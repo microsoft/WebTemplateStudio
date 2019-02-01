@@ -328,3 +328,9 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+# Ignore compiled files from the extension 
+**/out/
+**/react/
+**/node_modules/
+**/build/
