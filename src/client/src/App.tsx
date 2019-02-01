@@ -1,26 +1,33 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import * as React from 'react';
 import './App.css';
+import './css/grid.css';
 
-class App extends Component {
-  render() {
+import Header from './components/Header';
+import WizardForm from './components/WizardForm';
+import { Theme as UWPThemeProvider, getTheme } from "react-uwp/Theme";
+
+import logo from './logo.svg';
+
+class App extends React.Component {
+  public render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <UWPThemeProvider
+        theme={getTheme({
+          themeName: 'dark',
+          accent: '#0078D7',
+          useFluentDesign: true
+        })}
+      >
+        <div className="container">
+          <div>
+            <Header 
+              title="Web Template Studio"
+              subheader="Welcome to the Web Template Studio Wizard"
+            />
+          </div>
+          <WizardForm />
+        </div>
+      </UWPThemeProvider>
     );
   }
 }
