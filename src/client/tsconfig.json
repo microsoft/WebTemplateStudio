@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "target": "es5",
     "lib": [
       "dom",
@@ -21,5 +24,12 @@
   },
   "include": [
     "src"
+  ],
+  "filesGlob": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "files": [
+    "node_modules/react-uwp/index.d.ts" // add to here.
   ]
 }
