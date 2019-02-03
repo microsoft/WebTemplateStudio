@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { window, ExtensionContext, commands, ProgressLocation, Uri, workspace } from 'vscode';
+import { window, ExtensionContext, commands, Uri, workspace } from 'vscode';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { AzureLoginHelper } from './azure-account';
