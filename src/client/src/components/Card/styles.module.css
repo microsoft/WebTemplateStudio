@@ -1,0 +1,27 @@
+.container {
+    border: solid;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.boundingBox {
+    max-width: 198px;
+    max-height: 239px;
+}
+
+.button {
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.title {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.body {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
