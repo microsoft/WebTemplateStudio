@@ -1,4 +1,5 @@
-let nextCommentId = 5;
+// Comment ID will increment from this number. If the user chooses to add a database, use the id produced by the database.
+let nextCommentId = 3;
 
 // Update list of comments in the redux store after Comment button has been pressed
 export const submitComment = () => ({

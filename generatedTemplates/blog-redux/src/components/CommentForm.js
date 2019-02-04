@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 export default function CommentForm(props) {
   return (
     <Row>
-      <Col md={{ span: 10, offset: 1 }}>
+      <Col>
         <Form className="my-3" onSubmit={event => props.onSubmitComment(event)}>
           <Form.Group as={Col} controlId="formComment">
             <Form.Control
@@ -19,7 +19,7 @@ export default function CommentForm(props) {
               onChange={event => props.onUpdateCommentField(event)}
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="outline-secondary" size="sm" type="submit">
             Comment
           </Button>
         </Form>

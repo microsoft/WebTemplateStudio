@@ -13,11 +13,13 @@ class App extends Component {
       <div>
         <Container>
           <Row>
-            <Col md={{ span: 8, offset: 2 }}>
+            <Col md={{ span: 10, offset: 1 }}>
               <Navbar />
+            </Col>
+            <Col md={{ span: 8, offset: 2 }}>
               <BlogPost />
-              <CommentList />
               <CommentForm />
+              <CommentList />
             </Col>
           </Row>
         </Container>

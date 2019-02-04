@@ -9,7 +9,7 @@ import defaultAvatarImage from "../images/DefaultAvatar.png";
 export default function Comment(props) {
   return (
     <Row>
-      <Col md={{ span: 10, offset: 1 }}>
+      <Col>
         <Card className="my-3">
           <Card.Header>
             <Row>
