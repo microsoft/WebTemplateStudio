@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftView {
+    width: 20%;
+    background-color: #F7F7F7;
+    height: 100vh;
+}
+
+.centerView {
+    width: 55%;
+    padding: 20% 17%;
+}
+
+.rightView {
+    width: 25%;
+    background-color: #F7F7F7;
+    height: 100vh;
+}

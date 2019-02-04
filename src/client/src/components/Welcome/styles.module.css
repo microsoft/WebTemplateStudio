@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.container>div {
+    flex: 1 0 100%;
+}
+
+.flex>div:first-child {
+    flex: 0 1 100%;
+}
+
+.header {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+}
+
+.body {
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    margin: 10px;
+}
