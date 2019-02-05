@@ -1,43 +1,43 @@
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 
 const API = "http://localhost:";
 
 export class EngineAPIService {
-    _port: string;
+    private port: string;
 
     constructor(port: string) {
-        this._port = port;
+        this.port = port;
     }
 
-    async getProjectTypes() {
-        return fetch(API + this._port + "/api/projectType")
-            .then((response) => { return response.json() })
+    public async getProjectTypes() {
+        return fetch(API + this.port + "/api/projectType")
+            .then((response) => response.json())
             .catch((error: Error) => {
-                return {}
+                return {};
             });
     }
 
-    async getAllFrameworks(projectType: string) {
-        return fetch(API + this._port + "/api/framework?projectType=" + projectType)
-            .then((response) => { return response.json() })
+    public async getAllFrameworks(projectType: string) {
+        return fetch(API + this.port + "/api/framework?projectType=" + projectType)
+            .then((response) => response.json())
             .catch((error: Error) => {
-                return {}
+                return {};
             });
     }
 
-    async getFrontendFrameworks(projectType: string) {
-        return fetch(API + this._port + "/api/framework/frontend?projectType=" + projectType)
-            .then((response) => { return response.json() })
+    public async getFrontendFrameworks(projectType: string) {
+        return fetch(API + this.port + "/api/framework/frontend?projectType=" + projectType)
+            .then((response) => response.json())
             .catch((error: Error) => {
-                return {}
+                return {};
             });
     }
 
-    async getBackendFrameworks(projectType: string) {
-        return fetch(API + this._port + "/api/framework/backend?projectType=" + projectType)
-            .then((response) => { return response.json() })
+    public async getBackendFrameworks(projectType: string) {
+        return fetch(API + this.port + "/api/framework/backend?projectType=" + projectType)
+            .then((response) => response.json())
             .catch((error: Error) => {
-                return {}
+                return {};
             });
     }
-} 
+}
