@@ -1,9 +1,0 @@
-{
-	"webTemplateStudio.commands.wts": "Web Template Studio",
-	"webTemplateStudio.commands.login": "Azure Sign In",
-	"webTemplateStudio.commands.logout": "Sign Out",
-	"webTemplateStudio.commands.loginToCloud": "Sign In to Azure Cloud",
-	"webTemplateStudio.commands.selectSubscriptions": "Select Subscriptions",
-	"webTemplateStudio.commands.createAccount": "Create an Account",
-	"webTemplateStudio.commands.launch": "Launch"
-}

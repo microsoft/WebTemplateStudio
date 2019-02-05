@@ -1,8 +1,11 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "search.exclude": {
-        "out": true,
-        "dist": true
+    "files.exclude": {
+        "out": false // set this to true to hide the "out" folder with the compiled JS files
     },
-    "typescript.tsdk": "./node_modules/typescript/lib" // we want to use the TS server from our node_modules folder to control its version
+    "search.exclude": {
+        "out": true // set this to false to include "out" folder in search results
+    },
+    // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
+    "typescript.tsc.autoDetect": "off"
 }
