@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import styles from './styles.module.css';
-import grid from '../../css/grid.module.css';
 
 const Welcome = () => {
     return (
