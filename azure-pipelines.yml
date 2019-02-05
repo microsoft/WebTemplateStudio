@@ -1,0 +1,102 @@
+resources:
+
+- repo: self
+
+
+
+pool:
+
+  vmImage: Hosted VS2017
+
+  demands: npm
+
+
+
+#Your build pipeline references a secret variable named ‘oauth.token’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it secret. See https://go.microsoft.com/fwlink/?linkid=865972
+
+
+
+steps:
+
+- powershell: 'git -c http.https://github.com/Microsoft/CoreTemplateStudio.git.extraheader="AUTHORIZATION: basic $(oauth.token)" submodule update --init --force --recursive --remote --merge'
+
+  displayName: 'Update Git Submodule to Gen Engine'
+
+
+
+- task: securedevelopmentteam.vss-secure-development-tools.build-task-tslint.TSLint@1
+
+  displayName: 'Run TSLint'
+
+  inputs:
+
+    RuleLibrary: microsoft
+
+    RulesetMicrosoft: mssdlrecommended
+
+    ECMAScriptVersion: ES6
+
+
+
+- task: VSBuild@1
+
+  displayName: 'Build Core Engine'
+
+  enabled: false
+
+
+
+- task: NodeTool@0
+
+  displayName: 'Use Node 8.x'
+
+  inputs:
+
+    versionSpec: 8.x
+
+    checkLatest: true
+
+
+
+- task: Npm@1
+
+  displayName: 'npm install VSC dependencies'
+
+  inputs:
+
+    workingDir: src/extension/
+
+    verbose: false
+
+
+
+- task: Npm@1
+
+  displayName: 'npm run Compile VSC '
+
+  inputs:
+
+    command: custom
+
+    workingDir: src/extension/
+
+    verbose: false
+
+    customCommand: 'run compile'
+
+
+
+- script: 'cd src/extension && npm run test'
+
+  displayName: 'Run VSC Tests'
+
+
+
+- task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+
+  displayName: 'Component Detection For Open Source'
+
+
+
+
+
