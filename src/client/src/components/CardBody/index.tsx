@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import styles from './styles.module.css';
 
-const CardBody = ({ text }: { text: string }) => {
+const CardBody = ({ body }: { body: string }) => {
     return (
         <div className={styles.body}>
-            { text }
+            { body }
         </div>
     )
 }

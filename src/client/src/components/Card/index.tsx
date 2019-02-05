@@ -7,17 +7,22 @@ import CardBody from '../CardBody';
 import grid from '../../css/grid.module.css';
 import styles from './styles.module.css';
 
-const Card = () => {
+
+
+const Card = ({ iconPath, iconStyles, title, body }: { iconPath: string, iconStyles: string, title: string, body: string }) => {
     return (
         <div className={classNames(styles.container, styles.boundingBox)}>
-            <div className={grid.row}>
-                <div className={classNames(grid.col12, styles.title)}>
-                    <CardTitle title="Single Page Application" />
+            <div className={styles.cardHeader}>
+                <div className={styles.icon}>
+                    <img src={iconPath} className={iconStyles} />
+                </div>
+                <div className={styles.title}>
+                    <CardTitle title={title} />
                 </div>
             </div>
             <div className={grid.row}>
                 <div className={classNames(grid.col12, styles.body)}>
-                    <CardBody text='AngularJS is an open source, front-end web application framework maintained by Google to develop single page applications.' />
+                    <CardBody body={body} />
                 </div>
             </div>
             <div className={grid.row}>

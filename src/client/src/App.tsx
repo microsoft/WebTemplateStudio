@@ -7,6 +7,7 @@ import Welcome from './components/Welcome';
 import Header from './components/Header';
 import RightSidebar from './components/RightSidebar';
 import LeftSidebar from './components/LeftSidebar';
+import SelectWebApp from './components/SelectWebApp';
 
 import leftSidebarData from './mockData/leftSidebarData';
 
@@ -21,7 +22,8 @@ class App extends React.Component {
               <LeftSidebar sidebarItems={leftSidebarData} />
             </div>
             <div className={appStyles.centerView}>
-              <Route path="/" component={Welcome} />
+              <Route path="/selectWebApp" component={SelectWebApp} />
+              <Route exact path="/" component={Welcome} />
             </div>
             <div className={appStyles.rightView}>
               <RightSidebar />

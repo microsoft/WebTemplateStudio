@@ -3,6 +3,9 @@
     justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
+    padding-top: 35%;
+    padding-left: 20%;
+    padding-right: 20%;
 }
 
 .container>div {
