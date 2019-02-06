@@ -1,33 +1,11 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-
-import { window, ExtensionContext, commands, Uri, workspace } from 'vscode';
-import * as vscode from 'vscode';
 import * as path from 'path';
-import { AzureLoginHelper } from './azure-account';
-import { AzureAccount } from './azure-account.api';
-import { createReporter } from './telemetry';
-import * as nls from 'vscode-nls';
-import { survey } from './nps';
+import * as vscode from 'vscode';
 
-const localize = nls.loadMessageBundle();
-const enableLogging = false;
+export function activate(context: vscode.ExtensionContext) {
 
-export function activate(context: ExtensionContext) {
-	const reporter = createReporter(context);
-	const azureLogin = new AzureLoginHelper(context, reporter);
-	if (enableLogging) {
-		logDiagnostics(context, azureLogin.api);
-	}
-	const subscriptions = context.subscriptions;
-	subscriptions.push(createStatusBarItem(context, azureLogin.api));
-	subscriptions.push(commands.registerCommand('webTemplateStudio.createAccount', createAccount));
-	subscriptions.push(commands.registerCommand('webTemplateStudio.launch', () => {ReactPanel.createOrShow(context.extensionPath);}));
-
-	survey(context, reporter);
-	return Promise.resolve(azureLogin.api); // Return promise to work around weird error in WinJS.
+	context.subscriptions.push(vscode.commands.registerCommand('extension.webTemplateStudio', () => {
+		ReactPanel.createOrShow(context.extensionPath);
+	}));
 }
 
 /**
@@ -149,66 +127,3 @@ class ReactPanel {
 // 	}
 // 	return text;
 // }
-
-
-function logDiagnostics(context: ExtensionContext, api: AzureAccount) {
-	const subscriptions = context.subscriptions;
-	subscriptions.push(api.onStatusChanged(status => {
-		console.log(`onStatusChanged: ${status}`);
-	}));
-	subscriptions.push(api.onSessionsChanged(() => {
-		console.log(`onSessionsChanged: ${api.sessions.length} ${api.status}`);
-	}));
-	(async () => {
-		console.log(`waitForLogin: ${await api.waitForLogin()} ${api.status}`);
-	})().catch(console.error);
-	subscriptions.push(api.onSubscriptionsChanged(() => {
-		console.log(`onSubscriptionsChanged: ${api.subscriptions.length}`);
-	}));
-	(async () => {
-		console.log(`waitForSubscriptions: ${await api.waitForSubscriptions()} ${api.subscriptions.length}`);
-	})().catch(console.error);
-	subscriptions.push(api.onFiltersChanged(() => {
-		console.log(`onFiltersChanged: ${api.filters.length}`);
-	}));
-	(async () => {
-		console.log(`waitForFilters: ${await api.waitForFilters()} ${api.filters.length}`);
-	})().catch(console.error);
-}
-
-function createAccount() {
-	return commands.executeCommand('vscode.open', Uri.parse('https://azure.microsoft.com/en-us/free/?utm_source=campaign&utm_campaign=vscode-azure-account&mktingSource=vscode-azure-account'));
-}
-
-function createStatusBarItem(context: ExtensionContext, api: AzureAccount) {
-	const statusBarItem = window.createStatusBarItem();
-	statusBarItem.command = "webTemplateStudio.selectSubscriptions";
-	function updateStatusBar() {
-		switch (api.status) {
-			case 'LoggingIn':
-				statusBarItem.text = localize('azure-account.loggingIn', "Azure: Signing in...");
-				statusBarItem.show();
-				break;
-			case 'LoggedIn':
-				if (api.sessions.length) {
-					const azureConfig = workspace.getConfiguration('azure');
-					const showSignedInEmail = azureConfig.get<boolean>('showSignedInEmail');
-					statusBarItem.text = showSignedInEmail ? localize('azure-account.loggedIn', "Azure: {0}", api.sessions[0].userId) : localize('azure-account.loggedIn', "Azure: Signed In");
-					statusBarItem.show();
-				}
-				break;
-			default:
-				statusBarItem.hide();
-				break;
-		}
-	}
-	context.subscriptions.push(
-		statusBarItem,
-		api.onStatusChanged(updateStatusBar),
-		api.onSessionsChanged(updateStatusBar),
-		workspace.onDidChangeConfiguration(updateStatusBar)
-	);
-	updateStatusBar();
-	return statusBarItem;
-}
-
