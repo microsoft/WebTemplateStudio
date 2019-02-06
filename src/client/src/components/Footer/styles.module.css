@@ -4,4 +4,10 @@
     padding: 15px;
     bottom: 0;
     width: 97.36%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button {
+    margin-left: 10px;
 }
