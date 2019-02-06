@@ -5,6 +5,7 @@ import appStyles from './appStyles.module.css';
 
 import Welcome from './components/Welcome';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import RightSidebar from './components/RightSidebar';
 import LeftSidebar from './components/LeftSidebar';
 import SelectWebApp from './components/SelectWebApp';
@@ -29,6 +30,7 @@ class App extends React.Component {
               <RightSidebar />
             </div>
           </div>
+          <Footer />
         </div>
       </Router>
     );

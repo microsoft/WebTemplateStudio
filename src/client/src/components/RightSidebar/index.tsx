@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 class RightSidebar extends React.Component {
     public render() {
         return (
-            <div>
+            <div className={styles.container}>
                 <div className={styles.title}>
                     Your Project Details
                 </div>

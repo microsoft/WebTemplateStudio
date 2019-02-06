@@ -4,8 +4,15 @@ import { Option } from '../../types/option';
 const options: Array<Option> = [
     {
         svgUrl: blankpage,
-        title: "Single Page",
-        body: "AngularJS is an open source, front-end web application framework maintained by Google to develop single page applications."
+        title: "Full Stack App",
+        body: "A single page application with a local back-end server.",
+        selected: false
+    },
+    {
+        svgUrl: undefined,
+        title: "RESTful API",
+        body: "A RESTful API with no front-end user interface.",
+        selected: false
     }
 ]
 

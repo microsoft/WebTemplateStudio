@@ -1,4 +1,6 @@
 .header {
+    position: absolute;
+    width: 95.7%;
     padding: 12px 24px;
     background-color: #DBDBDB;
     font-weight: bold;

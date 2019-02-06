@@ -1,5 +1,6 @@
 .container {
-    border-bottom: 0.5px solid #7F7F7F
+    border-bottom: 0.5px solid #7F7F7F;
+    margin-top: 100%;
 }
 
 .itemBorder {

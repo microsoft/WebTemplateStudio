@@ -6,18 +6,18 @@
 .leftView {
     width: 20%;
     background-color: #F7F7F7;
-    height: 100vh;
+    height: 95vh;
     border-right: 0.5px solid rgba(0, 0, 0, 0.1);
-    padding: 15% 0%;
 }
 
 .centerView {
+    padding-top: 5%;
     width: 75%;
 }
 
 .rightView {
     width: 25%;
     background-color: #F7F7F7;
-    height: 100vh;
+    height: 95vh;
     border-left: 0.5px solid rgba(0, 0, 0, 0.1);
 }
