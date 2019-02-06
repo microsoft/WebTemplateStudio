@@ -204,5 +204,8 @@
     "vscode-extension-telemetry": "^0.1.0",
     "vscode-nls": "^4.0.0",
     "ws": "6.1.0"
-  }
+  },
+  "extensionDependencies": [
+    "ms-azuretools.vscode-cosmosdb"
+  ]
 }
