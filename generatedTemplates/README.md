@@ -7,6 +7,7 @@ This folder is for the development of the final boiler plate code that will be g
 Templates are being developed using the create-react-app starter kit. To run for development enter a specific folder and run:
 
 ```
+npm install
 npm start
 ```
 
