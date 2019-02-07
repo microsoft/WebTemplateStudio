@@ -32,7 +32,7 @@ class SelectOption extends React.Component<SelectOptionProps,SelectOptionState> 
         return this.state.selectedCards.includes(cardNumber)
     }
 
-    public removeOption(cardNumber: number) {
+    public addOrRemoveOption(cardNumber: number) {
         const { selectedCards } = this.state;
         let filteredCards = selectedCards;
         if (this.isCardSelected(cardNumber)) {
@@ -56,7 +56,7 @@ class SelectOption extends React.Component<SelectOptionProps,SelectOptionState> 
 
     public onCardClick(cardNumber: number) {
         if (this.props.multiSelect) {
-            this.removeOption(cardNumber);
+            this.addOrRemoveOption(cardNumber);
         } else {
             this.exchangeOption(cardNumber);
         }   

@@ -17,6 +17,18 @@
     outline: 3px solid #0067B8;
 }
 
+.selectedCheckMark {
+    display: flex;
+    justify-content: center;
+}
+
+.iconCheckMark {
+    padding-left: 5px;
+    height: 18px;
+    width: 18px;
+    align-self: center;
+}
+
 .hidden {
     display: none;
 }

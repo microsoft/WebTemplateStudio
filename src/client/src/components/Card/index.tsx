@@ -7,6 +7,8 @@ import CardBody from '../CardBody';
 import grid from '../../css/grid.module.css';
 import styles from './styles.module.css';
 
+import Check from '../../assets/Check.svg';
+
 const Card = ({ iconPath, iconStyles, title, body, selected, cardNumber, onCardClick }: { iconPath: string | undefined, iconStyles: string, title: string, body: string, selected: boolean, cardNumber: number, onCardClick: (idx: number) => void }) => {
     return (
         <div onClick={() => { onCardClick(cardNumber) }} className={classNames(styles.container, styles.boundingBox, { [styles.selected]: selected })}>
@@ -31,9 +33,13 @@ const Card = ({ iconPath, iconStyles, title, body, selected, cardNumber, onCardC
                     Details
                 </div>
                 <div className={classNames({
-                    [styles.hidden]: !selected
+                    [styles.hidden]: !selected,
+                    [styles.selectedCheckMark]: selected
                 })}>
-                    Selected
+                    <div>
+                        Selected
+                    </div>
+                    <img src={process.env.REACT_APP_RELATIVE_PATH + Check} className={styles.iconCheckMark} />
                 </div>
             </div>
         </div>

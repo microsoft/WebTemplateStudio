@@ -12,6 +12,8 @@ import SelectWebApp from './components/SelectWebApp';
 import SelectFrontEndFramework from './components/SelectFrontEndFramework';
 
 import leftSidebarData from './mockData/leftSidebarData';
+import SelectBackEndFramework from './components/SelectBackendFramework';
+import SelectPages from './components/SelectPages';
 
 class App extends React.Component {
   public render() {
@@ -24,7 +26,9 @@ class App extends React.Component {
               <LeftSidebar sidebarItems={leftSidebarData} />
             </div>
             <div className={appStyles.centerView}>
+              <Route path="/selectBackEnd" component={SelectBackEndFramework} />
               <Route path="/selectFrontEnd" component={SelectFrontEndFramework} />
+              <Route path="/selectPages" component={SelectPages} />
               <Route path="/SelectWebApp" component={SelectWebApp} />
               <Route exact path="/" component={Welcome} />
             </div>
