@@ -8,7 +8,7 @@ class SelectWebApp extends React.Component {
     public render() {
         return (
             <div>
-                <SelectOption title="2. Select a front-end framework for your project." options={options} />
+                <SelectOption multiSelect={false} title="What type of web application are you building?" options={options} />
             </div>
         )
     }

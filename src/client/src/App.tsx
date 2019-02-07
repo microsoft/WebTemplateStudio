@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 
 import appStyles from './appStyles.module.css';
 
@@ -24,8 +24,8 @@ class App extends React.Component {
               <LeftSidebar sidebarItems={leftSidebarData} />
             </div>
             <div className={appStyles.centerView}>
-              <Route path="/selectWebApp" component={SelectWebApp} />
               <Route path="/selectFrontEnd" component={SelectFrontEndFramework} />
+              <Route path="/SelectWebApp" component={SelectWebApp} />
               <Route exact path="/" component={Welcome} />
             </div>
             <div className={appStyles.rightView}>

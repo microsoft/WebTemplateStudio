@@ -8,7 +8,7 @@ class SelectFrontEndFramework extends React.Component {
     public render() {
         return (
             <div>
-                <SelectOption title="1. What type of web application are you building?" options={options} />
+                <SelectOption multiSelect={false} title="Select a front-end framework for your project." options={options} />
             </div>
         )
     }

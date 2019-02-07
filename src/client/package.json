@@ -23,7 +23,7 @@
     "start": "react-scripts start",
     "build-split": "react-scripts build",
     "build": "node ./scripts/build-non-split.js",
-    "postbuild": "mv build ../extension/react",
+    "postbuild": "rm -r ../extension/react && mv build ../extension/react",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
