@@ -1,17 +1,6 @@
 # Web Template Studio
 *To be written*
 
-## Build Status
-
-|Branch   |Full Tests       |
-|:--------|:---------------:|
-|master|[![Build Status](https://microsoftgarage.visualstudio.com/Intern%20Program/_apis/build/status/Vancouver-InDevelopment/Web-Template-Studio/Web-Template-Studio?branchName=master)](https://microsoftgarage.visualstudio.com/Intern%20Program/_build/latest?definitionId=267&branchName=master)|
-|staging|[![Build Status](https://microsoftgarage.visualstudio.com/Intern%20Program/_apis/build/status/Vancouver-InDevelopment/Web-Template-Studio/Web-Template-Studio?branchName=master)](https://microsoftgarage.visualstudio.com/Intern%20Program/_build/latest?definitionId=267&branchName=master)|
-|dev|[![Build Status](https://microsoftgarage.visualstudio.com/Intern%20Program/_apis/build/status/Vancouver-InDevelopment/Web-Template-Studio/Web-Template-Studio?branchName=dev)](https://microsoftgarage.visualstudio.com/Intern%20Program/_build/latest?definitionId=267&branchName=dev)|
-
-> The builds include test verifications to validate the contributions:
-> * *Full Tests*: Includes tests to verify combinations and variations of templates from a project generation point of view and builds the solutions generated to ensure no build time issues found. Runs every PR accepted and takes longer to be completed.
-
 # Quick Start
 Clone the repository and use
 ```

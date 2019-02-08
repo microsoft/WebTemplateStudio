@@ -1,8 +1,8 @@
 import blankpage from '../../assets/blankpage.svg';
 import { Option } from '../../types/option';
 
-console.log(process.env.PUBLIC_URL);
-console.log(process.env.PUBLIC_URL + blankpage);
+console.log(process.env.REACT_APP_RELATIVE_PATH);
+console.log(process.env.REACT_APP_RELATIVE_PATH + blankpage);
 
 const options: Array<Option> = [
     {
