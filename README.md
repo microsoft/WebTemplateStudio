@@ -1,5 +1,6 @@
 # Web Template Studio
 *To be written*
+Note: Running the extension in VSCode v1.31 and above will currently result in non-rendering SVGs.
 
 # Quick Start
 Clone the repository and use
