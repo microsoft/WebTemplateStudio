@@ -1,13 +1,9 @@
-import * as React from 'react';
+import * as React from "react";
 
-import styles from './styles.module.css';
+import styles from "./styles.module.css";
 
 const CardBody = ({ body }: { body: string }) => {
-    return (
-        <div className={styles.body}>
-            { body }
-        </div>
-    )
-}
+  return <div className={styles.body}>{body}</div>;
+};
 
-export default CardBody
+export default CardBody;
