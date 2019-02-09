@@ -1,0 +1,14 @@
+.textSelected,
+.text {
+    font-size: 12px;  
+    padding: 18px 26px; 
+}
+
+.text {
+    font-weight: bold;
+}
+
+.textSelected {
+    color: white;
+    background-color: #0067B8;
+}

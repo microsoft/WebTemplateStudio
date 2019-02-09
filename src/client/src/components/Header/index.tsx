@@ -1,23 +1,9 @@
-import * as React from 'react';
-import './styles.css';
-import '../../css/grid.css';
+import * as React from "react";
 
-import Button from 'react-uwp/Button';
+import styles from "./styles.module.css";
 
-const Header = ({title, subheader}: {title: string, subheader: string}) => {
-    return(
-        <div className="header">
-            <h1 className="white">
-                {title}
-            </h1>
-            <h2 className="white">
-                {subheader}
-            </h2>
-            <Button>
-                Start
-            </Button>
-        </div>
-    )
-}
+const Header = () => {
+  return <div className={styles.header}>Web Template Studio</div>;
+};
 
 export default Header;
