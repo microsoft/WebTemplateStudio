@@ -1,33 +1,47 @@
-import * as React from 'react';
-import './App.css';
-import './css/grid.css';
+import * as React from "react";
+import { HashRouter as Router, Route } from "react-router-dom";
 
-import Header from './components/Header';
-import WizardForm from './components/WizardForm';
-import { Theme as UWPThemeProvider, getTheme } from "react-uwp/Theme";
+import appStyles from "./appStyles.module.css";
 
-import logo from './logo.svg';
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import LeftSidebar from "./components/LeftSidebar";
+import RightSidebar from "./components/RightSidebar";
+import SelectFrontEndFramework from "./components/SelectFrontEndFramework";
+import SelectWebApp from "./components/SelectWebApp";
+import Welcome from "./components/Welcome";
+
+import SelectBackEndFramework from "./components/SelectBackendFramework";
+import SelectPages from "./components/SelectPages";
+import leftSidebarData from "./mockData/leftSidebarData";
 
 class App extends React.Component {
   public render() {
     return (
-      <UWPThemeProvider
-        theme={getTheme({
-          themeName: 'dark',
-          accent: '#0078D7',
-          useFluentDesign: true
-        })}
-      >
-        <div className="container">
-          <div>
-            <Header 
-              title="Web Template Studio"
-              subheader="Welcome to the Web Template Studio Wizard"
-            />
+      <Router>
+        <div>
+          <Header />
+          <div className={appStyles.container}>
+            <div className={appStyles.leftView}>
+              <LeftSidebar sidebarItems={leftSidebarData} />
+            </div>
+            <div className={appStyles.centerView}>
+              <Route path="/selectBackEnd" component={SelectBackEndFramework} />
+              <Route
+                path="/selectFrontEnd"
+                component={SelectFrontEndFramework}
+              />
+              <Route path="/selectPages" component={SelectPages} />
+              <Route path="/SelectWebApp" component={SelectWebApp} />
+              <Route exact={true} path="/" component={Welcome} />
+            </div>
+            <div className={appStyles.rightView}>
+              <RightSidebar />
+            </div>
           </div>
-          <WizardForm />
+          <Footer />
         </div>
-      </UWPThemeProvider>
+      </Router>
     );
   }
 }

@@ -1447,9 +1447,9 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
 
 typescript@^3.1.4:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.4.tgz#c585cb952912263d915b462726ce244ba510ef3d"
-  integrity sha512-0RNDbSdEokBeEAkgNbxJ+BLwSManFy9TeXz8uW+48j/xhEXv1ePME60olyzw2XzUqUBNAYFeJadIqAgNqIACwg==
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.3.tgz#f1657fc7daa27e1a8930758ace9ae8da31403221"
+  integrity sha512-Y21Xqe54TBVp+VDSNbuDYdGw0BpoR/Q6wo/+35M8PAU0vipahnyduJWirxxdxjsAkS7hue53x2zp8gz7F05u0A==
 
 unc-path-regex@^0.1.2:
   version "0.1.2"
@@ -1577,9 +1577,9 @@ vinyl@^2.0.0, vinyl@^2.0.1, vinyl@^2.0.2:
     replace-ext "^1.0.0"
 
 vscode@^1.1.25:
-  version "1.1.28"
-  resolved "https://registry.yarnpkg.com/vscode/-/vscode-1.1.28.tgz#642acc4a84de5ea0764e7419ae84a383b0c74062"
-  integrity sha512-vxpRMKVa/DgSihyy8I7puRZKiwQm9NK/e5oDTEFDtughhEHrspi0UaXKe795b1DFgO3XJe6KLiXzC8mJonvvWw==
+  version "1.1.29"
+  resolved "https://registry.yarnpkg.com/vscode/-/vscode-1.1.29.tgz#bef148f5eb88b966e425b7fa4287ff4b8b04e017"
+  integrity sha512-E6hzqGtCD65BnBxdZzSIi8FPCM4seEEK/bbTeYdJntg+4D5R6GLbdYFySE9DNTtMJF4iB9UGoucKU/p8Guts1g==
   dependencies:
     glob "^7.1.2"
     gulp-chmod "^2.0.0"
