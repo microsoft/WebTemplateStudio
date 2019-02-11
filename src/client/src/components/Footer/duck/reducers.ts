@@ -9,31 +9,39 @@ import * as Actions from "./types";
 */
 
 const mockVsCodeApi = () => {
-    return {
-        postMessage: ({ command, alert }: { command: string, alert: string }) => { console.log("command is " + command + ", alert is " + alert); }
+  return {
+    postMessage: ({ command, alert }: { command: string; alert: string }) => {
+      console.log("command is " + command + ", alert is " + alert);
     }
-}
+  };
+};
 
-function vscodeApi(state = {
+function vscodeApi(
+  state = {
     isVsCodeApiAcquired: false,
-    vscode: undefined,
-}, action: any) {
-    switch (action.type) {
-        case Actions.GET_VSCODE_API:
-            let newState: any = {...state};
-            if (!newState.isVsCodeApiAcquired) {
-                // @ts-ignore initialize VSCode API over here
-                newState.isVsCodeApiAcquired = true;
-                // @ts-ignore
-                newState.vscode = process.env.NODE_ENV === "production" ? acquireVsCodeApi() : mockVsCodeApi();
-                return newState;
-            }
-            return newState;
-        default:
-            return state;
-    }
+    vscode: undefined
+  },
+  action: any
+) {
+  switch (action.type) {
+    case Actions.GET_VSCODE_API:
+      const newState: any = { ...state };
+      if (!newState.isVsCodeApiAcquired) {
+        newState.isVsCodeApiAcquired = true;
+        newState.vscode =
+          process.env.NODE_ENV === "production"
+            ? 
+            // @ts-ignore
+            acquireVsCodeApi()
+            : mockVsCodeApi();
+        return newState;
+      }
+      return newState;
+    default:
+      return state;
+  }
 }
 
 export default combineReducers({
-    vscodeApi,
+  vscodeApi
 });

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { Link, withRouter } from "react-router-dom";
 
-import * as Duck from './duck/index';
+import * as Duck from "./duck/index";
 
 import styles from "./styles.module.css";
 
@@ -12,16 +12,21 @@ interface FooterProps {
 }
 
 class Footer extends React.Component<RouteComponentProps & FooterProps> {
-
   public componentDidMount() {
     this.props.getVsCodeApi();
   }
 
+  public logMessageToVsCode = (e: any): any => {
+    // @ts-ignore
+    this.props.vscode.vscodeApi.vscode.postMessage({
+      command: "alert",
+      text: "Sending Message to VSCode"
+    });
+  };
+
   public render() {
     // TODO: Needs access to redux to determine where each link should go to
     // TODO: Add previous paths through link prop to track state/history
-
-    // TODO: Remove this navigation once redux is implemented
     const { pathname } = this.props.location;
     const pathsNext: any = {
       "/SelectWebApp": "/selectFrontEnd",
@@ -33,13 +38,8 @@ class Footer extends React.Component<RouteComponentProps & FooterProps> {
       "/selectBackEnd": "/selectFrontEnd",
       "/selectPages": "/selectBackEnd"
     };
-
-    const logMessageToVsCode = (e: any): any => {
-      //@ts-ignore
-      this.props.vscode.vscodeApi.vscode.postMessage({
-        
-      });
-    }
+    console.log(pathsNext[pathname]);
+    console.log(pathsBack[pathname]);
 
     return (
       <div className={styles.footer}>
@@ -55,9 +55,9 @@ class Footer extends React.Component<RouteComponentProps & FooterProps> {
         >
           Next
         </Link>
-        <button onClick={logMessageToVsCode}>
+        <Link className={styles.button} to="/" onClick={this.logMessageToVsCode}>
           Generate
-        </button>
+        </Link>
         <Link className={styles.button} to="/">
           Cancel
         </Link>
@@ -69,14 +69,17 @@ class Footer extends React.Component<RouteComponentProps & FooterProps> {
 function mapStateToProps(state: any) {
   const { vscode } = state;
   return {
-    vscode,
+    vscode
   };
 }
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    getVsCodeApi: () => dispatch(Duck.duckActions.getVSCodeApi()),
+    getVsCodeApi: () => dispatch(Duck.duckActions.getVSCodeApi())
   };
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Footer));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Footer));

@@ -27,11 +27,12 @@
     "start": "react-scripts start",
     "build-split": "react-scripts build",
     "build": "node ./scripts/build-non-split.js",
-    "postbuild": "rm -r ../extension/react && mv build ../extension/react",
+    "postbuild": "rm -rf ../extension/react && mv build ../extension/react",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "format": "prettier --write 'src/**/*.{ts,tsx}'"
+    "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
+    "format": "prettier --write src/**/*.{ts,tsx}",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -41,5 +42,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "tslint-config-prettier": "^1.18.0"
+  }
 }

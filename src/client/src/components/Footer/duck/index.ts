@@ -7,9 +7,6 @@ import reducer from "./reducers";
 import * as duckTypes from "./types";
 import * as duckActions from "./actions";
 
-export {
-    duckActions,
-    duckTypes,
-};
+export { duckActions, duckTypes };
 
 export default reducer;
