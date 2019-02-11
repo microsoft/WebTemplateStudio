@@ -1,10 +1,22 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { Link, withRouter } from "react-router-dom";
 
+import * as Duck from './duck/index';
+
 import styles from "./styles.module.css";
 
-class Footer extends React.Component<RouteComponentProps> {
+interface FooterProps {
+  getVsCodeApi: () => void;
+}
+
+class Footer extends React.Component<RouteComponentProps & FooterProps> {
+
+  public componentDidMount() {
+    this.props.getVsCodeApi();
+  }
+
   public render() {
     // TODO: Needs access to redux to determine where each link should go to
     // TODO: Add previous paths through link prop to track state/history
@@ -22,6 +34,13 @@ class Footer extends React.Component<RouteComponentProps> {
       "/selectPages": "/selectBackEnd"
     };
 
+    const logMessageToVsCode = (e: any): any => {
+      //@ts-ignore
+      this.props.vscode.vscodeApi.vscode.postMessage({
+        
+      });
+    }
+
     return (
       <div className={styles.footer}>
         <Link
@@ -36,9 +55,9 @@ class Footer extends React.Component<RouteComponentProps> {
         >
           Next
         </Link>
-        <Link className={styles.button} to={pathname}>
+        <button onClick={logMessageToVsCode}>
           Generate
-        </Link>
+        </button>
         <Link className={styles.button} to="/">
           Cancel
         </Link>
@@ -47,4 +66,17 @@ class Footer extends React.Component<RouteComponentProps> {
   }
 }
 
-export default withRouter(Footer);
+function mapStateToProps(state: any) {
+  const { vscode } = state;
+  return {
+    vscode,
+  };
+}
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    getVsCodeApi: () => dispatch(Duck.duckActions.getVSCodeApi()),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Footer));

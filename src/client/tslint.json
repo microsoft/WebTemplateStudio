@@ -16,7 +16,8 @@
 			"always"
 		],
 		"triple-equals": false,
-		"jsx-wrap-multiline": true
+		"jsx-wrap-multiline": true,
+		"object-literal-sort-keys": false,
 	},
 	"defaultSeverity": "warning"
 }
