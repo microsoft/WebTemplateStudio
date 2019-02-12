@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import * as Actions from "./types";
+import * as Actions from "../actions/types";
 
 /* State Shape
 {
@@ -8,10 +8,14 @@ import * as Actions from "./types";
 }
 */
 
+/**
+ * Models the functionality of acquireVsCodeApi() from vscode for use
+ * in development environment.
+ */
 const mockVsCodeApi = () => {
   return {
     postMessage: ({ command, alert }: { command: string; alert: string }) => {
-      console.log("command is " + command + ", alert is " + alert);
+      console.log(`Command is ${command}, alert is ${alert}`);
     }
   };
 };
@@ -19,16 +23,16 @@ const mockVsCodeApi = () => {
 function vscodeApi(
   state = {
     isVsCodeApiAcquired: false,
-    vscode: undefined
+    vscodeObject: undefined
   },
   action: any
 ) {
   switch (action.type) {
     case Actions.GET_VSCODE_API:
-      const newState: any = { ...state };
-      if (!newState.isVsCodeApiAcquired) {
+      if (!state.isVsCodeApiAcquired) {
+        const newState = { ...state };
         newState.isVsCodeApiAcquired = true;
-        newState.vscode =
+        newState.vscodeObject =
           process.env.NODE_ENV === "production"
             ? 
             // @ts-ignore
@@ -36,12 +40,10 @@ function vscodeApi(
             : mockVsCodeApi();
         return newState;
       }
-      return newState;
+      return state;
     default:
       return state;
   }
 }
 
-export default combineReducers({
-  vscodeApi
-});
+export default vscodeApi;

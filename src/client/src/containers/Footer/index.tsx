@@ -3,22 +3,18 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { Link, withRouter } from "react-router-dom";
 
-import * as Duck from "./duck/index";
+import { getVSCodeApi } from "../../actions/getVSCodeApi";
 
 import styles from "./styles.module.css";
 
-interface FooterProps {
+interface IFooterState {
   getVsCodeApi: () => void;
 }
 
-class Footer extends React.Component<RouteComponentProps & FooterProps> {
-  public componentDidMount() {
-    this.props.getVsCodeApi();
-  }
-
+class Footer extends React.Component<RouteComponentProps, IFooterState> {
   public logMessageToVsCode = (e: any): any => {
     // @ts-ignore
-    this.props.vscode.vscodeApi.vscode.postMessage({
+    this.props.vscode.vscodeObject.postMessage({
       command: "alert",
       text: "Sending Message to VSCode"
     });
@@ -55,9 +51,9 @@ class Footer extends React.Component<RouteComponentProps & FooterProps> {
         >
           Next
         </Link>
-        <Link className={styles.button} to="/" onClick={this.logMessageToVsCode}>
+        <button className={styles.button} onClick={this.logMessageToVsCode}>
           Generate
-        </Link>
+        </button>
         <Link className={styles.button} to="/">
           Cancel
         </Link>
@@ -66,20 +62,6 @@ class Footer extends React.Component<RouteComponentProps & FooterProps> {
   }
 }
 
-function mapStateToProps(state: any) {
-  const { vscode } = state;
-  return {
-    vscode
-  };
-}
+const mapStateToProps = ({ vscode }: any) => ({ vscode });
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    getVsCodeApi: () => dispatch(Duck.duckActions.getVSCodeApi())
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Footer));
+export default withRouter(connect(mapStateToProps)(Footer));
