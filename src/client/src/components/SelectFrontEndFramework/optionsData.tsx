@@ -2,9 +2,9 @@ import Angular from "../../assets/Angular.svg";
 import React from "../../assets/React.svg";
 import Vue from "../../assets/VueJS.svg";
 
-import { Option } from "../../types/option";
+import { IOption } from "../../types/option";
 
-const options: Option[] = [
+const options: IOption[] = [
   {
     svgUrl: process.env.REACT_APP_RELATIVE_PATH + React,
     title: "React",

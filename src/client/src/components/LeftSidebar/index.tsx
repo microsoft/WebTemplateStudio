@@ -8,7 +8,7 @@ const LeftSidebar = ({ sidebarItems }: { sidebarItems: string[] }) => {
   return (
     <div className={styles.container}>
       {sidebarItems.map(sidebartitle => (
-        <div className={styles.itemBorder}>
+        <div className={styles.itemBorder} key={`${sidebartitle}`}>
           <SidebarItem text={sidebartitle} />
         </div>
       ))}

@@ -19,12 +19,16 @@ import { getVSCodeApi } from "./actions/getVSCodeApi";
 import appStyles from "./appStyles.module.css";
 
 interface IDispatchProps {
-  getVSCodeApi?: () => void;
+  getVSCodeApi: () => void;
 }
 
 class App extends React.Component<IDispatchProps> {
+  public static defaultProps = {
+    getVSCodeApi: undefined,
+  };
+
   public componentDidMount() {
-    if (this.props.getVSCodeApi != null) {
+    if (this.props.getVSCodeApi() !== undefined) {
       this.props.getVSCodeApi();
     }
   }
@@ -60,7 +64,7 @@ class App extends React.Component<IDispatchProps> {
 }
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
-  getVSCodeApi: () => dispatch(getVSCodeApi()),
+  getVSCodeApi: () => { dispatch(getVSCodeApi()) },
 });
 
 export default connect(null, mapDispatchToProps)(App);

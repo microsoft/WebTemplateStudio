@@ -8,7 +8,6 @@ import styles from "./styles.module.css";
 import { IVSCode } from "../../reducers/vscodeApiReducer";
 
 interface IDispatchProps {
-  getVsCodeApi?: () => void;
   vscode: IVSCode;
 }
 

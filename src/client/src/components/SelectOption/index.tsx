@@ -6,16 +6,16 @@ import Card from "../Card";
 import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
-import { Option } from "../../types/option";
+import { IOption } from "../../types/option";
 
 interface ISelectOptionProps {
   title: string;
-  options: Option[];
+  options: IOption[];
   multiSelect: boolean;
 }
 
 interface ISelectOptionState {
-  options: Option[];
+  options: IOption[];
   selectedCards: number[];
 }
 
@@ -77,6 +77,7 @@ class SelectOption extends React.Component<
         <div className={styles.container}>
           {options.map((option, cardNumber) => (
             <Card
+              key={`${cardNumber} ${option.title}`}
               onCardClick={(cardNumber: number) => {
                 this.onCardClick(cardNumber);
               }}

@@ -2,9 +2,9 @@ import blogpage from "../../assets/blogpage.svg";
 import contactpage from "../../assets/contactpage.svg";
 import homepage from "../../assets/homepage.svg";
 
-import { Option } from "../../types/option";
+import { IOption } from "../../types/option";
 
-const options: Option[] = [
+const options: IOption[] = [
   {
     svgUrl: process.env.REACT_APP_RELATIVE_PATH + homepage,
     title: "Home Page",
