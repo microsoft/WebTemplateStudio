@@ -1,5 +1,9 @@
 {
-	"extends": ["tslint:latest", "tslint-react"],
+	"extends": [
+		"tslint:latest",
+		"tslint-react",
+		"tslint-config-prettier"
+	],
 	"linterOptions": {
 		"exclude": [
 			"src/serviceWorker.ts"
@@ -11,12 +15,8 @@
 		"no-duplicate-variable": true,
 		"curly": true,
 		"class-name": true,
-		"semicolon": [
-			true,
-			"always"
-		],
 		"triple-equals": false,
-		"jsx-wrap-multiline": true
+		"object-literal-sort-keys": false
 	},
 	"defaultSeverity": "warning"
 }

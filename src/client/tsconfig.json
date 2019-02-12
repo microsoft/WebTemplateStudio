@@ -30,7 +30,4 @@
     "**/*.ts",
     "**/*.tsx"
   ],
-  "files": [
-    "node_modules/react-uwp/index.d.ts" // add to here.
-  ]
 }
