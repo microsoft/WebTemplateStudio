@@ -1,21 +1,34 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import { HashRouter as Router, Route } from "react-router-dom";
+import * as Redux from "redux";
 
-import appStyles from "./appStyles.module.css";
-
-import Footer from "./components/Footer";
 import Header from "./components/Header";
 import LeftSidebar from "./components/LeftSidebar";
 import RightSidebar from "./components/RightSidebar";
+import SelectBackEndFramework from "./components/SelectBackendFramework";
 import SelectFrontEndFramework from "./components/SelectFrontEndFramework";
+import SelectPages from "./components/SelectPages";
 import SelectWebApp from "./components/SelectWebApp";
 import Welcome from "./components/Welcome";
-
-import SelectBackEndFramework from "./components/SelectBackendFramework";
-import SelectPages from "./components/SelectPages";
+import Footer from "./containers/Footer";
 import leftSidebarData from "./mockData/leftSidebarData";
 
-class App extends React.Component {
+import { getVSCodeApi } from "./actions/getVSCodeApi";
+
+import appStyles from "./appStyles.module.css";
+
+interface IDispatchProps {
+  getVSCodeApi?: () => void;
+}
+
+class App extends React.Component<IDispatchProps> {
+  public componentDidMount() {
+    if (this.props.getVSCodeApi != null) {
+      this.props.getVSCodeApi();
+    }
+  }
+
   public render() {
     return (
       <Router>
@@ -26,12 +39,12 @@ class App extends React.Component {
               <LeftSidebar sidebarItems={leftSidebarData} />
             </div>
             <div className={appStyles.centerView}>
-              <Route path="/selectBackEnd" component={SelectBackEndFramework} />
+              <Route path="/SelectBackEnd" component={SelectBackEndFramework} />
               <Route
-                path="/selectFrontEnd"
+                path="/SelectFrontEnd"
                 component={SelectFrontEndFramework}
               />
-              <Route path="/selectPages" component={SelectPages} />
+              <Route path="/SelectPages" component={SelectPages} />
               <Route path="/SelectWebApp" component={SelectWebApp} />
               <Route exact={true} path="/" component={Welcome} />
             </div>
@@ -46,4 +59,8 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
+  getVSCodeApi: () => dispatch(getVSCodeApi()),
+});
+
+export default connect(null, mapDispatchToProps)(App);

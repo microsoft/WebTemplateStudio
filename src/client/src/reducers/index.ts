@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import vscode from "../components/Footer/duck";
+import vscodeApi from "./vscodeApiReducer";
 
 export default combineReducers({
-  vscode
+  vscode: vscodeApi
 });
