@@ -1,4 +1,7 @@
-import fetch from "node-fetch";
+import fetch, { Response } from "node-fetch";
+
+// This path is going to be used by the engine to create templates
+const templatesFolderPath = "../";
 
 export class EngineAPIService {
 
@@ -12,79 +15,69 @@ export class EngineAPIService {
         }
     }
 
-    public async getProjectTypes(platform: string, language: string) {
-        const url = new URLSearchParams(this.API + "/api/projectType");
-        url.append("platform", platform);
-        url.append("language", language);
-        fetch(url.toString(), { method: "get" })
+    public async getProjectTypes(platform: string, language: string): Promise<Response | JSON> {
+        const url = new URL(this.API + "/api/projectType");
+        url.searchParams.append("platform", platform);
+        url.searchParams.append("language", language);
+        return await fetch(url.href, { method: "get" })
             .then((response: Response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return {};
-                }
-
+                return response.json();
             })
             .catch((error: Error) => {
-                return {};
+                throw Error("request failed.");
             });
     }
 
-    public async getFrameworks(projectType: string) {
-        const url = new URLSearchParams(this.API + "/api/framework");
-        url.append("projectType", projectType);
-        fetch(url.toString(), { method: "get" })
+    public async getFrameworks(projectType: string): Promise<Response | JSON> {
+        const url = new URL(this.API + "/api/framework");
+        url.searchParams.append("projectType", projectType);
+        return await fetch(url.href, { method: "get" })
             .then((response: Response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return {};
-                }
-
+                return response;
             })
             .catch((error: Error) => {
-                return {};
+                throw Error("request failed.");
             });
     }
 
-    public async syncPlatforms(platform: string) {
-        throw Error("Undefined function");
+    public async syncPlatforms(platform: string): Promise<Response | JSON> {
+        const url = new URL(this.API + "/api/sync");
+        url.searchParams.append("platform", platform);
+        url.searchParams.append("path", templatesFolderPath);
+        return await fetch(url.href, { method: "post" })
+            .then((response: Response) => {
+                return response.json();
+            })
+            .catch((error: Error) => {
+                throw Error("request failed.");
+            });
     }
 
-    public async getFeatures(frameworks: [string]) {
-        const url = new URLSearchParams(this.API + "/api/feature");
+    public async getFeatures(frameworks: [string]): Promise<Response | JSON> {
+        const url = new URL(this.API + "/api/feature");
         frameworks.forEach((framework) => {
-            url.append("framework", framework);
+            url.searchParams.append("framework", framework);
         });
-        fetch(url.toString(), { method: "get" })
+        return await fetch(url.href, { method: "get" })
             .then((response: Response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return {};
-                }
-
-            }).catch((error: Error) => {
-                return {};
+                return response.json();
+            })
+            .catch((error: Error) => {
+                throw Error("request failed.");
             });
     }
 
-    public async getPages(frameworks: [string]) {
-        const url = new URLSearchParams(this.API + "/api/page");
+    public async getPages(frameworks: [string]): Promise<Response | JSON> {
+        const url = new URL(this.API + "/api/page");
         frameworks.forEach((framework) => {
-            url.append("framework", framework);
+            url.searchParams.append("framework", framework);
         });
-        fetch(url.toString(), { method: "get" })
+        return await fetch(url.href, { method: "get" })
             .then((response: Response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return {};
-                }
-
+                return response.json();
             })
             .catch((error: Error) => {
-                return {};
+                throw Error("request failed.");
             });
     }
 }
