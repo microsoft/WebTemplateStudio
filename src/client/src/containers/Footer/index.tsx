@@ -14,6 +14,7 @@ interface IDispatchProps {
 
 type Props = RouteComponentProps & IDispatchProps;
 
+// TODO: Reconfigure with proper navigation using redux
 const pathsNext: any = {
   "/SelectWebApp": "/SelectFrontEnd",
   "/SelectFrontEnd": "/SelectBackEnd",

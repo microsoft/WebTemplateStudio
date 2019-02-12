@@ -9,6 +9,7 @@
     "@types/react": "16.7.22",
     "@types/react-dom": "16.0.11",
     "@types/react-redux": "^7.0.1",
+    "@types/react-router": "^4.4.3",
     "@types/react-router-dom": "^4.3.1",
     "classnames": "^2.2.6",
     "global": "^4.3.2",
