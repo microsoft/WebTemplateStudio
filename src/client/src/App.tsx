@@ -39,12 +39,12 @@ class App extends React.Component<IDispatchProps> {
               <LeftSidebar sidebarItems={leftSidebarData} />
             </div>
             <div className={appStyles.centerView}>
-              <Route path="/selectBackEnd" component={SelectBackEndFramework} />
+              <Route path="/SelectBackEnd" component={SelectBackEndFramework} />
               <Route
-                path="/selectFrontEnd"
+                path="/SelectFrontEnd"
                 component={SelectFrontEndFramework}
               />
-              <Route path="/selectPages" component={SelectPages} />
+              <Route path="/SelectPages" component={SelectPages} />
               <Route path="/SelectWebApp" component={SelectWebApp} />
               <Route exact={true} path="/" component={Welcome} />
             </div>

@@ -3,16 +3,31 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { Link, withRouter } from "react-router-dom";
 
-import { getVSCodeApi } from "../../actions/getVSCodeApi";
-
 import styles from "./styles.module.css";
 
-interface IFooterState {
-  getVsCodeApi: () => void;
+import { IVSCode } from "../../reducers/vscodeApiReducer";
+
+interface IDispatchProps {
+  getVsCodeApi?: () => void;
+  vscode: IVSCode;
 }
 
-class Footer extends React.Component<RouteComponentProps, IFooterState> {
-  public logMessageToVsCode = (e: any): any => {
+type Props = RouteComponentProps & IDispatchProps;
+
+const pathsNext: any = {
+  "/SelectWebApp": "/SelectFrontEnd",
+  "/SelectFrontEnd": "/SelectBackEnd",
+  "/SelectBackEnd": "/SelectPages"
+};
+const pathsBack: any = {
+  "/SelectFrontEnd": "/SelectWebApp",
+  "/SelectBackEnd": "/SelectFrontEnd",
+  "/SelectPages": "/SelectBackEnd"
+};
+
+class Footer extends React.Component<Props> {
+  public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     // @ts-ignore
     this.props.vscode.vscodeObject.postMessage({
       command: "alert",
@@ -24,19 +39,6 @@ class Footer extends React.Component<RouteComponentProps, IFooterState> {
     // TODO: Needs access to redux to determine where each link should go to
     // TODO: Add previous paths through link prop to track state/history
     const { pathname } = this.props.location;
-    const pathsNext: any = {
-      "/SelectWebApp": "/selectFrontEnd",
-      "/selectFrontEnd": "/selectBackEnd",
-      "/selectBackEnd": "/selectPages"
-    };
-    const pathsBack: any = {
-      "/selectFrontEnd": "/selectWebApp",
-      "/selectBackEnd": "/selectFrontEnd",
-      "/selectPages": "/selectBackEnd"
-    };
-    console.log(pathsNext[pathname]);
-    console.log(pathsBack[pathname]);
-
     return (
       <div className={styles.footer}>
         <Link
@@ -62,6 +64,6 @@ class Footer extends React.Component<RouteComponentProps, IFooterState> {
   }
 }
 
-const mapStateToProps = ({ vscode }: any) => ({ vscode });
+const mapStateToProps = ({ vscode }: { vscode: IVSCode }) => ({ vscode });
 
 export default withRouter(connect(mapStateToProps)(Footer));

@@ -1,4 +1,3 @@
-import { combineReducers } from "redux";
 import * as Actions from "../actions/types";
 
 /* State Shape
@@ -8,24 +7,35 @@ import * as Actions from "../actions/types";
 }
 */
 
+export interface IVSCode {
+  vscode: IVSCodeAPI;
+}
+
+interface IVSCodeAPI {
+  isVsCodeApiAcquired: boolean;
+  vscodeObject: any;
+}
+
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
  * in development environment.
+ * 
+ * Returns type "any" because the VSCode API type is not known in the client. 
  */
-const mockVsCodeApi = () => {
-  return {
-    postMessage: ({ command, alert }: { command: string; alert: string }) => {
+const mockVsCodeApi = (): any => ({
+  postMessage: ({ command, alert }: { command: string; alert: string }) => {
       console.log(`Command is ${command}, alert is ${alert}`);
-    }
-  };
-};
+  },
+});
 
 function vscodeApi(
   state = {
     isVsCodeApiAcquired: false,
     vscodeObject: undefined
   },
-  action: any
+  action: {
+    type: string
+  }
 ) {
   switch (action.type) {
     case Actions.GET_VSCODE_API:
