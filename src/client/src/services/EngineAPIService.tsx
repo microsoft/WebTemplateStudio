@@ -1,4 +1,5 @@
 import fetch, { Response } from "node-fetch";
+import * as constants from "./constants";
 
 // This path is going to be used by the engine to create templates
 const templatesFolderPath = "../";
@@ -7,74 +8,74 @@ export class EngineAPIService {
 
     private API: string;
 
-    constructor(port: string, host: string | undefined) {
-        if (!undefined) {
-            this.API = "http://localhost:" + port;
+    constructor(port: string, url: string | undefined) {
+        if (url === undefined) {
+            this.API = constants.API.Localhost + port;
         } else {
-            this.API = host + ":" + port;
+            this.API = url + ":" + port;
         }
     }
 
     public async getProjectTypes(): Promise<Response | JSON> {
-        const url = new URL(this.API + "/api/projectType");
-        return await fetch(url.href, { method: "get" })
+        const url = new URL(constants.API.Endpoints.ProjectType, this.API);
+        return await fetch(url.href, { method: constants.API.Methods.GET })
             .then((response: Response) => {
                 return response.json();
             })
             .catch((error: Error) => {
-                throw Error("request failed.");
+                throw Error("request failed:" + error.toString());
             });
     }
 
     public async getFrameworks(): Promise<Response | JSON> {
-        const url = new URL(this.API + "/api/framework");
-        return await fetch(url.href, { method: "get" })
+        const url = new URL(constants.API.Endpoints.Framework, this.API);
+        return await fetch(url.href, { method: constants.API.Methods.GET })
             .then((response: Response) => {
                 return response;
             })
             .catch((error: Error) => {
-                throw Error("request failed.");
+                throw Error("request failed:" + error.toString());
             });
     }
 
     public async syncPlatforms(platform: string): Promise<Response | JSON> {
-        const url = new URL(this.API + "/api/sync");
-        url.searchParams.append("platform", platform);
-        url.searchParams.append("path", templatesFolderPath);
-        return await fetch(url.href, { method: "post" })
+        const url = new URL(constants.API.Endpoints.Sync, this.API);
+        url.searchParams.append(constants.API.QueryParams.Platform, platform);
+        url.searchParams.append(constants.API.QueryParams.Path, templatesFolderPath);
+        return await fetch(url.href, { method: constants.API.Methods.POST })
             .then((response: Response) => {
                 return response.json();
             })
             .catch((error: Error) => {
-                throw Error("request failed.");
+                throw Error("request failed:" + error.toString());
             });
     }
 
     public async getFeatures(frameworks: [string]): Promise<Response | JSON> {
-        const url = new URL(this.API + "/api/feature");
+        const url = new URL(constants.API.Endpoints.Feature, this.API);
         frameworks.forEach((framework) => {
-            url.searchParams.append("framework", framework);
+            url.searchParams.append(constants.API.QueryParams.Framework, framework);
         });
-        return await fetch(url.href, { method: "get" })
+        return await fetch(url.href, { method: constants.API.Methods.GET })
             .then((response: Response) => {
                 return response.json();
             })
             .catch((error: Error) => {
-                throw Error("request failed.");
+                throw Error("request failed:" + error.toString());
             });
     }
 
     public async getPages(frameworks: [string]): Promise<Response | JSON> {
-        const url = new URL(this.API + "/api/page");
+        const url = new URL(constants.API.Endpoints.Page, this.API);
         frameworks.forEach((framework) => {
-            url.searchParams.append("framework", framework);
+            url.searchParams.append(constants.API.QueryParams.Framework, framework);
         });
-        return await fetch(url.href, { method: "get" })
+        return await fetch(url.href, { method: constants.API.Methods.GET })
             .then((response: Response) => {
                 return response.json();
             })
             .catch((error: Error) => {
-                throw Error("request failed.");
+                throw Error("request failed:" + error.toString());
             });
     }
 }
