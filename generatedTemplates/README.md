@@ -4,17 +4,17 @@ This folder is for the development of the final boiler plate code that will be g
 
 ## Developing Templates
 
-Templates are being developed using the create-react-app starter kit. To run for development enter a specific folder and run:
+Templates are being developed using the create-react-app starter kit and express-react-starter (https://github.com/burkeholland/express-react-starter). To run for development enter a specific folder and run:
 
 ```
 npm install
 npm start
 ```
 
-The web app will then be available at localhost:3000.
+The web app will then be available at localhost:3000 and backend API at localhost:3001.
 
 ## Templates Contained
 
-`multi-page` - currently contains home, about and contact pages built with react and bootstrap
+`multi-page` - Currently contains about, contact home and blog pages. Blog is connects to a express backend and stores comments in a Cosmos Database.
 
-`blog-redux` - contains a blog page built with react, bootstrap and redux
+`blog-redux` - Contains a blog page built with react, bootstrap and redux.
