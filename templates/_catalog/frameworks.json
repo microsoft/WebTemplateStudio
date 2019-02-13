@@ -1,0 +1,42 @@
+﻿[
+  {
+    "name": "ReactJS",
+    "displayName": "ReactJS",
+    "summary": "React is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers.",
+    "author": "Microsoft",
+    "order": "1",
+    "licenses": "",
+    "platforms": [ "Web" ],
+    "languages": [ "Any" ],
+    "tags": {
+      "type": "frontend"
+    }
+  },
+  {
+    "name": "NodeJS",
+    "displayName": "NodeJS",
+    "summary": "Node.js is a highly efficient and scalable non-blocking I/O platform that was build on top of Google Chrome V8 engine and its ECMAScript.",
+    "author": "Microsoft",
+    "order": "1",
+    "licenses": "",
+    "platforms": [ "Web" ],
+    "languages": [ "Any" ],
+    "tags": {
+      "type": "backend"
+    }
+  },
+  {
+    "name": "ASPNET",
+    "displayName": "ASP.NET",
+    "summary": "ASP.NET is an open-source server-side web application framework designed for web development to produce dynamic web pages.",
+    "author": "Microsoft",
+    "order": "1",
+    "licenses": "",
+    "platforms": [ "Web" ],
+    "languages": [ "Any" ],
+    "tags": {
+      "type": "backend",
+      "enabled": false
+    }
+  }
+]
