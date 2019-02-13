@@ -15,10 +15,8 @@ export class EngineAPIService {
         }
     }
 
-    public async getProjectTypes(platform: string, language: string): Promise<Response | JSON> {
+    public async getProjectTypes(): Promise<Response | JSON> {
         const url = new URL(this.API + "/api/projectType");
-        url.searchParams.append("platform", platform);
-        url.searchParams.append("language", language);
         return await fetch(url.href, { method: "get" })
             .then((response: Response) => {
                 return response.json();
@@ -28,9 +26,8 @@ export class EngineAPIService {
             });
     }
 
-    public async getFrameworks(projectType: string): Promise<Response | JSON> {
+    public async getFrameworks(): Promise<Response | JSON> {
         const url = new URL(this.API + "/api/framework");
-        url.searchParams.append("projectType", projectType);
         return await fetch(url.href, { method: "get" })
             .then((response: Response) => {
                 return response;
