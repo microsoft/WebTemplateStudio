@@ -14,8 +14,6 @@ export default class Blog extends Component {
       comments: []
     };
 
-    // Comment ID will increment from 3. If a database is used to store the comments then use the id assigned by the database.
-    this.commentID = 3;
     this.handleChange = this.handleChange.bind(this);
     this.onNewComment = this.onNewComment.bind(this);
   }
@@ -24,7 +22,7 @@ export default class Blog extends Component {
   componentDidMount() {
     fetch("/api/comments")
       .then(res => res.json())
-      .then(result => this.setState({ comments: result.commentsList }));
+      .then(result => this.setState({ comments: result }));
   }
 
   onNewComment(event) {
@@ -47,7 +45,6 @@ export default class Blog extends Component {
         }))
       );
 
-    this.commentID++;
     event.preventDefault();
   }
 
@@ -73,7 +70,7 @@ export default class Blog extends Component {
               commentFieldValue={this.state.commentFieldValue}
             />
             {this.state.comments.map(comment => (
-              <Comment key={comment.id} text={comment.text} />
+              <Comment key={comment._id} text={comment.text} />
             ))}
           </Col>
         </Row>

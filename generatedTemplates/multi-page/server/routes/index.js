@@ -1,28 +1,13 @@
 var express = require("express");
 var router = express.Router();
-
-let commentId = 3;
-
-let defaultState = {
-  commentsList: [
-    {
-      id: 1,
-      text: "First comment on the blog post"
-    },
-    {
-      id: 2,
-      text: "Second comment on the blog post"
-    }
-  ]
-};
+var commentService = require("../comment-service");
 
 router.get("/comments", function(req, res, next) {
-  res.json(defaultState);
+  commentService.get(req, res);
 });
 
 router.post("/comments", function(req, res) {
-  defaultState.commentsList.unshift({ id: commentId++, text: req.body.text });
-  res.json("User added successfully");
+  commentService.create(req, res);
 });
 
 module.exports = router;
