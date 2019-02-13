@@ -6,7 +6,6 @@ export const API = {
         ProjectType: "/api/projectType",
         Sync: "/api/sync",
     },
-    Localhost: "http://localhost",
     Methods: {
         GET: "get",
         POST: "post",

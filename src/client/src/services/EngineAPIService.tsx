@@ -1,7 +1,8 @@
 import fetch, { Response } from "node-fetch";
 import * as constants from "./constants";
 
-// This path is going to be used by the engine to create templates
+// This path is going to be used by the engine to pull the templates
+// it will use to generate the output files
 const templatesFolderPath = "../";
 
 export class EngineAPIService {
@@ -10,7 +11,7 @@ export class EngineAPIService {
 
     constructor(port: string, url: string | undefined) {
         if (url === undefined) {
-            this.API = constants.API.Localhost + port;
+            this.API = "http://localhost" + port;
         } else {
             this.API = url + ":" + port;
         }
