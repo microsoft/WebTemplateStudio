@@ -27,7 +27,7 @@ class SelectOption extends React.Component<
     super(props);
     this.state = {
       options: this.props.options,
-      selectedCards: []
+      selectedCards: [0]
     };
   }
 

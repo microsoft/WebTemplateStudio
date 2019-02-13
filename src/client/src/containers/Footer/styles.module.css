@@ -6,6 +6,7 @@
     width: 97.36%;
     display: flex;
     justify-content: flex-end;
+    min-height: 25px;
 }
 
 .button {

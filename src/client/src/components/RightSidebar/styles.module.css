@@ -8,3 +8,16 @@
 .container {
     padding-top: 25%;
 }
+
+.dropdown {
+    background-color: red;
+}
+
+.dropdownTitle {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sidebarItem {
+    margin: 15px;
+}
