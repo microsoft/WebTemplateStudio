@@ -11,6 +11,7 @@ import { IOption } from "../../types/option";
 interface ISelectOptionProps {
   title: string;
   selectCard?: (card: string) => void;
+  selectOptions?: (cards: string[]) => void;
   options: IOption[];
   multiSelect: boolean;
 }
@@ -37,6 +38,21 @@ class SelectOption extends React.Component<
   }
 
   /**
+   * Converts the index numbers of options into ids
+   * In this case, titles, but can be changed to whatever is required
+   * by the redux store.
+   * 
+   * @param cardNumbers 
+   */
+  public convertCardNumbersToTitles(cardNumbers: number[]): string[] {
+    const cardTitles = [];
+    for (const num of cardNumbers) {
+      cardTitles.push(this.state.options[num].title);
+    }
+    return cardTitles;
+  }
+
+  /**
    * Allows more than one option to be selected at a time.
    * Updates the redux store with the selection.
    * 
@@ -49,6 +65,9 @@ class SelectOption extends React.Component<
       filteredCards = filteredCards.filter(val => val !== cardNumber);
     } else {
       filteredCards.push(cardNumber);
+    }
+    if (this.props.selectOptions !== undefined) {
+      this.props.selectOptions(this.convertCardNumbersToTitles(filteredCards));
     }
     this.setState({
       selectedCards: filteredCards
