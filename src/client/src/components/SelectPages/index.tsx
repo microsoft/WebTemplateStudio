@@ -5,13 +5,19 @@ import SelectOption from "../SelectOption";
 
 import { selectPagesAction } from "../../actions/selectPages";
 
-import options from "./optionsData";
+import { IOption } from "../../types/option";
 
 interface IDispatchProps {
   selectPages: (pages: string[]) => void;
 }
 
-class SelectPages extends React.Component<IDispatchProps> {
+interface ISelectPagesProps {
+  options: IOption[];
+}
+
+type Props = IDispatchProps & ISelectPagesProps;
+
+class SelectPages extends React.Component<Props> {
   public render() {
     return (
       <div>
@@ -19,10 +25,17 @@ class SelectPages extends React.Component<IDispatchProps> {
           selectOptions={this.props.selectPages}
           multiSelect={true}
           title="What pages do you need for your application?"
-          options={options}
+          options={this.props.options}
         />
       </div>
     );
+  }
+}
+
+const mapStateToProps = (state: any): ISelectPagesProps => {
+  const { pageOptions } = state.wizardContent;
+  return {
+    options: pageOptions,
   }
 }
 
@@ -30,4 +43,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   selectPages: (pages: string[]) => { dispatch(selectPagesAction(pages)) },
 });
 
-export default connect(null, mapDispatchToProps)(SelectPages);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectPages);
