@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
 
-import frontendFramework from "./selectFrameworkReducer";
+import backendFramework from "./selectBackendFrameworkReducer";
+import frontendFramework from "./selectFrontendFrameworkReducer";
 
 export default combineReducers({
-    frontendFramework
+    frontendFramework,
+    backendFramework
 });

@@ -36,6 +36,12 @@ class SelectOption extends React.Component<
     return this.state.selectedCards.includes(cardNumber);
   }
 
+  /**
+   * Allows more than one option to be selected at a time.
+   * Updates the redux store with the selection.
+   * 
+   * @param cardNumber 
+   */
   public addOrRemoveOption(cardNumber: number) {
     const { selectedCards } = this.state;
     let filteredCards = selectedCards;
@@ -49,6 +55,12 @@ class SelectOption extends React.Component<
     });
   }
 
+  /**
+   * Ensures only one option can be selected at a time.
+   * Updates the component state and the redux store with selection.
+   * 
+   * @param cardNumber 
+   */
   public exchangeOption(cardNumber: number) {
     const { selectedCards } = this.state;
     selectedCards.pop();
