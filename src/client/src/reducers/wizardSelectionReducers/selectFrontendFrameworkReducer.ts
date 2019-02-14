@@ -10,6 +10,7 @@ const frontendFramework = (state = "", action: any) => {
     switch(action.type) {
         case Actions.SELECT_FRONTEND_FRAMEWORK:
             return action.payload;
+        case Actions.GET_FRONTEND_FRAMEWORKS:
         default:
             return state;
     }

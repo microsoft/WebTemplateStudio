@@ -3,14 +3,27 @@ import { connect } from "react-redux";
 
 import SelectOption from "../SelectOption";
 
+import { getFrontendFrameworksAction } from "../../actions/getFrontendFrameworks";
 import { selectFrontendFramework as selectFrontendAction } from "../../actions/selectFrontEndFramework";
-import options from "./optionsData";
+
+import { IOption } from "../../types/option";
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: string) => void;
+  getFrontendFrameworks: () => void;
 }
 
-class SelectFrontEndFramework extends React.Component<IDispatchProps> {
+interface IDispatchState {
+  options: IOption[];
+}
+
+interface ISelectFrontEndFrameworkProps {
+  options: IOption[];
+}
+
+type Props = IDispatchProps & ISelectFrontEndFrameworkProps;
+
+class SelectFrontEndFramework extends React.Component<Props> {
   public render() {
     return (
       <div>
@@ -18,15 +31,23 @@ class SelectFrontEndFramework extends React.Component<IDispatchProps> {
           selectCard={this.props.selectFrontendFramework}
           multiSelect={false}
           title="Select a front-end framework for your project."
-          options={options}
+          options={this.props.options}
         />
       </div>
     );
   }
 }
 
+const mapStateToProps = (state: any): IDispatchState => {
+  const { frontendOptions } = state.wizardContent;
+  return {
+    options: frontendOptions,
+  }
+}
+
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  selectFrontendFramework: (framework: string) => { dispatch(selectFrontendAction(framework)) }
+  selectFrontendFramework: (framework: string) => { dispatch(selectFrontendAction(framework)) },
+  getFrontendFrameworks: () => { dispatch(getFrontendFrameworksAction()) }
 });
 
-export default connect(null, mapDispatchToProps)(SelectFrontEndFramework);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectFrontEndFramework);
