@@ -1,8 +1,11 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 
 import Dropdown from "../Dropdown";
+
+import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/selectFrontEndFramework";
 
 import styles from "./styles.module.css";
 
@@ -41,7 +44,40 @@ const backEndOptions = [
     label: "ASP.NET"
   }
 ]
-class RightSidebar extends React.Component<RouteComponentProps> {
+
+interface IDropdownValue {
+  value: string;
+  label: string;
+}
+
+// TODO: Finalize types when API is hooked up
+interface ISelectionType {
+  appType: string;
+  backendFramework: string;
+  frontendFramework: string;
+  pages: string[]
+}
+
+interface IDispatchProps {
+  selectFrontendFramework: (framework: string) => void;
+}
+
+interface IRightSidebarProps {
+  selection: ISelectionType;
+}
+
+type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
+
+class RightSidebar extends React.Component<Props> {
+  public convertToDropdownObject = (selection: string): IDropdownValue => {
+    return {
+      value: selection,
+      label: selection,
+    }
+  }
+  public handleChange(e: IDropdownValue) {
+    this.props.selectFrontendFramework(e.value);
+  }
   public showWebApp = (): boolean => {
     const { pathname } = this.props.location;
     return pathname !== "/";
@@ -55,7 +91,6 @@ class RightSidebar extends React.Component<RouteComponentProps> {
     return pathname !== "/" && pathname !== "/SelectWebApp" && pathname !== "/SelectFrontEnd"
   }
   public render() {
-    const { pathname } = this.props.location;
     return (
       <div className={styles.container}>
         <div className={styles.title}>Your Project Details</div>
@@ -76,7 +111,8 @@ class RightSidebar extends React.Component<RouteComponentProps> {
             Front-end Framework
           </div>
           <Dropdown
-            defaultValue={frontEndOptions[0]}
+            handleChange={this.handleChange.bind(this)}
+            defaultValue={this.convertToDropdownObject(this.props.selection.frontendFramework)}
             options={frontEndOptions}
           />
         </div>
@@ -97,4 +133,15 @@ class RightSidebar extends React.Component<RouteComponentProps> {
   }
 }
 
-export default withRouter(RightSidebar);
+const mapStateToProps = (state: any): IRightSidebarProps => {
+  const { selection } = state;
+  return {
+    selection,
+  }
+}
+
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  selectFrontendFramework: (framework: string) => { dispatch(selectFrontEndFrameworkAction(framework)) }
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RightSidebar));

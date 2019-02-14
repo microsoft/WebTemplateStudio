@@ -8,9 +8,16 @@ interface IDropdownOption {
     label: string,
 }
 
-const Dropdown = ({ options, defaultValue }: { options: IDropdownOption[], defaultValue: IDropdownOption }) => {
+interface DropdownProps {
+    options: IDropdownOption[],
+    defaultValue: IDropdownOption;
+    handleChange?: (e: any) => void;
+}
+
+const Dropdown = ({ options, defaultValue, handleChange }: DropdownProps) => {
     return (
         <Select
+            onChange={handleChange}
             styles={dropdownstyles}
             isSearchable={false}
             defaultValue={defaultValue}
