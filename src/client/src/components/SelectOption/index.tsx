@@ -11,13 +11,13 @@ import { IOption } from "../../types/option";
 interface ISelectOptionProps {
   title: string;
   selectCard?: (card: string) => void;
+  selectedCards?: number[];
   selectOptions?: (cards: string[]) => void;
   options: IOption[];
   multiSelect: boolean;
 }
 
 interface ISelectOptionState {
-  options: IOption[];
   selectedCards: number[];
 }
 
@@ -28,12 +28,14 @@ class SelectOption extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      options: this.props.options,
-      selectedCards: [0]
+      selectedCards: this.props.selectedCards ? this.props.selectedCards : [0],
     };
   }
 
   public isCardSelected(cardNumber: number): boolean {
+    if (this.props.selectedCards) {
+      return this.props.selectedCards.includes(cardNumber);
+    }
     return this.state.selectedCards.includes(cardNumber);
   }
 
@@ -47,7 +49,7 @@ class SelectOption extends React.Component<
   public convertCardNumbersToTitles(cardNumbers: number[]): string[] {
     const cardTitles = [];
     for (const num of cardNumbers) {
-      cardTitles.push(this.state.options[num].title);
+      cardTitles.push(this.props.options[num].title);
     }
     return cardTitles;
   }
@@ -85,7 +87,7 @@ class SelectOption extends React.Component<
     selectedCards.pop();
     selectedCards.push(cardNumber);
     if (this.props.selectCard !== undefined) {
-      this.props.selectCard(this.state.options[cardNumber].title);
+      this.props.selectCard(this.props.options[cardNumber].title);
     }
     this.setState({
       selectedCards
@@ -101,7 +103,6 @@ class SelectOption extends React.Component<
   }
 
   public render() {
-    const { options } = this.state;
     return (
       <div>
         <div className={grid.row}>
@@ -110,7 +111,7 @@ class SelectOption extends React.Component<
           </div>
         </div>
         <div className={styles.container}>
-          {options.map((option, cardNumber) => (
+          {this.props.options.map((option, cardNumber) => (
             <Card
               key={`${cardNumber} ${option.title}`}
               onCardClick={(cardNumber: number) => {

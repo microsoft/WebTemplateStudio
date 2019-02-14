@@ -12,11 +12,13 @@ interface DropdownProps {
     options: IDropdownOption[],
     defaultValue: IDropdownOption;
     handleChange?: (e: any) => void;
+    value?: IDropdownOption | undefined;
 }
 
-const Dropdown = ({ options, defaultValue, handleChange }: DropdownProps) => {
+const Dropdown = ({ options, defaultValue, handleChange, value }: DropdownProps) => {
     return (
         <Select
+            value={value}
             onChange={handleChange}
             styles={dropdownstyles}
             isSearchable={false}

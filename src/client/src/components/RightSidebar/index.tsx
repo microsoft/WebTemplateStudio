@@ -66,9 +66,19 @@ interface IRightSidebarProps {
   selection: ISelectionType;
 }
 
+interface IRightSidebarState {
+  frontendDropdownValue: IDropdownValue | undefined
+}
+
 type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
 
-class RightSidebar extends React.Component<Props> {
+class RightSidebar extends React.Component<Props, IRightSidebarState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      frontendDropdownValue: undefined,
+    };
+  }
   public convertToDropdownObject = (selection: string): IDropdownValue => {
     return {
       value: selection,
@@ -114,6 +124,7 @@ class RightSidebar extends React.Component<Props> {
             handleChange={this.handleChange.bind(this)}
             defaultValue={this.convertToDropdownObject(this.props.selection.frontendFramework)}
             options={frontEndOptions}
+            value={this.convertToDropdownObject(this.props.selection.frontendFramework)}
           />
         </div>
         }
