@@ -8,7 +8,6 @@ import styles from "./styles.module.css";
 import { IVSCode } from "../../reducers/vscodeApiReducer";
 
 interface IDispatchProps {
-  getVsCodeApi?: () => void;
   vscode: IVSCode;
 }
 
@@ -42,24 +41,29 @@ class Footer extends React.Component<Props> {
     const { pathname } = this.props.location;
     return (
       <div className={styles.footer}>
-        <Link
-          className={styles.button}
-          to={pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]}
-        >
-          Back
-        </Link>
-        <Link
-          className={styles.button}
-          to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
-        >
-          Next
-        </Link>
-        <button className={styles.button} onClick={this.logMessageToVsCode}>
-          Generate
-        </button>
-        <Link className={styles.button} to="/">
-          Cancel
-        </Link>
+        {
+          pathname !== "/" && 
+            <div>
+              <Link
+                className={styles.button}
+                to={pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]}
+              >
+                Back
+              </Link>
+              <Link
+                className={styles.button}
+                to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
+              >
+                Next
+              </Link>
+              <button className={styles.button} onClick={this.logMessageToVsCode}>
+                Generate
+              </button>
+              <Link className={styles.button} to="/">
+                Cancel
+              </Link>
+            </div>
+        }
       </div>
     );
   }

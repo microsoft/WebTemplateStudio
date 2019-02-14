@@ -1,9 +1,9 @@
 import NET from "../../assets/NET.svg";
 import NodeJS from "../../assets/NodeJS.svg";
 
-import { Option } from "../../types/option";
+import { IOption } from "../../types/option";
 
-const options: Option[] = [
+const options: IOption[] = [
   {
     svgUrl: process.env.REACT_APP_RELATIVE_PATH + NodeJS,
     title: "Node.JS",

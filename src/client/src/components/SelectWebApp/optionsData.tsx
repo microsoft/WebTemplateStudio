@@ -1,10 +1,7 @@
 import blankpage from "../../assets/blankpage.svg";
-import { Option } from "../../types/option";
+import { IOption } from "../../types/option";
 
-console.log(process.env.REACT_APP_RELATIVE_PATH);
-console.log(process.env.REACT_APP_RELATIVE_PATH + blankpage);
-
-const options: Option[] = [
+const options: IOption[] = [
   {
     svgUrl: process.env.REACT_APP_RELATIVE_PATH + blankpage,
     title: "Full Stack App",

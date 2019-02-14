@@ -1,4 +1,4 @@
-export interface Option {
+export interface IOption {
   title: string;
   body: string;
   svgUrl: string | undefined;

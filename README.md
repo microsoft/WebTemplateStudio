@@ -1,7 +1,7 @@
 # Web Template Studio
 *To be written*
 
-Note: Use VSCode light mode to view the extension. Running the extension in VSCode v1.31 and above will currently result in non-rendering SVGs. This issue was [fixed in v1.32](https://github.com/Microsoft/vscode/issues/68033) which will be released in March 2019.
+Note: Use VSCode light mode to view the extension. Running the extension in VSCode v1.31 ~~and above will currently result in non-rendering SVGs~~. This issue was [fixed on Feb.12, 2019](https://github.com/Microsoft/vscode/issues/68033).
 
 # Quick Start
 Clone the repository and use
