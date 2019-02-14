@@ -15,21 +15,27 @@ import Footer from "./containers/Footer";
 import leftSidebarData from "./mockData/leftSidebarData";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
+import { loadWizardContentAction } from "./actions/loadWizardContent";
 
 import appStyles from "./appStyles.module.css";
 
 interface IDispatchProps {
   getVSCodeApi: () => void;
+  loadWizardContent: () => void;
 }
 
 class App extends React.Component<IDispatchProps> {
   public static defaultProps = {
     getVSCodeApi: undefined,
+    loadWizardContent: undefined,
   };
 
   public componentDidMount() {
     if (this.props.getVSCodeApi() !== undefined) {
       this.props.getVSCodeApi();
+    }
+    if (this.props.loadWizardContent() !== undefined) {
+      this.props.loadWizardContent();
     }
   }
 
@@ -65,6 +71,7 @@ class App extends React.Component<IDispatchProps> {
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   getVSCodeApi: () => { dispatch(getVSCodeApi()) },
+  loadWizardContent: () => { dispatch(loadWizardContentAction()) },
 });
 
 export default connect(null, mapDispatchToProps)(App);
