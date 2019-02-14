@@ -1,14 +1,22 @@
 import * as React from "react";
+import { connect } from "react-redux";
 
 import SelectOption from "../SelectOption";
 
+import { selectWebAppAction } from "../../actions/selectWebApp";
+
 import options from "./optionsData";
 
-class SelectWebApp extends React.Component {
+interface IDispatchProps {
+  selectWebApp: (webApp: string) => void,
+}
+
+class SelectWebApp extends React.Component<IDispatchProps> {
   public render() {
     return (
       <div>
         <SelectOption
+          selectCard={this.props.selectWebApp}
           multiSelect={false}
           title="What type of web application are you building?"
           options={options}
@@ -18,4 +26,8 @@ class SelectWebApp extends React.Component {
   }
 }
 
-export default SelectWebApp;
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  selectWebApp: (webApp: string) => { dispatch(selectWebAppAction(webApp)) },
+});
+
+export default connect(null, mapDispatchToProps)(SelectWebApp);
