@@ -4,14 +4,20 @@ import { connect } from "react-redux";
 import SelectOption from "../SelectOption";
 
 import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
-
-import options from "./optionsData";
+;
+import { IOption } from "../../types/option";
 
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: string) => void
 }
 
-class SelectBackEndFramework extends React.Component<IDispatchProps> {
+interface ISelectBackendProps {
+  options: IOption[];
+}
+
+type Props = IDispatchProps & ISelectBackendProps;
+
+class SelectBackEndFramework extends React.Component<Props> {
   public render() {
     return (
       <div>
@@ -19,10 +25,17 @@ class SelectBackEndFramework extends React.Component<IDispatchProps> {
           selectCard={this.props.selectBackendFramework}
           multiSelect={false}
           title="Select a back-end framework for your project."
-          options={options}
+          options={this.props.options}
         />
       </div>
     );
+  }
+}
+
+const mapStateToProps = (state: any): ISelectBackendProps => {
+  const { backendOptions } = state.wizardContent;
+  return {
+    options: backendOptions,
   }
 }
 
@@ -30,4 +43,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   selectBackendFramework: (backendFramework: string) => { dispatch(selectBackendFrameworkAction(backendFramework))},
 })
 
-export default connect(null, mapDispatchToProps)(SelectBackEndFramework);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectBackEndFramework);
