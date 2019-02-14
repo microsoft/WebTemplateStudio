@@ -1,10 +1,12 @@
 import * as Actions from "./types";
 
+import { getFrontendFrameworksSuccess } from "./getFrontendFrameworks";
 import { getPagesOptionsSuccess } from "./getPagesOptions";
 import { getWebAppOptionsSuccess } from "./getWebAppOptions";
 
 import getFakePagesOptions from "../mockData/pagesOptions";
 import getFakeWebAppOptions from "../mockData/webAppOptions";
+import getFakeFrontendFrameworks from "../mockData/frontendFrameworks";
 
 const getWebAppOptions = () => {
   return {
@@ -21,6 +23,9 @@ const loadWizardContentAction = () => {
 
         const pagesOptions = await getFakePagesOptions();
         dispatch(getPagesOptionsSuccess(pagesOptions));
+
+        const frontendFrameworks = await getFakeFrontendFrameworks();
+        dispatch(getFrontendFrameworksSuccess(frontendFrameworks));
     };
 };
 
