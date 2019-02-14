@@ -10,6 +10,7 @@ import { IOption } from "../../types/option";
 
 interface ISelectOptionProps {
   title: string;
+  selectCard?: (card: string) => void;
   options: IOption[];
   multiSelect: boolean;
 }
@@ -52,6 +53,9 @@ class SelectOption extends React.Component<
     const { selectedCards } = this.state;
     selectedCards.pop();
     selectedCards.push(cardNumber);
+    if (this.props.selectCard !== undefined) {
+      this.props.selectCard(this.state.options[cardNumber].title);
+    }
     this.setState({
       selectedCards
     });
