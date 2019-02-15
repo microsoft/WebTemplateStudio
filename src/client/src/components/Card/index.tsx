@@ -61,7 +61,6 @@ const Card = ({
             [styles.selectedCheckMark]: selected
           })}
         >
-          <div>Selected</div>
           <img
             src={process.env.REACT_APP_RELATIVE_PATH + Check}
             className={styles.iconCheckMark}
