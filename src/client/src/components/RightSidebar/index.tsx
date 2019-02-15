@@ -8,6 +8,7 @@ import Dropdown from "../Dropdown";
 // import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/selectFrontEndFramework";
 import { selectWebAppAction } from "../../actions/selectWebApp";
+import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
 
 import styles from "./styles.module.css";
 
@@ -61,6 +62,7 @@ interface ISelectionType {
 }
 
 interface IDispatchProps {
+  selectBackendFramework: (framework: string) => void;
   selectFrontendFramework: (framework: string) => void;
   selectWebApp: (projectType: string) => void;
 }
@@ -133,8 +135,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             Back-end Framework
           </div>
           <Dropdown
+            handleChange={(dropdownOption) => { this.props.selectBackendFramework(dropdownOption.value) }}
             defaultValue={backEndOptions[0]}
             options={backEndOptions}
+            value={this.convertToDropdownObject(this.props.selection.backendFramework)}
           />
         </div>
         }
@@ -151,6 +155,7 @@ const mapStateToProps = (state: any): IRightSidebarProps => {
 }
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  selectBackendFramework: (framework: string) => { dispatch(selectBackendFrameworkAction(framework))},
   selectFrontendFramework: (framework: string) => { dispatch(selectFrontEndFrameworkAction(framework)) },
   selectWebApp: (projectType: string) => { dispatch(selectWebAppAction(projectType)) },
 })
