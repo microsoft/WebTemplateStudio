@@ -37,5 +37,8 @@
   },
   "extensionDependencies": [
     "ms-azuretools.vscode-cosmosdb"
-  ]
+  ],
+  "dependencies": {
+    "azure-arm-resource": "^7.3.0"
+  }
 }
