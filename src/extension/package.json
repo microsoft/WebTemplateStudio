@@ -30,15 +30,17 @@
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
-    "typescript": "^3.1.4",
-    "vscode": "^1.1.25",
+    "@types/node": "^8.10.25",
     "tslint": "^5.8.0",
-    "@types/node": "^8.10.25"
+    "typescript": "^3.1.4",
+    "vscode": "^1.1.25"
   },
   "extensionDependencies": [
     "ms-azuretools.vscode-cosmosdb"
   ],
   "dependencies": {
+    "@types/jest": "^24.0.5",
+    "@types/mocha": "^5.2.6",
     "azure-arm-resource": "^7.3.0"
   }
 }
