@@ -6,7 +6,7 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const pagesReducer = (state = [], action: any) => {
+const pagesReducer = (state = ["Home Page"], action: any) => {
     switch(action.type) {
         case Actions.SELECT_PAGES:
             return action.payload;

@@ -3,12 +3,15 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 
+import DraggableSidebarItem from "../DraggableSidebarItem";
 import Dropdown from "../Dropdown";
 
-// import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
+import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/selectFrontEndFramework";
 import { selectWebAppAction } from "../../actions/selectWebApp";
-import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
+
+import cancel from "../../assets/cancel.svg";
+import reorder from "../../assets/reorder.svg";
 
 import styles from "./styles.module.css";
 
@@ -95,7 +98,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const { pathname } = this.props.location;
     return pathname !== "/" && pathname !== "/SelectWebApp";
   }
-  public showBackEnd = (): boolean => {
+  public showPages = (): boolean => {
     const { pathname } = this.props.location;
     return pathname !== "/" && pathname !== "/SelectWebApp" && pathname !== "/SelectFrontEnd"
   }
@@ -129,7 +132,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           />
         </div>
         }
-        { this.showBackEnd() && 
+        { this.showFrontEnd() && 
         <div className={styles.sidebarItem}>        
           <div className={styles.dropdownTitle}>
             Back-end Framework
@@ -140,6 +143,16 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             options={backEndOptions}
             value={this.convertToDropdownObject(this.props.selection.backendFramework)}
           />
+        </div>
+        }
+        { this.showPages() &&
+        <div className={styles.sidebarItem}>
+          <div className={styles.dropdownTitle}>
+            Pages
+          </div>
+          {this.props.selection.pages.map((page) => (
+            <DraggableSidebarItem text={page} closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`} reorderSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${reorder}`}/>
+          ))}
         </div>
         }
       </div>
