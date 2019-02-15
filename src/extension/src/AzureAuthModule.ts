@@ -42,7 +42,7 @@ export class AzureAuth {
                 description: subscription.subscription.id || '',
                 session: subscription.session,
                 subscription: subscription.subscription
-            })
+            });
         });
         return subscriptionItems;
 
