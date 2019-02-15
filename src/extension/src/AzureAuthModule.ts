@@ -1,6 +1,6 @@
-import { ExtensionContext, commands, extensions } from 'vscode';
+import { extensions } from 'vscode';
 import { AzureAccount, AzureSession } from './azure-account.api'; // Other extensions need to copy this .d.ts to their repository.
-import { SubscriptionClient, ResourceManagementClient, SubscriptionModels } from 'azure-arm-resource';
+import { SubscriptionModels, ResourceManagementClient } from 'azure-arm-resource';
 
 export interface SubscriptionItem {
     label: string;
@@ -12,10 +12,6 @@ export interface SubscriptionItem {
 export interface ResourceGroup {
     label: string;
     description: string;
-}
-
-export interface PartialList<T> extends Array<T> {
-    nextLink?: string;
 }
 
 export class AzureAuth {
