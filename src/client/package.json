@@ -25,7 +25,8 @@
     "rewire": "^4.0.1",
     "tslint": "^5.12.1",
     "tslint-react": "^3.6.0",
-    "typescript": "3.2.4"
+    "typescript": "3.2.4",
+    "node-fetch": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
