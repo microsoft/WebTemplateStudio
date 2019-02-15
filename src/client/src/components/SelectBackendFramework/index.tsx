@@ -13,6 +13,7 @@ interface IDispatchProps {
 
 interface ISelectBackendProps {
   options: IOption[];
+  selectedBackend: string;
 }
 
 type Props = IDispatchProps & ISelectBackendProps;
@@ -34,8 +35,10 @@ class SelectBackEndFramework extends React.Component<Props> {
 
 const mapStateToProps = (state: any): ISelectBackendProps => {
   const { backendOptions } = state.wizardContent;
+  const { backend } = state.selection;
   return {
     options: backendOptions,
+    selectedBackend: backend,
   }
 }
 

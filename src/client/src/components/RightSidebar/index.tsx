@@ -5,7 +5,9 @@ import { withRouter } from "react-router-dom";
 
 import Dropdown from "../Dropdown";
 
+// import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/selectFrontEndFramework";
+import { selectWebAppAction } from "../../actions/selectWebApp";
 
 import styles from "./styles.module.css";
 
@@ -60,6 +62,7 @@ interface ISelectionType {
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: string) => void;
+  selectWebApp: (projectType: string) => void;
 }
 
 interface IRightSidebarProps {
@@ -73,12 +76,6 @@ interface IRightSidebarState {
 type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      frontendDropdownValue: undefined,
-    };
-  }
   public convertToDropdownObject = (selection: string): IDropdownValue => {
     return {
       value: selection,
@@ -110,8 +107,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             Project Type
           </div>
           <Dropdown
-            defaultValue={webAppOptions[0]}
+            handleChange={(dropdownOption) => { this.props.selectWebApp(dropdownOption.value) }}
+            defaultValue={this.convertToDropdownObject(this.props.selection.appType)}
             options={webAppOptions}
+            value={this.convertToDropdownObject(this.props.selection.appType)}
           />
         </div>
         }
@@ -152,7 +151,8 @@ const mapStateToProps = (state: any): IRightSidebarProps => {
 }
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  selectFrontendFramework: (framework: string) => { dispatch(selectFrontEndFrameworkAction(framework)) }
+  selectFrontendFramework: (framework: string) => { dispatch(selectFrontEndFrameworkAction(framework)) },
+  selectWebApp: (projectType: string) => { dispatch(selectWebAppAction(projectType)) },
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RightSidebar));
