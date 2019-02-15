@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 
-import DraggableSidebarItem from "../DraggableSidebarItem";
-import Dropdown from "../Dropdown";
+import DraggableSidebarItem from "../../components/DraggableSidebarItem";
+import Dropdown from "../../components/Dropdown";
 
 import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/selectFrontEndFramework";
@@ -100,7 +100,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   }
   public showPages = (): boolean => {
     const { pathname } = this.props.location;
-    return pathname !== "/" && pathname !== "/SelectWebApp" && pathname !== "/SelectFrontEnd"
+    return pathname !== "/" && pathname !== "/SelectWebApp" && pathname !== "/SelectFrameworks"
   }
   public render() {
     return (

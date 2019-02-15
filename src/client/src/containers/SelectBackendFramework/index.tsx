@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SelectOption from "../SelectOption";
+import SelectOption from "../../components/SelectOption";
 
 import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
 ;

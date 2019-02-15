@@ -15,12 +15,12 @@ type Props = RouteComponentProps & IDispatchProps;
 
 // TODO: Reconfigure with proper navigation using redux
 const pathsNext: any = {
-  "/SelectWebApp": "/SelectFrontEnd",
-  "/SelectFrontEnd": "/SelectPages"
+  "/SelectWebApp": "/SelectFrameworks",
+  "/SelectFrameworks": "/SelectPages"
 };
 const pathsBack: any = {
-  "/SelectFrontEnd": "/SelectWebApp",
-  "/SelectPages": "/SelectFrontEnd"
+  "/SelectFrameworks": "/SelectWebApp",
+  "/SelectPages": "/SelectFrameworks"
 };
 
 class Footer extends React.Component<Props> {

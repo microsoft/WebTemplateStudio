@@ -6,6 +6,7 @@ import * as Actions from "../../actions/types";
 }
 */
 
+// TODO: Default state to remove once API is hooked up
 const backendFramework = (state = "Node.JS", action: any) => {
     switch(action.type) {
         case Actions.SELECT_BACKEND_FRAMEWORK:
