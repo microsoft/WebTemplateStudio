@@ -1,6 +1,6 @@
 import { extensions } from 'vscode';
 import { AzureAccount, AzureSession } from './azure-account.api'; // Other extensions need to copy this .d.ts to their repository.
-import { SubscriptionModels, ResourceManagementClient } from 'azure-arm-resource';
+import { SubscriptionModels } from 'azure-arm-resource';
 
 export interface SubscriptionItem {
     label: string;
