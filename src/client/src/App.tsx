@@ -17,6 +17,7 @@ import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
 
 import appStyles from "./appStyles.module.css";
+import AzureLogin from "./containers/AzureLogin";
 
 interface IDispatchProps {
   getVSCodeApi: () => void;
@@ -44,6 +45,7 @@ class App extends React.Component<IDispatchProps> {
               <LeftSidebar sidebarItems={leftSidebarData} />
             </div>
             <div className={appStyles.centerView}>
+              <Route path="/AzureLogin" component={AzureLogin} />
               <Route
                 path="/SelectFrameworks"
                 component={SelectFrameworks}

@@ -7,6 +7,7 @@ import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
 import { IOption } from "../../types/option";
+import Title from "../Title";
 
 interface ISelectOptionProps {
   title: string;
@@ -106,8 +107,10 @@ class SelectOption extends React.Component<
     return (
       <div>
         <div className={grid.row}>
-          <div className={classNames(grid.col12, styles.title)}>
-            {this.props.title}
+          <div className={grid.col12}>
+            <Title>
+              {this.props.title}
+            </Title>
           </div>
         </div>
         <div className={styles.container}>
