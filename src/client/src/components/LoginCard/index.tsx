@@ -2,7 +2,7 @@ import * as React from "react";
 
 import styles from './styles.module.css';
 
-const LoginCard = ({ cardTitle, cardBody }: { cardTitle: string, cardBody: string }) => {
+const LoginCard = ({ cardTitle, cardBody, handleClick }: { cardTitle: string, cardBody: string, handleClick: () => void }) => {
     return (
         <div className={styles.loginContainer}>
             <div className={styles.cardTitle}>
@@ -19,7 +19,7 @@ const LoginCard = ({ cardTitle, cardBody }: { cardTitle: string, cardBody: strin
                     <div className={styles.cardBody}>
                         Create Account
                     </div>
-                    <button className={styles.signInButton}>
+                    <button onClick={handleClick} className={styles.signInButton}>
                         Sign in
                     </button>
                 </div>
