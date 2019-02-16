@@ -6,6 +6,7 @@
     "@types/classnames": "^2.2.7",
     "@types/jest": "23.3.13",
     "@types/node": "10.12.19",
+    "@types/node-fetch": "^2.1.6",
     "@types/react": "16.7.22",
     "@types/react-dom": "16.0.11",
     "@types/react-redux": "^7.0.1",
@@ -14,6 +15,7 @@
     "@types/react-select": "^2.0.11",
     "classnames": "^2.2.6",
     "global": "^4.3.2",
+    "node-fetch": "^2.3.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",
@@ -25,8 +27,7 @@
     "rewire": "^4.0.1",
     "tslint": "^5.12.1",
     "tslint-react": "^3.6.0",
-    "typescript": "3.2.4",
-    "node-fetch": "^2.3.0"
+    "typescript": "3.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
