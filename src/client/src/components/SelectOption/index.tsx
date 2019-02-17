@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import * as React from "react";
 
-import Card from "../Card";
+import Card from "../SelectableCard";
 
 import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";

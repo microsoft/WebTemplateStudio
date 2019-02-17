@@ -2,7 +2,13 @@ import * as React from "react";
 
 import styles from './styles.module.css';
 
-const LoginCard = ({ cardTitle, cardBody, handleClick }: { cardTitle: string, cardBody: string, handleClick: () => void }) => {
+interface IProps {
+    cardTitle: string;
+    cardBody: string;
+    handleClick: () => void;
+}
+
+const LoginCard = ({ cardTitle, cardBody, handleClick }: IProps) => {
     return (
         <div className={styles.loginContainer}>
             <div className={styles.cardTitle}>

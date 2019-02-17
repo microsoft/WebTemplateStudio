@@ -6,10 +6,6 @@ const isLoggedIntoAzureAction = () => ({
     type: Actions.IS_LOGGED_IN_TO_AZURE,
 });
 
-const setIsLoggedInToTrue = () => ({
-    type: Actions.SET_LOGGED_IN_TO_TRUE,
-})
-
 const logIntoAzureAction = (loginData: any) => ({
     type: Actions.LOG_IN_TO_AZURE,
     payload: loginData,
@@ -21,7 +17,6 @@ const startLoginToAzure = () => {
         try {
             const loginData = await login();
             dispatch(logIntoAzureAction(loginData));
-            dispatch(setIsLoggedInToTrue());
         } catch (err) {
             console.log(err);
         }

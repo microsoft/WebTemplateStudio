@@ -7,6 +7,7 @@ import Title from "../../components/Title";
 import styles from './styles.module.css';
 
 import * as AzureActions from "../../actions/logIntoAzure";
+import AzureSubscriptions from "./AzureSubscriptions";
 
 interface IDispatchProps {
     startLoginToAzure: () => any;
@@ -33,6 +34,7 @@ class AzureLogin extends React.Component<Props> {
                         cardBody="Use Azure to help build, manage, and deploy applications on a massive, global network. Sign in to your subscription account to get started." 
                     />}
                 </div>
+                <AzureSubscriptions />
             </div>
         )
     }
