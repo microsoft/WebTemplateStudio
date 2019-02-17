@@ -10,6 +10,9 @@ import styles from './styles.module.css';
 
 import * as AzureActions from "../../actions/logOutAzure";
 
+import { IOption } from "../../types/option";
+import getAzureServiceOptions from "../../mockData/azureServiceOptions";
+
 interface IDispatchProps {
     startLogOutToAzure: () => any;
 }
@@ -18,13 +21,29 @@ interface IAzureLoginProps {
     isLoggedIn: boolean;
 }
 
+interface IState {
+    azureServices?: IOption[] | undefined;
+}
+
 type Props = IDispatchProps & IAzureLoginProps;
 
-class AzureLogin extends React.Component<Props> {
+class AzureSubscriptions extends React.Component<Props,IState> {
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            azureServices: undefined,
+        };
+    }
+    public async componentDidMount() {
+        const azureServices = await getAzureServiceOptions();
+        this.setState({
+            azureServices
+        })
+    }
     public render() {
         const { isLoggedIn } = this.props;
         return (
-            !isLoggedIn && 
+            isLoggedIn && 
                 <div>
                     <div className={styles.subscriptionsContainer} >
                         <div className={styles.loginCard}>
@@ -40,27 +59,20 @@ class AzureLogin extends React.Component<Props> {
                     <Title>
                         Azure Services
                     </Title>
-                    <div className={styles.subscriptionsContainer}>
-                        <div className={grid.row}>
-                            <div className={grid.col6}>
-                                <Card 
-                                    cardTitle="Azure Functions"
-                                    cardBody="test"
-                                    buttonText="Create Resource"
-                                    handleButtonClick={()=>{}}
-                                    handleDetailsClick={()=>{}}
-                                />
-                            </div>
-                            <div className={grid.col6}>
-                                <Card 
-                                    cardTitle="Azure Functions"
-                                    cardBody="test"
-                                    buttonText="Create Resource"
-                                    handleButtonClick={()=>{}}
-                                    handleDetailsClick={()=>{}}
-                                />
-                            </div>
-                        </div>
+                    <div className={grid.row}>
+                        {!!this.state.azureServices && 
+                            this.state.azureServices.map((option) => (
+                                <div className={grid.col6}>
+                                    <Card
+                                        cardTitle={option.title}
+                                        cardBody={option.body}
+                                        buttonText="Create Resource"
+                                        handleButtonClick={()=>{}}
+                                        handleDetailsClick={()=>{}}
+                                        svgUrl={option.svgUrl}
+                                    />
+                                </div>
+                        ))}
                     </div>
                 </div>
         )
@@ -78,4 +90,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
     startLogOutToAzure: () => { dispatch(AzureActions.startLogOutAzure()) },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AzureLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(AzureSubscriptions);

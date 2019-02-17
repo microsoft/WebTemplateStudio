@@ -1,7 +1,7 @@
 .loginContainer {
     border: 0.5px solid #000000;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 12px;
+    padding: 1em;
 }
 
 .selectionContainer {
@@ -18,10 +18,20 @@
 }
 
 .cardTitle {
+    margin-left: 10px;
     font-weight: bold;
-    margin-bottom: 25px;
 }
 
 .cardBody {
     margin-bottom: 5%;
+}
+
+.cardTitleContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.icon {
+    height: 36px;
 }

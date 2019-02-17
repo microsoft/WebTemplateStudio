@@ -8,32 +8,31 @@ interface IProps {
     buttonText: string;
     handleButtonClick: () => void;
     handleDetailsClick: () => void;
+    svgUrl: string|undefined;
 }
 
-const LoginCard = ({ cardTitle, cardBody, buttonText, handleButtonClick, handleDetailsClick }: IProps) => {
+const Card = ({ cardTitle, cardBody, buttonText, handleButtonClick, handleDetailsClick, svgUrl }: IProps) => {
     return (
         <div className={styles.loginContainer}>
-            <div className={styles.cardTitle}>
-                {cardTitle}
+            <div className={styles.cardTitleContainer}>
+                {!!svgUrl && <img className={styles.icon} src={svgUrl} />}
+                <div className={styles.cardTitle}>
+                    {cardTitle}
+                </div>
             </div>
             <div className={styles.cardBody}>
                 {cardBody}
             </div>
             <div className={styles.selectionContainer}>
-                <div>
+                <div onClick={handleDetailsClick}>
                     Details
                 </div>
-                <div className={styles.buttonContainer}>
-                    <div className={styles.cardBody}>
-                        Create Account
-                    </div>
-                    <button onClick={handleButtonClick} className={styles.signInButton}>
-                        {buttonText}
-                    </button>
-                </div>
+                <button onClick={handleButtonClick} className={styles.signInButton}>
+                    {buttonText}
+                </button>
             </div>
         </div>
     )
 }
 
-export default LoginCard;
+export default Card;
