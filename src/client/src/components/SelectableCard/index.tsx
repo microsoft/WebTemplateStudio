@@ -9,7 +9,7 @@ import styles from "./styles.module.css";
 
 import Check from "../../assets/Check.svg";
 
-const Card = ({
+const SelectableCard = ({
   iconPath,
   iconStyles,
   title,
@@ -71,4 +71,4 @@ const Card = ({
   );
 };
 
-export default Card;
+export default SelectableCard;

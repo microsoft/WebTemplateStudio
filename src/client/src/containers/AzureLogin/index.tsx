@@ -7,7 +7,7 @@ import Title from "../../components/Title";
 import styles from './styles.module.css';
 
 import * as AzureActions from "../../actions/logIntoAzure";
-import AzureSubscriptions from "./AzureSubscriptions";
+import AzureSubscriptions from "../AzureSubscriptions";
 
 interface IDispatchProps {
     startLoginToAzure: () => any;
