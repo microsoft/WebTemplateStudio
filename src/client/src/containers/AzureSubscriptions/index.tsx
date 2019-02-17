@@ -4,19 +4,31 @@ import { connect } from "react-redux";
 import Card from "../../components/Card";
 
 import grid from "../../css/grid.module.css";
+import styles from './styles.module.css';
+
+import * as AzureActions from "../../actions/logOutAzure";
+import * as ModalActions from "../../actions/modalActions";
+import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import getAzureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
+import CosmosResourceModal from "../CosmosResourceModal";
+
+interface IDispatchProps {
+    startLogOutToAzure: () => any;
+    openCosmosDbModal: () => any;
+}
 
 interface IAzureLoginProps {
     isLoggedIn: boolean;
+    isCosmosDbModalOpen: boolean;
 }
 
 interface IState {
     azureServices?: IOption[] | undefined;
 }
 
-type Props = IAzureLoginProps;
+type Props = IAzureLoginProps & IDispatchProps;
 
 class AzureSubscriptions extends React.Component<Props,IState> {
     constructor(props: any) {
@@ -43,7 +55,7 @@ class AzureSubscriptions extends React.Component<Props,IState> {
                                     cardTitle={option.title}
                                     cardBody={option.body}
                                     buttonText="Create Resource"
-                                    handleButtonClick={()=>{}}
+                                    handleButtonClick={this.props.openCosmosDbModal}
                                     handleDetailsClick={()=>{}}
                                     svgUrl={option.svgUrl}
                                 />
@@ -58,7 +70,13 @@ const mapStateToProps = (state: any): IAzureLoginProps => {
     const { isLoggedIn } = state.azureProfileData;
     return {
         isLoggedIn,
+        isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
     }
 }
 
-export default connect(mapStateToProps)(AzureSubscriptions);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+    startLogOutToAzure: () => { dispatch(AzureActions.startLogOutAzure()) },
+    openCosmosDbModal: () => { dispatch(ModalActions.openCosmosDbModalAction()) },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AzureSubscriptions);

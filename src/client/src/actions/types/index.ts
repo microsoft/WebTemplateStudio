@@ -24,9 +24,21 @@ const IS_LOGGED_IN_TO_AZURE = "WTS/azure/IS_LOGGED_IN_TO_AZURE";
 const LOG_IN_TO_AZURE = "WTS/azure/LOG_IN_TO_AZURE";
 const LOG_OUT_OF_AZURE = "WTS/azure/LOG_OUT_OF_AZURE";
 
+// Modal actions
+const OPEN_MODAL = "WTS/modals/OPEN_MODAL";
+const CLOSE_MODALS = "WTS/modals/CLOSE_MODALS";
+
+// Modal types
+// Must add a modal type here when creating a new modal
+const COSMOS_DB_MODAL = "COSMOS_DB_MODAL";
+export type ModalType = "COSMOS_DB_MODAL";
+
 export {
   GET_PROJECT_TYPES,
   GET_PROJECT_TYPES_SUCCESS,
+  OPEN_MODAL,
+  CLOSE_MODALS,
+  COSMOS_DB_MODAL,
   LOG_OUT_OF_AZURE,
   LOG_IN_TO_AZURE,
   IS_LOGGED_IN_TO_AZURE,
