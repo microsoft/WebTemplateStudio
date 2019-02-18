@@ -12,7 +12,6 @@ import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import getAzureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
-import CosmosResourceModal from "../CosmosResourceModal";
 
 interface IDispatchProps {
     startLogOutToAzure: () => any;
@@ -46,7 +45,7 @@ class AzureSubscriptions extends React.Component<Props,IState> {
     public render() {
         const { isLoggedIn } = this.props;
         return (
-            isLoggedIn && 
+            isLoggedIn &&
                 <div className={grid.row}>
                     {!!this.state.azureServices && 
                         this.state.azureServices.map((option) => (
