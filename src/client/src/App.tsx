@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import { HashRouter as Router, Route } from "react-router-dom";
 import * as Redux from "redux";
 
-import Header from "./components/Header";
 import LeftSidebar from "./components/LeftSidebar";
 import SelectFrameworks from "./components/SelectFrameworks";
 import SelectPages from "./components/SelectPages";
 import SelectWebApp from "./components/SelectWebApp";
 import Welcome from "./components/Welcome";
 import Footer from "./containers/Footer";
+import Header from "./containers/Header";
 import RightSidebar from "./containers/RightSidebar";
 import leftSidebarData from "./mockData/leftSidebarData";
 
