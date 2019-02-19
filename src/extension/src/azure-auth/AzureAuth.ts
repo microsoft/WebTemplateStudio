@@ -1,7 +1,9 @@
 import { AzureAccount, AzureSession } from './azure-account.api'; // Other extensions need to copy this .d.ts to their repository.
 import { extensions, commands } from 'vscode';
-import { SubscriptionClient, ResourceManagementClient, SubscriptionModels } from 'azure-arm-resource';
+import { SubscriptionModels } from 'azure-arm-resource';
 import { ServiceClientCredentials } from 'ms-rest';
+import { SubscriptionClient } from '../../node_modules/azure-arm-resource/lib/subscription/subscriptionClient';
+import { ResourceManagementClient } from '../../node_modules/azure-arm-resource/lib/resource/resourceManagementClient';
 
 export interface SubscriptionItem {
     label: string;
@@ -82,7 +84,7 @@ export abstract class AzureAuth {
         resourceGroups.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
         resourceGroupItems.push(...resourceGroups.map(resourceGroup => {
             return {
-                name: resourceGroup.name,
+                name: resourceGroup.name || '',
                 location: resourceGroup.location,
                 resourceGroup: resourceGroup
             };
