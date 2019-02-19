@@ -10,6 +10,8 @@ import { IOption } from "../../types/option";
 
 interface ISelectOptionProps {
   title: string;
+  selectCard?: (card: string) => void;
+  selectOptions?: (cards: string[]) => void;
   options: IOption[];
   multiSelect: boolean;
 }
@@ -35,6 +37,27 @@ class SelectOption extends React.Component<
     return this.state.selectedCards.includes(cardNumber);
   }
 
+  /**
+   * Converts the index numbers of options into ids
+   * In this case, titles, but can be changed to whatever is required
+   * by the redux store.
+   * 
+   * @param cardNumbers 
+   */
+  public convertCardNumbersToTitles(cardNumbers: number[]): string[] {
+    const cardTitles = [];
+    for (const num of cardNumbers) {
+      cardTitles.push(this.state.options[num].title);
+    }
+    return cardTitles;
+  }
+
+  /**
+   * Allows more than one option to be selected at a time.
+   * Updates the redux store with the selection.
+   * 
+   * @param cardNumber 
+   */
   public addOrRemoveOption(cardNumber: number) {
     const { selectedCards } = this.state;
     let filteredCards = selectedCards;
@@ -43,15 +66,27 @@ class SelectOption extends React.Component<
     } else {
       filteredCards.push(cardNumber);
     }
+    if (this.props.selectOptions !== undefined) {
+      this.props.selectOptions(this.convertCardNumbersToTitles(filteredCards));
+    }
     this.setState({
       selectedCards: filteredCards
     });
   }
 
+  /**
+   * Ensures only one option can be selected at a time.
+   * Updates the component state and the redux store with selection.
+   * 
+   * @param cardNumber 
+   */
   public exchangeOption(cardNumber: number) {
     const { selectedCards } = this.state;
     selectedCards.pop();
     selectedCards.push(cardNumber);
+    if (this.props.selectCard !== undefined) {
+      this.props.selectCard(this.state.options[cardNumber].title);
+    }
     this.setState({
       selectedCards
     });

@@ -14,7 +14,7 @@
 }
 
 .selected {
-    outline: 3px solid #0067B8;
+    outline: 3px solid black;
 }
 
 .selectedCheckMark {
