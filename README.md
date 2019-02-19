@@ -3,7 +3,47 @@
 
 Note: Use VSCode light mode to view the extension. Running the extension in VSCode v1.31 ~~and above will currently result in non-rendering SVGs~~. This issue was [fixed on Feb.12, 2019](https://github.com/Microsoft/vscode/issues/68033).
 
-# Quick Start
+# Prerequisites
+[Git](https://git-scm.com/downloads), [Yarn](https://yarnpkg.com/en/docs/install#mac-stable), [Node](https://nodejs.org/en/download/) and [VSCode](https://code.visualstudio.com/updates/v1_31) must be installed prior to running the installation or build scripts.
+
+Install [Visual Studio Code Extensions CLI](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce) using the command `yarn add global vsce`.
+
+Run the command 
+```
+npm config set scripts-prepend-node-path true
+```
+to tell VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
+
+*If using Windows, it is recommended to run yarn commands using Git Bash which comes with the Git installation*.
+
+# Extension Installation Quick Start
+The installation script "installExtension" will build and install the extension for you. Use the command:
+```
+./installExtension
+```
+if on Windows. Alternatively, use:
+```
+bash installExtension
+```
+if on Mac to avoid setting permissions for the script.
+
+The script will compile the extension into the directory `/dist` and install the package into VSCode. Open or restart VSCode to load the extension. Use `ctrl+shift+p (Windows)` or `cmd+shift+p (Mac)` to open the Extension Launcher and select `Web Template Studio: Launch` to run the extension.
+
+## Creating an installation alias (optional)
+Create an alias in your `.bashrc` for `.bash_profile` to run the extension more conveniently. For example:
+
+```
+1. Use vim ~/.bashrc to open the bashrc file.
+2. Add the following line:
+
+alias bw="./installExtension||bash installExtension"
+
+3. Save the .bashrc file and quit Vim.
+4. Use the command "source ~/.bashrc" to load the alias.
+5. While in the repo, use the command "bw" (or change to your liking) to run the installation script. 
+```
+
+# Development Quick Start
 Clone the repository and use
 ```
 ./build
