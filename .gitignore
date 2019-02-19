@@ -335,7 +335,6 @@ ASALocalRun/
 **/node_modules/
 **/build/
 **/package-lock.json
-*.vsix
 **/*.vsix
 
 # Ignore OS generated files #
@@ -346,4 +345,3 @@ ASALocalRun/
 .Trashes
 ehthumbs.db
 Thumbs.db
-
