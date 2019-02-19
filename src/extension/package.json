@@ -3,6 +3,7 @@
   "displayName": "Web Template Studio",
   "description": "An extension that helps developers get started quickly when building web apps by generating web templates which encourage best code practices.",
   "version": "0.0.1",
+  "publisher": "Microsoft",
   "engines": {
     "vscode": "^1.30.0"
   },
@@ -37,7 +38,8 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "createVsixPackage": "rm -rf ../../dist/wts.vsix && vsce package --out ../../dist/wts.vsix"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
@@ -56,7 +58,13 @@
     "azure-arm-resource": "^7.3.0",
     "azure-arm-website": "^5.7.0",
     "fs-extra": "^7.0.1",
+    "global": "^4.3.2",
     "ms-rest": "^2.5.0",
-    "ms-rest-azure": "^2.6.0"
+    "ms-rest-azure": "^2.6.0",
+    "vsce": "^1.57.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/WebTemplateStudio"
   }
 }
