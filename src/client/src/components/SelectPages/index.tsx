@@ -1,21 +1,46 @@
 import * as React from "react";
+import { connect } from "react-redux";
 
 import SelectOption from "../SelectOption";
 
-import options from "./optionsData";
+import { selectPagesAction } from "../../actions/selectPages";
 
-class SelectPages extends React.Component {
+import { IOption } from "../../types/option";
+
+interface IDispatchProps {
+  selectPages: (pages: string[]) => void;
+}
+
+interface ISelectPagesProps {
+  options: IOption[];
+}
+
+type Props = IDispatchProps & ISelectPagesProps;
+
+class SelectPages extends React.Component<Props> {
   public render() {
     return (
       <div>
         <SelectOption
+          selectOptions={this.props.selectPages}
           multiSelect={true}
           title="What pages do you need for your application?"
-          options={options}
+          options={this.props.options}
         />
       </div>
     );
   }
 }
 
-export default SelectPages;
+const mapStateToProps = (state: any): ISelectPagesProps => {
+  const { pageOptions } = state.wizardContent;
+  return {
+    options: pageOptions,
+  }
+}
+
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  selectPages: (pages: string[]) => { dispatch(selectPagesAction(pages)) },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectPages);

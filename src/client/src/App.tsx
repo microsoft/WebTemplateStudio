@@ -26,17 +26,13 @@ interface IDispatchProps {
 
 class App extends React.Component<IDispatchProps> {
   public static defaultProps = {
-    getVSCodeApi: undefined,
-    loadWizardContent: undefined,
+    getVSCodeApi: () => {},
+    loadWizardContent: () => {},
   };
 
   public componentDidMount() {
-    if (this.props.getVSCodeApi() !== undefined) {
-      this.props.getVSCodeApi();
-    }
-    if (this.props.loadWizardContent() !== undefined) {
-      this.props.loadWizardContent();
-    }
+    this.props.getVSCodeApi();
+    this.props.loadWizardContent();
   }
 
   public render() {
