@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// check function name availability, this shows true/false as a toast
 	context.subscriptions.push(vscode.commands.registerCommand(
 		'webTemplateStudioExtension.checkFunctionAppName', (appName: string) => {
-			vscode.window.showInformationMessage(checkFunctionAppName(appName));
+			vscode.window.showInformationMessage(String(checkFunctionAppName(appName)));
 		}
 	));
 }
