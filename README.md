@@ -18,37 +18,8 @@ to tell VSCode which Node version to run during the extension compilation (other
 
 *If using Windows, use Git Bash*.
 
-# Extension Installation Quick Start
-The installation script "installExtension" will build and install the extension for you. Use the command on Windows:
-```
-./installExtension
-```
-For Mac, use:
-```
-bash installExtension
-```
-to avoid setting permissions for the script.
-
-The script will package the extension into the root directory `/dist` folder and install the package into VSCode. Open or restart VSCode to load the extension. Use `ctrl+shift+p (Windows)` or `cmd+shift+p (Mac)` to open the Extension Launcher and select `Web Template Studio: Launch` to run the extension.
-
-**Note: Use VSCode light mode for proper viewing**
-
-## Creating an installation alias (optional)
-Create an alias in your `.bashrc` file to run the extension more conveniently. For example:
-
-```
-1. Use vim ~/.bashrc to open the bashrc file (any text editor will do as long as you know the location).
-2. Add the following line:
-
-alias bw="./installExtension || bash installExtension"
-
-3. Save the .bashrc file and quit Vim.
-4. Use the command "source ~/.bashrc" to load the alias.
-```
-You can simply use the command `bw (or change to your liking)` to run the build script onwards.
-
 # Development Quick Start
-Clone the repository and use
+Clone the repository and use (for Windows)
 ```
 ./build
 ```
@@ -66,7 +37,50 @@ yarn start
 ```
 to begin development. The client was bootstrapped using [Create-React-App with TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript).
 
+# Create VSIX Package for Sideloading
+
+**EXCLAIMER: You cannot sideload the VSIX and build/run the extension through Extension Development Host (using `F5` on VSCode) at the same time or there will be naming conflicts. The VSIX should be uninstalled first.**
+
+The installation script "createVsix" will build and install the extension for you. Use the command on Windows:
+```
+./createVsix
+```
+For Mac, use:
+```
+bash createVsix
+```
+to avoid setting permissions for the script.
+
+The script will package the extension into the root directory `/dist` folder. The vsix package can be distributed and installed by anyone who has VSCode using the command in the extension directory:
+```
+code --install-extension [extensionName].vsix
+```
+`wts.vsix` is the default extensionName.
+
+Alternatively, copy the extension into your extensions directory. For Windows, it is `%USERPROFILE%\.vscode\extensions`. For Mac/Linux, it is  `~/.vscode/extensions` (By Default). 
+
+After installation, use `ctrl+shift+p (Windows)` or `cmd+shift+p (Mac)` to open the Extension Launcher and select `Web Template Studio: Launch` to run the extension.
+
+**Note: Use VSCode light mode for proper viewing**
+
+## Creating an installation alias (optional)
+Create an alias in your `.bashrc` file to run the extension more conveniently. For example:
+
+```
+1. Use vim ~/.bashrc to open the bashrc file (any text editor will do as long as you know the location).
+2. Add the following line:
+
+alias cv="./createVsix || bash createVsix"
+
+3. Save the .bashrc file and quit Vim.
+4. Use the command "source ~/.bashrc" to load the alias.
+```
+
+You can simply use the command `cv` (or change to your liking) to run the build script onwards.
+
 ## Running the client in the VSCode Extension
+
+
 
 To see any changes made on the client within VSCode, run the instructions shown in the `Quick Start` section to rebuild the client and the extension. The resulting changes should appear in VSCode when the extension runs.
 
