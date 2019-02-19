@@ -4,7 +4,7 @@ export interface Config {
   functionTemplatesRelativePath:  string;
   baseNodeFunctionPath:           string;
   baseNodeFunctionConfigPath:     string;
-  appSettingsPath:                string;
+  appNodeSettingsPath:            string;
 }
 
 export const config: Config = {
@@ -13,5 +13,5 @@ export const config: Config = {
     functionTemplatesRelativePath:  '/src/azure-functions/templates',
     baseNodeFunctionPath:           '/base/node/index.js',
     baseNodeFunctionConfigPath:     '/base/node/function.json',
-    appSettingsPath:                '/app'
+    appNodeSettingsPath:            '/app/node'
 };

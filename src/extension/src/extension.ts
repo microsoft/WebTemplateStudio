@@ -18,15 +18,19 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 	
 	// these functions would be used as webview messages later,
-	// temporarily registered here for testing
+	// TEMPORARILY registered here for testing
+
+	// NOTE: these can only be used after wizardLaunch is called
 
   // for debugging purporses only
   // the JSON and path being passed to the function would actually
-  // be returned by the wizard
+	// be returned by the wizard
+	// change the name to a name for function app that hasn't be taken (the wizard would use checkFunctionAppName for this)
+	// set the subscriptionId as an env variable (use GIV.Hackathon's for testing)
 	context.subscriptions.push(vscode.commands.registerCommand(
 		'webTemplateStudioExtension.createFunctionApp', () => {createFunctionApp(
 			{functionAppName: "project-acorn-test",
-			subscriptionId: "31add260-f4a3-497d-8b39-e35101c87f55",
+			subscriptionId: String(process.env.SUBSCRIPTION_ID),
 			location: "West US",
 			runtime: Runtime.node,
 			resourceGroupName: "GIV_W19_WTS",
@@ -37,6 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 	));
 	
 	// check function name availability, this shows true/false as a toast
+	// not implemented yet
 	context.subscriptions.push(vscode.commands.registerCommand(
 		'webTemplateStudioExtension.checkFunctionAppName', (appName: string) => {
 			vscode.window.showInformationMessage(String(checkFunctionAppName(appName)));

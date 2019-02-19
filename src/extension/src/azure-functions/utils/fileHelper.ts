@@ -20,7 +20,7 @@ export abstract class FileHelper {
     }
 
     private static copySettingsFiles(funcAppPath: string) {
-        let appSettingsPath: string = path.join(appRoot.toString(), config.functionTemplatesRelativePath, config.appSettingsPath);
+        let appSettingsPath: string = path.join(appRoot.toString(), config.functionTemplatesRelativePath, config.appNodeSettingsPath);
         fsx.copySync(appSettingsPath, funcAppPath);
     }
 

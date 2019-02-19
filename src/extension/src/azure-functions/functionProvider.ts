@@ -1,6 +1,6 @@
-import * as msrest from 'ms-rest-azure';
 import * as WebsiteManagement from 'azure-arm-website';
 import { FileHelper } from './utils';
+import { ServiceClientCredentials } from 'ms-rest';
 
 export enum Runtime {
     dotnet = "dotnet",
@@ -20,10 +20,10 @@ export interface FunctionSelections {
 export class FunctionProvider {
     
     private selections:     FunctionSelections;
-    private credentials:    msrest.DeviceTokenCredentials;
+    private credentials:    ServiceClientCredentials;
     private appPath:        string; // path to the generated application, functions app folder would be under this
 
-    constructor(selections: FunctionSelections, credentials: msrest.DeviceTokenCredentials, appPath: string) {
+    constructor(selections: FunctionSelections, credentials: ServiceClientCredentials, appPath: string) {
         this.appPath = appPath;
         this.selections = selections;
         this.credentials = credentials;
@@ -35,6 +35,7 @@ export class FunctionProvider {
         try {
             FileHelper.initFunctionDirectory(this.appPath, this.selections.functionAppName, this.selections.functionNames);
         } catch (err) {
+            console.log('Error initializing function folder: ', err);
             return Promise.reject(err);
         }
 
@@ -56,6 +57,7 @@ export class FunctionProvider {
                 }
             });
         } catch (err) {
+            console.log('Error deploying app: ', err);
             return Promise.reject(err);
         }
         

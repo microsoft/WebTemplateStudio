@@ -10,6 +10,11 @@ Clone the repository and use
 ```
 to install dependencies, compile the client and the extension. Open `src/extension` using `VSCode` and press `F5` to run the extension. Use `Ctrl+Shift+P` to open VSCode's extension CLI and open the extension named `Web Template Studio`.
 
+if compiling on Mac, try:
+```
+bash build
+```
+
 ## Developing for the Client
 The client lives in the `src/client` directory. To run the client for development, navigate to `src/client` and use the command
 ```

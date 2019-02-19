@@ -1,17 +1,16 @@
-import * as msrest from 'ms-rest-azure';
-import { AzureAuthentication } from './azureAuthentication';
 import { FunctionProvider, FunctionSelections } from './functionProvider';
-import {ValidationHelper} from './utils';
+import { ValidationHelper } from './utils';
+import { AzureAuth } from '../azure-auth/AzureAuth';
+import { ServiceClientCredentials } from 'ms-rest';
 
 // the user JSON will be parsed to FunctionSelection
 // JSON format:
 // {
 //      functionAppName: "project-acorn-test",
-//      subscriptionId: "31add260-f4a3-497d-8b39-e35101c87f55",
-//      location: "WestUS",
-//      os: OS.windows,
+//      subscriptionId: "YOUR_SUBSCRIPTION_ID",
+//      location: "West US",
 //      runtime: Runtime.node,
-//      resourceGroupId: "GIV_W19_WTS",
+//      resourceGroupName: "GIV_W19_WTS",
 //      storageId: "teamwts",
 //      functionNames: ["httpTrigger1", "httpTrigger2", "httpTrigger3"]
 // }, 
@@ -25,25 +24,33 @@ export function createFunctionApp(selections: FunctionSelections, appPath: strin
         throw err;
     } 
 
-    var credentials: msrest.DeviceTokenCredentials;
+    try {
+        var azureAuth: AzureAuth = new AzureAuth();
+    } catch (err) {
+        console.log("Error initializing auth object: ", err);
+        throw err;
+    }
+
     let functionProvider: FunctionProvider;
 
-    AzureAuthentication.getCredentials().then((creds) => {
-        credentials = creds;
-        functionProvider = new FunctionProvider(selections, credentials, appPath);
-        try {
-            functionProvider.createFunctionApp();
-        } catch (err) {
-            console.log("Error deploying application: ", err);
-            throw err;
-        }
-    }).catch((err: Error) => {
-        console.log("Error getting credentials: ", err);
+    try {
+        var credentials: ServiceClientCredentials = azureAuth.getCredentials();
+    } catch (err) {
+        console.log("User credentials not found: ", err);
         throw err;
-    });
+    }
+
+    functionProvider = new FunctionProvider(selections, credentials, appPath);
+    try {
+        functionProvider.createFunctionApp();
+    } catch (err) {
+        console.log("Error deploying application: ", err);
+        throw err;
+    }
 
 }
 
 export function checkFunctionAppName(appName: string) : boolean {
+    // TODO
     return true;
 }

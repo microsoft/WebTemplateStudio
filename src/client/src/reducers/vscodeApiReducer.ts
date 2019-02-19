@@ -2,8 +2,10 @@ import * as Actions from "../actions/types";
 
 /* State Shape
 {
-    isVsCodeApiAcquired: boolean,
-    vscode: any
+    vscode: {
+      isVsCodeApiAcquired: boolean,
+      vscode: any
+    }
 }
 */
 
@@ -45,7 +47,7 @@ function vscodeApi(
         newState.vscodeObject =
           process.env.NODE_ENV === "production"
             ? 
-            // @ts-ignore
+            // @ts-ignore because function does not exist in dev environment
             acquireVsCodeApi()
             : mockVsCodeApi();
         return newState;
