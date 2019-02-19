@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 
 export function logResourceGroups() {
     /**
-     * Sampel usage of Azure Auth class
+     * Sample usage of Azure Auth class
      */
     AzureAuth.getSubscriptions().then(
         (items) => {
