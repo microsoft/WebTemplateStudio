@@ -39,7 +39,7 @@
     "vscode": "^1.1.25"
   },
   "extensionDependencies": [
-    "ms-azuretools.vscode-cosmosdb"
+    "ms-vscode.azure-account"
   ],
   "dependencies": {
     "azure-arm-resource": "^7.3.0",
