@@ -1,18 +1,20 @@
 import * as fs from 'fs';
 import * as fsx from 'fs-extra';
 import * as path from 'path';
-import {config} from '../config';
+import { config } from '../config';
 import * as appRoot from 'app-root-path';
 import * as archiver from 'archiver';
 
 export namespace FileHelper {
 
-    export function initFunctionDirectory(basePath: string, appName: string, functionNames: string[]): void {
+    export function initFunctionDirectory(basePath: string, appName: string, functionNames: string[], runtime: string): void {
         let funcAppPath: string = path.join(basePath, appName);
         mkdir(funcAppPath);
 
         for (let i = 0; i < functionNames.length; i++) {
-            mkdirForNode(path.join(funcAppPath, functionNames[i]));
+            if (runtime === "node") {
+                mkdirForNode(path.join(funcAppPath, functionNames[i]));
+            }
         }
 
         copySettingsFiles(funcAppPath);

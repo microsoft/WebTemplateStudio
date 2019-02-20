@@ -1,10 +1,7 @@
 import * as vscode from "vscode";
 import { ReactPanel } from "./reactPanel";
-import { createFunctionApp, checkFunctionAppName } from './azure-functions/functionHelper';
-import { Runtime } from './azure-functions/functionProvider';
-
-// temporary import until wizard calls functions app
-import * as appRoot from 'app-root-path';
+import { FunctionProvider } from './azure-functions/functionProvider';
+import { ValidationError, DeploymentError, AuthorizationError } from './errors';
 
 export function activate(context: vscode.ExtensionContext) {
   //Launch the client wizard assuming it has been built
@@ -17,34 +14,58 @@ export function activate(context: vscode.ExtensionContext) {
     )
 	);
 	
-	// these functions would be used as webview messages later,
-	// TEMPORARILY registered here for testing
 
-	// NOTE: these can only be used after wizardLaunch is called
+	// NOTE: These functions are registered temporarily to debug functionality until wizard is ready, 
+	// the real call will be made by wizard through webview API!
 
-	// for debugging purporses only
-	// the JSON and path being passed to the function would actually
-	// be returned by the wizard
-	// change the name to a name for function app that hasn't be taken (the wizard would use checkFunctionAppName for this)
-	// set the subscriptionId as an env variable (use GIV.Hackathon's for testing)
+	// NOTE: These can only be used after launch is called!
+
+	// Deploy a function app
+	// replace these with actual values from your portal to test! Saves the function app folder to your Documents folder
 	context.subscriptions.push(vscode.commands.registerCommand(
-		'webTemplateStudioExtension.createFunctionApp', () => {createFunctionApp(
-			{functionAppName: "project-acorn-test",
-			subscriptionId: String(process.env.SUBSCRIPTION_ID),
-			location: "West US",
-			runtime: Runtime.node,
-			resourceGroupName: "GIV_W19_WTS",
-			storageId: "teamwts",
-			functionNames: ["httpTrigger1", "httpTrigger2", "httpTrigger3"]}, 
-			appRoot.toString());
+		'webTemplateStudioExtension.createFunctionApp', () => {
+			FunctionProvider.createFunctionApp(
+				{
+					functionAppName: "YOUR_UNIQUE_FUNCTION_APP_NAME",
+					subscriptionId: "YOUR_SUBSCRIPTION_ID",
+					location: "YOUR_LOCATION",
+					runtime: "YOUR_RUNTIME",
+					resourceGroupName: "YOUR_RESOURCE_GROUP",
+					functionNames: ["function1", "function2", "function3"]
+				}, 
+				require('path').join(require("os").homedir(), 'Documents')
+			)
+			.catch((err) => {
+				// error handling here
+				// example:
+				switch (err.constructor) {
+					case ValidationError:
+						console.log(err);
+						break;
+					case DeploymentError:
+						console.log(err);
+						break;
+					case AuthorizationError:
+						console.log(err);
+						break;
+				}
+			});
 		}
 	));
 	
-	// check function name availability, this shows true/false as a toast
-	// not implemented yet
+	// Check function name availability
+	// NOT IMPLEMENTED YET
 	context.subscriptions.push(vscode.commands.registerCommand(
 		'webTemplateStudioExtension.checkFunctionAppName', (appName: string) => {
-			vscode.window.showInformationMessage(String(checkFunctionAppName(appName)));
+			FunctionProvider.checkFunctionAppName(appName)
+			.then((result) => {
+				// result is either true or false
+				vscode.window.showInformationMessage("Function App Name: " + name + "\nAvailable: " + String(result));
+			})
+			.catch((err) => {
+				console.log(err);
+				// error handling here
+			});
 		}
 	));
 }

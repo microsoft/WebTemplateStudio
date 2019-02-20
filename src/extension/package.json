@@ -48,7 +48,9 @@
     "typescript": "^3.1.4",
     "vscode": "^1.1.29"
   },
-  "extensionDependencies": ["ms-vscode.azure-account"],
+  "extensionDependencies": [
+    "ms-vscode.azure-account"
+  ],
   "dependencies": {
     "@types/app-root-path": "^1.2.4",
     "@types/archiver": "^2.1.2",

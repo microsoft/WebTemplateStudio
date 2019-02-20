@@ -48,8 +48,6 @@ export interface UploadOptions {
 	token?: CancellationToken;
 }
 
-
-
 export interface CloudShell {
 	readonly status: CloudShellStatus;
 	readonly onStatusChanged: Event<CloudShellStatus>;
