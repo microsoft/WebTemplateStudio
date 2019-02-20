@@ -36,6 +36,7 @@ function vscodeApi(
     vscodeObject: undefined
   },
   action: {
+    // @ts-ignore
     type: string
   }
 ) {

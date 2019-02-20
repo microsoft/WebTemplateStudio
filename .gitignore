@@ -335,3 +335,13 @@ ASALocalRun/
 **/node_modules/
 **/build/
 **/package-lock.json
+**/*.vsix
+
+# Ignore OS generated files #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

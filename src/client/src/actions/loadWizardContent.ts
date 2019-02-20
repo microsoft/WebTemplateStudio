@@ -16,7 +16,11 @@ const getWebAppOptions = () => {
   };
 };
 
-// thunk
+/**
+ * Redux-thunk action that dispatches multiple actions to load
+ * the content for the wizard.
+ * 
+ */
 const loadWizardContentAction = () => {
     return async (dispatch: any) => {
         // TODO: Do fetch request here, dispatch success or failure
