@@ -1,4 +1,3 @@
-import projectTypes from "../reducers/wizardContent/projectTypeReducer";
 import EngineAPIService from "../services/EngineAPIService";
 import { IMetadata } from "../types/metadata";
 import { IOption } from "../types/option";
