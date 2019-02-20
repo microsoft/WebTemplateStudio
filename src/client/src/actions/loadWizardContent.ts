@@ -12,7 +12,7 @@ import getFakeWebAppOptions from "../mockData/webAppOptions";
 
 const getWebAppOptions = () => {
   return {
-    type: Actions.GET_WEB_APP_OPTIONS,
+    type: Actions.GET_WEB_APP_OPTIONS
   };
 };
 
@@ -22,8 +22,9 @@ const getWebAppOptions = () => {
  * 
  */
 const loadWizardContentAction = () => {
-    return async (dispatch: any) => {
-        // TODO: Do fetch request here, dispatch success or failure
+  return async (dispatch: any) => {
+    // TODO: Do fetch request here, dispatch success or failure
+    /*
         const webAppOptions = await getFakeWebAppOptions();
         dispatch(getWebAppOptionsSuccess(webAppOptions));
 
@@ -35,7 +36,8 @@ const loadWizardContentAction = () => {
 
         const backendFrameworks = await getFakeBackendFrameworks();
         dispatch(getBackendFrameworksSuccess(backendFrameworks));
-    };
+        */
+  };
 };
 
 export { getWebAppOptions, loadWizardContentAction };

@@ -12,7 +12,9 @@ export default class ApiModule {
         "CoreTemplateStudio.Api.dll"
       )
     ).fsPath;
-    let process = spawn("dotnet", [apiPath]);
+
+    let apiWorkingDirectory = path.join(context.extensionPath, "src", "api");
+    let process = spawn("dotnet", [apiPath], { cwd: apiWorkingDirectory });
     return process;
   }
 }

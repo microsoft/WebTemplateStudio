@@ -20,6 +20,12 @@ interface IStoreProps {
 type Props = IDispatchProps & IStoreProps;
 
 class SelectWebApp extends React.Component<Props> {
+  public componentDidMount() {
+    if (this.props.getProjectTypes !== undefined) {
+      this.props.getProjectTypes();
+    }
+  }
+
   public convertSelectionToIndexNumber(framework: string): number[] {
     for (let i = 0; i < this.props.type.length; i++) {
       if (this.props.type[i].title === framework) {
@@ -27,12 +33,6 @@ class SelectWebApp extends React.Component<Props> {
       }
     }
     return [0];
-  }
-
-  public componentDidMount() {
-    if (this.props.getProjectTypes() !== undefined) {
-      this.props.getProjectTypes();
-    }
   }
 
   public render() {
@@ -59,7 +59,7 @@ const mapStateToProps = (state: any): IStoreProps => {
   const { appType } = state.selection;
   return {
     selectedWebApp: appType,
-    type: state.projectTypes
+    type: state.wizardContent.projectTypes
   };
 };
 
@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
     dispatch(selectWebAppAction(webApp));
   },
   getProjectTypes: () => {
-    dispatch(getProjectTypesAction);
+    dispatch(getProjectTypesAction());
   }
 });
 

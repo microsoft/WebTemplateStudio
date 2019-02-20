@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "c486b738c928f44faec53dfad03e77d4dd44706e"
+    "signature": "c0b3f59d3b8ecf70f86fa0396c6eb1f34cadf5d2"
   },
   "compilationOptions": {
     "defines": [
@@ -26,11 +26,9 @@
       "CoreTemplateStudio.Api/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.App": "2.1.1",
-          "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.NETCore.App": "2.1.0",
           "Microsoft.Templates.Core": "1.0.0",
-          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.7",
-          "StyleCop.Analyzers": "1.1.0-beta009"
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.7"
         },
         "runtime": {
           "CoreTemplateStudio.Api.dll": {}
@@ -71,7 +69,6 @@
           "lib/netstandard1.3/Microsoft.ApplicationInsights.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Razor.Design/2.1.2": {},
       "Microsoft.CodeAnalysis.CSharp.Workspaces/2.8.0": {
         "dependencies": {
           "Microsoft.CodeAnalysis.CSharp": "2.8.0",
@@ -513,7 +510,6 @@
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
         }
       },
-      "StyleCop.Analyzers/1.1.0-beta009": {},
       "System.Composition/1.0.31": {
         "dependencies": {
           "System.Composition.AttributedModel": "1.0.31",
@@ -878,7 +874,6 @@
           "Microsoft.AspNetCore.NodeServices": "2.1.1",
           "Microsoft.AspNetCore.Owin": "2.1.1",
           "Microsoft.AspNetCore.Razor": "2.1.1",
-          "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.AspNetCore.Razor.Language": "2.1.1",
           "Microsoft.AspNetCore.Razor.Runtime": "2.1.1",
           "Microsoft.AspNetCore.ResponseCaching": "2.1.1",
@@ -1464,7 +1459,6 @@
           "Microsoft.AspNetCore.Mvc.RazorPages": "2.1.1",
           "Microsoft.AspNetCore.Mvc.TagHelpers": "2.1.1",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.1.1",
-          "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.Extensions.Caching.Memory": "2.1.1",
           "Microsoft.Extensions.DependencyInjection": "2.1.1"
         },
@@ -3717,13 +3711,6 @@
       "path": "microsoft.applicationinsights/2.3.0",
       "hashPath": "microsoft.applicationinsights.2.3.0.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Razor.Design/2.1.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ab4+TZw3Sxqrr5TwrwVyABeQkhSxYMJXgG6yZw7T+r6Vz+hcOt+pK79o15ESG7kZvWAK9wRG7emnTIia5O6R1Q==",
-      "path": "microsoft.aspnetcore.razor.design/2.1.2",
-      "hashPath": "microsoft.aspnetcore.razor.design.2.1.2.nupkg.sha512"
-    },
     "Microsoft.CodeAnalysis.CSharp.Workspaces/2.8.0": {
       "type": "package",
       "serviceable": true,
@@ -3891,13 +3878,6 @@
       "sha512": "sha512-KuqDbPzjOWbUM6gPMbkvdhlQ10roQAoMM7mNZ8hcY/fH+9J4Zc+qT8dLWoNzGyr0OrxQVdZdbSjy/fxwoICgGg==",
       "path": "nuget.frameworks/4.7.0",
       "hashPath": "nuget.frameworks.4.7.0.nupkg.sha512"
-    },
-    "StyleCop.Analyzers/1.1.0-beta009": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-RUAinW5hzjFmX67CWVPHfn1odC/hG1zrtcub3t/imAU69GNCPZUz/8lrRJRcTkqFlatxcxvO/ELhG84gAwimAg==",
-      "path": "stylecop.analyzers/1.1.0-beta009",
-      "hashPath": "stylecop.analyzers.1.1.0-beta009.nupkg.sha512"
     },
     "System.Composition/1.0.31": {
       "type": "package",

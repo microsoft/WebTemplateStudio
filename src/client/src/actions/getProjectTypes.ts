@@ -11,17 +11,20 @@ export const getProjectTypesAction = () => {
 
     try {
       const projectTypesJson = await api.getProjectTypes();
+
       if (projectTypesJson.value.items !== null) {
         dispatch(
           getProjectTypesSuccess(
-            getOptionalFromMetadata(getMetadataFromJson(projectTypesJson))
+            getOptionalFromMetadata(
+              getMetadataFromJson(projectTypesJson.value.items)
+            )
           )
         );
       } else {
-        // dispatch message here.
+        console.log("FAILED");
       }
     } catch (error) {
-      // dispatch message here.
+      console.log(error);
     }
   };
 };
