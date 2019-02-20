@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SelectOption from "../SelectOption";
+import SelectOption from "../../components/SelectOption";
 
 import { getFrontendFrameworksAction } from "../../actions/getFrontendFrameworks";
 import { selectFrontendFramework as selectFrontendAction } from "../../actions/selectFrontEndFramework";
@@ -13,17 +13,27 @@ interface IDispatchProps {
   getFrontendFrameworks: () => void;
 }
 
-interface IDispatchState {
-  options: IOption[];
-}
-
 interface ISelectFrontEndFrameworkProps {
   options: IOption[];
+  selectedFramework: string;
 }
 
 type Props = IDispatchProps & ISelectFrontEndFrameworkProps;
 
 class SelectFrontEndFramework extends React.Component<Props> {
+  /**
+   * Finds the index of the framework currently selected in the wizard
+   * 
+   * @param framework 
+   */
+  public convertSelectionToIndexNumber(framework: string): number[] {
+    for (let i = 0; i < this.props.options.length; i++) {
+      if (this.props.options[i].title === framework) {
+        return [i];
+      }
+    }
+    return [0];
+  }
   public render() {
     return (
       <div>
@@ -32,16 +42,19 @@ class SelectFrontEndFramework extends React.Component<Props> {
           multiSelect={false}
           title="Select a front-end framework for your project."
           options={this.props.options}
+          selectedCards={this.convertSelectionToIndexNumber(this.props.selectedFramework)}
         />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: any): IDispatchState => {
+const mapStateToProps = (state: any): ISelectFrontEndFrameworkProps => {
   const { frontendOptions } = state.wizardContent;
+  const { frontendFramework} = state.selection;
   return {
     options: frontendOptions,
+    selectedFramework: frontendFramework,
   }
 }
 

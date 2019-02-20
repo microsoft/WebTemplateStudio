@@ -5,13 +5,12 @@ import * as Redux from "redux";
 
 import Header from "./components/Header";
 import LeftSidebar from "./components/LeftSidebar";
-import RightSidebar from "./components/RightSidebar";
-import SelectBackEndFramework from "./components/SelectBackendFramework";
-import SelectFrontEndFramework from "./components/SelectFrontEndFramework";
+import SelectFrameworks from "./components/SelectFrameworks";
 import SelectPages from "./components/SelectPages";
 import SelectWebApp from "./components/SelectWebApp";
 import Welcome from "./components/Welcome";
 import Footer from "./containers/Footer";
+import RightSidebar from "./containers/RightSidebar";
 import leftSidebarData from "./mockData/leftSidebarData";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
@@ -45,10 +44,9 @@ class App extends React.Component<IDispatchProps> {
               <LeftSidebar sidebarItems={leftSidebarData} />
             </div>
             <div className={appStyles.centerView}>
-              <Route path="/SelectBackEnd" component={SelectBackEndFramework} />
               <Route
-                path="/SelectFrontEnd"
-                component={SelectFrontEndFramework}
+                path="/SelectFrameworks"
+                component={SelectFrameworks}
               />
               <Route path="/SelectPages" component={SelectPages} />
               <Route path="/SelectWebApp" component={SelectWebApp} />

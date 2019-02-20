@@ -1,8 +1,8 @@
 import * as Actions from "./types";
 
-const selectFrontendFramework = (backendFrameworks: string) => ({
+const selectFrontendFramework = (frontendFramework: string) => ({
     type: Actions.SELECT_FRONTEND_FRAMEWORK,
-    payload: backendFrameworks
+    payload: frontendFramework
 })
 
 export { selectFrontendFramework };
