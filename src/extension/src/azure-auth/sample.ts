@@ -1,4 +1,4 @@
-import { AzureAuth } from './AzureAuth';
+import { AzureAuth } from './azureAuth';
 import * as vscode from 'vscode';
 
 export function logResourceGroups() {

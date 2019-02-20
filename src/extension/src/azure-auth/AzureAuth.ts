@@ -32,7 +32,7 @@ export abstract class AzureAuth {
          * Will get called whenever a function that uses AzureAccount object is called
          * TODO: Force user to login if not logged in, currently breaks
          */
-        if (this.api === null) {
+        if (this.api === undefined) {
             this.api = extensions.getExtension<AzureAccount>('ms-vscode.azure-account')!.exports;
             if (!(await this.api.waitForLogin)) {
                 commands.executeCommand("azure-account.askForLogin");
@@ -99,8 +99,4 @@ export abstract class AzureAuth {
         }
         return all;
     }
-
-
-
-
 }

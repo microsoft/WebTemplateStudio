@@ -20,6 +20,16 @@
         "command": "webTemplateStudioExtension.wizardLaunch",
         "title": "%webTemplateStudioExtension.commands.wizardLaunch%",
         "category": "%webTemplateStudioExtension.commands.wts%"
+      },
+      {
+        "command": "webTemplateStudioExtension.createFunctionApp",
+        "title": "%webTemplateStudioExtension.commands.createFunctionApp%",
+        "category": "%webTemplateStudioExtension.commands.wts%"
+      },
+      {
+        "command": "webTemplateStudioExtension.checkFunctionAppName",
+        "title": "%webTemplateStudioExtension.commands.checkFunctionAppName%",
+        "category": "%webTemplateStudioExtension.commands.wts%"
       }
     ]
   },
@@ -36,13 +46,20 @@
     "@types/node": "^8.10.25",
     "tslint": "^5.8.0",
     "typescript": "^3.1.4",
-    "vscode": "^1.1.25"
+    "vscode": "^1.1.29"
   },
   "extensionDependencies": [
     "ms-vscode.azure-account"
   ],
   "dependencies": {
+    "@types/app-root-path": "^1.2.4",
+    "@types/archiver": "^2.1.2",
+    "@types/fs-extra": "^5.0.5",
+    "app-root-path": "^2.1.0",
+    "archiver": "^3.0.0",
     "azure-arm-resource": "^7.3.0",
+    "azure-arm-website": "^5.7.0",
+    "fs-extra": "^7.0.1",
     "global": "^4.3.2",
     "ms-rest": "^2.5.0",
     "ms-rest-azure": "^2.6.0",
