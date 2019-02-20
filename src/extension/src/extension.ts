@@ -2,13 +2,18 @@ import * as vscode from "vscode";
 import { ReactPanel } from "./reactPanel";
 import { FunctionProvider } from './azure-functions/functionProvider';
 import { ValidationError, DeploymentError, AuthorizationError } from './errors';
+import ApiModule from "./ApiModule";
+import { ChildProcess } from "child_process";
 
+let apiProcess: ChildProcess;
 export function activate(context: vscode.ExtensionContext) {
   //Launch the client wizard assuming it has been built
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "webTemplateStudioExtension.wizardLaunch",
       () => {
+        apiProcess = ApiModule.StartApi(context);
+        console.log(apiProcess.pid);
         ReactPanel.createOrShow(context.extensionPath);
       }
     )
@@ -68,4 +73,12 @@ export function activate(context: vscode.ExtensionContext) {
 			});
 		}
 	));
+}
+  );
+}
+
+export function deactivate() {
+  // This will ensure all pending events get flushed
+  apiProcess.kill();
+  console.log("Kill api process");
 }

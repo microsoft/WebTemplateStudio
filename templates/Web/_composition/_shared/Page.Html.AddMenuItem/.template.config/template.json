@@ -5,10 +5,10 @@
     ],
     "name": "Page.Html.AddMenuItem",
   "tags": {
-    "language": "C#",
+    "language": "Any",
     "type": "item",
     "wts.type": "composition",
-	"wts.platform" : "Uwp",
+	"wts.platform" : "Web",
     "wts.version": "1.0.0",
     "wts.compositionFilter": "identity == wts.Page.Html.Blank"
   },
