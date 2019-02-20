@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import { ReactPanel } from "./ReactPanelBuilder";
-import { createFunctionApp, checkFunctionAppName } from './azure-functions/functions';
+import { ReactPanel } from "./reactPanel";
+import { createFunctionApp, checkFunctionAppName } from './azure-functions/functionHelper';
 import { Runtime } from './azure-functions/functionProvider';
 
 // temporary import until wizard calls functions app
@@ -22,8 +22,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// NOTE: these can only be used after wizardLaunch is called
 
-  // for debugging purporses only
-  // the JSON and path being passed to the function would actually
+	// for debugging purporses only
+	// the JSON and path being passed to the function would actually
 	// be returned by the wizard
 	// change the name to a name for function app that hasn't be taken (the wizard would use checkFunctionAppName for this)
 	// set the subscriptionId as an env variable (use GIV.Hackathon's for testing)

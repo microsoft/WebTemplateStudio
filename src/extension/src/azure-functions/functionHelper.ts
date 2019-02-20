@@ -15,6 +15,7 @@ import { ServiceClientCredentials } from 'ms-rest';
 //      functionNames: ["httpTrigger1", "httpTrigger2", "httpTrigger3"]
 // }, 
 // appPath : "%USERPROFILE%\\source\\repos\\MyWebApplication" (this is just an example)
+// NOTE: Wrap this function call in a try-catch block!!!
 export function createFunctionApp(selections: FunctionSelections, appPath: string) {
 
     try {
