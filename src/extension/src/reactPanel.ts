@@ -73,7 +73,17 @@ export class ReactPanel {
               this._panel.webview.postMessage({
                 email: email
               });
+            }).catch(err => {
+              console.log(err);
             });
+          case "subscriptions":
+            AzureAuth.getSubscriptions().then(items => {
+              this._panel.webview.postMessage({
+                // subs is an array of SubscriptionItem objects: check azureAuth.ts for interface
+                subscriptions: items
+              });
+            }
+            );
         }
       },
       null,

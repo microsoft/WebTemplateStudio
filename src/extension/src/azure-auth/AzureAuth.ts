@@ -4,6 +4,7 @@ import { SubscriptionModels } from 'azure-arm-resource';
 import { ServiceClientCredentials } from 'ms-rest';
 import { SubscriptionClient } from '../../node_modules/azure-arm-resource/lib/subscription/subscriptionClient';
 import { ResourceManagementClient } from '../../node_modules/azure-arm-resource/lib/resource/resourceManagementClient';
+import { AuthorizationError } from '../errors';
 
 export interface SubscriptionItem {
     label: string;
@@ -30,7 +31,6 @@ export abstract class AzureAuth {
         /**
          * Initializes the AzureAccount object if not initialized.
          * Will get called whenever a function that uses AzureAccount object is called
-         * TODO: Force user to login if not logged in, currently breaks
          */
         if (this.api === undefined) {
             this.api = extensions.getExtension<AzureAccount>('ms-vscode.azure-account')!.exports;
@@ -41,6 +41,10 @@ export abstract class AzureAuth {
         this.initialize();
         if (this.api.status !== "LoggedIn") {
             await commands.executeCommand("azure-account.login");
+            // Make sure it did not return from timeout
+            if (this.api.status === "LoggingIn") {
+                throw new AuthorizationError("Timeout. User is not logged in");
+            }
             return true;
         } else {
             return true;
