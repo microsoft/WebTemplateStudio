@@ -6,7 +6,6 @@ export namespace ValidationHelper {
     export function validate(selections: FunctionSelections): void {
             validateFunctionNames(selections.functionNames);
             validateFunctionAppName(selections.functionAppName);
-            validateRuntime(selections.runtime);
     }
 
     function validateFunctionNames(names: string[]): void {
@@ -21,16 +20,10 @@ export namespace ValidationHelper {
         }
     }
 
-    function validateFunctionAppName(name: string): void {
+    export function validateFunctionAppName(name: string): void {
         let regexp = /^[a-zA-Z0-9]+[a-zA-Z0-9-]+[a-zA-Z0-9]+$/;
         if (!regexp.test(name)) {
             throw new ValidationError("Invalid name for function: " + name);
-        }
-    }
-
-    function validateRuntime(name: string): void {
-        if (name !== "node" && name !== "dotnet") {
-            throw new ValidationError("Runtime can only be one of 'node'/'dotnet'");
         }
     }
 }
