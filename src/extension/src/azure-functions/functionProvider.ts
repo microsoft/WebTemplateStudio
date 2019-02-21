@@ -1,16 +1,21 @@
 import { ValidationHelper, FileHelper } from './utils';
-import { AzureAuth } from '../azure-auth/azureAuth';
 import { ServiceClientCredentials } from 'ms-rest';
 import * as WebsiteManagement from 'azure-arm-website';
-import { FileError, DeploymentError, AuthorizationError } from '../errors';
+import { FileError, DeploymentError, AuthorizationError, ConnectionError } from '../errors';
+import { SubscriptionItem, ResourceGroupItem } from '../azure-auth/AzureAuth';
+import { config } from './config';
+
+
+/*
+* Runtime for the deployment, can be either 'dotnet' or 'node'.
+*/
+export type Runtime = "dotnet" | "node";
 
 /*
 * User selections from the wizard
-* Cast the user selection JSON object returned by the wizard to the interface as:
-*   var selections: FunctionSelections = <FunctionSelections>userSelections;
 * 
 * functionAppName: Globally unique app name for your function. Use checkFunctionAppName to validate
-* subscriptionId: Subscription Id for users selected subscription
+* subscriptionItem: Subscription Item for user's selected subscription
 * resourceGroupName: Name for the resource group under the subscription selected by use.
 *   If user creates a new subscription, send that resource group name in selections after resource group is created.
 * location: Location for deployment, can be West US/East US/China North/East Asia etc.
@@ -21,10 +26,10 @@ import { FileError, DeploymentError, AuthorizationError } from '../errors';
 *   No duplicates allowed!
 *
 *
-* JSON format:
+* Format:
 * {
 * functionAppName: "YOUR_FUNCTION_APP_NAME",
-* subscriptionId: "YOUR_SUBSCRIPTION_ID",
+* subscriptionItem: {label: , subscriptionId: , session: , subscription: },
 * location: "West US",
 * runtime: "node",
 * resourceGroupName: "YOUR_RESOURCE_GROUP",
@@ -33,10 +38,10 @@ import { FileError, DeploymentError, AuthorizationError } from '../errors';
 */
 export interface FunctionSelections {
     functionAppName:    string;
-    subscriptionId:     string;
-    resourceGroupName:  string;
+    subscriptionItem:   SubscriptionItem;
+    resourceGroupItem:  ResourceGroupItem;
     location:           string; 
-    runtime:            string;
+    runtime:            Runtime;
     functionNames:      string[];
 }
 
@@ -48,7 +53,7 @@ export namespace FunctionProvider {
     * Throws AuthoriaztionError if authorization fails.
     * Throws DeploymentError if deployment fails.
     *
-    * @param selections The user selection JSON casted to FunctionSelections interface
+    * @param selections The user selection object (FunctionSelections)
     *
     * @param appPath The path to original app being created by Web Template Studio
     *   The function app folder would be added under tis
@@ -57,14 +62,12 @@ export namespace FunctionProvider {
     */
     export async function createFunctionApp(selections: FunctionSelections, appPath: string): Promise<void> {
 
-        selections.runtime = selections.runtime.toLowerCase();
-
         ValidationHelper.validate(selections); // throws validation error on failure
 
         try {
-            let credentials: ServiceClientCredentials = AzureAuth.getCredentials();
+            let credentials: ServiceClientCredentials = selections.subscriptionItem.session.credentials;
 
-            var webClient = new WebsiteManagement.WebSiteManagementClient(credentials, selections.subscriptionId);
+            var webClient = new WebsiteManagement.WebSiteManagementClient(credentials, selections.subscriptionItem.subscriptionId);
         } catch (err) {
             throw new AuthorizationError(err.message);
         }
@@ -77,7 +80,7 @@ export namespace FunctionProvider {
         }
 
         try {
-            await webClient.webApps.createOrUpdate(selections.resourceGroupName, selections.functionAppName, {
+            await webClient.webApps.createOrUpdate(selections.resourceGroupItem.name, selections.functionAppName, {
                 location: selections.location,
                 kind: "functionapp",
                 siteConfig: {
@@ -85,7 +88,7 @@ export namespace FunctionProvider {
                 }
             });
             
-            await webClient.webApps.updateApplicationSettings(selections.resourceGroupName, selections.functionAppName, {
+            await webClient.webApps.updateApplicationSettings(selections.resourceGroupItem.name, selections.functionAppName, {
                 kind: "functionapp",
                 properties: {
                     "FUNCTIONS_EXTENSION_VERSION": "~2",
@@ -103,13 +106,30 @@ export namespace FunctionProvider {
     * Check if a function app name is available
     *
     * @param appName function app name to check uniqueness/availability for
+    * 
+    * @param subscriptionItem Subscription Item for user's selected subscription/random subscription for user
     *
     * @returns Promise<boolean> True if the app name is available, false if it isn't
     *   catch errors as required
     */
-    export async function checkFunctionAppName(appName: string) : Promise<boolean> {
-        // TODO
-        return true;
+    export async function checkFunctionAppName(appName: string, subscriptionItem: SubscriptionItem) : Promise<boolean | undefined> {
+        try {
+            let credentials: ServiceClientCredentials = subscriptionItem.session.credentials;
+
+            var webClient = new WebsiteManagement.WebSiteManagementClient(credentials, subscriptionItem.subscriptionId);
+        } catch (err) {
+            throw new AuthorizationError(err.message);
+        }
+
+        ValidationHelper.validateFunctionAppName(appName);
+
+        return await webClient.checkNameAvailability(appName + config.functionAppDomain, "Site", {isFqdn: true})
+        .then((res) => {
+            return res.nameAvailable;
+        })
+        .catch((err) => {
+            throw new ConnectionError(err.message);
+        });
     }
 }
 
