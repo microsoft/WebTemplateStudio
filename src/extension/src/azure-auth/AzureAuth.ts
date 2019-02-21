@@ -64,7 +64,7 @@ export abstract class AzureAuth {
         if (this.api.sessions.length > 0) {
             return this.api.sessions[0].userId;
         } else {
-            throw Error("Error: there is no session available. Make sure the user is logged in.");
+            throw new AuthorizationError("There is no session available. Make sure the user is logged in.");
         }
     }
 
