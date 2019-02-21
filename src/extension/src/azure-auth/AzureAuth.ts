@@ -4,6 +4,7 @@ import { SubscriptionModels } from 'azure-arm-resource';
 import { SubscriptionClient } from '../../node_modules/azure-arm-resource/lib/subscription/subscriptionClient';
 import { ResourceManagementClient } from '../../node_modules/azure-arm-resource/lib/resource/resourceManagementClient';
 import { AuthorizationError } from '../errors';
+import { ServiceClientCredentials } from 'ms-rest';
 
 export interface SubscriptionItem {
     label: string;
@@ -48,6 +49,14 @@ export abstract class AzureAuth {
         } else {
             return true;
         }
+    }
+
+    public static getCredentials(): ServiceClientCredentials {
+        this.initialize();
+        if (this.api.status !== "LoggedIn") {
+            throw new AuthorizationError("User is not logged in.");
+        }
+        return this.api.sessions[0].credentials;
     }
 
     public static getEmail(): string {
