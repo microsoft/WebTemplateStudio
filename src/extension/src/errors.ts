@@ -32,3 +32,10 @@ export class ConnectionError extends Error {
       this.name = "ConnectionError";
     }
 }
+
+export class SubscriptionError extends Error{
+  constructor(message: string) {
+    super(message);
+    this.name = "SubscriptionError";
+  }
+}

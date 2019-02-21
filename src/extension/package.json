@@ -57,6 +57,7 @@
     "@types/fs-extra": "^5.0.5",
     "app-root-path": "^2.1.0",
     "archiver": "^3.0.0",
+    "azure-arm-cosmosdb": "^2.3.0",
     "azure-arm-resource": "^7.3.0",
     "azure-arm-website": "^5.7.0",
     "fs-extra": "^7.0.1",
