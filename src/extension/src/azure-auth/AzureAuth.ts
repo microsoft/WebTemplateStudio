@@ -4,7 +4,6 @@ import { SubscriptionModels } from 'azure-arm-resource';
 import { SubscriptionClient } from '../../node_modules/azure-arm-resource/lib/subscription/subscriptionClient';
 import { ResourceManagementClient } from '../../node_modules/azure-arm-resource/lib/resource/resourceManagementClient';
 import { AuthorizationError } from '../errors';
-import { ServiceClientCredentials } from 'ms-rest';
 
 export interface SubscriptionItem {
     label: string;
