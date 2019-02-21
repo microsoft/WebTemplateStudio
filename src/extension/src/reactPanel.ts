@@ -76,14 +76,6 @@ export class ReactPanel {
             }).catch(err => {
               console.log(err);
             });
-          case "subscriptions":
-            AzureAuth.getSubscriptions().then(items => {
-              this._panel.webview.postMessage({
-                // subs is an array of SubscriptionItem objects: check azureAuth.ts for interface
-                subscriptions: items
-              });
-            }
-            );
         }
       },
       null,
