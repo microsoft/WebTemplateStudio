@@ -31,7 +31,7 @@ export enum API {
 
 export namespace CosmosDBDeploy { 
 
-  export async function createMongoAccount(userCosmosDBSelection : CosmosDBSelections ) : Promise<DatabaseObject>{
+  export async function createCosmosDB(userCosmosDBSelection : CosmosDBSelections ) : Promise<DatabaseObject>{
     let userSubscriptionItem : SubscriptionItem = userCosmosDBSelection.subscriptionItem;
     let userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials;
     if (userCosmosDBSelection.subscriptionItem === undefined || userCosmosDBSelection.subscriptionItem.subscription === undefined || userCosmosDBSelection.subscriptionItem.subscriptionId === undefined) {
@@ -52,13 +52,13 @@ export namespace CosmosDBDeploy {
     var dataBaseName = userCosmosDBSelection.cosmosDBResourceName;
     var location = userCosmosDBSelection.location;
     var experience = userCosmosDBSelection.cosmosAPI;
-    var resourceTags = userCosmosDBSelection.tags;
+    var tagObject = userCosmosDBSelection.tags;
 
     var options = {
       location: location,
       locations: [{ locationName: location }],
       kind: experience,
-      tags: resourceTags, // sample: { defaultExperience: "Azure Cosmos DB for MongoDB API", BuildOrigin : "Project Acorn"},
+      tag: tagObject, // sample: { defaultExperience: "Azure Cosmos DB for MongoDB API", BuildOrigin : "Project Acorn"},
       capabilities: []
     };
 
