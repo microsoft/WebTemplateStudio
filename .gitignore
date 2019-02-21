@@ -337,6 +337,8 @@ ASALocalRun/
 **/package-lock.json
 **/*.vsix
 
+!templates/**/package-lock.json
+
 # Ignore OS generated files #
 .DS_Store
 .DS_Store?
