@@ -19,24 +19,23 @@ const getWebAppOptions = () => {
 /**
  * Redux-thunk action that dispatches multiple actions to load
  * the content for the wizard.
- * 
+ *
  */
 const loadWizardContentAction = () => {
   return async (dispatch: any) => {
     // TODO: Do fetch request here, dispatch success or failure
-    /*
-        const webAppOptions = await getFakeWebAppOptions();
-        dispatch(getWebAppOptionsSuccess(webAppOptions));
 
-        const pagesOptions = await getFakePagesOptions();
-        dispatch(getPagesOptionsSuccess(pagesOptions));
+    const webAppOptions = await getFakeWebAppOptions();
+    dispatch(getWebAppOptionsSuccess(webAppOptions));
 
-        const frontendFrameworks = await getFakeFrontendFrameworks();
-        dispatch(getFrontendFrameworksSuccess(frontendFrameworks));
+    const pagesOptions = await getFakePagesOptions();
+    dispatch(getPagesOptionsSuccess(pagesOptions));
 
-        const backendFrameworks = await getFakeBackendFrameworks();
-        dispatch(getBackendFrameworksSuccess(backendFrameworks));
-        */
+    const frontendFrameworks = await getFakeFrontendFrameworks();
+    dispatch(getFrontendFrameworksSuccess(frontendFrameworks));
+
+    const backendFrameworks = await getFakeBackendFrameworks();
+    dispatch(getBackendFrameworksSuccess(backendFrameworks));
   };
 };
 
