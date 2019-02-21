@@ -34,18 +34,25 @@ export abstract class AzureAuth {
          */
         if (this.api === undefined) {
             this.api = extensions.getExtension<AzureAccount>('ms-vscode.azure-account')!.exports;
-            if (!(await this.api.waitForLogin)) {
-                commands.executeCommand("azure-account.askForLogin");
-            }
         }
     }
 
-    public static getCredentials(): ServiceClientCredentials {
+    public static async login(): Promise<Boolean> {
+        this.initialize();
+        if (this.api.status !== "LoggedIn") {
+            await commands.executeCommand("azure-account.login").then(res => {
+                console.log("User logged in");
+                return true;
+            });
+        }
+        return true;
+    }
+
+    public static getEmail(): string {
         this.initialize();
         if (this.api.sessions.length > 0) {
-            return this.api.sessions[0].credentials;
+            return this.api.sessions[0].userId;
         } else {
-            commands.executeCommand("azure-account.login");
             throw Error("Error: there is no session available. Make sure the user is logged in.");
         }
     }
