@@ -15,9 +15,10 @@ import leftSidebarData from "./mockData/leftSidebarData";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
-
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
+import EngineAPIService from "./services/EngineAPIService";
+
 
 interface IDispatchProps {
   getVSCodeApi: () => void;
@@ -27,12 +28,14 @@ interface IDispatchProps {
 class App extends React.Component<IDispatchProps> {
   public static defaultProps = {
     getVSCodeApi: () => {},
-    loadWizardContent: () => {},
+    loadWizardContent: () => {}
   };
 
   public componentDidMount() {
     this.props.getVSCodeApi();
     this.props.loadWizardContent();
+    const api = new EngineAPIService("5000", undefined);
+    api.syncPlatforms();
   }
 
   public render() {
@@ -46,10 +49,7 @@ class App extends React.Component<IDispatchProps> {
             </div>
             <div className={appStyles.centerView}>
               <Route path="/AzureLogin" component={AzureLogin} />
-              <Route
-                path="/SelectFrameworks"
-                component={SelectFrameworks}
-              />
+              <Route path="/SelectFrameworks" component={SelectFrameworks} />
               <Route path="/SelectPages" component={SelectPages} />
               <Route path="/SelectWebApp" component={SelectWebApp} />
               <Route exact={true} path="/" component={Welcome} />
@@ -66,8 +66,15 @@ class App extends React.Component<IDispatchProps> {
 }
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
-  getVSCodeApi: () => { dispatch(getVSCodeApi()) },
-  loadWizardContent: () => { dispatch(loadWizardContentAction()) },
+  getVSCodeApi: () => {
+    dispatch(getVSCodeApi());
+  },
+  loadWizardContent: () => {
+    dispatch(loadWizardContentAction());
+  }
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(
+  null,
+  mapDispatchToProps
+)(App);

@@ -6,12 +6,13 @@
   "identity": "wts.Proj.HtmlDefault",
   "description": "",
   "tags": {
-    "language": "C#",
+    "language": "Any",
     "type": "project",
     "wts.type": "project",
-    "wts.framework": "HtmlFramework",
-    "wts.projecttype":"HtmlBlank",
-	"wts.platform": "Uwp",
+    "wts.projecttype": "FullStackWebApp",
+    "wts.frontEndFramework": "all",
+    "wts.backEndFramework": "NodeJS",
+    "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.displayOrder": "1"
   },
