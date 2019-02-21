@@ -103,7 +103,7 @@ p {
   width: 100%;
 }
 
-.row [class^="col"] {
+.row [class^="grid_col"] {
   float: left;
   margin: 0.5rem 2%;
   min-height: 0.125rem;

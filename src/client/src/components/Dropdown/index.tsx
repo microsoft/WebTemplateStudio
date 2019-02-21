@@ -8,14 +8,14 @@ interface IDropdownOption {
     label: string,
 }
 
-interface DropdownProps {
+interface IDropdownProps {
     options: IDropdownOption[],
     defaultValue: IDropdownOption;
     handleChange?: (e: any) => void;
     value?: IDropdownOption | undefined;
 }
 
-const Dropdown = ({ options, defaultValue, handleChange, value }: DropdownProps) => {
+const Dropdown = ({ options, defaultValue, handleChange, value }: IDropdownProps) => {
     return (
         <Select
             value={value}

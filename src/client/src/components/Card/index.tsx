@@ -1,74 +1,38 @@
-import classNames from "classnames";
 import * as React from "react";
 
-import CardBody from "../CardBody";
-import CardTitle from "../CardTitle";
+import styles from './styles.module.css';
 
-import grid from "../../css/grid.module.css";
-import styles from "./styles.module.css";
+interface IProps {
+    cardTitle: string;
+    cardBody: string;
+    buttonText: string;
+    handleButtonClick: () => void;
+    handleDetailsClick: () => void;
+    svgUrl: string|undefined;
+}
 
-import Check from "../../assets/Check.svg";
-
-const Card = ({
-  iconPath,
-  iconStyles,
-  title,
-  body,
-  selected,
-  cardNumber,
-  onCardClick
-}: {
-  iconPath: string | undefined;
-  iconStyles: string;
-  title: string;
-  body: string;
-  selected: boolean;
-  cardNumber: number;
-  onCardClick: (idx: number) => void;
-}) => {
-  return (
-    <div
-      onClick={() => {
-        onCardClick(cardNumber);
-      }}
-      className={classNames(styles.container, styles.boundingBox, {
-        [styles.selected]: selected
-      })}
-    >
-      <div className={styles.cardHeader}>
-        <div className={styles.icon}>
-          {!!iconPath && <img src={iconPath} className={iconStyles} />}
+const Card = ({ cardTitle, cardBody, buttonText, handleButtonClick, handleDetailsClick, svgUrl }: IProps) => {
+    return (
+        <div className={styles.loginContainer}>
+            <div className={styles.cardTitleContainer}>
+                {!!svgUrl && <img className={styles.icon} src={svgUrl} />}
+                <div className={styles.cardTitle}>
+                    {cardTitle}
+                </div>
+            </div>
+            <div className={styles.cardBody}>
+                {cardBody}
+            </div>
+            <div className={styles.selectionContainer}>
+                <div onClick={handleDetailsClick}>
+                    Details
+                </div>
+                <button onClick={handleButtonClick} className={styles.signInButton}>
+                    {buttonText}
+                </button>
+            </div>
         </div>
-        <div
-          className={classNames({
-            [styles.title]: !!iconPath,
-            [styles.titleLeftJustified]: iconPath === undefined ? true : false
-          })}
-        >
-          <CardTitle title={title} />
-        </div>
-      </div>
-      <div className={grid.row}>
-        <div className={classNames(grid.col12, styles.body)}>
-          <CardBody body={body} />
-        </div>
-      </div>
-      <div className={styles.cardFooter}>
-        <div className={classNames(styles.button)}>Details</div>
-        <div
-          className={classNames({
-            [styles.hidden]: !selected,
-            [styles.selectedCheckMark]: selected
-          })}
-        >
-          <img
-            src={process.env.REACT_APP_RELATIVE_PATH + Check}
-            className={styles.iconCheckMark}
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
+    )
+}
 
 export default Card;

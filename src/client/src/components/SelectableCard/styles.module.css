@@ -1,0 +1,75 @@
+.container {
+    border: 0.5px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 15px;
+}
+
+.selected,
+.button {
+    font-size: 15px;
+}
+
+.selected {
+    outline: 3px solid black;
+}
+
+.selectedCheckMark {
+    display: flex;
+    justify-content: center;
+}
+
+.iconCheckMark {
+    padding-left: 5px;
+    height: 18px;
+    width: 18px;
+    align-self: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.boundingBox {
+    max-width: 170px;
+    max-height: 239px;
+}
+
+.button {
+    color: #0067B8;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon {
+    height: 36px;
+}
+
+.iconHeight {
+    height: 36px;
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+}
+
+.titleLeftJustified,
+.title {
+    margin: 15px 10px;
+}
+
+.titleLeftJustified {
+    margin-left: 0px;
+}
+
+.body {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
