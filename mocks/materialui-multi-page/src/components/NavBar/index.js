@@ -7,6 +7,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { withStyles } from "@material-ui/core";
 
 const styles = theme => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1
+  },
   toolbarTitle: {
     flex: 1
   }
@@ -17,7 +20,7 @@ function index(props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="default" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.toolbarTitle}>
             Company name

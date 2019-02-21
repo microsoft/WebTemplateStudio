@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
+import { withStyles } from "@material-ui/core/styles";
 import ListItem from "./ListItem";
 import ListForm from "./ListForm";
-import { withStyles } from "@material-ui/core/styles";
+import WarningMessage from "../WarningMessage";
 
 const styles = theme => ({
   layout: {
@@ -21,11 +22,15 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: []
+      list: [],
+      WarningMessageOpen: false,
+      WarningMessageText: ""
     };
 
+    // Temporary I will use the id provided by the database when it is added
     this.id = 3;
 
+    this.handleWarningClose = this.handleWarningClose.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleAddListItem = this.handleAddListItem.bind(this);
@@ -35,16 +40,19 @@ class index extends Component {
     fetch(`/api/listItem/${listItem.id}`, { method: "DELETE" })
       .then(response => response.json())
       .then(res => {
-        console.log(res);
         let list = this.state.list;
         list = list.filter(item => item.id !== listItem.id);
         this.setState({ list: list });
       })
-      .catch(error => console.error(error));
+      .catch(error =>
+        this.setState({
+          WarningMessageOpen: true,
+          WarningMessageText: "Request to delete list item failed."
+        })
+      );
   }
 
   handleAddListItem(event) {
-    console.log(this.state.multilineTextField);
     fetch("/api/listItems", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -56,7 +64,14 @@ class index extends Component {
           list: result,
           multilineTextField: ""
         })
+      )
+      .catch(error =>
+        this.setState({
+          WarningMessageOpen: true,
+          WarningMessageText: "Request to add list item failed"
+        })
       );
+
     this.id++;
   }
 
@@ -64,10 +79,23 @@ class index extends Component {
     this.setState({ [name]: event.target.value });
   }
 
+  handleWarningClose() {
+    this.setState({
+      WarningMessageOpen: false,
+      WarningMessageText: ""
+    });
+  }
+
   componentDidMount() {
     fetch("/api/listItems")
       .then(res => res.json())
-      .then(result => this.setState({ list: result }));
+      .then(result => this.setState({ list: result }))
+      .catch(error =>
+        this.setState({
+          WarningMessageOpen: true,
+          WarningMessageText: "Request to get list items failed"
+        })
+      );
   }
 
   render() {
@@ -88,6 +116,11 @@ class index extends Component {
             />
           ))}
         </Grid>
+        <WarningMessage
+          open={this.state.WarningMessageOpen}
+          text={this.state.WarningMessageText}
+          onWarningClose={this.handleWarningClose}
+        />
       </div>
     );
   }

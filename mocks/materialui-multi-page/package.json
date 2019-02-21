@@ -21,6 +21,7 @@
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"nodemon server/server.js\"",
+    "start-frontend": "react-scripts start",
     "build-mac": "react-scripts build && mv build server",
     "build-windows": "react-scripts build; Move-Item -Path .\\build -Destination .\\server",
     "test": "react-scripts test --env=jsdom",
