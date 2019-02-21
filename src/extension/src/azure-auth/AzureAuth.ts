@@ -40,12 +40,11 @@ export abstract class AzureAuth {
     public static async login(): Promise<Boolean> {
         this.initialize();
         if (this.api.status !== "LoggedIn") {
-            await commands.executeCommand("azure-account.login").then(res => {
-                console.log("User logged in");
-                return true;
-            });
+            await commands.executeCommand("azure-account.login");
+            return true;
+        } else {
+            return true;
         }
-        return true;
     }
 
     public static getEmail(): string {
