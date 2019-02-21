@@ -71,6 +71,7 @@ export class ReactPanel {
             AzureAuth.login().then(res => {
               const email = AzureAuth.getEmail();
               this._panel.webview.postMessage({
+                command: 'login',
                 email: email
               });
             }).catch(err => {

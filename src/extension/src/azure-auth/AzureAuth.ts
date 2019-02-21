@@ -1,7 +1,6 @@
 import { AzureAccount, AzureSession } from './azure-account.api'; // Other extensions need to copy this .d.ts to their repository.
 import { extensions, commands } from 'vscode';
 import { SubscriptionModels } from 'azure-arm-resource';
-import { ServiceClientCredentials } from 'ms-rest';
 import { SubscriptionClient } from '../../node_modules/azure-arm-resource/lib/subscription/subscriptionClient';
 import { ResourceManagementClient } from '../../node_modules/azure-arm-resource/lib/resource/resourceManagementClient';
 import { AuthorizationError } from '../errors';
