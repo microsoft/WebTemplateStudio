@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SelectOption from "../SelectOption";
+import SelectOption from "../../components/SelectOption";
 
 import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
 ;
@@ -13,11 +13,25 @@ interface IDispatchProps {
 
 interface ISelectBackendProps {
   options: IOption[];
+  selectedBackend: string;
 }
 
 type Props = IDispatchProps & ISelectBackendProps;
 
 class SelectBackEndFramework extends React.Component<Props> {
+  /**
+   * Finds the index of the framework currently selected in the wizard
+   * 
+   * @param framework 
+   */
+  public convertSelectionToIndexNumber(framework: string): number[] {
+    for (let i = 0; i < this.props.options.length; i++) {
+      if (this.props.options[i].title === framework) {
+        return [i];
+      }
+    }
+    return [0];
+  }
   public render() {
     return (
       <div>
@@ -26,6 +40,7 @@ class SelectBackEndFramework extends React.Component<Props> {
           multiSelect={false}
           title="Select a back-end framework for your project."
           options={this.props.options}
+          selectedCards={this.convertSelectionToIndexNumber(this.props.selectedBackend)}
         />
       </div>
     );
@@ -34,8 +49,10 @@ class SelectBackEndFramework extends React.Component<Props> {
 
 const mapStateToProps = (state: any): ISelectBackendProps => {
   const { backendOptions } = state.wizardContent;
+  const { backendFramework } = state.selection;
   return {
     options: backendOptions,
+    selectedBackend: backendFramework,
   }
 }
 

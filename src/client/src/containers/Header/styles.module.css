@@ -1,0 +1,31 @@
+.header {
+    position: absolute;
+    width: 95.7%;
+    padding: 12px 24px;
+    background-color: #DBDBDB;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.headerTitle {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.azureProfile {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profileName {
+    margin-right: 2em;
+}
+
+.button {
+    color: #0067B8;
+}
+
+.button:hover {
+    cursor: pointer;
+}

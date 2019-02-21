@@ -6,6 +6,7 @@ import SelectOption from "../SelectOption";
 import { selectWebAppAction } from "../../actions/selectWebApp";
 
 import { IOption } from "../../types/option";
+import { string } from "prop-types";
 
 interface IDispatchProps {
   selectWebApp: (webApp: string) => void,
@@ -13,11 +14,20 @@ interface IDispatchProps {
 
 interface IProps {
   options: IOption[];
+  selectedWebApp: string;
 }
 
 type Props = IDispatchProps & IProps;
 
 class SelectWebApp extends React.Component<Props> {
+  public convertSelectionToIndexNumber(framework: string): number[] {
+    for (let i = 0; i < this.props.options.length; i++) {
+      if (this.props.options[i].title === framework) {
+        return [i];
+      }
+    }
+    return [0];
+  }
   public render() {
     return (
       <div>
@@ -26,16 +36,19 @@ class SelectWebApp extends React.Component<Props> {
           multiSelect={false}
           title="What type of web application are you building?"
           options={this.props.options}
+          selectedCards={this.convertSelectionToIndexNumber(this.props.selectedWebApp)}
         />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: any): any => {
+const mapStateToProps = (state: any): IProps => {
   const { appTypeOptions } = state.wizardContent;
+  const { appType } = state.selection;
   return {
-    options: appTypeOptions
+    options: appTypeOptions,
+    selectedWebApp: appType,
   }
 }
 
