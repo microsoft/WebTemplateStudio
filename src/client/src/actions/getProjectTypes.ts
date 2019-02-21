@@ -1,8 +1,8 @@
+import blankpage from "../assets/blankpage.svg";
 import EngineAPIService from "../services/EngineAPIService";
 import { IMetadata } from "../types/metadata";
 import { IOption } from "../types/option";
 import { getProjectTypesSuccess } from "./getProjectTypesSuccess";
-
 // thunk
 export const getProjectTypesAction = () => {
   return async (dispatch: any) => {
@@ -45,7 +45,7 @@ function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
   return items.map<IOption>(val => ({
     title: val.name,
     body: val.summary,
-    svgUrl: val.svgUrl,
+    svgUrl: process.env.REACT_APP_RELATIVE_PATH + blankpage,
     selected: val.selected
   }));
 }
