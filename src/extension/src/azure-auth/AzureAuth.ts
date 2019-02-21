@@ -51,14 +51,6 @@ export abstract class AzureAuth {
         }
     }
 
-    public static getCredentials(): ServiceClientCredentials {
-        this.initialize();
-        if (this.api.status !== "LoggedIn") {
-            throw new AuthorizationError("User is not logged in.");
-        }
-        return this.api.sessions[0].credentials;
-    }
-
     public static getEmail(): string {
         this.initialize();
         if (this.api.sessions.length > 0) {
