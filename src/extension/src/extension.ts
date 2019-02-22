@@ -123,20 +123,6 @@ export function deactivate() {
 
 // temporary function that returns the Subscription Item for given subscription name
 export async function tempGetSubscription(name: string): Promise<SubscriptionItem> {
-<<<<<<< HEAD
-	let subItem: SubscriptionItem = <SubscriptionItem>{};
-
-	await AzureAuth.getSubscriptions().then(items => {
-		for (let item of items) {
-			if (item.label === name) {
-				subItem = item;
-				break;
-			}
-		}
-	});
-
-	return subItem;
-=======
   let subItem: SubscriptionItem = <SubscriptionItem>{};
 
   await AzureAuth.getSubscriptions().then(items => {
@@ -149,18 +135,12 @@ export async function tempGetSubscription(name: string): Promise<SubscriptionIte
   });
 
   return subItem;
->>>>>>> d3dc59e14cc1bf982a54a76df3b9dd43ac4cb0ad
 }
 
 // temporary function that returns the ResourceGroup Item for given resource and subscription name
 export async function tempGetResourceGroup(
-<<<<<<< HEAD
-	name: string,
-	subscription: string
-=======
   name: string,
   subscription: string
->>>>>>> d3dc59e14cc1bf982a54a76df3b9dd43ac4cb0ad
 ): Promise<ResourceGroupItem> {
   let resItem: ResourceGroupItem = <ResourceGroupItem>{};
 
