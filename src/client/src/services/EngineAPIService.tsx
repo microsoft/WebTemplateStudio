@@ -3,7 +3,7 @@ import * as constants from "./constants";
 
 // This path is going to be used by the engine to pull the templates
 // it will use to generate the output files
-const templatesFolderPath = "../../../..";
+const templatesFolderPath = ".";
 
 export default class EngineAPIService {
   private API: string;
