@@ -2,24 +2,24 @@ import * as vscode from 'vscode';
 import { CosmosDBManagementClient } from 'azure-arm-cosmosdb';
 import { DatabaseAccount } from 'azure-arm-cosmosdb/lib/models';
 import { ServiceClientCredentials } from 'ms-rest';
-import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/AzureAuth";
+import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
 import { SubscriptionError, AuthorizationError, DeploymentError } from '../errors';
 
 export interface CosmosDBSelections {
-  cosmosDBResourceName:     string;
-  location:                 string;
-  cosmosAPI:                API;
-  tags:                     Object;
-  subscriptionItem:         SubscriptionItem;
-  resourceGroupItem:        ResourceGroupItem;
+  cosmosDBResourceName: string;
+  location: string;
+  cosmosAPI: API;
+  tags: Object;
+  subscriptionItem: SubscriptionItem;
+  resourceGroupItem: ResourceGroupItem;
 }
 
 /*
  * Database Object - tuple to return to caller
  */
-export interface DatabaseObject{
-  databaseAccount : DatabaseAccount;
-  connectionString : string;
+export interface DatabaseObject {
+  databaseAccount: DatabaseAccount;
+  connectionString: string;
 }
 
 export enum API {
@@ -29,25 +29,25 @@ export enum API {
   DocumentDB = 'DocumentDB' //SQL
 }
 
-export namespace CosmosDBDeploy { 
+export namespace CosmosDBDeploy {
 
-  export async function createCosmosDB(userCosmosDBSelection : CosmosDBSelections ) : Promise<DatabaseObject>{
-    let userSubscriptionItem : SubscriptionItem = userCosmosDBSelection.subscriptionItem;
+  export async function createCosmosDB(userCosmosDBSelection: CosmosDBSelections): Promise<DatabaseObject> {
+    let userSubscriptionItem: SubscriptionItem = userCosmosDBSelection.subscriptionItem;
     let userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials;
     if (userCosmosDBSelection.subscriptionItem === undefined || userCosmosDBSelection.subscriptionItem.subscription === undefined || userCosmosDBSelection.subscriptionItem.subscriptionId === undefined) {
       throw new SubscriptionError("CosmosDBDeploy: SubscriptionItem cannot have undefined values");
     }
 
-    try{
+    try {
       /*
       * Create Cosmos Client with users credentials and selected subscription *
       */
       var cosmosClient = new CosmosDBManagementClient(userCredentials, userSubscriptionItem.subscriptionId, userSubscriptionItem.session.environment.resourceManagerEndpointUrl);
     }
-    catch(err){
+    catch (err) {
       throw new AuthorizationError("CosmosDBDeploy: " + err.message);
     }
-    
+
     var resourceGroup = userCosmosDBSelection.resourceGroupItem.name;
     var dataBaseName = userCosmosDBSelection.cosmosDBResourceName;
     var location = userCosmosDBSelection.location;
@@ -62,27 +62,27 @@ export namespace CosmosDBDeploy {
       capabilities: []
     };
 
-    try{
+    try {
       /*
       * Cosmos Client to generate a cosmos DB resource using resource group name, database name, and options *
       */
-      var databaseAccount : DatabaseAccount = await cosmosClient.databaseAccounts.createOrUpdate(resourceGroup,dataBaseName, options);
+      var databaseAccount: DatabaseAccount = await cosmosClient.databaseAccounts.createOrUpdate(resourceGroup, dataBaseName, options);
       databaseAccount = await cosmosClient.databaseAccounts.get(resourceGroup, dataBaseName);
-      
+
       var connectionString = await getConnectionString(cosmosClient, resourceGroup, dataBaseName);
     }
-    catch (err){
+    catch (err) {
       throw new DeploymentError("CosmosDBDeploy: " + err.message);
     }
-    
+
     /*
     * Returning a tuple which includes databaseAccount from callback and its connection string
     */
-    var db : DatabaseObject = {databaseAccount, connectionString}
+    var db: DatabaseObject = { databaseAccount, connectionString }
     return db;
   }
 
-  async function getConnectionString(cosmosClient: CosmosDBManagementClient, resourceGroup: string, dataBaseName: string): Promise<string>{
+  async function getConnectionString(cosmosClient: CosmosDBManagementClient, resourceGroup: string, dataBaseName: string): Promise<string> {
     const result = await cosmosClient.databaseAccounts.listConnectionStrings(resourceGroup, dataBaseName);
     console.log(result!.connectionStrings![0].connectionString!);
     return result!.connectionStrings![0].connectionString!;

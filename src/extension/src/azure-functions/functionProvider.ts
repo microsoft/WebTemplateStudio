@@ -2,7 +2,7 @@ import { ValidationHelper, FileHelper } from './utils';
 import { ServiceClientCredentials } from 'ms-rest';
 import * as WebsiteManagement from 'azure-arm-website';
 import { FileError, DeploymentError, AuthorizationError, ConnectionError } from '../errors';
-import { SubscriptionItem, ResourceGroupItem } from '../azure-auth/AzureAuth';
+import { SubscriptionItem, ResourceGroupItem } from '../azure-auth/azureAuth';
 import { config } from './config';
 import { ZipDeploy } from './utils/zipDeployHelper';
 
