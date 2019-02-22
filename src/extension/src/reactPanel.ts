@@ -91,6 +91,7 @@ export class ReactPanel {
             return;
           case "cosmos":
             vscode.window.showInformationMessage("Cosmos deployed");
+            return;
         }
       },
       null,
