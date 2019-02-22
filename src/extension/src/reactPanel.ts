@@ -85,6 +85,12 @@ export class ReactPanel {
                 subscriptions: subs
               });
             });
+            return;
+          case "functions":
+            vscode.window.showInformationMessage("Your function is now on Azure.");
+            return;
+          case "cosmos":
+            vscode.window.showInformationMessage("Cosmos deployed");
         }
       },
       null,
