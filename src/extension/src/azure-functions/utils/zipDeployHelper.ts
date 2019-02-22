@@ -21,15 +21,15 @@ export namespace ZipDeploy {
                 Accept: '*/*'
             }
         };
-        
+
         fs.createReadStream(zipPath)
-        .pipe(request.post(options, (uploadZipErr: any, uploadZipResponse: any) => {
-            if (uploadZipErr) {
-                return Promise.reject(uploadZipErr);
-            } else {
-                return Promise.resolve(uploadZipResponse);
+            .pipe(request.post(options, (uploadZipErr: any, uploadZipResponse: any) => {
+                if (uploadZipErr) {
+                    return Promise.reject(uploadZipErr);
+                } else {
+                    return Promise.resolve(uploadZipResponse);
+                }
             }
-        }
-        ));
+            ));
     }
 }

@@ -4,8 +4,8 @@ import { ValidationError } from '../../errors';
 export namespace ValidationHelper {
 
     export function validate(selections: FunctionSelections): void {
-            validateFunctionNames(selections.functionNames);
-            validateFunctionAppName(selections.functionAppName);
+        validateFunctionNames(selections.functionNames);
+        validateFunctionAppName(selections.functionAppName);
     }
 
     function validateFunctionNames(names: string[]): void {

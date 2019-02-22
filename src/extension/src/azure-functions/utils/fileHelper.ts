@@ -43,7 +43,7 @@ export namespace FileHelper {
 
     function mkdir(dirPath: string): void {
         if (fsx.pathExistsSync(dirPath)) {
-            fsx.removeSync(dirPath);            
+            fsx.removeSync(dirPath);
         }
 
         fsx.mkdirpSync(dirPath);
@@ -51,7 +51,7 @@ export namespace FileHelper {
 
     function createTempZip(basePath: string, funcAppName: string): void {
         fsx.mkdirpSync(path.join(basePath, 'tmp'));
-        
+
         let zipPath: string = path.join(basePath, 'tmp/out.zip');
         const output = fs.createWriteStream(zipPath);
 

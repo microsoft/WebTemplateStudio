@@ -38,12 +38,12 @@ export type Runtime = "dotnet" | "node";
 * }, 
 */
 export interface FunctionSelections {
-    functionAppName:    string;
-    subscriptionItem:   SubscriptionItem;
-    resourceGroupItem:  ResourceGroupItem;
-    location:           string; 
-    runtime:            Runtime;
-    functionNames:      string[];
+    functionAppName: string;
+    subscriptionItem: SubscriptionItem;
+    resourceGroupItem: ResourceGroupItem;
+    location: string;
+    runtime: Runtime;
+    functionNames: string[];
 }
 
 export namespace FunctionProvider {
@@ -67,12 +67,12 @@ export namespace FunctionProvider {
 
         try {
             let credentials: ServiceClientCredentials = selections.subscriptionItem.session.credentials;
-        
+
             var webClient = new WebsiteManagement.WebSiteManagementClient(credentials, selections.subscriptionItem.subscriptionId);
         } catch (err) {
             throw new AuthorizationError(err.message);
         }
-        
+
 
         try {
             FileHelper.initFunctionDirectory(appPath, selections.functionAppName, selections.functionNames, selections.runtime);
@@ -88,7 +88,7 @@ export namespace FunctionProvider {
                     http20Enabled: true,
                 }
             });
-            
+
             await webClient.webApps.updateApplicationSettings(selections.resourceGroupItem.name, selections.functionAppName, {
                 kind: "functionapp",
                 properties: {
@@ -123,7 +123,7 @@ export namespace FunctionProvider {
     * @returns Promise<boolean> True if the app name is available, false if it isn't
     *   catch errors as required
     */
-    export async function checkFunctionAppName(appName: string, subscriptionItem: SubscriptionItem) : Promise<boolean | undefined> {
+    export async function checkFunctionAppName(appName: string, subscriptionItem: SubscriptionItem): Promise<boolean | undefined> {
         try {
             let credentials: ServiceClientCredentials = subscriptionItem.session.credentials;
 
@@ -134,13 +134,13 @@ export namespace FunctionProvider {
 
         ValidationHelper.validateFunctionAppName(appName);
 
-        return await webClient.checkNameAvailability(appName + config.functionAppDomain, "Site", {isFqdn: true})
-        .then((res) => {
-            return res.nameAvailable;
-        })
-        .catch((err) => {
-            throw new ConnectionError(err.message);
-        });
+        return await webClient.checkNameAvailability(appName + config.functionAppDomain, "Site", { isFqdn: true })
+            .then((res) => {
+                return res.nameAvailable;
+            })
+            .catch((err) => {
+                throw new ConnectionError(err.message);
+            });
     }
 }
 
