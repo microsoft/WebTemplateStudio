@@ -89,7 +89,7 @@ export namespace FunctionProvider {
                 }
             });
 
-            await webClient.webApps.updateApplicationSettings(selections.resourceGroupItem.name, selections.functionAppName, {
+            webClient.webApps.updateApplicationSettings(selections.resourceGroupItem.name, selections.functionAppName, {
                 kind: "functionapp",
                 properties: {
                     "FUNCTIONS_EXTENSION_VERSION": "~2",
@@ -97,20 +97,25 @@ export namespace FunctionProvider {
                     "WEBSITE_RUN_FROM_PACKAGE": "1",
                     "WEBSITE_NODE_DEFAULT_VERSION": "8.11.1",
                 }
+            }).then((result) => {
+                setTimeout(async () => {
+                    await ZipDeploy.zipDeploy(selections.subscriptionItem.session.credentials, appPath, selections.functionAppName);
+
+                    try {
+                        FileHelper.deleteTempZip(appPath);
+                    } catch (err) {
+                        throw new FileError(err.message);
+                    }
+
+                    return Promise.resolve(result);
+                }, 10000);
             });
-
-            await ZipDeploy.zipDeploy(selections.subscriptionItem.session.credentials, appPath, selections.functionAppName);
-
         } catch (err) {
+            if (err.constructor === FileError) {
+                throw err;
+            }
             throw new DeploymentError(err.message);
         }
-
-        try {
-            FileHelper.deleteTempZip(appPath);
-        } catch (err) {
-            throw new FileError(err.message);
-        }
-
     }
 
     /*
