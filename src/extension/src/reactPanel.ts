@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "path";
+import { AzureAuth } from './azure-auth/AzureAuth';
 
 /**
  * Manages react webview panels
@@ -66,6 +67,16 @@ export class ReactPanel {
           case "alert":
             vscode.window.showErrorMessage(message.text);
             return;
+          case "login":
+            AzureAuth.login().then(res => {
+              const email = AzureAuth.getEmail();
+              this._panel.webview.postMessage({
+                command: 'login',
+                email: email
+              });
+            }).catch(err => {
+              console.log(err);
+            });
         }
       },
       null,
@@ -121,8 +132,8 @@ export class ReactPanel {
 				<link rel="stylesheet" type="text/css" href="${styleUri}">
 				<meta img-src vscode-resource: https: ;style-src vscode-resource: 'unsafe-inline' http: https: data:;">
 				<base href="${vscode.Uri.file(path.join(this._extensionPath, "react")).with({
-          scheme: "vscode-resource"
-        })}/">
+      scheme: "vscode-resource"
+    })}/">
 			</head>
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>

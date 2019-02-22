@@ -1,9 +1,9 @@
 import { AzureAccount, AzureSession } from './azure-account.api'; // Other extensions need to copy this .d.ts to their repository.
 import { extensions, commands } from 'vscode';
 import { SubscriptionModels } from 'azure-arm-resource';
-import { ServiceClientCredentials } from 'ms-rest';
 import { SubscriptionClient } from '../../node_modules/azure-arm-resource/lib/subscription/subscriptionClient';
 import { ResourceManagementClient } from '../../node_modules/azure-arm-resource/lib/resource/resourceManagementClient';
+import { AuthorizationError } from '../errors';
 
 export interface SubscriptionItem {
     label: string;
@@ -30,23 +30,32 @@ export abstract class AzureAuth {
         /**
          * Initializes the AzureAccount object if not initialized.
          * Will get called whenever a function that uses AzureAccount object is called
-         * TODO: Force user to login if not logged in, currently breaks
          */
         if (this.api === undefined) {
             this.api = extensions.getExtension<AzureAccount>('ms-vscode.azure-account')!.exports;
-            if (!(await this.api.waitForLogin)) {
-                commands.executeCommand("azure-account.askForLogin");
-            }
         }
     }
 
-    public static getCredentials(): ServiceClientCredentials {
+    public static async login(): Promise<Boolean> {
+        this.initialize();
+        if (this.api.status !== "LoggedIn") {
+            await commands.executeCommand("azure-account.login");
+            // Make sure it did not return from timeout
+            if (this.api.status === "LoggingIn") {
+                throw new AuthorizationError("Timeout. User is not logged in");
+            }
+            return true;
+        } else {
+            return true;
+        }
+    }
+
+    public static getEmail(): string {
         this.initialize();
         if (this.api.sessions.length > 0) {
-            return this.api.sessions[0].credentials;
+            return this.api.sessions[0].userId;
         } else {
-            commands.executeCommand("azure-account.login");
-            throw Error("Error: there is no session available. Make sure the user is logged in.");
+            throw new AuthorizationError("There is no session available. Make sure the user is logged in.");
         }
     }
 
