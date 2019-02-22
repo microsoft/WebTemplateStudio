@@ -56,7 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
         });
       }
 
-      FunctionProvider.createFunctionApp(
+      await FunctionProvider.createFunctionApp(
         {
           functionAppName: appName,
           subscriptionItem: subscriptionItem,
@@ -122,28 +122,7 @@ export function deactivate() {
 }
 
 // temporary function that returns the Subscription Item for given subscription name
-<<<<<<< HEAD
 export async function tempGetSubscription(name: string): Promise<SubscriptionItem> {
-	let subItem: SubscriptionItem = <SubscriptionItem>{};
-
-	await AzureAuth.getSubscriptions().then(items => {
-		for (let item of items) {
-			if (item.label === name) {
-				subItem = item;
-				break;
-			}
-		}
-	});
-
-	return subItem;
-}
-
-// temporary function that returns the ResourceGroup Item for given resource and subscription name
-export async function tempGetResourceGroup(
-	name: string,
-	subscription: string
-=======
-async function tempGetSubscription(name: string): Promise<SubscriptionItem> {
   let subItem: SubscriptionItem = <SubscriptionItem>{};
 
   await AzureAuth.getSubscriptions().then(items => {
@@ -159,10 +138,9 @@ async function tempGetSubscription(name: string): Promise<SubscriptionItem> {
 }
 
 // temporary function that returns the ResourceGroup Item for given resource and subscription name
-async function tempGetResourceGroup(
+export async function tempGetResourceGroup(
   name: string,
   subscription: string
->>>>>>> e17a2aac2403c24ca49ac4d8441d4a11faeba081
 ): Promise<ResourceGroupItem> {
   let resItem: ResourceGroupItem = <ResourceGroupItem>{};
 
