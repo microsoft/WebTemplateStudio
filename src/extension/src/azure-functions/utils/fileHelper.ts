@@ -5,6 +5,7 @@ import { config } from '../config';
 import * as appRoot from 'app-root-path';
 import * as archiver from 'archiver';
 import { Runtime } from '../functionProvider';
+import * as rimraf from 'rimraf';
 
 export namespace FileHelper {
 
@@ -74,5 +75,6 @@ export namespace FileHelper {
 
     export function deleteTempZip(basePath: string): void {
         fsx.removeSync(path.join(basePath, 'tmp'));
+        rimraf(path.join(basePath, 'tmp'), () => { });
     }
 }
