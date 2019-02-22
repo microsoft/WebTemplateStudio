@@ -4,6 +4,7 @@ import * as WebsiteManagement from 'azure-arm-website';
 import { FileError, DeploymentError, AuthorizationError, ConnectionError } from '../errors';
 import { SubscriptionItem, ResourceGroupItem } from '../azure-auth/AzureAuth';
 import { config } from './config';
+import { ZipDeploy } from './utils/zipDeployHelper';
 
 
 /*
@@ -66,7 +67,7 @@ export namespace FunctionProvider {
 
         try {
             let credentials: ServiceClientCredentials = selections.subscriptionItem.session.credentials;
-
+        
             var webClient = new WebsiteManagement.WebSiteManagementClient(credentials, selections.subscriptionItem.subscriptionId);
         } catch (err) {
             throw new AuthorizationError(err.message);
@@ -93,11 +94,21 @@ export namespace FunctionProvider {
                 properties: {
                     "FUNCTIONS_EXTENSION_VERSION": "~2",
                     "FUNCTIONS_WORKER_RUNTIME": selections.runtime,
-                    "WEBSITE_RUN_FROM_PACKAGE": "1"
+                    "WEBSITE_RUN_FROM_PACKAGE": "1",
+                    "WEBSITE_NODE_DEFAULT_VERSION": "8.11.1",
                 }
             });
+
+            await ZipDeploy.zipDeploy(selections.subscriptionItem.session.credentials, appPath, selections.functionAppName);
+
         } catch (err) {
             throw new DeploymentError(err.message);
+        }
+
+        try {
+            FileHelper.deleteTempZip(appPath);
+        } catch (err) {
+            throw new FileError(err.message);
         }
 
     }

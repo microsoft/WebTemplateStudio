@@ -23,7 +23,7 @@ export namespace FileHelper {
         }
 
         copySettingsFiles(funcAppPath);
-        createTempZip(funcAppPath);
+        createTempZip(basePath);
     }
 
     function copySettingsFiles(funcAppPath: string) {
@@ -49,10 +49,10 @@ export namespace FileHelper {
         fsx.mkdirpSync(dirPath);
     }
 
-    function createTempZip(funcAppPath: string): void {
-        fsx.mkdirpSync(path.join(funcAppPath, 'tmp'));
+    function createTempZip(basePath: string): void {
+        fsx.mkdirpSync(path.join(basePath, 'tmp'));
         
-        let zipPath: string = path.join(funcAppPath, 'tmp/out.zip');
+        let zipPath: string = path.join(basePath, 'tmp/out.zip');
         const output = fs.createWriteStream(zipPath);
 
         var archive = archiver('zip', {
@@ -68,11 +68,11 @@ export namespace FileHelper {
         });
 
         archive.pipe(output);
-        archive.directory(funcAppPath, false);
+        archive.directory(basePath, false);
         archive.finalize();
     }
 
-    export function deleteTempZip(basePath: string, appName: string): void {
-        fsx.removeSync(path.join(basePath, appName, 'tmp'));
+    export function deleteTempZip(basePath: string): void {
+        fsx.removeSync(path.join(basePath, 'tmp'));
     }
 }

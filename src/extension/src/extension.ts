@@ -30,9 +30,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 			FunctionProvider.createFunctionApp(
 				{
-					functionAppName: "YOUR_UNIQUE_FUNCTION_APP_NAME",
+					functionAppName: "YOUR-UNIQUE-FUNCTION-APP-NAME",
 					subscriptionItem: subscriptionItem,
-					location: "YOUR_LOCATION",
+					location: "West US",
 					runtime: "node",
 					resourceGroupItem: resourceGroupItem,
 					functionNames: ["function1", "function2", "function3"]
