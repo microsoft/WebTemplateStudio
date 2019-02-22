@@ -77,6 +77,14 @@ export class ReactPanel {
             }).catch(err => {
               console.log(err);
             });
+          case "subscriptions":
+            AzureAuth.getSubscriptions().then(items => {
+              const subs = items;
+              this._panel.webview.postMessage({
+                command: 'subscriptions',
+                subscriptions: subs
+              });
+            });
         }
       },
       null,
