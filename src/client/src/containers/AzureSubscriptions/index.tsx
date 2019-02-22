@@ -18,7 +18,7 @@ interface IState {
 
 type Props = IAzureLoginProps;
 
-class AzureSubscriptions extends React.Component<Props,IState> {
+class AzureSubscriptions extends React.Component<Props, IState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -34,22 +34,28 @@ class AzureSubscriptions extends React.Component<Props,IState> {
     public render() {
         const { isLoggedIn } = this.props;
         return (
-            isLoggedIn && 
-                <div className={grid.row}>
-                    {!!this.state.azureServices && 
-                        this.state.azureServices.map((option) => (
-                            <div key={option.title} className={grid.col6}>
-                                <Card
-                                    cardTitle={option.title}
-                                    cardBody={option.body}
-                                    buttonText="Create Resource"
-                                    handleButtonClick={()=>{}}
-                                    handleDetailsClick={()=>{}}
-                                    svgUrl={option.svgUrl}
-                                />
-                            </div>
+            isLoggedIn &&
+            <div className={grid.row}>
+                {!!this.state.azureServices &&
+                    this.state.azureServices.map((option) => (
+                        <div key={option.title} className={grid.col6}>
+                            <Card
+                                cardTitle={option.title}
+                                cardBody={option.body}
+                                buttonText="Create Resource"
+                                handleButtonClick={() => {
+                                    // @ts-ignore
+                                    this.props.vscode.vscodeObject.postMessage({
+                                        command: "alert",
+                                        text: option.title
+                                    });
+                                }}
+                                handleDetailsClick={() => { }}
+                                svgUrl={option.svgUrl}
+                            />
+                        </div>
                     ))}
-                </div>
+            </div>
         )
     }
 }

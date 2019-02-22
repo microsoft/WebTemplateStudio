@@ -35,6 +35,24 @@ class Footer extends React.Component<Props> {
     });
   };
 
+  public logFunctionsMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    // @ts-ignore
+    this.props.vscode.vscodeObject.postMessage({
+      command: "functions",
+      text: "Sending Message to VSCode"
+    });
+  };
+
+  public logCosmosMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    // @ts-ignore
+    this.props.vscode.vscodeObject.postMessage({
+      command: "cosmos",
+      text: "Sending Message to VSCode"
+    });
+  };
+
   public render() {
     // TODO: Needs access to redux to determine where each link should go to
     // TODO: Add previous paths through link prop to track state/history
@@ -42,27 +60,33 @@ class Footer extends React.Component<Props> {
     return (
       <div className={styles.footer}>
         {
-          pathname !== "/" && 
-            <div>
-              <Link
-                className={styles.button}
-                to={pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]}
-              >
-                Back
+          pathname !== "/" &&
+          <div>
+            <Link
+              className={styles.button}
+              to={pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]}
+            >
+              Back
               </Link>
-              <Link
-                className={styles.button}
-                to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
-              >
-                Next
+            <Link
+              className={styles.button}
+              to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
+            >
+              Next
               </Link>
-              <button className={styles.button} onClick={this.logMessageToVsCode}>
-                Generate
+            <button className={styles.button} onClick={this.logMessageToVsCode}>
+              Generate
               </button>
-              <Link className={styles.button} to="/">
-                Cancel
+            <Link className={styles.button} to="/">
+              Cancel
               </Link>
-            </div>
+            <button className={styles.button} onClick={this.logFunctionsMessageToVsCode}>
+              Create Functions
+              </button>
+            <button className={styles.button} onClick={this.logCosmosMessageToVsCode}>
+              Create Cosmos DB
+              </button>
+          </div>
         }
       </div>
     );
