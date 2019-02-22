@@ -5,6 +5,7 @@ import { config } from '../config';
 import * as appRoot from 'app-root-path';
 import * as archiver from 'archiver';
 import { Runtime } from '../functionProvider';
+import * as rimraf from 'rimraf';
 
 export namespace FileHelper {
 
@@ -52,7 +53,7 @@ export namespace FileHelper {
     function createTempZip(basePath: string, funcAppName: string): void {
         fsx.mkdirpSync(path.join(basePath, 'tmp'));
 
-        let zipPath: string = path.join(basePath, 'tmp/out.zip');
+        let zipPath: string = path.join(basePath, 'tmp', 'out.zip');
         const output = fs.createWriteStream(zipPath);
 
         var archive = archiver('zip', {
@@ -74,5 +75,6 @@ export namespace FileHelper {
 
     export function deleteTempZip(basePath: string): void {
         fsx.removeSync(path.join(basePath, 'tmp'));
+        rimraf(path.join(basePath, 'tmp'), () => { });
     }
 }

@@ -2,7 +2,7 @@ import { ValidationHelper, FileHelper } from './utils';
 import { ServiceClientCredentials } from 'ms-rest';
 import * as WebsiteManagement from 'azure-arm-website';
 import { FileError, DeploymentError, AuthorizationError, ConnectionError } from '../errors';
-import { SubscriptionItem, ResourceGroupItem } from '../azure-auth/AzureAuth';
+import { SubscriptionItem, ResourceGroupItem } from '../azure-auth/azureAuth';
 import { config } from './config';
 import { ZipDeploy } from './utils/zipDeployHelper';
 
@@ -17,8 +17,7 @@ export type Runtime = "dotnet" | "node";
 * 
 * functionAppName: Globally unique app name for your function. Use checkFunctionAppName to validate
 * subscriptionItem: Subscription Item for user's selected subscription
-* resourceGroupName: Name for the resource group under the subscription selected by use.
-*   If user creates a new subscription, send that resource group name in selections after resource group is created.
+* resourceGroupItem ResourceGroupItem for user's selected resource group
 * location: Location for deployment, can be West US/East US/China North/East Asia etc.
 *   The location is in same format as found on Azure portal
 * runtime: Runtime for the deployment, can be either 'dotnet' or 'node'. Throws validation error otherwise.
@@ -33,7 +32,7 @@ export type Runtime = "dotnet" | "node";
 * subscriptionItem: {label: , subscriptionId: , session: , subscription: },
 * location: "West US",
 * runtime: "node",
-* resourceGroupName: "YOUR_RESOURCE_GROUP",
+* resourceGroupItem: {location: , name: resourceGroup: },
 * functionNames: ["function1", "function2", "function3"]
 * }, 
 */
@@ -89,7 +88,7 @@ export namespace FunctionProvider {
                 }
             });
 
-            await webClient.webApps.updateApplicationSettings(selections.resourceGroupItem.name, selections.functionAppName, {
+            webClient.webApps.updateApplicationSettings(selections.resourceGroupItem.name, selections.functionAppName, {
                 kind: "functionapp",
                 properties: {
                     "FUNCTIONS_EXTENSION_VERSION": "~2",
@@ -97,20 +96,25 @@ export namespace FunctionProvider {
                     "WEBSITE_RUN_FROM_PACKAGE": "1",
                     "WEBSITE_NODE_DEFAULT_VERSION": "8.11.1",
                 }
+            }).then((result) => {
+                setTimeout(async () => {
+                    await ZipDeploy.zipDeploy(selections.subscriptionItem.session.credentials, appPath, selections.functionAppName);
+
+                    try {
+                        FileHelper.deleteTempZip(appPath);
+                    } catch (err) {
+                        throw new FileError(err.message);
+                    }
+
+                    return Promise.resolve(result);
+                }, 10000);
             });
-
-            await ZipDeploy.zipDeploy(selections.subscriptionItem.session.credentials, appPath, selections.functionAppName);
-
         } catch (err) {
+            if (err.constructor === FileError) {
+                throw err;
+            }
             throw new DeploymentError(err.message);
         }
-
-        try {
-            FileHelper.deleteTempZip(appPath);
-        } catch (err) {
-            throw new FileError(err.message);
-        }
-
     }
 
     /*

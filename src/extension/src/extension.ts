@@ -8,7 +8,7 @@ import {
 	AzureAuth,
 	SubscriptionItem,
 	ResourceGroupItem
-} from "./azure-auth/AzureAuth";
+} from "./azure-auth/azureAuth";
 
 let apiProcess: ChildProcess;
 
