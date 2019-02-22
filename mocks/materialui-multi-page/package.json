@@ -12,7 +12,8 @@
     "jade": "^1.11.0",
     "morgan": "^1.9.1",
     "react": "^16.8.2",
-    "react-dom": "^16.8.2"
+    "react-dom": "^16.8.2",
+    "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",

@@ -20,13 +20,13 @@ function index(props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="static" color="default" className={classes.appBar}>
+      <AppBar position="sticky" color="default" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.toolbarTitle}>
             Company name
           </Typography>
-          <Button>Link</Button>
-          <Button>Link</Button>
+          <Button href="/masterdetail">Master Detail</Button>
+          <Button href="/longlist">Long List</Button>
           <Button>Link</Button>
         </Toolbar>
       </AppBar>
