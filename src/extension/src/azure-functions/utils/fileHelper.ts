@@ -52,7 +52,7 @@ export namespace FileHelper {
     function createTempZip(basePath: string, funcAppName: string): void {
         fsx.mkdirpSync(path.join(basePath, 'tmp'));
 
-        let zipPath: string = path.join(basePath, 'tmp/out.zip');
+        let zipPath: string = path.join(basePath, 'tmp', 'out.zip');
         const output = fs.createWriteStream(zipPath);
 
         var archive = archiver('zip', {
