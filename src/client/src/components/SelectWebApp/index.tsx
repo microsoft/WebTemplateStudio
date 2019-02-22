@@ -6,9 +6,10 @@ import { IOption } from "../../types/option";
 import SelectOption from "../SelectOption";
 
 import { selectWebAppAction } from "../../actions/selectWebApp";
+import { ISelected } from "../../types/selected";
 
 interface IDispatchProps {
-  selectWebApp: (webApp: string) => void;
+  selectWebApp: (selectedApp: ISelected) => void;
   getProjectTypes: () => any;
 }
 
@@ -64,8 +65,8 @@ const mapStateToProps = (state: any): IStoreProps => {
 };
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  selectWebApp: (webApp: string) => {
-    dispatch(selectWebAppAction(webApp));
+  selectWebApp: (selectedApp: ISelected) => {
+    dispatch(selectWebAppAction(selectedApp));
   },
   getProjectTypes: () => {
     dispatch(getProjectTypesAction());

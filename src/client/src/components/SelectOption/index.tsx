@@ -7,11 +7,13 @@ import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
 import { IOption } from "../../types/option";
+import { ISelected } from "../../types/selected";
 import Title from "../Title";
 
 interface ISelectOptionProps {
   title: string;
-  selectCard?: (card: string) => void;
+  internalName?: string;
+  selectCard?: (card: ISelected) => void;
   selectedCards?: number[];
   selectOptions?: (cards: string[]) => void;
   options: IOption[];
@@ -29,7 +31,7 @@ class SelectOption extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      selectedCards: this.props.selectedCards ? this.props.selectedCards : [0],
+      selectedCards: this.props.selectedCards ? this.props.selectedCards : [0]
     };
   }
 
@@ -44,8 +46,8 @@ class SelectOption extends React.Component<
    * Converts the index numbers of options into ids
    * In this case, titles, but can be changed to whatever is required
    * by the redux store.
-   * 
-   * @param cardNumbers 
+   *
+   * @param cardNumbers
    */
   public convertCardNumbersToTitles(cardNumbers: number[]): string[] {
     const cardTitles = [];
@@ -58,8 +60,8 @@ class SelectOption extends React.Component<
   /**
    * Allows more than one option to be selected at a time.
    * Updates the redux store with the selection.
-   * 
-   * @param cardNumber 
+   *
+   * @param cardNumber
    */
   public addOrRemoveOption(cardNumber: number) {
     const { selectedCards } = this.state;
@@ -80,15 +82,18 @@ class SelectOption extends React.Component<
   /**
    * Ensures only one option can be selected at a time.
    * Updates the component state and the redux store with selection.
-   * 
-   * @param cardNumber 
+   *
+   * @param cardNumber
    */
   public exchangeOption(cardNumber: number) {
     const { selectedCards } = this.state;
     selectedCards.pop();
     selectedCards.push(cardNumber);
     if (this.props.selectCard !== undefined) {
-      this.props.selectCard(this.props.options[cardNumber].title);
+      this.props.selectCard({
+        title: this.props.options[cardNumber].title,
+        internalName: this.props.options[cardNumber].internalName
+      });
     }
     this.setState({
       selectedCards
@@ -108,9 +113,7 @@ class SelectOption extends React.Component<
       <div>
         <div className={grid.row}>
           <div className={grid.col12}>
-            <Title>
-              {this.props.title}
-            </Title>
+            <Title>{this.props.title}</Title>
           </div>
         </div>
         <div className={styles.container}>

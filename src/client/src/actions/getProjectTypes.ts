@@ -37,13 +37,15 @@ function getMetadataFromJson(items: any[]): IMetadata[] {
     position: val.order,
     licenses: val.licenses,
     svgUrl: val.icon,
+    tags: val.tags,
     selected: false
   }));
 }
 
 function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
   return items.map<IOption>(val => ({
-    title: val.name,
+    title: val.displayName,
+    internalName: val.name,
     body: val.summary,
     svgUrl: process.env.REACT_APP_RELATIVE_PATH + blankpage,
     selected: val.selected

@@ -13,6 +13,7 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 import cancel from "../../assets/Cancel.svg";
 import reorder from "../../assets/Reorder.svg";
 
+import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 
 // TODO: These constants are temporary and will migrate to the app state tree (redux store)
@@ -65,9 +66,9 @@ interface ISelectionType {
 }
 
 interface IDispatchProps {
-  selectBackendFramework: (framework: string) => void;
-  selectFrontendFramework: (framework: string) => void;
-  selectWebApp: (projectType: string) => void;
+  selectBackendFramework: (framework: ISelected) => void;
+  selectFrontendFramework: (framework: ISelected) => void;
+  selectWebApp: (projectType: ISelected) => void;
 }
 
 interface IRightSidebarProps {
@@ -88,7 +89,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     };
   };
   public handleChange(e: IDropdownValue) {
-    this.props.selectFrontendFramework(e.value);
+    this.props.selectFrontendFramework({
+      title: e.label,
+      internalName: e.value
+    });
   }
   public showWebApp = (): boolean => {
     const { pathname } = this.props.location;
@@ -115,7 +119,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             <div className={styles.dropdownTitle}>Project Type</div>
             <Dropdown
               handleChange={dropdownOption => {
-                this.props.selectWebApp(dropdownOption.value);
+                this.props.selectWebApp({
+                  title: dropdownOption.label,
+                  internalName: dropdownOption.value
+                });
               }}
               defaultValue={this.convertToDropdownObject(
                 this.props.selection.appType
@@ -145,7 +152,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             <div className={styles.dropdownTitle}>Back-end Framework</div>
             <Dropdown
               handleChange={dropdownOption => {
-                this.props.selectBackendFramework(dropdownOption.value);
+                this.props.selectBackendFramework({
+                  title: dropdownOption.label,
+                  internalName: dropdownOption.value
+                });
               }}
               defaultValue={backEndOptions[0]}
               options={backEndOptions}
@@ -182,13 +192,13 @@ const mapStateToProps = (state: any): IRightSidebarProps => {
 };
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  selectBackendFramework: (framework: string) => {
+  selectBackendFramework: (framework: ISelected) => {
     dispatch(selectBackendFrameworkAction(framework));
   },
-  selectFrontendFramework: (framework: string) => {
+  selectFrontendFramework: (framework: ISelected) => {
     dispatch(selectFrontEndFrameworkAction(framework));
   },
-  selectWebApp: (projectType: string) => {
+  selectWebApp: (projectType: ISelected) => {
     dispatch(selectWebAppAction(projectType));
   }
 });

@@ -7,4 +7,5 @@ export interface IMetadata {
   svgUrl: string | undefined;
   licenses: string[];
   selected: boolean;
+  tags: any;
 }
