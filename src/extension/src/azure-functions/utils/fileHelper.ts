@@ -67,7 +67,7 @@ export namespace FileHelper {
         });
 
         archive.pipe(output);
-        archive.directory(funcAppPath, false);
+        archive.directory(path.join(funcAppPath), false);
         archive.finalize();
     }
 }
