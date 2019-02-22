@@ -31,18 +31,23 @@ export enum API {
 
 export namespace CosmosDBDeploy { 
 
-  export async function createCosmosDB(userCosmosDBSelection : CosmosDBSelections ) : Promise<DatabaseObject>{
-    let userSubscriptionItem : SubscriptionItem = userCosmosDBSelection.subscriptionItem;
+  function createCosmosClient(userSubscriptionItem : SubscriptionItem ){
+    
     let userCredentials: ServiceClientCredentials = userSubscriptionItem.session.credentials;
-    if (userCosmosDBSelection.subscriptionItem === undefined || userCosmosDBSelection.subscriptionItem.subscription === undefined || userCosmosDBSelection.subscriptionItem.subscriptionId === undefined) {
+    if (userSubscriptionItem === undefined || userSubscriptionItem.subscription === undefined || userSubscriptionItem.subscriptionId === undefined) {
       throw new SubscriptionError("CosmosDBDeploy: SubscriptionItem cannot have undefined values");
     }
+    return new CosmosDBManagementClient(userCredentials, userSubscriptionItem.subscriptionId, userSubscriptionItem.session.environment.resourceManagerEndpointUrl);
+  }
+  
+  export async function createCosmosDB(userCosmosDBSelection : CosmosDBSelections ) : Promise<DatabaseObject>{
 
+    let userSubscriptionItem : SubscriptionItem = userCosmosDBSelection.subscriptionItem;
     try{
       /*
       * Create Cosmos Client with users credentials and selected subscription *
       */
-      var cosmosClient = new CosmosDBManagementClient(userCredentials, userSubscriptionItem.subscriptionId, userSubscriptionItem.session.environment.resourceManagerEndpointUrl);
+      var cosmosClient = createCosmosClient(userSubscriptionItem);
     }
     catch(err){
       throw new AuthorizationError("CosmosDBDeploy: " + err.message);
@@ -87,6 +92,24 @@ export namespace CosmosDBDeploy {
     console.log(result!.connectionStrings![0].connectionString!);
     return result!.connectionStrings![0].connectionString!;
   }
+
+  export async function validateCosmosDBAccountName(name: string, userSubscriptionItem : SubscriptionItem ): Promise<string | undefined> {
+    let client: CosmosDBManagementClient = createCosmosClient(userSubscriptionItem);
+    name = name ? name.trim() : '';
+
+    const min = 3;
+    const max = 31;
+
+    if (name.length < min || name.length > max) {
+        return `The name must be between ${min} and ${max} characters.`;
+    } else if (name.match(/[^a-z0-9-]/)) {
+        return "The name can only contain lowercase letters, numbers, and the '-' character.";
+    } else if (await client.databaseAccounts.checkNameExists(name)) {
+        return `Account name "${name}" is not available.`;
+    } else {
+        return undefined;
+    }
+}
 }
 
 export class CosmosDbModuleWrapper {

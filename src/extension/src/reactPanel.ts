@@ -1,6 +1,8 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import { AzureAuth } from './azure-auth/AzureAuth';
+import { AzureAuth, SubscriptionItem, ResourceGroupItem } from './azure-auth/AzureAuth';
+import { CosmosDBDeploy, CosmosDBSelections, API } from "./azure-cosmosDB/cosmosDbModule";
+import { tempGetSubscription, tempGetResourceGroup } from "./extension";
 
 /**
  * Manages react webview panels
@@ -94,6 +96,8 @@ export class ReactPanel {
             return;
           case "cosmos":
             vscode.window.showInformationMessage("Cosmos deployed");
+            this.createCosmosDB();
+			      
             return;
         }
       },
@@ -102,6 +106,26 @@ export class ReactPanel {
     );
   }
 
+  private async createCosmosDB(){
+    let si: SubscriptionItem = await tempGetSubscription("GiV.Hackathon");
+    let rgi: ResourceGroupItem = await tempGetResourceGroup("GIV.W19.WTS", "GiV.Hackathon");
+    let vscOptions : vscode.InputBoxOptions = {
+      placeHolder: "Account name",
+      prompt: "Provide a Cosmos DB account name",
+      validateInput: (name: string) => CosmosDBDeploy.validateCosmosDBAccountName(name, si)
+  };
+    let dbname : any = await vscode.window.showInputBox(vscOptions); 
+    const selection : CosmosDBSelections = {
+      cosmosDBResourceName : dbname,
+      cosmosAPI : API.MongoDB,
+      location : "West US",
+      resourceGroupItem : rgi,
+      subscriptionItem : si,
+      tags : {"Created from" : "WTS demo-friday"}
+    } 
+
+    CosmosDBDeploy.createCosmosDB(selection);
+  }
   public doRefactor() {
     // Send a message to the webview webview.
     // You can send any JSON serializable data.
