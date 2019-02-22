@@ -18,17 +18,20 @@ import { loadWizardContentAction } from "./actions/loadWizardContent";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
+import { logIntoAzureAction } from "./actions/logIntoAzure";
 
 
 interface IDispatchProps {
   getVSCodeApi: () => void;
   loadWizardContent: () => void;
+  logIntoAzure: (email: string) => any;
 }
 
 class App extends React.Component<IDispatchProps> {
   public static defaultProps = {
     getVSCodeApi: () => {},
-    loadWizardContent: () => {}
+    loadWizardContent: () => {},
+    logIntoAzure: () => {},
   };
 
   public componentDidMount() {
@@ -36,6 +39,19 @@ class App extends React.Component<IDispatchProps> {
     this.props.loadWizardContent();
     const api = new EngineAPIService("5000", undefined);
     api.syncPlatforms();
+    window.addEventListener("message", event => {
+      console.log("getting event");
+      const message = event.data;
+      switch (message.command) {
+        case "login":
+          if (message.email != null) {
+            console.log("azure login")
+            console.log(message);
+            this.props.logIntoAzure(message.email);
+          }
+          return;
+      };
+    });
   }
 
   public render() {
@@ -71,7 +87,10 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   },
   loadWizardContent: () => {
     dispatch(loadWizardContentAction());
-  }
+  },
+  logIntoAzure: (email: string) => {
+    dispatch(logIntoAzureAction(email))
+  },
 });
 
 export default connect(
