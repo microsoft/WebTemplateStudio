@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 			"webTemplateStudioExtension.wizardLaunch",
 			() => {
 				apiProcess = ApiModule.StartApi(context);
-				console.log(apiProcess.pid);
+				console.log('API Process PID: ', apiProcess.pid);
 				ReactPanel.createOrShow(context.extensionPath);
 			}
 		)
@@ -40,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			FunctionProvider.createFunctionApp(
 				{
-					functionAppName: "YOUR-UNIQUE-FUNCTION-APP-NAME",
+					functionAppName: "UNIQUE-FUNCTION-APP-NAME",
 					subscriptionItem: subscriptionItem,
 					location: "West US",
 					runtime: "node",

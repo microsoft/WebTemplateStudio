@@ -8,7 +8,7 @@ export namespace ZipDeploy {
 
     export async function zipDeploy(credentials: ServiceClientCredentials, appPath: string, appName: string): Promise<void> {
 
-        const zipPath = path.join(appPath, 'tmp', 'out.zip');
+        const zipPath = path.join(appPath, appName, 'out.zip');
 
         const zipRequestUrl = `https://${appName.toLowerCase()}${config.functionZipPath}`;
 

@@ -33,7 +33,7 @@ export type Runtime = "dotnet" | "node";
 * subscriptionItem: {label: , subscriptionId: , session: , subscription: },
 * location: "West US",
 * runtime: "node",
-* resourceGroupName: "YOUR_RESOURCE_GROUP",
+* resourceGroupItem: {name:, location: , resourceGroup: },
 * functionNames: ["function1", "function2", "function3"]
 * }, 
 */
@@ -103,12 +103,6 @@ export namespace FunctionProvider {
 
         } catch (err) {
             throw new DeploymentError(err.message);
-        }
-
-        try {
-            FileHelper.deleteTempZip(appPath);
-        } catch (err) {
-            throw new FileError(err.message);
         }
 
     }

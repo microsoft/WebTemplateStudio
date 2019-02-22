@@ -16,7 +16,7 @@ export namespace ValidationHelper {
             }
         }
         if ((new Set(names)).size !== names.length) {
-            throw new ValidationError("No duplicates allowed for function names")
+            throw new ValidationError("No duplicates allowed for function names");
         }
     }
 
