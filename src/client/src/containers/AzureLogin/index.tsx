@@ -15,11 +15,17 @@ interface IDispatchProps {
 
 interface IAzureLoginProps {
     isLoggedIn: boolean;
+    vscode: any;
 }
 
 type Props = IDispatchProps & IAzureLoginProps;
 
 class AzureLogin extends React.Component<Props> {
+    public handleLogin = () => {
+        this.props.vscode.postMessage({
+            command: "login",
+        });
+    }
     public render() {
         const { isLoggedIn } = this.props;
         return (
@@ -29,7 +35,7 @@ class AzureLogin extends React.Component<Props> {
                 </Title>
                 <div className={styles.loginCard}>
                     {!isLoggedIn && <LoginCard 
-                        handleClick={() => { this.props.startLoginToAzure() }}
+                        handleClick={() => { this.handleLogin() }}
                         cardTitle="Microsoft Azure Deployment" 
                         cardBody="Use Azure to help build, manage, and deploy applications on a massive, global network. Sign in to your subscription account to get started." 
                     />}
@@ -42,13 +48,15 @@ class AzureLogin extends React.Component<Props> {
 
 const mapStateToProps = (state: any): IAzureLoginProps => {
     const { isLoggedIn } = state.azureProfileData;
+    const { vscodeObject } = state.vscode;
     return {
         isLoggedIn,
+        vscode: vscodeObject,
     }
 }
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-    startLoginToAzure: () => { dispatch(AzureActions.startLoginToAzure()) },
-})
+// const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+//     startLoginToAzure: () => { dispatch(AzureActions.startLoginToAzure()) },
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AzureLogin);
+export default connect(mapStateToProps, null)(AzureLogin);
