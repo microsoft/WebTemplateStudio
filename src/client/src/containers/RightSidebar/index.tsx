@@ -10,8 +10,8 @@ import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramewo
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/selectFrontEndFramework";
 import { selectWebAppAction } from "../../actions/selectWebApp";
 
-import cancel from "../../assets/Cancel.svg";
-import reorder from "../../assets/Reorder.svg";
+import cancel from "../../assets/cancel.svg";
+import reorder from "../../assets/reorder.svg";
 
 import styles from "./styles.module.css";
 

@@ -23,4 +23,4 @@ const startLoginToAzure = () => {
     }
 }
 
-export { isLoggedIntoAzureAction, startLoginToAzure };
+export { isLoggedIntoAzureAction, logIntoAzureAction, startLoginToAzure };
