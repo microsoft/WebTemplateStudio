@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand(
 		'webTemplateStudioExtension.createFunctionApp', async () => {
 			let subscriptionItem: SubscriptionItem = await tempGetSubscription("GiV.Hackathon");
-			let resourceGroupItem: ResourceGroupItem = await tempGetResourceGroup("GIV_W19_WTS", "GiV.Hackathon");
+			let resourceGroupItem: ResourceGroupItem = await tempGetResourceGroup("GIV.W19.WTS", "GiV.Hackathon");
 
 			FunctionProvider.createFunctionApp(
 				{
