@@ -87,6 +87,9 @@ export class ReactPanel {
             });
             return;
           case "functions":
+            async () => {
+              await vscode.commands.executeCommand('webTemplateStudioExtension.createFunctionApp');
+            }
             vscode.window.showInformationMessage("Your function is now on Azure.");
             return;
           case "cosmos":
