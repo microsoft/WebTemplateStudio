@@ -1,59 +1,78 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
+import { getProjectTypesAction } from "../../actions/getProjectTypes";
+import { IOption } from "../../types/option";
 import SelectOption from "../SelectOption";
 
 import { selectWebAppAction } from "../../actions/selectWebApp";
 
-import { IOption } from "../../types/option";
-import { string } from "prop-types";
-
 interface IDispatchProps {
-  selectWebApp: (webApp: string) => void,
+  selectWebApp: (webApp: string) => void;
+  getProjectTypes: () => any;
 }
 
-interface IProps {
-  options: IOption[];
+interface IStoreProps {
   selectedWebApp: string;
+  type: IOption[];
 }
 
-type Props = IDispatchProps & IProps;
+type Props = IDispatchProps & IStoreProps;
 
 class SelectWebApp extends React.Component<Props> {
+  public componentDidMount() {
+    if (this.props.getProjectTypes !== undefined) {
+      this.props.getProjectTypes();
+    }
+  }
+
   public convertSelectionToIndexNumber(framework: string): number[] {
-    for (let i = 0; i < this.props.options.length; i++) {
-      if (this.props.options[i].title === framework) {
+    for (let i = 0; i < this.props.type.length; i++) {
+      if (this.props.type[i].title === framework) {
         return [i];
       }
     }
     return [0];
   }
+
   public render() {
     return (
       <div>
-        <SelectOption
-          selectCard={this.props.selectWebApp}
-          multiSelect={false}
-          title="What type of web application are you building?"
-          options={this.props.options}
-          selectedCards={this.convertSelectionToIndexNumber(this.props.selectedWebApp)}
-        />
+        {this.props.type.length > 0 && (
+          <SelectOption
+            selectCard={this.props.selectWebApp}
+            multiSelect={false}
+            title="What type of web application are you building?"
+            options={this.props.type}
+            selectedCards={this.convertSelectionToIndexNumber(
+              this.props.selectedWebApp
+            )}
+          />
+        )}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: any): IProps => {
+const mapStateToProps = (state: any): IStoreProps => {
   const { appTypeOptions } = state.wizardContent;
   const { appType } = state.selection;
   return {
-    options: appTypeOptions,
     selectedWebApp: appType,
-  }
-}
+    type: state.wizardContent.projectTypes
+  };
+};
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  selectWebApp: (webApp: string) => { dispatch(selectWebAppAction(webApp)) },
+  selectWebApp: (webApp: string) => {
+    dispatch(selectWebAppAction(webApp));
+  },
+  getProjectTypes: () => {
+    dispatch(getProjectTypesAction());
+  }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectWebApp);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SelectWebApp);

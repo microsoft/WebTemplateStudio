@@ -53,5 +53,6 @@
   ],
   "devDependencies": {
     "tslint-config-prettier": "^1.18.0"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

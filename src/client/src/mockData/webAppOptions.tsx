@@ -3,7 +3,8 @@ import { IOption } from "../types/option";
 
 const options: IOption[] = [
   {
-    svgUrl: process.env.REACT_APP_RELATIVE_PATH + blankpage,
+    svgUrl:
+      "C:\\ProgramData\\CoreTemplateStudio\\Templates\\LocalEnv\\0.0.0.0\\_catalog\\projectTypes\\FullStackWebApp.svg",
     title: "Full Stack App",
     body: "A single page application with a local back-end server.",
     selected: false
@@ -18,6 +19,6 @@ const options: IOption[] = [
 
 const getWebAppOptions = (): Promise<IOption[]> => {
   return Promise.resolve(options);
-}
+};
 
 export default getWebAppOptions;
