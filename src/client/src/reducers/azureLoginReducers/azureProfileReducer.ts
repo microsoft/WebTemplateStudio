@@ -11,7 +11,11 @@ const profileData = (state = {}, action: any) => {
         case Actions.LOG_OUT_OF_AZURE:
             return {};
         case Actions.LOG_IN_TO_AZURE:
-            return action.payload;
+            const newState = {
+                ...state,
+                email: action.payload,
+            };
+            return newState;
         default:
             return state;
     }
