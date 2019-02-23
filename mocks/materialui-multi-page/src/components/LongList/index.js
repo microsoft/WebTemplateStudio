@@ -37,7 +37,7 @@ class index extends Component {
   }
 
   handleDelete(event, listItem) {
-    fetch(`/api/listItem/${listItem.id}`, { method: "DELETE" })
+    fetch(`/api/listItems/${listItem.id}`, { method: "DELETE" })
       .then(response => response.json())
       .then(res => {
         let list = this.state.list;

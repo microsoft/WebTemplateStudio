@@ -7,7 +7,7 @@ This folder is for the development of the final boiler plate code that will be g
 Templates are being developed using the create-react-app starter kit and express-react-starter (https://github.com/burkeholland/express-react-starter). To run for development enter a specific folder and run:
 
 ```
-npm install
+yarn install
 npm start
 ```
 
@@ -19,4 +19,4 @@ The web app will then be available at localhost:3000 and backend API at localhos
 
 `blog-redux` - Contains a blog page built with react, bootstrap and redux.
 
-`materialui-multi-page` - contains a long list page built with react, material-ui and an express back end
+`materialui-multi-page` - contains a long list and master detail page built with react, material-ui and an express back end
