@@ -7,7 +7,10 @@ import * as Actions from "../../actions/types";
 */
 
 // TODO: Default state to remove once API is hooked up
-const frontendFramework = (state = [], action: any) => {
+const frontendFramework = (state = {
+  title: "ReactJS",
+  internalName: "ReactJS"
+}, action: any) => {
   switch (action.type) {
     case Actions.SELECT_FRONTEND_FRAMEWORK:
       return action.payload;

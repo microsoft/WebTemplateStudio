@@ -8,6 +8,7 @@ const options: IOption[] = [
   {
     svgUrl: process.env.REACT_APP_RELATIVE_PATH + homepage,
     title: "Home Page",
+    internalName: "Homepage",
     body:
       "The introductory page of a website, typically serving as a table of contents for a site.",
     selected: false
@@ -15,6 +16,7 @@ const options: IOption[] = [
   {
     svgUrl: process.env.REACT_APP_RELATIVE_PATH + blogpage,
     title: "Blog Page",
+    internalName: "Blogpage",
     body:
       "A discussion or an informational website consisting of discrete, often informational diary-style text entries",
     selected: false
@@ -22,6 +24,7 @@ const options: IOption[] = [
   {
     svgUrl: process.env.REACT_APP_RELATIVE_PATH + contactpage,
     title: "Contact Page",
+    internalName: "Contactpage",
     body:
       "A page used to allow the visitor to contact the website or people who are responsible for the maintenance of the site.",
     selected: false

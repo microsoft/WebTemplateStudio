@@ -8,6 +8,7 @@ import styles from './styles.module.css';
 
 import * as AzureActions from "../../actions/logOutAzure";
 import * as ModalActions from "../../actions/modalActions";
+import { isCosmosResourceCreatedSelector } from "../../selectors/cosmosServiceSelector";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import getAzureServiceOptions from "../../mockData/azureServiceOptions";
@@ -21,6 +22,7 @@ interface IDispatchProps {
 interface IAzureLoginProps {
     isLoggedIn: boolean;
     isCosmosDbModalOpen: boolean;
+    isCosmosResourceCreated: boolean;
 }
 
 interface IState {
@@ -42,6 +44,12 @@ class AzureSubscriptions extends React.Component<Props,IState> {
             azureServices
         })
     }
+    public resourceButtonContent = (optionTitle: string): string => {
+        if (this.props.isCosmosResourceCreated && optionTitle.includes("Cosmos")) {
+            return "Edit Resource";
+        }
+        return "Create Resource";
+    }
     public render() {
         const { isLoggedIn } = this.props;
         return (
@@ -53,7 +61,7 @@ class AzureSubscriptions extends React.Component<Props,IState> {
                                 <Card
                                     cardTitle={option.title}
                                     cardBody={option.body}
-                                    buttonText="Create Resource"
+                                    buttonText={this.resourceButtonContent(option.title)}
                                     handleButtonClick={this.props.openCosmosDbModal}
                                     handleDetailsClick={()=>{}}
                                     svgUrl={option.svgUrl}
@@ -70,6 +78,7 @@ const mapStateToProps = (state: any): IAzureLoginProps => {
     return {
         isLoggedIn,
         isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
+        isCosmosResourceCreated: isCosmosResourceCreatedSelector(state),
     }
 }
 

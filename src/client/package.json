@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/classnames": "^2.2.7",
     "@types/jest": "23.3.13",
+    "@types/lodash": "^4.14.121",
     "@types/node": "10.12.19",
     "@types/node-fetch": "^2.1.6",
     "@types/react": "16.7.22",
@@ -18,6 +19,7 @@
     "@types/reselect": "^2.2.0",
     "classnames": "^2.2.6",
     "global": "^4.3.2",
+    "lodash": "^4.17.11",
     "node-fetch": "^2.3.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
