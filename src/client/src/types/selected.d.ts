@@ -1,4 +1,4 @@
 export interface ISelected {
-  title?: string;
+  title: string;
   internalName?: string;
 }

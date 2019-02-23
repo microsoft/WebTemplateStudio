@@ -14,7 +14,7 @@ interface IDispatchProps {
 }
 
 interface IStoreProps {
-  selectedWebApp: string;
+  selectedWebApp: ISelected;
   type: IOption[];
 }
 
@@ -27,9 +27,9 @@ class SelectWebApp extends React.Component<Props> {
     }
   }
 
-  public convertSelectionToIndexNumber(framework: string): number[] {
+  public convertSelectionToIndexNumber(framework: ISelected): number[] {
     for (let i = 0; i < this.props.type.length; i++) {
-      if (this.props.type[i].title === framework) {
+      if (this.props.type[i].internalName === framework.internalName) {
         return [i];
       }
     }
@@ -56,7 +56,6 @@ class SelectWebApp extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: any): IStoreProps => {
-  const { appTypeOptions } = state.wizardContent;
   const { appType } = state.selection;
   return {
     selectedWebApp: appType,

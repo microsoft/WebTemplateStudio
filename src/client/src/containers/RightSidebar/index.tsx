@@ -15,53 +15,15 @@ import reorder from "../../assets/Reorder.svg";
 
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
-
-// TODO: These constants are temporary and will migrate to the app state tree (redux store)
-const webAppOptions = [
-  {
-    value: "Full Stack Web App",
-    label: "Full Stack Web App"
-  },
-  {
-    value: "RESTful API",
-    label: "RESTful API"
-  }
-];
-const frontEndOptions = [
-  {
-    value: "React",
-    label: "React"
-  },
-  {
-    value: "Vue.JS",
-    label: "Vue.JS"
-  },
-  {
-    value: "AngularJS",
-    label: "AngularJS"
-  }
-];
-const backEndOptions = [
-  {
-    value: "Node.JS",
-    label: "Node.JS"
-  },
-  {
-    value: "ASP.NET",
-    label: "ASP.NET"
-  }
-];
-
-interface IDropdownValue {
-  value: string;
-  label: string;
-}
+import { IOption } from "../../types/option";
+import projectTypes from "../../reducers/wizardContentReducers/projectTypeReducer";
+import frontendFrameworkOptions from "../../reducers/wizardContentReducers/frontendFrameworkReducer";
 
 // TODO: Finalize types when API is hooked up
 interface ISelectionType {
-  appType: string;
-  backendFramework: string;
-  frontendFramework: string;
+  appType: ISelected;
+  backendFramework: ISelected;
+  frontendFramework: ISelected;
   pages: string[];
 }
 
@@ -73,23 +35,35 @@ interface IDispatchProps {
 
 interface IRightSidebarProps {
   selection: ISelectionType;
+  projectTypeDropdownItems: IDropDownOptionType[];
+  frontendDropdownItems: IDropDownOptionType[];
+  backendDropdownItems: IDropDownOptionType[];
 }
 
 interface IRightSidebarState {
-  frontendDropdownValue: IDropdownValue | undefined;
+  frontendDropdownValue: ISelected | undefined;
 }
 
 type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
-  public convertToDropdownObject = (selection: string): IDropdownValue => {
-    return {
-      value: selection,
-      label: selection
-    };
+  static defaultProps = {
+    selectBackendFramework: () => {},
+    selectFrontendFramework: () => {},
+    selectWebApp: () => {}
   };
-  public handleChange(e: IDropdownValue) {
-    this.props.selectFrontendFramework({
+  // public convertToDropdownObject = (selection: string): ISelected => {
+  //   return {
+  //     value: selection,
+  //     label: selection
+  //   };
+  // };
+  public handleChange(
+    e: IDropDownOptionType,
+    selectOption: (item: ISelected) => void
+  ) {
+    console.log(selectOption);
+    selectOption({
       title: e.label,
       internalName: e.value
     });
@@ -118,17 +92,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           <div className={styles.sidebarItem}>
             <div className={styles.dropdownTitle}>Project Type</div>
             <Dropdown
-              handleChange={dropdownOption => {
-                this.props.selectWebApp({
-                  title: dropdownOption.label,
-                  internalName: dropdownOption.value
-                });
+              handleChange={dropDrownItem => {
+                this.handleChange(dropDrownItem, this.props.selectWebApp);
               }}
-              defaultValue={this.convertToDropdownObject(
-                this.props.selection.appType
-              )}
-              options={webAppOptions}
-              value={this.convertToDropdownObject(this.props.selection.appType)}
+              options={this.props.projectTypeDropdownItems}
             />
           </div>
         )}
@@ -136,14 +103,13 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           <div className={styles.sidebarItem}>
             <div className={styles.dropdownTitle}>Front-end Framework</div>
             <Dropdown
-              handleChange={this.handleChange.bind(this)}
-              defaultValue={this.convertToDropdownObject(
-                this.props.selection.frontendFramework
-              )}
-              options={frontEndOptions}
-              value={this.convertToDropdownObject(
-                this.props.selection.frontendFramework
-              )}
+              handleChange={dropDrownItem => {
+                this.handleChange(
+                  dropDrownItem,
+                  this.props.selectFrontendFramework
+                );
+              }}
+              options={this.props.frontendDropdownItems}
             />
           </div>
         )}
@@ -151,17 +117,14 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           <div className={styles.sidebarItem}>
             <div className={styles.dropdownTitle}>Back-end Framework</div>
             <Dropdown
-              handleChange={dropdownOption => {
-                this.props.selectBackendFramework({
-                  title: dropdownOption.label,
-                  internalName: dropdownOption.value
-                });
+              handleChange={dropDrownItem => {
+                this.handleChange(
+                  dropDrownItem,
+                  this.props.selectBackendFramework
+                );
               }}
-              defaultValue={backEndOptions[0]}
-              options={backEndOptions}
-              value={this.convertToDropdownObject(
-                this.props.selection.backendFramework
-              )}
+              options={this.props.backendDropdownItems}
+              //value={this.props.selection.backendFramework}
             />
           </div>
         )}
@@ -185,11 +148,37 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
 }
 
 const mapStateToProps = (state: any): IRightSidebarProps => {
+  // FIXME: Change this to selectors
   const { selection } = state;
+  const { backendOptions, frontendOptions, projectTypes } = state.wizardContent;
+  const projectTypeDropdownItems = convertOptionsToDropdownItems(projectTypes);
+  const frontendDropdownItems = convertOptionsToDropdownItems(frontendOptions);
+  const backendDropdownItems = convertOptionsToDropdownItems(backendOptions);
+
   return {
-    selection
+    selection,
+    projectTypeDropdownItems,
+    frontendDropdownItems,
+    backendDropdownItems
   };
 };
+
+function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
+  const dropDownItems = [];
+
+  for (const option of options) {
+    const dropdownItem = convertOptionToDropdownItem(option);
+    dropDownItems.push(dropdownItem);
+  }
+  return dropDownItems;
+}
+
+function convertOptionToDropdownItem(option: any): IDropDownOptionType {
+  return {
+    value: option.internalName,
+    label: option.title
+  };
+}
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   selectBackendFramework: (framework: ISelected) => {
