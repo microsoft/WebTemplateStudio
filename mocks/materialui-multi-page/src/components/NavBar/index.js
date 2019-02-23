@@ -27,7 +27,7 @@ function index(props) {
           </Typography>
           <Button href="/masterdetail">Master Detail</Button>
           <Button href="/longlist">Long List</Button>
-          <Button>Link</Button>
+          <Button href="/grid">Grid</Button>
         </Toolbar>
       </AppBar>
     </React.Fragment>

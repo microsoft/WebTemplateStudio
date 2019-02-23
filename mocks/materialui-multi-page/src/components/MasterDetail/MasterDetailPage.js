@@ -22,7 +22,7 @@ const styles = theme => ({
   }
 });
 
-function ListItem(props) {
+function MasterDetailPage(props) {
   const { classes } = props;
 
   return (
@@ -42,4 +42,4 @@ function ListItem(props) {
   );
 }
 
-export default withStyles(styles)(ListItem);
+export default withStyles(styles)(MasterDetailPage);
