@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { HashRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
@@ -21,6 +21,7 @@ import { logIntoAzureAction } from "./actions/logIntoAzure";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
+import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 
 
 interface IDispatchProps {
@@ -46,7 +47,7 @@ class App extends React.Component<IDispatchProps> {
       const message = event.data;
       switch (message.command) {
         case "login":
-          // email will be null if login didn't work correctly
+          // email will be null or undefined if login didn't work correctly
           if (message.email != null) {
             this.props.logIntoAzure(message.email);
           }
@@ -60,6 +61,8 @@ class App extends React.Component<IDispatchProps> {
       <Router>
         <div>
           <Header />
+          <ReviewAndGenerate />
+          {/*
           <div className={appStyles.container}>
             <CosmosResourceModal />
             <div className={appStyles.leftView}>
@@ -76,6 +79,7 @@ class App extends React.Component<IDispatchProps> {
               <RightSidebar />
             </div>
           </div>
+          */}
           <Footer />
         </div>
       </Router>
