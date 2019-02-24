@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import LongList from "./components/LongList";
 import NavBar from "./components/NavBar";
 import MasterDetail from "./components/MasterDetail";
+import Grid from "./components/Grid";
 import { CssBaseline } from "@material-ui/core";
 
 class App extends Component {
@@ -12,8 +13,9 @@ class App extends Component {
         <CssBaseline />
         <NavBar />
         <Switch>
-          <Route path="/longlist" exact component={LongList} />
+          <Route path="/longlist" component={LongList} />
           <Route path="/masterdetail" component={MasterDetail} />
+          <Route path="/grid" component={Grid} />
         </Switch>
       </React.Fragment>
     );

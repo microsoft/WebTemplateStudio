@@ -19,4 +19,4 @@ The web app will then be available at localhost:3000 and backend API at localhos
 
 `blog-redux` - Contains a blog page built with react, bootstrap and redux.
 
-`materialui-multi-page` - contains a long list and master detail page built with react, material-ui and an express back end
+`materialui-multi-page` - contains a long list, content grid and master detail page built with react, material-ui and an express back end
