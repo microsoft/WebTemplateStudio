@@ -11,5 +11,11 @@
 }
 
 .button {
-    margin-left: 10px;
+    margin-left: 1em;
+    font-size: 1em;
+}
+
+.buttonContainer {
+    display: flex;
+    align-items: center;
 }

@@ -1,0 +1,18 @@
+.buttonHighlighted {
+    background-color: #0067B8;
+    color: white;
+    border: 1px solid white;
+}
+
+.buttonLight,
+.buttonHighlighted {
+    text-decoration: none;
+    outline: none;
+    border-radius: 2px;
+    padding: 0.5em 1em;
+}
+
+.buttonLight {
+    background-color: white;
+    border: 1px solid black;
+}

@@ -6,22 +6,22 @@
 
 .selectionContainer {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    color: #0067B8;
 }
 
 .buttonContainer {
     display: flex;
+    align-items: center;
 }
 
 .signInButton {
+    font-size: 1em;
     margin-left: 10px;
 }
 
 .cardTitle {
     font-weight: bold;
     margin-bottom: 25px;
-}
-
-.cardBody {
-    margin-bottom: 5%;
 }

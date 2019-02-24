@@ -1,9 +1,13 @@
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { Link, withRouter } from "react-router-dom";
 
+import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
+
+import { ROUTES } from "../../utils/constants";
 
 import { IVSCode } from "../../reducers/vscodeApiReducer";
 
@@ -44,24 +48,24 @@ class Footer extends React.Component<Props> {
     return (
       <div className={styles.footer}>
         {pathname !== "/" && 
-            <div>
+            <div className={styles.buttonContainer}>
               <Link
-                className={styles.button}
+                className={classnames(buttonStyles.buttonLight, styles.button)}
                 to={pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]}
               >
                 Back
               </Link>
               { pathname !== "/ReviewAndGenerate" &&
                 <Link
-                  className={styles.button}
+                  className={classnames(styles.button, buttonStyles.buttonHighlighted)}
                   to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
                 >
                   Next
                 </Link>}
-              <button className={styles.button} onClick={this.logMessageToVsCode}>
+              <button disabled={pathname !== ROUTES.REVIEW_AND_GENERATE} className={classnames(styles.button, buttonStyles.buttonLight)} onClick={this.logMessageToVsCode}>
                 Generate
               </button>
-              <Link className={styles.button} to="/">
+              <Link className={classnames(styles.button, buttonStyles.buttonLight)} to="/">
                 Cancel
               </Link>
             </div>
