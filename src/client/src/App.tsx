@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { HashRouter as Router } from "react-router-dom";
+import { HashRouter as Router, Route } from "react-router-dom";
 import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
@@ -11,9 +11,11 @@ import Welcome from "./components/Welcome";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";
+import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 
 import leftSidebarData from "./mockData/leftSidebarData";
+import { ROUTES } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
@@ -21,7 +23,6 @@ import { logIntoAzureAction } from "./actions/logIntoAzure";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
-import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 
 
 interface IDispatchProps {
@@ -30,7 +31,9 @@ interface IDispatchProps {
   logIntoAzure: (email: string) => void;
 }
 
-class App extends React.Component<IDispatchProps> {
+type Props = IDispatchProps
+
+class App extends React.Component<Props> {
   public static defaultProps = {
     getVSCodeApi: () => {},
     loadWizardContent: () => {},
@@ -61,25 +64,24 @@ class App extends React.Component<IDispatchProps> {
       <Router>
         <div>
           <Header />
-          <ReviewAndGenerate />
-          {/*
+          {/*<ReviewAndGenerate />*/}
           <div className={appStyles.container}>
             <CosmosResourceModal />
             <div className={appStyles.leftView}>
               <LeftSidebar sidebarItems={leftSidebarData} />
             </div>
             <div className={appStyles.centerView}>
-              <Route path="/AzureLogin" component={AzureLogin} />
-              <Route path="/SelectFrameworks" component={SelectFrameworks} />
-              <Route path="/SelectPages" component={SelectPages} />
-              <Route path="/SelectWebApp" component={SelectWebApp} />
+              <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
+              <Route path={ROUTES.REVIEW_AND_GENERATE} component={ReviewAndGenerate} />
+              <Route path={ROUTES.SELECT_FRAMEWORKS} component={SelectFrameworks} />
+              <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
+              <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
               <Route exact={true} path="/" component={Welcome} />
             </div>
             <div className={appStyles.rightView}>
               <RightSidebar />
             </div>
           </div>
-          */}
           <Footer />
         </div>
       </Router>

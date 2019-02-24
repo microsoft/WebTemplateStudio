@@ -1,8 +1,20 @@
 .container {
-    border-bottom: 0.5px solid #7F7F7F;
     margin-top: 100%;
 }
 
 .itemBorder {
+    border-bottom: 0.5px solid #7F7F7F;
+}
+
+.itemBorderTop {
     border-top: 0.5px solid #7F7F7F;
+}
+
+.currentPath {
+    background-color: #0067B8;
+    color: white;
+}
+
+.nextPath {
+    opacity: 0.4;
 }

@@ -45,9 +45,18 @@ const getServices = (selection: any): RowType[] => {
     return servicesRows;
 }
 
-// const getPagesRowItems = (selection: any): RowType[] => {
-//     const { pages } = 
-// }
+// FIXME: Needs to be in a format that is in line with the Core engine
+const getPagesRowItems = (selection: any): RowType[] => {
+    const { pages } = selection;
+    const pagesRows = [];
+    for (const page of pages) {
+        pagesRows.push({
+            type: page,
+            name: page
+        })
+    }
+    return pagesRows
+}
 
 const getProjectTypeRowItemSelector = createSelector(
     getWizardSelectionsSelector,
@@ -59,14 +68,14 @@ const getFrameworksRowItemSelector = createSelector(
     frameworksRowItems
 )
 
-// const getPagesRowItemsSelector = createSelector(
-//     getWizardSelectionsSelector,
-//     getPagesRowItems,
-// )
+const getPagesRowItemsSelector = createSelector(
+    getWizardSelectionsSelector,
+    getPagesRowItems,
+)
 
 const getServicesSelector = createSelector(
     getWizardSelectionsSelector,
     getServices
 );
 
-export { getProjectTypeRowItemSelector, getWizardSelectionsSelector, getFrameworksRowItemSelector, getServicesSelector };
+export { getPagesRowItemsSelector, getProjectTypeRowItemSelector, getWizardSelectionsSelector, getFrameworksRowItemSelector, getServicesSelector };

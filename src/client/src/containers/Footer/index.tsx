@@ -18,11 +18,13 @@ const pathsNext: any = {
   "/SelectWebApp": "/SelectFrameworks",
   "/SelectFrameworks": "/SelectPages",
   "/SelectPages": "/AzureLogin",
+  "/AzureLogin": "/ReviewAndGenerate"
 };
 const pathsBack: any = {
   "/SelectFrameworks": "/SelectWebApp",
   "/SelectPages": "/SelectFrameworks",
   "/AzureLogin": "/SelectPages",
+  "/ReviewAndGenerate": "/AzureLogin"
 };
 
 class Footer extends React.Component<Props> {
@@ -41,8 +43,7 @@ class Footer extends React.Component<Props> {
     const { pathname } = this.props.location;
     return (
       <div className={styles.footer}>
-        {
-          pathname !== "/" && 
+        {pathname !== "/" && 
             <div>
               <Link
                 className={styles.button}
@@ -50,12 +51,13 @@ class Footer extends React.Component<Props> {
               >
                 Back
               </Link>
-              <Link
-                className={styles.button}
-                to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
-              >
-                Next
-              </Link>
+              { pathname !== "/ReviewAndGenerate" &&
+                <Link
+                  className={styles.button}
+                  to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
+                >
+                  Next
+                </Link>}
               <button className={styles.button} onClick={this.logMessageToVsCode}>
                 Generate
               </button>
