@@ -24,7 +24,7 @@ const LoginCard = ({ cardTitle, cardBody, handleClick }: IProps) => {
                     Details
                 </div>
                 <div className={styles.buttonContainer}>
-                    <div className={styles.cardBody}>
+                    <div>
                         Create Account
                     </div>
                     <button onClick={handleClick} className={classnames(styles.signInButton, buttonStyles.buttonHighlighted)}>
