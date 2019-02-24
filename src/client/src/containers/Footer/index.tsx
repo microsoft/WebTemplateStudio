@@ -46,30 +46,32 @@ class Footer extends React.Component<Props> {
     // TODO: Add previous paths through link prop to track state/history
     const { pathname } = this.props.location;
     return (
-      <div className={styles.footer}>
+      <div>
         {pathname !== "/" && 
-            <div className={styles.buttonContainer}>
-              <Link
-                className={classnames(buttonStyles.buttonLight, styles.button)}
-                to={pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]}
-              >
-                Back
-              </Link>
-              { pathname !== "/ReviewAndGenerate" &&
+        <div className={styles.footer}>
+          
+              <div className={styles.buttonContainer}>
                 <Link
-                  className={classnames(styles.button, buttonStyles.buttonHighlighted)}
-                  to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
+                  className={classnames(buttonStyles.buttonLight, styles.button)}
+                  to={pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]}
                 >
-                  Next
-                </Link>}
-              <button disabled={pathname !== ROUTES.REVIEW_AND_GENERATE} className={classnames(styles.button, buttonStyles.buttonLight)} onClick={this.logMessageToVsCode}>
-                Generate
-              </button>
-              <Link className={classnames(styles.button, buttonStyles.buttonLight)} to="/">
-                Cancel
-              </Link>
-            </div>
-        }
+                  Back
+                </Link>
+                { pathname !== "/ReviewAndGenerate" &&
+                  <Link
+                    className={classnames(styles.button, buttonStyles.buttonHighlighted)}
+                    to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
+                  >
+                    Next
+                  </Link>}
+                <button disabled={pathname !== ROUTES.REVIEW_AND_GENERATE} className={classnames(styles.button, buttonStyles.buttonLight)} onClick={this.logMessageToVsCode}>
+                  Generate
+                </button>
+                <Link className={classnames(styles.button, buttonStyles.buttonLight)} to="/">
+                  Cancel
+                </Link>
+              </div>
+        </div>}
       </div>
     );
   }

@@ -22,6 +22,7 @@ type Props = IDispatchProps & IAzureLoginProps;
 class AzureLogin extends React.Component<Props> {
     handleClick = () => {
         // initiates a login command to VSCode ReactPanel class
+        console.log(this.props.vscode);
         if (process.env.NODE_ENV === "production") {
             this.props.vscode.postMessage({
                 command: "login",
