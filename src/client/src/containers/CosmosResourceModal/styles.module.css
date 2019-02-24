@@ -25,6 +25,10 @@
     float: right;
 }
 
+.button {
+    font-size: 1em;
+}
+
 .icon {
     height: 12px;
 }
