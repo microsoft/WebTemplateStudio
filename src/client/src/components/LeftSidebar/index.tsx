@@ -3,7 +3,7 @@ import * as React from "react";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 
-import SidebarItem from "../SidebarItem";
+import LeftSidebarItem from "../LeftSidebarItem";
 
 import styles from "./styles.module.css";
 
@@ -21,6 +21,9 @@ const LeftSidebar = (props: Props) => {
   React.useEffect(() => {
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
   });
+  const isVisitedPath = (idx: number): boolean => {
+    return idx < currentPathIndex;
+  }
   return (
     <div className={styles.container}>
       {props.sidebarItems.map((sidebartitle, idx) => {
@@ -28,11 +31,11 @@ const LeftSidebar = (props: Props) => {
           <div className={
             classnames(styles.itemBorder, { 
               [styles.currentPath]: idx === currentPathIndex, 
-              [styles.visitedPath]: idx < currentPathIndex,
+              [styles.visitedPath]: isVisitedPath(idx),
               [styles.nextPath]: idx > currentPathIndex,
               [styles.itemBorderTop]: idx === 0,
             })} key={`${sidebartitle}`}>
-            <SidebarItem text={sidebartitle} />
+            <LeftSidebarItem text={sidebartitle} showCheck={isVisitedPath(idx)}/>
           </div>
           )})}
     </div>
