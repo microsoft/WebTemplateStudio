@@ -106,10 +106,11 @@ export class ReactPanel {
   private async createCosmosDB(){
     let si: SubscriptionItem = await tempGetSubscription("GiV.Hackathon");
     let rgi: ResourceGroupItem = await tempGetResourceGroup("GIV.W19.WTS", "GiV.Hackathon");
+    let cosmosDBDeploy = new CosmosDBDeploy();
     let vscOptions : vscode.InputBoxOptions = {
       placeHolder: "Account name",
       prompt: "Provide a Cosmos DB account name",
-      validateInput: (name: string) => CosmosDBDeploy.validateCosmosDBAccountName(name, si)
+      validateInput: (name: string) => cosmosDBDeploy.validateCosmosDBAccountName(name, si)
   };
     let dbname : any = await vscode.window.showInputBox(vscOptions); 
     const selection : CosmosDBSelections = {
@@ -121,7 +122,7 @@ export class ReactPanel {
       tags : {"Created from" : "WTS demo-friday"}
     } 
 
-    CosmosDBDeploy.createCosmosDB(selection);
+    cosmosDBDeploy.createCosmosDB(selection);
   }
   public doRefactor() {
     // Send a message to the webview webview.

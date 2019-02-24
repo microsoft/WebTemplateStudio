@@ -5,10 +5,10 @@ import { ChildProcess } from "child_process";
 import { FunctionProvider } from "./azure-functions/functionProvider";
 import { ValidationError, DeploymentError, AuthorizationError } from "./errors";
 import {
-  AzureAuth,
-  SubscriptionItem,
-  ResourceGroupItem
-} from "./azure-auth/AzureAuth";
+	AzureAuth,
+	SubscriptionItem,
+	ResourceGroupItem
+} from "./azure-auth/azureAuth";
 
 let apiProcess: ChildProcess;
 

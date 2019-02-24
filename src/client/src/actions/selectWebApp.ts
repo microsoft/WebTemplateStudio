@@ -1,8 +1,9 @@
 import * as Actions from "./types";
+import { ISelected } from "../types/selected";
 
-const selectWebAppAction = (webAppOption: string) => ({
-    type: Actions.SELECT_WEB_APP,
-    payload: webAppOption
-})
+const selectWebAppAction = (selectedApp: ISelected) => ({
+  type: Actions.SELECT_WEB_APP,
+  payload: selectedApp
+});
 
 export { selectWebAppAction };

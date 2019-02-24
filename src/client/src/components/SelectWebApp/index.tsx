@@ -6,14 +6,15 @@ import { IOption } from "../../types/option";
 import SelectOption from "../SelectOption";
 
 import { selectWebAppAction } from "../../actions/selectWebApp";
+import { ISelected } from "../../types/selected";
 
 interface IDispatchProps {
-  selectWebApp: (webApp: string) => void;
+  selectWebApp: (selectedApp: ISelected) => void;
   getProjectTypes: () => any;
 }
 
 interface IStoreProps {
-  selectedWebApp: string;
+  selectedWebApp: ISelected;
   type: IOption[];
 }
 
@@ -26,9 +27,9 @@ class SelectWebApp extends React.Component<Props> {
     }
   }
 
-  public convertSelectionToIndexNumber(framework: string): number[] {
+  public convertSelectionToIndexNumber(framework: ISelected): number[] {
     for (let i = 0; i < this.props.type.length; i++) {
-      if (this.props.type[i].title === framework) {
+      if (this.props.type[i].internalName === framework.internalName) {
         return [i];
       }
     }
@@ -55,7 +56,6 @@ class SelectWebApp extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: any): IStoreProps => {
-  const { appTypeOptions } = state.wizardContent;
   const { appType } = state.selection;
   return {
     selectedWebApp: appType,
@@ -64,8 +64,8 @@ const mapStateToProps = (state: any): IStoreProps => {
 };
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  selectWebApp: (webApp: string) => {
-    dispatch(selectWebAppAction(webApp));
+  selectWebApp: (selectedApp: ISelected) => {
+    dispatch(selectWebAppAction(selectedApp));
   },
   getProjectTypes: () => {
     dispatch(getProjectTypesAction());

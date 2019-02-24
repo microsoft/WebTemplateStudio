@@ -1,13 +1,18 @@
+import { getFrameworks } from "./getFrameworks";
 import * as Actions from "./types";
 
-const getBackendFrameworks = () => ({
-    type: Actions.GET_BACKEND_FRAMEWORKS,
-})
+const getBackendFrameworksSuccess = (frameworks: any) => ({
+  type: Actions.GET_BACKEND_FRAMEWORKS_SUCCESS,
+  payload: frameworks
+});
 
-
-const getBackendFrameworksSuccess = (backendFrameworks: any) => ({
-    type: Actions.GET_BACKEND_FRAMEWORKS_SUCCESS,
-    payload: backendFrameworks
-})
-
-export { getBackendFrameworks, getBackendFrameworksSuccess };
+// thunk
+export const getBackendFrameworksAction = (projectType: string) => {
+  return async (dispatch: any) => {
+    return dispatch(
+      dispatch(
+        getBackendFrameworksSuccess(await getFrameworks(projectType, "backend"))
+      )
+    );
+  };
+};

@@ -15,6 +15,7 @@ import leftSidebarData from "./mockData/leftSidebarData";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
+import { logIntoAzureAction } from "./actions/logIntoAzure";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
@@ -24,7 +25,7 @@ import { logIntoAzureAction } from "./actions/logIntoAzure";
 interface IDispatchProps {
   getVSCodeApi: () => void;
   loadWizardContent: () => void;
-  logIntoAzure: (email: string) => any;
+  logIntoAzure: (email: string) => void;
 }
 
 class App extends React.Component<IDispatchProps> {
@@ -39,19 +40,18 @@ class App extends React.Component<IDispatchProps> {
     this.props.loadWizardContent();
     const api = new EngineAPIService("5000", undefined);
     api.syncPlatforms();
+    // listens for a login event from VSCode
     window.addEventListener("message", event => {
-      console.log("getting event");
       const message = event.data;
       switch (message.command) {
         case "login":
+          // email will be null if login didn't work correctly
           if (message.email != null) {
-            console.log("azure login")
-            console.log(message);
             this.props.logIntoAzure(message.email);
           }
-          return;
-      };
-    });
+        return;
+      }
+    })
   }
 
   public render() {
@@ -89,7 +89,7 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
     dispatch(loadWizardContentAction());
   },
   logIntoAzure: (email: string) => {
-    dispatch(logIntoAzureAction(email))
+    dispatch(logIntoAzureAction(email));
   },
 });
 

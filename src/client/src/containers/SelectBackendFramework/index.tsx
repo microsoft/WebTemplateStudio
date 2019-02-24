@@ -3,12 +3,14 @@ import { connect } from "react-redux";
 
 import SelectOption from "../../components/SelectOption";
 
+import { getBackendFrameworksAction } from "../../actions/getBackendFrameworks";
 import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
-;
 import { IOption } from "../../types/option";
+import { ISelected } from "../../types/selected";
 
 interface IDispatchProps {
-  selectBackendFramework: (backendFramework: string) => void
+  selectBackendFramework: (backendFramework: ISelected) => void;
+  getBackendFrameworks: (projectType: string) => void;
 }
 
 interface ISelectBackendProps {
@@ -19,10 +21,16 @@ interface ISelectBackendProps {
 type Props = IDispatchProps & ISelectBackendProps;
 
 class SelectBackEndFramework extends React.Component<Props> {
+  public componentDidMount() {
+    // TODO: use store to get project type next time.
+    if (this.props.getBackendFrameworks !== undefined) {
+      this.props.getBackendFrameworks("FullStackWebApp");
+    }
+  }
   /**
    * Finds the index of the framework currently selected in the wizard
-   * 
-   * @param framework 
+   *
+   * @param framework
    */
   public convertSelectionToIndexNumber(framework: string): number[] {
     for (let i = 0; i < this.props.options.length; i++) {
@@ -35,13 +43,17 @@ class SelectBackEndFramework extends React.Component<Props> {
   public render() {
     return (
       <div>
-        <SelectOption
-          selectCard={this.props.selectBackendFramework}
-          multiSelect={false}
-          title="Select a back-end framework for your project."
-          options={this.props.options}
-          selectedCards={this.convertSelectionToIndexNumber(this.props.selectedBackend)}
-        />
+        {this.props.options.length > 0 && (
+          <SelectOption
+            selectCard={this.props.selectBackendFramework}
+            multiSelect={false}
+            title="Select a back-end framework for your project."
+            options={this.props.options}
+            selectedCards={this.convertSelectionToIndexNumber(
+              this.props.selectedBackend
+            )}
+          />
+        )}
       </div>
     );
   }
@@ -50,14 +62,23 @@ class SelectBackEndFramework extends React.Component<Props> {
 const mapStateToProps = (state: any): ISelectBackendProps => {
   const { backendOptions } = state.wizardContent;
   const { backendFramework } = state.selection;
+
   return {
     options: backendOptions,
-    selectedBackend: backendFramework,
-  }
-}
+    selectedBackend: backendFramework
+  };
+};
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  selectBackendFramework: (backendFramework: string) => { dispatch(selectBackendFrameworkAction(backendFramework))},
-})
+  selectBackendFramework: (backendFramework: ISelected) => {
+    dispatch(selectBackendFrameworkAction(backendFramework));
+  },
+  getBackendFrameworks: (projectType: string) => {
+    dispatch(getBackendFrameworksAction(projectType));
+  }
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectBackEndFramework);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SelectBackEndFramework);
