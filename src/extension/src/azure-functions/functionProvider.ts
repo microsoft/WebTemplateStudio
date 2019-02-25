@@ -1,7 +1,7 @@
 import { ValidationHelper, FileHelper } from './utils';
 import { ServiceClientCredentials } from 'ms-rest';
-import * as WebsiteManagement from 'azure-arm-website';
-import { FileError, DeploymentError, AuthorizationError, ConnectionError } from '../errors';
+import { WebSiteManagementClient } from 'azure-arm-website';
+import { FileError, DeploymentError, AuthorizationError, ConnectionError, SubscriptionError, ValidationError } from '../errors';
 import { SubscriptionItem, ResourceGroupItem } from '../azure-auth/azureAuth';
 import { config } from './config';
 import { ZipDeploy } from './utils/zipDeployHelper';
@@ -45,7 +45,10 @@ export interface FunctionSelections {
     functionNames: string[];
 }
 
-export namespace FunctionProvider {
+export class FunctionProvider {
+
+    private webClient: WebSiteManagementClient | undefined = undefined;
+
     /*
     * Create and deploy a function app from the given user selections.
     * Validates the user selections
@@ -60,14 +63,17 @@ export namespace FunctionProvider {
     *
     * @returns Promise<void> Throws a void promise, catch errors as required
     */
-    export async function createFunctionApp(selections: FunctionSelections, appPath: string): Promise<void> {
+    public async createFunctionApp(selections: FunctionSelections, appPath: string): Promise<void> {
 
         ValidationHelper.validate(selections); // throws validation error on failure
 
-        try {
-            let credentials: ServiceClientCredentials = selections.subscriptionItem.session.credentials;
+        let isUnique = await this.checkFunctionAppName(selections.functionAppName, selections.subscriptionItem);
+        if (!isUnique) {
+            throw new ValidationError(`Function app name: ${selections.functionAppName} is not available.`);
+        }
 
-            var webClient = new WebsiteManagement.WebSiteManagementClient(credentials, selections.subscriptionItem.subscriptionId);
+        try {
+            this.setClientState(selections.subscriptionItem);
         } catch (err) {
             throw new AuthorizationError(err.message);
         }
@@ -80,7 +86,11 @@ export namespace FunctionProvider {
         }
 
         try {
-            await webClient.webApps.createOrUpdate(selections.resourceGroupItem.name, selections.functionAppName, {
+            if (this.webClient === undefined) {
+                throw new AuthorizationError("Website management client cannot be undefined.");
+            }
+
+            await this.webClient.webApps.createOrUpdate(selections.resourceGroupItem.name, selections.functionAppName, {
                 location: selections.location,
                 kind: "functionapp",
                 siteConfig: {
@@ -88,7 +98,7 @@ export namespace FunctionProvider {
                 }
             });
 
-            webClient.webApps.updateApplicationSettings(selections.resourceGroupItem.name, selections.functionAppName, {
+            this.webClient.webApps.updateApplicationSettings(selections.resourceGroupItem.name, selections.functionAppName, {
                 kind: "functionapp",
                 properties: {
                     "FUNCTIONS_EXTENSION_VERSION": "~2",
@@ -117,6 +127,26 @@ export namespace FunctionProvider {
         }
     }
 
+    private setClientState(userSubscriptionItem: SubscriptionItem): void {
+        if (this.webClient === undefined) {
+            this.webClient = this.createWebClient(userSubscriptionItem);
+        }
+        else if (this.webClient.subscriptionId !== userSubscriptionItem.subscriptionId) {
+            this.webClient = this.createWebClient(userSubscriptionItem);
+        }
+    }
+
+    private createWebClient(userSubscriptionItem: SubscriptionItem): WebSiteManagementClient {
+
+        let credentials: ServiceClientCredentials = userSubscriptionItem.session.credentials;
+
+        if (userSubscriptionItem === undefined || userSubscriptionItem.subscription === undefined || userSubscriptionItem.subscriptionId === undefined) {
+            throw new SubscriptionError("Subscription Item cannot have undefined values.");
+        }
+
+        return new WebSiteManagementClient(credentials, userSubscriptionItem.subscriptionId);
+    }
+
     /*
     * Check if a function app name is available
     *
@@ -127,18 +157,20 @@ export namespace FunctionProvider {
     * @returns Promise<boolean> True if the app name is available, false if it isn't
     *   catch errors as required
     */
-    export async function checkFunctionAppName(appName: string, subscriptionItem: SubscriptionItem): Promise<boolean | undefined> {
+    public async checkFunctionAppName(appName: string, subscriptionItem: SubscriptionItem): Promise<boolean | undefined> {
         try {
-            let credentials: ServiceClientCredentials = subscriptionItem.session.credentials;
-
-            var webClient = new WebsiteManagement.WebSiteManagementClient(credentials, subscriptionItem.subscriptionId);
+            this.setClientState(subscriptionItem);
         } catch (err) {
             throw new AuthorizationError(err.message);
         }
 
         ValidationHelper.validateFunctionAppName(appName);
 
-        return await webClient.checkNameAvailability(appName + config.functionAppDomain, "Site", { isFqdn: true })
+        if (this.webClient === undefined) {
+            throw new AuthorizationError("Website management client cannot be undefined.");
+        }
+
+        return await this.webClient.checkNameAvailability(appName + config.functionAppDomain, "Site", { isFqdn: true })
             .then((res) => {
                 return res.nameAvailable;
             })
