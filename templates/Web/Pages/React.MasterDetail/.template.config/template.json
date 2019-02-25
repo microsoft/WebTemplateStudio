@@ -1,0 +1,45 @@
+﻿{
+  "author": "Microsoft",
+  "classifications": [
+    "Universal"
+  ],
+  "name": "Master Detail",
+  "groupIdentity": "wts.Page.React.MasterDetail",
+  "identity": "wts.Page.React.MasterDetail",
+  "description": "This is a master detail which can be used for detail things.",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "page",
+    "wts.platform": "Web",
+    "wts.projecttype": "FullStackWebApp",
+    "wts.frontendframework": "ReactJS",
+    "wts.backendframework": "all",
+    "wts.version": "1.0.0",
+    "wts.displayOrder": "1",
+    "wts.genGroup": "0",
+    "wts.rightClickEnabled": "true"
+  },
+  "sourceName": "ReactMasterDetail",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [
+  ],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.itemNamespace": {
+      "type": "parameter",
+      "replaces": "Param_ItemNamespace"
+    },
+    "baseclass": {
+      "type": "parameter",
+      "replaces": "System.ComponentModel.INotifyPropertyChanged"
+    },
+    "setter": {
+      "type": "parameter",
+      "replaces": "Param_Setter"
+    }
+  }
+}

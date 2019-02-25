@@ -1,0 +1,45 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2em;
+}
+
+.modalTitle {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.selectionContainer {
+    margin-bottom: 2em;
+}
+
+.selectionHeaderContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
+}
+
+.buttonContainer {
+    display: flex;
+    float: right;
+}
+
+.icon {
+    height: 12px;
+}
+
+.input {
+    width: 100%;
+    outline: none;
+    font-size: 1em;
+    padding: 0.5em;
+    box-sizing: border-box;
+    background-color: #DFDFDF;
+    border: 0.5px solid rgba(0, 0, 0, 0.5);
+}
+
+.link {
+    text-decoration: none;
+    color: #0067B8;
+}

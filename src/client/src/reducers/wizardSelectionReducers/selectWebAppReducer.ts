@@ -6,10 +6,12 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const webAppReducer = (state = [], action: any) => {
+const webAppReducer = (state = {
+  title: "Fullstack Web Application",
+  internalName: "Fullstack web app"
+}, action: any) => {
   switch (action.type) {
     case Actions.SELECT_WEB_APP:
-      console.log(action.payload);
       return action.payload;
     default:
       return state;
