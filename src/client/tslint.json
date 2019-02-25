@@ -2,7 +2,8 @@
 	"extends": [
 		"tslint:latest",
 		"tslint-react",
-		"tslint-config-prettier"
+		"tslint-config-prettier",
+		"tslint-react-hooks"
 	],
 	"linterOptions": {
 		"exclude": [
@@ -17,7 +18,8 @@
 		"curly": true,
 		"class-name": true,
 		"triple-equals": false,
-		"object-literal-sort-keys": false
+		"object-literal-sort-keys": false,
+		"react-hooks-nesting": "error"
 	},
 	"defaultSeverity": "warning"
 }

@@ -8,9 +8,11 @@ import SelectFrameworks from "./components/SelectFrameworks";
 import SelectPages from "./components/SelectPages";
 import SelectWebApp from "./components/SelectWebApp";
 import Welcome from "./components/Welcome";
+import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";
 import RightSidebar from "./containers/RightSidebar";
+
 import leftSidebarData from "./mockData/leftSidebarData";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
@@ -59,6 +61,7 @@ class App extends React.Component<IDispatchProps> {
         <div>
           <Header />
           <div className={appStyles.container}>
+            <CosmosResourceModal />
             <div className={appStyles.leftView}>
               <LeftSidebar sidebarItems={leftSidebarData} />
             </div>

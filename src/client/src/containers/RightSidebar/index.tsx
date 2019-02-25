@@ -4,20 +4,19 @@ import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
-import Dropdown from "../../components/Dropdown";
+import RightSidebarDropdown from "../../components/RightSidebarDropdown";
 
 import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/selectFrontEndFramework";
 import { selectWebAppAction } from "../../actions/selectWebApp";
+
+import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
 import cancel from "../../assets/cancel.svg";
 import reorder from "../../assets/reorder.svg";
 
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
-import { IOption } from "../../types/option";
-import projectTypes from "../../reducers/wizardContentReducers/projectTypeReducer";
-import frontendFrameworkOptions from "../../reducers/wizardContentReducers/frontendFrameworkReducer";
 
 // TODO: Finalize types when API is hooked up
 interface ISelectionType {
@@ -30,7 +29,7 @@ interface ISelectionType {
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
   selectFrontendFramework: (framework: ISelected) => void;
-  selectWebApp: (projectType: ISelected) => void;
+  selectProjectType: (projectType: ISelected) => void;
 }
 
 interface IRightSidebarProps {
@@ -38,6 +37,7 @@ interface IRightSidebarProps {
   projectTypeDropdownItems: IDropDownOptionType[];
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
+  services: any;
 }
 
 interface IRightSidebarState {
@@ -47,32 +47,25 @@ interface IRightSidebarState {
 type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
-  static defaultProps = {
+  public static defaultProps = {
     selectBackendFramework: () => {},
     selectFrontendFramework: () => {},
     selectWebApp: () => {}
   };
-  // public convertToDropdownObject = (selection: string): ISelected => {
-  //   return {
-  //     value: selection,
-  //     label: selection
-  //   };
-  // };
   public handleChange(
     e: IDropDownOptionType,
     selectOption: (item: ISelected) => void
   ) {
-    console.log(selectOption);
     selectOption({
       title: e.label,
       internalName: e.value
     });
   }
-  public showWebApp = (): boolean => {
+  public showProjectTypes = (): boolean => {
     const { pathname } = this.props.location;
     return pathname !== "/";
   };
-  public showFrontEnd = (): boolean => {
+  public showFrameworks = (): boolean => {
     const { pathname } = this.props.location;
     return pathname !== "/" && pathname !== "/SelectWebApp";
   };
@@ -84,50 +77,49 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       pathname !== "/SelectFrameworks"
     );
   };
+  public showServices = (): boolean => {
+    const { pathname } = this.props.location;
+    return (
+      pathname !== "/" &&
+      pathname !== "/SelectWebApp" &&
+      pathname !== "/SelectFrameworks" &&
+      pathname !== "/SelectPages"
+    );
+  };
+  public convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
+    return {
+      value: option.internalName,
+      label: option.title
+    };
+  }
   public render() {
     return (
       <div className={styles.container}>
         <div className={styles.title}>Your Project Details</div>
-        {this.showWebApp() && (
-          <div className={styles.sidebarItem}>
-            <div className={styles.dropdownTitle}>Project Type</div>
-            <Dropdown
-              handleChange={dropDrownItem => {
-                this.handleChange(dropDrownItem, this.props.selectWebApp);
-              }}
-              options={this.props.projectTypeDropdownItems}
-            />
-          </div>
-        )}
-        {this.showFrontEnd() && (
-          <div className={styles.sidebarItem}>
-            <div className={styles.dropdownTitle}>Front-end Framework</div>
-            <Dropdown
-              handleChange={dropDrownItem => {
-                this.handleChange(
-                  dropDrownItem,
-                  this.props.selectFrontendFramework
-                );
-              }}
-              options={this.props.frontendDropdownItems}
-            />
-          </div>
-        )}
-        {this.showFrontEnd() && (
-          <div className={styles.sidebarItem}>
-            <div className={styles.dropdownTitle}>Back-end Framework</div>
-            <Dropdown
-              handleChange={dropDrownItem => {
-                this.handleChange(
-                  dropDrownItem,
-                  this.props.selectBackendFramework
-                );
-              }}
-              options={this.props.backendDropdownItems}
-              //value={this.props.selection.backendFramework}
-            />
-          </div>
-        )}
+        <RightSidebarDropdown 
+          options={this.props.projectTypeDropdownItems}
+          handleDropdownChange={this.handleChange.bind(this)}
+          selectDropdownOption={this.props.selectProjectType}
+          isVisible={this.showProjectTypes()}
+          title="Project Type"
+          value={this.convertOptionToDropdownItem(this.props.selection.appType)}
+        />
+        <RightSidebarDropdown 
+          options={this.props.frontendDropdownItems}
+          handleDropdownChange={this.handleChange.bind(this)}
+          selectDropdownOption={this.props.selectFrontendFramework}
+          isVisible={this.showFrameworks()}
+          title="Front-end Framework"
+          value={this.convertOptionToDropdownItem(this.props.selection.frontendFramework)}
+        />
+        <RightSidebarDropdown 
+          options={this.props.backendDropdownItems}
+          handleDropdownChange={this.handleChange.bind(this)}
+          selectDropdownOption={this.props.selectBackendFramework}
+          isVisible={this.showFrameworks()}
+          title="Back-end Framework"
+          value={this.convertOptionToDropdownItem(this.props.selection.backendFramework)}
+        />
         {this.showPages() && (
           <div className={styles.sidebarItem}>
             <div className={styles.dropdownTitle}>Pages</div>
@@ -140,6 +132,19 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 }${reorder}`}
               />
             ))}
+          </div>
+        )}
+        {this.showServices() && !!this.props.services && (
+          <div className={styles.sidebarItem}>
+            <div className={styles.dropdownTitle}>Services</div>
+            {Object.keys(this.props.services).map(serviceName => (
+              <DraggableSidebarItem
+                text={this.props.services[serviceName].api}
+                closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`}
+                itemTitle={serviceName === "cosmosOptions" ? "CosmosDB" : "Azure Functions"}
+              />
+            ))}
+            {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
           </div>
         )}
       </div>
@@ -159,7 +164,8 @@ const mapStateToProps = (state: any): IRightSidebarProps => {
     selection,
     projectTypeDropdownItems,
     frontendDropdownItems,
-    backendDropdownItems
+    backendDropdownItems,
+    services: getServicesSelector(state),
   };
 };
 
@@ -187,7 +193,7 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   selectFrontendFramework: (framework: ISelected) => {
     dispatch(selectFrontEndFrameworkAction(framework));
   },
-  selectWebApp: (projectType: ISelected) => {
+  selectProjectType: (projectType: ISelected) => {
     dispatch(selectWebAppAction(projectType));
   }
 });

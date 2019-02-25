@@ -4,19 +4,32 @@ import { connect } from "react-redux";
 import Card from "../../components/Card";
 
 import grid from "../../css/grid.module.css";
+import styles from './styles.module.css';
+
+import * as AzureActions from "../../actions/logOutAzure";
+import * as ModalActions from "../../actions/modalActions";
+import { isCosmosResourceCreatedSelector } from "../../selectors/cosmosServiceSelector";
+import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import getAzureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
 
+interface IDispatchProps {
+    startLogOutToAzure: () => any;
+    openCosmosDbModal: () => any;
+}
+
 interface IAzureLoginProps {
     isLoggedIn: boolean;
+    isCosmosDbModalOpen: boolean;
+    isCosmosResourceCreated: boolean;
 }
 
 interface IState {
     azureServices?: IOption[] | undefined;
 }
 
-type Props = IAzureLoginProps;
+type Props = IAzureLoginProps & IDispatchProps;
 
 class AzureSubscriptions extends React.Component<Props,IState> {
     constructor(props: any) {
@@ -31,10 +44,16 @@ class AzureSubscriptions extends React.Component<Props,IState> {
             azureServices
         })
     }
+    public resourceButtonContent = (optionTitle: string): string => {
+        if (this.props.isCosmosResourceCreated && optionTitle.includes("Cosmos")) {
+            return "Edit Resource";
+        }
+        return "Create Resource";
+    }
     public render() {
         const { isLoggedIn } = this.props;
         return (
-            isLoggedIn && 
+            isLoggedIn &&
                 <div className={grid.row}>
                     {!!this.state.azureServices && 
                         this.state.azureServices.map((option) => (
@@ -42,8 +61,8 @@ class AzureSubscriptions extends React.Component<Props,IState> {
                                 <Card
                                     cardTitle={option.title}
                                     cardBody={option.body}
-                                    buttonText="Create Resource"
-                                    handleButtonClick={()=>{}}
+                                    buttonText={this.resourceButtonContent(option.title)}
+                                    handleButtonClick={this.props.openCosmosDbModal}
                                     handleDetailsClick={()=>{}}
                                     svgUrl={option.svgUrl}
                                 />
@@ -58,7 +77,14 @@ const mapStateToProps = (state: any): IAzureLoginProps => {
     const { isLoggedIn } = state.azureProfileData;
     return {
         isLoggedIn,
+        isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
+        isCosmosResourceCreated: isCosmosResourceCreatedSelector(state),
     }
 }
 
-export default connect(mapStateToProps)(AzureSubscriptions);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+    startLogOutToAzure: () => { dispatch(AzureActions.startLogOutAzure()) },
+    openCosmosDbModal: () => { dispatch(ModalActions.openCosmosDbModalAction()) },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AzureSubscriptions);
