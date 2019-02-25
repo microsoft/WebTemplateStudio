@@ -28,9 +28,9 @@ const DraggableSidebarItem = ({
           <img className={styles.icon} src={reorderSvgUrl} />
         </div>
         <div className={styles.pagesTextContainer}>
-          <div>
-            <input />
-            {text}
+          <div className={styles.inputContainer}>
+            <img className={styles.cancelIcon} src={closeSvgUrl} />
+            <input className={styles.input} defaultValue={text} />
           </div>
           <img className={styles.cancelIcon} src={closeSvgUrl} />
         </div>
