@@ -21,9 +21,6 @@ const styles = theme => ({
 });
 
 class index extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const { classes } = this.props;
 

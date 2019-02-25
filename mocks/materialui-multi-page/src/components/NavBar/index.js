@@ -26,7 +26,7 @@ function index(props) {
             Company name
           </Typography>
           <Button href="/masterdetail">Master Detail</Button>
-          <Button href="/longlist">Long List</Button>
+          <Button href="/list">List</Button>
           <Button href="/grid">Grid</Button>
         </Toolbar>
       </AppBar>

@@ -10,7 +10,8 @@ server/node_modules
 # vscode configuration
 .vscode/
 
-# linter
+# config file
+.env
 
 # production
 /server/build

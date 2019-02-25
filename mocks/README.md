@@ -8,7 +8,7 @@ Templates are being developed using the create-react-app starter kit and express
 
 ```
 yarn install
-npm start
+yarn start
 ```
 
 The web app will then be available at localhost:3000 and backend API at localhost:3001.
@@ -19,4 +19,4 @@ The web app will then be available at localhost:3000 and backend API at localhos
 
 `blog-redux` - Contains a blog page built with react, bootstrap and redux.
 
-`materialui-multi-page` - contains a long list, content grid and master detail page built with react, material-ui and an express back end
+`materialui-multi-page` - Contains a list, grid and master detail page built with react, material-ui and an express back end. The back end template contains code for a connection to Cosmos that is commented out in the /server/routes folder. To use Cosmos uncomment the code in /server/routes, rename .env-change-me to .env and add your connection string to the .env file.
