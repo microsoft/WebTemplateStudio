@@ -37,8 +37,8 @@ function ListItem(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button color="primary">Reply</Button>
-          <Button color="primary">Edit</Button>
+          <Button color="primary">Action 1</Button>
+          <Button color="primary">Action 2</Button>
         </CardActions>
       </Card>
     </Grid>

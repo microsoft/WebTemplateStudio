@@ -36,22 +36,39 @@ var listItems = [
 ];
 
 router.get(constants.endpoint, function(req, res) {
-  res.json(listItems);
+  try {
+    res.json(listItems);
+  } catch (err) {
+    res.status.send(500).send(err);
+  }
 });
 
 router.post(constants.endpoint, function(req, res) {
-  let listItem = {
-    text: req.body.text,
-    _id: req.body._id
-  };
-  listItems.unshift(listItem);
-  res.json(listItem);
+  try {
+    let listItem = {
+      text: req.body.text,
+      _id: req.body._id
+    };
+    listItems.unshift(listItem);
+    res.json(listItem);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 router.delete(constants.endpoint + "/:_id", function(req, res) {
-  const { _id } = req.params;
-  listItems = listItems.filter(listItem => listItem._id !== _id);
-  res.json({ _id: Number(_id), text: "This commented was deleted" });
+  try {
+    const { _id } = req.params;
+    var index = listItems.findIndex(listItem => listItem._id == _id);
+    if (index > -1) {
+      listItems.splice(index, 1);
+      res.json({ _id: Number(_id), text: "This commented was deleted" });
+    } else {
+      res.status(404).send("Could not find item with id:" + _id);
+    }
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 module.exports = router;

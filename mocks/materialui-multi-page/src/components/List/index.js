@@ -30,6 +30,7 @@ class index extends Component {
     //Only include if list is selected and cosmos db is not selected
     this._id = 3;
 
+    this.endpoint = "/api/listItems";
     this.handleWarningClose = this.handleWarningClose.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -37,23 +38,28 @@ class index extends Component {
   }
 
   handleDelete(event, listItem) {
-    fetch(`/api/listItems/${listItem._id}`, { method: "DELETE" })
-      .then(response => response.json())
-      .then(res => {
+    fetch(`${this.endpoint}/${listItem._id}`, { method: "DELETE" })
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then(result => {
         let list = this.state.list;
-        list = list.filter(item => item._id !== res._id);
+        list = list.filter(item => item._id !== result._id);
         this.setState({ list: list });
       })
       .catch(error => {
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: "Request to delete list item failed."
+          WarningMessageText: `Request to delete list item failed: ${error}`
         });
       });
   }
 
   handleAddListItem(event) {
-    fetch("/api/listItems", {
+    fetch(this.endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -61,7 +67,12 @@ class index extends Component {
         _id: this._id // Only include if list is selected and cosmos db is not selected
       })
     })
-      .then(resp => resp.json())
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
       .then(result =>
         this.setState(prevState => ({
           list: [result, ...prevState.list],
@@ -71,7 +82,7 @@ class index extends Component {
       .catch(error =>
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: "Request to add list item failed"
+          WarningMessageText: `Request to add list item failed: ${error}`
         })
       );
 
@@ -91,13 +102,18 @@ class index extends Component {
   }
 
   componentDidMount() {
-    fetch("/api/listItems")
-      .then(res => res.json())
+    fetch(this.endpoint)
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
       .then(result => this.setState({ list: result }))
       .catch(error =>
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: "Request to get list items failed"
+          WarningMessageText: `Request to get list items failed: ${error}`
         })
       );
   }
