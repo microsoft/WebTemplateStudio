@@ -7,7 +7,7 @@ import CardTitle from "../CardTitle";
 import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
-import Check from "../../assets/Check.svg";
+import Check from "../../assets/check.svg";
 
 const SelectableCard = ({
   iconPath,
