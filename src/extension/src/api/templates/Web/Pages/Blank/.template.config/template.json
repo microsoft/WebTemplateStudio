@@ -3,26 +3,34 @@
   "classifications": [
     "Universal"
   ],
-  "name": "Html Blank",
-  "groupIdentity": "wts.Page.Html.Blank",
-  "identity": "wts.Page.Html.Blank",
-  "description": "This is the most html basic page.",
+  "name": "Blank",
+  "groupIdentity": "wts.Page.Blank",
+  "identity": "wts.Page.Blank",
+  "description": "This is the most basic page. A blank canvas to mold into whatever you wish.",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "page",
+    "wts.frontEndFramework": "ReactJS",
+    "wts.backEndFramework":  "NodeJS",
     "wts.platform": "Web",
-    "wts.projecttype": "FullStackWebApp",
-    "wts.frontendframework": "all",
-    "wts.backendframework":  "all",
     "wts.version": "1.0.0",
     "wts.displayOrder": "1",
     "wts.genGroup": "0",
     "wts.rightClickEnabled":"true" 
   },
-  "sourceName": "HtmlBlankPage",
+  "sourceName": "BlankView",
   "preferNameDirectory": true,
   "PrimaryOutputs": [
+    {
+      "path": ".\\Views\\BlankViewPage.xaml"
+    },
+    {
+      "path": ".\\Views\\BlankViewPage.xaml.cs"
+    },
+    {
+      "path": ".\\ViewModels\\BlankViewViewModel.cs"
+    }
   ],
   "symbols": {
     "wts.rootNamespace": {
