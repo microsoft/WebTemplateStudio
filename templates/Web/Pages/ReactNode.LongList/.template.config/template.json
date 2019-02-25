@@ -3,24 +3,24 @@
   "classifications": [
     "Universal"
   ],
-  "name": "Html Blank",
-  "groupIdentity": "wts.Page.Html.Blank",
-  "identity": "wts.Page.Html.Blank",
-  "description": "This is the most html basic page.",
+  "name": "Long List",
+  "groupIdentity": "wts.Page.ReactNode.LongList",
+  "identity": "wts.Page.ReactNode.LongList",
+  "description": "This is a long list which can be used for things like a blog page.",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "page",
     "wts.platform": "Web",
     "wts.projecttype": "FullStackWebApp",
-    "wts.frontendframework": "all",
-    "wts.backendframework":  "all",
+    "wts.frontendframework": "ReactJS",
+    "wts.backendframework":  "NodeJS",
     "wts.version": "1.0.0",
     "wts.displayOrder": "1",
     "wts.genGroup": "0",
     "wts.rightClickEnabled":"true" 
   },
-  "sourceName": "HtmlBlankPage",
+  "sourceName": "ReactNodeLongList",
   "preferNameDirectory": true,
   "PrimaryOutputs": [
   ],
