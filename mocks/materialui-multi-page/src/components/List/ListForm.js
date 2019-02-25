@@ -4,11 +4,9 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-const styles = themes => ({});
+const styles = theme => ({});
 
 function ListForm(props) {
-  const { classes } = props;
-
   return (
     <React.Fragment>
       <Grid item xs={12}>

@@ -15,23 +15,24 @@ import defaultAvatarImage from "../../images/DefaultAvatar.png";
 const styles = theme => ({});
 
 function ListItem(props) {
-  const { classes } = props;
-
   return (
     <Grid item xs={12}>
       <Card>
         <CardHeader
           avatar={<Avatar alt="Default Avatar" src={defaultAvatarImage} />}
           action={
-            <IconButton aria-label="Delete">
-              <ClearIcon onClick={e => props.onDelete(e, props.listItem)} />
+            <IconButton
+              aria-label="Delete"
+              onClick={e => props.onDelete(e, props.listItem)}
+            >
+              <ClearIcon />
             </IconButton>
           }
           title="Jimmy Jones"
-          subheader="September 14, 2016"
+          subheader="January 1, 2019"
         />
         <CardContent>
-          <Typography variant="h5" component="h2">
+          <Typography variant="h6" component="h2">
             {props.listItem.text}
           </Typography>
         </CardContent>

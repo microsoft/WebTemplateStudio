@@ -27,8 +27,8 @@ class index extends Component {
       WarningMessageText: ""
     };
 
-    // Temporary I will use the id provided by the database when it is added
-    this.id = 3;
+    //Only include if list is selected and cosmos db is not selected
+    this._id = 3;
 
     this.handleWarningClose = this.handleWarningClose.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -37,33 +37,36 @@ class index extends Component {
   }
 
   handleDelete(event, listItem) {
-    fetch(`/api/listItems/${listItem.id}`, { method: "DELETE" })
+    fetch(`/api/listItems/${listItem._id}`, { method: "DELETE" })
       .then(response => response.json())
       .then(res => {
         let list = this.state.list;
-        list = list.filter(item => item.id !== listItem.id);
+        list = list.filter(item => item._id !== res._id);
         this.setState({ list: list });
       })
-      .catch(error =>
+      .catch(error => {
         this.setState({
           WarningMessageOpen: true,
           WarningMessageText: "Request to delete list item failed."
-        })
-      );
+        });
+      });
   }
 
   handleAddListItem(event) {
     fetch("/api/listItems", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: this.state.multilineTextField, id: this.id })
+      body: JSON.stringify({
+        text: this.state.multilineTextField,
+        _id: this._id // Only include if list is selected and cosmos db is not selected
+      })
     })
       .then(resp => resp.json())
       .then(result =>
-        this.setState({
-          list: result,
+        this.setState(prevState => ({
+          list: [result, ...prevState.list],
           multilineTextField: ""
-        })
+        }))
       )
       .catch(error =>
         this.setState({
@@ -72,7 +75,8 @@ class index extends Component {
         })
       );
 
-    this.id++;
+    // Only include if list is selected and cosmos db is not selected
+    this._id++;
   }
 
   handleChange(event, name) {
@@ -110,7 +114,7 @@ class index extends Component {
           />
           {this.state.list.map(listItem => (
             <ListItem
-              key={listItem.id}
+              key={listItem._id}
               listItem={listItem}
               onDelete={this.handleDelete}
             />
