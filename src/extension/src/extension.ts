@@ -29,6 +29,8 @@ export function activate(context: vscode.ExtensionContext) {
 	// NOTE: These functions are registered temporarily to debug functionality until wizard is ready,
 	// the real call will be made by wizard through webview API!
 
+	let functionProvider: FunctionProvider = new FunctionProvider();
+
 	// NOTE: These can only be used after launch is called!
 
 	// Deploy a function app
@@ -38,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 			let subscriptionItem: SubscriptionItem = await tempGetSubscription("GiV.Hackathon");
 			let resourceGroupItem: ResourceGroupItem = await tempGetResourceGroup("GIV.W19.WTS", "GiV.Hackathon");
 
-			FunctionProvider.createFunctionApp(
+			functionProvider.createFunctionApp(
 				{
 					functionAppName: "YOUR-UNIQUE-FUNCTION-APP-NAME",
 					subscriptionItem: subscriptionItem,
@@ -79,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
 				if (!appName) {
 					await vscode.window.showInputBox().then(value => (appName = value!));
 				}
-				FunctionProvider.checkFunctionAppName(
+				functionProvider.checkFunctionAppName(
 					appName,
 					await tempGetSubscription("GiV.Hackathon")
 				)
