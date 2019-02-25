@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { AzureAuth } from './azure-auth/azureAuth';
+import { Controller } from "./controller";
 
 /**
  * Manages react webview panels
@@ -16,6 +17,7 @@ export class ReactPanel {
   private readonly _panel: vscode.WebviewPanel;
   private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
+  private static _controller: Controller;
 
   public static createOrShow(extensionPath: string) {
     const column = vscode.window.activeTextEditor
@@ -36,6 +38,8 @@ export class ReactPanel {
 
   private constructor(extensionPath: string, column: vscode.ViewColumn) {
     this._extensionPath = extensionPath;
+
+    this._controller = new Controller(this._panel);
 
     // Create and show a new webview panel
     this._panel = vscode.window.createWebviewPanel(
