@@ -1,4 +1,4 @@
-import { AzureAuth } from './azure-auth/azureAuth';
+import { AzureAuth, SubscriptionItem } from './azure-auth/azureAuth';
 import { SubscriptionError } from './errors';
 export abstract class Controller {
     /**
@@ -9,19 +9,12 @@ export abstract class Controller {
         return AzureAuth.getSubscriptions();
     }
 
-    public static getResourceGroups(subscriptionLabel: string) {
-        this.getSubscriptions().then(items => {
-            items.forEach(subscriptionItem => {
-                if (subscriptionItem.label === subscriptionLabel) {
-                    return AzureAuth.getResourceGroupItems(subscriptionItem);
-                }
-            });
-            throw new SubscriptionError("Subscription label " + subscriptionLabel + " not found");
-        });
+    public static getResourceGroups() {
+        throw Error("undefined");
     }
 
     public static getLocations() {
-        throw Error("Undefined");
+        throw Error("undefined");
     }
 
     public static isFunctionAppNameUnique() {
@@ -40,9 +33,16 @@ export abstract class Controller {
         throw Error("undefined");
     }
 
-
-
-
-
-
+    private static async_getSubscriptionItem(subscriptionLabel: string): Promise<SubscriptionItem> {
+        return AzureAuth.getSubscriptions().then(items => {
+            items.forEach(subscriptionItem => {
+                if (subscriptionItem.label === subscriptionLabel) {
+                    return Promise.resolve(subscriptionItem);
+                }
+            });
+            throw new SubscriptionError("No subscription found with this name.");
+        });
+    }
 }
+
+
