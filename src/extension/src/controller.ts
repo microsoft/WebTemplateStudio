@@ -33,7 +33,7 @@ export abstract class Controller {
         throw Error("undefined");
     }
 
-    private static async_getSubscriptionItem(subscriptionLabel: string): Promise<SubscriptionItem> {
+    private static async _getSubscriptionItem(subscriptionLabel: string): Promise<SubscriptionItem> {
         return AzureAuth.getSubscriptions().then(items => {
             items.forEach(subscriptionItem => {
                 if (subscriptionItem.label === subscriptionLabel) {
