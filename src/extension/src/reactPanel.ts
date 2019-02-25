@@ -39,8 +39,6 @@ export class ReactPanel {
   private constructor(extensionPath: string, column: vscode.ViewColumn) {
     this._extensionPath = extensionPath;
 
-    this._controller = new Controller(this._panel);
-
     // Create and show a new webview panel
     this._panel = vscode.window.createWebviewPanel(
       ReactPanel.viewType,
