@@ -6,7 +6,7 @@ const DraggableSidebarItem = ({
   text,
   closeSvgUrl,
   reorderSvgUrl,
-  itemTitle,
+  itemTitle
 }: {
   text: string;
   reorderSvgUrl?: string;
@@ -15,18 +15,23 @@ const DraggableSidebarItem = ({
 }) => {
   return (
     <div>
-      {!!itemTitle && <div className={styles.draggablePage}>
-        <div className={styles.iconContainer} />
-        <div className={styles.itemContainer}>
-          <div>{itemTitle}</div>
+      {!!itemTitle && (
+        <div className={styles.draggablePage}>
+          <div className={styles.iconContainer} />
+          <div className={styles.itemContainer}>
+            <div>{itemTitle}</div>
+          </div>
         </div>
-      </div>}
+      )}
       <div className={styles.draggablePage}>
         <div className={styles.iconContainer}>
           <img className={styles.icon} src={reorderSvgUrl} />
         </div>
         <div className={styles.pagesTextContainer}>
-          <div>{text}</div>
+          <div>
+            <input />
+            {text}
+          </div>
           <img className={styles.cancelIcon} src={closeSvgUrl} />
         </div>
       </div>

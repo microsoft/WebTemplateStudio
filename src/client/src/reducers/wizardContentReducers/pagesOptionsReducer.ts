@@ -6,14 +6,22 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const pageOptions = (state = [], action: any) => {
-    switch(action.type) {
-        case Actions.GET_PAGES_OPTIONS_SUCCESS:
-            return action.payload;
-        case Actions.GET_PAGES_OPTIONS:
-        default:
-            return state;
+const pageOptions = (
+  state = [
+    {
+      Name: "Test Detail",
+      Template: "wts.Page.React.MasterDetail"
     }
-}
+  ],
+  action: any
+) => {
+  switch (action.type) {
+    case Actions.GET_PAGES_OPTIONS_SUCCESS:
+      return action.payload;
+    case Actions.GET_PAGES_OPTIONS:
+    default:
+      return state;
+  }
+};
 
 export default pageOptions;

@@ -23,7 +23,7 @@ interface ISelectionType {
   appType: ISelected;
   backendFramework: ISelected;
   frontendFramework: ISelected;
-  pages: string[];
+  pages: ISelected[];
 }
 
 interface IDispatchProps {
@@ -96,7 +96,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     return (
       <div className={styles.container}>
         <div className={styles.title}>Your Project Details</div>
-        <RightSidebarDropdown 
+        <RightSidebarDropdown
           options={this.props.projectTypeDropdownItems}
           handleDropdownChange={this.handleChange.bind(this)}
           selectDropdownOption={this.props.selectProjectType}
@@ -104,28 +104,32 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           title="Project Type"
           value={this.convertOptionToDropdownItem(this.props.selection.appType)}
         />
-        <RightSidebarDropdown 
+        <RightSidebarDropdown
           options={this.props.frontendDropdownItems}
           handleDropdownChange={this.handleChange.bind(this)}
           selectDropdownOption={this.props.selectFrontendFramework}
           isVisible={this.showFrameworks()}
           title="Front-end Framework"
-          value={this.convertOptionToDropdownItem(this.props.selection.frontendFramework)}
+          value={this.convertOptionToDropdownItem(
+            this.props.selection.frontendFramework
+          )}
         />
-        <RightSidebarDropdown 
+        <RightSidebarDropdown
           options={this.props.backendDropdownItems}
           handleDropdownChange={this.handleChange.bind(this)}
           selectDropdownOption={this.props.selectBackendFramework}
           isVisible={this.showFrameworks()}
           title="Back-end Framework"
-          value={this.convertOptionToDropdownItem(this.props.selection.backendFramework)}
+          value={this.convertOptionToDropdownItem(
+            this.props.selection.backendFramework
+          )}
         />
         {this.showPages() && (
           <div className={styles.sidebarItem}>
             <div className={styles.dropdownTitle}>Pages</div>
             {this.props.selection.pages.map(page => (
               <DraggableSidebarItem
-                text={page}
+                text={page.title}
                 closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`}
                 reorderSvgUrl={`${
                   process.env.REACT_APP_RELATIVE_PATH
@@ -141,7 +145,11 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               <DraggableSidebarItem
                 text={this.props.services[serviceName].api}
                 closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`}
-                itemTitle={serviceName === "cosmosOptions" ? "CosmosDB" : "Azure Functions"}
+                itemTitle={
+                  serviceName === "cosmosOptions"
+                    ? "CosmosDB"
+                    : "Azure Functions"
+                }
               />
             ))}
             {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
@@ -165,7 +173,7 @@ const mapStateToProps = (state: any): IRightSidebarProps => {
     projectTypeDropdownItems,
     frontendDropdownItems,
     backendDropdownItems,
-    services: getServicesSelector(state),
+    services: getServicesSelector(state)
   };
 };
 

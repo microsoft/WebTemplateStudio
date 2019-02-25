@@ -1,21 +1,20 @@
-import classNames from "classnames";
 import * as React from "react";
 
 import Card from "../SelectableCard";
+import Title from "../Title";
 
 import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-import Title from "../Title";
 
 interface ISelectOptionProps {
   title: string;
   internalName?: string;
   selectCard?: (card: ISelected) => void;
   selectedCards?: number[];
-  selectOptions?: (cards: string[]) => void;
+  selectOptions?: (cards: ISelected[]) => void;
   options: IOption[];
   multiSelect: boolean;
 }
@@ -30,9 +29,15 @@ class SelectOption extends React.Component<
 > {
   constructor(props: any) {
     super(props);
-    this.state = {
-      selectedCards: this.props.selectedCards ? this.props.selectedCards : [0]
-    };
+    if (!this.props.multiSelect) {
+      this.state = {
+        selectedCards: this.props.selectedCards ? this.props.selectedCards : [0]
+      };
+    } else {
+      this.state = {
+        selectedCards: [0]
+      };
+    }
   }
 
   public isCardSelected(cardNumber: number): boolean {
@@ -49,10 +54,13 @@ class SelectOption extends React.Component<
    *
    * @param cardNumbers
    */
-  public convertCardNumbersToTitles(cardNumbers: number[]): string[] {
+  public convertCardNumbersToTitles(cardNumbers: number[]): ISelected[] {
     const cardTitles = [];
     for (const num of cardNumbers) {
-      cardTitles.push(this.props.options[num].title);
+      cardTitles.push({
+        title: this.props.options[num].title,
+        internalName: this.props.options[num].internalName
+      });
     }
     return cardTitles;
   }

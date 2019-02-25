@@ -6,9 +6,10 @@ import SelectOption from "../SelectOption";
 import { selectPagesAction } from "../../actions/selectPages";
 
 import { IOption } from "../../types/option";
+import { ISelected } from "../../types/selected";
 
 interface IDispatchProps {
-  selectPages: (pages: string[]) => void;
+  selectPages: (pages: ISelected[]) => void;
 }
 
 interface ISelectPagesProps {
@@ -35,12 +36,17 @@ class SelectPages extends React.Component<Props> {
 const mapStateToProps = (state: any): ISelectPagesProps => {
   const { pageOptions } = state.wizardContent;
   return {
-    options: pageOptions,
-  }
-}
+    options: pageOptions
+  };
+};
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  selectPages: (pages: string[]) => { dispatch(selectPagesAction(pages)) },
+  selectPages: (pages: ISelected[]) => {
+    dispatch(selectPagesAction(pages));
+  }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectPages);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SelectPages);
