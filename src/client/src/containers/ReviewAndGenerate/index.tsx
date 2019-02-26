@@ -22,6 +22,20 @@ const ReviewAndGenerate = (props: IStateProps) => {
             <div className={styles.title}>
                 Review and Generate Template
             </div>
+            <div className={styles.outputDetailsContainer}>
+                <div className={styles.inputContainer}>
+                    <div className={styles.inputTitle}>
+                        Project Name:
+                    </div>
+                    <input className={styles.input}/>
+                </div>
+                <div className={styles.inputContainer}>
+                    <div className={styles.inputTitle}>
+                        Output Path:
+                    </div>
+                    <input className={styles.input}/>
+                </div>
+            </div>
             <Table title="1. Type of Application" rowItems={props.projectTypeRows}/>
             <Table title="2. Frameworks" rowItems={props.frameworkRows}/>
             <Table title="3. Pages" rowItems={props.pagesRows} />

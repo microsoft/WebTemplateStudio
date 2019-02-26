@@ -40,7 +40,9 @@ class Footer extends React.Component<Props> {
       text: "Sending Message to VSCode"
     });
   };
-
+  public isReviewAndGenerate = ():boolean => {
+    return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
+  }
   public render() {
     // TODO: Needs access to redux to determine where each link should go to
     // TODO: Add previous paths through link prop to track state/history
@@ -57,14 +59,18 @@ class Footer extends React.Component<Props> {
                 >
                   Back
                 </Link>
-                { pathname !== "/ReviewAndGenerate" &&
+                { !this.isReviewAndGenerate() &&
                   <Link
                     className={classnames(styles.button, buttonStyles.buttonHighlighted)}
                     to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
                   >
                     Next
                   </Link>}
-                <button disabled={pathname !== ROUTES.REVIEW_AND_GENERATE} className={classnames(styles.button, buttonStyles.buttonLight)} onClick={this.logMessageToVsCode}>
+                <button disabled={pathname !== ROUTES.REVIEW_AND_GENERATE} 
+                    className={classnames(styles.button, {
+                      [buttonStyles.buttonLight]: !this.isReviewAndGenerate(),
+                      [buttonStyles.buttonHighlighted]: this.isReviewAndGenerate(),
+                    })} onClick={this.logMessageToVsCode}>
                   Generate
                 </button>
                 <Link className={classnames(styles.button, buttonStyles.buttonLight)} to="/">

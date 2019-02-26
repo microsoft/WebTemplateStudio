@@ -1,9 +1,37 @@
 .container {
-    padding: 2% 20%;
+    padding: 2% 15%;
 }
 
 .title {
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 0.5em;
+}
+
+.outputDetailsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.inputTitle {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.input {
+    box-sizing: border-box;
+    padding: 0.3em;
+    width: 100%;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.inputContainer {
+    width: 45%;
+    text-decoration: none;
+    outline: none;
 }
