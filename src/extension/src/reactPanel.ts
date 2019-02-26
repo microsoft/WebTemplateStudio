@@ -1,7 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { AzureAuth } from './azure-auth/azureAuth';
-import { Controller } from "./controller";
 
 /**
  * Manages react webview panels
@@ -17,9 +16,20 @@ export class ReactPanel {
   private readonly _panel: vscode.WebviewPanel;
   private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
-  private static _controller: Controller;
+  private static _controllerFunctionDelegate =
+     function (message: any) {
+      switch (message.command) {
+        case "alert":
+          vscode.window.showErrorMessage(message.text);
 
-  public static createOrShow(extensionPath: string) {
+          return;
+      }
+    }
+  ;
+
+  // private static _controller: Controller;
+
+  public static createOrShow(extensionPath: string, controllerFunctionDelegate : (message: any) => any = this._controllerFunctionDelegate) {
     const column = vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
       : undefined;
@@ -29,14 +39,22 @@ export class ReactPanel {
     if (ReactPanel.currentPanel) {
       ReactPanel.currentPanel._panel.reveal(column);
     } else {
+      this._controllerFunctionDelegate = controllerFunctionDelegate;
+
       ReactPanel.currentPanel = new ReactPanel(
         extensionPath,
-        column || vscode.ViewColumn.One
+        column || vscode.ViewColumn.One, 
+        controllerFunctionDelegate
       );
     }
+    return ReactPanel.currentPanel;
   }
 
-  private constructor(extensionPath: string, column: vscode.ViewColumn) {
+  public postMessageWebview(object : Object){
+    this._panel.webview.postMessage(object);
+  };
+
+  private constructor(extensionPath: string, column: vscode.ViewColumn, controllerFunctionDelegate : (message: any) => any) {
     this._extensionPath = extensionPath;
 
     // Create and show a new webview panel
@@ -62,38 +80,15 @@ export class ReactPanel {
     // This happens when the user closes the panel or when the panel is closed programatically
     this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
 
-    // Handle messages from the webview
+    // Handle messages from the webview from a function delegate
     this._panel.webview.onDidReceiveMessage(
-      message => {
-        switch (message.command) {
-          case "alert":
-            vscode.window.showErrorMessage(message.text);
-            return;
-          case "login":
-            AzureAuth.login().then(res => {
-              const email = AzureAuth.getEmail();
-              this._panel.webview.postMessage({
-                command: 'login',
-                email: email
-              });
-            }).catch(err => {
-              console.log(err);
-            });
-          case "subscriptions":
-            AzureAuth.getSubscriptions().then(items => {
-              const subs = items;
-              this._panel.webview.postMessage({
-                command: 'subscriptions',
-                subscriptions: subs
-              });
-            });
-        }
-      },
+      controllerFunctionDelegate,
       null,
       this._disposables
     );
   }
 
+  // TODO: this should be removed
   public doRefactor() {
     // Send a message to the webview webview.
     // You can send any JSON serializable data.
