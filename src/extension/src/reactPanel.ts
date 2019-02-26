@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { AzureAuth } from './azure-auth/azureAuth';
+import { Controller } from "./controller";
 
 /**
  * Manages react webview panels
@@ -16,6 +17,7 @@ export class ReactPanel {
   private readonly _panel: vscode.WebviewPanel;
   private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
+  private _controller: Controller = new Controller();
 
   public static createOrShow(extensionPath: string) {
     const column = vscode.window.activeTextEditor
@@ -77,6 +79,7 @@ export class ReactPanel {
             }).catch(err => {
               console.log(err);
             });
+            break;
           case "subscriptions":
             AzureAuth.getSubscriptions().then(items => {
               const subs = items;
@@ -85,6 +88,45 @@ export class ReactPanel {
                 subscriptions: subs
               });
             });
+            break;
+          case "name-functions":
+            this._controller.isFunctionAppNameUnique(message.appName, message.subscriptionLabel)
+              .then((isAvailable) => {
+                this._panel.webview.postMessage({
+                  command: 'functions-name-result',
+                  isAvailable: isAvailable,
+                  message: ""
+                });
+              })
+              .catch((err: Error) => {
+                this._panel.webview.postMessage({
+                  command: 'functions-name-result',
+                  isAvailable: false,
+                  message: err.message
+                });
+              });
+            break;
+          case "name-cosmos":
+            this._controller.isCosmosResourceNameUnique(message.appName, message.subscriptionLabel)
+              .then((isAvailable) => {
+                this._panel.webview.postMessage({
+                  command: 'cosmos-name-result',
+                  isAvailable: isAvailable,
+                  message: ""
+                });
+              })
+              .catch((err: Error) => {
+                this._panel.webview.postMessage({
+                  command: 'cosmos-name-result',
+                  isAvailable: false,
+                  message: err.message
+                });
+              });
+            break;
+          case "deploy-functions":
+            break;
+          case "deploy-cosmos":
+            break;
         }
       },
       null,

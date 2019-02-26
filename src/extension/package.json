@@ -25,11 +25,6 @@
         "command": "webTemplateStudioExtension.createFunctionApp",
         "title": "%webTemplateStudioExtension.commands.createFunctionApp%",
         "category": "%webTemplateStudioExtension.commands.wts%"
-      },
-      {
-        "command": "webTemplateStudioExtension.checkFunctionAppName",
-        "title": "%webTemplateStudioExtension.commands.checkFunctionAppName%",
-        "category": "%webTemplateStudioExtension.commands.wts%"
       }
     ]
   },
