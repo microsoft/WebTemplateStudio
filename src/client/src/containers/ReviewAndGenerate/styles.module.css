@@ -27,6 +27,7 @@
   font-size: 1em;
   background-color: #696969;
   border: 1px solid #ffffff;
+  border-radius: 2px;
 }
 
 .input:focus {
