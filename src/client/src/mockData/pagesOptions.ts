@@ -1,4 +1,4 @@
-import masterdetail from "../assets/masterdetail.svg";
+import masterdetail from "../assets/masterdetailwhite.svg";
 import contentgrid from "../assets/contentgrid.svg";
 import list from "../assets/list.svg";
 

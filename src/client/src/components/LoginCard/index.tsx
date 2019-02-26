@@ -1,39 +1,42 @@
 import classnames from "classnames";
 import * as React from "react";
 
+import azure from "../../assets/azure.svg";
+
 import buttonStyles from "../../css/buttonStyles.module.css";
-import styles from './styles.module.css';
+import styles from "./styles.module.css";
 
 interface IProps {
-    cardTitle: string;
-    cardBody: string;
-    handleClick: () => void;
+  cardTitle: string;
+  cardBody: string;
+  handleClick: () => void;
 }
 
 const LoginCard = ({ cardTitle, cardBody, handleClick }: IProps) => {
-    return (
-        <div className={styles.loginContainer}>
-            <div className={styles.cardTitle}>
-                {cardTitle}
-            </div>
-            <div className={styles.cardBody}>
-                {cardBody}
-            </div>
-            <div className={styles.selectionContainer}>
-                <div className={styles.details}>
-                    Details
-                </div>
-                <div className={styles.buttonContainer}>
-                    <div>
-                        Create Account
-                    </div>
-                    <button onClick={handleClick} className={classnames(styles.signInButton, buttonStyles.buttonHighlighted)}>
-                        Sign in
-                    </button>
-                </div>
-            </div>
+  return (
+    <div className={styles.loginContainer}>
+      <div className={styles.cardTitle}>
+        <img className={styles.icon} src={azure} />
+        {cardTitle}
+      </div>
+      <div className={styles.cardBody}>{cardBody}</div>
+      <div className={styles.selectionContainer}>
+        <div className={styles.details}>Details</div>
+        <div className={styles.buttonContainer}>
+          <div>Create Account</div>
+          <button
+            onClick={handleClick}
+            className={classnames(
+              styles.signInButton,
+              buttonStyles.buttonHighlighted
+            )}
+          >
+            Sign in
+          </button>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
 export default LoginCard;
