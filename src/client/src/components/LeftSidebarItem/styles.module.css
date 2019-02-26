@@ -1,0 +1,33 @@
+.textSelected,
+.text {
+    font-size: 1em;  
+}
+
+.text {
+    font-weight: bold;
+    padding: 18px 0px;
+}
+
+.textSelected {
+    color: white;
+    background-color: #0067B8;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    height: 1em;
+    padding-left: 1em;
+}
+
+.spacer {
+    padding-left: 2em;
+}
+
+.spacer,
+.icon {
+    padding-right: 0.5em;
+}

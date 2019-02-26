@@ -1,9 +1,13 @@
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { Link, withRouter } from "react-router-dom";
 
+import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
+
+import { ROUTES } from "../../utils/constants";
 
 import { IVSCode } from "../../reducers/vscodeApiReducer";
 
@@ -18,11 +22,13 @@ const pathsNext: any = {
   "/SelectWebApp": "/SelectFrameworks",
   "/SelectFrameworks": "/SelectPages",
   "/SelectPages": "/AzureLogin",
+  "/AzureLogin": "/ReviewAndGenerate"
 };
 const pathsBack: any = {
   "/SelectFrameworks": "/SelectWebApp",
   "/SelectPages": "/SelectFrameworks",
   "/AzureLogin": "/SelectPages",
+  "/ReviewAndGenerate": "/AzureLogin"
 };
 
 class Footer extends React.Component<Props> {
@@ -34,36 +40,47 @@ class Footer extends React.Component<Props> {
       text: "Sending Message to VSCode"
     });
   };
-
+  public isReviewAndGenerate = ():boolean => {
+    return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
+  }
   public render() {
     // TODO: Needs access to redux to determine where each link should go to
     // TODO: Add previous paths through link prop to track state/history
     const { pathname } = this.props.location;
     return (
-      <div className={styles.footer}>
-        {
-          pathname !== "/" && 
-            <div>
-              <Link
-                className={styles.button}
-                to={pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]}
-              >
-                Back
-              </Link>
-              <Link
-                className={styles.button}
-                to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
-              >
-                Next
-              </Link>
-              <button className={styles.button} onClick={this.logMessageToVsCode}>
-                Generate
-              </button>
-              <Link className={styles.button} to="/">
-                Cancel
-              </Link>
-            </div>
-        }
+      <div>
+        {pathname !== "/" && 
+        <div className={styles.footer}>
+          
+              <div className={styles.buttonContainer}>
+                <Link
+                  className={classnames(buttonStyles.buttonDark, styles.button)}
+                  to={pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]}
+                >
+                  Back
+                </Link>
+                { !this.isReviewAndGenerate() &&
+                  <Link
+                    className={classnames(styles.button, {
+                      [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
+                      [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate(),
+                    })}
+                    to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
+                  >
+                    Next
+                  </Link>}
+                <button disabled={pathname !== ROUTES.REVIEW_AND_GENERATE} 
+                    className={classnames(styles.button, {
+                      [buttonStyles.buttonDark]: !this.isReviewAndGenerate(),
+                      [buttonStyles.buttonHighlightedBorder]: this.isReviewAndGenerate(),
+                    })} onClick={this.logMessageToVsCode}>
+                  Generate
+                </button>
+                <Link className={classnames(styles.button, buttonStyles.buttonDark)} to="/">
+                  Cancel
+                </Link>
+              </div>
+        </div>}
       </div>
     );
   }

@@ -1,11 +1,12 @@
 .header {
     position: absolute;
-    width: 95.7%;
+    width: 100%;
     padding: 12px 24px;
-    background-color: #DBDBDB;
-    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    background-color: #303030;
+    border-bottom: 0.5px solid #7f7f7f;
     display: flex;
     justify-content: space-between;
+    box-sizing: border-box;
 }
 
 .headerTitle {
@@ -23,7 +24,7 @@
 }
 
 .button {
-    color: #0067B8;
+    color: #54B4FF;
 }
 
 .button:hover {

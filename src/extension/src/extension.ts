@@ -71,33 +71,6 @@ export function activate(context: vscode.ExtensionContext) {
 				});
 		}
 	));
-
-	// Check function name availability, asks user for function app name as input and returns availability as a toast
-	// only for testing
-	context.subscriptions.push(
-		vscode.commands.registerCommand(
-			"webTemplateStudioExtension.checkFunctionAppName",
-			async (appName: string) => {
-				if (!appName) {
-					await vscode.window.showInputBox().then(value => (appName = value!));
-				}
-				functionProvider.checkFunctionAppName(
-					appName,
-					await tempGetSubscription("GiV.Hackathon")
-				)
-					.then(result => {
-						// result is either true or false
-						vscode.window.showInformationMessage(
-							"Function App Name: " + appName + "\nAvailable: " + String(result)
-						);
-					})
-					.catch(err => {
-						console.log(err);
-						// error handling here
-					});
-			}
-		)
-	);
 }
 
 export function deactivate() {

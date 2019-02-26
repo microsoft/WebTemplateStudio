@@ -1,2 +1,2 @@
-# Code owners below will be automatically assigned as automatic PR reviewers:
-* @trevorNgo @Kai-Bailey @amrrsharaff @dandua98 @ngkelly3 @SahilTara @KirillShchetinin @mohannad-abwah @tejbirsingh @markAtMicrosoft @sibille @mvegaca @dgomezc
+# At least one of the code owners below will be required on each PR:
+* @KirillShchetinin @mohannad-abwah @tejbirsingh @markAtMicrosoft @sibille @mvegaca @dgomezc @smmatte

@@ -7,8 +7,6 @@ import CloseIcon from "@material-ui/icons/Close";
 const styles = theme => ({});
 
 function WarningMessage(props) {
-  const { classes } = props;
-
   return (
     <div>
       <Snackbar

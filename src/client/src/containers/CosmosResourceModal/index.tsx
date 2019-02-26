@@ -2,10 +2,10 @@
  * This component uses React Hooks in lieu of Class Components.
  * https://reactjs.org/docs/hooks-intro.html
  */
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import CardTitle from "../../components/CardTitle";
 import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
@@ -18,6 +18,7 @@ import getCosmosModalData, {
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
+import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
 interface IDispatchProps {
@@ -36,7 +37,8 @@ const initialState = {
   resourceGroup: "",
   accountName: "",
   api: "",
-  location: ""
+  location: "",
+  internalName: "wts.Feature.Azure.Cosmos"
 };
 
 const CosmosResourceModal = (props: Props) => {
@@ -84,7 +86,7 @@ const CosmosResourceModal = (props: Props) => {
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
           <div>Subscription Selected</div>
-          <div>Create new</div>
+          <div className={styles.createNew}>Create new</div>
         </div>
         <Dropdown
           options={cosmosData.subscription}
@@ -96,7 +98,7 @@ const CosmosResourceModal = (props: Props) => {
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
           <div>Resource Group</div>
-          <div>Create new</div>
+          <div className={styles.createNew}>Create new</div>
         </div>
         <Dropdown
           options={cosmosData.resourceGroup}
@@ -141,6 +143,7 @@ const CosmosResourceModal = (props: Props) => {
       </div>
       <div className={styles.buttonContainer}>
         <button
+          className={classnames(buttonStyles.buttonHighlighted, styles.button)}
           onClick={() => {
             props.saveCosmosOptions(cosmosFormData);
           }}

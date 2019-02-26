@@ -30,7 +30,7 @@ function MasterDetailPage(props) {
       <div className={classes.layout}>
         <img
           src={props.Asset.image}
-          alt={"Default Image"}
+          alt={"Default"}
           className={classes.image}
         />
         <Typography variant="h3" color="textPrimary" className={classes.title}>

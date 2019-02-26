@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { AzureAuth, SubscriptionItem } from './azure-auth/azureAuth';
-import { SubscriptionError } from './errors';
+import { SubscriptionError, ValidationError } from './errors';
 import { FunctionProvider, FunctionSelections } from './azure-functions/functionProvider';
 import { CosmosDBDeploy, CosmosDBSelections } from './azure-cosmosDB/cosmosDbModule';
 import {ReactPanel}  from './reactPanel';
@@ -65,22 +65,38 @@ export abstract class Controller {
     }
 
     public static async getLocations(subscriptionLabel : string) {
-        let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
+        // let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
         // return AzureAuth.getLocations(subscriptionItem);
         
         throw Error("unimplemented");
     }
 
-    public static async isFunctionAppNameUnique(functionAppName : string, subscriptionLabel : string) {
+    public static async isFunctionAppNameUnique(functionAppName : string, subscriptionLabel : string) : Promise<boolean> {
         this.updateFunctionSubscriptionItemCache(subscriptionLabel);
 
-        return this.AzureFunctionProvider.checkFunctionAppName(functionAppName, this.usersFunctionSubscriptionItemCache);
+        return this.AzureFunctionProvider.checkFunctionAppName(functionAppName, this.usersFunctionSubscriptionItemCache)
+        .then((isAvailable) => {
+            if (isAvailable) {
+                return Promise.resolve(true);
+            } else {
+                return Promise.reject(new ValidationError(`Function app name ${functionAppName} is not available`));
+            }
+        })
+        .catch(err => { throw err; });;
     }
 
-    public static async isCosmosResourceNameUnique(cosmosDBAccountName : string, subscriptionLabel : string) {
+    public static async isCosmosResourceNameUnique(cosmosDBAccountName : string, subscriptionLabel : string) : Promise<boolean> {
         await this.updateCosmosDBSubscriptionItemCache(subscriptionLabel);
 
-        return this.AzureCosmosDBProvider.validateCosmosDBAccountName(cosmosDBAccountName, this.usersCosmosDBSubscriptionItemCache);
+        return this.AzureCosmosDBProvider.validateCosmosDBAccountName(cosmosDBAccountName, this.usersCosmosDBSubscriptionItemCache)
+        .then((message) => {
+            if (message === undefined || message === null || message === "") {
+                return Promise.resolve(true);
+            } else {
+                return Promise.reject(new ValidationError(message));
+            }
+        })
+        .catch(err => { throw err; });
     }
 
     public static deployFunctionApp() {
@@ -102,6 +118,11 @@ export abstract class Controller {
         });
     }
 
+    /*
+    *
+    * Caching is used for performance; when displaying live check on keystroke to wizard
+    * 
+    */
     private static async updateCosmosDBSubscriptionItemCache(subscriptionLabel : string): Promise<void> {
         if(this.usersCosmosDBSubscriptionItemCache === undefined){
             let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);

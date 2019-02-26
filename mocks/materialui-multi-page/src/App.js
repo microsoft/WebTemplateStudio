@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import LongList from "./components/LongList";
+import List from "./components/List";
 import NavBar from "./components/NavBar";
 import MasterDetail from "./components/MasterDetail";
 import Grid from "./components/Grid";
@@ -13,7 +13,7 @@ class App extends Component {
         <CssBaseline />
         <NavBar />
         <Switch>
-          <Route path="/longlist" component={LongList} />
+          <Route path="/list" component={List} />
           <Route path="/masterdetail" component={MasterDetail} />
           <Route path="/grid" component={Grid} />
         </Switch>

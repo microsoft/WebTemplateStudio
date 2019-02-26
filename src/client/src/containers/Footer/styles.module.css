@@ -1,14 +1,21 @@
 .footer {
     position: absolute;
-    background-color: #DBDBDB;
+    background-color: #4C4C4C;
     padding: 15px;
     bottom: 0;
-    width: 97.36%;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
-    min-height: 25px;
+    min-height: 4em;
+    box-sizing: border-box;
 }
 
 .button {
-    margin-left: 10px;
+    margin-left: 1em;
+    font-size: 1em;
+}
+
+.buttonContainer {
+    display: flex;
+    align-items: center;
 }

@@ -21,7 +21,7 @@ export class ReactPanel {
         case "alert":
           vscode.window.showErrorMessage(message.text);
 
-          return;
+          break;
       }
     }
   ;
