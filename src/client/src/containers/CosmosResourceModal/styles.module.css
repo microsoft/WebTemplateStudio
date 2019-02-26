@@ -27,6 +27,7 @@
 
 .button {
     font-size: 1em;
+    border: none;
 }
 
 .icon {
@@ -39,11 +40,13 @@
     font-size: 1em;
     padding: 0.5em;
     box-sizing: border-box;
-    background-color: #DFDFDF;
+    background-color: #696969;
     border: 0.5px solid rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
 }
 
+.createNew,
 .link {
     text-decoration: none;
-    color: #0067B8;
+    color: #54B4FF;
 }

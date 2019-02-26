@@ -26,7 +26,7 @@ const Card = ({ cardTitle, cardBody, buttonText, handleButtonClick, handleDetail
                 {cardBody}
             </div>
             <div className={styles.selectionContainer}>
-                <div onClick={handleDetailsClick}>
+                <div className={styles.details} onClick={handleDetailsClick}>
                     Details
                 </div>
                 <button onClick={handleButtonClick} className={classnames(styles.signInButton, buttonStyles.buttonHighlighted)}>

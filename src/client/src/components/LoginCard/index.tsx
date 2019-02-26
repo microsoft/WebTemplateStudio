@@ -20,7 +20,7 @@ const LoginCard = ({ cardTitle, cardBody, handleClick }: IProps) => {
                 {cardBody}
             </div>
             <div className={styles.selectionContainer}>
-                <div>
+                <div className={styles.details}>
                     Details
                 </div>
                 <div className={styles.buttonContainer}>

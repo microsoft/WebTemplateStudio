@@ -85,7 +85,7 @@ const CosmosResourceModal = (props: Props) => {
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
           <div>Subscription Selected</div>
-          <div>Create new</div>
+          <div className={styles.createNew}>Create new</div>
         </div>
         <Dropdown
           options={cosmosData.subscription}
@@ -97,7 +97,7 @@ const CosmosResourceModal = (props: Props) => {
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
           <div>Resource Group</div>
-          <div>Create new</div>
+          <div className={styles.createNew}>Create new</div>
         </div>
         <Dropdown
           options={cosmosData.resourceGroup}

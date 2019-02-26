@@ -22,8 +22,10 @@
 
 .input {
     box-sizing: border-box;
-    padding: 0.3em;
+    padding: 0.5em;
     width: 100%;
+    font-size: 1em;
+    background-color: #696969;
 }
 
 .input:focus {

@@ -20,6 +20,7 @@
 .signInButton {
     font-size: 1em;
     margin-left: 10px;
+    border: none;
 }
 
 .cardTitle {
@@ -29,4 +30,8 @@
 
 .cardBody {
     margin-bottom: 1em;
+}
+
+.details {
+    color: #54B4FF;
 }

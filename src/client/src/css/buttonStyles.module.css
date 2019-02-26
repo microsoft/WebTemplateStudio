@@ -1,11 +1,17 @@
-.buttonHighlighted {
+.buttonHighlightedBorder {
     background-color: #0067B8;
     color: white;
     border: 0.5px solid white;
 }
 
+.buttonHighlighted {
+    background-color: #0067B8;
+    color: white;
+}
+
 .buttonLight,
 .buttonHighlighted,
+.buttonHighlightedBorder,
 .buttonDark {
     text-decoration: none;
     outline: none;
