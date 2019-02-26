@@ -33,8 +33,10 @@ export class Controller {
                         } else {
                             return Promise.reject(new ValidationError(`Function app name ${appName} is not available`));
                         }
-                    });
-            });
+                    })
+                    .catch(err => { throw err; });
+            })
+            .catch(err => { throw err; });
     }
 
     public async isCosmosResourceNameUnique(appName: string, subscriptionLabel: string): Promise<boolean> {
@@ -47,8 +49,10 @@ export class Controller {
                         } else {
                             return Promise.reject(new ValidationError(message));
                         }
-                    });
-            });
+                    })
+                    .catch(err => { throw err; });
+            })
+            .catch(err => { throw err; });
     }
 
     public deployFunctionApp() {
@@ -61,11 +65,11 @@ export class Controller {
 
     private async _getSubscriptionItem(subscriptionLabel: string): Promise<SubscriptionItem> {
         return AzureAuth.getSubscriptions().then(items => {
-            items.forEach(subscriptionItem => {
+            for (let subscriptionItem of items) {
                 if (subscriptionItem.label === subscriptionLabel) {
-                    return Promise.resolve(subscriptionItem);
+                    return subscriptionItem;
                 }
-            });
+            }
             throw new SubscriptionError("No subscription found with this name.");
         });
     }

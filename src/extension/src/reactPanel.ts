@@ -93,12 +93,14 @@ export class ReactPanel {
             this._controller.isFunctionAppNameUnique(message.appName, message.subscriptionLabel)
               .then((isAvailable) => {
                 this._panel.webview.postMessage({
+                  command: 'functions-name-result',
                   isAvailable: isAvailable,
                   message: ""
                 });
               })
               .catch((err: Error) => {
                 this._panel.webview.postMessage({
+                  command: 'functions-name-result',
                   isAvailable: false,
                   message: err.message
                 });
@@ -108,12 +110,14 @@ export class ReactPanel {
             this._controller.isCosmosResourceNameUnique(message.appName, message.subscriptionLabel)
               .then((isAvailable) => {
                 this._panel.webview.postMessage({
+                  command: 'cosmos-name-result',
                   isAvailable: isAvailable,
                   message: ""
                 });
               })
               .catch((err: Error) => {
                 this._panel.webview.postMessage({
+                  command: 'cosmos-name-result',
                   isAvailable: false,
                   message: err.message
                 });
