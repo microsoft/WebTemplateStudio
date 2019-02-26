@@ -54,26 +54,29 @@ class Footer extends React.Component<Props> {
           
               <div className={styles.buttonContainer}>
                 <Link
-                  className={classnames(buttonStyles.buttonLight, styles.button)}
+                  className={classnames(buttonStyles.buttonDark, styles.button)}
                   to={pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]}
                 >
                   Back
                 </Link>
                 { !this.isReviewAndGenerate() &&
                   <Link
-                    className={classnames(styles.button, buttonStyles.buttonHighlighted)}
+                    className={classnames(styles.button, {
+                      [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
+                      [buttonStyles.buttonHighlighted]: !this.isReviewAndGenerate(),
+                    })}
                     to={pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]}
                   >
                     Next
                   </Link>}
                 <button disabled={pathname !== ROUTES.REVIEW_AND_GENERATE} 
                     className={classnames(styles.button, {
-                      [buttonStyles.buttonLight]: !this.isReviewAndGenerate(),
+                      [buttonStyles.buttonDark]: !this.isReviewAndGenerate(),
                       [buttonStyles.buttonHighlighted]: this.isReviewAndGenerate(),
                     })} onClick={this.logMessageToVsCode}>
                   Generate
                 </button>
-                <Link className={classnames(styles.button, buttonStyles.buttonLight)} to="/">
+                <Link className={classnames(styles.button, buttonStyles.buttonDark)} to="/">
                   Cancel
                 </Link>
               </div>

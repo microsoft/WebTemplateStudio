@@ -5,9 +5,9 @@
 
 .leftView {
     width: 20%;
-    background-color: #F7F7F7;
+    background-color: #303030;
     height: 100vh;
-    border-right: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-right: 0.5px solid #555555;
     box-sizing: border-box;
 }
 
@@ -15,13 +15,14 @@
     padding-top: 5%;
     width: 75%;
     box-sizing: border-box;
+    background-color: #303030;
 }
 
 .rightView {
     width: 25%;
-    background-color: #F7F7F7;
+    background-color: #303030;
     height: 100vh;
-    border-left: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-left: 0.5px solid #555555;
     box-sizing: border-box;
 }
 

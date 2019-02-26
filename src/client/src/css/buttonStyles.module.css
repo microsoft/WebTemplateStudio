@@ -1,11 +1,12 @@
 .buttonHighlighted {
     background-color: #0067B8;
     color: white;
-    border: 1px solid white;
+    border: 0.5px solid white;
 }
 
 .buttonLight,
-.buttonHighlighted {
+.buttonHighlighted,
+.buttonDark {
     text-decoration: none;
     outline: none;
     border-radius: 2px;
@@ -14,5 +15,10 @@
 
 .buttonLight {
     background-color: white;
-    border: 1px solid black;
+    border: 0.5px solid black;
+}
+
+.buttonDark {
+    background-color: #696969;
+    border: 0.5px solid #FFFFFF;
 }

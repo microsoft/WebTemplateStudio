@@ -1,7 +1,7 @@
 .table {
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
     margin-bottom: 1.5em;
 }
 
@@ -13,16 +13,17 @@
     padding: 0.75em 1.5em;
     font-weight: bold;
     font-size: 1.2em;
+    background-color: #6A6A6A;
 }
 
 .row,
 .rowTitle,
 .rowTitleLight {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #FFFFFF;
 }
 
 .rowCellLeft {
-    border-right: 1px solid black;
+    border-right: 1px solid #FFFFFF;
     width: 25%;
 }
 
