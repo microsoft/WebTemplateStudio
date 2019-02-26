@@ -18,7 +18,8 @@ export abstract class Controller {
             vscode.window.showErrorMessage(message.text);
             // Controller.isCosmosResourceNameUnique();
 
-            return;
+            break;
+
             case "login":
             AzureAuth.login().then(res => {
                 const email = AzureAuth.getEmail();
@@ -29,6 +30,8 @@ export abstract class Controller {
             }).catch(err => {
                 console.log(err);
             });
+            break;
+
             case "subscriptions":
             AzureAuth.getSubscriptions().then(items => {
                 const subs = items;
@@ -38,6 +41,49 @@ export abstract class Controller {
                 // resources: {label:Giv.Hackathon value: Giv.Hackathon}[]
                 });
             });
+            break;
+
+            case "name-functions":
+            Controller.isFunctionAppNameUnique(message.appName, message.subscriptionLabel)
+              .then((isAvailable) => {
+                Controller.reactPanelContext.postMessageWebview({
+                  command: 'functions-name-result',
+                  isAvailable: isAvailable,
+                  message: ""
+                });
+              })
+              .catch((err: Error) => {
+                Controller.reactPanelContext.postMessageWebview({
+                  command: 'functions-name-result',
+                  isAvailable: false,
+                  message: err.message
+                });
+              });
+            break;
+
+          case "name-cosmos":
+            Controller.isCosmosResourceNameUnique(message.appName, message.subscriptionLabel)
+              .then((isAvailable) => {
+                Controller.reactPanelContext.postMessageWebview({
+                  command: 'cosmos-name-result',
+                  isAvailable: isAvailable,
+                  message: ""
+                });
+              })
+              .catch((err: Error) => {
+                Controller.reactPanelContext.postMessageWebview({
+                  command: 'cosmos-name-result',
+                  isAvailable: false,
+                  message: err.message
+                });
+              });
+            break;
+
+          case "deploy-functions":
+            break;
+
+          case "deploy-cosmos":
+            break;
         }
     }
   ;
