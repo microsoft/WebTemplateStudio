@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import LoginCard from "../../components/LoginCard";
 import Title from "../../components/Title";
 
+import azure from "../../assets/azure.svg";
+
 import styles from "./styles.module.css";
 
 import AzureSubscriptions from "../AzureSubscriptions";
@@ -42,6 +44,7 @@ class AzureLogin extends React.Component<Props> {
         <div className={styles.loginCard}>
           {!isLoggedIn && (
             <LoginCard
+              svgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${azure}`}
               handleClick={() => {
                 this.handleClick();
               }}
