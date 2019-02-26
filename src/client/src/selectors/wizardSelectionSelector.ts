@@ -51,7 +51,7 @@ const getPagesRowItems = (selection: any): RowType[] => {
   const pagesRows = [];
   for (const page of pages) {
     pagesRows.push({
-      type: page.title,
+      type: page.originalTitle ? page.originalTitle : page.title,
       name: page.title
     });
   }

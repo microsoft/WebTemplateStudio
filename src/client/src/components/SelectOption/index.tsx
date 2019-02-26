@@ -57,10 +57,21 @@ class SelectOption extends React.Component<
   public convertCardNumbersToTitles(cardNumbers: number[]): ISelected[] {
     const cardTitles = [];
     for (const num of cardNumbers) {
-      cardTitles.push({
+      /**
+       * originalTitle is for page layouts.
+       */
+      const cardToConvert: {
+        title: string;
+        internalName: string;
+        originalTitle?: string;
+      } = {
         title: this.props.options[num].title,
         internalName: this.props.options[num].internalName
-      });
+      };
+      if (this.props.options[num].hasOwnProperty("originalTitle")) {
+        cardToConvert.originalTitle = this.props.options[num].originalTitle;
+      }
+      cardTitles.push(cardToConvert);
     }
     return cardTitles;
   }
