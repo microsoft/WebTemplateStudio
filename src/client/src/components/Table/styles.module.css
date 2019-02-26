@@ -2,7 +2,7 @@
     border-top: 1px solid #FFFFFF;
     border-left: 1px solid #FFFFFF;
     border-right: 1px solid #FFFFFF;
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
 }
 
 .row {
@@ -10,10 +10,12 @@
 }
 
 .rowTitle {
-    padding: 0.75em 1.5em;
+    padding: 0.5em 1.5em;
     font-weight: bold;
     font-size: 1.2em;
     background-color: #6A6A6A;
+    display: flex;
+    justify-content: space-between;
 }
 
 .row,
