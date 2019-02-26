@@ -11,10 +11,12 @@ PageOption = {
 }
 */
 
-const pagesReducer = (state = [], action: any) => {
+const pagesReducer = (state: any[] = [], action: any) => {
   switch (action.type) {
     case Actions.SELECT_PAGES:
-      return action.payload;
+      // FIXME: Define proper types
+      const newPages: any[] = [...action.payload];
+      return newPages;
     default:
       return state;
   }
