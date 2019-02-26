@@ -10,13 +10,19 @@ interface IProps {
 }
 
 const Table = (props: IProps) => {
+    const [ isMinimized, hideOrShowRows ] = React.useState(false);
     return (
         <div className={styles.table}>
             <div className={styles.rowTitle}>
-                {props.title}
+                <div>
+                    {props.title}
+                </div>
+                <div onClick={() => { isMinimized ? hideOrShowRows(false) : hideOrShowRows(true) }}>
+                    Minimize
+                </div>
             </div> 
             <div className={styles.rowContainer}>
-                {props.rowItems.map((rowItem: RowType) => (
+                {!isMinimized && props.rowItems.map((rowItem: RowType) => (
                     <div className={styles.row}>
                         <div className={styles.rowCellLeft}>
                             {rowItem.type}

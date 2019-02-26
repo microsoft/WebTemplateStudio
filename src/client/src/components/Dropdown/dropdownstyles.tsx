@@ -2,13 +2,21 @@
 // custom styling for dropdown component using the Style API provided by react-select
 
 export default ({
+    singleValue: (base: any) => ({
+        ...base,
+        color: "#FFFFFF",
+    }),
+    placeholder: (base: any) => ({
+        ...base,
+        color: "#FFFFFF",
+    }),
     control: (base: any, state: any): any => ({
         ...base,
-        outline: "0.5px solid rgba(0,0,0,0.5)",
+        color: "white",
         border: 0,
-        background: "#DFDFDF",
+        background: "#696969",
         // match with the menu
-        borderRadius: "0px",
+        borderRadius: "2px",
         // Removes weird border around container
         boxShadow: state.isFocused ? null : null,
         "&:hover": {
@@ -39,5 +47,6 @@ export default ({
     menuList: (base: any) => ({
         ...base,
         // kill the white space on first and last option
-        padding: 0
+        padding: 0,
+        background: "#696969",
     })})

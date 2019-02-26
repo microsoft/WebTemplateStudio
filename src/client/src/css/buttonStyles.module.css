@@ -1,0 +1,30 @@
+.buttonHighlightedBorder {
+    background-color: #0067B8;
+    color: white;
+    border: 0.5px solid white;
+}
+
+.buttonHighlighted {
+    background-color: #0067B8;
+    color: white;
+}
+
+.buttonLight,
+.buttonHighlighted,
+.buttonHighlightedBorder,
+.buttonDark {
+    text-decoration: none;
+    outline: none;
+    border-radius: 2px;
+    padding: 0.5em 1em;
+}
+
+.buttonLight {
+    background-color: white;
+    border: 0.5px solid black;
+}
+
+.buttonDark {
+    background-color: #696969;
+    border: 0.5px solid #FFFFFF;
+}

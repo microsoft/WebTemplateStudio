@@ -1,6 +1,6 @@
 .footer {
     position: absolute;
-    background-color: #DBDBDB;
+    background-color: #4C4C4C;
     padding: 15px;
     bottom: 0;
     width: 100%;
@@ -11,5 +11,11 @@
 }
 
 .button {
-    margin-left: 10px;
+    margin-left: 1em;
+    font-size: 1em;
+}
+
+.buttonContainer {
+    display: flex;
+    align-items: center;
 }

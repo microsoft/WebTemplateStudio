@@ -14,7 +14,10 @@ const SidebarItem = ({
   return (
     <div className={styles.container}>
       {showCheck ? (
-        <img src={Check} className={styles.icon} />
+        <img
+          src={process.env.REACT_APP_RELATIVE_PATH + Check}
+          className={styles.icon}
+        />
       ) : (
         <div className={styles.spacer} />
       )}

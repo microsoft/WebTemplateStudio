@@ -1,5 +1,7 @@
+import classnames from "classnames";
 import * as React from "react";
 
+import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from './styles.module.css';
 
 interface IProps {
@@ -24,10 +26,10 @@ const Card = ({ cardTitle, cardBody, buttonText, handleButtonClick, handleDetail
                 {cardBody}
             </div>
             <div className={styles.selectionContainer}>
-                <div onClick={handleDetailsClick}>
+                <div className={styles.details} onClick={handleDetailsClick}>
                     Details
                 </div>
-                <button onClick={handleButtonClick} className={styles.signInButton}>
+                <button onClick={handleButtonClick} className={classnames(styles.signInButton, buttonStyles.buttonHighlighted)}>
                     {buttonText}
                 </button>
             </div>
