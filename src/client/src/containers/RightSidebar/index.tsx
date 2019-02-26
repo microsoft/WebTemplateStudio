@@ -13,10 +13,14 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
 import cancel from "../../assets/cancel.svg";
+import masterdetail from "../../assets/masterdetail.svg";
+import longlist from "../../assets/longlist.svg";
+import contentgrid from "../../assets/contentgrid.svg";
 import reorder from "../../assets/reorder.svg";
 
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
+import { selectPagesAction } from "../../actions/selectPages";
 
 // TODO: Finalize types when API is hooked up
 interface ISelectionType {
@@ -30,6 +34,7 @@ interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
   selectFrontendFramework: (framework: ISelected) => void;
   selectProjectType: (projectType: ISelected) => void;
+  selectPages: (pages: ISelected[]) => void;
 }
 
 interface IRightSidebarProps {
@@ -46,11 +51,25 @@ interface IRightSidebarState {
 
 type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
 
+// FIXME: Delete when icons can be properly served from the Core Engine
+const SVG_URLS: { [key: string]: string } = {
+  "wts.Page.React.MasterDetail": `${
+    process.env.REACT_APP_RELATIVE_PATH
+  }${masterdetail}`,
+  "wts.Page.React.ContentGrid": `${
+    process.env.REACT_APP_RELATIVE_PATH
+  }${contentgrid}`,
+  "wts.Page.ReactNode.LongList": `${
+    process.env.REACT_APP_RELATIVE_PATH
+  }${longlist}`
+};
+
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {
     selectBackendFramework: () => {},
     selectFrontendFramework: () => {},
-    selectWebApp: () => {}
+    selectWebApp: () => {},
+    selectPages: () => {}
   };
   public handleChange(
     e: IDropDownOptionType,
@@ -61,6 +80,15 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       internalName: e.value
     });
   }
+  /**
+   * Changes the title of the page type that was chosen
+   * Saves changes into the redux
+   */
+  public handleInputChange = (newTitle: string, idx: number) => {
+    const { pages } = this.props.selection;
+    pages[idx].title = newTitle;
+    this.props.selectPages(pages);
+  };
   public showProjectTypes = (): boolean => {
     const { pathname } = this.props.location;
     return pathname !== "/";
@@ -127,15 +155,20 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         {this.showPages() && (
           <div className={styles.sidebarItem}>
             <div className={styles.dropdownTitle}>Pages</div>
-            {this.props.selection.pages.map(page => (
+            {this.props.selection.pages.map((page, idx) => (
               <DraggableSidebarItem
-                text={page.title}
+                key={page.internalName}
+                page={page}
                 closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`}
+                pageSvgUrl={SVG_URLS[page.internalName]}
                 reorderSvgUrl={`${
                   process.env.REACT_APP_RELATIVE_PATH
                 }${reorder}`}
+                handleInputChange={this.handleInputChange.bind(this)}
+                idx={idx + 1}
               />
             ))}
+            {/* Using a baseline of 1 for idx because !!0 === false */}
           </div>
         )}
         {this.showServices() && !!this.props.services && (
@@ -203,6 +236,9 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   },
   selectProjectType: (projectType: ISelected) => {
     dispatch(selectWebAppAction(projectType));
+  },
+  selectPages: (pages: ISelected[]) => {
+    dispatch(selectPagesAction(pages));
   }
 });
 

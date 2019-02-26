@@ -29,9 +29,9 @@ class SelectOption extends React.Component<
 > {
   constructor(props: any) {
     super(props);
-    if (!this.props.multiSelect) {
+    if (this.props.multiSelect) {
       this.state = {
-        selectedCards: this.props.selectedCards ? this.props.selectedCards : [0]
+        selectedCards: this.props.selectedCards ? this.props.selectedCards : []
       };
     } else {
       this.state = {
