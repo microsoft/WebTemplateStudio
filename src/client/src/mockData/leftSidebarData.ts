@@ -1,10 +1,9 @@
 const leftSidebarData: string[] = [
   "1. Project Type",
-  "2. Front-end Framework",
+  "2. Frameworks",
   "3. Pages",
-  "4. Back-end Framework",
-  "5. Services",
-  "6. Summary"
+  "4. Services",
+  "5. Summary"
 ];
 
 export default leftSidebarData;

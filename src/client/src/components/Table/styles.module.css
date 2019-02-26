@@ -1,0 +1,33 @@
+.table {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    margin-bottom: 1.5em;
+}
+
+.row {
+    display: flex
+}
+
+.rowTitle {
+    padding: 0.75em 1.5em;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.row,
+.rowTitle,
+.rowTitleLight {
+    border-bottom: 1px solid black;
+}
+
+.rowCellLeft {
+    border-right: 1px solid black;
+    width: 25%;
+}
+
+.rowCellLeft,
+.rowCellRight {
+    padding: 0.5em 1em;
+    justify-content: center;
+}

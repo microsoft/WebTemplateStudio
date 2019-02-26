@@ -3,10 +3,11 @@
     background-color: #DBDBDB;
     padding: 15px;
     bottom: 0;
-    width: 97.36%;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
-    min-height: 25px;
+    min-height: 4em;
+    box-sizing: border-box;
 }
 
 .button {
