@@ -27,9 +27,7 @@ class index extends Component {
       WarningMessageText: ""
     };
 
-    // Temporary I will use the id provided by the database when it is added
-    this.id = 3;
-
+    this.endpoint = "/api/ReactNodeLongListItems";
     this.handleWarningClose = this.handleWarningClose.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -37,42 +35,49 @@ class index extends Component {
   }
 
   handleDelete(event, listItem) {
-    fetch(`/api/ReactNodeLongListItems/${listItem.id}`, { method: "DELETE" })
-      .then(response => response.json())
-      .then(res => {
+    fetch(`${this.endpoint}/${listItem._id}`, { method: "DELETE" })
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then(result => {
         let list = this.state.list;
-        list = list.filter(item => item.id !== listItem.id);
+        list = list.filter(item => item._id !== result._id);
         this.setState({ list: list });
       })
-      .catch(error =>
+      .catch(error => {
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: "Request to delete list item failed."
-        })
-      );
+          WarningMessageText: `Request to delete list item failed: ${error}`
+        });
+      });
   }
 
   handleAddListItem(event) {
-    fetch("/api/ReactNodeLongListItems", {
+    fetch(this.endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: this.state.multilineTextField, id: this.id })
     })
-      .then(resp => resp.json())
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
       .then(result =>
-        this.setState({
-          list: result,
+        this.setState(prevState => ({
+          list: [result, ...prevState.list],
           multilineTextField: ""
-        })
+        }))
       )
       .catch(error =>
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: "Request to add list item failed"
+          WarningMessageText: `Request to add list item failed: ${error}`
         })
       );
-
-    this.id++;
   }
 
   handleChange(event, name) {
@@ -87,13 +92,18 @@ class index extends Component {
   }
 
   componentDidMount() {
-    fetch("/api/ReactNodeLongListItems")
-      .then(res => res.json())
+    fetch(this.endpoint)
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
       .then(result => this.setState({ list: result }))
       .catch(error =>
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: "Request to get list items failed"
+          WarningMessageText: `Request to get list items failed: ${error}`
         })
       );
   }
