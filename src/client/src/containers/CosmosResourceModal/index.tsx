@@ -37,7 +37,8 @@ const initialState = {
   resourceGroup: "",
   accountName: "",
   api: "",
-  location: ""
+  location: "",
+  internalName: "wts.Feature.Azure.Cosmos"
 };
 
 const CosmosResourceModal = (props: Props) => {
