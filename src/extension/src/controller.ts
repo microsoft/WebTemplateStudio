@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
 import { AzureAuth, SubscriptionItem } from './azure-auth/azureAuth';
 import { SubscriptionError, ValidationError } from './errors';
-import { FunctionProvider, FunctionSelections } from './azure-functions/functionProvider';
-import { CosmosDBDeploy, CosmosDBSelections } from './azure-cosmosDB/cosmosDbModule';
+import { FunctionProvider } from './azure-functions/functionProvider';
+import { CosmosDBDeploy } from './azure-cosmosDB/cosmosDbModule';
 import {ReactPanel}  from './reactPanel';
 export abstract class Controller {
 
