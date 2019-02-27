@@ -1,5 +1,8 @@
 .body {
   font-size: 13px;
-  height: 100px;
   line-height: 1.75em;
+}
+
+.cardBody {
+  margin-bottom: 0.5em;
 }
