@@ -4,8 +4,7 @@
 }
 
 .centerView {
-  padding-top: 51px;
-  padding-bottom: 71px;
+  padding: 51px 0.75em 71px 0.75em;
   overflow: auto;
   width: 100%;
   height: 100vh;

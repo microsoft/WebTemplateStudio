@@ -12,6 +12,10 @@
   color: #0067b8;
 }
 
+.createAccountButton {
+  color: #54b4ff;
+}
+
 .buttonContainer {
   display: flex;
   align-items: center;

@@ -22,7 +22,7 @@ const LoginCard = ({ cardTitle, cardBody, svgUrl, handleClick }: IProps) => {
       <div className={styles.selectionContainer}>
         <div className={styles.details}>Details</div>
         <div className={styles.buttonContainer}>
-          <div>Create Account</div>
+          <div className={styles.createAccountButton}>Create Account</div>
           <button
             onClick={handleClick}
             className={classnames(

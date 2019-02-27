@@ -130,11 +130,7 @@ class SelectOption extends React.Component<
   public render() {
     return (
       <div>
-        <div className={grid.row}>
-          <div className={grid.col12}>
-            <Title>{this.props.title}</Title>
-          </div>
-        </div>
+        <Title>{this.props.title}</Title>
         <div className={styles.container}>
           {this.props.options.map((option, cardNumber) => (
             <Card
