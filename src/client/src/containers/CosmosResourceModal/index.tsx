@@ -58,6 +58,8 @@ const CosmosResourceModal = (props: Props) => {
   const [accountName, setAccountName] = React.useState("");
 
   const handleDropdown = (infoLabel: string, value: string) => {
+    // Send command to extension on change
+    // Populate resource groups on received commands
     updateForm({
       ...cosmosFormData,
       [infoLabel]: value

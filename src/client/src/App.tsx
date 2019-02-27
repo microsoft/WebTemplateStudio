@@ -23,21 +23,24 @@ import { logIntoAzureAction } from "./actions/logIntoAzure";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
+import { getSubscriptionData } from "./actions/onSelectSubscriptions";
 
 
 interface IDispatchProps {
   getVSCodeApi: () => void;
   loadWizardContent: () => void;
   logIntoAzure: (email: string) => void;
+  saveSubscriptions: (subscriptionData: any) => void;
 }
 
 type Props = IDispatchProps
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => {},
-    loadWizardContent: () => {},
-    logIntoAzure: () => {},
+    getVSCodeApi: () => { },
+    loadWizardContent: () => { },
+    logIntoAzure: () => { },
+    saveSubscriptions: () => { },
   };
 
   public componentDidMount() {
@@ -54,7 +57,20 @@ class App extends React.Component<Props> {
           if (message.email != null) {
             this.props.logIntoAzure(message.email);
           }
-        return;
+          return;
+
+        case "onSelectSubscription":
+          // Expect resource groups and locations on this request
+
+          // Receive resource groups and locations
+          // and update redux (resourceGroups, locations)
+          this.props.saveSubscriptions({ locations: message.locations, resourceGroups: message.resourceGroups });
+          return;
+
+        case "nameFunction":
+          // Receive input validation
+          // and update redux (boolean, string)
+          return;
       }
     })
   }
@@ -99,6 +115,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   logIntoAzure: (email: string) => {
     dispatch(logIntoAzureAction(email));
   },
+  saveSubscriptions: (subscriptionData: any) => {
+    dispatch(getSubscriptionData(subscriptionData));
+  }
 });
 
 export default connect(
