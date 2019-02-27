@@ -6,7 +6,15 @@
 }
 
 .container {
-    padding-top: 25%;
+    padding-top: 5%;
+}
+
+.rightView {
+    width: 25%;
+    background-color: #303030;
+    height: 100vh;
+    border-left: 0.5px solid #555555;
+    box-sizing: border-box;
 }
 
 .dropdown {

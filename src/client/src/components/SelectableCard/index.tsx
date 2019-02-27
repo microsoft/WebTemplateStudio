@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import * as React from "react";
 
+import { Link } from "react-router-dom";
+
 import CardBody from "../CardBody";
 import CardTitle from "../CardTitle";
 
@@ -54,7 +56,7 @@ const SelectableCard = ({
         </div>
       </div>
       <div className={styles.cardFooter}>
-        <div className={classNames(styles.button)}>Details</div>
+        <Link className={classNames(styles.link)} to={"/PageDetail"}>Details</Link>
         <div
           className={classNames({
             [styles.hidden]: !selected,

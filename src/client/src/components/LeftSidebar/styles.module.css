@@ -18,3 +18,11 @@
 .nextPath {
     opacity: 0.4;
 }
+
+.leftView {
+    width: 20%;
+    background-color: #303030;
+    height: 100vh;
+    border-right: 0.5px solid #555555;
+    box-sizing: border-box;
+}

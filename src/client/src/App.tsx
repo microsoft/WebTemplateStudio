@@ -4,6 +4,7 @@ import { HashRouter as Router, Route } from "react-router-dom";
 import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
+import PageDetails from "./components/PageDetails";
 import SelectFrameworks from "./components/SelectFrameworks";
 import SelectPages from "./components/SelectPages";
 import SelectWebApp from "./components/SelectWebApp";
@@ -83,10 +84,9 @@ class App extends React.Component<Props> {
           {/*<ReviewAndGenerate />*/}
           <div className={appStyles.container}>
             <CosmosResourceModal />
-            <div className={appStyles.leftView}>
-              <LeftSidebar sidebarItems={leftSidebarData} />
-            </div>
+            <LeftSidebar sidebarItems={leftSidebarData} />
             <div className={appStyles.centerView}>
+              <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
               <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
               <Route path={ROUTES.REVIEW_AND_GENERATE} component={ReviewAndGenerate} />
               <Route path={ROUTES.SELECT_FRAMEWORKS} component={SelectFrameworks} />
@@ -94,9 +94,7 @@ class App extends React.Component<Props> {
               <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
               <Route exact={true} path="/" component={Welcome} />
             </div>
-            <div className={appStyles.rightView}>
-              <RightSidebar />
-            </div>
+             <RightSidebar />
           </div>
           <Footer />
         </div>

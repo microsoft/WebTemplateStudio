@@ -1,3 +1,4 @@
+const PAGE_DETAILS = "/PageDetail";
 const SELECT_PROJECT_TYPE = "/SelectWebApp";
 const SELECT_FRAMEWORKS = "/SelectFrameworks";
 const SELECT_PAGES = "/SelectPages";
@@ -5,6 +6,7 @@ const AZURE_LOGIN = "/AzureLogin";
 const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
 
 const ROUTES = {
+    PAGE_DETAILS,
     SELECT_PROJECT_TYPE,
     SELECT_FRAMEWORKS,
     SELECT_PAGES,
