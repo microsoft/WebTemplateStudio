@@ -18,7 +18,7 @@ const options: IOption[] = [
     svgUrl: process.env.REACT_APP_RELATIVE_PATH + contentgrid,
     title: "Content Grid",
     originalTitle: "Content Grid",
-    internalName: "wts.Page.React.ContentGrid",
+    internalName: "wts.Page.React.Grid",
     body:
       "A discussion or an informational website consisting of discrete, often informational diary-style text entries",
     selected: false
@@ -27,7 +27,7 @@ const options: IOption[] = [
     svgUrl: process.env.REACT_APP_RELATIVE_PATH + list,
     title: "List",
     originalTitle: "List",
-    internalName: "wts.Page.ReactNode.List",
+    internalName: "wts.Page.ReactNode.LongList",
     body:
       "A page used to allow the visitor to contact the website or people who are responsible for the maintenance of the site.",
     selected: false

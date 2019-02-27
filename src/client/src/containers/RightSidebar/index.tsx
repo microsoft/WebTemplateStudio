@@ -56,10 +56,8 @@ const SVG_URLS: { [key: string]: string } = {
   "wts.Page.React.MasterDetail": `${
     process.env.REACT_APP_RELATIVE_PATH
   }${masterdetail}`,
-  "wts.Page.React.ContentGrid": `${
-    process.env.REACT_APP_RELATIVE_PATH
-  }${contentgrid}`,
-  "wts.Page.ReactNode.List": `${process.env.REACT_APP_RELATIVE_PATH}${list}`
+  "wts.Page.React.Grid": `${process.env.REACT_APP_RELATIVE_PATH}${contentgrid}`,
+  "wts.Page.ReactNode.LongList": `${process.env.REACT_APP_RELATIVE_PATH}${list}`
 };
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
