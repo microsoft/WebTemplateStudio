@@ -1,28 +1,28 @@
 .container {
-    margin-top: 100%;
+  padding-top: 20%;
 }
 
 .itemBorder {
-    border-bottom: 0.5px solid #7F7F7F;
+  border-bottom: 0.5px solid #7f7f7f;
 }
 
 .itemBorderTop {
-    border-top: 0.5px solid #7F7F7F;
+  border-top: 0.5px solid #7f7f7f;
 }
 
 .currentPath {
-    background-color: #0067B8;
-    color: white;
+  background-color: #0067b8;
+  color: white;
 }
 
 .nextPath {
-    opacity: 0.4;
+  opacity: 0.4;
 }
 
 .leftView {
-    width: 20%;
-    background-color: #303030;
-    height: 100vh;
-    border-right: 0.5px solid #555555;
-    box-sizing: border-box;
+  width: 20%;
+  background-color: #303030;
+  height: 100vh;
+  border-right: 0.5px solid #555555;
+  box-sizing: border-box;
 }

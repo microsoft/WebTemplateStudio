@@ -1,21 +1,23 @@
 .container {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .centerView {
-    padding-top: 5%;
-    width: 100%;
-    height: 100vh;
-    box-sizing: border-box;
-    background-color: #303030;
+  padding-top: 51px;
+  padding-bottom: 71px;
+  overflow: auto;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  background-color: #303030;
 }
 
 .cosmosDbModalStyle {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    right: 40px;
-    bottom: 40px;
-    background-color: black;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  background-color: black;
 }

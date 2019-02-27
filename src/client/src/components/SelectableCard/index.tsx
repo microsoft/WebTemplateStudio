@@ -37,26 +37,30 @@ const SelectableCard = ({
         [styles.selected]: selected
       })}
     >
-      <div className={styles.cardHeader}>
-        <div className={styles.icon}>
-          {!!iconPath && <img src={iconPath} className={iconStyles} />}
+      <div>
+        <div className={styles.cardHeader}>
+          <div className={styles.icon}>
+            {!!iconPath && <img src={iconPath} className={iconStyles} />}
+          </div>
+          <div
+            className={classNames({
+              [styles.title]: !!iconPath,
+              [styles.titleLeftJustified]: iconPath === undefined ? true : false
+            })}
+          >
+            <CardTitle title={title} />
+          </div>
         </div>
-        <div
-          className={classNames({
-            [styles.title]: !!iconPath,
-            [styles.titleLeftJustified]: iconPath === undefined ? true : false
-          })}
-        >
-          <CardTitle title={title} />
-        </div>
-      </div>
-      <div className={grid.row}>
-        <div className={classNames(grid.col12, styles.body)}>
-          <CardBody body={body} />
+        <div className={grid.row}>
+          <div className={classNames(grid.col12, styles.body)}>
+            <CardBody body={body} />
+          </div>
         </div>
       </div>
       <div className={styles.cardFooter}>
-        <Link className={classNames(styles.link)} to={"/PageDetail"}>Details</Link>
+        <Link className={classNames(styles.link)} to={"/PageDetail"}>
+          Details
+        </Link>
         <div
           className={classNames({
             [styles.hidden]: !selected,
