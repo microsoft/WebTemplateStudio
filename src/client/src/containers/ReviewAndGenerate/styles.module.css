@@ -1,39 +1,41 @@
 .container {
-    padding: 2% 15%;
+  padding: 2% 15%;
 }
 
 .title {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-bottom: 0.5em;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
 }
 
 .outputDetailsContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
 }
 
 .inputTitle {
-    font-size: 1em;
-    font-weight: bold;
+  font-size: 1em;
+  font-weight: bold;
 }
 
 .input {
-    box-sizing: border-box;
-    padding: 0.5em;
-    width: 100%;
-    font-size: 1em;
-    background-color: #696969;
+  box-sizing: border-box;
+  padding: 0.5em;
+  width: 100%;
+  font-size: 1em;
+  background-color: #696969;
+  border: 1px solid #ffffff;
+  border-radius: 2px;
 }
 
 .input:focus {
-    outline: none;
+  outline: none;
 }
 
 .inputContainer {
-    width: 45%;
-    text-decoration: none;
-    outline: none;
+  width: 45%;
+  text-decoration: none;
+  outline: none;
 }

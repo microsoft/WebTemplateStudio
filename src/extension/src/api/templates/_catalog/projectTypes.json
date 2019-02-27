@@ -1,6 +1,6 @@
 ﻿[
   {
-    "name": "FullstackWebApp",
+    "name": "FullStackWebApp",
     "displayName": "Fullstack Web Application",
     "summary": "An end to end web application, which includes frontend (e.g. React) backend (e.g. Node) and database.",
     "author": "Microsoft",
