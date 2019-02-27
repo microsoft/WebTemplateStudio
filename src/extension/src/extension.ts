@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
 import { ChildProcess } from "child_process";
 import { FunctionProvider } from "./azure-functions/functionProvider";
@@ -9,6 +8,7 @@ import {
 	SubscriptionItem,
 	ResourceGroupItem
 } from "./azure-auth/azureAuth";
+import {Controller} from './controller'
 
 let apiProcess: ChildProcess;
 
@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
 			() => {
 				apiProcess = ApiModule.StartApi(context);
 				console.log(apiProcess.pid);
-				ReactPanel.createOrShow(context.extensionPath);
+				Controller.launchWizard(context);
 			}
 		)
 	);
@@ -71,33 +71,6 @@ export function activate(context: vscode.ExtensionContext) {
 				});
 		}
 	));
-
-	// Check function name availability, asks user for function app name as input and returns availability as a toast
-	// only for testing
-	context.subscriptions.push(
-		vscode.commands.registerCommand(
-			"webTemplateStudioExtension.checkFunctionAppName",
-			async (appName: string) => {
-				if (!appName) {
-					await vscode.window.showInputBox().then(value => (appName = value!));
-				}
-				functionProvider.checkFunctionAppName(
-					appName,
-					await tempGetSubscription("GiV.Hackathon")
-				)
-					.then(result => {
-						// result is either true or false
-						vscode.window.showInformationMessage(
-							"Function App Name: " + appName + "\nAvailable: " + String(result)
-						);
-					})
-					.catch(err => {
-						console.log(err);
-						// error handling here
-					});
-			}
-		)
-	);
 }
 
 export function deactivate() {
