@@ -1,36 +1,45 @@
 .table {
-    border-top: 1px solid #FFFFFF;
-    border-left: 1px solid #FFFFFF;
-    border-right: 1px solid #FFFFFF;
-    margin-bottom: 1em;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  margin-bottom: 1em;
 }
 
 .row {
-    display: flex
+  display: flex;
 }
 
 .rowTitle {
-    padding: 0.5em 1.5em;
-    font-weight: bold;
-    font-size: 1.2em;
-    background-color: #6A6A6A;
-    display: flex;
-    justify-content: space-between;
+  padding: 0.5em 1.5em;
+  font-weight: bold;
+  font-size: 1.2em;
+  background-color: #6a6a6a;
+  display: flex;
+  justify-content: space-between;
 }
 
 .row,
 .rowTitle,
 .rowTitleLight {
-    border-bottom: 1px solid #FFFFFF;
+  border-bottom: 1px solid #ffffff;
 }
 
 .rowCellLeft {
-    border-right: 1px solid #FFFFFF;
-    width: 25%;
+  border-right: 1px solid #ffffff;
+  width: 25%;
 }
 
 .rowCellLeft,
 .rowCellRight {
-    padding: 0.5em 1em;
-    justify-content: center;
+  padding: 0.5em 1em;
+  justify-content: center;
+}
+
+.iconDown,
+.iconUp {
+  height: 15px;
+}
+
+.iconDown {
+  transform: rotate(180deg);
 }

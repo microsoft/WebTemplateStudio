@@ -5,6 +5,8 @@ import { ISelected } from "../types/selected";
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
+const getProjectName = (state: any): string => state.selection.projectName;
+const getOutputPath = (state: any): string => state.selection.outputPath;
 
 const getProjectTypeRowItems = (selection: any): RowType[] => {
   const projectType = selection.appType as ISelected;
@@ -49,7 +51,7 @@ const getPagesRowItems = (selection: any): RowType[] => {
   const pagesRows = [];
   for (const page of pages) {
     pagesRows.push({
-      type: page.title,
+      type: page.originalTitle ? page.originalTitle : page.title,
       name: page.title
     });
   }
@@ -81,5 +83,7 @@ export {
   getProjectTypeRowItemSelector,
   getWizardSelectionsSelector,
   getFrameworksRowItemSelector,
-  getServicesSelector
+  getServicesSelector,
+  getOutputPath,
+  getProjectName
 };
