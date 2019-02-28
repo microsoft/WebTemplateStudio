@@ -11,7 +11,7 @@ export abstract class Controller {
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static reactPanelContext: ReactPanel;
-  private static routingMessageReceieverDelegate = function(message: any) {
+  private static routingMessageReceieverDelegate = function (message: any) {
     switch (message.command) {
       case "alert":
         vscode.window.showErrorMessage(message.text);
@@ -20,17 +20,25 @@ export abstract class Controller {
         break;
 
       case "login":
-      AzureAuth.login()
-        .then(res => {
-          const email = AzureAuth.getEmail();
-          Controller.reactPanelContext.postMessageWebview({
-            command: "login",
-            email: email
+        AzureAuth.login()
+          .then(res => {
+            const email = AzureAuth.getEmail();
+            AzureAuth.getSubscriptions().then(items => {
+              const subs = items.map((subscriptionItem) => {
+                return { label: subscriptionItem.label, value: subscriptionItem.label };
+              });
+              Controller.reactPanelContext.postMessageWebview({
+                command: "login",
+                email: email,
+                subscriptions: subs
+              });
+            }).catch(err => {
+              console.log(err);
+            });
+          })
+          .catch(err => {
+            console.log(err);
           });
-        })
-        .catch(err => {
-          console.log(err);
-        });
         break;
 
       case "subscriptions":
