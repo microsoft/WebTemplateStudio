@@ -32,7 +32,7 @@ export abstract class Controller {
         break;
 
       case "subscriptions":
-        AzureAuth.getSubscriptions().then(subs => {
+        Controller.getSubscriptions().then(subs => {
           Controller.reactPanelContext.postMessageWebview({
             command: "subscriptions",
             subscriptions: subs
@@ -119,6 +119,7 @@ export abstract class Controller {
    *
    * */
   public static getSubscriptions() {
+    //TODO FORMAT TO {label:,  value:}
     return AzureAuth.getSubscriptions();
   }
 
