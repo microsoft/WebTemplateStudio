@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { AzureAuth, SubscriptionItem, LocationItem } from "./azure-auth/azureAuth";
+import { AzureAuth, SubscriptionItem } from "./azure-auth/azureAuth";
 import { SubscriptionError, ValidationError } from "./errors";
 import { FunctionProvider } from "./azure-functions/functionProvider";
 import { CosmosDBDeploy } from "./azure-cosmosDB/cosmosDbModule";
