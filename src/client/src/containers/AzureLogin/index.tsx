@@ -36,7 +36,7 @@ class AzureLogin extends React.Component<Props> {
                 subscriptions: [{ value: "GIV.Hackathon", label: "GIV.Hackathon" }]
             });
         }
-    }
+    };
     public render() {
         const { isLoggedIn } = this.props;
         return (

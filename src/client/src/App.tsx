@@ -30,7 +30,7 @@ interface IDispatchProps {
   getVSCodeApi: () => void;
   loadWizardContent: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
-  saveSubscriptions: (subscriptionData: any) => void;
+  saveSubscriptionData: (subscriptionData: any) => void;
 }
 
 type Props = IDispatchProps
@@ -40,7 +40,7 @@ class App extends React.Component<Props> {
     getVSCodeApi: () => { },
     loadWizardContent: () => { },
     logIntoAzure: () => { },
-    saveSubscriptions: () => { },
+    saveSubscriptionData: () => { },
   };
 
   public componentDidMount() {
@@ -64,7 +64,7 @@ class App extends React.Component<Props> {
 
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
-          this.props.saveSubscriptions({ locations: message.locations, resourceGroups: message.resourceGroups });
+          this.props.saveSubscriptionData({ locations: message.locations, resourceGroups: message.resourceGroups });
           return;
 
         case "nameFunction":
@@ -115,7 +115,7 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   logIntoAzure: (email: string, subscriptions: []) => {
     dispatch(logIntoAzureAction({ email, subscriptions }));
   },
-  saveSubscriptions: (subscriptionData: any) => {
+  saveSubscriptionData: (subscriptionData: any) => {
     dispatch(getSubscriptionData(subscriptionData));
   }
 });
