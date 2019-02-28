@@ -8,6 +8,8 @@ import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramewo
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 
+import styles from "./styles.module.css";
+
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
   getBackendFrameworks: (projectType: string) => void;
@@ -42,7 +44,7 @@ class SelectBackEndFramework extends React.Component<Props> {
   }
   public render() {
     return (
-      <div>
+      <div className={styles.container}>
         {this.props.options.length > 0 && (
           <SelectOption
             selectCard={this.props.selectBackendFramework}

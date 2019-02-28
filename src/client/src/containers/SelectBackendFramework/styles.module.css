@@ -1,16 +1,3 @@
-.title {
-    font-size: 18px;
-    padding: 24px 24px;
-    font-weight: bold;
-}
-
 .container {
-    display: flex;
-    justify-content: space-between;
-    padding-left: 24px;
-    padding-right: 24px;
-}
-
-.icon {
-    height: 36px;
+    margin-top: -12px;
 }
