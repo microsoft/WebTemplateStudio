@@ -69,7 +69,7 @@ class Footer extends React.Component<Props> {
                   [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
                 })}
                 to={
-                  pathsNext[pathname] === undefined ? "/" : pathsNext[pathname]
+                  pathname === ROUTES.REVIEW_AND_GENERATE ? ROUTES.REVIEW_AND_GENERATE : pathsNext[pathname]
                 }
               >
                 Next

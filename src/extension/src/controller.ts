@@ -95,6 +95,26 @@ export abstract class Controller {
         vscode.window.showInformationMessage(message.text);
         // FIXME: After gen is done, we need to do some feedback.
         ApiModule.SendGeneration("5000", message.payload);
+        break;
+      case "getOutputPath":
+          vscode.window.showOpenDialog({
+            canSelectFiles: false,
+            canSelectFolders: true,
+            canSelectMany: false
+          }).then((res) => {
+            if (res !== undefined) {
+              Controller.reactPanelContext.postMessageWebview({
+                command: "getOutputPath",
+                outputPath: res[0].path
+              });
+            } else {
+              Controller.reactPanelContext.postMessageWebview({
+                command: "getOutputPath",
+                outputPath: undefined
+              });
+            };
+          });
+          break;
     }
   };
 
