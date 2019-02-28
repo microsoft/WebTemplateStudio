@@ -15,6 +15,7 @@ export abstract class Controller {
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static reactPanelContext: ReactPanel;
+<<<<<<< HEAD
 
   private static routingMessageReceieverDelegate =
     function (message: any) {
@@ -82,6 +83,59 @@ export abstract class Controller {
                 isAvailable: false,
                 message: err.message
               });
+=======
+  private static routingMessageReceieverDelegate = function (message: any) {
+    switch (message.command) {
+      case "alert":
+        vscode.window.showErrorMessage(message.text);
+        // Controller.isCosmosResourceNameUnique();
+
+        break;
+
+      case "login":
+        AzureAuth.login()
+          .then(res => {
+            const email = AzureAuth.getEmail();
+            AzureAuth.getSubscriptions().then(items => {
+              const subs = items.map((subscriptionItem) => {
+                return { label: subscriptionItem.label, value: subscriptionItem.label };
+              });
+              Controller.reactPanelContext.postMessageWebview({
+                command: "login",
+                email: email,
+                subscriptions: subs
+              });
+            }).catch(err => {
+              console.log(err);
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        break;
+
+      case "subscriptions":
+        AzureAuth.getSubscriptions().then(items => {
+          const subs = items;
+          Controller.reactPanelContext.postMessageWebview({
+            command: "subscriptions",
+            subscriptions: subs
+            // resources: {label:Giv.Hackathon value: Giv.Hackathon}[]
+          });
+        });
+        break;
+
+      case "name-functions":
+        Controller.isFunctionAppNameUnique(
+          message.appName,
+          message.subscriptionLabel
+        )
+          .then(isAvailable => {
+            Controller.reactPanelContext.postMessageWebview({
+              command: "functions-name-result",
+              isAvailable: isAvailable,
+              message: ""
+>>>>>>> 1474758b42d4507244f45e9d9fcd570518f67dbd
             });
           break;
 
