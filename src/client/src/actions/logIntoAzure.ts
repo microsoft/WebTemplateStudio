@@ -8,7 +8,7 @@ const isLoggedIntoAzureAction = () => ({
 
 const logIntoAzureAction = (loginData: any) => ({
     type: Actions.LOG_IN_TO_AZURE,
-    payload: loginData,
+    payload: loginData
 });
 
 const startLoginToAzure = () => {

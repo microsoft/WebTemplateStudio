@@ -23,13 +23,13 @@ import { logIntoAzureAction } from "./actions/logIntoAzure";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
-import { getSubscriptionData } from "./actions/onSelectSubscriptions";
+import { getSubscriptionData } from "./actions/subscriptionData";
 
 
 interface IDispatchProps {
   getVSCodeApi: () => void;
   loadWizardContent: () => void;
-  logIntoAzure: (email: string) => void;
+  logIntoAzure: (email: string, subscriptions: []) => void;
   saveSubscriptions: (subscriptionData: any) => void;
 }
 
@@ -55,11 +55,11 @@ class App extends React.Component<Props> {
         case "login":
           // email will be null or undefined if login didn't work correctly
           if (message.email != null) {
-            this.props.logIntoAzure(message.email);
+            this.props.logIntoAzure(message.email, message.subscriptions);
           }
           return;
 
-        case "onSelectSubscription":
+        case "subscriptionData":
           // Expect resource groups and locations on this request
 
           // Receive resource groups and locations
@@ -112,8 +112,8 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   loadWizardContent: () => {
     dispatch(loadWizardContentAction());
   },
-  logIntoAzure: (email: string) => {
-    dispatch(logIntoAzureAction(email));
+  logIntoAzure: (email: string, subscriptions: []) => {
+    dispatch(logIntoAzureAction({ email, subscriptions }));
   },
   saveSubscriptions: (subscriptionData: any) => {
     dispatch(getSubscriptionData(subscriptionData));

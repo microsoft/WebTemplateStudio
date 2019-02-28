@@ -28,6 +28,9 @@ interface IDispatchProps {
 
 interface IStateProps {
   isModalOpen: boolean;
+  vscode: any;
+  subscriptionData: any;
+  subscriptions: [];
 }
 
 type Props = IDispatchProps & IStateProps;
@@ -43,23 +46,54 @@ const initialState = {
 
 const CosmosResourceModal = (props: Props) => {
   const [cosmosData, setData] = React.useState(cosmosInitialState);
-  const getCosmosTempData = async () => {
-    const response = await getCosmosModalData();
-    setData(response);
-  };
   /**
    * Second parameter of useEffect is [] which tells React to
    * run this effect when mounting the component.
    */
   React.useEffect(() => {
-    getCosmosTempData();
-  }, []);
+
+    console.log(cosmosData);
+    setData(
+      {
+        accountName: [{
+          value: "",
+          label: ""
+        }],
+        api: [{
+          value: "MongoDB",
+          label: "MongoDB"
+        }],
+        subscription: props.subscriptions,
+        resourceGroup: props.subscriptionData.resourceGroups,
+        location: props.subscriptionData.locations,
+      }
+    )
+  }, [props.subscriptionData]);
+
   const [cosmosFormData, updateForm] = React.useState(initialState);
   const [accountName, setAccountName] = React.useState("");
 
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
+    if (infoLabel === "subscription") {
+      // Get resource Group and locations and set the dropdown options to them
+      if (process.env.NODE_ENV === "production") {
+        props.vscode.postMessage({
+          command: "subscriptionData",
+          subscription: value
+        });
+      } else {
+        // @ts-ignore produces a mock login response from VSCode in development
+        window.postMessage({
+          command: "subscriptionData",
+          locations: [{ label: "WEST US", value: "WEST US" }],
+          resourceGroups: [{ label: "resourceGroupMock", value: "resourceGroupMock" }]
+        });
+      }
+
+
+    }
     updateForm({
       ...cosmosFormData,
       [infoLabel]: value
@@ -158,8 +192,13 @@ const CosmosResourceModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => {
+  const { vscodeObject } = state.vscode;
+  console.log(state);
   return {
-    isModalOpen: isCosmosDbModalOpenSelector(state)
+    isModalOpen: isCosmosDbModalOpenSelector(state),
+    vscode: vscodeObject,
+    subscriptionData: state.azureProfileData.subscriptionData,
+    subscriptions: state.azureProfileData.profileData.subscriptions,
   };
 };
 
