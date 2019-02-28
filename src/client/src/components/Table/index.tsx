@@ -35,7 +35,7 @@ const Table = (props: IProps) => {
       <div className={styles.rowContainer}>
         {!isMinimized &&
           props.rowItems.map((rowItem: RowType) => (
-            <div className={styles.row}>
+            <div key={rowItem.type} className={styles.row}>
               <div className={styles.rowCellLeft}>{rowItem.type}</div>
               <div className={styles.rowCellRight}>{rowItem.name}</div>
             </div>

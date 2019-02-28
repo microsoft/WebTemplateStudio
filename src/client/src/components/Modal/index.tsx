@@ -32,7 +32,7 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    borderRadius: "0px",
+    borderRadius: "4px",
     width: "40%",
     padding: "2.4%",
     background: "#303030",

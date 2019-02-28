@@ -52,7 +52,7 @@ class Footer extends React.Component<Props> {
     const { pathname } = this.props.location;
     return (
       <div>
-        {pathname !== "/" && (
+        {pathname !== "/" && pathname !== ROUTES.PAGE_DETAILS && (
           <div className={styles.footer}>
             <div className={styles.buttonContainer}>
               <Link
@@ -63,21 +63,17 @@ class Footer extends React.Component<Props> {
               >
                 Back
               </Link>
-              {!this.isReviewAndGenerate() && (
-                <Link
-                  className={classnames(styles.button, {
-                    [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
-                    [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
-                  })}
-                  to={
-                    pathsNext[pathname] === undefined
-                      ? "/"
-                      : pathsNext[pathname]
-                  }
-                >
-                  Next
-                </Link>
-              )}
+              <Link
+                className={classnames(styles.button, {
+                  [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
+                  [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
+                })}
+                to={
+                  pathname === ROUTES.REVIEW_AND_GENERATE ? ROUTES.REVIEW_AND_GENERATE : pathsNext[pathname]
+                }
+              >
+                Next
+              </Link>
               <button
                 disabled={pathname !== ROUTES.REVIEW_AND_GENERATE}
                 className={classnames(styles.button, {

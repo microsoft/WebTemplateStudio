@@ -47,19 +47,33 @@ export abstract class Controller {
         AzureAuth.login()
           .then(res => {
             const email = AzureAuth.getEmail();
-            Controller.reactPanelContext.postMessageWebview({
-              command: "login",
-              email: email,
-              message: ""
-            });
+            AzureAuth.getSubscriptions()
+              .then(items => {
+                const subs = items.map(subscriptionItem => {
+                  return {
+                    label: subscriptionItem.label,
+                    value: subscriptionItem.label
+                  };
+                });
+                Controller.reactPanelContext.postMessageWebview({
+                  command: "login",
+                  email: email,
+                  subscriptions: subs,
+                  message: ""
+                });
+              })
+              .catch((err: Error) => {
+                Controller.reactPanelContext.postMessageWebview({
+                  command: "login",
+                  email: "",
+                  subscriptions: null,
+                  message: err.message,
+                  errorType: err.name
+                });
+              });
           })
-          .catch((err: Error) => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "login",
-              email: null,
-              message: err.message,
-              errorType: err.name
-            });
+          .catch(err => {
+            vscode.window.showErrorMessage(err);
           });
         break;
 
@@ -196,6 +210,28 @@ export abstract class Controller {
       case "generate":
         // FIXME: After gen is done, we need to do some feedback.
         ApiModule.SendGeneration("5000", message.payload);
+        break;
+
+      case "getOutputPath":
+        vscode.window
+          .showOpenDialog({
+            canSelectFiles: false,
+            canSelectFolders: true,
+            canSelectMany: false
+          })
+          .then(res => {
+            if (res !== undefined) {
+              Controller.reactPanelContext.postMessageWebview({
+                command: "getOutputPath",
+                outputPath: res[0].path
+              });
+            } else {
+              Controller.reactPanelContext.postMessageWebview({
+                command: "getOutputPath",
+                outputPath: undefined
+              });
+            }
+          });
         break;
     }
   };
@@ -362,6 +398,7 @@ export abstract class Controller {
       this.usersCosmosDBSubscriptionItemCache = subscriptionItem;
     }
   }
+
   private static async updateFunctionSubscriptionItemCache(
     subscriptionLabel: string
   ): Promise<void> {
