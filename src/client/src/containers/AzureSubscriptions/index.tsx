@@ -45,8 +45,14 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       azureServices
     });
   }
+  public isCosmosContent = (optionTitle: string): boolean => {
+    return optionTitle.includes("Cosmos");
+  }
+  public isCosmosContentCreated = (optionTitle: string): boolean => {
+    return this.props.isCosmosResourceCreated && this.isCosmosContent(optionTitle);
+  }
   public resourceButtonContent = (optionTitle: string): string => {
-    if (this.props.isCosmosResourceCreated && optionTitle.includes("Cosmos")) {
+    if (this.isCosmosContentCreated(optionTitle)) {
       return "Edit Resource";
     }
     return "Add Resource";
@@ -66,7 +72,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                   cardTitle={option.title}
                   cardBody={option.body}
                   buttonText={this.resourceButtonContent(option.title)}
-                  handleButtonClick={this.props.openCosmosDbModal}
+                  handleButtonClick={this.isCosmosContent(option.title) ? this.props.openCosmosDbModal : ()=>{}}
                   handleDetailsClick={() => {}}
                   svgUrl={option.svgUrl}
                 />
