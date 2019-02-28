@@ -27,7 +27,6 @@ import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
 
-
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;
@@ -36,7 +35,7 @@ interface IDispatchProps {
   saveSubscriptionData: (subscriptionData: any) => void;
 }
 
-type Props = IDispatchProps
+type Props = IDispatchProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
@@ -58,15 +57,17 @@ class App extends React.Component<Props> {
       switch (message.command) {
         case "getOutputPath":
           if (message.outputPath != null) {
-            this.props.updateOutputPath(message.outputPath);
+            this.props.updateOutputPath(
+              message.outputPath.substring(1, message.outputPath.length)
+            );
           }
+          return;
         case "login":
           // email will be null or undefined if login didn't work correctly
           if (message.email != null) {
             this.props.logIntoAzure(message.email, message.subscriptions);
           }
           return;
-
         case "subscriptionData":
           // Expect resource groups and locations on this request
 
@@ -80,7 +81,7 @@ class App extends React.Component<Props> {
           // and update redux (boolean, string)
           return;
       }
-    })
+    });
   }
 
   public render() {
@@ -95,13 +96,22 @@ class App extends React.Component<Props> {
             <div className={appStyles.centerView}>
               <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
               <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
-              <Route path={ROUTES.REVIEW_AND_GENERATE} component={ReviewAndGenerate} />
-              <Route path={ROUTES.SELECT_FRAMEWORKS} component={SelectFrameworks} />
+              <Route
+                path={ROUTES.REVIEW_AND_GENERATE}
+                component={ReviewAndGenerate}
+              />
+              <Route
+                path={ROUTES.SELECT_FRAMEWORKS}
+                component={SelectFrameworks}
+              />
               <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
-              <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
+              <Route
+                path={ROUTES.SELECT_PROJECT_TYPE}
+                component={SelectWebApp}
+              />
               <Route exact={true} path="/" component={Welcome} />
             </div>
-             <RightSidebar />
+            <RightSidebar />
           </div>
           <Footer />
         </div>

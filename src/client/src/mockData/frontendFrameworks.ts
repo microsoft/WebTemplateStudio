@@ -9,7 +9,7 @@ const options: IOption[] = [
     title: "Vue.JS",
     internalName: "Vue",
     body:
-      "Vue.JS is an open-source JavaScript framework for building user interfaces and single page applications.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
     selected: false,
     unselectable: true
   },
@@ -18,7 +18,7 @@ const options: IOption[] = [
     title: "AngularJS",
     internalName: "Angular",
     body:
-      "AngularJS is an open-source, front-end web application maintained by Google to develop single-page applications.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
     selected: false,
     unselectable: true
   }
@@ -26,6 +26,6 @@ const options: IOption[] = [
 
 const getFrontendFrameworks = (): Promise<IOption[]> => {
   return Promise.resolve(options);
-}
+};
 
 export default getFrontendFrameworks;

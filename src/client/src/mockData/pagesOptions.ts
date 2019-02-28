@@ -29,6 +29,15 @@ const options: IOption[] = [
     body:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
     selected: false
+  },
+  {
+    svgUrl: svgUrlLoader(WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE),
+    title: "Blank Page",
+    originalTitle: "Blank Page",
+    internalName: WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE,
+    body:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
+    selected: false
   }
 ];
 

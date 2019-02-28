@@ -3,6 +3,7 @@
   padding: 16px;
   margin-right: 15px;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .selected,
@@ -85,4 +86,5 @@
 
 .unselectable {
   opacity: 0.4;
+  cursor: default;
 }

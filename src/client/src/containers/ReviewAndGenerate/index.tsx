@@ -1,12 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { ReactComponent as SaveSVG } from "../../assets/savewhite.svg"
+import { ReactComponent as SaveSVG } from "../../assets/folder.svg";
 import Table from "../../components/Table";
 
 import {
   updateOutputPathAction,
-  updateProjectNameAction,
+  updateProjectNameAction
 } from "../../actions/updateProjectNameAndPath";
 import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 
@@ -54,7 +54,7 @@ const ReviewAndGenerate = (props: Props) => {
         outputPath: "/generic_output_path"
       });
     }
-  }
+  };
   return (
     <div className={styles.container}>
       <div className={styles.title}>Review and Generate Template</div>
@@ -72,11 +72,15 @@ const ReviewAndGenerate = (props: Props) => {
           <div className={styles.outputPathContainer}>
             <input
               onChange={handleOutputPathChange}
-              defaultValue={props.outputPath}
               className={styles.pathInput}
               value={props.outputPath}
             />
-            <SaveSVG className={styles.saveIcon} onClick={() => { handleSaveClick() }} />
+            <SaveSVG
+              className={styles.saveIcon}
+              onClick={() => {
+                handleSaveClick();
+              }}
+            />
           </div>
         </div>
       </div>

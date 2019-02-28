@@ -7,6 +7,7 @@ import grid from "../assets/contentgridwhite.svg";
 import list from "../assets/listwhite.svg";
 import azurefunctions from "../assets/azurefunctions.svg";
 import cosmosdb from "../assets/cosmosdbwhite.svg";
+import blankpage from "../assets/blankpagewhite.svg";
 
 const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP]: fullstack,
@@ -16,15 +17,16 @@ const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.CONTENT_GRID]: grid,
   [WIZARD_CONTENT_INTERNAL_NAMES.LIST]: list,
   [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: azurefunctions,
-  [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: cosmosdb
+  [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: cosmosdb,
+  [WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE]: blankpage
 };
 
-const getLocalPath = (absolutePath: string): string => {
+const withLocalPath = (absolutePath: string): string => {
   return process.env.REACT_APP_RELATIVE_PATH + absolutePath;
 };
 
 export default (internalName: string): string | undefined => {
   if (SVG_MAPPINGS[internalName] !== undefined) {
-    return getLocalPath(SVG_MAPPINGS[internalName]);
+    return withLocalPath(SVG_MAPPINGS[internalName]);
   }
 };

@@ -8,15 +8,14 @@ const options: IOption[] = [
     title: "ASP.NET",
     internalName: "Node",
     body:
-      "ASP.NET creates websites based on HTML5, CSS and JavaScript that are simple, fast and scalable.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
     selected: false,
     unselectable: true
   }
 ];
 
-
 const getBackendFrameworks = (): Promise<IOption[]> => {
   return Promise.resolve(options);
-}
+};
 
 export default getBackendFrameworks;
