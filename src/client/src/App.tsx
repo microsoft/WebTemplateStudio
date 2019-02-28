@@ -21,6 +21,7 @@ import { ROUTES } from "./utils/constants";
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
+import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
@@ -28,6 +29,7 @@ import { getSubscriptionData } from "./actions/subscriptionData";
 
 
 interface IDispatchProps {
+  updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;
   loadWizardContent: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
@@ -42,6 +44,7 @@ class App extends React.Component<Props> {
     loadWizardContent: () => { },
     logIntoAzure: () => { },
     saveSubscriptionData: () => { },
+    updateOutputPath: () => {}
   };
 
   public componentDidMount() {
@@ -53,6 +56,10 @@ class App extends React.Component<Props> {
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
+        case "getOutputPath":
+          if (message.outputPath != null) {
+            this.props.updateOutputPath(message.outputPath);
+          }
         case "login":
           // email will be null or undefined if login didn't work correctly
           if (message.email != null) {
@@ -114,7 +121,10 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
     dispatch(logIntoAzureAction({ email, subscriptions }));
   },
   saveSubscriptionData: (subscriptionData: any) => {
-    dispatch(getSubscriptionData(subscriptionData));
+    dispatch(getSubscriptionData(subscriptionData))
+  },
+  updateOutputPath: (outputPath: string) => {
+    dispatch(updateOutputPathAction(outputPath));
   }
 });
 

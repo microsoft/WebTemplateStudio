@@ -13,6 +13,7 @@ import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 import styles from "./styles.module.css";
 
 import { RowType } from "../../types/rowType";
+import { IVSCode } from "../../reducers/vscodeApiReducer";
 
 interface IStateProps {
   projectTypeRows: RowType[];
@@ -21,6 +22,7 @@ interface IStateProps {
   pagesRows: RowType[];
   projectName: string;
   outputPath: string;
+  vscode: any;
 }
 
 interface IDispatchProps {
@@ -40,6 +42,19 @@ const ReviewAndGenerate = (props: Props) => {
     const element = e.currentTarget as HTMLInputElement;
     props.updateOutputPath(element.value);
   };
+  const handleSaveClick = () => {
+    if (process.env.NODE_ENV === "production") {
+      props.vscode.postMessage({
+        command: "getOutputPath"
+      });
+    } else {
+      // @ts-ignore produces a mock login response from VSCode in development
+      window.postMessage({
+        command: "getOutputPath",
+        outputPath: "/generic_output_path"
+      });
+    }
+  }
   return (
     <div className={styles.container}>
       <div className={styles.title}>Review and Generate Template</div>
@@ -59,8 +74,9 @@ const ReviewAndGenerate = (props: Props) => {
               onChange={handleOutputPathChange}
               defaultValue={props.outputPath}
               className={styles.pathInput}
+              value={props.outputPath}
             />
-            <SaveSVG className={styles.saveIcon} />
+            <SaveSVG className={styles.saveIcon} onClick={() => { handleSaveClick() }} />
           </div>
         </div>
       </div>
@@ -80,7 +96,8 @@ const mapStateToProps = (state: any): IStateProps => ({
   servicesRows: WizardSelectors.getServicesSelector(state),
   pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
   projectName: WizardSelectors.getProjectName(state),
-  outputPath: WizardSelectors.getOutputPath(state)
+  outputPath: WizardSelectors.getOutputPath(state),
+  vscode: state.vscode.vscodeObject
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
