@@ -31,18 +31,21 @@ export abstract class Controller {
                     AzureAuth.login()
                         .then(res => {
                             const email = AzureAuth.getEmail();
-                            Controller.reactPanelContext.postMessageWebview({
-                                command: 'login',
-                                email: email,
-                                message: ""
+                            AzureAuth.getSubscriptions().then(items => {
+                                const subs = items.map((subscriptionItem) => {
+                                    return { label: subscriptionItem.label, value: subscriptionItem.label };
+                                });
+                                Controller.reactPanelContext.postMessageWebview({
+                                    command: "login",
+                                    email: email,
+                                    subscriptions: subs
+                                });
+                            }).catch(err => {
+                                vscode.window.showErrorMessage(err);
                             });
                         })
-                        .catch((err: Error) => {
-                            Controller.reactPanelContext.postMessageWebview({
-                                command: 'login',
-                                email: null,
-                                message: err.message
-                            });
+                        .catch(err => {
+                            vscode.window.showErrorMessage(err);
                         });
                     break;
 
@@ -159,7 +162,6 @@ export abstract class Controller {
             }
         }
         ;
-
 
     public static launchWizard(context: vscode.ExtensionContext) {
         Controller.reactPanelContext = ReactPanel.createOrShow(context.extensionPath, this.routingMessageReceieverDelegate);
