@@ -30,7 +30,9 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   CONTENT_GRID: "wts.Page.React.Grid",
   LIST: "wts.Page.ReactNode.LongList",
   FULL_STACK_APP: "FullStackWebApp",
-  REST_API: "RestAPI"
+  REST_API: "RestAPI",
+  AZURE_FUNCTIONS: "AzureFunctions",
+  COSMOS_DB: "Cosmos"
 };
 
 export { ROUTES, ROUTES_ARRAY, WIZARD_CONTENT_INTERNAL_NAMES };
