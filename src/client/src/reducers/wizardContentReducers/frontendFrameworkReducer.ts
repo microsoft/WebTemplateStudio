@@ -6,10 +6,10 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const frontendFrameworkOptions = (state = [], action: any) => {
+const frontendFrameworkOptions = (state: any = [], action: any) => {
   switch (action.type) {
     case Actions.GET_FRONTEND_FRAMEWORKS_SUCCESS:
-      return action.payload;
+      return [...state, ...action.payload];
     default:
       return state;
   }

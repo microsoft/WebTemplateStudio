@@ -82,3 +82,7 @@
   font-size: 15px;
   text-decoration: none;
 }
+
+.unselectable {
+  opacity: 0.4;
+}

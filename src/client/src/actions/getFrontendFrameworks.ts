@@ -1,7 +1,7 @@
 import { getFrameworks } from "./getFrameworks";
 import * as Actions from "./types";
 
-const getFrontendFrameworksSuccess = (frameworks: any) => ({
+export const getFrontendFrameworksSuccess = (frameworks: any) => ({
   type: Actions.GET_FRONTEND_FRAMEWORKS_SUCCESS,
   payload: frameworks
 });

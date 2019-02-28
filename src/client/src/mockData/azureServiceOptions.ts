@@ -10,14 +10,14 @@ const options: IOption[] = [
     title: "Azure Functions",
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
     body:
-      "Consider Azure functions for tasks like image or order processing, file maintenance, or for any tasks you want to run on a schedule."
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Consectetur adipiscing elit, sed do eiusmod tempor incididunt."
   },
   {
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
     title: "Cosmos Resource",
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     body:
-      "An intelligent, fully managed relational cloud database service that provides the broadest SQL Server engine compatibility."
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Consectetur adipiscing elit, sed do eiusmod tempor incididunt."
   }
 ];
 

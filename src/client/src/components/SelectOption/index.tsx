@@ -35,7 +35,7 @@ class SelectOption extends React.Component<
       };
     } else {
       this.state = {
-        selectedCards: [0]
+        selectedCards: this.props.selectedCards ? this.props.selectedCards : [0]
       };
     }
   }
@@ -120,6 +120,9 @@ class SelectOption extends React.Component<
   }
 
   public onCardClick(cardNumber: number) {
+    if (this.props.options[cardNumber].unselectable) {
+      return;
+    }
     if (this.props.multiSelect) {
       this.addOrRemoveOption(cardNumber);
     } else {
@@ -144,6 +147,7 @@ class SelectOption extends React.Component<
               iconStyles={styles.icon}
               title={option.title}
               body={option.body}
+              unselectable={option.unselectable}
             />
           ))}
         </div>

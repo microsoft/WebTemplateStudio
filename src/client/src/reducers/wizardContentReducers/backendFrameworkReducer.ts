@@ -2,14 +2,14 @@ import * as Actions from "../../actions/types";
 
 /* State Shape
 {
-    frontendOptions: []
+    backendOptions: []
 }
 */
 
-const backendFrameworkOptions = (state = [], action: any) => {
+const backendFrameworkOptions = (state: any = [], action: any) => {
   switch (action.type) {
     case Actions.GET_BACKEND_FRAMEWORKS_SUCCESS:
-      return action.payload;
+      return [...state, ...action.payload];
     default:
       return state;
   }

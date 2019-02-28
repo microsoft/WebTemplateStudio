@@ -225,6 +225,9 @@ function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
   const dropDownItems = [];
 
   for (const option of options) {
+    if (option.unselectable) { 
+      continue;
+    };
     const dropdownItem = convertOptionToDropdownItem(option);
     dropDownItems.push(dropdownItem);
   }

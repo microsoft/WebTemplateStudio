@@ -1,13 +1,14 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
+import { ReactComponent as SaveSVG } from "../../assets/savewhite.svg"
 import Table from "../../components/Table";
 
-import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 import {
+  updateOutputPathAction,
   updateProjectNameAction,
-  updateOutputPathAction
 } from "../../actions/updateProjectNameAndPath";
+import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 
 import styles from "./styles.module.css";
 
@@ -53,11 +54,14 @@ const ReviewAndGenerate = (props: Props) => {
         </div>
         <div className={styles.inputContainer}>
           <div className={styles.inputTitle}>Output Path:</div>
-          <input
-            onChange={handleOutputPathChange}
-            defaultValue={props.outputPath}
-            className={styles.input}
-          />
+          <div className={styles.outputPathContainer}>
+            <input
+              onChange={handleOutputPathChange}
+              defaultValue={props.outputPath}
+              className={styles.pathInput}
+            />
+            <SaveSVG className={styles.saveIcon} />
+          </div>
         </div>
       </div>
       <Table title="1. Type of Application" rowItems={props.projectTypeRows} />
