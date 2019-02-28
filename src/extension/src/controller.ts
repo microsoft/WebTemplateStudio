@@ -67,10 +67,10 @@ export abstract class Controller {
 
                 case "name-functions":
                     Controller.isFunctionAppNameUnique(message.appName, message.subscriptionLabel)
-                        .then((isAvailable) => {
+                        .then(() => {
                             Controller.reactPanelContext.postMessageWebview({
                                 command: 'name-functions-result',
-                                isAvailable: isAvailable,
+                                isAvailable: true,
                                 message: ""
                             });
                         })
@@ -85,10 +85,10 @@ export abstract class Controller {
 
                 case "name-cosmos":
                     Controller.isCosmosResourceNameUnique(message.appName, message.subscriptionLabel)
-                        .then((isAvailable) => {
+                        .then(() => {
                             Controller.reactPanelContext.postMessageWebview({
                                 command: 'name-cosmos-result',
-                                isAvailable: isAvailable,
+                                isAvailable: true,
                                 message: ""
                             });
                         })
@@ -154,13 +154,13 @@ export abstract class Controller {
         return AzureAuth.getResourceGroupItems(subscriptionItem);
     }
 
-    public static async isFunctionAppNameUnique(functionAppName: string, subscriptionLabel: string): Promise<boolean> {
+    public static async isFunctionAppNameUnique(functionAppName: string, subscriptionLabel: string): Promise<void> {
         await this.updateFunctionSubscriptionItemCache(subscriptionLabel);
 
         return this.AzureFunctionProvider.checkFunctionAppName(functionAppName, this.usersFunctionSubscriptionItemCache)
             .then((isAvailable) => {
                 if (isAvailable) {
-                    return Promise.resolve(true);
+                    return Promise.resolve();
                 } else {
                     return Promise.reject(new ValidationError(`Function app name ${functionAppName} is not available`));
                 }
@@ -168,13 +168,13 @@ export abstract class Controller {
             .catch(err => { throw err; });
     }
 
-    public static async isCosmosResourceNameUnique(cosmosDBAccountName: string, subscriptionLabel: string): Promise<boolean> {
+    public static async isCosmosResourceNameUnique(cosmosDBAccountName: string, subscriptionLabel: string): Promise<void> {
         await this.updateCosmosDBSubscriptionItemCache(subscriptionLabel);
 
         return this.AzureCosmosDBProvider.validateCosmosDBAccountName(cosmosDBAccountName, this.usersCosmosDBSubscriptionItemCache)
             .then((message) => {
                 if (message === undefined || message === null || message === "") {
-                    return Promise.resolve(true);
+                    return Promise.resolve();
                 } else {
                     return Promise.reject(new ValidationError(message));
                 }
@@ -192,11 +192,11 @@ export abstract class Controller {
 
     private static async _getSubscriptionItem(subscriptionLabel: string): Promise<SubscriptionItem> {
         return AzureAuth.getSubscriptions().then(items => {
-            items.forEach(subscriptionItem => {
+            for (let subscriptionItem of items) {
                 if (subscriptionItem.label === subscriptionLabel) {
-                    return Promise.resolve(subscriptionItem);
+                    return subscriptionItem;
                 }
-            });
+            }
             throw new SubscriptionError("No subscription found with this name.");
         });
     }
