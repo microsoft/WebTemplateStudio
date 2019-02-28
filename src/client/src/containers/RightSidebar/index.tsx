@@ -14,7 +14,7 @@ import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
 import cancel from "../../assets/cancel.svg";
 import masterdetail from "../../assets/masterdetail.svg";
-import longlist from "../../assets/longlist.svg";
+import list from "../../assets/list.svg";
 import contentgrid from "../../assets/contentgrid.svg";
 import reorder from "../../assets/reorder.svg";
 
@@ -56,12 +56,8 @@ const SVG_URLS: { [key: string]: string } = {
   "wts.Page.React.MasterDetail": `${
     process.env.REACT_APP_RELATIVE_PATH
   }${masterdetail}`,
-  "wts.Page.React.ContentGrid": `${
-    process.env.REACT_APP_RELATIVE_PATH
-  }${contentgrid}`,
-  "wts.Page.ReactNode.LongList": `${
-    process.env.REACT_APP_RELATIVE_PATH
-  }${longlist}`
+  "wts.Page.React.Grid": `${process.env.REACT_APP_RELATIVE_PATH}${contentgrid}`,
+  "wts.Page.ReactNode.LongList": `${process.env.REACT_APP_RELATIVE_PATH}${list}`
 };
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
