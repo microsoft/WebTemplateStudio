@@ -7,13 +7,14 @@ import * as Actions from "../../actions/types";
 */
 
 const profileData = (state = {}, action: any) => {
-    switch(action.type) {
+    switch (action.type) {
         case Actions.LOG_OUT_OF_AZURE:
             return {};
         case Actions.LOG_IN_TO_AZURE:
             const newState = {
                 ...state,
-                email: action.payload,
+                email: action.payload.email,
+                subscriptions: action.payload.subscriptions,
             };
             return newState;
         default:

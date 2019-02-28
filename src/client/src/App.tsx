@@ -23,21 +23,24 @@ import { logIntoAzureAction } from "./actions/logIntoAzure";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
+import { getSubscriptionData } from "./actions/subscriptionData";
 
 
 interface IDispatchProps {
   getVSCodeApi: () => void;
   loadWizardContent: () => void;
-  logIntoAzure: (email: string) => void;
+  logIntoAzure: (email: string, subscriptions: []) => void;
+  saveSubscriptionData: (subscriptionData: any) => void;
 }
 
 type Props = IDispatchProps
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => {},
-    loadWizardContent: () => {},
-    logIntoAzure: () => {},
+    getVSCodeApi: () => { },
+    loadWizardContent: () => { },
+    logIntoAzure: () => { },
+    saveSubscriptionData: () => { },
   };
 
   public componentDidMount() {
@@ -52,9 +55,22 @@ class App extends React.Component<Props> {
         case "login":
           // email will be null or undefined if login didn't work correctly
           if (message.email != null) {
-            this.props.logIntoAzure(message.email);
+            this.props.logIntoAzure(message.email, message.subscriptions);
           }
-        return;
+          return;
+
+        case "subscriptionData":
+          // Expect resource groups and locations on this request
+
+          // Receive resource groups and locations
+          // and update redux (resourceGroups, locations)
+          this.props.saveSubscriptionData({ locations: message.locations, resourceGroups: message.resourceGroups });
+          return;
+
+        case "nameFunction":
+          // Receive input validation
+          // and update redux (boolean, string)
+          return;
       }
     })
   }
@@ -96,9 +112,12 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   loadWizardContent: () => {
     dispatch(loadWizardContentAction());
   },
-  logIntoAzure: (email: string) => {
-    dispatch(logIntoAzureAction(email));
+  logIntoAzure: (email: string, subscriptions: []) => {
+    dispatch(logIntoAzureAction({ email, subscriptions }));
   },
+  saveSubscriptionData: (subscriptionData: any) => {
+    dispatch(getSubscriptionData(subscriptionData));
+  }
 });
 
 export default connect(
