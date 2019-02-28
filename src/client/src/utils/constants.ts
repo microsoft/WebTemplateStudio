@@ -27,9 +27,9 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   NODE_JS: "NodeJS",
   REACT_JS: "ReactJS",
   MASTER_DETAIL: "wts.Page.React.MasterDetail",
-  CONTENT_GRID: "wts.Page.React.ContentGrd",
+  CONTENT_GRID: "wts.Page.React.Grid",
   LIST: "wts.Page.ReactNode.LongList",
-  FULL_STACK_APP: "FullstackWebApp",
+  FULL_STACK_APP: "FullStackWebApp",
   REST_API: "RestAPI"
 };
 

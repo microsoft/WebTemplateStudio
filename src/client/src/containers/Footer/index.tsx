@@ -56,6 +56,14 @@ class Footer extends React.Component<Props> {
           <div className={styles.footer}>
             <div className={styles.buttonContainer}>
               <Link
+                className={classnames(buttonStyles.buttonDark, styles.button)}
+                to={
+                  pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]
+                }
+              >
+                Back
+              </Link>
+              <Link
                 className={classnames(styles.button, {
                   [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
                   [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
@@ -66,7 +74,6 @@ class Footer extends React.Component<Props> {
               >
                 Next
               </Link>
-              )}
               <button
                 disabled={pathname !== ROUTES.REVIEW_AND_GENERATE}
                 className={classnames(styles.button, {
@@ -85,7 +92,6 @@ class Footer extends React.Component<Props> {
               </Link>
             </div>
           </div>
-        )}
         )}
       </div>
     );

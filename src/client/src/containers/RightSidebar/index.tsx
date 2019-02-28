@@ -14,6 +14,7 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
 import { ROUTES } from "../../utils/constants";
+import getSvgUrl from "../../utils/getSvgUrl";
 
 import cancel from "../../assets/cancel.svg";
 import masterdetail from "../../assets/masterdetail.svg";
@@ -123,7 +124,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const { pathname } = this.props.location;
     return (
       <React.Fragment>
-        {pathname !== ROUTES.PAGE_DETAILS &&
+        {pathname !== ROUTES.PAGE_DETAILS && (
           <div className={classNames(styles.rightView, styles.container)}>
             <div className={styles.title}>Your Project Details</div>
             <RightSidebarDropdown
@@ -132,7 +133,9 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               selectDropdownOption={this.props.selectProjectType}
               isVisible={this.showProjectTypes()}
               title="Project Type"
-              value={this.convertOptionToDropdownItem(this.props.selection.appType)}
+              value={this.convertOptionToDropdownItem(
+                this.props.selection.appType
+              )}
             />
             <RightSidebarDropdown
               options={this.props.frontendDropdownItems}
@@ -161,8 +164,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   <DraggableSidebarItem
                     key={page.internalName}
                     page={page}
-                    closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`}
-                    pageSvgUrl={SVG_URLS[page.internalName]}
+                    closeSvgUrl={`${
+                      process.env.REACT_APP_RELATIVE_PATH
+                    }${cancel}`}
+                    pageSvgUrl={getSvgUrl(page.internalName)}
                     reorderSvgUrl={`${
                       process.env.REACT_APP_RELATIVE_PATH
                     }${reorder}`}
@@ -179,7 +184,9 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 {Object.keys(this.props.services).map(serviceName => (
                   <DraggableSidebarItem
                     text={this.props.services[serviceName].api}
-                    closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`}
+                    closeSvgUrl={`${
+                      process.env.REACT_APP_RELATIVE_PATH
+                    }${cancel}`}
                     itemTitle={
                       serviceName === "cosmosOptions"
                         ? "CosmosDB"
@@ -191,7 +198,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               </div>
             )}
           </div>
-        }
+        )}
       </React.Fragment>
     );
   }

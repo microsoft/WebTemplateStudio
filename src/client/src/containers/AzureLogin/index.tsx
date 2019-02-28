@@ -5,7 +5,6 @@ import LoginCard from "../../components/LoginCard";
 import Title from "../../components/Title";
 
 import azure from "../../assets/azure.svg";
-
 import styles from "./styles.module.css";
 import grid from "../../css/grid.module.css";
 
