@@ -1,7 +1,7 @@
 import * as Actions from "./types";
 
 export const getSubscriptionData = (subscriptionData: any) => ({
-    type: Actions.SELECT_SUBSCRIPTION,
+    type: Actions.GET_SUBSCRIPTION_DATA,
     payload: subscriptionData
 });
 

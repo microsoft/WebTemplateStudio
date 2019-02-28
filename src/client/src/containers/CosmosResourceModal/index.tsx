@@ -191,7 +191,6 @@ const CosmosResourceModal = (props: Props) => {
 
 const mapStateToProps = (state: any): IStateProps => {
   const { vscodeObject } = state.vscode;
-  console.log(state);
   return {
     isModalOpen: isCosmosDbModalOpenSelector(state),
     vscode: vscodeObject,
