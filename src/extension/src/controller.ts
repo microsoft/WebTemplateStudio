@@ -1,251 +1,249 @@
 import * as vscode from "vscode";
-import { AzureAuth, SubscriptionItem } from "./azure-auth/azureAuth";
-import { SubscriptionError, ValidationError } from "./errors";
-import { FunctionProvider } from "./azure-functions/functionProvider";
-import { CosmosDBDeploy } from "./azure-cosmosDB/cosmosDbModule";
-import { ReactPanel } from "./reactPanel";
-import ApiModule from "./apiModule";
+import { AzureAuth, SubscriptionItem } from './azure-auth/azureAuth';
+import { SubscriptionError, ValidationError } from './errors';
+import { FunctionProvider } from './azure-functions/functionProvider';
+import { CosmosDBDeploy, DatabaseObject } from './azure-cosmosDB/cosmosDbModule';
+import { ReactPanel } from './reactPanel';
+
 export abstract class Controller {
-  private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
-  private static usersFunctionSubscriptionItemCache: SubscriptionItem;
-  private static AzureFunctionProvider = new FunctionProvider();
-  private static AzureCosmosDBProvider = new CosmosDBDeploy();
-  private static reactPanelContext: ReactPanel;
-  private static routingMessageReceieverDelegate = function(message: any) {
-    switch (message.command) {
-      case "alert":
-        vscode.window.showErrorMessage(message.text);
-        // Controller.isCosmosResourceNameUnique();
+    /*
+    * Handles messages from the wizard
+    */
 
-        break;
+    private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
+    private static usersFunctionSubscriptionItemCache: SubscriptionItem;
+    private static AzureFunctionProvider = new FunctionProvider();
+    private static AzureCosmosDBProvider = new CosmosDBDeploy();
+    private static reactPanelContext: ReactPanel;
 
-      case "login":
-      AzureAuth.login()
-        .then(res => {
-          const email = AzureAuth.getEmail();
-          Controller.reactPanelContext.postMessageWebview({
-            command: "login",
-            email: email
-          });
-        })
-        .catch(err => {
-          console.log(err);
+    private static routingMessageReceieverDelegate =
+        function (message: any) {
+            switch (message.command) {
+                case "information":
+                    vscode.window.showInformationMessage(message.text);
+                    break;
+
+                case "alert":
+                    vscode.window.showErrorMessage(message.text);
+                    break;
+
+                case "login":
+                    AzureAuth.login()
+                        .then(res => {
+                            const email = AzureAuth.getEmail();
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'login',
+                                email: email,
+                                message: ""
+                            });
+                        })
+                        .catch((err: Error) => {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'login',
+                                email: null,
+                                message: err.message
+                            });
+                        });
+                    break;
+
+                case "subscriptions":
+                    AzureAuth.getSubscriptions()
+                        .then(items => {
+                            const subs = items;
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'subscriptions',
+                                subscriptions: subs,
+                                message: ""
+                            });
+                        })
+                        .catch((err: Error) => {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'subscriptions',
+                                subscriptions: null,
+                                message: err.message
+                            });
+                        });;
+                    break;
+
+                case "name-functions":
+                    Controller.isFunctionAppNameUnique(message.appName, message.subscriptionLabel)
+                        .then(() => {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'name-functions-result',
+                                isAvailable: true,
+                                message: ""
+                            });
+                        })
+                        .catch((err: Error) => {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'name-functions-result',
+                                isAvailable: false,
+                                message: err.message
+                            });
+                        });
+                    break;
+
+                case "name-cosmos":
+                    Controller.isCosmosResourceNameUnique(message.appName, message.subscriptionLabel)
+                        .then(() => {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'name-cosmos-result',
+                                isAvailable: true,
+                                message: ""
+                            });
+                        })
+                        .catch((err: Error) => {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'name-cosmos-result',
+                                isAvailable: false,
+                                message: err.message
+                            });
+                        });
+                    break;
+
+                case "deploy-functions":
+                    Controller.deployFunctionApp(message.selections)
+                        .then(() => {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'deploy-functions-result',
+                                deploymentSucceeded: true,
+                                message: ""
+                            });
+                        })
+                        .catch((err: Error) => {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'deploy-functions-result',
+                                deploymentSucceeded: false,
+                                message: err.message
+                            });
+                        });
+                    break;
+
+                case "deploy-cosmos":
+                    Controller.deployCosmosResource(message.selections)
+                        .then((dbObject: DatabaseObject) => {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'deploy-cosmos-result',
+                                databaseObject: dbObject,
+                                message: ""
+                            });
+                        })
+                        .catch((err: Error) => {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: 'deploy-cosmos-result',
+                                databaseObject: null,
+                                message: err.message
+                            });
+                        });
+                    break;
+
+                case "getOutputPath":
+                    vscode.window.showOpenDialog({
+                        canSelectFiles: false,
+                        canSelectFolders: true,
+                        canSelectMany: false
+                    }).then((res) => {
+                        if (res !== undefined) {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: "getOutputPath",
+                                outputPath: res[0].path
+                            });
+                        } else {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: "getOutputPath",
+                                outputPath: undefined
+                            });
+                        };
+                    });
+                    break;
+            }
+        }
+        ;
+
+
+    public static launchWizard(context: vscode.ExtensionContext) {
+        Controller.reactPanelContext = ReactPanel.createOrShow(context.extensionPath, this.routingMessageReceieverDelegate);
+    }
+
+    public static getSubscriptions() {
+        return AzureAuth.getSubscriptions();
+    }
+
+    public static async getResourceGroups(subscriptionLabel: string) {
+        let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
+        return AzureAuth.getResourceGroupItems(subscriptionItem);
+    }
+
+    public static async isFunctionAppNameUnique(functionAppName: string, subscriptionLabel: string): Promise<void> {
+        await this.updateFunctionSubscriptionItemCache(subscriptionLabel);
+
+        return this.AzureFunctionProvider.checkFunctionAppName(functionAppName, this.usersFunctionSubscriptionItemCache)
+            .then((isAvailable) => {
+                if (isAvailable) {
+                    return Promise.resolve();
+                } else {
+                    return Promise.reject(new ValidationError(`Function app name ${functionAppName} is not available`));
+                }
+            })
+            .catch(err => { throw err; });
+    }
+
+    public static async isCosmosResourceNameUnique(cosmosDBAccountName: string, subscriptionLabel: string): Promise<void> {
+        await this.updateCosmosDBSubscriptionItemCache(subscriptionLabel);
+
+        return this.AzureCosmosDBProvider.validateCosmosDBAccountName(cosmosDBAccountName, this.usersCosmosDBSubscriptionItemCache)
+            .then((message) => {
+                if (message === undefined || message === null || message === "") {
+                    return Promise.resolve();
+                } else {
+                    return Promise.reject(new ValidationError(message));
+                }
+            })
+            .catch(err => { throw err; });
+    }
+
+    public static async deployFunctionApp(selections: any): Promise<void> {
+        throw Error("undefined");
+    }
+
+    public static async deployCosmosResource(selections: any): Promise<DatabaseObject> {
+        throw Error("undefined");
+    }
+
+    private static async _getSubscriptionItem(subscriptionLabel: string): Promise<SubscriptionItem> {
+        return AzureAuth.getSubscriptions().then(items => {
+            for (let subscriptionItem of items) {
+                if (subscriptionItem.label === subscriptionLabel) {
+                    return subscriptionItem;
+                }
+            }
+            throw new SubscriptionError("No subscription found with this name.");
         });
-        break;
-
-      case "subscriptions":
-        AzureAuth.getSubscriptions().then(items => {
-          const subs = items;
-          Controller.reactPanelContext.postMessageWebview({
-            command: "subscriptions",
-            subscriptions: subs
-            // resources: {label:Giv.Hackathon value: Giv.Hackathon}[]
-          });
-        });
-        break;
-
-      case "name-functions":
-        Controller.isFunctionAppNameUnique(
-          message.appName,
-          message.subscriptionLabel
-        )
-          .then(isAvailable => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "functions-name-result",
-              isAvailable: isAvailable,
-              message: ""
-            });
-          })
-          .catch((err: Error) => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "functions-name-result",
-              isAvailable: false,
-              message: err.message
-            });
-          });
-        break;
-
-      case "name-cosmos":
-        Controller.isCosmosResourceNameUnique(
-          message.appName,
-          message.subscriptionLabel
-        )
-          .then(isAvailable => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "cosmos-name-result",
-              isAvailable: isAvailable,
-              message: ""
-            });
-          })
-          .catch((err: Error) => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "cosmos-name-result",
-              isAvailable: false,
-              message: err.message
-            });
-          });
-        break;
-
-      case "deploy-functions":
-        break;
-
-      case "deploy-cosmos":
-        break;
-      case "generate":
-        vscode.window.showInformationMessage(message.text);
-        // FIXME: After gen is done, we need to do some feedback.
-        ApiModule.SendGeneration("5000", message.payload);
-        break;
-      case "getOutputPath":
-          vscode.window.showOpenDialog({
-            canSelectFiles: false,
-            canSelectFolders: true,
-            canSelectMany: false
-          }).then((res) => {
-            if (res !== undefined) {
-              Controller.reactPanelContext.postMessageWebview({
-                command: "getOutputPath",
-                outputPath: res[0].path
-              });
-            } else {
-              Controller.reactPanelContext.postMessageWebview({
-                command: "getOutputPath",
-                outputPath: undefined
-              });
-            };
-          });
-          break;
     }
-  };
 
-  /**
-   * launchWizard
-   */
-  public static launchWizard(context: vscode.ExtensionContext) {
-    Controller.reactPanelContext = ReactPanel.createOrShow(
-      context.extensionPath,
-      this.routingMessageReceieverDelegate
-    );
-  }
-
-  /**
-   * Handles messages from the wizard
-   *
-   * */
-  public static getSubscriptions() {
-    return AzureAuth.getSubscriptions();
-  }
-
-  public static async getResourceGroups(subscriptionLabel: string) {
-    let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-    return AzureAuth.getResourceGroupItems(subscriptionItem);
-  }
-
-  public static async getLocations(subscriptionLabel: string) {
-    // let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-    // return AzureAuth.getLocations(subscriptionItem);
-
-    throw Error("unimplemented");
-  }
-
-  public static async isFunctionAppNameUnique(
-    functionAppName: string,
-    subscriptionLabel: string
-  ): Promise<boolean> {
-    this.updateFunctionSubscriptionItemCache(subscriptionLabel);
-
-    return this.AzureFunctionProvider.checkFunctionAppName(
-      functionAppName,
-      this.usersFunctionSubscriptionItemCache
-    )
-      .then(isAvailable => {
-        if (isAvailable) {
-          return Promise.resolve(true);
-        } else {
-          return Promise.reject(
-            new ValidationError(
-              `Function app name ${functionAppName} is not available`
-            )
-          );
+    /*
+    * Caching is used for performance; when displaying live check on keystroke to wizard
+    */
+    private static async updateCosmosDBSubscriptionItemCache(subscriptionLabel: string): Promise<void> {
+        if (this.usersCosmosDBSubscriptionItemCache === undefined) {
+            let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
+            this.usersCosmosDBSubscriptionItemCache = subscriptionItem;
         }
-      })
-      .catch(err => {
-        throw err;
-      });
-  }
-
-  public static async isCosmosResourceNameUnique(
-    cosmosDBAccountName: string,
-    subscriptionLabel: string
-  ): Promise<boolean> {
-    await this.updateCosmosDBSubscriptionItemCache(subscriptionLabel);
-
-    return this.AzureCosmosDBProvider.validateCosmosDBAccountName(
-      cosmosDBAccountName,
-      this.usersCosmosDBSubscriptionItemCache
-    )
-      .then(message => {
-        if (message === undefined || message === null || message === "") {
-          return Promise.resolve(true);
-        } else {
-          return Promise.reject(new ValidationError(message));
+        else if (subscriptionLabel !== this.usersCosmosDBSubscriptionItemCache.label) {
+            let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
+            this.usersCosmosDBSubscriptionItemCache = subscriptionItem;
         }
-      })
-      .catch(err => {
-        throw err;
-      });
-  }
-
-  public static deployFunctionApp() {
-    throw Error("undefined");
-  }
-
-  public static deployCosmosResource() {
-    throw Error("undefined");
-  }
-
-  private static async _getSubscriptionItem(
-    subscriptionLabel: string
-  ): Promise<SubscriptionItem> {
-    return AzureAuth.getSubscriptions().then(items => {
-      items.forEach(subscriptionItem => {
-        if (subscriptionItem.label === subscriptionLabel) {
-          return Promise.resolve(subscriptionItem);
-        }
-      });
-      throw new SubscriptionError("No subscription found with this name.");
-    });
-  }
-
-  /*
-   *
-   * Caching is used for performance; when displaying live check on keystroke to wizard
-   *
-   */
-  private static async updateCosmosDBSubscriptionItemCache(
-    subscriptionLabel: string
-  ): Promise<void> {
-    if (this.usersCosmosDBSubscriptionItemCache === undefined) {
-      let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-      this.usersCosmosDBSubscriptionItemCache = subscriptionItem;
-    } else if (
-      subscriptionLabel !== this.usersCosmosDBSubscriptionItemCache.label
-    ) {
-      let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-      this.usersCosmosDBSubscriptionItemCache = subscriptionItem;
     }
-  }
-  private static async updateFunctionSubscriptionItemCache(
-    subscriptionLabel: string
-  ): Promise<void> {
-    if (this.usersFunctionSubscriptionItemCache === undefined) {
-      let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-      this.usersFunctionSubscriptionItemCache = subscriptionItem;
-    } else if (
-      subscriptionLabel !== this.usersFunctionSubscriptionItemCache.label
-    ) {
-      let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-      this.usersFunctionSubscriptionItemCache = subscriptionItem;
+    private static async updateFunctionSubscriptionItemCache(subscriptionLabel: string): Promise<void> {
+        if (this.usersFunctionSubscriptionItemCache === undefined) {
+            let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
+            this.usersFunctionSubscriptionItemCache = subscriptionItem;
+        }
+        else if (subscriptionLabel !== this.usersFunctionSubscriptionItemCache.label) {
+            let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
+            this.usersFunctionSubscriptionItemCache = subscriptionItem;
+        }
     }
-  }
 }
+
+
