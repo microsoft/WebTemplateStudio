@@ -15,19 +15,22 @@ export class ReactPanel {
   private readonly _panel: vscode.WebviewPanel;
   private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
-  private static _controllerFunctionDelegate =
-     function (message: any) {
-      switch (message.command) {
-        case "alert":
-          vscode.window.showErrorMessage(message.text);
-          break;
-      }
+  private static _controllerFunctionDelegate = function(message: any) {
+    switch (message.command) {
+      case "alert":
+        vscode.window.showErrorMessage(message.text);
+
+        break;
     }
-  ;
+  };
 
   // private static _controller: Controller;
 
-  public static createOrShow(extensionPath: string, controllerFunctionDelegate : (message: any) => any = this._controllerFunctionDelegate) {
+  public static createOrShow(
+    extensionPath: string,
+    controllerFunctionDelegate: (message: any) => any = this
+      ._controllerFunctionDelegate
+  ) {
     const column = vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
       : undefined;
@@ -41,18 +44,22 @@ export class ReactPanel {
 
       ReactPanel.currentPanel = new ReactPanel(
         extensionPath,
-        column || vscode.ViewColumn.One, 
+        column || vscode.ViewColumn.One,
         controllerFunctionDelegate
       );
     }
     return ReactPanel.currentPanel;
   }
 
-  public postMessageWebview(object : Object){
+  public postMessageWebview(object: Object) {
     this._panel.webview.postMessage(object);
-  };
+  }
 
-  private constructor(extensionPath: string, column: vscode.ViewColumn, controllerFunctionDelegate : (message: any) => any) {
+  private constructor(
+    extensionPath: string,
+    column: vscode.ViewColumn,
+    controllerFunctionDelegate: (message: any) => any
+  ) {
     this._extensionPath = extensionPath;
 
     // Create and show a new webview panel
@@ -136,8 +143,8 @@ export class ReactPanel {
 				<link rel="stylesheet" type="text/css" href="${styleUri}">
 				<meta img-src vscode-resource: https: ;style-src vscode-resource: 'unsafe-inline' http: https: data:;">
 				<base href="${vscode.Uri.file(path.join(this._extensionPath, "react")).with({
-      scheme: "vscode-resource"
-    })}/">
+          scheme: "vscode-resource"
+        })}/">
 			</head>
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>
