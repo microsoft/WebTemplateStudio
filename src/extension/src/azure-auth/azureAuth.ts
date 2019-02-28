@@ -18,6 +18,10 @@ export interface ResourceGroupItem {
     resourceGroup: {};
 }
 
+export interface LocationItem{
+    locationDisplayName : string;
+}
+
 interface PartialList<T> extends Array<T> {
     nextLink?: string;
 }
@@ -99,6 +103,21 @@ export abstract class AzureAuth {
             };
         }));
         return resourceGroupItems;
+    }
+
+    public static async getLocations(subscriptionItem: SubscriptionItem): Promise<LocationItem[]>{
+        this.initialize();
+        const { session, subscription } = subscriptionItem;
+        const locationList: LocationItem[] = [];
+        const subscriptionClient = new SubscriptionClient(session.credentials, session.environment.resourceManagerEndpointUrl);
+        let locations : SubscriptionModels.LocationListResult = await subscriptionClient.subscriptions.listLocations(subscription.subscriptionId!);
+        locations.sort((l1, l2) => l1.displayName!.localeCompare(l2.displayName!));
+        locationList.push(...locations.map(loc => {
+            return {
+                locationDisplayName: loc.displayName || ""
+            };
+        }));
+        return locationList;
     }
 
     private static async listAll<T>(client: { listNext(nextPageLink: string): Promise<PartialList<T>>; }, first: Promise<PartialList<T>>): Promise<T[]> {

@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { AzureAuth, SubscriptionItem } from "./azure-auth/azureAuth";
+import { AzureAuth, SubscriptionItem, LocationItem } from "./azure-auth/azureAuth";
 import { SubscriptionError, ValidationError } from "./errors";
 import { FunctionProvider } from "./azure-functions/functionProvider";
 import { CosmosDBDeploy } from "./azure-cosmosDB/cosmosDbModule";
@@ -20,17 +20,17 @@ export abstract class Controller {
         break;
 
       case "login":
-        AzureAuth.login()
-          .then(res => {
-            const email = AzureAuth.getEmail();
-            Controller.reactPanelContext.postMessageWebview({
-              command: "login",
-              email: email
-            });
-          })
-          .catch(err => {
-            console.log(err);
+      AzureAuth.login()
+        .then(res => {
+          const email = AzureAuth.getEmail();
+          Controller.reactPanelContext.postMessageWebview({
+            command: "login",
+            email: email
           });
+        })
+        .catch(err => {
+          console.log(err);
+        });
         break;
 
       case "subscriptions":
