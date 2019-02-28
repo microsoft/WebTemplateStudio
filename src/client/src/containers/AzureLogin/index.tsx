@@ -43,16 +43,11 @@ class AzureLogin extends React.Component<Props> {
             <div>
                 <Title>Attach services to your web application</Title>
                 <div className={styles.loginCard}>
-                    {!isLoggedIn && (
-                        <LoginCard
-                            svgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${azure}`}
-                            handleClick={() => {
-                                this.handleClick();
-                            }}
-                            cardTitle="Microsoft Azure Deployment"
-                            cardBody="Use Azure to help build, manage, and deploy applications on a massive, global network. Sign in to your subscription account to get started."
-                        />
-                    )}
+                    {!isLoggedIn && <LoginCard
+                        handleClick={() => { this.handleClick() }}
+                        cardTitle="Microsoft Azure Deployment"
+                        cardBody="Use Azure to help build, manage, and deploy applications on a massive, global network. Sign in to your subscription account to get started."
+                    />}
                 </div>
                 <AzureSubscriptions />
             </div>
