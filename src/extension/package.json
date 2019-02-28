@@ -20,11 +20,6 @@
         "command": "webTemplateStudioExtension.wizardLaunch",
         "title": "%webTemplateStudioExtension.commands.wizardLaunch%",
         "category": "%webTemplateStudioExtension.commands.wts%"
-      },
-      {
-        "command": "webTemplateStudioExtension.createFunctionApp",
-        "title": "%webTemplateStudioExtension.commands.createFunctionApp%",
-        "category": "%webTemplateStudioExtension.commands.wts%"
       }
     ]
   },

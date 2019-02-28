@@ -22,10 +22,10 @@ export interface DatabaseObject {
 }
 
 export enum API {
-  MongoDB = 'MongoDB', //Mongo NoSQL
-  Graph = 'Graph', //Gremlin
-  Table = 'Table', //Azure Table
-  DocumentDB = 'DocumentDB' //SQL
+  MongoDB = 'MongoDB', // Mongo NoSQL
+  Graph = 'Graph', // Gremlin
+  Table = 'Table', // Azure Table
+  DocumentDB = 'DocumentDB' // SQL
 }
 
 export class CosmosDBDeploy {
@@ -78,7 +78,7 @@ export class CosmosDBDeploy {
     /*
     * Returning a tuple which includes databaseAccount from callback and its connection string
     */
-    var db: DatabaseObject = { databaseAccount, connectionString }
+    var db: DatabaseObject = { databaseAccount, connectionString };
     return db;
   }
 
