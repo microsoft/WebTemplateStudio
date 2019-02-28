@@ -34,6 +34,7 @@ export abstract class Controller {
 
   private static routingMessageReceieverDelegate = function(message: any) {
     switch (message.command) {
+      // use information and alert to throw vscode info/alert messages through the wizards
       case "information":
         vscode.window.showInformationMessage(message.text);
         break;
