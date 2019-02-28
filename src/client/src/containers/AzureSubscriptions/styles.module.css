@@ -1,15 +1,20 @@
-.subscriptionsContainer {
-    margin: 2%;
-}
-
 .loginCard {
-    width: 50%;
-    margin-bottom: 3%;
+  width: 50%;
+  margin-bottom: 3%;
 }
 
 .hr {
-    border: none;
-    height: 1px;
-    color: #333;
-    background-color: #333;
+  border: none;
+  height: 1px;
+  color: #333;
+  background-color: #333;
+}
+
+.subscriptionCardContainer {
+  width: 40%;
+  margin-right: 0.75em;
+}
+
+.container {
+  display: flex;
 }

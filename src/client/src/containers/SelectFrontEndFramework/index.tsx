@@ -33,9 +33,9 @@ class SelectFrontEndFramework extends React.Component<Props> {
    *
    * @param framework
    */
-  public convertSelectionToIndexNumber(framework: string): number[] {
+  public convertSelectionToIndexNumber(framework: any): number[] {
     for (let i = 0; i < this.props.options.length; i++) {
-      if (this.props.options[i].title === framework) {
+      if (this.props.options[i].internalName === framework.internalName) {
         return [i];
       }
     }

@@ -18,8 +18,10 @@
 .inputTitle {
   font-size: 1em;
   font-weight: bold;
+  margin-bottom: 3px;
 }
 
+.outputPathContainer,
 .input {
   box-sizing: border-box;
   padding: 0.5em;
@@ -28,6 +30,28 @@
   background-color: #696969;
   border: 1px solid #ffffff;
   border-radius: 2px;
+}
+
+.outputPathContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 42px;
+}
+
+.saveIcon {
+  height: 25px;
+  cursor: pointer;
+}
+
+.pathInput {
+  outline: none;
+  text-decoration: none;
+  font-size: 1em;
+  background-color: #696969;
+  width: 100%;
+  border: none;
+  margin-right: 0.25em;
 }
 
 .input:focus {

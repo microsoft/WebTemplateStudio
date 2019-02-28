@@ -7,7 +7,7 @@ import LeftSidebarItem from "../LeftSidebarItem";
 
 import styles from "./styles.module.css";
 
-import { ROUTES_ARRAY } from "../../utils/constants";
+import { ROUTES, ROUTES_ARRAY } from "../../utils/constants";
 
 interface IProps {
   sidebarItems: string[];
@@ -25,20 +25,24 @@ const LeftSidebar = (props: Props) => {
     return idx < currentPathIndex;
   }
   return (
-    <div className={styles.container}>
-      {props.sidebarItems.map((sidebartitle, idx) => {
-        return (
-          <div className={
-            classnames(styles.itemBorder, { 
-              [styles.currentPath]: idx === currentPathIndex, 
-              [styles.visitedPath]: isVisitedPath(idx),
-              [styles.nextPath]: idx > currentPathIndex,
-              [styles.itemBorderTop]: idx === 0,
-            })} key={`${sidebartitle}`}>
-            <LeftSidebarItem text={sidebartitle} showCheck={isVisitedPath(idx)}/>
-          </div>
-          )})}
-    </div>
+    <React.Fragment>
+      {pathname !== ROUTES.PAGE_DETAILS && 
+      <div className={classnames(styles.leftView, styles.container)}>
+        {props.sidebarItems.map((sidebartitle, idx) => {
+          return (
+            <div className={
+              classnames(styles.itemBorder, { 
+                [styles.currentPath]: idx === currentPathIndex, 
+                [styles.visitedPath]: isVisitedPath(idx),
+                [styles.nextPath]: idx > currentPathIndex,
+                [styles.itemBorderTop]: idx === 0,
+              })} key={`${sidebartitle}`}>
+              <LeftSidebarItem text={sidebartitle} showCheck={isVisitedPath(idx)}/>
+            </div>
+            )})}
+      </div>
+      }
+    </React.Fragment>
   );
 };
 
