@@ -25,17 +25,8 @@ export interface DatabaseObject {
   connectionString: string;
 }
 
-<<<<<<< HEAD
 // Mongo NoSQL | Gremlin | Azure Table | SQL
 export type API = "MongoDB" | "Graph" | "Table" | "DocumentDB";
-=======
-export enum API {
-  MongoDB = 'MongoDB', // Mongo NoSQL
-  Graph = 'Graph', // Gremlin
-  Table = 'Table', // Azure Table
-  DocumentDB = 'DocumentDB' // SQL
-}
->>>>>>> demo-redmond
 
 export class CosmosDBDeploy {
   private SubscriptionItemCosmosClient:
@@ -98,13 +89,8 @@ export class CosmosDBDeploy {
     }
 
     /*
-<<<<<<< HEAD
      * Returning a tuple which includes databaseAccount from callback and its connection string
      */
-=======
-    * Returning a tuple which includes databaseAccount from callback and its connection string
-    */
->>>>>>> demo-redmond
     var db: DatabaseObject = { databaseAccount, connectionString };
     return db;
   }
