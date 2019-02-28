@@ -51,21 +51,23 @@ const CosmosResourceModal = (props: Props) => {
    * run this effect when mounting the component.
    */
   React.useEffect(() => {
-    setData(
-      {
-        accountName: [{
+    setData({
+      accountName: [
+        {
           value: "",
           label: ""
-        }],
-        api: [{
+        }
+      ],
+      api: [
+        {
           value: "MongoDB",
           label: "MongoDB"
-        }],
-        subscription: props.subscriptions,
-        resourceGroup: props.subscriptionData.resourceGroups,
-        location: props.subscriptionData.locations,
-      }
-    )
+        }
+      ],
+      subscription: props.subscriptions,
+      resourceGroup: props.subscriptionData.resourceGroups,
+      location: props.subscriptionData.locations
+    });
   }, [props.subscriptionData]);
 
   const [cosmosFormData, updateForm] = React.useState(initialState);
@@ -86,11 +88,11 @@ const CosmosResourceModal = (props: Props) => {
         window.postMessage({
           command: "subscriptionData",
           locations: [{ label: "WEST US", value: "WEST US" }],
-          resourceGroups: [{ label: "resourceGroupMock", value: "resourceGroupMock" }]
+          resourceGroups: [
+            { label: "resourceGroupMock", value: "resourceGroupMock" }
+          ]
         });
       }
-
-
     }
     updateForm({
       ...cosmosFormData,
@@ -182,7 +184,7 @@ const CosmosResourceModal = (props: Props) => {
             props.saveCosmosOptions(cosmosFormData);
           }}
         >
-          Create Resource
+          Add Resource
         </button>
       </div>
     </div>
@@ -195,7 +197,7 @@ const mapStateToProps = (state: any): IStateProps => {
     isModalOpen: isCosmosDbModalOpenSelector(state),
     vscode: vscodeObject,
     subscriptionData: state.azureProfileData.subscriptionData,
-    subscriptions: state.azureProfileData.profileData.subscriptions,
+    subscriptions: state.azureProfileData.profileData.subscriptions
   };
 };
 

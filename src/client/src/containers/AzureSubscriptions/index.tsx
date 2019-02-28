@@ -49,7 +49,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     if (this.props.isCosmosResourceCreated && optionTitle.includes("Cosmos")) {
       return "Edit Resource";
     }
-    return "Create Resource";
+    return "Add Resource";
   };
   public render() {
     const { isLoggedIn } = this.props;
