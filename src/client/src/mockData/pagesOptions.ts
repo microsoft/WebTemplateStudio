@@ -3,13 +3,15 @@ import contentgrid from "../assets/contentgrid.svg";
 import list from "../assets/list.svg";
 
 import { IOption } from "../types/option";
+import svgUrlLoader from "../utils/getSvgUrl";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../utils/constants";
 
 const options: IOption[] = [
   {
-    svgUrl: process.env.REACT_APP_RELATIVE_PATH + masterdetail,
+    svgUrl: svgUrlLoader(WIZARD_CONTENT_INTERNAL_NAMES.MASTER_DETAIL),
     title: "Master Detail",
     originalTitle: "Master Detail",
-    internalName: "wts.Page.React.MasterDetail",
+    internalName: WIZARD_CONTENT_INTERNAL_NAMES.MASTER_DETAIL,
     body:
       "The introductory page of a website, typically serving as a table of contents for a site.",
     selected: false

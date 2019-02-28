@@ -52,7 +52,7 @@ const SelectableCard = ({
           </div>
         </div>
         <div className={grid.row}>
-          <div className={classNames(grid.col12, styles.body)}>
+          <div className={styles.body}>
             <CardBody body={body} />
           </div>
         </div>
