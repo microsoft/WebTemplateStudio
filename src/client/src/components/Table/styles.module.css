@@ -38,6 +38,7 @@
 .iconDown,
 .iconUp {
   height: 15px;
+  cursor: pointer;
 }
 
 .iconDown {

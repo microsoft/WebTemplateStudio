@@ -136,6 +136,26 @@ export abstract class Controller {
                             });
                         });
                     break;
+
+                case "getOutputPath":
+                    vscode.window.showOpenDialog({
+                        canSelectFiles: false,
+                        canSelectFolders: true,
+                        canSelectMany: false
+                    }).then((res) => {
+                        if (res !== undefined) {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: "getOutputPath",
+                                outputPath: res[0].path
+                            });
+                        } else {
+                            Controller.reactPanelContext.postMessageWebview({
+                                command: "getOutputPath",
+                                outputPath: undefined
+                            });
+                        };
+                    });
+                    break;
             }
         }
         ;

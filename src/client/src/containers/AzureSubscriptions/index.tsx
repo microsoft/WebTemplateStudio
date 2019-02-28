@@ -5,6 +5,7 @@ import Card from "../../components/Card";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import grid from "../../css/grid.module.css";
+import styles from "./styles.module.css";
 
 import * as AzureActions from "../../actions/logOutAzure";
 import * as ModalActions from "../../actions/modalActions";
@@ -48,16 +49,19 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     if (this.props.isCosmosResourceCreated && optionTitle.includes("Cosmos")) {
       return "Edit Resource";
     }
-    return "Create Resource";
+    return "Add Resource";
   };
   public render() {
     const { isLoggedIn } = this.props;
     return (
       isLoggedIn && (
-        <div className={grid.row}>
+        <div className={styles.container}>
           {!!this.state.azureServices &&
             this.state.azureServices.map(option => (
-              <div key={option.title} className={grid.col6}>
+              <div
+                key={option.title}
+                className={styles.subscriptionCardContainer}
+              >
                 <Card
                   cardTitle={option.title}
                   cardBody={option.body}

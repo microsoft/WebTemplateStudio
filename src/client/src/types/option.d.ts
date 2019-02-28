@@ -5,4 +5,5 @@ export interface IOption {
   body: string;
   svgUrl: string | undefined;
   selected?: boolean;
+  unselectable?: boolean;
 }

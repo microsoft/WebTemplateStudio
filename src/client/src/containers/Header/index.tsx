@@ -21,7 +21,7 @@ const Header = (props: Props) => {
   return (
     <div className={styles.header}>
       <div className={styles.headerTitle}>
-        Web Template Studio
+        Project Acorn
       </div>
       {isLoggedIn && (<div className={styles.azureProfile}>
         <div className={styles.profileName}>
