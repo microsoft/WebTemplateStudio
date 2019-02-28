@@ -51,8 +51,6 @@ const CosmosResourceModal = (props: Props) => {
    * run this effect when mounting the component.
    */
   React.useEffect(() => {
-
-    console.log(cosmosData);
     setData(
       {
         accountName: [{
