@@ -41,7 +41,7 @@ class AzureLogin extends React.Component<Props> {
         const { isLoggedIn } = this.props;
         return (
             <div>
-                <Title>Attach services to your web application</Title>
+                <Title>Attach services to your web application (Optional)</Title>
                 <div className={styles.loginCard}>
                     {!isLoggedIn &&
                         <LoginCard

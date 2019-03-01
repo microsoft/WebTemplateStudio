@@ -1,6 +1,6 @@
 import * as Actions from "./types";
 
-export const setAccountAvailability = (isAccountAvailable: any) => ({
+export const setAccountAvailability = (isAccountAvailableObject: any) => ({
     type: Actions.SET_ACCOUNT_AVAILABILITY,
-    payload: isAccountAvailable
+    payload: isAccountAvailableObject
 });

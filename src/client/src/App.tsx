@@ -35,7 +35,7 @@ interface IDispatchProps {
   loadWizardContent: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
   saveSubscriptionData: (subscriptionData: any) => void;
-  setCosmosResourceAccountNameAvailability: (isAvailable: boolean) => any;
+  setCosmosResourceAccountNameAvailability: (isAvailable: any) => any;
 }
 
 type Props = IDispatchProps;
@@ -83,7 +83,10 @@ class App extends React.Component<Props> {
         case "name-cosmos":
           // Receive input validation
           // and update redux (boolean, string)
-          this.props.setCosmosResourceAccountNameAvailability(message.isAvailable);
+          this.props.setCosmosResourceAccountNameAvailability({
+            isAvailable: message.isAvailable,
+            message: message.message
+          });
           return;
       }
     });

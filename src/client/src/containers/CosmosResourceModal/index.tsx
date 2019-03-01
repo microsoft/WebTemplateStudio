@@ -33,7 +33,7 @@ interface IStateProps {
   vscode: any;
   subscriptionData: any;
   subscriptions: [];
-  isAccountNameAvailable: boolean|undefined;
+  cosmosAccountInformation: any;
 }
 
 type Props = IDispatchProps & IStateProps;
@@ -135,10 +135,11 @@ const CosmosResourceModal = (props: Props) => {
     });
   };
   const handleAddResource = () => {
-    if (props.isAccountNameAvailable) {
+    if (props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable) {
       props.saveCosmosOptions(cosmosFormData); 
     }
   }
+  console.log(props);
   return (
     <div>
       <div className={styles.headerContainer}>
@@ -147,7 +148,7 @@ const CosmosResourceModal = (props: Props) => {
       </div>
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
-          <div>Subscription Selected</div>
+          <div>Subscription</div>
           <div className={styles.createNew}>Create new</div>
         </div>
         <Dropdown
@@ -169,7 +170,10 @@ const CosmosResourceModal = (props: Props) => {
           }}
         />
       </div>
-      <div className={styles.selectionContainer}>
+      <div className={classnames({
+        [styles.selectionInputContainer]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable,
+        [styles.selectionContainer]: props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable
+        })}>
         <div className={styles.selectionHeaderContainer}>
           <div>Account Name</div>
           <a
@@ -179,11 +183,13 @@ const CosmosResourceModal = (props: Props) => {
             documents.azure.com
           </a>
         </div>
-        <div className={styles.inputContainer}>
+        <div className={classnames(styles.inputContainer, {
+            [styles.borderRed]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable
+          })}>
           <input className={styles.input} onChange={handleInput} value={cosmosFormData.accountName} placeholder="Account Name" />
-          {props.isAccountNameAvailable ? <GreenCheck className={styles.validationIcon} /> :
-          <RedCancel className={styles.validationIcon} />}
+          {props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && <GreenCheck className={styles.validationIcon} />}
         </div>
+        {!props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && <div style={{ color: "#FF6666", fontSize: "12px", marginBototm: "-18px"}}>{props.cosmosAccountInformation.message}</div>}
       </div>
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
@@ -226,7 +232,7 @@ const mapStateToProps = (state: any): IStateProps => {
     vscode: vscodeObject,
     subscriptionData: state.azureProfileData.subscriptionData,
     subscriptions: state.azureProfileData.profileData.subscriptions,
-    isAccountNameAvailable: state.selection.services.isCosmosResourceAccountNameAvailable,
+    cosmosAccountInformation: state.selection.services,
   };
 };
 
