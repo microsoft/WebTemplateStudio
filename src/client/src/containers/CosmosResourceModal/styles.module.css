@@ -66,13 +66,19 @@
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 068768b... add error message for incorrect account name
 .borderRed {
     border: 1px solid #FF6666;
     padding: 8.5px;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> 2bbb282... restrain form input to lowercase names with no spaces
+=======
+>>>>>>> 068768b... add error message for incorrect account name
 input:focus {
     outline: none;
 }
