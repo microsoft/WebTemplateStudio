@@ -61,6 +61,15 @@
     margin-right: 10px;
 }
 
+input:focus {
+    outline: none;
+}
+
+input::placeholder {
+    color: white;
+    opacity: 0.4;
+}
+
 .createNew,
 .link {
     text-decoration: none;

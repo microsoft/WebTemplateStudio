@@ -187,6 +187,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   if (serviceName !== "isCosmosResourceAccountNameAvailable") {
                     return (
                       <DraggableSidebarItem
+                        key={serviceName}
                         text={this.props.services[serviceName].api}
                         closeSvgUrl={`${
                           process.env.REACT_APP_RELATIVE_PATH

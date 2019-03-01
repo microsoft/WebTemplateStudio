@@ -222,6 +222,7 @@ export abstract class Controller {
         break;
 
       case "generate":
+        vscode.window.showInformationMessage(message.text);
         // FIXME: After gen is done, we need to do some feedback.
         ApiModule.SendGeneration("5000", message.payload);
         break;
