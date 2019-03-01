@@ -63,7 +63,7 @@ const ReviewAndGenerate = (props: Props) => {
           <div className={styles.inputTitle}>Project Name:</div>
           <input
             onChange={handleProjectNameChange}
-            defaultValue={props.projectName}
+            placeholder="Enter a name for your project..."
             className={styles.input}
           />
         </div>
@@ -73,6 +73,7 @@ const ReviewAndGenerate = (props: Props) => {
             <input
               onChange={handleOutputPathChange}
               className={styles.pathInput}
+              placeholder="Enter an output path..."
               value={props.outputPath}
             />
             <SaveSVG

@@ -2,6 +2,7 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { RowType } from "../types/rowType";
 import { ISelected } from "../types/selected";
+import getSvgUrl from "../utils/getSvgUrl";
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
@@ -13,7 +14,8 @@ const getProjectTypeRowItems = (selection: any): RowType[] => {
   return [
     {
       type: "Project Type",
-      name: projectType.title
+      name: projectType.title,
+      svgUrl: getSvgUrl(projectType.internalName)
     }
   ];
 };
@@ -23,11 +25,13 @@ const frameworksRowItems = (selection: any): RowType[] => {
   return [
     {
       type: "Front-end framework",
-      name: frontendFramework.title
+      name: frontendFramework.title,
+      svgUrl: getSvgUrl(frontendFramework.internalName)
     },
     {
       type: "Back-end framework",
-      name: backendFramework.title
+      name: backendFramework.title,
+      svgUrl: getSvgUrl(backendFramework.internalName)
     }
   ];
 };
@@ -52,7 +56,8 @@ const getPagesRowItems = (selection: any): RowType[] => {
   for (const page of pages) {
     pagesRows.push({
       type: page.originalTitle ? page.originalTitle : page.title,
-      name: page.title
+      name: page.title,
+      svgUrl: getSvgUrl(page.internalName)
     });
   }
   return pagesRows;

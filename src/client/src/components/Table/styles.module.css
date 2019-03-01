@@ -35,6 +35,16 @@
   justify-content: center;
 }
 
+.rowCellRight {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  height: 20px;
+  margin-right: 5px;
+}
+
 .iconDown,
 .iconUp {
   height: 15px;

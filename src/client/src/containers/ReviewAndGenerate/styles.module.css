@@ -58,6 +58,12 @@
   outline: none;
 }
 
+.input::placeholder,
+.pathInput::placeholder {
+  color: white;
+  opacity: 0.4;
+}
+
 .inputContainer {
   width: 45%;
   text-decoration: none;
