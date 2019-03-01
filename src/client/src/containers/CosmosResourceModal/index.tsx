@@ -71,7 +71,6 @@ const CosmosResourceModal = (props: Props) => {
   }, [props.subscriptionData]);
 
   const [cosmosFormData, updateForm] = React.useState(initialState);
-  const [accountName, setAccountName] = React.useState("");
 
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
@@ -100,13 +99,48 @@ const CosmosResourceModal = (props: Props) => {
     });
   };
 
+  // const handleInputNameChange = () => {
+  //   if (process.env.NODE_ENV === "production") {
+  //     props.vscode.postMessage({
+  //       command: "name-cosmos",
+  //       appName: cosmosFormData.accountName,
+  //       subscription: cosmosFormData.subscription
+  //     });
+  //   } else {
+  //     // @ts-ignore produces a mock login response from VSCode in development
+  //     window.postMessage({
+  //       command: "name-cosmos",
+  //       isAvailable: true,
+  //       message: "in development, no error",
+  //       errorType: "in development, no error type"
+  //     });
+  //   }
+  // }
+
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === "production") {
+      props.vscode.postMessage({
+        command: "name-cosmos",
+        appName: cosmosFormData.accountName,
+        subscription: cosmosFormData.subscription
+      });
+    } else {
+      // @ts-ignore produces a mock login response from VSCode in development
+      window.postMessage({
+        command: "name-cosmos",
+        isAvailable: true,
+        message: "in development, no error",
+        errorType: "in development, no error type"
+      });
+    }
+  }, [cosmosFormData.accountName]);
+
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
    */
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
-    setAccountName(element.value);
     updateForm({
       ...cosmosFormData,
       accountName: element.value

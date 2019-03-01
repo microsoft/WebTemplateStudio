@@ -22,10 +22,12 @@ import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
 import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
+import { setAccountAvailability } from "./actions/setAccountAvailability";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
+import { isExtraneousPopstateEvent } from "history/DOMUtils";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -33,17 +35,19 @@ interface IDispatchProps {
   loadWizardContent: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
   saveSubscriptionData: (subscriptionData: any) => void;
+  setCosmosResourceAccountNameAvailability: (isAvailable: boolean) => any;
 }
 
 type Props = IDispatchProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => { },
-    loadWizardContent: () => { },
-    logIntoAzure: () => { },
-    saveSubscriptionData: () => { },
-    updateOutputPath: () => {}
+    getVSCodeApi: () => {},
+    loadWizardContent: () => {},
+    logIntoAzure: () => {},
+    saveSubscriptionData: () => {},
+    updateOutputPath: () => {},
+    setCosmosResourceAccountNameAvailability: () => {},
   };
 
   public componentDidMount() {
@@ -76,9 +80,10 @@ class App extends React.Component<Props> {
           this.props.saveSubscriptionData({ locations: message.locations, resourceGroups: message.resourceGroups });
           return;
 
-        case "nameFunction":
+        case "name-cosmos":
           // Receive input validation
           // and update redux (boolean, string)
+          this.props.setCosmosResourceAccountNameAvailability(message.isAvailable);
           return;
       }
     });
@@ -135,7 +140,10 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   },
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
-  }
+  },
+  setCosmosResourceAccountNameAvailability: (isAvailable: boolean) => {
+    dispatch(setAccountAvailability(isAvailable));
+  },
 });
 
 export default connect(
