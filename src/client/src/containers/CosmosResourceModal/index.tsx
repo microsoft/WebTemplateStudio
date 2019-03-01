@@ -16,6 +16,8 @@ import getCosmosModalData, {
 } from "../../mockData/cosmosDbModalData";
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
+import { ReactComponent as GreenCheck} from "../../assets/checkgreen.svg";
+import { ReactComponent as RedCancel } from "../../assets/redcancel.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
@@ -31,6 +33,7 @@ interface IStateProps {
   vscode: any;
   subscriptionData: any;
   subscriptions: [];
+  isAccountNameAvailable: boolean|undefined;
 }
 
 type Props = IDispatchProps & IStateProps;
@@ -71,7 +74,6 @@ const CosmosResourceModal = (props: Props) => {
   }, [props.subscriptionData]);
 
   const [cosmosFormData, updateForm] = React.useState(initialState);
-  const [accountName, setAccountName] = React.useState("");
 
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
@@ -99,20 +101,43 @@ const CosmosResourceModal = (props: Props) => {
       [infoLabel]: value
     });
   };
-
+  /**
+   * Listens on account name change and validates the input in VSCode
+   */
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === "production") {
+      props.vscode.postMessage({
+        command: "name-cosmos",
+        appName: cosmosFormData.accountName,
+        subscription: cosmosFormData.subscription
+      });
+    } else {
+      // In development, disables modal closing until an account name is entered.
+      // @ts-ignore produces a mock login response from VSCode in development
+      window.postMessage({
+        command: "name-cosmos",
+        isAvailable: cosmosFormData.accountName === "" ? false: true,
+        message: "in development, no error",
+        errorType: "in development, no error type"
+      });
+    }
+  }, [cosmosFormData.accountName]);
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
    */
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
-    setAccountName(element.value);
     updateForm({
       ...cosmosFormData,
       accountName: element.value
     });
   };
-
+  const handleAddResource = () => {
+    if (props.isAccountNameAvailable) {
+      props.saveCosmosOptions(cosmosFormData); 
+    }
+  }
   return (
     <div>
       <div className={styles.headerContainer}>
@@ -153,7 +178,11 @@ const CosmosResourceModal = (props: Props) => {
             documents.azure.com
           </a>
         </div>
-        <input className={styles.input} onChange={handleInput} />
+        <div className={styles.inputContainer}>
+          <input className={styles.input} onChange={handleInput} />
+          {props.isAccountNameAvailable ? <GreenCheck className={styles.validationIcon} /> :
+          <RedCancel className={styles.validationIcon} />}
+        </div>
       </div>
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
@@ -180,9 +209,7 @@ const CosmosResourceModal = (props: Props) => {
       <div className={styles.buttonContainer}>
         <button
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
-          onClick={() => {
-            props.saveCosmosOptions(cosmosFormData);
-          }}
+          onClick={handleAddResource}
         >
           Add Resource
         </button>
@@ -197,7 +224,8 @@ const mapStateToProps = (state: any): IStateProps => {
     isModalOpen: isCosmosDbModalOpenSelector(state),
     vscode: vscodeObject,
     subscriptionData: state.azureProfileData.subscriptionData,
-    subscriptions: state.azureProfileData.profileData.subscriptions
+    subscriptions: state.azureProfileData.profileData.subscriptions,
+    isAccountNameAvailable: state.selection.services.isCosmosResourceAccountNameAvailable,
   };
 };
 

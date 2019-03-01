@@ -1,7 +1,8 @@
 .container {
   border: 0.5px solid #ffffff;
   padding: 16px;
-  margin-right: 15px;
+  margin-right: 12px;
+  margin-bottom: 12px;
   border-radius: 4px;
   cursor: pointer;
 }
