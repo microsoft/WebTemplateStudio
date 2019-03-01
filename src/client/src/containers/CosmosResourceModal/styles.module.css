@@ -17,7 +17,7 @@
 .selectionHeaderContainer {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0.5em;
+    margin-bottom: 3px;
 }
 
 .buttonContainer {
@@ -32,6 +32,7 @@
 
 .icon {
     height: 12px;
+    cursor: pointer;
 }
 
 .input {

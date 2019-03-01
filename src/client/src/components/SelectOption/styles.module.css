@@ -1,15 +1,7 @@
-.title {
-    font-size: 18px;
-    padding: 24px 24px;
-    font-weight: bold;
-}
-
 .container {
-    display: flex;
-    padding-left: 24px;
-    padding-right: 24px;
+  display: flex;
 }
 
 .icon {
-    height: 36px;
+  height: 36px;
 }

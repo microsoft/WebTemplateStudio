@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import * as React from "react";
 
+import { Link } from "react-router-dom";
+
 import CardBody from "../CardBody";
 import CardTitle from "../CardTitle";
 
@@ -16,7 +18,8 @@ const SelectableCard = ({
   body,
   selected,
   cardNumber,
-  onCardClick
+  onCardClick,
+  unselectable
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -25,6 +28,7 @@ const SelectableCard = ({
   selected: boolean;
   cardNumber: number;
   onCardClick: (idx: number) => void;
+  unselectable: boolean | undefined;
 }) => {
   return (
     <div
@@ -32,29 +36,34 @@ const SelectableCard = ({
         onCardClick(cardNumber);
       }}
       className={classNames(styles.container, styles.boundingBox, {
-        [styles.selected]: selected
+        [styles.selected]: selected,
+        [styles.unselectable]: unselectable
       })}
     >
-      <div className={styles.cardHeader}>
-        <div className={styles.icon}>
-          {!!iconPath && <img src={iconPath} className={iconStyles} />}
+      <div>
+        <div className={styles.cardHeader}>
+          <div className={styles.icon}>
+            {!!iconPath && <img src={iconPath} className={iconStyles} />}
+          </div>
+          <div
+            className={classNames({
+              [styles.title]: !!iconPath,
+              [styles.titleLeftJustified]: iconPath === undefined ? true : false
+            })}
+          >
+            <CardTitle title={title} />
+          </div>
         </div>
-        <div
-          className={classNames({
-            [styles.title]: !!iconPath,
-            [styles.titleLeftJustified]: iconPath === undefined ? true : false
-          })}
-        >
-          <CardTitle title={title} />
-        </div>
-      </div>
-      <div className={grid.row}>
-        <div className={classNames(grid.col12, styles.body)}>
-          <CardBody body={body} />
+        <div className={grid.row}>
+          <div className={styles.body}>
+            <CardBody body={body} />
+          </div>
         </div>
       </div>
       <div className={styles.cardFooter}>
-        <div className={classNames(styles.button)}>Details</div>
+        <Link className={classNames(styles.link)} to={"/PageDetail"}>
+          Details
+        </Link>
         <div
           className={classNames({
             [styles.hidden]: !selected,

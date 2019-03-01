@@ -6,7 +6,7 @@
 
 .buttonHighlighted {
     background-color: #0067B8;
-    color: white;
+    color: white !important; /* To be removed after Demo Redmond, repaced with css variables */
 }
 
 .buttonLight,
@@ -17,6 +17,7 @@
     outline: none;
     border-radius: 2px;
     padding: 0.5em 1em;
+    cursor: pointer;
 }
 
 .buttonLight {
@@ -27,4 +28,5 @@
 .buttonDark {
     background-color: #696969;
     border: 0.5px solid #FFFFFF;
+    color: white !important; /* To be removed after Demo Redmond, repaced with css variables */
 }

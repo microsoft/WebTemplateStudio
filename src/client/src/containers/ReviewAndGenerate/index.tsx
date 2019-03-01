@@ -1,17 +1,19 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
+import { ReactComponent as SaveSVG } from "../../assets/folder.svg";
 import Table from "../../components/Table";
 
-import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 import {
-  updateProjectNameAction,
-  updateOutputPathAction
+  updateOutputPathAction,
+  updateProjectNameAction
 } from "../../actions/updateProjectNameAndPath";
+import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 
 import styles from "./styles.module.css";
 
 import { RowType } from "../../types/rowType";
+import { IVSCode } from "../../reducers/vscodeApiReducer";
 
 interface IStateProps {
   projectTypeRows: RowType[];
@@ -20,6 +22,7 @@ interface IStateProps {
   pagesRows: RowType[];
   projectName: string;
   outputPath: string;
+  vscode: any;
 }
 
 interface IDispatchProps {
@@ -39,6 +42,19 @@ const ReviewAndGenerate = (props: Props) => {
     const element = e.currentTarget as HTMLInputElement;
     props.updateOutputPath(element.value);
   };
+  const handleSaveClick = () => {
+    if (process.env.NODE_ENV === "production") {
+      props.vscode.postMessage({
+        command: "getOutputPath"
+      });
+    } else {
+      // @ts-ignore produces a mock login response from VSCode in development
+      window.postMessage({
+        command: "getOutputPath",
+        outputPath: "/generic_output_path"
+      });
+    }
+  };
   return (
     <div className={styles.container}>
       <div className={styles.title}>Review and Generate Template</div>
@@ -53,11 +69,19 @@ const ReviewAndGenerate = (props: Props) => {
         </div>
         <div className={styles.inputContainer}>
           <div className={styles.inputTitle}>Output Path:</div>
-          <input
-            onChange={handleOutputPathChange}
-            defaultValue={props.outputPath}
-            className={styles.input}
-          />
+          <div className={styles.outputPathContainer}>
+            <input
+              onChange={handleOutputPathChange}
+              className={styles.pathInput}
+              value={props.outputPath}
+            />
+            <SaveSVG
+              className={styles.saveIcon}
+              onClick={() => {
+                handleSaveClick();
+              }}
+            />
+          </div>
         </div>
       </div>
       <Table title="1. Type of Application" rowItems={props.projectTypeRows} />
@@ -76,7 +100,8 @@ const mapStateToProps = (state: any): IStateProps => ({
   servicesRows: WizardSelectors.getServicesSelector(state),
   pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
   projectName: WizardSelectors.getProjectName(state),
-  outputPath: WizardSelectors.getOutputPath(state)
+  outputPath: WizardSelectors.getOutputPath(state),
+  vscode: state.vscode.vscodeObject
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({

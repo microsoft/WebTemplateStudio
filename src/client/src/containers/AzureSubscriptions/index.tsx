@@ -5,6 +5,7 @@ import Card from "../../components/Card";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import grid from "../../css/grid.module.css";
+import styles from "./styles.module.css";
 
 import * as AzureActions from "../../actions/logOutAzure";
 import * as ModalActions from "../../actions/modalActions";
@@ -44,25 +45,34 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       azureServices
     });
   }
+  public isCosmosContent = (optionTitle: string): boolean => {
+    return optionTitle.includes("Cosmos");
+  }
+  public isCosmosContentCreated = (optionTitle: string): boolean => {
+    return this.props.isCosmosResourceCreated && this.isCosmosContent(optionTitle);
+  }
   public resourceButtonContent = (optionTitle: string): string => {
-    if (this.props.isCosmosResourceCreated && optionTitle.includes("Cosmos")) {
+    if (this.isCosmosContentCreated(optionTitle)) {
       return "Edit Resource";
     }
-    return "Create Resource";
+    return "Add Resource";
   };
   public render() {
     const { isLoggedIn } = this.props;
     return (
       isLoggedIn && (
-        <div className={grid.row}>
+        <div className={styles.container}>
           {!!this.state.azureServices &&
             this.state.azureServices.map(option => (
-              <div key={option.title} className={grid.col6}>
+              <div
+                key={option.title}
+                className={styles.subscriptionCardContainer}
+              >
                 <Card
                   cardTitle={option.title}
                   cardBody={option.body}
                   buttonText={this.resourceButtonContent(option.title)}
-                  handleButtonClick={this.props.openCosmosDbModal}
+                  handleButtonClick={this.isCosmosContent(option.title) ? this.props.openCosmosDbModal : ()=>{}}
                   handleDetailsClick={() => {}}
                   svgUrl={option.svgUrl}
                 />

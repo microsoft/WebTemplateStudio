@@ -30,7 +30,8 @@ export default ({
         "&:hover": {
             background: "#DFDFDF",
             border: 0,
-            }
+            color: "black",
+        }
     }),
     menu: (base: any) => ({
         ...base,

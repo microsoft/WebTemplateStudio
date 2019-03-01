@@ -15,20 +15,22 @@ export class ReactPanel {
   private readonly _panel: vscode.WebviewPanel;
   private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
-  private static _controllerFunctionDelegate =
-     function (message: any) {
-      switch (message.command) {
-        case "alert":
-          vscode.window.showErrorMessage(message.text);
+  private static _controllerFunctionDelegate = function(message: any) {
+    switch (message.command) {
+      case "alert":
+        vscode.window.showErrorMessage(message.text);
 
-          break;
-      }
+        break;
     }
-  ;
+  };
 
   // private static _controller: Controller;
 
-  public static createOrShow(extensionPath: string, controllerFunctionDelegate : (message: any) => any = this._controllerFunctionDelegate) {
+  public static createOrShow(
+    extensionPath: string,
+    controllerFunctionDelegate: (message: any) => any = this
+      ._controllerFunctionDelegate
+  ) {
     const column = vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
       : undefined;
@@ -42,18 +44,22 @@ export class ReactPanel {
 
       ReactPanel.currentPanel = new ReactPanel(
         extensionPath,
-        column || vscode.ViewColumn.One, 
+        column || vscode.ViewColumn.One,
         controllerFunctionDelegate
       );
     }
     return ReactPanel.currentPanel;
   }
 
-  public postMessageWebview(object : Object){
+  public postMessageWebview(object: Object) {
     this._panel.webview.postMessage(object);
-  };
+  }
 
-  private constructor(extensionPath: string, column: vscode.ViewColumn, controllerFunctionDelegate : (message: any) => any) {
+  private constructor(
+    extensionPath: string,
+    column: vscode.ViewColumn,
+    controllerFunctionDelegate: (message: any) => any
+  ) {
     this._extensionPath = extensionPath;
 
     // Create and show a new webview panel
@@ -74,6 +80,7 @@ export class ReactPanel {
 
     // Set the webview's initial html content
     this._panel.webview.html = this._getHtmlForWebview();
+    this._panel.title = "Project Acorn";
 
     // Listen for when the panel is disposed
     // This happens when the user closes the panel or when the panel is closed programatically
@@ -132,12 +139,12 @@ export class ReactPanel {
 				<meta charset="utf-8">
 				<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 				<meta name="theme-color" content="#000000">
-				<title>React App</title>
+				<title>Web Template Studio</title>
 				<link rel="stylesheet" type="text/css" href="${styleUri}">
 				<meta img-src vscode-resource: https: ;style-src vscode-resource: 'unsafe-inline' http: https: data:;">
 				<base href="${vscode.Uri.file(path.join(this._extensionPath, "react")).with({
-      scheme: "vscode-resource"
-    })}/">
+          scheme: "vscode-resource"
+        })}/">
 			</head>
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>
