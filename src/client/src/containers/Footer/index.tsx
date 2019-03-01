@@ -11,10 +11,11 @@ import { ROUTES } from "../../utils/constants";
 
 import { IVSCode } from "../../reducers/vscodeApiReducer";
 import { rootSelector } from "../../selectors/generationSelector";
-
+import { getCosmosDbSelectionSelector } from "../../selectors/cosmosServiceSelector";
 interface IDispatchProps {
   vscode?: IVSCode;
   engine?: any;
+  cosmos?: any;
 }
 
 type Props = RouteComponentProps & IDispatchProps;
@@ -36,6 +37,12 @@ const pathsBack: any = {
 class Footer extends React.Component<Props> {
   public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    // @ts-ignore
+    this.props.vscode.postMessage({
+      command: "deploy-cosmos",
+      cosmosSelection : this.props.cosmos
+    });
+
     // @ts-ignore
     this.props.vscode.postMessage({
       command: "generate",
@@ -102,7 +109,8 @@ const mapStateToProps = (state: any): any => {
   const { vscode } = state;
   return {
     vscode: vscode.vscodeObject,
-    engine: rootSelector(state)
+    engine: rootSelector(state),
+    cosmos: getCosmosDbSelectionSelector(state)
   };
 };
 

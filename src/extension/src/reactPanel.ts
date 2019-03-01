@@ -58,7 +58,7 @@ export class ReactPanel {
   private constructor(
     extensionPath: string,
     column: vscode.ViewColumn,
-    controllerFunctionDelegate: (message: any) => any
+    controllerClassDelegate: (message: any) => any
   ) {
     this._extensionPath = extensionPath;
 
@@ -88,7 +88,7 @@ export class ReactPanel {
 
     // Handle messages from the webview from a function delegate
     this._panel.webview.onDidReceiveMessage(
-      controllerFunctionDelegate,
+      controllerClassDelegate,
       null,
       this._disposables
     );
