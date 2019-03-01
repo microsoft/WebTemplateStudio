@@ -95,6 +95,13 @@ export abstract class Controller {
             resourceGroups: subscriptionDatapackage.resourceGroups,
             locations: subscriptionDatapackage.locations
           });
+        }).catch((err: Error) => {
+          Controller.reactPanelContext.postMessageWebview({
+            command: "subscriptionData",
+            isAvailable: false,
+            message: err.message,
+            errorType: err.name
+          });
         });
         break;
       case "name-functions":
