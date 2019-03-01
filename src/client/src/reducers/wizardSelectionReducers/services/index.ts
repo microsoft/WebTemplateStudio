@@ -8,7 +8,11 @@ import * as Actions from "../../../actions/types";
 }
 */
 
-const services = (state: any = {isCosmosResourceAccountNameAvailable: false}, action: any) => {
+const initialState = {
+  isCosmosResourceAccountNameAvailable: false
+}
+
+const services = (state: any = initialState, action: any) => {
   switch (action.type) {
     case Actions.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
       const newState = {
@@ -23,7 +27,7 @@ const services = (state: any = {isCosmosResourceAccountNameAvailable: false}, ac
       }
       return newAvailabilityState;
     case Actions.LOG_OUT_OF_AZURE:
-      return {};
+      return initialState;
     default:
       return state;
   }

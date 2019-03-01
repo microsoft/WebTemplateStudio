@@ -31,19 +31,34 @@
 }
 
 .icon {
-    height: 12px;
     cursor: pointer;
+    height: 12px;
 }
 
-.input {
+.validationIcon {
+    height: 15px;
+    margin-right: 0.2em;
+}
+
+.inputContainer {
+    display: flex;
+    align-items: center;
     width: 100%;
     outline: none;
-    font-size: 1em;
     padding: 0.5em;
     box-sizing: border-box;
     background-color: #696969;
     border: 0.5px solid rgba(0, 0, 0, 0.5);
     border-radius: 2px;
+}
+
+.input {
+    text-decoration: none;
+    border: none;
+    background-color: #696969;
+    font-size: 1em;
+    width: 100%;
+    margin-right: 10px;
 }
 
 .createNew,

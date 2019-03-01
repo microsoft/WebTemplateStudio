@@ -178,22 +178,28 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 {/* Using a baseline of 1 for idx because !!0 === false */}
               </div>
             )}
-            {this.showServices() && !!this.props.services && (
+            {this.showServices() && Object.keys(this.props.services).length > 1 && (
               <div className={styles.sidebarItem}>
                 <div className={styles.dropdownTitle}>Services</div>
-                {Object.keys(this.props.services).map(serviceName => (
-                  <DraggableSidebarItem
-                    text={this.props.services[serviceName].api}
-                    closeSvgUrl={`${
-                      process.env.REACT_APP_RELATIVE_PATH
-                    }${cancel}`}
-                    itemTitle={
-                      serviceName === "cosmosOptions"
-                        ? "CosmosDB"
-                        : "Azure Functions"
-                    }
-                  />
-                ))}
+                {Object.keys(this.props.services).map(serviceName => {
+                  // FIXME: Storing the state of the cosmos account name availability is not practicial in "services"
+                  // Better to create another object that can store these booleans for name validation.
+                  if (serviceName !== "isCosmosResourceAccountNameAvailable") {
+                    return (
+                      <DraggableSidebarItem
+                        text={this.props.services[serviceName].api}
+                        closeSvgUrl={`${
+                          process.env.REACT_APP_RELATIVE_PATH
+                        }${cancel}`}
+                        itemTitle={
+                          serviceName === "cosmosOptions"
+                            ? "CosmosDB"
+                            : "Azure Functions"
+                        }
+                      />
+                    )
+                  }
+                })}
                 {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
               </div>
             )}
