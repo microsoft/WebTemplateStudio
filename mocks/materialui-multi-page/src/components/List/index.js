@@ -28,7 +28,7 @@ class index extends Component {
     };
 
     //Only include if list is selected and cosmos db is not selected
-    this._id = 3;
+    // this._id = 3;
 
     this.endpoint = "/api/listItems";
     this.handleWarningClose = this.handleWarningClose.bind(this);
@@ -63,8 +63,8 @@ class index extends Component {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        text: this.state.multilineTextField,
-        _id: this._id // Only include if list is selected and cosmos db is not selected
+        text: this.state.multilineTextField
+        // _id: this._id // Only include if list is selected and cosmos db is not selected
       })
     })
       .then(response => {
@@ -87,7 +87,7 @@ class index extends Component {
       );
 
     // Only include if list is selected and cosmos db is not selected
-    this._id++;
+    // this._id++;
   }
 
   handleChange(event, name) {
