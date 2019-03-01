@@ -197,15 +197,17 @@ export abstract class Controller {
          *       }
          *   }
          */
-        Controller.deployCosmosResource(message.selections)
+        Controller.deployCosmosResource(message.cosmosSelection)
           .then((dbObject: DatabaseObject) => {
             Controller.reactPanelContext.postMessageWebview({
               command: "deploy-cosmos",
               databaseObject: dbObject,
               message: ""
             });
+            vscode.window.showInformationMessage(message.cosmosSelection.accountName + " has been deployed!");
           })
           .catch((err: Error) => {
+            vscode.window.showErrorMessage(err.message);
             Controller.reactPanelContext.postMessageWebview({
               command: "deploy-cosmos",
               databaseObject: null,
