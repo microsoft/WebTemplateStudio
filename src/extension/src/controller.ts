@@ -89,7 +89,7 @@ export abstract class Controller {
           });
         break;
       case "subscriptionData":
-        Controller.getSubscriptionData(message.subscriptionLabel).then(subscriptionDatapackage => {
+        Controller.getSubscriptionData(message.subscription).then(subscriptionDatapackage => {
           Controller.reactPanelContext.postMessageWebview({
             command: "subscriptionData",
             resourceGroups: subscriptionDatapackage.resourceGroups,
@@ -132,6 +132,7 @@ export abstract class Controller {
             });
           })
           .catch((err: Error) => {
+            vscode.window.showErrorMessage(err.message);
             Controller.reactPanelContext.postMessageWebview({
               command: "name-cosmos",
               isAvailable: false,
