@@ -65,11 +65,14 @@
     margin-right: 10px;
 }
 
+<<<<<<< HEAD
 .borderRed {
     border: 1px solid #FF6666;
     padding: 8.5px;
 }
 
+=======
+>>>>>>> 2bbb282... restrain form input to lowercase names with no spaces
 input:focus {
     outline: none;
 }
