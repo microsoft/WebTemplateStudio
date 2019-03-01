@@ -22,7 +22,6 @@ import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
 
 export abstract class Controller {
-  
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static AzureFunctionProvider = new FunctionProvider();
@@ -74,12 +73,14 @@ export abstract class Controller {
         break;
 
       case "subscriptions":
-        Controller.getSubscriptions().then(subs => {
+        Controller.getSubscriptions()
+          .then(subs => {
             Controller.reactPanelContext.postMessageWebview({
               command: "subscriptions",
               subscriptions: subs
-          });
-        }).catch((err: Error) => {
+            });
+          })
+          .catch((err: Error) => {
             Controller.reactPanelContext.postMessageWebview({
               command: "subscriptions",
               subscriptions: null,
@@ -89,20 +90,22 @@ export abstract class Controller {
           });
         break;
       case "subscriptionData":
-        Controller.getSubscriptionData(message.subscription).then(subscriptionDatapackage => {
-          Controller.reactPanelContext.postMessageWebview({
-            command: "subscriptionData",
-            resourceGroups: subscriptionDatapackage.resourceGroups,
-            locations: subscriptionDatapackage.locations
+        Controller.getSubscriptionData(message.subscription)
+          .then(subscriptionDatapackage => {
+            Controller.reactPanelContext.postMessageWebview({
+              command: "subscriptionData",
+              resourceGroups: subscriptionDatapackage.resourceGroups,
+              locations: subscriptionDatapackage.locations
+            });
+          })
+          .catch((err: Error) => {
+            Controller.reactPanelContext.postMessageWebview({
+              command: "subscriptionData",
+              isAvailable: false,
+              message: err.message,
+              errorType: err.name
+            });
           });
-        }).catch((err: Error) => {
-          Controller.reactPanelContext.postMessageWebview({
-            command: "subscriptionData",
-            isAvailable: false,
-            message: err.message,
-            errorType: err.name
-          });
-        });
         break;
       case "name-functions":
         Controller.validateFunctionAppName(
@@ -139,7 +142,6 @@ export abstract class Controller {
             });
           })
           .catch((err: Error) => {
-            vscode.window.showErrorMessage(err.message);
             Controller.reactPanelContext.postMessageWebview({
               command: "name-cosmos",
               isAvailable: false,
@@ -204,7 +206,9 @@ export abstract class Controller {
               databaseObject: dbObject,
               message: ""
             });
-            vscode.window.showInformationMessage(message.cosmosSelection.accountName + " has been deployed!");
+            vscode.window.showInformationMessage(
+              message.cosmosSelection.accountName + " has been deployed!"
+            );
           })
           .catch((err: Error) => {
             vscode.window.showErrorMessage(err.message);
@@ -274,43 +278,52 @@ export abstract class Controller {
    * */
   public static async getSubscriptionData(subscriptionLabel: string) {
     let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-    let resourceGroupItems = this.getResourceGroups(subscriptionItem).then(resourceGroups =>{
+    let resourceGroupItems = this.getResourceGroups(subscriptionItem).then(
+      resourceGroups => {
+        // Format
+        let formatResourceGroupList = [];
+        formatResourceGroupList.push(
+          ...resourceGroups.map(resourceGroup => {
+            return {
+              label: resourceGroup.name,
+              value: resourceGroup.name
+            };
+          })
+        );
+        return formatResourceGroupList;
+      }
+    );
+    let locationItems = this.getLocations(subscriptionItem).then(locations => {
       // Format
-      let formatResourceGroupList = []
-      formatResourceGroupList.push(...resourceGroups.map(resourceGroup => {
-        return {
-            label: resourceGroup.name,
-            value: resourceGroup.name
-        };
-      }));
-      return formatResourceGroupList;
-    });
-    let locationItems = this.getLocations(subscriptionItem).then(locations =>{
-      // Format
-      let formatLocationList = []
-      formatLocationList.push(...locations.map(location => {
-        return {
+      let formatLocationList = [];
+      formatLocationList.push(
+        ...locations.map(location => {
+          return {
             label: location.locationDisplayName,
             value: location.locationDisplayName
-        };
-      }));
+          };
+        })
+      );
       return formatLocationList;
     });
 
     // Parallel setup
-    return {resourceGroups: await resourceGroupItems, locations: await locationItems}
+    return {
+      resourceGroups: await resourceGroupItems,
+      locations: await locationItems
+    };
   }
-   /**
+  /**
    * @param SubscriptionItem subscription item interface implementation
-   * @returns a list of Resource Group Items 
+   * @returns a list of Resource Group Items
    *
    * */
   private static async getResourceGroups(subscriptionItem: SubscriptionItem) {
     return AzureAuth.getResourceGroupItems(subscriptionItem);
   }
-   /**
+  /**
    * @param SubscriptionItem subscription item interface implementation
-   * @returns a list of Location Items 
+   * @returns a list of Location Items
    *
    * */
   private static async getLocations(subscriptionItem: SubscriptionItem) {
