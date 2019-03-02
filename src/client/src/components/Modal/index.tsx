@@ -55,7 +55,7 @@ const asModal = <P extends object>(
     render() {
       return (
         <Modal
-          isOpen={true}
+          isOpen={this.props.isModalOpen}
           onRequestClose={this.props.closeModal}
           contentLabel="Modal Display"
           style={customStyles}

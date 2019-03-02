@@ -184,7 +184,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 {Object.keys(this.props.services).map(serviceName => {
                   // FIXME: Storing the state of the cosmos account name availability is not practicial in "services"
                   // Better to create another object that can store these booleans for name validation.
-                  if (serviceName !== "isCosmosResourceAccountNameAvailable") {
+                  if (serviceName !== "isCosmosResourceAccountNameAvailable" && serviceName !== "message") {
                     return (
                       <DraggableSidebarItem
                         key={serviceName}

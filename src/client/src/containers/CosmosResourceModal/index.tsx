@@ -171,8 +171,8 @@ const CosmosResourceModal = (props: Props) => {
         />
       </div>
       <div className={classnames({
-        [styles.selectionInputContainer]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable,
-        [styles.selectionContainer]: props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable
+        [styles.selectionInputContainer]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0,
+        [styles.selectionContainer]: (props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable || cosmosFormData.accountName.length === 0)
         })}>
         <div className={styles.selectionHeaderContainer}>
           <div>Account Name</div>
@@ -184,12 +184,12 @@ const CosmosResourceModal = (props: Props) => {
           </a>
         </div>
         <div className={classnames(styles.inputContainer, {
-            [styles.borderRed]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable
+            [styles.borderRed]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0
           })}>
           <input className={styles.input} onChange={handleInput} value={cosmosFormData.accountName} placeholder="Account Name" />
           {props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && <GreenCheck className={styles.validationIcon} />}
         </div>
-        {!props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && <div style={{ color: "#FF6666", fontSize: "12px", marginBototm: "-18px"}}>{props.cosmosAccountInformation.message}</div>}
+        {!props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0 && <div style={{ color: "#FF6666", fontSize: "12px", marginBototm: "-18px"}}>{props.cosmosAccountInformation.message}</div>}
       </div>
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
