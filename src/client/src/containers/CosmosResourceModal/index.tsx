@@ -69,7 +69,7 @@ const CosmosResourceModal = (props: Props) => {
       ],
       subscription: props.subscriptions,
       resourceGroup: props.subscriptionData.resourceGroups,
-      location: props.subscriptionData.locations
+      location: props.subscriptionData.locations ? props.subscriptionData.locations.reverse().slice(0,2) : props.subscriptionData.locations
     });
   }, [props.subscriptionData]);
 
