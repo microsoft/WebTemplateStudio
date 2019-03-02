@@ -52,6 +52,9 @@ const CosmosResourceModal = (props: Props) => {
   /**
    * Second parameter of useEffect is [] which tells React to
    * run this effect when mounting the component.
+   * 
+   * FIXME: Currently reverse and slice locations array to make it
+   * easier for demoing purposes. Remove later.
    */
   React.useEffect(() => {
     setData({
