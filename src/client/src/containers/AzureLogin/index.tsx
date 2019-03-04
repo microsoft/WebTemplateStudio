@@ -46,7 +46,6 @@ class AzureLogin extends React.Component<Props> {
                     {!isLoggedIn &&
                         <LoginCard
                             svgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${azure}`}
-
                             handleClick={() => {
                                 this.handleClick()
                             }}
