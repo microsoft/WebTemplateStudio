@@ -200,13 +200,13 @@ export abstract class Controller {
                 value: subscriptionItem.label
               };
             });
-            this.handleValidMessage(ExtensionCommand.Login, {
+            Controller.handleValidMessage(ExtensionCommand.Login, {
               email: email,
               subscriptions: subs
             });
           })
           .catch((err: Error) => {
-            this.handleErrorMessage(ExtensionCommand.Login, err);
+            Controller.handleErrorMessage(ExtensionCommand.Login, err);
           });
       })
       .catch(err => {
@@ -217,37 +217,37 @@ export abstract class Controller {
   public static sendSubscriptionsToClient(message: any) {
     Controller.getSubscriptions()
       .then(subs => {
-        this.handleValidMessage(ExtensionCommand.Subscriptions, {
+        Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
           subscriptions: subs
         });
       })
       .catch((err: Error) => {
-        this.handleErrorMessage(ExtensionCommand.Subscriptions, err);
+        Controller.handleErrorMessage(ExtensionCommand.Subscriptions, err);
       });
   }
 
   public static sendSubscriptionDataToClient(message: any) {
     Controller.getSubscriptionData(message.subscription)
       .then(subscriptionDatapackage => {
-        this.handleValidMessage(ExtensionCommand.SubscriptionData, {
+        Controller.handleValidMessage(ExtensionCommand.SubscriptionData, {
           resourceGroups: subscriptionDatapackage.resourceGroups,
           locations: subscriptionDatapackage.locations
         });
       })
       .catch((err: Error) => {
-        this.handleErrorMessage(ExtensionCommand.SubscriptionData, err);
+        Controller.handleErrorMessage(ExtensionCommand.SubscriptionData, err);
       });
   }
 
   public static sendFunctionNameValidationStatusToClient(message: any) {
     Controller.validateFunctionAppName(message.appName, message.subscription)
       .then(() => {
-        this.handleValidMessage(ExtensionCommand.NameFunctions, {
+        Controller.handleValidMessage(ExtensionCommand.NameFunctions, {
           isAvailable: true
         });
       })
       .catch((err: Error) => {
-        this.handleErrorMessage(ExtensionCommand.NameFunctions, err, {
+        Controller.handleErrorMessage(ExtensionCommand.NameFunctions, err, {
           isAvailable: false
         });
       });
@@ -256,12 +256,12 @@ export abstract class Controller {
   public static sendCosmosNameValidationStatusToClient(message: any) {
     Controller.validateCosmosAccountName(message.appName, message.subscription)
       .then(() => {
-        this.handleValidMessage(ExtensionCommand.NameCosmos, {
+        Controller.handleValidMessage(ExtensionCommand.NameCosmos, {
           isAvailable: true
         });
       })
       .catch((err: Error) => {
-        this.handleErrorMessage(ExtensionCommand.NameCosmos, err, {
+        Controller.handleErrorMessage(ExtensionCommand.NameCosmos, err, {
           isAvailable: false
         });
       });
@@ -285,12 +285,12 @@ export abstract class Controller {
      */
     Controller.deployFunctionApp(message.selections, message.appPath)
       .then(() => {
-        this.handleValidMessage(ExtensionCommand.DeployFunctions, {
+        Controller.handleValidMessage(ExtensionCommand.DeployFunctions, {
           succeeded: true
         });
       })
       .catch((err: Error) => {
-        this.handleErrorMessage(ExtensionCommand.DeployFunctions, err, {
+        Controller.handleErrorMessage(ExtensionCommand.DeployFunctions, err, {
           succeeded: false
         });
       });
@@ -312,7 +312,7 @@ export abstract class Controller {
      */
     Controller.deployCosmosResource(message.cosmosSelection)
       .then((dbObject: DatabaseObject) => {
-        this.handleValidMessage(ExtensionCommand.DeployCosmos, {
+        Controller.handleValidMessage(ExtensionCommand.DeployCosmos, {
           databaseObject: dbObject
         });
 
@@ -322,7 +322,7 @@ export abstract class Controller {
       })
       .catch((err: Error) => {
         vscode.window.showErrorMessage(err.message);
-        this.handleErrorMessage(ExtensionCommand.DeployCosmos, err);
+        Controller.handleErrorMessage(ExtensionCommand.DeployCosmos, err);
       });
   }
 
@@ -345,7 +345,7 @@ export abstract class Controller {
           path = res[0].path;
         }
 
-        this.handleValidMessage(ExtensionCommand.GetOutputPath, {
+        Controller.handleValidMessage(ExtensionCommand.GetOutputPath, {
           outputPath: path
         });
       });
