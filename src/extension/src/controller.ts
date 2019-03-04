@@ -21,233 +21,64 @@ import {
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
 
+enum ExtensionCommand {
+  Login = "login",
+  Subscriptions = "subscriptions",
+  SubscriptionData = "subscriptionData",
+  NameFunctions = "name-functions",
+  NameCosmos = "name-cosmos",
+  DeployFunctions = "deploy-functions",
+  DeployCosmos = "deploy-cosmos",
+  Generate = "generate",
+  GetOutputPath = "getOutputPath"
+}
+
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static reactPanelContext: ReactPanel;
+  private static commandMap: Map<
+    ExtensionCommand,
+    (message: any) => void
+  > = new Map([
+    [ExtensionCommand.Login, Controller.performLogin],
+    [ExtensionCommand.Subscriptions, Controller.sendSubscriptionsToClient],
+    [
+      ExtensionCommand.SubscriptionData,
+      Controller.sendSubscriptionDataToClient
+    ],
+    [
+      ExtensionCommand.NameFunctions,
+      Controller.sendFunctionNameValidationStatusToClient
+    ],
+    [
+      ExtensionCommand.NameCosmos,
+      Controller.sendCosmosNameValidationStatusToClient
+    ],
+    [
+      ExtensionCommand.DeployFunctions,
+      Controller.attemptFunctionDeploymentAndSendStatusToClient
+    ],
+    [
+      ExtensionCommand.DeployCosmos,
+      Controller.attemptCosmosDeploymentAndSendStatusToClient
+    ],
+    [
+      ExtensionCommand.Generate,
+      Controller.sendTemplateGenInfoToApiAndSendStatusToClient
+    ],
+    [ExtensionCommand.GetOutputPath, Controller.sendOutputPathSelectionToClient]
+  ]);
 
   private static routingMessageReceieverDelegate = function(message: any) {
-    switch (message.command) {
-      // use information and alert to throw vscode info/alert messages through the wizards
-      case "information":
-        vscode.window.showInformationMessage(message.text);
-        break;
+    let command = Controller.commandMap.get(message.command);
 
-      case "alert":
-        vscode.window.showErrorMessage(message.text);
-        break;
-      case "login":
-        AzureAuth.login()
-          .then(res => {
-            const email = AzureAuth.getEmail();
-            AzureAuth.getSubscriptions()
-              .then(items => {
-                const subs = items.map(subscriptionItem => {
-                  return {
-                    label: subscriptionItem.label,
-                    value: subscriptionItem.label
-                  };
-                });
-                Controller.reactPanelContext.postMessageWebview({
-                  command: "login",
-                  email: email,
-                  subscriptions: subs,
-                  message: ""
-                });
-              })
-              .catch((err: Error) => {
-                Controller.reactPanelContext.postMessageWebview({
-                  command: "login",
-                  email: "",
-                  subscriptions: null,
-                  message: err.message,
-                  errorType: err.name
-                });
-              });
-          })
-          .catch(err => {
-            vscode.window.showErrorMessage(err);
-          });
-        break;
-
-      case "subscriptions":
-        Controller.getSubscriptions()
-          .then(subs => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "subscriptions",
-              subscriptions: subs
-            });
-          })
-          .catch((err: Error) => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "subscriptions",
-              subscriptions: null,
-              message: err.message,
-              errorType: err.name
-            });
-          });
-        break;
-      case "subscriptionData":
-        Controller.getSubscriptionData(message.subscription)
-          .then(subscriptionDatapackage => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "subscriptionData",
-              resourceGroups: subscriptionDatapackage.resourceGroups,
-              locations: subscriptionDatapackage.locations
-            });
-          })
-          .catch((err: Error) => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "subscriptionData",
-              isAvailable: false,
-              message: err.message,
-              errorType: err.name
-            });
-          });
-        break;
-      case "name-functions":
-        Controller.validateFunctionAppName(
-          message.appName,
-          message.subscription
-        )
-          .then(() => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "name-functions",
-              isAvailable: true,
-              message: ""
-            });
-          })
-          .catch((err: Error) => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "name-functions",
-              isAvailable: false,
-              message: err.message,
-              errorType: err.name
-            });
-          });
-        break;
-
-      case "name-cosmos":
-        Controller.validateCosmosAccountName(
-          message.appName,
-          message.subscription
-        )
-          .then(() => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "name-cosmos",
-              isAvailable: true,
-              message: ""
-            });
-          })
-          .catch((err: Error) => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "name-cosmos",
-              isAvailable: false,
-              message: err.message,
-              errorType: err.name
-            });
-          });
-        break;
-
-      case "deploy-functions":
-        /*
-         * example:
-         *   {
-         *       command: 'deploy-functions'
-         *       appPath: 'C:\Users\t-dadua\Documents'
-         *       selections: {
-         *           appName: "YOUR_FUNCTION_APP_NAME",
-         *           subscription: "YOUR_SUBSCRIPTION_LABEL",
-         *           location: "West US",
-         *           runtime: "node",
-         *           resourceGroup: "YOUR_RESOURCE_GROUP",
-         *           functionNames: ["function1", "function2", "function3"]
-         *       }
-         *   }
-         */
-        Controller.deployFunctionApp(message.selections, message.appPath)
-          .then(() => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "deploy-functions",
-              succeeded: true,
-              message: ""
-            });
-          })
-          .catch((err: Error) => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "deploy-functions",
-              succeeded: false,
-              message: err.message,
-              errorType: err.name
-            });
-          });
-        break;
-
-      case "deploy-cosmos":
-        /*
-         * example:
-         *   {
-         *       command: 'deploy-cosmos'
-         *       selections: {
-         *           api: "MongoDB",
-         *           accountName: "YOUR_ACCOUNT_NAME",
-         *           location: "West US",
-         *           subscription: "YOUR_SUBSCRIPTION_LABEL",
-         *           resourceGroup: "YOUR_RESOURCE_GROUP"
-         *       }
-         *   }
-         */
-        Controller.deployCosmosResource(message.cosmosSelection)
-          .then((dbObject: DatabaseObject) => {
-            Controller.reactPanelContext.postMessageWebview({
-              command: "deploy-cosmos",
-              databaseObject: dbObject,
-              message: ""
-            });
-            vscode.window.showInformationMessage(
-              message.cosmosSelection.accountName + " has been deployed!"
-            );
-          })
-          .catch((err: Error) => {
-            vscode.window.showErrorMessage(err.message);
-            Controller.reactPanelContext.postMessageWebview({
-              command: "deploy-cosmos",
-              databaseObject: null,
-              message: err.message,
-              errorType: err.name
-            });
-          });
-        break;
-
-      case "generate":
-        vscode.window.showInformationMessage(message.text);
-        // FIXME: After gen is done, we need to do some feedback.
-        ApiModule.SendGeneration("5000", message.payload);
-        break;
-
-      case "getOutputPath":
-        vscode.window
-          .showOpenDialog({
-            canSelectFiles: false,
-            canSelectFolders: true,
-            canSelectMany: false
-          })
-          .then(res => {
-            if (res !== undefined) {
-              Controller.reactPanelContext.postMessageWebview({
-                command: "getOutputPath",
-                outputPath: res[0].path
-              });
-            } else {
-              Controller.reactPanelContext.postMessageWebview({
-                command: "getOutputPath",
-                outputPath: undefined
-              });
-            }
-          });
-        break;
+    if (command) {
+      command(message);
+    } else {
+      vscode.window.showErrorMessage("Invalid command used");
     }
   };
 
@@ -355,6 +186,190 @@ export abstract class Controller {
       .catch(err => {
         throw err;
       });
+  }
+
+  public static performLogin(message: any) {
+    AzureAuth.login()
+      .then(res => {
+        const email = AzureAuth.getEmail();
+        AzureAuth.getSubscriptions()
+          .then(items => {
+            const subs = items.map(subscriptionItem => {
+              return {
+                label: subscriptionItem.label,
+                value: subscriptionItem.label
+              };
+            });
+            this.handleValidMessage(ExtensionCommand.Login, {
+              email: email,
+              subscriptions: subs
+            });
+          })
+          .catch((err: Error) => {
+            this.handleErrorMessage(ExtensionCommand.Login, err);
+          });
+      })
+      .catch(err => {
+        vscode.window.showErrorMessage(err);
+      });
+  }
+
+  public static sendSubscriptionsToClient(message: any) {
+    Controller.getSubscriptions()
+      .then(subs => {
+        this.handleValidMessage(ExtensionCommand.Subscriptions, {
+          subscriptions: subs
+        });
+      })
+      .catch((err: Error) => {
+        this.handleErrorMessage(ExtensionCommand.Subscriptions, err);
+      });
+  }
+
+  public static sendSubscriptionDataToClient(message: any) {
+    Controller.getSubscriptionData(message.subscription)
+      .then(subscriptionDatapackage => {
+        this.handleValidMessage(ExtensionCommand.SubscriptionData, {
+          resourceGroups: subscriptionDatapackage.resourceGroups,
+          locations: subscriptionDatapackage.locations
+        });
+      })
+      .catch((err: Error) => {
+        this.handleErrorMessage(ExtensionCommand.SubscriptionData, err);
+      });
+  }
+
+  public static sendFunctionNameValidationStatusToClient(message: any) {
+    Controller.validateFunctionAppName(message.appName, message.subscription)
+      .then(() => {
+        this.handleValidMessage(ExtensionCommand.NameFunctions, {
+          isAvailable: true
+        });
+      })
+      .catch((err: Error) => {
+        this.handleErrorMessage(ExtensionCommand.NameFunctions, err, {
+          isAvailable: false
+        });
+      });
+  }
+
+  public static sendCosmosNameValidationStatusToClient(message: any) {
+    Controller.validateCosmosAccountName(message.appName, message.subscription)
+      .then(() => {
+        this.handleValidMessage(ExtensionCommand.NameCosmos, {
+          isAvailable: true
+        });
+      })
+      .catch((err: Error) => {
+        this.handleErrorMessage(ExtensionCommand.NameCosmos, err, {
+          isAvailable: false
+        });
+      });
+  }
+
+  public static attemptFunctionDeploymentAndSendStatusToClient(message: any) {
+    /*
+     * example:
+     *   {
+     *       command: 'deploy-functions'
+     *       appPath: 'C:\Users\t-dadua\Documents'
+     *       selections: {
+     *           appName: "YOUR_FUNCTION_APP_NAME",
+     *           subscription: "YOUR_SUBSCRIPTION_LABEL",
+     *           location: "West US",
+     *           runtime: "node",
+     *           resourceGroup: "YOUR_RESOURCE_GROUP",
+     *           functionNames: ["function1", "function2", "function3"]
+     *       }
+     *   }
+     */
+    Controller.deployFunctionApp(message.selections, message.appPath)
+      .then(() => {
+        this.handleValidMessage(ExtensionCommand.DeployFunctions, {
+          succeeded: true
+        });
+      })
+      .catch((err: Error) => {
+        this.handleErrorMessage(ExtensionCommand.DeployFunctions, err, {
+          succeeded: false
+        });
+      });
+  }
+
+  public static attemptCosmosDeploymentAndSendStatusToClient(message: any) {
+    /*
+     * example:
+     *   {
+     *       command: 'deploy-cosmos'
+     *       selections: {
+     *           api: "MongoDB",
+     *           accountName: "YOUR_ACCOUNT_NAME",
+     *           location: "West US",
+     *           subscription: "YOUR_SUBSCRIPTION_LABEL",
+     *           resourceGroup: "YOUR_RESOURCE_GROUP"
+     *       }
+     *   }
+     */
+    Controller.deployCosmosResource(message.cosmosSelection)
+      .then((dbObject: DatabaseObject) => {
+        this.handleValidMessage(ExtensionCommand.DeployCosmos, {
+          databaseObject: dbObject
+        });
+
+        vscode.window.showInformationMessage(
+          message.cosmosSelection.accountName + " has been deployed!"
+        );
+      })
+      .catch((err: Error) => {
+        vscode.window.showErrorMessage(err.message);
+        this.handleErrorMessage(ExtensionCommand.DeployCosmos, err);
+      });
+  }
+
+  public static sendTemplateGenInfoToApiAndSendStatusToClient(message: any) {
+    // FIXME: After gen is done, we need to do some feedback.
+    ApiModule.SendGeneration("5000", message.payload);
+  }
+
+  public static sendOutputPathSelectionToClient(message: any) {
+    vscode.window
+      .showOpenDialog({
+        canSelectFiles: false,
+        canSelectFolders: true,
+        canSelectMany: false
+      })
+      .then(res => {
+        let path = undefined;
+
+        if (res !== undefined) {
+          path = res[0].path;
+        }
+
+        this.handleValidMessage(ExtensionCommand.GetOutputPath, {
+          outputPath: path
+        });
+      });
+  }
+
+  public static handleValidMessage(command: ExtensionCommand, payload?: any) {
+    Controller.reactPanelContext.postMessageWebview({
+      command: command,
+      payload: payload,
+      message: ""
+    });
+  }
+
+  public static handleErrorMessage(
+    command: ExtensionCommand,
+    error: Error,
+    payload?: any
+  ) {
+    Controller.reactPanelContext.postMessageWebview({
+      command: command,
+      payload: payload,
+      message: error.message,
+      errorType: error.name
+    });
   }
 
   public static async validateCosmosAccountName(
@@ -467,10 +482,8 @@ export abstract class Controller {
   private static async updateCosmosDBSubscriptionItemCache(
     subscriptionLabel: string
   ): Promise<void> {
-    if (this.usersCosmosDBSubscriptionItemCache === undefined) {
-      let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-      this.usersCosmosDBSubscriptionItemCache = subscriptionItem;
-    } else if (
+    if (
+      this.usersCosmosDBSubscriptionItemCache === undefined ||
       subscriptionLabel !== this.usersCosmosDBSubscriptionItemCache.label
     ) {
       let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
@@ -481,10 +494,8 @@ export abstract class Controller {
   private static async updateFunctionSubscriptionItemCache(
     subscriptionLabel: string
   ): Promise<void> {
-    if (this.usersFunctionSubscriptionItemCache === undefined) {
-      let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-      this.usersFunctionSubscriptionItemCache = subscriptionItem;
-    } else if (
+    if (
+      this.usersFunctionSubscriptionItemCache === undefined ||
       subscriptionLabel !== this.usersFunctionSubscriptionItemCache.label
     ) {
       let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);

@@ -41,7 +41,7 @@ export abstract class AzureAuth {
     }
   }
 
-  public static async login(): Promise<Boolean> {
+  public static async login(): Promise<boolean> {
     this.initialize();
     if (this.api.status !== "LoggedIn") {
       await commands.executeCommand("azure-account.login");

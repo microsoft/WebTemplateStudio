@@ -47,7 +47,7 @@ class App extends React.Component<Props> {
     logIntoAzure: () => {},
     saveSubscriptionData: () => {},
     updateOutputPath: () => {},
-    setCosmosResourceAccountNameAvailability: () => {},
+    setCosmosResourceAccountNameAvailability: () => {}
   };
 
   public componentDidMount() {
@@ -60,16 +60,22 @@ class App extends React.Component<Props> {
       const message = event.data;
       switch (message.command) {
         case "getOutputPath":
-          if (message.outputPath != null) {
+          if (message.payload != null && message.payload.outputPath != null) {
             this.props.updateOutputPath(
-              message.outputPath.substring(1, message.outputPath.length)
+              message.payload.outputPath.substring(
+                1,
+                message.payload.outputPath.length
+              )
             );
           }
           return;
         case "login":
           // email will be null or undefined if login didn't work correctly
-          if (message.email != null) {
-            this.props.logIntoAzure(message.email, message.subscriptions);
+          if (message.payload != null) {
+            this.props.logIntoAzure(
+              message.payload.email,
+              message.payload.subscriptions
+            );
           }
           return;
         case "subscriptionData":
@@ -77,14 +83,20 @@ class App extends React.Component<Props> {
 
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
-          this.props.saveSubscriptionData({ locations: message.locations, resourceGroups: message.resourceGroups });
+          if (message.payload != null) {
+            this.props.saveSubscriptionData({
+              locations: message.payload.locations,
+              resourceGroups: message.payload.resourceGroups
+            });
+          }
+
           return;
 
         case "name-cosmos":
           // Receive input validation
           // and update redux (boolean, string)
           this.props.setCosmosResourceAccountNameAvailability({
-            isAvailable: message.isAvailable,
+            isAvailable: message.payload.isAvailable,
             message: message.message
           });
           return;
@@ -139,14 +151,14 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
     dispatch(logIntoAzureAction({ email, subscriptions }));
   },
   saveSubscriptionData: (subscriptionData: any) => {
-    dispatch(getSubscriptionData(subscriptionData))
+    dispatch(getSubscriptionData(subscriptionData));
   },
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
   },
   setCosmosResourceAccountNameAvailability: (isAvailable: boolean) => {
     dispatch(setAccountAvailability(isAvailable));
-  },
+  }
 });
 
 export default connect(
