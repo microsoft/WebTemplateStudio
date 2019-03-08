@@ -1,4 +1,5 @@
 {
+  "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
   "rules": {
     "no-string-throw": true,
     "no-unused-expression": true,
@@ -8,5 +9,6 @@
     "semicolon": [true, "always"],
     "triple-equals": true
   },
-  "defaultSeverity": "warning"
+  "defaultSeverity": "warning",
+  "extends": "tslint-microsoft-contrib/recommended"
 }
