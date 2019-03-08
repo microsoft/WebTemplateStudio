@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { CONSTANTS, ExtensionCommand } from './constants';
 import {
   AzureAuth,
   SubscriptionItem,
@@ -21,17 +22,7 @@ import {
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
 
-enum ExtensionCommand {
-  Login = "login",
-  Subscriptions = "subscriptions",
-  SubscriptionData = "subscriptionData",
-  NameFunctions = "name-functions",
-  NameCosmos = "name-cosmos",
-  DeployFunctions = "deploy-functions",
-  DeployCosmos = "deploy-cosmos",
-  Generate = "generate",
-  GetOutputPath = "getOutputPath"
-}
+
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -72,13 +63,13 @@ export abstract class Controller {
     [ExtensionCommand.GetOutputPath, Controller.sendOutputPathSelectionToClient]
   ]);
 
-  private static routingMessageReceieverDelegate = function(message: any) {
+  private static routingMessageReceieverDelegate = function (message: any) {
     let command = Controller.commandMap.get(message.command);
 
     if (command) {
       command(message);
     } else {
-      vscode.window.showErrorMessage("Invalid command used");
+      vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
     }
   };
 
@@ -178,7 +169,7 @@ export abstract class Controller {
         } else {
           return Promise.reject(
             new ValidationError(
-              `Function app name ${functionAppName} is not available`
+              CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(functionAppName)
             )
           );
         }
@@ -317,7 +308,7 @@ export abstract class Controller {
         });
 
         vscode.window.showInformationMessage(
-          message.cosmosSelection.accountName + " has been deployed!"
+          CONSTANTS.INFO.COSMOS_ACCOUNT_DEPLOYED(message.cosmosSelection.accountName)
         );
       })
       .catch((err: Error) => {
@@ -459,7 +450,7 @@ export abstract class Controller {
           return resourceGroup;
         }
       }
-      throw new ResourceGroupError("No resource group found with this name");
+      throw new ResourceGroupError(CONSTANTS.ERRORS.RESOURCE_GROUP_NOT_FOUND);
     });
   }
 
@@ -472,7 +463,7 @@ export abstract class Controller {
           return subscriptionItem;
         }
       }
-      throw new SubscriptionError("No subscription found with this name.");
+      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
     });
   }
 
