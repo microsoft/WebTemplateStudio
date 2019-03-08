@@ -4,12 +4,14 @@ import * as Actions from "../../../actions/types";
 {
     services: {
       isCosmosResourceAccountNameAvailable: false,
+      message: "Account name unavailable"
     }
 }
 */
 
 const initialState = {
-  isCosmosResourceAccountNameAvailable: false
+  isCosmosResourceAccountNameAvailable: false,
+  message: "Account name unavailable"
 }
 
 const services = (state: any = initialState, action: any) => {
@@ -23,8 +25,9 @@ const services = (state: any = initialState, action: any) => {
     case Actions.SET_ACCOUNT_AVAILABILITY:
       const newAvailabilityState = {
         ...state,
-        isCosmosResourceAccountNameAvailable: action.payload
-      }
+        isCosmosResourceAccountNameAvailable: action.payload.isAvailable,
+        message: action.payload.message
+      };
       return newAvailabilityState;
     case Actions.LOG_OUT_OF_AZURE:
       return initialState;

@@ -37,7 +37,13 @@ const Table = (props: IProps) => {
           props.rowItems.map((rowItem: RowType) => (
             <div key={rowItem.type} className={styles.row}>
               <div className={styles.rowCellLeft}>{rowItem.type}</div>
-              <div className={styles.rowCellRight}>{rowItem.name}</div>
+              <div className={styles.rowCellRight}>
+                <img
+                  className={styles.icon}
+                  src={rowItem.svgUrl}
+                />
+                {rowItem.name}
+              </div>
             </div>
           ))}
       </div>

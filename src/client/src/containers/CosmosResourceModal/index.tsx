@@ -33,7 +33,7 @@ interface IStateProps {
   vscode: any;
   subscriptionData: any;
   subscriptions: [];
-  isAccountNameAvailable: boolean|undefined;
+  cosmosAccountInformation: any;
 }
 
 type Props = IDispatchProps & IStateProps;
@@ -52,6 +52,9 @@ const CosmosResourceModal = (props: Props) => {
   /**
    * Second parameter of useEffect is [] which tells React to
    * run this effect when mounting the component.
+   * 
+   * FIXME: Currently reverse and slice locations array to make it
+   * easier for demoing purposes. Remove later.
    */
   React.useEffect(() => {
     setData({
@@ -69,7 +72,7 @@ const CosmosResourceModal = (props: Props) => {
       ],
       subscription: props.subscriptions,
       resourceGroup: props.subscriptionData.resourceGroups,
-      location: props.subscriptionData.locations
+      location: props.subscriptionData.locations ? props.subscriptionData.locations.reverse().slice(0,2) : props.subscriptionData.locations
     });
   }, [props.subscriptionData]);
 
@@ -128,16 +131,18 @@ const CosmosResourceModal = (props: Props) => {
    */
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
+    const strippedInput = element.value.toLowerCase().replace(" ","").toLowerCase().substring(0,130);
     updateForm({
       ...cosmosFormData,
-      accountName: element.value
+      accountName: strippedInput
     });
   };
   const handleAddResource = () => {
-    if (props.isAccountNameAvailable) {
+    if (props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable) {
       props.saveCosmosOptions(cosmosFormData); 
     }
   }
+  console.log(props);
   return (
     <div>
       <div className={styles.headerContainer}>
@@ -146,7 +151,7 @@ const CosmosResourceModal = (props: Props) => {
       </div>
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
-          <div>Subscription Selected</div>
+          <div>Subscription</div>
           <div className={styles.createNew}>Create new</div>
         </div>
         <Dropdown
@@ -168,7 +173,10 @@ const CosmosResourceModal = (props: Props) => {
           }}
         />
       </div>
-      <div className={styles.selectionContainer}>
+      <div className={classnames({
+        [styles.selectionInputContainer]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0,
+        [styles.selectionContainer]: (props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable || cosmosFormData.accountName.length === 0)
+        })}>
         <div className={styles.selectionHeaderContainer}>
           <div>Account Name</div>
           <a
@@ -178,11 +186,13 @@ const CosmosResourceModal = (props: Props) => {
             documents.azure.com
           </a>
         </div>
-        <div className={styles.inputContainer}>
-          <input className={styles.input} onChange={handleInput} />
-          {props.isAccountNameAvailable ? <GreenCheck className={styles.validationIcon} /> :
-          <RedCancel className={styles.validationIcon} />}
+        <div className={classnames(styles.inputContainer, {
+            [styles.borderRed]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0
+          })}>
+          <input className={styles.input} onChange={handleInput} value={cosmosFormData.accountName} placeholder="Account Name" />
+          {props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && <GreenCheck className={styles.validationIcon} />}
         </div>
+        {!props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0 && <div style={{ color: "#FF6666", fontSize: "12px", marginBototm: "-18px"}}>{props.cosmosAccountInformation.message}</div>}
       </div>
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
@@ -225,7 +235,7 @@ const mapStateToProps = (state: any): IStateProps => {
     vscode: vscodeObject,
     subscriptionData: state.azureProfileData.subscriptionData,
     subscriptions: state.azureProfileData.profileData.subscriptions,
-    isAccountNameAvailable: state.selection.services.isCosmosResourceAccountNameAvailable,
+    cosmosAccountInformation: state.selection.services,
   };
 };
 

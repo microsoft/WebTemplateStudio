@@ -41,7 +41,7 @@ class AzureLogin extends React.Component<Props> {
         const { isLoggedIn } = this.props;
         return (
             <div>
-                <Title>Attach services to your web application</Title>
+                <Title>Attach services to your web application (Optional)</Title>
                 <div className={styles.loginCard}>
                     {!isLoggedIn &&
                         <LoginCard
@@ -51,8 +51,7 @@ class AzureLogin extends React.Component<Props> {
                                 this.handleClick()
                             }}
                             cardTitle="Microsoft Azure Deployment"
-                            cardBody="Use Azure to help build, manage, and deploy applications on a massive, global network. Sign in to your 
-                            subscription account to get started."
+                            cardBody="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
                         />}
                 </div>
                 <AzureSubscriptions />

@@ -20,6 +20,10 @@
     margin-bottom: 3px;
 }
 
+.selectionInputContainer {
+    margin-bottom: 14px;
+}
+
 .buttonContainer {
     display: flex;
     float: right;
@@ -45,7 +49,7 @@
     align-items: center;
     width: 100%;
     outline: none;
-    padding: 0.5em;
+    padding: 9px;
     box-sizing: border-box;
     background-color: #696969;
     border: 0.5px solid rgba(0, 0, 0, 0.5);
@@ -59,6 +63,20 @@
     font-size: 1em;
     width: 100%;
     margin-right: 10px;
+}
+
+.borderRed {
+    border: 1px solid #FF6666;
+    padding: 8.5px;
+}
+
+input:focus {
+    outline: none;
+}
+
+input::placeholder {
+    color: white;
+    opacity: 0.4;
 }
 
 .createNew,
