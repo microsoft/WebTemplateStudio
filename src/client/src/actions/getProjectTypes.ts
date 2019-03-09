@@ -12,12 +12,10 @@ export const getProjectTypesAction = () => {
     try {
       const projectTypesJson = await api.getProjectTypes();
 
-      if (projectTypesJson.value.items !== null) {
+      if (projectTypesJson.detail == null) {
         dispatch(
           getProjectTypesSuccess(
-            getOptionalFromMetadata(
-              getMetadataFromJson(projectTypesJson.value.items)
-            )
+            getOptionalFromMetadata(getMetadataFromJson(projectTypesJson))
           )
         );
       } else {
