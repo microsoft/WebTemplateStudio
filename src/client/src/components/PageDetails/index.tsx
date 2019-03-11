@@ -19,20 +19,21 @@ interface ISelectPagesProps {
 
 type Props = IDispatchProps & ISelectPagesProps;
 
-class SelectPages extends React.Component<Props> {
+class PageDetails extends React.Component<Props> {
+  constructor(props: any) {
+    super(props);
+  }
+
+  public findSelectedDetails(): number {
+    return 1;
+  }
 
   public render() {
     return (
       <div>
         <Details
-          title={"Example title"}
-          body={"Page description"}
-          author={"Author"}
-          version={"Version"}
-          license={"License"}
-          dependencies={"dependencies"}
+          options={this.props.options[this.findSelectedDetails()]}
           handleDetailsClick={() => console.log("details clicked")}
-          svgUrl={"testURL"}
         />
       </div>
     );
@@ -57,4 +58,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SelectPages);
+)(PageDetails);
