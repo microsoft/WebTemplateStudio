@@ -817,17 +817,26 @@
           "Microsoft.Templates.Core.dll": {}
         },
         "resources": {
+          "tr-TR/Microsoft.Templates.Core.resources.dll": {
+            "locale": "tr-TR"
+          },
           "fr-FR/Microsoft.Templates.Core.resources.dll": {
             "locale": "fr-FR"
           },
-          "en-US/Microsoft.Templates.Core.resources.dll": {
-            "locale": "en-US"
+          "de-DE/Microsoft.Templates.Core.resources.dll": {
+            "locale": "de-DE"
+          },
+          "pl-PL/Microsoft.Templates.Core.resources.dll": {
+            "locale": "pl-PL"
           },
           "es-ES/Microsoft.Templates.Core.resources.dll": {
             "locale": "es-ES"
           },
-          "pl-PL/Microsoft.Templates.Core.resources.dll": {
-            "locale": "pl-PL"
+          "ru-RU/Microsoft.Templates.Core.resources.dll": {
+            "locale": "ru-RU"
+          },
+          "ja-JP/Microsoft.Templates.Core.resources.dll": {
+            "locale": "ja-JP"
           },
           "cs-CZ/Microsoft.Templates.Core.resources.dll": {
             "locale": "cs-CZ"
@@ -835,23 +844,14 @@
           "ko-KR/Microsoft.Templates.Core.resources.dll": {
             "locale": "ko-KR"
           },
-          "de-DE/Microsoft.Templates.Core.resources.dll": {
-            "locale": "de-DE"
-          },
           "pt-BR/Microsoft.Templates.Core.resources.dll": {
             "locale": "pt-BR"
-          },
-          "ja-JP/Microsoft.Templates.Core.resources.dll": {
-            "locale": "ja-JP"
           },
           "it-IT/Microsoft.Templates.Core.resources.dll": {
             "locale": "it-IT"
           },
-          "tr-TR/Microsoft.Templates.Core.resources.dll": {
-            "locale": "tr-TR"
-          },
-          "ru-RU/Microsoft.Templates.Core.resources.dll": {
-            "locale": "ru-RU"
+          "en-US/Microsoft.Templates.Core.resources.dll": {
+            "locale": "en-US"
           }
         },
         "compile": {
