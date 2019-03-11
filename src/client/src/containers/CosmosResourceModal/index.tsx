@@ -88,10 +88,12 @@ const CosmosResourceModal = (props: Props) => {
         // @ts-ignore produces a mock login response from VSCode in development
         window.postMessage({
           command: "subscriptionData",
-          locations: [{ label: "WEST US", value: "WEST US" }],
-          resourceGroups: [
-            { label: "resourceGroupMock", value: "resourceGroupMock" }
-          ]
+          payload: {
+            locations: [{ label: "WEST US", value: "WEST US" }],
+            resourceGroups: [
+              { label: "resourceGroupMock", value: "resourceGroupMock" }
+            ]
+          }
         });
       }
     }
@@ -115,7 +117,9 @@ const CosmosResourceModal = (props: Props) => {
       // @ts-ignore produces a mock login response from VSCode in development 
       window.postMessage({
         command: "name-cosmos",
-        isAvailable: cosmosFormData.accountName === "" ? false: true,
+        payload: {
+          isAvailable: cosmosFormData.accountName === "" ? false: true,
+        },
         message: "in development, no error message",
         errorType: "in development, no error type"
       });
