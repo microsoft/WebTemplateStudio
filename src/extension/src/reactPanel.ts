@@ -1,5 +1,10 @@
 import * as vscode from "vscode";
 import * as path from "path";
+<<<<<<< HEAD
+=======
+import { AzureAuth } from './azure-auth/azureAuth';
+import { Controller } from "./controller";
+>>>>>>> dev
 
 /**
  * Manages react webview panels
