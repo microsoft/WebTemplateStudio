@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { CONSTANTS, ExtensionCommand } from './constants';
+import { CONSTANTS, ExtensionCommand } from "./constants";
 import {
   AzureAuth,
   SubscriptionItem,
@@ -21,8 +21,6 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
-
-
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -63,7 +61,7 @@ export abstract class Controller {
     [ExtensionCommand.GetOutputPath, Controller.sendOutputPathSelectionToClient]
   ]);
 
-  private static routingMessageReceieverDelegate = function (message: any) {
+  private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.commandMap.get(message.command);
 
     if (command) {
@@ -308,7 +306,9 @@ export abstract class Controller {
         });
 
         vscode.window.showInformationMessage(
-          CONSTANTS.INFO.COSMOS_ACCOUNT_DEPLOYED(message.cosmosSelection.accountName)
+          CONSTANTS.INFO.COSMOS_ACCOUNT_DEPLOYED(
+            message.cosmosSelection.accountName
+          )
         );
       })
       .catch((err: Error) => {
@@ -431,8 +431,7 @@ export abstract class Controller {
         selections.resourceGroup,
         Controller.usersCosmosDBSubscriptionItemCache
       ),
-      subscriptionItem: Controller.usersCosmosDBSubscriptionItemCache,
-      tags: { "Created from": "Web Template Studio" }
+      subscriptionItem: Controller.usersCosmosDBSubscriptionItemCache
     };
 
     return await this.AzureCosmosDBProvider.createCosmosDB(
