@@ -3,14 +3,14 @@ import { connect } from "react-redux";
 
 import Card from "../../components/Card";
 
-import buttonStyles from "../../css/buttonStyles.module.css";
-import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
 import * as AzureActions from "../../actions/logOutAzure";
 import * as ModalActions from "../../actions/modalActions";
 import { isCosmosResourceCreatedSelector } from "../../selectors/cosmosServiceSelector";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
+
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 import getAzureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
@@ -45,18 +45,31 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       azureServices
     });
   }
-  public isCosmosContent = (optionTitle: string): boolean => {
-    return optionTitle.includes("Cosmos");
+  public isCosmosContent = (internalName: string): boolean => {
+    return internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB;
   }
-  public isCosmosContentCreated = (optionTitle: string): boolean => {
-    return this.props.isCosmosResourceCreated && this.isCosmosContent(optionTitle);
+  public isCosmosContentCreated = (internalName: string): boolean => {
+    return this.props.isCosmosResourceCreated && this.isCosmosContent(internalName);
   }
-  public resourceButtonContent = (optionTitle: string): string => {
-    if (this.isCosmosContentCreated(optionTitle)) {
+  public resourceButtonContent = (internalName: string): string => {
+    if (this.isCosmosContentCreated(internalName)) {
       return "Edit Resource";
     }
     return "Add Resource";
   };
+  /**
+   * Returns a function that opens a modal for a specific internalName
+   * @param internalName internal name of service within Core Engine
+   */
+  public getServicesModalOpener(internalName: string): () => void {
+    const modalOpeners = {
+      [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: this.props.openCosmosDbModal,
+    }
+    if (modalOpeners.hasOwnProperty(internalName)) {
+      return modalOpeners[internalName];
+    }
+    return () => {};
+  }
   public render() {
     return (
       this.props.isLoggedIn != null && (
@@ -70,11 +83,11 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                 <Card
                   cardTitle={option.title}
                   cardBody={option.body}
-                  buttonText={this.resourceButtonContent(option.title)}
-                  handleButtonClick={this.isCosmosContent(option.title) ? this.props.openCosmosDbModal : ()=>{}}
+                  buttonText={this.resourceButtonContent(option.internalName)}
+                  handleButtonClick={this.getServicesModalOpener(option.internalName)}
                   handleDetailsClick={() => {}}
                   svgUrl={option.svgUrl}
-                  useNormalButtons={this.isCosmosContentCreated(option.title)}
+                  useNormalButtons={this.isCosmosContentCreated(option.internalName)}
                 />
               </div>
             ))}
