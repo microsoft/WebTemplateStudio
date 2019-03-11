@@ -11,10 +11,11 @@ import { ROUTES } from "../../utils/constants";
 
 import { IVSCode } from "../../reducers/vscodeApiReducer";
 import { rootSelector } from "../../selectors/generationSelector";
-import { getCosmosDbSelectionSelector } from "../../selectors/cosmosServiceSelector";
+import { getCosmosDbSelectionSelector, isCosmosResourceCreatedSelector } from "../../selectors/cosmosServiceSelector";
 interface IDispatchProps {
   vscode?: IVSCode;
   engine?: any;
+  selectedCosmos?: any;
   cosmos?: any;
 }
 
@@ -37,17 +38,23 @@ const pathsBack: any = {
 class Footer extends React.Component<Props> {
   public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // @ts-ignore
-    this.props.vscode.postMessage({
-      command: "deploy-cosmos",
-      cosmosSelection : this.props.cosmos
-    });
-
+    // if(this.props.selectedCosmos){
+    //   // @ts-ignore
+    //   this.props.vscode.postMessage({
+    //     command: "deploy-cosmos",
+    //     cosmosSelection : this.props.cosmos
+    //   });
+    // }
+    
     // @ts-ignore
     this.props.vscode.postMessage({
       command: "generate",
       text: "Sending generation info...",
-      payload: this.props.engine
+      payload: {
+        engine: this.props.engine,
+        selectedCosmos: this.props.selectedCosmos,
+        cosmos: this.props.cosmos
+      }
     });
   };
   public isReviewAndGenerate = (): boolean => {
@@ -110,6 +117,7 @@ const mapStateToProps = (state: any): any => {
   return {
     vscode: vscode.vscodeObject,
     engine: rootSelector(state),
+    selectedCosmos: isCosmosResourceCreatedSelector(state),
     cosmos: getCosmosDbSelectionSelector(state)
   };
 };
