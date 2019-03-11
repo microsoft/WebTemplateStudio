@@ -11,13 +11,12 @@ import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions";
 import { saveCosmosDbSettingsAction } from "../../actions/saveCosmosDbSettings";
-import getCosmosModalData, {
+import {
   cosmosInitialState
 } from "../../mockData/cosmosDbModalData";
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck} from "../../assets/checkgreen.svg";
-import { ReactComponent as RedCancel } from "../../assets/redcancel.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
@@ -52,9 +51,6 @@ const CosmosResourceModal = (props: Props) => {
   /**
    * Second parameter of useEffect is [] which tells React to
    * run this effect when mounting the component.
-   * 
-   * FIXME: Currently reverse and slice locations array to make it
-   * easier for demoing purposes. Remove later.
    */
   React.useEffect(() => {
     setData({
@@ -72,7 +68,7 @@ const CosmosResourceModal = (props: Props) => {
       ],
       subscription: props.subscriptions,
       resourceGroup: props.subscriptionData.resourceGroups,
-      location: props.subscriptionData.locations ? props.subscriptionData.locations.reverse().slice(0,2) : props.subscriptionData.locations
+      location: props.subscriptionData.locations
     });
   }, [props.subscriptionData]);
 
@@ -92,10 +88,12 @@ const CosmosResourceModal = (props: Props) => {
         // @ts-ignore produces a mock login response from VSCode in development
         window.postMessage({
           command: "subscriptionData",
-          locations: [{ label: "WEST US", value: "WEST US" }],
-          resourceGroups: [
-            { label: "resourceGroupMock", value: "resourceGroupMock" }
-          ]
+          payload: {
+            locations: [{ label: "WEST US", value: "WEST US" }],
+            resourceGroups: [
+              { label: "resourceGroupMock", value: "resourceGroupMock" }
+            ]
+          }
         });
       }
     }
@@ -116,11 +114,13 @@ const CosmosResourceModal = (props: Props) => {
       });
     } else {
       // In development, disables modal closing until an account name is entered.
-      // @ts-ignore produces a mock login response from VSCode in development
+      // @ts-ignore produces a mock login response from VSCode in development 
       window.postMessage({
         command: "name-cosmos",
-        isAvailable: cosmosFormData.accountName === "" ? false: true,
-        message: "in development, no error",
+        payload: {
+          isAvailable: cosmosFormData.accountName === "" ? false: true,
+        },
+        message: "in development, no error message",
         errorType: "in development, no error type"
       });
     }
@@ -142,7 +142,6 @@ const CosmosResourceModal = (props: Props) => {
       props.saveCosmosOptions(cosmosFormData); 
     }
   }
-  console.log(props);
   return (
     <div>
       <div className={styles.headerContainer}>
@@ -192,7 +191,7 @@ const CosmosResourceModal = (props: Props) => {
           <input className={styles.input} onChange={handleInput} value={cosmosFormData.accountName} placeholder="Account Name" />
           {props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && <GreenCheck className={styles.validationIcon} />}
         </div>
-        {!props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0 && <div style={{ color: "#FF6666", fontSize: "12px", marginBototm: "-18px"}}>{props.cosmosAccountInformation.message}</div>}
+        {!props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0 && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}>{props.cosmosAccountInformation.message}</div>}
       </div>
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
