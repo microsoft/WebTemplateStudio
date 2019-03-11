@@ -10,10 +10,10 @@ import { IOption } from "../../types/option";
 
 interface IProps {
   options: IOption;
-  handleDetailsClick: () => void;
+  handleBackClick: () => void;
 }
 
-const Card = ({ options, handleDetailsClick }: IProps) => {
+const Card = ({ options, handleBackClick }: IProps) => {
   return (
     <React.Fragment>
       <div className={styles.container}>
@@ -21,7 +21,7 @@ const Card = ({ options, handleDetailsClick }: IProps) => {
           <div>
             {!!backArrow && <img className={styles.backIcon} src={backArrow} />}
           </div>
-          <div className={styles.details} onClick={handleDetailsClick}>
+          <div className={styles.details} onClick={handleBackClick}>
             Back
           </div>
         </div>
