@@ -31,6 +31,8 @@ import {
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
 import { ChildProcess } from "child_process";
+import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
+import fs = require("fs");
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -85,7 +87,7 @@ export abstract class Controller {
     });
   }
 
-  private static routingMessageReceieverDelegate = function(message: any) {
+  private static routingMessageReceieverDelegate = function (message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -390,16 +392,7 @@ export abstract class Controller {
       });
       return;
     }
-    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
-      enginePayload
-    );
-
-    if (payload.selectedFunctions) {
-      Controller.processFunctionDeploymentAndSendStatusToClient(
-        payload.functions,
-        enginePayload.path
-      );
-    }
+    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload);
 
     if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
