@@ -15,6 +15,7 @@ import {
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
 import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
+import { ARMFileHelper } from "../azure-arm/armFileHelper";
 
 export interface CosmosDBSelections {
   cosmosDBResourceName: string;
@@ -98,7 +99,8 @@ export class CosmosDBDeploy {
     | undefined = undefined;
 
   public async createCosmosDB(
-    userCosmosDBSelection: CosmosDBSelections
+    userCosmosDBSelection: CosmosDBSelections,
+    genPath: string
   ): Promise<DatabaseObject> {
     /*
      * Create Cosmos Client with users credentials and selected subscription *
@@ -186,6 +188,16 @@ export class CosmosDBDeploy {
 
       let azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
         userSubscriptionItem
+      );
+
+      ARMFileHelper.createOrOverwriteDir(path.join(genPath, "arm-templates"));
+      ARMFileHelper.writeObjectToJsonFile(
+        path.join(genPath, "arm-templates", "cosmos-template.json"),
+        template
+      );
+      ARMFileHelper.writeObjectToJsonFile(
+        path.join(genPath, "arm-templates", "cosmos-parameters.json"),
+        parameters
       );
 
       /*

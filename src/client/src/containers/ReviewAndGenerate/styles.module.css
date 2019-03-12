@@ -41,6 +41,7 @@
 
 .saveIcon {
   height: 25px;
+  transform: rotate(-90deg);
   cursor: pointer;
 }
 

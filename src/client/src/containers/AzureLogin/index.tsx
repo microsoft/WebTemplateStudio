@@ -32,8 +32,10 @@ class AzureLogin extends React.Component<Props> {
             // @ts-ignore produces a mock login response from VSCode in development
             window.postMessage({
                 command: "login",
-                email: "devEnvironment2@email.com",
-                subscriptions: [{ value: "GIV.Hackathon", label: "GIV.Hackathon" }]
+                payload: {
+                    email: "devEnvironment2@email.com",
+                    subscriptions: [{ value: "GIV.Hackathon", label: "GIV.Hackathon" }]
+                }
             });
         }
     };
@@ -46,7 +48,6 @@ class AzureLogin extends React.Component<Props> {
                     {!isLoggedIn &&
                         <LoginCard
                             svgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${azure}`}
-
                             handleClick={() => {
                                 this.handleClick()
                             }}

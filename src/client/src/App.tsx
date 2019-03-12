@@ -80,7 +80,6 @@ class App extends React.Component<Props> {
           return;
         case "subscriptionData":
           // Expect resource groups and locations on this request
-
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
           if (message.payload != null) {
@@ -109,7 +108,6 @@ class App extends React.Component<Props> {
       <Router>
         <div>
           <Header />
-          {/*<ReviewAndGenerate />*/}
           <div className={appStyles.container}>
             <CosmosResourceModal />
             <LeftSidebar sidebarItems={leftSidebarData} />

@@ -46,18 +46,7 @@ export abstract class Controller {
       ExtensionCommand.NameCosmos,
       Controller.sendCosmosNameValidationStatusToClient
     ],
-    [
-      ExtensionCommand.DeployFunctions,
-      Controller.attemptFunctionDeploymentAndSendStatusToClient
-    ],
-    [
-      ExtensionCommand.DeployCosmos,
-      Controller.attemptCosmosDeploymentAndSendStatusToClient
-    ],
-    [
-      ExtensionCommand.Generate,
-      Controller.sendTemplateGenInfoToApiAndSendStatusToClient
-    ],
+    [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [ExtensionCommand.GetOutputPath, Controller.sendOutputPathSelectionToClient]
   ]);
 
@@ -256,6 +245,24 @@ export abstract class Controller {
       });
   }
 
+  public static async handleGeneratePayloadFromClient(
+    message: any
+  ): Promise<any> {
+    var payload = message.payload;
+    var enginePayload: any = payload.engine;
+    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
+      enginePayload
+    );
+
+    if (payload.selectedCosmos) {
+      var cosmosPayload: any = payload.cosmos;
+      await Controller.attemptCosmosDeploymentAndSendStatusToClient(
+        cosmosPayload,
+        enginePayload.path
+      );
+    }
+  }
+
   public static attemptFunctionDeploymentAndSendStatusToClient(message: any) {
     /*
      * example:
@@ -285,7 +292,10 @@ export abstract class Controller {
       });
   }
 
-  public static attemptCosmosDeploymentAndSendStatusToClient(message: any) {
+  public static attemptCosmosDeploymentAndSendStatusToClient(
+    cosmosPayload: any,
+    genPath: string
+  ) {
     /*
      * example:
      *   {
@@ -299,16 +309,14 @@ export abstract class Controller {
      *       }
      *   }
      */
-    Controller.deployCosmosResource(message.cosmosSelection)
+    Controller.deployCosmosResource(cosmosPayload, genPath)
       .then((dbObject: DatabaseObject) => {
         Controller.handleValidMessage(ExtensionCommand.DeployCosmos, {
           databaseObject: dbObject
         });
 
         vscode.window.showInformationMessage(
-          CONSTANTS.INFO.COSMOS_ACCOUNT_DEPLOYED(
-            message.cosmosSelection.accountName
-          )
+          CONSTANTS.INFO.COSMOS_ACCOUNT_DEPLOYED(cosmosPayload.accountName)
         );
       })
       .catch((err: Error) => {
@@ -317,9 +325,11 @@ export abstract class Controller {
       });
   }
 
-  public static sendTemplateGenInfoToApiAndSendStatusToClient(message: any) {
+  public static sendTemplateGenInfoToApiAndSendStatusToClient(
+    enginePayload: any
+  ) {
     // FIXME: After gen is done, we need to do some feedback.
-    ApiModule.SendGeneration("5000", message.payload);
+    ApiModule.SendGeneration("5000", enginePayload);
   }
 
   public static sendOutputPathSelectionToClient(message: any) {
@@ -412,7 +422,8 @@ export abstract class Controller {
   }
 
   public static async deployCosmosResource(
-    selections: any
+    selections: any,
+    genPath: string
   ): Promise<DatabaseObject> {
     try {
       await Controller.validateCosmosAccountName(
@@ -435,7 +446,8 @@ export abstract class Controller {
     };
 
     return await this.AzureCosmosDBProvider.createCosmosDB(
-      userCosmosDBSelection
+      userCosmosDBSelection,
+      genPath
     );
   }
 
