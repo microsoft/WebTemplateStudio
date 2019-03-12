@@ -43,10 +43,10 @@ const Card = ({ options, handleBackClick }: IProps) => {
                 <div>Dependencies:</div>
               </div>
               <div>
-                <div>Mircrosoft</div>
-                <div>Mircrosoft</div>
-                <div>Mircrosoft</div>
-                <div>Mircrosoft</div>
+                <div>Micrrosoft</div>
+                <div>Micrrosoft</div>
+                <div>Micrrosoft</div>
+                <div>Micrrosoft</div>
               </div>
             </div>
           </div>

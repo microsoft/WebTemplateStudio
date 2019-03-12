@@ -1,14 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
+import { withRouter, RouteComponentProps } from "react-router";
 import Details from "../Details";
 
 import { selectPagesAction } from "../../actions/selectPages";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-
-import { RouteComponentProps } from "react-router";
 
 interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
