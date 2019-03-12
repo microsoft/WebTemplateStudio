@@ -1,3 +1,4 @@
+import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -24,7 +25,8 @@ interface IDispatchProps {
 interface IAzureLoginProps {
   isLoggedIn: boolean;
   isCosmosDbModalOpen: boolean;
-  isCosmosResourceCreated: boolean;
+  azureFunctionsSelection: any;
+  cosmosDbSelection: any;
 }
 
 interface IState {
@@ -46,15 +48,20 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       azureServices
     });
   }
-  public isCosmosContentCreated = (internalName: string): boolean => {
-    return this.props.isCosmosResourceCreated && internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB;
+  public isSelectionCreated = (internalName: string): boolean => {
+    if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS) {
+      return !_.isEmpty(this.props.azureFunctionsSelection);
+    } else if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB) {
+      return !_.isEmpty(this.props.cosmosDbSelection);
+    }
+    return false;
   }
-  public resourceButtonContent = (internalName: string): string => {
-    if (this.isCosmosContentCreated(internalName)) {
+  public addOrEditResourceText = (internalName: string): string => {
+    if (this.isSelectionCreated(internalName)) {
       return "Edit Resource";
     }
     return "Add Resource";
-  };
+  }
   /**
    * Returns a function that opens a modal for a specific internalName
    * @param internalName internal name of service within Core Engine
@@ -82,11 +89,11 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                 <Card
                   cardTitle={option.title}
                   cardBody={option.body}
-                  buttonText={this.resourceButtonContent(option.internalName)}
+                  buttonText="Add Resource"
                   handleButtonClick={this.getServicesModalOpener(option.internalName)}
                   handleDetailsClick={() => {}}
                   svgUrl={option.svgUrl}
-                  useNormalButtons={this.isCosmosContentCreated(option.internalName)}
+                  useNormalButtons={this.isSelectionCreated(option.internalName)}
                 />
               </div>
             ))}
@@ -101,7 +108,8 @@ const mapStateToProps = (state: any): IAzureLoginProps => {
   return {
     isLoggedIn,
     isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
-    isCosmosResourceCreated: isCosmosResourceCreatedSelector(state)
+    azureFunctionsSelection: state.selection.services.azureFunctions.selection,
+    cosmosDbSelection: state.selection.services.cosmosDb
   };
 };
 

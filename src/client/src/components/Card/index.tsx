@@ -13,7 +13,7 @@ interface IProps {
   handleButtonClick: () => void;
   handleDetailsClick: () => void;
   svgUrl: string | undefined;
-  useNormalButtons: boolean | undefined;
+  useNormalButtons?: boolean;
 }
 
 const Card = ({

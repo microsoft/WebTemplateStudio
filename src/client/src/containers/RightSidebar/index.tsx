@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
@@ -166,25 +167,20 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 {/* Using a baseline of 1 for idx because !!0 === false */}
               </div>
             )}
-            {this.showServices() && Object.keys(this.props.services).length > 1 && (
+            {this.showServices() && (
               <div className={styles.sidebarItem}>
                 <div className={styles.dropdownTitle}>Services</div>
                 {Object.keys(this.props.services).map(serviceName => {
-                  // FIXME: Storing the state of the cosmos account name availability is not practicial in "services"
-                  // Better to create another object that can store these booleans for name validation.
-                  if (serviceName !== "isCosmosResourceAccountNameAvailable" && serviceName !== "message") {
+                  // Checks if a service selection was saved
+                  if (!_.isEmpty(this.props.services[serviceName].selection)) {
                     return (
                       <DraggableSidebarItem
                         key={serviceName}
-                        text={this.props.services[serviceName].api}
+                        text={this.props.services[serviceName].wizardContent.serviceName}
                         closeSvgUrl={`${
                           process.env.REACT_APP_RELATIVE_PATH
                         }${cancel}`}
-                        itemTitle={
-                          serviceName === "cosmosOptions"
-                            ? "CosmosDB"
-                            : "Azure Functions"
-                        }
+                        itemTitle={this.props.services[serviceName].wizardContent.serviceType}
                       />
                     )
                   }

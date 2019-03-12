@@ -12,7 +12,7 @@ import asModal from "../../components/Modal";
 import { closeModalAction } from "../../actions/modalActions";
 import { saveCosmosDbSettingsAction } from "../../actions/saveCosmosDbSettings";
 import {
-  cosmosInitialState
+  azureModalInitialState as cosmosInitialState
 } from "../../mockData/cosmosDbModalData";
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";

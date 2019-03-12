@@ -1,27 +1,50 @@
-const cosmosSelections: any = {
+// const cosmosSelections: any = {
+//     subscription: [{
+//         value: "GIV.Hackathon",
+//         label: "GIV.Hackathon"
+//     }],
+//     resourceGroup: [{
+//         value: "GIV_W19_WTS",
+//         label: "GIV_W19_WTS"
+//     }],
+//     accountName: [{
+//         value: "vrtemplatestudio",
+//         label: "vrtemplatestudio"
+//     }],    
+//     api: [{
+//         value: "Azure Table",
+//         label: "Azure Table"
+//     }],
+//     location: [{
+//         value: "West US",
+//         label: "West US"
+//     }],
+// };
+
+export const azureModalInitialState: any = {
     subscription: [{
-        value: "GIV.Hackathon",
-        label: "GIV.Hackathon"
+        value: "",
+        label: ""
     }],
     resourceGroup: [{
-        value: "GIV_W19_WTS",
-        label: "GIV_W19_WTS"
+        value: "",
+        label: ""
     }],
     accountName: [{
-        value: "vrtemplatestudio",
-        label: "vrtemplatestudio"
+        value: "",
+        label: ""
     }],    
     api: [{
-        value: "Azure Table",
-        label: "Azure Table"
+        value: "",
+        label: ""
     }],
     location: [{
-        value: "West US",
-        label: "West US"
+        value: "",
+        label: ""
     }],
 };
 
-export const cosmosInitialState: any = {
+export const azureFunctionModalInitialState: any = {
     subscription: [{
         value: "",
         label: ""
@@ -30,22 +53,26 @@ export const cosmosInitialState: any = {
         value: "",
         label: ""
     }],
-    accountName: [{
+    appName: [{
         value: "",
         label: ""
     }],    
-    api: [{
-        value: "",
-        label: ""
-    }],
     location: [{
         value: "",
         label: ""
     }],
+    runtimeStack: [{
+        value: "",
+        label: ""
+    }],
+    numFunctions: [{
+        value: 0,
+        label: 0
+    }]
 };
 
-const getCosmosModalData = (): Promise<any> => {
-    return Promise.resolve(cosmosSelections);
-};
+// const getCosmosModalData = (): Promise<any> => {
+//     return Promise.resolve(cosmosSelections);
+// };
 
-export default getCosmosModalData;
+// export default getCosmosModalData;

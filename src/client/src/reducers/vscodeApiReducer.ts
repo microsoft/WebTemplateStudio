@@ -1,5 +1,6 @@
 import * as Actions from "../actions/types";
 import { PRODUCTION } from "../utils/constants";
+import { EXTENSION_COMMANDS } from "../utils/constants";
 
 /* State Shape
 {
@@ -22,6 +23,9 @@ interface IVSCodeAPI {
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
  * in development environment.
+ * 
+ * Mimics VSCode API by using native postMessage API to mimic postMessage from
+ * VSCode.
  *
  * Returns type "any" because the VSCode API type is not known in the client.
  */
@@ -31,6 +35,28 @@ const mockVsCodeApi = (): any => ({
       case "alert":
         console.log("Command: ", message.alert);
         break;
+      case EXTENSION_COMMANDS.NAME_FUNCTIONS:
+        //@ts-ignore
+        window.postMessage({
+          command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
+          payload: {
+            isAvailable: message.appName.length > 0 ? true : false,
+          },
+          message: "in development, no error message",
+          errorType: "in development, no error type"
+        });
+        break;
+      case EXTENSION_COMMANDS.SUBSCRIPTION_DATA:
+        // @ts-ignore produces locations and resource groups in development
+        window.postMessage({
+          command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA,
+          payload: {
+            locations: [{ label: "WEST US", value: "WEST US" }],
+            resourceGroups: [
+              { label: "resourceGroupMock", value: "resourceGroupMock" }
+            ]
+          }
+        });
     }
   }
 });

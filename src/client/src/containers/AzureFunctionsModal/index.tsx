@@ -10,9 +10,9 @@ import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions";
-import { saveCosmosDbSettingsAction } from "../../actions/saveCosmosDbSettings";
+import { saveAzureFunctionsSettingsAction } from "../../actions/saveAzureFunctionsSettings";
 import {
-  cosmosInitialState
+  azureFunctionModalInitialState
 } from "../../mockData/cosmosDbModalData";
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
@@ -20,11 +20,12 @@ import { ReactComponent as GreenCheck} from "../../assets/checkgreen.svg";
 import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
+import { EXTENSION_COMMANDS, WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import styles from "./styles.module.css";
 
 interface IDispatchProps {
   closeModal: () => any;
-  saveCosmosOptions: (cosmosOptions: any) => any;
+  saveAzureFunctionsOptions: (azureFunctionsOptions: any) => any;
 }
 
 interface IStateProps {
@@ -32,7 +33,8 @@ interface IStateProps {
   vscode: any;
   subscriptionData: any;
   subscriptions: [];
-  cosmosAccountInformation: any;
+  appNameAvailability: any;
+  selection: any;
 }
 
 type Props = IDispatchProps & IStateProps;
@@ -40,65 +42,48 @@ type Props = IDispatchProps & IStateProps;
 const initialState = {
   subscription: "",
   resourceGroup: "",
-  accountName: "",
-  api: "",
+  appName: "",
+  runtimeStack: "",
   location: "",
-  internalName: "wts.Feature.Azure.AzureFunctions"
+  numFunctions: 0,
+  internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
 };
 
 const CosmosResourceModal = (props: Props) => {
-  const [cosmosData, setData] = React.useState(cosmosInitialState);
-  /**
-   * Second parameter of useEffect is [] which tells React to
-   * run this effect when mounting the component.
-   */
+  const [functionsData, setData] = React.useState(azureFunctionModalInitialState);
   React.useEffect(() => {
     setData({
-      accountName: [
+      appName: [
         {
           value: "",
           label: ""
         }
       ],
-      api: [
+      runtimeStack: [
         {
           value: "node",
           label: "node"
         }
       ],
+      numFunctions: 1,
       subscription: props.subscriptions,
       resourceGroup: props.subscriptionData.resourceGroups,
       location: props.subscriptionData.locations
     });
   }, [props.subscriptionData]);
-
-  const [cosmosFormData, updateForm] = React.useState(initialState);
-
+  const [azureFunctionsFormData, updateForm] = React.useState(initialState);
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
     if (infoLabel === "subscription") {
       // Get resource Group and locations and set the dropdown options to them
-      if (process.env.NODE_ENV === "production") {
-        props.vscode.postMessage({
-          command: "subscriptionData",
-          subscription: value
-        });
-      } else {
-        // @ts-ignore produces a mock login response from VSCode in development
-        window.postMessage({
-          command: "subscriptionData",
-          payload: {
-            locations: [{ label: "WEST US", value: "WEST US" }],
-            resourceGroups: [
-              { label: "resourceGroupMock", value: "resourceGroupMock" }
-            ]
-          }
-        });
-      }
+      props.vscode.postMessage({
+        command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA,
+        subscription: value
+      });
     }
     updateForm({
-      ...cosmosFormData,
+      ...azureFunctionsFormData,
       [infoLabel]: value
     });
   };
@@ -106,25 +91,12 @@ const CosmosResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
-      props.vscode.postMessage({
-        command: "name-functions",
-        appName: cosmosFormData.accountName,
-        subscription: cosmosFormData.subscription
-      });
-    } else {
-      // In development, disables modal closing until an account name is entered.
-      // @ts-ignore produces a mock login response from VSCode in development 
-      window.postMessage({
-        command: "name-functions",
-        payload: {
-          isAvailable: cosmosFormData.accountName === "" ? false: true,
-        },
-        message: "in development, no error message",
-        errorType: "in development, no error type"
-      });
-    }
-  }, [cosmosFormData.accountName]);
+    props.vscode.postMessage({
+      command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
+      appName: azureFunctionsFormData.appName,
+      subscription: azureFunctionsFormData.subscription
+    });
+  }, [azureFunctionsFormData.appName]);
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
@@ -133,103 +105,90 @@ const CosmosResourceModal = (props: Props) => {
     const element = e.currentTarget as HTMLInputElement;
     const strippedInput = element.value.toLowerCase().replace(" ","").toLowerCase().substring(0,130);
     updateForm({
-      ...cosmosFormData,
-      accountName: strippedInput
+      ...azureFunctionsFormData,
+      appName: strippedInput
     });
   };
   const handleAddResource = () => {
-    if (props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable) {
-      props.saveCosmosOptions(cosmosFormData); 
+    if (props.appNameAvailability.isAppNameAvailable) {
+      props.saveAzureFunctionsOptions(azureFunctionsFormData); 
     }
   }
+  const getDropdownSection = (leftHeader: string, options: any, formSectionId: string, rightHeader?: string, defaultValue?: any) => {
+    return (
+      <div className={styles.selectionContainer}>
+        <div className={styles.selectionHeaderContainer}>
+          <div>{leftHeader}</div>
+          <div className={styles.createNew}>{rightHeader}</div>
+        </div>
+        <Dropdown
+          options={options}
+          handleChange={option => {
+            handleDropdown(formSectionId, option.value);
+          }}
+          defaultValue={defaultValue}
+        />
+      </div>)
+  }
+  const getNumFunctionsData = () => {
+    // limit the number of generated functions to 10
+    const dropDownArray = [];
+    for (let i = 1; i <= 10; i++) {
+      dropDownArray.push({ value: i, label: i });
+    }
+    return dropDownArray;
+  }
+  const { isAppNameAvailable } = props.appNameAvailability;
   return (
-    <div>
+    <React.Fragment>
       <div className={styles.headerContainer}>
         <div className={styles.modalTitle}>Create Function Application</div>
         <Cancel className={styles.icon} onClick={props.closeModal} />
       </div>
-      <div className={styles.selectionContainer}>
-        <div className={styles.selectionHeaderContainer}>
-          <div>Subscription</div>
-          <div className={styles.createNew}>Create new</div>
-        </div>
-        <Dropdown
-          options={cosmosData.subscription}
-          handleChange={option => {
-            handleDropdown("subscription", option.value);
-          }}
-        />
-      </div>
-      <div className={styles.selectionContainer}>
-        <div className={styles.selectionHeaderContainer}>
-          <div>Resource Group</div>
-          <div className={styles.createNew}>Create new</div>
-        </div>
-        <Dropdown
-          options={cosmosData.resourceGroup}
-          handleChange={option => {
-            handleDropdown("resourceGroup", option.value);
-          }}
-        />
-      </div>
+      {getDropdownSection("Subscription", functionsData.subscription, "subscription", "Create new")}
+      {getDropdownSection("Resource Group", functionsData.resourceGroup, "resourceGroup", "Create new")}
       <div className={classnames({
-        [styles.selectionInputContainer]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0,
-        [styles.selectionContainer]: (props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable || cosmosFormData.accountName.length === 0)
+        [styles.selectionInputContainer]: !isAppNameAvailable && azureFunctionsFormData.appName.length > 0,
+        [styles.selectionContainer]: (isAppNameAvailable || azureFunctionsFormData.appName.length === 0)
         })}>
         <div className={styles.selectionHeaderContainer}>
           <div>App Name</div>
           <div>.azurewebsites.net</div>
         </div>
         <div className={classnames(styles.inputContainer, {
-            [styles.borderRed]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0
+            [styles.borderRed]: !isAppNameAvailable && azureFunctionsFormData.appName.length > 0
           })}>
-          <input className={styles.input} onChange={handleInput} value={cosmosFormData.accountName} placeholder="App Name" />
-          {props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && <GreenCheck className={styles.validationIcon} />}
+          <input className={styles.input} onChange={handleInput} value={azureFunctionsFormData.appName} placeholder="App Name" />
+          {isAppNameAvailable && <GreenCheck className={styles.validationIcon} />}
         </div>
-        {!props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0 && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}>{props.cosmosAccountInformation.message}</div>}
+        {!isAppNameAvailable && azureFunctionsFormData.appName.length > 0 && 
+          <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}>
+            {props.appNameAvailability.message}
+          </div>}
       </div>
-      <div className={styles.selectionContainer}>
-        <div className={styles.selectionHeaderContainer}>
-          <div>Location</div>
-        </div>
-        <Dropdown
-          options={cosmosData.location}
-          handleChange={option => {
-            handleDropdown("location", option.value);
-          }}
-        />
-      </div>
-      <div className={styles.selectionContainer}>
-        <div className={styles.selectionHeaderContainer}>
-          <div>Runtime Stack</div>
-        </div>
-        <Dropdown
-          options={cosmosData.api}
-          handleChange={option => {
-            handleDropdown("api", option.value);
-          }}
-        />
-      </div>
-      <div className={styles.buttonContainer}>
+      {getDropdownSection("Location", functionsData.location, "location")}
+      {getDropdownSection("Runtime Stack", functionsData.runtimeStack, "runtimeStack")}
+      <div className={styles.modalFooterContainer}>
+        {getDropdownSection("Number of functions", getNumFunctionsData(), "numFunctions", undefined, getNumFunctionsData()[0])}
         <button
-          className={classnames(buttonStyles.buttonHighlighted, styles.button)}
+          className={classnames(buttonStyles.buttonHighlighted, styles.button, styles.selectionContainer)}
           onClick={handleAddResource}
         >
           Add Resource
         </button>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 
 const mapStateToProps = (state: any): IStateProps => {
-  const { vscodeObject } = state.vscode;
   return {
     isModalOpen: isAzureFunctionsModalOpenSelector(state),
-    vscode: vscodeObject,
+    vscode: state.vscode.vscodeObject,
     subscriptionData: state.azureProfileData.subscriptionData,
     subscriptions: state.azureProfileData.profileData.subscriptions,
-    cosmosAccountInformation: state.selection.services,
+    appNameAvailability: state.selection.services.azureFunctions.appNameAvailability,
+    selection: state.selection.services.azureFunctions.selection
   };
 };
 
@@ -237,8 +196,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   closeModal: () => {
     dispatch(closeModalAction());
   },
-  saveCosmosOptions: (cosmosOptions: any) => {
-    dispatch(saveCosmosDbSettingsAction(cosmosOptions));
+  saveAzureFunctionsOptions: (azureFunctionsOptions: any) => {
+    dispatch(saveAzureFunctionsSettingsAction(azureFunctionsOptions));
   }
 });
 

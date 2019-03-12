@@ -24,12 +24,13 @@
     margin-bottom: 14px;
 }
 
-.buttonContainer {
+.modalFooterContainer {
     display: flex;
-    float: right;
+    justify-content: space-between;
 }
 
 .button {
+    margin-top: 27px;
     font-size: 1em;
     border: none;
 }
