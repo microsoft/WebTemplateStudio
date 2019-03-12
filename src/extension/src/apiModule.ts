@@ -7,18 +7,26 @@ export default class ApiModule {
   private static readonly GenerateEndpoint = "/api/generate";
 
   public static StartApi(context: vscode.ExtensionContext): ChildProcess {
+    let platform = process.platform;
+    let executableName = "CoreTemplateStudio.Api";
+
+    if (platform === "win32") {
+      executableName += ".exe";
+    }
+
     let apiPath = vscode.Uri.file(
       path.join(
         context.extensionPath,
         "src",
         "api",
-        "CoreTemplateStudio.Api.dll"
+        platform,
+        executableName
       )
     ).fsPath;
 
-    let apiWorkingDirectory = path.join(context.extensionPath, "src", "api");
-    let process = spawn("dotnet", [apiPath], { cwd: apiWorkingDirectory });
-    return process;
+    let apiWorkingDirectory = path.join(context.extensionPath, "src", "api", platform);
+    let spawnedProcess = spawn(`${apiPath}`, undefined, { cwd: apiWorkingDirectory });
+    return spawnedProcess;
   }
 
   public static async SendGeneration(
