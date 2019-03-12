@@ -314,7 +314,7 @@ export abstract class Controller {
     else {
       // Send error to wizard, do not do anything
       Controller.reactPanelContext.postMessageWebview({
-        command: "validatePath",
+        command: ExtensionCommand.ValidateOutputPath,
         pathAvailability: {
           isAvailable: isAvailable,
           error: error
@@ -390,7 +390,7 @@ export abstract class Controller {
     enginePayload: any
   ) {
     // FIXME: After gen is done, we need to do some feedback.
-    ApiModule.SendTemplateGenerationPayloadToApi("5000", enginePayload);
+    ApiModule.SendTemplateGenerationPayloadToApi(CONSTANTS.PORT, enginePayload);
   }
 
   public static sendOutputPathSelectionToClient(message: any) {

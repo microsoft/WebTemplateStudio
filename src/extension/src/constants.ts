@@ -3,11 +3,7 @@ export const CONSTANTS = {
     INVALID_COMMAND: "Invalid command used",
     RESOURCE_GROUP_NOT_FOUND: "No resource group found with this name",
     SUBSCRIPTION_NOT_FOUND: "No subscription found with this name.",
-<<<<<<< HEAD
     FUNCTION_APP_NAME_NOT_AVAILABLE: (functionName: string) => {
-=======
-    FUNCTION_APP_NAME_NOT_AVAILABLE: function (functionName: string) {
->>>>>>> Input validation
       return `Function app name ${functionName} is not available`;
     },
     LOGIN_TIMEOUT: "Timeout. User is not logged in",
@@ -21,12 +17,6 @@ export const CONSTANTS = {
       "CosmosDBDeploy: GetConnectionString Failed to create Client with SubscriptionItem - ",
     RUNTIME_NOT_IMPLEMENTED: "Runtime not implemented yet",
     FUNCTIONS_NO_DUPLICATES: "No duplicates allowed for function names",
-<<<<<<< HEAD
-    FUNCTIONS_INVALID_NAME: (name: string) => {
-      return `Invalid function name ${name}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters`;
-    },
-    COSMOS_ACCOUNT_NOT_AVAILABLE: (name: string) => {
-=======
     FUNCTIONS_INVALID_NAME: function (name: string) {
       return `Invalid function name ${name}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters`;
     },
@@ -36,25 +26,16 @@ export const CONSTANTS = {
     INVALID_OUTPUT_PATH: "Output Path does not exist.",
     PROJECT_PATH_EXISTS: "There exists a directory with the Project name, please choose a unique name.",
     COSMOS_ACCOUNT_NOT_AVAILABLE: function (name: string) {
->>>>>>> Input validation
       return `Account name "${name}" is not available.`;
     },
     COSMOS_VALID_CHARACTERS:
       "The name can only contain lowercase letters, numbers, and the '-' character.",
-<<<<<<< HEAD
     NAME_MIN_MAX: (min: Number, max: Number) => {
-=======
-    NAME_MIN_MAX: function (min: Number, max: Number) {
->>>>>>> Input validation
       return `The name must be between ${min} and ${max} characters.`;
     }
   },
   INFO: {
-<<<<<<< HEAD
     COSMOS_ACCOUNT_DEPLOYED: (accountName: string) => {
-=======
-    COSMOS_ACCOUNT_DEPLOYED: function (accountName: string) {
->>>>>>> Input validation
       return `${accountName} has been deployed!`;
     },
     FUNCTION_APP_DEPLOYED: (appName: string) => {
