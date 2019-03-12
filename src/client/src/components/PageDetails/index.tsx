@@ -1,9 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router";
-import styles from "./styles.module.css";
 import Details from "../Details";
-
 import { IOption } from "../../types/option";
 
 interface IPageDetailsProps {
