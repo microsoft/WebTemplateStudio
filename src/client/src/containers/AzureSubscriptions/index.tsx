@@ -18,6 +18,7 @@ import { IOption } from "../../types/option";
 interface IDispatchProps {
   startLogOutToAzure: () => any;
   openCosmosDbModal: () => any;
+  openAzureFunctionsModal: () => any;
 }
 
 interface IAzureLoginProps {
@@ -45,11 +46,8 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       azureServices
     });
   }
-  public isCosmosContent = (internalName: string): boolean => {
-    return internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB;
-  }
   public isCosmosContentCreated = (internalName: string): boolean => {
-    return this.props.isCosmosResourceCreated && this.isCosmosContent(internalName);
+    return this.props.isCosmosResourceCreated && internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB;
   }
   public resourceButtonContent = (internalName: string): string => {
     if (this.isCosmosContentCreated(internalName)) {
@@ -64,6 +62,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   public getServicesModalOpener(internalName: string): () => void {
     const modalOpeners = {
       [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: this.props.openCosmosDbModal,
+      [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: this.props.openAzureFunctionsModal,
     }
     if (modalOpeners.hasOwnProperty(internalName)) {
       return modalOpeners[internalName];
@@ -112,6 +111,9 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   },
   openCosmosDbModal: () => {
     dispatch(ModalActions.openCosmosDbModalAction());
+  },
+  openAzureFunctionsModal: () => {
+    dispatch(ModalActions.openAzureFunctionsModalAction());
   }
 });
 

@@ -1,0 +1,86 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2em;
+}
+
+.modalTitle {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.selectionContainer {
+    margin-bottom: 2em;
+}
+
+.selectionHeaderContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+
+.selectionInputContainer {
+    margin-bottom: 14px;
+}
+
+.buttonContainer {
+    display: flex;
+    float: right;
+}
+
+.button {
+    font-size: 1em;
+    border: none;
+}
+
+.icon {
+    cursor: pointer;
+    height: 12px;
+}
+
+.validationIcon {
+    height: 15px;
+    margin-right: 0.2em;
+}
+
+.inputContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    outline: none;
+    padding: 9px;
+    box-sizing: border-box;
+    background-color: #696969;
+    border: 0.5px solid rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+}
+
+.input {
+    text-decoration: none;
+    border: none;
+    background-color: #696969;
+    font-size: 1em;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.borderRed {
+    border: 1px solid #FF6666;
+    padding: 8.5px;
+}
+
+input:focus {
+    outline: none;
+}
+
+input::placeholder {
+    color: white;
+    opacity: 0.4;
+}
+
+.createNew,
+.link {
+    text-decoration: none;
+    color: #54B4FF;
+}

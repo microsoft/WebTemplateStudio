@@ -27,6 +27,7 @@ import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
+import AzureFunctionsModal from "./containers/AzureFunctionsModal";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -87,9 +88,7 @@ class App extends React.Component<Props> {
               resourceGroups: message.payload.resourceGroups
             });
           }
-
           return;
-
         case "name-cosmos":
           // Receive input validation
           // and update redux (boolean, string)
@@ -98,6 +97,12 @@ class App extends React.Component<Props> {
             message: message.message
           });
           return;
+        // case "name-functions":
+        //   this.props.setAzureFunctionsResourceAccountNameAvailability({
+        //     isAvailable: message.payload.isAvailable,
+        //     message: message.message
+        //   });
+        //   return;
       }
     });
   }
@@ -108,7 +113,8 @@ class App extends React.Component<Props> {
         <div>
           <Header />
           <div className={appStyles.container}>
-            <CosmosResourceModal />
+            {/* <CosmosResourceModal /> */}
+            <AzureFunctionsModal />
             <LeftSidebar sidebarItems={leftSidebarData} />
             <div className={appStyles.centerView}>
               <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />

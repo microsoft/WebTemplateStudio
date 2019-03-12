@@ -34,8 +34,8 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   BLANK_PAGE: "wts.Page.ReactNode.BlankPage",
   FULL_STACK_APP: "FullStackWebApp",
   REST_API: "RestAPI",
-  AZURE_FUNCTIONS: "AzureFunctions",
-  COSMOS_DB: "Cosmos"
+  AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
+  COSMOS_DB: "wts.Feature.Azure.Cosmos"
 };
 
 export { PRODUCTION, ROUTES, ROUTES_ARRAY, WIZARD_CONTENT_INTERNAL_NAMES };

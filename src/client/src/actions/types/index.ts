@@ -45,9 +45,11 @@ const CLOSE_MODALS = "WTS/modals/CLOSE_MODALS";
  * Modal type registered in Redux store as notification a modal is open
  */
 const COSMOS_DB_MODAL = "COSMOS_DB_MODAL";
-export type ModalType = "COSMOS_DB_MODAL";
+const AZURE_FUNCTIONS_MODAL = "AZURE_FUNCTIONS_MODAL";
+export type ModalType = "COSMOS_DB_MODAL" | "AZURE_FUNCTIONS_MODAL";
 
 export {
+  AZURE_FUNCTIONS_MODAL,
   SET_ACCOUNT_AVAILABILITY,
   UPDATE_PROJECT_NAME,
   UPDATE_OUTPUT_PATH,
