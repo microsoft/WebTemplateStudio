@@ -6,6 +6,7 @@ import * as appRoot from "app-root-path";
 import * as archiver from "archiver";
 import { Runtime } from "../functionProvider";
 import * as rimraf from "rimraf";
+import { CONSTANTS } from "../../constants";
 
 export namespace FileHelper {
   export function initFunctionDirectory(
@@ -23,7 +24,7 @@ export namespace FileHelper {
           mkdirForNode(path.join(funcAppPath, functionNames[i]));
           break;
         case "dotnet":
-          throw new Error("Runtime not implement yet");
+          throw new Error(CONSTANTS.ERRORS.RUNTIME_NOT_IMPLEMENTED);
       }
     }
 

@@ -16,6 +16,7 @@ import {
 import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
+import { CONSTANTS } from "../constants";
 
 export interface CosmosDBSelections {
   cosmosDBResourceName: string;
@@ -221,7 +222,9 @@ export class CosmosDBDeploy {
 
     try {
       if (this.SubscriptionItemCosmosClient === undefined) {
-        throw new AuthorizationError("Cosmos Client cannot be undefined.");
+        throw new AuthorizationError(
+          CONSTANTS.ERRORS.COSMOS_CLIENT_NOT_UNDEFINED
+        );
       }
 
       let azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
@@ -293,9 +296,7 @@ export class CosmosDBDeploy {
       userSubscriptionItem.subscription === undefined ||
       userSubscriptionItem.subscriptionId === undefined
     ) {
-      throw new SubscriptionError(
-        "SubscriptionItem cannot have undefined values"
-      );
+      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_UNDEFINED);
     }
     return new CosmosDBManagementClient(
       userCredentials,
@@ -325,7 +326,9 @@ export class CosmosDBDeploy {
   ): Promise<string | undefined> {
     // let client: CosmosDBManagementClient = this.createCosmosClient(userSubscriptionItem);
     if (this.SubscriptionItemCosmosClient === undefined) {
-      throw new AuthorizationError("Cosmos Client cannot be undefined.");
+      throw new AuthorizationError(
+        CONSTANTS.ERRORS.COSMOS_CLIENT_NOT_UNDEFINED
+      );
     }
     name = name ? name.trim() : "";
 
@@ -333,15 +336,15 @@ export class CosmosDBDeploy {
     const max = 31;
 
     if (name.length < min || name.length > max) {
-      return `The name must be between ${min} and ${max} characters.`;
+      return CONSTANTS.ERRORS.NAME_MIN_MAX(min, max);
     } else if (name.match(/[^a-z0-9-]/)) {
-      return "The name can only contain lowercase letters, numbers, and the '-' character.";
+      return CONSTANTS.ERRORS.COSMOS_VALID_CHARACTERS;
     } else if (
       await this.SubscriptionItemCosmosClient.databaseAccounts.checkNameExists(
         name
       )
     ) {
-      return `Account name "${name}" is not available.`;
+      return CONSTANTS.ERRORS.COSMOS_ACCOUNT_NOT_AVAILABLE(name);
     } else {
       return undefined;
     }
@@ -373,8 +376,7 @@ export class CosmosDBDeploy {
         cosmosClient = this.createCosmosClient(cosmosClientOrSubscriptionItem);
       } catch (err) {
         throw new AuthorizationError(
-          "CosmosDBDeploy: GetConnectionString Failed to create Client with SubscriptionItem - " +
-            err.message
+          CONSTANTS.ERRORS.CONNECTION_STRING_FAILED + err.message
         );
       }
     }
