@@ -8,5 +8,6 @@ export interface IOption {
   svgUrl: string | undefined;
   licenses?: string[];
   selected?: boolean;
+  author?: string;
   unselectable?: boolean;
 }

@@ -3,6 +3,8 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
+import { IOption } from "../../types/option";
+
 import CardBody from "../CardBody";
 import CardTitle from "../CardTitle";
 
@@ -19,7 +21,9 @@ const SelectableCard = ({
   selected,
   cardNumber,
   onCardClick,
-  unselectable
+  unselectable,
+  option,
+  onDetailsClick
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -29,6 +33,8 @@ const SelectableCard = ({
   cardNumber: number;
   onCardClick: (idx: number) => void;
   unselectable: boolean | undefined;
+  option: IOption;
+  onDetailsClick: (detailPageInfo: IOption) => void;
 }) => {
   return (
     <div
@@ -61,7 +67,11 @@ const SelectableCard = ({
         </div>
       </div>
       <div className={styles.cardFooter}>
-        <Link className={classNames(styles.link)} to={"/PageDetail"}>
+        <Link
+          onClick={() => onDetailsClick(option)}
+          className={classNames(styles.link)}
+          to={"/PageDetail"}
+        >
           Details
         </Link>
         <div

@@ -38,6 +38,7 @@ function getMetadataFromJson(items: any[], type: FrameworkType): IMetadata[] {
       licenses: val.licenses,
       svgUrl: val.icon,
       tags: val.tags,
+      author: val.author,
       selected: false
     }))
     .filter((val: IMetadata) => {
@@ -54,6 +55,7 @@ function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
     position: val.position,
     svgUrl: getSvgUrl(val.name),
     selected: val.selected,
+    author: val.author,
     licenses: val.licenses
   }));
 }

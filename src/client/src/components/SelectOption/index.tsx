@@ -1,10 +1,13 @@
 import * as React from "react";
+import { connect } from "react-redux";
 
 import Card from "../SelectableCard";
 import Title from "../Title";
 
 import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
+
+import { setDetailPageAction } from "../../actions/setDetailsPage";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
@@ -23,10 +26,13 @@ interface ISelectOptionState {
   selectedCards: number[];
 }
 
-class SelectOption extends React.Component<
-  ISelectOptionProps,
-  ISelectOptionState
-> {
+interface IDispatchProps {
+  setDetailPage: (detailPageInfo: IOption) => void;
+}
+
+type Props = ISelectOptionProps & IDispatchProps;
+
+class SelectOption extends React.Component<Props, ISelectOptionState> {
   constructor(props: any) {
     super(props);
     if (this.props.multiSelect) {
@@ -137,10 +143,12 @@ class SelectOption extends React.Component<
         <div className={styles.container}>
           {this.props.options.map((option, cardNumber) => (
             <Card
+              option={option}
               key={`${cardNumber} ${option.title}`}
               onCardClick={(cardNumber: number) => {
                 this.onCardClick(cardNumber);
               }}
+              onDetailsClick={this.props.setDetailPage}
               cardNumber={cardNumber}
               selected={this.isCardSelected(cardNumber)}
               iconPath={option.svgUrl}
@@ -156,4 +164,13 @@ class SelectOption extends React.Component<
   }
 }
 
-export default SelectOption;
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  setDetailPage: (detailPageInfo: IOption) => {
+    dispatch(setDetailPageAction(detailPageInfo));
+  }
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SelectOption);

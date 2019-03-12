@@ -1,25 +1,28 @@
-import classnames from "classnames";
 import * as React from "react";
 
-import buttonStyles from "../../css/buttonStyles.module.css";
-import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 import backArrow from "../../assets/backarrow.svg";
 
 import { IOption } from "../../types/option";
 
 interface IProps {
-  options: IOption;
+  detailInfo: IOption;
   handleBackClick: () => void;
 }
 
-const Card = ({ options, handleBackClick }: IProps) => {
+const Details = ({ detailInfo, handleBackClick }: IProps) => {
   return (
     <React.Fragment>
       <div className={styles.container}>
         <div className={styles.backContainer}>
           <div>
-            {!!backArrow && <img className={styles.backIcon} src={backArrow} />}
+            {!!backArrow && (
+              <img
+                onClick={handleBackClick}
+                className={styles.backIcon}
+                src={backArrow}
+              />
+            )}
           </div>
           <div className={styles.details} onClick={handleBackClick}>
             Back
@@ -27,26 +30,24 @@ const Card = ({ options, handleBackClick }: IProps) => {
         </div>
         <div className={styles.detailsContainer}>
           <div>
-            {!!options.svgUrl && (
-              <img className={styles.icon} src={options.svgUrl} />
+            {!!detailInfo.svgUrl && (
+              <img className={styles.icon} src={detailInfo.svgUrl} />
             )}
           </div>
           <div>
-            <div className={styles.detailsTitle}>{options.title}</div>
-            <div className={styles.detailsDescription}>{options.body}</div>
+            <div className={styles.detailsTitle}>{detailInfo.title}</div>
+            <div className={styles.detailsDescription}>{detailInfo.body}</div>
 
             <div className={styles.col}>
               <div className={styles.categoriesContainer}>
                 <div>Author:</div>
                 <div>Version:</div>
                 <div>Licenses:</div>
-                <div>Dependencies:</div>
               </div>
               <div>
-                <div>Micrrosoft</div>
-                <div>Micrrosoft</div>
-                <div>Micrrosoft</div>
-                <div>Micrrosoft</div>
+                <div>{detailInfo.author || "None"}</div>
+                <div>1.0.0</div>
+                <div>{detailInfo.licenses || "None"}</div>
               </div>
             </div>
           </div>
@@ -56,21 +57,4 @@ const Card = ({ options, handleBackClick }: IProps) => {
   );
 };
 
-{
-  /* <div className={styles.loginContainer}>
-<div className={styles.cardTitleContainer}>
-  {!!options.svgUrl && (
-    <img className={styles.icon} src={options.svgUrl} />
-  )}
-  <div className={styles.cardTitle}>{options.title}</div>
-</div>
-<div className={styles.cardBody}>{options.body}</div>
-<div className={styles.selectionContainer}>
-  <div className={styles.details} onClick={handleDetailsClick}>
-    Details
-  </div>
-</div>
-</div> */
-}
-
-export default Card;
+export default Details;

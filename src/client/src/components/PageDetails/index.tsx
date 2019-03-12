@@ -1,64 +1,41 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router";
+import styles from "./styles.module.css";
 import Details from "../Details";
 
-import { selectPagesAction } from "../../actions/selectPages";
-
 import { IOption } from "../../types/option";
-import { ISelected } from "../../types/selected";
-
-interface IDispatchProps {
-  selectPages: (pages: ISelected[]) => void;
-}
 
 interface IPageDetailsProps {
-  options: IOption[];
-  selectedPages: ISelected[];
+  detailsPageInfo: IOption;
 }
 
-type Props = IDispatchProps & IPageDetailsProps & RouteComponentProps;
+type Props = IPageDetailsProps & RouteComponentProps;
 
 class PageDetails extends React.Component<Props> {
   constructor(props: any) {
     super(props);
   }
 
-  public findSelectedDetails(): number {
-    return 0;
-  }
-
   public render() {
     return (
-      <div>
-        <Details
-          handleBackClick={this.props.history.goBack}
-          options={this.props.options[this.findSelectedDetails()]}
-        />
-      </div>
+      <Details
+        handleBackClick={this.props.history.goBack}
+        detailInfo={this.props.detailsPageInfo}
+      />
     );
   }
 }
 
 const mapStateToProps = (state: any): IPageDetailsProps => {
-  const { pageOptions } = state.wizardContent;
-  const { pages } = state.selection;
-
   return {
-    options: pageOptions,
-    selectedPages: pages
+    detailsPageInfo: state.wizardContent.detailsPage
   };
 };
-
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  selectPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
-  }
-});
 
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
   )(PageDetails)
 );

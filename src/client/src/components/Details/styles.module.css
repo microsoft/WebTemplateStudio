@@ -9,9 +9,9 @@
 }
 
 .container {
-  border: 0.5px solid #ffffff;
   margin: 2em;
   padding: 2em;
+  max-width: 40em;
 }
 
 .backContainer {
