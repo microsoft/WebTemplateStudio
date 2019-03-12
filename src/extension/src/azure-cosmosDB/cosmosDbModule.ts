@@ -39,6 +39,44 @@ export interface DatabaseObject {
 export type API = "MongoDB" | "Graph" | "Table" | "SQL" | "Cassandra";
 
 /*
+ * Implemented API selections
+ * value: the API which should be returned as selection
+ * label: String to display to user
+ */
+export interface APIObject {
+  value: API;
+  label: string;
+}
+
+/*
+ * Returns an array of available/implemented APIObjects for cosmos
+ */
+export function GetAvailableAPIs(): Array<APIObject> {
+  return [
+    {
+      value: "MongoDB",
+      label: "Azure Cosmos DB for MongoDB API"
+    },
+    {
+      value: "Graph",
+      label: "Gremlin (graph)"
+    },
+    {
+      value: "Table",
+      label: "Azure Table"
+    },
+    {
+      value: "SQL",
+      label: "Core (SQL)"
+    },
+    {
+      value: "Cassandra",
+      label: "Cassandra"
+    }
+  ];
+}
+
+/*
  * ARM template definitions for Cosmos APIs
  */
 interface APIdefinition {
@@ -190,7 +228,7 @@ export class CosmosDBDeploy {
         userSubscriptionItem
       );
 
-      ARMFileHelper.createOrOverwriteDir(path.join(genPath, "arm-templates"));
+      ARMFileHelper.creatDirIfNotExists(path.join(genPath, "arm-templates"));
       ARMFileHelper.writeObjectToJsonFile(
         path.join(genPath, "arm-templates", "cosmos-template.json"),
         template

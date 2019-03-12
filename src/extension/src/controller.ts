@@ -254,21 +254,29 @@ export abstract class Controller {
       enginePayload
     );
 
+    if (payload.selectedFunctions) {
+      Controller.attemptFunctionDeploymentAndSendStatusToClient(
+        payload.functions,
+        enginePayload.path
+      );
+    }
+
     if (payload.selectedCosmos) {
-      var cosmosPayload: any = payload.cosmos;
-      await Controller.attemptCosmosDeploymentAndSendStatusToClient(
-        cosmosPayload,
+      Controller.attemptCosmosDeploymentAndSendStatusToClient(
+        payload.cosmos,
         enginePayload.path
       );
     }
   }
 
-  public static attemptFunctionDeploymentAndSendStatusToClient(message: any) {
+  public static attemptFunctionDeploymentAndSendStatusToClient(
+    funcPayload: any,
+    genPath: string
+  ) {
     /*
      * example:
      *   {
      *       command: 'deploy-functions'
-     *       appPath: 'C:\Users\t-dadua\Documents'
      *       selections: {
      *           appName: "YOUR_FUNCTION_APP_NAME",
      *           subscription: "YOUR_SUBSCRIPTION_LABEL",
@@ -279,7 +287,7 @@ export abstract class Controller {
      *       }
      *   }
      */
-    Controller.deployFunctionApp(message.selections, message.appPath)
+    Controller.deployFunctionApp(funcPayload.selections, genPath)
       .then(() => {
         Controller.handleValidMessage(ExtensionCommand.DeployFunctions, {
           succeeded: true

@@ -12,11 +12,43 @@ import {
 import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
 import { config } from "./config";
 import { ZipDeploy } from "./utils/zipDeployHelper";
+import * as fs from "fs";
+import * as path from "path";
+import {
+  ResourceManagementClient,
+  ResourceManagementModels
+} from "azure-arm-resource/lib/resource/resourceManagementClient";
+import { ResourceManager } from "../azure-arm/resourceManager";
+import * as appRoot from "app-root-path";
+import { ARMFileHelper } from "../azure-arm/armFileHelper";
+import { CONSTANTS } from "../constants";
 
 /*
  * Runtime for the deployment, can be either 'dotnet' or 'node'.
  */
 export type Runtime = "dotnet" | "node";
+
+/*
+ * Implemented runtime selections
+ * value: the runtime which should be returned as selection
+ * label: String to display to user
+ */
+export interface RuntimeObject {
+  value: Runtime;
+  label: string;
+}
+
+/*
+ * Returns an array of available/implemented RuntimeObjects for functions app
+ */
+export function GetAvailableRuntimes(): Array<RuntimeObject> {
+  return [
+    {
+      value: "node",
+      label: "Node.JS"
+    }
+  ];
+}
 
 /*
  * User selections from the wizard
@@ -64,7 +96,7 @@ export class FunctionProvider {
    * @param selections The user selection object (FunctionSelections)
    *
    * @param appPath The path to original app being created by Web Template Studio
-   *   The function app folder would be added under tis
+   *   The function app folder would be added under this
    *
    * @returns Promise<void> Throws a void promise, catch errors as required
    */
@@ -80,7 +112,9 @@ export class FunctionProvider {
     );
     if (!isUnique) {
       throw new ValidationError(
-        `Function app name: ${selections.functionAppName} is not available.`
+        CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(
+          selections.functionAppName
+        )
       );
     }
 
@@ -102,37 +136,85 @@ export class FunctionProvider {
     }
 
     try {
-      if (this.webClient === undefined) {
-        throw new AuthorizationError(
-          "Website management client cannot be undefined."
-        );
-      }
-
-      await this.webClient.webApps.createOrUpdate(
-        selections.resourceGroupItem.name,
-        selections.functionAppName,
-        {
-          location: selections.location,
-          kind: "functionapp",
-          siteConfig: {
-            http20Enabled: true
-          }
-        }
+      let template = JSON.parse(
+        fs.readFileSync(
+          path.join(
+            appRoot.toString(),
+            "src",
+            "azure-functions",
+            "arm-templates",
+            "template.json"
+          ),
+          "utf8"
+        )
       );
 
-      this.webClient.webApps
-        .updateApplicationSettings(
+      let parameters = JSON.parse(
+        fs.readFileSync(
+          path.join(
+            appRoot.toString(),
+            "src",
+            "azure-functions",
+            "arm-templates",
+            "parameters.json"
+          ),
+          "utf8"
+        )
+      );
+
+      parameters.parameters = {
+        name: {
+          value: selections.functionAppName
+        },
+        location: {
+          value: selections.location
+        },
+        runtime: {
+          value: selections.runtime
+        },
+        subscriptionId: {
+          value: selections.subscriptionItem.subscriptionId
+        },
+        storageName: {
+          value:
+            selections.functionAppName
+              .toLowerCase()
+              .replace(/[^0-9a-z]/gi, "") + config.storageNameSuffix
+        }
+      };
+
+      let deploymentParams = parameters.parameters;
+
+      var options: ResourceManagementModels.Deployment = {
+        properties: {
+          mode: "Incremental",
+          parameters: deploymentParams,
+          template: template
+        }
+      };
+
+      let azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
+        selections.subscriptionItem
+      );
+
+      ARMFileHelper.creatDirIfNotExists(path.join(appPath, "arm-templates"));
+      ARMFileHelper.writeObjectToJsonFile(
+        path.join(appPath, "arm-templates", "functions-template.json"),
+        template
+      );
+      ARMFileHelper.writeObjectToJsonFile(
+        path.join(appPath, "arm-templates", "functions-parameters.json"),
+        parameters
+      );
+
+      /*
+       * Cosmos Client to generate a cosmos DB resource using resource group name, database name, and options *
+       */
+      await azureResourceClient.deployments
+        .createOrUpdate(
           selections.resourceGroupItem.name,
           selections.functionAppName,
-          {
-            kind: "functionapp",
-            properties: {
-              FUNCTIONS_EXTENSION_VERSION: "~2",
-              FUNCTIONS_WORKER_RUNTIME: selections.runtime,
-              WEBSITE_RUN_FROM_PACKAGE: "1",
-              WEBSITE_NODE_DEFAULT_VERSION: "8.11.1"
-            }
-          }
+          options
         )
         .then(result => {
           setTimeout(async () => {
@@ -180,9 +262,7 @@ export class FunctionProvider {
       userSubscriptionItem.subscription === undefined ||
       userSubscriptionItem.subscriptionId === undefined
     ) {
-      throw new SubscriptionError(
-        "Subscription Item cannot have undefined values."
-      );
+      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_UNDEFINED);
     }
 
     return new WebSiteManagementClient(
@@ -215,7 +295,7 @@ export class FunctionProvider {
 
     if (this.webClient === undefined) {
       throw new AuthorizationError(
-        "Website management client cannot be undefined."
+        CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_UNDEFINED
       );
     }
 

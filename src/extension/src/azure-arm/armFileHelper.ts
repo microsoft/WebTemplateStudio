@@ -1,12 +1,10 @@
 import * as fsx from "fs-extra";
 
 export namespace ARMFileHelper {
-  export function createOrOverwriteDir(dirPath: string): void {
-    if (fsx.pathExistsSync(dirPath)) {
-      fsx.removeSync(dirPath);
+  export function creatDirIfNotExists(dirPath: string): void {
+    if (!fsx.pathExistsSync(dirPath)) {
+      fsx.mkdirpSync(dirPath);
     }
-
-    fsx.mkdirpSync(dirPath);
   }
 
   export function writeObjectToJsonFile(
