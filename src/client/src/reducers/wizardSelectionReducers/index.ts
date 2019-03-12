@@ -7,6 +7,7 @@ import appType from "./selectWebAppReducer";
 import projectName from "./updateProjectName";
 import outputPath from "./updateOutputPath";
 import services from "./services";
+import pathAvailability from './getPathAvailability';
 
 export default combineReducers({
   appType,
@@ -15,5 +16,6 @@ export default combineReducers({
   pages,
   services,
   outputPath,
-  projectName
+  projectName,
+  pathAvailability
 });

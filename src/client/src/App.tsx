@@ -28,6 +28,7 @@ import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
+import { getPathAvailability } from "./actions/getPathAvailability";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -37,6 +38,7 @@ interface IDispatchProps {
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
+  setPathAvailability: (pathAvailability: {}) => void;
 }
 
 interface IStateProps {
@@ -47,13 +49,14 @@ type Props = IDispatchProps & IStateProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => { },
-    loadWizardContent: () => { },
-    logIntoAzure: () => { },
-    saveSubscriptionData: () => { },
-    updateOutputPath: () => { },
-    setCosmosResourceAccountNameAvailability: () => { },
-    setAppNameAvailability: () => { }
+    getVSCodeApi: () => {},
+    loadWizardContent: () => {},
+    logIntoAzure: () => {},
+    saveSubscriptionData: () => {},
+    updateOutputPath: () => {},
+    setCosmosResourceAccountNameAvailability: () => {},
+    setAppNameAvailability: () => {},
+    setPathAvailability: () => { }
   };
 
   public componentDidMount() {
@@ -178,6 +181,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   },
   setAppNameAvailability: (isAvailableObject: any) => {
     dispatch(setAppNameAvailabilityAction(isAvailableObject));
+  },
+  setPathAvailability: (pathAvailability: {}) => {
+    dispatch(getPathAvailability(pathAvailability));
   }
 });
 

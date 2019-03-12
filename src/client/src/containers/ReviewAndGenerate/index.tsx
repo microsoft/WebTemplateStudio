@@ -23,6 +23,7 @@ interface IStateProps {
   projectName: string;
   outputPath: string;
   vscode: any;
+  pathAvailability: any
 }
 
 interface IDispatchProps {
@@ -65,6 +66,7 @@ const ReviewAndGenerate = (props: Props) => {
             onChange={handleProjectNameChange}
             placeholder="Project Name"
             className={styles.input}
+            maxLength={50}
           />
         </div>
         <div className={styles.inputContainer}>
@@ -85,6 +87,7 @@ const ReviewAndGenerate = (props: Props) => {
           </div>
         </div>
       </div>
+      {!props.pathAvailability.isAvailable && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.pathAvailability.error}</div>}
       <Table title="1. Type of Application" rowItems={props.projectTypeRows} />
       <Table title="2. Frameworks" rowItems={props.frameworkRows} />
       <Table title="3. Pages" rowItems={props.pagesRows} />
@@ -95,15 +98,17 @@ const ReviewAndGenerate = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
-  projectTypeRows: WizardSelectors.getProjectTypeRowItemSelector(state),
-  frameworkRows: WizardSelectors.getFrameworksRowItemSelector(state),
-  servicesRows: WizardSelectors.getServicesSelector(state),
-  pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
-  projectName: WizardSelectors.getProjectName(state),
-  outputPath: WizardSelectors.getOutputPath(state),
-  vscode: state.vscode.vscodeObject
-});
+const mapStateToProps = (state: any): IStateProps => (
+  {
+    projectTypeRows: WizardSelectors.getProjectTypeRowItemSelector(state),
+    frameworkRows: WizardSelectors.getFrameworksRowItemSelector(state),
+    servicesRows: WizardSelectors.getServicesSelector(state),
+    pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
+    projectName: WizardSelectors.getProjectName(state),
+    outputPath: WizardSelectors.getOutputPath(state),
+    vscode: state.vscode.vscodeObject,
+    pathAvailability: state.selection.pathAvailability
+  });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   updateProjectName: (projectName: string) => {

@@ -23,6 +23,7 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
+import fs = require("fs");
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -266,28 +267,59 @@ export abstract class Controller {
       });
   }
 
-  public static async handleGeneratePayloadFromClient(
-    message: any
-  ): Promise<any> {
+  public static async handleGeneratePayloadFromClient(message: any): Promise<any> {
     var payload = message.payload;
     var enginePayload: any = payload.engine;
-    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
-      enginePayload
-    );
 
-    if (payload.selectedFunctions) {
-      Controller.processFunctionDeploymentAndSendStatusToClient(
-        payload.functions,
-        enginePayload.path
-      );
+    var error = "";
+    var isAvailable = true;
+
+
+    //validate name
+    if (enginePayload.path === "") {
+      error = CONSTANTS.ERRORS.EMPTY_OUTPUT_PATH;
+      isAvailable = false;
+    } else if (enginePayload.projectName === "") {
+      error = CONSTANTS.ERRORS.EMPTY_PROJECT_NAME;
+      isAvailable = false;
+    } else if (enginePayload.projectName.length > CONSTANTS.MAX_PROJECT_NAME_LENGTH) {
+      error = CONSTANTS.ERRORS.PROJECT_NAME_LENGTH_EXCEEDED_MAX;
+      isAvailable = false;
+    } else if (!fs.existsSync(enginePayload.path)) {
+      error = CONSTANTS.ERRORS.INVALID_OUTPUT_PATH;
+      isAvailable = false;
+    } else if (fs.existsSync(enginePayload.path + "/" + enginePayload.projectName)) {
+      error = CONSTANTS.ERRORS.PROJECT_PATH_EXISTS;
+      isAvailable = false;
     }
 
-    if (payload.selectedCosmos) {
-      var cosmosPayload: any = payload.cosmos;
-      await Controller.processCosmosDeploymentAndSendStatusToClient(
-        cosmosPayload,
-        enginePayload.path
-      );
+    if (isAvailable) {
+      await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload);
+
+      if (payload.selectedFunctions) {
+        Controller.processFunctionDeploymentAndSendStatusToClient(
+          payload.functions,
+          enginePayload.path
+        );
+      }
+
+      if (payload.selectedCosmos) {
+        var cosmosPayload: any = payload.cosmos;
+        await Controller.processCosmosDeploymentAndSendStatusToClient(
+          cosmosPayload,
+          enginePayload.path
+        );
+      }
+    }
+    else {
+      // Send error to wizard, do not do anything
+      Controller.reactPanelContext.postMessageWebview({
+        command: "validatePath",
+        pathAvailability: {
+          isAvailable: isAvailable,
+          error: error
+        }
+      });
     }
   }
 
@@ -368,7 +400,7 @@ export abstract class Controller {
         canSelectFolders: true,
         canSelectMany: false
       })
-      .then(res => {
+      .then((res: any) => {
         let path = undefined;
 
         if (res !== undefined) {
