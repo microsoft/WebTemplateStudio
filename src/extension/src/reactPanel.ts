@@ -40,7 +40,7 @@ export class ReactPanel {
     if (ReactPanel.currentPanel) {
       ReactPanel.currentPanel._panel.reveal(column);
     } else {
-      this._controllerFunctionDelegate = controllerFunctionDelegate;
+      ReactPanel._controllerFunctionDelegate = controllerFunctionDelegate;
 
       ReactPanel.currentPanel = new ReactPanel(
         extensionPath,
@@ -58,7 +58,7 @@ export class ReactPanel {
   private constructor(
     extensionPath: string,
     column: vscode.ViewColumn,
-    controllerFunctionDelegate: (message: any) => any
+    controllerClassDelegate: (message: any) => any
   ) {
     this._extensionPath = extensionPath;
 
@@ -88,7 +88,7 @@ export class ReactPanel {
 
     // Handle messages from the webview from a function delegate
     this._panel.webview.onDidReceiveMessage(
-      controllerFunctionDelegate,
+      ReactPanel._controllerFunctionDelegate,
       null,
       this._disposables
     );
@@ -149,7 +149,7 @@ export class ReactPanel {
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>
 				<div id="root"></div>
-				<script src="${scriptUri}"></script>
+        <script src="${scriptUri}"></script>
 			</body>
 			</html>`;
   }

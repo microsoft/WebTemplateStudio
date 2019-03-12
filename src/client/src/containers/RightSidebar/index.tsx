@@ -17,9 +17,6 @@ import { ROUTES } from "../../utils/constants";
 import getSvgUrl from "../../utils/getSvgUrl";
 
 import cancel from "../../assets/cancel.svg";
-import masterdetail from "../../assets/masterdetail.svg";
-import list from "../../assets/list.svg";
-import contentgrid from "../../assets/contentgrid.svg";
 import reorder from "../../assets/reorder.svg";
 
 import { ISelected } from "../../types/selected";
@@ -54,15 +51,6 @@ interface IRightSidebarState {
 }
 
 type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
-
-// FIXME: Delete when icons can be properly served from the Core Engine
-const SVG_URLS: { [key: string]: string } = {
-  "wts.Page.React.MasterDetail": `${
-    process.env.REACT_APP_RELATIVE_PATH
-  }${masterdetail}`,
-  "wts.Page.React.Grid": `${process.env.REACT_APP_RELATIVE_PATH}${contentgrid}`,
-  "wts.Page.ReactNode.LongList": `${process.env.REACT_APP_RELATIVE_PATH}${list}`
-};
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {
@@ -178,22 +166,29 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 {/* Using a baseline of 1 for idx because !!0 === false */}
               </div>
             )}
-            {this.showServices() && !!this.props.services && (
+            {this.showServices() && Object.keys(this.props.services).length > 1 && (
               <div className={styles.sidebarItem}>
                 <div className={styles.dropdownTitle}>Services</div>
-                {Object.keys(this.props.services).map(serviceName => (
-                  <DraggableSidebarItem
-                    text={this.props.services[serviceName].api}
-                    closeSvgUrl={`${
-                      process.env.REACT_APP_RELATIVE_PATH
-                    }${cancel}`}
-                    itemTitle={
-                      serviceName === "cosmosOptions"
-                        ? "CosmosDB"
-                        : "Azure Functions"
-                    }
-                  />
-                ))}
+                {Object.keys(this.props.services).map(serviceName => {
+                  // FIXME: Storing the state of the cosmos account name availability is not practicial in "services"
+                  // Better to create another object that can store these booleans for name validation.
+                  if (serviceName !== "isCosmosResourceAccountNameAvailable" && serviceName !== "message") {
+                    return (
+                      <DraggableSidebarItem
+                        key={serviceName}
+                        text={this.props.services[serviceName].api}
+                        closeSvgUrl={`${
+                          process.env.REACT_APP_RELATIVE_PATH
+                        }${cancel}`}
+                        itemTitle={
+                          serviceName === "cosmosOptions"
+                            ? "CosmosDB"
+                            : "Azure Functions"
+                        }
+                      />
+                    )
+                  }
+                })}
                 {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
               </div>
             )}

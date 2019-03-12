@@ -32,8 +32,10 @@ class AzureLogin extends React.Component<Props> {
             // @ts-ignore produces a mock login response from VSCode in development
             window.postMessage({
                 command: "login",
-                email: "devEnvironment2@email.com",
-                subscriptions: [{ value: "GIV.Hackathon", label: "GIV.Hackathon" }]
+                payload: {
+                    email: "devEnvironment2@email.com",
+                    subscriptions: [{ value: "GIV.Hackathon", label: "GIV.Hackathon" }]
+                }
             });
         }
     };
@@ -41,18 +43,16 @@ class AzureLogin extends React.Component<Props> {
         const { isLoggedIn } = this.props;
         return (
             <div>
-                <Title>Attach services to your web application</Title>
+                <Title>Attach services to your web application (Optional)</Title>
                 <div className={styles.loginCard}>
                     {!isLoggedIn &&
                         <LoginCard
                             svgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${azure}`}
-
                             handleClick={() => {
                                 this.handleClick()
                             }}
                             cardTitle="Microsoft Azure Deployment"
-                            cardBody="Use Azure to help build, manage, and deploy applications on a massive, global network. Sign in to your 
-                            subscription account to get started."
+                            cardBody="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
                         />}
                 </div>
                 <AzureSubscriptions />

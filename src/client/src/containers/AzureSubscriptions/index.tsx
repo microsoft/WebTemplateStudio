@@ -75,6 +75,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                   handleButtonClick={this.isCosmosContent(option.title) ? this.props.openCosmosDbModal : ()=>{}}
                   handleDetailsClick={() => {}}
                   svgUrl={option.svgUrl}
+                  useNormalButtons={this.isCosmosContentCreated(option.title)}
                 />
               </div>
             ))}

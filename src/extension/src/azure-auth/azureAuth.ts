@@ -4,6 +4,7 @@ import { SubscriptionModels } from "azure-arm-resource";
 import { SubscriptionClient } from "../../node_modules/azure-arm-resource/lib/subscription/subscriptionClient";
 import { ResourceManagementClient } from "../../node_modules/azure-arm-resource/lib/resource/resourceManagementClient";
 import { AuthorizationError } from "../errors";
+import { CONSTANTS } from '../constants';
 
 export interface SubscriptionItem {
   label: string;
@@ -41,13 +42,13 @@ export abstract class AzureAuth {
     }
   }
 
-  public static async login(): Promise<Boolean> {
+  public static async login(): Promise<boolean> {
     this.initialize();
     if (this.api.status !== "LoggedIn") {
       await commands.executeCommand("azure-account.login");
       // Make sure it did not return from timeout
       if (this.api.status === "LoggingIn") {
-        throw new AuthorizationError("Timeout. User is not logged in");
+        throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
       }
       return true;
     } else {
@@ -61,7 +62,7 @@ export abstract class AzureAuth {
       return this.api.sessions[0].userId;
     } else {
       throw new AuthorizationError(
-        "There is no session available. Make sure the user is logged in."
+        CONSTANTS.ERRORS.SESSION_NOT_AVAILABLE
       );
     }
   }

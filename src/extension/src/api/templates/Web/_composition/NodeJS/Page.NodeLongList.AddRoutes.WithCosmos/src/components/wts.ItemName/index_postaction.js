@@ -1,4 +1,4 @@
-handleAddListItem(event) {
+﻿handleAddListItem(event) {
   fetch(this.endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

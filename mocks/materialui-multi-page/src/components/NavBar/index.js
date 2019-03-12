@@ -28,6 +28,7 @@ function index(props) {
           <Button href="/masterdetail">Master Detail</Button>
           <Button href="/list">List</Button>
           <Button href="/grid">Grid</Button>
+          <Button href="/blank">Blank</Button>
         </Toolbar>
       </AppBar>
     </React.Fragment>

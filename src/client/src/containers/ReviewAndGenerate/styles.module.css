@@ -41,6 +41,7 @@
 
 .saveIcon {
   height: 25px;
+  transform: rotate(-90deg);
   cursor: pointer;
 }
 
@@ -56,6 +57,12 @@
 
 .input:focus {
   outline: none;
+}
+
+.input::placeholder,
+.pathInput::placeholder {
+  color: white;
+  opacity: 0.4;
 }
 
 .inputContainer {

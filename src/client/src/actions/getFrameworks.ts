@@ -15,10 +15,8 @@ export const getFrameworks = async (
   try {
     const frameworksJson = await api.getFrameworks(projectType);
 
-    if (frameworksJson.value.items !== null) {
-      return getOptionalFromMetadata(
-        getMetadataFromJson(frameworksJson.value.items, type)
-      );
+    if (frameworksJson.detail == null) {
+      return getOptionalFromMetadata(getMetadataFromJson(frameworksJson, type));
     } else {
       console.log("FAILED");
       return [];

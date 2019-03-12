@@ -22,10 +22,12 @@ import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
 import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
+import { setAccountAvailability } from "./actions/setAccountAvailability";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
+import { isExtraneousPopstateEvent } from "history/DOMUtils";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -33,17 +35,19 @@ interface IDispatchProps {
   loadWizardContent: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
   saveSubscriptionData: (subscriptionData: any) => void;
+  setCosmosResourceAccountNameAvailability: (isAvailable: any) => any;
 }
 
 type Props = IDispatchProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => { },
-    loadWizardContent: () => { },
-    logIntoAzure: () => { },
-    saveSubscriptionData: () => { },
-    updateOutputPath: () => {}
+    getVSCodeApi: () => {},
+    loadWizardContent: () => {},
+    logIntoAzure: () => {},
+    saveSubscriptionData: () => {},
+    updateOutputPath: () => {},
+    setCosmosResourceAccountNameAvailability: () => {}
   };
 
   public componentDidMount() {
@@ -56,29 +60,44 @@ class App extends React.Component<Props> {
       const message = event.data;
       switch (message.command) {
         case "getOutputPath":
-          if (message.outputPath != null) {
+          if (message.payload != null && message.payload.outputPath != null) {
             this.props.updateOutputPath(
-              message.outputPath.substring(1, message.outputPath.length)
+              message.payload.outputPath.substring(
+                1,
+                message.payload.outputPath.length
+              )
             );
           }
           return;
         case "login":
           // email will be null or undefined if login didn't work correctly
-          if (message.email != null) {
-            this.props.logIntoAzure(message.email, message.subscriptions);
+          if (message.payload != null) {
+            this.props.logIntoAzure(
+              message.payload.email,
+              message.payload.subscriptions
+            );
           }
           return;
         case "subscriptionData":
           // Expect resource groups and locations on this request
-
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
-          this.props.saveSubscriptionData({ locations: message.locations, resourceGroups: message.resourceGroups });
+          if (message.payload != null) {
+            this.props.saveSubscriptionData({
+              locations: message.payload.locations,
+              resourceGroups: message.payload.resourceGroups
+            });
+          }
+
           return;
 
-        case "nameFunction":
+        case "name-cosmos":
           // Receive input validation
           // and update redux (boolean, string)
+          this.props.setCosmosResourceAccountNameAvailability({
+            isAvailable: message.payload.isAvailable,
+            message: message.message
+          });
           return;
       }
     });
@@ -89,7 +108,6 @@ class App extends React.Component<Props> {
       <Router>
         <div>
           <Header />
-          {/*<ReviewAndGenerate />*/}
           <div className={appStyles.container}>
             <CosmosResourceModal />
             <LeftSidebar sidebarItems={leftSidebarData} />
@@ -131,10 +149,13 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
     dispatch(logIntoAzureAction({ email, subscriptions }));
   },
   saveSubscriptionData: (subscriptionData: any) => {
-    dispatch(getSubscriptionData(subscriptionData))
+    dispatch(getSubscriptionData(subscriptionData));
   },
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
+  },
+  setCosmosResourceAccountNameAvailability: (isAvailable: boolean) => {
+    dispatch(setAccountAvailability(isAvailable));
   }
 });
 
