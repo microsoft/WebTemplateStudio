@@ -5,7 +5,7 @@
  */
 
 var app = require("./app");
-var debug = require("debug")("express-react:server");
+var debug = require("debug")("WebTemplateStudioExpress:server");
 var http = require("http");
 var constants = require("./constants");
 
