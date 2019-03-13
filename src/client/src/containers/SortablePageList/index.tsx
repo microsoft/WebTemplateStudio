@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { arrayMove, SortableContainer, SortableElement } from "react-sortable-hoc";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
+import SortableList from "../SortableSelectionList";
 
 import cancel from "../../assets/cancel.svg";
 import reorder from "../../assets/reorder.svg";
@@ -34,46 +35,50 @@ const SortablePageList = (props: Props) => {
      * Saves changes into the redux
      */
     const handleInputChange = (newTitle: string, idx: number) => {
-        props.pages[idx].title = newTitle;
+        pages[idx].title = newTitle;
+        setPages(pages);
         props.selectPages(pages);
     };
-    const SortableItem = SortableElement(({page, index}: {page: any, index: number}) =>                   
-        <DraggableSidebarItem
-            key={page.internalName}
-            page={page}
-            closeSvgUrl={`${
-            process.env.REACT_APP_RELATIVE_PATH
-            }${cancel}`}
-            pageSvgUrl={getSvgUrl(page.internalName)}
-            reorderSvgUrl={`${
-            process.env.REACT_APP_RELATIVE_PATH
-            }${reorder}`}
-            handleInputChange={handleInputChange}
-            idx={index + 1}
-        />);
-    const SortableList = SortableContainer(({pages}:{pages: any}) => {
-      return (
-        <div>
-          {pages.map((page: any, idx: number) => (
-            <SortableItem key={`item-${idx}`} index={idx} page={page} />
-          ))}
-        </div>
-      );
-    });
+    // const SortableItem = SortableElement(({page, idx}: {page: any, idx: number}) => {
+    //     return (
+    //     <DraggableSidebarItem
+    //         key={page.internalName}
+    //         page={page}
+    //         closeSvgUrl={`${
+    //         process.env.REACT_APP_RELATIVE_PATH
+    //         }${cancel}`}
+    //         pageSvgUrl={getSvgUrl(page.internalName)}
+    //         reorderSvgUrl={`${
+    //         process.env.REACT_APP_RELATIVE_PATH
+    //         }${reorder}`}
+    //         handleInputChange={handleInputChange}
+    //         idx={idx + 1}
+    //     />)
+    // })
+    // const SortableList = SortableContainer(({pages}:{pages: any}) => {
+    //   return (
+    //     <div>
+    //       {pages.map((page: any, idx: number) => {
+    //         return (
+    //         <SortableItem key={`item-${page.internalName + idx}`} index={idx} idx={idx} page={page} />)
+    //         })}
+    //     </div>
+    //   );
+    // });
     const onSortEnd = ({oldIndex, newIndex}: {oldIndex: number, newIndex: number}) => {
-        props.selectPages(arrayMove(pages, oldIndex, newIndex));
+        props.selectPages((arrayMove(pages, oldIndex, newIndex)));
     };
     return (
         <div className={styles.sidebarItem}>
             <div className={styles.dropdownTitle}>Pages</div>
-            <SortableList pages={pages} onSortEnd={onSortEnd} />
+            {/* <SortableSelectionList selectedItems={pages} handleInputChange={handleInputChange} onSortEnd={onSortEnd} />*/}
+            <SortableList pages={props.pages} onSortEnd={onSortEnd} handleInputChange={handleInputChange} />
             {/* Using a baseline of 1 for idx because !!0 === false */}
-      </div>
+        </div>
     )
 }
 
 const mapStateToProps = (state: any): ISortablePageListProps => {
-    // FIXME: Change this to selectors
     return {
       pages: state.selection.pages
     };
