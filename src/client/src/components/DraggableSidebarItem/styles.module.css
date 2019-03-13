@@ -3,6 +3,10 @@
   margin-bottom: 10px;
 }
 
+.titleContainer {
+  display: flex;
+}
+
 .textContainer,
 .pagesTextContainer {
   width: 100%;

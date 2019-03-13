@@ -20,6 +20,7 @@ import { ReactComponent as GreenCheck} from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
+import { WIZARD_CONTENT_INTERNAL_NAMES, EXTENSION_COMMANDS } from "../../utils/constants";
 import styles from "./styles.module.css";
 
 interface IDispatchProps {
@@ -32,7 +33,8 @@ interface IStateProps {
   vscode: any;
   subscriptionData: any;
   subscriptions: [];
-  cosmosAccountInformation: any;
+  accountNameAvailability: any;
+  selection: any;
 }
 
 type Props = IDispatchProps & IStateProps;
@@ -43,7 +45,7 @@ const initialState = {
   accountName: "",
   api: "",
   location: "",
-  internalName: "wts.Feature.Azure.Cosmos"
+  internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
 };
 
 const FORM_CONSTANTS = {
@@ -113,24 +115,24 @@ const CosmosResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
+    // if (process.env.NODE_ENV === "production") {
       props.vscode.postMessage({
-        command: "name-cosmos",
-        appName: cosmosFormData.accountName,
+        command: EXTENSION_COMMANDS.NAME_COSMOS,
+        accountName: cosmosFormData.accountName,
         subscription: cosmosFormData.subscription
       });
-    } else {
-      // In development, disables modal closing until an account name is entered.
-      // @ts-ignore produces a mock login response from VSCode in development 
-      window.postMessage({
-        command: "name-cosmos",
-        payload: {
-          isAvailable: cosmosFormData.accountName === "" ? false: true,
-        },
-        message: "in development, no error message",
-        errorType: "in development, no error type"
-      });
-    }
+    // } else {
+    //   // In development, disables modal closing until an account name is entered.
+    //   // @ts-ignore produces a mock login response from VSCode in development 
+    //   window.postMessage({
+    //     command: "name-cosmos",
+    //     payload: {
+    //       isAvailable: cosmosFormData.accountName === "" ? false: true,
+    //     },
+    //     message: "in development, no error message",
+    //     errorType: "in development, no error type"
+    //   });
+    // }
   }, [cosmosFormData.accountName]);
   /**
    * To obtain the input value, must cast as HTMLInputElement
@@ -145,10 +147,11 @@ const CosmosResourceModal = (props: Props) => {
     });
   };
   const handleAddResource = () => {
-    if (props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable) {
+    if (isAccountNameAvailable) {
       props.saveCosmosOptions(cosmosFormData); 
     }
   }
+  const { isAccountNameAvailable } = props.accountNameAvailability;
   return (
     <div>
       <div className={styles.headerContainer}>
@@ -180,8 +183,8 @@ const CosmosResourceModal = (props: Props) => {
         />
       </div>
       <div className={classnames({
-        [styles.selectionInputContainer]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0,
-        [styles.selectionContainer]: (props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable || cosmosFormData.accountName.length === 0)
+        [styles.selectionInputContainer]: !isAccountNameAvailable && cosmosFormData.accountName.length > 0,
+        [styles.selectionContainer]: (isAccountNameAvailable || cosmosFormData.accountName.length === 0)
         })}>
         <div className={styles.selectionHeaderContainer}>
           <div>Account Name</div>
@@ -193,12 +196,12 @@ const CosmosResourceModal = (props: Props) => {
           </a>
         </div>
         <div className={classnames(styles.inputContainer, {
-            [styles.borderRed]: !props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0
+            [styles.borderRed]: !isAccountNameAvailable && cosmosFormData.accountName.length > 0
           })}>
           <input className={styles.input} onChange={handleInput} value={cosmosFormData.accountName} placeholder="Account Name" />
-          {props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && <GreenCheck className={styles.validationIcon} />}
+          {isAccountNameAvailable && <GreenCheck className={styles.validationIcon} />}
         </div>
-        {!props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0 && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}>{props.cosmosAccountInformation.message}</div>}
+        {!isAccountNameAvailable && cosmosFormData.accountName.length > 0 && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}>{props.accountNameAvailability.message}</div>}
       </div>
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
@@ -235,13 +238,13 @@ const CosmosResourceModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => {
-  const { vscodeObject } = state.vscode;
   return {
     isModalOpen: isCosmosDbModalOpenSelector(state),
-    vscode: vscodeObject,
+    vscode: state.vscode.vscodeObject,
     subscriptionData: state.azureProfileData.subscriptionData,
     subscriptions: state.azureProfileData.profileData.subscriptions,
-    cosmosAccountInformation: state.selection.services,
+    accountNameAvailability: state.selection.services.cosmosDB.accountNameAvailability,
+    selection: state.selection.services.cosmosDB.selection,
   };
 };
 

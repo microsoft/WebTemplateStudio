@@ -89,11 +89,11 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                 <Card
                   cardTitle={option.title}
                   cardBody={option.body}
-                  buttonText="Add Resource"
+                  buttonText={this.addOrEditResourceText(option.internalName)}
                   handleButtonClick={this.getServicesModalOpener(option.internalName)}
                   handleDetailsClick={() => {}}
                   svgUrl={option.svgUrl}
-                  useNormalButtons={false}
+                  useNormalButtons={this.isSelectionCreated(option.internalName)}
                 />
               </div>
             ))}
@@ -103,15 +103,12 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   }
 }
 
-const mapStateToProps = (state: any): IAzureLoginProps => {
-  const { isLoggedIn } = state.azureProfileData;
-  return {
-    isLoggedIn,
+const mapStateToProps = (state: any): IAzureLoginProps => ({
+    isLoggedIn: state.azureProfileData.isLoggedIn,
     isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
     azureFunctionsSelection: state.selection.services.azureFunctions.selection,
-    cosmosDbSelection: state.selection.services.cosmosDb
-  };
-};
+    cosmosDbSelection: state.selection.services.cosmosDB.selection,
+});
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   startLogOutToAzure: () => {

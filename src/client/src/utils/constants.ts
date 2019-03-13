@@ -25,6 +25,11 @@ const ROUTES_ARRAY = [
   REVIEW_AND_GENERATE
 ];
 
+const SERVICE_KEYS = {
+  COSMOS_DB: "cosmosDB",
+  AZURE_FUNCTIONS: "azureFunctions"
+}
+
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   NODE_JS: "NodeJS",
   REACT_JS: "ReactJS",
@@ -38,9 +43,11 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   COSMOS_DB: "wts.Feature.Azure.Cosmos"
 };
 
+// Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
+  NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
   SUBSCRIPTION_DATA: "subscriptionData"
 }
 
-export { PRODUCTION, EXTENSION_COMMANDS, ROUTES, ROUTES_ARRAY, WIZARD_CONTENT_INTERNAL_NAMES };
+export { PRODUCTION, EXTENSION_COMMANDS, ROUTES, ROUTES_ARRAY, SERVICE_KEYS, WIZARD_CONTENT_INTERNAL_NAMES };

@@ -26,10 +26,8 @@ interface IVSCodeAPI {
  * 
  * Mimics VSCode API by using native postMessage API to mimic postMessage from
  * VSCode.
- *
- * Returns type "any" because the VSCode API type is not known in the client.
  */
-const mockVsCodeApi = (): any => ({
+const mockVsCodeApi = () => ({
   postMessage: (message: any) => {
     switch (message.command) {
       case "alert":
@@ -41,6 +39,17 @@ const mockVsCodeApi = (): any => ({
           command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
           payload: {
             isAvailable: message.appName.length > 0 ? true : false,
+          },
+          message: "in development, no error message",
+          errorType: "in development, no error type"
+        });
+        break;
+      case EXTENSION_COMMANDS.NAME_COSMOS:
+        //@ts-ignore
+        window.postMessage({
+          command: EXTENSION_COMMANDS.NAME_COSMOS,
+          payload: {
+            isAvailable: message.accountName.length > 0 ? true : false,
           },
           message: "in development, no error message",
           errorType: "in development, no error type"

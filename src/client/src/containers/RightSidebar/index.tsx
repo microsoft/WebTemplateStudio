@@ -14,7 +14,7 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
-import { ROUTES } from "../../utils/constants";
+import { ROUTES, SERVICE_KEYS } from "../../utils/constants";
 import getSvgUrl from "../../utils/getSvgUrl";
 
 import cancel from "../../assets/cancel.svg";
@@ -23,6 +23,7 @@ import reorder from "../../assets/reorder.svg";
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 import { selectPagesAction } from "../../actions/selectPages";
+import AzureFunctionsSelection from "../AzureFunctionsSelection";
 
 // TODO: Finalize types when API is hooked up
 interface ISelectionType {
@@ -111,28 +112,17 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   }
   public renderService(serviceName: string, selected: any) {
     const componentsToRender = [];
-    if (serviceName === "azureFunctions") {
+    if (!_.isEmpty(selected)) {
       for (const app of selected) {
         const appComponent = <DraggableSidebarItem
           key={serviceName}
-          text={app.appName}
+          text={app.accountName}
           closeSvgUrl={`${
             process.env.REACT_APP_RELATIVE_PATH
           }${cancel}`}
-          itemTitle="Azure Functions"
+          itemTitle="CosmosDB"
         />
         componentsToRender.push(appComponent);
-        for (const functionName of app.functionNames) {
-          const functionNameComponent = <DraggableSidebarItem
-            key={serviceName}
-            text={functionName}
-            closeSvgUrl={`${
-              process.env.REACT_APP_RELATIVE_PATH
-            }${cancel}`}
-            withIndent={true}
-          />
-          componentsToRender.push(functionNameComponent);
-        }
       }
     }
     return componentsToRender;
@@ -200,18 +190,13 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 <div className={styles.dropdownTitle}>Services</div>
                 {Object.keys(this.props.services).map(serviceName => {
                   // Checks if a service selection was saved
-                  if (!_.isEmpty(this.props.services[serviceName].selection)) {
-                    return (this.renderService(serviceName, this.props.services[serviceName].selection));
-                    // return (
-                    //   <DraggableSidebarItem
-                    //     key={serviceName}
-                    //     text={this.props.services[serviceName].wizardContent.serviceName}
-                    //     closeSvgUrl={`${
-                    //       process.env.REACT_APP_RELATIVE_PATH
-                    //     }${cancel}`}
-                    //     itemTitle={this.props.services[serviceName].wizardContent.serviceType}
-                    //   />
-                    // )
+                  // if (!_.isEmpty(this.props.services[serviceName].selection)) {
+                  //   return (this.renderService(serviceName, this.props.services[serviceName].selection));
+                  // }
+                  if (serviceName === SERVICE_KEYS.AZURE_FUNCTIONS) {
+                    return <AzureFunctionsSelection serviceName={serviceName} functionApps={this.props.services[serviceName].selection}/>
+                  } else if (serviceName === SERVICE_KEYS.COSMOS_DB) {
+                    return this.renderService(serviceName, this.props.services[serviceName].selection);
                   }
                 })}
               </div>
@@ -223,26 +208,16 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   }
 }
 
-const mapStateToProps = (state: any): IRightSidebarProps => {
-  // FIXME: Change this to selectors
-  const { selection } = state;
-  const { backendOptions, frontendOptions, projectTypes } = state.wizardContent;
-  const projectTypeDropdownItems = convertOptionsToDropdownItems(projectTypes);
-  const frontendDropdownItems = convertOptionsToDropdownItems(frontendOptions);
-  const backendDropdownItems = convertOptionsToDropdownItems(backendOptions);
-
-  return {
-    selection,
-    projectTypeDropdownItems,
-    frontendDropdownItems,
-    backendDropdownItems,
+const mapStateToProps = (state: any): IRightSidebarProps => ({
+    selection: state.selection,
+    projectTypeDropdownItems: convertOptionsToDropdownItems(state.wizardContent.projectTypes),
+    frontendDropdownItems: convertOptionsToDropdownItems(state.wizardContent.frontendOptions),
+    backendDropdownItems: convertOptionsToDropdownItems(state.wizardContent.backendOptions),
     services: getServicesSelector(state)
-  };
-};
+});
 
 function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
   const dropDownItems = [];
-
   for (const option of options) {
     if (option.unselectable) { 
       continue;

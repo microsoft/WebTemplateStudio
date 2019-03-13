@@ -10,7 +10,6 @@ import * as Actions from "../../../actions/types";
         selection: [],
         wizardContent: {
           serviceType: string,
-          serviceName: string
         }
     }
 }
@@ -21,26 +20,26 @@ const initialState = {
       isAppNameAvailable: false,
       message: "App name unavailable"
   },
-  selection: [{
-    appName: "testAppName",
-    functionNames: ["function1", "function2"]
-  }],
+  selection: [],
   wizardContent: {
     serviceType: "Azure Functions",
-    serviceName: ""
   }
 }
 
 const createFunctionNames = (numFunctions: number): string[] => {
   const functionNames = [];
   for (let i = 1; i <= numFunctions; i++) {
-    functionNames.push(`function${i}`);
+    functionNames.push(`Function${i}`);
   }
   return functionNames;
 }
 
 const azureFunctions = (state: any = initialState, action: any) => {
   switch (action.type) {
+    case Actions.UPDATE_AZURE_FUNCTION_NAMES:
+      const newFunctionNamesState = {...state};
+      newFunctionNamesState.selection[action.payload.appIndex].functionNames = action.payload.functionNames;
+      return newFunctionNamesState;
     case Actions.SET_APP_NAME_AVAILABILITY:
       const newAvailabilityState = {
         ...state,
@@ -56,7 +55,6 @@ const azureFunctions = (state: any = initialState, action: any) => {
       const newSelectionState = {
         ...initialState,
         selection: [
-          ...state.selection,
           {
             ...action.payload,
             functionNames: createFunctionNames(action.payload.numFunctions)

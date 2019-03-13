@@ -115,7 +115,7 @@ class App extends React.Component<Props> {
         <div>
           <Header />
           <div className={appStyles.container}>
-            {/* <CosmosResourceModal /> */}
+            <CosmosResourceModal />
             <AzureFunctionsModal />
             <LeftSidebar sidebarItems={leftSidebarData} />
             <div className={appStyles.centerView}>

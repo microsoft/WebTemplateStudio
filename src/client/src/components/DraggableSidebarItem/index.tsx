@@ -17,6 +17,7 @@ const DraggableSidebarItem = ({
   itemTitle,
   handleInputChange,
   idx,
+  functionName,
   withIndent,
 }: {
   page?: ISelected;
@@ -27,12 +28,13 @@ const DraggableSidebarItem = ({
   itemTitle?: string;
   handleInputChange?: (e: any, idx: number) => void;
   idx?: number;
+  functionName?: string;
   withIndent?: boolean
 }) => {
   return (
     <React.Fragment>
       {itemTitle != null && (
-        <div className={styles.draggablePage}>
+        <div className={styles.titleContainer}>
           { withIndent ?
           <React.Fragment>
             <div className={styles.iconContainer} />
@@ -52,10 +54,10 @@ const DraggableSidebarItem = ({
         })}>
           <div className={styles.inputContainer}>
             {pageSvgUrl != null && <img className={styles.icon} src={pageSvgUrl} />}
-            {handleInputChange != null && page != null && idx != null && (
+            {handleInputChange != null && (page != null || functionName != null) && idx != null && (
               <input
                 className={styles.input}
-                defaultValue={page.title}
+                defaultValue={page ? page.title : functionName}
                 onChange={e => {
                   handleInputChange(e.target.value, idx - 1);
                 }}
