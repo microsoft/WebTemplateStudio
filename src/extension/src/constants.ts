@@ -16,6 +16,12 @@ export const CONSTANTS = {
         COSMOS_ACCOUNT_DEPLOYED: function (accountName: string) {
             return `${accountName} has been deployed!`;
         }
+    },
+    AZURE_LOGIN_STATUS: {
+        LOGGED_IN: "LoggedIn",
+        LOGGING_IN: "LoggingIn",
+        INITIALIZING: "Initializing",
+        LOGGED_OUT: "LoggedOut"
     }
 }
 

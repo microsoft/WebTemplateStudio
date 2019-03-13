@@ -44,10 +44,10 @@ export abstract class AzureAuth {
 
   public static async login(): Promise<boolean> {
     this.initialize();
-    if (this.api.status !== "LoggedIn") {
+    if (this.api.status !== CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
       await commands.executeCommand("azure-account.login");
       // Make sure it did not return from timeout
-      if (this.api.status === "LoggingIn") {
+      if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGING_IN) {
         throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
       }
       return true;
