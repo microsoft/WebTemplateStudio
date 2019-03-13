@@ -28,7 +28,7 @@ const Card = ({
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cardTitleContainer}>
-        {!!svgUrl && <img className={styles.icon} src={svgUrl} />}
+        {svgUrl != null && <img className={styles.icon} src={svgUrl} />}
         <div className={styles.cardTitle}>{cardTitle}</div>
       </div>
       <div className={styles.cardBody}>
@@ -44,7 +44,7 @@ const Card = ({
             styles.signInButton,
             {
               [buttonStyles.buttonHighlighted]: useNormalButtons ? false : true,
-              [buttonStyles.buttonDark]: !!useNormalButtons
+              [buttonStyles.buttonDark]: useNormalButtons != null
             }
           )}
         >
