@@ -173,7 +173,7 @@ export abstract class Controller {
         const email = AzureAuth.getEmail();
         AzureAuth.getSubscriptions()
           .then(items => {
-            const subs = items.map(subscriptionItem => {
+            const subscriptions = items.map(subscriptionItem => {
               return {
                 label: subscriptionItem.label,
                 value: subscriptionItem.label
@@ -181,7 +181,7 @@ export abstract class Controller {
             });
             Controller.handleValidMessage(ExtensionCommand.Login, {
               email: email,
-              subscriptions: subs
+              subscriptions: subscriptions
             });
           })
           .catch((err: Error) => {
@@ -195,9 +195,9 @@ export abstract class Controller {
 
   public static sendSubscriptionsToClient(message: any) {
     Controller.getSubscriptions()
-      .then(subs => {
+      .then(subscriptions => {
         Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
-          subscriptions: subs
+          subscriptions: subscriptions
         });
       })
       .catch((err: Error) => {
