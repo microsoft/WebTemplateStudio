@@ -1,25 +1,24 @@
 {
-	"extends": [
-		"tslint:latest",
-		"tslint-react",
-		"tslint-config-prettier",
-		"tslint-react-hooks"
-	],
-	"linterOptions": {
-		"exclude": [
-			"src/serviceWorker.ts"
-		]
-	},
-	"rules": {
-		"no-implicit-dependencies": [true, "dev"],
-		"no-string-throw": true,
-		"no-unused-expression": true,
-		"no-duplicate-variable": true,
-		"curly": true,
-		"class-name": true,
-		"triple-equals": false,
-		"object-literal-sort-keys": false,
-		"react-hooks-nesting": "error"
-	},
-	"defaultSeverity": "warning"
+  "extends": [
+    "tslint:latest",
+    "tslint-react",
+    "tslint-config-prettier",
+    "tslint-react-hooks",
+    "tslint-microsoft-contrib/recommended"
+  ],
+  "linterOptions": {
+    "exclude": ["src/serviceWorker.ts"]
+  },
+  "rules": {
+    "no-implicit-dependencies": [true, "dev"],
+    "no-string-throw": true,
+    "no-unused-expression": true,
+    "no-duplicate-variable": true,
+    "curly": true,
+    "class-name": true,
+    "triple-equals": false,
+    "object-literal-sort-keys": false,
+    "react-hooks-nesting": "error"
+  },
+  "defaultSeverity": "warning"
 }
