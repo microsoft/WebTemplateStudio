@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { CONSTANTS, ExtensionCommand } from './constants';
+import { CONSTANTS, ExtensionCommand } from "./constants";
 import {
   AzureAuth,
   SubscriptionItem,
@@ -21,8 +21,6 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
-
-
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -48,14 +46,11 @@ export abstract class Controller {
       ExtensionCommand.NameCosmos,
       Controller.sendCosmosNameValidationStatusToClient
     ],
-    [
-      ExtensionCommand.Generate,
-      Controller.handleGeneratePayloadFromClient
-    ],
+    [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [ExtensionCommand.GetOutputPath, Controller.sendOutputPathSelectionToClient]
   ]);
 
-  private static routingMessageReceieverDelegate = function (message: any) {
+  private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.commandMap.get(message.command);
 
     if (command) {
@@ -64,7 +59,7 @@ export abstract class Controller {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
     }
   };
-  
+
   /**
    * launchWizard
    * Will pass in a routing function delegate to the ReactPanel
@@ -250,14 +245,20 @@ export abstract class Controller {
       });
   }
 
-  public static async handleGeneratePayloadFromClient(message : any): Promise<any>{
+  public static async handleGeneratePayloadFromClient(
+    message: any
+  ): Promise<any> {
     var payload = message.payload;
     var enginePayload: any = payload.engine;
-    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload);
-    
-    if(payload.selectedCosmos){
+    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
+      enginePayload
+    );
+
+    if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
-      await Controller.attemptCosmosDeploymentAndSendStatusToClient(cosmosPayload);
+      await Controller.attemptCosmosDeploymentAndSendStatusToClient(
+        cosmosPayload
+      );
     }
   }
 
@@ -290,7 +291,9 @@ export abstract class Controller {
       });
   }
 
-  public static attemptCosmosDeploymentAndSendStatusToClient(cosmosPayload: any) {
+  public static attemptCosmosDeploymentAndSendStatusToClient(
+    cosmosPayload: any
+  ) {
     /*
      * example:
      *   {
@@ -320,9 +323,11 @@ export abstract class Controller {
       });
   }
 
-  public static sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload: any) {
+  public static sendTemplateGenInfoToApiAndSendStatusToClient(
+    enginePayload: any
+  ) {
     // FIXME: After gen is done, we need to do some feedback.
-    ApiModule.SendGeneration("5000", enginePayload);
+    ApiModule.SendTemplateGenerationPayloadToApi("5000", enginePayload);
   }
 
   public static sendOutputPathSelectionToClient(message: any) {

@@ -21,7 +21,13 @@ export default class ApiModule {
     return process;
   }
 
-  public static async SendGeneration(
+  /**
+   * This method will send a post request to the generation end point in the engine's api, to generate a project
+   * with the information provided.
+   * @param port The port of the api
+   * @param payload The template generation payload for the post request that is to be sent to the engine api for generation.
+   */
+  public static async SendTemplateGenerationPayloadToApi(
     port: string,
     payload: IGenerationPayloadType
   ): Promise<any> {
