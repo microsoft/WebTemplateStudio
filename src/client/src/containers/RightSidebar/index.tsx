@@ -4,6 +4,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
+import { arrayMove, SortableContainer, SortableElement } from "react-sortable-hoc";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
@@ -21,9 +22,10 @@ import getSvgUrl from "../../utils/getSvgUrl";
 import cancel from "../../assets/cancel.svg";
 import reorder from "../../assets/reorder.svg";
 
+import { selectPagesAction } from "../../actions/selectPages";
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
-import { selectPagesAction } from "../../actions/selectPages";
+import SortablePageList from "../SortablePageList";
 
 // TODO: Finalize types when API is hooked up
 interface ISelectionType {
@@ -49,7 +51,8 @@ interface IRightSidebarProps {
 }
 
 interface IRightSidebarState {
-  frontendDropdownValue: ISelected | undefined;
+  frontendDropdownValue?: ISelected | undefined;
+  items: string[];
 }
 
 type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
@@ -61,6 +64,9 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     selectWebApp: () => {},
     selectPages: () => {}
   };
+  public state = {
+    items: ["Item 1", "Item 2", "Item 3"]
+  }
   public handleChange(
     e: IDropDownOptionType,
     selectOption: (item: ISelected) => void
@@ -127,6 +133,11 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     }
     return componentsToRender;
   }
+  public onSortEnd = ({oldIndex, newIndex}: {oldIndex: number, newIndex: number}) => {
+    this.setState(({items}) => ({
+      items: arrayMove(items, oldIndex, newIndex),
+    }));
+  };
   public render() {
     const { pathname } = this.props.location;
     return (
@@ -164,27 +175,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 this.props.selection.backendFramework
               )}
             />
-            {this.showPages() && (
-              <div className={styles.sidebarItem}>
-                <div className={styles.dropdownTitle}>Pages</div>
-                {this.props.selection.pages.map((page, idx) => (
-                  <DraggableSidebarItem
-                    key={page.internalName}
-                    page={page}
-                    closeSvgUrl={`${
-                      process.env.REACT_APP_RELATIVE_PATH
-                    }${cancel}`}
-                    pageSvgUrl={getSvgUrl(page.internalName)}
-                    reorderSvgUrl={`${
-                      process.env.REACT_APP_RELATIVE_PATH
-                    }${reorder}`}
-                    handleInputChange={this.handleInputChange.bind(this)}
-                    idx={idx + 1}
-                  />
-                ))}
-                {/* Using a baseline of 1 for idx because !!0 === false */}
-              </div>
-            )}
+            {this.showPages() && <SortablePageList />}
             {this.showServices() && (
               <div className={styles.sidebarItem}>
                 <div className={styles.dropdownTitle}>Services</div>

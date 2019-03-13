@@ -3,7 +3,6 @@ import * as React from "react";
 import Card from "../SelectableCard";
 import Title from "../Title";
 
-import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
 import { IOption } from "../../types/option";
@@ -29,15 +28,9 @@ class SelectOption extends React.Component<
 > {
   constructor(props: any) {
     super(props);
-    if (this.props.multiSelect) {
-      this.state = {
-        selectedCards: this.props.selectedCards ? this.props.selectedCards : []
-      };
-    } else {
-      this.state = {
-        selectedCards: this.props.selectedCards ? this.props.selectedCards : [0]
-      };
-    }
+    this.state = {
+      selectedCards: this.props.selectedCards ? this.props.selectedCards : [0]
+    };
   }
 
   public isCardSelected(cardNumber: number): boolean {
