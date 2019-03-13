@@ -79,7 +79,7 @@ class Footer extends React.Component<Props> {
     const regx = new RegExp(/^[a-zA-Z0-9 ]+$/i)
     for (var i = 0; i < this.props.engine.pages.length; i++) {
       const pageName = this.props.engine.pages[i].name;
-      if (!/^[a-zA-Z0-9 ]+$/i.test(pageName) || !/\S/.test(pageName.title)) {
+      if (!/^[a-zA-Z0-9 ]+$/i.test(pageName) || !/\S/.test(pageName)) {
         areValidNames = false;
         break;
       } else if (pageNames.has(pageName)) {
