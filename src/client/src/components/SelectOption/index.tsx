@@ -57,9 +57,7 @@ class SelectOption extends React.Component<
   public convertCardNumbersToTitles(cardNumbers: number[]): ISelected[] {
     const cardTitles = [];
     for (const num of cardNumbers) {
-      /**
-       * originalTitle is for page layouts.
-       */
+      // originalTitle is for page layouts.
       const cardToConvert: {
         title: string;
         internalName: string;
