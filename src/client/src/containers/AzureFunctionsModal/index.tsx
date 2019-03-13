@@ -45,7 +45,7 @@ const initialState = {
   appName: "",
   runtimeStack: "",
   location: "",
-  numFunctions: 0,
+  numFunctions: 1,
   internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
 };
 
@@ -65,7 +65,6 @@ const CosmosResourceModal = (props: Props) => {
           label: "node"
         }
       ],
-      numFunctions: 1,
       subscription: props.subscriptions,
       resourceGroup: props.subscriptionData.resourceGroups,
       location: props.subscriptionData.locations

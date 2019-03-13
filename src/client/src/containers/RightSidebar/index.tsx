@@ -109,6 +109,34 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       label: option.title
     };
   }
+  public renderService(serviceName: string, selected: any) {
+    const componentsToRender = [];
+    if (serviceName === "azureFunctions") {
+      for (const app of selected) {
+        const appComponent = <DraggableSidebarItem
+          key={serviceName}
+          text={app.appName}
+          closeSvgUrl={`${
+            process.env.REACT_APP_RELATIVE_PATH
+          }${cancel}`}
+          itemTitle="Azure Functions"
+        />
+        componentsToRender.push(appComponent);
+        for (const functionName of app.functionNames) {
+          const functionNameComponent = <DraggableSidebarItem
+            key={serviceName}
+            text={functionName}
+            closeSvgUrl={`${
+              process.env.REACT_APP_RELATIVE_PATH
+            }${cancel}`}
+            withIndent={true}
+          />
+          componentsToRender.push(functionNameComponent);
+        }
+      }
+    }
+    return componentsToRender;
+  }
   public render() {
     const { pathname } = this.props.location;
     return (
@@ -173,19 +201,19 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 {Object.keys(this.props.services).map(serviceName => {
                   // Checks if a service selection was saved
                   if (!_.isEmpty(this.props.services[serviceName].selection)) {
-                    return (
-                      <DraggableSidebarItem
-                        key={serviceName}
-                        text={this.props.services[serviceName].wizardContent.serviceName}
-                        closeSvgUrl={`${
-                          process.env.REACT_APP_RELATIVE_PATH
-                        }${cancel}`}
-                        itemTitle={this.props.services[serviceName].wizardContent.serviceType}
-                      />
-                    )
+                    return (this.renderService(serviceName, this.props.services[serviceName].selection));
+                    // return (
+                    //   <DraggableSidebarItem
+                    //     key={serviceName}
+                    //     text={this.props.services[serviceName].wizardContent.serviceName}
+                    //     closeSvgUrl={`${
+                    //       process.env.REACT_APP_RELATIVE_PATH
+                    //     }${cancel}`}
+                    //     itemTitle={this.props.services[serviceName].wizardContent.serviceType}
+                    //   />
+                    // )
                   }
                 })}
-                {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
               </div>
             )}
           </div>

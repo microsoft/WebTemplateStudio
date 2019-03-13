@@ -7,7 +7,11 @@ import * as Actions from "../../../actions/types";
             isAppNameAvailable: boolean,
             message: string
         },
-        selection: {}
+        selection: [],
+        wizardContent: {
+          serviceType: string,
+          serviceName: string
+        }
     }
 }
 */
@@ -17,11 +21,22 @@ const initialState = {
       isAppNameAvailable: false,
       message: "App name unavailable"
   },
-  selection: [],
+  selection: [{
+    appName: "testAppName",
+    functionNames: ["function1", "function2"]
+  }],
   wizardContent: {
     serviceType: "Azure Functions",
     serviceName: ""
   }
+}
+
+const createFunctionNames = (numFunctions: number): string[] => {
+  const functionNames = [];
+  for (let i = 1; i <= numFunctions; i++) {
+    functionNames.push(`function${i}`);
+  }
+  return functionNames;
 }
 
 const azureFunctions = (state: any = initialState, action: any) => {
@@ -40,7 +55,13 @@ const azureFunctions = (state: any = initialState, action: any) => {
     case Actions.SAVE_AZURE_FUNCTIONS_SETTINGS:
       const newSelectionState = {
         ...initialState,
-        selection: [...state.selection, action.payload],
+        selection: [
+          ...state.selection,
+          {
+            ...action.payload,
+            functionNames: createFunctionNames(action.payload.numFunctions)
+          }
+        ],
       };
       return newSelectionState;
     default:
