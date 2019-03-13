@@ -20,7 +20,7 @@ const DraggableSidebarItem = ({
   azureFunctionName,
   withIndent,
   withLargeIndent,
-  handleCloseClick,
+  handleCloseClick
 }: {
   page?: ISelected;
   text?: string;
@@ -36,27 +36,34 @@ const DraggableSidebarItem = ({
   handleCloseClick?: (idx: number) => void;
 }) => {
   return (
-    <React.Fragment>
+    <div style={{ width: "87%" }}>
       {itemTitle && (
         <div className={styles.titleContainer}>
-          {withIndent ?
+          {withIndent ? (
             <React.Fragment>
               <div className={styles.iconContainer} />
               <div className={styles.itemContainer}>
                 <div>{itemTitle}</div>
               </div>
-            </React.Fragment> : itemTitle}
+            </React.Fragment>
+          ) : (
+            itemTitle
+          )}
         </div>
       )}
       <div className={styles.draggablePage}>
-        {(withIndent || reorderSvgUrl) && <div className={styles.iconContainer}>
-          <img className={styles.reorderIcon} src={reorderSvgUrl} />
-        </div>}
-        <div className={classnames({
-          [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
-          [styles.textContainer]: !withIndent,
-          [styles.largeIndentContainer]: withLargeIndent
-        })}>
+        {(withIndent || reorderSvgUrl) && (
+          <div className={styles.iconContainer}>
+            <img className={styles.reorderIcon} src={reorderSvgUrl} />
+          </div>
+        )}
+        <div
+          className={classnames({
+            [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
+            [styles.textContainer]: !withIndent,
+            [styles.largeIndentContainer]: withLargeIndent
+          })}
+        >
           <div className={styles.inputContainer}>
             {pageSvgUrl && <img className={styles.icon} src={pageSvgUrl} />}
             {handleInputChange && (page || azureFunctionName) && idx && (
@@ -74,12 +81,29 @@ const DraggableSidebarItem = ({
             )}
             <div>{text}</div>
           </div>
+          {page && !page!.isValidTitle && (
+            <div
+              style={{
+                backgroundColor: "#5f0d0d",
+                borderWidth: `1px solid`,
+                borderColor: "red",
+                marginTop: 0
+              }}
+              className={styles.pagesTextContainer}
+            >
+              {page.error}
+            </div>
+          )}
         </div>
-        <img onClick={() => {
-          idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
-        }} className={styles.cancelIcon} src={closeSvgUrl} />
+        <img
+          onClick={() => {
+            idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
+          }}
+          className={styles.cancelIcon}
+          src={closeSvgUrl}
+        />
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

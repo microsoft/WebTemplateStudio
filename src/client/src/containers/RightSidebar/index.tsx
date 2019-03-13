@@ -57,10 +57,10 @@ type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {
-    selectBackendFramework: () => {},
-    selectFrontendFramework: () => {},
-    selectWebApp: () => {},
-    selectPages: () => {}
+    selectBackendFramework: () => { },
+    selectFrontendFramework: () => { },
+    selectWebApp: () => { },
+    selectPages: () => { }
   };
   public handleChange(
     e: IDropDownOptionType,
@@ -78,6 +78,21 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public handleInputChange = (newTitle: string, idx: number) => {
     const { pages } = this.props.selection;
     pages[idx].title = newTitle;
+    if (!/^[a-zA-Z0-9 ]+$/i.test(pages[idx].title) || !/\S/.test(pages[idx].title)) {
+      pages[idx].isValidTitle = false;
+      pages[idx].error = "Invalid Name";
+    } else {
+      pages[idx].isValidTitle = true;
+    }
+    var pageNames = new Set();
+    for (var i = 0; i < pages.length; i++) {
+      if (pages[i].title === pages[idx].title && i !== idx) {
+        pages[idx].isValidTitle = false;
+        pages[idx].error = "Duplicate Name";
+        break;
+      }
+    }
+
     this.props.selectPages(pages);
   };
   public showProjectTypes = (): boolean => {
@@ -176,11 +191,53 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 this.props.selection.backendFramework
               )}
             />
-            {this.showPages() && <SortablePageList />}
-            {this.showServices() && (
+            {this.showPages() && (
+              <div className={styles.sidebarItem}>
+                <div className={styles.dropdownTitle}>Pages</div>
+                {this.props.selection.pages.map((page, idx) => (
+                  <div>
+                    <DraggableSidebarItem
+                      key={page.internalName}
+                      page={page}
+                      closeSvgUrl={`${
+                        process.env.REACT_APP_RELATIVE_PATH
+                        }${cancel}`}
+                      pageSvgUrl={getSvgUrl(page.internalName)}
+                      reorderSvgUrl={`${
+                        process.env.REACT_APP_RELATIVE_PATH
+                        }${reorder}`}
+                      handleInputChange={this.handleInputChange.bind(this)}
+                      idx={idx + 1}
+                    />
+                  </div>
+                ))}
+                {/* Using a baseline of 1 for idx because !!0 === false */}
+              </div>
+            )}
+            {this.showServices() && Object.keys(this.props.services).length > 1 && (
               <div className={styles.sidebarItem}>
                 <div className={styles.dropdownTitle}>Services</div>
-                <ServicesSidebarItem services={this.props.services} />
+                {Object.keys(this.props.services).map(serviceName => {
+                  // FIXME: Storing the state of the cosmos account name availability is not practicial in "services"
+                  // Better to create another object that can store these booleans for name validation.
+                  if (serviceName !== "isCosmosResourceAccountNameAvailable" && serviceName !== "message") {
+                    return (
+                      <DraggableSidebarItem
+                        key={serviceName}
+                        text={this.props.services[serviceName].api}
+                        closeSvgUrl={`${
+                          process.env.REACT_APP_RELATIVE_PATH
+                          }${cancel}`}
+                        itemTitle={
+                          serviceName === "cosmosOptions"
+                            ? "CosmosDB"
+                            : "Azure Functions"
+                        }
+                      />
+                    )
+                  }
+                })}
+                {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
               </div>
             )}
           </div>

@@ -72,6 +72,26 @@ class Footer extends React.Component<Props> {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
   public render() {
+
+    // Validate the page names and do not generate if they are invalid
+    var pageNames = new Set();
+    var areValidNames = true;
+    const regx = new RegExp(/^[a-zA-Z0-9 ]+$/i)
+    for (var i = 0; i < this.props.engine.pages.length; i++) {
+      const pageName = this.props.engine.pages[i].name;
+      if (!/^[a-zA-Z0-9 ]+$/i.test(pageName) || !/\S/.test(pageName.title)) {
+        areValidNames = false;
+        break;
+      } else if (pageNames.has(pageName)) {
+        areValidNames = false;
+        break;
+      } else {
+        pageNames.add(pageName);
+      }
+    }
+
+    console.log(areValidNames);
+
     // TODO: Needs access to redux to determine where each link should go to
     // TODO: Add previous paths through link prop to track state/history
     const { pathname } = this.props.location;
@@ -102,10 +122,10 @@ class Footer extends React.Component<Props> {
                 Next
               </Link>
               <button
-                disabled={pathname !== ROUTES.REVIEW_AND_GENERATE}
+                disabled={pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames}
                 className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]: !this.isReviewAndGenerate(),
-                  [buttonStyles.buttonHighlightedBorder]: this.isReviewAndGenerate()
+                  [buttonStyles.buttonDark]: !this.isReviewAndGenerate() || !areValidNames,
+                  [buttonStyles.buttonHighlightedBorder]: this.isReviewAndGenerate() && areValidNames
                 })}
                 onClick={this.logMessageToVsCode}
               >
