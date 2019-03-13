@@ -21,6 +21,10 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
+<<<<<<< HEAD
+=======
+import fs = require('fs');
+>>>>>>> Added function that updates connection string
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -505,4 +509,23 @@ export abstract class Controller {
       this.usersFunctionSubscriptionItemCache = subscriptionItem;
     }
   }
+
+  private static updateConnectionStringInEnvFile(filePath: string, connectionString: string): void {
+    /**
+     * Updates .env file in generated project directory once the connection string is received.
+     * Throws an error if the user deleted the project directory
+     * @filePath: path of .env file
+     */
+    const fileContents = `COSMOSDB_CONNSTR = ${connectionString};\nCOSMODDB_USER = <cosmos-user>;\nCOSMOSDB_PASSWORD = <cosmos_password>\n;`
+    try {
+      if (fs.existsSync(filePath)) {
+        // file exists
+        fs.writeFileSync(filePath + "\\.env", fileContents);
+      }
+    }
+    catch (err) {
+      throw new Error(err);
+    }
+  }
+
 }
