@@ -12,12 +12,14 @@ import {
 } from "./errors";
 import {
   FunctionProvider,
-  FunctionSelections
+  FunctionSelections,
+  GetAvailableRuntimes
 } from "./azure-functions/functionProvider";
 import {
   CosmosDBDeploy,
   CosmosDBSelections,
-  DatabaseObject
+  DatabaseObject,
+  GetAvailableAPIs
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
@@ -47,8 +49,25 @@ export abstract class Controller {
       Controller.sendCosmosNameValidationStatusToClient
     ],
     [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
-    [ExtensionCommand.GetOutputPath, Controller.sendOutputPathSelectionToClient]
+    [
+      ExtensionCommand.GetOutputPath,
+      Controller.sendOutputPathSelectionToClient
+    ],
+    [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
+    [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs]
   ]);
+
+  public static sendFunctionRuntimes(message: any) {
+    Controller.handleValidMessage(ExtensionCommand.GetFunctionsRuntimes, {
+      runtimes: GetAvailableRuntimes()
+    });
+  }
+
+  public static sendCosmosAPIs(message: any) {
+    Controller.handleValidMessage(ExtensionCommand.GetCosmosAPIs, {
+      APIs: GetAvailableAPIs()
+    });
+  }
 
   private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.commandMap.get(message.command);

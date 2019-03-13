@@ -46,5 +46,7 @@ export enum ExtensionCommand {
   DeployFunctions = "deploy-functions",
   DeployCosmos = "deploy-cosmos",
   Generate = "generate",
-  GetOutputPath = "getOutputPath"
+  GetOutputPath = "getOutputPath",
+  GetFunctionsRuntimes = "getFunctionsRuntimes",
+  GetCosmosAPIs = "getCosmosAPIs"
 }
