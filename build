@@ -1,8 +1,4 @@
-path=$(find ~/ | grep -m 1 'WebTemplateStudio/build')
-
-path=$(echo $path | sed "s/build/src/g")
-
-yarn --cwd $path/client install
-yarn --cwd $path/client build
-yarn --cwd $path/extension install
-yarn --cwd $path/extension compile
+yarn --cwd ./src/client install
+yarn --cwd ./src/client build
+yarn --cwd ./src/extension install
+yarn --cwd ./src/extension compile
