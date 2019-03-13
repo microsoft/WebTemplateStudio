@@ -145,7 +145,7 @@ class SelectOption extends React.Component<
               iconStyles={styles.icon}
               title={option.title}
               body={option.body}
-              unselectable={option.unselectable}
+              disabled={option.unselectable}
             />
           ))}
         </div>

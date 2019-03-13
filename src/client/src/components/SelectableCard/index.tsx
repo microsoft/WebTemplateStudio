@@ -19,7 +19,7 @@ const SelectableCard = ({
   selected,
   cardNumber,
   onCardClick,
-  unselectable
+  disabled
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -28,7 +28,7 @@ const SelectableCard = ({
   selected: boolean;
   cardNumber: number;
   onCardClick: (idx: number) => void;
-  unselectable: boolean | undefined;
+  disabled: boolean | undefined;
 }) => {
   return (
     <div
@@ -37,7 +37,7 @@ const SelectableCard = ({
       }}
       className={classNames(styles.container, styles.boundingBox, {
         [styles.selected]: selected,
-        [styles.unselectable]: unselectable
+        [styles.unselectable]: disabled
       })}
     >
       <div>
