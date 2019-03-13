@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import { spawn, ChildProcess } from "child_process";
+import { ChildProcess, exec } from "child_process";
 import fetch, { Response } from "node-fetch";
 
 export default class ApiModule {
@@ -25,7 +25,8 @@ export default class ApiModule {
     ).fsPath;
 
     let apiWorkingDirectory = path.join(context.extensionPath, "src", "api", platform);
-    let spawnedProcess = spawn(`${apiPath}`, undefined, { cwd: apiWorkingDirectory });
+    let spawnedProcess = exec(`${apiPath}`, { cwd: apiWorkingDirectory });
+    
     return spawnedProcess;
   }
 
