@@ -6,6 +6,7 @@ import masterdetailwhite from "../assets/masterdetailwhite.svg";
 import grid from "../assets/contentgridwhite.svg";
 import list from "../assets/listwhite.svg";
 import azurefunctions from "../assets/azurefunctions.svg";
+import cancel from "../assets/cancel.svg";
 import cosmosdb from "../assets/cosmosdbwhite.svg";
 import blankpage from "../assets/blankpagewhite.svg";
 
@@ -30,3 +31,5 @@ export default (internalName: string): string | undefined => {
     return withLocalPath(SVG_MAPPINGS[internalName]);
   }
 };
+
+export const getCancelSvg = (): string => withLocalPath(cancel);

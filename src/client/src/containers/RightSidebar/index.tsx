@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
+import ServicesSidebarItem from "../../components/ServicesSidebarItem";
 
 import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/selectFrontEndFramework";
@@ -14,7 +15,7 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
-import { ROUTES, SERVICE_KEYS } from "../../utils/constants";
+import { ROUTES } from "../../utils/constants";
 import getSvgUrl from "../../utils/getSvgUrl";
 
 import cancel from "../../assets/cancel.svg";
@@ -23,7 +24,6 @@ import reorder from "../../assets/reorder.svg";
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 import { selectPagesAction } from "../../actions/selectPages";
-import AzureFunctionsSelection from "../AzureFunctionsSelection";
 
 // TODO: Finalize types when API is hooked up
 interface ISelectionType {
@@ -188,17 +188,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             {this.showServices() && (
               <div className={styles.sidebarItem}>
                 <div className={styles.dropdownTitle}>Services</div>
-                {Object.keys(this.props.services).map(serviceName => {
-                  // Checks if a service selection was saved
-                  // if (!_.isEmpty(this.props.services[serviceName].selection)) {
-                  //   return (this.renderService(serviceName, this.props.services[serviceName].selection));
-                  // }
-                  if (serviceName === SERVICE_KEYS.AZURE_FUNCTIONS) {
-                    return <AzureFunctionsSelection serviceName={serviceName} functionApps={this.props.services[serviceName].selection}/>
-                  } else if (serviceName === SERVICE_KEYS.COSMOS_DB) {
-                    return this.renderService(serviceName, this.props.services[serviceName].selection);
-                  }
-                })}
+                <ServicesSidebarItem services={this.props.services} />
               </div>
             )}
           </div>

@@ -2,7 +2,7 @@ import * as Actions from "../../../actions/types";
 
 /* State Shape
 {
-  cosmosDB:
+  cosmosDB: {
     appNameAvailability: {
         isAppNameAvailable: boolean,
         message: string
@@ -15,6 +15,30 @@ import * as Actions from "../../../actions/types";
 }
 */
 
+interface IAvailability {
+  isAccountNameAvailable: boolean;
+  message: string;
+}
+
+interface ISelectedCosmosService {
+  subscription: string;
+  resourceGroup: string;
+  accountName: string;
+  api: string;
+  location: string;
+  internalName: string;
+}
+
+interface IServiceContent {
+  serviceType: string;
+}
+
+export interface ICosmosDB {
+  accountNameAvailability: IAvailability;
+  selection: ISelectedCosmosService[];
+  wizardContent: IServiceContent;
+}
+
 const initialState = {
   accountNameAvailability: {
       isAccountNameAvailable: false,
@@ -26,7 +50,7 @@ const initialState = {
   }
 }
 
-const services = (state: any = initialState, action: any) => {
+const services = (state: ICosmosDB = initialState, action: any) => {
   switch (action.type) {
     case Actions.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
       const newSelectionState = {

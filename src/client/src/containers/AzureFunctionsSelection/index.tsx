@@ -9,7 +9,6 @@ import { updateAzureFunctionNamesAction } from "../../actions/updateAzureFunctio
 
 interface IProps {
     functionApps: any;
-    serviceName: string;
 }
 
 interface IFunctionApp {
@@ -23,7 +22,7 @@ interface IDispatchProps {
 
 type Props = IProps & IDispatchProps;
 
-const AzureFunctionsSelection = ({functionApps, serviceName, updateFunctionNames}: Props) => {
+const AzureFunctionsSelection = ({functionApps, updateFunctionNames}: Props) => {
 
     const handleInputChange = (newTitle: string, idx: number) => {
         // current implementation has only one function app at index 0
