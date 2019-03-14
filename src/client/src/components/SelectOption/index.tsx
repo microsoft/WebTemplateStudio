@@ -75,17 +75,12 @@ class SelectOption extends React.Component<
    */
   public addOrRemoveOption(cardNumber: number) {
     const { selectedCards } = this.state;
-    let filteredCards = selectedCards;
-    if (this.isCardSelected(cardNumber)) {
-      filteredCards = filteredCards.filter(val => val !== cardNumber);
-    } else {
-      filteredCards.push(cardNumber);
-    }
+    selectedCards.push(cardNumber);
     if (this.props.selectOptions !== undefined) {
-      this.props.selectOptions(this.convertCardNumbersToTitles(filteredCards));
+      this.props.selectOptions(this.convertCardNumbersToTitles(selectedCards));
     }
     this.setState({
-      selectedCards: filteredCards
+      selectedCards
     });
   }
 
