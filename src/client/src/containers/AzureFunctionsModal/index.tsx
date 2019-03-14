@@ -102,10 +102,9 @@ const CosmosResourceModal = (props: Props) => {
    */
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
-    const strippedInput = element.value.toLowerCase().replace(" ","").toLowerCase().substring(0,130);
     updateForm({
       ...azureFunctionsFormData,
-      appName: strippedInput
+      appName: element.value
     });
   };
   const handleAddResource = () => {
@@ -125,7 +124,7 @@ const CosmosResourceModal = (props: Props) => {
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
           }}
-          defaultValue={defaultValue}
+          defaultValue={{value: "test", label: "test"}}
         />
       </div>)
   }
