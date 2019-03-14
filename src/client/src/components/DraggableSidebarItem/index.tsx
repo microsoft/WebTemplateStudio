@@ -50,7 +50,7 @@ const DraggableSidebarItem = ({
       )}
       <div className={styles.draggablePage}>
         {(withIndent || reorderSvgUrl) && <div className={styles.iconContainer}>
-          <img className={styles.icon} src={reorderSvgUrl} />
+          <img className={styles.reorderIcon} src={reorderSvgUrl} />
         </div>}
         <div className={classnames({
             [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
@@ -74,10 +74,10 @@ const DraggableSidebarItem = ({
             )}
             <div>{text}</div>
           </div>
-          <img onClick={() => {
+        </div>
+        <img onClick={() => {
             idx && handleCloseClick && handleCloseClick(idx - 1);
           }} className={styles.cancelIcon} src={closeSvgUrl} />
-        </div>
       </div>
     </React.Fragment>
   );

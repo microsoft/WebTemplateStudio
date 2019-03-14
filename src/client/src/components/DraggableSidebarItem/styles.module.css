@@ -1,5 +1,6 @@
 .draggablePage {
   display: flex;
+  align-items: center;
   margin-bottom: 10px;
 }
 
@@ -39,10 +40,17 @@
 
 .cancelIcon {
   height: 12px;
+  margin-left: 10px;
 }
 
-.icon {
+.cancelIcon:hover {
+  cursor: pointer;
+}
+
+.icon,
+.reorderIcon {
   height: 20px;
+  cursor: row-resize;
 }
 
 .inputContainer {
