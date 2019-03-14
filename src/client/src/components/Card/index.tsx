@@ -35,7 +35,11 @@ const Card = ({
         <CardBody body={cardBody} />
       </div>
       <div className={styles.selectionContainer}>
-        <div className={styles.details} onClick={handleDetailsClick}>
+        <div
+          className={styles.details}
+          onClick={handleDetailsClick}
+          role="Button"
+        >
           Details
         </div>
         <button
