@@ -28,15 +28,11 @@ function MasterDetailPage(props) {
   return (
     <Grid item xs>
       <div className={classes.layout}>
-        <img
-          src={props.Asset.image}
-          alt={"Default"}
-          className={classes.image}
-        />
+        <img src={props.image} alt={"Default"} className={classes.image} />
         <Typography variant="h3" color="textPrimary" className={classes.title}>
-          {props.Asset.title}
+          {props.textAssets.title}
         </Typography>
-        <Typography paragraph>{props.Asset.paragraph}</Typography>
+        <Typography paragraph>{props.textAssets.paragraph}</Typography>
       </div>
     </Grid>
   );

@@ -1,4 +1,5 @@
 var constants = require("../constants");
+var sampleData = require("../sampleData");
 var express = require("express");
 var router = express.Router();
 
@@ -22,46 +23,36 @@ router.delete(constants.endpoint + "/:_id", function(req, res) {
 /*
  * Include the following code if list is selected but Cosmos is not
  */
-// var listItems = [
-//   {
-//     text:
-//       "Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum minim. Dolore fugiat consectetur laborum laboris labore sit veniam deserunt id dolor laboris ad veniam.",
-//     _id: 1
-//   },
-//   {
-//     text:
-//       "Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum minim. Dolore fugiat consectetur laborum laboris labore sit veniam deserunt id dolor laboris ad veniam.",
-//     _id: 2
-//   }
-// ];
-
-// router.get(constants.endpoint, function(req, res) {
+// List Page Endpoints
+// router.get(constants.endpoint.list, function(req, res) {
 //   try {
-//     res.json(listItems);
+//     res.json(sampleData.listTextAssets);
 //   } catch (err) {
 //     res.status.send(500).send(err);
 //   }
 // });
 
-// router.post(constants.endpoint, function(req, res) {
+// router.post(constants.endpoint.list, function(req, res) {
 //   try {
 //     let listItem = {
 //       text: req.body.text,
 //       _id: req.body._id
 //     };
-//     listItems.unshift(listItem);
+//     sampleData.listTextAssets.unshift(listItem);
 //     res.json(listItem);
 //   } catch (err) {
 //     res.status(500).send(err);
 //   }
 // });
 
-// router.delete(constants.endpoint + "/:_id", function(req, res) {
+// router.delete(constants.endpoint.list + "/:_id", function(req, res) {
 //   try {
 //     const { _id } = req.params;
-//     var index = listItems.findIndex(listItem => listItem._id == _id);
+//     var index = sampleData.listTextAssets.findIndex(
+//       listItem => listItem._id == _id
+//     );
 //     if (index > -1) {
-//       listItems.splice(index, 1);
+//       sampleData.listTextAssets.splice(index, 1);
 //       res.json({ _id: Number(_id), text: "This commented was deleted" });
 //     } else {
 //       res.status(404).send("Could not find item with id:" + _id);
@@ -70,5 +61,23 @@ router.delete(constants.endpoint + "/:_id", function(req, res) {
 //     res.status(500).send(err);
 //   }
 // });
+
+// Grid Page Endpoint
+router.get(constants.endpoint.grid, function(req, res) {
+  try {
+    res.json(sampleData.gridTextAssets);
+  } catch (err) {
+    res.status.send(500).send(err);
+  }
+});
+
+// MasterDetail Page Endpoint
+router.get(constants.endpoint.masterdetail, function(req, res) {
+  try {
+    res.json(sampleData.masterDetailTextAssets);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 module.exports = router;

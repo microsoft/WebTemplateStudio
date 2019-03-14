@@ -30,7 +30,7 @@ class index extends Component {
     //Only include if list is selected and cosmos db is not selected
     // this._id = 3;
 
-    this.endpoint = "/api/listItems";
+    this.endpoint = "/api/list";
     this.handleWarningClose = this.handleWarningClose.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleChange = this.handleChange.bind(this);
