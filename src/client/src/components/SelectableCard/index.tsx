@@ -19,6 +19,7 @@ const SelectableCard = ({
   selected,
   cardNumber,
   onCardClick,
+  clickCount,
   disabled
 }: {
   iconPath: string | undefined;
@@ -28,6 +29,7 @@ const SelectableCard = ({
   selected: boolean;
   cardNumber: number;
   onCardClick: (idx: number) => void;
+  clickCount?: number;
   disabled: boolean | undefined;
 }) => {
   return (
@@ -67,13 +69,14 @@ const SelectableCard = ({
         <div
           className={classNames({
             [styles.hidden]: !selected,
-            [styles.selectedCheckMark]: selected
+            [styles.selectedCheckMark]: selected && clickCount == null,
+            [styles.cardCount]: selected && clickCount != null
           })}
         >
-          <img
+          {clickCount ? clickCount : <img
             src={process.env.REACT_APP_RELATIVE_PATH + Check}
             className={styles.iconCheckMark}
-          />
+          />}
         </div>
       </div>
     </div>

@@ -62,7 +62,6 @@ class SelectPages extends React.Component<Props> {
   };
   public render() {
     const { options, selectPages, selectedPages } = this.props;
-
     return (
       <div>
         {options.length > 0 && (

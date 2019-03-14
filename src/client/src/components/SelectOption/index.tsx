@@ -12,7 +12,7 @@ interface ISelectOptionProps {
   title: string;
   internalName?: string;
   selectCard?: (card: ISelected) => void;
-  selectedCards?: number[];
+  selectedCards: number[];
   selectOptions?: (cards: ISelected[]) => void;
   options: IOption[];
   multiSelect: boolean;
@@ -73,15 +73,12 @@ class SelectOption extends React.Component<
    *
    * @param cardNumber
    */
-  public addOrRemoveOption(cardNumber: number) {
+  public addOption(cardNumber: number) {
     const { selectedCards } = this.state;
     selectedCards.push(cardNumber);
     if (this.props.selectOptions !== undefined) {
       this.props.selectOptions(this.convertCardNumbersToTitles(selectedCards));
     }
-    this.setState({
-      selectedCards
-    });
   }
 
   /**
@@ -111,9 +108,26 @@ class SelectOption extends React.Component<
       return;
     }
     if (this.props.multiSelect) {
-      this.addOrRemoveOption(cardNumber);
+      this.addOption(cardNumber);
     } else {
       this.exchangeOption(cardNumber);
+    }
+  }
+
+  /**
+   * If this is a card that can be selected many times, this function returns
+   * the number of times that a particular card was selected/clicked on.
+   * 
+   * If card can only be clicked once, this function returns undefined.
+   */
+  public getNumber = (internalName: string) => {
+    if (this.props.selectedCards && this.props.multiSelect) {
+      return this.props.selectedCards.reduce((accum: number, card: number) => {
+        if (this.props.options[card].internalName === internalName) {
+          return accum + 1;
+        }
+        return accum;
+      }, 0);
     }
   }
 
@@ -135,6 +149,7 @@ class SelectOption extends React.Component<
               title={option.title}
               body={option.body}
               disabled={option.unselectable}
+              clickCount={this.getNumber(option.internalName)}
             />
           ))}
         </div>
