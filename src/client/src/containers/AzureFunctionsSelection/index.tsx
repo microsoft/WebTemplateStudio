@@ -1,14 +1,17 @@
+import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
-import cancel from "../../assets/cancel.svg";
+import * as getSvg from "../../utils/getSvgUrl";
+
+import { IAzureFunctionsSelection, ISelectedAzureFunctionsService } from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
 import { updateAzureFunctionNamesAction } from "../../actions/updateAzureFunctionNames";
 
 interface IProps {
-    functionApps: any;
+    functionApps: IAzureFunctionsSelection;
 }
 
 interface IFunctionApp {
@@ -22,39 +25,49 @@ interface IDispatchProps {
 
 type Props = IProps & IDispatchProps;
 
+/**
+ *  The current implementation only allows for one Azure Function application to be created.
+ *  This is stored in the redux state in an array at position 0, which is why the value of '0'
+ *  is hardcoded in the current implementation.
+ * 
+ *  In the future, more than one Azure Function app can be created, and can simply be appended
+ *  to the array data structure holding the Azure Function app selections (see reducer for Azure Functions)
+ */
 const AzureFunctionsSelection = ({functionApps, updateFunctionNames}: Props) => {
-
+    const { selection } = functionApps;
+    const { serviceType } = functionApps.wizardContent;
     const handleInputChange = (newTitle: string, idx: number) => {
-        // current implementation has only one function app at index 0
-        const { functionNames } = functionApps[0];
-        functionNames[idx] = newTitle;
-        updateFunctionNames({
-            appIndex: 0,
-            functionNames
-        });
+        const { functionNames } = functionApps.selection[0];
+        if (functionNames != null) {
+            functionNames[idx] = newTitle;
+            updateFunctionNames({
+                appIndex: 0,
+                functionNames
+            });
+        }
     };
-
-    return ( functionApps != null && functionApps.map((functionApp: any, idx: number) =>         
-        <React.Fragment key={functionApp.appName + idx}>
-            <DraggableSidebarItem
-                text={functionApp.appName}
-                closeSvgUrl={`${
-                    process.env.REACT_APP_RELATIVE_PATH
-                }${cancel}`}
-                itemTitle="Azure Functions"
-            />
-            {functionApp.functionNames != null && (functionApp.functionNames.map((functionName: string, idx: number) => 
-                <DraggableSidebarItem
-                    key={functionName + idx}
-                    closeSvgUrl={`${
-                    process.env.REACT_APP_RELATIVE_PATH
-                    }${cancel}`}
-                    withIndent={true}
-                    functionName={functionName}
-                    handleInputChange={handleInputChange}
-                    idx={idx + 1}
-                />))}
-        </React.Fragment>)
+    return ( 
+        <React.Fragment>
+            {!_.isEmpty(selection) && selection.map((functionApp: ISelectedAzureFunctionsService, idx: number) => (        
+                <React.Fragment key={serviceType + functionApp.appName + idx}>
+                    <DraggableSidebarItem
+                        key={functionApp.appName + idx}
+                        text={functionApp.appName}
+                        closeSvgUrl={getSvg.getCancelSvg()}
+                        itemTitle={serviceType}
+                        withIndent={true}
+                    />
+                    {functionApp.functionNames != null && (functionApp.functionNames.map((functionName: string, idx: number) => 
+                        <DraggableSidebarItem
+                            key={functionApp.appName + idx.toString()}
+                            closeSvgUrl={getSvg.getCancelSvg()}
+                            withLargeIndent={true}
+                            functionName={functionName}
+                            handleInputChange={handleInputChange}
+                            idx={idx + 1}
+                        />))}
+                </React.Fragment>))}
+        </React.Fragment>
     )
 }
 

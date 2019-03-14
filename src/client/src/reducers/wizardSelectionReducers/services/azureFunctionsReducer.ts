@@ -15,6 +15,31 @@ import * as Actions from "../../../actions/types";
 }
 */
 
+interface IAvailability {
+  isAppNameAvailable: boolean;
+  message: string;
+}
+
+export interface ISelectedAzureFunctionsService {
+  subscription: string;
+  resourceGroup: string;
+  appName: string;
+  runtimeStack: string;
+  location: string;
+  numFunctions: number;
+  functionNames?: string[];
+}
+
+interface IServiceContent {
+  serviceType: string;
+}
+
+export interface IAzureFunctionsSelection {
+  appNameAvailability: IAvailability;
+  selection: ISelectedAzureFunctionsService[];
+  wizardContent: IServiceContent;
+}
+
 const initialState = {
   appNameAvailability: {
       isAppNameAvailable: false,
@@ -34,7 +59,7 @@ const createFunctionNames = (numFunctions: number): string[] => {
   return functionNames;
 }
 
-const azureFunctions = (state: any = initialState, action: any) => {
+const azureFunctions = (state: IAzureFunctionsSelection = initialState, action: any) => {
   switch (action.type) {
     case Actions.UPDATE_AZURE_FUNCTION_NAMES:
       const newFunctionNamesState = {...state};

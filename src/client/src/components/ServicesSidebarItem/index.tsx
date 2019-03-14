@@ -22,7 +22,7 @@ const ServicesSidebarItem = ({ services }: Props) => {
     const renderService = (serviceName: string) => {
         switch (serviceName) {
             case SERVICE_KEYS.AZURE_FUNCTIONS:
-                return <AzureFunctionsSelection functionApps={services[serviceName].selection}/>
+                return <AzureFunctionsSelection functionApps={services[serviceName]}/>
             case SERVICE_KEYS.COSMOS_DB:
                 return <CosmosDBSelection cosmosSelection={services[serviceName]} />
         }

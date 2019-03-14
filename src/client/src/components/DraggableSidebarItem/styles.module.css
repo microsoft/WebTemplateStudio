@@ -33,6 +33,10 @@
   align-items: center;
 }
 
+.largeIndentContainer {
+  margin-left: 25%;
+}
+
 .cancelIcon {
   height: 12px;
 }
@@ -46,6 +50,7 @@
   align-items: center;
 }
 
+.functionNameInput,
 .input {
   padding-left: 0.5em;
   width: 100%;
@@ -54,6 +59,10 @@
   box-sizing: border-box;
   background-color: #696969;
   border: none;
+}
+
+.functionNameInput {
+  padding-left: 0;
 }
 
 .iconContainer {
