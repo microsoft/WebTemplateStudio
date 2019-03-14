@@ -4,7 +4,7 @@ Azure Functions is a serverless compute service that enables you to run code on-
 provision or manage infrastructure. Think of it as deploying functions that run on pre-defined triggers instead of having
 to write and manage a full-fledged server yourself. One of the most commonly used triggers is an HTTPTrigger which is
 a function that runs whenever it receives an HTTP request (like an API endpoint). Project Acorn allows you to deploy
-a function app with multiple 'hello world' HTTPTrigger functions (maximum of 10) so you can get to wrtiting your business
+a function app with multiple 'hello world' HTTPTrigger functions (maximum of 10) so you can get to writing your business
 logic as soon as possible!
 
 ## Getting started
@@ -23,7 +23,7 @@ To deploy an azure function application using Project Acorn:
   `<function_app_name>.azurewebsites.net` after.
 
 - Select a location where your function app will be deployed. You want it to be closer to your users (or servers if it's
-  running as a backend service helper)
+  running as a back-end service helper)
 
 - Select a runtime for your functions. This is basically what programming language/framework you want to write your
   functions in.
