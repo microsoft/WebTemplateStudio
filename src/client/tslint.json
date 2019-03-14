@@ -1,10 +1,11 @@
 {
+  "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
   "extends": [
     "tslint:latest",
     "tslint-react",
     "tslint-config-prettier",
     "tslint-react-hooks",
-    "tslint-microsoft-contrib/recommended"
+    "tslint-microsoft-contrib/latest"
   ],
   "linterOptions": {
     "exclude": ["src/serviceWorker.ts"]
@@ -14,11 +15,14 @@
     "no-string-throw": true,
     "no-unused-expression": true,
     "no-duplicate-variable": true,
+    "no-empty": false,
+    "no-relative-imports": false,
     "curly": true,
     "class-name": true,
     "triple-equals": false,
-    "object-literal-sort-keys": false,
-    "react-hooks-nesting": "error"
+    "object-literal-sort-keys": true,
+    "react-hooks-nesting": "error",
+    "ordered-imports": false
   },
   "defaultSeverity": "warning"
 }

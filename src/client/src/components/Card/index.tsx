@@ -23,12 +23,12 @@ const Card = ({
   handleButtonClick,
   handleDetailsClick,
   svgUrl,
-  useNormalButtons,
+  useNormalButtons
 }: IProps) => {
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cardTitleContainer}>
-        {!!svgUrl && <img className={styles.icon} src={svgUrl} />}
+        {!!svgUrl && <img className={styles.icon} src={svgUrl} alt="icon" />}
         <div className={styles.cardTitle}>{cardTitle}</div>
       </div>
       <div className={styles.cardBody}>
@@ -40,13 +40,10 @@ const Card = ({
         </div>
         <button
           onClick={handleButtonClick}
-          className={classnames(
-            styles.signInButton,
-            {
-              [buttonStyles.buttonHighlighted]: useNormalButtons ? false : true,
-              [buttonStyles.buttonDark]: !!useNormalButtons
-            }
-          )}
+          className={classnames(styles.signInButton, {
+            [buttonStyles.buttonHighlighted]: useNormalButtons ? false : true,
+            [buttonStyles.buttonDark]: !!useNormalButtons
+          })}
         >
           {buttonText}
         </button>
