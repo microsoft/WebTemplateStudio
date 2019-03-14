@@ -147,9 +147,9 @@ export class CosmosDBDeploy {
     try {
       var userSubscriptionItem: SubscriptionItem =
         userCosmosDBSelection.subscriptionItem;
-      this.setClientState(userSubscriptionItem);
-    } catch (err) {
-      throw new AuthorizationError("CosmosDBDeploy: " + err.message);
+      this.setCosmosClient(userSubscriptionItem);
+    } catch (error) {
+      throw new AuthorizationError("CosmosDBDeploy: " + error.message);
     }
 
     var resourceGroup = userCosmosDBSelection.resourceGroupItem.name;
@@ -260,8 +260,8 @@ export class CosmosDBDeploy {
         resourceGroup,
         databaseName
       );
-    } catch (err) {
-      throw new DeploymentError("CosmosDBDeploy: " + err.message);
+    } catch (error) {
+      throw new DeploymentError("CosmosDBDeploy: " + error.message);
     }
 
     /*
@@ -271,7 +271,10 @@ export class CosmosDBDeploy {
     return db;
   }
 
-  private setClientState(userSubscriptionItem: SubscriptionItem): void {
+  /*
+   * Set internal cosmos client using a user's selected subscription item
+   */
+  private setCosmosClient(userSubscriptionItem: SubscriptionItem): void {
     if (this.SubscriptionItemCosmosClient === undefined) {
       this.SubscriptionItemCosmosClient = this.createCosmosClient(
         userSubscriptionItem
@@ -313,7 +316,7 @@ export class CosmosDBDeploy {
     name: string,
     userSubscriptionItem: SubscriptionItem
   ): Promise<string | undefined> {
-    this.setClientState(userSubscriptionItem);
+    this.setCosmosClient(userSubscriptionItem);
     return await this.validateUniqueCosmosDBAccountName(name);
   }
 
@@ -374,9 +377,9 @@ export class CosmosDBDeploy {
     } else {
       try {
         cosmosClient = this.createCosmosClient(cosmosClientOrSubscriptionItem);
-      } catch (err) {
+      } catch (error) {
         throw new AuthorizationError(
-          CONSTANTS.ERRORS.CONNECTION_STRING_FAILED + err.message
+          CONSTANTS.ERRORS.CONNECTION_STRING_FAILED + error.message
         );
       }
     }

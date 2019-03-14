@@ -34,6 +34,10 @@ export const CONSTANTS = {
     COSMOS_ACCOUNT_DEPLOYED: function(accountName: string) {
       return `${accountName} has been deployed!`;
     }
+  },
+  FUNCTIONS_CONFIG: {
+    MAX_NAME_LEN: 60,
+    MIN_NAME_LEN: 0
   }
 };
 

@@ -119,9 +119,9 @@ export class FunctionProvider {
     }
 
     try {
-      this.setClientState(selections.subscriptionItem);
-    } catch (err) {
-      throw new AuthorizationError(err.message);
+      this.setWebClient(selections.subscriptionItem);
+    } catch (error) {
+      throw new AuthorizationError(error.message);
     }
 
     try {
@@ -131,8 +131,8 @@ export class FunctionProvider {
         selections.functionNames,
         selections.runtime
       );
-    } catch (err) {
-      throw new FileError(err.message);
+    } catch (error) {
+      throw new FileError(error.message);
     }
 
     try {
@@ -226,22 +226,25 @@ export class FunctionProvider {
 
             try {
               FileHelper.deleteTempZip(appPath);
-            } catch (err) {
-              throw new FileError(err.message);
+            } catch (error) {
+              throw new FileError(error.message);
             }
 
             return Promise.resolve(result);
           }, 10000);
         });
-    } catch (err) {
-      if (err.constructor === FileError) {
-        throw err;
+    } catch (error) {
+      if (error.constructor === FileError) {
+        throw error;
       }
-      throw new DeploymentError(err.message);
+      throw new DeploymentError(error.message);
     }
   }
 
-  private setClientState(userSubscriptionItem: SubscriptionItem): void {
+  /*
+   * Sets a web client from a users selected subscription item's credentials
+   */
+  private setWebClient(userSubscriptionItem: SubscriptionItem): void {
     if (this.webClient === undefined) {
       this.webClient = this.createWebClient(userSubscriptionItem);
     } else if (
@@ -286,9 +289,9 @@ export class FunctionProvider {
     subscriptionItem: SubscriptionItem
   ): Promise<boolean | undefined> {
     try {
-      this.setClientState(subscriptionItem);
-    } catch (err) {
-      throw new AuthorizationError(err.message);
+      this.setWebClient(subscriptionItem);
+    } catch (error) {
+      throw new AuthorizationError(error.message);
     }
 
     ValidationHelper.validateFunctionAppName(appName);
@@ -306,8 +309,8 @@ export class FunctionProvider {
       .then(res => {
         return res.nameAvailable;
       })
-      .catch(err => {
-        throw new ConnectionError(err.message);
+      .catch(error => {
+        throw new ConnectionError(error.message);
       });
   }
 }

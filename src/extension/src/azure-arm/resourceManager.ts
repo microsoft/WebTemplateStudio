@@ -9,7 +9,11 @@ export class ResourceManager {
     | ResourceManagementClient
     | undefined = undefined;
 
-  private setClientState(userSubscriptionItem: SubscriptionItem): void {
+  /**
+   * sets internal resource client from credentials from user's selected subscription
+   * @param userSubscriptionItem
+   */
+  private setResourceClient(userSubscriptionItem: SubscriptionItem): void {
     if (this.AzureResourceManagementClient === undefined) {
       this.AzureResourceManagementClient = this.createResourceManagementClient(
         userSubscriptionItem
@@ -46,7 +50,7 @@ export class ResourceManager {
   public getResourceManagementClient(
     userSubscriptionItem: SubscriptionItem
   ): ResourceManagementClient {
-    this.setClientState(userSubscriptionItem);
+    this.setResourceClient(userSubscriptionItem);
     return this.AzureResourceManagementClient!;
   }
 }

@@ -16,12 +16,12 @@ export namespace FileHelper {
     runtime: Runtime
   ): void {
     let funcAppPath: string = path.join(basePath, appName);
-    mkdir(funcAppPath);
+    createFolder(funcAppPath);
 
     for (let i = 0; i < functionNames.length; i++) {
       switch (runtime) {
         case "node":
-          mkdirForNode(path.join(funcAppPath, functionNames[i]));
+          createFolderForNode(path.join(funcAppPath, functionNames[i]));
           break;
         case "dotnet":
           throw new Error(CONSTANTS.ERRORS.RUNTIME_NOT_IMPLEMENTED);
@@ -41,8 +41,8 @@ export namespace FileHelper {
     fsx.copySync(appSettingsPath, funcAppPath);
   }
 
-  function mkdirForNode(dirPath: string): void {
-    mkdir(dirPath);
+  function createFolderForNode(dirPath: string): void {
+    createFolder(dirPath);
 
     let indexPath: string = path.join(
       appRoot.toString(),
@@ -59,7 +59,7 @@ export namespace FileHelper {
     fs.copyFileSync(funcJsonPath, path.join(dirPath, "function.json"));
   }
 
-  function mkdir(dirPath: string): void {
+  function createFolder(dirPath: string): void {
     if (fsx.pathExistsSync(dirPath)) {
       fsx.removeSync(dirPath);
     }
@@ -77,12 +77,12 @@ export namespace FileHelper {
       zlib: { level: 9 } // Sets the compression level.
     });
 
-    output.on("error", function(err: any) {
-      throw err;
+    output.on("error", function(error: any) {
+      throw error;
     });
 
-    archive.on("error", function(err: any) {
-      throw err;
+    archive.on("error", function(error: any) {
+      throw error;
     });
 
     archive.pipe(output);
