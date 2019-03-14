@@ -78,7 +78,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   }
   public render() {
     return (
-      this.props.isLoggedIn != null && (
+      this.props.isLoggedIn && (
         <div className={styles.container}>
           {this.state.azureServices != null &&
             this.state.azureServices.map(option => (

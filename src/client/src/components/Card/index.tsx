@@ -47,8 +47,8 @@ const Card = ({
           className={classnames(
             styles.signInButton,
             {
-              [buttonStyles.buttonHighlighted]: useNormalButtons ? false : true,
-              [buttonStyles.buttonDark]: useNormalButtons != null
+              [buttonStyles.buttonHighlighted]: !useNormalButtons,
+              [buttonStyles.buttonDark]: useNormalButtons
             }
           )}
         >
