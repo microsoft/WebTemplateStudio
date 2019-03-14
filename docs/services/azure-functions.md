@@ -3,13 +3,13 @@
 Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly
 provision or manage infrastructure. Think of it as deploying functions that run on pre-defined triggers instead of having
 to write and manage a full-fledged server yourself. One of the most commonly used triggers is an HTTPTrigger which is
-a function that runs whenever it receives an HTTP request (like an API endpoint). Project Acorn allows you to deploy
+a function that runs whenever it receives an HTTP request (like an API endpoint). Web Template Studio allows you to deploy
 a function app with multiple 'hello world' HTTPTrigger functions (maximum of 10) so you can get to writing your business
 logic as soon as possible!
 
 ## Getting started
 
-To deploy an azure function application using Project Acorn:
+To deploy an azure function application using Web Template Studio:
 
 ![azure-functions-modal](../resources/azure-functions-modal.png)
 
@@ -28,16 +28,17 @@ To deploy an azure function application using Project Acorn:
 - Select a runtime for your functions. This is basically what programming language/framework you want to write your
   functions in.
 
-- Select number of functions you think you might need for your applications. Think about this as number of endpoints you
-  think your application would need. You can rename your functions from the summary bar on the right side of the
+- Select the number of functions needed for your applications. This number can be thought of as the number of endpoints
+  your application would need. You can rename your functions from the summary bar on the right side of the
   application. These would be available as `<function_app_name>.azurewebsites.net\api\<function_name>`
 
 The _hello world_ functions deployed are pretty basic and just return _Hello, <name>_ on a query/header with variable
-name. For ex: `<function_app_name>.azurewebsites.net\api\<function_name>?name=John+Doe` will return _Hello, John Doe_.
+'name'. For example: `<function_app_name>.azurewebsites.net\api\<function_name>?name=John+Doe` will return _Hello, John
+Doe_.
 
 ## How this works
 
-Once you hit generate, Project acorn creates a directory with the same name as your _function app name_ under your
+Once you hit generate, Web Template Studio creates a directory with the same name as your _function app name_ under your
 generated project. This is compressed to a _.zip_ and deployed (using kudu zip deploy) to your newly created function
 application. \__**Note:**_ For advanced users, the _arm templates_ used to deploy your application are also available
 under _arm-templates_ directory (under your generated project).
@@ -46,9 +47,9 @@ under _arm-templates_ directory (under your generated project).
 
 ![azure-functions-portal](../resources/azure-functions-portal.png)
 
-You can configure your functions application for advanced settings (like configuring domain, storage accounts etc.),
+You can configure your functions application for advanced settings (like configuring a domain, storage accounts etc.),
 delete your application etc. from your [azure portal](https://portal.azure.com). Once you login to the portal, select
-functions app from the menu bar on left side and select your application. Your individual functions are listed under
+functions app from the menu bar on the left side and select your application. Your individual functions are listed under
 _functions_ and you can monitor them/integrate them here. Pretty much anything you need to manage about your application
 can be done through the portal.
 
