@@ -20,6 +20,7 @@ const DraggableSidebarItem = ({
   functionName,
   withIndent,
   withLargeIndent,
+  handleCloseClick,
 }: {
   page?: ISelected;
   text?: string;
@@ -32,6 +33,7 @@ const DraggableSidebarItem = ({
   functionName?: string;
   withIndent?: boolean;
   withLargeIndent?: boolean
+  handleCloseClick?: (idx: number) => void;
 }) => {
   return (
     <React.Fragment>
@@ -72,7 +74,9 @@ const DraggableSidebarItem = ({
             )}
             <div>{text}</div>
           </div>
-          <img className={styles.cancelIcon} src={closeSvgUrl} />
+          <img onClick={() => {
+            idx && handleCloseClick && handleCloseClick(idx - 1);
+          }} className={styles.cancelIcon} src={closeSvgUrl} />
         </div>
       </div>
     </React.Fragment>

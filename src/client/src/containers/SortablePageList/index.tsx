@@ -34,6 +34,10 @@ const SortablePageList = (props: Props) => {
     const onSortEnd = ({oldIndex, newIndex}: {oldIndex: number, newIndex: number}) => {
         props.selectPages((arrayMove(pages, oldIndex, newIndex)));
     };
+    const handleCloseClick = (idx: number) => {
+        const pagesWithOmittedIdx = pages.slice(0,idx).concat(pages.slice(idx + 1, pages.length));
+        props.selectPages(pagesWithOmittedIdx);
+    }
     const hideOrShowText = isMinimized ? "Show" : "Hide";
     return (
         <div className={styles.sidebarItem}>
@@ -41,7 +45,8 @@ const SortablePageList = (props: Props) => {
                 <div className={styles.dropdownTitle}>Pages</div>
                 <div className={styles.hideOrShow} onClick={() => { setMinimized(isMinimized ? false : true) }}>{hideOrShowText}</div>    
             </div>
-            {!isMinimized && <SortableList pages={props.pages} onSortEnd={onSortEnd} handleInputChange={handleInputChange} />}
+            {!isMinimized && <SortableList pages={props.pages} onSortEnd={onSortEnd} distance={1} handleInputChange={handleInputChange} />}
+            {/* Using a baseline of 1 for idx because !!0 === false */}
         </div>
     )
 }

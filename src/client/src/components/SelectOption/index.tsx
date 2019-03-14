@@ -138,7 +138,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
    * @param cardNumber
    */
   public addOption(cardNumber: number) {
-    const { selectedCards } = this.state;
+    const { selectedCards } = this.props;
     selectedCards.push(cardNumber);
     if (this.props.selectOptions !== undefined) {
       this.props.selectOptions(this.convertCardNumbersToTitles(selectedCards));
