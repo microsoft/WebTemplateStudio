@@ -5,7 +5,7 @@ import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
 import cancel from "../../assets/cancel.svg";
 import reorder from "../../assets/reorder.svg";
-import getSvgUrl from "../../utils/getSvgUrl";
+import getSvgUrl, { withLocalPath } from "../../utils/getSvgUrl";
 import { ISelected } from "../../types/selected";
 
 const SortableItem = SortableElement(({page, idx, handleInputChange}: {page: any, idx: number, handleInputChange: any}) => {
@@ -13,17 +13,14 @@ const SortableItem = SortableElement(({page, idx, handleInputChange}: {page: any
     <DraggableSidebarItem
         key={page.internalName}
         page={page}
-        closeSvgUrl={`${
-        process.env.REACT_APP_RELATIVE_PATH
-        }${cancel}`}
+        closeSvgUrl={withLocalPath(cancel)}
         pageSvgUrl={getSvgUrl(page.internalName)}
-        reorderSvgUrl={`${
-        process.env.REACT_APP_RELATIVE_PATH
-        }${reorder}`}
+        reorderSvgUrl={withLocalPath(reorder)}
         handleInputChange={handleInputChange}
         idx={idx + 1}
     />)
-})
+    // use idx+1 to prevent falsiness of 0th value
+});
 const SortableList = SortableContainer(({pages, handleInputChange}:{pages: ISelected[], handleInputChange: any}) => {
   return (
     <div>

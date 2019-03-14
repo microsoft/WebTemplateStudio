@@ -64,8 +64,6 @@ const DraggableSidebarItem = ({
                 })}
                 defaultValue={page ? page.title : functionName}
                 onChange={e => {
-                  console.log(handleInputChange);
-                  console.log(idx);
                   if (handleInputChange && idx) {
                     handleInputChange(e.target.value, idx - 1);
                   }
