@@ -118,7 +118,8 @@ class SelectOption extends React.Component<
   }
 
   public onCardClick(cardNumber: number) {
-    if (this.props.options[cardNumber].unselectable) {
+    const { unselectable } = this.props.options[cardNumber];
+    if (unselectable) {
       return;
     }
     if (this.props.multiSelect) {
