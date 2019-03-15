@@ -257,7 +257,10 @@ export abstract class Controller {
 
     if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
-      await Controller.processCosmosDeploymentSendStatusToClient(cosmosPayload);
+      await Controller.processCosmosDeploymentAndSendStatusToClient(
+        cosmosPayload,
+        enginePayload.path
+      );
     }
   }
 
@@ -290,7 +293,10 @@ export abstract class Controller {
       });
   }
 
-  public static processCosmosDeploymentSendStatusToClient(cosmosPayload: any) {
+  public static processCosmosDeploymentAndSendStatusToClient(
+    cosmosPayload: any,
+    genPath: string
+  ) {
     /*
      * example:
      *   {
@@ -304,7 +310,7 @@ export abstract class Controller {
      *       }
      *   }
      */
-    Controller.deployCosmosResource(cosmosPayload)
+    Controller.deployCosmosResource(cosmosPayload, genPath)
       .then((dbObject: DatabaseObject) => {
         Controller.handleValidMessage(ExtensionCommand.DeployCosmos, {
           databaseObject: dbObject
@@ -417,7 +423,8 @@ export abstract class Controller {
   }
 
   public static async deployCosmosResource(
-    selections: any
+    selections: any,
+    genPath: string
   ): Promise<DatabaseObject> {
     try {
       await Controller.validateCosmosAccountName(
@@ -436,12 +443,12 @@ export abstract class Controller {
         selections.resourceGroup,
         Controller.usersCosmosDBSubscriptionItemCache
       ),
-      subscriptionItem: Controller.usersCosmosDBSubscriptionItemCache,
-      tags: { "Created from": "Web Template Studio" }
+      subscriptionItem: Controller.usersCosmosDBSubscriptionItemCache
     };
 
     return await this.AzureCosmosDBProvider.createCosmosDB(
-      userCosmosDBSelection
+      userCosmosDBSelection,
+      genPath
     );
   }
 
