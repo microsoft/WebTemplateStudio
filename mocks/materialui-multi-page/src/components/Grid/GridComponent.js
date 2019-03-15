@@ -15,6 +15,7 @@ const styles = theme => ({
   }
 });
 
+// Presentational component for the cards in the grid
 function GridComponent(props) {
   const { classes } = props;
   return (

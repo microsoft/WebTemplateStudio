@@ -29,8 +29,8 @@ class index extends Component {
   constructor(props) {
     super(props);
 
-    // The index of the current tab being displayed
     this.state = {
+      // The index of the current tab being displayed
       displayTab: 0,
       masterDetailText: [
         {
@@ -42,7 +42,7 @@ class index extends Component {
       ]
     };
     this.endpoint = "api/masterdetail";
-    this.handleClick = this.handleClick.bind(this);
+    this.handleDisplayTabClick = this.handleDisplayTabClick.bind(this);
     this.handleWarningClose = this.handleWarningClose.bind(this);
   }
 
@@ -53,10 +53,11 @@ class index extends Component {
     });
   }
 
-  handleClick(id) {
+  handleDisplayTabClick(id) {
     this.setState({ displayTab: id });
   }
 
+  // Get the text assets from the back end
   componentDidMount() {
     fetch(this.endpoint)
       .then(response => {
@@ -98,7 +99,7 @@ class index extends Component {
             {masterDetailText.map((textAssets, index) => (
               <ListItem
                 button
-                onClick={() => this.handleClick(index)}
+                onClick={() => this.handleDisplayTabClick(index)}
                 key={textAssets.id}
               >
                 <ListItemText primary={textAssets.tabName} />

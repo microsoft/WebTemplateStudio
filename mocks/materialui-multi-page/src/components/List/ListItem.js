@@ -23,7 +23,7 @@ function ListItem(props) {
           action={
             <IconButton
               aria-label="Delete"
-              onClick={e => props.onDelete(e, props.listItem)}
+              onClick={e => props.onDeleteListItem(e, props.listItem)}
             >
               <ClearIcon />
             </IconButton>

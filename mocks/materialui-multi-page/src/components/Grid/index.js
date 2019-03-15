@@ -41,6 +41,7 @@ class index extends Component {
     });
   }
 
+  // Get the text assets from the back end
   componentDidMount() {
     fetch(this.endpoint)
       .then(response => {
@@ -60,7 +61,6 @@ class index extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classNames(classes.layout, classes.cardGrid)}>
         <Grid container spacing={40}>
