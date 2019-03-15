@@ -9,14 +9,9 @@ import * as getSvg from "../../utils/getSvgUrl";
 import { IAzureFunctionsSelection, ISelectedAzureFunctionsService } from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
 import { updateAzureFunctionNamesAction } from "../../actions/updateAzureFunctionNames";
-import { getFunctionsSelection } from "../../selectors/azureFunctionsServiceSelector";
 
 interface IProps {
     functionApps: IAzureFunctionsSelection;
-}
-
-interface IStateProps {
-    azureFunctionsSelection: any;
 }
 
 interface IFunctionApp {
@@ -28,7 +23,7 @@ interface IDispatchProps {
     updateFunctionNames: (functionApp: IFunctionApp) => any;
 }
 
-type Props = IProps & IDispatchProps & IStateProps;
+type Props = IProps & IDispatchProps;
 
 /**
  *  The current implementation only allows for one Azure Function application to be created.
@@ -76,12 +71,8 @@ const AzureFunctionsSelection = ({functionApps, updateFunctionNames}: Props) => 
     )
 }
 
-const mapStateToProps = (state: any): IStateProps => ({
-    azureFunctionsSelection: getFunctionsSelection(state),
-})
-
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
     updateFunctionNames: (functionApp: IFunctionApp) => { dispatch(updateAzureFunctionNamesAction(functionApp))},
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AzureFunctionsSelection);
+export default connect(null, mapDispatchToProps)(AzureFunctionsSelection);

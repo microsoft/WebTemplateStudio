@@ -18,6 +18,7 @@ import {
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck} from "../../assets/checkgreen.svg";
 import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector";
+import { getFunctionsSelection } from "../../selectors/azureFunctionsServiceSelector";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { EXTENSION_COMMANDS, WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
@@ -86,6 +87,12 @@ const CosmosResourceModal = (props: Props) => {
       [infoLabel]: value
     });
   };
+  React.useEffect(() => {
+    if (props.selection) {
+      const { previousFormData } = props.selection;
+      updateForm(previousFormData);
+    }
+  }, [])
   /**
    * Listens on account name change and validates the input in VSCode
    */
@@ -124,7 +131,7 @@ const CosmosResourceModal = (props: Props) => {
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
           }}
-          defaultValue={{value: "test", label: "test"}}
+          defaultValue={props.selection ? props.selection.dropdownSelection[formSectionId] : defaultValue}
         />
       </div>)
   }
@@ -167,7 +174,7 @@ const CosmosResourceModal = (props: Props) => {
       {getDropdownSection("Location", functionsData.location, "location")}
       {getDropdownSection("Runtime Stack", functionsData.runtimeStack, "runtimeStack")}
       <div className={styles.modalFooterContainer}>
-        {getDropdownSection("Number of functions", getNumFunctionsData(), "numFunctions", undefined, getNumFunctionsData()[0])}
+        {getDropdownSection("Number of functions", getNumFunctionsData(), "numFunctions", undefined, 1)}
         <button
           className={classnames(buttonStyles.buttonHighlighted, styles.button, styles.selectionContainer)}
           onClick={handleAddResource}
@@ -179,16 +186,14 @@ const CosmosResourceModal = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => {
-  return {
+const mapStateToProps = (state: any): IStateProps => ({
     isModalOpen: isAzureFunctionsModalOpenSelector(state),
     vscode: state.vscode.vscodeObject,
     subscriptionData: state.azureProfileData.subscriptionData,
     subscriptions: state.azureProfileData.profileData.subscriptions,
     appNameAvailability: state.selection.services.azureFunctions.appNameAvailability,
-    selection: state.selection.services.azureFunctions.selection
-  };
-};
+    selection: getFunctionsSelection(state)
+});
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   closeModal: () => {
