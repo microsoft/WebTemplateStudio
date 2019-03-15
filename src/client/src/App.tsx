@@ -27,7 +27,6 @@ import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
-import { isExtraneousPopstateEvent } from "history/DOMUtils";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;

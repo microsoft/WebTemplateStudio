@@ -63,9 +63,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   public convertCardNumbersToTitles(cardNumbers: number[]): ISelected[] {
     const cardTitles = [];
     for (const num of cardNumbers) {
-      /**
-       * originalTitle is for page layouts.
-       */
+      // originalTitle is for page layouts.
       const cardToConvert: {
         title: string;
         internalName: string;
@@ -126,7 +124,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public onCardClick(cardNumber: number) {
-    if (this.props.options[cardNumber].unselectable) {
+    const { unselectable } = this.props.options[cardNumber];
+    if (unselectable) {
       return;
     }
     if (this.props.multiSelect) {
@@ -155,7 +154,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
               iconStyles={styles.icon}
               title={option.title}
               body={option.body}
-              unselectable={option.unselectable}
+              disabled={option.unselectable}
             />
           ))}
         </div>

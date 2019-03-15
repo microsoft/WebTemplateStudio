@@ -46,6 +46,13 @@ const initialState = {
   internalName: "wts.Feature.Azure.Cosmos"
 };
 
+const FORM_CONSTANTS = {
+  SUBSCRIPTION: "subscription",
+  RESOURCE_GROUP: "resourceGroup",
+  API: "api",
+  LOCATION: "location"
+}
+
 const CosmosResourceModal = (props: Props) => {
   const [cosmosData, setData] = React.useState(cosmosInitialState);
   /**
@@ -77,7 +84,7 @@ const CosmosResourceModal = (props: Props) => {
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
-    if (infoLabel === "subscription") {
+    if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION) {
       // Get resource Group and locations and set the dropdown options to them
       if (process.env.NODE_ENV === "production") {
         props.vscode.postMessage({
@@ -156,7 +163,7 @@ const CosmosResourceModal = (props: Props) => {
         <Dropdown
           options={cosmosData.subscription}
           handleChange={option => {
-            handleDropdown("subscription", option.value);
+            handleDropdown(FORM_CONSTANTS.SUBSCRIPTION, option.value);
           }}
         />
       </div>
@@ -168,7 +175,7 @@ const CosmosResourceModal = (props: Props) => {
         <Dropdown
           options={cosmosData.resourceGroup}
           handleChange={option => {
-            handleDropdown("resourceGroup", option.value);
+            handleDropdown(FORM_CONSTANTS.RESOURCE_GROUP, option.value);
           }}
         />
       </div>
@@ -200,7 +207,7 @@ const CosmosResourceModal = (props: Props) => {
         <Dropdown
           options={cosmosData.api}
           handleChange={option => {
-            handleDropdown("api", option.value);
+            handleDropdown(FORM_CONSTANTS.API, option.value);
           }}
         />
       </div>
@@ -211,7 +218,7 @@ const CosmosResourceModal = (props: Props) => {
         <Dropdown
           options={cosmosData.location}
           handleChange={option => {
-            handleDropdown("location", option.value);
+            handleDropdown(FORM_CONSTANTS.LOCATION, option.value);
           }}
         />
       </div>
