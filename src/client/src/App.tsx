@@ -173,7 +173,7 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   loadWizardContent: () => {
     dispatch(loadWizardContentAction());
   },
-  logIntoAzure: (email: string, subscriptions: []) => {
+  logIntoAzure: (email: string, subscriptions: any[]) => {
     dispatch(logIntoAzureAction({ email, subscriptions }));
   },
   saveSubscriptionData: (subscriptionData: any) => {

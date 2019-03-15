@@ -2,6 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 import LeftSidebarLink from "../LeftSidebarLink";
 
@@ -45,4 +46,4 @@ const LeftSidebar = (props: Props) => {
   );
 };
 
-export default withRouter(LeftSidebar);
+export default withRouter(connect()(LeftSidebar));
