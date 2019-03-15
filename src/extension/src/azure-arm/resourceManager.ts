@@ -4,18 +4,13 @@ import { ServiceClientCredentials } from "ms-rest";
 import { SubscriptionError } from "../errors";
 
 export class ResourceManager {
-  private AzureResourceManagementClient:
-    | ResourceManagementClient
-    | undefined = undefined;
+  private AzureResourceManagementClient: ResourceManagementClient | undefined;
 
   private setClientState(userSubscriptionItem: SubscriptionItem): void {
-    if (this.AzureResourceManagementClient === undefined) {
-      this.AzureResourceManagementClient = this.createResourceManagementClient(
-        userSubscriptionItem
-      );
-    } else if (
+    if (
+      this.AzureResourceManagementClient === undefined ||
       this.AzureResourceManagementClient.subscriptionId !==
-      userSubscriptionItem.subscriptionId
+        userSubscriptionItem.subscriptionId
     ) {
       this.AzureResourceManagementClient = this.createResourceManagementClient(
         userSubscriptionItem

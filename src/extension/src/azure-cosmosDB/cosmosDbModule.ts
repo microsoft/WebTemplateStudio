@@ -231,13 +231,10 @@ export class CosmosDBDeploy {
   }
 
   private setClientState(userSubscriptionItem: SubscriptionItem): void {
-    if (this.SubscriptionItemCosmosClient === undefined) {
-      this.SubscriptionItemCosmosClient = this.createCosmosClient(
-        userSubscriptionItem
-      );
-    } else if (
+    if (
+      this.SubscriptionItemCosmosClient === undefined ||
       this.SubscriptionItemCosmosClient.subscriptionId !==
-      userSubscriptionItem.subscriptionId
+        userSubscriptionItem.subscriptionId
     ) {
       this.SubscriptionItemCosmosClient = this.createCosmosClient(
         userSubscriptionItem
