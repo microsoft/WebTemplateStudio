@@ -64,7 +64,7 @@ const DraggableSidebarItem = ({
                 className={classnames(styles.input, {
                   [styles.functionNameInput]: functionName
                 })}
-                defaultValue={page ? page.title : functionName}
+                value={page ? page.title : functionName}
                 onChange={e => {
                   if (handleInputChange && idx) {
                     handleInputChange(e.target.value, idx - 1);
