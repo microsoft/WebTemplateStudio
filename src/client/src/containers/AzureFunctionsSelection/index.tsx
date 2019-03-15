@@ -38,7 +38,7 @@ const AzureFunctionsSelection = ({functionApps, updateFunctionNames}: Props) => 
     const { serviceType } = functionApps.wizardContent;
     const handleInputChange = (newTitle: string, idx: number) => {
         const { functionNames } = functionApps.selection[0];
-        if (functionNames != null) {
+        if (functionNames) {
             functionNames[idx] = newTitle;
             updateFunctionNames({
                 appIndex: 0,
@@ -57,7 +57,7 @@ const AzureFunctionsSelection = ({functionApps, updateFunctionNames}: Props) => 
                         itemTitle={serviceType}
                         withIndent={true}
                     />
-                    {functionApp.functionNames != null && (functionApp.functionNames.map((functionName: string, idx: number) => 
+                    {functionApp.functionNames && (functionApp.functionNames.map((functionName: string, idx: number) => 
                         <DraggableSidebarItem
                             key={functionApp.appName + idx.toString()}
                             closeSvgUrl={getSvg.getCancelSvg()}

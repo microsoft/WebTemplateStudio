@@ -61,6 +61,8 @@ const CosmosResourceModal = (props: Props) => {
   /**
    * Second parameter of useEffect is [] which tells React to
    * run this effect when mounting the component.
+   * 
+   * Hardcoding a "MongoDB" value until data can be loaded dynamically
    */
   React.useEffect(() => {
     setData({
@@ -105,7 +107,7 @@ const CosmosResourceModal = (props: Props) => {
   React.useEffect(() => {
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.NAME_COSMOS,
-        accountName: cosmosFormData.accountName,
+        appName: cosmosFormData.accountName,
         subscription: cosmosFormData.subscription
       });
   }, [cosmosFormData.accountName, props.selection]);

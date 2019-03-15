@@ -8,7 +8,6 @@ import styles from "./styles.module.css";
 
 import * as AzureActions from "../../actions/logOutAzure";
 import * as ModalActions from "../../actions/modalActions";
-import { isCosmosResourceCreatedSelector } from "../../selectors/cosmosServiceSelector";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
@@ -80,7 +79,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return (
       this.props.isLoggedIn && (
         <div className={styles.container}>
-          {this.state.azureServices != null &&
+          {this.state.azureServices &&
             this.state.azureServices.map(option => (
               <div
                 key={option.title}

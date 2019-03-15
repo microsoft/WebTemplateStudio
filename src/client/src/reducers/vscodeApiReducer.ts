@@ -38,7 +38,7 @@ const mockVsCodeApi = () => ({
         window.postMessage({
           command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
           payload: {
-            isAvailable: message.appName.length > 0 ? true : false,
+            isAvailable: message.appName.length > 0,
           },
           message: "in development, no error message",
           errorType: "in development, no error type"
@@ -49,7 +49,7 @@ const mockVsCodeApi = () => ({
         window.postMessage({
           command: EXTENSION_COMMANDS.NAME_COSMOS,
           payload: {
-            isAvailable: message.accountName.length > 0 ? true : false,
+            isAvailable: message.appName.length > 0,
           },
           message: "in development, no error message",
           errorType: "in development, no error type"

@@ -24,8 +24,8 @@ interface ISelectionInformation {
  * Currently, only one Azure Functions App can be added, hence
  * the hardcoded value of 0 index.
  * 
- * @param services An object of all the services available in Project Acorn
- * @param isAzureFunctionsSelected A boolean that tells if Azure Functions was selected
+ * @param services
+ * @param isAzureFunctionsSelected
  */
 const getAzureFunctionsSelectionInDropdownForm = (services: any): any => {
     const { selection } = services.azureFunctions;

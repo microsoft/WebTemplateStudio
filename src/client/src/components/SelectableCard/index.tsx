@@ -43,11 +43,11 @@ const SelectableCard = ({
       <div>
         <div className={styles.cardHeader}>
           <div className={styles.icon}>
-            {iconPath != null && <img src={iconPath} className={iconStyles} />}
+            {iconPath && <img src={iconPath} className={iconStyles} />}
           </div>
           <div
             className={classNames({
-              [styles.title]: iconPath != null,
+              [styles.title]: iconPath,
               [styles.titleLeftJustified]: iconPath === undefined ? true : false
             })}
           >

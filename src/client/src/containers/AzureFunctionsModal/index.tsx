@@ -60,6 +60,7 @@ const FORM_CONSTANTS = {
 
 const CosmosResourceModal = (props: Props) => {
   const [functionsData, setData] = React.useState(azureFunctionModalInitialState);
+  // Hardcoding a "node" value until data can be loaded dynamically
   React.useEffect(() => {
     setData({
       appName: [
@@ -83,7 +84,7 @@ const CosmosResourceModal = (props: Props) => {
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
-    if (infoLabel === "subscription") {
+    if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION) {
       // Get resource Group and locations and set the dropdown options to them
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA,

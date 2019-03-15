@@ -1,26 +1,3 @@
-// const cosmosSelections: any = {
-//     subscription: [{
-//         value: "GIV.Hackathon",
-//         label: "GIV.Hackathon"
-//     }],
-//     resourceGroup: [{
-//         value: "GIV_W19_WTS",
-//         label: "GIV_W19_WTS"
-//     }],
-//     accountName: [{
-//         value: "vrtemplatestudio",
-//         label: "vrtemplatestudio"
-//     }],    
-//     api: [{
-//         value: "Azure Table",
-//         label: "Azure Table"
-//     }],
-//     location: [{
-//         value: "West US",
-//         label: "West US"
-//     }],
-// };
-
 export const azureModalInitialState: any = {
     subscription: [{
         value: "",
@@ -70,9 +47,3 @@ export const azureFunctionModalInitialState: any = {
         label: 0
     }]
 };
-
-// const getCosmosModalData = (): Promise<any> => {
-//     return Promise.resolve(cosmosSelections);
-// };
-
-// export default getCosmosModalData;

@@ -28,7 +28,7 @@ const Card = ({
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cardTitleContainer}>
-        {svgUrl != null && <img className={styles.icon} src={svgUrl} alt="icon" />}
+        {svgUrl && <img className={styles.icon} src={svgUrl} alt="icon" />}
         <div className={styles.cardTitle}>{cardTitle}</div>
       </div>
       <div className={styles.cardBody}>

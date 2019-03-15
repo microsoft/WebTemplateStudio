@@ -53,7 +53,7 @@ const initialState = {
 
 const createFunctionNames = (numFunctions: number): string[] => {
   const functionNames = [];
-  for (let i = 1; i <= numFunctions; i++) {
+  for (let i = 0; i < numFunctions; i++) {
     functionNames.push(`Function${i}`);
   }
   return functionNames;
@@ -65,6 +65,7 @@ const azureFunctions = (state: IAzureFunctionsSelection = initialState, action: 
       const newFunctionNamesState = {...state};
       newFunctionNamesState.selection[action.payload.appIndex].functionNames = action.payload.functionNames;
       return newFunctionNamesState;
+
     case Actions.SET_APP_NAME_AVAILABILITY:
       const newAvailabilityState = {
         ...state,
@@ -74,8 +75,10 @@ const azureFunctions = (state: IAzureFunctionsSelection = initialState, action: 
         }
       };
       return newAvailabilityState;
+
     case Actions.LOG_OUT_OF_AZURE:
       return initialState;
+
     case Actions.SAVE_AZURE_FUNCTIONS_SETTINGS:
       const newSelectionState = {
         ...state,
@@ -87,6 +90,7 @@ const azureFunctions = (state: IAzureFunctionsSelection = initialState, action: 
         ],
       };
       return newSelectionState;
+      
     default:
       return state;
   }
