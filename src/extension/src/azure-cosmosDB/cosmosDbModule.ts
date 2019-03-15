@@ -44,7 +44,7 @@ export type API = "MongoDB" | "Graph" | "Table" | "SQL" | "Cassandra";
 interface APIdefinition {
   readonly kind: string;
   readonly defaultExperience: string;
-  readonly capabilities: Array<Object>;
+  readonly capabilities: Object[];
 }
 
 export class CosmosDBDeploy {
