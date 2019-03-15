@@ -1,4 +1,27 @@
 # Web Template Studio
+Web Template Studio (WTS) is a Visual Studio Code Extension that accelerates the creation of new Web apps using a wizard-based experience. The resulting Web application is well-formed, readable code that
+incorporates cloud services on Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to Docs, Stack Overflow and blogs to provide useful insights. 
+
+WTS currently supports the following:
+
+- Front-end: React
+- Back-end: NodeJs
+- Cloud services: Cosmos DB, Azure Functions
+
+Example Scenario: I need a Fullstack web app that stores blog posts in a database deployed on Cosmos DB.
+
+<img src="./screenshot.png">
+
+## Features
+
+Web Template Studio approaches web app creation using the following four attribute sets:
+
+* **Project type**: First, what type of application are you building? We currently support one type: *Fullstack Application*.
+* **Frameworks**: Next, which frameworks do you want to use for your frontend and backend? We currently support one framework for frontend: *[React](https://reactjs.org/)* and one framework for backend: *[NodeJs](https://nodejs.org/en/)*.
+* **App pages**: To accelerate app creation, we provide a number of app page templates that you can use to add common UI pages into your new app. We currently include page templates from the *blank page* to the common layouts (*e.g., master/detail) to pages that implement common patterns (*e.g., grid, list). Using the wizard, add as many of the pages as you need, providing a name for each one, and we'll generate them for you.
+* **Cloud Services**: Lastly, you specify which Azure cloud services you want to use in your app, and we'll build out the framework for the services into your app, tagging 'TODO' items. Currently supported services cover storage (*Azure Cosmos DB*), and compute (*Azure Functions*).
+
+Once you make the selections you want your new web app to have, you can quickly extend the generated code.
 
 Note: Use VSCode light mode to view the extension. Running the extension in VSCode v1.31 ~~and above will currently result in non-rendering SVGs~~. This issue was [fixed on Feb.12, 2019](https://github.com/Microsoft/vscode/issues/68033).
 
