@@ -5,28 +5,7 @@ import { SubscriptionError } from "../errors";
 import { CONSTANTS } from "../constants";
 
 export class ResourceManager {
-  private AzureResourceManagementClient:
-    | ResourceManagementClient
-    | undefined = undefined;
-
-  /**
-   * sets internal resource client from credentials from user's selected subscription
-   * @param userSubscriptionItem
-   */
-  private setResourceClient(userSubscriptionItem: SubscriptionItem): void {
-    if (this.AzureResourceManagementClient === undefined) {
-      this.AzureResourceManagementClient = this.createResourceManagementClient(
-        userSubscriptionItem
-      );
-    } else if (
-      this.AzureResourceManagementClient.subscriptionId !==
-      userSubscriptionItem.subscriptionId
-    ) {
-      this.AzureResourceManagementClient = this.createResourceManagementClient(
-        userSubscriptionItem
-      );
-    }
-  }
+  private AzureResourceManagementClient: ResourceManagementClient | undefined;
 
   private createResourceManagementClient(
     userSubscriptionItem: SubscriptionItem
@@ -50,7 +29,15 @@ export class ResourceManager {
   public getResourceManagementClient(
     userSubscriptionItem: SubscriptionItem
   ): ResourceManagementClient {
-    this.setResourceClient(userSubscriptionItem);
+    if (
+      this.AzureResourceManagementClient === undefined ||
+      this.AzureResourceManagementClient.subscriptionId !==
+        userSubscriptionItem.subscriptionId
+    ) {
+      this.AzureResourceManagementClient = this.createResourceManagementClient(
+        userSubscriptionItem
+      );
+    }
     return this.AzureResourceManagementClient!;
   }
 }

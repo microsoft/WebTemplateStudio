@@ -10,7 +10,7 @@ const frontendFrameworkOptions = (state: any = [], action: any) => {
   switch (action.type) {
     case Actions.GET_FRONTEND_FRAMEWORKS_SUCCESS:
       /**
-       * TODO: Remove after Demo Redmond
+       * FIXME: Remove once all data is completely supplied through core engine
        * Code is used to concatenate unselectable frameworks from
        * mockData and selectable frameworks from engine and sort
        * so that selectable items appear first.

@@ -83,7 +83,7 @@ export function GetAvailableAPIs(): Array<APIObject> {
 interface APIdefinition {
   readonly kind: string;
   readonly defaultExperience: string;
-  readonly capabilities: Array<Object>;
+  readonly capabilities: Object[];
 }
 
 export class CosmosDBDeploy {
@@ -133,9 +133,7 @@ export class CosmosDBDeploy {
     ]
   ]);
 
-  private SubscriptionItemCosmosClient:
-    | CosmosDBManagementClient
-    | undefined = undefined;
+  private SubscriptionItemCosmosClient: CosmosDBManagementClient | undefined;
 
   public async createCosmosDB(
     userCosmosDBSelection: CosmosDBSelections,
@@ -275,13 +273,10 @@ export class CosmosDBDeploy {
    * Set internal cosmos client using a user's selected subscription item
    */
   private setCosmosClient(userSubscriptionItem: SubscriptionItem): void {
-    if (this.SubscriptionItemCosmosClient === undefined) {
-      this.SubscriptionItemCosmosClient = this.createCosmosClient(
-        userSubscriptionItem
-      );
-    } else if (
+    if (
+      this.SubscriptionItemCosmosClient === undefined ||
       this.SubscriptionItemCosmosClient.subscriptionId !==
-      userSubscriptionItem.subscriptionId
+        userSubscriptionItem.subscriptionId
     ) {
       this.SubscriptionItemCosmosClient = this.createCosmosClient(
         userSubscriptionItem
@@ -354,6 +349,9 @@ export class CosmosDBDeploy {
   }
 
   /*
+   * Returns Azure Cosmos DB connection string for user's deployed database instance.
+   * This is what the user will use to connect to the database.
+   *
    * Overload on getConnectionString; one for providing creating the Cosmos Client
    */
   public async getConnectionString(

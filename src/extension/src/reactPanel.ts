@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "path";
+import { CONSTANTS } from "./constants";
 
 /**
  * Manages react webview panels
@@ -16,11 +17,8 @@ export class ReactPanel {
   private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
   private static _controllerFunctionDelegate = function(message: any) {
-    switch (message.command) {
-      case "alert":
-        vscode.window.showErrorMessage(message.text);
-
-        break;
+    if (message.command === "alert") {
+      vscode.window.showErrorMessage(message.text);
     }
   };
 
@@ -80,7 +78,7 @@ export class ReactPanel {
 
     // Set the webview's initial html content
     this._panel.webview.html = this._getHtmlForWebview();
-    this._panel.title = "Project Acorn";
+    this._panel.title = CONSTANTS.REACT_PANEL.Project_Title;
 
     // Listen for when the panel is disposed
     // This happens when the user closes the panel or when the panel is closed programatically

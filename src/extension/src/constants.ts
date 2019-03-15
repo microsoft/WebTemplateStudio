@@ -38,7 +38,17 @@ export const CONSTANTS = {
   FUNCTIONS_CONFIG: {
     MAX_NAME_LEN: 60,
     MIN_NAME_LEN: 0
-  }
+  },
+  AZURE_LOGIN_STATUS: {
+    LOGGED_IN: "LoggedIn",
+    LOGGING_IN: "LoggingIn",
+    INITIALIZING: "Initializing",
+    LOGGED_OUT: "LoggedOut"
+  },
+  REACT_PANEL: {
+    Project_Title: "Project Acorn"
+  },
+  GENERATE_ENDPOINT: "/api/generate"
 };
 
 export enum ExtensionCommand {

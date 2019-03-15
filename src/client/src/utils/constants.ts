@@ -5,6 +5,8 @@ const SELECT_PAGES = "/SelectPages";
 const AZURE_LOGIN = "/AzureLogin";
 const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
 
+const PRODUCTION = "production";
+
 const ROUTES = {
   PAGE_DETAILS,
   SELECT_PROJECT_TYPE,
@@ -36,4 +38,4 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   COSMOS_DB: "Cosmos"
 };
 
-export { ROUTES, ROUTES_ARRAY, WIZARD_CONTENT_INTERNAL_NAMES };
+export { PRODUCTION, ROUTES, ROUTES_ARRAY, WIZARD_CONTENT_INTERNAL_NAMES };

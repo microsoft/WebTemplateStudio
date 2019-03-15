@@ -84,13 +84,13 @@ export interface FunctionSelections {
 }
 
 export class FunctionProvider {
-  private webClient: WebSiteManagementClient | undefined = undefined;
+  private webClient: WebSiteManagementClient | undefined;
 
   /*
    * Create and deploy a function app from the given user selections.
    * Validates the user selections
    * Throws ValidationError if user input is invalid.
-   * Throws AuthoriaztionError if authorization fails.
+   * Throws AuthorizationError if authorization fails.
    * Throws DeploymentError if deployment fails.
    *
    * @param selections The user selection object (FunctionSelections)
@@ -245,9 +245,8 @@ export class FunctionProvider {
    * Sets a web client from a users selected subscription item's credentials
    */
   private setWebClient(userSubscriptionItem: SubscriptionItem): void {
-    if (this.webClient === undefined) {
-      this.webClient = this.createWebClient(userSubscriptionItem);
-    } else if (
+    if (
+      this.webClient === undefined ||
       this.webClient.subscriptionId !== userSubscriptionItem.subscriptionId
     ) {
       this.webClient = this.createWebClient(userSubscriptionItem);

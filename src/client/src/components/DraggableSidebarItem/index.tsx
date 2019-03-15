@@ -28,7 +28,7 @@ const DraggableSidebarItem = ({
 }) => {
   return (
     <div>
-      {!!itemTitle && (
+      {itemTitle != null && (
         <div className={styles.draggablePage}>
           <div className={styles.iconContainer} />
           <div className={styles.itemContainer}>
@@ -42,8 +42,8 @@ const DraggableSidebarItem = ({
         </div>
         <div className={styles.pagesTextContainer}>
           <div className={styles.inputContainer}>
-            {!!pageSvgUrl && <img className={styles.icon} src={pageSvgUrl} />}
-            {!!handleInputChange && !!page && !!idx && (
+            {pageSvgUrl != null && <img className={styles.icon} src={pageSvgUrl} />}
+            {handleInputChange != null && page != null && idx != null && (
               <input
                 className={styles.input}
                 defaultValue={page.title}

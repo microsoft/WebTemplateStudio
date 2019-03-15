@@ -38,14 +38,6 @@ const pathsBack: any = {
 class Footer extends React.Component<Props> {
   public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // if(this.props.selectedCosmos){
-    //   // @ts-ignore
-    //   this.props.vscode.postMessage({
-    //     command: "deploy-cosmos",
-    //     cosmosSelection : this.props.cosmos
-    //   });
-    // }
-    
     // @ts-ignore
     this.props.vscode.postMessage({
       command: "generate",

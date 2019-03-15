@@ -30,7 +30,8 @@ export abstract class Controller {
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static reactPanelContext: ReactPanel;
-  private static commandMap: Map<
+  // This will map commands from the client to functions.
+  private static clientCommandMap: Map<
     ExtensionCommand,
     (message: any) => void
   > = new Map([
@@ -70,7 +71,7 @@ export abstract class Controller {
   }
 
   private static routingMessageReceieverDelegate = function(message: any) {
-    let command = Controller.commandMap.get(message.command);
+    let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
       command(message);
@@ -191,7 +192,7 @@ export abstract class Controller {
         const email = AzureAuth.getEmail();
         AzureAuth.getSubscriptions()
           .then(items => {
-            const subs = items.map(subscriptionItem => {
+            const subscriptions = items.map(subscriptionItem => {
               return {
                 label: subscriptionItem.label,
                 value: subscriptionItem.label
@@ -199,7 +200,7 @@ export abstract class Controller {
             });
             Controller.handleValidMessage(ExtensionCommand.Login, {
               email: email,
-              subscriptions: subs
+              subscriptions: subscriptions
             });
           })
           .catch((err: Error) => {
@@ -213,9 +214,9 @@ export abstract class Controller {
 
   public static sendSubscriptionsToClient(message: any) {
     Controller.getSubscriptions()
-      .then(subs => {
+      .then(subscriptions => {
         Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
-          subscriptions: subs
+          subscriptions: subscriptions
         });
       })
       .catch((err: Error) => {
@@ -274,21 +275,22 @@ export abstract class Controller {
     );
 
     if (payload.selectedFunctions) {
-      Controller.attemptFunctionDeploymentAndSendStatusToClient(
+      Controller.processFunctionDeploymentAndSendStatusToClient(
         payload.functions,
         enginePayload.path
       );
     }
 
     if (payload.selectedCosmos) {
-      Controller.attemptCosmosDeploymentAndSendStatusToClient(
-        payload.cosmos,
+      var cosmosPayload: any = payload.cosmos;
+      await Controller.processCosmosDeploymentAndSendStatusToClient(
+        cosmosPayload,
         enginePayload.path
       );
     }
   }
 
-  public static attemptFunctionDeploymentAndSendStatusToClient(
+  public static processFunctionDeploymentAndSendStatusToClient(
     funcPayload: any,
     genPath: string
   ) {
@@ -319,7 +321,7 @@ export abstract class Controller {
       });
   }
 
-  public static attemptCosmosDeploymentAndSendStatusToClient(
+  public static processCosmosDeploymentAndSendStatusToClient(
     cosmosPayload: any,
     genPath: string
   ) {
@@ -356,7 +358,7 @@ export abstract class Controller {
     enginePayload: any
   ) {
     // FIXME: After gen is done, we need to do some feedback.
-    ApiModule.SendGeneration("5000", enginePayload);
+    ApiModule.SendTemplateGenerationPayloadToApi("5000", enginePayload);
   }
 
   public static sendOutputPathSelectionToClient(message: any) {
