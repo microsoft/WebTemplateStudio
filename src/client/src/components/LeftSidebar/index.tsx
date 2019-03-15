@@ -14,7 +14,11 @@ interface IProps {
   sidebarItems: string[];
 }
 
-type Props = IProps & RouteComponentProps;
+interface IStateProps {
+  isVisited: {[key: string]: boolean};
+}
+
+type Props = IProps & RouteComponentProps & IStateProps;
 
 const LeftSidebar = (props: Props) => {
   const { pathname } = props.location;
@@ -25,6 +29,7 @@ const LeftSidebar = (props: Props) => {
   const isVisitedPath = (idx: number): boolean => {
     return idx < currentPathIndex;
   }
+  const { isVisited } = props;
   return (
     <React.Fragment>
       {pathname !== ROUTES.PAGE_DETAILS && 
@@ -38,7 +43,7 @@ const LeftSidebar = (props: Props) => {
                 [styles.nextPath]: idx > currentPathIndex,
                 [styles.itemBorderTop]: idx === 0,
               })} key={`${sidebartitle}`}>
-              <LeftSidebarLink disabled={!isVisitedPath(idx)} path={ROUTES_ARRAY[idx]} text={sidebartitle} showCheck={isVisitedPath(idx)}/>
+              <LeftSidebarLink disabled={!isVisited[ROUTES_ARRAY[idx]]} path={ROUTES_ARRAY[idx]} text={sidebartitle} showCheck={isVisitedPath(idx)}/>
             </div>
             )})}
       </div>}
@@ -46,4 +51,8 @@ const LeftSidebar = (props: Props) => {
   );
 };
 
-export default withRouter(connect()(LeftSidebar));
+const mapStateToProps = (state: any): IStateProps => ({
+  isVisited: state.wizardRoutes.isVisited
+})
+
+export default withRouter(connect(mapStateToProps)(LeftSidebar));

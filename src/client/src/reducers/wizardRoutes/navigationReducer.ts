@@ -17,7 +17,8 @@ const wizardNavigation = (state: IRoutes = initialState, action: any) => {
     switch (action.type) {
       case Actions.SET_VISITED_WIZARD_PAGE:
         const newSelectionState = {
-          ...state
+          ...state,
+          [action.payload]: true
         };
         return newSelectionState;
       default:

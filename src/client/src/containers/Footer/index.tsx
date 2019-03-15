@@ -21,6 +21,12 @@ import {
   isAzureFunctionsSelected
 } from "../../selectors/azureFunctionsServiceSelector";
 
+import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
+
+interface IDispatchProps {
+  setRouteVisited: (route: string) => void;
+}
+
 interface IStateProps {
   vscode?: IVSCode;
   engine: any;
@@ -30,20 +36,20 @@ interface IStateProps {
   functions: any;
 }
 
-type Props = RouteComponentProps & IStateProps;
+type Props = RouteComponentProps & IStateProps & IDispatchProps;
 
 // TODO: Reconfigure with proper navigation using redux
 const pathsNext: any = {
-  "/SelectWebApp": "/SelectFrameworks",
-  "/SelectFrameworks": "/SelectPages",
-  "/SelectPages": "/AzureLogin",
-  "/AzureLogin": "/ReviewAndGenerate"
+  [ROUTES.SELECT_PROJECT_TYPE]: ROUTES.SELECT_FRAMEWORKS,
+  [ROUTES.SELECT_FRAMEWORKS]: ROUTES.SELECT_PAGES,
+  [ROUTES.SELECT_PAGES]: ROUTES.AZURE_LOGIN,
+  [ROUTES.AZURE_LOGIN]: ROUTES.REVIEW_AND_GENERATE
 };
 const pathsBack: any = {
-  "/SelectFrameworks": "/SelectWebApp",
-  "/SelectPages": "/SelectFrameworks",
-  "/AzureLogin": "/SelectPages",
-  "/ReviewAndGenerate": "/AzureLogin"
+  [ROUTES.SELECT_FRAMEWORKS]: ROUTES.SELECT_PROJECT_TYPE,
+  [ROUTES.SELECT_PAGES]: ROUTES.SELECT_FRAMEWORKS,
+  [ROUTES.AZURE_LOGIN]: ROUTES.SELECT_PAGES,
+  [ROUTES.REVIEW_AND_GENERATE]: ROUTES.AZURE_LOGIN
 };
 
 class Footer extends React.Component<Props> {
@@ -72,6 +78,11 @@ class Footer extends React.Component<Props> {
   public isReviewAndGenerate = (): boolean => {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
+  public handleLinkClick = (pathname: string) => {
+    if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
+      this.props.setRouteVisited(pathsNext[pathname]);
+    }
+  }
   public render() {
     // Validate the page names and do not generate if they are invalid or if there are duplicates
     const pageNames = new Set();
@@ -88,9 +99,6 @@ class Footer extends React.Component<Props> {
         break;
       }
     }
-
-    // TODO: Needs access to redux to determine where each link should go to
-    // TODO: Add previous paths through link prop to track state/history
     const { pathname } = this.props.location;
     return (
       <div>
@@ -110,6 +118,7 @@ class Footer extends React.Component<Props> {
                   [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
                   [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
                 })}
+                onClick={() => { this.handleLinkClick(pathname) }}
                 to={
                   pathname === ROUTES.REVIEW_AND_GENERATE
                     ? ROUTES.REVIEW_AND_GENERATE
@@ -158,4 +167,8 @@ const mapStateToProps = (state: any): IStateProps => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(Footer));
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  setRouteVisited: (route: string) => { dispatch(setVisitedWizardPageAction(route)) },
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Footer));
