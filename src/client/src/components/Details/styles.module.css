@@ -6,6 +6,7 @@
 .backIcon {
   height: 24px;
   margin-right: 1em;
+  cursor: pointer;
 }
 
 .container {
@@ -45,4 +46,5 @@
 
 .details {
   color: #54b4ff;
+  cursor: pointer;
 }

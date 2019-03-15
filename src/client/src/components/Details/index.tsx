@@ -20,7 +20,7 @@ const Details = ({ detailInfo, handleBackClick }: IProps) => {
               <img
                 onClick={handleBackClick}
                 className={styles.backIcon}
-                src={backArrow}
+                src={process.env.REACT_APP_RELATIVE_PATH + backArrow}
               />
             )}
           </div>
@@ -41,12 +41,10 @@ const Details = ({ detailInfo, handleBackClick }: IProps) => {
             <div className={styles.col}>
               <div className={styles.categoriesContainer}>
                 <div>Author:</div>
-                <div>Version:</div>
                 <div>Licenses:</div>
               </div>
               <div>
                 <div>{detailInfo.author || "None"}</div>
-                <div>1.0.0</div>
                 <div>{detailInfo.licenses || "None"}</div>
               </div>
             </div>
