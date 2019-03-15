@@ -32,7 +32,7 @@ To deploy an azure function application using Web Template Studio:
   your application would need. You can rename your functions from the summary bar on the right side of the
   application. These would be available as `<function_app_name>.azurewebsites.net\api\<function_name>`
 
-The _hello world_ functions deployed are pretty basic and just return _Hello, <name>_ on a query/header with variable
+The _hello world_ functions deployed are pretty basic and just return _Hello, <name>_ on a query/header with the variable
 'name'. For example: `<function_app_name>.azurewebsites.net\api\<function_name>?name=John+Doe` will return _Hello, John
 Doe_.
 
@@ -40,7 +40,7 @@ Doe_.
 
 Once you hit generate, Web Template Studio creates a directory with the same name as your _function app name_ under your
 generated project. This is compressed to a _.zip_ and deployed (using kudu zip deploy) to your newly created function
-application. \__**Note:**_ For advanced users, the _arm templates_ used to deploy your application are also available
+application. _**Note:**_ For advanced users, the _arm templates_ used to deploy your application are also available
 under _arm-templates_ directory (under your generated project).
 
 ## Functions app in Azure Portal
