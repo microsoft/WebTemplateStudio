@@ -257,7 +257,7 @@ export abstract class Controller {
 
     if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
-      await Controller.attemptCosmosDeploymentAndSendStatusToClient(
+      await Controller.processCosmosDeploymentAndSendStatusToClient(
         cosmosPayload,
         enginePayload.path
       );
@@ -293,7 +293,7 @@ export abstract class Controller {
       });
   }
 
-  public static attemptCosmosDeploymentAndSendStatusToClient(
+  public static processCosmosDeploymentAndSendStatusToClient(
     cosmosPayload: any,
     genPath: string
   ) {
