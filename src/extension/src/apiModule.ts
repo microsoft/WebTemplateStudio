@@ -2,9 +2,10 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { spawn, ChildProcess } from "child_process";
 import fetch, { Response } from "node-fetch";
+import { CONSTANTS } from './constants';
 
 export default class ApiModule {
-  private static readonly GenerateEndpoint = "/api/generate";
+  private static readonly GenerateEndpoint = CONSTANTS.GENERATE_ENDPOINT;
 
   public static StartApi(context: vscode.ExtensionContext): ChildProcess {
     let apiPath = vscode.Uri.file(

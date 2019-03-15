@@ -28,7 +28,7 @@ const Card = ({
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cardTitleContainer}>
-        {!!svgUrl && <img className={styles.icon} src={svgUrl} alt="icon" />}
+        {svgUrl != null && <img className={styles.icon} src={svgUrl} alt="icon" />}
         <div className={styles.cardTitle}>{cardTitle}</div>
       </div>
       <div className={styles.cardBody}>
@@ -44,10 +44,13 @@ const Card = ({
         </div>
         <button
           onClick={handleButtonClick}
-          className={classnames(styles.signInButton, {
-            [buttonStyles.buttonHighlighted]: useNormalButtons ? false : true,
-            [buttonStyles.buttonDark]: !!useNormalButtons
-          })}
+          className={classnames(
+            styles.signInButton,
+            {
+              [buttonStyles.buttonHighlighted]: useNormalButtons ? false : true,
+              [buttonStyles.buttonDark]: useNormalButtons != null
+            }
+          )}
         >
           {buttonText}
         </button>

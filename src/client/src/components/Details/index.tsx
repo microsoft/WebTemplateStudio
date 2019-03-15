@@ -19,7 +19,7 @@ const Card = ({ title, body, author, version, license, dependencies, handleDetai
     return (
         <div className={styles.loginContainer}>
             <div className={styles.cardTitleContainer}>
-                {!!svgUrl && <img className={styles.icon} src={svgUrl} />}
+                {svgUrl != null && <img className={styles.icon} src={svgUrl} />}
                 <div className={styles.cardTitle}>
                     {title}
                 </div>

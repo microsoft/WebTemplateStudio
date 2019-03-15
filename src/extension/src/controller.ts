@@ -28,7 +28,8 @@ export abstract class Controller {
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static reactPanelContext: ReactPanel;
-  private static commandMap: Map<
+  // This will map commands from the client to functions.
+  private static clientCommandMap: Map<
     ExtensionCommand,
     (message: any) => void
   > = new Map([
@@ -51,7 +52,7 @@ export abstract class Controller {
   ]);
 
   private static routingMessageReceieverDelegate = function(message: any) {
-    let command = Controller.commandMap.get(message.command);
+    let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
       command(message);
@@ -172,7 +173,7 @@ export abstract class Controller {
         const email = AzureAuth.getEmail();
         AzureAuth.getSubscriptions()
           .then(items => {
-            const subs = items.map(subscriptionItem => {
+            const subscriptions = items.map(subscriptionItem => {
               return {
                 label: subscriptionItem.label,
                 value: subscriptionItem.label
@@ -180,7 +181,7 @@ export abstract class Controller {
             });
             Controller.handleValidMessage(ExtensionCommand.Login, {
               email: email,
-              subscriptions: subs
+              subscriptions: subscriptions
             });
           })
           .catch((err: Error) => {
@@ -194,9 +195,9 @@ export abstract class Controller {
 
   public static sendSubscriptionsToClient(message: any) {
     Controller.getSubscriptions()
-      .then(subs => {
+      .then(subscriptions => {
         Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
-          subscriptions: subs
+          subscriptions: subscriptions
         });
       })
       .catch((err: Error) => {
@@ -256,13 +257,11 @@ export abstract class Controller {
 
     if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
-      await Controller.attemptCosmosDeploymentAndSendStatusToClient(
-        cosmosPayload
-      );
+      await Controller.processCosmosDeploymentSendStatusToClient(cosmosPayload);
     }
   }
 
-  public static attemptFunctionDeploymentAndSendStatusToClient(message: any) {
+  public static processFunctionDeploymentSendStatusToClient(message: any) {
     /*
      * example:
      *   {
@@ -291,9 +290,7 @@ export abstract class Controller {
       });
   }
 
-  public static attemptCosmosDeploymentAndSendStatusToClient(
-    cosmosPayload: any
-  ) {
+  public static processCosmosDeploymentSendStatusToClient(cosmosPayload: any) {
     /*
      * example:
      *   {
