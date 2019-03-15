@@ -26,9 +26,6 @@ const LeftSidebar = (props: Props) => {
   React.useEffect(() => {
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
   });
-  const isVisitedPath = (idx: number): boolean => {
-    return idx < currentPathIndex;
-  }
   const { isVisited } = props;
   return (
     <React.Fragment>
@@ -39,11 +36,11 @@ const LeftSidebar = (props: Props) => {
             <div className={
               classnames(styles.itemBorder, { 
                 [styles.currentPath]: idx === currentPathIndex, 
-                [styles.visitedPath]: isVisitedPath(idx),
-                [styles.nextPath]: idx > currentPathIndex,
+                [styles.visitedPath]: isVisited[ROUTES_ARRAY[idx]],
+                [styles.nextPath]: idx > currentPathIndex && !isVisited[ROUTES_ARRAY[idx]],
                 [styles.itemBorderTop]: idx === 0,
               })} key={`${sidebartitle}`}>
-              <LeftSidebarLink disabled={!isVisited[ROUTES_ARRAY[idx]]} path={ROUTES_ARRAY[idx]} text={sidebartitle} showCheck={isVisitedPath(idx)}/>
+              <LeftSidebarLink disabled={!isVisited[ROUTES_ARRAY[idx]]} path={ROUTES_ARRAY[idx]} text={sidebartitle} showCheck={idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]]}/>
             </div>
             )})}
       </div>}
