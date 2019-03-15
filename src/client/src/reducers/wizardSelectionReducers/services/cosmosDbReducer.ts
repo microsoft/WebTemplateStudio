@@ -20,7 +20,7 @@ interface IAvailability {
   message: string;
 }
 
-interface ISelectedCosmosService {
+export interface ISelectedCosmosService {
   subscription: string;
   resourceGroup: string;
   accountName: string;

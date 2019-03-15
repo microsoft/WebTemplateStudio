@@ -22,6 +22,7 @@ import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { EXTENSION_COMMANDS, WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import styles from "./styles.module.css";
+import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
 
 interface IDispatchProps {
   closeModal: () => any;
@@ -107,7 +108,13 @@ const CosmosResourceModal = (props: Props) => {
         accountName: cosmosFormData.accountName,
         subscription: cosmosFormData.subscription
       });
-  }, [cosmosFormData.accountName]);
+  }, [cosmosFormData.accountName, props.selection]);
+  React.useEffect(() => {
+    if (props.selection) {
+      const { previousFormData } = props.selection;
+      updateForm(previousFormData);
+    }
+  }, [])
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
@@ -137,7 +144,7 @@ const CosmosResourceModal = (props: Props) => {
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
           }}
-          defaultValue={/*props.selection ? props.selection.dropdownSelection[formSectionId] : */defaultValue}
+          defaultValue={props.selection ? props.selection.dropdownSelection[formSectionId] : defaultValue}
         />
       </div>)
   }
@@ -185,16 +192,14 @@ const CosmosResourceModal = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => {
-  return {
+const mapStateToProps = (state: any): IStateProps => ({
     isModalOpen: isCosmosDbModalOpenSelector(state),
     vscode: state.vscode.vscodeObject,
     subscriptionData: state.azureProfileData.subscriptionData,
     subscriptions: state.azureProfileData.profileData.subscriptions,
     accountNameAvailability: state.selection.services.cosmosDB.accountNameAvailability,
-    selection: state.selection.services.cosmosDB.selection,
-  };
-};
+    selection: getCosmosSelectionInDropdownForm(state),
+});
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   closeModal: () => {
