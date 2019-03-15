@@ -94,9 +94,7 @@ export class CosmosDBDeploy {
     ]
   ]);
 
-  private SubscriptionItemCosmosClient:
-    | CosmosDBManagementClient
-    | undefined = undefined;
+  private SubscriptionItemCosmosClient: CosmosDBManagementClient | undefined;
 
   public async createCosmosDB(
     userCosmosDBSelection: CosmosDBSelections,
@@ -307,6 +305,9 @@ export class CosmosDBDeploy {
   }
 
   /*
+   * Returns Azure Cosmos DB connection string for user's deployed database instance.
+   * This is what the user will use to connect to the database.
+   *
    * Overload on getConnectionString; one for providing creating the Cosmos Client
    */
   public async getConnectionString(
