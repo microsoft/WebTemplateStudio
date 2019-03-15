@@ -1,5 +1,4 @@
 {
   "webTemplateStudioExtension.commands.wts": "Web Template Studio",
-  "webTemplateStudioExtension.commands.wizardLaunch": "Launch",
-  "webTemplateStudioExtension.commands.createFunctionApp": "Create Function App"
+  "webTemplateStudioExtension.commands.wizardLaunch": "Launch"
 }

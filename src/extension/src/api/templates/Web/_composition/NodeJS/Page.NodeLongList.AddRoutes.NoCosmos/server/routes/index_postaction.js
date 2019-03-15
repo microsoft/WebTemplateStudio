@@ -1,4 +1,4 @@
-var constants = require("../constants");
+﻿var constants = require("../constants");
 
 var express = require("express");
 var router = express.Router();
@@ -28,18 +28,18 @@ router.get(constants.wts.ItemNameendpoint, function(req, res) {
 
 router.post(constants.wts.ItemNameendpoint, function(req, res) {
   try {
-    let wts.ItemNameItems = {
+    let wts.ItemNameItem = {
       text: req.body.text,
       _id: req.body._id
     };
-    wts.ItemNameItems.unshift(wts.ItemNameItems);
+    wts.ItemNameItems.unshift(wts.ItemNameItem);
     res.json(wts.ItemNameItems);
   } catch (err) {
     res.status(500).send(err);
   }
 });
 
-router.delete(constants.wts.ItemNameendpoint + "/:id", function(req, res) {
+router.delete(constants.wts.ItemNameendpoint + "/:_id", function(req, res) {
   try {
     const { _id } = req.params;
     var index = wts.ItemNameItems.findIndex(item => item._id == _id);

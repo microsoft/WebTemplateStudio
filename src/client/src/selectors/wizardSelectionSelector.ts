@@ -2,16 +2,20 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { RowType } from "../types/rowType";
 import { ISelected } from "../types/selected";
+import getSvgUrl from "../utils/getSvgUrl";
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
+const getProjectName = (state: any): string => state.selection.projectName;
+const getOutputPath = (state: any): string => state.selection.outputPath;
 
 const getProjectTypeRowItems = (selection: any): RowType[] => {
   const projectType = selection.appType as ISelected;
   return [
     {
       type: "Project Type",
-      name: projectType.title
+      name: projectType.title,
+      svgUrl: getSvgUrl(projectType.internalName)
     }
   ];
 };
@@ -21,11 +25,13 @@ const frameworksRowItems = (selection: any): RowType[] => {
   return [
     {
       type: "Front-end framework",
-      name: frontendFramework.title
+      name: frontendFramework.title,
+      svgUrl: getSvgUrl(frontendFramework.internalName)
     },
     {
       type: "Back-end framework",
-      name: backendFramework.title
+      name: backendFramework.title,
+      svgUrl: getSvgUrl(backendFramework.internalName)
     }
   ];
 };
@@ -49,8 +55,9 @@ const getPagesRowItems = (selection: any): RowType[] => {
   const pagesRows = [];
   for (const page of pages) {
     pagesRows.push({
-      type: page.title,
-      name: page.title
+      type: page.originalTitle ? page.originalTitle : page.title,
+      name: page.title,
+      svgUrl: getSvgUrl(page.internalName)
     });
   }
   return pagesRows;
@@ -81,5 +88,7 @@ export {
   getProjectTypeRowItemSelector,
   getWizardSelectionsSelector,
   getFrameworksRowItemSelector,
-  getServicesSelector
+  getServicesSelector,
+  getOutputPath,
+  getProjectName
 };

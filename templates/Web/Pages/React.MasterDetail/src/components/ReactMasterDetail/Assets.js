@@ -1,4 +1,4 @@
-import defaultImage from "../../images/defaultImage.jpg";
+﻿import defaultImage from "../../images/defaultImage.jpg";
 
 export const Assets = [
   {

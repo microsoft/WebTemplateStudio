@@ -2,6 +2,10 @@
 // custom styling for dropdown component using the Style API provided by react-select
 
 export default ({
+    indicatorSeparator: (base: any) => ({
+        ...base,
+        display: "none",
+    }),
     singleValue: (base: any) => ({
         ...base,
         color: "#FFFFFF",
@@ -21,7 +25,8 @@ export default ({
         boxShadow: state.isFocused ? null : null,
         "&:hover": {
         outline: "0.5px solid rgba(0,0,0,0.5)"
-        }
+        },
+        cursor: "pointer"
     }),
     option: (provided: any, state: any) => ({
         ...provided,
@@ -30,7 +35,9 @@ export default ({
         "&:hover": {
             background: "#DFDFDF",
             border: 0,
-            }
+            color: "black",
+        },
+        cursor: "pointer"
     }),
     menu: (base: any) => ({
         ...base,

@@ -4,6 +4,7 @@ import { HashRouter as Router, Route } from "react-router-dom";
 import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
+import PageDetails from "./components/PageDetails";
 import SelectFrameworks from "./components/SelectFrameworks";
 import SelectPages from "./components/SelectPages";
 import SelectWebApp from "./components/SelectWebApp";
@@ -20,24 +21,32 @@ import { ROUTES } from "./utils/constants";
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
+import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
+import { setAccountAvailability } from "./actions/setAccountAvailability";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
-
+import { getSubscriptionData } from "./actions/subscriptionData";
 
 interface IDispatchProps {
+  updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;
   loadWizardContent: () => void;
-  logIntoAzure: (email: string) => void;
+  logIntoAzure: (email: string, subscriptions: []) => void;
+  saveSubscriptionData: (subscriptionData: any) => void;
+  setCosmosResourceAccountNameAvailability: (isAvailable: any) => any;
 }
 
-type Props = IDispatchProps
+type Props = IDispatchProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
     getVSCodeApi: () => {},
     loadWizardContent: () => {},
     logIntoAzure: () => {},
+    saveSubscriptionData: () => {},
+    updateOutputPath: () => {},
+    setCosmosResourceAccountNameAvailability: () => {}
   };
 
   public componentDidMount() {
@@ -49,14 +58,48 @@ class App extends React.Component<Props> {
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
+        case "getOutputPath":
+          if (message.payload != null && message.payload.outputPath != null) {
+            this.props.updateOutputPath(
+              message.payload.outputPath.substring(
+                1,
+                message.payload.outputPath.length
+              )
+            );
+          }
+          return;
         case "login":
           // email will be null or undefined if login didn't work correctly
-          if (message.email != null) {
-            this.props.logIntoAzure(message.email);
+          if (message.payload != null) {
+            this.props.logIntoAzure(
+              message.payload.email,
+              message.payload.subscriptions
+            );
           }
-        return;
+          return;
+        case "subscriptionData":
+          // Expect resource groups and locations on this request
+          // Receive resource groups and locations
+          // and update redux (resourceGroups, locations)
+          if (message.payload != null) {
+            this.props.saveSubscriptionData({
+              locations: message.payload.locations,
+              resourceGroups: message.payload.resourceGroups
+            });
+          }
+
+          return;
+
+        case "name-cosmos":
+          // Receive input validation
+          // and update redux (boolean, string)
+          this.props.setCosmosResourceAccountNameAvailability({
+            isAvailable: message.payload.isAvailable,
+            message: message.message
+          });
+          return;
       }
-    })
+    });
   }
 
   public render() {
@@ -64,23 +107,28 @@ class App extends React.Component<Props> {
       <Router>
         <div>
           <Header />
-          {/*<ReviewAndGenerate />*/}
           <div className={appStyles.container}>
             <CosmosResourceModal />
-            <div className={appStyles.leftView}>
-              <LeftSidebar sidebarItems={leftSidebarData} />
-            </div>
+            <LeftSidebar sidebarItems={leftSidebarData} />
             <div className={appStyles.centerView}>
+              <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
               <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
-              <Route path={ROUTES.REVIEW_AND_GENERATE} component={ReviewAndGenerate} />
-              <Route path={ROUTES.SELECT_FRAMEWORKS} component={SelectFrameworks} />
+              <Route
+                path={ROUTES.REVIEW_AND_GENERATE}
+                component={ReviewAndGenerate}
+              />
+              <Route
+                path={ROUTES.SELECT_FRAMEWORKS}
+                component={SelectFrameworks}
+              />
               <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
-              <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
+              <Route
+                path={ROUTES.SELECT_PROJECT_TYPE}
+                component={SelectWebApp}
+              />
               <Route exact={true} path="/" component={Welcome} />
             </div>
-            <div className={appStyles.rightView}>
-              <RightSidebar />
-            </div>
+            <RightSidebar />
           </div>
           <Footer />
         </div>
@@ -96,9 +144,18 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   loadWizardContent: () => {
     dispatch(loadWizardContentAction());
   },
-  logIntoAzure: (email: string) => {
-    dispatch(logIntoAzureAction(email));
+  logIntoAzure: (email: string, subscriptions: []) => {
+    dispatch(logIntoAzureAction({ email, subscriptions }));
   },
+  saveSubscriptionData: (subscriptionData: any) => {
+    dispatch(getSubscriptionData(subscriptionData));
+  },
+  updateOutputPath: (outputPath: string) => {
+    dispatch(updateOutputPathAction(outputPath));
+  },
+  setCosmosResourceAccountNameAvailability: (isAvailable: boolean) => {
+    dispatch(setAccountAvailability(isAvailable));
+  }
 });
 
 export default connect(
