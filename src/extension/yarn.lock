@@ -175,6 +175,15 @@ append-buffer@^1.0.2:
   dependencies:
     buffer-equal "^1.0.0"
 
+applicationinsights@1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-1.0.8.tgz#db6e3d983cf9f9405fe1ee5ba30ac6e1914537b5"
+  integrity sha512-KzOOGdphOS/lXWMFZe5440LUdFbrLpMvh2SaRxn7BmiI550KAoSb2gIhiq6kJZ9Ir3AxRRztjhzif+e5P5IXIg==
+  dependencies:
+    diagnostic-channel "0.2.0"
+    diagnostic-channel-publishers "0.2.1"
+    zone.js "0.7.6"
+
 archiver-utils@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/archiver-utils/-/archiver-utils-2.0.0.tgz#5639818a8b5d89d0ffc51b72c39283cf4fea14a1"
@@ -637,6 +646,18 @@ denodeify@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/denodeify/-/denodeify-1.2.1.tgz#3a36287f5034e699e7577901052c2e6c94251631"
   integrity sha1-OjYof1A05pnnV3kBBSwubJQlFjE=
+
+diagnostic-channel-publishers@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/diagnostic-channel-publishers/-/diagnostic-channel-publishers-0.2.1.tgz#8e2d607a8b6d79fe880b548bc58cc6beb288c4f3"
+  integrity sha1-ji1geottef6IC1SLxYzGvrKIxPM=
+
+diagnostic-channel@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/diagnostic-channel/-/diagnostic-channel-0.2.0.tgz#cc99af9612c23fb1fff13612c72f2cbfaa8d5a17"
+  integrity sha1-zJmvlhLCP7H/8TYSxy8sv6qNWhc=
+  dependencies:
+    semver "^5.3.0"
 
 diff@3.3.1:
   version "3.3.1"
@@ -2286,6 +2307,13 @@ vsce@^1.57.1:
     yauzl "^2.3.1"
     yazl "^2.2.2"
 
+vscode-extension-telemetry@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/vscode-extension-telemetry/-/vscode-extension-telemetry-0.1.1.tgz#91387e06b33400c57abd48979b0e790415ae110b"
+  integrity sha512-TkKKG/B/J94DP5qf6xWB4YaqlhWDg6zbbqVx7Bz//stLQNnfE9XS1xm3f6fl24c5+bnEK0/wHgMgZYKIKxPeUA==
+  dependencies:
+    applicationinsights "1.0.8"
+
 vscode@^1.1.29:
   version "1.1.29"
   resolved "https://registry.yarnpkg.com/vscode/-/vscode-1.1.29.tgz#bef148f5eb88b966e425b7fa4287ff4b8b04e017"
@@ -2359,3 +2387,8 @@ zip-stream@^2.0.1:
     archiver-utils "^2.0.0"
     compress-commons "^1.2.0"
     readable-stream "^2.0.0"
+
+zone.js@0.7.6:
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.7.6.tgz#fbbc39d3e0261d0986f1ba06306eb3aeb0d22009"
+  integrity sha1-+7w50+AmHQmG8boGMG6zrrDSIAk=

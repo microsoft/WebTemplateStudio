@@ -21,12 +21,14 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
+import {TelemetryAIProvider, TelemetryReporter} from "./telemetry/telemetryAI";
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
+  private static Telemetry: TelemetryReporter;
   private static reactPanelContext: ReactPanel;
   // This will map commands from the client to functions.
   private static clientCommandMap: Map<
@@ -67,6 +69,12 @@ export abstract class Controller {
    *  @param VSCode context interface
    */
   public static launchWizard(context: vscode.ExtensionContext) {
+    try{
+      Controller.Telemetry = TelemetryAIProvider.createTelemetryReporter(context);
+      Controller.Telemetry.sendTelemetryEvent('sampleFakeEvent', { 'stringProp': 'some string' }, { 'numericMeasure': 123});
+    }catch(error){
+      console.log("Telemetry Failed: " + error.message);
+    }
     Controller.reactPanelContext = ReactPanel.createOrShow(
       context.extensionPath,
       this.routingMessageReceieverDelegate
@@ -376,7 +384,7 @@ export abstract class Controller {
 
     return this.AzureCosmosDBProvider.validateCosmosDBAccountName(
       cosmosDBAccountName,
-      this.usersCosmosDBSubscriptionItemCache
+      Controller.usersCosmosDBSubscriptionItemCache
     )
       .then(message => {
         if (message === undefined || message === null || message === "") {
