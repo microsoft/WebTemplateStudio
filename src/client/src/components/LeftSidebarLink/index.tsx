@@ -1,18 +1,28 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 import Check from "../../assets/check.svg";
 
 import styles from "./styles.module.css";
 
-const SidebarItem = ({
+const LeftSidebarLink = ({
   text,
-  showCheck
+  showCheck,
+  path,
+  disabled
 }: {
   text: string;
   showCheck: boolean;
+  path: string;
+  disabled: boolean;
 }) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (disabled) {
+      e.preventDefault();
+    }
+  }
   return (
-    <div className={styles.container}>
+    <Link to={path} onClick={handleClick} className={styles.container}>
       {showCheck ? (
         <img
           src={process.env.REACT_APP_RELATIVE_PATH + Check}
@@ -22,8 +32,8 @@ const SidebarItem = ({
         <div className={styles.spacer} />
       )}
       <div className={styles.text}>{text}</div>
-    </div>
+    </Link>
   );
 };
 
-export default SidebarItem;
+export default LeftSidebarLink;

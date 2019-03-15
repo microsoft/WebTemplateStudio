@@ -3,7 +3,7 @@ import * as React from "react";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 
-import LeftSidebarItem from "../LeftSidebarItem";
+import LeftSidebarLink from "../LeftSidebarLink";
 
 import styles from "./styles.module.css";
 
@@ -37,11 +37,10 @@ const LeftSidebar = (props: Props) => {
                 [styles.nextPath]: idx > currentPathIndex,
                 [styles.itemBorderTop]: idx === 0,
               })} key={`${sidebartitle}`}>
-              <LeftSidebarItem text={sidebartitle} showCheck={isVisitedPath(idx)}/>
+              <LeftSidebarLink disabled={!isVisitedPath(idx)} path={ROUTES_ARRAY[idx]} text={sidebartitle} showCheck={isVisitedPath(idx)}/>
             </div>
             )})}
-      </div>
-      }
+      </div>}
     </React.Fragment>
   );
 };
