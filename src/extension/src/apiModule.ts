@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { ChildProcess, exec } from "child_process";
-import fetch, { Response } from "node-fetch";
-import { CONSTANTS } from "./constants";
+import { CONSTANTS, SyncStatus } from "./constants";
+import * as signalR from "@aspnet/signalr";
 
 export default class ApiModule {
   private static readonly GenerateEndpoint = CONSTANTS.GENERATE_ENDPOINT;
@@ -29,6 +29,51 @@ export default class ApiModule {
     let spawnedProcess = exec(`${apiPath}`, { cwd: apiWorkingDirectory });
 
     return spawnedProcess;
+  }
+
+  public static async SendSyncRequestToApi(
+    port: string,
+    path: string,
+    statusHandler: (status: SyncStatus) => any
+  ) {
+    await this.createSignalRConnection(
+      port,
+      { path: path, listener: statusHandler },
+      this.postSyncConnectionHandler
+    );
+  }
+
+  private static async createSignalRConnection(
+    port: string,
+    payload: any,
+    postConnectionHandler: (
+      connection: signalR.HubConnection,
+      payload: any
+    ) => {}
+  ): Promise<signalR.HubConnection> {
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(`http://localhost:${port}/corehub`)
+      .build();
+
+    await connection.start().catch(error => console.log(error));
+
+    postConnectionHandler(connection, payload);
+
+    return connection;
+  }
+
+  private static async postSyncConnectionHandler(
+    connection: signalR.HubConnection,
+    payload: any
+  ) {
+    connection.on("syncMessage", payload!.listener);
+
+    connection
+      .invoke("SyncTemplates", "Web", payload!.path, "Any")
+      .then(obj => console.log(obj))
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   /**

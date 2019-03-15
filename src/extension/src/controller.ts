@@ -1,6 +1,11 @@
 import * as vscode from "vscode";
 import { Validator } from "./utils/validator";
-import { CONSTANTS, ExtensionCommand, AzureResourceType } from "./constants";
+import {
+  CONSTANTS,
+  ExtensionCommand,
+  SyncStatus,
+  AzureResourceType
+} from "./constants";
 import {
   AzureAuth,
   SubscriptionItem,
@@ -81,7 +86,7 @@ export abstract class Controller {
     });
   }
 
-  private static routingMessageReceieverDelegate = function (message: any) {
+  private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -93,21 +98,36 @@ export abstract class Controller {
 
   /**
    * launchWizard
-   * Will pass in a routing function delegate to the ReactPanel
+   * Will launch the api, sync templates then pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public static launchWizard(
+  public static async launchWizard(
     context: vscode.ExtensionContext,
     extensionStartUpTime: number = Date.now()
   ) {
-    Controller.reactPanelContext = ReactPanel.createOrShow(
-      context.extensionPath,
-      this.routingMessageReceieverDelegate
+    ApiModule.StartApi(context);
+    // TODO: start this after the api launches.
+    await ApiModule.SendSyncRequestToApi(
+      "5000",
+      "../../../..",
+      (status: SyncStatus) => {
+        console.log(`SyncStatus:${SyncStatus[status]}`);
+        if (
+          status === SyncStatus.ErrorAcquiring ||
+          status === SyncStatus.NoUpdates ||
+          status === SyncStatus.Updated
+        ) {
+          Controller.reactPanelContext = ReactPanel.createOrShow(
+            context.extensionPath,
+            this.routingMessageReceieverDelegate
+          );
+        }
+      }
     );
     Controller.Telemetry = new TelemetryAI(context, extensionStartUpTime);
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       "testingFunctionWrapper",
-      async function (this: IActionContext): Promise<void> {
+      async function(this: IActionContext): Promise<void> {
         this.properties.customProp = "Hello Testing";
         console.log("helloworld");
       }
@@ -328,7 +348,9 @@ export abstract class Controller {
       });
   }
 
-  public static async handleGeneratePayloadFromClient(message: any): Promise<any> {
+  public static async handleGeneratePayloadFromClient(
+    message: any
+  ): Promise<any> {
     var payload = message.payload;
     var enginePayload: any = payload.engine;
 
@@ -345,7 +367,10 @@ export abstract class Controller {
     }
 
     try {
-      Validator.isValidProjectPath(enginePayload.projectPath, enginePayload.projectName);
+      Validator.isValidProjectPath(
+        enginePayload.projectPath,
+        enginePayload.projectName
+      );
     } catch (error) {
       projectPathError = error.message;
       isValidProjectPath = false;
@@ -366,7 +391,9 @@ export abstract class Controller {
       });
       return;
     }
-    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload);
+    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
+      enginePayload
+    );
 
     if (payload.selectedFunctions) {
       Controller.processFunctionDeploymentAndSendStatusToClient(

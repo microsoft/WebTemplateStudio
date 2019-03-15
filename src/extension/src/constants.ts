@@ -127,3 +127,15 @@ export namespace DialogMessages {
     "An error has occured. Check output window for more details."
   );
 }
+export enum SyncStatus {
+  None = 0,
+  Updating = 1,
+  Updated = 2,
+  CheckingForUpdates = 3,
+  NoUpdates = 4,
+  Acquiring = 5,
+  Preparing = 6,
+  NewWizardVersionAvailable = 7,
+  Ready = 8,
+  ErrorAcquiring = 9
+}
