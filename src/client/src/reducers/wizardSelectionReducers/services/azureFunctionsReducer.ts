@@ -78,7 +78,7 @@ const azureFunctions = (state: IAzureFunctionsSelection = initialState, action: 
       return initialState;
     case Actions.SAVE_AZURE_FUNCTIONS_SETTINGS:
       const newSelectionState = {
-        ...initialState,
+        ...state,
         selection: [
           {
             ...action.payload,

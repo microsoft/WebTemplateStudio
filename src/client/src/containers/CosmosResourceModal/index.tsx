@@ -20,7 +20,7 @@ import { ReactComponent as GreenCheck} from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { WIZARD_CONTENT_INTERNAL_NAMES, EXTENSION_COMMANDS } from "../../utils/constants";
+import { EXTENSION_COMMANDS, WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import styles from "./styles.module.css";
 
 interface IDispatchProps {
@@ -88,23 +88,10 @@ const CosmosResourceModal = (props: Props) => {
     // Populate resource groups on received commands
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION) {
       // Get resource Group and locations and set the dropdown options to them
-      if (process.env.NODE_ENV === "production") {
-        props.vscode.postMessage({
-          command: "subscriptionData",
-          subscription: value
-        });
-      } else {
-        // @ts-ignore produces a mock login response from VSCode in development
-        window.postMessage({
-          command: "subscriptionData",
-          payload: {
-            locations: [{ label: "WEST US", value: "WEST US" }],
-            resourceGroups: [
-              { label: "resourceGroupMock", value: "resourceGroupMock" }
-            ]
-          }
-        });
-      }
+      props.vscode.postMessage({
+        command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA,
+        subscription: value
+      });
     }
     updateForm({
       ...cosmosFormData,
@@ -115,24 +102,11 @@ const CosmosResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    // if (process.env.NODE_ENV === "production") {
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.NAME_COSMOS,
         accountName: cosmosFormData.accountName,
         subscription: cosmosFormData.subscription
       });
-    // } else {
-    //   // In development, disables modal closing until an account name is entered.
-    //   // @ts-ignore produces a mock login response from VSCode in development 
-    //   window.postMessage({
-    //     command: "name-cosmos",
-    //     payload: {
-    //       isAvailable: cosmosFormData.accountName === "" ? false: true,
-    //     },
-    //     message: "in development, no error message",
-    //     errorType: "in development, no error type"
-    //   });
-    // }
   }, [cosmosFormData.accountName]);
   /**
    * To obtain the input value, must cast as HTMLInputElement
@@ -140,7 +114,7 @@ const CosmosResourceModal = (props: Props) => {
    */
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
-    const strippedInput = element.value.toLowerCase().replace(" ","").toLowerCase().substring(0,130);
+    const strippedInput = element.value;
     updateForm({
       ...cosmosFormData,
       accountName: strippedInput
@@ -151,6 +125,22 @@ const CosmosResourceModal = (props: Props) => {
       props.saveCosmosOptions(cosmosFormData); 
     }
   }
+  const getDropdownSection = (leftHeader: string, options: any, formSectionId: string, rightHeader?: string, defaultValue?: any) => {
+    return (
+      <div className={styles.selectionContainer}>
+        <div className={styles.selectionHeaderContainer}>
+          <div>{leftHeader}</div>
+          <div className={styles.createNew}>{rightHeader}</div>
+        </div>
+        <Dropdown
+          options={options}
+          handleChange={option => {
+            handleDropdown(formSectionId, option.value);
+          }}
+          defaultValue={/*props.selection ? props.selection.dropdownSelection[formSectionId] : */defaultValue}
+        />
+      </div>)
+  }
   const { isAccountNameAvailable } = props.accountNameAvailability;
   return (
     <div>
@@ -158,30 +148,8 @@ const CosmosResourceModal = (props: Props) => {
         <div className={styles.modalTitle}>Create Cosmos DB Account</div>
         <Cancel className={styles.icon} onClick={props.closeModal} />
       </div>
-      <div className={styles.selectionContainer}>
-        <div className={styles.selectionHeaderContainer}>
-          <div>Subscription</div>
-          <div className={styles.createNew}>Create new</div>
-        </div>
-        <Dropdown
-          options={cosmosData.subscription}
-          handleChange={option => {
-            handleDropdown(FORM_CONSTANTS.SUBSCRIPTION, option.value);
-          }}
-        />
-      </div>
-      <div className={styles.selectionContainer}>
-        <div className={styles.selectionHeaderContainer}>
-          <div>Resource Group</div>
-          <div className={styles.createNew}>Create new</div>
-        </div>
-        <Dropdown
-          options={cosmosData.resourceGroup}
-          handleChange={option => {
-            handleDropdown(FORM_CONSTANTS.RESOURCE_GROUP, option.value);
-          }}
-        />
-      </div>
+      {getDropdownSection("Subscription", cosmosData.subscription, FORM_CONSTANTS.SUBSCRIPTION, "Create new")}
+      {getDropdownSection("Resource Group", cosmosData.resourceGroup, FORM_CONSTANTS.RESOURCE_GROUP, "Create new")}
       <div className={classnames({
         [styles.selectionInputContainer]: !isAccountNameAvailable && cosmosFormData.accountName.length > 0,
         [styles.selectionContainer]: (isAccountNameAvailable || cosmosFormData.accountName.length === 0)
@@ -203,28 +171,8 @@ const CosmosResourceModal = (props: Props) => {
         </div>
         {!isAccountNameAvailable && cosmosFormData.accountName.length > 0 && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}>{props.accountNameAvailability.message}</div>}
       </div>
-      <div className={styles.selectionContainer}>
-        <div className={styles.selectionHeaderContainer}>
-          <div>API</div>
-        </div>
-        <Dropdown
-          options={cosmosData.api}
-          handleChange={option => {
-            handleDropdown(FORM_CONSTANTS.API, option.value);
-          }}
-        />
-      </div>
-      <div className={styles.selectionContainer}>
-        <div className={styles.selectionHeaderContainer}>
-          <div>Location</div>
-        </div>
-        <Dropdown
-          options={cosmosData.location}
-          handleChange={option => {
-            handleDropdown(FORM_CONSTANTS.LOCATION, option.value);
-          }}
-        />
-      </div>
+      {getDropdownSection("API", cosmosData.api, FORM_CONSTANTS.API, undefined)}
+      {getDropdownSection("Location", cosmosData.location, FORM_CONSTANTS.LOCATION, undefined)}
       <div className={styles.buttonContainer}>
         <button
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}

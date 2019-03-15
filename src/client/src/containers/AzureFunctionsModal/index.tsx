@@ -17,8 +17,8 @@ import {
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck} from "../../assets/checkgreen.svg";
-import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector";
 import { getFunctionsSelection } from "../../selectors/azureFunctionsServiceSelector";
+import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { EXTENSION_COMMANDS, WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
@@ -49,6 +49,14 @@ const initialState = {
   numFunctions: 1,
   internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
 };
+
+const FORM_CONSTANTS = {
+  SUBSCRIPTION: "subscription",
+  RESOURCE_GROUP: "resourceGroup",
+  LOCATION: "location",
+  RUNTIME_STACK: "runtimeStack",
+  NUM_FUNCTIONS: "numFunctions"
+}
 
 const CosmosResourceModal = (props: Props) => {
   const [functionsData, setData] = React.useState(azureFunctionModalInitialState);
@@ -102,7 +110,7 @@ const CosmosResourceModal = (props: Props) => {
       appName: azureFunctionsFormData.appName,
       subscription: azureFunctionsFormData.subscription
     });
-  }, [azureFunctionsFormData.appName]);
+  }, [azureFunctionsFormData.appName, props.selection]);
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
@@ -150,8 +158,8 @@ const CosmosResourceModal = (props: Props) => {
         <div className={styles.modalTitle}>Create Function Application</div>
         <Cancel className={styles.icon} onClick={props.closeModal} />
       </div>
-      {getDropdownSection("Subscription", functionsData.subscription, "subscription", "Create new")}
-      {getDropdownSection("Resource Group", functionsData.resourceGroup, "resourceGroup", "Create new")}
+      {getDropdownSection("Subscription", functionsData.subscription, FORM_CONSTANTS.SUBSCRIPTION, "Create new")}
+      {getDropdownSection("Resource Group", functionsData.resourceGroup, FORM_CONSTANTS.RESOURCE_GROUP, "Create new")}
       <div className={classnames({
         [styles.selectionInputContainer]: !isAppNameAvailable && azureFunctionsFormData.appName.length > 0,
         [styles.selectionContainer]: (isAppNameAvailable || azureFunctionsFormData.appName.length === 0)
@@ -171,10 +179,10 @@ const CosmosResourceModal = (props: Props) => {
             {props.appNameAvailability.message}
           </div>}
       </div>
-      {getDropdownSection("Location", functionsData.location, "location")}
-      {getDropdownSection("Runtime Stack", functionsData.runtimeStack, "runtimeStack")}
+      {getDropdownSection("Location", functionsData.location, FORM_CONSTANTS.LOCATION)}
+      {getDropdownSection("Runtime Stack", functionsData.runtimeStack, FORM_CONSTANTS.RUNTIME_STACK)}
       <div className={styles.modalFooterContainer}>
-        {getDropdownSection("Number of functions", getNumFunctionsData(), "numFunctions", undefined, 1)}
+        {getDropdownSection("Number of functions", getNumFunctionsData(), FORM_CONSTANTS.NUM_FUNCTIONS, undefined, 1)}
         <button
           className={classnames(buttonStyles.buttonHighlighted, styles.button, styles.selectionContainer)}
           onClick={handleAddResource}
