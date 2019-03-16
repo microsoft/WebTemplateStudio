@@ -76,6 +76,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return () => {};
   }
   public render() {
+    console.log(this.props);
     return (
       this.props.isLoggedIn && (
         <div className={styles.container}>

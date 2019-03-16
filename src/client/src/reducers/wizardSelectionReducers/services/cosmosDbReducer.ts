@@ -71,12 +71,11 @@ const services = (state: ICosmosDB = initialState, action: any) => {
       };
       return newAvailabilityState;
     case Actions.REMOVE_COSMOS_RESOURCE:
-      const { selection } = state;
-      const selectionIndex = action.payload;
-      const newSelection = selection.slice(0, selectionIndex).concat(selection.slice(selectionIndex + 1, selection.length));
+      const cosmosSelections = [ ...state.selection ];
+      cosmosSelections.splice(action.payload, 1);
       return {
         ...state,
-        selection: newSelection
+        selection: cosmosSelections
       };
     case Actions.LOG_OUT_OF_AZURE:
       return initialState;

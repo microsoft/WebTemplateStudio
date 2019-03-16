@@ -40,7 +40,7 @@ const SortablePageList = (props: Props) => {
         pages[idx].error = PAGE_NAME_ERROR_MESSAGES.DUPLICATE_NAME;
         break;
       }
-    }
+    };
     setPages(pages);
     props.selectPages(pages);
   };
