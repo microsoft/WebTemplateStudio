@@ -1,67 +1,48 @@
 import * as vscode from 'vscode';
 import TelemetryReporter from 'vscode-extension-telemetry';
-import * as fse from 'fs-extra';
-
-export type TelemetryReporter = TelemetryReporter;
-
-export class TelemetryAIProvider {
+import { getPackageInfo } from './getPackageInfo';
 
 
-    public static createTelemetryReporter(ctx: vscode.ExtensionContext) {
-        const { extensionName, extensionVersion, aiKey } = this.getPackageInfo(ctx);
+export class TelemetryAI {
+
+    private telemetryReporter: TelemetryReporter;
+    private lastTrackTimeStamp: number = this.extensionStartTime;
+
+    constructor(context: vscode.ExtensionContext, private extensionStartTime: number){
+        this.telemetryReporter = this.createTelemetryReporter(context);
+        this.trackDurationExtensionStartUp();
+        this.updateLastTrackTimeStamp();
+    }
+
+    private createTelemetryReporter(ctx: vscode.ExtensionContext) {
+        const { extensionName, extensionVersion, aiKey } = getPackageInfo(ctx);
         const reporter: TelemetryReporter = new TelemetryReporter(extensionName, extensionVersion, aiKey);
-        //adding to the array of disposables
+        // adding to the array of disposables
         ctx.subscriptions.push(reporter);
         return reporter;
     }
 
-    private static getPackageInfo(ctx?: vscode.ExtensionContext): { extensionName: string, extensionVersion: string, aiKey: string, extensionId: string, bugsUrl: string | undefined } {
-        
-        let packageJson: IPackageJson;
-        try {
-            if (ctx) {
-                // tslint:disable-next-line:non-literal-require
-                packageJson = <IPackageJson>fse.readJsonSync(ctx.asAbsolutePath('package.json'));
-            } else {
-                throw new Error('No extension context');
-            }
-        } catch (error) {
-            console.error(`getPackageInfo: ${(error).message}`);
-            throw error;
-        }
-        const extensionName: string | undefined = packageJson.name;
-        const extensionVersion: string | undefined = packageJson.version;
-        const aiKey: string | undefined = packageJson.aiKey;
-        const publisher: string | undefined = packageJson.publisher;
-        const bugsUrl: string | undefined = !packageJson.bugs ? undefined :
-            typeof packageJson.bugs === 'string' ? packageJson.bugs :
-            packageJson.bugs.url;
+    private trackDurationExtensionStartUp(){
+        this.trackTimeDuration("ExtensionStartUpTime", Date.now(), this.extensionStartTime);
+    }
 
-        if (!aiKey) {
-            throw new Error('Extension\'s package.json is missing aiKey');
-        }
-        if (!extensionName) {
-            throw new Error('Extension\'s package.json is missing name');
-        }
-        if (!publisher) {
-            throw new Error('Extension\'s package.json is missing publisher');
-        }
-        if (!extensionVersion) {
-            throw new Error('Extension\'s package.json is missing version');
-        }
+    public trackDurationOnPageRouterChange(previousPageName : string){
+        this.trackTimeDuration(previousPageName, Date.now(), this.lastTrackTimeStamp);
+        this.updateLastTrackTimeStamp();
+    }
+    
+    public trackDurationStartToGenerate(){
+        this.trackTimeDuration("StartToGenerateTime", Date.now(), this.extensionStartTime);
+    }
 
-        const extensionId: string = `${packageJson.publisher}.${packageJson.name}`;
-
-        return { extensionName, extensionVersion, aiKey, extensionId, bugsUrl };
+    private trackTimeDuration(eventName : string, endTime : number, startTime : number){
+        var measurement = {
+            duration: endTime - startTime
+        };
+        this.telemetryReporter.sendTelemetryEvent(eventName, undefined, measurement)
+    }
+    private updateLastTrackTimeStamp(){
+        this.lastTrackTimeStamp = Date.now();
     }
 }
 
-interface IPackageJson {
-    version?: string;
-    name?: string;
-    publisher?: string;
-    aiKey?: string;
-    bugs?: string | {
-        url?: string;
-    };
-}

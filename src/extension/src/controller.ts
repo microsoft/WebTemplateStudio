@@ -21,14 +21,14 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
-import {TelemetryAIProvider, TelemetryReporter} from "./telemetry/telemetryAI";
+import {TelemetryAI} from "./telemetry/telemetryAI";
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
-  private static Telemetry: TelemetryReporter;
+  private static Telemetry: TelemetryAI;
   private static reactPanelContext: ReactPanel;
   // This will map commands from the client to functions.
   private static clientCommandMap: Map<
@@ -49,8 +49,18 @@ export abstract class Controller {
       ExtensionCommand.NameCosmos,
       Controller.sendCosmosNameValidationStatusToClient
     ],
-    [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
-    [ExtensionCommand.GetOutputPath, Controller.sendOutputPathSelectionToClient]
+    [ 
+      ExtensionCommand.GetOutputPath, 
+      Controller.sendOutputPathSelectionToClient
+    ],
+    [
+      ExtensionCommand.HandleTelemetry,
+      Controller.handleTelemetry
+    ],
+    [
+      ExtensionCommand.Generate,
+      Controller.handleGeneratePayloadFromClient
+    ]
   ]);
 
   private static routingMessageReceieverDelegate = function(message: any) {
@@ -63,24 +73,24 @@ export abstract class Controller {
     }
   };
 
+
   /**
    * launchWizard
    * Will pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public static launchWizard(context: vscode.ExtensionContext) {
-    try{
-      Controller.Telemetry = TelemetryAIProvider.createTelemetryReporter(context);
-      Controller.Telemetry.sendTelemetryEvent('sampleFakeEvent', { 'stringProp': 'some string' }, { 'numericMeasure': 123});
-    }catch(error){
-      console.log("Telemetry Failed: " + error.message);
-    }
+  public static launchWizard(context: vscode.ExtensionContext, startTime: number) {
+
     Controller.reactPanelContext = ReactPanel.createOrShow(
       context.extensionPath,
       this.routingMessageReceieverDelegate
     );
+    Controller.Telemetry = new TelemetryAI(context, startTime);
   }
 
+  public static handleTelemetry(payload : any): any {
+    Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
+  };
   /**
    * Returns an array of Subscription Items when the user is logged in
    *
