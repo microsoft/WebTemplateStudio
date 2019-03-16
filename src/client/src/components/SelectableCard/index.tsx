@@ -22,7 +22,7 @@ const SelectableCard = ({
   cardNumber,
   onCardClick,
   option,
-  onDetailsClick
+  onDetailsClick,
   disabled
 }: {
   iconPath: string | undefined;
