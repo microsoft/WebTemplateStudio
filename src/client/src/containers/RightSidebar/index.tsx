@@ -19,8 +19,8 @@ import { ROUTES } from "../../utils/constants";
 
 import { selectPagesAction } from "../../actions/selectPages";
 import { ISelected } from "../../types/selected";
-import styles from "./styles.module.css";
 import SortablePageList from "../SortablePageList";
+import styles from "./styles.module.css";
 
 interface ISelectionType {
   appType: ISelected;
