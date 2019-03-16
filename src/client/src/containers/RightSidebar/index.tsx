@@ -4,9 +4,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
-import { arrayMove } from "react-sortable-hoc";
 
-import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
 import ServicesSidebarItem from "../../components/ServicesSidebarItem";
 
@@ -15,17 +13,15 @@ import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../
 import { selectWebAppAction } from "../../actions/selectWebApp";
 
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
+import { getIsVisitedRoutesSelector } from "../../selectors/wizardNavigationSelector";
 
 import { ROUTES } from "../../utils/constants";
-
-import cancel from "../../assets/cancel.svg";
 
 import { selectPagesAction } from "../../actions/selectPages";
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 import SortablePageList from "../SortablePageList";
 
-// TODO: Finalize types when API is hooked up
 interface ISelectionType {
   appType: ISelected;
   backendFramework: ISelected;
@@ -46,6 +42,7 @@ interface IRightSidebarProps {
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
   services: any;
+  isRoutesVisited: any;
 }
 
 interface IRightSidebarState {
@@ -80,66 +77,14 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     pages[idx].title = newTitle;
     this.props.selectPages(pages);
   };
-  public showProjectTypes = (): boolean => {
-    const { pathname } = this.props.location;
-    return pathname !== "/";
-  };
-  public showFrameworks = (): boolean => {
-    const { pathname } = this.props.location;
-    return pathname !== "/" && pathname !== "/SelectWebApp";
-  };
-  public showPages = (): boolean => {
-    const { pathname } = this.props.location;
-    return (
-      pathname !== "/" &&
-      pathname !== "/SelectWebApp" &&
-      pathname !== "/SelectFrameworks"
-    );
-  };
-  public showServices = (): boolean => {
-    const { pathname } = this.props.location;
-    return (
-      pathname !== "/" &&
-      pathname !== "/SelectWebApp" &&
-      pathname !== "/SelectFrameworks" &&
-      pathname !== "/SelectPages"
-    );
-  };
   public convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
     return {
       value: option.internalName,
       label: option.title
     };
   }
-  public renderService(serviceName: string, selected: any) {
-    const componentsToRender = [];
-    if (!_.isEmpty(selected)) {
-      for (const app of selected) {
-        const appComponent = (
-          <DraggableSidebarItem
-            key={serviceName}
-            text={app.accountName}
-            closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`}
-            itemTitle="CosmosDB"
-          />
-        );
-        componentsToRender.push(appComponent);
-      }
-    }
-    return componentsToRender;
-  }
-  public onSortEnd = ({
-    oldIndex,
-    newIndex
-  }: {
-    oldIndex: number;
-    newIndex: number;
-  }) => {
-    this.setState(({ items }) => ({
-      items: arrayMove(items, oldIndex, newIndex)
-    }));
-  };
   public render() {
+    const { showFrameworks, showPages, showProjectTypes, showServices }= this.props.isRoutesVisited;
     const { pathname } = this.props.location;
     return (
       <React.Fragment>
@@ -150,7 +95,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               options={this.props.projectTypeDropdownItems}
               handleDropdownChange={this.handleChange.bind(this)}
               selectDropdownOption={this.props.selectProjectType}
-              isVisible={this.showProjectTypes()}
+              isVisible={showProjectTypes}
               title="Project Type"
               value={this.convertOptionToDropdownItem(
                 this.props.selection.appType
@@ -160,7 +105,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               options={this.props.frontendDropdownItems}
               handleDropdownChange={this.handleChange.bind(this)}
               selectDropdownOption={this.props.selectFrontendFramework}
-              isVisible={this.showFrameworks()}
+              isVisible={showFrameworks}
               title="Front-end Framework"
               value={this.convertOptionToDropdownItem(
                 this.props.selection.frontendFramework
@@ -170,14 +115,14 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               options={this.props.backendDropdownItems}
               handleDropdownChange={this.handleChange.bind(this)}
               selectDropdownOption={this.props.selectBackendFramework}
-              isVisible={this.showFrameworks()}
+              isVisible={showFrameworks}
               title="Back-end Framework"
               value={this.convertOptionToDropdownItem(
                 this.props.selection.backendFramework
               )}
             />
-            {this.showPages() && <SortablePageList />}
-            {this.showServices() && (
+            {showPages && <SortablePageList />}
+            {showServices && (
               <div className={styles.sidebarItem}>
                 <div className={styles.dropdownTitle}>Services</div>
                 <ServicesSidebarItem services={this.props.services} />
@@ -191,17 +136,12 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
 }
 
 const mapStateToProps = (state: any): IRightSidebarProps => ({
-  selection: state.selection,
-  projectTypeDropdownItems: convertOptionsToDropdownItems(
-    state.wizardContent.projectTypes
-  ),
-  frontendDropdownItems: convertOptionsToDropdownItems(
-    state.wizardContent.frontendOptions
-  ),
-  backendDropdownItems: convertOptionsToDropdownItems(
-    state.wizardContent.backendOptions
-  ),
-  services: getServicesSelector(state)
+    selection: state.selection,
+    projectTypeDropdownItems: convertOptionsToDropdownItems(state.wizardContent.projectTypes),
+    frontendDropdownItems: convertOptionsToDropdownItems(state.wizardContent.frontendOptions),
+    backendDropdownItems: convertOptionsToDropdownItems(state.wizardContent.backendOptions),
+    services: getServicesSelector(state),
+    isRoutesVisited: getIsVisitedRoutesSelector(state),
 });
 
 function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
