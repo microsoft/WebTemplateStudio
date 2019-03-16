@@ -3,13 +3,24 @@
   justify-content: space-between;
 }
 
+.centerViewCropped,
 .centerView {
-  padding: 51px 0.75em 71px 0.75em;
+  padding: 0px 0.75em 0px 0.75em;
   overflow: auto;
   width: 100%;
-  height: 100vh;
   box-sizing: border-box;
   background-color: #303030;
+}
+
+.centerView {
+  height: 100vh;
+  padding-top: 51px;
+}
+
+.centerViewCropped {
+  height: calc(100vh - 122px);
+  margin-top: 51px;
+  margin-bottom: 71px;
 }
 
 .cosmosDbModalStyle {

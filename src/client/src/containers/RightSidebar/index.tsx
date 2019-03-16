@@ -89,7 +89,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     return (
       <React.Fragment>
         {pathname !== ROUTES.PAGE_DETAILS && (
-          <div className={classNames(styles.rightView, styles.container)}>
+          <div className={classNames(styles.container, {
+            [styles.rightView]: pathname === ROUTES.WELCOME,
+            [styles.rightViewCropped]: pathname !== ROUTES.WELCOME
+          })}>
             <div className={styles.title}>Your Project Details</div>
             <RightSidebarDropdown
               options={this.props.projectTypeDropdownItems}

@@ -1,6 +1,8 @@
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import { HashRouter as Router, Route } from "react-router-dom";
+import { withRouter } from "react-router";
+import { Route, RouteComponentProps } from "react-router-dom";
 import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
@@ -16,7 +18,7 @@ import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 
 import leftSidebarData from "./mockData/leftSidebarData";
-import { ROUTES, EXTENSION_COMMANDS } from "./utils/constants";
+import { EXTENSION_COMMANDS, ROUTES } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
@@ -28,7 +30,6 @@ import {
 } from "./actions/setAccountAvailability";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
-import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
 import { setPathAndNameValidation } from "./actions/setPathAndNameValidation";
@@ -48,7 +49,7 @@ interface IStateProps {
   vscode: any;
 }
 
-type Props = IDispatchProps & IStateProps;
+type Props = IDispatchProps & IStateProps & RouteComponentProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
@@ -131,15 +132,18 @@ class App extends React.Component<Props> {
   }
 
   public render() {
+    const { pathname } = this.props.location;
     return (
-      <Router>
-        <div>
+        <React.Fragment>
           <Header />
           <div className={appStyles.container}>
             <CosmosResourceModal />
             <AzureFunctionsModal />
             <LeftSidebar sidebarItems={leftSidebarData} />
-            <div className={appStyles.centerView}>
+            <div className={classnames({
+                [appStyles.centerView]: pathname === ROUTES.WELCOME,
+                [appStyles.centerViewCropped]: pathname !== ROUTES.WELCOME
+              })}>
               <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
               <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
               <Route
@@ -155,13 +159,12 @@ class App extends React.Component<Props> {
                 path={ROUTES.SELECT_PROJECT_TYPE}
                 component={SelectWebApp}
               />
-              <Route exact={true} path="/" component={Welcome} />
+              <Route exact={true} path={ROUTES.WELCOME} component={Welcome} />
             </div>
             <RightSidebar />
           </div>
           <Footer />
-        </div>
-      </Router>
+        </React.Fragment>
     );
   }
 }
@@ -197,7 +200,7 @@ const mapStateToProps = (state: any): IStateProps => ({
   vscode: state.vscode.vscodeObject
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(App));
