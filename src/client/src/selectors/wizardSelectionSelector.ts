@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import { RowType } from "../types/rowType";
 import { ISelected } from "../types/selected";
 import getSvgUrl from "../utils/getSvgUrl";
+import { WIZARD_CONTENT_INTERNAL_NAMES, SERVICE_KEYS } from "../utils/constants";
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
@@ -14,7 +15,7 @@ const getProjectTypeRowItems = (selection: any): RowType[] => {
   return [
     {
       type: "Project Type",
-      name: projectType.title,
+      title: projectType.title,
       svgUrl: getSvgUrl(projectType.internalName)
     }
   ];
@@ -25,26 +26,47 @@ const frameworksRowItems = (selection: any): RowType[] => {
   return [
     {
       type: "Front-end framework",
-      name: frontendFramework.title,
+      title: frontendFramework.title,
       svgUrl: getSvgUrl(frontendFramework.internalName)
     },
     {
       type: "Back-end framework",
-      name: backendFramework.title,
+      title: backendFramework.title,
       svgUrl: getSvgUrl(backendFramework.internalName)
     }
   ];
 };
 
-// only works for Cosmos right now
-const getServices = (selection: any): RowType[] => {
-  const { services } = selection;
+/**
+ * Iterates through every service, and for every services, identifies each
+ * resource that was created and adds it to a list that will be displayed on the
+ * summary page. Currently supports Azure Functions and CosmosDB only. Information
+ * provided is in line with props required by SummaryTile component.
+ * 
+ * @param selection selection object created by the developer
+ */
+const getServices = (selection: any): any => {
+  const { services } = selection;  
   const servicesRows = [];
-  if (_.has(services, "cosmosOptions")) {
-    servicesRows.push({
-      type: "Cosmos DB",
-      name: services.cosmosOptions.api
-    });
+  for (const serviceKey in services) {
+    for (const selection of services[serviceKey].selection) {
+      if (serviceKey === SERVICE_KEYS.AZURE_FUNCTIONS) {
+        servicesRows.push({
+          title: selection.appName,
+          originalTitle: "Azure Functions",
+          company: "Microsoft",
+          svgUrl: getSvgUrl(selection.internalName),
+          functionNames: selection.functionNames
+        })
+      } else if (serviceKey === SERVICE_KEYS.COSMOS_DB) {
+        servicesRows.push({
+          title: selection.accountName,
+          originalTitle: "CosmosDB",
+          company: "Microsoft",
+          svgUrl: getSvgUrl(selection.internalName)
+        }) 
+      }
+    }
   }
   return servicesRows;
 };
@@ -56,7 +78,7 @@ const getPagesRowItems = (selection: any): RowType[] => {
   for (const page of pages) {
     pagesRows.push({
       type: page.originalTitle ? page.originalTitle : page.title,
-      name: page.title,
+      title: page.title,
       svgUrl: getSvgUrl(page.internalName)
     });
   }

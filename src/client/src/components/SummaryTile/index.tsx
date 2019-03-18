@@ -4,19 +4,20 @@ import * as React from "react";
 import styles from "./styles.module.css";
 
 import edit from "../../assets/edit.svg";
-import fullstackwhite from "../../assets/fullstackwhite.svg";
 import cancel from "../../assets/cancel.svg"
 
 interface IProps {
     withIndent?: boolean;
     title: string;
+    originalTitle?: string;
     company?: string;
     version: string;
-    isEditable: boolean;
-    withoutDelete?: boolean;
+    isEditable?: boolean;
+    svgUrl?: string;
+    withoutEditIcon?: boolean;
 }
 
-const SummaryTile = ({ withIndent, title, company, version, isEditable, withoutDelete }: IProps) => {
+const SummaryTile = ({ withIndent, title, originalTitle, company, version, isEditable, svgUrl, withoutEditIcon }: IProps) => {
     const [ componentTitle, setTitle ] = React.useState(title);
     const [ isDisabled, setDisabled ] = React.useState(true);
     const [ showEditable, setEditable ] = React.useState(false);
@@ -54,22 +55,22 @@ const SummaryTile = ({ withIndent, title, company, version, isEditable, withoutD
                 [styles.disableHover]: !isEditable
             })}>
                 <div className={styles.leftContainer}>
-                    <img src={fullstackwhite} className={styles.leftIcon} />
+                    <img src={svgUrl} className={styles.leftIcon} />
                     <div className={styles.tileContent}>
                         <input ref={inputRef} className={styles.tileInput} value={componentTitle} onChange={handleChange} disabled={isDisabled} onBlur={handleFocusOut} onClick={handleClick} />
                         <div className={styles.metaData}>
-                            <div>{title}</div><div>&nbsp;|&nbsp;</div>
+                            {originalTitle && <React.Fragment><div>{originalTitle}</div><div>&nbsp;|&nbsp;</div></React.Fragment>}
                             {company && <React.Fragment><div>{company}</div><div>&nbsp;|&nbsp;</div></React.Fragment>}
                             <div>{version}</div>
                         </div>
                     </div>
                 </div>
-                {showEditable && <img src={edit} className={styles.rightIcon} onClick={handleClick} />}        
+                {(showEditable && !withoutEditIcon) && <img src={edit} className={styles.rightIcon} onClick={handleClick} />}        
             </div>
             <img src={cancel} className={classnames(styles.closeIcon, {
-                [styles.hidden]: !showEditable || !isEditable || withoutDelete
+                [styles.hidden]: !showEditable || !isEditable
             })} />
-            {(!showEditable || withoutDelete) && <div className={styles.spacer} />}
+            {!showEditable && <div className={styles.spacer} />}
         </div>
     )
 }

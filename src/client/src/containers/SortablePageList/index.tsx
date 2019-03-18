@@ -19,11 +19,16 @@ interface ISortablePageListProps {
   pages: any[];
 }
 
+interface IStateProps {
+    pagesRows?: any[];
+    selectionTitle?: string;
+}
+
 interface ISortableDispatchProps {
   selectPages: (pages: ISelected[]) => any;
 }
 
-type Props = ISortablePageListProps & ISortableDispatchProps;
+type Props = ISortablePageListProps & ISortableDispatchProps & IStateProps;
 
 const SortablePageList = (props: Props) => {
   const [pages, setPages] = React.useState(props.pages);
@@ -80,6 +85,7 @@ const SortablePageList = (props: Props) => {
       {!isMinimized && (
         <SortableList
           pages={props.pages}
+          pagesRows={props.pagesRows}
           onSortEnd={onSortEnd}
           distance={DRAG_PIXEL_THRESHOLD}
           handleInputChange={handleInputChange}

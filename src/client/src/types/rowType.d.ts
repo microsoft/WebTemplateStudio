@@ -1,5 +1,8 @@
 export interface RowType {
     type: string;
-    name: string;
+    title: string;
     svgUrl?: string;
+    functionNames?: string[];
+    company?: string;
+    originalTitle?: string;
 }

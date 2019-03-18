@@ -16,7 +16,7 @@
 .rightViewCropped,
 .rightView {
   width: 25%;
-  background-color: #303030;
+  background-color: black;
   border-left: 0.5px solid #555555;
   box-sizing: border-box;
 }
