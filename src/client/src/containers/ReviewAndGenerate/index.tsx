@@ -89,14 +89,6 @@ const ReviewAndGenerate = (props: Props) => {
       </div>
       {!props.validation.isValidProjectName && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectNameError}</div>}
       {!props.validation.isValidProjectPath && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectPathError}</div>}
-      <SummaryTile />
-      {/*
-      <Table title="1. Type of Application" rowItems={props.projectTypeRows} />
-      <Table title="2. Frameworks" rowItems={props.frameworkRows} />
-      <Table title="3. Pages" rowItems={props.pagesRows} />
-      {props.servicesRows.length > 0 && (
-        <Table title="4. Services" rowItems={props.servicesRows} />
-      )}*/}
     </div>
   );
 };

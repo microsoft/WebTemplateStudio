@@ -4,6 +4,7 @@
     align-items: center;
 }
 
+.disableHover,
 .summaryTileContainer {
     display: flex;
     align-items: center;
@@ -66,7 +67,6 @@
 
 .metaData {
     display: flex;
-    justify-content: space-between;
 }
 
 .tileContent {
