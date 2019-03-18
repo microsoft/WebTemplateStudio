@@ -41,7 +41,7 @@ export interface RuntimeObject {
 /*
  * Returns an array of available/implemented RuntimeObjects for functions app
  */
-export function GetAvailableRuntimes(): Array<RuntimeObject> {
+export function GetAvailableRuntimes(): RuntimeObject[] {
   return [
     {
       value: "node",
@@ -197,7 +197,7 @@ export class FunctionProvider {
         selections.subscriptionItem
       );
 
-      ARMFileHelper.creatDirIfNotExists(path.join(appPath, "arm-templates"));
+      ARMFileHelper.creatDirIfNonExistent(path.join(appPath, "arm-templates"));
       ARMFileHelper.writeObjectToJsonFile(
         path.join(appPath, "arm-templates", "functions-template.json"),
         template

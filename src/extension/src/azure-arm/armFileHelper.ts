@@ -1,7 +1,7 @@
 import * as fsx from "fs-extra";
 
 export namespace ARMFileHelper {
-  export function creatDirIfNotExists(dirPath: string): void {
+  export function creatDirIfNonExistent(dirPath: string): void {
     if (!fsx.pathExistsSync(dirPath)) {
       fsx.mkdirpSync(dirPath);
     }

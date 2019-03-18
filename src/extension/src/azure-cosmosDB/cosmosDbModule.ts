@@ -52,7 +52,7 @@ export interface APIObject {
 /*
  * Returns an array of available/implemented APIObjects for cosmos
  */
-export function GetAvailableAPIs(): Array<APIObject> {
+export function GetAvailableAPIs(): APIObject[] {
   return [
     {
       value: "MongoDB",
@@ -229,7 +229,7 @@ export class CosmosDBDeploy {
         userSubscriptionItem
       );
 
-      ARMFileHelper.creatDirIfNotExists(path.join(genPath, "arm-templates"));
+      ARMFileHelper.creatDirIfNonExistent(path.join(genPath, "arm-templates"));
       ARMFileHelper.writeObjectToJsonFile(
         path.join(genPath, "arm-templates", "cosmos-template.json"),
         template

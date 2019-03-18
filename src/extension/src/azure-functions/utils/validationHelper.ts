@@ -15,7 +15,12 @@ export namespace ValidationHelper {
         name.length > CONSTANTS.FUNCTIONS_CONFIG.MAX_NAME_LEN ||
         name.length < CONSTANTS.FUNCTIONS_CONFIG.MIN_NAME_LEN
       ) {
-        throw new ValidationError(CONSTANTS.ERRORS.NAME_MIN_MAX(1, 60));
+        throw new ValidationError(
+          CONSTANTS.ERRORS.NAME_MIN_MAX(
+            CONSTANTS.FUNCTIONS_CONFIG.MIN_NAME_LEN,
+            CONSTANTS.FUNCTIONS_CONFIG.MAX_NAME_LEN
+          )
+        );
       }
     }
 
