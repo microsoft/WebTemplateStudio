@@ -1,1 +1,3 @@
-﻿Fullstack Web Application project type details.
+﻿A Full Stack Web Application where you can select a frontend framework, a backend framework and possibly some Azure services.
+We will handle the deployment of Azure resources if selected, and most of the connections to such resources.
+However,  you must still fill somethings in yourself via our TODOs.

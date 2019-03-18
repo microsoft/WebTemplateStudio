@@ -8,18 +8,5 @@
     "licenses": "",
     "platforms": [ "Web" ],
     "languages": [ "Any" ]
-  },
-  {
-    "name": "ASPNET",
-    "displayName": "ASP.NET",
-    "summary": "ASP.NET is an open-source server-side web application framework designed for web development to produce dynamic web pages.",
-    "author": "Microsoft",
-    "order": "2",
-    "licenses": "",
-    "platforms": [ "Web" ],
-    "languages": [ "Any" ],
-    "tags": {
-      "enabled": false
-    }
   }
 ]
