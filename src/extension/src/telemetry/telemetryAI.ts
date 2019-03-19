@@ -1,20 +1,17 @@
 import * as vscode from 'vscode';
 import TelemetryReporter from 'vscode-extension-telemetry';
 import { getPackageInfo } from './getPackageInfo';
-import { IActionContext,  callWithTelemetryAndErrorHandling } from './callWithTelemetryAndErrorHandling'
+import { IActionContext, ITelemetryReporter, callWithTelemetryAndErrorHandling } from './callWithTelemetryAndErrorHandling'
 
 export type IActionContext = IActionContext;
 
-interface ITelemetryReporter {
-    sendTelemetryEvent(eventName: string, properties?: { [key: string]: string | undefined }, measures?: { [key: string]: number | undefined }): void;
-}
 export class TelemetryAI {
 
-    private telemetryReporter: ITelemetryReporter;
+    private static telemetryReporter: ITelemetryReporter;
     private lastTrackTimeStamp: number = this.extensionStartTime;
 
     constructor(context: vscode.ExtensionContext, private extensionStartTime: number){
-        this.telemetryReporter = this.createTelemetryReporter(context);
+        TelemetryAI.telemetryReporter = this.createTelemetryReporter(context);
         this.trackDurationExtensionStartUp();
         this.updateLastTrackTimeStamp();
     }
@@ -46,11 +43,11 @@ export class TelemetryAI {
         var measurement = {
             duration: (endTime - startTime) / 1000
         };
-        this.telemetryReporter.sendTelemetryEvent(eventName, undefined, measurement)
+        TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, undefined, measurement)
     }
 
     public async callAndHandleError<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{
-        return await callWithTelemetryAndErrorHandling(callbackId,callback, this.telemetryReporter.sendTelemetryEvent)
+        return await callWithTelemetryAndErrorHandling(callbackId,callback, TelemetryAI.telemetryReporter)
     }
 }
 

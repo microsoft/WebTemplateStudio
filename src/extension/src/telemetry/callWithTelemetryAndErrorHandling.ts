@@ -27,6 +27,11 @@ export interface IActionContext {
      */
     rethrowError?: boolean;
 }
+
+export interface ITelemetryReporter {
+    sendTelemetryEvent(eventName: string, properties?: { [key: string]: string | undefined }, measures?: { [key: string]: number | undefined }): void;
+}
+
 export interface TelemetryProperties {
     /**
      * Defaults to `false`
@@ -48,7 +53,7 @@ export interface TelemetryMeasurements {
 export async function callWithTelemetryAndErrorHandling<T>(
     callbackId: string, 
     callback: (this: IActionContext) => T | PromiseLike<T>, 
-    sendTelemetry: (callbackId: string, properties?: TelemetryProperties, measures?: TelemetryMeasurements) => void): Promise<T | undefined> {
+    telemetryReporter: ITelemetryReporter): Promise<T | undefined> {
     const [start, context] = initContext();
 
     try {
@@ -57,7 +62,7 @@ export async function callWithTelemetryAndErrorHandling<T>(
         handleError(context, callbackId, error);
         return undefined;
     } finally {
-        handleTelemetry(context, callbackId, start, sendTelemetry);
+        handleTelemetry(context, callbackId, start, telemetryReporter);
     }
 }
 function initContext(): [number, IActionContext] {
@@ -124,7 +129,7 @@ function handleTelemetry(
     context: IActionContext,
     callbackId: string,
     start: number,
-    sendTelemetry: (callbackId: string, properties?: TelemetryProperties, measures?: TelemetryMeasurements) => void): void {
+    telemetryReporter: ITelemetryReporter): void {
         
     // For suppressTelemetry=true, ignore successful results
     if (!(context.suppressTelemetry && context.properties.result === 'Succeeded')) {
@@ -132,7 +137,7 @@ function handleTelemetry(
         context.measurements.duration = (end - start) / 1000;
 
         // Note: The id of the extension is automatically prepended to the given callbackId (e.g. "vscode-cosmosdb/")
-        sendTelemetry(callbackId, context.properties, context.measurements);
+        telemetryReporter.sendTelemetryEvent(callbackId, context.properties, context.measurements);
     }
 }
 

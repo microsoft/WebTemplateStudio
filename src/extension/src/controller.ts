@@ -87,6 +87,7 @@ export abstract class Controller {
     );
     Controller.Telemetry = new TelemetryAI(context, startTime);
     Controller.Telemetry.callAndHandleError("testingFunctionWrapper",async function (this: IActionContext): Promise<void> {
+      this.properties.customProp = "Hello Testing";
       console.log("helloworld");
     })
   }
