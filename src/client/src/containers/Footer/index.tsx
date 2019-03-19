@@ -73,7 +73,7 @@ class Footer extends React.Component<Props> {
   };
   public render() {
 
-    // Validate the page names and do not generate if they are invalid
+    // Validate the page names and do not generate if they are invalid or if there are duplicates
     var pageNames = new Set();
     var areValidNames = true;
     const regx = new RegExp(/^[a-zA-Z0-9 ]+$/i)
@@ -89,8 +89,6 @@ class Footer extends React.Component<Props> {
         pageNames.add(pageName);
       }
     }
-
-    console.log(areValidNames);
 
     // TODO: Needs access to redux to determine where each link should go to
     // TODO: Add previous paths through link prop to track state/history
