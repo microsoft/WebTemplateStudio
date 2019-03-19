@@ -147,7 +147,7 @@ export class CosmosDBDeploy {
         userCosmosDBSelection.subscriptionItem;
       this.setCosmosClient(userSubscriptionItem);
     } catch (error) {
-      throw new AuthorizationError("CosmosDBDeploy: " + error.message);
+      throw new AuthorizationError(error.message);
     }
 
     var resourceGroup = userCosmosDBSelection.resourceGroupItem.name;
@@ -259,7 +259,7 @@ export class CosmosDBDeploy {
         databaseName
       );
     } catch (error) {
-      throw new DeploymentError("CosmosDBDeploy: " + error.message);
+      throw new DeploymentError(error.message);
     }
 
     /*
