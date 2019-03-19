@@ -133,7 +133,6 @@ class Footer extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: any): any => {
-  console.log(state);
   const { vscode } = state;
   return {
     vscode: vscode.vscodeObject,
