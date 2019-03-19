@@ -70,6 +70,9 @@ export class ReactPanel {
         // Enable javascript in the webview
         enableScripts: true,
 
+        // Keep the wizard in its current state
+        retainContextWhenHidden: true,
+
         // And restric the webview to only loading content from our extension's `media` directory.
         localResourceRoots: [
           vscode.Uri.file(path.join(this._extensionPath, "react"))
@@ -142,8 +145,8 @@ export class ReactPanel {
 				<link rel="stylesheet" type="text/css" href="${styleUri}">
 				<meta img-src vscode-resource: https: ;style-src vscode-resource: 'unsafe-inline' http: https: data:;">
 				<base href="${vscode.Uri.file(path.join(this._extensionPath, "react")).with({
-          scheme: "vscode-resource"
-        })}/">
+      scheme: "vscode-resource"
+    })}/">
 			</head>
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>
