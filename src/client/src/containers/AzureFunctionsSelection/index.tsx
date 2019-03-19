@@ -14,7 +14,7 @@ interface IProps {
     functionApps: IAzureFunctionsSelection;
 }
 
-interface IFunctionApp {
+export interface IFunctionApp {
     appIndex: number;
     functionNames: string[]
 }

@@ -71,7 +71,7 @@ const SortablePageList = (props: Props) => {
   const DRAG_PIXEL_THRESHOLD = 1;
   return (
     <div className={styles.sidebarItem}>
-      <div className={styles.pageListContainer}>
+      {!props.pagesRows && <div className={styles.pageListContainer}>
         <div className={styles.dropdownTitle}>Pages</div>
         <div
           className={styles.hideOrShow}
@@ -81,7 +81,7 @@ const SortablePageList = (props: Props) => {
         >
           {hideOrShowText}
         </div>
-      </div>
+      </div>}
       {!isMinimized && (
         <SortableList
           pages={props.pages}

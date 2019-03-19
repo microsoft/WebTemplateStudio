@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { ReactComponent as SaveSVG } from "../../assets/folder.svg";
 import SummaryTile from "../../components/SummaryTile";
 import SortablePageList from "../SortablePageList";
-import Title from "../../components/Title";
 
 import {
   updateOutputPathAction,
@@ -16,6 +15,7 @@ import styles from "./styles.module.css";
 
 import { RowType } from "../../types/rowType";
 import { EXTENSION_COMMANDS } from "../../utils/constants";
+import SummarySection from "../../components/SummarySection";
 
 interface IStateProps {
   projectTypeRows: RowType[];
@@ -50,27 +50,6 @@ const ReviewAndGenerate = (props: Props) => {
       command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
     });
   };
-  const renderTile = (title: string, svgUrl?: string, company?: string, originalTitle?: string, isEditable?: boolean, withIndent?: boolean) => {
-    return (
-      <div className={styles.tileContainer}>
-        <SummaryTile title={title} version="v1.0" svgUrl={svgUrl} company={company} originalTitle={originalTitle} isEditable={isEditable} withIndent={withIndent} />
-      </div>
-    )
-  }
-  const renderSelection = (selectionTitle: string, selectionRows: RowType[], isEditable?: boolean, withIndent?: boolean) => {
-    return (
-      <div className={styles.selectionContainer}>
-        <div className={styles.selectionTitle}>{selectionTitle}</div>
-          {selectionRows.map((selection) => (
-              <React.Fragment>
-                {renderTile(selection.title, selection.svgUrl, selection.company, selection.originalTitle, isEditable)}
-                {selection.functionNames && selection.functionNames.map((functionName) => (
-                  renderTile(functionName, undefined, undefined, undefined, true, true)
-                ))}
-              </React.Fragment>
-            ))}
-        </div>
-    )}
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -104,13 +83,13 @@ const ReviewAndGenerate = (props: Props) => {
       </div>
       {!props.validation.isValidProjectName && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectNameError}</div>}
       {!props.validation.isValidProjectPath && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectPathError}</div>}
-      {renderSelection("2. Project Type", props.projectTypeRows)}
-      {renderSelection("3. Frameworks", props.frameworkRows)}
+      <SummarySection selectionTitle="2. Project Type" selectionRows={props.projectTypeRows} />
+      <SummarySection selectionTitle="3. Frameworks" selectionRows={props.frameworkRows} />
       <div className={styles.selectionContainer}>
         <div className={styles.selectionTitle}>4. Pages</div>
           <SortablePageList pagesRows={props.pagesRows} />
       </div>
-      {renderSelection("5. Services", props.servicesRows)}
+      <SummarySection selectionTitle="5. Services" selectionRows={props.servicesRows} />
     </div>
   );
 };

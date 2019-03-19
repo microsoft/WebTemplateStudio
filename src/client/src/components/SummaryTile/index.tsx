@@ -73,6 +73,7 @@ const SummaryTile = ({ withIndent, title, originalTitle, company, version, isEdi
             </div>
             <img src={withLocalPath(cancel)} onClick={
                 () => {
+                    // idx + 1 avoids falsiness of 0th value
                     if (handleCloseClick && idx) {
                         handleCloseClick(idx - 1);
                     }
