@@ -12,12 +12,14 @@ import {
 } from "./errors";
 import {
   FunctionProvider,
-  FunctionSelections
+  FunctionSelections,
+  GetAvailableRuntimes
 } from "./azure-functions/functionProvider";
 import {
   CosmosDBDeploy,
   CosmosDBSelections,
-  DatabaseObject
+  DatabaseObject,
+  GetAvailableAPIs
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
@@ -48,10 +50,27 @@ export abstract class Controller {
       Controller.sendCosmosNameValidationStatusToClient
     ],
     [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
-    [ExtensionCommand.GetOutputPath, Controller.sendOutputPathSelectionToClient]
+    [
+      ExtensionCommand.GetOutputPath,
+      Controller.sendOutputPathSelectionToClient
+    ],
+    [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
+    [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs]
   ]);
 
-  private static routingMessageReceieverDelegate = function (message: any) {
+  public static sendFunctionRuntimes(message: any) {
+    Controller.handleValidMessage(ExtensionCommand.GetFunctionsRuntimes, {
+      runtimes: GetAvailableRuntimes()
+    });
+  }
+
+  public static sendCosmosAPIs(message: any) {
+    Controller.handleValidMessage(ExtensionCommand.GetCosmosAPIs, {
+      APIs: GetAvailableAPIs()
+    });
+  }
+
+  private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -255,6 +274,13 @@ export abstract class Controller {
       enginePayload
     );
 
+    if (payload.selectedFunctions) {
+      Controller.processFunctionDeploymentAndSendStatusToClient(
+        payload.functions,
+        enginePayload.path
+      );
+    }
+
     if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
       var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(cosmosPayload, enginePayload.path);
@@ -270,12 +296,14 @@ export abstract class Controller {
     }
   }
 
-  public static processFunctionDeploymentSendStatusToClient(message: any) {
+  public static processFunctionDeploymentAndSendStatusToClient(
+    funcPayload: any,
+    genPath: string
+  ) {
     /*
      * example:
      *   {
      *       command: 'deploy-functions'
-     *       appPath: 'C:\Users\t-dadua\Documents'
      *       selections: {
      *           appName: "YOUR_FUNCTION_APP_NAME",
      *           subscription: "YOUR_SUBSCRIPTION_LABEL",
@@ -286,7 +314,7 @@ export abstract class Controller {
      *       }
      *   }
      */
-    Controller.deployFunctionApp(message.selections, message.appPath)
+    Controller.deployFunctionApp(funcPayload.selections, genPath)
       .then(() => {
         Controller.handleValidMessage(ExtensionCommand.DeployFunctions, {
           succeeded: true
