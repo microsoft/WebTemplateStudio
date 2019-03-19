@@ -225,7 +225,7 @@ export class CosmosDBDeploy {
     try {
       if (this.SubscriptionItemCosmosClient === undefined) {
         throw new AuthorizationError(
-          CONSTANTS.ERRORS.COSMOS_CLIENT_NOT_UNDEFINED
+          CONSTANTS.ERRORS.COSMOS_CLIENT_NOT_DEFINED
         );
       }
 
@@ -298,7 +298,7 @@ export class CosmosDBDeploy {
       userSubscriptionItem.subscription === undefined ||
       userSubscriptionItem.subscriptionId === undefined
     ) {
-      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_UNDEFINED);
+      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
     return new CosmosDBManagementClient(
       userCredentials,
@@ -328,9 +328,7 @@ export class CosmosDBDeploy {
   ): Promise<string | undefined> {
     // let client: CosmosDBManagementClient = this.createCosmosClient(userSubscriptionItem);
     if (this.SubscriptionItemCosmosClient === undefined) {
-      throw new AuthorizationError(
-        CONSTANTS.ERRORS.COSMOS_CLIENT_NOT_UNDEFINED
-      );
+      throw new AuthorizationError(CONSTANTS.ERRORS.COSMOS_CLIENT_NOT_DEFINED);
     }
     name = name ? name.trim() : "";
 

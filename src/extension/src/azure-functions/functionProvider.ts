@@ -264,7 +264,7 @@ export class FunctionProvider {
       userSubscriptionItem.subscription === undefined ||
       userSubscriptionItem.subscriptionId === undefined
     ) {
-      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_UNDEFINED);
+      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
 
     return new WebSiteManagementClient(
@@ -296,9 +296,7 @@ export class FunctionProvider {
     ValidationHelper.validateFunctionAppName(appName);
 
     if (this.webClient === undefined) {
-      throw new AuthorizationError(
-        CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_UNDEFINED
-      );
+      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
     }
 
     return await this.webClient
