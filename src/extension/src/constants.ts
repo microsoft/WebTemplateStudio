@@ -11,7 +11,7 @@ export const CONSTANTS = {
       "There is no session available. Make sure the user is logged in."
   },
   INFO: {
-    COSMOS_ACCOUNT_DEPLOYED: function(accountName: string) {
+    COSMOS_ACCOUNT_DEPLOYED: function (accountName: string) {
       return `${accountName} has been deployed!`;
     }
   },
@@ -28,7 +28,10 @@ export const CONSTANTS = {
   REACT_PANEL: {
     Project_Title: "Project Acorn"
   },
-  GENERATE_ENDPOINT: "/api/generate"
+  GENERATE_ENDPOINT: "/api/generate",
+  ENV: function (username: string, password: string, origin: string) {
+    return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMODDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
+  }
 };
 
 export enum ExtensionCommand {

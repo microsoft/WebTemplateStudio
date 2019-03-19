@@ -21,7 +21,6 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
-import fs = require('fs');
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -258,10 +257,16 @@ export abstract class Controller {
 
     if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
-      await Controller.processCosmosDeploymentAndSendStatusToClient(
-        cosmosPayload,
-        enginePayload.path
-      );
+      var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(cosmosPayload, enginePayload.path);
+      //call .env replace
+      await vscode.window
+        .showInformationMessage('Replace your connection string in the .env file with the generated DB connection string?', ...['Yes', 'No'])
+        .then(selection => {
+          if (selection === "Yes") {
+            CosmosDBDeploy.updateConnectionStringInEnvFile(enginePayload.path, dbobject.connectionString);
+            vscode.window.showInformationMessage("Replaced");
+          }
+        });
     }
   }
 
@@ -311,19 +316,18 @@ export abstract class Controller {
      *       }
      *   }
      */
-    Controller.deployCosmosResource(cosmosPayload, genPath)
+    return Controller.deployCosmosResource(cosmosPayload, genPath)
       .then((dbObject: DatabaseObject) => {
         Controller.handleValidMessage(ExtensionCommand.DeployCosmos, {
           databaseObject: dbObject
         });
-
-        vscode.window.showInformationMessage(
-          CONSTANTS.INFO.COSMOS_ACCOUNT_DEPLOYED(cosmosPayload.accountName)
-        );
+        return dbObject;
+        //callyourfunction
       })
       .catch((err: Error) => {
         vscode.window.showErrorMessage(err.message);
         Controller.handleErrorMessage(ExtensionCommand.DeployCosmos, err);
+        throw err;
       });
   }
 
@@ -504,24 +508,6 @@ export abstract class Controller {
     ) {
       let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
       this.usersFunctionSubscriptionItemCache = subscriptionItem;
-    }
-  }
-
-  private static updateConnectionStringInEnvFile(filePath: string, connectionString: string): void {
-    /**
-     * Updates .env file in generated project directory once the connection string is received.
-     * Throws an error if the user deleted the project directory
-     * @filePath: path of .env file
-     */
-    const fileContents = `COSMOSDB_CONNSTR = ${connectionString};\nCOSMODDB_USER = <cosmos-user>;\nCOSMOSDB_PASSWORD = <cosmos_password>\n;`
-    try {
-      if (fs.existsSync(filePath)) {
-        // file exists
-        fs.writeFileSync(filePath + "\\.env", fileContents);
-      }
-    }
-    catch (err) {
-      throw new Error(err);
     }
   }
 

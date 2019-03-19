@@ -17,6 +17,10 @@ import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 
+import fs = require('fs');
+import { CONSTANTS } from "../constants";
+var Url = require('url-parse');
+
 export interface CosmosDBSelections {
   cosmosDBResourceName: string;
   location: string;
@@ -334,7 +338,7 @@ export class CosmosDBDeploy {
       } catch (err) {
         throw new AuthorizationError(
           "CosmosDBDeploy: GetConnectionString Failed to create Client with SubscriptionItem - " +
-            err.message
+          err.message
         );
       }
     }
@@ -344,5 +348,25 @@ export class CosmosDBDeploy {
       dataBaseName
     );
     return result!.connectionStrings![0].connectionString!;
+  }
+
+  public static updateConnectionStringInEnvFile(filePath: string, connectionString: string): void {
+    /**
+     * Updates .env file in generated project directory once the connection string is received.
+     * Throws an error if the user deleted the project directory
+     * @filePath: path of .env file
+     */
+    const cosmosConnectionString = Url(connectionString);
+    const envContent = CONSTANTS.ENV(cosmosConnectionString.username, cosmosConnectionString.password, cosmosConnectionString.origin);
+    const path = filePath + "\\.env";
+    try {
+      if (fs.existsSync(filePath)) {
+        // file exists
+        fs.writeFileSync(path, envContent);
+      }
+    }
+    catch (err) {
+      throw new Error(err);
+    }
   }
 }
