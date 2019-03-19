@@ -535,7 +535,16 @@ export abstract class Controller {
     }
   }
 
-  private static async sendUserInfo(message: any): Promise<void> {
-
+  private static async sendUserStatus(message: any): Promise<void> {
+    try {
+      const email = AzureAuth.getEmail();
+      Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
+        email: email
+      });
+    } catch (error) {
+      Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
+        email: ""
+      });
+    }
   }
 }

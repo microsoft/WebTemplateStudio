@@ -16,7 +16,7 @@ import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 
 import leftSidebarData from "./mockData/leftSidebarData";
-import { ROUTES } from "./utils/constants";
+import { ROUTES, EXTENSION_COMMANDS } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
@@ -37,16 +37,20 @@ interface IDispatchProps {
   setCosmosResourceAccountNameAvailability: (isAvailable: any) => any;
 }
 
-type Props = IDispatchProps;
+interface IStateProps {
+  vscode: any;
+}
+
+type Props = IDispatchProps & IStateProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => {},
-    loadWizardContent: () => {},
-    logIntoAzure: () => {},
-    saveSubscriptionData: () => {},
-    updateOutputPath: () => {},
-    setCosmosResourceAccountNameAvailability: () => {}
+    getVSCodeApi: () => { },
+    loadWizardContent: () => { },
+    logIntoAzure: () => { },
+    saveSubscriptionData: () => { },
+    updateOutputPath: () => { },
+    setCosmosResourceAccountNameAvailability: () => { }
   };
 
   public componentDidMount() {
@@ -100,6 +104,14 @@ class App extends React.Component<Props> {
           return;
       }
     });
+  }
+
+  public componentDidUpdate(prevProps: any){
+    if(this.props.vscode !== prevProps.vscode){
+      this.props.vscode.postMessage({
+        command: EXTENSION_COMMANDS.GET_USER_STATUS
+      });
+    }
   }
 
   public render() {
@@ -158,7 +170,13 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   }
 });
 
+const mapStateToProps = (state: any): IStateProps => {
+  return {
+    vscode: state.vscode.vscodeObject
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App);
