@@ -30,8 +30,6 @@
     "type": "git",
     "url": "https://github.com/Microsoft/WebTemplateStudio"
   },
-
-
   "activationEvents": [
     "onCommand:webTemplateStudioExtension.wizardLaunch"
   ],
@@ -68,6 +66,7 @@
     "@types/archiver": "^2.1.2",
     "@types/fs-extra": "^5.0.5",
     "@types/node-fetch": "^2.1.6",
+    "@types/opn": "^5.1.0",
     "@types/request": "^2.48.1",
     "@types/rimraf": "^2.0.2",
     "app-root-path": "^2.1.0",
@@ -80,9 +79,11 @@
     "ms-rest": "^2.5.0",
     "ms-rest-azure": "^2.6.0",
     "node-fetch": "^2.3.0",
+    "opn": "^5.5.0",
     "rimraf": "^2.6.3",
     "tslint-microsoft-contrib": "^6.0.0",
     "vsce": "^1.57.1",
-    "vscode-extension-telemetry": "^0.1.1"
+    "vscode-extension-telemetry": "^0.1.1",
+    "vscode-nls": "^4.0.0"
   }
 }

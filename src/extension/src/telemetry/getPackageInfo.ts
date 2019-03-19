@@ -7,7 +7,7 @@ export interface IPackageJson {
     publisher?: string;
     aiKey?: string;
     bugs?: string | {
-        url?: string;
+    url?: string;
     };
 }
 

@@ -21,7 +21,7 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
-import {TelemetryAI} from "./telemetry/telemetryAI";
+import {TelemetryAI, IActionContext} from "./telemetry/telemetryAI";
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -86,6 +86,9 @@ export abstract class Controller {
       this.routingMessageReceieverDelegate
     );
     Controller.Telemetry = new TelemetryAI(context, startTime);
+    Controller.Telemetry.callAndHandleError("testingFunctionWrapper",async function (this: IActionContext): Promise<void> {
+      console.log("helloworld");
+    })
   }
 
   public static handleTelemetry(payload : any): any {
