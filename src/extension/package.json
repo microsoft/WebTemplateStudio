@@ -60,6 +60,7 @@
     "node-fetch": "^2.3.0",
     "rimraf": "^2.6.3",
     "tslint-microsoft-contrib": "^6.1.0",
+    "url-parse": "^1.4.4",
     "vsce": "^1.57.1"
   },
   "repository": {
