@@ -38,16 +38,44 @@ const pathsBack: any = {
 class Footer extends React.Component<Props> {
   public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+<<<<<<< HEAD
+=======
+    // if(this.props.selectedCosmos){
+    //   // @ts-ignore
+    //   this.props.vscode.postMessage({
+    //     command: "deploy-cosmos",
+    //     cosmosSelection : this.props.cosmos
+    //   });
+    // }
+
+>>>>>>> Input validation
     // @ts-ignore
-    this.props.vscode.postMessage({
-      command: "generate",
-      text: "Sending generation info...",
-      payload: {
-        engine: this.props.engine,
-        selectedCosmos: this.props.selectedCosmos,
-        cosmos: this.props.cosmos
-      }
-    });
+    if (process.env.NODE_ENV === "production") {
+      //@ts-ignore
+      this.props.vscode.postMessage({
+        command: "generate",
+        text: "Sending generation info...",
+        payload: {
+          engine: this.props.engine,
+          selectedCosmos: this.props.selectedCosmos,
+          cosmos: this.props.cosmos
+        }
+      });
+    } else {
+      // @ts-ignore produces a mock login response from VSCode in development 
+      window.postMessage({
+        command: "validatePath",
+        pathAvailability: {
+<<<<<<< HEAD
+          isAvailable: false,
+          error: "Name is empty"
+=======
+          isAvailable: true,
+          error: ""
+>>>>>>> Input validation
+        }
+      });
+    }
   };
   public isReviewAndGenerate = (): boolean => {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
@@ -105,6 +133,7 @@ class Footer extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: any): any => {
+  console.log(state);
   const { vscode } = state;
   return {
     vscode: vscode.vscodeObject,

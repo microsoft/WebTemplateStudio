@@ -27,6 +27,7 @@ import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
+import { getPathAvailability } from "./actions/getPathAvailability";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -35,18 +36,20 @@ interface IDispatchProps {
   logIntoAzure: (email: string, subscriptions: []) => void;
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailable: any) => any;
+  setPathAvailability: (pathAvailability: {}) => void;
 }
 
 type Props = IDispatchProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => {},
-    loadWizardContent: () => {},
-    logIntoAzure: () => {},
-    saveSubscriptionData: () => {},
-    updateOutputPath: () => {},
-    setCosmosResourceAccountNameAvailability: () => {}
+    getVSCodeApi: () => { },
+    loadWizardContent: () => { },
+    logIntoAzure: () => { },
+    saveSubscriptionData: () => { },
+    updateOutputPath: () => { },
+    setCosmosResourceAccountNameAvailability: () => { },
+    setPathAvailability: () => { }
   };
 
   public componentDidMount() {
@@ -98,6 +101,10 @@ class App extends React.Component<Props> {
             message: message.message
           });
           return;
+
+        case "validatePath":
+          // Receive path validation
+          this.props.setPathAvailability(message.pathAvailability);
       }
     });
   }
@@ -155,6 +162,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   },
   setCosmosResourceAccountNameAvailability: (isAvailable: boolean) => {
     dispatch(setAccountAvailability(isAvailable));
+  },
+  setPathAvailability: (pathAvailability: {}) => {
+    dispatch(getPathAvailability(pathAvailability));
   }
 });
 

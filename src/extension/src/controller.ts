@@ -21,6 +21,7 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
+import fs = require("fs");
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -51,7 +52,7 @@ export abstract class Controller {
     [ExtensionCommand.GetOutputPath, Controller.sendOutputPathSelectionToClient]
   ]);
 
-  private static routingMessageReceieverDelegate = function(message: any) {
+  private static routingMessageReceieverDelegate = function (message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -246,21 +247,51 @@ export abstract class Controller {
       });
   }
 
-  public static async handleGeneratePayloadFromClient(
-    message: any
-  ): Promise<any> {
+  public static async handleGeneratePayloadFromClient(message: any): Promise<any> {
     var payload = message.payload;
     var enginePayload: any = payload.engine;
-    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
-      enginePayload
-    );
 
-    if (payload.selectedCosmos) {
-      var cosmosPayload: any = payload.cosmos;
-      await Controller.processCosmosDeploymentAndSendStatusToClient(
-        cosmosPayload,
-        enginePayload.path
-      );
+    var error = "";
+    var isAvailable = true;
+
+
+    //validate name
+    if (enginePayload.path === "") {
+      error = CONSTANTS.ERRORS.EMPTY_OUTPUT_PATH;
+      isAvailable = false;
+    } else if (enginePayload.projectName === "") {
+      error = CONSTANTS.ERRORS.EMPTY_PROJECT_NAME;
+      isAvailable = false;
+    } else if (enginePayload.projectName.length > CONSTANTS.MAX_PROJECT_NAME_LENGTH) {
+      error = CONSTANTS.ERRORS.PROJECT_NAME_LENGTH_EXCEEDED_MAX;
+      isAvailable = false;
+    } else if (!fs.existsSync(enginePayload.path)) {
+      error = CONSTANTS.ERRORS.INVALID_OUTPUT_PATH;
+      isAvailable = false;
+    } else if (fs.existsSync(enginePayload.path + "/" + enginePayload.projectName)) {
+      error = CONSTANTS.ERRORS.PROJECT_PATH_EXISTS;
+      isAvailable = false;
+    }
+
+    if (isAvailable) {
+      await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload);
+
+      if (payload.selectedCosmos) {
+        var cosmosPayload: any = payload.cosmos;
+        await Controller.processCosmosDeploymentAndSendStatusToClient(
+          cosmosPayload,
+          enginePayload.path
+        );
+      }
+    } else {
+      // Send error to wizard, do not do anything
+      Controller.reactPanelContext.postMessageWebview({
+        command: ExtensionCommand.ValidateOutputPath,
+        pathAvailability: {
+          isAvailable: isAvailable,
+          error: error
+        }
+      });
     }
   }
 
@@ -330,7 +361,7 @@ export abstract class Controller {
     enginePayload: any
   ) {
     // FIXME: After gen is done, we need to do some feedback.
-    ApiModule.SendTemplateGenerationPayloadToApi("5000", enginePayload);
+    ApiModule.SendTemplateGenerationPayloadToApi(CONSTANTS.PORT, enginePayload);
   }
 
   public static sendOutputPathSelectionToClient(message: any) {

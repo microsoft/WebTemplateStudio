@@ -8,10 +8,15 @@ export const CONSTANTS = {
     },
     LOGIN_TIMEOUT: "Timeout. User is not logged in",
     SESSION_NOT_AVAILABLE:
-      "There is no session available. Make sure the user is logged in."
+      "There is no session available. Make sure the user is logged in.",
+    EMPTY_OUTPUT_PATH: "Output Path cannot be empty.",
+    EMPTY_PROJECT_NAME: "Project Name cannot be empty.",
+    PROJECT_NAME_LENGTH_EXCEEDED_MAX: "Project Name has to be less than 50 chars long.",
+    INVALID_OUTPUT_PATH: "Output Path does not exist.",
+    PROJECT_PATH_EXISTS: "There exists a directory with the Project name, please choose a unique name."
   },
   INFO: {
-    COSMOS_ACCOUNT_DEPLOYED: function(accountName: string) {
+    COSMOS_ACCOUNT_DEPLOYED: function (accountName: string) {
       return `${accountName} has been deployed!`;
     }
   },
@@ -19,17 +24,19 @@ export const CONSTANTS = {
     WINDOWS_PLATFORM_VERSION: "win32",
     BASE_APPLICATION_NAME: "CoreTemplateStudio.Api"
   },
+  MAX_PROJECT_NAME_LENGTH: 50,
+  GENERATE_ENDPOINT: "/api/generate",
+  REACT_PANEL: {
+    Project_Title: "Project Acorn"
+  },
   AZURE_LOGIN_STATUS: {
     LOGGED_IN: "LoggedIn",
     LOGGING_IN: "LoggingIn",
     INITIALIZING: "Initializing",
     LOGGED_OUT: "LoggedOut"
   },
-  REACT_PANEL: {
-    Project_Title: "Project Acorn"
-  },
-  GENERATE_ENDPOINT: "/api/generate"
-};
+  PORT: "5000"
+}
 
 export enum ExtensionCommand {
   Login = "login",
@@ -40,5 +47,6 @@ export enum ExtensionCommand {
   DeployFunctions = "deploy-functions",
   DeployCosmos = "deploy-cosmos",
   Generate = "generate",
-  GetOutputPath = "getOutputPath"
+  GetOutputPath = "getOutputPath",
+  ValidateOutputPath = "validatePath"
 }
