@@ -1,25 +1,34 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import { spawn, ChildProcess } from "child_process";
+import { ChildProcess, exec } from "child_process";
 import fetch, { Response } from "node-fetch";
-import { CONSTANTS } from './constants';
+import { CONSTANTS } from "./constants";
 
 export default class ApiModule {
   private static readonly GenerateEndpoint = CONSTANTS.GENERATE_ENDPOINT;
 
   public static StartApi(context: vscode.ExtensionContext): ChildProcess {
+    let platform = process.platform;
+
+    let executableName = CONSTANTS.API.BASE_APPLICATION_NAME;
+
+    if (platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
+      executableName += ".exe";
+    }
+
     let apiPath = vscode.Uri.file(
-      path.join(
-        context.extensionPath,
-        "src",
-        "api",
-        "CoreTemplateStudio.Api.dll"
-      )
+      path.join(context.extensionPath, "src", "api", platform, executableName)
     ).fsPath;
 
-    let apiWorkingDirectory = path.join(context.extensionPath, "src", "api");
-    let process = spawn("dotnet", [apiPath], { cwd: apiWorkingDirectory });
-    return process;
+    let apiWorkingDirectory = path.join(
+      context.extensionPath,
+      "src",
+      "api",
+      platform
+    );
+    let spawnedProcess = exec(`${apiPath}`, { cwd: apiWorkingDirectory });
+
+    return spawnedProcess;
   }
 
   /**
