@@ -2,7 +2,6 @@ import { CosmosDBManagementClient } from "azure-arm-cosmosdb";
 import { DatabaseAccount } from "azure-arm-cosmosdb/lib/models";
 import { ServiceClientCredentials } from "ms-rest";
 import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
-import * as fs from "fs";
 import * as path from "path";
 import {
   SubscriptionError,
@@ -17,9 +16,7 @@ import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import { CONSTANTS } from "../constants";
-
 import fs = require('fs');
-import { CONSTANTS } from "../constants";
 var Url = require('url-parse');
 
 export interface CosmosDBSelections {
@@ -280,7 +277,7 @@ export class CosmosDBDeploy {
     if (
       this.SubscriptionItemCosmosClient === undefined ||
       this.SubscriptionItemCosmosClient.subscriptionId !==
-        userSubscriptionItem.subscriptionId
+      userSubscriptionItem.subscriptionId
     ) {
       this.SubscriptionItemCosmosClient = this.createCosmosClient(
         userSubscriptionItem
