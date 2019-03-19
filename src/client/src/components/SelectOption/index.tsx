@@ -35,7 +35,7 @@ class SelectOption extends React.Component<
       };
     } else {
       this.state = {
-        selectedCards: [0]
+        selectedCards: this.props.selectedCards ? this.props.selectedCards : [0]
       };
     }
   }
@@ -57,10 +57,19 @@ class SelectOption extends React.Component<
   public convertCardNumbersToTitles(cardNumbers: number[]): ISelected[] {
     const cardTitles = [];
     for (const num of cardNumbers) {
-      cardTitles.push({
+      // originalTitle is for page layouts.
+      const cardToConvert: {
+        title: string;
+        internalName: string;
+        originalTitle?: string;
+      } = {
         title: this.props.options[num].title,
         internalName: this.props.options[num].internalName
-      });
+      };
+      if (this.props.options[num].hasOwnProperty("originalTitle")) {
+        cardToConvert.originalTitle = this.props.options[num].originalTitle;
+      }
+      cardTitles.push(cardToConvert);
     }
     return cardTitles;
   }
@@ -109,6 +118,10 @@ class SelectOption extends React.Component<
   }
 
   public onCardClick(cardNumber: number) {
+    const { unselectable } = this.props.options[cardNumber];
+    if (unselectable) {
+      return;
+    }
     if (this.props.multiSelect) {
       this.addOrRemoveOption(cardNumber);
     } else {
@@ -119,11 +132,7 @@ class SelectOption extends React.Component<
   public render() {
     return (
       <div>
-        <div className={grid.row}>
-          <div className={grid.col12}>
-            <Title>{this.props.title}</Title>
-          </div>
-        </div>
+        <Title>{this.props.title}</Title>
         <div className={styles.container}>
           {this.props.options.map((option, cardNumber) => (
             <Card
@@ -137,6 +146,7 @@ class SelectOption extends React.Component<
               iconStyles={styles.icon}
               title={option.title}
               body={option.body}
+              disabled={option.unselectable}
             />
           ))}
         </div>

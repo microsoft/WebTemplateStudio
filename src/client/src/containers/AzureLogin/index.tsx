@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import LoginCard from "../../components/LoginCard";
 import Title from "../../components/Title";
 
-import styles from './styles.module.css';
+import azure from "../../assets/azure.svg";
+import styles from "./styles.module.css";
+import grid from "../../css/grid.module.css";
 
 import AzureSubscriptions from "../AzureSubscriptions";
 
@@ -14,7 +16,7 @@ interface IDispatchProps {
 
 interface IAzureLoginProps {
     isLoggedIn: boolean;
-    vscode: any,
+    vscode: any;
 }
 
 type Props = IDispatchProps & IAzureLoginProps;
@@ -22,7 +24,6 @@ type Props = IDispatchProps & IAzureLoginProps;
 class AzureLogin extends React.Component<Props> {
     handleClick = () => {
         // initiates a login command to VSCode ReactPanel class
-        console.log(this.props.vscode);
         if (process.env.NODE_ENV === "production") {
             this.props.vscode.postMessage({
                 command: "login",
@@ -31,37 +32,45 @@ class AzureLogin extends React.Component<Props> {
             // @ts-ignore produces a mock login response from VSCode in development
             window.postMessage({
                 command: "login",
-                email: "devEnvironment@email.com"
+                payload: {
+                    email: "devEnvironment2@email.com",
+                    subscriptions: [{ value: "GIV.Hackathon", label: "GIV.Hackathon" }]
+                }
             });
         }
-    }
+    };
     public render() {
         const { isLoggedIn } = this.props;
         return (
             <div>
-                <Title>
-                    Attach services to your web application
-                </Title>
+                <Title>Attach services to your web application (Optional)</Title>
                 <div className={styles.loginCard}>
-                    {!isLoggedIn && <LoginCard 
-                        handleClick={() => { this.handleClick() }}
-                        cardTitle="Microsoft Azure Deployment" 
-                        cardBody="Use Azure to help build, manage, and deploy applications on a massive, global network. Sign in to your subscription account to get started." 
-                    />}
+                    {!isLoggedIn &&
+                        <LoginCard
+                            svgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${azure}`}
+                            handleClick={() => {
+                                this.handleClick()
+                            }}
+                            cardTitle="Microsoft Azure Deployment"
+                            cardBody="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+                        />}
                 </div>
                 <AzureSubscriptions />
             </div>
-        )
+        );
     }
-}
+};
 
 const mapStateToProps = (state: any): IAzureLoginProps => {
     const { isLoggedIn } = state.azureProfileData;
     const { vscodeObject } = state.vscode;
     return {
         isLoggedIn,
-        vscode: vscodeObject,
-    }
-}
+        vscode: vscodeObject
+    };
+};
 
-export default connect(mapStateToProps, null)(AzureLogin);
+export default connect(
+    mapStateToProps,
+    null
+)(AzureLogin);

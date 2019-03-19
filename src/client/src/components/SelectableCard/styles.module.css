@@ -1,74 +1,91 @@
 .container {
-    border: 0.5px solid #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 10px 16px;
-    margin-right: 15px;
-    border-radius: 4px;
+  border: 0.5px solid #ffffff;
+  padding: 16px;
+  margin-right: 12px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .selected,
 .button {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .selected {
-    padding: 7.5px 13.5px; /* Account for lost padding on select with border */
-    border: 3px solid #FFFFFF;
+  /* Account for lost padding on select with border */
+  padding: 13.5px;
+  border: 3px solid #ffffff;
 }
 
 .selectedCheckMark {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .iconCheckMark {
-    padding-left: 5px;
-    height: 18px;
-    width: 18px;
-    align-self: center;
+  padding-left: 5px;
+  height: 18px;
+  width: 18px;
+  align-self: center;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .boundingBox {
-    max-width: 170px;
-    max-height: 239px;
+  max-width: 198px;
+  min-height: 239px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .button {
-    color: #54B4FF;
+  color: #54b4ff;
 }
 
 .cardFooter {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .icon {
-    height: 36px;
+  height: 36px;
 }
 
 .iconHeight {
-    height: 36px;
+  height: 36px;
 }
 
 .cardHeader {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  max-height: 51px;
 }
 
 .titleLeftJustified,
 .title {
-    margin: 15px 10px;
+  margin: 15px 10px;
 }
 
 .titleLeftJustified {
-    margin-left: 0px;
+  margin-left: 0px;
 }
 
 .body {
-    margin-top: 15px;
-    margin-bottom: 10px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.link {
+  color: #54b4ff;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.unselectable {
+  opacity: 0.4;
+  cursor: default;
 }

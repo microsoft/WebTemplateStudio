@@ -1,39 +1,72 @@
 .container {
-    padding: 2% 15%;
+  padding: 2% 15%;
 }
 
 .title {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-bottom: 0.5em;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
 }
 
 .outputDetailsContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
 }
 
 .inputTitle {
-    font-size: 1em;
-    font-weight: bold;
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 3px;
 }
 
+.outputPathContainer,
 .input {
-    box-sizing: border-box;
-    padding: 0.5em;
-    width: 100%;
-    font-size: 1em;
-    background-color: #696969;
+  box-sizing: border-box;
+  padding: 0.5em;
+  width: 100%;
+  font-size: 1em;
+  background-color: #696969;
+  border: 1px solid #ffffff;
+  border-radius: 2px;
+}
+
+.outputPathContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 42px;
+}
+
+.saveIcon {
+  height: 25px;
+  transform: rotate(-90deg);
+  cursor: pointer;
+}
+
+.pathInput {
+  outline: none;
+  text-decoration: none;
+  font-size: 1em;
+  background-color: #696969;
+  width: 100%;
+  border: none;
+  margin-right: 0.25em;
 }
 
 .input:focus {
-    outline: none;
+  outline: none;
+}
+
+.input::placeholder,
+.pathInput::placeholder {
+  color: white;
+  opacity: 0.4;
 }
 
 .inputContainer {
-    width: 45%;
-    text-decoration: none;
-    outline: none;
+  width: 45%;
+  text-decoration: none;
+  outline: none;
 }

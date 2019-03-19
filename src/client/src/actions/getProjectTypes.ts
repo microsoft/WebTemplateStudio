@@ -3,6 +3,7 @@ import EngineAPIService from "../services/EngineAPIService";
 import { IMetadata } from "../types/metadata";
 import { IOption } from "../types/option";
 import { getProjectTypesSuccess } from "./getProjectTypesSuccess";
+import getSvgUrl from "../utils/getSvgUrl";
 // thunk
 export const getProjectTypesAction = () => {
   return async (dispatch: any) => {
@@ -11,12 +12,10 @@ export const getProjectTypesAction = () => {
     try {
       const projectTypesJson = await api.getProjectTypes();
 
-      if (projectTypesJson.value.items !== null) {
+      if (projectTypesJson.detail == null) {
         dispatch(
           getProjectTypesSuccess(
-            getOptionalFromMetadata(
-              getMetadataFromJson(projectTypesJson.value.items)
-            )
+            getOptionalFromMetadata(getMetadataFromJson(projectTypesJson))
           )
         );
       } else {
@@ -47,7 +46,7 @@ function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
     title: val.displayName,
     internalName: val.name,
     body: val.summary,
-    svgUrl: process.env.REACT_APP_RELATIVE_PATH + blankpage,
+    svgUrl: getSvgUrl(val.name),
     selected: val.selected
   }));
 }

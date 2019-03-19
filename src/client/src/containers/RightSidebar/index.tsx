@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
@@ -12,10 +13,10 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
+import { ROUTES } from "../../utils/constants";
+import getSvgUrl from "../../utils/getSvgUrl";
+
 import cancel from "../../assets/cancel.svg";
-import masterdetail from "../../assets/masterdetail.svg";
-import longlist from "../../assets/longlist.svg";
-import contentgrid from "../../assets/contentgrid.svg";
 import reorder from "../../assets/reorder.svg";
 
 import { ISelected } from "../../types/selected";
@@ -50,19 +51,6 @@ interface IRightSidebarState {
 }
 
 type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
-
-// FIXME: Delete when icons can be properly served from the Core Engine
-const SVG_URLS: { [key: string]: string } = {
-  "wts.Page.React.MasterDetail": `${
-    process.env.REACT_APP_RELATIVE_PATH
-  }${masterdetail}`,
-  "wts.Page.React.ContentGrid": `${
-    process.env.REACT_APP_RELATIVE_PATH
-  }${contentgrid}`,
-  "wts.Page.ReactNode.LongList": `${
-    process.env.REACT_APP_RELATIVE_PATH
-  }${longlist}`
-};
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {
@@ -121,74 +109,92 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     };
   }
   public render() {
+    const { pathname } = this.props.location;
     return (
-      <div className={styles.container}>
-        <div className={styles.title}>Your Project Details</div>
-        <RightSidebarDropdown
-          options={this.props.projectTypeDropdownItems}
-          handleDropdownChange={this.handleChange.bind(this)}
-          selectDropdownOption={this.props.selectProjectType}
-          isVisible={this.showProjectTypes()}
-          title="Project Type"
-          value={this.convertOptionToDropdownItem(this.props.selection.appType)}
-        />
-        <RightSidebarDropdown
-          options={this.props.frontendDropdownItems}
-          handleDropdownChange={this.handleChange.bind(this)}
-          selectDropdownOption={this.props.selectFrontendFramework}
-          isVisible={this.showFrameworks()}
-          title="Front-end Framework"
-          value={this.convertOptionToDropdownItem(
-            this.props.selection.frontendFramework
-          )}
-        />
-        <RightSidebarDropdown
-          options={this.props.backendDropdownItems}
-          handleDropdownChange={this.handleChange.bind(this)}
-          selectDropdownOption={this.props.selectBackendFramework}
-          isVisible={this.showFrameworks()}
-          title="Back-end Framework"
-          value={this.convertOptionToDropdownItem(
-            this.props.selection.backendFramework
-          )}
-        />
-        {this.showPages() && (
-          <div className={styles.sidebarItem}>
-            <div className={styles.dropdownTitle}>Pages</div>
-            {this.props.selection.pages.map((page, idx) => (
-              <DraggableSidebarItem
-                key={page.internalName}
-                page={page}
-                closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`}
-                pageSvgUrl={SVG_URLS[page.internalName]}
-                reorderSvgUrl={`${
-                  process.env.REACT_APP_RELATIVE_PATH
-                }${reorder}`}
-                handleInputChange={this.handleInputChange.bind(this)}
-                idx={idx + 1}
-              />
-            ))}
-            {/* Using a baseline of 1 for idx because !!0 === false */}
+      <React.Fragment>
+        {pathname !== ROUTES.PAGE_DETAILS && (
+          <div className={classNames(styles.rightView, styles.container)}>
+            <div className={styles.title}>Your Project Details</div>
+            <RightSidebarDropdown
+              options={this.props.projectTypeDropdownItems}
+              handleDropdownChange={this.handleChange.bind(this)}
+              selectDropdownOption={this.props.selectProjectType}
+              isVisible={this.showProjectTypes()}
+              title="Project Type"
+              value={this.convertOptionToDropdownItem(
+                this.props.selection.appType
+              )}
+            />
+            <RightSidebarDropdown
+              options={this.props.frontendDropdownItems}
+              handleDropdownChange={this.handleChange.bind(this)}
+              selectDropdownOption={this.props.selectFrontendFramework}
+              isVisible={this.showFrameworks()}
+              title="Front-end Framework"
+              value={this.convertOptionToDropdownItem(
+                this.props.selection.frontendFramework
+              )}
+            />
+            <RightSidebarDropdown
+              options={this.props.backendDropdownItems}
+              handleDropdownChange={this.handleChange.bind(this)}
+              selectDropdownOption={this.props.selectBackendFramework}
+              isVisible={this.showFrameworks()}
+              title="Back-end Framework"
+              value={this.convertOptionToDropdownItem(
+                this.props.selection.backendFramework
+              )}
+            />
+            {this.showPages() && (
+              <div className={styles.sidebarItem}>
+                <div className={styles.dropdownTitle}>Pages</div>
+                {this.props.selection.pages.map((page, idx) => (
+                  <DraggableSidebarItem
+                    key={page.internalName}
+                    page={page}
+                    closeSvgUrl={`${
+                      process.env.REACT_APP_RELATIVE_PATH
+                    }${cancel}`}
+                    pageSvgUrl={getSvgUrl(page.internalName)}
+                    reorderSvgUrl={`${
+                      process.env.REACT_APP_RELATIVE_PATH
+                    }${reorder}`}
+                    handleInputChange={this.handleInputChange.bind(this)}
+                    idx={idx + 1}
+                  />
+                ))}
+                {/* Using a baseline of 1 for idx because !!0 === false */}
+              </div>
+            )}
+            {this.showServices() && Object.keys(this.props.services).length > 1 && (
+              <div className={styles.sidebarItem}>
+                <div className={styles.dropdownTitle}>Services</div>
+                {Object.keys(this.props.services).map(serviceName => {
+                  // FIXME: Storing the state of the cosmos account name availability is not practicial in "services"
+                  // Better to create another object that can store these booleans for name validation.
+                  if (serviceName !== "isCosmosResourceAccountNameAvailable" && serviceName !== "message") {
+                    return (
+                      <DraggableSidebarItem
+                        key={serviceName}
+                        text={this.props.services[serviceName].api}
+                        closeSvgUrl={`${
+                          process.env.REACT_APP_RELATIVE_PATH
+                        }${cancel}`}
+                        itemTitle={
+                          serviceName === "cosmosOptions"
+                            ? "CosmosDB"
+                            : "Azure Functions"
+                        }
+                      />
+                    )
+                  }
+                })}
+                {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
+              </div>
+            )}
           </div>
         )}
-        {this.showServices() && !!this.props.services && (
-          <div className={styles.sidebarItem}>
-            <div className={styles.dropdownTitle}>Services</div>
-            {Object.keys(this.props.services).map(serviceName => (
-              <DraggableSidebarItem
-                text={this.props.services[serviceName].api}
-                closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`}
-                itemTitle={
-                  serviceName === "cosmosOptions"
-                    ? "CosmosDB"
-                    : "Azure Functions"
-                }
-              />
-            ))}
-            {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
-          </div>
-        )}
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -214,6 +220,9 @@ function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
   const dropDownItems = [];
 
   for (const option of options) {
+    if (option.unselectable) { 
+      continue;
+    };
     const dropdownItem = convertOptionToDropdownItem(option);
     dropDownItems.push(dropdownItem);
   }

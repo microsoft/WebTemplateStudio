@@ -1,5 +1,6 @@
 import blankpage from "../assets/blankpage.svg";
 import EngineAPIService from "../services/EngineAPIService";
+import getSvgUrl from "../utils/getSvgUrl";
 import { IMetadata } from "../types/metadata";
 import { IOption } from "../types/option";
 
@@ -14,10 +15,8 @@ export const getFrameworks = async (
   try {
     const frameworksJson = await api.getFrameworks(projectType);
 
-    if (frameworksJson.value.items !== null) {
-      return getOptionalFromMetadata(
-        getMetadataFromJson(frameworksJson.value.items, type)
-      );
+    if (frameworksJson.detail == null) {
+      return getOptionalFromMetadata(getMetadataFromJson(frameworksJson, type));
     } else {
       console.log("FAILED");
       return [];
@@ -51,7 +50,7 @@ function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
     title: val.displayName,
     internalName: val.name,
     body: val.summary,
-    svgUrl: process.env.REACT_APP_RELATIVE_PATH + blankpage,
+    svgUrl: getSvgUrl(val.name),
     selected: val.selected
   }));
 }
