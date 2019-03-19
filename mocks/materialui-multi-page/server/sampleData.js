@@ -1,4 +1,4 @@
-var sampleData = {};
+const sampleData = {};
 
 const longLoremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus
@@ -18,6 +18,10 @@ const shortLoremIpsum = `Lorem id sint aliqua tempor tempor sit. Ad dolor dolor 
 
 // This class holds sample data used by some generated pages to show how they can be used.
 // TODO WTS: Delete this file once your app is using real data.
+
+// TODO WTS: If you use a database replace this ID with the ID created by the database
+sampleData.listID = 3;
+
 sampleData.listTextAssets = [
   {
     text: shortLoremIpsum,

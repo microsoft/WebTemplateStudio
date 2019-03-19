@@ -6,7 +6,7 @@ var router = express.Router();
 /*
  * Include this block of code if list and mongo are selected
  */
-var mongoService = require("../mongo/mongoService");
+// var mongoService = require("../mongo/mongoService");
 
 // router.get(CONSTANTS.ENDPOINT.LIST, function(req, res) {
 //   mongoService.get(req, res);
@@ -36,10 +36,11 @@ router.post(CONSTANTS.ENDPOINT.LIST, function(req, res) {
   try {
     let listItem = {
       text: req.body.text,
-      _id: req.body._id
+      _id: sampleData.listID
     };
     sampleData.listTextAssets.unshift(listItem);
     res.json(listItem);
+    sampleData.listID++;
   } catch (err) {
     res.status(500).send(err);
   }
