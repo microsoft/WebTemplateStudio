@@ -29,7 +29,7 @@ const SortableSummaryTile = SortableElement(({page, idx, handleInputChange, hand
   return (
       <React.Fragment>
           <div className={styles.tileContainer}>
-          <SummaryTile title={page.title} version="v1.0" svgUrl={page.svgUrl} isEditable={true} handleCloseClick={handleCloseClick} idx={idx + 1} />
+          <SummaryTile title={page.title} version="v1.0" svgUrl={page.svgUrl} isEditable={true} handleCloseClick={handleCloseClick} handleInputChange={handleInputChange} idx={idx + 1} />
           </div>
       </React.Fragment>)
 })
@@ -48,7 +48,7 @@ const SortableList = SortableContainer(({pages, pagesRows, handleInputChange, ha
       }
       {pagesRows && pagesRows.map((page: any, idx: number) => {
         return (
-        <SortableSummaryTile key={`item-${page.title} ${idx}`} index={idx} idx={idx} page={page} handleInputChange={handleInputChange} handleCloseClick={handleCloseClick} />
+        <SortableSummaryTile key={`item-${page.id}`} index={idx} idx={idx} page={page} handleInputChange={handleInputChange} handleCloseClick={handleCloseClick} />
         )})}
     </div>
   );

@@ -7,6 +7,7 @@ import { withLocalPath } from "../../utils/getSvgUrl";
 
 import edit from "../../assets/edit.svg";
 import cancel from "../../assets/cancel.svg"
+import { handleInputChange } from "react-select/lib/utils";
 
 interface IProps {
     withIndent?: boolean;
@@ -18,10 +19,11 @@ interface IProps {
     svgUrl?: string;
     withoutEditIcon?: boolean;
     handleCloseClick?: (idx: number) => void;
+    handleInputChange?: (newTitle: string, idx: number) => void;
     idx?: number;
 }
 
-const SummaryTile = ({ withIndent, title, originalTitle, company, version, isEditable, svgUrl, withoutEditIcon, handleCloseClick, idx }: IProps) => {
+const SummaryTile = ({ withIndent, title, originalTitle, company, version, isEditable, svgUrl, withoutEditIcon, handleCloseClick, idx, handleInputChange }: IProps) => {
     const [ componentTitle, setTitle ] = React.useState(title);
     const [ isDisabled, setDisabled ] = React.useState(true);
     const [ showEditable, setEditable ] = React.useState(false);
@@ -32,7 +34,10 @@ const SummaryTile = ({ withIndent, title, originalTitle, company, version, isEdi
         }
     },[isDisabled])
     const handleChange = (e: React.SyntheticEvent) => {
-        let target = e.target as HTMLInputElement;
+        const target = e.target as HTMLInputElement;
+        if (handleInputChange && idx) {
+            handleInputChange(target.value, idx - 1);
+        }
         setTitle(target.value);
     }
     const handleClick = () => {
@@ -73,8 +78,8 @@ const SummaryTile = ({ withIndent, title, originalTitle, company, version, isEdi
             </div>
             <img src={withLocalPath(cancel)} onClick={
                 () => {
-                    // idx + 1 avoids falsiness of 0th value
                     if (handleCloseClick && idx) {
+                        // component index based at 1, so -1 for correction
                         handleCloseClick(idx - 1);
                     }
                 }
