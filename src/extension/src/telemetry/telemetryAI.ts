@@ -8,12 +8,10 @@ export type IActionContext = IActionContext;
 export class TelemetryAI {
 
     private static telemetryReporter: ITelemetryReporter;
-    private lastTrackTimeStamp: number = this.extensionStartTime;
 
     constructor(context: vscode.ExtensionContext, private extensionStartTime: number){
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(context);
         this.trackDurationExtensionStartUp();
-        this.updateLastTrackTimeStamp();
     }
 
     private createTelemetryReporter(ctx: vscode.ExtensionContext) {
@@ -23,20 +21,13 @@ export class TelemetryAI {
         ctx.subscriptions.push(reporter);
         return reporter;
     }
-    private updateLastTrackTimeStamp(){
-        this.lastTrackTimeStamp = Date.now();
-    }
-    private trackDurationExtensionStartUp(){
-        this.trackTimeDuration("ExtensionStartUpTime", Date.now(), this.extensionStartTime);
+
+    private trackDurationExtensionStartUp(eventName : string = "Wizard Launch Time", startTime : number = this.extensionStartTime, endTime : number = Date.now()){
+        this.trackTimeDuration(eventName, this.extensionStartTime, endTime);
     }
 
-    public trackDurationOnPageRouterChange(previousPageName : string){
-        this.trackTimeDuration(previousPageName, Date.now(), this.lastTrackTimeStamp);
-        this.updateLastTrackTimeStamp();
-    }
-    
-    public trackDurationStartToGenerate(){
-        this.trackTimeDuration("StartToGenerateTime", Date.now(), this.extensionStartTime);
+    public trackWizardTimeToGenerate(eventName : string = "Wizard Launch To Generate Time", startTime : number = this.extensionStartTime, endTime : number = Date.now()){
+        this.trackTimeDuration(eventName, this.extensionStartTime, endTime);
     }
 
     private trackTimeDuration(eventName : string, endTime : number, startTime : number){
@@ -46,8 +37,8 @@ export class TelemetryAI {
         TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, undefined, measurement)
     }
 
-    public async callAndHandleError<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{
-        return await callWithTelemetryAndErrorHandling(callbackId,callback, TelemetryAI.telemetryReporter)
+    public async callFunctionsAndSendResult<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{
+        return await callWithTelemetryAndErrorHandling(callbackId,callback, TelemetryAI.telemetryReporter);
     }
 }
 
