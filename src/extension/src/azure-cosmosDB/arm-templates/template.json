@@ -26,7 +26,7 @@
     {
       "apiVersion": "2015-04-08",
       "kind": "[parameters('kind')]",
-      "type": "Microsoft.DocumentDb/databaseAccounts",
+      "type": "Microsoft.DocumentDB/databaseAccounts",
       "name": "[parameters('name')]",
       "location": "[parameters('location')]",
       "properties": {
