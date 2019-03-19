@@ -25,7 +25,7 @@ export const CONSTANTS = {
     PROJECT_NAME_LENGTH_EXCEEDED_MAX: "Project Name has to be less than 50 chars long.",
     INVALID_OUTPUT_PATH: "Output Path does not exist.",
     PROJECT_PATH_EXISTS: "There exists a directory with the Project name, please choose a unique name.",
-    COSMOS_ACCOUNT_NOT_AVAILABLE: function (name: string) {
+    COSMOS_ACCOUNT_NOT_AVAILABLE: (name: string) => {
       return `Account name "${name}" is not available.`;
     },
     COSMOS_VALID_CHARACTERS:
