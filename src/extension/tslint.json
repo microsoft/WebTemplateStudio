@@ -7,8 +7,9 @@
     "curly": true,
     "class-name": true,
     "semicolon": [true, "always"],
-    "triple-equals": true
+    "triple-equals": true,
+    "no-relative-imports": false
   },
   "defaultSeverity": "warning",
-  "extends": "tslint-microsoft-contrib/recommended"
+  "extends": ["tslint-microsoft-contrib/recommended"]
 }

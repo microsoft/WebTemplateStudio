@@ -20,7 +20,6 @@ interface ISelectPagesProps {
 type Props = IDispatchProps & ISelectPagesProps;
 
 class SelectPages extends React.Component<Props> {
-
   public render() {
     return (
       <div>
