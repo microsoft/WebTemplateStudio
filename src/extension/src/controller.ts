@@ -55,7 +55,8 @@ export abstract class Controller {
       Controller.sendOutputPathSelectionToClient
     ],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
-    [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs]
+    [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
+    [ExtensionCommand.GetUserStatus, Controller.sendUserStatus]
   ]);
 
   public static sendFunctionRuntimes(message: any) {
@@ -70,7 +71,7 @@ export abstract class Controller {
     });
   }
 
-  private static routingMessageReceieverDelegate = function(message: any) {
+  private static routingMessageReceieverDelegate = function (message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -532,5 +533,9 @@ export abstract class Controller {
       let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
       this.usersFunctionSubscriptionItemCache = subscriptionItem;
     }
+  }
+
+  private static async sendUserInfo(message: any): Promise<void> {
+
   }
 }
