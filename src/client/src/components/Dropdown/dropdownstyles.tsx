@@ -45,8 +45,9 @@ export default ({
         borderRadius: 0,
         // beautify the word cut by adding a dash see https://caniuse.com/#search=hyphens for the compatibility
         hyphens: "auto",
-        // kill the gap
+        // kill the gap when opening up or down
         marginTop: 1,
+        marginBottom: 1,
         textAlign: "left",
         // prevent menu to scroll y
         wordWrap: "break-word"
