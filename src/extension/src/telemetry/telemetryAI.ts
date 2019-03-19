@@ -9,7 +9,7 @@ export class TelemetryAI {
 
     private static telemetryReporter: ITelemetryReporter;
 
-    constructor(context: vscode.ExtensionContext, private extensionStartTime: number){
+    constructor(context: vscode.ExtensionContext, private extensionStartTime: number = Date.now()){
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(context);
         this.trackDurationExtensionStartUp();
     }
@@ -30,11 +30,15 @@ export class TelemetryAI {
         this.trackTimeDuration(eventName, this.extensionStartTime, endTime);
     }
 
-    private trackTimeDuration(eventName : string, endTime : number, startTime : number){
+    public trackCustomEventTime(customEventName: string, startTime: number, endTime: number = Date.now(), customEventProperties?: { [key: string]: string | undefined }){
+        this.trackTimeDuration(customEventName, startTime, endTime, customEventProperties);
+    }
+
+    private trackTimeDuration(eventName : string, startTime : number, endTime : number, properties?: { [key: string]: string | undefined }){
         var measurement = {
             duration: (endTime - startTime) / 1000
         };
-        TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, undefined, measurement)
+        TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, properties, measurement)
     }
 
     public async callFunctionsAndSendResult<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{

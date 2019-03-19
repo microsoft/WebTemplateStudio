@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { CONSTANTS, ExtensionCommand } from "./constants";
+import { CONSTANTS, ExtensionCommand, TelemetryEventName } from "./constants";
 import {
   AzureAuth,
   SubscriptionItem,
@@ -86,21 +86,18 @@ export abstract class Controller {
       this.routingMessageReceieverDelegate
     );
     Controller.Telemetry = new TelemetryAI(context, startTime);
-    Controller.Telemetry.callAndHandleError("testingFunctionWrapper",async function (this: IActionContext): Promise<void> {
-      this.properties.customProp = "Hello Testing";
-      console.log("helloworld");
-    })
   }
 
   public static handleTelemetry(payload : any): any {
-    Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
+    Controller.Telemetry.callFunctionsAndSendResult(payload.pageName, async function (this: IActionContext): Promise<void> {
+    });
   };
+  
   /**
    * Returns an array of Subscription Items when the user is logged in
    *
    * */
   public static getSubscriptions() {
-    //TODO FORMAT TO {label:,  value:}
     return AzureAuth.getSubscriptions();
   }
 
@@ -190,7 +187,8 @@ export abstract class Controller {
   }
 
   public static performLogin(message: any) {
-    AzureAuth.login()
+    Controller.Telemetry.callFunctionsAndSendResult(ExtensionCommand.Login, async function (this: IActionContext): Promise<void> {
+      AzureAuth.login()
       .then(res => {
         const email = AzureAuth.getEmail();
         AzureAuth.getSubscriptions()
@@ -213,10 +211,13 @@ export abstract class Controller {
       .catch(err => {
         vscode.window.showErrorMessage(err);
       });
+    });
+    
   }
 
   public static sendSubscriptionsToClient(message: any) {
-    Controller.getSubscriptions()
+    Controller.Telemetry.callFunctionsAndSendResult(TelemetryEventName.Subscriptions, async function (this: IActionContext): Promise<void> {
+      Controller.getSubscriptions()
       .then(subscriptions => {
         Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
           subscriptions: subscriptions
@@ -225,10 +226,12 @@ export abstract class Controller {
       .catch((err: Error) => {
         Controller.handleErrorMessage(ExtensionCommand.Subscriptions, err);
       });
+    });
   }
 
   public static sendSubscriptionDataToClient(message: any) {
-    Controller.getSubscriptionData(message.subscription)
+    Controller.Telemetry.callFunctionsAndSendResult(TelemetryEventName.SubscriptionData, async function (this: IActionContext): Promise<void> {
+      Controller.getSubscriptionData(message.subscription)
       .then(subscriptionDatapackage => {
         Controller.handleValidMessage(ExtensionCommand.SubscriptionData, {
           resourceGroups: subscriptionDatapackage.resourceGroups,
@@ -238,6 +241,7 @@ export abstract class Controller {
       .catch((err: Error) => {
         Controller.handleErrorMessage(ExtensionCommand.SubscriptionData, err);
       });
+    });
   }
 
   public static sendFunctionNameValidationStatusToClient(message: any) {

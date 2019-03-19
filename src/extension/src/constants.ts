@@ -47,6 +47,12 @@ export enum ExtensionCommand {
   HandleTelemetry = "telemetryAI"
 }
 
+export enum TelemetryEventName{
+  Login = "Login Time",
+  Subscriptions = "Acquire Subscription",
+  SubscriptionData = "Acquire Subscription Data",
+  Subscriptions2 = "subscriptions"
+}
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 export namespace DialogResponses {
   export const yes: MessageItem = { title: localize('yes', 'Yes') };
