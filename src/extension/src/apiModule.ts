@@ -2,31 +2,32 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { ChildProcess, exec } from "child_process";
 import fetch, { Response } from "node-fetch";
+import { CONSTANTS } from "./constants";
 
 export default class ApiModule {
   private static readonly GenerateEndpoint = "/api/generate";
 
   public static StartApi(context: vscode.ExtensionContext): ChildProcess {
     let platform = process.platform;
-    let executableName = "CoreTemplateStudio.Api";
 
-    if (platform === "win32") {
+    let executableName = CONSTANTS.API.BASE_APPLICATION_NAME;
+
+    if (platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
       executableName += ".exe";
     }
 
     let apiPath = vscode.Uri.file(
-      path.join(
-        context.extensionPath,
-        "src",
-        "api",
-        platform,
-        executableName
-      )
+      path.join(context.extensionPath, "src", "api", platform, executableName)
     ).fsPath;
 
-    let apiWorkingDirectory = path.join(context.extensionPath, "src", "api", platform);
+    let apiWorkingDirectory = path.join(
+      context.extensionPath,
+      "src",
+      "api",
+      platform
+    );
     let spawnedProcess = exec(`${apiPath}`, { cwd: apiWorkingDirectory });
-    
+
     return spawnedProcess;
   }
 
