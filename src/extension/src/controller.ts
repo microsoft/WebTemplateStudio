@@ -322,7 +322,6 @@ export abstract class Controller {
           databaseObject: dbObject
         });
         return dbObject;
-        //callyourfunction
       })
       .catch((err: Error) => {
         vscode.window.showErrorMessage(err.message);
