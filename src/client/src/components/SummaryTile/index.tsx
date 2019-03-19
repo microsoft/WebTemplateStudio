@@ -3,6 +3,8 @@ import * as React from "react";
 
 import styles from "./styles.module.css";
 
+import { withLocalPath } from "../../utils/getSvgUrl";
+
 import edit from "../../assets/edit.svg";
 import cancel from "../../assets/cancel.svg"
 
@@ -15,9 +17,11 @@ interface IProps {
     isEditable?: boolean;
     svgUrl?: string;
     withoutEditIcon?: boolean;
+    handleCloseClick?: (idx: number) => void;
+    idx?: number;
 }
 
-const SummaryTile = ({ withIndent, title, originalTitle, company, version, isEditable, svgUrl, withoutEditIcon }: IProps) => {
+const SummaryTile = ({ withIndent, title, originalTitle, company, version, isEditable, svgUrl, withoutEditIcon, handleCloseClick, idx }: IProps) => {
     const [ componentTitle, setTitle ] = React.useState(title);
     const [ isDisabled, setDisabled ] = React.useState(true);
     const [ showEditable, setEditable ] = React.useState(false);
@@ -65,9 +69,15 @@ const SummaryTile = ({ withIndent, title, originalTitle, company, version, isEdi
                         </div>
                     </div>
                 </div>
-                {(showEditable && !withoutEditIcon) && <img src={edit} className={styles.rightIcon} onClick={handleClick} />}        
+                {(showEditable && !withoutEditIcon) && <img src={withLocalPath(edit)} className={styles.rightIcon} onClick={handleClick} />}        
             </div>
-            <img src={cancel} className={classnames(styles.closeIcon, {
+            <img src={withLocalPath(cancel)} onClick={
+                () => {
+                    if (handleCloseClick && idx) {
+                        handleCloseClick(idx - 1);
+                    }
+                }
+            } className={classnames(styles.closeIcon, {
                 [styles.hidden]: !showEditable || !isEditable
             })} />
             {!showEditable && <div className={styles.spacer} />}

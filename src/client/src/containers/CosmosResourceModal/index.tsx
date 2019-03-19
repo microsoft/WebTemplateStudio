@@ -160,7 +160,7 @@ const CosmosResourceModal = (props: Props) => {
   React.useEffect(() => {
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.NAME_COSMOS,
-        accountName: cosmosFormData.accountName,
+        appName: cosmosFormData.accountName,
         subscription: cosmosFormData.subscription
       });
   }, [cosmosFormData.accountName, props.selection]);

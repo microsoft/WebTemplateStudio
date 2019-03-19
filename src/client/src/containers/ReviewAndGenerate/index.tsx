@@ -73,7 +73,10 @@ const ReviewAndGenerate = (props: Props) => {
     )}
   return (
     <div className={styles.container}>
-      <Title>Review and generate template</Title>
+      <div className={styles.title}>
+        5. Review and Generate Template
+      </div>
+      <div className={styles.selectionTitle}>1. Welcome</div>
       <div className={styles.inputContainer}>
         <div className={styles.inputTitle}>Project Name:</div>
         <input
