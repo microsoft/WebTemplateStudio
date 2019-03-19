@@ -14,9 +14,13 @@ export const CONSTANTS = {
       "There is no session available. Make sure the user is logged in."
   },
   INFO: {
-    COSMOS_ACCOUNT_DEPLOYED: function (accountName: string) {
+    COSMOS_ACCOUNT_DEPLOYED: function(accountName: string) {
       return `${accountName} has been deployed!`;
     }
+  },
+  API: {
+    WINDOWS_PLATFORM_VERSION: "win32",
+    BASE_APPLICATION_NAME: "CoreTemplateStudio.Api"
   },
   AZURE_LOGIN_STATUS: {
     LOGGED_IN: "LoggedIn",

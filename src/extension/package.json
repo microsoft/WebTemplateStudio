@@ -81,7 +81,7 @@
     "node-fetch": "^2.3.0",
     "opn": "^5.5.0",
     "rimraf": "^2.6.3",
-    "tslint-microsoft-contrib": "^6.0.0",
+    "tslint-microsoft-contrib": "^6.1.0",
     "vsce": "^1.57.1",
     "vscode-extension-telemetry": "^0.1.1",
     "vscode-nls": "^4.0.0"
