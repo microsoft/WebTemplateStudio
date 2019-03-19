@@ -1,6 +1,6 @@
 # Web Template Studio
 Web Template Studio (WebTS) is a Visual Studio Code Extension that accelerates the creation of new Web apps using a wizard-based experience. The resulting Web application is well-formed, readable code that
-incorporates cloud services on Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to Docs, Stack Overflow and Blogs to provide useful insights. 
+incorporates cloud services on Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to Docs to provide useful insights. 
 
 WebTS currently supports the following:
 
