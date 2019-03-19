@@ -12,12 +12,14 @@ import {
 } from "./errors";
 import {
   FunctionProvider,
-  FunctionSelections
+  FunctionSelections,
+  GetAvailableRuntimes
 } from "./azure-functions/functionProvider";
 import {
   CosmosDBDeploy,
   CosmosDBSelections,
-  DatabaseObject
+  DatabaseObject,
+  GetAvailableAPIs
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
@@ -49,19 +51,30 @@ export abstract class Controller {
       ExtensionCommand.NameCosmos,
       Controller.sendCosmosNameValidationStatusToClient
     ],
-    [ 
-      ExtensionCommand.GetOutputPath, 
+    [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
+    [
+      ExtensionCommand.GetOutputPath,
       Controller.sendOutputPathSelectionToClient
     ],
     [
       ExtensionCommand.HandleTelemetry,
       Controller.handleTelemetry
     ],
-    [
-      ExtensionCommand.Generate,
-      Controller.handleGeneratePayloadFromClient
-    ]
+    [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
+    [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs]
   ]);
+
+  public static sendFunctionRuntimes(message: any) {
+    Controller.handleValidMessage(ExtensionCommand.GetFunctionsRuntimes, {
+      runtimes: GetAvailableRuntimes()
+    });
+  }
+
+  public static sendCosmosAPIs(message: any) {
+    Controller.handleValidMessage(ExtensionCommand.GetCosmosAPIs, {
+      APIs: GetAvailableAPIs()
+    });
+  }
 
   private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.clientCommandMap.get(message.command);
@@ -86,15 +99,16 @@ export abstract class Controller {
       this.routingMessageReceieverDelegate
     );
     Controller.Telemetry = new TelemetryAI(context, startTime);
-    Controller.Telemetry.callAndHandleError("testingFunctionWrapper",async function (this: IActionContext): Promise<void> {
+    Controller.Telemetry.callFunctionsAndSendResult("testingFunctionWrapper",async function (this: IActionContext): Promise<void> {
       this.properties.customProp = "Hello Testing";
       console.log("helloworld");
     })
   }
-
+  // TODO: To minimize PR size, this will be edited in next PR; branch: t-trngo/telemetryIntegrationInController
   public static handleTelemetry(payload : any): any {
-    Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
+  //   Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
   };
+
   /**
    * Returns an array of Subscription Items when the user is logged in
    *
@@ -277,6 +291,13 @@ export abstract class Controller {
       enginePayload
     );
 
+    if (payload.selectedFunctions) {
+      Controller.processFunctionDeploymentAndSendStatusToClient(
+        payload.functions,
+        enginePayload.path
+      );
+    }
+
     if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
       await Controller.processCosmosDeploymentAndSendStatusToClient(
@@ -286,12 +307,14 @@ export abstract class Controller {
     }
   }
 
-  public static processFunctionDeploymentSendStatusToClient(message: any) {
+  public static processFunctionDeploymentAndSendStatusToClient(
+    funcPayload: any,
+    genPath: string
+  ) {
     /*
      * example:
      *   {
      *       command: 'deploy-functions'
-     *       appPath: 'C:\Users\t-dadua\Documents'
      *       selections: {
      *           appName: "YOUR_FUNCTION_APP_NAME",
      *           subscription: "YOUR_SUBSCRIPTION_LABEL",
@@ -302,7 +325,7 @@ export abstract class Controller {
      *       }
      *   }
      */
-    Controller.deployFunctionApp(message.selections, message.appPath)
+    Controller.deployFunctionApp(funcPayload.selections, genPath)
       .then(() => {
         Controller.handleValidMessage(ExtensionCommand.DeployFunctions, {
           succeeded: true
