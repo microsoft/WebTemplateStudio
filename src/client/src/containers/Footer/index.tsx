@@ -125,7 +125,11 @@ class Footer extends React.Component<Props> {
   }
 }
 
+<<<<<<< HEAD
 const mapStateToProps = (state: any): IStateProps => {
+=======
+const mapStateToProps = (state: any): any => {
+>>>>>>> 987d318... Removed git text
   const { vscode } = state;
   return {
     vscode: vscode.vscodeObject,
