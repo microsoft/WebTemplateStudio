@@ -5,8 +5,6 @@ import { CONSTANTS, SyncStatus } from "./constants";
 import * as signalR from "@aspnet/signalr";
 
 export default class ApiModule {
-  private static readonly GenerateEndpoint = CONSTANTS.GENERATE_ENDPOINT;
-
   public static StartApi(context: vscode.ExtensionContext): ChildProcess {
     let platform = process.platform;
 
@@ -55,7 +53,7 @@ export default class ApiModule {
       .withUrl(`http://localhost:${port}/corehub`)
       .build();
 
-    await connection.start().catch(error => console.log(error));
+    await connection.start().catch((error: Error) => console.log(error));
 
     postConnectionHandler(connection, payload);
 
@@ -68,12 +66,26 @@ export default class ApiModule {
   ) {
     connection.on("syncMessage", payload!.listener);
 
-    connection
+    await connection
       .invoke("SyncTemplates", "Web", payload!.path, "Any")
-      .then(obj => console.log(obj))
-      .catch(error => {
+      .then((obj: any) => console.log(obj))
+      .catch((error: Error) => {
         console.log(error);
       });
+
+    connection.stop();
+  }
+
+  private static async postGenerateConnectionHandler(
+    connection: signalR.HubConnection,
+    payload: any
+  ) {
+    connection.on("genMessage", payload!.listener);
+    await connection
+      .invoke("Generate", payload!.body)
+      .then((obj: any) => console.log(obj));
+
+    connection.stop();
   }
 
   /**
@@ -86,8 +98,6 @@ export default class ApiModule {
     port: string,
     payload: IGenerationPayloadType
   ): Promise<any> {
-    let host = "http://localhost:" + port;
-    const url = new URL(this.GenerateEndpoint, host);
     let body = {
       projectName: payload.projectName,
       genPath: payload.path,
@@ -107,19 +117,15 @@ export default class ApiModule {
       }))
     };
 
-    return await fetch(url.href, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+    return await this.createSignalRConnection(
+      port,
+      {
+        body: body,
+        listener: (message: any) => {
+          console.log(message);
+        }
       },
-      body: JSON.stringify(body)
-    })
-      .then((response: Response) => {
-        return response;
-      })
-      .catch((error: Error) => {
-        throw Error("request failed:" + error.toString());
-      });
+      this.postGenerateConnectionHandler
+    );
   }
 }
