@@ -27,7 +27,6 @@ import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
-import { isExtraneousPopstateEvent } from "history/DOMUtils";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -80,7 +79,6 @@ class App extends React.Component<Props> {
           return;
         case "subscriptionData":
           // Expect resource groups and locations on this request
-
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
           if (message.payload != null) {
@@ -109,7 +107,6 @@ class App extends React.Component<Props> {
       <Router>
         <div>
           <Header />
-          {/*<ReviewAndGenerate />*/}
           <div className={appStyles.container}>
             <CosmosResourceModal />
             <LeftSidebar sidebarItems={leftSidebarData} />

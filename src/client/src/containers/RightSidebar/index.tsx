@@ -17,9 +17,6 @@ import { ROUTES } from "../../utils/constants";
 import getSvgUrl from "../../utils/getSvgUrl";
 
 import cancel from "../../assets/cancel.svg";
-import masterdetail from "../../assets/masterdetail.svg";
-import list from "../../assets/list.svg";
-import contentgrid from "../../assets/contentgrid.svg";
 import reorder from "../../assets/reorder.svg";
 
 import { ISelected } from "../../types/selected";
@@ -54,15 +51,6 @@ interface IRightSidebarState {
 }
 
 type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
-
-// FIXME: Delete when icons can be properly served from the Core Engine
-const SVG_URLS: { [key: string]: string } = {
-  "wts.Page.React.MasterDetail": `${
-    process.env.REACT_APP_RELATIVE_PATH
-  }${masterdetail}`,
-  "wts.Page.React.Grid": `${process.env.REACT_APP_RELATIVE_PATH}${contentgrid}`,
-  "wts.Page.ReactNode.LongList": `${process.env.REACT_APP_RELATIVE_PATH}${list}`
-};
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {

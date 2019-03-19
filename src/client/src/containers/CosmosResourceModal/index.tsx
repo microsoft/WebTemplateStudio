@@ -11,13 +11,12 @@ import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions";
 import { saveCosmosDbSettingsAction } from "../../actions/saveCosmosDbSettings";
-import getCosmosModalData, {
+import {
   cosmosInitialState
 } from "../../mockData/cosmosDbModalData";
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck} from "../../assets/checkgreen.svg";
-import { ReactComponent as RedCancel } from "../../assets/redcancel.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
@@ -47,14 +46,18 @@ const initialState = {
   internalName: "wts.Feature.Azure.Cosmos"
 };
 
+const FORM_CONSTANTS = {
+  SUBSCRIPTION: "subscription",
+  RESOURCE_GROUP: "resourceGroup",
+  API: "api",
+  LOCATION: "location"
+}
+
 const CosmosResourceModal = (props: Props) => {
   const [cosmosData, setData] = React.useState(cosmosInitialState);
   /**
    * Second parameter of useEffect is [] which tells React to
    * run this effect when mounting the component.
-   * 
-   * FIXME: Currently reverse and slice locations array to make it
-   * easier for demoing purposes. Remove later.
    */
   React.useEffect(() => {
     setData({
@@ -72,7 +75,7 @@ const CosmosResourceModal = (props: Props) => {
       ],
       subscription: props.subscriptions,
       resourceGroup: props.subscriptionData.resourceGroups,
-      location: props.subscriptionData.locations ? props.subscriptionData.locations.reverse().slice(0,2) : props.subscriptionData.locations
+      location: props.subscriptionData.locations
     });
   }, [props.subscriptionData]);
 
@@ -81,7 +84,7 @@ const CosmosResourceModal = (props: Props) => {
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
-    if (infoLabel === "subscription") {
+    if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION) {
       // Get resource Group and locations and set the dropdown options to them
       if (process.env.NODE_ENV === "production") {
         props.vscode.postMessage({
@@ -92,10 +95,12 @@ const CosmosResourceModal = (props: Props) => {
         // @ts-ignore produces a mock login response from VSCode in development
         window.postMessage({
           command: "subscriptionData",
-          locations: [{ label: "WEST US", value: "WEST US" }],
-          resourceGroups: [
-            { label: "resourceGroupMock", value: "resourceGroupMock" }
-          ]
+          payload: {
+            locations: [{ label: "WEST US", value: "WEST US" }],
+            resourceGroups: [
+              { label: "resourceGroupMock", value: "resourceGroupMock" }
+            ]
+          }
         });
       }
     }
@@ -116,11 +121,13 @@ const CosmosResourceModal = (props: Props) => {
       });
     } else {
       // In development, disables modal closing until an account name is entered.
-      // @ts-ignore produces a mock login response from VSCode in development
+      // @ts-ignore produces a mock login response from VSCode in development 
       window.postMessage({
         command: "name-cosmos",
-        isAvailable: cosmosFormData.accountName === "" ? false: true,
-        message: "in development, no error",
+        payload: {
+          isAvailable: cosmosFormData.accountName === "" ? false: true,
+        },
+        message: "in development, no error message",
         errorType: "in development, no error type"
       });
     }
@@ -142,7 +149,6 @@ const CosmosResourceModal = (props: Props) => {
       props.saveCosmosOptions(cosmosFormData); 
     }
   }
-  console.log(props);
   return (
     <div>
       <div className={styles.headerContainer}>
@@ -157,7 +163,7 @@ const CosmosResourceModal = (props: Props) => {
         <Dropdown
           options={cosmosData.subscription}
           handleChange={option => {
-            handleDropdown("subscription", option.value);
+            handleDropdown(FORM_CONSTANTS.SUBSCRIPTION, option.value);
           }}
         />
       </div>
@@ -169,7 +175,7 @@ const CosmosResourceModal = (props: Props) => {
         <Dropdown
           options={cosmosData.resourceGroup}
           handleChange={option => {
-            handleDropdown("resourceGroup", option.value);
+            handleDropdown(FORM_CONSTANTS.RESOURCE_GROUP, option.value);
           }}
         />
       </div>
@@ -192,7 +198,7 @@ const CosmosResourceModal = (props: Props) => {
           <input className={styles.input} onChange={handleInput} value={cosmosFormData.accountName} placeholder="Account Name" />
           {props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && <GreenCheck className={styles.validationIcon} />}
         </div>
-        {!props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0 && <div style={{ color: "#FF6666", fontSize: "12px", marginBototm: "-18px"}}>{props.cosmosAccountInformation.message}</div>}
+        {!props.cosmosAccountInformation.isCosmosResourceAccountNameAvailable && cosmosFormData.accountName.length > 0 && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}>{props.cosmosAccountInformation.message}</div>}
       </div>
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
@@ -201,7 +207,7 @@ const CosmosResourceModal = (props: Props) => {
         <Dropdown
           options={cosmosData.api}
           handleChange={option => {
-            handleDropdown("api", option.value);
+            handleDropdown(FORM_CONSTANTS.API, option.value);
           }}
         />
       </div>
@@ -212,7 +218,7 @@ const CosmosResourceModal = (props: Props) => {
         <Dropdown
           options={cosmosData.location}
           handleChange={option => {
-            handleDropdown("location", option.value);
+            handleDropdown(FORM_CONSTANTS.LOCATION, option.value);
           }}
         />
       </div>

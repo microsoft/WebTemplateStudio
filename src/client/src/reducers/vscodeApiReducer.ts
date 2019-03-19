@@ -1,4 +1,5 @@
 import * as Actions from "../actions/types";
+import { PRODUCTION } from "../utils/constants";
 
 /* State Shape
 {
@@ -49,7 +50,7 @@ function vscodeApi(
         const newState = { ...state };
         newState.isVsCodeApiAcquired = true;
         newState.vscodeObject =
-          process.env.NODE_ENV === "production"
+          process.env.NODE_ENV === PRODUCTION
             ? //
             // @ts-ignore because function does not exist in dev environment
             acquireVsCodeApi()

@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { CONSTANTS, ExtensionCommand } from './constants';
+import { CONSTANTS, ExtensionCommand } from "./constants";
 import {
   AzureAuth,
   SubscriptionItem,
@@ -22,15 +22,14 @@ import {
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
 
-
-
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static reactPanelContext: ReactPanel;
-  private static commandMap: Map<
+  // This will map commands from the client to functions.
+  private static clientCommandMap: Map<
     ExtensionCommand,
     (message: any) => void
   > = new Map([
@@ -48,23 +47,12 @@ export abstract class Controller {
       ExtensionCommand.NameCosmos,
       Controller.sendCosmosNameValidationStatusToClient
     ],
-    [
-      ExtensionCommand.DeployFunctions,
-      Controller.attemptFunctionDeploymentAndSendStatusToClient
-    ],
-    [
-      ExtensionCommand.DeployCosmos,
-      Controller.attemptCosmosDeploymentAndSendStatusToClient
-    ],
-    [
-      ExtensionCommand.Generate,
-      Controller.sendTemplateGenInfoToApiAndSendStatusToClient
-    ],
+    [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [ExtensionCommand.GetOutputPath, Controller.sendOutputPathSelectionToClient]
   ]);
 
-  private static routingMessageReceieverDelegate = function (message: any) {
-    let command = Controller.commandMap.get(message.command);
+  private static routingMessageReceieverDelegate = function(message: any) {
+    let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
       command(message);
@@ -185,7 +173,7 @@ export abstract class Controller {
         const email = AzureAuth.getEmail();
         AzureAuth.getSubscriptions()
           .then(items => {
-            const subs = items.map(subscriptionItem => {
+            const subscriptions = items.map(subscriptionItem => {
               return {
                 label: subscriptionItem.label,
                 value: subscriptionItem.label
@@ -193,7 +181,7 @@ export abstract class Controller {
             });
             Controller.handleValidMessage(ExtensionCommand.Login, {
               email: email,
-              subscriptions: subs
+              subscriptions: subscriptions
             });
           })
           .catch((err: Error) => {
@@ -207,9 +195,9 @@ export abstract class Controller {
 
   public static sendSubscriptionsToClient(message: any) {
     Controller.getSubscriptions()
-      .then(subs => {
+      .then(subscriptions => {
         Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
-          subscriptions: subs
+          subscriptions: subscriptions
         });
       })
       .catch((err: Error) => {
@@ -258,7 +246,25 @@ export abstract class Controller {
       });
   }
 
-  public static attemptFunctionDeploymentAndSendStatusToClient(message: any) {
+  public static async handleGeneratePayloadFromClient(
+    message: any
+  ): Promise<any> {
+    var payload = message.payload;
+    var enginePayload: any = payload.engine;
+    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
+      enginePayload
+    );
+
+    if (payload.selectedCosmos) {
+      var cosmosPayload: any = payload.cosmos;
+      await Controller.processCosmosDeploymentAndSendStatusToClient(
+        cosmosPayload,
+        enginePayload.path
+      );
+    }
+  }
+
+  public static processFunctionDeploymentSendStatusToClient(message: any) {
     /*
      * example:
      *   {
@@ -287,7 +293,10 @@ export abstract class Controller {
       });
   }
 
-  public static attemptCosmosDeploymentAndSendStatusToClient(message: any) {
+  public static processCosmosDeploymentAndSendStatusToClient(
+    cosmosPayload: any,
+    genPath: string
+  ) {
     /*
      * example:
      *   {
@@ -301,14 +310,14 @@ export abstract class Controller {
      *       }
      *   }
      */
-    Controller.deployCosmosResource(message.cosmosSelection)
+    Controller.deployCosmosResource(cosmosPayload, genPath)
       .then((dbObject: DatabaseObject) => {
         Controller.handleValidMessage(ExtensionCommand.DeployCosmos, {
           databaseObject: dbObject
         });
 
         vscode.window.showInformationMessage(
-          CONSTANTS.INFO.COSMOS_ACCOUNT_DEPLOYED(message.cosmosSelection.accountName)
+          CONSTANTS.INFO.COSMOS_ACCOUNT_DEPLOYED(cosmosPayload.accountName)
         );
       })
       .catch((err: Error) => {
@@ -317,9 +326,11 @@ export abstract class Controller {
       });
   }
 
-  public static sendTemplateGenInfoToApiAndSendStatusToClient(message: any) {
+  public static sendTemplateGenInfoToApiAndSendStatusToClient(
+    enginePayload: any
+  ) {
     // FIXME: After gen is done, we need to do some feedback.
-    ApiModule.SendGeneration("5000", message.payload);
+    ApiModule.SendTemplateGenerationPayloadToApi("5000", enginePayload);
   }
 
   public static sendOutputPathSelectionToClient(message: any) {
@@ -412,7 +423,8 @@ export abstract class Controller {
   }
 
   public static async deployCosmosResource(
-    selections: any
+    selections: any,
+    genPath: string
   ): Promise<DatabaseObject> {
     try {
       await Controller.validateCosmosAccountName(
@@ -431,12 +443,12 @@ export abstract class Controller {
         selections.resourceGroup,
         Controller.usersCosmosDBSubscriptionItemCache
       ),
-      subscriptionItem: Controller.usersCosmosDBSubscriptionItemCache,
-      tags: { "Created from": "Web Template Studio" }
+      subscriptionItem: Controller.usersCosmosDBSubscriptionItemCache
     };
 
     return await this.AzureCosmosDBProvider.createCosmosDB(
-      userCosmosDBSelection
+      userCosmosDBSelection,
+      genPath
     );
   }
 

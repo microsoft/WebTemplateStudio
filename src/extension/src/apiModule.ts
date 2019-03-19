@@ -5,7 +5,7 @@ import fetch, { Response } from "node-fetch";
 import { CONSTANTS } from "./constants";
 
 export default class ApiModule {
-  private static readonly GenerateEndpoint = "/api/generate";
+  private static readonly GenerateEndpoint = CONSTANTS.GENERATE_ENDPOINT;
 
   public static StartApi(context: vscode.ExtensionContext): ChildProcess {
     let platform = process.platform;
@@ -31,7 +31,13 @@ export default class ApiModule {
     return spawnedProcess;
   }
 
-  public static async SendGeneration(
+  /**
+   * This method will send a post request to the generation end point in the engine's api, to generate a project
+   * with the information provided.
+   * @param port The port of the api
+   * @param payload The template generation payload for the post request that is to be sent to the engine api for generation.
+   */
+  public static async SendTemplateGenerationPayloadToApi(
     port: string,
     payload: IGenerationPayloadType
   ): Promise<any> {

@@ -2,17 +2,25 @@ import { CosmosDBManagementClient } from "azure-arm-cosmosdb";
 import { DatabaseAccount } from "azure-arm-cosmosdb/lib/models";
 import { ServiceClientCredentials } from "ms-rest";
 import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
+import * as fs from "fs";
+import * as path from "path";
 import {
   SubscriptionError,
   AuthorizationError,
   DeploymentError
 } from "../errors";
+import {
+  ResourceManagementClient,
+  ResourceManagementModels
+} from "azure-arm-resource/lib/resource/resourceManagementClient";
+import { ResourceManager } from "../azure-arm/resourceManager";
+import * as appRoot from "app-root-path";
+import { ARMFileHelper } from "../azure-arm/armFileHelper";
 
 export interface CosmosDBSelections {
   cosmosDBResourceName: string;
   location: string;
   cosmosAPI: API;
-  tags: Object;
   subscriptionItem: SubscriptionItem;
   resourceGroupItem: ResourceGroupItem;
 }
@@ -25,16 +33,72 @@ export interface DatabaseObject {
   connectionString: string;
 }
 
-// Mongo NoSQL | Gremlin | Azure Table | SQL
-export type API = "MongoDB" | "Graph" | "Table" | "DocumentDB";
+/*
+ * Azure Cosmos DB for Mongo API | Gremlin | Azure Table | Core (SQL) | Cassandra
+ */
+export type API = "MongoDB" | "Graph" | "Table" | "SQL" | "Cassandra";
+
+/*
+ * ARM template definitions for Cosmos APIs
+ */
+interface APIdefinition {
+  readonly kind: string;
+  readonly defaultExperience: string;
+  readonly capabilities: Object[];
+}
 
 export class CosmosDBDeploy {
-  private SubscriptionItemCosmosClient:
-    | CosmosDBManagementClient
-    | undefined = undefined;
+  /*
+   * Map of Cosmos API type to its definitions for ARM templates
+   */
+  private APIdefinitionMap = new Map<API, APIdefinition>([
+    [
+      "MongoDB",
+      {
+        kind: "MongoDB",
+        defaultExperience: "Azure Cosmos DB for MongoDB API",
+        capabilities: []
+      }
+    ],
+    [
+      "Graph",
+      {
+        kind: "GlobalDocumentDB",
+        defaultExperience: "Gremlin (graph)",
+        capabilities: [{ name: "EnableGremlin" }]
+      }
+    ],
+    [
+      "Table",
+      {
+        kind: "GlobalDocumentDB",
+        defaultExperience: "Azure Table",
+        capabilities: [{ name: "EnableTable" }]
+      }
+    ],
+    [
+      "SQL",
+      {
+        kind: "GlobalDocumentDB",
+        defaultExperience: "Core (SQL)",
+        capabilities: []
+      }
+    ],
+    [
+      "Cassandra",
+      {
+        kind: "GlobalDocumentDB",
+        defaultExperience: "Cassandra",
+        capabilities: [{ name: "EnableCassandra" }]
+      }
+    ]
+  ]);
+
+  private SubscriptionItemCosmosClient: CosmosDBManagementClient | undefined;
 
   public async createCosmosDB(
-    userCosmosDBSelection: CosmosDBSelections
+    userCosmosDBSelection: CosmosDBSelections,
+    genPath: string
   ): Promise<DatabaseObject> {
     /*
      * Create Cosmos Client with users credentials and selected subscription *
@@ -48,41 +112,110 @@ export class CosmosDBDeploy {
     }
 
     var resourceGroup = userCosmosDBSelection.resourceGroupItem.name;
-    var dataBaseName = userCosmosDBSelection.cosmosDBResourceName;
+    var databaseName = userCosmosDBSelection.cosmosDBResourceName;
 
     var location = userCosmosDBSelection.location;
     var experience = userCosmosDBSelection.cosmosAPI;
-    var tagObject = userCosmosDBSelection.tags;
 
-    var options = {
-      location: location,
-      locations: [{ locationName: location }],
-      kind: experience,
-      tag: tagObject, // sample: { defaultExperience: "Azure Cosmos DB for MongoDB API", BuildOrigin : "Project Acorn"},
-      capabilities: []
+    let template = JSON.parse(
+      fs.readFileSync(
+        path.join(
+          appRoot.toString(),
+          "src",
+          "azure-cosmosDB",
+          "arm-templates",
+          "template.json"
+        ),
+        "utf8"
+      )
+    );
+
+    let parameters = JSON.parse(
+      fs.readFileSync(
+        path.join(
+          appRoot.toString(),
+          "src",
+          "azure-cosmosDB",
+          "arm-templates",
+          "parameters.json"
+        ),
+        "utf8"
+      )
+    );
+
+    let definitions: APIdefinition = this.APIdefinitionMap.get(experience)!;
+
+    parameters.parameters = {
+      name: {
+        value: databaseName
+      },
+      location: {
+        value: location
+          .split(" ")
+          .join("")
+          .toLowerCase()
+      },
+      locationName: {
+        value: location
+      },
+      defaultExperience: {
+        value: definitions.defaultExperience
+      },
+      capabilities: {
+        value: definitions.capabilities
+      },
+      kind: {
+        value: definitions.kind
+      }
+    };
+
+    let deploymentParams = parameters.parameters;
+
+    var options: ResourceManagementModels.Deployment = {
+      properties: {
+        mode: "Incremental",
+        parameters: deploymentParams,
+        template: template
+      }
     };
 
     try {
       if (this.SubscriptionItemCosmosClient === undefined) {
         throw new AuthorizationError("Cosmos Client cannot be undefined.");
       }
+
+      let azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
+        userSubscriptionItem
+      );
+
+      ARMFileHelper.createOrOverwriteDir(path.join(genPath, "arm-templates"));
+      ARMFileHelper.writeObjectToJsonFile(
+        path.join(genPath, "arm-templates", "cosmos-template.json"),
+        template
+      );
+      ARMFileHelper.writeObjectToJsonFile(
+        path.join(genPath, "arm-templates", "cosmos-parameters.json"),
+        parameters
+      );
+
       /*
        * Cosmos Client to generate a cosmos DB resource using resource group name, database name, and options *
        */
-      var databaseAccount: DatabaseAccount = await this.SubscriptionItemCosmosClient.databaseAccounts.createOrUpdate(
+      await azureResourceClient.deployments.createOrUpdate(
         resourceGroup,
-        dataBaseName,
+        databaseName,
         options
       );
-      databaseAccount = await this.SubscriptionItemCosmosClient.databaseAccounts.get(
+
+      var databaseAccount: DatabaseAccount = await this.SubscriptionItemCosmosClient.databaseAccounts.get(
         resourceGroup,
-        dataBaseName
+        databaseName
       );
 
       var connectionString = await this.getConnectionString(
         this.SubscriptionItemCosmosClient,
         resourceGroup,
-        dataBaseName
+        databaseName
       );
     } catch (err) {
       throw new DeploymentError("CosmosDBDeploy: " + err.message);
@@ -96,13 +229,10 @@ export class CosmosDBDeploy {
   }
 
   private setClientState(userSubscriptionItem: SubscriptionItem): void {
-    if (this.SubscriptionItemCosmosClient === undefined) {
-      this.SubscriptionItemCosmosClient = this.createCosmosClient(
-        userSubscriptionItem
-      );
-    } else if (
+    if (
+      this.SubscriptionItemCosmosClient === undefined ||
       this.SubscriptionItemCosmosClient.subscriptionId !==
-      userSubscriptionItem.subscriptionId
+        userSubscriptionItem.subscriptionId
     ) {
       this.SubscriptionItemCosmosClient = this.createCosmosClient(
         userSubscriptionItem
@@ -175,8 +305,10 @@ export class CosmosDBDeploy {
   }
 
   /*
-   * Overload on getConnectionString; one for providing creating the Cosmos Client
+   * Returns Azure Cosmos DB connection string for user's deployed database instance.
+   * This is what the user will use to connect to the database.
    *
+   * Overload on getConnectionString; one for providing creating the Cosmos Client
    */
   public async getConnectionString(
     userSubscriptionItem: SubscriptionItem,
@@ -211,7 +343,6 @@ export class CosmosDBDeploy {
       resourceGroup,
       dataBaseName
     );
-    console.log(result!.connectionStrings![0].connectionString!);
     return result!.connectionStrings![0].connectionString!;
   }
 }
