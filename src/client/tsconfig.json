@@ -1,15 +1,8 @@
 {
   "compilerOptions": {
-    "typeRoots": [
-      "./node_modules/@types",
-      "./images.d.ts"
-    ],
+    "typeRoots": ["./node_modules/@types", "./images.d.ts"],
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -23,11 +16,6 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": [
-    "src"
-  ],
-  "filesGlob": [
-    "**/*.ts",
-    "**/*.tsx"
-  ],
+  "include": ["src"],
+  "filesGlob": ["**/*.ts", "**/*.tsx"]
 }

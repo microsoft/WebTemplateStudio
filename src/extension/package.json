@@ -59,7 +59,7 @@
     "ms-rest-azure": "^2.6.0",
     "node-fetch": "^2.3.0",
     "rimraf": "^2.6.3",
-    "tslint-microsoft-contrib": "^6.0.0",
+    "tslint-microsoft-contrib": "^6.1.0",
     "vsce": "^1.57.1"
   },
   "repository": {

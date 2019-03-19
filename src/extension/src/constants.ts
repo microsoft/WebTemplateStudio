@@ -39,6 +39,10 @@ export const CONSTANTS = {
     MAX_NAME_LEN: 60,
     MIN_NAME_LEN: 0
   },
+  API: {
+    WINDOWS_PLATFORM_VERSION: "win32",
+    BASE_APPLICATION_NAME: "CoreTemplateStudio.Api"
+  },
   AZURE_LOGIN_STATUS: {
     LOGGED_IN: "LoggedIn",
     LOGGING_IN: "LoggingIn",
