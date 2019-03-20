@@ -9,64 +9,6 @@
   margin-top: 1em;
 }
 
-.inputTitle {
-  font-size: 1em;
-  font-weight: bold;
-  margin-bottom: 3px;
-}
-
-.outputPathContainer,
-.input {
-  box-sizing: border-box;
-  padding: 0.5em;
-  width: 100%;
-  font-size: 1em;
-  background-color: #3C3C3C;
-  border: 1px solid #ffffff;
-  border-radius: 2px;
-}
-
-.outputPathContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-height: 42px;
-}
-
-.saveIcon {
-  height: 25px;
-  transform: rotate(-90deg);
-  cursor: pointer;
-}
-
-.pathInput {
-  outline: none;
-  text-decoration: none;
-  font-size: 1em;
-  background-color: #3C3C3C;
-  width: 100%;
-  border: none;
-  margin-right: 0.25em;
-}
-
-.input:focus {
-  outline: none;
-}
-
-.input::placeholder,
-.pathInput::placeholder {
-  color: white;
-  opacity: 0.4;
-}
-
-.inputContainer {
-  width: calc(100% - 34px);
-  text-decoration: none;
-  outline: none;
-  margin-bottom: 30px;
-  margin-left: 10px;
-}
-
 .tileContainer {
   margin-bottom: 10px;
 }
@@ -77,4 +19,9 @@
 
 .selectionTitle {
   font-size: 18px;
+}
+
+.projectDetailsContainer {
+  margin-left: 2%;
+  width: calc(100% - 40px);
 }
