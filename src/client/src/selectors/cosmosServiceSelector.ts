@@ -25,7 +25,7 @@ const isCosmosResourceCreatedSelector = createSelector(
 )
 const getCosmosDbOptions = (services: any, isCosmosSelected: boolean): any => {
     if (isCosmosSelected) {
-        return services.cosmosDB;
+        return services.cosmosDB.selection[0];
     }
 }
 const getCosmosDbSelectionSelector = createSelector(

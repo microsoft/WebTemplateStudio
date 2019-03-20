@@ -32,11 +32,14 @@ export const CONSTANTS = {
   INFO: {
     COSMOS_ACCOUNT_DEPLOYED: (accountName: string) => {
       return `${accountName} has been deployed!`;
+    },
+    FUNCTION_APP_DEPLOYED: (appName: string) => {
+      return `Function App ${appName} has been deployed and is ready to use!`;
     }
   },
   FUNCTIONS_CONFIG: {
     MAX_NAME_LEN: 60,
-    MIN_NAME_LEN: 0
+    MIN_NAME_LEN: 1
   },
   API: {
     WINDOWS_PLATFORM_VERSION: "win32",

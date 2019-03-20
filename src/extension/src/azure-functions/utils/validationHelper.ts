@@ -10,7 +10,6 @@ export namespace ValidationHelper {
 
   function validateFunctionNames(names: string[]): void {
     for (var name of names) {
-      checkFunctionNameRegex(name);
       if (
         name.length > CONSTANTS.FUNCTIONS_CONFIG.MAX_NAME_LEN ||
         name.length < CONSTANTS.FUNCTIONS_CONFIG.MIN_NAME_LEN
@@ -22,6 +21,7 @@ export namespace ValidationHelper {
           )
         );
       }
+      checkFunctionNameRegex(name);
     }
 
     names = names.map(function(name) {
@@ -34,8 +34,6 @@ export namespace ValidationHelper {
   }
 
   export function validateFunctionAppName(name: string): void {
-    checkFunctionNameRegex(name);
-
     if (
       name.length > CONSTANTS.FUNCTIONS_CONFIG.MAX_NAME_LEN ||
       name.length < CONSTANTS.FUNCTIONS_CONFIG.MIN_NAME_LEN
@@ -47,10 +45,12 @@ export namespace ValidationHelper {
         )
       );
     }
+
+    checkFunctionNameRegex(name);
   }
 
   function checkFunctionNameRegex(name: string): void {
-    let regexp = /^[a-zA-Z0-9]+[a-zA-Z0-9-]+[a-zA-Z0-9]+$/;
+    let regexp = /^[a-zA-Z0-9]+[a-zA-Z0-9-]*[a-zA-Z0-9]+$/;
     if (!regexp.test(name)) {
       throw new ValidationError(CONSTANTS.ERRORS.FUNCTIONS_INVALID_NAME(name));
     }
