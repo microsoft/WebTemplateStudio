@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import TelemetryReporter from 'vscode-extension-telemetry';
 import { getPackageInfo } from './getPackageInfo';
 import { IActionContext, ITelemetryReporter, callWithTelemetryAndCatchErrors } from './callWithTelemetryAndErrorHandling';
+import { TelemetryEventName } from '../constants'; 
 
 export type IActionContext = IActionContext;
 
@@ -24,11 +25,11 @@ export class TelemetryAI {
         return reporter;
     }
 
-    private trackExtensionStartUpTime(eventName : string = "Wizard Launch Time"){
+    private trackExtensionStartUpTime(eventName : string = TelemetryEventName.ExtensionLaunch){
         this.trackTimeDuration(eventName, this.extensionStartTime, Date.now());
     }
 
-    public trackWizardTotalSessionTimeToGenerate(eventName : string = "Wizard Launch To Generate Time"){
+    public trackWizardTotalSessionTimeToGenerate(eventName : string = TelemetryEventName.WizardSession){
         this.trackTimeDuration(eventName, this.wizardSessionStartTime, Date.now());
     }
 

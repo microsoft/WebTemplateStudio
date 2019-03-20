@@ -74,10 +74,14 @@ export enum ExtensionCommand {
 }
 
 export enum TelemetryEventName{
-  Login = "Login Time",
-  Subscriptions = "Acquire Subscription",
-  SubscriptionData = "Acquire Subscription Data",
-  EngineGeneration = "Engine Generation Time"
+  ExtensionLaunch = "Wizard-Launch-Time",
+  WizardSession = "Wizard-To-Generate-Session-Time",
+  AzureLogin = "Azure-Account-Extension",
+  Subscriptions = "Acquire-Subscription",
+  SubscriptionData = "Acquire-Subscription-Data",
+  EngineGeneration = "Engine-Generation-Time",
+  CosmosDBDeploy = "Azure-Cosmos-Deployment",
+  FunctionsDeploy = "Azure-Functions-Deployment"
 }
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 export namespace DialogResponses {
