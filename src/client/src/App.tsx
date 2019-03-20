@@ -37,7 +37,6 @@ interface IDispatchProps {
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
-  getUserStatus: ()
 }
 
 interface IStateProps {
