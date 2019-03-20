@@ -50,7 +50,7 @@ export interface TelemetryMeasurements {
     [key: string]: number | undefined;
 }
 
-export async function callWithTelemetryAndErrorHandling<T>(
+export async function callWithTelemetryAndCatchErrors<T>(
     callbackId: string, 
     callback: (this: IActionContext) => T | PromiseLike<T>, 
     telemetryReporter: ITelemetryReporter): Promise<T | undefined> {

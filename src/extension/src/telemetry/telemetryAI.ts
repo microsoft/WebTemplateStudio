@@ -1,17 +1,19 @@
 import * as vscode from 'vscode';
 import TelemetryReporter from 'vscode-extension-telemetry';
 import { getPackageInfo } from './getPackageInfo';
-import { IActionContext, ITelemetryReporter, callWithTelemetryAndErrorHandling } from './callWithTelemetryAndErrorHandling'
+import { IActionContext, ITelemetryReporter, callWithTelemetryAndCatchErrors } from './callWithTelemetryAndErrorHandling';
 
 export type IActionContext = IActionContext;
 
 export class TelemetryAI {
 
     private static telemetryReporter: ITelemetryReporter;
+    private wizardSessionStartTime: number;
 
     constructor(context: vscode.ExtensionContext, private extensionStartTime: number = Date.now()){
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(context);
-        this.trackDurationExtensionStartUp();
+        this.trackExtensionStartUpTime();
+        this.wizardSessionStartTime = Date.now();
     }
 
     private createTelemetryReporter(ctx: vscode.ExtensionContext) {
@@ -22,12 +24,12 @@ export class TelemetryAI {
         return reporter;
     }
 
-    private trackDurationExtensionStartUp(eventName : string = "Wizard Launch Time", startTime : number = this.extensionStartTime, endTime : number = Date.now()){
-        this.trackTimeDuration(eventName, this.extensionStartTime, endTime);
+    private trackExtensionStartUpTime(eventName : string = "Wizard Launch Time"){
+        this.trackTimeDuration(eventName, this.extensionStartTime, Date.now());
     }
 
-    public trackWizardTimeToGenerate(eventName : string = "Wizard Launch To Generate Time", startTime : number = this.extensionStartTime, endTime : number = Date.now()){
-        this.trackTimeDuration(eventName, this.extensionStartTime, endTime);
+    public trackWizardTotalSessionTimeToGenerate(eventName : string = "Wizard Launch To Generate Time"){
+        this.trackTimeDuration(eventName, this.wizardSessionStartTime, Date.now());
     }
 
     public trackCustomEventTime(customEventName: string, startTime: number, endTime: number = Date.now(), customEventProperties?: { [key: string]: string | undefined }){
@@ -41,8 +43,12 @@ export class TelemetryAI {
         TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, properties, measurement)
     }
 
-    public async runHandleAndSendResult<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{
-        return await callWithTelemetryAndErrorHandling(callbackId,callback, TelemetryAI.telemetryReporter);
+    public resetWizardSessionStartTime(){
+        this.wizardSessionStartTime = Date.now();
+    }
+
+    public callWithTelemetryAndCatchHandleErrors<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{
+        return callWithTelemetryAndCatchErrors(callbackId,callback, TelemetryAI.telemetryReporter);
     }
 }
 

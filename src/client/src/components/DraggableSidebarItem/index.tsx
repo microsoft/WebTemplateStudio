@@ -1,4 +1,5 @@
 import * as React from "react";
+import classnames from "classnames";
 
 import styles from "./styles.module.css";
 import { ISelected } from "../../types/selected";
@@ -15,7 +16,10 @@ const DraggableSidebarItem = ({
   reorderSvgUrl,
   itemTitle,
   handleInputChange,
-  idx
+  idx,
+  functionName,
+  withIndent,
+  withLargeIndent,
 }: {
   page?: ISelected;
   text?: string;
@@ -25,28 +29,40 @@ const DraggableSidebarItem = ({
   itemTitle?: string;
   handleInputChange?: (e: any, idx: number) => void;
   idx?: number;
+  functionName?: string;
+  withIndent?: boolean;
+  withLargeIndent?: boolean
 }) => {
   return (
-    <div>
-      {itemTitle != null && (
-        <div className={styles.draggablePage}>
-          <div className={styles.iconContainer} />
-          <div className={styles.itemContainer}>
-            <div>{itemTitle}</div>
-          </div>
+    <React.Fragment>
+      {itemTitle && (
+        <div className={styles.titleContainer}>
+          { withIndent ?
+          <React.Fragment>
+            <div className={styles.iconContainer} />
+            <div className={styles.itemContainer}>
+              <div>{itemTitle}</div>
+            </div>
+          </React.Fragment> : itemTitle }
         </div>
       )}
       <div className={styles.draggablePage}>
-        <div className={styles.iconContainer}>
+        {(withIndent || reorderSvgUrl) && <div className={styles.iconContainer}>
           <img className={styles.icon} src={reorderSvgUrl} />
-        </div>
-        <div className={styles.pagesTextContainer}>
+        </div>}
+        <div className={classnames({
+            [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
+            [styles.textContainer]: !withIndent,
+            [styles.largeIndentContainer]: withLargeIndent
+        })}>
           <div className={styles.inputContainer}>
-            {pageSvgUrl != null && <img className={styles.icon} src={pageSvgUrl} />}
-            {handleInputChange != null && page != null && idx != null && (
+            {pageSvgUrl && <img className={styles.icon} src={pageSvgUrl} />}
+            {handleInputChange && (page || functionName) && idx && (
               <input
-                className={styles.input}
-                defaultValue={page.title}
+                className={classnames(styles.input, {
+                  [styles.functionNameInput]: functionName
+                })}
+                defaultValue={page ? page.title : functionName}
                 onChange={e => {
                   handleInputChange(e.target.value, idx - 1);
                 }}
@@ -57,7 +73,7 @@ const DraggableSidebarItem = ({
           <img className={styles.cancelIcon} src={closeSvgUrl} />
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 
