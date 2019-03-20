@@ -60,7 +60,8 @@ export const CONSTANTS = {
     Project_Title: "Project Acorn"
   },
   GENERATE_ENDPOINT: "/api/generate",
-  MAX_PROJECT_NAME_LENGTH: 50
+  MAX_PROJECT_NAME_LENGTH: 50,
+  PORT: "5000"
 };
 
 export enum ExtensionCommand {
