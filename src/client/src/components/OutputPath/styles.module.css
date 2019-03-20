@@ -1,0 +1,26 @@
+.saveIcon {
+    height: 25px;
+    transform: rotate(-90deg);
+    cursor: pointer;
+}
+
+.pathInput {
+    outline: none;
+    text-decoration: none;
+    font-size: 1em;
+    background-color: #3C3C3C;
+    width: 100%;
+    border: none;
+    margin-right: 0.25em;
+    padding-left: 0px;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.input::placeholder,
+.pathInput::placeholder {
+    color: white;
+    opacity: 0.4;
+}
