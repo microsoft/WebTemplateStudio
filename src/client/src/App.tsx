@@ -37,6 +37,7 @@ interface IDispatchProps {
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
+  getUserStatus: ()
 }
 
 interface IStateProps {
@@ -47,13 +48,13 @@ type Props = IDispatchProps & IStateProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => {},
-    loadWizardContent: () => {},
-    logIntoAzure: () => {},
-    saveSubscriptionData: () => {},
-    updateOutputPath: () => {},
-    setCosmosResourceAccountNameAvailability: () => {},
-    setAppNameAvailability: () => {}
+    getVSCodeApi: () => { },
+    loadWizardContent: () => { },
+    logIntoAzure: () => { },
+    saveSubscriptionData: () => { },
+    updateOutputPath: () => { },
+    setCosmosResourceAccountNameAvailability: () => { },
+    setAppNameAvailability: () => { }
   };
 
   public componentDidMount() {
@@ -75,6 +76,7 @@ class App extends React.Component<Props> {
             );
           }
           return;
+        case EXTENSION_COMMANDS.GET_USER_STATUS:
         case "login":
           // email will be null or undefined if login didn't work correctly
           if (message.payload != null) {
@@ -108,13 +110,12 @@ class App extends React.Component<Props> {
             isAvailable: message.payload.isAvailable,
             message: message.message
           });
-          return;
       }
     });
   }
 
-  public componentDidUpdate(prevProps: any){
-    if(this.props.vscode !== prevProps.vscode){
+  public componentDidUpdate(prevProps: any) {
+    if (this.props.vscode !== prevProps.vscode) {
       this.props.vscode.postMessage({
         command: EXTENSION_COMMANDS.GET_USER_STATUS
       });
