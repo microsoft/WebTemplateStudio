@@ -22,14 +22,14 @@ function GridComponent(props) {
       <Card>
         <CardMedia
           className={classes.cardMedia}
-          image={props.Asset.image}
+          image={props.image}
           title="Image title"
         />
         <CardContent>
           <Typography gutterBottom variant="h5">
-            {props.Asset.header}
+            {props.header}
           </Typography>
-          <Typography>{props.Asset.description}</Typography>
+          <Typography>{props.description}</Typography>
         </CardContent>
         <Divider />
         <CardActions>
