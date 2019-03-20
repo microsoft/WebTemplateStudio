@@ -10,7 +10,7 @@ server/node_modules
 # vscode configuration
 .vscode/
 
-# config file
+# Hide API Keys
 .env
 
 # production

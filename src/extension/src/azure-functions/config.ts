@@ -6,6 +6,7 @@ export interface Config {
   baseNodeFunctionPath: string;
   baseNodeFunctionConfigPath: string;
   appNodeSettingsPath: string;
+  storageNameSuffix: string;
 }
 
 export const config: Config = {
@@ -15,5 +16,6 @@ export const config: Config = {
   functionTemplatesRelativePath: "/src/azure-functions/templates",
   baseNodeFunctionPath: "/base/node/index.js",
   baseNodeFunctionConfigPath: "/base/node/function.json",
-  appNodeSettingsPath: "/app/node"
+  appNodeSettingsPath: "/app/node",
+  storageNameSuffix: "wtsazfunctions"
 };
