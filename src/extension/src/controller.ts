@@ -297,18 +297,15 @@ export abstract class Controller {
     /*
      * example:
      *   {
-     *       command: 'deploy-functions'
-     *       selections: {
-     *           appName: "YOUR_FUNCTION_APP_NAME",
-     *           subscription: "YOUR_SUBSCRIPTION_LABEL",
-     *           location: "West US",
-     *           runtime: "node",
-     *           resourceGroup: "YOUR_RESOURCE_GROUP",
-     *           functionNames: ["function1", "function2", "function3"]
-     *       }
+     *       appName: "YOUR_FUNCTION_APP_NAME",
+     *       subscription: "YOUR_SUBSCRIPTION_LABEL",
+     *       location: "West US",
+     *       runtime: "node",
+     *       resourceGroup: "YOUR_RESOURCE_GROUP",
+     *       functionNames: ["function1", "function2", "function3"]
      *   }
      */
-    Controller.deployFunctionApp(funcPayload.selections, genPath)
+    Controller.deployFunctionApp(funcPayload, genPath)
       .then(() => {
         Controller.handleValidMessage(ExtensionCommand.DeployFunctions, {
           succeeded: true
@@ -328,14 +325,11 @@ export abstract class Controller {
     /*
      * example:
      *   {
-     *       command: 'deploy-cosmos'
-     *       selections: {
-     *           api: "MongoDB",
-     *           accountName: "YOUR_ACCOUNT_NAME",
-     *           location: "West US",
-     *           subscription: "YOUR_SUBSCRIPTION_LABEL",
-     *           resourceGroup: "YOUR_RESOURCE_GROUP"
-     *       }
+     *       api: "MongoDB",
+     *       accountName: "YOUR_ACCOUNT_NAME",
+     *       location: "West US",
+     *       subscription: "YOUR_SUBSCRIPTION_LABEL",
+     *       resourceGroup: "YOUR_RESOURCE_GROUP"
      *   }
      */
     Controller.deployCosmosResource(cosmosPayload, genPath)
@@ -438,7 +432,7 @@ export abstract class Controller {
         Controller.usersFunctionSubscriptionItemCache
       ),
       location: selections.location,
-      runtime: selections.runtime,
+      runtime: selections.runtimeStack,
       functionNames: selections.functionNames
     };
 

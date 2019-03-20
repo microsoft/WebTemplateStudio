@@ -36,7 +36,7 @@ export const CONSTANTS = {
   },
   FUNCTIONS_CONFIG: {
     MAX_NAME_LEN: 60,
-    MIN_NAME_LEN: 0
+    MIN_NAME_LEN: 1
   },
   API: {
     WINDOWS_PLATFORM_VERSION: "win32",
