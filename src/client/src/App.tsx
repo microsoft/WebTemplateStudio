@@ -113,12 +113,12 @@ class App extends React.Component<Props> {
     });
   }
 
-  public componentDidUpdate(prevProps: any) {
-    if (this.props.vscode !== prevProps.vscode) {
-      this.props.vscode.postMessage({
-        command: EXTENSION_COMMANDS.GET_USER_STATUS
-      });
-    }
+  public componentDidUpdate(prevProps: Props) {
+      if (this.props.vscode !== prevProps.vscode) {
+        this.props.vscode.postMessage({
+          command: EXTENSION_COMMANDS.GET_USER_STATUS
+        });
+      }
   }
 
   public render() {
@@ -181,11 +181,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   }
 });
 
-const mapStateToProps = (state: any): IStateProps => {
-  return {
+const mapStateToProps = (state: any): IStateProps => ({
     vscode: state.vscode.vscodeObject
-  };
-};
+});
 
 export default connect(
   mapStateToProps,
