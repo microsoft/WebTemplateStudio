@@ -49,7 +49,8 @@ const EXTENSION_COMMANDS = {
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
   SUBSCRIPTION_DATA: "subscriptionData",
-  GENERATE: "generate"
+  GENERATE: "generate",
+  PROJECT_PATH_VALIDATION: "validatePath"
 }
 
 export { PRODUCTION, EXTENSION_COMMANDS, ROUTES, ROUTES_ARRAY, SERVICE_KEYS, WIZARD_CONTENT_INTERNAL_NAMES };

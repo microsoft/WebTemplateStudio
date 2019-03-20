@@ -49,13 +49,13 @@ type Props = IDispatchProps & IStateProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => {},
-    loadWizardContent: () => {},
-    logIntoAzure: () => {},
-    saveSubscriptionData: () => {},
-    updateOutputPath: () => {},
-    setCosmosResourceAccountNameAvailability: () => {},
-    setAppNameAvailability: () => {},
+    getVSCodeApi: () => { },
+    loadWizardContent: () => { },
+    logIntoAzure: () => { },
+    saveSubscriptionData: () => { },
+    updateOutputPath: () => { },
+    setCosmosResourceAccountNameAvailability: () => { },
+    setAppNameAvailability: () => { },
     setPathAvailability: () => { }
   };
 
@@ -112,6 +112,10 @@ class App extends React.Component<Props> {
             isAvailable: message.payload.isAvailable,
             message: message.message
           });
+          return;
+        case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
+          this.props.setPathAvailability(message.payload.pathAvailability);
+          return;
       }
     });
   }

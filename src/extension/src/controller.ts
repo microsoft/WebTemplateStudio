@@ -315,9 +315,11 @@ export abstract class Controller {
       // Send error to wizard, do not do anything
       Controller.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.ValidateOutputPath,
-        pathAvailability: {
-          isAvailable: isAvailable,
-          error: error
+        payload: {
+            pathAvailability: {
+            isAvailable: isAvailable,
+            error: error
+          }
         }
       });
     }
