@@ -17,7 +17,7 @@ export const CONSTANTS = {
       "CosmosDBDeploy: GetConnectionString Failed to create Client with SubscriptionItem - ",
     RUNTIME_NOT_IMPLEMENTED: "Runtime not implemented yet",
     FUNCTIONS_NO_DUPLICATES: "No duplicates allowed for function names",
-    FUNCTIONS_INVALID_NAME: function (name: string) {
+    FUNCTIONS_INVALID_NAME: (name: string) => {
       return `Invalid function name ${name}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters`;
     },
     EMPTY_OUTPUT_PATH: "Output Path cannot be empty.",
@@ -75,5 +75,6 @@ export enum ExtensionCommand {
   GetOutputPath = "getOutputPath",
   GetFunctionsRuntimes = "getFunctionsRuntimes",
   GetCosmosAPIs = "getCosmosAPIs",
-  GetUserStatus = "getUserStatus"
+  GetUserStatus = "getUserStatus",
+  ValidateOutputPath = "validatePath"
 }
