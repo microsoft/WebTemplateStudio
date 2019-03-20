@@ -78,6 +78,12 @@ class index extends Component {
 
   render() {
     const { classes } = this.props;
+    const {
+      masterDetailText,
+      displayTab,
+      WarningMessageOpen,
+      WarningMessageText
+    } = this.state;
     return (
       <div className={classes.root}>
         <Drawer
@@ -89,7 +95,7 @@ class index extends Component {
         >
           <div className={classes.toolbar} />
           <List>
-            {this.state.masterDetailText.map((textAssets, index) => (
+            {masterDetailText.map((textAssets, index) => (
               <ListItem
                 button
                 onClick={() => this.handleClick(index)}
@@ -102,13 +108,13 @@ class index extends Component {
         </Drawer>
         <Grid container justify="flex-start" alignItems="flex-start">
           <MasterDetailPage
-            textAssets={this.state.masterDetailText[this.state.displayTab]}
+            textAssets={masterDetailText[displayTab]}
             image={defaultImage}
           />
         </Grid>
         <WarningMessage
-          open={this.state.WarningMessageOpen}
-          text={this.state.WarningMessageText}
+          open={WarningMessageOpen}
+          text={WarningMessageText}
           onWarningClose={this.handleWarningClose}
         />
       </div>
