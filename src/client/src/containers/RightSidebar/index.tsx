@@ -4,7 +4,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
-import { arrayMove, SortableContainer, SortableElement } from "react-sortable-hoc";
+import { arrayMove } from "react-sortable-hoc";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
@@ -17,10 +17,8 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
 import { ROUTES } from "../../utils/constants";
-import getSvgUrl from "../../utils/getSvgUrl";
 
 import cancel from "../../assets/cancel.svg";
-import reorder from "../../assets/reorder.svg";
 
 import { selectPagesAction } from "../../actions/selectPages";
 import { ISelected } from "../../types/selected";
@@ -64,9 +62,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     selectWebApp: () => {},
     selectPages: () => {}
   };
-  public state = {
-    items: ["Item 1", "Item 2", "Item 3"]
-  }
   public handleChange(
     e: IDropDownOptionType,
     selectOption: (item: ISelected) => void
@@ -120,22 +115,28 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const componentsToRender = [];
     if (!_.isEmpty(selected)) {
       for (const app of selected) {
-        const appComponent = <DraggableSidebarItem
-          key={serviceName}
-          text={app.accountName}
-          closeSvgUrl={`${
-            process.env.REACT_APP_RELATIVE_PATH
-          }${cancel}`}
-          itemTitle="CosmosDB"
-        />
+        const appComponent = (
+          <DraggableSidebarItem
+            key={serviceName}
+            text={app.accountName}
+            closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`}
+            itemTitle="CosmosDB"
+          />
+        );
         componentsToRender.push(appComponent);
       }
     }
     return componentsToRender;
   }
-  public onSortEnd = ({oldIndex, newIndex}: {oldIndex: number, newIndex: number}) => {
-    this.setState(({items}) => ({
-      items: arrayMove(items, oldIndex, newIndex),
+  public onSortEnd = ({
+    oldIndex,
+    newIndex
+  }: {
+    oldIndex: number;
+    newIndex: number;
+  }) => {
+    this.setState(({ items }) => ({
+      items: arrayMove(items, oldIndex, newIndex)
     }));
   };
   public render() {
@@ -190,19 +191,25 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
 }
 
 const mapStateToProps = (state: any): IRightSidebarProps => ({
-    selection: state.selection,
-    projectTypeDropdownItems: convertOptionsToDropdownItems(state.wizardContent.projectTypes),
-    frontendDropdownItems: convertOptionsToDropdownItems(state.wizardContent.frontendOptions),
-    backendDropdownItems: convertOptionsToDropdownItems(state.wizardContent.backendOptions),
-    services: getServicesSelector(state)
+  selection: state.selection,
+  projectTypeDropdownItems: convertOptionsToDropdownItems(
+    state.wizardContent.projectTypes
+  ),
+  frontendDropdownItems: convertOptionsToDropdownItems(
+    state.wizardContent.frontendOptions
+  ),
+  backendDropdownItems: convertOptionsToDropdownItems(
+    state.wizardContent.backendOptions
+  ),
+  services: getServicesSelector(state)
 });
 
 function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
   const dropDownItems = [];
   for (const option of options) {
-    if (option.unselectable) { 
+    if (option.unselectable) {
       continue;
-    };
+    }
     const dropdownItem = convertOptionToDropdownItem(option);
     dropDownItems.push(dropdownItem);
   }
