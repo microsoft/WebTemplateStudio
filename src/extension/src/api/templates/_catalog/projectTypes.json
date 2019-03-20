@@ -8,15 +8,5 @@
     "licenses": "",
     "platforms": [ "Web" ],
     "languages": [ "Any" ]
-  },
-  {
-    "name": "RestAPI",
-    "displayName": "Restful API",
-    "summary": "A Restful API is a collection of endpoints connected to a database implemented in a backend framework such as Node.JS",
-    "author": "Microsoft",
-    "order": "2",
-    "licenses": "",
-    "platforms": [ "Web" ],
-    "languages": [ "Any" ]
   }
 ]
