@@ -104,7 +104,7 @@ export abstract class Controller {
     Controller.Telemetry = new TelemetryAI(context, startTime);
   }
   public static handleTelemetry(payload : any): any {
-    Controller.Telemetry.callFunctionsAndSendResult(payload.pageName, async function (this: IActionContext): Promise<void> {
+    Controller.Telemetry.runHandleAndSendResult(payload.pageName, async function (this: IActionContext): Promise<void> {
     });
   };
   
@@ -202,7 +202,8 @@ export abstract class Controller {
   }
 
   public static performLogin(message: any) {
-    Controller.Telemetry.callFunctionsAndSendResult(ExtensionCommand.Login, async function (this: IActionContext): Promise<void> {
+    Controller.Telemetry.runHandleAndSendResult(ExtensionCommand.Login, async function (this: IActionContext): Promise<void> {
+
       AzureAuth.login()
       .then(res => {
         const email = AzureAuth.getEmail();
@@ -226,12 +227,13 @@ export abstract class Controller {
       .catch(err => {
         vscode.window.showErrorMessage(err);
       });
+
     });
-    
   }
 
   public static sendSubscriptionsToClient(message: any) {
-    Controller.Telemetry.callFunctionsAndSendResult(TelemetryEventName.Subscriptions, async function (this: IActionContext): Promise<void> {
+    Controller.Telemetry.runHandleAndSendResult(TelemetryEventName.Subscriptions, async function (this: IActionContext): Promise<void> {
+      
       Controller.getSubscriptions()
       .then(subscriptions => {
         Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
@@ -241,11 +243,13 @@ export abstract class Controller {
       .catch((err: Error) => {
         Controller.handleErrorMessage(ExtensionCommand.Subscriptions, err);
       });
+
     });
   }
 
   public static sendSubscriptionDataToClient(message: any) {
-    Controller.Telemetry.callFunctionsAndSendResult(TelemetryEventName.SubscriptionData, async function (this: IActionContext): Promise<void> {
+    Controller.Telemetry.runHandleAndSendResult(TelemetryEventName.SubscriptionData, async function (this: IActionContext): Promise<void> {
+      
       Controller.getSubscriptionData(message.subscription)
       .then(subscriptionDatapackage => {
         Controller.handleValidMessage(ExtensionCommand.SubscriptionData, {
@@ -256,6 +260,7 @@ export abstract class Controller {
       .catch((err: Error) => {
         Controller.handleErrorMessage(ExtensionCommand.SubscriptionData, err);
       });
+
     });
   }
 
@@ -290,6 +295,7 @@ export abstract class Controller {
   public static async handleGeneratePayloadFromClient(
     message: any
   ): Promise<any> {
+    Controller.Telemetry.trackWizardTimeToGenerate();
     var payload = message.payload;
     var enginePayload: any = payload.engine;
     await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
@@ -297,18 +303,23 @@ export abstract class Controller {
     );
 
     if (payload.selectedFunctions) {
-      Controller.processFunctionDeploymentAndSendStatusToClient(
-        payload.functions,
-        enginePayload.path
-      );
+      Controller.Telemetry.runHandleAndSendResult(payload.pageName, async function (this: IActionContext): Promise<void> {
+        Controller.processFunctionDeploymentAndSendStatusToClient(
+          payload.functions,
+          enginePayload.path
+        );
+      });
+      
     }
 
     if (payload.selectedCosmos) {
-      var cosmosPayload: any = payload.cosmos;
-      await Controller.processCosmosDeploymentAndSendStatusToClient(
-        cosmosPayload,
-        enginePayload.path
-      );
+      Controller.Telemetry.runHandleAndSendResult(payload.pageName, async function (this: IActionContext): Promise<void> {
+        var cosmosPayload: any = payload.cosmos;
+        await Controller.processCosmosDeploymentAndSendStatusToClient(
+          cosmosPayload,
+          enginePayload.path
+        );
+      });
     }
   }
 

@@ -76,7 +76,7 @@ export enum TelemetryEventName{
   Login = "Login Time",
   Subscriptions = "Acquire Subscription",
   SubscriptionData = "Acquire Subscription Data",
-  Subscriptions2 = "subscriptions"
+  EngineGeneration = "Engine Generation Time"
 }
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 export namespace DialogResponses {

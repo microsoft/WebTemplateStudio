@@ -41,7 +41,7 @@ export class TelemetryAI {
         TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, properties, measurement)
     }
 
-    public async callFunctionsAndSendResult<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{
+    public async runHandleAndSendResult<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{
         return await callWithTelemetryAndErrorHandling(callbackId,callback, TelemetryAI.telemetryReporter);
     }
 }
