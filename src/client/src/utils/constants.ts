@@ -45,6 +45,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
 
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
+  GET_USER_STATUS: "getUserStatus",
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
   SUBSCRIPTION_DATA: "subscriptionData"

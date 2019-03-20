@@ -39,7 +39,11 @@ interface IDispatchProps {
   setAppNameAvailability: (isAvailableObject: any) => any;
 }
 
-type Props = IDispatchProps;
+interface IStateProps {
+  vscode: any;
+}
+
+type Props = IDispatchProps & IStateProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
@@ -109,6 +113,14 @@ class App extends React.Component<Props> {
     });
   }
 
+  public componentDidUpdate(prevProps: any){
+    if(this.props.vscode !== prevProps.vscode){
+      this.props.vscode.postMessage({
+        command: EXTENSION_COMMANDS.GET_USER_STATUS
+      });
+    }
+  }
+
   public render() {
     return (
       <Router>
@@ -169,7 +181,13 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   }
 });
 
+const mapStateToProps = (state: any): IStateProps => {
+  return {
+    vscode: state.vscode.vscodeObject
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App);
