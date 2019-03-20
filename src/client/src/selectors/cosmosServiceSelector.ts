@@ -1,29 +1,31 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
+import { ISelectedCosmosService } from "../reducers/wizardSelectionReducers/services/cosmosDbReducer";
 
-//FIXME: Define the "Type" for the services selection
+interface ISelectedDropdowns {
+    subscription?: IDropDownOptionType;
+    resourceGroup?: IDropDownOptionType;
+    appName?: IDropDownOptionType;
+    runtimeStack?: IDropDownOptionType;
+    location?: IDropDownOptionType;
+    numFunctions?: IDropDownOptionType;
+}
+
+interface ISelectionInformation { 
+    dropdownSelection: ISelectedDropdowns
+    previousFormData: ISelectedCosmosService
+}
 const getServicesSelector = (state: any): object => state.selection.services;
-const areServicesSelectedSelector = (services: any): boolean => {
-    return !_.isEmpty(services);
+const isCosmosDbSelected = (services: any): boolean => {
+    return !_.isEmpty(services.cosmosDB.selection);
 }
-const isCosmosDbSelected = (services: any, areServicesSelected: boolean): boolean => {
-    if (areServicesSelected) {
-        return _.has(services, "cosmosOptions");
-    }
-    return false;
-}
-
 const isCosmosResourceCreatedSelector = createSelector(
     getServicesSelector,
-    areServicesSelectedSelector,
     isCosmosDbSelected
 )
-
 const getCosmosDbOptions = (services: any, isCosmosSelected: boolean): any => {
     if (isCosmosSelected) {
-        return services.cosmosOptions;
-    } else {
-        return {};
+        return services.cosmosDB;
     }
 }
 const getCosmosDbSelectionSelector = createSelector(
@@ -31,5 +33,37 @@ const getCosmosDbSelectionSelector = createSelector(
     isCosmosResourceCreatedSelector,
     getCosmosDbOptions
 )
+/**
+ * Returns the CosmosDB selection made by a developer.
+ * Returns undefined if a selection was not made.
+ * Currently, only one Cosmos Resource can be added, hence
+ * the hardcoded value of 0 index.
+ * 
+ * @param services An object of all the services available in Project Acorn
+ */
+const getCosmosSelectionInDropdownForm = (services: any): any => {
+    const { selection } = services.selection.services.cosmosDB;
+    if (!_.isEmpty(selection)) {
+        const selectionInformation: ISelectionInformation = {
+            dropdownSelection: {},
+            previousFormData: selection[0]
+        };
+        for (const selectionKey in selection[0]) {
+            if (selectionKey) {
+                // @ts-ignore to allow dynamic key selection
+                selectionInformation.dropdownSelection[selectionKey] = {
+                    value: selection[0][selectionKey],
+                    label: selection[0][selectionKey]
+                }
+            }
+        }
+        return selectionInformation;
+    }
+}
 
-export { getCosmosDbSelectionSelector, getServicesSelector, isCosmosResourceCreatedSelector };
+const getFunctionsSelection = createSelector(
+    getCosmosDbOptions,
+    getCosmosSelectionInDropdownForm
+)
+
+export { getCosmosDbSelectionSelector, getFunctionsSelection, getCosmosSelectionInDropdownForm, getServicesSelector, isCosmosResourceCreatedSelector };

@@ -1,1 +1,0 @@
-﻿Restful API project type details.

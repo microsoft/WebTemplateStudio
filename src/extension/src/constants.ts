@@ -68,5 +68,6 @@ export enum ExtensionCommand {
   Generate = "generate",
   GetOutputPath = "getOutputPath",
   GetFunctionsRuntimes = "getFunctionsRuntimes",
-  GetCosmosAPIs = "getCosmosAPIs"
+  GetCosmosAPIs = "getCosmosAPIs",
+  GetUserStatus = "getUserStatus"
 }

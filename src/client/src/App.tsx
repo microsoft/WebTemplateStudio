@@ -16,17 +16,18 @@ import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 
 import leftSidebarData from "./mockData/leftSidebarData";
-import { ROUTES } from "./utils/constants";
+import { ROUTES, EXTENSION_COMMANDS } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
 import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
-import { setAccountAvailability } from "./actions/setAccountAvailability";
+import { setAccountAvailability, setAppNameAvailabilityAction } from "./actions/setAccountAvailability";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
+import AzureFunctionsModal from "./containers/AzureFunctionsModal";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -34,19 +35,25 @@ interface IDispatchProps {
   loadWizardContent: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
   saveSubscriptionData: (subscriptionData: any) => void;
-  setCosmosResourceAccountNameAvailability: (isAvailable: any) => any;
+  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
+  setAppNameAvailability: (isAvailableObject: any) => any;
 }
 
-type Props = IDispatchProps;
+interface IStateProps {
+  vscode: any;
+}
+
+type Props = IDispatchProps & IStateProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => {},
-    loadWizardContent: () => {},
-    logIntoAzure: () => {},
-    saveSubscriptionData: () => {},
-    updateOutputPath: () => {},
-    setCosmosResourceAccountNameAvailability: () => {}
+    getVSCodeApi: () => { },
+    loadWizardContent: () => { },
+    logIntoAzure: () => { },
+    saveSubscriptionData: () => { },
+    updateOutputPath: () => { },
+    setCosmosResourceAccountNameAvailability: () => { },
+    setAppNameAvailability: () => { }
   };
 
   public componentDidMount() {
@@ -68,6 +75,7 @@ class App extends React.Component<Props> {
             );
           }
           return;
+        case EXTENSION_COMMANDS.GET_USER_STATUS:
         case "login":
           // email will be null or undefined if login didn't work correctly
           if (message.payload != null) {
@@ -77,7 +85,7 @@ class App extends React.Component<Props> {
             );
           }
           return;
-        case "subscriptionData":
+        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA:
           // Expect resource groups and locations on this request
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
@@ -87,9 +95,7 @@ class App extends React.Component<Props> {
               resourceGroups: message.payload.resourceGroups
             });
           }
-
           return;
-
         case "name-cosmos":
           // Receive input validation
           // and update redux (boolean, string)
@@ -98,8 +104,21 @@ class App extends React.Component<Props> {
             message: message.message
           });
           return;
+        case EXTENSION_COMMANDS.NAME_FUNCTIONS:
+          this.props.setAppNameAvailability({
+            isAvailable: message.payload.isAvailable,
+            message: message.message
+          });
       }
     });
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+      if (this.props.vscode !== prevProps.vscode) {
+        this.props.vscode.postMessage({
+          command: EXTENSION_COMMANDS.GET_USER_STATUS
+        });
+      }
   }
 
   public render() {
@@ -109,6 +128,7 @@ class App extends React.Component<Props> {
           <Header />
           <div className={appStyles.container}>
             <CosmosResourceModal />
+            <AzureFunctionsModal />
             <LeftSidebar sidebarItems={leftSidebarData} />
             <div className={appStyles.centerView}>
               <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
@@ -153,12 +173,19 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
   },
-  setCosmosResourceAccountNameAvailability: (isAvailable: boolean) => {
-    dispatch(setAccountAvailability(isAvailable));
+  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => {
+    dispatch(setAccountAvailability(isAvailableObject));
+  },
+  setAppNameAvailability: (isAvailableObject: any) => {
+    dispatch(setAppNameAvailabilityAction(isAvailableObject));
   }
 });
 
+const mapStateToProps = (state: any): IStateProps => ({
+    vscode: state.vscode.vscodeObject
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App);
