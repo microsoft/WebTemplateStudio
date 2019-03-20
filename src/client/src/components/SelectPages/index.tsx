@@ -30,14 +30,15 @@ type Props = IDispatchProps & ISelectPagesProps;
 
 class SelectPages extends React.Component<Props> {
   public componentDidMount() {
-    // TODO: use store to get project type next time.
-    if (this.props.getPages !== undefined) {
-      const {
-        selectedBackend,
-        selectedFrontend,
-        selectedProjectType
-      } = this.props;
-      this.props.getPages(
+    const {
+      getPages,
+      selectedBackend,
+      selectedFrontend,
+      selectedProjectType
+    } = this.props;
+
+    if (getPages !== undefined) {
+      getPages(
         selectedProjectType.internalName,
         selectedFrontend.internalName,
         selectedBackend.internalName
@@ -60,17 +61,17 @@ class SelectPages extends React.Component<Props> {
     return selectedPageIndices;
   };
   public render() {
+    const { options, selectPages, selectedPages } = this.props;
+
     return (
       <div>
-        {this.props.options.length > 0 && (
+        {options.length > 0 && (
           <SelectOption
-            selectOptions={this.props.selectPages}
+            selectOptions={selectPages}
             multiSelect={true}
-            selectedCards={this.convertSelectedPagesToIndices(
-              this.props.selectedPages
-            )}
+            selectedCards={this.convertSelectedPagesToIndices(selectedPages)}
             title="What pages do you need for your application?"
-            options={this.props.options}
+            options={options}
           />
         )}
       </div>
