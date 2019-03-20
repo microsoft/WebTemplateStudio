@@ -109,6 +109,7 @@ class App extends React.Component<Props> {
             message: message.message
           });
           return;
+
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
           this.props.setAppNameAvailability({
             isAvailable: message.payload.isAvailable,
