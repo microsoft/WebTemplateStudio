@@ -538,13 +538,20 @@ export abstract class Controller {
   private static async sendUserStatus(message: any): Promise<void> {
     try {
       const email = AzureAuth.getEmail();
-      Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
-        email: email
-      });
+      AzureAuth.getSubscriptions().then(items => {
+        const subscriptions = items.map(subscriptionItem => {
+          return {
+            label: subscriptionItem.label,
+            value: subscriptionItem.label
+          };
+        });
+        Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
+          email: email,
+          subscriptions: subscriptions
+        });
+      })
     } catch (error) {
-      Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
-        email: ""
-      });
+      Controller.handleValidMessage(ExtensionCommand.GetUserStatus, null);
     }
   }
 }
