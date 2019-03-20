@@ -69,7 +69,8 @@ export enum ExtensionCommand {
   GetOutputPath = "getOutputPath",
   HandleTelemetry = "telemetryAI",
   GetFunctionsRuntimes = "getFunctionsRuntimes",
-  GetCosmosAPIs = "getCosmosAPIs"
+  GetCosmosAPIs = "getCosmosAPIs",
+  GetUserStatus = "getUserStatus"
 }
 
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();

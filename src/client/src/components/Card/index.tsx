@@ -13,7 +13,7 @@ interface IProps {
   handleButtonClick: () => void;
   handleDetailsClick: () => void;
   svgUrl: string | undefined;
-  useNormalButtons: boolean | undefined;
+  useNormalButtons?: boolean;
 }
 
 const Card = ({
@@ -28,7 +28,7 @@ const Card = ({
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cardTitleContainer}>
-        {svgUrl != null && <img className={styles.icon} src={svgUrl} alt="icon" />}
+        {svgUrl && <img className={styles.icon} src={svgUrl} alt="icon" />}
         <div className={styles.cardTitle}>{cardTitle}</div>
       </div>
       <div className={styles.cardBody}>
@@ -47,8 +47,8 @@ const Card = ({
           className={classnames(
             styles.signInButton,
             {
-              [buttonStyles.buttonHighlighted]: useNormalButtons ? false : true,
-              [buttonStyles.buttonDark]: useNormalButtons != null
+              [buttonStyles.buttonHighlighted]: !useNormalButtons,
+              [buttonStyles.buttonDark]: useNormalButtons
             }
           )}
         >

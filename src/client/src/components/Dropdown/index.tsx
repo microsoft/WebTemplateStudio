@@ -38,6 +38,7 @@ const Dropdown = ({
       isSearchable={false}
       defaultValue={defaultValue}
       options={options}
+      menuPlacement="auto"
     />
   );
 };

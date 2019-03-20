@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
@@ -6,6 +7,7 @@ import { withRouter } from "react-router-dom";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
+import ServicesSidebarItem from "../../components/ServicesSidebarItem";
 
 import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/selectFrontEndFramework";
@@ -108,6 +110,23 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       label: option.title
     };
   }
+  public renderService(serviceName: string, selected: any) {
+    const componentsToRender = [];
+    if (!_.isEmpty(selected)) {
+      for (const app of selected) {
+        const appComponent = <DraggableSidebarItem
+          key={serviceName}
+          text={app.accountName}
+          closeSvgUrl={`${
+            process.env.REACT_APP_RELATIVE_PATH
+          }${cancel}`}
+          itemTitle="CosmosDB"
+        />
+        componentsToRender.push(appComponent);
+      }
+    }
+    return componentsToRender;
+  }
   public render() {
     const { pathname } = this.props.location;
     return (
@@ -166,30 +185,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 {/* Using a baseline of 1 for idx because !!0 === false */}
               </div>
             )}
-            {this.showServices() && Object.keys(this.props.services).length > 1 && (
+            {this.showServices() && (
               <div className={styles.sidebarItem}>
                 <div className={styles.dropdownTitle}>Services</div>
-                {Object.keys(this.props.services).map(serviceName => {
-                  // FIXME: Storing the state of the cosmos account name availability is not practicial in "services"
-                  // Better to create another object that can store these booleans for name validation.
-                  if (serviceName !== "isCosmosResourceAccountNameAvailable" && serviceName !== "message") {
-                    return (
-                      <DraggableSidebarItem
-                        key={serviceName}
-                        text={this.props.services[serviceName].api}
-                        closeSvgUrl={`${
-                          process.env.REACT_APP_RELATIVE_PATH
-                        }${cancel}`}
-                        itemTitle={
-                          serviceName === "cosmosOptions"
-                            ? "CosmosDB"
-                            : "Azure Functions"
-                        }
-                      />
-                    )
-                  }
-                })}
-                {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
+                <ServicesSidebarItem services={this.props.services} />
               </div>
             )}
           </div>
@@ -199,26 +198,16 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   }
 }
 
-const mapStateToProps = (state: any): IRightSidebarProps => {
-  // FIXME: Change this to selectors
-  const { selection } = state;
-  const { backendOptions, frontendOptions, projectTypes } = state.wizardContent;
-  const projectTypeDropdownItems = convertOptionsToDropdownItems(projectTypes);
-  const frontendDropdownItems = convertOptionsToDropdownItems(frontendOptions);
-  const backendDropdownItems = convertOptionsToDropdownItems(backendOptions);
-
-  return {
-    selection,
-    projectTypeDropdownItems,
-    frontendDropdownItems,
-    backendDropdownItems,
+const mapStateToProps = (state: any): IRightSidebarProps => ({
+    selection: state.selection,
+    projectTypeDropdownItems: convertOptionsToDropdownItems(state.wizardContent.projectTypes),
+    frontendDropdownItems: convertOptionsToDropdownItems(state.wizardContent.frontendOptions),
+    backendDropdownItems: convertOptionsToDropdownItems(state.wizardContent.backendOptions),
     services: getServicesSelector(state)
-  };
-};
+});
 
 function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
   const dropDownItems = [];
-
   for (const option of options) {
     if (option.unselectable) { 
       continue;

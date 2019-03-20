@@ -61,7 +61,8 @@ export abstract class Controller {
       Controller.handleTelemetry
     ],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
-    [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs]
+    [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
+    [ExtensionCommand.GetUserStatus, Controller.sendUserStatus]
   ]);
 
   public static sendFunctionRuntimes(message: any) {
@@ -76,7 +77,7 @@ export abstract class Controller {
     });
   }
 
-  private static routingMessageReceieverDelegate = function(message: any) {
+  private static routingMessageReceieverDelegate = function (message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -548,6 +549,19 @@ export abstract class Controller {
     ) {
       let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
       this.usersFunctionSubscriptionItemCache = subscriptionItem;
+    }
+  }
+
+  private static async sendUserStatus(message: any): Promise<void> {
+    try {
+      const email = AzureAuth.getEmail();
+      Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
+        email: email
+      });
+    } catch (error) {
+      Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
+        email: ""
+      });
     }
   }
 }
