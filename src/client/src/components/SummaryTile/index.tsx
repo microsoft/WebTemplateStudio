@@ -5,8 +5,8 @@ import styles from "./styles.module.css";
 
 import { withLocalPath } from "../../utils/getSvgUrl";
 
-import edit from "../../assets/edit.svg";
 import cancel from "../../assets/cancel.svg";
+import edit from "../../assets/edit.svg";
 
 interface IProps {
   withIndent?: boolean;

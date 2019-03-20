@@ -20,6 +20,7 @@ const ROUTES = {
 
 // Presents the routes in the order of the wizard
 const ROUTES_ARRAY = [
+  WELCOME,
   SELECT_PROJECT_TYPE,
   SELECT_FRAMEWORKS,
   SELECT_PAGES,
