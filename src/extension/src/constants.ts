@@ -32,6 +32,9 @@ export const CONSTANTS = {
   INFO: {
     COSMOS_ACCOUNT_DEPLOYED: (accountName: string) => {
       return `${accountName} has been deployed!`;
+    },
+    FUNCTION_APP_DEPLOYED: (appName: string) => {
+      return `Function App ${appName} has been deployed and is ready to use!`;
     }
   },
   FUNCTIONS_CONFIG: {

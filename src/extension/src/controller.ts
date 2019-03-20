@@ -310,8 +310,13 @@ export abstract class Controller {
         Controller.handleValidMessage(ExtensionCommand.DeployFunctions, {
           succeeded: true
         });
+
+        vscode.window.showInformationMessage(
+          CONSTANTS.INFO.FUNCTION_APP_DEPLOYED(funcPayload.appName)
+        );
       })
       .catch((err: Error) => {
+        vscode.window.showErrorMessage(err.message);
         Controller.handleErrorMessage(ExtensionCommand.DeployFunctions, err, {
           succeeded: false
         });
