@@ -92,14 +92,14 @@ export abstract class Controller {
    * Will pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public static launchWizard(context: vscode.ExtensionContext, startTime: number) {
+  public static launchWizard(context: vscode.ExtensionContext, extensionStartUpTime: number = Date.now()) {
 
     Controller.reactPanelContext = ReactPanel.createOrShow(
       context.extensionPath,
       this.routingMessageReceieverDelegate
     );
-    Controller.Telemetry = new TelemetryAI(context, startTime);
-    Controller.Telemetry.callFunctionsAndSendResult("testingFunctionWrapper",async function (this: IActionContext): Promise<void> {
+    Controller.Telemetry = new TelemetryAI(context, extensionStartUpTime);
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors("testingFunctionWrapper",async function (this: IActionContext): Promise<void> {
       this.properties.customProp = "Hello Testing";
       console.log("helloworld");
     })
