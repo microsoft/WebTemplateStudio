@@ -6,3 +6,12 @@
 .sidebarItem {
     margin: 15px;
 }
+
+.pageListContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.hideOrShow {
+    cursor: pointer;
+}
