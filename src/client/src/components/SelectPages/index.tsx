@@ -7,19 +7,43 @@ import { selectPagesAction } from "../../actions/selectPages";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
+import { getPagesOptionsAction } from "../../actions/getPagesOptions";
 
 interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
+  getPages: (
+    projectType: string,
+    frontendFramework: string,
+    backendFramework: string
+  ) => void;
 }
 
 interface ISelectPagesProps {
   options: IOption[];
+  selectedBackend: ISelected;
+  selectedFrontend: ISelected;
   selectedPages: ISelected[];
+  selectedProjectType: ISelected;
 }
 
 type Props = IDispatchProps & ISelectPagesProps;
 
 class SelectPages extends React.Component<Props> {
+  public componentDidMount() {
+    // TODO: use store to get project type next time.
+    if (this.props.getPages !== undefined) {
+      const {
+        selectedBackend,
+        selectedFrontend,
+        selectedProjectType
+      } = this.props;
+      this.props.getPages(
+        selectedProjectType.internalName,
+        selectedFrontend.internalName,
+        selectedBackend.internalName
+      );
+    }
+  }
   /**
    * Maps the selected page of the user and saves its state
    * so it can show up as a selected card
@@ -38,15 +62,17 @@ class SelectPages extends React.Component<Props> {
   public render() {
     return (
       <div>
-        <SelectOption
-          selectOptions={this.props.selectPages}
-          multiSelect={true}
-          selectedCards={this.convertSelectedPagesToIndices(
-            this.props.selectedPages
-          )}
-          title="What pages do you need for your application?"
-          options={this.props.options}
-        />
+        {this.props.options.length > 0 && (
+          <SelectOption
+            selectOptions={this.props.selectPages}
+            multiSelect={true}
+            selectedCards={this.convertSelectedPagesToIndices(
+              this.props.selectedPages
+            )}
+            title="What pages do you need for your application?"
+            options={this.props.options}
+          />
+        )}
       </div>
     );
   }
@@ -55,13 +81,29 @@ class SelectPages extends React.Component<Props> {
 const mapStateToProps = (state: any): ISelectPagesProps => {
   const { pageOptions } = state.wizardContent;
   const { pages } = state.selection;
+  const { appType } = state.selection;
+  const { frontendFramework } = state.selection;
+  const { backendFramework } = state.selection;
+
   return {
     options: pageOptions,
-    selectedPages: pages
+    selectedBackend: backendFramework,
+    selectedFrontend: frontendFramework,
+    selectedPages: pages,
+    selectedProjectType: appType
   };
 };
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  getPages: (
+    projectType: string,
+    frontendFramework: string,
+    backendFramework: string
+  ) => {
+    dispatch(
+      getPagesOptionsAction(projectType, frontendFramework, backendFramework)
+    );
+  },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
   }
