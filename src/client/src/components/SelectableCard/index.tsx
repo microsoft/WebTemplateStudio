@@ -69,8 +69,8 @@ const SelectableCard = ({
         <div
           className={classNames({
             [styles.hidden]: !selected,
-            [styles.selectedCheckMark]: selected && clickCount == null,
-            [styles.cardCount]: selected && clickCount != null
+            [styles.selectedCheckMark]: selected && !clickCount,
+            [styles.cardCount]: selected && clickCount
           })}
         >
           {clickCount ? clickCount : <img

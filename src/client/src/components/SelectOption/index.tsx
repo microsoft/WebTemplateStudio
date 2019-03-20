@@ -41,9 +41,18 @@ class SelectOption extends React.Component<
     return this.state.selectedCards.includes(cardNumber);
   }
 
-  public createCard(i: number, internalName: string, num: number, cardData: ISelected[]) {
+  public getPageTitle(i: number, num: number, count: number, cardData: ISelected[]) {
+    if (count === 1) {
+      return this.props.options[num].title;
+    } else if (i > cardData.length - 1) {
+      return `${count}-${this.props.options[num].title}`
+    }
+    return cardData[i].title;
+  }
+
+  public createdSelectedPage(i: number, count: number, internalName: string, num: number, cardData: ISelected[]) {
       const cardToConvert: ISelected = {
-        title: i > cardData.length - 1 ? `${i}-${this.props.options[num].title}` : cardData[i].title,
+        title: this.getPageTitle(i, num, count, cardData),
         internalName,
         id: `${i}-${this.props.options[num].title}`
       };
@@ -72,7 +81,7 @@ class SelectOption extends React.Component<
         cardTypeCount[internalName] += 1;
       }
       if (this.props.selectedCardData) {
-        cardTitles.push(this.createCard(i, internalName, num, this.props.selectedCardData));
+        cardTitles.push(this.createdSelectedPage(i, cardTypeCount[internalName], internalName, num, this.props.selectedCardData));
       }
     }
     return cardTitles;
