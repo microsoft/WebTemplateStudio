@@ -22,7 +22,7 @@ const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE]: blankpage
 };
 
-const withLocalPath = (absolutePath: string): string => {
+export const withLocalPath = (absolutePath: string): string => {
   return process.env.REACT_APP_RELATIVE_PATH + absolutePath;
 };
 

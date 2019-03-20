@@ -1061,6 +1061,13 @@
     "@types/react-dom" "*"
     "@types/react-transition-group" "*"
 
+"@types/react-sortable-hoc@^0.6.5":
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/@types/react-sortable-hoc/-/react-sortable-hoc-0.6.5.tgz#3f40611427b4dd1ed06f99678a5df7c0f950de29"
+  integrity sha512-0Ms36xuds/pByIQFobwlDGPaUPSF6jOZUhOqf/0SaX/ZC0z9a/vwwWigEJomTvlshyjlKwB6JXV9TK+8keXq7w==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@*":
   version "2.0.16"
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-2.0.16.tgz#2dcb9e396ab385ee19c4af1c9caa469a14cd042f"
@@ -8117,7 +8124,7 @@ prompts@^0.1.9:
     kleur "^2.0.1"
     sisteransi "^0.1.1"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -8476,6 +8483,15 @@ react-select@^2.3.0:
     raf "^3.4.0"
     react-input-autosize "^2.2.1"
     react-transition-group "^2.2.1"
+
+react-sortable-hoc@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/react-sortable-hoc/-/react-sortable-hoc-1.7.1.tgz#2d61c6003f22523ab3adfe37e69774c5d73c1ac6"
+  integrity sha512-I8X6T7n6jIc+gL65Xr56zauDvmM7mFDEyM3cuDMYWh/ZrLszm2jTxqJ+0tgmM++vh3dfXAbDd6cBfg4id5cHGQ==
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    invariant "^2.2.4"
+    prop-types "^15.5.7"
 
 react-transition-group@^2.2.1:
   version "2.5.3"
