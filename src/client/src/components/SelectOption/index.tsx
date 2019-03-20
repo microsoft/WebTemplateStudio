@@ -13,6 +13,7 @@ interface ISelectOptionProps {
   internalName?: string;
   selectCard?: (card: ISelected) => void;
   selectedCards: number[];
+  selectedCardData?: ISelected[];
   selectOptions?: (cards: ISelected[]) => void;
   options: IOption[];
   multiSelect: boolean;
@@ -26,11 +27,11 @@ class SelectOption extends React.Component<
   ISelectOptionProps,
   ISelectOptionState
 > {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      selectedCards: this.props.selectedCards || [0]
-    };
+
+  componentDidMount() {
+    this.setState({
+      selectedCards: [0],
+    });
   }
 
   public isCardSelected(cardNumber: number): boolean {
@@ -38,6 +39,18 @@ class SelectOption extends React.Component<
       return this.props.selectedCards.includes(cardNumber);
     }
     return this.state.selectedCards.includes(cardNumber);
+  }
+
+  public createCard(i: number, internalName: string, num: number, cardData: ISelected[]) {
+      const cardToConvert: ISelected = {
+        title: i > cardData.length - 1 ? `${i}-${this.props.options[num].title}` : cardData[i].title,
+        internalName,
+        id: `${i}-${this.props.options[num].title}`
+      };
+      if (this.props.options[num].hasOwnProperty("originalTitle")) {
+        cardToConvert.originalTitle = this.props.options[num].originalTitle;
+      }
+      return cardToConvert;
   }
 
   /**
@@ -49,20 +62,18 @@ class SelectOption extends React.Component<
    */
   public convertCardNumbersToTitles(cardNumbers: number[]): ISelected[] {
     const cardTitles = [];
-    for (const num of cardNumbers) {
-      // originalTitle is for page layouts.
-      const cardToConvert: {
-        title: string;
-        internalName: string;
-        originalTitle?: string;
-      } = {
-        title: this.props.options[num].title,
-        internalName: this.props.options[num].internalName
-      };
-      if (this.props.options[num].hasOwnProperty("originalTitle")) {
-        cardToConvert.originalTitle = this.props.options[num].originalTitle;
+    const cardTypeCount: {[key: string]: number} = {};
+    for (let i = 0 ; i < cardNumbers.length ; i++) {
+      const num = cardNumbers[i];
+      const { internalName } = this.props.options[num];
+      if (!cardTypeCount.hasOwnProperty(internalName)) {
+        cardTypeCount[internalName] = 1;
+      } else {
+        cardTypeCount[internalName] += 1;
       }
-      cardTitles.push(cardToConvert);
+      if (this.props.selectedCardData) {
+        cardTitles.push(this.createCard(i, internalName, num, this.props.selectedCardData));
+      }
     }
     return cardTitles;
   }
