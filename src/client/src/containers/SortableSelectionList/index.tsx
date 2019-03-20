@@ -27,6 +27,7 @@ const SortableList = SortableContainer(({pages, handleInputChange}:{pages: ISele
       {pages.map((page: any, idx: number) => {
         return (
         <SortableItem key={`item-${page.internalName + idx}`} index={idx} idx={idx} page={page} handleInputChange={handleInputChange} />)
+        // index prop required by react-sortable, while idx used for updating redux state changes
         })}
     </div>
   );
