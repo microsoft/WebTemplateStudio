@@ -27,10 +27,7 @@ class index extends Component {
       WarningMessageText: ""
     };
 
-    //Only include if list is selected and cosmos db is not selected
-    // this._id = 3;
-
-    this.endpoint = "/api/listItems";
+    this.endpoint = "/api/list";
     this.handleWarningClose = this.handleWarningClose.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -64,7 +61,6 @@ class index extends Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         text: this.state.multilineTextField
-        // _id: this._id // Only include if list is selected and cosmos db is not selected
       })
     })
       .then(response => {
@@ -85,9 +81,6 @@ class index extends Component {
           WarningMessageText: `Request to add list item failed: ${error}`
         })
       );
-
-    // Only include if list is selected and cosmos db is not selected
-    // this._id++;
   }
 
   handleChange(event, name) {

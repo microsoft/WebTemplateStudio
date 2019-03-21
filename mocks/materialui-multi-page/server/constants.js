@@ -1,6 +1,9 @@
-var constants = {};
+const CONSTANTS = {};
 
-constants.port = process.env.PORT || "3001";
-constants.endpoint = "/listItems";
+CONSTANTS.PORT = process.env.PORT || "3001";
+CONSTANTS.ENDPOINT = {};
+CONSTANTS.ENDPOINT.LIST = "/list";
+CONSTANTS.ENDPOINT.GRID = "/grid";
+CONSTANTS.ENDPOINT.MASTERDETAIL = "/masterdetail";
 
-module.exports = constants;
+module.exports = CONSTANTS;

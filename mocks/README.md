@@ -4,7 +4,7 @@ This folder is for the development of the final boiler plate code that will be g
 
 ## Developing Templates
 
-Templates are being developed using the create-react-app starter kit and express-react-starter (https://github.com/burkeholland/express-react-starter). To run for development enter a specific folder and run:
+Templates are being developed using the create-react-app starter kit and express-generator. To run for development enter a specific folder and run:
 
 ```
 yarn install

@@ -23,12 +23,14 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
+import {TelemetryAI, IActionContext} from "./telemetry/telemetryAI";
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
+  private static Telemetry: TelemetryAI;
   private static reactPanelContext: ReactPanel;
   // This will map commands from the client to functions.
   private static clientCommandMap: Map<
@@ -53,6 +55,10 @@ export abstract class Controller {
     [
       ExtensionCommand.GetOutputPath,
       Controller.sendOutputPathSelectionToClient
+    ],
+    [
+      ExtensionCommand.HandleTelemetry,
+      Controller.handleTelemetry
     ],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
     [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
@@ -81,17 +87,28 @@ export abstract class Controller {
     }
   };
 
+
   /**
    * launchWizard
    * Will pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public static launchWizard(context: vscode.ExtensionContext) {
+  public static launchWizard(context: vscode.ExtensionContext, extensionStartUpTime: number = Date.now()) {
+
     Controller.reactPanelContext = ReactPanel.createOrShow(
       context.extensionPath,
       this.routingMessageReceieverDelegate
     );
+    Controller.Telemetry = new TelemetryAI(context, extensionStartUpTime);
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors("testingFunctionWrapper",async function (this: IActionContext): Promise<void> {
+      this.properties.customProp = "Hello Testing";
+      console.log("helloworld");
+    })
   }
+  // TODO: To minimize PR size, this will be edited in next PR; branch: t-trngo/telemetryIntegrationInController
+  public static handleTelemetry(payload : any): any {
+  //   Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
+  };
 
   /**
    * Returns an array of Subscription Items when the user is logged in
@@ -303,24 +320,26 @@ export abstract class Controller {
     /*
      * example:
      *   {
-     *       command: 'deploy-functions'
-     *       selections: {
-     *           appName: "YOUR_FUNCTION_APP_NAME",
-     *           subscription: "YOUR_SUBSCRIPTION_LABEL",
-     *           location: "West US",
-     *           runtime: "node",
-     *           resourceGroup: "YOUR_RESOURCE_GROUP",
-     *           functionNames: ["function1", "function2", "function3"]
-     *       }
+     *       appName: "YOUR_FUNCTION_APP_NAME",
+     *       subscription: "YOUR_SUBSCRIPTION_LABEL",
+     *       location: "West US",
+     *       runtime: "node",
+     *       resourceGroup: "YOUR_RESOURCE_GROUP",
+     *       functionNames: ["function1", "function2", "function3"]
      *   }
      */
-    Controller.deployFunctionApp(funcPayload.selections, genPath)
+    Controller.deployFunctionApp(funcPayload, genPath)
       .then(() => {
         Controller.handleValidMessage(ExtensionCommand.DeployFunctions, {
           succeeded: true
         });
+
+        vscode.window.showInformationMessage(
+          CONSTANTS.INFO.FUNCTION_APP_DEPLOYED(funcPayload.appName)
+        );
       })
       .catch((err: Error) => {
+        vscode.window.showErrorMessage(err.message);
         Controller.handleErrorMessage(ExtensionCommand.DeployFunctions, err, {
           succeeded: false
         });
@@ -334,14 +353,11 @@ export abstract class Controller {
     /*
      * example:
      *   {
-     *       command: 'deploy-cosmos'
-     *       selections: {
-     *           api: "MongoDB",
-     *           accountName: "YOUR_ACCOUNT_NAME",
-     *           location: "West US",
-     *           subscription: "YOUR_SUBSCRIPTION_LABEL",
-     *           resourceGroup: "YOUR_RESOURCE_GROUP"
-     *       }
+     *       api: "MongoDB",
+     *       accountName: "YOUR_ACCOUNT_NAME",
+     *       location: "West US",
+     *       subscription: "YOUR_SUBSCRIPTION_LABEL",
+     *       resourceGroup: "YOUR_RESOURCE_GROUP"
      *   }
      */
     return Controller.deployCosmosResource(cosmosPayload, genPath)
@@ -414,7 +430,7 @@ export abstract class Controller {
 
     return this.AzureCosmosDBProvider.validateCosmosDBAccountName(
       cosmosDBAccountName,
-      this.usersCosmosDBSubscriptionItemCache
+      Controller.usersCosmosDBSubscriptionItemCache
     )
       .then(message => {
         if (message === undefined || message === null || message === "") {
@@ -442,7 +458,7 @@ export abstract class Controller {
         Controller.usersFunctionSubscriptionItemCache
       ),
       location: selections.location,
-      runtime: selections.runtime,
+      runtime: selections.runtimeStack,
       functionNames: selections.functionNames
     };
 
