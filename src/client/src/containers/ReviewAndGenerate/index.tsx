@@ -2,14 +2,22 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import SummarySection from "../../components/SummarySection";
+import ProjectNameAndOutput from "../ProjectNameAndOutput";
 import SortablePageList from "../SortablePageList";
 
+import * as ModalActions from "../../actions/modalActions";
 import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 
 import styles from "./styles.module.css";
 
 import { RowType } from "../../types/rowType";
-import ProjectNameAndOutput from "../ProjectNameAndOutput";
+
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+
+interface IDispatchProps {
+  openCosmosDbModal: () => any;
+  openAzureFunctionsModal: () => any;
+}
 
 interface IStateProps {
   projectTypeRows: RowType[];
@@ -20,7 +28,7 @@ interface IStateProps {
   validation: any;
 }
 
-type Props = IStateProps;
+type Props = IStateProps & IDispatchProps;
 
 const ReviewAndGenerate = (props: Props) => {
   const {
@@ -30,6 +38,11 @@ const ReviewAndGenerate = (props: Props) => {
     pagesRows,
     frameworkRows
   } = props;
+  const modalOpeners = {
+    [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: props.openCosmosDbModal,
+    [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]:
+      props.openAzureFunctionsModal
+  };
   return (
     <div className={styles.container}>
       <div className={styles.title}>5. Review and Generate Template</div>
@@ -52,10 +65,20 @@ const ReviewAndGenerate = (props: Props) => {
       <SummarySection
         selectionTitle="5. Services"
         selectionRows={servicesRows}
+        modalOpeners={modalOpeners}
       />
     </div>
   );
 };
+
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  openCosmosDbModal: () => {
+    dispatch(ModalActions.openCosmosDbModalAction());
+  },
+  openAzureFunctionsModal: () => {
+    dispatch(ModalActions.openAzureFunctionsModalAction());
+  }
+});
 
 const mapStateToProps = (state: any): IStateProps => ({
   projectTypeRows: WizardSelectors.getProjectTypeRowItemSelector(state),
@@ -66,4 +89,7 @@ const mapStateToProps = (state: any): IStateProps => ({
   validation: state.selection.validation
 });
 
-export default connect(mapStateToProps)(ReviewAndGenerate);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReviewAndGenerate);

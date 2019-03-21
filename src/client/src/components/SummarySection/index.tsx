@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 
 import SummaryTile from "../SummaryTile";
 
-import { RowType } from "../../types/rowType";
-
 import styles from "./styles.module.css";
+
 import { IFunctionApp } from "../../containers/AzureFunctionsSelection";
+import { RowType } from "../../types/rowType";
 
 import * as AzureFunctionActions from "../../actions/azureFunctionActions";
 
@@ -14,6 +14,7 @@ interface IProps {
   selectionTitle: string;
   selectionRows: RowType[];
   isEditable?: boolean;
+  modalOpeners?: { [key: string]: () => any };
 }
 
 interface IStateProps {
@@ -33,7 +34,8 @@ const SummarySection = ({
   isEditable,
   removeAzureFunction,
   updateFunctionNames,
-  functionApps
+  functionApps,
+  modalOpeners
 }: Props) => {
   const handleAzureFuncNameChange = (newTitle: string, idx: number) => {
     const { functionNames } = functionApps.selection[0];
@@ -53,7 +55,7 @@ const SummarySection = ({
     svgUrl?: string,
     company?: string,
     originalTitle?: string,
-    isEditable?: boolean,
+    canEdit?: boolean,
     withIndent?: boolean,
     handleCloseClick?: (idx: number) => any,
     handleInputChange?: (newTitle: string, idx: number) => any,
@@ -67,7 +69,7 @@ const SummarySection = ({
           svgUrl={svgUrl}
           company={company}
           originalTitle={originalTitle}
-          isEditable={isEditable}
+          isEditable={canEdit}
           withIndent={withIndent}
           handleCloseClick={handleCloseClick}
           handleInputChange={handleInputChange}
@@ -81,6 +83,16 @@ const SummarySection = ({
       <div className={styles.selectionTitle}>{selectionTitle}</div>
       {selectionRows.map(selection => (
         <React.Fragment>
+          {modalOpeners && selection.internalName && (
+            <div className={styles.headerContainer}>
+              <div
+                className={styles.editButton}
+                onClick={modalOpeners[selection.internalName]}
+              >
+                Edit Resource
+              </div>
+            </div>
+          )}
           {renderTile(
             selection.title,
             selection.svgUrl,
