@@ -10,7 +10,8 @@ const getPagesOptionsAction = (
   backendFramework: string
 ) => {
   return async (dispatch: any) => {
-    const api = new EngineAPIService("5000", undefined);
+    const port = "5000";
+    const api = new EngineAPIService(port, undefined);
 
     try {
       const pagesJson = await api.getPages(
