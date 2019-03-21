@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
       () => {
         apiProcess = ApiModule.StartApi(context);
         console.log(apiProcess.pid);
-        Controller.launchWizard(context);
+        Controller.launchWizard(context, Date.now());
       }
     )
   );
