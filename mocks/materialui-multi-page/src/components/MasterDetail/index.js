@@ -30,8 +30,7 @@ class index extends Component {
     super(props);
 
     this.state = {
-      // The index of the current tab being displayed
-      displayTab: 0,
+      currentDisplayTabIndex: 0,
       masterDetailText: [
         {
           paragraph: "",
@@ -54,7 +53,7 @@ class index extends Component {
   }
 
   handleDisplayTabClick(id) {
-    this.setState({ displayTab: id });
+    this.setState({ currentDisplayTabIndex: id });
   }
 
   // Get the text assets from the back end
@@ -81,7 +80,7 @@ class index extends Component {
     const { classes } = this.props;
     const {
       masterDetailText,
-      displayTab,
+      currentDisplayTabIndex,
       WarningMessageOpen,
       WarningMessageText
     } = this.state;
@@ -109,7 +108,7 @@ class index extends Component {
         </Drawer>
         <Grid container justify="flex-start" alignItems="flex-start">
           <MasterDetailPage
-            textAssets={masterDetailText[displayTab]}
+            textAssets={masterDetailText[currentDisplayTabIndex]}
             image={defaultImage}
           />
         </Grid>
