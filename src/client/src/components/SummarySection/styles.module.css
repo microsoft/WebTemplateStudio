@@ -9,3 +9,13 @@
 .selectionTitle {
     font-size: 18px;
 }
+
+.headerContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 34px;
+}
+
+.editButton {
+    cursor: pointer;
+}
