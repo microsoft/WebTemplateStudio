@@ -11,7 +11,6 @@ import { ISelected } from "../../types/selected";
 const SortableItem = SortableElement(({page, idx, handleInputChange}: {page: any, idx: number, handleInputChange: any}) => {
     return (
     <DraggableSidebarItem
-        key={`ditem-${page.internalName}-${idx}`}
         page={page}
         closeSvgUrl={withLocalPath(cancel)}
         pageSvgUrl={getSvgUrl(page.internalName)}
@@ -26,8 +25,10 @@ const SortableList = SortableContainer(({pages, handleInputChange}:{pages: ISele
     <div>
       {pages.map((page: any, idx: number) => {
         return (
-        <SortableItem key={`pageItem-${page.id + idx}`} index={idx} idx={idx} page={page} handleInputChange={handleInputChange} />)
-        })}
+        <SortableItem key={page.id} index={idx} idx={idx} page={page} handleInputChange={handleInputChange} />)
+        })
+        // index prop required by react-sortable, while idx used for updating redux state changes
+      }
     </div>
   );
 });

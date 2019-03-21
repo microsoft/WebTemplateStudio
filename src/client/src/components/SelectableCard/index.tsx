@@ -73,7 +73,7 @@ const SelectableCard = ({
             [styles.cardCount]: selected && clickCount
           })}
         >
-          {clickCount ? clickCount : <img
+          {clickCount || <img
             src={process.env.REACT_APP_RELATIVE_PATH + Check}
             className={styles.iconCheckMark}
           />}

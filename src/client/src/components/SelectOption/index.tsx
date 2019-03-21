@@ -13,7 +13,7 @@ interface ISelectOptionProps {
   internalName?: string;
   selectCard?: (card: ISelected) => void;
   selectedCards: number[];
-  selectedCardData?: ISelected[];
+  currentCardData?: ISelected[];
   selectOptions?: (cards: ISelected[]) => void;
   options: IOption[];
   multiSelect: boolean;
@@ -41,25 +41,35 @@ class SelectOption extends React.Component<
     return this.state.selectedCards.includes(cardNumber);
   }
 
-  public getPageTitle(i: number, num: number, count: number, cardData: ISelected[]) {
+  /**
+   * Creates a title for the card being selected (e.g. selected Page).
+   * Prepends a number of a certain card is selected more than once.
+   * Only changes the title of the last card selected.
+   * 
+   * @param selectedCardIndex 
+   * @param optionIndexContainingData 
+   * @param count 
+   * @param cardData 
+   */
+  public createTitle(selectedCardIndex: number, optionIndexContainingData: number, count: number, cardData: ISelected[]) {
     if (count === 1) {
-      return this.props.options[num].title;
-    } else if (i > cardData.length - 1) {
-      return `${count}-${this.props.options[num].title}`
+      return this.props.options[optionIndexContainingData].title;
+    } else if (selectedCardIndex > cardData.length - 1) {
+      return `${count}-${this.props.options[optionIndexContainingData].title}`
     }
-    return cardData[i].title;
+    return cardData[selectedCardIndex].title;
   }
 
-  public createdSelectedPage(i: number, count: number, internalName: string, num: number, cardData: ISelected[]) {
-      const cardToConvert: ISelected = {
-        title: this.getPageTitle(i, num, count, cardData),
+  public mapIndexToCardInfo(selectedCardIndex: number, count: number, internalName: string, num: number, currentCardData: ISelected[]) {
+      const { originalTitle } = this.props.options[num];
+      const title = this.createTitle(selectedCardIndex, num, count, currentCardData);
+      const cardInfo: ISelected = {
+        title,
         internalName,
-        id: `${i}-${this.props.options[num].title}`
+        id: title,
+        originalTitle
       };
-      if (this.props.options[num].hasOwnProperty("originalTitle")) {
-        cardToConvert.originalTitle = this.props.options[num].originalTitle;
-      }
-      return cardToConvert;
+      return cardInfo;
   }
 
   /**
@@ -69,22 +79,19 @@ class SelectOption extends React.Component<
    *
    * @param cardNumbers
    */
-  public convertCardNumbersToTitles(cardNumbers: number[]): ISelected[] {
-    const cardTitles = [];
+  public convertCardNumbersToTitles(selectedCardIndices: number[]): ISelected[] {
+    const selectedCardsWithInfo = [];
     const cardTypeCount: {[key: string]: number} = {};
-    for (let i = 0 ; i < cardNumbers.length ; i++) {
-      const num = cardNumbers[i];
-      const { internalName } = this.props.options[num];
-      if (!cardTypeCount.hasOwnProperty(internalName)) {
-        cardTypeCount[internalName] = 1;
-      } else {
-        cardTypeCount[internalName] += 1;
-      }
-      if (this.props.selectedCardData) {
-        cardTitles.push(this.createdSelectedPage(i, cardTypeCount[internalName], internalName, num, this.props.selectedCardData));
+    const { currentCardData, options } = this.props;
+    for (let selectedCardIndex = 0 ; selectedCardIndex < selectedCardIndices.length ; selectedCardIndex++) {
+      const optionIndexContainingData = selectedCardIndices[selectedCardIndex];
+      const { internalName } = options[optionIndexContainingData];
+      cardTypeCount[internalName] = cardTypeCount[internalName] ? cardTypeCount[internalName] + 1 : 1;
+      if (currentCardData) {
+        selectedCardsWithInfo.push(this.mapIndexToCardInfo(selectedCardIndex, cardTypeCount[internalName], internalName, optionIndexContainingData, currentCardData));
       }
     }
-    return cardTitles;
+    return selectedCardsWithInfo;
   }
 
   /**
@@ -135,18 +142,18 @@ class SelectOption extends React.Component<
   }
 
   /**
-   * If this is a card that can be selected many times, this function returns
-   * the number of times that a particular card was selected/clicked on.
+   * Returns the number of times that a particular card was selected/clicked on.
    * 
    * If card can only be clicked once, this function returns undefined.
    */
-  public getNumber = (internalName: string) => {
-    if (this.props.selectedCards && this.props.multiSelect) {
-      return this.props.selectedCards.reduce((accum: number, card: number) => {
-        if (this.props.options[card].internalName === internalName) {
-          return accum + 1;
+  public getCardCount = (internalName: string) => {
+    const { selectedCards, multiSelect, options } = this.props;
+    if (selectedCards && multiSelect) {
+      return selectedCards.reduce((cardCount: number, card: number) => {
+        if (options[card].internalName === internalName) {
+          return cardCount + 1;
         }
-        return accum;
+        return cardCount;
       }, 0);
     }
   }
@@ -169,7 +176,7 @@ class SelectOption extends React.Component<
               title={option.title}
               body={option.body}
               disabled={option.unselectable}
-              clickCount={this.getNumber(option.internalName)}
+              clickCount={this.getCardCount(option.internalName)}
             />
           ))}
         </div>

@@ -50,10 +50,11 @@ class SelectPages extends React.Component<Props> {
    * so it can show up as a selected card
    */
   public convertSelectedPagesToIndices = (pages: ISelected[]): number[] => {
+    const { options }= this.props;
     const selectedPageIndices = [];
     for (let i = 0; i < pages.length; i++) {
-      for (let j = 0; j < this.props.options.length; j++) {
-        if (pages[i].internalName === this.props.options[j].internalName) {
+      for (let j = 0; j < options.length; j++) {
+        if (pages[i].internalName === options[j].internalName) {
           selectedPageIndices.push(j);
         }
       }
