@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -80,19 +81,27 @@ const SummarySection = ({
   };
   return (
     <div className={styles.selectionContainer}>
-      <div className={styles.selectionTitle}>{selectionTitle}</div>
-      {selectionRows.map(selection => (
+      {selectionRows.map((selection: RowType, idx: number) => (
         <React.Fragment>
-          {modalOpeners && selection.internalName && (
-            <div className={styles.headerContainer}>
+          <div
+            className={classnames({
+              [styles.headerContainer]: idx === 0,
+              [styles.headerContainerRest]: idx > 0
+            })}
+          >
+            {idx === 0 && (
+              <div className={styles.selectionTitle}>{selectionTitle}</div>
+            )}
+            {modalOpeners && selection.internalName && (
               <div
                 className={styles.editButton}
                 onClick={modalOpeners[selection.internalName]}
               >
                 Edit Resource
               </div>
-            </div>
-          )}
+            )}
+          </div>
+
           {renderTile(
             selection.title,
             selection.svgUrl,

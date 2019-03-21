@@ -10,10 +10,18 @@
     font-size: 18px;
 }
 
+.headerContainerRest,
 .headerContainer {
     display: flex;
-    justify-content: flex-end;
     margin-right: 34px;
+}
+
+.headerContainer {
+    justify-content: space-between;
+}
+
+.headerContainerRest {
+    justify-content: flex-end;
 }
 
 .editButton {
