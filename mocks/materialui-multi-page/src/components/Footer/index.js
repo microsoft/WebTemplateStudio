@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./footer.module.css";
-import classnames from "classnames";
 
 export default function index() {
   return (
@@ -20,7 +19,7 @@ export default function index() {
               <li>
                 <a
                   className={styles.footerlink}
-                  href="https://getbootstrap.com/"
+                  href="https://github.com/Microsoft/WebTemplateStudio"
                 >
                   Github Page
                 </a>
@@ -28,7 +27,7 @@ export default function index() {
               <li>
                 <a
                   className={styles.footerlink}
-                  href="https://getbootstrap.com/"
+                  href="https://github.com/Microsoft/WebTemplateStudio/tree/dev/docs"
                 >
                   Resources
                 </a>
