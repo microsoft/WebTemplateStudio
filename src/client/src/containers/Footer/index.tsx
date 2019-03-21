@@ -11,8 +11,14 @@ import { ROUTES } from "../../utils/constants";
 
 import { IVSCode } from "../../reducers/vscodeApiReducer";
 import { rootSelector } from "../../selectors/generationSelector";
-import { getCosmosDbSelectionSelector, isCosmosResourceCreatedSelector } from "../../selectors/cosmosServiceSelector";
-import { getAzureFunctionsOptionsSelector, isAzureFunctionsSelected } from "../../selectors/azureFunctionsServiceSelector";
+import {
+  getCosmosDbSelectionSelector,
+  isCosmosResourceCreatedSelector
+} from "../../selectors/cosmosServiceSelector";
+import {
+  getAzureFunctionsOptionsSelector,
+  isAzureFunctionsSelected
+} from "../../selectors/azureFunctionsServiceSelector";
 
 interface IStateProps {
   vscode?: IVSCode;
@@ -41,7 +47,13 @@ const pathsBack: any = {
 
 class Footer extends React.Component<Props> {
   public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { engine, selectedCosmos, cosmos, selectedFunctions, functions } = this.props;
+    const {
+      engine,
+      selectedCosmos,
+      cosmos,
+      selectedFunctions,
+      functions
+    } = this.props;
     e.preventDefault();
     // @ts-ignore
     this.props.vscode.postMessage({
@@ -52,7 +64,7 @@ class Footer extends React.Component<Props> {
         selectedCosmos,
         cosmos,
         selectedFunctions,
-        functions,
+        functions
       }
     });
   };
@@ -82,7 +94,9 @@ class Footer extends React.Component<Props> {
                   [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
                 })}
                 to={
-                  pathname === ROUTES.REVIEW_AND_GENERATE ? ROUTES.REVIEW_AND_GENERATE : pathsNext[pathname]
+                  pathname === ROUTES.REVIEW_AND_GENERATE
+                    ? ROUTES.REVIEW_AND_GENERATE
+                    : pathsNext[pathname]
                 }
               >
                 Next

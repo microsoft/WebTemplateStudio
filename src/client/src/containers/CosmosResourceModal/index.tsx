@@ -11,16 +11,17 @@ import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions";
 import { saveCosmosDbSettingsAction } from "../../actions/saveCosmosDbSettings";
-import {
-  azureModalInitialState as cosmosInitialState
-} from "../../mockData/cosmosDbModalData";
+import { azureModalInitialState as cosmosInitialState } from "../../mockData/cosmosDbModalData";
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { ReactComponent as GreenCheck} from "../../assets/checkgreen.svg";
+import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { EXTENSION_COMMANDS, WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import {
+  EXTENSION_COMMANDS,
+  WIZARD_CONTENT_INTERNAL_NAMES
+} from "../../utils/constants";
 import styles from "./styles.module.css";
 import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
 
@@ -54,14 +55,14 @@ const FORM_CONSTANTS = {
   RESOURCE_GROUP: "resourceGroup",
   API: "api",
   LOCATION: "location"
-}
+};
 
 const CosmosResourceModal = (props: Props) => {
   const [cosmosData, setData] = React.useState(cosmosInitialState);
   /**
    * Second parameter of useEffect is [] which tells React to
    * run this effect when mounting the component.
-   * 
+   *
    * Hardcoding a "MongoDB" value until data can be loaded dynamically
    */
   React.useEffect(() => {
@@ -92,7 +93,7 @@ const CosmosResourceModal = (props: Props) => {
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION) {
       // Get resource Group and locations and set the dropdown options to them
       props.vscode.postMessage({
-        command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA,
+        command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
         subscription: value
       });
     }
@@ -105,18 +106,18 @@ const CosmosResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-      props.vscode.postMessage({
-        command: EXTENSION_COMMANDS.NAME_COSMOS,
-        appName: cosmosFormData.accountName,
-        subscription: cosmosFormData.subscription
-      });
+    props.vscode.postMessage({
+      command: EXTENSION_COMMANDS.NAME_COSMOS,
+      appName: cosmosFormData.accountName,
+      subscription: cosmosFormData.subscription
+    });
   }, [cosmosFormData.accountName, props.selection]);
   React.useEffect(() => {
     if (props.selection) {
       const { previousFormData } = props.selection;
       updateForm(previousFormData);
     }
-  }, [])
+  }, []);
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
@@ -131,10 +132,16 @@ const CosmosResourceModal = (props: Props) => {
   };
   const handleAddResource = () => {
     if (isAccountNameAvailable) {
-      props.saveCosmosOptions(cosmosFormData); 
+      props.saveCosmosOptions(cosmosFormData);
     }
-  }
-  const getDropdownSection = (leftHeader: string, options: any, formSectionId: string, rightHeader?: string, defaultValue?: any) => {
+  };
+  const getDropdownSection = (
+    leftHeader: string,
+    options: any,
+    formSectionId: string,
+    rightHeader?: string,
+    defaultValue?: any
+  ) => {
     return (
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
@@ -146,10 +153,15 @@ const CosmosResourceModal = (props: Props) => {
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
           }}
-          defaultValue={props.selection ? props.selection.dropdownSelection[formSectionId] : defaultValue}
+          defaultValue={
+            props.selection
+              ? props.selection.dropdownSelection[formSectionId]
+              : defaultValue
+          }
         />
-      </div>)
-  }
+      </div>
+    );
+  };
   const { isAccountNameAvailable } = props.accountNameAvailability;
   return (
     <div>
@@ -157,12 +169,26 @@ const CosmosResourceModal = (props: Props) => {
         <div className={styles.modalTitle}>Create Cosmos DB Account</div>
         <Cancel className={styles.icon} onClick={props.closeModal} />
       </div>
-      {getDropdownSection("Subscription", cosmosData.subscription, FORM_CONSTANTS.SUBSCRIPTION, "Create new")}
-      {getDropdownSection("Resource Group", cosmosData.resourceGroup, FORM_CONSTANTS.RESOURCE_GROUP, "Create new")}
-      <div className={classnames({
-        [styles.selectionInputContainer]: !isAccountNameAvailable && cosmosFormData.accountName.length > 0,
-        [styles.selectionContainer]: (isAccountNameAvailable || cosmosFormData.accountName.length === 0)
-        })}>
+      {getDropdownSection(
+        "Subscription",
+        cosmosData.subscription,
+        FORM_CONSTANTS.SUBSCRIPTION,
+        "Create new"
+      )}
+      {getDropdownSection(
+        "Resource Group",
+        cosmosData.resourceGroup,
+        FORM_CONSTANTS.RESOURCE_GROUP,
+        "Create new"
+      )}
+      <div
+        className={classnames({
+          [styles.selectionInputContainer]:
+            !isAccountNameAvailable && cosmosFormData.accountName.length > 0,
+          [styles.selectionContainer]:
+            isAccountNameAvailable || cosmosFormData.accountName.length === 0
+        })}
+      >
         <div className={styles.selectionHeaderContainer}>
           <div>Account Name</div>
           <a
@@ -172,16 +198,37 @@ const CosmosResourceModal = (props: Props) => {
             documents.azure.com
           </a>
         </div>
-        <div className={classnames(styles.inputContainer, {
-            [styles.borderRed]: !isAccountNameAvailable && cosmosFormData.accountName.length > 0
-          })}>
-          <input className={styles.input} onChange={handleInput} value={cosmosFormData.accountName} placeholder="Account Name" />
-          {isAccountNameAvailable && <GreenCheck className={styles.validationIcon} />}
+        <div
+          className={classnames(styles.inputContainer, {
+            [styles.borderRed]:
+              !isAccountNameAvailable && cosmosFormData.accountName.length > 0
+          })}
+        >
+          <input
+            className={styles.input}
+            onChange={handleInput}
+            value={cosmosFormData.accountName}
+            placeholder="Account Name"
+          />
+          {isAccountNameAvailable && (
+            <GreenCheck className={styles.validationIcon} />
+          )}
         </div>
-        {!isAccountNameAvailable && cosmosFormData.accountName.length > 0 && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}>{props.accountNameAvailability.message}</div>}
+        {!isAccountNameAvailable && cosmosFormData.accountName.length > 0 && (
+          <div
+            style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}
+          >
+            {props.accountNameAvailability.message}
+          </div>
+        )}
       </div>
       {getDropdownSection("API", cosmosData.api, FORM_CONSTANTS.API, undefined)}
-      {getDropdownSection("Location", cosmosData.location, FORM_CONSTANTS.LOCATION, undefined)}
+      {getDropdownSection(
+        "Location",
+        cosmosData.location,
+        FORM_CONSTANTS.LOCATION,
+        undefined
+      )}
       <div className={styles.buttonContainer}>
         <button
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
@@ -195,12 +242,13 @@ const CosmosResourceModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => ({
-    isModalOpen: isCosmosDbModalOpenSelector(state),
-    vscode: state.vscode.vscodeObject,
-    subscriptionData: state.azureProfileData.subscriptionData,
-    subscriptions: state.azureProfileData.profileData.subscriptions,
-    accountNameAvailability: state.selection.services.cosmosDB.accountNameAvailability,
-    selection: getCosmosSelectionInDropdownForm(state),
+  isModalOpen: isCosmosDbModalOpenSelector(state),
+  vscode: state.vscode.vscodeObject,
+  subscriptionData: state.azureProfileData.subscriptionData,
+  subscriptions: state.azureProfileData.profileData.subscriptions,
+  accountNameAvailability:
+    state.selection.services.cosmosDB.accountNameAvailability,
+  selection: getCosmosSelectionInDropdownForm(state)
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({

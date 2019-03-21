@@ -1,9 +1,10 @@
 import * as vscode from "vscode";
-import { CONSTANTS, ExtensionCommand } from "./constants";
+import { CONSTANTS, ExtensionCommand, AzureResourceType } from "./constants";
 import {
   AzureAuth,
   SubscriptionItem,
-  ResourceGroupItem
+  ResourceGroupItem,
+  LocationItem
 } from "./azure-auth/azureAuth";
 import {
   SubscriptionError,
@@ -23,7 +24,7 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
-import {TelemetryAI, IActionContext} from "./telemetry/telemetryAI";
+import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -33,6 +34,7 @@ export abstract class Controller {
   private static Telemetry: TelemetryAI;
   private static reactPanelContext: ReactPanel;
   // This will map commands from the client to functions.
+
   private static clientCommandMap: Map<
     ExtensionCommand,
     (message: any) => void
@@ -40,8 +42,12 @@ export abstract class Controller {
     [ExtensionCommand.Login, Controller.performLogin],
     [ExtensionCommand.Subscriptions, Controller.sendSubscriptionsToClient],
     [
-      ExtensionCommand.SubscriptionData,
-      Controller.sendSubscriptionDataToClient
+      ExtensionCommand.SubscriptionDataForCosmos,
+      Controller.sendCosmosSubscriptionDataToClient
+    ],
+    [
+      ExtensionCommand.SubscriptionDataForFunctions,
+      Controller.sendFunctionsSubscriptionDataToClient
     ],
     [
       ExtensionCommand.NameFunctions,
@@ -56,10 +62,7 @@ export abstract class Controller {
       ExtensionCommand.GetOutputPath,
       Controller.sendOutputPathSelectionToClient
     ],
-    [
-      ExtensionCommand.HandleTelemetry,
-      Controller.handleTelemetry
-    ],
+    [ExtensionCommand.HandleTelemetry, Controller.handleTelemetry],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
     [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
     [ExtensionCommand.GetUserStatus, Controller.sendUserStatus]
@@ -77,7 +80,7 @@ export abstract class Controller {
     });
   }
 
-  private static routingMessageReceieverDelegate = function (message: any) {
+  private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -87,28 +90,32 @@ export abstract class Controller {
     }
   };
 
-
   /**
    * launchWizard
    * Will pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public static launchWizard(context: vscode.ExtensionContext, extensionStartUpTime: number = Date.now()) {
-
+  public static launchWizard(
+    context: vscode.ExtensionContext,
+    extensionStartUpTime: number = Date.now()
+  ) {
     Controller.reactPanelContext = ReactPanel.createOrShow(
       context.extensionPath,
       this.routingMessageReceieverDelegate
     );
     Controller.Telemetry = new TelemetryAI(context, extensionStartUpTime);
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors("testingFunctionWrapper",async function (this: IActionContext): Promise<void> {
-      this.properties.customProp = "Hello Testing";
-      console.log("helloworld");
-    })
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      "testingFunctionWrapper",
+      async function(this: IActionContext): Promise<void> {
+        this.properties.customProp = "Hello Testing";
+        console.log("helloworld");
+      }
+    );
   }
   // TODO: To minimize PR size, this will be edited in next PR; branch: t-trngo/telemetryIntegrationInController
-  public static handleTelemetry(payload : any): any {
-  //   Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
-  };
+  public static handleTelemetry(payload: any): any {
+    //   Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
+  }
 
   /**
    * Returns an array of Subscription Items when the user is logged in
@@ -124,7 +131,10 @@ export abstract class Controller {
    * @returns a Json object of Formatted Resource and Location strings
    *
    * */
-  public static async getSubscriptionData(subscriptionLabel: string) {
+  public static async getSubscriptionData(
+    subscriptionLabel: string,
+    AzureType: AzureResourceType
+  ) {
     let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
     let resourceGroupItems = this.getResourceGroups(subscriptionItem).then(
       resourceGroups => {
@@ -141,26 +151,35 @@ export abstract class Controller {
         return formatResourceGroupList;
       }
     );
-    let locationItems = this.getLocations(subscriptionItem).then(locations => {
-      // Format
-      let formatLocationList = [];
-      formatLocationList.push(
-        ...locations.map(location => {
-          return {
-            label: location.locationDisplayName,
-            value: location.locationDisplayName
-          };
-        })
-      );
-      return formatLocationList;
-    });
+
+    var locationItems: LocationItem[] = [];
+
+    switch (AzureType) {
+      case AzureResourceType.Cosmos:
+        locationItems = await this.getLocationsForCosmos(subscriptionItem);
+        break;
+      case AzureResourceType.Functions:
+        locationItems = await this.getLocationsForFunctions(subscriptionItem);
+        break;
+    }
+
+    let locations = [];
+    locations.push(
+      ...locationItems.map(location => {
+        return {
+          label: location.locationDisplayName,
+          value: location.locationDisplayName
+        };
+      })
+    );
 
     // Parallel setup
     return {
       resourceGroups: await resourceGroupItems,
-      locations: await locationItems
+      locations: locations
     };
   }
+
   /**
    * @param SubscriptionItem subscription item interface implementation
    * @returns a list of Resource Group Items
@@ -169,13 +188,27 @@ export abstract class Controller {
   private static async getResourceGroups(subscriptionItem: SubscriptionItem) {
     return AzureAuth.getResourceGroupItems(subscriptionItem);
   }
+
   /**
    * @param SubscriptionItem subscription item interface implementation
-   * @returns a list of Location Items
+   * @returns a list of Location Items For Azure Functions
    *
    * */
-  private static async getLocations(subscriptionItem: SubscriptionItem) {
-    return AzureAuth.getLocations(subscriptionItem);
+  private static async getLocationsForFunctions(
+    subscriptionItem: SubscriptionItem
+  ) {
+    return AzureAuth.getLocationsForFunctions(subscriptionItem);
+  }
+
+  /**
+   * @param SubscriptionItem subscription item interface implementation
+   * @returns a list of Location Items For Azure Cosmos
+   *
+   * */
+  private static async getLocationsForCosmos(
+    subscriptionItem: SubscriptionItem
+  ) {
+    return AzureAuth.getLocationsForCosmos(subscriptionItem);
   }
 
   public static async validateFunctionAppName(
@@ -242,16 +275,47 @@ export abstract class Controller {
       });
   }
 
-  public static sendSubscriptionDataToClient(message: any) {
-    Controller.getSubscriptionData(message.subscription)
+  public static sendCosmosSubscriptionDataToClient(message: any) {
+    Controller.getSubscriptionData(
+      message.subscription,
+      AzureResourceType.Cosmos
+    )
       .then(subscriptionDatapackage => {
-        Controller.handleValidMessage(ExtensionCommand.SubscriptionData, {
-          resourceGroups: subscriptionDatapackage.resourceGroups,
-          locations: subscriptionDatapackage.locations
-        });
+        Controller.handleValidMessage(
+          ExtensionCommand.SubscriptionDataForCosmos,
+          {
+            resourceGroups: subscriptionDatapackage.resourceGroups,
+            locations: subscriptionDatapackage.locations
+          }
+        );
       })
       .catch((err: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.SubscriptionData, err);
+        Controller.handleErrorMessage(
+          ExtensionCommand.SubscriptionDataForCosmos,
+          err
+        );
+      });
+  }
+
+  public static sendFunctionsSubscriptionDataToClient(message: any) {
+    Controller.getSubscriptionData(
+      message.subscription,
+      AzureResourceType.Functions
+    )
+      .then(subscriptionDatapackage => {
+        Controller.handleValidMessage(
+          ExtensionCommand.SubscriptionDataForFunctions,
+          {
+            resourceGroups: subscriptionDatapackage.resourceGroups,
+            locations: subscriptionDatapackage.locations
+          }
+        );
+      })
+      .catch((err: Error) => {
+        Controller.handleErrorMessage(
+          ExtensionCommand.SubscriptionDataForFunctions,
+          err
+        );
       });
   }
 
@@ -565,7 +629,7 @@ export abstract class Controller {
           email: email,
           subscriptions: subscriptions
         });
-      })
+      });
     } catch (error) {
       Controller.handleValidMessage(ExtensionCommand.GetUserStatus, null);
     }

@@ -23,7 +23,7 @@ interface IVSCodeAPI {
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
  * in development environment.
- * 
+ *
  * Mimics VSCode API by using native postMessage API to mimic postMessage from
  * VSCode.
  */
@@ -38,7 +38,7 @@ const mockVsCodeApi = () => ({
         window.postMessage({
           command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
           payload: {
-            isAvailable: message.appName.length > 0,
+            isAvailable: message.appName.length > 0
           },
           message: "in development, no error message",
           errorType: "in development, no error type"
@@ -49,16 +49,27 @@ const mockVsCodeApi = () => ({
         window.postMessage({
           command: EXTENSION_COMMANDS.NAME_COSMOS,
           payload: {
-            isAvailable: message.appName.length > 0,
+            isAvailable: message.appName.length > 0
           },
           message: "in development, no error message",
           errorType: "in development, no error type"
         });
         break;
-      case EXTENSION_COMMANDS.SUBSCRIPTION_DATA:
+      case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
         // @ts-ignore produces locations and resource groups in development
         window.postMessage({
-          command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA,
+          command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
+          payload: {
+            locations: [{ label: "WEST US", value: "WEST US" }],
+            resourceGroups: [
+              { label: "resourceGroupMock", value: "resourceGroupMock" }
+            ]
+          }
+        });
+      case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
+        // @ts-ignore produces locations and resource groups in development
+        window.postMessage({
+          command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
           payload: {
             locations: [{ label: "WEST US", value: "WEST US" }],
             resourceGroups: [
@@ -87,8 +98,8 @@ function vscodeApi(
         newState.vscodeObject =
           process.env.NODE_ENV === PRODUCTION
             ? //
-            // @ts-ignore because function does not exist in dev environment
-            acquireVsCodeApi()
+              // @ts-ignore because function does not exist in dev environment
+              acquireVsCodeApi()
             : mockVsCodeApi();
         return newState;
       }
