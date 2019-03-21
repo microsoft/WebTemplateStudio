@@ -17,7 +17,7 @@ import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import { CONSTANTS } from "../constants";
 import fs = require('fs');
-var Url = require('url-parse');
+const Url = require('url-parse');
 
 export interface CosmosDBSelections {
   cosmosDBResourceName: string;
@@ -276,8 +276,7 @@ export class CosmosDBDeploy {
   private setCosmosClient(userSubscriptionItem: SubscriptionItem): void {
     if (
       this.SubscriptionItemCosmosClient === undefined ||
-      this.SubscriptionItemCosmosClient.subscriptionId !==
-      userSubscriptionItem.subscriptionId
+      this.SubscriptionItemCosmosClient.subscriptionId !== userSubscriptionItem.subscriptionId
     ) {
       this.SubscriptionItemCosmosClient = this.createCosmosClient(
         userSubscriptionItem
@@ -395,12 +394,11 @@ export class CosmosDBDeploy {
      * @filePath: path of .env file
      */
     const cosmosConnectionString = Url(connectionString);
-    const envContent = CONSTANTS.ENV(cosmosConnectionString.username, cosmosConnectionString.password, cosmosConnectionString.origin);
-    const path = filePath + "\\.env";
+    const cosmosEnvironmentVariables = CONSTANTS.CONNECTION_STRING(cosmosConnectionString.username, cosmosConnectionString.password, cosmosConnectionString.origin);
+    const path = filePath + "/" + ".env";
     try {
       if (fs.existsSync(filePath)) {
-        // file exists
-        fs.writeFileSync(path, envContent);
+        fs.writeFileSync(path, cosmosEnvironmentVariables);
       }
     }
     catch (err) {

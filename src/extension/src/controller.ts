@@ -285,9 +285,8 @@ export abstract class Controller {
     if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
       var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(cosmosPayload, enginePayload.path);
-      //call .env replace
       await vscode.window
-        .showInformationMessage('Replace your connection string in the .env file with the generated DB connection string?', ...['Yes', 'No'])
+        .showInformationMessage('Replace your DB connection string in the .env file with the generated CosmosDB connection string?', ...['Yes', 'No'])
         .then(selection => {
           if (selection === "Yes") {
             CosmosDBDeploy.updateConnectionStringInEnvFile(enginePayload.path, dbobject.connectionString);
