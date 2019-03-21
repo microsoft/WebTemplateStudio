@@ -7,13 +7,13 @@
 var app = require("./app");
 var debug = require("debug")("WebTemplateStudioExpress:server");
 var http = require("http");
-var constants = require("./constants");
+var CONSTANTS = require("./constants");
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(constants.port);
+var port = normalizePort(CONSTANTS.PORT);
 app.set("port", port);
 
 /**
