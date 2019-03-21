@@ -11,6 +11,12 @@ import { EXTENSION_COMMANDS } from "../utils/constants";
 }
 */
 
+const WEST_US: string = "WEST US";
+const RESOURCE_GROUP_MOCK: string = "resourceGroupMock";
+
+const DEV_NO_ERROR_MSG: string = "in development, no error message";
+const DEV_NO_ERROR_TYPE: string = "in development, no error type";
+
 export interface IVSCode {
   vscode: IVSCodeAPI;
 }
@@ -40,8 +46,8 @@ const mockVsCodeApi = () => ({
           payload: {
             isAvailable: message.appName.length > 0
           },
-          message: "in development, no error message",
-          errorType: "in development, no error type"
+          message: DEV_NO_ERROR_MSG,
+          errorType: DEV_NO_ERROR_TYPE
         });
         break;
       case EXTENSION_COMMANDS.NAME_COSMOS:
@@ -51,8 +57,8 @@ const mockVsCodeApi = () => ({
           payload: {
             isAvailable: message.appName.length > 0
           },
-          message: "in development, no error message",
-          errorType: "in development, no error type"
+          message: DEV_NO_ERROR_MSG,
+          errorType: DEV_NO_ERROR_TYPE
         });
         break;
       case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
@@ -60,9 +66,9 @@ const mockVsCodeApi = () => ({
         window.postMessage({
           command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
           payload: {
-            locations: [{ label: "WEST US", value: "WEST US" }],
+            locations: [{ label: WEST_US, value: WEST_US }],
             resourceGroups: [
-              { label: "resourceGroupMock", value: "resourceGroupMock" }
+              { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK }
             ]
           }
         });
@@ -71,9 +77,9 @@ const mockVsCodeApi = () => ({
         window.postMessage({
           command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
           payload: {
-            locations: [{ label: "WEST US", value: "WEST US" }],
+            locations: [{ label: WEST_US, value: WEST_US }],
             resourceGroups: [
-              { label: "resourceGroupMock", value: "resourceGroupMock" }
+              { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK }
             ]
           }
         });

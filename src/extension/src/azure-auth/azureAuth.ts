@@ -6,6 +6,12 @@ import { ResourceManagementClient } from "../../node_modules/azure-arm-resource/
 import { AuthorizationError } from "../errors";
 import { CONSTANTS } from "../constants";
 
+const MICROSOFT_DOCUMENT_DB_PROVIDER: string = "Microsoft.DocumentDb";
+const MICROSOFT_WEB_PROVIDER: string = "Microsoft.Web";
+
+const WEB_RESOURCE_SITES = "sites";
+const DOCUMENT_DB_RESOURCE_ACCOUNTS = "databaseAccounts";
+
 export interface SubscriptionItem {
   label: string;
   subscriptionId: string;
@@ -139,7 +145,7 @@ export abstract class AzureAuth {
     let bLocations: string[] = b.map(element => element.locationDisplayName);
 
     aLocations
-      .filter(value => -1 !== bLocations.indexOf(value))
+      .filter(value => bLocations.indexOf(value) !== -1)
       .map(location =>
         resultLocationItem.push({ locationDisplayName: location })
       );
@@ -150,6 +156,10 @@ export abstract class AzureAuth {
   public static async getLocationsForCosmos(
     subscriptionItem: SubscriptionItem
   ): Promise<LocationItem[]> {
+    if (subscriptionItem === null || subscriptionItem === undefined) {
+      return Promise.reject(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
+    }
+
     this.initializeLocations(subscriptionItem);
     let azureResourceClient: ResourceManagementClient = new ResourceManagementClient(
       subscriptionItem.session.credentials,
@@ -158,11 +168,11 @@ export abstract class AzureAuth {
     let cosmosLocations: LocationItem[] = [];
 
     let documentDBProvider = await azureResourceClient.providers.get(
-      "Microsoft.DocumentDb"
+      MICROSOFT_DOCUMENT_DB_PROVIDER
     );
 
     let databaseAccounts = documentDBProvider!.resourceTypes!.find(element => {
-      return element.resourceType === "databaseAccounts";
+      return element.resourceType === DOCUMENT_DB_RESOURCE_ACCOUNTS;
     });
 
     databaseAccounts!.locations!.forEach(element => {
@@ -179,6 +189,10 @@ export abstract class AzureAuth {
   public static async getLocationsForFunctions(
     subscriptionItem: SubscriptionItem
   ): Promise<LocationItem[]> {
+    if (subscriptionItem === null || subscriptionItem === undefined) {
+      return Promise.reject(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
+    }
+
     this.initializeLocations(subscriptionItem);
     let azureResourceClient: ResourceManagementClient = new ResourceManagementClient(
       subscriptionItem.session.credentials,
@@ -186,10 +200,12 @@ export abstract class AzureAuth {
     );
     let functionsLocations: LocationItem[] = [];
 
-    let webProvider = await azureResourceClient.providers.get("Microsoft.Web");
+    let webProvider = await azureResourceClient.providers.get(
+      MICROSOFT_WEB_PROVIDER
+    );
 
     let sites = webProvider!.resourceTypes!.find(element => {
-      return element.resourceType === "sites";
+      return element.resourceType === WEB_RESOURCE_SITES;
     });
 
     sites!.locations!.forEach(element => {

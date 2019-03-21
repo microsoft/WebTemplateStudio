@@ -156,10 +156,12 @@ export abstract class Controller {
 
     switch (AzureType) {
       case AzureResourceType.Cosmos:
-        locationItems = await this.getLocationsForCosmos(subscriptionItem);
+        locationItems = await AzureAuth.getLocationsForCosmos(subscriptionItem);
         break;
       case AzureResourceType.Functions:
-        locationItems = await this.getLocationsForFunctions(subscriptionItem);
+        locationItems = await AzureAuth.getLocationsForFunctions(
+          subscriptionItem
+        );
         break;
     }
 
@@ -189,28 +191,6 @@ export abstract class Controller {
     return AzureAuth.getResourceGroupItems(subscriptionItem);
   }
 
-  /**
-   * @param SubscriptionItem subscription item interface implementation
-   * @returns a list of Location Items For Azure Functions
-   *
-   * */
-  private static async getLocationsForFunctions(
-    subscriptionItem: SubscriptionItem
-  ) {
-    return AzureAuth.getLocationsForFunctions(subscriptionItem);
-  }
-
-  /**
-   * @param SubscriptionItem subscription item interface implementation
-   * @returns a list of Location Items For Azure Cosmos
-   *
-   * */
-  private static async getLocationsForCosmos(
-    subscriptionItem: SubscriptionItem
-  ) {
-    return AzureAuth.getLocationsForCosmos(subscriptionItem);
-  }
-
   public static async validateFunctionAppName(
     functionAppName: string,
     subscriptionLabel: string
@@ -232,8 +212,8 @@ export abstract class Controller {
           );
         }
       })
-      .catch(err => {
-        throw err;
+      .catch(error => {
+        throw error;
       });
   }
 
@@ -254,12 +234,12 @@ export abstract class Controller {
               subscriptions: subscriptions
             });
           })
-          .catch((err: Error) => {
-            Controller.handleErrorMessage(ExtensionCommand.Login, err);
+          .catch((error: Error) => {
+            Controller.handleErrorMessage(ExtensionCommand.Login, error);
           });
       })
-      .catch(err => {
-        vscode.window.showErrorMessage(err);
+      .catch(error => {
+        vscode.window.showErrorMessage(error);
       });
   }
 
@@ -270,8 +250,8 @@ export abstract class Controller {
           subscriptions: subscriptions
         });
       })
-      .catch((err: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.Subscriptions, err);
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(ExtensionCommand.Subscriptions, error);
       });
   }
 
@@ -289,10 +269,10 @@ export abstract class Controller {
           }
         );
       })
-      .catch((err: Error) => {
+      .catch((error: Error) => {
         Controller.handleErrorMessage(
           ExtensionCommand.SubscriptionDataForCosmos,
-          err
+          error
         );
       });
   }
@@ -311,10 +291,10 @@ export abstract class Controller {
           }
         );
       })
-      .catch((err: Error) => {
+      .catch((error: Error) => {
         Controller.handleErrorMessage(
           ExtensionCommand.SubscriptionDataForFunctions,
-          err
+          error
         );
       });
   }
@@ -326,8 +306,8 @@ export abstract class Controller {
           isAvailable: true
         });
       })
-      .catch((err: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameFunctions, err, {
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(ExtensionCommand.NameFunctions, error, {
           isAvailable: false
         });
       });
@@ -340,8 +320,8 @@ export abstract class Controller {
           isAvailable: true
         });
       })
-      .catch((err: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameCosmos, err, {
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(ExtensionCommand.NameCosmos, error, {
           isAvailable: false
         });
       });
@@ -397,9 +377,9 @@ export abstract class Controller {
           CONSTANTS.INFO.FUNCTION_APP_DEPLOYED(funcPayload.appName)
         );
       })
-      .catch((err: Error) => {
-        vscode.window.showErrorMessage(err.message);
-        Controller.handleErrorMessage(ExtensionCommand.DeployFunctions, err, {
+      .catch((error: Error) => {
+        vscode.window.showErrorMessage(error.message);
+        Controller.handleErrorMessage(ExtensionCommand.DeployFunctions, error, {
           succeeded: false
         });
       });
@@ -429,9 +409,9 @@ export abstract class Controller {
           CONSTANTS.INFO.COSMOS_ACCOUNT_DEPLOYED(cosmosPayload.accountName)
         );
       })
-      .catch((err: Error) => {
-        vscode.window.showErrorMessage(err.message);
-        Controller.handleErrorMessage(ExtensionCommand.DeployCosmos, err);
+      .catch((error: Error) => {
+        vscode.window.showErrorMessage(error.message);
+        Controller.handleErrorMessage(ExtensionCommand.DeployCosmos, error);
       });
   }
 
@@ -500,8 +480,8 @@ export abstract class Controller {
           return Promise.reject(new ValidationError(message));
         }
       })
-      .catch(err => {
-        throw err;
+      .catch(error => {
+        throw error;
       });
   }
 
@@ -540,8 +520,8 @@ export abstract class Controller {
         selections.accountName,
         selections.subscription
       );
-    } catch (err) {
-      return Promise.reject(err);
+    } catch (error) {
+      return Promise.reject(error);
     }
 
     let userCosmosDBSelection: CosmosDBSelections = {
