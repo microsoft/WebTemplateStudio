@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import GridComponent from "./GridComponent";
+import WarningMessage from "../WarningMessage";
 import GreyBox from "../../images/GreyBox.svg";
 import styles from "./grid.module.css";
 import classnames from "classnames";
@@ -24,7 +25,7 @@ export default class Grid extends Component {
     });
   }
 
-  // Get the text assets from the back end
+  // Get the text sample data from the back end
   componentDidMount() {
     fetch(this.endpoint)
       .then(response => {
@@ -72,6 +73,11 @@ export default class Grid extends Component {
             ))}
           </div>
         </div>
+        <WarningMessage
+          open={this.state.WarningMessageOpen}
+          text={this.state.WarningMessageText}
+          onWarningClose={this.handleWarningClose}
+        />
       </React.Fragment>
     );
   }
