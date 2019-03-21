@@ -27,7 +27,7 @@ export const CONSTANTS = {
       return `Path ${path} does not exist.`;
     },
     INVALID_PROJECT_NAME: (name: string) => {
-      return `${name} is invalid. The project name attribute may only contain letters, numbers and spaces`;
+      return `${name} is invalid. The project name attribute may only contain letters, numbers, and spaces`;
     },
     PROJECT_PATH_EXISTS: (path: string, name: string) => {
       return `There exists a directory named ${name} in the specified path '${path}', please choose a unique path`;
