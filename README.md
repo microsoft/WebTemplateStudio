@@ -18,10 +18,10 @@ Web Template Studio approaches web app creation using the following four attribu
 
 * **Project type**: First, what type of application are you building? We currently support one type: *Fullstack Application*.
 * **Frameworks**: Next, which frameworks do you want to use for your frontend and backend? We currently support one framework for frontend: *[React.js](https://reactjs.org/)* and one framework for backend: *[Node.js](https://nodejs.org/en/)*.
-* **App pages**: To accelerate app creation, we provide a number of app page templates that you can use to add common UI pages into your new app. We currently include page templates from the *blank page* to the common layouts (*e.g., master/detail) to pages that implement common patterns (*e.g., grid, list). Using the wizard, add as many of the pages as you need, providing a name for each one, and we'll generate them for you.
-* **Cloud Services**: Lastly, you specify which Azure cloud services you want to use in your app, and we'll build out the framework for the services into your app, tagging 'TODO' items. Currently supported services cover storage (*Azure Cosmos DB*), and compute (*Azure Functions*).
+* **App pages**: To accelerate app creation, we provide a number of app page templates that you can use to add common UI pages into your new app. The current page templates include: *blank page*, common layouts (*e.g., master/detail) and pages that implement common patterns (*e.g., grid, list). Using the wizard, add as many of the pages as you need, providing a name for each one, and we'll generate them for you.
+* **Cloud Services**: Lastly, you specify which Azure cloud services you want to use, and we'll build out the framework for the services into your app including tagging 'TODO' items. Currently supported services cover storage (*Azure Cosmos DB*), and compute (*Azure Functions*).
 
-Once you make the selections you want your new web app to have and click generate, you can quickly extend the generated code.
+Once you make the selections you want and click generate, you can quickly extend the generated code.
 
 Note: Use VSCode light mode to view the extension. Running the extension in VSCode v1.31 ~~and above will currently result in non-rendering SVGs~~. This issue was [fixed on Feb.12, 2019](https://github.com/Microsoft/vscode/issues/68033).
 
