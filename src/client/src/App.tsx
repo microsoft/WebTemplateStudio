@@ -28,7 +28,7 @@ import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
-import { getPathAvailability } from "./actions/getPathAvailability";
+import { setPathAndNameValidation } from "./actions/setPathAndNameValidation";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -38,7 +38,7 @@ interface IDispatchProps {
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
-  setPathAvailability: (pathAvailability: {}) => void;
+  setPathAndNameValidation: (validation: {}) => void;
 }
 
 interface IStateProps {
@@ -56,7 +56,7 @@ class App extends React.Component<Props> {
     updateOutputPath: () => { },
     setCosmosResourceAccountNameAvailability: () => { },
     setAppNameAvailability: () => { },
-    setPathAvailability: () => { }
+    setPathAndNameValidation: () => { }
   };
 
   public componentDidMount() {
@@ -113,19 +113,20 @@ class App extends React.Component<Props> {
             message: message.message
           });
           return;
-        case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
-          this.props.setPathAvailability(message.payload.pathAvailability);
+        case EXTENSION_COMMANDS.PROJECT_PATH_AND_NAME_VALIDATION:
+          console.log(message.payload.validation.projectPathError);
+          this.props.setPathAndNameValidation(message.payload.validation);
           return;
       }
     });
   }
 
   public componentDidUpdate(prevProps: Props) {
-      if (this.props.vscode !== prevProps.vscode) {
-        this.props.vscode.postMessage({
-          command: EXTENSION_COMMANDS.GET_USER_STATUS
-        });
-      }
+    if (this.props.vscode !== prevProps.vscode) {
+      this.props.vscode.postMessage({
+        command: EXTENSION_COMMANDS.GET_USER_STATUS
+      });
+    }
   }
 
   public render() {
@@ -186,13 +187,13 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   setAppNameAvailability: (isAvailableObject: any) => {
     dispatch(setAppNameAvailabilityAction(isAvailableObject));
   },
-  setPathAvailability: (pathAvailability: {}) => {
-    dispatch(getPathAvailability(pathAvailability));
+  setPathAndNameValidation: (validation: {}) => {
+    dispatch(setPathAndNameValidation(validation));
   }
 });
 
 const mapStateToProps = (state: any): IStateProps => ({
-    vscode: state.vscode.vscodeObject
+  vscode: state.vscode.vscodeObject
 });
 
 export default connect(

@@ -23,7 +23,7 @@ interface IStateProps {
   projectName: string;
   outputPath: string;
   vscode: any;
-  pathAvailability: any
+  validation: any
 }
 
 interface IDispatchProps {
@@ -87,7 +87,8 @@ const ReviewAndGenerate = (props: Props) => {
           </div>
         </div>
       </div>
-      {!props.pathAvailability.isAvailable && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.pathAvailability.error}</div>}
+      {!props.validation.isValidProjectName && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectNameError}</div>}
+      {!props.validation.isValidProjectPath && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectPathError}</div>}
       <Table title="1. Type of Application" rowItems={props.projectTypeRows} />
       <Table title="2. Frameworks" rowItems={props.frameworkRows} />
       <Table title="3. Pages" rowItems={props.pagesRows} />
@@ -107,7 +108,7 @@ const mapStateToProps = (state: any): IStateProps => (
     projectName: WizardSelectors.getProjectName(state),
     outputPath: WizardSelectors.getOutputPath(state),
     vscode: state.vscode.vscodeObject,
-    pathAvailability: state.selection.pathAvailability
+    validation: state.selection.validation
   });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({

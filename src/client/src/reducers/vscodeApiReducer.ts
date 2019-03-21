@@ -68,14 +68,18 @@ const mockVsCodeApi = () => ({
         });
         break;
       case EXTENSION_COMMANDS.GENERATE:
-          // @ts-ignore produces a mock login response from VSCode in development 
-          window.postMessage({
-            command: "validatePath",
-            pathAvailability: {
-              isAvailable: false,
-              error: "Name is empty"
+        // @ts-ignore produces a mock login response from VSCode in development 
+        window.postMessage({
+          command: EXTENSION_COMMANDS.PROJECT_PATH_AND_NAME_VALIDATION,
+          payload: {
+            validation: {
+              isValidProjectName: false,
+              projectNameError: "project name is invalid",
+              isValidProjectPath: false,
+              projectPathError: "project path is invalid"
             }
-          });
+          }
+        });
         break;
     }
   }

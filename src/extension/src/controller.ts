@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { CONSTANTS, ExtensionCommand } from "./constants";
+import { Validator } from "./utils/validator";
 import {
   AzureAuth,
   SubscriptionItem,
@@ -23,7 +24,6 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
-import fs = require("fs");
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -271,57 +271,56 @@ export abstract class Controller {
     var payload = message.payload;
     var enginePayload: any = payload.engine;
 
-    var error = "";
-    var isAvailable = true;
+    var projectNameError = "";
+    var isValidProjectName = true;
+    var projectPathError = "";
+    var isValidProjectPath = true;
 
-
-    //validate name
-    if (enginePayload.path === "") {
-      error = CONSTANTS.ERRORS.EMPTY_OUTPUT_PATH;
-      isAvailable = false;
-    } else if (enginePayload.projectName === "") {
-      error = CONSTANTS.ERRORS.EMPTY_PROJECT_NAME;
-      isAvailable = false;
-    } else if (enginePayload.projectName.length > CONSTANTS.MAX_PROJECT_NAME_LENGTH) {
-      error = CONSTANTS.ERRORS.PROJECT_NAME_LENGTH_EXCEEDED_MAX;
-      isAvailable = false;
-    } else if (!fs.existsSync(enginePayload.path)) {
-      error = CONSTANTS.ERRORS.INVALID_OUTPUT_PATH;
-      isAvailable = false;
-    } else if (fs.existsSync(enginePayload.path + "/" + enginePayload.projectName)) {
-      error = CONSTANTS.ERRORS.PROJECT_PATH_EXISTS;
-      isAvailable = false;
+    try {
+      Validator.isValidProjectName(enginePayload.projectName);
+    } catch (error) {
+      console.log(error.message);
+      projectNameError = error.message;
+      isValidProjectName = false;
     }
 
-    if (isAvailable) {
-      await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload);
-
-      if (payload.selectedFunctions) {
-        Controller.processFunctionDeploymentAndSendStatusToClient(
-          payload.functions,
-          enginePayload.path
-        );
-      }
-
-      if (payload.selectedCosmos) {
-        var cosmosPayload: any = payload.cosmos;
-        await Controller.processCosmosDeploymentAndSendStatusToClient(
-          cosmosPayload,
-          enginePayload.path
-        );
-      }
+    try {
+      Validator.isValidProjectPath(enginePayload.projectPath, enginePayload.projectName);
+    } catch (error) {
+      projectPathError = error.message;
+      isValidProjectPath = false;
     }
-    else {
+
+    if (!isValidProjectName || !isValidProjectPath) {
       // Send error to wizard, do not do anything
       Controller.reactPanelContext.postMessageWebview({
-        command: ExtensionCommand.ValidateOutputPath,
+        command: ExtensionCommand.ProjectPathAndNameValidation,
         payload: {
-            pathAvailability: {
-            isAvailable: isAvailable,
-            error: error
+          validation: {
+            isValidProjectName: isValidProjectName,
+            projectNameError: projectNameError,
+            isValidProjectPath: isValidProjectPath,
+            projectPathError: projectPathError
           }
         }
       });
+      return;
+    }
+    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload);
+
+    if (payload.selectedFunctions) {
+      Controller.processFunctionDeploymentAndSendStatusToClient(
+        payload.functions,
+        enginePayload.path
+      );
+    }
+
+    if (payload.selectedCosmos) {
+      var cosmosPayload: any = payload.cosmos;
+      await Controller.processCosmosDeploymentAndSendStatusToClient(
+        cosmosPayload,
+        enginePayload.path
+      );
     }
   }
 
