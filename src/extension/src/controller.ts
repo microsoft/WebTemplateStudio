@@ -279,7 +279,6 @@ export abstract class Controller {
     try {
       Validator.isValidProjectName(enginePayload.projectName);
     } catch (error) {
-      console.log(error.message);
       projectNameError = error.message;
       isValidProjectName = false;
     }
