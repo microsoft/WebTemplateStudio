@@ -114,7 +114,6 @@ class App extends React.Component<Props> {
           });
           return;
         case EXTENSION_COMMANDS.PROJECT_PATH_AND_NAME_VALIDATION:
-          console.log(message.payload.validation.projectPathError);
           this.props.setPathAndNameValidation(message.payload.validation);
           return;
       }
