@@ -58,7 +58,12 @@ export const CONSTANTS = {
   },
   API: {
     WINDOWS_PLATFORM_VERSION: "win32",
-    BASE_APPLICATION_NAME: "CoreTemplateStudio.Api"
+    BASE_APPLICATION_NAME: "CoreTemplateStudio.Api",
+    PATH_TO_TEMPLATES: "..",
+    SYNC_LIVE_MESSAGE_TRIGGER_NAME: "syncMessage",
+    GEN_LIVE_MESSAGE_TRIGGER_NAME: "genMessage",
+    SIGNALR_API_SYNC_METHOD_NAME: "SyncTemplates",
+    SIGNALR_API_GENERATE_METHOD_NAME: "Generate"
   },
   AZURE_LOGIN_STATUS: {
     LOGGED_IN: "LoggedIn",

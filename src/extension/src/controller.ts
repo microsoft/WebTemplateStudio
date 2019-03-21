@@ -31,6 +31,7 @@ import {
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
+import { ChildProcess } from "child_process";
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -101,43 +102,43 @@ export abstract class Controller {
    * Will launch the api, sync templates then pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public static async launchWizard(
-    context: vscode.ExtensionContext,
-    extensionStartUpTime: number = Date.now()
-  ) {
-    ApiModule.StartApi(context);
-    // TODO: start this after the api launches.
-    await ApiModule.SendSyncRequestToApi(
-      "5000",
-      "../../../..",
-      (status: SyncStatus) => {
-        console.log(`SyncStatus:${SyncStatus[status]}`);
-        if (
-          status === SyncStatus.ErrorAcquiring ||
-          status === SyncStatus.NoUpdates ||
-          status === SyncStatus.Updated
-        ) {
-          Controller.reactPanelContext = ReactPanel.createOrShow(
-            context.extensionPath,
-            this.routingMessageReceieverDelegate
-          );
-        }
-      }
-    );
-    Controller.Telemetry = new TelemetryAI(context, extensionStartUpTime);
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      "testingFunctionWrapper",
-      async function(this: IActionContext): Promise<void> {
-        this.properties.customProp = "Hello Testing";
-        console.log("helloworld");
-      }
-    );
+  public static launchWizard(context: vscode.ExtensionContext): ChildProcess {
+    let process = ApiModule.StartApi(context);
+    this.attemptSync(context, 0);
+
+    return process;
   }
+
   // TODO: To minimize PR size, this will be edited in next PR; branch: t-trngo/telemetryIntegrationInController
   public static handleTelemetry(payload: any): any {
     //   Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
   }
 
+  private static attemptSync(context: vscode.ExtensionContext, count: number) {
+    setTimeout(() => {
+      ApiModule.SendSyncRequestToApi(
+        "5000",
+        CONSTANTS.API.PATH_TO_TEMPLATES,
+        this.handleSyncLiveData
+      )
+        .then(() => {
+          Controller.reactPanelContext = ReactPanel.createOrShow(
+            context.extensionPath,
+            this.routingMessageReceieverDelegate
+          );
+        })
+        .catch(() => {
+          if (count === 11) {
+            vscode.window.showErrorMessage("Could not sync to repository.");
+            return;
+          }
+          this.attemptSync(context, count + 1);
+        });
+    }, 200);
+  }
+  private static handleSyncLiveData(status: SyncStatus) {
+    console.log(`SyncStatus:${SyncStatus[status]}`);
+  }
   /**
    * Returns an array of Subscription Items when the user is logged in
    *
@@ -474,11 +475,20 @@ export abstract class Controller {
       });
   }
 
-  public static sendTemplateGenInfoToApiAndSendStatusToClient(
+  public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ) {
-    // FIXME: After gen is done, we need to do some feedback.
-    ApiModule.SendTemplateGenerationPayloadToApi(CONSTANTS.PORT, enginePayload);
+    await ApiModule.SendTemplateGenerationPayloadToApi(
+      CONSTANTS.PORT,
+      enginePayload,
+      this.handleGenLiveMessage
+    ).then((object: any) => {
+      console.log(object);
+    });
+  }
+
+  private static handleGenLiveMessage(message: any) {
+    console.log(message);
   }
 
   public static sendOutputPathSelectionToClient(message: any) {

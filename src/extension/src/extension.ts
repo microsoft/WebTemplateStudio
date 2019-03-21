@@ -10,7 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "webTemplateStudioExtension.wizardLaunch",
       () => {
-        Controller.launchWizard(context, Date.now());
+        apiProcess = Controller.launchWizard(context);
       }
     )
   );
