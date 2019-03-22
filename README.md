@@ -1,10 +1,32 @@
 # Web Template Studio
-*To be written*
+Web Template Studio (WebTS) is a Visual Studio Code Extension that accelerates the creation of new Web apps using a wizard-based experience. The resulting Web application is well-formed, readable code that
+incorporates cloud services on Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to Docs to provide useful insights. 
+
+WebTS currently supports the following:
+
+- Front-end: React.js
+- Back-end: Node.js
+- Cloud services: Cosmos DB, Azure Functions
+
+*Example Scenario*: I need a Fullstack web app that stores blog posts in a Cosmos database.
+
+<img src="./screenshot.png">
+
+## Features
+
+Web Template Studio approaches web app creation using the following four attribute sets:
+
+* **Project type**: First, what type of application are you building? We currently support one type: *Fullstack Application*.
+* **Frameworks**: Next, which frameworks do you want to use for your frontend and backend? We currently support one framework for frontend: *[React.js](https://reactjs.org/)* and one framework for backend: *[Node.js](https://nodejs.org/en/)*.
+* **App pages**: To accelerate app creation, we provide a number of app page templates that you can use to add common UI pages into your new app. The current page templates include: *blank page*, common layouts (*e.g., master/detail) and pages that implement common patterns (*e.g., grid, list). Using the wizard, add as many of the pages as you need, providing a name for each one, and we'll generate them for you.
+* **Cloud Services**: Lastly, you specify which Azure cloud services you want to use, and we'll build out the framework for the services into your app including tagging 'TODO' items. Currently supported services cover storage (*Azure Cosmos DB*), and compute (*Azure Functions*).
+
+Once you make the selections you want and click generate, you can quickly extend the generated code.
 
 Note: Use VSCode light mode to view the extension. Running the extension in VSCode v1.31 ~~and above will currently result in non-rendering SVGs~~. This issue was [fixed on Feb.12, 2019](https://github.com/Microsoft/vscode/issues/68033).
 
 # Prerequisites
-[Git](https://git-scm.com/downloads), [Yarn](https://yarnpkg.com/en/docs/install#mac-stable), [Node](https://nodejs.org/en/download/) and [VSCode](https://code.visualstudio.com/updates/v1_31) must be installed prior to running the installation or build scripts.
+[Git](https://git-scm.com/downloads), [Yarn](https://yarnpkg.com/en/docs/install#mac-stable), [Node.js](https://nodejs.org/en/download/) and [VSCode](https://code.visualstudio.com/updates/v1_31) must be installed prior to running the installation or build scripts.
 
 In VSCode, install the [Azure Cosmos DB VSCode extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-cosmosdb) because it is an extension dependency.
 
@@ -96,7 +118,7 @@ The following notes are inspired by the [vscode-webview-react](https://github.co
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
+Contributor License Agreement *(CLA) declaring that you have the right to, and actually do, grant us
 the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
