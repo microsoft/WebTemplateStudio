@@ -30,7 +30,6 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
-import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 import { ChildProcess } from "child_process";
 
 export abstract class Controller {
@@ -38,7 +37,6 @@ export abstract class Controller {
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
-  private static Telemetry: TelemetryAI;
   private static reactPanelContext: ReactPanel;
   // This will map commands from the client to functions.
 
