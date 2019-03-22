@@ -49,7 +49,7 @@
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test",
-    "createVsixPackage": "rm -rf ../../dist/wts.vsix && vsce package --out ../../dist/wts.__VERSIONNUMBER__.vsix"
+    "createVsixPackage": "rm -rf ../../dist/wts.vsix && vsce package --out ../../dist/wts-__VERSIONNUMBER__.vsix"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
