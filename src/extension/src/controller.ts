@@ -115,7 +115,7 @@ export abstract class Controller {
   private static attemptSync(context: vscode.ExtensionContext, count: number) {
     setTimeout(() => {
       ApiModule.SendSyncRequestToApi(
-        "5000",
+        CONSTANTS.PORT,
         CONSTANTS.API.PATH_TO_TEMPLATES,
         this.handleSyncLiveData
       )
@@ -126,7 +126,7 @@ export abstract class Controller {
           );
         })
         .catch(() => {
-          if (count === 11) {
+          if (count === CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
             vscode.window.showErrorMessage("Could not sync to repository.");
             return;
           }

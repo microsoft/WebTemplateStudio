@@ -25,7 +25,8 @@ export const CONSTANTS = {
     },
     EMPTY_OUTPUT_PATH: "Output Path cannot be empty.",
     EMPTY_PROJECT_NAME: "Project Name cannot be empty.",
-    PROJECT_NAME_LENGTH_EXCEEDED_MAX: "Project Name has to be less than 50 chars long.",
+    PROJECT_NAME_LENGTH_EXCEEDED_MAX:
+      "Project Name has to be less than 50 chars long.",
     INVALID_OUTPUT_PATH: (path: string) => {
       return `Path ${path} does not exist.`;
     },
@@ -63,7 +64,8 @@ export const CONSTANTS = {
     SYNC_LIVE_MESSAGE_TRIGGER_NAME: "syncMessage",
     GEN_LIVE_MESSAGE_TRIGGER_NAME: "genMessage",
     SIGNALR_API_SYNC_METHOD_NAME: "SyncTemplates",
-    SIGNALR_API_GENERATE_METHOD_NAME: "Generate"
+    SIGNALR_API_GENERATE_METHOD_NAME: "Generate",
+    MAX_SYNC_REQUEST_ATTEMPTS: 11
   },
   AZURE_LOGIN_STATUS: {
     LOGGED_IN: "LoggedIn",
