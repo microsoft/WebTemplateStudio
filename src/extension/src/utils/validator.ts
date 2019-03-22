@@ -5,7 +5,7 @@ import path = require("path");
 export abstract class Validator {
 
     public static isAlphaNumeric = (name: string) => {
-        return /^[a-zA-Z0-9 ]+$/i.test(name);
+        return /^[\w ]+$/i.test(name);
     }
 
     public static isEmpty = (name: string) => {

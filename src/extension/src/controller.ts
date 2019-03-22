@@ -290,7 +290,7 @@ export abstract class Controller {
       isValidProjectPath = false;
     }
 
-    if (!isValidProjectName || !isValidProjectPath) {
+    if (isValidProjectName && isValidProjectPath) {
       // Send error to wizard, do not do anything
       Controller.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.ProjectPathAndNameValidation,
