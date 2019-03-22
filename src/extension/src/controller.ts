@@ -369,7 +369,7 @@ export abstract class Controller {
     }
   }
 
-  public static processFunctionDeploymentAndSendStatusToClient(
+  public static async processFunctionDeploymentAndSendStatusToClient(
     funcPayload: any,
     genPath: string
   ) {
@@ -384,7 +384,7 @@ export abstract class Controller {
      *       functionNames: ["function1", "function2", "function3"]
      *   }
      */
-    Controller.deployFunctionApp(funcPayload, genPath)
+      await Controller.deployFunctionApp(funcPayload, genPath)
       .then(() => {
         Controller.handleValidMessage(ExtensionCommand.DeployFunctions, {
           succeeded: true
@@ -402,7 +402,7 @@ export abstract class Controller {
       });
   }
 
-  public static processCosmosDeploymentAndSendStatusToClient(
+  public static async processCosmosDeploymentAndSendStatusToClient(
     cosmosPayload: any,
     genPath: string
   ) {
@@ -416,7 +416,7 @@ export abstract class Controller {
      *       resourceGroup: "YOUR_RESOURCE_GROUP"
      *   }
      */
-    Controller.deployCosmosResource(cosmosPayload, genPath)
+    await Controller.deployCosmosResource(cosmosPayload, genPath)
       .then((dbObject: DatabaseObject) => {
         Controller.handleValidMessage(ExtensionCommand.DeployCosmos, {
           databaseObject: dbObject
