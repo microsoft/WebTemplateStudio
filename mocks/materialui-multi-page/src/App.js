@@ -7,6 +7,7 @@ import Grid from "./components/Grid";
 import Blank from "./components/Blank";
 import { CssBaseline } from "@material-ui/core";
 
+// TODO WTS: Add routes for your new pages here.
 class App extends Component {
   render() {
     return (

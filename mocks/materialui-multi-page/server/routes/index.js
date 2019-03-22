@@ -1,7 +1,8 @@
-var CONSTANTS = require("../constants");
-var sampleData = require("../sampleData");
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const CONSTANTS = require("../constants");
+const sampleData = require("../sampleData");
+
+const router = express.Router();
 
 /*
  * Include this block of code if list and mongo are selected
@@ -64,7 +65,7 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 // });
 
 // Grid Page Endpoint
-router.get(CONSTANTS.ENDPOINT.GRID, function(req, res) {
+router.get(CONSTANTS.ENDPOINT.GRID, (req, res) => {
   try {
     res.json(sampleData.gridTextAssets);
   } catch (err) {
@@ -73,7 +74,7 @@ router.get(CONSTANTS.ENDPOINT.GRID, function(req, res) {
 });
 
 // MasterDetail Page Endpoint
-router.get(CONSTANTS.ENDPOINT.MASTERDETAIL, function(req, res) {
+router.get(CONSTANTS.ENDPOINT.MASTERDETAIL, (req, res) => {
   try {
     res.json(sampleData.masterDetailTextAssets);
   } catch (err) {

@@ -29,12 +29,12 @@ class index extends Component {
 
     this.endpoint = "/api/list";
     this.handleWarningClose = this.handleWarningClose.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleDeleteListItem = this.handleDeleteListItem.bind(this);
+    this.handleChangeInputText = this.handleChangeInputText.bind(this);
     this.handleAddListItem = this.handleAddListItem.bind(this);
   }
 
-  handleDelete(event, listItem) {
+  handleDeleteListItem(event, listItem) {
     fetch(`${this.endpoint}/${listItem._id}`, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
@@ -83,7 +83,7 @@ class index extends Component {
       );
   }
 
-  handleChange(event, name) {
+  handleChangeInputText(event, name) {
     this.setState({ [name]: event.target.value });
   }
 
@@ -94,6 +94,7 @@ class index extends Component {
     });
   }
 
+  // Get the text assets from the back end
   componentDidMount() {
     fetch(this.endpoint)
       .then(response => {
@@ -118,14 +119,14 @@ class index extends Component {
         <Grid container justify="center" alignItems="flex-start" spacing={24}>
           <ListForm
             onClick={this.handleAddListItem}
-            onChange={this.handleChange}
+            onChangeInputText={this.handleChangeInputText}
             multilineTextField={this.state.multilineTextField}
           />
           {this.state.list.map(listItem => (
             <ListItem
               key={listItem._id}
               listItem={listItem}
-              onDelete={this.handleDelete}
+              onDeleteListItem={this.handleDeleteListItem}
             />
           ))}
         </Grid>

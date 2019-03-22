@@ -15,7 +15,9 @@ function ListForm(props) {
           label="Add Message"
           multiline
           value={props.multilineTextField}
-          onChange={event => props.onChange(event, "multilineTextField")}
+          onChange={event =>
+            props.onChangeInputText(event, "multilineTextField")
+          }
           fullWidth
           margin="normal"
           variant="filled"

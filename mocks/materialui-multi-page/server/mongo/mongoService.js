@@ -1,9 +1,9 @@
-const ListItem = require("./mongoModel");
 const ReadPreference = require("mongodb").ReadPreference;
+const ListItem = require("./mongoModel");
 
 require("./mongoConnect").connect();
 
-// Find all list items from the nearest instance of the database
+// Find all list items from the nearest instance of Cosmos MongoDB
 function get(req, res) {
   const docquery = ListItem.find({}).read(ReadPreference.NEAREST);
   docquery
