@@ -1,8 +1,8 @@
-import * as React from "react";
 import classnames from "classnames";
+import * as React from "react";
 
-import styles from "./styles.module.css";
 import { ISelected } from "../../types/selected";
+import styles from "./styles.module.css";
 
 /**
  * Takes in either a page (type ISelected) or text, but not both

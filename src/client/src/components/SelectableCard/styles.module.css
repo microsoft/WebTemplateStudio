@@ -18,6 +18,7 @@
   border: 3px solid #ffffff;
 }
 
+.cardCount,
 .selectedCheckMark {
   display: flex;
   justify-content: center;
@@ -49,6 +50,8 @@
 .cardFooter {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  max-height: 22px;
 }
 
 .icon {
@@ -88,4 +91,13 @@
 .unselectable {
   opacity: 0.4;
   cursor: default;
+}
+
+.cardCount {
+  text-align: center;
+  background-color: #555555;
+  height: 22px;
+  width: 22px;
+  padding: 3px;
+  border-radius: 50%
 }

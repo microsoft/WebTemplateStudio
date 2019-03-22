@@ -15,7 +15,8 @@ PageOption = {
 const pagesReducer = (state: any[] = [{
   title: "Blank Page",
   internalName: WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE,
-  originalTitle: "Blank Page"
+  originalTitle: "Blank Page",
+  id: "Blank Page"
 }], action: any) => {
   switch (action.type) {
     case Actions.SELECT_PAGES:

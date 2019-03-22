@@ -22,6 +22,7 @@ type Props = ISortablePageListProps & ISortableDispatchProps;
 
 const SortablePageList = (props: Props) => {
     const [pages, setPages] = React.useState(props.pages);
+    const [isMinimized, setMinimized] = React.useState(false);
     React.useEffect(() => {
         setPages(props.pages);
     }, [props.pages]);
@@ -33,10 +34,14 @@ const SortablePageList = (props: Props) => {
     const onSortEnd = ({oldIndex, newIndex}: {oldIndex: number, newIndex: number}) => {
         props.selectPages((arrayMove(pages, oldIndex, newIndex)));
     };
+    const hideOrShowText = isMinimized ? "Show" : "Hide";
     return (
         <div className={styles.sidebarItem}>
-            <div className={styles.dropdownTitle}>Pages</div>
-            <SortableList pages={props.pages} onSortEnd={onSortEnd} handleInputChange={handleInputChange} />
+            <div className={styles.pageListContainer}>
+                <div className={styles.dropdownTitle}>Pages</div>
+                <div className={styles.hideOrShow} onClick={() => { setMinimized(isMinimized ? false : true) }}>{hideOrShowText}</div>    
+            </div>
+            {!isMinimized && <SortableList pages={props.pages} onSortEnd={onSortEnd} handleInputChange={handleInputChange} />}
         </div>
     )
 }

@@ -12,7 +12,8 @@ interface ISelectOptionProps {
   title: string;
   internalName?: string;
   selectCard?: (card: ISelected) => void;
-  selectedCards?: number[];
+  selectedCards: number[];
+  currentCardData?: ISelected[];
   selectOptions?: (cards: ISelected[]) => void;
   options: IOption[];
   multiSelect: boolean;
@@ -26,11 +27,11 @@ class SelectOption extends React.Component<
   ISelectOptionProps,
   ISelectOptionState
 > {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      selectedCards: this.props.selectedCards || [0]
-    };
+
+  componentDidMount() {
+    this.setState({
+      selectedCards: [0],
+    });
   }
 
   public isCardSelected(cardNumber: number): boolean {
@@ -41,30 +42,56 @@ class SelectOption extends React.Component<
   }
 
   /**
+   * Creates a title for the card being selected (e.g. selected Page).
+   * Prepends a number of a certain card is selected more than once.
+   * Only changes the title of the last card selected.
+   * 
+   * @param selectedCardIndex 
+   * @param optionIndexContainingData 
+   * @param count 
+   * @param cardData 
+   */
+  public createTitle(selectedCardIndex: number, optionIndexContainingData: number, count: number, cardData: ISelected[]) {
+    if (count === 1) {
+      return this.props.options[optionIndexContainingData].title;
+    } else if (selectedCardIndex > cardData.length - 1) {
+      return `${count}-${this.props.options[optionIndexContainingData].title}`
+    }
+    return cardData[selectedCardIndex].title;
+  }
+
+  public mapIndexToCardInfo(selectedCardIndex: number, count: number, internalName: string, num: number, currentCardData: ISelected[]) {
+      const { originalTitle } = this.props.options[num];
+      const title = this.createTitle(selectedCardIndex, num, count, currentCardData);
+      const cardInfo: ISelected = {
+        title,
+        internalName,
+        id: title,
+        originalTitle
+      };
+      return cardInfo;
+  }
+
+  /**
    * Converts the index numbers of options into ids
    * In this case, titles, but can be changed to whatever is required
    * by the redux store.
    *
    * @param cardNumbers
    */
-  public convertCardNumbersToTitles(cardNumbers: number[]): ISelected[] {
-    const cardTitles = [];
-    for (const num of cardNumbers) {
-      // originalTitle is for page layouts.
-      const cardToConvert: {
-        title: string;
-        internalName: string;
-        originalTitle?: string;
-      } = {
-        title: this.props.options[num].title,
-        internalName: this.props.options[num].internalName
-      };
-      if (this.props.options[num].hasOwnProperty("originalTitle")) {
-        cardToConvert.originalTitle = this.props.options[num].originalTitle;
+  public convertCardNumbersToTitles(selectedCardIndices: number[]): ISelected[] {
+    const selectedCardsWithInfo = [];
+    const cardTypeCount: {[key: string]: number} = {};
+    const { currentCardData, options } = this.props;
+    for (let selectedCardIndex = 0 ; selectedCardIndex < selectedCardIndices.length ; selectedCardIndex++) {
+      const optionIndexContainingData = selectedCardIndices[selectedCardIndex];
+      const { internalName } = options[optionIndexContainingData];
+      cardTypeCount[internalName] = cardTypeCount[internalName] ? cardTypeCount[internalName] + 1 : 1;
+      if (currentCardData) {
+        selectedCardsWithInfo.push(this.mapIndexToCardInfo(selectedCardIndex, cardTypeCount[internalName], internalName, optionIndexContainingData, currentCardData));
       }
-      cardTitles.push(cardToConvert);
     }
-    return cardTitles;
+    return selectedCardsWithInfo;
   }
 
   /**
@@ -73,20 +100,12 @@ class SelectOption extends React.Component<
    *
    * @param cardNumber
    */
-  public addOrRemoveOption(cardNumber: number) {
+  public addOption(cardNumber: number) {
     const { selectedCards } = this.state;
-    let filteredCards = selectedCards;
-    if (this.isCardSelected(cardNumber)) {
-      filteredCards = filteredCards.filter(val => val !== cardNumber);
-    } else {
-      filteredCards.push(cardNumber);
-    }
+    selectedCards.push(cardNumber);
     if (this.props.selectOptions !== undefined) {
-      this.props.selectOptions(this.convertCardNumbersToTitles(filteredCards));
+      this.props.selectOptions(this.convertCardNumbersToTitles(selectedCards));
     }
-    this.setState({
-      selectedCards: filteredCards
-    });
   }
 
   /**
@@ -116,9 +135,26 @@ class SelectOption extends React.Component<
       return;
     }
     if (this.props.multiSelect) {
-      this.addOrRemoveOption(cardNumber);
+      this.addOption(cardNumber);
     } else {
       this.exchangeOption(cardNumber);
+    }
+  }
+
+  /**
+   * Returns the number of times that a particular card was selected/clicked on.
+   * 
+   * If card can only be clicked once, this function returns undefined.
+   */
+  public getCardCount = (internalName: string) => {
+    const { selectedCards, multiSelect, options } = this.props;
+    if (selectedCards && multiSelect) {
+      return selectedCards.reduce((cardCount: number, card: number) => {
+        if (options[card].internalName === internalName) {
+          return cardCount + 1;
+        }
+        return cardCount;
+      }, 0);
     }
   }
 
@@ -140,6 +176,7 @@ class SelectOption extends React.Component<
               title={option.title}
               body={option.body}
               disabled={option.unselectable}
+              clickCount={this.getCardCount(option.internalName)}
             />
           ))}
         </div>
