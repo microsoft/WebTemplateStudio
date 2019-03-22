@@ -377,10 +377,15 @@ export abstract class Controller {
 
     if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
-      await Controller.processCosmosDeploymentAndSendStatusToClient(
-        cosmosPayload,
-        enginePayload.path
-      );
+      var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(cosmosPayload, enginePayload.path);
+      await vscode.window
+        .showInformationMessage('Replace your DB connection string in the .env file with the generated CosmosDB connection string?', ...['Yes', 'No'])
+        .then(selection => {
+          if (selection === "Yes") {
+            CosmosDBDeploy.updateConnectionStringInEnvFile(enginePayload.path, dbobject.connectionString);
+            vscode.window.showInformationMessage("Replaced");
+          }
+        });
     }
   }
 
@@ -431,19 +436,17 @@ export abstract class Controller {
      *       resourceGroup: "YOUR_RESOURCE_GROUP"
      *   }
      */
-    Controller.deployCosmosResource(cosmosPayload, genPath)
+    return Controller.deployCosmosResource(cosmosPayload, genPath)
       .then((dbObject: DatabaseObject) => {
         Controller.handleValidMessage(ExtensionCommand.DeployCosmos, {
           databaseObject: dbObject
         });
-
-        vscode.window.showInformationMessage(
-          CONSTANTS.INFO.COSMOS_ACCOUNT_DEPLOYED(cosmosPayload.accountName)
-        );
+        return dbObject;
       })
       .catch((error: Error) => {
         vscode.window.showErrorMessage(error.message);
         Controller.handleErrorMessage(ExtensionCommand.DeployCosmos, error);
+        throw error;
       });
   }
 

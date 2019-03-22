@@ -70,6 +70,9 @@ export const CONSTANTS = {
     Project_Title: "Project Acorn"
   },
   GENERATE_ENDPOINT: "/api/generate",
+  CONNECTION_STRING: function (username: string, password: string, origin: string) {
+    return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMODDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
+  },
   MAX_PROJECT_NAME_LENGTH: 50,
   PORT: "5000"
 };

@@ -28,7 +28,10 @@
   "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Microsoft/WebTemplateStudio"
+    "url": "https://github.com/Microsoft/WebTemplateStudio",
+    "vsce": "^1.57.1",
+    "vscode-extension-telemetry": "^0.1.1",
+    "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
     "onCommand:webTemplateStudioExtension.wizardLaunch"
@@ -82,8 +85,9 @@
     "opn": "^5.5.0",
     "rimraf": "^2.6.3",
     "tslint-microsoft-contrib": "^6.1.0",
+    "url-parse": "^1.4.4",
     "vsce": "^1.57.1",
     "vscode-extension-telemetry": "^0.1.1",
-    "vscode-nls": "^4.0.0"
+    "vscode-nls": "^4.1.0"
   }
 }
