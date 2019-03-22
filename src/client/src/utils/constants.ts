@@ -28,7 +28,7 @@ const ROUTES_ARRAY = [
 const SERVICE_KEYS = {
   COSMOS_DB: "cosmosDB",
   AZURE_FUNCTIONS: "azureFunctions"
-}
+};
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   NODE_JS: "NodeJS",
@@ -48,7 +48,15 @@ const EXTENSION_COMMANDS = {
   GET_USER_STATUS: "getUserStatus",
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
-  SUBSCRIPTION_DATA: "subscriptionData"
-}
+  SUBSCRIPTION_DATA_COSMOS: "subscriptionDataForCosmos",
+  SUBSCRIPTION_DATA_FUNCTIONS: "subscriptionDataForFunctions"
+};
 
-export { PRODUCTION, EXTENSION_COMMANDS, ROUTES, ROUTES_ARRAY, SERVICE_KEYS, WIZARD_CONTENT_INTERNAL_NAMES };
+export {
+  PRODUCTION,
+  EXTENSION_COMMANDS,
+  ROUTES,
+  ROUTES_ARRAY,
+  SERVICE_KEYS,
+  WIZARD_CONTENT_INTERNAL_NAMES
+};

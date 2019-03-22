@@ -11,17 +11,18 @@ import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions";
 import { saveAzureFunctionsSettingsAction } from "../../actions/saveAzureFunctionsSettings";
-import {
-  azureFunctionModalInitialState
-} from "../../mockData/cosmosDbModalData";
+import { azureFunctionModalInitialState } from "../../mockData/cosmosDbModalData";
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { ReactComponent as GreenCheck} from "../../assets/checkgreen.svg";
+import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getFunctionsSelection } from "../../selectors/azureFunctionsServiceSelector";
 import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { EXTENSION_COMMANDS, WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import {
+  EXTENSION_COMMANDS,
+  WIZARD_CONTENT_INTERNAL_NAMES
+} from "../../utils/constants";
 import styles from "./styles.module.css";
 
 interface IDispatchProps {
@@ -56,10 +57,12 @@ const FORM_CONSTANTS = {
   LOCATION: "location",
   RUNTIME_STACK: "runtimeStack",
   NUM_FUNCTIONS: "numFunctions"
-}
+};
 
 const CosmosResourceModal = (props: Props) => {
-  const [functionsData, setData] = React.useState(azureFunctionModalInitialState);
+  const [functionsData, setData] = React.useState(
+    azureFunctionModalInitialState
+  );
   // Hardcoding a "node" value until data can be loaded dynamically
   React.useEffect(() => {
     setData({
@@ -87,7 +90,7 @@ const CosmosResourceModal = (props: Props) => {
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION) {
       // Get resource Group and locations and set the dropdown options to them
       props.vscode.postMessage({
-        command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA,
+        command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
         subscription: value
       });
     }
@@ -101,7 +104,7 @@ const CosmosResourceModal = (props: Props) => {
       const { previousFormData } = props.selection;
       updateForm(previousFormData);
     }
-  }, [])
+  }, []);
   /**
    * Listens on account name change and validates the input in VSCode
    */
@@ -125,10 +128,16 @@ const CosmosResourceModal = (props: Props) => {
   };
   const handleAddResource = () => {
     if (props.appNameAvailability.isAppNameAvailable) {
-      props.saveAzureFunctionsOptions(azureFunctionsFormData); 
+      props.saveAzureFunctionsOptions(azureFunctionsFormData);
     }
-  }
-  const getDropdownSection = (leftHeader: string, options: any, formSectionId: string, rightHeader?: string, defaultValue?: any) => {
+  };
+  const getDropdownSection = (
+    leftHeader: string,
+    options: any,
+    formSectionId: string,
+    rightHeader?: string,
+    defaultValue?: any
+  ) => {
     return (
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
@@ -140,10 +149,15 @@ const CosmosResourceModal = (props: Props) => {
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
           }}
-          defaultValue={props.selection ? props.selection.dropdownSelection[formSectionId] : defaultValue}
+          defaultValue={
+            props.selection
+              ? props.selection.dropdownSelection[formSectionId]
+              : defaultValue
+          }
         />
-      </div>)
-  }
+      </div>
+    );
+  };
   const getNumFunctionsData = () => {
     // limit the number of generated functions to 10
     const dropDownArray = [];
@@ -151,7 +165,7 @@ const CosmosResourceModal = (props: Props) => {
       dropDownArray.push({ value: i, label: i });
     }
     return dropDownArray;
-  }
+  };
   const { isAppNameAvailable } = props.appNameAvailability;
   return (
     <React.Fragment>
@@ -159,33 +173,78 @@ const CosmosResourceModal = (props: Props) => {
         <div className={styles.modalTitle}>Create Function Application</div>
         <Cancel className={styles.icon} onClick={props.closeModal} />
       </div>
-      {getDropdownSection("Subscription", functionsData.subscription, FORM_CONSTANTS.SUBSCRIPTION, "Create new")}
-      {getDropdownSection("Resource Group", functionsData.resourceGroup, FORM_CONSTANTS.RESOURCE_GROUP, "Create new")}
-      <div className={classnames({
-        [styles.selectionInputContainer]: !isAppNameAvailable && azureFunctionsFormData.appName.length > 0,
-        [styles.selectionContainer]: (isAppNameAvailable || azureFunctionsFormData.appName.length === 0)
-        })}>
+      {getDropdownSection(
+        "Subscription",
+        functionsData.subscription,
+        FORM_CONSTANTS.SUBSCRIPTION,
+        "Create new"
+      )}
+      {getDropdownSection(
+        "Resource Group",
+        functionsData.resourceGroup,
+        FORM_CONSTANTS.RESOURCE_GROUP,
+        "Create new"
+      )}
+      <div
+        className={classnames({
+          [styles.selectionInputContainer]:
+            !isAppNameAvailable && azureFunctionsFormData.appName.length > 0,
+          [styles.selectionContainer]:
+            isAppNameAvailable || azureFunctionsFormData.appName.length === 0
+        })}
+      >
         <div className={styles.selectionHeaderContainer}>
           <div>App Name</div>
           <div>.azurewebsites.net</div>
         </div>
-        <div className={classnames(styles.inputContainer, {
-            [styles.borderRed]: !isAppNameAvailable && azureFunctionsFormData.appName.length > 0
-          })}>
-          <input className={styles.input} onChange={handleInput} value={azureFunctionsFormData.appName} placeholder="App Name" />
-          {isAppNameAvailable && <GreenCheck className={styles.validationIcon} />}
+        <div
+          className={classnames(styles.inputContainer, {
+            [styles.borderRed]:
+              !isAppNameAvailable && azureFunctionsFormData.appName.length > 0
+          })}
+        >
+          <input
+            className={styles.input}
+            onChange={handleInput}
+            value={azureFunctionsFormData.appName}
+            placeholder="App Name"
+          />
+          {isAppNameAvailable && (
+            <GreenCheck className={styles.validationIcon} />
+          )}
         </div>
-        {!isAppNameAvailable && azureFunctionsFormData.appName.length > 0 && 
-          <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}>
+        {!isAppNameAvailable && azureFunctionsFormData.appName.length > 0 && (
+          <div
+            style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}
+          >
             {props.appNameAvailability.message}
-          </div>}
+          </div>
+        )}
       </div>
-      {getDropdownSection("Location", functionsData.location, FORM_CONSTANTS.LOCATION)}
-      {getDropdownSection("Runtime Stack", functionsData.runtimeStack, FORM_CONSTANTS.RUNTIME_STACK)}
+      {getDropdownSection(
+        "Location",
+        functionsData.location,
+        FORM_CONSTANTS.LOCATION
+      )}
+      {getDropdownSection(
+        "Runtime Stack",
+        functionsData.runtimeStack,
+        FORM_CONSTANTS.RUNTIME_STACK
+      )}
       <div className={styles.modalFooterContainer}>
-        {getDropdownSection("Number of functions", getNumFunctionsData(), FORM_CONSTANTS.NUM_FUNCTIONS, undefined, 1)}
+        {getDropdownSection(
+          "Number of functions",
+          getNumFunctionsData(),
+          FORM_CONSTANTS.NUM_FUNCTIONS,
+          undefined,
+          1
+        )}
         <button
-          className={classnames(buttonStyles.buttonHighlighted, styles.button, styles.selectionContainer)}
+          className={classnames(
+            buttonStyles.buttonHighlighted,
+            styles.button,
+            styles.selectionContainer
+          )}
           onClick={handleAddResource}
         >
           Add Resource
@@ -196,12 +255,13 @@ const CosmosResourceModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => ({
-    isModalOpen: isAzureFunctionsModalOpenSelector(state),
-    vscode: state.vscode.vscodeObject,
-    subscriptionData: state.azureProfileData.subscriptionData,
-    subscriptions: state.azureProfileData.profileData.subscriptions,
-    appNameAvailability: state.selection.services.azureFunctions.appNameAvailability,
-    selection: getFunctionsSelection(state)
+  isModalOpen: isAzureFunctionsModalOpenSelector(state),
+  vscode: state.vscode.vscodeObject,
+  subscriptionData: state.azureProfileData.subscriptionData,
+  subscriptions: state.azureProfileData.profileData.subscriptions,
+  appNameAvailability:
+    state.selection.services.azureFunctions.appNameAvailability,
+  selection: getFunctionsSelection(state)
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
