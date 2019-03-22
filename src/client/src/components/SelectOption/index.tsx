@@ -100,9 +100,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
    *
    * @param cardNumbers
    */
-  public convertCardNumbersToTitles(
-    selectedCardIndices: number[]
-  ): ISelected[] {
+  public mapSelectedCardIndicesToCardInfo(selectedCardIndices: number[]): ISelected[] {
     const selectedCardsWithInfo = [];
     const cardTypeCount: { [key: string]: number } = {};
     const { currentCardData, options } = this.props;
@@ -140,8 +138,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   public addOption(cardNumber: number) {
     const { selectedCards } = this.props;
     selectedCards.push(cardNumber);
-    if (this.props.selectOptions !== undefined) {
-      this.props.selectOptions(this.convertCardNumbersToTitles(selectedCards));
+    if (this.props.selectOptions) {
+      this.props.selectOptions(this.mapSelectedCardIndicesToCardInfo(selectedCards));
     }
   }
 
