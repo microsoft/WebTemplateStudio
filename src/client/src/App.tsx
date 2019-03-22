@@ -22,7 +22,10 @@ import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
 import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
-import { setAccountAvailability, setAppNameAvailabilityAction } from "./actions/setAccountAvailability";
+import {
+  setAccountAvailability,
+  setAppNameAvailabilityAction
+} from "./actions/setAccountAvailability";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
@@ -88,7 +91,8 @@ class App extends React.Component<Props> {
             );
           }
           return;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA:
+        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
+        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
           // Expect resource groups and locations on this request
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)

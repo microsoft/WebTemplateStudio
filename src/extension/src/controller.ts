@@ -1,10 +1,11 @@
 import * as vscode from "vscode";
-import { CONSTANTS, ExtensionCommand } from "./constants";
 import { Validator } from "./utils/validator";
+import { CONSTANTS, ExtensionCommand, AzureResourceType } from "./constants";
 import {
   AzureAuth,
   SubscriptionItem,
-  ResourceGroupItem
+  ResourceGroupItem,
+  LocationItem
 } from "./azure-auth/azureAuth";
 import {
   SubscriptionError,
@@ -24,14 +25,17 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
+import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
+  private static Telemetry: TelemetryAI;
   private static reactPanelContext: ReactPanel;
   // This will map commands from the client to functions.
+
   private static clientCommandMap: Map<
     ExtensionCommand,
     (message: any) => void
@@ -39,8 +43,12 @@ export abstract class Controller {
     [ExtensionCommand.Login, Controller.performLogin],
     [ExtensionCommand.Subscriptions, Controller.sendSubscriptionsToClient],
     [
-      ExtensionCommand.SubscriptionData,
-      Controller.sendSubscriptionDataToClient
+      ExtensionCommand.SubscriptionDataForCosmos,
+      Controller.sendCosmosSubscriptionDataToClient
+    ],
+    [
+      ExtensionCommand.SubscriptionDataForFunctions,
+      Controller.sendFunctionsSubscriptionDataToClient
     ],
     [
       ExtensionCommand.NameFunctions,
@@ -55,6 +63,7 @@ export abstract class Controller {
       ExtensionCommand.GetOutputPath,
       Controller.sendOutputPathSelectionToClient
     ],
+    [ExtensionCommand.HandleTelemetry, Controller.handleTelemetry],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
     [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
     [ExtensionCommand.GetUserStatus, Controller.sendUserStatus]
@@ -72,7 +81,7 @@ export abstract class Controller {
     });
   }
 
-  private static routingMessageReceieverDelegate = function (message: any) {
+  private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -87,11 +96,26 @@ export abstract class Controller {
    * Will pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public static launchWizard(context: vscode.ExtensionContext) {
+  public static launchWizard(
+    context: vscode.ExtensionContext,
+    extensionStartUpTime: number = Date.now()
+  ) {
     Controller.reactPanelContext = ReactPanel.createOrShow(
       context.extensionPath,
       this.routingMessageReceieverDelegate
     );
+    Controller.Telemetry = new TelemetryAI(context, extensionStartUpTime);
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      "testingFunctionWrapper",
+      async function(this: IActionContext): Promise<void> {
+        this.properties.customProp = "Hello Testing";
+        console.log("helloworld");
+      }
+    );
+  }
+  // TODO: To minimize PR size, this will be edited in next PR; branch: t-trngo/telemetryIntegrationInController
+  public static handleTelemetry(payload: any): any {
+    //   Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
   }
 
   /**
@@ -108,7 +132,10 @@ export abstract class Controller {
    * @returns a Json object of Formatted Resource and Location strings
    *
    * */
-  public static async getSubscriptionData(subscriptionLabel: string) {
+  public static async getSubscriptionData(
+    subscriptionLabel: string,
+    AzureType: AzureResourceType
+  ) {
     let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
     let resourceGroupItems = this.getResourceGroups(subscriptionItem).then(
       resourceGroups => {
@@ -125,26 +152,37 @@ export abstract class Controller {
         return formatResourceGroupList;
       }
     );
-    let locationItems = this.getLocations(subscriptionItem).then(locations => {
-      // Format
-      let formatLocationList = [];
-      formatLocationList.push(
-        ...locations.map(location => {
-          return {
-            label: location.locationDisplayName,
-            value: location.locationDisplayName
-          };
-        })
-      );
-      return formatLocationList;
-    });
+
+    var locationItems: LocationItem[] = [];
+
+    switch (AzureType) {
+      case AzureResourceType.Cosmos:
+        locationItems = await AzureAuth.getLocationsForCosmos(subscriptionItem);
+        break;
+      case AzureResourceType.Functions:
+        locationItems = await AzureAuth.getLocationsForFunctions(
+          subscriptionItem
+        );
+        break;
+    }
+
+    let locations = [];
+    locations.push(
+      ...locationItems.map(location => {
+        return {
+          label: location.locationDisplayName,
+          value: location.locationDisplayName
+        };
+      })
+    );
 
     // Parallel setup
     return {
       resourceGroups: await resourceGroupItems,
-      locations: await locationItems
+      locations: locations
     };
   }
+
   /**
    * @param SubscriptionItem subscription item interface implementation
    * @returns a list of Resource Group Items
@@ -152,14 +190,6 @@ export abstract class Controller {
    * */
   private static async getResourceGroups(subscriptionItem: SubscriptionItem) {
     return AzureAuth.getResourceGroupItems(subscriptionItem);
-  }
-  /**
-   * @param SubscriptionItem subscription item interface implementation
-   * @returns a list of Location Items
-   *
-   * */
-  private static async getLocations(subscriptionItem: SubscriptionItem) {
-    return AzureAuth.getLocations(subscriptionItem);
   }
 
   public static async validateFunctionAppName(
@@ -183,8 +213,8 @@ export abstract class Controller {
           );
         }
       })
-      .catch(err => {
-        throw err;
+      .catch(error => {
+        throw error;
       });
   }
 
@@ -205,12 +235,12 @@ export abstract class Controller {
               subscriptions: subscriptions
             });
           })
-          .catch((err: Error) => {
-            Controller.handleErrorMessage(ExtensionCommand.Login, err);
+          .catch((error: Error) => {
+            Controller.handleErrorMessage(ExtensionCommand.Login, error);
           });
       })
-      .catch(err => {
-        vscode.window.showErrorMessage(err);
+      .catch(error => {
+        vscode.window.showErrorMessage(error);
       });
   }
 
@@ -221,21 +251,52 @@ export abstract class Controller {
           subscriptions: subscriptions
         });
       })
-      .catch((err: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.Subscriptions, err);
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(ExtensionCommand.Subscriptions, error);
       });
   }
 
-  public static sendSubscriptionDataToClient(message: any) {
-    Controller.getSubscriptionData(message.subscription)
+  public static sendCosmosSubscriptionDataToClient(message: any) {
+    Controller.getSubscriptionData(
+      message.subscription,
+      AzureResourceType.Cosmos
+    )
       .then(subscriptionDatapackage => {
-        Controller.handleValidMessage(ExtensionCommand.SubscriptionData, {
-          resourceGroups: subscriptionDatapackage.resourceGroups,
-          locations: subscriptionDatapackage.locations
-        });
+        Controller.handleValidMessage(
+          ExtensionCommand.SubscriptionDataForCosmos,
+          {
+            resourceGroups: subscriptionDatapackage.resourceGroups,
+            locations: subscriptionDatapackage.locations
+          }
+        );
       })
-      .catch((err: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.SubscriptionData, err);
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(
+          ExtensionCommand.SubscriptionDataForCosmos,
+          error
+        );
+      });
+  }
+
+  public static sendFunctionsSubscriptionDataToClient(message: any) {
+    Controller.getSubscriptionData(
+      message.subscription,
+      AzureResourceType.Functions
+    )
+      .then(subscriptionDatapackage => {
+        Controller.handleValidMessage(
+          ExtensionCommand.SubscriptionDataForFunctions,
+          {
+            resourceGroups: subscriptionDatapackage.resourceGroups,
+            locations: subscriptionDatapackage.locations
+          }
+        );
+      })
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(
+          ExtensionCommand.SubscriptionDataForFunctions,
+          error
+        );
       });
   }
 
@@ -246,8 +307,8 @@ export abstract class Controller {
           isAvailable: true
         });
       })
-      .catch((err: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameFunctions, err, {
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(ExtensionCommand.NameFunctions, error, {
           isAvailable: false
         });
       });
@@ -260,8 +321,8 @@ export abstract class Controller {
           isAvailable: true
         });
       })
-      .catch((err: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameCosmos, err, {
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(ExtensionCommand.NameCosmos, error, {
           isAvailable: false
         });
       });
@@ -348,9 +409,9 @@ export abstract class Controller {
           CONSTANTS.INFO.FUNCTION_APP_DEPLOYED(funcPayload.appName)
         );
       })
-      .catch((err: Error) => {
-        vscode.window.showErrorMessage(err.message);
-        Controller.handleErrorMessage(ExtensionCommand.DeployFunctions, err, {
+      .catch((error: Error) => {
+        vscode.window.showErrorMessage(error.message);
+        Controller.handleErrorMessage(ExtensionCommand.DeployFunctions, error, {
           succeeded: false
         });
       });
@@ -380,9 +441,9 @@ export abstract class Controller {
           CONSTANTS.INFO.COSMOS_ACCOUNT_DEPLOYED(cosmosPayload.accountName)
         );
       })
-      .catch((err: Error) => {
-        vscode.window.showErrorMessage(err.message);
-        Controller.handleErrorMessage(ExtensionCommand.DeployCosmos, err);
+      .catch((error: Error) => {
+        vscode.window.showErrorMessage(error.message);
+        Controller.handleErrorMessage(ExtensionCommand.DeployCosmos, error);
       });
   }
 
@@ -442,7 +503,7 @@ export abstract class Controller {
 
     return this.AzureCosmosDBProvider.validateCosmosDBAccountName(
       cosmosDBAccountName,
-      this.usersCosmosDBSubscriptionItemCache
+      Controller.usersCosmosDBSubscriptionItemCache
     )
       .then(message => {
         if (message === undefined || message === null || message === "") {
@@ -451,8 +512,8 @@ export abstract class Controller {
           return Promise.reject(new ValidationError(message));
         }
       })
-      .catch(err => {
-        throw err;
+      .catch(error => {
+        throw error;
       });
   }
 
@@ -491,8 +552,8 @@ export abstract class Controller {
         selections.accountName,
         selections.subscription
       );
-    } catch (err) {
-      return Promise.reject(err);
+    } catch (error) {
+      return Promise.reject(error);
     }
 
     let userCosmosDBSelection: CosmosDBSelections = {
@@ -580,7 +641,7 @@ export abstract class Controller {
           email: email,
           subscriptions: subscriptions
         });
-      })
+      });
     } catch (error) {
       Controller.handleValidMessage(ExtensionCommand.GetUserStatus, null);
     }

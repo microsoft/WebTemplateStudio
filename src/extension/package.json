@@ -1,15 +1,35 @@
 {
-  "name": "extension",
+  "name": "extension-wts",
   "displayName": "Web Template Studio",
   "description": "An extension that helps developers get started quickly when building web apps by generating web templates which encourage best code practices.",
   "version": "0.0.1",
   "publisher": "Microsoft",
+  "aiKey": "9bcb5271-8522-48f5-bb69-a9d5d04c595e",
   "engines": {
     "vscode": "^1.30.0"
   },
   "categories": [
     "Other"
   ],
+  "galleryBanner": {
+    "color": "#3c3c3c",
+    "theme": "dark"
+  },
+  "icon": "",
+  "keywords": [
+    "Garage",
+    "Web Application"
+  ],
+  "preview": true,
+  "homepage": "https://github.com/Microsoft/WebTemplateStudio/blob/master/README.md",
+  "bugs": {
+    "url": "https://github.com/Microsoft/WebTemplateStudio/issues"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/WebTemplateStudio"
+  },
   "activationEvents": [
     "onCommand:webTemplateStudioExtension.wizardLaunch"
   ],
@@ -46,6 +66,7 @@
     "@types/archiver": "^2.1.2",
     "@types/fs-extra": "^5.0.5",
     "@types/node-fetch": "^2.1.6",
+    "@types/opn": "^5.1.0",
     "@types/request": "^2.48.1",
     "@types/rimraf": "^2.0.2",
     "app-root-path": "^2.1.0",
@@ -58,12 +79,11 @@
     "ms-rest": "^2.5.0",
     "ms-rest-azure": "^2.6.0",
     "node-fetch": "^2.3.0",
+    "opn": "^5.5.0",
     "rimraf": "^2.6.3",
     "tslint-microsoft-contrib": "^6.1.0",
-    "vsce": "^1.57.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/WebTemplateStudio"
+    "vsce": "^1.57.1",
+    "vscode-extension-telemetry": "^0.1.1",
+    "vscode-nls": "^4.0.0"
   }
 }
