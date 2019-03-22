@@ -1,10 +1,10 @@
 {
-  "name": "{{EXTENSIONNAME}}",
-  "displayName": "{{DISPLAYNAME}}",
+  "name": "__EXTENSIONNAME__",
+  "displayName": "__DISPLAYNAME__",
   "description": "An extension that helps developers get started quickly when building web apps by generating web templates which encourage best code practices.",
-  "version": "{{VERSIONNUMBER}}",
-  "publisher": "{{PUBLISHER}}",
-  "aiKey": "{{AIKEY}}",
+  "version": "__VERSIONNUMBER__",
+  "publisher": "__PUBLISHER__",
+  "aiKey": "__AIKEY__",
   "engines": {
     "vscode": "^1.30.0"
   },
@@ -49,7 +49,7 @@
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test",
-    "createVsixPackage": "rm -rf ../../dist/wts.vsix && vsce package --out ../../dist/wts.vsix"
+    "createVsixPackage": "rm -rf ../../dist/wts.vsix && vsce package --out ../../dist/wts.__VERSIONNUMBER__.vsix"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
