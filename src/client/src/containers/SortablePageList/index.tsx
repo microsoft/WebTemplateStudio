@@ -35,7 +35,8 @@ const SortablePageList = (props: Props) => {
         props.selectPages((arrayMove(pages, oldIndex, newIndex)));
     };
     const handleCloseClick = (idx: number) => {
-        const pagesWithOmittedIdx = pages.slice(0,idx).concat(pages.slice(idx + 1, pages.length));
+        const pagesWithOmittedIdx: ISelected[] = [...pages];
+        pagesWithOmittedIdx.splice(idx, 1);
         props.selectPages(pagesWithOmittedIdx);
     }
     const hideOrShowText = isMinimized ? "Show" : "Hide";
@@ -45,7 +46,7 @@ const SortablePageList = (props: Props) => {
                 <div className={styles.dropdownTitle}>Pages</div>
                 <div className={styles.hideOrShow} onClick={() => { setMinimized(isMinimized ? false : true) }}>{hideOrShowText}</div>    
             </div>
-            {!isMinimized && <SortableList pages={props.pages} onSortEnd={onSortEnd} distance={1} handleInputChange={handleInputChange} />}
+            {!isMinimized && <SortableList pages={props.pages} onSortEnd={onSortEnd} distance={1} handleInputChange={handleInputChange} handleCloseClick={handleCloseClick} />}
             {/* Using a baseline of 1 for idx because !!0 === false */}
         </div>
     )
