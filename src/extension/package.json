@@ -1,10 +1,10 @@
 {
-  "name": "extension-wts",
-  "displayName": "Web Template Studio",
+  "name": "{{EXTENSIONNAME}}",
+  "displayName": "{{DISPLAYNAME}}",
   "description": "An extension that helps developers get started quickly when building web apps by generating web templates which encourage best code practices.",
-  "version": "0.0.1",
-  "publisher": "Microsoft",
-  "aiKey": "9bcb5271-8522-48f5-bb69-a9d5d04c595e",
+  "version": "{{VERSIONNUMBER}}",
+  "publisher": "{{PUBLISHER}}",
+  "aiKey": "{{AIKEY}}",
   "engines": {
     "vscode": "^1.30.0"
   },
