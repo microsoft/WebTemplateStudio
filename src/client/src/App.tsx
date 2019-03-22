@@ -31,6 +31,7 @@ import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
+import { setPathAndNameValidation } from "./actions/setPathAndNameValidation";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -40,6 +41,7 @@ interface IDispatchProps {
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
+  setPathAndNameValidation: (validation: {}) => void;
 }
 
 interface IStateProps {
@@ -50,13 +52,14 @@ type Props = IDispatchProps & IStateProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => {},
-    loadWizardContent: () => {},
-    logIntoAzure: () => {},
-    saveSubscriptionData: () => {},
-    updateOutputPath: () => {},
-    setCosmosResourceAccountNameAvailability: () => {},
-    setAppNameAvailability: () => {}
+    getVSCodeApi: () => { },
+    loadWizardContent: () => { },
+    logIntoAzure: () => { },
+    saveSubscriptionData: () => { },
+    updateOutputPath: () => { },
+    setCosmosResourceAccountNameAvailability: () => { },
+    setAppNameAvailability: () => { },
+    setPathAndNameValidation: () => { }
   };
 
   public componentDidMount() {
@@ -113,6 +116,10 @@ class App extends React.Component<Props> {
             isAvailable: message.payload.isAvailable,
             message: message.message
           });
+          return;
+        case EXTENSION_COMMANDS.PROJECT_PATH_AND_NAME_VALIDATION:
+          this.props.setPathAndNameValidation(message.payload.validation);
+          return;
       }
     });
   }
@@ -182,6 +189,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   },
   setAppNameAvailability: (isAvailableObject: any) => {
     dispatch(setAppNameAvailabilityAction(isAvailableObject));
+  },
+  setPathAndNameValidation: (validation: {}) => {
+    dispatch(setPathAndNameValidation(validation));
   }
 });
 
