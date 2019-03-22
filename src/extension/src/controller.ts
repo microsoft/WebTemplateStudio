@@ -111,13 +111,6 @@ export abstract class Controller {
       this.routingMessageReceieverDelegate
     );
     Controller.Telemetry = new TelemetryAI(context, extensionStartUpTime);
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      "testingFunctionWrapper",
-      async function(this: IActionContext): Promise<void> {
-        this.properties.customProp = "Hello Testing";
-        console.log("helloworld");
-      }
-    );
   }
   public static handleTelemetry(payload : any): any {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(payload.pageName, async function (this: IActionContext): Promise<void> {
@@ -356,7 +349,7 @@ export abstract class Controller {
     );
 
     if (payload.selectedFunctions) {
-      Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(payload.pageName, async function (this: IActionContext): Promise<void> {
+      Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.FunctionsDeploy, async function (this: IActionContext): Promise<void> {
         Controller.processFunctionDeploymentAndSendStatusToClient(
           payload.functions,
           enginePayload.path
@@ -366,7 +359,7 @@ export abstract class Controller {
     }
 
     if (payload.selectedCosmos) {
-      Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(payload.pageName, async function (this: IActionContext): Promise<void> {
+      Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.CosmosDBDeploy, async function (this: IActionContext): Promise<void> {
         var cosmosPayload: any = payload.cosmos;
         await Controller.processCosmosDeploymentAndSendStatusToClient(
           cosmosPayload,
