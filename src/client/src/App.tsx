@@ -4,7 +4,7 @@ import { HashRouter as Router, Route } from "react-router-dom";
 import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
-import PageDetails from "./components/PageDetails";
+import PageDetails from "./containers/PageDetails";
 import SelectFrameworks from "./components/SelectFrameworks";
 import SelectPages from "./components/SelectPages";
 import SelectWebApp from "./components/SelectWebApp";
@@ -22,7 +22,10 @@ import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
 import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
-import { setAccountAvailability, setAppNameAvailabilityAction } from "./actions/setAccountAvailability";
+import {
+  setAccountAvailability,
+  setAppNameAvailabilityAction
+} from "./actions/setAccountAvailability";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
@@ -47,13 +50,13 @@ type Props = IDispatchProps & IStateProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => { },
-    loadWizardContent: () => { },
-    logIntoAzure: () => { },
-    saveSubscriptionData: () => { },
-    updateOutputPath: () => { },
-    setCosmosResourceAccountNameAvailability: () => { },
-    setAppNameAvailability: () => { }
+    getVSCodeApi: () => {},
+    loadWizardContent: () => {},
+    logIntoAzure: () => {},
+    saveSubscriptionData: () => {},
+    updateOutputPath: () => {},
+    setCosmosResourceAccountNameAvailability: () => {},
+    setAppNameAvailability: () => {}
   };
 
   public componentDidMount() {
@@ -114,11 +117,11 @@ class App extends React.Component<Props> {
   }
 
   public componentDidUpdate(prevProps: Props) {
-      if (this.props.vscode !== prevProps.vscode) {
-        this.props.vscode.postMessage({
-          command: EXTENSION_COMMANDS.GET_USER_STATUS
-        });
-      }
+    if (this.props.vscode !== prevProps.vscode) {
+      this.props.vscode.postMessage({
+        command: EXTENSION_COMMANDS.GET_USER_STATUS
+      });
+    }
   }
 
   public render() {
@@ -182,7 +185,7 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
 });
 
 const mapStateToProps = (state: any): IStateProps => ({
-    vscode: state.vscode.vscodeObject
+  vscode: state.vscode.vscodeObject
 });
 
 export default connect(

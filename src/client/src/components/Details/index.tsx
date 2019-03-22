@@ -16,7 +16,7 @@ const Details = ({ detailInfo, handleBackClick }: IProps) => {
       <div className={styles.container}>
         <div className={styles.backContainer}>
           <div>
-            {!!backArrow && (
+            {backArrow && (
               <img
                 onClick={handleBackClick}
                 className={styles.backIcon}
@@ -30,7 +30,7 @@ const Details = ({ detailInfo, handleBackClick }: IProps) => {
         </div>
         <div className={styles.detailsContainer}>
           <div>
-            {!!detailInfo.svgUrl && (
+            {detailInfo.svgUrl && (
               <img className={styles.icon} src={detailInfo.svgUrl} />
             )}
           </div>

@@ -4,7 +4,7 @@ import { IMetadata } from "../types/metadata";
 import { IOption } from "../types/option";
 import { getProjectTypesSuccess } from "./getProjectTypesSuccess";
 import getSvgUrl from "../utils/getSvgUrl";
-import { callbackify } from "util";
+
 // thunk
 export const getProjectTypesAction = () => {
   return async (dispatch: any) => {

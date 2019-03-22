@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router";
-import Details from "../Details";
+import Details from "../../components/Details";
 import { IOption } from "../../types/option";
 
 interface IPageDetailsProps {
@@ -10,20 +10,14 @@ interface IPageDetailsProps {
 
 type Props = IPageDetailsProps & RouteComponentProps;
 
-class PageDetails extends React.Component<Props> {
-  constructor(props: any) {
-    super(props);
-  }
-
-  public render() {
-    return (
-      <Details
-        handleBackClick={this.props.history.goBack}
-        detailInfo={this.props.detailsPageInfo}
-      />
-    );
-  }
-}
+const PageDetails = (props: Props) => {
+  return (
+    <Details
+      handleBackClick={props.history.goBack}
+      detailInfo={props.detailsPageInfo}
+    />
+  );
+};
 
 const mapStateToProps = (state: any): IPageDetailsProps => {
   return {

@@ -136,25 +136,22 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public render() {
+    let { title, options, setDetailPage } = this.props;
     return (
       <div>
-        <Title>{this.props.title}</Title>
+        <Title>{title}</Title>
         <div className={styles.container}>
-          {this.props.options.map((option, cardNumber) => (
+          {options.map((option, cardNumber) => (
             <Card
               option={option}
               key={`${cardNumber} ${option.title}`}
               onCardClick={(cardNumber: number) => {
                 this.onCardClick(cardNumber);
               }}
-              onDetailsClick={this.props.setDetailPage}
+              onDetailsClick={setDetailPage}
               cardNumber={cardNumber}
               selected={this.isCardSelected(cardNumber)}
-              iconPath={option.svgUrl}
               iconStyles={styles.icon}
-              title={option.title}
-              body={option.body}
-              disabled={option.unselectable}
             />
           ))}
         </div>

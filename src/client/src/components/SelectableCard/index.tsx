@@ -14,27 +14,19 @@ import styles from "./styles.module.css";
 import Check from "../../assets/check.svg";
 
 const SelectableCard = ({
-  iconPath,
   iconStyles,
-  title,
-  body,
   selected,
   cardNumber,
   onCardClick,
   option,
-  onDetailsClick,
-  disabled
+  onDetailsClick
 }: {
-  iconPath: string | undefined;
   iconStyles: string;
-  title: string;
-  body: string;
   selected: boolean;
   cardNumber: number;
   onCardClick: (idx: number) => void;
   option: IOption;
   onDetailsClick: (detailPageInfo: IOption) => void;
-  disabled: boolean | undefined;
 }) => {
   return (
     <div
@@ -43,26 +35,29 @@ const SelectableCard = ({
       }}
       className={classNames(styles.container, styles.boundingBox, {
         [styles.selected]: selected,
-        [styles.unselectable]: disabled
+        [styles.unselectable]: option.unselectable
       })}
     >
       <div>
         <div className={styles.cardHeader}>
           <div className={styles.icon}>
-            {iconPath && <img src={iconPath} className={iconStyles} />}
+            {option.svgUrl && (
+              <img src={option.svgUrl} className={iconStyles} />
+            )}
           </div>
           <div
             className={classNames({
-              [styles.title]: iconPath,
-              [styles.titleLeftJustified]: iconPath === undefined ? true : false
+              [styles.title]: option.svgUrl,
+              [styles.titleLeftJustified]:
+                option.svgUrl === undefined ? true : false
             })}
           >
-            <CardTitle title={title} />
+            <CardTitle title={option.title} />
           </div>
         </div>
         <div className={grid.row}>
           <div className={styles.body}>
-            <CardBody body={body} />
+            <CardBody body={option.body} />
           </div>
         </div>
       </div>
