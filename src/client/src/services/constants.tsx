@@ -11,7 +11,8 @@ export const API = {
     POST: "post"
   },
   QueryParams: {
-    Framework: "framework",
+    FrontendFramework: "frontendFramework",
+    BackendFramework: "backendFramework",
     Path: "path",
     Platform: "platform",
     ProjectType: "projectType"

@@ -1,4 +1,5 @@
 import * as Actions from "../../actions/types";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 /* State Shape
 {
@@ -11,7 +12,11 @@ PageOption = {
 }
 */
 
-const pagesReducer = (state: any[] = [], action: any) => {
+const pagesReducer = (state: any[] = [{
+  title: "Blank Page",
+  internalName: WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE,
+  originalTitle: "Blank Page"
+}], action: any) => {
   switch (action.type) {
     case Actions.SELECT_PAGES:
       // FIXME: Define proper types

@@ -22,7 +22,10 @@ import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
 import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
-import { setAccountAvailability, setAppNameAvailabilityAction } from "./actions/setAccountAvailability";
+import {
+  setAccountAvailability,
+  setAppNameAvailabilityAction
+} from "./actions/setAccountAvailability";
 import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
@@ -75,6 +78,7 @@ class App extends React.Component<Props> {
             );
           }
           return;
+        case EXTENSION_COMMANDS.GET_USER_STATUS:
         case "login":
           // email will be null or undefined if login didn't work correctly
           if (message.payload != null) {
@@ -84,7 +88,8 @@ class App extends React.Component<Props> {
             );
           }
           return;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA:
+        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
+        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
           // Expect resource groups and locations on this request
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
@@ -108,13 +113,12 @@ class App extends React.Component<Props> {
             isAvailable: message.payload.isAvailable,
             message: message.message
           });
-          return;
       }
     });
   }
 
-  public componentDidUpdate(prevProps: any){
-    if(this.props.vscode !== prevProps.vscode){
+  public componentDidUpdate(prevProps: Props) {
+    if (this.props.vscode !== prevProps.vscode) {
       this.props.vscode.postMessage({
         command: EXTENSION_COMMANDS.GET_USER_STATUS
       });
@@ -181,11 +185,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   }
 });
 
-const mapStateToProps = (state: any): IStateProps => {
-  return {
-    vscode: state.vscode.vscodeObject
-  };
-};
+const mapStateToProps = (state: any): IStateProps => ({
+  vscode: state.vscode.vscodeObject
+});
 
 export default connect(
   mapStateToProps,

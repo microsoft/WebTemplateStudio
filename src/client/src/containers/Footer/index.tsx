@@ -11,15 +11,25 @@ import { ROUTES } from "../../utils/constants";
 
 import { IVSCode } from "../../reducers/vscodeApiReducer";
 import { rootSelector } from "../../selectors/generationSelector";
-import { getCosmosDbSelectionSelector, isCosmosResourceCreatedSelector } from "../../selectors/cosmosServiceSelector";
-interface IDispatchProps {
+import {
+  getCosmosDbSelectionSelector,
+  isCosmosResourceCreatedSelector
+} from "../../selectors/cosmosServiceSelector";
+import {
+  getAzureFunctionsOptionsSelector,
+  isAzureFunctionsSelected
+} from "../../selectors/azureFunctionsServiceSelector";
+
+interface IStateProps {
   vscode?: IVSCode;
-  engine?: any;
-  selectedCosmos?: any;
-  cosmos?: any;
+  engine: any;
+  selectedCosmos: boolean;
+  cosmos: any;
+  selectedFunctions: boolean;
+  functions: any;
 }
 
-type Props = RouteComponentProps & IDispatchProps;
+type Props = RouteComponentProps & IStateProps;
 
 // TODO: Reconfigure with proper navigation using redux
 const pathsNext: any = {
@@ -37,15 +47,24 @@ const pathsBack: any = {
 
 class Footer extends React.Component<Props> {
   public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const {
+      engine,
+      selectedCosmos,
+      cosmos,
+      selectedFunctions,
+      functions
+    } = this.props;
     e.preventDefault();
     // @ts-ignore
     this.props.vscode.postMessage({
       command: "generate",
       text: "Sending generation info...",
       payload: {
-        engine: this.props.engine,
-        selectedCosmos: this.props.selectedCosmos,
-        cosmos: this.props.cosmos
+        engine,
+        selectedCosmos,
+        cosmos,
+        selectedFunctions,
+        functions
       }
     });
   };
@@ -75,7 +94,9 @@ class Footer extends React.Component<Props> {
                   [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
                 })}
                 to={
-                  pathname === ROUTES.REVIEW_AND_GENERATE ? ROUTES.REVIEW_AND_GENERATE : pathsNext[pathname]
+                  pathname === ROUTES.REVIEW_AND_GENERATE
+                    ? ROUTES.REVIEW_AND_GENERATE
+                    : pathsNext[pathname]
                 }
               >
                 Next
@@ -104,13 +125,15 @@ class Footer extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): any => {
+const mapStateToProps = (state: any): IStateProps => {
   const { vscode } = state;
   return {
     vscode: vscode.vscodeObject,
     engine: rootSelector(state),
     selectedCosmos: isCosmosResourceCreatedSelector(state),
-    cosmos: getCosmosDbSelectionSelector(state)
+    cosmos: getCosmosDbSelectionSelector(state),
+    selectedFunctions: isAzureFunctionsSelected(state),
+    functions: getAzureFunctionsOptionsSelector(state)
   };
 };
 

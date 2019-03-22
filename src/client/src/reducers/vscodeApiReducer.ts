@@ -11,6 +11,12 @@ import { EXTENSION_COMMANDS } from "../utils/constants";
 }
 */
 
+const WEST_US: string = "WEST US";
+const RESOURCE_GROUP_MOCK: string = "resourceGroupMock";
+
+const DEV_NO_ERROR_MSG: string = "in development, no error message";
+const DEV_NO_ERROR_TYPE: string = "in development, no error type";
+
 export interface IVSCode {
   vscode: IVSCodeAPI;
 }
@@ -23,7 +29,7 @@ interface IVSCodeAPI {
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
  * in development environment.
- * 
+ *
  * Mimics VSCode API by using native postMessage API to mimic postMessage from
  * VSCode.
  */
@@ -38,10 +44,10 @@ const mockVsCodeApi = () => ({
         window.postMessage({
           command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
           payload: {
-            isAvailable: message.appName.length > 0,
+            isAvailable: message.appName.length > 0
           },
-          message: "in development, no error message",
-          errorType: "in development, no error type"
+          message: DEV_NO_ERROR_MSG,
+          errorType: DEV_NO_ERROR_TYPE
         });
         break;
       case EXTENSION_COMMANDS.NAME_COSMOS:
@@ -49,20 +55,31 @@ const mockVsCodeApi = () => ({
         window.postMessage({
           command: EXTENSION_COMMANDS.NAME_COSMOS,
           payload: {
-            isAvailable: message.appName.length > 0,
+            isAvailable: message.appName.length > 0
           },
-          message: "in development, no error message",
-          errorType: "in development, no error type"
+          message: DEV_NO_ERROR_MSG,
+          errorType: DEV_NO_ERROR_TYPE
         });
         break;
-      case EXTENSION_COMMANDS.SUBSCRIPTION_DATA:
+      case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
         // @ts-ignore produces locations and resource groups in development
         window.postMessage({
-          command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA,
+          command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
           payload: {
-            locations: [{ label: "WEST US", value: "WEST US" }],
+            locations: [{ label: WEST_US, value: WEST_US }],
             resourceGroups: [
-              { label: "resourceGroupMock", value: "resourceGroupMock" }
+              { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK }
+            ]
+          }
+        });
+      case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
+        // @ts-ignore produces locations and resource groups in development
+        window.postMessage({
+          command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
+          payload: {
+            locations: [{ label: WEST_US, value: WEST_US }],
+            resourceGroups: [
+              { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK }
             ]
           }
         });
@@ -87,8 +104,8 @@ function vscodeApi(
         newState.vscodeObject =
           process.env.NODE_ENV === PRODUCTION
             ? //
-            // @ts-ignore because function does not exist in dev environment
-            acquireVsCodeApi()
+              // @ts-ignore because function does not exist in dev environment
+              acquireVsCodeApi()
             : mockVsCodeApi();
         return newState;
       }
