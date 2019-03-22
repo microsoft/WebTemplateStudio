@@ -23,6 +23,18 @@ export const CONSTANTS = {
     FUNCTIONS_INVALID_NAME: (name: string) => {
       return `Invalid function name ${name}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters`;
     },
+    EMPTY_OUTPUT_PATH: "Output Path cannot be empty.",
+    EMPTY_PROJECT_NAME: "Project Name cannot be empty.",
+    PROJECT_NAME_LENGTH_EXCEEDED_MAX: "Project Name has to be less than 50 chars long.",
+    INVALID_OUTPUT_PATH: (path: string) => {
+      return `Path ${path} does not exist.`;
+    },
+    INVALID_PROJECT_NAME: (name: string) => {
+      return `${name} is invalid. The project name attribute may only contain letters, numbers, and spaces`;
+    },
+    PROJECT_PATH_EXISTS: (path: string, name: string) => {
+      return `There exists a directory named ${name} in the specified path '${path}', please choose a unique path`;
+    },
     COSMOS_ACCOUNT_NOT_AVAILABLE: (name: string) => {
       return `Account name "${name}" is not available.`;
     },
@@ -60,7 +72,9 @@ export const CONSTANTS = {
   GENERATE_ENDPOINT: "/api/generate",
   CONNECTION_STRING: function (username: string, password: string, origin: string) {
     return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMODDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
-  }
+  },
+  MAX_PROJECT_NAME_LENGTH: 50,
+  PORT: "5000"
 };
 
 export enum ExtensionCommand {
@@ -77,7 +91,8 @@ export enum ExtensionCommand {
   HandleTelemetry = "telemetryAI",
   GetFunctionsRuntimes = "getFunctionsRuntimes",
   GetCosmosAPIs = "getCosmosAPIs",
-  GetUserStatus = "getUserStatus"
+  GetUserStatus = "getUserStatus",
+  ProjectPathAndNameValidation = "project-path-and-name-validation"
 }
 
 export enum AzureResourceType {

@@ -48,6 +48,8 @@ const EXTENSION_COMMANDS = {
   GET_USER_STATUS: "getUserStatus",
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
+  GENERATE: "generate",
+  PROJECT_PATH_AND_NAME_VALIDATION: "project-path-and-name-validation",
   SUBSCRIPTION_DATA_COSMOS: "subscriptionDataForCosmos",
   SUBSCRIPTION_DATA_FUNCTIONS: "subscriptionDataForFunctions"
 };

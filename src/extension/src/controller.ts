@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { Validator } from "./utils/validator";
 import { CONSTANTS, ExtensionCommand, AzureResourceType } from "./constants";
 import {
   AzureAuth,
@@ -327,14 +328,45 @@ export abstract class Controller {
       });
   }
 
-  public static async handleGeneratePayloadFromClient(
-    message: any
-  ): Promise<any> {
+  public static async handleGeneratePayloadFromClient(message: any): Promise<any> {
     var payload = message.payload;
     var enginePayload: any = payload.engine;
-    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
-      enginePayload
-    );
+
+    var projectNameError = "";
+    var isValidProjectName = true;
+    var projectPathError = "";
+    var isValidProjectPath = true;
+
+    try {
+      Validator.isValidProjectName(enginePayload.projectName);
+    } catch (error) {
+      projectNameError = error.message;
+      isValidProjectName = false;
+    }
+
+    try {
+      Validator.isValidProjectPath(enginePayload.projectPath, enginePayload.projectName);
+    } catch (error) {
+      projectPathError = error.message;
+      isValidProjectPath = false;
+    }
+
+    if (!(isValidProjectName && isValidProjectPath)) {
+      // Send error to wizard, do not do anything
+      Controller.reactPanelContext.postMessageWebview({
+        command: ExtensionCommand.ProjectPathAndNameValidation,
+        payload: {
+          validation: {
+            isValidProjectName: isValidProjectName,
+            projectNameError: projectNameError,
+            isValidProjectPath: isValidProjectPath,
+            projectPathError: projectPathError
+          }
+        }
+      });
+      return;
+    }
+    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload);
 
     if (payload.selectedFunctions) {
       Controller.processFunctionDeploymentAndSendStatusToClient(
@@ -422,7 +454,7 @@ export abstract class Controller {
     enginePayload: any
   ) {
     // FIXME: After gen is done, we need to do some feedback.
-    ApiModule.SendTemplateGenerationPayloadToApi("5000", enginePayload);
+    ApiModule.SendTemplateGenerationPayloadToApi(CONSTANTS.PORT, enginePayload);
   }
 
   public static sendOutputPathSelectionToClient(message: any) {
@@ -432,7 +464,7 @@ export abstract class Controller {
         canSelectFolders: true,
         canSelectMany: false
       })
-      .then(res => {
+      .then((res: any) => {
         let path = undefined;
 
         if (res !== undefined) {
