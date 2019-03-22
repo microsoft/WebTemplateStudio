@@ -4,23 +4,73 @@ Once your business logic is implemented, we recommend that you deploy your websi
 
 ## Azure App Service
 
-One way to deploy is using Azure's App Service. App Service is Azure's platform as a service, which allows you to deploy and scale web, mobile and APIs. We also deploy our azure functions that we generate in WebTS to Azure App Service.
+One way to deploy is using Azure's App Service. App Service is Azure's platform as a service, which allows you to deploy and scale web, mobile and APIs. We also deploy our Azure Functions that we generate in WebTS to Azure App Service.
 
 ## Getting Started with Deployment
 
-### VS code Extension Method
+### VS Code Extension Method
 
 We highly recommend using the [vscode-azureappservice](https://github.com/Microsoft/vscode-azureappservice) extension.
-You can learn all about deployment using their extension on their docs.
+To learn how to deploy using their extension you can look at their docs.
 
 ### Local Git Deployment Method
 
-This method will require a lot more work on the user, but it won't require you to download another extension.
+This method will require a lot more work from the user, but it won't require you to download another extension.
+This method requires the user to have [git](https://git-scm.com/downloads) installed on their computer.
 
 #### Creating the App Service
 
-First you must head over to the [Azure Portal](https://portal.azure.com) and click on the App Services button.
-![Portal image the button is on the left](./resources/azure-appservice-portal.png)
+- Go to the [Azure Portal](https://portal.azure.com) and click on the App Services button.
 
-Next, you must click on the Add button in the new window that appears.
-![Portal image the add button is on the top left](./resources/azure-appservice-add.png)
+  ![Portal image the button is on the left](./resources/azure-appservice-portal.png)
+
+- Click on the Add button in the new window that appears.
+
+  ![Portal image the add button is on the top left](./resources/azure-appservice-add.png)
+
+- Click the _web app_ button.
+
+  ![Portal image click webapp](./resources/azure-appservice-click-webapp.png)
+
+- You will be presented with another screen on which you should click _create_.
+
+  ![Portal image click create](./resources/azure-appservice-click-create.png)
+
+- Another screen will appear. Enter the name of the website in the _app name_ field. Select a subscription, then create a resource group or use an existing one. Select the publish _code_ option. You will have the option to create an _app service_ on this screen (costs money but required if one doesn't already exist). Click on the App service button and you will be to create a new app service. If creating an _app service_ name it and select a location, and finally select the tier you want.
+
+  ![Portal image create resource](./resources/azure-appservice-createresource.png)
+
+- Click create resource.
+
+  ![Portal image create resource create button](./resources/azure-appservice-createadd.png)
+
+- After clicking create you will get a notification, you can click the bell icon on the top right to view notifications. Click the go to resource button.
+
+  ![Portal image go to resource](./resources/azure-appservice-notification.png)
+
+You now have an app service resource in the cloud. You can now upload your website to the cloud.
+
+#### Deploying the website to the App Service
+
+To be able to deploy your website you will need to do the following set of commands in either _terminal_ or _git bash_. **Note you must be in the root of your generated project's directory**.
+
+![Root directory of generated project](./resources/azure-appservice-rootdirectory.png)
+
+`npm install && npm build` or `yarn install && yarn build`
+
+You should then have a build folder in the root directory. After which you should run the following command which will move the production build of your client side into the server folder, while removing the old build if any.
+
+`rm -rf server/build && mv build/ server/`
+
+You will then want to do `git init` if you haven't already to make the root directory a local git repository.
+
+Finally you will want to run the following command to create a .deployment file with the proper parameters.
+
+```
+echo "[config]
+project=server" > .deployment
+```
+
+You will then want to follow the docs that the azure team has created for [deploying with a local git repository](https://docs.microsoft.com/en-us/azure/app-service/deploy-local-git#open-azure-cloud-shell)
+
+Then go to the app you created which should be at `<app name>.azurewebsites.net`
