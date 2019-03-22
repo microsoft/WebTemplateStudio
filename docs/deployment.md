@@ -4,19 +4,17 @@ Once your business logic is implemented, we recommend that you deploy your websi
 
 ## Azure App Service
 
-One way to deploy is using Azure's App Service. App Service is Azure's platform as a service, which allows you to deploy and scale web, mobile and APIs. We also deploy our Azure Functions that we generate in WebTS to Azure App Service.
+One way to deploy is using Azure App Service. This service will allow you to deploy and scale web, mobile and API apps. The Azure Functions generated in Web Template Studio are also deployed to Azure App Service.
 
 ## Getting Started with Deployment
 
 ### VS Code Extension Method
 
-We highly recommend using the [vscode-azureappservice](https://github.com/Microsoft/vscode-azureappservice) extension.
-To learn how to deploy using their extension you can look at their docs.
+The Azure App Service extension provides an easy way to manage and deploy you web application. To learn how to deploy using their VS Code extension, see [Azure App Service Extension](https://github.com/Microsoft/vscode-azureappservice)
 
 ### Local Git Deployment Method
 
-This method will require a lot more work from the user, but it won't require you to download another extension.
-This method requires the user to have [git](https://git-scm.com/downloads) installed on their computer.
+This method will require you to have [git](https://git-scm.com/downloads) installed on your computer.
 
 #### Creating the App Service
 
@@ -44,15 +42,15 @@ This method requires the user to have [git](https://git-scm.com/downloads) insta
 
   ![Portal image create resource create button](./resources/azure-appservice-createadd.png)
 
-- After clicking create you will get a notification, you can click the bell icon on the top right to view notifications. Click the go to resource button.
+- After clicking create you will get a notification, click the bell icon on the top right to view notifications. Click the go to resource button.
 
   ![Portal image go to resource](./resources/azure-appservice-notification.png)
 
-You now have an app service resource in the cloud. You can now upload your website to the cloud.
+You now have an app service resource in the cloud, where you can upload your web application.
 
 #### Deploying the website to the App Service
 
-To be able to deploy your website you will need to do the following set of commands in either _terminal_ or _git bash_. **Note you must be in the root of your generated project's directory**.
+To be able to deploy your web application, you will need to do the following set of commands in either _terminal_ or _git bash_. **Note: you must be in the root of your generated project's directory**.
 
 ![Root directory of generated project](./resources/azure-appservice-rootdirectory.png)
 
@@ -62,15 +60,15 @@ You should then have a build folder in the root directory. After which you shoul
 
 `rm -rf server/build && mv build/ server/`
 
-You will then want to do `git init` if you haven't already to make the root directory a local git repository.
+You will then want to `git init` to make the root directory a local git repository.
 
-Finally you will want to run the following command to create a .deployment file with the proper parameters.
+Finally, run the following command to create a .deployment file with the proper parameters.
 
 ```
 echo "[config]
 project=server" > .deployment
 ```
 
-You will then want to follow the docs that the azure team has created for [deploying with a local git repository](https://docs.microsoft.com/en-us/azure/app-service/deploy-local-git#open-azure-cloud-shell)
+Follow the documentation created by the Azure team for [deploying with a local git repository](https://docs.microsoft.com/en-us/azure/app-service/deploy-local-git#open-azure-cloud-shell)
 
-Then go to the app you created which should be at `<app name>.azurewebsites.net`
+Your newly deployed web app can be found at `<app name>.azurewebsites.net`
