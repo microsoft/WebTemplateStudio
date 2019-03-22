@@ -80,7 +80,7 @@ export abstract class Controller {
     });
   }
 
-  private static routingMessageReceieverDelegate = function(message: any) {
+  private static routingMessageReceieverDelegate = function (message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -106,7 +106,7 @@ export abstract class Controller {
     Controller.Telemetry = new TelemetryAI(context, extensionStartUpTime);
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       "testingFunctionWrapper",
-      async function(this: IActionContext): Promise<void> {
+      async function (this: IActionContext): Promise<void> {
         this.properties.customProp = "Hello Testing";
         console.log("helloworld");
       }
@@ -414,6 +414,7 @@ export abstract class Controller {
       .catch((error: Error) => {
         vscode.window.showErrorMessage(error.message);
         Controller.handleErrorMessage(ExtensionCommand.DeployCosmos, error);
+        throw error;
       });
   }
 
