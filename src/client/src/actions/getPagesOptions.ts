@@ -46,9 +46,9 @@ function getApiTemplateInfoFromJson(items: any[]): IApiTemplateInfo[] {
   return items.map<IApiTemplateInfo>(val => ({
     displayName: val.name,
     licenses: val.licenses,
-    longDescription: val.description,
-    name: val.identity,
-    position: val.precedence,
+    longDescription: val.richDescription,
+    name: val.templateId,
+    position: val.displayOrder,
     selected: false,
     summary: val.description,
     svgUrl: val.icon,

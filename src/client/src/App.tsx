@@ -52,21 +52,19 @@ type Props = IDispatchProps & IStateProps;
 
 class App extends React.Component<Props> {
   public static defaultProps = {
-    getVSCodeApi: () => { },
-    loadWizardContent: () => { },
-    logIntoAzure: () => { },
-    saveSubscriptionData: () => { },
-    updateOutputPath: () => { },
-    setCosmosResourceAccountNameAvailability: () => { },
-    setAppNameAvailability: () => { },
-    setPathAndNameValidation: () => { }
+    getVSCodeApi: () => {},
+    loadWizardContent: () => {},
+    logIntoAzure: () => {},
+    saveSubscriptionData: () => {},
+    updateOutputPath: () => {},
+    setCosmosResourceAccountNameAvailability: () => {},
+    setAppNameAvailability: () => {},
+    setPathAndNameValidation: () => {}
   };
 
   public componentDidMount() {
     this.props.getVSCodeApi();
     this.props.loadWizardContent();
-    const api = new EngineAPIService("5000", undefined);
-    api.syncPlatforms();
     // listens for a login event from VSCode
     window.addEventListener("message", event => {
       const message = event.data;
