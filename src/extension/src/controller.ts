@@ -137,7 +137,7 @@ export abstract class Controller {
     }, 200);
   }
   private static handleSyncLiveData(status: SyncStatus) {
-    console.log(`SyncStatus:${SyncStatus[status]}`);
+    vscode.window.showInformationMessage(`SyncStatus:${SyncStatus[status]}`);
   }
   /**
    * Returns an array of Subscription Items when the user is logged in
@@ -488,7 +488,7 @@ export abstract class Controller {
   }
 
   private static handleGenLiveMessage(message: any) {
-    console.log(message);
+    vscode.window.showInformationMessage(message);
   }
 
   public static sendOutputPathSelectionToClient(message: any) {
