@@ -16,7 +16,7 @@ const SortableSidebarItem = SortableElement(
     page,
     idx,
     handleInputChange,
-    handleCloseClick
+    handleCloseClick,
   }: {
     page: any;
     idx: number;
@@ -43,12 +43,13 @@ const SortableSummaryTile = SortableElement(
     page,
     idx,
     handleInputChange,
-    handleCloseClick
+    handleCloseClick,
   }: {
     page: any;
     idx: number;
     handleInputChange: any;
     handleCloseClick?: (idx: number) => void;
+    isDraggable?: boolean;
   }) => {
     return (
       <React.Fragment>
@@ -61,6 +62,7 @@ const SortableSummaryTile = SortableElement(
             handleCloseClick={handleCloseClick}
             handleInputChange={handleInputChange}
             idx={idx + 1}
+            isDraggable={true}
           />
         </div>
       </React.Fragment>

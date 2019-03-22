@@ -7,6 +7,7 @@ import { withLocalPath } from "../../utils/getSvgUrl";
 
 import cancel from "../../assets/cancel.svg";
 import edit from "../../assets/edit.svg";
+import reorder from "../../assets/reorder.svg";
 
 interface IProps {
   withIndent?: boolean;
@@ -20,6 +21,7 @@ interface IProps {
   handleCloseClick?: (idx: number) => void;
   handleInputChange?: (newTitle: string, idx: number) => void;
   idx?: number;
+  isDraggable?: boolean;
 }
 
 const SummaryTile = ({
@@ -33,7 +35,8 @@ const SummaryTile = ({
   withoutEditIcon,
   handleCloseClick,
   idx,
-  handleInputChange
+  handleInputChange,
+  isDraggable,
 }: IProps) => {
   const [componentTitle, setTitle] = React.useState(title);
   const [isDisabled, setDisabled] = React.useState(true);
@@ -71,6 +74,7 @@ const SummaryTile = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      {isDraggable && <img className={styles.reorder} src={withLocalPath(reorder)} />}
       <div
         className={classnames({
           [styles.indent]: withIndent,

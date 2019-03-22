@@ -81,3 +81,9 @@
 .indent {
     margin-left: 4em;
 }
+
+.reorder {
+    height: 18px;
+    margin-right: 10px;
+    cursor: grab;
+}
