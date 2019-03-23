@@ -3,8 +3,7 @@ export const API = {
     Feature: "/api/feature",
     Framework: "/api/framework",
     Page: "/api/page",
-    ProjectType: "/api/projectType",
-    Sync: "/api/sync"
+    ProjectType: "/api/projectType"
   },
   Methods: {
     GET: "get",
