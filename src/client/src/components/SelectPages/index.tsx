@@ -69,7 +69,7 @@ class SelectPages extends React.Component<Props> {
           <SelectOption
             selectOptions={selectPages}
             multiSelect={true}
-            selectedCards={this.convertSelectedPagesToIndices(selectedPages)}
+            selectedCardIndices={this.convertSelectedPagesToIndices(selectedPages)}
             title="What pages do you need for your application?"
             options={options}
             currentCardData={selectedPages}

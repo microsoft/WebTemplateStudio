@@ -15,7 +15,7 @@ interface ISelectOptionProps {
   title: string;
   internalName?: string;
   selectCard?: (card: ISelected) => void;
-  selectedCards: number[];
+  selectedCardIndices: number[];
   currentCardData?: ISelected[];
   selectOptions?: (cards: ISelected[]) => void;
   options: IOption[];
@@ -23,34 +23,28 @@ interface ISelectOptionProps {
 }
 
 interface ISelectOptionState {
-  selectedCards: number[];
+  selectedCardIndices: number[];
 }
 
-<<<<<<< HEAD
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => void;
 }
 
 type Props = IDispatchProps & ISelectOptionProps;
-=======
-class SelectOption extends React.Component<
-  ISelectOptionProps,
-  ISelectOptionState
-  > {
->>>>>>> abafeb1... fix seelection bugs
 
 class SelectOption extends React.Component<Props, ISelectOptionState> {
   componentDidMount() {
     this.setState({
-      selectedCards: [0]
+      selectedCardIndices: [0],
     });
   }
 
   public isCardSelected(cardNumber: number): boolean {
-    if (this.props.selectedCards) {
-      return this.props.selectedCards.includes(cardNumber);
+    const { selectedCardIndices } = this.props;
+    if (selectedCardIndices) {
+      return selectedCardIndices.includes(cardNumber);
     }
-    return this.state.selectedCards.includes(cardNumber);
+    return this.state.selectedCardIndices.includes(cardNumber);
   }
 
   /**
@@ -129,11 +123,14 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
    * @param cardNumber
    */
   public addOption(cardNumber: number) {
-    const { selectedCards, selectOptions } = this.props;
-    selectedCards.push(cardNumber);
+    const { selectedCardIndices, selectOptions } = this.props;
+    selectedCardIndices.push(cardNumber);
     if (selectOptions) {
-      selectOptions(this.mapSelectedCardIndicesToCardInfo(selectedCards));
+      selectOptions(this.mapSelectedCardIndicesToCardInfo(selectedCardIndices));
     }
+    this.setState({
+      selectedCardIndices
+    });
   }
 
   /**
@@ -143,17 +140,17 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
    * @param cardNumber
    */
   public exchangeOption(cardNumber: number) {
-    const { selectedCards } = this.state;
-    selectedCards.pop();
-    selectedCards.push(cardNumber);
-    if (this.props.selectCard !== undefined) {
+    const { selectedCardIndices } = this.state;
+    selectedCardIndices.pop();
+    selectedCardIndices.push(cardNumber);
+    if (this.props.selectCard) {
       this.props.selectCard({
         title: this.props.options[cardNumber].title,
         internalName: this.props.options[cardNumber].internalName
       });
     }
     this.setState({
-      selectedCards
+      selectedCardIndices
     });
   }
 
@@ -176,9 +173,9 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
    * If card can only be clicked once, this function returns undefined.
    */
   public getCardCount = (internalName: string) => {
-    const { selectedCards, multiSelect, options } = this.props;
-    if (selectedCards && multiSelect) {
-      return selectedCards.reduce((cardCount: number, card: number) => {
+    const { selectedCardIndices, multiSelect, options } = this.props;
+    if (selectedCardIndices && multiSelect) {
+      return selectedCardIndices.reduce((cardCount: number, card: number) => {
         if (options[card].internalName === internalName) {
           return cardCount + 1;
         }

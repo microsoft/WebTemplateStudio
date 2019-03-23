@@ -16,7 +16,7 @@ interface IDispatchProps {
 
 interface ISelectFrontEndFrameworkProps {
   options: IOption[];
-  selectedFramework: string;
+  selectedFrontendFramework: string;
 }
 
 type Props = IDispatchProps & ISelectFrontEndFrameworkProps;
@@ -24,7 +24,7 @@ type Props = IDispatchProps & ISelectFrontEndFrameworkProps;
 class SelectFrontEndFramework extends React.Component<Props> {
   public componentDidMount() {
     // TODO: use store to get project type next time.
-    if (this.props.getFrontendFrameworks !== undefined) {
+    if (this.props.getFrontendFrameworks) {
       this.props.getFrontendFrameworks("FullStackWebApp");
     }
   }
@@ -43,16 +43,17 @@ class SelectFrontEndFramework extends React.Component<Props> {
   }
 
   public render() {
+    const { options, selectedFrontendFramework, selectFrontendFramework } = this.props;
     return (
       <div>
         {this.props.options.length > 0 && (
           <SelectOption
-            selectCard={this.props.selectFrontendFramework}
+            selectCard={selectFrontendFramework}
             multiSelect={false}
             title="Select a front-end framework for your project."
-            options={this.props.options}
-            selectedCards={this.convertSelectionToIndexNumber(
-              this.props.selectedFramework
+            options={options}
+            selectedCardIndices={this.convertSelectionToIndexNumber(
+              selectedFrontendFramework
             )}
           />
         )}
@@ -66,7 +67,7 @@ const mapStateToProps = (state: any): ISelectFrontEndFrameworkProps => {
   const { frontendFramework } = state.selection;
   return {
     options: frontendOptions,
-    selectedFramework: frontendFramework
+    selectedFrontendFramework: frontendFramework
   };
 };
 
