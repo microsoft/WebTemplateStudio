@@ -1,12 +1,10 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { ChildProcess, exec } from "child_process";
-import fetch, { Response } from "node-fetch";
-import { CONSTANTS } from "./constants";
+import { CONSTANTS, SyncStatus } from "./constants";
+import * as signalR from "@aspnet/signalr";
 
 export default class ApiModule {
-  private static readonly GenerateEndpoint = CONSTANTS.GENERATE_ENDPOINT;
-
   public static StartApi(context: vscode.ExtensionContext): ChildProcess {
     let platform = process.platform;
 
@@ -26,9 +24,75 @@ export default class ApiModule {
       "api",
       platform
     );
+
     let spawnedProcess = exec(`${apiPath}`, { cwd: apiWorkingDirectory });
 
     return spawnedProcess;
+  }
+
+  public static async SendSyncRequestToApi(
+    port: string,
+    path: string,
+    statusHandler: (status: SyncStatus) => any
+  ) {
+    return this.postSyncConnectionHandler(
+      await this.createSignalRConnection(port),
+      {
+        path: path,
+        listener: statusHandler
+      }
+    );
+  }
+
+  private static async createSignalRConnection(
+    port: string
+  ): Promise<signalR.HubConnection> {
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(`http://localhost:${port}/corehub`)
+      .build();
+
+    await connection.start().catch((error: Error) => console.log(error));
+
+    return connection;
+  }
+
+  private static async postSyncConnectionHandler(
+    connection: signalR.HubConnection,
+    payload: any
+  ): Promise<any> {
+    connection.on(
+      CONSTANTS.API.SYNC_LIVE_MESSAGE_TRIGGER_NAME,
+      payload!.listener
+    );
+
+    const result = await connection
+      .invoke(
+        CONSTANTS.API.SIGNALR_API_SYNC_METHOD_NAME,
+        "Web",
+        payload!.path,
+        "Any"
+      )
+      .catch((error: Error) => Promise.reject(error));
+
+    connection.stop();
+
+    return Promise.resolve(result!.value);
+  }
+
+  private static async postGenerateConnectionHandler(
+    connection: signalR.HubConnection,
+    payload: any
+  ): Promise<any> {
+    connection.on(
+      CONSTANTS.API.GEN_LIVE_MESSAGE_TRIGGER_NAME,
+      payload!.listener
+    );
+    const result = await connection
+      .invoke(CONSTANTS.API.SIGNALR_API_GENERATE_METHOD_NAME, payload!.body)
+      .catch((error: Error) => Promise.reject(error));
+
+    connection.stop();
+    return Promise.resolve(result!.value);
   }
 
   /**
@@ -39,10 +103,9 @@ export default class ApiModule {
    */
   public static async SendTemplateGenerationPayloadToApi(
     port: string,
-    payload: IGenerationPayloadType
+    payload: IGenerationPayloadType,
+    genListener: (message: any) => any
   ): Promise<any> {
-    let host = "http://localhost:" + port;
-    const url = new URL(this.GenerateEndpoint, host);
     let body = {
       projectName: payload.projectName,
       genPath: payload.path,
@@ -62,19 +125,12 @@ export default class ApiModule {
       }))
     };
 
-    return await fetch(url.href, {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-      .then((response: Response) => {
-        return response;
-      })
-      .catch((error: Error) => {
-        throw Error("request failed:" + error.toString());
-      });
+    return this.postGenerateConnectionHandler(
+      await this.createSignalRConnection(port),
+      {
+        body: body,
+        listener: genListener
+      }
+    );
   }
 }

@@ -25,7 +25,8 @@ export const CONSTANTS = {
     },
     EMPTY_OUTPUT_PATH: "Output Path cannot be empty.",
     EMPTY_PROJECT_NAME: "Project Name cannot be empty.",
-    PROJECT_NAME_LENGTH_EXCEEDED_MAX: "Project Name has to be less than 50 chars long.",
+    PROJECT_NAME_LENGTH_EXCEEDED_MAX:
+      "Project Name has to be less than 50 chars long.",
     INVALID_OUTPUT_PATH: (path: string) => {
       return `Path ${path} does not exist.`;
     },
@@ -58,7 +59,13 @@ export const CONSTANTS = {
   },
   API: {
     WINDOWS_PLATFORM_VERSION: "win32",
-    BASE_APPLICATION_NAME: "CoreTemplateStudio.Api"
+    BASE_APPLICATION_NAME: "CoreTemplateStudio.Api",
+    PATH_TO_TEMPLATES: "..",
+    SYNC_LIVE_MESSAGE_TRIGGER_NAME: "syncMessage",
+    GEN_LIVE_MESSAGE_TRIGGER_NAME: "genMessage",
+    SIGNALR_API_SYNC_METHOD_NAME: "SyncTemplates",
+    SIGNALR_API_GENERATE_METHOD_NAME: "Generate",
+    MAX_SYNC_REQUEST_ATTEMPTS: 11
   },
   AZURE_LOGIN_STATUS: {
     LOGGED_IN: "LoggedIn",
@@ -129,4 +136,16 @@ export namespace DialogMessages {
     "multilineError",
     "An error has occured. Check output window for more details."
   );
+}
+export enum SyncStatus {
+  None = 0,
+  Updating = 1,
+  Updated = 2,
+  CheckingForUpdates = 3,
+  NoUpdates = 4,
+  Acquiring = 5,
+  Preparing = 6,
+  NewWizardVersionAvailable = 7,
+  Ready = 8,
+  ErrorAcquiring = 9
 }

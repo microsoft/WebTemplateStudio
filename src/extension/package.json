@@ -65,6 +65,7 @@
     "ms-vscode.azure-account"
   ],
   "dependencies": {
+    "@aspnet/signalr": "^1.1.2",
     "@types/app-root-path": "^1.2.4",
     "@types/archiver": "^2.1.2",
     "@types/fs-extra": "^5.0.5",

@@ -1,6 +1,11 @@
 import * as vscode from "vscode";
 import { Validator } from "./utils/validator";
-import { CONSTANTS, ExtensionCommand, AzureResourceType } from "./constants";
+import {
+  CONSTANTS,
+  ExtensionCommand,
+  SyncStatus,
+  AzureResourceType
+} from "./constants";
 import {
   AzureAuth,
   SubscriptionItem,
@@ -25,14 +30,13 @@ import {
 } from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
-import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
+import { ChildProcess } from "child_process";
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
-  private static Telemetry: TelemetryAI;
   private static reactPanelContext: ReactPanel;
   // This will map commands from the client to functions.
 
@@ -81,7 +85,7 @@ export abstract class Controller {
     });
   }
 
-  private static routingMessageReceieverDelegate = function (message: any) {
+  private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -93,31 +97,46 @@ export abstract class Controller {
 
   /**
    * launchWizard
-   * Will pass in a routing function delegate to the ReactPanel
+   * Will launch the api, sync templates then pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public static launchWizard(
-    context: vscode.ExtensionContext,
-    extensionStartUpTime: number = Date.now()
-  ) {
-    Controller.reactPanelContext = ReactPanel.createOrShow(
-      context.extensionPath,
-      this.routingMessageReceieverDelegate
-    );
-    Controller.Telemetry = new TelemetryAI(context, extensionStartUpTime);
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      "testingFunctionWrapper",
-      async function (this: IActionContext): Promise<void> {
-        this.properties.customProp = "Hello Testing";
-        console.log("helloworld");
-      }
-    );
+  public static launchWizard(context: vscode.ExtensionContext): ChildProcess {
+    let process = ApiModule.StartApi(context);
+    this.attemptSync(context, 0);
+
+    return process;
   }
+
   // TODO: To minimize PR size, this will be edited in next PR; branch: t-trngo/telemetryIntegrationInController
   public static handleTelemetry(payload: any): any {
     //   Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
   }
 
+  private static attemptSync(context: vscode.ExtensionContext, count: number) {
+    setTimeout(() => {
+      ApiModule.SendSyncRequestToApi(
+        CONSTANTS.PORT,
+        CONSTANTS.API.PATH_TO_TEMPLATES,
+        this.handleSyncLiveData
+      )
+        .then(() => {
+          Controller.reactPanelContext = ReactPanel.createOrShow(
+            context.extensionPath,
+            this.routingMessageReceieverDelegate
+          );
+        })
+        .catch(() => {
+          if (count === CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+            vscode.window.showErrorMessage("Could not sync to repository.");
+            return;
+          }
+          this.attemptSync(context, count + 1);
+        });
+    }, 200);
+  }
+  private static handleSyncLiveData(status: SyncStatus) {
+    vscode.window.showInformationMessage(`SyncStatus:${SyncStatus[status]}`);
+  }
   /**
    * Returns an array of Subscription Items when the user is logged in
    *
@@ -328,7 +347,9 @@ export abstract class Controller {
       });
   }
 
-  public static async handleGeneratePayloadFromClient(message: any): Promise<any> {
+  public static async handleGeneratePayloadFromClient(
+    message: any
+  ): Promise<any> {
     var payload = message.payload;
     var enginePayload: any = payload.engine;
 
@@ -345,7 +366,10 @@ export abstract class Controller {
     }
 
     try {
-      Validator.isValidProjectPath(enginePayload.projectPath, enginePayload.projectName);
+      Validator.isValidProjectPath(
+        enginePayload.projectPath,
+        enginePayload.projectName
+      );
     } catch (error) {
       projectPathError = error.message;
       isValidProjectPath = false;
@@ -366,7 +390,9 @@ export abstract class Controller {
       });
       return;
     }
-    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload);
+    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
+      enginePayload
+    );
 
     if (payload.selectedFunctions) {
       Controller.processFunctionDeploymentAndSendStatusToClient(
@@ -450,11 +476,20 @@ export abstract class Controller {
       });
   }
 
-  public static sendTemplateGenInfoToApiAndSendStatusToClient(
+  public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ) {
-    // FIXME: After gen is done, we need to do some feedback.
-    ApiModule.SendTemplateGenerationPayloadToApi(CONSTANTS.PORT, enginePayload);
+    await ApiModule.SendTemplateGenerationPayloadToApi(
+      CONSTANTS.PORT,
+      enginePayload,
+      this.handleGenLiveMessage
+    ).then((object: any) => {
+      console.log(object);
+    });
+  }
+
+  private static handleGenLiveMessage(message: any) {
+    vscode.window.showInformationMessage(message);
   }
 
   public static sendOutputPathSelectionToClient(message: any) {

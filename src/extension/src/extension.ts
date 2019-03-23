@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import ApiModule from "./apiModule";
 import { ChildProcess } from "child_process";
 import { Controller } from "./controller";
 
@@ -11,9 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "webTemplateStudioExtension.wizardLaunch",
       () => {
-        apiProcess = ApiModule.StartApi(context);
-        console.log(apiProcess.pid);
-        Controller.launchWizard(context, Date.now());
+        apiProcess = Controller.launchWizard(context);
       }
     )
   );
