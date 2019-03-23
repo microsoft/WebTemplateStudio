@@ -58,7 +58,7 @@
   align-items: center;
 }
 
-.functionNameInput,
+.azureFunctionNameInput,
 .input {
   padding-left: 0.5em;
   width: 100%;
@@ -69,7 +69,7 @@
   border: none;
 }
 
-.functionNameInput {
+.azureFunctionNameInput {
   padding-left: 0;
 }
 

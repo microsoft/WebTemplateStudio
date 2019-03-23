@@ -72,6 +72,7 @@ class SelectPages extends React.Component<Props> {
             selectedCards={this.convertSelectedPagesToIndices(selectedPages)}
             title="What pages do you need for your application?"
             options={options}
+            currentCardData={selectedPages}
           />
         )}
       </div>
