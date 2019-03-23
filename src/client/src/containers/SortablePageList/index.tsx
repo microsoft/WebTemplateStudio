@@ -40,13 +40,14 @@ const SortablePageList = (props: Props) => {
         props.selectPages(pagesWithOmittedIdx);
     }
     const hideOrShowText = isMinimized ? "Show" : "Hide";
+    const DRAG_PIXEL_THRESHOLD = 1;
     return (
         <div className={styles.sidebarItem}>
             <div className={styles.pageListContainer}>
                 <div className={styles.dropdownTitle}>Pages</div>
                 <div className={styles.hideOrShow} onClick={() => { setMinimized(isMinimized ? false : true) }}>{hideOrShowText}</div>    
             </div>
-            {!isMinimized && <SortableList pages={props.pages} onSortEnd={onSortEnd} distance={1} handleInputChange={handleInputChange} handleCloseClick={handleCloseClick} />}
+            {!isMinimized && <SortableList pages={props.pages} onSortEnd={onSortEnd} distance={DRAG_PIXEL_THRESHOLD} handleInputChange={handleInputChange} handleCloseClick={handleCloseClick} />}
             {/* Using a baseline of 1 for idx because !!0 === false */}
         </div>
     )
