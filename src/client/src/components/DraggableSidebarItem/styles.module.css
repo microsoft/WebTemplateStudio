@@ -1,20 +1,14 @@
 .draggablePage {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 10px;
-}
-
-.draggablePage2 {
-  display: flex;
-  margin-bottom: 10px;
-  width: 100%;
 }
 
 .titleContainer {
   display: flex;
 }
 
-.errorStack{
+.errorStack {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -106,4 +100,5 @@
   display: flex;
   align-items: center;
   width: 20px;
+  padding-top: 8px;
 }
