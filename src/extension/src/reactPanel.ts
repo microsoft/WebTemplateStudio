@@ -1,7 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import { AzureAuth } from './azure-auth/azureAuth';
-import { Controller } from "./controller";
+import { CONSTANTS } from "./constants";
 
 /**
  * Manages react webview panels
@@ -17,7 +16,7 @@ export class ReactPanel {
   private readonly _panel: vscode.WebviewPanel;
   private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
-  private static _controllerFunctionDelegate = function (message: any) {
+  private static _controllerFunctionDelegate = function(message: any) {
     //default behavior
     if (message.command === "alert") {
       vscode.window.showErrorMessage(message.text);
@@ -26,7 +25,11 @@ export class ReactPanel {
 
   // private static _controller: Controller;
 
-  public static createOrShow(extensionPath: string) {
+  public static createOrShow(
+    extensionPath: string,
+    controllerFunctionDelegate: (message: any) => any = this
+      ._controllerFunctionDelegate
+  ) {
     const column = vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
       : undefined;
@@ -36,14 +39,26 @@ export class ReactPanel {
     if (ReactPanel.currentPanel) {
       ReactPanel.currentPanel._panel.reveal(column);
     } else {
+      ReactPanel._controllerFunctionDelegate = controllerFunctionDelegate;
+
       ReactPanel.currentPanel = new ReactPanel(
         extensionPath,
-        column || vscode.ViewColumn.One
+        column || vscode.ViewColumn.One,
+        controllerFunctionDelegate
       );
     }
+    return ReactPanel.currentPanel;
   }
 
-  private constructor(extensionPath: string, column: vscode.ViewColumn) {
+  public postMessageWebview(object: Object) {
+    this._panel.webview.postMessage(object);
+  }
+
+  private constructor(
+    extensionPath: string,
+    column: vscode.ViewColumn,
+    controllerClassDelegate: (message: any) => any
+  ) {
     this._extensionPath = extensionPath;
 
     // Create and show a new webview panel
@@ -55,6 +70,9 @@ export class ReactPanel {
         // Enable javascript in the webview
         enableScripts: true,
 
+        // Keep the wizard in its current state
+        retainContextWhenHidden: true,
+
         // And restric the webview to only loading content from our extension's `media` directory.
         localResourceRoots: [
           vscode.Uri.file(path.join(this._extensionPath, "react"))
@@ -64,83 +82,21 @@ export class ReactPanel {
 
     // Set the webview's initial html content
     this._panel.webview.html = this._getHtmlForWebview();
+    this._panel.title = CONSTANTS.REACT_PANEL.Project_Title;
 
     // Listen for when the panel is disposed
     // This happens when the user closes the panel or when the panel is closed programatically
     this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
 
-    // Handle messages from the webview
+    // Handle messages from the webview from a function delegate
     this._panel.webview.onDidReceiveMessage(
-      message => {
-        switch (message.command) {
-          case "alert":
-            vscode.window.showErrorMessage(message.text);
-            return;
-          case "login":
-            AzureAuth.login().then(res => {
-              const email = AzureAuth.getEmail();
-              this._panel.webview.postMessage({
-                command: 'login',
-                email: email
-              });
-            }).catch(err => {
-              console.log(err);
-            });
-            break;
-          case "subscriptions":
-            AzureAuth.getSubscriptions().then(items => {
-              const subs = items;
-              this._panel.webview.postMessage({
-                command: 'subscriptions',
-                subscriptions: subs
-              });
-            });
-            break;
-          case "name-functions":
-            this._controller.isFunctionAppNameUnique(message.appName, message.subscriptionLabel)
-              .then((isAvailable) => {
-                this._panel.webview.postMessage({
-                  command: 'functions-name-result',
-                  isAvailable: isAvailable,
-                  message: ""
-                });
-              })
-              .catch((err: Error) => {
-                this._panel.webview.postMessage({
-                  command: 'functions-name-result',
-                  isAvailable: false,
-                  message: err.message
-                });
-              });
-            break;
-          case "name-cosmos":
-            this._controller.isCosmosResourceNameUnique(message.appName, message.subscriptionLabel)
-              .then((isAvailable) => {
-                this._panel.webview.postMessage({
-                  command: 'cosmos-name-result',
-                  isAvailable: isAvailable,
-                  message: ""
-                });
-              })
-              .catch((err: Error) => {
-                this._panel.webview.postMessage({
-                  command: 'cosmos-name-result',
-                  isAvailable: false,
-                  message: err.message
-                });
-              });
-            break;
-          case "deploy-functions":
-            break;
-          case "deploy-cosmos":
-            break;
-        }
-      },
+      ReactPanel._controllerFunctionDelegate,
       null,
       this._disposables
     );
   }
 
+  // TODO: this should be removed
   public doRefactor() {
     // Send a message to the webview webview.
     // You can send any JSON serializable data.
@@ -185,7 +141,7 @@ export class ReactPanel {
 				<meta charset="utf-8">
 				<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 				<meta name="theme-color" content="#000000">
-				<title>React App</title>
+				<title>Web Template Studio</title>
 				<link rel="stylesheet" type="text/css" href="${styleUri}">
 				<meta img-src vscode-resource: https: ;style-src vscode-resource: 'unsafe-inline' http: https: data:;">
 				<base href="${vscode.Uri.file(path.join(this._extensionPath, "react")).with({
@@ -195,7 +151,7 @@ export class ReactPanel {
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>
 				<div id="root"></div>
-				<script src="${scriptUri}"></script>
+        <script src="${scriptUri}"></script>
 			</body>
 			</html>`;
   }
