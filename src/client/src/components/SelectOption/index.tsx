@@ -72,13 +72,13 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public mapIndexToCardInfo(selectedCardIndex: number, count: number, internalName: string, num: number, currentCardData: ISelected[]) {
-    const { originalTitle } = this.props.options[num];
+    const { defaultName } = this.props.options[num];
     const title = this.createTitle(selectedCardIndex, num, count, currentCardData);
     const cardInfo: ISelected = {
       title,
       internalName,
       id: title,
-      originalTitle
+      defaultName
     };
     return cardInfo;
   }

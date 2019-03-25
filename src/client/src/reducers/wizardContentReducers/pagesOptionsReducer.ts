@@ -2,17 +2,12 @@ import * as Actions from "../../actions/types";
 
 /* State Shape
 {
-    pageOptions: []
+    pageOptions: IOption[]
 }
 */
 
 const pageOptions = (
-  state = [
-    {
-      Name: "Test Detail",
-      Template: "wts.Page.React.MasterDetail"
-    }
-  ],
+  state = [],
   action: any
 ) => {
   switch (action.type) {

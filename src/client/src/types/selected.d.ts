@@ -1,6 +1,6 @@
 export interface ISelected {
   title: string;
-  originalTitle?: string;
+  defaultName?: string;
   internalName: string;
   id?: string;
 }

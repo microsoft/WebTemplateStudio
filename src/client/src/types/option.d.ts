@@ -1,7 +1,7 @@
 export interface IOption {
   title: string;
   internalName: string;
-  originalTitle?: string;
+  defaultName?: string;
   body: string;
   longDescription?: string;
   position?: number;
