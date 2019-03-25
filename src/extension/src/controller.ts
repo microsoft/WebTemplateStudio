@@ -390,9 +390,11 @@ export abstract class Controller {
       });
       return;
     }
-    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
+    const apiGenResult = await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
-    ).then(obj => console.log(obj));
+    );
+
+    enginePayload.path = apiGenResult.generationOutputPath;
 
     if (payload.selectedFunctions) {
       Controller.processFunctionDeploymentAndSendStatusToClient(
