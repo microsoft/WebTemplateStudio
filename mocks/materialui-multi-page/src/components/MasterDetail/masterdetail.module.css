@@ -7,20 +7,6 @@
   font-color: #000000;
 }
 
-.sidebar .nav-link.active {
-  color: #007bff;
-}
-
-.sidebar .nav-link:hover .feather,
-.sidebar .nav-link.active .feather {
-  color: inherit;
-}
-
-.sidebar-heading {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-}
-
 .breadCrumbLink {
   color: #025fce;
 }
