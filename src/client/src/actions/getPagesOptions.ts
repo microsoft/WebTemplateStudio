@@ -43,7 +43,6 @@ const getPagesOptionsSuccess = (pagesOptions: IOption[]) => ({
 });
 
 function getApiTemplateInfoFromJson(items: any[]): IApiTemplateInfo[] {
-  console.log(items);
   return items.map<IApiTemplateInfo>(val => ({
     displayName: val.name,
     licenses: val.licenses,
