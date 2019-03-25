@@ -13,8 +13,7 @@ tincidunt lobortis feugiat vivamus at augue. At augue eget arcu dictum
 varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt.
 Lorem donec massa sapien faucibus et molestie ac.`;
 
-const shortLoremIpsum = `Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum minim.
-                         Dolore fugiat consectetur laborum laboris labore sit veniam deserunt id dolor laboris ad veniam.`;
+const shortLoremIpsum = `Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.`;
 
 const header = "Heading";
 
