@@ -17,6 +17,7 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
 import { ROUTES, PAGE_NAME_ERROR_MESSAGES } from "../../utils/constants";
+import { validateName } from "../../utils/validateName";
 
 import cancel from "../../assets/cancel.svg";
 import reorder from "../../assets/reorder.svg";
@@ -80,21 +81,18 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public handleInputChange = (newTitle: string, idx: number) => {
     const { pages } = this.props.selection;
     pages[idx].title = newTitle;
-    if (
-      !/^[a-zA-Z0-9 ]+$/i.test(pages[idx].title) ||
-      !/\S/.test(pages[idx].title)
-    ) {
-      pages[idx].isValidTitle = false;
-      pages[idx].error = PAGE_NAME_ERROR_MESSAGES.INVALID_REGEX;
-    } else {
-      pages[idx].isValidTitle = true;
-    }
-    for (let i = 0; i < pages.length; i++) {
-      if (pages[i].title === pages[idx].title && i !== idx) {
-        pages[idx].isValidTitle = false;
-        pages[idx].error = PAGE_NAME_ERROR_MESSAGES.DUPLICATE_NAME;
-        break;
+    try {
+      pages[idx].isValidTitle = validateName(pages[idx].title);
+      for (let i = 0; i < pages.length; i++) {
+        if (pages[i].title === pages[idx].title && i !== idx) {
+          pages[idx].isValidTitle = false;
+          pages[idx].error = PAGE_NAME_ERROR_MESSAGES.DUPLICATE_NAME;
+          break;
+        }
       }
+    } catch (error) {
+      pages[idx].isValidTitle = false;
+      pages[idx].error = error.message;
     }
 
     this.props.selectPages(pages);

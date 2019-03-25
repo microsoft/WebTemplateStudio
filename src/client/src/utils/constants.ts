@@ -45,8 +45,10 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
 
 const PAGE_NAME_ERROR_MESSAGES = {
   DUPLICATE_NAME: "page name has to be unique",
-  INVALID_REGEX: "only letters, numbers and spaces are allowed"
-}
+  INVALID_REGEX: "page name may only contain letters, numbers, and spaces",
+  EMPTY_NAME: "name cannot be empty",
+  NAME_STARTS_WITH_SPACE: "page name may only start with letters or numbers"
+};
 
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {

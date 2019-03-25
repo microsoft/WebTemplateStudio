@@ -8,6 +8,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
 import { ROUTES } from "../../utils/constants";
+import { validateName } from "../../utils/validateName";
 
 import { IVSCode } from "../../reducers/vscodeApiReducer";
 import { rootSelector } from "../../selectors/generationSelector";
@@ -72,21 +73,23 @@ class Footer extends React.Component<Props> {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
   public render() {
-
     // Validate the page names and do not generate if they are invalid or if there are duplicates
-    var pageNames = new Set();
-    var areValidNames = true;
-    const regx = new RegExp(/^[a-zA-Z0-9 ]+$/i)
-    for (var i = 0; i < this.props.engine.pages.length; i++) {
-      const pageName = this.props.engine.pages[i].name;
-      if (!/^[a-zA-Z0-9 ]+$/i.test(pageName) || !/\S/.test(pageName)) {
+    const pageNames = new Set();
+    let areValidNames = true;
+    for (const page of this.props.engine.pages) {
+      const pageName = page.name;
+      try {
+        areValidNames = validateName(pageName);
+        if (pageNames.has(pageName)) {
+          areValidNames = false;
+        } else {
+          pageNames.add(pageName);
+        }
+      } catch (error) {
         areValidNames = false;
+      }
+      if (!areValidNames) {
         break;
-      } else if (pageNames.has(pageName)) {
-        areValidNames = false;
-        break;
-      } else {
-        pageNames.add(pageName);
       }
     }
 
@@ -120,10 +123,14 @@ class Footer extends React.Component<Props> {
                 Next
               </Link>
               <button
-                disabled={pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames}
+                disabled={
+                  pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
+                }
                 className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]: !this.isReviewAndGenerate() || !areValidNames,
-                  [buttonStyles.buttonHighlightedBorder]: this.isReviewAndGenerate() && areValidNames
+                  [buttonStyles.buttonDark]:
+                    !this.isReviewAndGenerate() || !areValidNames,
+                  [buttonStyles.buttonHighlightedBorder]:
+                    this.isReviewAndGenerate() && areValidNames
                 })}
                 onClick={this.logMessageToVsCode}
               >
