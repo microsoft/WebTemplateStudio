@@ -112,7 +112,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
         );
       }
     }
-    console.log(selectedCardsWithInfo);
     return selectedCardsWithInfo;
   }
 

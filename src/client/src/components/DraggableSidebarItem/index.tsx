@@ -22,7 +22,7 @@ const DraggableSidebarItem = ({
   withLargeIndent,
   handleCloseClick,
 }: {
-  page?: ISelected
+  page?: ISelected;
   text?: string;
   reorderSvgUrl?: string;
   pageSvgUrl?: string;
@@ -32,7 +32,7 @@ const DraggableSidebarItem = ({
   idx?: number;
   azureFunctionName?: string;
   withIndent?: boolean;
-  withLargeIndent?: boolean
+  withLargeIndent?: boolean;
   handleCloseClick?: (idx: number) => void;
 }) => {
   return (
