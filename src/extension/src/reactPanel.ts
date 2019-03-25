@@ -16,7 +16,8 @@ export class ReactPanel {
   private readonly _panel: vscode.WebviewPanel;
   private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
-  private static _controllerFunctionDelegate = function (message: any) {
+  private static _controllerFunctionDelegate = function(message: any) {
+    //default behavior
     if (message.command === "alert") {
       vscode.window.showErrorMessage(message.text);
     }

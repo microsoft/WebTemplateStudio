@@ -2,7 +2,6 @@ import { CosmosDBManagementClient } from "azure-arm-cosmosdb";
 import { DatabaseAccount } from "azure-arm-cosmosdb/lib/models";
 import { ServiceClientCredentials } from "ms-rest";
 import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
-import * as fs from "fs";
 import * as path from "path";
 import {
   SubscriptionError,
@@ -17,6 +16,8 @@ import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import { CONSTANTS } from "../constants";
+import fs = require('fs');
+const Url = require('url-parse');
 
 export interface CosmosDBSelections {
   cosmosDBResourceName: string;
@@ -275,8 +276,7 @@ export class CosmosDBDeploy {
   private setCosmosClient(userSubscriptionItem: SubscriptionItem): void {
     if (
       this.SubscriptionItemCosmosClient === undefined ||
-      this.SubscriptionItemCosmosClient.subscriptionId !==
-        userSubscriptionItem.subscriptionId
+      this.SubscriptionItemCosmosClient.subscriptionId !== userSubscriptionItem.subscriptionId
     ) {
       this.SubscriptionItemCosmosClient = this.createCosmosClient(
         userSubscriptionItem
@@ -385,5 +385,24 @@ export class CosmosDBDeploy {
       dataBaseName
     );
     return result!.connectionStrings![0].connectionString!;
+  }
+
+  public static updateConnectionStringInEnvFile(filePath: string, connectionString: string): void {
+    /**
+     * Updates .env file in generated project directory once the connection string is received.
+     * Throws an error if the user deleted the project directory
+     * @filePath: path of .env file
+     */
+    const cosmosConnectionString = Url(connectionString);
+    const cosmosEnvironmentVariables = CONSTANTS.CONNECTION_STRING(cosmosConnectionString.username, cosmosConnectionString.password, cosmosConnectionString.origin);
+    const path = filePath + "/" + ".env";
+    try {
+      if (fs.existsSync(filePath)) {
+        fs.writeFileSync(path, cosmosEnvironmentVariables);
+      }
+    }
+    catch (err) {
+      throw new Error(err);
+    }
   }
 }

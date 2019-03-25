@@ -31,6 +31,7 @@ import AzureLogin from "./containers/AzureLogin";
 import EngineAPIService from "./services/EngineAPIService";
 import { getSubscriptionData } from "./actions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
+import { setPathAndNameValidation } from "./actions/setPathAndNameValidation";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -40,6 +41,7 @@ interface IDispatchProps {
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
+  setPathAndNameValidation: (validation: {}) => void;
 }
 
 interface IStateProps {
@@ -56,14 +58,13 @@ class App extends React.Component<Props> {
     saveSubscriptionData: () => {},
     updateOutputPath: () => {},
     setCosmosResourceAccountNameAvailability: () => {},
-    setAppNameAvailability: () => {}
+    setAppNameAvailability: () => {},
+    setPathAndNameValidation: () => {}
   };
 
   public componentDidMount() {
     this.props.getVSCodeApi();
     this.props.loadWizardContent();
-    const api = new EngineAPIService("5000", undefined);
-    api.syncPlatforms();
     // listens for a login event from VSCode
     window.addEventListener("message", event => {
       const message = event.data;
@@ -88,7 +89,8 @@ class App extends React.Component<Props> {
             );
           }
           return;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA:
+        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
+        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
           // Expect resource groups and locations on this request
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
@@ -112,6 +114,10 @@ class App extends React.Component<Props> {
             isAvailable: message.payload.isAvailable,
             message: message.message
           });
+          return;
+        case EXTENSION_COMMANDS.PROJECT_PATH_AND_NAME_VALIDATION:
+          this.props.setPathAndNameValidation(message.payload.validation);
+          return;
       }
     });
   }
@@ -181,6 +187,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   },
   setAppNameAvailability: (isAvailableObject: any) => {
     dispatch(setAppNameAvailabilityAction(isAvailableObject));
+  },
+  setPathAndNameValidation: (validation: {}) => {
+    dispatch(setPathAndNameValidation(validation));
   }
 });
 

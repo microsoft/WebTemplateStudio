@@ -30,10 +30,10 @@ Deploying an Azure Function application using Web Template Studio:
 
 - Select the _Number of Functions_ needed for your application. This number can be thought of as the number of endpoints
   your application would need. You can rename your functions from the summary bar on the right side of the
-  application. These would be available as `<function_app_name>.azurewebsites.net\api\<function_name>`.
+  application. These would be available as `<function_app_name>.azurewebsites.net/api/<function_name>`.
 
 The _hello world_ functions deployed are pretty basic and just return _"Hello, `<name>`"_ on a query/header with the
-variable 'name'. For example: `<function_app_name>.azurewebsites.net\api\<function_name>?name=John+Doe` will return
+variable 'name'. For example: `<function_app_name>.azurewebsites.net/api/<function_name>?name=John+Doe` will return
 _"Hello, John Doe"_.
 
 ## How this works
@@ -42,6 +42,52 @@ Once you hit generate, Web Template Studio creates a directory with the same nam
 generated project. This is compressed to a _.zip_ and deployed (using kudu zip deploy) to your newly created function
 application. _**Note:**_ For advanced users, the _arm templates_ used to deploy your application are also available
 under the _arm-templates_ directory (inside your generated project).
+
+## Calling your function
+
+Since all functions deployed through Web Template Studio are HTTP Triggers, you can invoke a function with an HTTP request.
+You can use your favorite HTTP Client library (for example Axios, Fetch, Request etc.) to hit the endpoints exposed
+by your function application. An individual function (assume it's called `function1`) under an application with _appName_
+`my-functions-app` is available at `my-functions-app.azurewebsites.net/api/function1`.
+
+### Examples
+
+Let's assume we have a Hello World function application with appName `my-functions-app` and a function `function1` that returns _"Hello,
+`<name>`"_ on a query/header with the variable 'name'
+
+- Using Fetch with Javascript:
+
+```js
+fetch(
+  "https://`my-functions-app.azurewebsites.net/api/function1?name=John+Doe",
+  {
+    method: "GET"
+  }
+)
+  .then(res => {
+    //  this would print `Hello John Doe`
+    console.log(res);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+```
+
+- Using Axios with Javascript
+
+```js
+axios
+  .get(
+    "https://`my-functions-app.azurewebsites.net/api/function1?name=John+Doe"
+  )
+  .then(res => {
+    //  this would print `Hello John Doe`
+    console.log(res);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+```
 
 ## Functions app in Azure Portal
 

@@ -6,6 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 const styles = theme => ({});
 
+// Warning messages are used to display failed connections to the back end through a pop up notification
 function WarningMessage(props) {
   return (
     <div>

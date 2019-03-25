@@ -6,7 +6,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import MasterDetailPage from "./MasterDetailPage";
-import { Assets } from "./Assets";
+import defaultImage from "../../images/defaultImage.jpg";
+import WarningMessage from "../WarningMessage";
 
 const drawerWidth = 240;
 
@@ -28,17 +29,61 @@ class index extends Component {
   constructor(props) {
     super(props);
 
-    // The index of the current tab being displayed
-    this.state = { displayTab: 0 };
-    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      currentDisplayTabIndex: 0,
+      masterDetailText: [
+        {
+          paragraph: "",
+          title: "",
+          tabName: "",
+          id: 0
+        }
+      ]
+    };
+    this.endpoint = "api/masterdetail";
+    this.handleDisplayTabClick = this.handleDisplayTabClick.bind(this);
+    this.handleWarningClose = this.handleWarningClose.bind(this);
   }
 
-  handleClick(id) {
-    this.setState({ displayTab: id });
+  handleWarningClose() {
+    this.setState({
+      WarningMessageOpen: false,
+      WarningMessageText: ""
+    });
+  }
+
+  handleDisplayTabClick(id) {
+    this.setState({ currentDisplayTabIndex: id });
+  }
+
+  // Get the text assets from the back end
+  componentDidMount() {
+    fetch(this.endpoint)
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then(result => {
+        this.setState({ masterDetailText: result });
+      })
+      .catch(error =>
+        this.setState({
+          WarningMessageOpen: true,
+          WarningMessageText: `Request to get master detail text failed: ${error}`
+        })
+      );
   }
 
   render() {
     const { classes } = this.props;
+    const {
+      masterDetailText,
+      currentDisplayTabIndex,
+      WarningMessageOpen,
+      WarningMessageText
+    } = this.state;
     return (
       <div className={classes.root}>
         <Drawer
@@ -50,25 +95,28 @@ class index extends Component {
         >
           <div className={classes.toolbar} />
           <List>
-            {Assets.map((Asset, index) => (
+            {masterDetailText.map((textAssets, index) => (
               <ListItem
                 button
-                onClick={() => this.handleClick(index)}
-                key={Asset.id}
+                onClick={() => this.handleDisplayTabClick(index)}
+                key={textAssets.id}
               >
-                <ListItemText primary={Asset.tabName} />
+                <ListItemText primary={textAssets.tabName} />
               </ListItem>
             ))}
           </List>
         </Drawer>
         <Grid container justify="flex-start" alignItems="flex-start">
           <MasterDetailPage
-            Asset={
-              // this.state.displayTab indexes the assests contained in assets.js file
-              Assets[this.state.displayTab]
-            }
+            textAssets={masterDetailText[currentDisplayTabIndex]}
+            image={defaultImage}
           />
         </Grid>
+        <WarningMessage
+          open={WarningMessageOpen}
+          text={WarningMessageText}
+          onWarningClose={this.handleWarningClose}
+        />
       </div>
     );
   }

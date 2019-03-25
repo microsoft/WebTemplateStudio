@@ -1,10 +1,6 @@
 import fetch, { Response } from "node-fetch";
 import * as constants from "./constants";
 
-// This path is going to be used by the engine to pull the templates
-// it will use to generate the output files
-const templatesFolderPath = "..";
-
 export default class EngineAPIService {
   private API: string;
 
@@ -40,28 +36,21 @@ export default class EngineAPIService {
       });
   }
 
-  public async syncPlatforms(): Promise<any> {
-    const url = new URL(constants.API.Endpoints.Sync, this.API);
-    const platform = "Web";
-    url.searchParams.append(constants.API.QueryParams.Platform, platform);
-    url.searchParams.append(
-      constants.API.QueryParams.Path,
-      templatesFolderPath
-    );
-    return await fetch(url.href, { method: constants.API.Methods.POST })
-      .then((response: Response) => {
-        return response.json();
-      })
-      .catch((error: Error) => {
-        throw Error("request failed:" + error.toString());
-      });
-  }
-
-  public async getFeatures(frameworks: [string]): Promise<any> {
+  public async getFeatures(
+    projectType: string,
+    frontendFramework: string,
+    backendFramework: string
+  ): Promise<any> {
     const url = new URL(constants.API.Endpoints.Feature, this.API);
-    frameworks.forEach(framework => {
-      url.searchParams.append(constants.API.QueryParams.Framework, framework);
-    });
+    url.searchParams.append(constants.API.QueryParams.ProjectType, projectType);
+    url.searchParams.append(
+      constants.API.QueryParams.FrontendFramework,
+      frontendFramework
+    );
+    url.searchParams.append(
+      constants.API.QueryParams.BackendFramework,
+      backendFramework
+    );
     return await fetch(url.href, { method: constants.API.Methods.GET })
       .then((response: Response) => {
         return response.json();
@@ -71,11 +60,22 @@ export default class EngineAPIService {
       });
   }
 
-  public async getPages(frameworks: [string]): Promise<any> {
+  public async getPages(
+    projectType: string,
+    frontendFramework: string,
+    backendFramework: string
+  ): Promise<any> {
     const url = new URL(constants.API.Endpoints.Page, this.API);
-    frameworks.forEach(framework => {
-      url.searchParams.append(constants.API.QueryParams.Framework, framework);
-    });
+    url.searchParams.append(constants.API.QueryParams.ProjectType, projectType);
+    url.searchParams.append(
+      constants.API.QueryParams.FrontendFramework,
+      frontendFramework
+    );
+    url.searchParams.append(
+      constants.API.QueryParams.BackendFramework,
+      backendFramework
+    );
+
     return await fetch(url.href, { method: constants.API.Methods.GET })
       .then((response: Response) => {
         return response.json();

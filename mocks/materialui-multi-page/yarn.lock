@@ -1068,9 +1068,9 @@
   integrity sha512-eItQyV43bj4rR3JPV0Skpl1SncRCdziTEK9/v8VwXmV6d/qOUO8/EuWeHBbCZcsfSHfzI5UyMJLCSXtxxznyZg==
 
 "@types/q@^1.5.1":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.1.tgz#48fd98c1561fe718b61733daed46ff115b496e18"
-  integrity sha512-eqz8c/0kwNi/OEHQfvIuJVLTst3in0e7uTKeuY+WL/zfKn0xVujOTp42bS/vUUokhK5P2BppLd9JXMOMHcgbjA==
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
+  integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
 
 "@types/react-transition-group@^2.0.8":
   version "2.0.16"
@@ -1604,9 +1604,9 @@ astral-regex@^1.0.0:
   integrity sha512-+Ryf6g3BKoRc7jfp7ad8tM4TtMiaWvbF/1/sQcZPkkS7ag3D5nMBCe2UfOTONtAkaG0tO0ij3C5Lwmf1EiyjHg==
 
 async-each@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.1.tgz#19d386a1d9edc6e7c1c85d388aedbcc56d33602d"
-  integrity sha1-GdOGodntxufByF04iu28xW0zYC0=
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.2.tgz#8b8a7ca2a658f927e9f307d6d1a42f4199f0f735"
+  integrity sha512-6xrbvN0MOBKSJDdonmSSz2OwFSgxRaVtBDes26mj9KIGtDo+g9xosFRSC+i1gQh2oAN/tQ62AI/pGZGQjVOiRg==
 
 async-limiter@~1.0.0:
   version "1.0.0"
@@ -1643,12 +1643,12 @@ atob@^2.1.1:
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
 autoprefixer@^9.4.2:
-  version "9.4.10"
-  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.4.10.tgz#e1be61fc728bacac8f4252ed242711ec0dcc6a7b"
-  integrity sha512-XR8XZ09tUrrSzgSlys4+hy5r2/z4Jp7Ag3pHm31U4g/CTccYPOVe19AkaJ4ey/vRd1sfj+5TtuD6I0PXtutjvQ==
+  version "9.5.0"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.5.0.tgz#7e51d0355c11596e6cf9a0afc9a44e86d1596c70"
+  integrity sha512-hMKcyHsZn5+qL6AUeP3c8OyuteZ4VaUlg+fWbyl8z7PqsKHF/Bf8/px3K6AT8aMzDkBo8Bc11245MM+itDBOxQ==
   dependencies:
     browserslist "^4.4.2"
-    caniuse-lite "^1.0.30000940"
+    caniuse-lite "^1.0.30000947"
     normalize-range "^0.1.2"
     num2fraction "^1.2.2"
     postcss "^7.0.14"
@@ -2039,6 +2039,11 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
+bootstrap@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.3.1.tgz#280ca8f610504d99d7b6b4bfc4b68cec601704ac"
+  integrity sha512-rXqOmH1VilAt2DyPzluTi2blhk17bO7ef+zLLPlWvG494pDxcM234pJ8wTc/6R40UWizAIIMgxjvxZg5kmsbag==
+
 boxen@^1.2.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/boxen/-/boxen-1.3.0.tgz#55c6c39a8ba58d9c61ad22cd877532deb665a20b"
@@ -2327,10 +2332,10 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000918, caniuse-lite@^1.0.30000929, caniuse-lite@^1.0.30000939, caniuse-lite@^1.0.30000940:
-  version "1.0.30000946"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000946.tgz#ac50a3331bb805b483478bbc26a0ab71bb6d0509"
-  integrity sha512-ZVXtMoZ3Mfq69Ikv587Av+5lwGVJsG98QKUucVmtFBf0tl1kOCfLQ5o6Z2zBNis4Mx3iuH77WxEUpdP6t7f2CQ==
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000918, caniuse-lite@^1.0.30000929, caniuse-lite@^1.0.30000939, caniuse-lite@^1.0.30000947:
+  version "1.0.30000947"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000947.tgz#c30305e9701449c22e97f4e9837cea3d76aa3273"
+  integrity sha512-ubgBUfufe5Oi3W1+EHyh2C3lfBIEcZ6bTuvl5wNOpIuRB978GF/Z+pQ7pGGUpeYRB0P+8C7i/3lt6xkeu2hwnA==
 
 capture-exit@^1.2.0:
   version "1.2.0"
@@ -2468,7 +2473,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5:
+classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -3544,9 +3549,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.103, electron-to-chromium@^1.3.113:
-  version "1.3.115"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.115.tgz#fdaa56c19b9f7386dbf29abc1cc632ff5468ff3b"
-  integrity sha512-mN2qeapQWdi2B9uddxTZ4nl80y46hbyKY5Wt9Yjih+QZFQLdaujEDK4qJky35WhyxMzHF3ZY41Lgjd2BPDuBhg==
+  version "1.3.116"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.116.tgz#1dbfee6a592a0c14ade77dbdfe54fef86387d702"
+  integrity sha512-NKwKAXzur5vFCZYBHpdWjTMO8QptNLNP80nItkSIgUOapPAo9Uia+RvkCaZJtO7fhQaVElSvBPWEc2ku6cKsPA==
 
 elliptic@^6.0.0:
   version "6.4.1"
@@ -6917,9 +6922,9 @@ mute-stream@0.0.7:
   integrity sha1-MHXOk7whuPq0PhvE2n6BFe0ee6s=
 
 nan@^2.9.2:
-  version "2.12.1"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.12.1.tgz#7b1aa193e9aa86057e3c7bbd0ac448e770925552"
-  integrity sha512-JY7V6lRkStKcKTvHO5NVSQRv+RV+FIL5pvDoLiAtSL9pKlC5x9PKQcZDsq7m4FO4d57mkhC6Z+QhAh3Jdk5JFw==
+  version "2.13.1"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.13.1.tgz#a15bee3790bde247e8f38f1d446edcdaeb05f2dd"
+  integrity sha512-I6YB/YEuDeUZMmhscXKxGgZlFnhsn5y0hgOZBadkzfTRrZBtJDZeg6eQf7PYMIEclwmorTKK8GztsyOUSVBREA==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -8864,9 +8869,9 @@ react-scripts@2.1.8:
     fsevents "1.2.4"
 
 react-transition-group@^2.2.1:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.6.0.tgz#3c41cbdd9c044c5f8604d4e8d319e860919c9fae"
-  integrity sha512-VzZ+6k/adL3pJHo4PU/MHEPjW59/TGQtRsXC+wnxsx2mxjQKNHnDdJL/GpYuPJIsyHGjYbBQfIJ2JNOAdPc8GQ==
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.6.1.tgz#abf4a95e2f13fb9ba83a970a896fedbc5c4856a2"
+  integrity sha512-9DHwCy0aOYEe35frlEN68N9ut/THDQBLnVoQuKTvzF4/s3tk7lqkefCqxK2Nv96fOh6JXk6tQtliygk6tl3bQA==
   dependencies:
     dom-helpers "^3.3.1"
     loose-envify "^1.4.0"

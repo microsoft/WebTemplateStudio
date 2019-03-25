@@ -3,15 +3,15 @@ export const API = {
     Feature: "/api/feature",
     Framework: "/api/framework",
     Page: "/api/page",
-    ProjectType: "/api/projectType",
-    Sync: "/api/sync"
+    ProjectType: "/api/projectType"
   },
   Methods: {
     GET: "get",
     POST: "post"
   },
   QueryParams: {
-    Framework: "framework",
+    FrontendFramework: "frontendFramework",
+    BackendFramework: "backendFramework",
     Path: "path",
     Platform: "platform",
     ProjectType: "projectType"

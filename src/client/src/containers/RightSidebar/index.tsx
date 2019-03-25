@@ -4,6 +4,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
+import { arrayMove } from "react-sortable-hoc";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
@@ -16,14 +17,13 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
 import { ROUTES } from "../../utils/constants";
-import getSvgUrl from "../../utils/getSvgUrl";
 
 import cancel from "../../assets/cancel.svg";
-import reorder from "../../assets/reorder.svg";
 
+import { selectPagesAction } from "../../actions/selectPages";
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
-import { selectPagesAction } from "../../actions/selectPages";
+import SortablePageList from "../SortablePageList";
 
 // TODO: Finalize types when API is hooked up
 interface ISelectionType {
@@ -49,7 +49,8 @@ interface IRightSidebarProps {
 }
 
 interface IRightSidebarState {
-  frontendDropdownValue: ISelected | undefined;
+  frontendDropdownValue?: ISelected | undefined;
+  items: string[];
 }
 
 type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
@@ -114,19 +115,30 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const componentsToRender = [];
     if (!_.isEmpty(selected)) {
       for (const app of selected) {
-        const appComponent = <DraggableSidebarItem
-          key={serviceName}
-          text={app.accountName}
-          closeSvgUrl={`${
-            process.env.REACT_APP_RELATIVE_PATH
-          }${cancel}`}
-          itemTitle="CosmosDB"
-        />
+        const appComponent = (
+          <DraggableSidebarItem
+            key={serviceName}
+            text={app.accountName}
+            closeSvgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${cancel}`}
+            itemTitle="CosmosDB"
+          />
+        );
         componentsToRender.push(appComponent);
       }
     }
     return componentsToRender;
   }
+  public onSortEnd = ({
+    oldIndex,
+    newIndex
+  }: {
+    oldIndex: number;
+    newIndex: number;
+  }) => {
+    this.setState(({ items }) => ({
+      items: arrayMove(items, oldIndex, newIndex)
+    }));
+  };
   public render() {
     const { pathname } = this.props.location;
     return (
@@ -164,27 +176,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 this.props.selection.backendFramework
               )}
             />
-            {this.showPages() && (
-              <div className={styles.sidebarItem}>
-                <div className={styles.dropdownTitle}>Pages</div>
-                {this.props.selection.pages.map((page, idx) => (
-                  <DraggableSidebarItem
-                    key={page.internalName}
-                    page={page}
-                    closeSvgUrl={`${
-                      process.env.REACT_APP_RELATIVE_PATH
-                    }${cancel}`}
-                    pageSvgUrl={getSvgUrl(page.internalName)}
-                    reorderSvgUrl={`${
-                      process.env.REACT_APP_RELATIVE_PATH
-                    }${reorder}`}
-                    handleInputChange={this.handleInputChange.bind(this)}
-                    idx={idx + 1}
-                  />
-                ))}
-                {/* Using a baseline of 1 for idx because !!0 === false */}
-              </div>
-            )}
+            {this.showPages() && <SortablePageList />}
             {this.showServices() && (
               <div className={styles.sidebarItem}>
                 <div className={styles.dropdownTitle}>Services</div>
@@ -199,19 +191,25 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
 }
 
 const mapStateToProps = (state: any): IRightSidebarProps => ({
-    selection: state.selection,
-    projectTypeDropdownItems: convertOptionsToDropdownItems(state.wizardContent.projectTypes),
-    frontendDropdownItems: convertOptionsToDropdownItems(state.wizardContent.frontendOptions),
-    backendDropdownItems: convertOptionsToDropdownItems(state.wizardContent.backendOptions),
-    services: getServicesSelector(state)
+  selection: state.selection,
+  projectTypeDropdownItems: convertOptionsToDropdownItems(
+    state.wizardContent.projectTypes
+  ),
+  frontendDropdownItems: convertOptionsToDropdownItems(
+    state.wizardContent.frontendOptions
+  ),
+  backendDropdownItems: convertOptionsToDropdownItems(
+    state.wizardContent.backendOptions
+  ),
+  services: getServicesSelector(state)
 });
 
 function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
   const dropDownItems = [];
   for (const option of options) {
-    if (option.unselectable) { 
+    if (option.unselectable) {
       continue;
-    };
+    }
     const dropdownItem = convertOptionToDropdownItem(option);
     dropDownItems.push(dropdownItem);
   }
