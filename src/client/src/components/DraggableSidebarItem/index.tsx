@@ -19,8 +19,12 @@ const DraggableSidebarItem = ({
   idx,
   azureFunctionName,
   withIndent,
+<<<<<<< HEAD
   withLargeIndent,
   handleCloseClick
+=======
+  withLargeIndent
+>>>>>>> a6f72c5... Page name validation
 }: {
   page?: ISelected;
   text?: string;
@@ -33,7 +37,10 @@ const DraggableSidebarItem = ({
   azureFunctionName?: string;
   withIndent?: boolean;
   withLargeIndent?: boolean;
+<<<<<<< HEAD
   handleCloseClick?: (idx: number) => void;
+=======
+>>>>>>> a6f72c5... Page name validation
 }) => {
   return (
     <div>
@@ -106,13 +113,3 @@ const DraggableSidebarItem = ({
 };
 
 export default DraggableSidebarItem;
-
-// {page && !page.isValidTitle &&
-//   <div className={classnames({
-//     [styles.errorTextContainer]: withIndent || reorderSvgUrl,
-//     [styles.textContainer]: !withIndent,
-//     [styles.largeIndentContainer]: withLargeIndent
-//   })}>
-//     {page.error}
-//   </div>
-// }

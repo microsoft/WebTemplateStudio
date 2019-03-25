@@ -59,10 +59,10 @@ type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {
-    selectBackendFramework: () => { },
-    selectFrontendFramework: () => { },
-    selectWebApp: () => { },
-    selectPages: () => { }
+    selectBackendFramework: () => {},
+    selectFrontendFramework: () => {},
+    selectWebApp: () => {},
+    selectPages: () => {}
   };
   public handleChange(
     e: IDropDownOptionType,
@@ -80,7 +80,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public handleInputChange = (newTitle: string, idx: number) => {
     const { pages } = this.props.selection;
     pages[idx].title = newTitle;
-    if (!/^[a-zA-Z0-9 ]+$/i.test(pages[idx].title) || !/\S/.test(pages[idx].title)) {
+    if (
+      !/^[a-zA-Z0-9 ]+$/i.test(pages[idx].title) ||
+      !/\S/.test(pages[idx].title)
+    ) {
       pages[idx].isValidTitle = false;
       pages[idx].error = PAGE_NAME_ERROR_MESSAGES.INVALID_REGEX;
     } else {
@@ -202,11 +205,11 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                       page={page}
                       closeSvgUrl={`${
                         process.env.REACT_APP_RELATIVE_PATH
-                        }${cancel}`}
+                      }${cancel}`}
                       pageSvgUrl={getSvgUrl(page.internalName)}
                       reorderSvgUrl={`${
                         process.env.REACT_APP_RELATIVE_PATH
-                        }${reorder}`}
+                      }${reorder}`}
                       handleInputChange={this.handleInputChange.bind(this)}
                       idx={idx + 1}
                     />
@@ -215,32 +218,36 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 {/* Using a baseline of 1 for idx because !!0 === false */}
               </div>
             )}
-            {this.showServices() && Object.keys(this.props.services).length > 1 && (
-              <div className={styles.sidebarItem}>
-                <div className={styles.dropdownTitle}>Services</div>
-                {Object.keys(this.props.services).map(serviceName => {
-                  // FIXME: Storing the state of the cosmos account name availability is not practicial in "services"
-                  // Better to create another object that can store these booleans for name validation.
-                  if (serviceName !== "isCosmosResourceAccountNameAvailable" && serviceName !== "message") {
-                    return (
-                      <DraggableSidebarItem
-                        key={serviceName}
-                        text={this.props.services[serviceName].api}
-                        closeSvgUrl={`${
-                          process.env.REACT_APP_RELATIVE_PATH
+            {this.showServices() &&
+              Object.keys(this.props.services).length > 1 && (
+                <div className={styles.sidebarItem}>
+                  <div className={styles.dropdownTitle}>Services</div>
+                  {Object.keys(this.props.services).map(serviceName => {
+                    // FIXME: Storing the state of the cosmos account name availability is not practicial in "services"
+                    // Better to create another object that can store these booleans for name validation.
+                    if (
+                      serviceName !== "isCosmosResourceAccountNameAvailable" &&
+                      serviceName !== "message"
+                    ) {
+                      return (
+                        <DraggableSidebarItem
+                          key={serviceName}
+                          text={this.props.services[serviceName].api}
+                          closeSvgUrl={`${
+                            process.env.REACT_APP_RELATIVE_PATH
                           }${cancel}`}
-                        itemTitle={
-                          serviceName === "cosmosOptions"
-                            ? "CosmosDB"
-                            : "Azure Functions"
-                        }
-                      />
-                    )
-                  }
-                })}
-                {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
-              </div>
-            )}
+                          itemTitle={
+                            serviceName === "cosmosOptions"
+                              ? "CosmosDB"
+                              : "Azure Functions"
+                          }
+                        />
+                      );
+                    }
+                  })}
+                  {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
+                </div>
+              )}
           </div>
         )}
       </React.Fragment>
