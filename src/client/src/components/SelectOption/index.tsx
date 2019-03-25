@@ -198,6 +198,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                   this.onCardClick(cardNumber);
                 }}
                 onDetailsClick={setDetailPage}
+                option={option}
                 cardNumber={cardNumber}
                 selected={this.isCardSelected(cardNumber)}
                 iconPath={svgUrl}
