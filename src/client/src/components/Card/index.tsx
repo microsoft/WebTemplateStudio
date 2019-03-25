@@ -38,19 +38,16 @@ const Card = ({
         <div
           className={styles.details}
           onClick={handleDetailsClick}
-          role="Button"
+          role="button"
         >
           Details
         </div>
         <button
           onClick={handleButtonClick}
-          className={classnames(
-            styles.signInButton,
-            {
-              [buttonStyles.buttonHighlighted]: !useNormalButtons,
-              [buttonStyles.buttonDark]: useNormalButtons
-            }
-          )}
+          className={classnames(styles.signInButton, {
+            [buttonStyles.buttonHighlighted]: !useNormalButtons,
+            [buttonStyles.buttonDark]: useNormalButtons
+          })}
         >
           {buttonText}
         </button>
