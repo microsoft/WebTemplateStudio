@@ -50,8 +50,7 @@ const SelectableCard = ({
           <div
             className={classNames({
               [styles.title]: option.svgUrl,
-              [styles.titleLeftJustified]:
-                option.svgUrl === undefined ? true : false
+              [styles.titleLeftJustified]: option.svgUrl ? false : true
             })}
           >
             <CardTitle title={option.title} />
