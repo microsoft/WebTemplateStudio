@@ -3,6 +3,8 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 
+import { IOption } from "../../types/option";
+
 import CardBody from "../CardBody";
 import CardTitle from "../CardTitle";
 
@@ -12,25 +14,21 @@ import styles from "./styles.module.css";
 import Check from "../../assets/check.svg";
 
 const SelectableCard = ({
-  iconPath,
   iconStyles,
-  title,
-  body,
   selected,
   cardNumber,
   onCardClick,
-  clickCount,
-  disabled
+  option,
+  onDetailsClick,
+  clickCount
 }: {
-  iconPath: string | undefined;
   iconStyles: string;
-  title: string;
-  body: string;
   selected: boolean;
   cardNumber: number;
   onCardClick: (idx: number) => void;
+  option: IOption;
+  onDetailsClick: (detailPageInfo: IOption) => void;
   clickCount?: number;
-  disabled: boolean | undefined;
 }) => {
   return (
     <div
@@ -39,31 +37,37 @@ const SelectableCard = ({
       }}
       className={classNames(styles.container, styles.boundingBox, {
         [styles.selected]: selected,
-        [styles.unselectable]: disabled
+        [styles.unselectable]: option.unselectable
       })}
     >
       <div>
         <div className={styles.cardHeader}>
           <div className={styles.icon}>
-            {iconPath && <img src={iconPath} className={iconStyles} />}
+            {option.svgUrl && (
+              <img src={option.svgUrl} className={iconStyles} />
+            )}
           </div>
           <div
             className={classNames({
-              [styles.title]: iconPath,
-              [styles.titleLeftJustified]: iconPath === undefined ? true : false
+              [styles.title]: option.svgUrl,
+              [styles.titleLeftJustified]: option.svgUrl ? false : true
             })}
           >
-            <CardTitle title={title} />
+            <CardTitle title={option.title} />
           </div>
         </div>
         <div className={grid.row}>
           <div className={styles.body}>
-            <CardBody body={body} />
+            <CardBody body={option.body} />
           </div>
         </div>
       </div>
       <div className={styles.cardFooter}>
-        <Link className={classNames(styles.link)} to={"/PageDetail"}>
+        <Link
+          onClick={() => onDetailsClick(option)}
+          className={classNames(styles.link)}
+          to={"/PageDetail"}
+        >
           Details
         </Link>
         <div
@@ -73,10 +77,12 @@ const SelectableCard = ({
             [styles.cardCount]: selected && clickCount
           })}
         >
-          {clickCount || <img
-            src={process.env.REACT_APP_RELATIVE_PATH + Check}
-            className={styles.iconCheckMark}
-          />}
+          {clickCount || (
+            <img
+              src={process.env.REACT_APP_RELATIVE_PATH + Check}
+              className={styles.iconCheckMark}
+            />
+          )}
         </div>
       </div>
     </div>

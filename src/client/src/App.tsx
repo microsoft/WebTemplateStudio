@@ -4,7 +4,7 @@ import { HashRouter as Router, Route } from "react-router-dom";
 import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
-import PageDetails from "./components/PageDetails";
+import PageDetails from "./containers/PageDetails";
 import SelectFrameworks from "./components/SelectFrameworks";
 import SelectPages from "./components/SelectPages";
 import SelectWebApp from "./components/SelectWebApp";

@@ -1,9 +1,12 @@
 import * as React from "react";
+import { connect } from "react-redux";
 
 import Card from "../SelectableCard";
 import Title from "../Title";
 
 import styles from "./styles.module.css";
+
+import { setDetailPageAction } from "../../actions/setDetailsPage";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
@@ -23,14 +26,16 @@ interface ISelectOptionState {
   selectedCards: number[];
 }
 
-class SelectOption extends React.Component<
-  ISelectOptionProps,
-  ISelectOptionState
-> {
+interface IDispatchProps {
+  setDetailPage: (detailPageInfo: IOption) => void;
+}
 
+type Props = IDispatchProps & ISelectOptionProps;
+
+class SelectOption extends React.Component<Props, ISelectOptionState> {
   componentDidMount() {
     this.setState({
-      selectedCards: [0],
+      selectedCards: [0]
     });
   }
 
@@ -45,31 +50,47 @@ class SelectOption extends React.Component<
    * Creates a title for the card being selected (e.g. selected Page).
    * Prepends a number of a certain card is selected more than once.
    * Only changes the title of the last card selected.
-   * 
-   * @param selectedCardIndex 
-   * @param optionIndexContainingData 
-   * @param count 
-   * @param cardData 
+   *
+   * @param selectedCardIndex
+   * @param optionIndexContainingData
+   * @param count
+   * @param cardData
    */
-  public createTitle(selectedCardIndex: number, optionIndexContainingData: number, count: number, cardData: ISelected[]) {
+  public createTitle(
+    selectedCardIndex: number,
+    optionIndexContainingData: number,
+    count: number,
+    cardData: ISelected[]
+  ) {
     if (count === 1) {
       return this.props.options[optionIndexContainingData].title;
     } else if (selectedCardIndex > cardData.length - 1) {
-      return `${count}-${this.props.options[optionIndexContainingData].title}`
+      return `${count}-${this.props.options[optionIndexContainingData].title}`;
     }
     return cardData[selectedCardIndex].title;
   }
 
-  public mapIndexToCardInfo(selectedCardIndex: number, count: number, internalName: string, num: number, currentCardData: ISelected[]) {
-      const { originalTitle } = this.props.options[num];
-      const title = this.createTitle(selectedCardIndex, num, count, currentCardData);
-      const cardInfo: ISelected = {
-        title,
-        internalName,
-        id: title,
-        originalTitle
-      };
-      return cardInfo;
+  public mapIndexToCardInfo(
+    selectedCardIndex: number,
+    count: number,
+    internalName: string,
+    num: number,
+    currentCardData: ISelected[]
+  ) {
+    const { originalTitle } = this.props.options[num];
+    const title = this.createTitle(
+      selectedCardIndex,
+      num,
+      count,
+      currentCardData
+    );
+    const cardInfo: ISelected = {
+      title,
+      internalName,
+      id: title,
+      originalTitle
+    };
+    return cardInfo;
   }
 
   /**
@@ -79,16 +100,32 @@ class SelectOption extends React.Component<
    *
    * @param cardNumbers
    */
-  public convertCardNumbersToTitles(selectedCardIndices: number[]): ISelected[] {
+  public convertCardNumbersToTitles(
+    selectedCardIndices: number[]
+  ): ISelected[] {
     const selectedCardsWithInfo = [];
-    const cardTypeCount: {[key: string]: number} = {};
+    const cardTypeCount: { [key: string]: number } = {};
     const { currentCardData, options } = this.props;
-    for (let selectedCardIndex = 0 ; selectedCardIndex < selectedCardIndices.length ; selectedCardIndex++) {
+    for (
+      let selectedCardIndex = 0;
+      selectedCardIndex < selectedCardIndices.length;
+      selectedCardIndex++
+    ) {
       const optionIndexContainingData = selectedCardIndices[selectedCardIndex];
       const { internalName } = options[optionIndexContainingData];
-      cardTypeCount[internalName] = cardTypeCount[internalName] ? cardTypeCount[internalName] + 1 : 1;
+      cardTypeCount[internalName] = cardTypeCount[internalName]
+        ? cardTypeCount[internalName] + 1
+        : 1;
       if (currentCardData) {
-        selectedCardsWithInfo.push(this.mapIndexToCardInfo(selectedCardIndex, cardTypeCount[internalName], internalName, optionIndexContainingData, currentCardData));
+        selectedCardsWithInfo.push(
+          this.mapIndexToCardInfo(
+            selectedCardIndex,
+            cardTypeCount[internalName],
+            internalName,
+            optionIndexContainingData,
+            currentCardData
+          )
+        );
       }
     }
     return selectedCardsWithInfo;
@@ -143,7 +180,7 @@ class SelectOption extends React.Component<
 
   /**
    * Returns the number of times that a particular card was selected/clicked on.
-   * 
+   *
    * If card can only be clicked once, this function returns undefined.
    */
   public getCardCount = (internalName: string) => {
@@ -156,27 +193,25 @@ class SelectOption extends React.Component<
         return cardCount;
       }, 0);
     }
-  }
+  };
 
   public render() {
+    const { title, options, setDetailPage } = this.props;
     return (
       <div>
-        <Title>{this.props.title}</Title>
+        <Title>{title}</Title>
         <div className={styles.container}>
-          {this.props.options.map((option, cardNumber) => (
+          {options.map((option, cardNumber) => (
             <Card
+              option={option}
               key={`${cardNumber} ${option.title}`}
               onCardClick={(cardNumber: number) => {
                 this.onCardClick(cardNumber);
               }}
+              onDetailsClick={setDetailPage}
               cardNumber={cardNumber}
               selected={this.isCardSelected(cardNumber)}
-              iconPath={option.svgUrl}
               iconStyles={styles.icon}
-              title={option.title}
-              body={option.body}
-              disabled={option.unselectable}
-              clickCount={this.getCardCount(option.internalName)}
             />
           ))}
         </div>
@@ -185,4 +220,13 @@ class SelectOption extends React.Component<
   }
 }
 
-export default SelectOption;
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  setDetailPage: (detailPageInfo: IOption) => {
+    dispatch(setDetailPageAction(detailPageInfo));
+  }
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SelectOption);
