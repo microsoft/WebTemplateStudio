@@ -367,7 +367,7 @@ export abstract class Controller {
 
     try {
       Validator.isValidProjectPath(
-        enginePayload.projectPath,
+        enginePayload.path,
         enginePayload.projectName
       );
     } catch (error) {
@@ -392,7 +392,7 @@ export abstract class Controller {
     }
     await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
-    );
+    ).then(obj => console.log(obj));
 
     if (payload.selectedFunctions) {
       Controller.processFunctionDeploymentAndSendStatusToClient(
@@ -403,12 +403,21 @@ export abstract class Controller {
 
     if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
-      var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(cosmosPayload, enginePayload.path);
+      var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(
+        cosmosPayload,
+        enginePayload.path
+      );
       await vscode.window
-        .showInformationMessage('Replace your DB connection string in the .env file with the generated CosmosDB connection string?', ...['Yes', 'No'])
+        .showInformationMessage(
+          "Replace your DB connection string in the .env file with the generated CosmosDB connection string?",
+          ...["Yes", "No"]
+        )
         .then(selection => {
           if (selection === "Yes") {
-            CosmosDBDeploy.updateConnectionStringInEnvFile(enginePayload.path, dbobject.connectionString);
+            CosmosDBDeploy.updateConnectionStringInEnvFile(
+              enginePayload.path,
+              dbobject.connectionString
+            );
             vscode.window.showInformationMessage("Replaced");
           }
         });
@@ -478,14 +487,12 @@ export abstract class Controller {
 
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
-  ) {
-    await ApiModule.SendTemplateGenerationPayloadToApi(
+  ): Promise<any> {
+    return ApiModule.SendTemplateGenerationPayloadToApi(
       CONSTANTS.PORT,
       enginePayload,
       this.handleGenLiveMessage
-    ).then((object: any) => {
-      console.log(object);
-    });
+    );
   }
 
   private static handleGenLiveMessage(message: any) {
