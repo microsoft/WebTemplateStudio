@@ -106,3 +106,13 @@ const DraggableSidebarItem = ({
 };
 
 export default DraggableSidebarItem;
+
+// {page && !page.isValidTitle &&
+//   <div className={classnames({
+//     [styles.errorTextContainer]: withIndent || reorderSvgUrl,
+//     [styles.textContainer]: !withIndent,
+//     [styles.largeIndentContainer]: withLargeIndent
+//   })}>
+//     {page.error}
+//   </div>
+// }
