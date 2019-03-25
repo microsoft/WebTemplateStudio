@@ -59,7 +59,7 @@
     font-weight: bold;
     background-color: #303030;
     border: none;
-    width: 80%;
+    max-width: 300px;
 }
 
 .tileInput:focus {
