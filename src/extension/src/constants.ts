@@ -3,6 +3,7 @@ import * as nls from "vscode-nls";
 
 export const CONSTANTS = {
   ERRORS: {
+    TOO_MANY_FAILED_SYNC_REQUESTS: "Could not sync to template repository",
     INVALID_COMMAND: "Invalid command used",
     RESOURCE_GROUP_NOT_FOUND: "No resource group found with this name",
     SUBSCRIPTION_NOT_FOUND: "No subscription found with this name.",
@@ -77,7 +78,11 @@ export const CONSTANTS = {
     Project_Title: "Project Acorn"
   },
   GENERATE_ENDPOINT: "/api/generate",
-  CONNECTION_STRING: function (username: string, password: string, origin: string) {
+  CONNECTION_STRING: function(
+    username: string,
+    password: string,
+    origin: string
+  ) {
     return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMODDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
   },
   MAX_PROJECT_NAME_LENGTH: 50,
