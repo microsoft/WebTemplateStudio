@@ -1,6 +1,7 @@
 # Deployment
 
-Once your business logic is implemented, we recommend that you deploy your website to the cloud so that your friends, family and customers can see.
+After implementing your business logic, we recommend deploying your website to the cloud.
+Deploying your website to the cloud allows people to view your website by visiting a URL.
 
 ## Azure App Service
 
@@ -34,17 +35,25 @@ This method will require you to have [git](https://git-scm.com/downloads) instal
 
   ![Portal image click create](./resources/azure-appservice-click-create.png)
 
-- Another screen will appear. Enter the name of the website in the _app name_ field. Select a subscription, then create a resource group or use an existing one. Select the publish _code_ option. You will have the option to create an _app service_ on this screen (costs money but required if one doesn't already exist). Click on the App service button and you will be to create a new app service. If creating an _app service_ name it and select a location, and finally select the tier you want.
+- Another screen will appear in which you are required to do the following actions:
 
-  ![Portal image create resource](./resources/azure-appservice-createresource.png)
+1. Enter the name of the website in the _app name_ field.
+2. Select a subscription
+3. Create a resource group or use an existing one.
+4. Select the publish _code_ option.
+5. If no _app service_ exists create an _app service_ on this screen (costs money but required if one doesn't already exist).
+   1. Click on the App service button and you will be to create a new app service.
+   2. If creating an _app service_ name it and select a location, and finally select the tier you want.
 
-- Click create resource.
+![Portal image create resource](./resources/azure-appservice-createresource.png)
 
-  ![Portal image create resource create button](./resources/azure-appservice-createadd.png)
+6. Click create resource.
+
+![Portal image create resource create button](./resources/azure-appservice-createadd.png)
 
 - After clicking create you will get a notification, click the bell icon on the top right to view notifications. Click the go to resource button.
 
-  ![Portal image go to resource](./resources/azure-appservice-notification.png)
+![Portal image go to resource](./resources/azure-appservice-notification.png)
 
 You now have an app service resource in the cloud, where you can upload your web application.
 
