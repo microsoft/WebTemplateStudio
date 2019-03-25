@@ -8,6 +8,7 @@ import { selectFrontendFramework as selectFrontendAction } from "../../actions/s
 import { getFrontendFrameworksAction } from "../../actions/getFrontendFrameworks";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
@@ -23,9 +24,8 @@ type Props = IDispatchProps & ISelectFrontEndFrameworkProps;
 
 class SelectFrontEndFramework extends React.Component<Props> {
   public componentDidMount() {
-    // TODO: use store to get project type next time.
     if (this.props.getFrontendFrameworks) {
-      this.props.getFrontendFrameworks("FullStackWebApp");
+      this.props.getFrontendFrameworks(WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP);
     }
   }
   /**
