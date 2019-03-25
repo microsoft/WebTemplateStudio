@@ -1,41 +1,34 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
+import classnames from "classnames";
+import styles from "./masterdetail.module.css";
 
-const styles = theme => ({
-  image: {
-    maxWidth: 600,
-    width: "100%",
-    marginBottom: theme.spacing.unit * 4
-  },
-  layout: {
-    width: "auto",
-    margin: theme.spacing.unit * 6,
-    [theme.breakpoints.up("lg")]: {
-      width: 800,
-      margin: theme.spacing.unit * 8
-    }
-  },
-  title: {
-    marginBottom: theme.spacing.unit * 4
-  }
-});
-
-function MasterDetailPage(props) {
-  const { classes } = props;
-
+export default function MasterDetailPage(props) {
   return (
-    <Grid item xs>
-      <div className={classes.layout}>
-        <img src={props.image} alt={"Default"} className={classes.image} />
-        <Typography variant="h3" color="textPrimary" className={classes.title}>
-          {props.textAssets.title}
-        </Typography>
-        <Typography paragraph>{props.textAssets.paragraph}</Typography>
+    <div className="col">
+      <div className={classnames("row", styles.heading)}>
+        <div className="col">
+          <h3 className="ml-3 mb-4">{props.textSampleData.title}</h3>
+        </div>
       </div>
-    </Grid>
+      <div className="row">
+        <div className="col-12 mt-3">
+          <nav aria-label="breadcrumb">
+            <ol className="breadcrumb bg-white">
+              <li className="breadcrumb-item">
+                <a className={styles.breadCrumbLink} href="/masterdetail">
+                  Master Detail
+                </a>
+              </li>
+              <li className="breadcrumb-item active" aria-current="page">
+                {props.textSampleData.title}
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div className="col-md-8 col-12">
+          <p className="ml-3">{props.textSampleData.paragraph}</p>
+        </div>
+      </div>
+    </div>
   );
 }
-
-export default withStyles(styles)(MasterDetailPage);

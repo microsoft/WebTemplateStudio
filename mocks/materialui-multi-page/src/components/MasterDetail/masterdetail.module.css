@@ -1,0 +1,31 @@
+.sidebar {
+  /* full height - footer height - navbar height */
+  min-height: calc(100vh - 160px - 57px);
+}
+.sidebarText {
+  font-weight: 500;
+  font-color: #000000;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.breadCrumbLink {
+  color: #025fce;
+}
+
+.heading {
+  background-color: #cecece;
+  padding-top: 18em;
+}
