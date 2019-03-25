@@ -36,7 +36,7 @@ const DraggableSidebarItem = ({
   handleCloseClick?: (idx: number) => void;
 }) => {
   return (
-    <div style={{ width: "87%" }}>
+    <div>
       {itemTitle && (
         <div className={styles.titleContainer}>
           {withIndent ? (
@@ -81,15 +81,13 @@ const DraggableSidebarItem = ({
             )}
             <div>{text}</div>
           </div>
-          {page && !page!.isValidTitle && (
+          {page && !page.isValidTitle && (
             <div
-              style={{
-                backgroundColor: "#5f0d0d",
-                borderWidth: `1px solid`,
-                borderColor: "red",
-                marginTop: 0
-              }}
-              className={styles.pagesTextContainer}
+              className={classnames({
+                [styles.errorTextContainer]: withIndent || reorderSvgUrl,
+                [styles.textContainer]: !withIndent,
+                [styles.largeIndentContainer]: withLargeIndent
+              })}
             >
               {page.error}
             </div>

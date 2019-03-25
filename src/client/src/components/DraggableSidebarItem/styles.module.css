@@ -4,6 +4,12 @@
   margin-bottom: 10px;
 }
 
+.draggablePage2 {
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
 .titleContainer {
   display: flex;
 }
@@ -19,6 +25,19 @@
   align-items: center;
   padding: 0px 10px;
   border-radius: 2px;
+}
+
+.errorTextContainer {
+  width: 100%;
+  height: 38px;
+  background: #BE1100;
+  border: 1px solid #5f0d0d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  border-radius: 2px;
+  font-size: 50%;
 }
 
 .pagesTextContainer {

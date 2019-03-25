@@ -43,6 +43,11 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   COSMOS_DB: "wts.Feature.Azure.Cosmos"
 };
 
+const PAGE_NAME_ERROR_MESSAGES = {
+  DUPLICATE_NAME: "page name has to be unique",
+  INVALID_REGEX: "only letters, numbers and spaces are allowed"
+}
+
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
   GET_USER_STATUS: "getUserStatus",
@@ -60,5 +65,6 @@ export {
   ROUTES,
   ROUTES_ARRAY,
   SERVICE_KEYS,
-  WIZARD_CONTENT_INTERNAL_NAMES
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  PAGE_NAME_ERROR_MESSAGES
 };

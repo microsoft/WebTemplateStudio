@@ -16,14 +16,16 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
-import { ROUTES } from "../../utils/constants";
+import { ROUTES, PAGE_NAME_ERROR_MESSAGES } from "../../utils/constants";
 
 import cancel from "../../assets/cancel.svg";
+import reorder from "../../assets/reorder.svg";
 
 import { selectPagesAction } from "../../actions/selectPages";
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 import SortablePageList from "../SortablePageList";
+import getSvgUrl from "../../utils/getSvgUrl";
 
 // TODO: Finalize types when API is hooked up
 interface ISelectionType {
@@ -80,15 +82,14 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     pages[idx].title = newTitle;
     if (!/^[a-zA-Z0-9 ]+$/i.test(pages[idx].title) || !/\S/.test(pages[idx].title)) {
       pages[idx].isValidTitle = false;
-      pages[idx].error = "Invalid Name";
+      pages[idx].error = PAGE_NAME_ERROR_MESSAGES.INVALID_REGEX;
     } else {
       pages[idx].isValidTitle = true;
     }
-    var pageNames = new Set();
-    for (var i = 0; i < pages.length; i++) {
+    for (let i = 0; i < pages.length; i++) {
       if (pages[i].title === pages[idx].title && i !== idx) {
         pages[idx].isValidTitle = false;
-        pages[idx].error = "Duplicate Name";
+        pages[idx].error = PAGE_NAME_ERROR_MESSAGES.DUPLICATE_NAME;
         break;
       }
     }
