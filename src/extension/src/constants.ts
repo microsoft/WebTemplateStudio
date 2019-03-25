@@ -102,11 +102,16 @@ export enum ExtensionCommand {
   ProjectPathAndNameValidation = "project-path-and-name-validation"
 }
 
-export enum AzureResourceType {
-  Cosmos = "cosmos",
-  Functions = "functions"
+export enum TelemetryEventName{
+  ExtensionLaunch = "Wizard-Launch-Time",
+  WizardSession = "Wizard-To-Generate-Session-Time",
+  AzureLogin = "Azure-Account-Extension",
+  Subscriptions = "Acquire-Subscription",
+  SubscriptionData = "Acquire-Subscription-Data",
+  EngineGeneration = "Engine-Generation-Time",
+  CosmosDBDeploy = "Azure-Cosmos-Deployment",
+  FunctionsDeploy = "Azure-Functions-Deployment"
 }
-
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 export namespace DialogResponses {
   export const yes: MessageItem = { title: localize("yes", "Yes") };
@@ -148,4 +153,9 @@ export enum SyncStatus {
   NewWizardVersionAvailable = 7,
   Ready = 8,
   ErrorAcquiring = 9
+}
+
+export enum AzureResourceType {
+  Cosmos = "cosmos",
+  Functions = "functions"
 }

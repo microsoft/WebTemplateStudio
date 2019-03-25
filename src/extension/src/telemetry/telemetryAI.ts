@@ -1,16 +1,17 @@
 import * as vscode from 'vscode';
 import TelemetryReporter from 'vscode-extension-telemetry';
 import { getPackageInfo } from './getPackageInfo';
-import { IActionContext, ITelemetryReporter, callWithTelemetryAndCatchErrors } from './callWithTelemetryAndErrorHandling'
+import { IActionContext, ITelemetryReporter, callWithTelemetryAndCatchErrors } from './callWithTelemetryAndErrorHandling';
+import { TelemetryEventName } from '../constants'; 
 
 export type IActionContext = IActionContext;
 
 export class TelemetryAI {
 
     private static telemetryReporter: ITelemetryReporter;
-    wizardSessionStartTime: number;
+    private wizardSessionStartTime: number;
 
-    constructor(context: vscode.ExtensionContext, private extensionStartTime: number){
+    constructor(context: vscode.ExtensionContext, private extensionStartTime: number = Date.now()){
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(context);
         this.trackExtensionStartUpTime();
         this.wizardSessionStartTime = Date.now();
@@ -24,19 +25,23 @@ export class TelemetryAI {
         return reporter;
     }
 
-    private trackExtensionStartUpTime(eventName : string = "Wizard Launch Time"){
+    private trackExtensionStartUpTime(eventName : string = TelemetryEventName.ExtensionLaunch){
         this.trackTimeDuration(eventName, this.extensionStartTime, Date.now());
     }
 
-    public trackWizardTotalSessionTimeToGenerate(eventName : string = "Wizard Launch To Generate Time"){
+    public trackWizardTotalSessionTimeToGenerate(eventName : string = TelemetryEventName.WizardSession){
         this.trackTimeDuration(eventName, this.wizardSessionStartTime, Date.now());
     }
 
-    private trackTimeDuration(eventName : string, endTime : number, startTime : number){
+    public trackCustomEventTime(customEventName: string, startTime: number, endTime: number = Date.now(), customEventProperties?: { [key: string]: string | undefined }){
+        this.trackTimeDuration(customEventName, startTime, endTime, customEventProperties);
+    }
+
+    private trackTimeDuration(eventName : string, startTime : number, endTime : number, properties?: { [key: string]: string | undefined }){
         var measurement = {
             duration: (endTime - startTime) / 1000
         };
-        TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, undefined, measurement)
+        TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, properties, measurement)
     }
 
     public resetWizardSessionStartTime(){

@@ -3,6 +3,7 @@ import { Validator } from "./utils/validator";
 import {
   CONSTANTS,
   ExtensionCommand,
+  TelemetryEventName,
   SyncStatus,
   AzureResourceType
 } from "./constants";
@@ -31,6 +32,7 @@ import {
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
 import { ChildProcess } from "child_process";
+import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -38,6 +40,7 @@ export abstract class Controller {
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static reactPanelContext: ReactPanel;
+  private static Telemetry: TelemetryAI;
   // This will map commands from the client to functions.
 
   private static clientCommandMap: Map<
@@ -62,12 +65,18 @@ export abstract class Controller {
       ExtensionCommand.NameCosmos,
       Controller.sendCosmosNameValidationStatusToClient
     ],
-    [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [
       ExtensionCommand.GetOutputPath,
       Controller.sendOutputPathSelectionToClient
     ],
-    [ExtensionCommand.HandleTelemetry, Controller.handleTelemetry],
+    [
+      ExtensionCommand.HandleTelemetry,
+      Controller.trackOnPageChangeInTelemetry
+    ],
+    [
+      ExtensionCommand.Generate,
+      Controller.handleGeneratePayloadFromClient
+    ],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
     [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
     [ExtensionCommand.GetUserStatus, Controller.sendUserStatus]
@@ -95,21 +104,20 @@ export abstract class Controller {
     }
   };
 
+
   /**
    * launchWizard
    * Will launch the api, sync templates then pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public static launchWizard(context: vscode.ExtensionContext): ChildProcess {
+  public static launchWizard(
+    context: vscode.ExtensionContext,
+    extensionStartUpTime: number = Date.now()
+  ): ChildProcess {
     let process = ApiModule.StartApi(context);
     this.attemptSync(context, 0);
-
+    Controller.Telemetry = new TelemetryAI(context, extensionStartUpTime);
     return process;
-  }
-
-  // TODO: To minimize PR size, this will be edited in next PR; branch: t-trngo/telemetryIntegrationInController
-  public static handleTelemetry(payload: any): any {
-    //   Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
   }
 
   private static attemptSync(context: vscode.ExtensionContext, count: number) {
@@ -137,12 +145,17 @@ export abstract class Controller {
   private static handleSyncLiveData(status: SyncStatus) {
     vscode.window.showInformationMessage(`SyncStatus:${SyncStatus[status]}`);
   }
+
+  //To be addressed in next PR for page/navigation tracking
+  public static trackOnPageChangeInTelemetry(payload: any): any {
+    //   Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
+  }
+
   /**
    * Returns an array of Subscription Items when the user is logged in
    *
    * */
   public static getSubscriptions() {
-    //TODO FORMAT TO {label:,  value:}
     return AzureAuth.getSubscriptions();
   }
 
@@ -238,7 +251,9 @@ export abstract class Controller {
   }
 
   public static performLogin(message: any) {
-    AzureAuth.login()
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(ExtensionCommand.Login, async function (this: IActionContext): Promise<void> {
+
+      AzureAuth.login()
       .then(res => {
         const email = AzureAuth.getEmail();
         AzureAuth.getSubscriptions()
@@ -261,10 +276,14 @@ export abstract class Controller {
       .catch(error => {
         vscode.window.showErrorMessage(error);
       });
+
+    });
   }
 
   public static sendSubscriptionsToClient(message: any) {
-    Controller.getSubscriptions()
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.Subscriptions, async function (this: IActionContext): Promise<void> {
+      
+      Controller.getSubscriptions()
       .then(subscriptions => {
         Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
           subscriptions: subscriptions
@@ -273,13 +292,17 @@ export abstract class Controller {
       .catch((error: Error) => {
         Controller.handleErrorMessage(ExtensionCommand.Subscriptions, error);
       });
+
+    });
   }
 
   public static sendCosmosSubscriptionDataToClient(message: any) {
-    Controller.getSubscriptionData(
-      message.subscription,
-      AzureResourceType.Cosmos
-    )
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.SubscriptionData, async function (this: IActionContext): Promise<void> {
+      
+      Controller.getSubscriptionData(
+        message.subscription,
+        AzureResourceType.Cosmos
+      )
       .then(subscriptionDatapackage => {
         Controller.handleValidMessage(
           ExtensionCommand.SubscriptionDataForCosmos,
@@ -295,6 +318,7 @@ export abstract class Controller {
           error
         );
       });
+    });
   }
 
   public static sendFunctionsSubscriptionDataToClient(message: any) {
@@ -317,7 +341,8 @@ export abstract class Controller {
           error
         );
       });
-  }
+    }
+  
 
   public static sendFunctionNameValidationStatusToClient(message: any) {
     Controller.validateFunctionAppName(message.appName, message.subscription)
@@ -350,6 +375,7 @@ export abstract class Controller {
   public static async handleGeneratePayloadFromClient(
     message: any
   ): Promise<any> {
+    Controller.Telemetry.trackWizardTotalSessionTimeToGenerate();
     var payload = message.payload;
     var enginePayload: any = payload.engine;
 
@@ -395,27 +421,32 @@ export abstract class Controller {
     );
 
     if (payload.selectedFunctions) {
-      Controller.processFunctionDeploymentAndSendStatusToClient(
-        payload.functions,
-        enginePayload.path
-      );
+      Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.FunctionsDeploy, async function (this: IActionContext): Promise<void> {
+        Controller.processFunctionDeploymentAndSendStatusToClient(
+          payload.functions,
+          enginePayload.path
+        );
+      });
+      
     }
 
     if (payload.selectedCosmos) {
-      var cosmosPayload: any = payload.cosmos;
-      var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(cosmosPayload, enginePayload.path);
-      await vscode.window
-        .showInformationMessage('Replace your DB connection string in the .env file with the generated CosmosDB connection string?', ...['Yes', 'No'])
-        .then(selection => {
-          if (selection === "Yes") {
-            CosmosDBDeploy.updateConnectionStringInEnvFile(enginePayload.path, dbobject.connectionString);
-            vscode.window.showInformationMessage("Replaced");
-          }
+      Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.CosmosDBDeploy, async function (this: IActionContext): Promise<void> {      
+        var cosmosPayload: any = payload.cosmos;
+        var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(cosmosPayload, enginePayload.path);
+        await vscode.window
+          .showInformationMessage('Replace your DB connection string in the .env file with the generated CosmosDB connection string?', ...['Yes', 'No'])
+          .then(selection => {
+            if (selection === "Yes") {
+              CosmosDBDeploy.updateConnectionStringInEnvFile(enginePayload.path, dbobject.connectionString);
+              vscode.window.showInformationMessage("Replaced");
+            }
+          });
         });
     }
   }
 
-  public static processFunctionDeploymentAndSendStatusToClient(
+  public static async processFunctionDeploymentAndSendStatusToClient(
     funcPayload: any,
     genPath: string
   ) {
@@ -430,7 +461,7 @@ export abstract class Controller {
      *       functionNames: ["function1", "function2", "function3"]
      *   }
      */
-    Controller.deployFunctionApp(funcPayload, genPath)
+      await Controller.deployFunctionApp(funcPayload, genPath)
       .then(() => {
         Controller.handleValidMessage(ExtensionCommand.DeployFunctions, {
           succeeded: true
@@ -448,7 +479,7 @@ export abstract class Controller {
       });
   }
 
-  public static processCosmosDeploymentAndSendStatusToClient(
+  public static async processCosmosDeploymentAndSendStatusToClient(
     cosmosPayload: any,
     genPath: string
   ) {
