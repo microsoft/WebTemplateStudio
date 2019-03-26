@@ -110,7 +110,7 @@ export abstract class Controller {
       synced = await Controller.attemptSync();
       syncAttempts++;
       if (!synced) {
-        await Controller.timeout(200);
+        await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
       }
     }
     if (syncAttempts > CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
@@ -142,10 +142,10 @@ export abstract class Controller {
       this.handleSyncLiveData
     )
       .then(() => {
-        return Promise.resolve(true);
+        return true;
       })
       .catch(() => {
-        return Promise.resolve(false);
+        return false;
       });
   }
   private static handleSyncLiveData(status: SyncStatus) {
@@ -504,7 +504,7 @@ export abstract class Controller {
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ): Promise<any> {
-    return ApiModule.SendTemplateGenerationPayloadToApi(
+    return await ApiModule.SendTemplateGenerationPayloadToApi(
       CONSTANTS.PORT,
       enginePayload,
       this.handleGenLiveMessage
