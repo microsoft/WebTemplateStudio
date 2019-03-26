@@ -12,8 +12,8 @@ export class TelemetryAI {
     private wizardSessionStartTime: number;
     private pageStartTimer: number;
 
-    constructor(context: vscode.ExtensionContext){
-        TelemetryAI.telemetryReporter = this.createTelemetryReporter(context);
+    constructor(private vscodeContext: vscode.ExtensionContext){
+        TelemetryAI.telemetryReporter = this.createTelemetryReporter(vscodeContext);
         this.wizardSessionStartTime = Date.now();
         this.pageStartTimer = this.wizardSessionStartTime;
     }
@@ -56,7 +56,7 @@ export class TelemetryAI {
     }
 
     public callWithTelemetryAndCatchHandleErrors<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{
-        return callWithTelemetryAndCatchErrors(callbackId,callback, TelemetryAI.telemetryReporter);
+        return callWithTelemetryAndCatchErrors(this.vscodeContext, callbackId,callback, TelemetryAI.telemetryReporter);
     }
 }
 
