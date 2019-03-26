@@ -26,24 +26,21 @@ const SummaryTile = ({ withIndent, title, company, version, isEditable, withoutD
             inputRef.current.select()
         }
     },[isDisabled])
-    const handleChange = (e: any) => {
-        setTitle(e.target.value);
+    const handleChange = (e: React.SyntheticEvent) => {
+        let target = e.target as HTMLInputElement;
+        setTitle(target.value);
     }
-    const handleClick = (e: any) => {
+    const handleClick = () => {
         setDisabled(false);
     }
-    const handleFocusOut = (e: any) => {
+    const handleFocusOut = () => {
         setDisabled(true);
     }
     const handleMouseEnter = () => {
-        if (isEditable) {
-            setEditable(true);
-        }
+        setEditable(isEditable);
     }
     const handleMouseLeave = () => {
-        if (isEditable) {
-            setEditable(false);
-        }
+        setEditable(!isEditable);
     }
     return (
         <div className={styles.container} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>

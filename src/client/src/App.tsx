@@ -101,7 +101,7 @@ class App extends React.Component<Props> {
             });
           }
           return;
-        case "name-cosmos":
+        case EXTENSION_COMMANDS.NAME_COSMOS:
           // Receive input validation
           // and update redux (boolean, string)
           this.props.setCosmosResourceAccountNameAvailability({

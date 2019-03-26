@@ -22,9 +22,6 @@ type Props = IProps & IDispatchProps;
 // This component lives in "containers" because the accountName can change via redux in the future
 const CosmosDBSelection = ({ cosmosSelection, removeCosmosResource }: Props) => {
     const { serviceType } = cosmosSelection.wizardContent;
-    const handleCloseClick = (selectionIndex: number) => {
-        removeCosmosResource(selectionIndex);
-    }
     return (
         <React.Fragment>
             {!_.isEmpty(cosmosSelection.selection) && cosmosSelection.selection.map((resource: any, idx: number) => {
@@ -36,7 +33,7 @@ const CosmosDBSelection = ({ cosmosSelection, removeCosmosResource }: Props) => 
                     closeSvgUrl={getSvg.getCancelSvg()}
                     itemTitle={serviceType}
                     withIndent={true}
-                    handleCloseClick={handleCloseClick}
+                    handleCloseClick={removeCosmosResource}
                     idx={idx + 1}
                 />)
             })}

@@ -48,12 +48,6 @@ const AzureFunctionsSelection = ({functionApps, updateFunctionNames, removeAzure
             });
         }
     };
-    const handleRemoveResource = (appIndex: number) => {
-        removeAzureFunctionApp(appIndex);
-    }
-    const handleRemoveFunction = (functionIndex: number) => {
-        removeAzureFunction(functionIndex);
-    }
     return ( 
         <React.Fragment>
             {!_.isEmpty(selection) && selection.map((functionApp: ISelectedAzureFunctionsService, idx: number) => (
@@ -65,7 +59,7 @@ const AzureFunctionsSelection = ({functionApps, updateFunctionNames, removeAzure
                         itemTitle={serviceType}
                         withIndent={true}
                         idx={idx+1}
-                        handleCloseClick={handleRemoveResource}
+                        handleCloseClick={removeAzureFunctionApp}
                     />
                     {functionApp.functionNames && (functionApp.functionNames.map((functionName: string, idx: number) =>
                         <DraggableSidebarItem
@@ -75,7 +69,7 @@ const AzureFunctionsSelection = ({functionApps, updateFunctionNames, removeAzure
                             azureFunctionName={functionName}
                             handleInputChange={handleInputChange}
                             idx={idx + 1}
-                            handleCloseClick={handleRemoveFunction}
+                            handleCloseClick={removeAzureFunction}
                         />))}
                 </React.Fragment>))}
         </React.Fragment>
