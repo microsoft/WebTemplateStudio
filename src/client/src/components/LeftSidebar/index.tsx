@@ -9,16 +9,13 @@ import LeftSidebarLink from "../LeftSidebarLink";
 import styles from "./styles.module.css";
 
 import { ROUTES, ROUTES_ARRAY } from "../../utils/constants";
-
-interface IProps {
-  sidebarItems: string[];
-}
+import leftSidebarData from "../../mockData/leftSidebarData";
 
 interface IStateProps {
   isVisited: {[key: string]: boolean};
 }
 
-type Props = IProps & RouteComponentProps & IStateProps;
+type Props = RouteComponentProps & IStateProps;
 
 const LeftSidebar = (props: Props) => {
   const { pathname } = props.location;
@@ -31,7 +28,7 @@ const LeftSidebar = (props: Props) => {
     <React.Fragment>
       {pathname !== ROUTES.PAGE_DETAILS && 
       <div className={classnames(styles.leftView, styles.container)}>
-        {props.sidebarItems.map((sidebartitle, idx) => {
+        {leftSidebarData.map((sidebartitle, idx) => {
           return (
             <div className={
               classnames(styles.itemBorder, { 

@@ -17,7 +17,6 @@ import Header from "./containers/Header";
 import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 
-import leftSidebarData from "./mockData/leftSidebarData";
 import { EXTENSION_COMMANDS, ROUTES } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
@@ -139,7 +138,7 @@ class App extends React.Component<Props> {
           <div className={appStyles.container}>
             <CosmosResourceModal />
             <AzureFunctionsModal />
-            <LeftSidebar sidebarItems={leftSidebarData} />
+            <LeftSidebar />
             <div className={classnames({
                 [appStyles.centerView]: pathname === ROUTES.WELCOME,
                 [appStyles.centerViewCropped]: pathname !== ROUTES.WELCOME
