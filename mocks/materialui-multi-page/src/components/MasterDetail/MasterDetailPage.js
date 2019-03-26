@@ -3,11 +3,12 @@ import classnames from "classnames";
 import styles from "./masterdetail.module.css";
 
 export default function MasterDetailPage(props) {
+  const { title, paragraph } = props.textSampleData;
   return (
     <div className="col">
       <div className={classnames("row", styles.heading)}>
         <div className="col">
-          <h3 className="ml-3 mb-4">{props.textSampleData.title}</h3>
+          <h3 className="ml-3 mb-4">{title}</h3>
         </div>
       </div>
       <div className="row">
@@ -20,13 +21,13 @@ export default function MasterDetailPage(props) {
                 </a>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                {props.textSampleData.title}
+                {title}
               </li>
             </ol>
           </nav>
         </div>
         <div className="col-md-8 col-12">
-          <p className="ml-3">{props.textSampleData.paragraph}</p>
+          <p className="ml-3">{paragraph}</p>
         </div>
       </div>
     </div>

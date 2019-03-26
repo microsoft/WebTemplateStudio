@@ -58,6 +58,12 @@ export default class MasterDetail extends Component {
   }
 
   render() {
+    const {
+      masterDetailText,
+      currentDisplayTabIndex,
+      WarningMessageOpen,
+      WarningMessageText
+    } = this.state;
     return (
       <React.Fragment>
         <div className="container-fluid">
@@ -71,7 +77,7 @@ export default class MasterDetail extends Component {
               )}
             >
               <div class="list-group list-group-flush border-bottom">
-                {this.state.masterDetailText.map((textAssets, index) => (
+                {masterDetailText.map((textAssets, index) => (
                   <MasterDetailSideBarTab
                     onDisplayTabClick={this.handleDisplayTabClick}
                     tabText={textAssets.tabName}
@@ -83,15 +89,13 @@ export default class MasterDetail extends Component {
               </div>
             </div>
             <MasterDetailPage
-              textSampleData={
-                this.state.masterDetailText[this.state.currentDisplayTabIndex]
-              }
+              textSampleData={masterDetailText[currentDisplayTabIndex]}
             />
           </div>
         </div>
         <WarningMessage
-          open={this.state.WarningMessageOpen}
-          text={this.state.WarningMessageText}
+          open={WarningMessageOpen}
+          text={WarningMessageText}
           onWarningClose={this.handleWarningClose}
         />
       </React.Fragment>
