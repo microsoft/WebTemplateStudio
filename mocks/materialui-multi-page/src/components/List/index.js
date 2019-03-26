@@ -1,24 +1,9 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
 import ListItem from "./ListItem";
 import ListForm from "./ListForm";
 import WarningMessage from "../WarningMessage";
 
-const styles = theme => ({
-  layout: {
-    width: "auto",
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    [theme.breakpoints.up("lg")]: {
-      width: 1000,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }
-  }
-});
-
-class index extends Component {
+export default class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +19,7 @@ class index extends Component {
     this.handleAddListItem = this.handleAddListItem.bind(this);
   }
 
-  handleDeleteListItem(event, listItem) {
+  handleDeleteListItem(listItem) {
     fetch(`${this.endpoint}/${listItem._id}`, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
@@ -55,7 +40,16 @@ class index extends Component {
       });
   }
 
-  handleAddListItem(event) {
+  handleAddListItem() {
+    // Warning Pop Up if the user submits an empty message
+    if (!this.state.multilineTextField) {
+      this.setState({
+        WarningMessageOpen: true,
+        WarningMessageText: "Please enter a valid message"
+      });
+      return;
+    }
+
     fetch(this.endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -94,7 +88,7 @@ class index extends Component {
     });
   }
 
-  // Get the text assets from the back end
+  // Get the sample data from the back end
   componentDidMount() {
     fetch(this.endpoint)
       .then(response => {
@@ -113,31 +107,39 @@ class index extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const {
+      multilineTextField,
+      list,
+      WarningMessageOpen,
+      WarningMessageText
+    } = this.state;
     return (
-      <div className={classes.layout}>
-        <Grid container justify="center" alignItems="flex-start" spacing={24}>
-          <ListForm
-            onClick={this.handleAddListItem}
-            onChangeInputText={this.handleChangeInputText}
-            multilineTextField={this.state.multilineTextField}
-          />
-          {this.state.list.map(listItem => (
+      <div className="container">
+        <div className="row">
+          <div className="col mt-5 p-0">
+            <h3>Bootstrap List Template</h3>
+          </div>
+          <div className="col-12 p-0">
+            <ListForm
+              onAddListItem={this.handleAddListItem}
+              onChangeInputText={this.handleChangeInputText}
+              multilineTextField={multilineTextField}
+            />
+          </div>
+          {list.map(listItem => (
             <ListItem
               key={listItem._id}
               listItem={listItem}
               onDeleteListItem={this.handleDeleteListItem}
             />
           ))}
-        </Grid>
-        <WarningMessage
-          open={this.state.WarningMessageOpen}
-          text={this.state.WarningMessageText}
-          onWarningClose={this.handleWarningClose}
-        />
+          <WarningMessage
+            open={WarningMessageOpen}
+            text={WarningMessageText}
+            onWarningClose={this.handleWarningClose}
+          />
+        </div>
       </div>
     );
   }
 }
-
-export default withStyles(styles)(index);
