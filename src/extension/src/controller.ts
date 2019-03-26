@@ -118,7 +118,7 @@ export abstract class Controller {
         let syncAttempts = 0;
         while (
           !synced &&
-          syncAttempts <= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
+          syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
         ) {
           synced = await Controller.attemptSync();
           syncAttempts++;
@@ -126,7 +126,7 @@ export abstract class Controller {
             await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
           }
         }
-        if (syncAttempts > CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+        if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
           vscode.window.showErrorMessage(
             CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
           );
