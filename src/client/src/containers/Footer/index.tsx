@@ -78,15 +78,11 @@ class Footer extends React.Component<Props> {
     let areValidNames = true;
     for (const page of this.props.engine.pages) {
       const pageName = page.name;
-      try {
-        areValidNames = validateName(pageName);
-        if (pageNames.has(pageName)) {
-          areValidNames = false;
-        } else {
-          pageNames.add(pageName);
-        }
-      } catch (error) {
+      areValidNames = validateName(pageName).isValid;
+      if (pageNames.has(pageName)) {
         areValidNames = false;
+      } else {
+        pageNames.add(pageName);
       }
       if (!areValidNames) {
         break;
