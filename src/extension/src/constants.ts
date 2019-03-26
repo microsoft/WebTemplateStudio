@@ -118,7 +118,8 @@ export enum TelemetryEventName {
   CosmosDBDeploy = "Azure-Cosmos-Deployment",
   FunctionsDeploy = "Azure-Functions-Deployment",
   PageChange = "Wizard-Page-Change",
-  SyncEngine = "SyncEngine"
+  SyncEngine = "SyncEngine",
+  ConnectionStringReplace = "ConnectionStringReplaced"
 }
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 export namespace DialogResponses {

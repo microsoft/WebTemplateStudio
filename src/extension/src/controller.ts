@@ -106,38 +106,46 @@ export abstract class Controller {
    *  @param VSCode context interface
    */
   public static async launchWizard(
-    context: vscode.ExtensionContext, 
+    context: vscode.ExtensionContext,
     extensionStartTime: number
   ): Promise<any> {
     Controller.Telemetry = new TelemetryAI(context);
-    this.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.SyncEngine, async function (this: IActionContext): Promise<ChildProcess> {
-
-      let process = ApiModule.StartApi(context);
-      let synced = false;
-      let syncAttempts = 0;
-      while (!synced && syncAttempts <= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-        synced = await Controller.attemptSync();
-        syncAttempts++;
-        if (!synced) {
-          await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
+    this.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.SyncEngine,
+      async function(this: IActionContext): Promise<ChildProcess> {
+        let process = ApiModule.StartApi(context);
+        let synced = false;
+        let syncAttempts = 0;
+        while (
+          !synced &&
+          syncAttempts <= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
+        ) {
+          synced = await Controller.attemptSync();
+          syncAttempts++;
+          if (!synced) {
+            await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
+          }
         }
-      }
-      if (syncAttempts > CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-        vscode.window.showErrorMessage(
-          CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
+        if (syncAttempts > CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+          vscode.window.showErrorMessage(
+            CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
+          );
+          this.properties.Status =
+            CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS;
+          return process;
+        }
+
+        Controller.reactPanelContext = ReactPanel.createOrShow(
+          context.extensionPath,
+          Controller.routingMessageReceieverDelegate
         );
-        this.properties.Status = CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS;
+        Controller.Telemetry.trackExtensionStartUpTime(
+          TelemetryEventName.ExtensionLaunch,
+          extensionStartTime
+        );
         return process;
       }
-
-      Controller.reactPanelContext = ReactPanel.createOrShow(
-        context.extensionPath,
-        Controller.routingMessageReceieverDelegate
-      );
-      return process;
-    });
-
-    
+    );
   }
 
   private static timeout(ms: number) {
@@ -469,32 +477,45 @@ export abstract class Controller {
           TelemetryEventName.CosmosDBDeploy,
           async function(this: IActionContext): Promise<void> {
             var cosmosPayload: any = payload.cosmos;
-            var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(
+            var dbObject = await Controller.processCosmosDeploymentAndSendStatusToClient(
               cosmosPayload,
               enginePayload.path
             );
-            await vscode.window
-              .showInformationMessage(
-                DialogMessages.cosmosDBConnectStringReplacePrompt,
-                ...[DialogResponses.yes, DialogResponses.no]
-              )
-              .then((selection: vscode.MessageItem | undefined)  => {
-                if (selection === DialogResponses.yes) {
-                  CosmosDBDeploy.updateConnectionStringInEnvFile(
-                    enginePayload.path,
-                    dbobject.connectionString
-                  );
-                  this.properties.userReplacedEnv = "true";
-                  vscode.window.showInformationMessage("Replaced");
-                }
-              });
+            Controller.promptUserForCosmosReplacement(
+              enginePayload.path,
+              dbObject
+            );
           }
         )
       );
     }
-
     // kick off both services asynchronously
     Promise.all(serviceQueue);
+  }
+
+  private static async promptUserForCosmosReplacement(
+    pathToEnv: string,
+    dbObject: DatabaseObject
+  ) {
+    return await vscode.window
+      .showInformationMessage(
+        DialogMessages.cosmosDBConnectStringReplacePrompt,
+        ...[DialogResponses.yes, DialogResponses.no]
+      )
+      .then((selection: vscode.MessageItem | undefined) => {
+        if (selection === DialogResponses.yes) {
+          var start = Date.now();
+          CosmosDBDeploy.updateConnectionStringInEnvFile(
+            pathToEnv,
+            dbObject.connectionString
+          );
+          vscode.window.showInformationMessage(
+            "Replaced file at: " + pathToEnv
+          );
+          Controller.Telemetry.trackCustomEventTime(TelemetryEventName.ConnectionStringReplace, start, Date.now());
+        }
+        return selection === DialogResponses.yes;
+      });
   }
 
   public static async processFunctionDeploymentAndSendStatusToClient(
