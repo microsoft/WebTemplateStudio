@@ -12,9 +12,8 @@ export class TelemetryAI {
     private wizardSessionStartTime: number;
     private pageStartTimer: number;
 
-    constructor(context: vscode.ExtensionContext, private extensionStartTime: number = Date.now()){
+    constructor(context: vscode.ExtensionContext){
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(context);
-        this.trackExtensionStartUpTime();
         this.wizardSessionStartTime = Date.now();
         this.pageStartTimer = this.wizardSessionStartTime;
     }
@@ -27,8 +26,8 @@ export class TelemetryAI {
         return reporter;
     }
 
-    private trackExtensionStartUpTime(eventName : string = TelemetryEventName.ExtensionLaunch){
-        this.trackTimeDuration(eventName, this.extensionStartTime, Date.now());
+    public trackExtensionStartUpTime(eventName : string = TelemetryEventName.ExtensionLaunch, extensionStartTime: number){
+        this.trackTimeDuration(eventName, extensionStartTime, Date.now());
     }
 
     /*
