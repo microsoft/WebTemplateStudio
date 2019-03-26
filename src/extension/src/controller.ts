@@ -100,39 +100,53 @@ export abstract class Controller {
    * Will launch the api, sync templates then pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public static launchWizard(context: vscode.ExtensionContext): ChildProcess {
+  public static async launchWizard(
+    context: vscode.ExtensionContext
+  ): Promise<ChildProcess> {
     let process = ApiModule.StartApi(context);
-    this.attemptSync(context, 0);
+    let synced = false;
+    let syncAttempts = 0;
+    while (!synced && syncAttempts <= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+      synced = await Controller.attemptSync();
+      syncAttempts++;
+      if (!synced) {
+        await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
+      }
+    }
+    if (syncAttempts > CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+      vscode.window.showErrorMessage(
+        CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
+      );
+      return process;
+    }
 
+    Controller.reactPanelContext = ReactPanel.createOrShow(
+      context.extensionPath,
+      this.routingMessageReceieverDelegate
+    );
     return process;
   }
 
+  private static timeout(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
   // TODO: To minimize PR size, this will be edited in next PR; branch: t-trngo/telemetryIntegrationInController
   public static handleTelemetry(payload: any): any {
     //   Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
   }
 
-  private static attemptSync(context: vscode.ExtensionContext, count: number) {
-    setTimeout(() => {
-      ApiModule.SendSyncRequestToApi(
-        CONSTANTS.PORT,
-        CONSTANTS.API.PATH_TO_TEMPLATES,
-        this.handleSyncLiveData
-      )
-        .then(() => {
-          Controller.reactPanelContext = ReactPanel.createOrShow(
-            context.extensionPath,
-            this.routingMessageReceieverDelegate
-          );
-        })
-        .catch(() => {
-          if (count === CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-            vscode.window.showErrorMessage("Could not sync to repository.");
-            return;
-          }
-          this.attemptSync(context, count + 1);
-        });
-    }, 200);
+  private static async attemptSync(): Promise<boolean> {
+    return await ApiModule.SendSyncRequestToApi(
+      CONSTANTS.PORT,
+      CONSTANTS.API.PATH_TO_TEMPLATES,
+      this.handleSyncLiveData
+    )
+      .then(() => {
+        return true;
+      })
+      .catch(() => {
+        return false;
+      });
   }
   private static handleSyncLiveData(status: SyncStatus) {
     vscode.window.showInformationMessage(`SyncStatus:${SyncStatus[status]}`);
@@ -367,7 +381,7 @@ export abstract class Controller {
 
     try {
       Validator.isValidProjectPath(
-        enginePayload.projectPath,
+        enginePayload.path,
         enginePayload.projectName
       );
     } catch (error) {
@@ -390,9 +404,11 @@ export abstract class Controller {
       });
       return;
     }
-    await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
+    const apiGenResult = await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
     );
+
+    enginePayload.path = apiGenResult.generationOutputPath;
 
     if (payload.selectedFunctions) {
       Controller.processFunctionDeploymentAndSendStatusToClient(
@@ -403,12 +419,21 @@ export abstract class Controller {
 
     if (payload.selectedCosmos) {
       var cosmosPayload: any = payload.cosmos;
-      var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(cosmosPayload, enginePayload.path);
+      var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(
+        cosmosPayload,
+        enginePayload.path
+      );
       await vscode.window
-        .showInformationMessage('Replace your DB connection string in the .env file with the generated CosmosDB connection string?', ...['Yes', 'No'])
+        .showInformationMessage(
+          "Replace your DB connection string in the .env file with the generated CosmosDB connection string?",
+          ...["Yes", "No"]
+        )
         .then(selection => {
           if (selection === "Yes") {
-            CosmosDBDeploy.updateConnectionStringInEnvFile(enginePayload.path, dbobject.connectionString);
+            CosmosDBDeploy.updateConnectionStringInEnvFile(
+              enginePayload.path,
+              dbobject.connectionString
+            );
             vscode.window.showInformationMessage("Replaced");
           }
         });
@@ -479,13 +504,11 @@ export abstract class Controller {
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ) {
-    await ApiModule.SendTemplateGenerationPayloadToApi(
+    return await ApiModule.SendTemplateGenerationPayloadToApi(
       CONSTANTS.PORT,
       enginePayload,
       this.handleGenLiveMessage
-    ).then((object: any) => {
-      console.log(object);
-    });
+    );
   }
 
   private static handleGenLiveMessage(message: any) {

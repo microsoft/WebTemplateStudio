@@ -9,8 +9,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "webTemplateStudioExtension.wizardLaunch",
-      () => {
-        apiProcess = Controller.launchWizard(context);
+      async () => {
+        apiProcess = await Controller.launchWizard(context);
       }
     )
   );
