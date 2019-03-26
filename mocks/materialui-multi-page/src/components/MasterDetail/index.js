@@ -1,31 +1,12 @@
 import React, { Component } from "react";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
-import MasterDetailPage from "./MasterDetailPage";
-import defaultImage from "../../images/defaultImage.jpg";
+import classnames from "classnames";
 import WarningMessage from "../WarningMessage";
+import MasterDetailPage from "./MasterDetailPage";
+import MasterDetailSideBarTab from "./MasterDetailSideBarTab";
+import GreyAvatar from "../../images/GreyAvatar.svg";
+import styles from "./masterdetail.module.css";
 
-const drawerWidth = 240;
-
-const styles = theme => ({
-  root: {
-    display: "flex"
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0
-  },
-  drawerPaper: {
-    width: drawerWidth
-  },
-  toolbar: theme.mixins.toolbar
-});
-
-class index extends Component {
+export default class MasterDetail extends Component {
   constructor(props) {
     super(props);
 
@@ -56,7 +37,7 @@ class index extends Component {
     this.setState({ currentDisplayTabIndex: id });
   }
 
-  // Get the text assets from the back end
+  // Get the sample data from the back end
   componentDidMount() {
     fetch(this.endpoint)
       .then(response => {
@@ -77,7 +58,6 @@ class index extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     const {
       masterDetailText,
       currentDisplayTabIndex,
@@ -85,41 +65,40 @@ class index extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <div className={classes.root}>
-        <Drawer
-          variant="permanent"
-          className={classes.drawer}
-          classes={{
-            paper: classes.drawerPaper
-          }}
-        >
-          <div className={classes.toolbar} />
-          <List>
-            {masterDetailText.map((textAssets, index) => (
-              <ListItem
-                button
-                onClick={() => this.handleDisplayTabClick(index)}
-                key={textAssets.id}
-              >
-                <ListItemText primary={textAssets.tabName} />
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <Grid container justify="flex-start" alignItems="flex-start">
-          <MasterDetailPage
-            textAssets={masterDetailText[currentDisplayTabIndex]}
-            image={defaultImage}
-          />
-        </Grid>
+      <React.Fragment>
+        <div className="container-fluid">
+          <div className="row">
+            <div
+              className={classnames(
+                "col-2",
+                "p-0",
+                "border-right",
+                styles.sidebar
+              )}
+            >
+              <div class="list-group list-group-flush border-bottom">
+                {masterDetailText.map((textAssets, index) => (
+                  <MasterDetailSideBarTab
+                    onDisplayTabClick={this.handleDisplayTabClick}
+                    tabText={textAssets.tabName}
+                    image={GreyAvatar}
+                    index={index}
+                    key={textAssets.id}
+                  />
+                ))}
+              </div>
+            </div>
+            <MasterDetailPage
+              textSampleData={masterDetailText[currentDisplayTabIndex]}
+            />
+          </div>
+        </div>
         <WarningMessage
           open={WarningMessageOpen}
           text={WarningMessageText}
           onWarningClose={this.handleWarningClose}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }
-
-export default withStyles(styles)(index);

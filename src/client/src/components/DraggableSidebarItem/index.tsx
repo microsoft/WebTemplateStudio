@@ -20,7 +20,7 @@ const DraggableSidebarItem = ({
   azureFunctionName,
   withIndent,
   withLargeIndent,
-  handleCloseClick,
+  handleCloseClick
 }: {
   page?: ISelected;
   text?: string;
@@ -36,50 +36,74 @@ const DraggableSidebarItem = ({
   handleCloseClick?: (idx: number) => void;
 }) => {
   return (
-    <React.Fragment>
+    <div>
       {itemTitle && (
         <div className={styles.titleContainer}>
-          {withIndent ?
+          {withIndent ? (
             <React.Fragment>
               <div className={styles.iconContainer} />
               <div className={styles.itemContainer}>
                 <div>{itemTitle}</div>
               </div>
-            </React.Fragment> : itemTitle}
+            </React.Fragment>
+          ) : (
+            itemTitle
+          )}
         </div>
       )}
       <div className={styles.draggablePage}>
-        {(withIndent || reorderSvgUrl) && <div className={styles.iconContainer}>
-          <img className={styles.reorderIcon} src={reorderSvgUrl} />
-        </div>}
-        <div className={classnames({
-          [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
-          [styles.textContainer]: !withIndent,
-          [styles.largeIndentContainer]: withLargeIndent
-        })}>
-          <div className={styles.inputContainer}>
-            {pageSvgUrl && <img className={styles.icon} src={pageSvgUrl} />}
-            {handleInputChange && (page || azureFunctionName) && idx && (
-              <input
-                className={classnames(styles.input, {
-                  [styles.azureFunctionNameInput]: azureFunctionName
-                })}
-                value={page ? page.title : azureFunctionName}
-                onChange={e => {
-                  if (handleInputChange && idx) {
-                    handleInputChange(e.target.value, idx - 1);
-                  }
-                }}
-              />
-            )}
-            <div>{text}</div>
+        {(withIndent || reorderSvgUrl) && (
+          <div className={styles.iconContainer}>
+            <img className={styles.reorderIcon} src={reorderSvgUrl} />
           </div>
+        )}
+        <div className={styles.errorStack}>
+          <div
+            className={classnames({
+              [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
+              [styles.textContainer]: !withIndent,
+              [styles.largeIndentContainer]: withLargeIndent
+            })}
+          >
+            <div className={styles.inputContainer}>
+              {pageSvgUrl && <img className={styles.icon} src={pageSvgUrl} />}
+              {handleInputChange && (page || azureFunctionName) && idx && (
+                <input
+                  className={classnames(styles.input, {
+                    [styles.azureFunctionNameInput]: azureFunctionName
+                  })}
+                  value={page ? page.title : azureFunctionName}
+                  onChange={e => {
+                    if (handleInputChange && idx) {
+                      handleInputChange(e.target.value, idx - 1);
+                    }
+                  }}
+                />
+              )}
+              <div>{text}</div>
+            </div>
+          </div>
+          {page && !page.isValidTitle && (
+            <div
+              className={classnames({
+                [styles.errorTextContainer]: withIndent || reorderSvgUrl,
+                [styles.textContainer]: !withIndent,
+                [styles.largeIndentContainer]: withLargeIndent
+              })}
+            >
+              {page.error}
+            </div>
+          )}
         </div>
-        <img onClick={() => {
-          idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
-        }} className={styles.cancelIcon} src={closeSvgUrl} />
+        <img
+          onClick={() => {
+            idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
+          }}
+          className={styles.cancelIcon}
+          src={closeSvgUrl}
+        />
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

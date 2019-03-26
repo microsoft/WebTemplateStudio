@@ -64,7 +64,8 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
     selected: val.selected,
     svgUrl: getSvgUrl(val.name),
     title: val.displayName,
-    defaultName: val.defaultName
+    defaultName: val.defaultName,
+    isValidTitle: true
   }));
 }
 

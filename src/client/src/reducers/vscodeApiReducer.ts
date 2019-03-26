@@ -119,8 +119,8 @@ function vscodeApi(
         newState.vscodeObject =
           process.env.NODE_ENV === PRODUCTION
             ? //
-              // @ts-ignore because function does not exist in dev environment
-              acquireVsCodeApi()
+            // @ts-ignore because function does not exist in dev environment
+            acquireVsCodeApi()
             : mockVsCodeApi();
         return newState;
       }
