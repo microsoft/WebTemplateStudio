@@ -112,22 +112,21 @@ export abstract class Controller {
     Controller.Telemetry = new TelemetryAI(context);
     this.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.SyncEngine, async function (this: IActionContext): Promise<ChildProcess> {
 
-      var process: ChildProcess;
-      process = ApiModule.StartApi(context);
-      
+      let process = ApiModule.StartApi(context);
       let synced = false;
       let syncAttempts = 0;
       while (!synced && syncAttempts <= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-        await Controller.timeout(200);
         synced = await Controller.attemptSync();
         syncAttempts++;
+        if (!synced) {
+          await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
+        }
       }
       if (syncAttempts > CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-        this.properties.status = "Failed";
         vscode.window.showErrorMessage(
           CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
         );
-        
+        this.properties.Status = CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS;
         return process;
       }
 
@@ -135,8 +134,6 @@ export abstract class Controller {
         context.extensionPath,
         Controller.routingMessageReceieverDelegate
       );
-      this.measurements.SyncAttempt = syncAttempts;
-      Controller.Telemetry.trackExtensionStartUpTime(TelemetryEventName.ExtensionLaunch, extensionStartTime);
       return process;
     });
 
@@ -148,15 +145,17 @@ export abstract class Controller {
   }
 
   private static async attemptSync(): Promise<boolean> {
-    await ApiModule.SendSyncRequestToApi(
+    return await ApiModule.SendSyncRequestToApi(
       CONSTANTS.PORT,
       CONSTANTS.API.PATH_TO_TEMPLATES,
       this.handleSyncLiveData
-    ).catch(() => {
-      return Promise.resolve(false);
-    });
-
-    return Promise.resolve(true);
+    )
+      .then(() => {
+        return true;
+      })
+      .catch(() => {
+        return false;
+      });
   }
   private static handleSyncLiveData(status: SyncStatus) {
     vscode.window.showInformationMessage(`SyncStatus:${SyncStatus[status]}`);
@@ -561,8 +560,8 @@ export abstract class Controller {
 
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
-  ): Promise<any> {
-    return ApiModule.SendTemplateGenerationPayloadToApi(
+  ) {
+    return await ApiModule.SendTemplateGenerationPayloadToApi(
       CONSTANTS.PORT,
       enginePayload,
       this.handleGenLiveMessage
