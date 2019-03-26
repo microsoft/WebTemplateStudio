@@ -3,4 +3,6 @@ export interface ISelected {
   defaultName?: string;
   internalName: string;
   id?: string;
+  isValidTitle?: boolean;
+  error?: string;
 }

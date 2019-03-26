@@ -35,7 +35,7 @@ type Props = IDispatchProps & ISelectOptionProps;
 class SelectOption extends React.Component<Props, ISelectOptionState> {
   componentDidMount() {
     this.setState({
-      selectedCardIndices: [0],
+      selectedCardIndices: [0]
     });
   }
 
@@ -71,14 +71,26 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     return cardData[selectedCardIndex].title;
   }
 
-  public mapIndexToCardInfo(selectedCardIndex: number, count: number, internalName: string, num: number, currentCardData: ISelected[]) {
+  public mapIndexToCardInfo(
+    selectedCardIndex: number,
+    count: number,
+    internalName: string,
+    num: number,
+    currentCardData: ISelected[]
+  ) {
     const { defaultName } = this.props.options[num];
-    const title = this.createTitle(selectedCardIndex, num, count, currentCardData);
+    const title = this.createTitle(
+      selectedCardIndex,
+      num,
+      count,
+      currentCardData
+    );
     const cardInfo: ISelected = {
       title,
       internalName,
       id: title,
-      defaultName
+      defaultName,
+      isValidTitle: true
     };
     return cardInfo;
   }
@@ -90,11 +102,17 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
    *
    * @param cardNumbers
    */
-  public mapSelectedCardIndicesToCardInfo(selectedCardIndices: number[]): ISelected[] {
+  public mapSelectedCardIndicesToCardInfo(
+    selectedCardIndices: number[]
+  ): ISelected[] {
     const selectedCardsWithInfo = [];
     const cardTypeCount: { [key: string]: number } = {};
     const { currentCardData, options } = this.props;
-    for (let selectedCardIndex = 0; selectedCardIndex < selectedCardIndices.length; selectedCardIndex++) {
+    for (
+      let selectedCardIndex = 0;
+      selectedCardIndex < selectedCardIndices.length;
+      selectedCardIndex++
+    ) {
       const optionIndexContainingData = selectedCardIndices[selectedCardIndex];
       const { internalName } = options[optionIndexContainingData];
       cardTypeCount[internalName] = cardTypeCount[internalName]
@@ -208,7 +226,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 disabled={unselectable}
                 clickCount={this.getCardCount(internalName)}
               />
-            )
+            );
           })}
         </div>
       </div>

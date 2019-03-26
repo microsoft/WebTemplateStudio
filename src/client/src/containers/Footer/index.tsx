@@ -8,6 +8,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
 import { ROUTES } from "../../utils/constants";
+import { validateName } from "../../utils/validateName";
 
 import { IVSCode } from "../../reducers/vscodeApiReducer";
 import { rootSelector } from "../../selectors/generationSelector";
@@ -72,6 +73,22 @@ class Footer extends React.Component<Props> {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
   public render() {
+    // Validate the page names and do not generate if they are invalid or if there are duplicates
+    const pageNames = new Set();
+    let areValidNames = true;
+    for (const page of this.props.engine.pages) {
+      const pageName = page.name;
+      areValidNames = validateName(pageName).isValid;
+      if (pageNames.has(pageName)) {
+        areValidNames = false;
+      } else {
+        pageNames.add(pageName);
+      }
+      if (!areValidNames) {
+        break;
+      }
+    }
+
     // TODO: Needs access to redux to determine where each link should go to
     // TODO: Add previous paths through link prop to track state/history
     const { pathname } = this.props.location;
@@ -102,10 +119,14 @@ class Footer extends React.Component<Props> {
                 Next
               </Link>
               <button
-                disabled={pathname !== ROUTES.REVIEW_AND_GENERATE}
+                disabled={
+                  pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
+                }
                 className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]: !this.isReviewAndGenerate(),
-                  [buttonStyles.buttonHighlightedBorder]: this.isReviewAndGenerate()
+                  [buttonStyles.buttonDark]:
+                    !this.isReviewAndGenerate() || !areValidNames,
+                  [buttonStyles.buttonHighlightedBorder]:
+                    this.isReviewAndGenerate() && areValidNames
                 })}
                 onClick={this.logMessageToVsCode}
               >

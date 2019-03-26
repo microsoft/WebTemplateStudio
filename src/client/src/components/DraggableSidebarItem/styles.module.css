@@ -1,6 +1,6 @@
 .draggablePage {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 10px;
 }
 
@@ -8,12 +8,18 @@
   display: flex;
 }
 
+.errorStack {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
 .textContainer,
 .pagesTextContainer {
   width: 100%;
   height: 38px;
   background: #696969;
-  border: 0.5px solid rgba(0, 0, 0, 0.5);
+  border: 0px solid rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,7 +27,25 @@
   border-radius: 2px;
 }
 
+.errorTextContainer {
+  width: 100%;
+  height: 38px;
+  background: #5f0d0d;
+  border: 1px solid #9d2f23;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  border-radius: 2px;
+  font-size: 70%;
+  opacity: 50%;
+}
+
 .pagesTextContainer {
+  margin-left: 10px;
+}
+
+.errorTextContainer {
   margin-left: 10px;
 }
 
@@ -77,4 +101,5 @@
   display: flex;
   align-items: center;
   width: 20px;
+  padding-top: 8px;
 }
