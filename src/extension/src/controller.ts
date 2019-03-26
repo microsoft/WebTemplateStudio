@@ -107,9 +107,11 @@ export abstract class Controller {
     let synced = false;
     let syncAttempts = 0;
     while (!synced && syncAttempts <= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-      await Controller.timeout(200);
       synced = await Controller.attemptSync();
       syncAttempts++;
+      if (!synced) {
+        await Controller.timeout(200);
+      }
     }
     if (syncAttempts > CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
       vscode.window.showErrorMessage(
@@ -134,15 +136,17 @@ export abstract class Controller {
   }
 
   private static async attemptSync(): Promise<boolean> {
-    await ApiModule.SendSyncRequestToApi(
+    return await ApiModule.SendSyncRequestToApi(
       CONSTANTS.PORT,
       CONSTANTS.API.PATH_TO_TEMPLATES,
       this.handleSyncLiveData
-    ).catch(() => {
-      return Promise.resolve(false);
-    });
-
-    return Promise.resolve(true);
+    )
+      .then(() => {
+        return Promise.resolve(true);
+      })
+      .catch(() => {
+        return Promise.resolve(false);
+      });
   }
   private static handleSyncLiveData(status: SyncStatus) {
     vscode.window.showInformationMessage(`SyncStatus:${SyncStatus[status]}`);
