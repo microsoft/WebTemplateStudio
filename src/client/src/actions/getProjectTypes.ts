@@ -4,6 +4,7 @@ import { IMetadata } from "../types/metadata";
 import { IOption } from "../types/option";
 import { getProjectTypesSuccess } from "./getProjectTypesSuccess";
 import getSvgUrl from "../utils/getSvgUrl";
+
 // thunk
 export const getProjectTypesAction = () => {
   return async (dispatch: any) => {
@@ -37,7 +38,8 @@ function getMetadataFromJson(items: any[]): IMetadata[] {
     licenses: val.licenses,
     svgUrl: val.icon,
     tags: val.tags,
-    selected: false
+    selected: false,
+    author: val.author
   }));
 }
 
@@ -46,7 +48,11 @@ function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
     title: val.displayName,
     internalName: val.name,
     body: val.summary,
+    longDescription: val.longDescription,
+    position: val.position,
     svgUrl: getSvgUrl(val.name),
-    selected: val.selected
+    selected: val.selected,
+    licenses: val.licenses,
+    author: val.author
   }));
 }

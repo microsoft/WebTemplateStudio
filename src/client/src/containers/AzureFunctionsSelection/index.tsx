@@ -33,7 +33,7 @@ type Props = IProps & IDispatchProps;
  *  In the future, more than one Azure Function app can be created, and can simply be appended
  *  to the array data structure holding the Azure Function app selections (see reducer for Azure Functions)
  */
-const AzureFunctionsSelection = ({functionApps, updateFunctionNames}: Props) => {
+const AzureFunctionsSelection = ({ functionApps, updateFunctionNames }: Props) => {
     const { selection } = functionApps;
     const { serviceType } = functionApps.wizardContent;
     const handleInputChange = (newTitle: string, idx: number) => {
@@ -46,9 +46,9 @@ const AzureFunctionsSelection = ({functionApps, updateFunctionNames}: Props) => 
             });
         }
     };
-    return ( 
+    return (
         <React.Fragment>
-            {!_.isEmpty(selection) && selection.map((functionApp: ISelectedAzureFunctionsService, idx: number) => (        
+            {!_.isEmpty(selection) && selection.map((functionApp: ISelectedAzureFunctionsService, idx: number) => (
                 <React.Fragment key={serviceType + functionApp.appName + idx}>
                     <DraggableSidebarItem
                         key={functionApp.appName + idx}
@@ -57,12 +57,12 @@ const AzureFunctionsSelection = ({functionApps, updateFunctionNames}: Props) => 
                         itemTitle={serviceType}
                         withIndent={true}
                     />
-                    {functionApp.functionNames && (functionApp.functionNames.map((functionName: string, idx: number) => 
+                    {functionApp.functionNames && (functionApp.functionNames.map((functionName: string, idx: number) =>
                         <DraggableSidebarItem
                             key={functionApp.appName + idx.toString()}
                             closeSvgUrl={getSvg.getCancelSvg()}
                             withLargeIndent={true}
-                            functionName={functionName}
+                            azureFunctionName={functionName}
                             handleInputChange={handleInputChange}
                             idx={idx + 1}
                         />))}
@@ -72,7 +72,7 @@ const AzureFunctionsSelection = ({functionApps, updateFunctionNames}: Props) => 
 }
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-    updateFunctionNames: (functionApp: IFunctionApp) => { dispatch(updateAzureFunctionNamesAction(functionApp))},
+    updateFunctionNames: (functionApp: IFunctionApp) => { dispatch(updateAzureFunctionNamesAction(functionApp)) },
 })
 
 export default connect(null, mapDispatchToProps)(AzureFunctionsSelection);

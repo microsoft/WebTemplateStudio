@@ -36,7 +36,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   MASTER_DETAIL: "wts.Page.React.MasterDetail",
   CONTENT_GRID: "wts.Page.React.Grid",
   LIST: "wts.Page.ReactNode.LongList",
-  BLANK_PAGE: "wts.Page.ReactNode.BlankPage",
+  BLANK_PAGE: "wts.Page.Html.Blank",
   FULL_STACK_APP: "FullStackWebApp",
   REST_API: "RestAPI",
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",

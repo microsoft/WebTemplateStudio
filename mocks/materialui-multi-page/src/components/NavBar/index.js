@@ -1,38 +1,25 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Toolbar from "@material-ui/core/Toolbar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { withStyles } from "@material-ui/core";
 
-const styles = theme => ({
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1
-  },
-  toolbarTitle: {
-    flex: 1
-  }
-});
-
-function index(props) {
-  const { classes } = props;
+export default function NavBar() {
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <AppBar position="sticky" color="default" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" className={classes.toolbarTitle}>
-            Company name
-          </Typography>
-          <Button href="/masterdetail">Master Detail</Button>
-          <Button href="/list">List</Button>
-          <Button href="/grid">Grid</Button>
-          <Button href="/blank">Blank</Button>
-        </Toolbar>
-      </AppBar>
-    </React.Fragment>
+    <nav className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
+      <a className="navbar-brand" href="/">
+        Project Name
+      </a>
+      <div className="navbar-nav">
+        <a className="nav-item nav-link active" href="/masterdetail">
+          Master Detail
+        </a>
+        <a className="nav-item nav-link active" href="/grid">
+          Content Grid
+        </a>
+        <a className="nav-item nav-link active" href="/list">
+          List
+        </a>
+        <a className="nav-item nav-link active" href="/blank">
+          Blank
+        </a>
+      </div>
+    </nav>
   );
 }
-
-export default withStyles(styles)(index);

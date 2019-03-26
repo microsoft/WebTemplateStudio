@@ -1,9 +1,12 @@
 import * as React from "react";
+import { connect } from "react-redux";
 
 import Card from "../SelectableCard";
 import Title from "../Title";
 
 import styles from "./styles.module.css";
+
+import { setDetailPageAction } from "../../actions/setDetailsPage";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
@@ -12,7 +15,7 @@ interface ISelectOptionProps {
   title: string;
   internalName?: string;
   selectCard?: (card: ISelected) => void;
-  selectedCards: number[];
+  selectedCardIndices: number[];
   currentCardData?: ISelected[];
   selectOptions?: (cards: ISelected[]) => void;
   options: IOption[];
@@ -20,56 +23,64 @@ interface ISelectOptionProps {
 }
 
 interface ISelectOptionState {
-  selectedCards: number[];
+  selectedCardIndices: number[];
 }
 
-class SelectOption extends React.Component<
-  ISelectOptionProps,
-  ISelectOptionState
-> {
+interface IDispatchProps {
+  setDetailPage: (detailPageInfo: IOption) => void;
+}
 
+type Props = IDispatchProps & ISelectOptionProps;
+
+class SelectOption extends React.Component<Props, ISelectOptionState> {
   componentDidMount() {
     this.setState({
-      selectedCards: [0],
+      selectedCardIndices: [0],
     });
   }
 
   public isCardSelected(cardNumber: number): boolean {
-    if (this.props.selectedCards) {
-      return this.props.selectedCards.includes(cardNumber);
+    const { selectedCardIndices } = this.props;
+    if (selectedCardIndices) {
+      return selectedCardIndices.includes(cardNumber);
     }
-    return this.state.selectedCards.includes(cardNumber);
+    return this.state.selectedCardIndices.includes(cardNumber);
   }
 
   /**
    * Creates a title for the card being selected (e.g. selected Page).
    * Prepends a number of a certain card is selected more than once.
    * Only changes the title of the last card selected.
-   * 
-   * @param selectedCardIndex 
-   * @param optionIndexContainingData 
-   * @param count 
-   * @param cardData 
+   *
+   * @param selectedCardIndex
+   * @param optionIndexContainingData
+   * @param count
+   * @param cardData
    */
-  public createTitle(selectedCardIndex: number, optionIndexContainingData: number, count: number, cardData: ISelected[]) {
+  public createTitle(
+    selectedCardIndex: number,
+    optionIndexContainingData: number,
+    count: number,
+    cardData: ISelected[]
+  ) {
     if (count === 1) {
       return this.props.options[optionIndexContainingData].title;
     } else if (selectedCardIndex > cardData.length - 1) {
-      return `${count}-${this.props.options[optionIndexContainingData].title}`
+      return `${count}-${this.props.options[optionIndexContainingData].title}`;
     }
     return cardData[selectedCardIndex].title;
   }
 
   public mapIndexToCardInfo(selectedCardIndex: number, count: number, internalName: string, num: number, currentCardData: ISelected[]) {
-      const { originalTitle } = this.props.options[num];
-      const title = this.createTitle(selectedCardIndex, num, count, currentCardData);
-      const cardInfo: ISelected = {
-        title,
-        internalName,
-        id: title,
-        originalTitle
-      };
-      return cardInfo;
+    const { defaultName } = this.props.options[num];
+    const title = this.createTitle(selectedCardIndex, num, count, currentCardData);
+    const cardInfo: ISelected = {
+      title,
+      internalName,
+      id: title,
+      defaultName
+    };
+    return cardInfo;
   }
 
   /**
@@ -79,16 +90,26 @@ class SelectOption extends React.Component<
    *
    * @param cardNumbers
    */
-  public convertCardNumbersToTitles(selectedCardIndices: number[]): ISelected[] {
+  public mapSelectedCardIndicesToCardInfo(selectedCardIndices: number[]): ISelected[] {
     const selectedCardsWithInfo = [];
-    const cardTypeCount: {[key: string]: number} = {};
+    const cardTypeCount: { [key: string]: number } = {};
     const { currentCardData, options } = this.props;
-    for (let selectedCardIndex = 0 ; selectedCardIndex < selectedCardIndices.length ; selectedCardIndex++) {
+    for (let selectedCardIndex = 0; selectedCardIndex < selectedCardIndices.length; selectedCardIndex++) {
       const optionIndexContainingData = selectedCardIndices[selectedCardIndex];
       const { internalName } = options[optionIndexContainingData];
-      cardTypeCount[internalName] = cardTypeCount[internalName] ? cardTypeCount[internalName] + 1 : 1;
+      cardTypeCount[internalName] = cardTypeCount[internalName]
+        ? cardTypeCount[internalName] + 1
+        : 1;
       if (currentCardData) {
-        selectedCardsWithInfo.push(this.mapIndexToCardInfo(selectedCardIndex, cardTypeCount[internalName], internalName, optionIndexContainingData, currentCardData));
+        selectedCardsWithInfo.push(
+          this.mapIndexToCardInfo(
+            selectedCardIndex,
+            cardTypeCount[internalName],
+            internalName,
+            optionIndexContainingData,
+            currentCardData
+          )
+        );
       }
     }
     return selectedCardsWithInfo;
@@ -101,11 +122,14 @@ class SelectOption extends React.Component<
    * @param cardNumber
    */
   public addOption(cardNumber: number) {
-    const { selectedCards } = this.state;
-    selectedCards.push(cardNumber);
-    if (this.props.selectOptions !== undefined) {
-      this.props.selectOptions(this.convertCardNumbersToTitles(selectedCards));
+    const { selectedCardIndices, selectOptions } = this.props;
+    selectedCardIndices.push(cardNumber);
+    if (selectOptions) {
+      selectOptions(this.mapSelectedCardIndicesToCardInfo(selectedCardIndices));
     }
+    this.setState({
+      selectedCardIndices
+    });
   }
 
   /**
@@ -115,26 +139,27 @@ class SelectOption extends React.Component<
    * @param cardNumber
    */
   public exchangeOption(cardNumber: number) {
-    const { selectedCards } = this.state;
-    selectedCards.pop();
-    selectedCards.push(cardNumber);
-    if (this.props.selectCard !== undefined) {
+    const { selectedCardIndices } = this.state;
+    selectedCardIndices.pop();
+    selectedCardIndices.push(cardNumber);
+    if (this.props.selectCard) {
       this.props.selectCard({
         title: this.props.options[cardNumber].title,
         internalName: this.props.options[cardNumber].internalName
       });
     }
     this.setState({
-      selectedCards
+      selectedCardIndices
     });
   }
 
   public onCardClick(cardNumber: number) {
-    const { unselectable } = this.props.options[cardNumber];
+    const { options, multiSelect } = this.props;
+    const { unselectable } = options[cardNumber];
     if (unselectable) {
       return;
     }
-    if (this.props.multiSelect) {
+    if (multiSelect) {
       this.addOption(cardNumber);
     } else {
       this.exchangeOption(cardNumber);
@@ -143,46 +168,61 @@ class SelectOption extends React.Component<
 
   /**
    * Returns the number of times that a particular card was selected/clicked on.
-   * 
+   *
    * If card can only be clicked once, this function returns undefined.
    */
   public getCardCount = (internalName: string) => {
-    const { selectedCards, multiSelect, options } = this.props;
-    if (selectedCards && multiSelect) {
-      return selectedCards.reduce((cardCount: number, card: number) => {
+    const { selectedCardIndices, multiSelect, options } = this.props;
+    if (selectedCardIndices && multiSelect) {
+      return selectedCardIndices.reduce((cardCount: number, card: number) => {
         if (options[card].internalName === internalName) {
           return cardCount + 1;
         }
         return cardCount;
       }, 0);
     }
-  }
+  };
 
   public render() {
+    const { title, options, setDetailPage } = this.props;
     return (
       <div>
-        <Title>{this.props.title}</Title>
+        <Title>{title}</Title>
         <div className={styles.container}>
-          {this.props.options.map((option, cardNumber) => (
-            <Card
-              key={`${cardNumber} ${option.title}`}
-              onCardClick={(cardNumber: number) => {
-                this.onCardClick(cardNumber);
-              }}
-              cardNumber={cardNumber}
-              selected={this.isCardSelected(cardNumber)}
-              iconPath={option.svgUrl}
-              iconStyles={styles.icon}
-              title={option.title}
-              body={option.body}
-              disabled={option.unselectable}
-              clickCount={this.getCardCount(option.internalName)}
-            />
-          ))}
+          {options.map((option, cardNumber) => {
+            const { svgUrl, title, body, unselectable, internalName } = option;
+            return (
+              <Card
+                key={`${cardNumber} ${title}`}
+                onCardClick={(cardNumber: number) => {
+                  this.onCardClick(cardNumber);
+                }}
+                onDetailsClick={setDetailPage}
+                option={option}
+                cardNumber={cardNumber}
+                selected={this.isCardSelected(cardNumber)}
+                iconPath={svgUrl}
+                iconStyles={styles.icon}
+                title={title}
+                body={body}
+                disabled={unselectable}
+                clickCount={this.getCardCount(internalName)}
+              />
+            )
+          })}
         </div>
       </div>
     );
   }
 }
 
-export default SelectOption;
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  setDetailPage: (detailPageInfo: IOption) => {
+    dispatch(setDetailPageAction(detailPageInfo));
+  }
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SelectOption);

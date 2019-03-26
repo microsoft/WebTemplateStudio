@@ -1,46 +1,50 @@
-.loginContainer {
-    border: 0.5px solid #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 1em;
-    border-radius: 4px;
+.icon {
+  height: 48px;
+  margin-right: 24px;
 }
 
-.selectionContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #0067B8;
+.backIcon {
+  height: 24px;
+  margin-right: 1em;
+  cursor: pointer;
 }
 
-.buttonContainer {
-    display: flex;
+.container {
+  margin: 2em;
+  padding: 2em;
+  max-width: 40em;
 }
 
-.signInButton {
-    margin-left: 10px;
-    font-size: 1em;
-    border: none;
+.backContainer {
+  display: flex;
+  margin-bottom: 4em;
 }
 
-.cardTitle {
-    margin-left: 10px;
-    font-weight: bold;
+.detailsContainer {
+  display: flex;
 }
 
-.cardBody {
-    margin-bottom: 5%;
+.col {
+  display: flex;
+  align-items: center;
 }
 
-.cardTitleContainer {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1em;
+.detailsTitle {
+  font-weight: bold;
+  font-size: 24px;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+.detailsDescription {
+  margin-bottom: 1em;
+}
+
+.categoriesContainer {
+  margin-right: 15%;
 }
 
 .details {
-    color: #54B4FF;
-}
-
-.icon {
-    height: 36px;
+  color: #54b4ff;
+  cursor: pointer;
 }

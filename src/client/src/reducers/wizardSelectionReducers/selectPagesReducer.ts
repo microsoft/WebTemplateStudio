@@ -1,27 +1,24 @@
 import * as Actions from "../../actions/types";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import { ISelected } from "../../types/selected";
 
 /* State Shape
 {
-    pages: PageOption[]
-}
-
-PageOption = {
-    "Name": string,
-    "Template": string
+    pages: ISelected[]
 }
 */
 
-const pagesReducer = (state: any[] = [{
-  title: "Blank Page",
+const DEFAULT_PAGE_NAME = "Html Blank";
+
+const pagesReducer = (state: ISelected[] = [{
+  title: DEFAULT_PAGE_NAME,
   internalName: WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE,
-  originalTitle: "Blank Page",
-  id: "Blank Page"
+  defaultName: DEFAULT_PAGE_NAME,
+  id: DEFAULT_PAGE_NAME
 }], action: any) => {
   switch (action.type) {
     case Actions.SELECT_PAGES:
-      // FIXME: Define proper types
-      const newPages: any[] = [...action.payload];
+      const newPages: ISelected[] = [...action.payload];
       return newPages;
     default:
       return state;

@@ -1,27 +1,11 @@
 import React, { Component } from "react";
 import GridComponent from "./GridComponent";
-import Grid from "@material-ui/core/Grid";
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core/styles";
 import WarningMessage from "../WarningMessage";
-import defaultImage from "../../images/defaultImage.jpg";
+import GreyBox from "../../images/GreyBox.svg";
+import styles from "./grid.module.css";
+import classnames from "classnames";
 
-const styles = theme => ({
-  layout: {
-    marginRight: theme.spacing.unit * 4,
-    marginLeft: theme.spacing.unit * 4,
-    [theme.breakpoints.up("lg")]: {
-      width: 1100,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }
-  },
-  cardGrid: {
-    padding: theme.spacing.unit * 6
-  }
-});
-
-class index extends Component {
+export default class Grid extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +25,7 @@ class index extends Component {
     });
   }
 
-  // Get the text assets from the back end
+  // Get the text sample data from the back end
   componentDidMount() {
     fetch(this.endpoint)
       .then(response => {
@@ -60,27 +44,41 @@ class index extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     return (
-      <div className={classNames(classes.layout, classes.cardGrid)}>
-        <Grid container spacing={40}>
-          {this.state.gridTextAssets.map(textAssets => (
-            <GridComponent
-              key={textAssets.id}
-              header={textAssets.header}
-              description={textAssets.description}
-              image={defaultImage}
-            />
-          ))}
-        </Grid>
+      <React.Fragment>
+        <div className={classnames("text-center", styles.header)}>
+          <h1>Project Acorn</h1>
+          <p>Full Stack boiler plate powered by Bootstrap 4.3</p>
+          <a
+            href="https://github.com/Microsoft/WebTemplateStudio"
+            className="btn btn-primary my-2"
+          >
+            Link to our Github
+          </a>
+        </div>
+
+        <div className="container">
+          <div className="row justify-content-center py-5">
+            <h1>Bootstrap Grid Template</h1>
+          </div>
+
+          <div className="row justify-content-around text-center pb-5">
+            {this.state.gridTextAssets.map(textAssets => (
+              <GridComponent
+                key={textAssets.id}
+                header={textAssets.header}
+                description={textAssets.description}
+                image={GreyBox}
+              />
+            ))}
+          </div>
+        </div>
         <WarningMessage
           open={this.state.WarningMessageOpen}
           text={this.state.WarningMessageText}
           onWarningClose={this.handleWarningClose}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }
-
-export default withStyles(styles)(index);

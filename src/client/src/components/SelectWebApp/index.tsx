@@ -45,7 +45,7 @@ class SelectWebApp extends React.Component<Props> {
             multiSelect={false}
             title="What type of web application are you building?"
             options={this.props.type}
-            selectedCards={this.convertSelectionToIndexNumber(
+            selectedCardIndices={this.convertSelectionToIndexNumber(
               this.props.selectedWebApp
             )}
           />

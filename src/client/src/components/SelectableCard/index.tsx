@@ -11,6 +11,8 @@ import styles from "./styles.module.css";
 
 import Check from "../../assets/check.svg";
 
+import { IOption } from "../../types/option";
+
 const SelectableCard = ({
   iconPath,
   iconStyles,
@@ -19,6 +21,8 @@ const SelectableCard = ({
   selected,
   cardNumber,
   onCardClick,
+  option,
+  onDetailsClick,
   clickCount,
   disabled
 }: {
@@ -27,8 +31,10 @@ const SelectableCard = ({
   title: string;
   body: string;
   selected: boolean;
+  option: IOption;
   cardNumber: number;
   onCardClick: (idx: number) => void;
+  onDetailsClick: (detailPageInfo: IOption) => void;
   clickCount?: number;
   disabled: boolean | undefined;
 }) => {
@@ -63,7 +69,7 @@ const SelectableCard = ({
         </div>
       </div>
       <div className={styles.cardFooter}>
-        <Link className={classNames(styles.link)} to={"/PageDetail"}>
+        <Link onClick={() => onDetailsClick(option)} className={classNames(styles.link)} to={"/PageDetail"}>
           Details
         </Link>
         <div
