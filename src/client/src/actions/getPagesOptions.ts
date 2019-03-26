@@ -52,7 +52,8 @@ function getApiTemplateInfoFromJson(items: any[]): IApiTemplateInfo[] {
     selected: false,
     summary: val.description,
     svgUrl: val.icon,
-    tags: val.tags
+    tags: val.tags,
+    defaultName: val.defaultName
   }));
 }
 
@@ -62,7 +63,8 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
     internalName: val.name,
     selected: val.selected,
     svgUrl: getSvgUrl(val.name),
-    title: val.displayName
+    title: val.displayName,
+    defaultName: val.defaultName
   }));
 }
 

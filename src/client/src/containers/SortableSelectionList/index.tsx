@@ -8,7 +8,7 @@ import reorder from "../../assets/reorder.svg";
 import getSvgUrl, { withLocalPath } from "../../utils/getSvgUrl";
 import { ISelected } from "../../types/selected";
 
-const SortableItem = SortableElement(({page, idx, handleInputChange}: {page: any, idx: number, handleInputChange: any}) => {
+const SortableItem = SortableElement(({page, idx, handleInputChange, handleCloseClick}: {page: any, idx: number, handleInputChange: any, handleCloseClick?: (idx: number) => void }) => {
     return (
     <DraggableSidebarItem
         page={page}
@@ -16,16 +16,17 @@ const SortableItem = SortableElement(({page, idx, handleInputChange}: {page: any
         pageSvgUrl={getSvgUrl(page.internalName)}
         reorderSvgUrl={withLocalPath(reorder)}
         handleInputChange={handleInputChange}
+        handleCloseClick={handleCloseClick}
         idx={idx + 1}
     />)
     // use idx+1 to prevent falsiness of 0th value
-});
-const SortableList = SortableContainer(({pages, handleInputChange}:{pages: ISelected[], handleInputChange: any}) => {
+})
+const SortableList = SortableContainer(({pages, handleInputChange, handleCloseClick }:{pages: ISelected[], handleInputChange: any, handleCloseClick?: (idx: number) => void }) => {
   return (
     <div>
       {pages.map((page: any, idx: number) => {
         return (
-        <SortableItem key={page.id} index={idx} idx={idx} page={page} handleInputChange={handleInputChange} />)
+        <SortableItem key={page.id} index={idx} idx={idx} page={page} handleInputChange={handleInputChange} handleCloseClick={handleCloseClick} />)
         })
         // index prop required by react-sortable, while idx used for updating redux state changes
       }

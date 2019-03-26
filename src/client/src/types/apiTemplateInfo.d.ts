@@ -8,4 +8,5 @@ export interface IApiTemplateInfo {
   licenses: string[];
   selected: boolean;
   tags: any;
+  defaultName: string;
 }

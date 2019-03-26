@@ -43,16 +43,17 @@ class SelectBackEndFramework extends React.Component<Props> {
     return [0];
   }
   public render() {
+    const { options, selectedBackend, selectBackendFramework } = this.props;
     return (
       <div className={styles.container}>
-        {this.props.options.length > 0 && (
+        {options.length > 0 && (
           <SelectOption
-            selectCard={this.props.selectBackendFramework}
+            selectCard={selectBackendFramework}
             multiSelect={false}
             title="Select a back-end framework for your project."
-            options={this.props.options}
-            selectedCards={this.convertSelectionToIndexNumber(
-              this.props.selectedBackend
+            options={options}
+            selectedCardIndices={this.convertSelectionToIndexNumber(
+              selectedBackend
             )}
           />
         )}

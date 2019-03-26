@@ -17,9 +17,10 @@ const DraggableSidebarItem = ({
   itemTitle,
   handleInputChange,
   idx,
-  functionName,
+  azureFunctionName,
   withIndent,
   withLargeIndent,
+  handleCloseClick,
 }: {
   page?: ISelected;
   text?: string;
@@ -29,40 +30,41 @@ const DraggableSidebarItem = ({
   itemTitle?: string;
   handleInputChange?: (e: any, idx: number) => void;
   idx?: number;
-  functionName?: string;
+  azureFunctionName?: string;
   withIndent?: boolean;
-  withLargeIndent?: boolean
+  withLargeIndent?: boolean;
+  handleCloseClick?: (idx: number) => void;
 }) => {
   return (
     <React.Fragment>
       {itemTitle && (
         <div className={styles.titleContainer}>
-          { withIndent ?
-          <React.Fragment>
-            <div className={styles.iconContainer} />
-            <div className={styles.itemContainer}>
-              <div>{itemTitle}</div>
-            </div>
-          </React.Fragment> : itemTitle }
+          {withIndent ?
+            <React.Fragment>
+              <div className={styles.iconContainer} />
+              <div className={styles.itemContainer}>
+                <div>{itemTitle}</div>
+              </div>
+            </React.Fragment> : itemTitle}
         </div>
       )}
       <div className={styles.draggablePage}>
         {(withIndent || reorderSvgUrl) && <div className={styles.iconContainer}>
-          <img className={styles.icon} src={reorderSvgUrl} />
+          <img className={styles.reorderIcon} src={reorderSvgUrl} />
         </div>}
         <div className={classnames({
-            [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
-            [styles.textContainer]: !withIndent,
-            [styles.largeIndentContainer]: withLargeIndent
+          [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
+          [styles.textContainer]: !withIndent,
+          [styles.largeIndentContainer]: withLargeIndent
         })}>
           <div className={styles.inputContainer}>
             {pageSvgUrl && <img className={styles.icon} src={pageSvgUrl} />}
-            {handleInputChange && (page || functionName) && idx && (
+            {handleInputChange && (page || azureFunctionName) && idx && (
               <input
                 className={classnames(styles.input, {
-                  [styles.functionNameInput]: functionName
+                  [styles.azureFunctionNameInput]: azureFunctionName
                 })}
-                defaultValue={page ? page.title : functionName}
+                value={page ? page.title : azureFunctionName}
                 onChange={e => {
                   if (handleInputChange && idx) {
                     handleInputChange(e.target.value, idx - 1);
@@ -72,8 +74,10 @@ const DraggableSidebarItem = ({
             )}
             <div>{text}</div>
           </div>
-          <img className={styles.cancelIcon} src={closeSvgUrl} />
         </div>
+        <img onClick={() => {
+          idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
+        }} className={styles.cancelIcon} src={closeSvgUrl} />
       </div>
     </React.Fragment>
   );
