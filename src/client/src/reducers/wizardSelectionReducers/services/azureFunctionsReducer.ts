@@ -1,5 +1,4 @@
 import * as Actions from "../../../actions/types";
-import { stat } from "fs";
 
 /* State Shape
 {
