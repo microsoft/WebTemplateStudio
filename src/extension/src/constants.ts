@@ -102,15 +102,16 @@ export enum ExtensionCommand {
   ProjectPathAndNameValidation = "project-path-and-name-validation"
 }
 
-export enum TelemetryEventName{
-  ExtensionLaunch = "Wizard-Launch-Time",
-  WizardSession = "Wizard-To-Generate-Session-Time",
-  AzureLogin = "Azure-Account-Extension",
-  Subscriptions = "Acquire-Subscription",
-  SubscriptionData = "Acquire-Subscription-Data",
-  EngineGeneration = "Engine-Generation-Time",
-  CosmosDBDeploy = "Azure-Cosmos-Deployment",
-  FunctionsDeploy = "Azure-Functions-Deployment"
+export enum TelemetryEventName {
+    ExtensionLaunch = "Extension-Launch-Time",
+    WizardSession = "Wizard-To-Generate-Session-Time",
+    AzureLogin = "Azure-Account-Extension",
+    Subscriptions = "Acquire-Subscription-Names",
+    SubscriptionData = "Acquire-Subscription-Data",
+    EngineGeneration = "Engine-Generation-Time",
+    CosmosDBDeploy = "Azure-Cosmos-Deployment",
+    FunctionsDeploy = "Azure-Functions-Deployment",
+    PageChange = "Wizard-Page-Change"
 }
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 export namespace DialogResponses {
@@ -140,6 +141,10 @@ export namespace DialogMessages {
   export const multiLineError: string = localize(
     "multilineError",
     "An error has occured. Check output window for more details."
+  );
+  export const cosmosDBConnectStringReplacePrompt: string = localize(
+    "cosmosDBConnectStringReplacePrompt",
+    "Replace your DB connection string in the .env file with the generated CosmosDB connection string?"
   );
 }
 export enum SyncStatus {

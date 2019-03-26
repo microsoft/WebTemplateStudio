@@ -10,11 +10,13 @@ export class TelemetryAI {
 
     private static telemetryReporter: ITelemetryReporter;
     private wizardSessionStartTime: number;
+    private pageStartTimer: number;
 
     constructor(context: vscode.ExtensionContext, private extensionStartTime: number = Date.now()){
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(context);
         this.trackExtensionStartUpTime();
         this.wizardSessionStartTime = Date.now();
+        this.pageStartTimer = this.wizardSessionStartTime;
     }
 
     private createTelemetryReporter(ctx: vscode.ExtensionContext) {
@@ -29,7 +31,17 @@ export class TelemetryAI {
         this.trackTimeDuration(eventName, this.extensionStartTime, Date.now());
     }
 
+    /*
+    * @param pageToTrack is the name of the page the wizard is on before the user clicks the next button; this page name will be sent to Application Insights as property
+    * 
+    */
+    public trackWizardPageTimeToNext(pageToTrack: string){
+        this.trackTimeDuration(TelemetryEventName.PageChange, this.pageStartTimer, Date.now(), {"Page-Name": pageToTrack});
+        this.pageStartTimer = Date.now();
+    }
+
     public trackWizardTotalSessionTimeToGenerate(eventName : string = TelemetryEventName.WizardSession){
+        this.trackWizardPageTimeToNext("Summary-Page");
         this.trackTimeDuration(eventName, this.wizardSessionStartTime, Date.now());
     }
 
@@ -42,10 +54,6 @@ export class TelemetryAI {
             duration: (endTime - startTime) / 1000
         };
         TelemetryAI.telemetryReporter.sendTelemetryEvent(eventName, properties, measurement)
-    }
-
-    public resetWizardSessionStartTime(){
-        this.wizardSessionStartTime = Date.now();
     }
 
     public callWithTelemetryAndCatchHandleErrors<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{
