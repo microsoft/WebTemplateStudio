@@ -14,10 +14,12 @@ import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 import getAzureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
+import { setDetailPageAction } from "../../actions/setDetailsPage";
 
 interface IDispatchProps {
   startLogOutToAzure: () => any;
   openCosmosDbModal: () => any;
+  setDetailPage: (detailPageInfo: IOption) => void;
   openAzureFunctionsModal: () => any;
 }
 
@@ -54,13 +56,13 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       return !_.isEmpty(this.props.cosmosDbSelection);
     }
     return false;
-  }
+  };
   public addOrEditResourceText = (internalName: string): string => {
     if (this.isSelectionCreated(internalName)) {
       return "Edit Resource";
     }
     return "Add Resource";
-  }
+  };
   /**
    * Returns a function that opens a modal for a specific internalName
    * @param internalName internal name of service within Core Engine
@@ -68,14 +70,16 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   public getServicesModalOpener(internalName: string): () => void {
     const modalOpeners = {
       [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: this.props.openCosmosDbModal,
-      [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: this.props.openAzureFunctionsModal,
-    }
+      [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: this.props
+        .openAzureFunctionsModal
+    };
     if (modalOpeners.hasOwnProperty(internalName)) {
       return modalOpeners[internalName];
     }
     return () => {};
   }
   public render() {
+    const { isLoggedIn, setDetailPage } = this.props;
     return (
       this.props.isLoggedIn && (
         <div className={styles.container}>
@@ -86,13 +90,15 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                 className={styles.subscriptionCardContainer}
               >
                 <Card
-                  cardTitle={option.title}
-                  cardBody={option.body}
+                  option={option}
                   buttonText={this.addOrEditResourceText(option.internalName)}
-                  handleButtonClick={this.getServicesModalOpener(option.internalName)}
-                  handleDetailsClick={() => {}}
-                  svgUrl={option.svgUrl}
-                  useNormalButtons={this.isSelectionCreated(option.internalName)}
+                  handleButtonClick={this.getServicesModalOpener(
+                    option.internalName
+                  )}
+                  handleDetailsClick={setDetailPage}
+                  useNormalButtons={this.isSelectionCreated(
+                    option.internalName
+                  )}
                 />
               </div>
             ))}
@@ -103,15 +109,18 @@ class AzureSubscriptions extends React.Component<Props, IState> {
 }
 
 const mapStateToProps = (state: any): IAzureLoginProps => ({
-    isLoggedIn: state.azureProfileData.isLoggedIn,
-    isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
-    azureFunctionsSelection: state.selection.services.azureFunctions.selection,
-    cosmosDbSelection: state.selection.services.cosmosDB.selection,
+  isLoggedIn: state.azureProfileData.isLoggedIn,
+  isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
+  azureFunctionsSelection: state.selection.services.azureFunctions.selection,
+  cosmosDbSelection: state.selection.services.cosmosDB.selection
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   startLogOutToAzure: () => {
     dispatch(AzureActions.startLogOutAzure());
+  },
+  setDetailPage: (detailPageInfo: IOption) => {
+    dispatch(setDetailPageAction(detailPageInfo));
   },
   openCosmosDbModal: () => {
     dispatch(ModalActions.openCosmosDbModalAction());

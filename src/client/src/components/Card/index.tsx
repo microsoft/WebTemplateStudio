@@ -5,43 +5,44 @@ import CardBody from "../CardBody";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
+import { IOption } from "../../types/option";
+import { Link } from "react-router-dom";
+import classNames from "classnames";
 
 interface IProps {
-  cardTitle: string;
-  cardBody: string;
   buttonText: string;
+  option: IOption;
   handleButtonClick: () => void;
-  handleDetailsClick: () => void;
-  svgUrl: string | undefined;
+  handleDetailsClick: (detailPageInfo: IOption) => void;
   useNormalButtons?: boolean;
 }
 
 const Card = ({
-  cardTitle,
-  cardBody,
+  option,
   buttonText,
   handleButtonClick,
   handleDetailsClick,
-  svgUrl,
   useNormalButtons
 }: IProps) => {
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cardTitleContainer}>
-        {svgUrl && <img className={styles.icon} src={svgUrl} alt="icon" />}
-        <div className={styles.cardTitle}>{cardTitle}</div>
+        {option.svgUrl && (
+          <img className={styles.icon} src={option.svgUrl} alt="icon" />
+        )}
+        <div className={styles.cardTitle}>{option.title}</div>
       </div>
       <div className={styles.cardBody}>
-        <CardBody body={cardBody} />
+        <CardBody body={option.body} />
       </div>
       <div className={styles.selectionContainer}>
-        <div
-          className={styles.details}
-          onClick={handleDetailsClick}
-          role="button"
+        <Link
+          onClick={() => handleDetailsClick(option)}
+          className={classNames(styles.link)}
+          to={"/PageDetail"}
         >
           Details
-        </div>
+        </Link>
         <button
           onClick={handleButtonClick}
           className={classnames(styles.signInButton, {
