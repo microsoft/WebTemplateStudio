@@ -5,6 +5,7 @@ import MasterDetailPage from "./MasterDetailPage";
 import MasterDetailSideBarTab from "./MasterDetailSideBarTab";
 import GreyAvatar from "../../images/GreyAvatar.svg";
 import styles from "./masterdetail.module.css";
+import CONSTANTS from "../../constants";
 
 export default class MasterDetail extends Component {
   constructor(props) {
@@ -21,7 +22,6 @@ export default class MasterDetail extends Component {
         }
       ]
     };
-    this.endpoint = "api/masterdetail";
     this.handleDisplayTabClick = this.handleDisplayTabClick.bind(this);
     this.handleWarningClose = this.handleWarningClose.bind(this);
   }
@@ -39,7 +39,7 @@ export default class MasterDetail extends Component {
 
   // Get the sample data from the back end
   componentDidMount() {
-    fetch(this.endpoint)
+    fetch(CONSTANTS.ENDPOINT.MASTERDETAIL)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -52,7 +52,9 @@ export default class MasterDetail extends Component {
       .catch(error =>
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: `Request to get master detail text failed: ${error}`
+          WarningMessageText: `${
+            CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET
+          } ${error}`
         })
       );
   }

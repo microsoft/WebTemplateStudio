@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ListItem from "./ListItem";
 import ListForm from "./ListForm";
 import WarningMessage from "../WarningMessage";
+import CONSTANTS from "../../constants";
 
 export default class List extends Component {
   constructor(props) {
@@ -12,7 +13,6 @@ export default class List extends Component {
       WarningMessageText: ""
     };
 
-    this.endpoint = "/api/list";
     this.handleWarningClose = this.handleWarningClose.bind(this);
     this.handleDeleteListItem = this.handleDeleteListItem.bind(this);
     this.handleChangeInputText = this.handleChangeInputText.bind(this);
@@ -20,7 +20,7 @@ export default class List extends Component {
   }
 
   handleDeleteListItem(listItem) {
-    fetch(`${this.endpoint}/${listItem._id}`, { method: "DELETE" })
+    fetch(`${CONSTANTS.ENDPOINT.LIST}/${listItem._id}`, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -35,26 +35,26 @@ export default class List extends Component {
       .catch(error => {
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: `Request to delete list item failed: ${error}`
+          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`
         });
       });
   }
 
   handleAddListItem() {
     // Warning Pop Up if the user submits an empty message
-    if (!this.state.multilineTextField) {
+    if (!this.state.textField) {
       this.setState({
         WarningMessageOpen: true,
-        WarningMessageText: "Please enter a valid message"
+        WarningMessageText: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
       });
       return;
     }
 
-    fetch(this.endpoint, {
+    fetch(CONSTANTS.ENDPOINT.LIST, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        text: this.state.multilineTextField
+        text: this.state.textField
       })
     })
       .then(response => {
@@ -66,13 +66,13 @@ export default class List extends Component {
       .then(result =>
         this.setState(prevState => ({
           list: [result, ...prevState.list],
-          multilineTextField: ""
+          textField: ""
         }))
       )
       .catch(error =>
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: `Request to add list item failed: ${error}`
+          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`
         })
       );
   }
@@ -90,7 +90,7 @@ export default class List extends Component {
 
   // Get the sample data from the back end
   componentDidMount() {
-    fetch(this.endpoint)
+    fetch(CONSTANTS.ENDPOINT.LIST)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -101,14 +101,14 @@ export default class List extends Component {
       .catch(error =>
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: `Request to get list items failed: ${error}`
+          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
         })
       );
   }
 
   render() {
     const {
-      multilineTextField,
+      textField,
       list,
       WarningMessageOpen,
       WarningMessageText
@@ -123,7 +123,7 @@ export default class List extends Component {
             <ListForm
               onAddListItem={this.handleAddListItem}
               onChangeInputText={this.handleChangeInputText}
-              multilineTextField={multilineTextField}
+              textField={textField}
             />
           </div>
           {list.map(listItem => (

@@ -4,6 +4,7 @@ import WarningMessage from "../WarningMessage";
 import GreyBox from "../../images/GreyBox.svg";
 import styles from "./grid.module.css";
 import classnames from "classnames";
+import CONSTANTS from "../../constants";
 
 export default class Grid extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ export default class Grid extends Component {
       WarningMessageText: ""
     };
 
-    this.endpoint = "/api/grid";
     this.handleWarningClose = this.handleWarningClose.bind(this);
   }
 
@@ -27,7 +27,7 @@ export default class Grid extends Component {
 
   // Get the text sample data from the back end
   componentDidMount() {
-    fetch(this.endpoint)
+    fetch(CONSTANTS.ENDPOINT.GRID)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -38,7 +38,7 @@ export default class Grid extends Component {
       .catch(error =>
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: `Request to get grid text failed: ${error}`
+          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.GRID_GET} ${error}`
         })
       );
   }
