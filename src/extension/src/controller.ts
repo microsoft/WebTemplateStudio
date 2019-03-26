@@ -503,7 +503,7 @@ export abstract class Controller {
 
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
-  ): Promise<any> {
+  ) {
     return await ApiModule.SendTemplateGenerationPayloadToApi(
       CONSTANTS.PORT,
       enginePayload,
