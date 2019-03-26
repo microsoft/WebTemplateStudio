@@ -19,12 +19,8 @@ const DraggableSidebarItem = ({
   idx,
   azureFunctionName,
   withIndent,
-<<<<<<< HEAD
   withLargeIndent,
   handleCloseClick
-=======
-  withLargeIndent
->>>>>>> a6f72c5... Page name validation
 }: {
   page?: ISelected;
   text?: string;
@@ -37,10 +33,7 @@ const DraggableSidebarItem = ({
   azureFunctionName?: string;
   withIndent?: boolean;
   withLargeIndent?: boolean;
-<<<<<<< HEAD
   handleCloseClick?: (idx: number) => void;
-=======
->>>>>>> a6f72c5... Page name validation
 }) => {
   return (
     <div>
@@ -64,29 +57,31 @@ const DraggableSidebarItem = ({
             <img className={styles.reorderIcon} src={reorderSvgUrl} />
           </div>
         )}
-        <div
-          className={classnames({
-            [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
-            [styles.textContainer]: !withIndent,
-            [styles.largeIndentContainer]: withLargeIndent
-          })}
-        >
-          <div className={styles.inputContainer}>
-            {pageSvgUrl && <img className={styles.icon} src={pageSvgUrl} />}
-            {handleInputChange && (page || azureFunctionName) && idx && (
-              <input
-                className={classnames(styles.input, {
-                  [styles.azureFunctionNameInput]: azureFunctionName
-                })}
-                value={page ? page.title : azureFunctionName}
-                onChange={e => {
-                  if (handleInputChange && idx) {
-                    handleInputChange(e.target.value, idx - 1);
-                  }
-                }}
-              />
-            )}
-            <div>{text}</div>
+        <div className={styles.errorStack}>
+          <div
+            className={classnames({
+              [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
+              [styles.textContainer]: !withIndent,
+              [styles.largeIndentContainer]: withLargeIndent
+            })}
+          >
+            <div className={styles.inputContainer}>
+              {pageSvgUrl && <img className={styles.icon} src={pageSvgUrl} />}
+              {handleInputChange && (page || azureFunctionName) && idx && (
+                <input
+                  className={classnames(styles.input, {
+                    [styles.azureFunctionNameInput]: azureFunctionName
+                  })}
+                  value={page ? page.title : azureFunctionName}
+                  onChange={e => {
+                    if (handleInputChange && idx) {
+                      handleInputChange(e.target.value, idx - 1);
+                    }
+                  }}
+                />
+              )}
+              <div>{text}</div>
+            </div>
           </div>
           {page && !page.isValidTitle && (
             <div
