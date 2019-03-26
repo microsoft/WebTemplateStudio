@@ -5,13 +5,13 @@ Deploying your website to the cloud allows people to view your website by visiti
 
 ## Azure App Service
 
-One way to deploy is using Azure App Service. This service will allow you to deploy and scale web, mobile and API apps. The Azure Functions generated in Web Template Studio are also deployed to Azure App Service.
+One way to deploy is using Azure App Service. This service will allow you to deploy and scale web, mobile and API apps.
 
 ## Getting Started with Deployment
 
-### VS Code Extension Method
+### VS Code Extension Method (Recommended)
 
-The Azure App Service extension provides an easy way to manage and deploy you web application. To learn how to deploy using their VS Code extension, see [Azure App Service Extension](https://github.com/Microsoft/vscode-azureappservice)
+The Azure App Service extension provides an easy way to manage and deploy you web application. To learn how to deploy using their VS Code extension, see [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
 
 ### Local Git Deployment Method
 
