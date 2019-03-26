@@ -36,7 +36,7 @@
   align-items: center;
   padding: 0px 10px;
   border-radius: 2px;
-  font-size: 70%;
+  font-size: 90%;
   opacity: 50%;
 }
 
@@ -64,6 +64,7 @@
 .cancelIcon {
   height: 12px;
   margin-left: 10px;
+  padding-top: 13px;
 }
 
 .cancelIcon:hover {
