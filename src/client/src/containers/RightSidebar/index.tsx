@@ -16,17 +16,14 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 
-import { ROUTES, PAGE_NAME_ERROR_MESSAGES } from "../../utils/constants";
-import { validateName } from "../../utils/validateName";
+import { ROUTES } from "../../utils/constants";
 
 import cancel from "../../assets/cancel.svg";
-import reorder from "../../assets/reorder.svg";
 
 import { selectPagesAction } from "../../actions/selectPages";
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 import SortablePageList from "../SortablePageList";
-import getSvgUrl from "../../utils/getSvgUrl";
 
 // TODO: Finalize types when API is hooked up
 interface ISelectionType {
@@ -81,20 +78,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public handleInputChange = (newTitle: string, idx: number) => {
     const { pages } = this.props.selection;
     pages[idx].title = newTitle;
-    try {
-      pages[idx].isValidTitle = validateName(pages[idx].title);
-      for (let i = 0; i < pages.length; i++) {
-        if (pages[i].title === pages[idx].title && i !== idx) {
-          pages[idx].isValidTitle = false;
-          pages[idx].error = PAGE_NAME_ERROR_MESSAGES.DUPLICATE_NAME;
-          break;
-        }
-      }
-    } catch (error) {
-      pages[idx].isValidTitle = false;
-      pages[idx].error = error.message;
-    }
-
     this.props.selectPages(pages);
   };
   public showProjectTypes = (): boolean => {
@@ -193,59 +176,13 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 this.props.selection.backendFramework
               )}
             />
-            {this.showPages() && (
+            {this.showPages() && <SortablePageList />}
+            {this.showServices() && (
               <div className={styles.sidebarItem}>
-                <div className={styles.dropdownTitle}>Pages</div>
-                {this.props.selection.pages.map((page, idx) => (
-                  <div>
-                    <DraggableSidebarItem
-                      key={page.internalName}
-                      page={page}
-                      closeSvgUrl={`${
-                        process.env.REACT_APP_RELATIVE_PATH
-                      }${cancel}`}
-                      pageSvgUrl={getSvgUrl(page.internalName)}
-                      reorderSvgUrl={`${
-                        process.env.REACT_APP_RELATIVE_PATH
-                      }${reorder}`}
-                      handleInputChange={this.handleInputChange.bind(this)}
-                      idx={idx + 1}
-                    />
-                  </div>
-                ))}
-                {/* Using a baseline of 1 for idx because !!0 === false */}
+                <div className={styles.dropdownTitle}>Services</div>
+                <ServicesSidebarItem services={this.props.services} />
               </div>
             )}
-            {this.showServices() &&
-              Object.keys(this.props.services).length > 1 && (
-                <div className={styles.sidebarItem}>
-                  <div className={styles.dropdownTitle}>Services</div>
-                  {Object.keys(this.props.services).map(serviceName => {
-                    // FIXME: Storing the state of the cosmos account name availability is not practicial in "services"
-                    // Better to create another object that can store these booleans for name validation.
-                    if (
-                      serviceName !== "isCosmosResourceAccountNameAvailable" &&
-                      serviceName !== "message"
-                    ) {
-                      return (
-                        <DraggableSidebarItem
-                          key={serviceName}
-                          text={this.props.services[serviceName].api}
-                          closeSvgUrl={`${
-                            process.env.REACT_APP_RELATIVE_PATH
-                          }${cancel}`}
-                          itemTitle={
-                            serviceName === "cosmosOptions"
-                              ? "CosmosDB"
-                              : "Azure Functions"
-                          }
-                        />
-                      );
-                    }
-                  })}
-                  {/*FIXME: service options assume only CosmosDB and Azure Functions for now*/}
-                </div>
-              )}
           </div>
         )}
       </React.Fragment>
