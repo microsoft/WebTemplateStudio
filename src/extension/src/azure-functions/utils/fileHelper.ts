@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import * as fsx from "fs-extra";
 import * as path from "path";
-import { config } from "../config";
 import * as appRoot from "app-root-path";
 import * as archiver from "archiver";
 import { Runtime } from "../functionProvider";
@@ -35,8 +34,8 @@ export namespace FileHelper {
   function copySettingsFiles(funcAppPath: string) {
     let appSettingsPath: string = path.join(
       appRoot.toString(),
-      config.functionTemplatesRelativePath,
-      config.appNodeSettingsPath
+      CONSTANTS.FUNCTIONS_CONFIG.FUNCTION_TEMPLATES_RELATIVE_PATH,
+      CONSTANTS.FUNCTIONS_CONFIG.APP_NODE_SETTINGS_PATH
     );
     fsx.copySync(appSettingsPath, funcAppPath);
   }
@@ -46,13 +45,13 @@ export namespace FileHelper {
 
     let indexPath: string = path.join(
       appRoot.toString(),
-      config.functionTemplatesRelativePath,
-      config.baseNodeFunctionPath
+      CONSTANTS.FUNCTIONS_CONFIG.FUNCTION_TEMPLATES_RELATIVE_PATH,
+      CONSTANTS.FUNCTIONS_CONFIG.BASE_NODE_FUNCTION_PATH
     );
     let funcJsonPath: string = path.join(
       appRoot.toString(),
-      config.functionTemplatesRelativePath,
-      config.baseNodeFunctionConfigPath
+      CONSTANTS.FUNCTIONS_CONFIG.FUNCTION_TEMPLATES_RELATIVE_PATH,
+      CONSTANTS.FUNCTIONS_CONFIG.BASE_NODE_FUNCTION_CONFIG_PATH
     );
 
     fs.copyFileSync(indexPath, path.join(dirPath, "index.js"));

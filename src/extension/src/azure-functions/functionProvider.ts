@@ -10,8 +10,7 @@ import {
   ValidationError
 } from "../errors";
 import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
-import { config } from "./config";
-import { ZipDeploy } from "./utils/zipDeployHelper";
+import { ZipDeployHelper } from "./utils/zipDeployHelper";
 import * as fs from "fs";
 import * as path from "path";
 import {
@@ -176,10 +175,10 @@ export class FunctionProvider {
           value: selections.subscriptionItem.subscriptionId
         },
         storageName: {
-          value:
-            selections.functionAppName
-              .toLowerCase()
-              .replace(/[^0-9a-z]/gi, "") + config.storageNameSuffix
+          value: selections.functionAppName
+            .toLowerCase()
+            .replace(/[^0-9a-z]/gi, "")
+            .substring(0, CONSTANTS.FUNCTIONS_CONFIG.MAX_STORAGE_NAME)
         }
       };
 
@@ -218,7 +217,7 @@ export class FunctionProvider {
         )
         .then(result => {
           setTimeout(async () => {
-            await ZipDeploy.zipDeploy(
+            await ZipDeployHelper.zipDeploy(
               selections.subscriptionItem.session.credentials,
               appPath,
               selections.functionAppName
@@ -300,9 +299,13 @@ export class FunctionProvider {
     }
 
     return await this.webClient
-      .checkNameAvailability(appName + config.functionAppDomain, "Site", {
-        isFqdn: true
-      })
+      .checkNameAvailability(
+        appName + CONSTANTS.FUNCTIONS_CONFIG.FUNCTION_APP_DOMAIN,
+        "Site",
+        {
+          isFqdn: true
+        }
+      )
       .then(res => {
         return res.nameAvailable;
       })
