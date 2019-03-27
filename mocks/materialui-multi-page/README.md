@@ -25,7 +25,7 @@ Replace the default images stored in /src/images.
 The Cosmos database will take approximately 5 minutes to deploy. Upon completion of deployment,
 a notification will appear in VS Code and your connection string will be automatically added
 the .env file. The schema and operations for the Cosmos database are defined in `/server` folder.
-Additional documentation can be found here: [Cosmos Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/services/azure-cosmos.md)
+Additional documentation can be found here: [Cosmos Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/services/azure-cosmos.md).
 
 ### Azure Functions
 
@@ -37,11 +37,11 @@ Function it is recommended to install the [Azure Functions Extension](https://ma
 
 The generated templates can be deployed to Azure App Service using the following steps:
 
-1. In the root directory of the project `yarn build` or `npm build` to create a build folder
-2. Move the build folder inside the server folder
-3. Deploy the server folder to Azure App Service using the [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
-4. If a database is used, add the environment variables defined in .env to your Application Settings
-5. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security)
+1. In the root directory of the project `yarn build` or `npm build` to create a build folder.
+2. Move the build folder inside the server folder.
+3. Deploy the server folder to Azure App Service using the [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice).
+4. If a database is used, add the environment variables defined in .env to your Application Settings.
+5. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
 
 Full documentation for deployment to Azure App Service can be found here: //TODO Add link to deployment doc
 
