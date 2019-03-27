@@ -121,26 +121,19 @@ const CosmosResourceModal = (props: Props) => {
     let isApiEmpty: boolean = false;
     let isAnyEmpty: boolean = true;
 
-    if (selections.subscription === "") {
-      isSubscriptionEmpty = true;
-      isAnyEmpty = true;
-    }
-    if (selections.resourceGroup === "") {
-      isResourceGroupEmpty = true;
-      isAnyEmpty = true;
-    }
-    if (selections.accountName === "") {
-      isAccountNameEmpty = true;
-      isAnyEmpty = true;
-    }
-    if (selections.api === "") {
-      isApiEmpty = true;
-      isAnyEmpty = true;
-    }
-    if (selections.location === "") {
-      isLocationEmpty = true;
-      isAnyEmpty = true;
-    }
+    isSubscriptionEmpty = selections.subscription === "";
+    isResourceGroupEmpty = selections.resourceGroup === "";
+    isAccountNameEmpty = selections.accountName === "";
+    isApiEmpty = selections.api === "";
+    isLocationEmpty = selections.location === "";
+
+    isAnyEmpty =
+      isSubscriptionEmpty ||
+      isResourceGroupEmpty ||
+      isAccountNameEmpty ||
+      isLocationEmpty ||
+      isApiEmpty;
+
     updateValidation({
       isSubscriptionEmpty: isSubscriptionEmpty,
       isResourceGroupEmpty: isResourceGroupEmpty,
