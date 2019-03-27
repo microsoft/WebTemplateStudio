@@ -119,7 +119,7 @@ const CosmosResourceModal = (props: Props) => {
     let isAccountNameEmpty: boolean = false;
     let isLocationEmpty: boolean = false;
     let isApiEmpty: boolean = false;
-    let isAnyEmpty: boolean = true;
+    let isAnyEmpty: boolean = false;
 
     isSubscriptionEmpty = selections.subscription === "";
     isResourceGroupEmpty = selections.resourceGroup === "";
