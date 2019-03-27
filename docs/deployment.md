@@ -51,7 +51,7 @@ This method will require you to have [git](https://git-scm.com/downloads) instal
 
 ![Portal image create resource create button](./resources/azure-appservice-createadd.png)
 
-- After clicking create you will get a notification, click the bell icon on the top right to view notifications. Click the _go to resource_ button.
+- After clicking create you will get a notification. Click the bell icon on the top right to view notifications, then click the _go to resource_ button.
 
 ![Portal image go to resource](./resources/azure-appservice-notification.png)
 
