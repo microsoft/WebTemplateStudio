@@ -274,7 +274,7 @@ export abstract class Controller {
 
   public static performLogin(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      ExtensionCommand.Login,
+      TelemetryEventName.PerformLogin,
       async function(this: IActionContext): Promise<void> {
         await AzureAuth.login()
           .then(res => {
