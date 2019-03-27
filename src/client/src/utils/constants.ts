@@ -50,6 +50,10 @@ const PAGE_NAME_ERROR_MESSAGES = {
   NAME_STARTS_WITH_SPACE: "page name may only start with letters or numbers"
 };
 
+const EMPTY_FIELD = (fieldId: string) => {
+  return `${fieldId} field cannot be empty`;
+};
+
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
   GET_USER_STATUS: "getUserStatus",
@@ -68,5 +72,6 @@ export {
   ROUTES_ARRAY,
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  PAGE_NAME_ERROR_MESSAGES
+  PAGE_NAME_ERROR_MESSAGES,
+  EMPTY_FIELD
 };
