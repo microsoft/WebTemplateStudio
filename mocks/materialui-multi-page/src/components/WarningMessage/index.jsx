@@ -2,6 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import styles from "./warningmessage.module.css";
 
+// A pop up message used to warn users about failed API calls to the back end
 export default function index(props) {
   const { open, text, onWarningClose } = props;
   return (
