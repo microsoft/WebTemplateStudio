@@ -193,7 +193,6 @@ const CosmosResourceModal = (props: Props) => {
   };
   const handleAddResource = () => {
     if (setModalValidation(azureFunctionsFormData)) {
-      console.log(azureFunctionsFormData);
       return;
     }
     props.saveAzureFunctionsOptions(azureFunctionsFormData);
@@ -245,14 +244,16 @@ const CosmosResourceModal = (props: Props) => {
         <Cancel className={styles.icon} onClick={props.closeModal} />
       </div>
       {getDropdownSection(
-        modalValidation.isSubscriptionEmpty,
+        modalValidation.isSubscriptionEmpty &&
+          azureFunctionsFormData.subscription === "",
         FORM_CONSTANTS.SUBSCRIPTION.label,
         functionsData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
         "Create new"
       )}
       {getDropdownSection(
-        modalValidation.isResourceGroupEmpty,
+        modalValidation.isResourceGroupEmpty &&
+          azureFunctionsFormData.resourceGroup === "",
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         functionsData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
@@ -291,27 +292,31 @@ const CosmosResourceModal = (props: Props) => {
             {props.appNameAvailability.message}
           </div>
         )}
-        {modalValidation.isAppNameEmpty && (
-          <div className={styles.errorMessage}>
-            {EMPTY_FIELD(FORM_CONSTANTS.APP_NAME.label)}
-          </div>
-        )}
+        {modalValidation.isAppNameEmpty &&
+          azureFunctionsFormData.appName.length == 0 && (
+            <div className={styles.errorMessage}>
+              {EMPTY_FIELD(FORM_CONSTANTS.APP_NAME.label)}
+            </div>
+          )}
       </div>
       {getDropdownSection(
-        modalValidation.isLocationEmpty,
+        modalValidation.isLocationEmpty &&
+          azureFunctionsFormData.location === "",
         FORM_CONSTANTS.LOCATION.label,
         functionsData.location,
         FORM_CONSTANTS.LOCATION.value
       )}
       {getDropdownSection(
-        modalValidation.isRuntimeStackEmpty,
+        modalValidation.isRuntimeStackEmpty &&
+          azureFunctionsFormData.runtimeStack === "",
         FORM_CONSTANTS.RUNTIME_STACK.label,
         functionsData.runtimeStack,
         FORM_CONSTANTS.RUNTIME_STACK.value
       )}
       <div className={styles.modalFooterContainer}>
         {getDropdownSection(
-          modalValidation.isNumFunctionsZero,
+          modalValidation.isNumFunctionsZero &&
+            azureFunctionsFormData.numFunctions === 0,
           FORM_CONSTANTS.NUM_FUNCTIONS.label,
           getNumFunctionsData(),
           FORM_CONSTANTS.NUM_FUNCTIONS.value,
