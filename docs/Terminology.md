@@ -2,7 +2,7 @@
 
 This document outlines the terminology to be used to refer to the various parts of Web Template Studio application as a standard throughout the codebase and verbally in meetings and discussions. This is a living document and will change with time to reflect changes in the architecture of the application, development standards etc. The architecture diagram below is a helpful reference when looking at the terms.
 
-// TODO Add terminology document
+// TODO Add Architecture Diagram
 
 ## General Terminology
 
