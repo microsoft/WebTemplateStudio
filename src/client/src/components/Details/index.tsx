@@ -36,7 +36,9 @@ const Details = ({ detailInfo, handleBackClick }: IProps) => {
           </div>
           <div>
             <div className={styles.detailsTitle}>{detailInfo.title}</div>
-            <div className={styles.detailsDescription}>{detailInfo.body}</div>
+            <div className={styles.detailsDescription}>
+              {detailInfo.longDescription}
+            </div>
 
             <div className={styles.col}>
               <div className={styles.categoriesContainer}>
