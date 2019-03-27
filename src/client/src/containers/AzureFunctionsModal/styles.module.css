@@ -1,87 +1,101 @@
 .headerContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
 }
 
 .modalTitle {
-    font-size: 1.3em;
-    font-weight: bold;
+  font-size: 1.3em;
+  font-weight: bold;
 }
 
 .selectionContainer {
-    margin-bottom: 2em;
+  margin-bottom: 2em;
 }
 
 .selectionHeaderContainer {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 3px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
 }
 
 .selectionInputContainer {
-    margin-bottom: 14px;
+  margin-bottom: 14px;
 }
 
 .modalFooterContainer {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .button {
-    margin-top: 27px;
-    font-size: 1em;
-    border: none;
+  margin-top: 27px;
+  font-size: 1em;
+  border: none;
+  height: 50%;
 }
 
 .icon {
-    cursor: pointer;
-    height: 12px;
+  cursor: pointer;
+  height: 12px;
 }
 
 .validationIcon {
-    height: 15px;
-    margin-right: 0.2em;
+  height: 15px;
+  margin-right: 0.2em;
 }
 
 .inputContainer {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    outline: none;
-    padding: 9px;
-    box-sizing: border-box;
-    background-color: #696969;
-    border: 0.5px solid rgba(0, 0, 0, 0.5);
-    border-radius: 2px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  outline: none;
+  padding: 9px;
+  box-sizing: border-box;
+  background-color: #696969;
+  border: 0.5px solid rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
 }
 
 .input {
-    text-decoration: none;
-    border: none;
-    background-color: #696969;
-    font-size: 1em;
-    width: 100%;
-    margin-right: 10px;
+  text-decoration: none;
+  border: none;
+  background-color: #696969;
+  font-size: 1em;
+  width: 100%;
+  margin-right: 10px;
 }
 
 .borderRed {
-    border: 1px solid #FF6666;
-    padding: 8.5px;
+  border: 1px solid #ff6666;
+  padding: 8.5px;
 }
 
 input:focus {
-    outline: none;
+  outline: none;
 }
 
 input::placeholder {
-    color: white;
-    opacity: 0.4;
+  color: white;
+  opacity: 0.4;
 }
 
 .createNew,
 .link {
-    text-decoration: none;
-    color: #54B4FF;
+  text-decoration: none;
+  color: #54b4ff;
+}
+
+.errorMessage {
+  height: 38px;
+  background: #5f0d0d;
+  border: 1px solid #9d2f23;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  border-radius: 2px;
+  font-size: 90%;
+  opacity: 50%;
 }
