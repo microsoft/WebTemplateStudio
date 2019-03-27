@@ -10,12 +10,12 @@ export class TelemetryAI {
 
     private static telemetryReporter: ITelemetryReporter;
     private wizardSessionStartTime: number;
-    private pageStartTimer: number;
+    private pageStartTime: number;
 
-    constructor(private vscodeContext: vscode.ExtensionContext){
+    constructor(private vscodeContext: vscode.ExtensionContext, private extensionStartTime: number){
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(vscodeContext);
         this.wizardSessionStartTime = Date.now();
-        this.pageStartTimer = this.wizardSessionStartTime;
+        this.pageStartTime = this.wizardSessionStartTime;
     }
 
     private createTelemetryReporter(ctx: vscode.ExtensionContext) {
@@ -26,8 +26,8 @@ export class TelemetryAI {
         return reporter;
     }
 
-    public trackExtensionStartUpTime(eventName : string = TelemetryEventName.ExtensionLaunch, extensionStartTime: number){
-        this.trackTimeDuration(eventName, extensionStartTime, Date.now());
+    public trackExtensionStartUpTime(eventName : string = TelemetryEventName.ExtensionLaunch){
+        this.trackTimeDuration(eventName, this.extensionStartTime, Date.now());
     }
 
     /*
@@ -35,8 +35,8 @@ export class TelemetryAI {
     * 
     */
     public trackWizardPageTimeToNext(pageToTrack: string){
-        this.trackTimeDuration(TelemetryEventName.PageChange, this.pageStartTimer, Date.now(), {"Page-Name": pageToTrack});
-        this.pageStartTimer = Date.now();
+        this.trackTimeDuration(TelemetryEventName.PageChange, this.pageStartTime, Date.now(), {"Page-Name": pageToTrack});
+        this.pageStartTime = Date.now();
     }
 
     public trackWizardTotalSessionTimeToGenerate(eventName : string = TelemetryEventName.WizardSession){

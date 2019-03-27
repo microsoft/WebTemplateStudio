@@ -109,7 +109,7 @@ export abstract class Controller {
     context: vscode.ExtensionContext,
     extensionStartTime: number
   ): Promise<any> {
-    Controller.Telemetry = new TelemetryAI(context);
+    Controller.Telemetry = new TelemetryAI(context, extensionStartTime);
     this.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
       async function(this: IActionContext): Promise<ChildProcess> {
@@ -140,8 +140,7 @@ export abstract class Controller {
           Controller.routingMessageReceieverDelegate
         );
         Controller.Telemetry.trackExtensionStartUpTime(
-          TelemetryEventName.ExtensionLaunch,
-          extensionStartTime
+          TelemetryEventName.ExtensionLaunch
         );
         return process;
       }
@@ -551,7 +550,7 @@ export abstract class Controller {
       });
   }
 
-  public static async processCosmosDeploymentAndSendStatusToClient(
+  public static processCosmosDeploymentAndSendStatusToClient(
     cosmosPayload: any,
     genPath: string
   ) {
