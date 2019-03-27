@@ -1,24 +1,10 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
 import ListItem from "./ListItem";
 import ListForm from "./ListForm";
 import WarningMessage from "../WarningMessage";
+import CONSTANTS from "../../constants";
 
-const styles = theme => ({
-  layout: {
-    width: "auto",
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    [theme.breakpoints.up("lg")]: {
-      width: 1000,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }
-  }
-});
-
-class index extends Component {
+export default class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,15 +13,14 @@ class index extends Component {
       WarningMessageText: ""
     };
 
-    this.endpoint = "/api/list";
     this.handleWarningClose = this.handleWarningClose.bind(this);
     this.handleDeleteListItem = this.handleDeleteListItem.bind(this);
     this.handleChangeInputText = this.handleChangeInputText.bind(this);
     this.handleAddListItem = this.handleAddListItem.bind(this);
   }
 
-  handleDeleteListItem(event, listItem) {
-    fetch(`${this.endpoint}/${listItem._id}`, { method: "DELETE" })
+  handleDeleteListItem(listItem) {
+    fetch(`${CONSTANTS.ENDPOINT.LIST}/${listItem._id}`, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -50,17 +35,26 @@ class index extends Component {
       .catch(error => {
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: `Request to delete list item failed: ${error}`
+          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`
         });
       });
   }
 
-  handleAddListItem(event) {
-    fetch(this.endpoint, {
+  handleAddListItem() {
+    // Warning Pop Up if the user submits an empty message
+    if (!this.state.textField) {
+      this.setState({
+        WarningMessageOpen: true,
+        WarningMessageText: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
+      });
+      return;
+    }
+
+    fetch(CONSTANTS.ENDPOINT.LIST, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        text: this.state.multilineTextField
+        text: this.state.textField
       })
     })
       .then(response => {
@@ -72,13 +66,13 @@ class index extends Component {
       .then(result =>
         this.setState(prevState => ({
           list: [result, ...prevState.list],
-          multilineTextField: ""
+          textField: ""
         }))
       )
       .catch(error =>
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: `Request to add list item failed: ${error}`
+          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`
         })
       );
   }
@@ -94,9 +88,9 @@ class index extends Component {
     });
   }
 
-  // Get the text assets from the back end
+  // Get the sample data from the back end
   componentDidMount() {
-    fetch(this.endpoint)
+    fetch(CONSTANTS.ENDPOINT.LIST)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -107,37 +101,45 @@ class index extends Component {
       .catch(error =>
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: `Request to get list items failed: ${error}`
+          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
         })
       );
   }
 
   render() {
-    const { classes } = this.props;
+    const {
+      textField,
+      list,
+      WarningMessageOpen,
+      WarningMessageText
+    } = this.state;
     return (
-      <div className={classes.layout}>
-        <Grid container justify="center" alignItems="flex-start" spacing={24}>
-          <ListForm
-            onClick={this.handleAddListItem}
-            onChangeInputText={this.handleChangeInputText}
-            multilineTextField={this.state.multilineTextField}
-          />
-          {this.state.list.map(listItem => (
+      <div className="container">
+        <div className="row">
+          <div className="col mt-5 p-0">
+            <h3>Bootstrap List Template</h3>
+          </div>
+          <div className="col-12 p-0">
+            <ListForm
+              onAddListItem={this.handleAddListItem}
+              onChangeInputText={this.handleChangeInputText}
+              textField={textField}
+            />
+          </div>
+          {list.map(listItem => (
             <ListItem
               key={listItem._id}
               listItem={listItem}
               onDeleteListItem={this.handleDeleteListItem}
             />
           ))}
-        </Grid>
-        <WarningMessage
-          open={this.state.WarningMessageOpen}
-          text={this.state.WarningMessageText}
-          onWarningClose={this.handleWarningClose}
-        />
+          <WarningMessage
+            open={WarningMessageOpen}
+            text={WarningMessageText}
+            onWarningClose={this.handleWarningClose}
+          />
+        </div>
       </div>
     );
   }
 }
-
-export default withStyles(styles)(index);
