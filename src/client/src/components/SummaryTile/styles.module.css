@@ -1,0 +1,81 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.disableHover,
+.summaryTileContainer {
+    display: flex;
+    align-items: center;
+    background-color: blue;
+    padding: 11px;
+    justify-content: space-between;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.summaryTileContainer:hover {
+    outline: 2px solid #FFFFFF;
+}
+
+.leftContainer {
+    display: flex;
+    align-items: center;
+}
+
+.leftIcon {
+    height: 36px;
+    margin-right: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.closeIcon,
+.rightIcon {
+    max-height: 18px;
+    padding: 3px;
+}
+
+.closeIcon:hover {
+    cursor: pointer;
+}
+
+.rightIcon:hover {
+    cursor: pointer;
+    padding: 3px;
+    background-color: black;
+    border-radius: 3px;
+}
+
+.spacer {
+    width: 24px;
+}
+
+.tileInput {
+    font-size: 18px;
+    font-weight: bold;
+    background-color: blue;
+    border: none;
+}
+
+.tileInput:focus {
+    outline: 1px solid #FFFFFF;
+}
+
+.metaData {
+    display: flex;
+}
+
+.tileContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.indent {
+    margin-left: 4em;
+}

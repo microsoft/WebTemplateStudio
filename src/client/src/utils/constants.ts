@@ -4,6 +4,7 @@ const SELECT_FRAMEWORKS = "/SelectFrameworks";
 const SELECT_PAGES = "/SelectPages";
 const AZURE_LOGIN = "/AzureLogin";
 const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
+const WELCOME = "/";
 
 const PRODUCTION = "production";
 
@@ -13,7 +14,8 @@ const ROUTES = {
   SELECT_FRAMEWORKS,
   SELECT_PAGES,
   AZURE_LOGIN,
-  REVIEW_AND_GENERATE
+  REVIEW_AND_GENERATE,
+  WELCOME
 };
 
 // Presents the routes in the order of the wizard

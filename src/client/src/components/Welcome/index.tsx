@@ -1,10 +1,18 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
+import { ROUTES } from "../../utils/constants";
 
-const Welcome = () => {
+import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
+
+interface IDispatchProps {
+  setRouteVisited: (route: string) => any;
+}
+
+const Welcome = ({ setRouteVisited }: IDispatchProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>Welcome to Project Acorn</div>
@@ -13,9 +21,13 @@ const Welcome = () => {
         developers with boilerplate code, easy to use templates, and automates
         the Azure deployment process, all within this wizard.
       </div>
-      <Link to="/SelectWebApp" className={buttonStyles.buttonHighlighted}>Get Started</Link>
+      <Link onClick={() => { setRouteVisited(ROUTES.SELECT_PROJECT_TYPE) }} to={ROUTES.SELECT_PROJECT_TYPE} className={buttonStyles.buttonHighlighted}>Get Started</Link>
     </div>
   );
 };
 
-export default Welcome;
+const mapDispatchToProps = (dispatch : any): IDispatchProps => ({
+  setRouteVisited: (route: string) => { dispatch(setVisitedWizardPageAction(route))},
+})
+
+export default connect(null, mapDispatchToProps)(Welcome);

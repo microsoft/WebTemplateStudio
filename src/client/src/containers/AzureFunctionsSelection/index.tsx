@@ -8,7 +8,7 @@ import * as getSvg from "../../utils/getSvgUrl";
 
 import { IAzureFunctionsSelection, ISelectedAzureFunctionsService } from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
-import { updateAzureFunctionNamesAction } from "../../actions/updateAzureFunctionNames";
+import * as AzureFunctionActions from "../../actions/azureFunctionActions";
 
 interface IProps {
     functionApps: IAzureFunctionsSelection;
@@ -21,6 +21,8 @@ interface IFunctionApp {
 
 interface IDispatchProps {
     updateFunctionNames: (functionApp: IFunctionApp) => any;
+    removeAzureFunctionApp: (appIndex: number) => any;
+    removeAzureFunction: (functionIndex: number) => any;
 }
 
 type Props = IProps & IDispatchProps;
@@ -33,7 +35,7 @@ type Props = IProps & IDispatchProps;
  *  In the future, more than one Azure Function app can be created, and can simply be appended
  *  to the array data structure holding the Azure Function app selections (see reducer for Azure Functions)
  */
-const AzureFunctionsSelection = ({ functionApps, updateFunctionNames }: Props) => {
+const AzureFunctionsSelection = ({functionApps, updateFunctionNames, removeAzureFunctionApp, removeAzureFunction }: Props) => {
     const { selection } = functionApps;
     const { serviceType } = functionApps.wizardContent;
     const handleInputChange = (newTitle: string, idx: number) => {
@@ -46,7 +48,7 @@ const AzureFunctionsSelection = ({ functionApps, updateFunctionNames }: Props) =
             });
         }
     };
-    return (
+    return ( 
         <React.Fragment>
             {!_.isEmpty(selection) && selection.map((functionApp: ISelectedAzureFunctionsService, idx: number) => (
                 <React.Fragment key={serviceType + functionApp.appName + idx}>
@@ -56,6 +58,8 @@ const AzureFunctionsSelection = ({ functionApps, updateFunctionNames }: Props) =
                         closeSvgUrl={getSvg.getCancelSvg()}
                         itemTitle={serviceType}
                         withIndent={true}
+                        idx={idx+1}
+                        handleCloseClick={removeAzureFunctionApp}
                     />
                     {functionApp.functionNames && (functionApp.functionNames.map((functionName: string, idx: number) =>
                         <DraggableSidebarItem
@@ -65,6 +69,7 @@ const AzureFunctionsSelection = ({ functionApps, updateFunctionNames }: Props) =
                             azureFunctionName={functionName}
                             handleInputChange={handleInputChange}
                             idx={idx + 1}
+                            handleCloseClick={removeAzureFunction}
                         />))}
                 </React.Fragment>))}
         </React.Fragment>
@@ -72,7 +77,9 @@ const AzureFunctionsSelection = ({ functionApps, updateFunctionNames }: Props) =
 }
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-    updateFunctionNames: (functionApp: IFunctionApp) => { dispatch(updateAzureFunctionNamesAction(functionApp)) },
+    updateFunctionNames: (functionApp: IFunctionApp) => { dispatch(AzureFunctionActions.updateAzureFunctionNamesAction(functionApp)) },
+    removeAzureFunctionApp: (appIndex) => { dispatch(AzureFunctionActions.removeAzureFunctionAppAction(appIndex)) },
+    removeAzureFunction: (functionIndex) => { dispatch(AzureFunctionActions.removeAzureFunctionAction(functionIndex)) }
 })
 
 export default connect(null, mapDispatchToProps)(AzureFunctionsSelection);

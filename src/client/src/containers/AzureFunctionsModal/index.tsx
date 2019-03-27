@@ -9,8 +9,8 @@ import { connect } from "react-redux";
 import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
+import { saveAzureFunctionsSettingsAction } from "../../actions/azureFunctionActions";
 import { closeModalAction } from "../../actions/modalActions";
-import { saveAzureFunctionsSettingsAction } from "../../actions/saveAzureFunctionsSettings";
 import { azureFunctionModalInitialState } from "../../mockData/cosmosDbModalData";
 
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
