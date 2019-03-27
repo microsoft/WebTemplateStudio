@@ -21,7 +21,8 @@ import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
-  WIZARD_CONTENT_INTERNAL_NAMES
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  EMPTY_FIELD
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 
@@ -47,16 +48,35 @@ const initialState = {
   appName: "",
   runtimeStack: "",
   location: "",
-  numFunctions: 1,
+  numFunctions: 0,
   internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
 };
 
 const FORM_CONSTANTS = {
-  SUBSCRIPTION: "subscription",
-  RESOURCE_GROUP: "resourceGroup",
-  LOCATION: "location",
-  RUNTIME_STACK: "runtimeStack",
-  NUM_FUNCTIONS: "numFunctions"
+  SUBSCRIPTION: {
+    label: "Subscription",
+    value: "subscription"
+  },
+  RESOURCE_GROUP: {
+    label: "Resource Group",
+    value: "resourceGroup"
+  },
+  LOCATION: {
+    label: "Location",
+    value: "location"
+  },
+  RUNTIME_STACK: {
+    label: "Runtime Stack",
+    value: "runtimeStack"
+  },
+  NUM_FUNCTIONS: {
+    label: "Number of functions",
+    value: "numFunctions"
+  },
+  APP_NAME: {
+    label: "App Name",
+    value: "appName"
+  }
 };
 
 const CosmosResourceModal = (props: Props) => {
@@ -84,10 +104,55 @@ const CosmosResourceModal = (props: Props) => {
     });
   }, [props.subscriptionData]);
   const [azureFunctionsFormData, updateForm] = React.useState(initialState);
+
+  const [modalValidation, updateValidation] = React.useState({
+    isAppNameEmpty: false,
+    isRuntimeStackEmpty: false,
+    isLocationEmpty: false,
+    isSubscriptionEmpty: false,
+    isResourceGroupEmpty: false,
+    isNumFunctionsZero: false
+  });
+
+  const setModalValidation = (selections: any): boolean => {
+    let isSubscriptionEmpty: boolean = false;
+    let isResourceGroupEmpty: boolean = false;
+    let isAppNameEmpty: boolean = false;
+    let isLocationEmpty: boolean = false;
+    let isNumFunctionsZero: boolean = false;
+    let isRuntimeStackEmpty: boolean = false;
+    let isAnyEmpty: boolean = false;
+
+    isSubscriptionEmpty = selections.subscription === "";
+    isResourceGroupEmpty = selections.resourceGroup === "";
+    isAppNameEmpty = selections.appName === "";
+    isNumFunctionsZero = selections.numFunctions === 0;
+    isLocationEmpty = selections.location === "";
+    isRuntimeStackEmpty = selections.runtimeStack == "";
+
+    isAnyEmpty =
+      isSubscriptionEmpty ||
+      isResourceGroupEmpty ||
+      isAppNameEmpty ||
+      isLocationEmpty ||
+      isRuntimeStackEmpty ||
+      isNumFunctionsZero;
+
+    updateValidation({
+      isSubscriptionEmpty: isSubscriptionEmpty,
+      isResourceGroupEmpty: isResourceGroupEmpty,
+      isAppNameEmpty: isAppNameEmpty,
+      isNumFunctionsZero: isNumFunctionsZero,
+      isLocationEmpty: isLocationEmpty,
+      isRuntimeStackEmpty: isRuntimeStackEmpty
+    });
+    return isAnyEmpty;
+  };
+
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
-    if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION) {
+    if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
       // Get resource Group and locations and set the dropdown options to them
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
@@ -127,11 +192,13 @@ const CosmosResourceModal = (props: Props) => {
     });
   };
   const handleAddResource = () => {
-    if (props.appNameAvailability.isAppNameAvailable) {
-      props.saveAzureFunctionsOptions(azureFunctionsFormData);
+    if (setModalValidation(azureFunctionsFormData)) {
+      return;
     }
+    props.saveAzureFunctionsOptions(azureFunctionsFormData);
   };
   const getDropdownSection = (
+    isEmpty: boolean,
     leftHeader: string,
     options: any,
     formSectionId: string,
@@ -155,6 +222,9 @@ const CosmosResourceModal = (props: Props) => {
               : defaultValue
           }
         />
+        {isEmpty && (
+          <div className={styles.errorMessage}>{EMPTY_FIELD(leftHeader)}</div>
+        )}
       </div>
     );
   };
@@ -174,15 +244,19 @@ const CosmosResourceModal = (props: Props) => {
         <Cancel className={styles.icon} onClick={props.closeModal} />
       </div>
       {getDropdownSection(
-        "Subscription",
+        modalValidation.isSubscriptionEmpty &&
+          azureFunctionsFormData.subscription === "",
+        FORM_CONSTANTS.SUBSCRIPTION.label,
         functionsData.subscription,
-        FORM_CONSTANTS.SUBSCRIPTION,
+        FORM_CONSTANTS.SUBSCRIPTION.value,
         "Create new"
       )}
       {getDropdownSection(
-        "Resource Group",
+        modalValidation.isResourceGroupEmpty &&
+          azureFunctionsFormData.resourceGroup === "",
+        FORM_CONSTANTS.RESOURCE_GROUP.label,
         functionsData.resourceGroup,
-        FORM_CONSTANTS.RESOURCE_GROUP,
+        FORM_CONSTANTS.RESOURCE_GROUP.value,
         "Create new"
       )}
       <div
@@ -207,35 +281,45 @@ const CosmosResourceModal = (props: Props) => {
             className={styles.input}
             onChange={handleInput}
             value={azureFunctionsFormData.appName}
-            placeholder="App Name"
+            placeholder={FORM_CONSTANTS.APP_NAME.label}
           />
           {isAppNameAvailable && (
             <GreenCheck className={styles.validationIcon} />
           )}
         </div>
         {!isAppNameAvailable && azureFunctionsFormData.appName.length > 0 && (
-          <div
-            style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}
-          >
+          <div className={styles.errorMessage}>
             {props.appNameAvailability.message}
           </div>
         )}
+        {modalValidation.isAppNameEmpty &&
+          azureFunctionsFormData.appName.length == 0 && (
+            <div className={styles.errorMessage}>
+              {EMPTY_FIELD(FORM_CONSTANTS.APP_NAME.label)}
+            </div>
+          )}
       </div>
       {getDropdownSection(
-        "Location",
+        modalValidation.isLocationEmpty &&
+          azureFunctionsFormData.location === "",
+        FORM_CONSTANTS.LOCATION.label,
         functionsData.location,
-        FORM_CONSTANTS.LOCATION
+        FORM_CONSTANTS.LOCATION.value
       )}
       {getDropdownSection(
-        "Runtime Stack",
+        modalValidation.isRuntimeStackEmpty &&
+          azureFunctionsFormData.runtimeStack === "",
+        FORM_CONSTANTS.RUNTIME_STACK.label,
         functionsData.runtimeStack,
-        FORM_CONSTANTS.RUNTIME_STACK
+        FORM_CONSTANTS.RUNTIME_STACK.value
       )}
       <div className={styles.modalFooterContainer}>
         {getDropdownSection(
-          "Number of functions",
+          modalValidation.isNumFunctionsZero &&
+            azureFunctionsFormData.numFunctions === 0,
+          FORM_CONSTANTS.NUM_FUNCTIONS.label,
           getNumFunctionsData(),
-          FORM_CONSTANTS.NUM_FUNCTIONS,
+          FORM_CONSTANTS.NUM_FUNCTIONS.value,
           undefined,
           1
         )}
