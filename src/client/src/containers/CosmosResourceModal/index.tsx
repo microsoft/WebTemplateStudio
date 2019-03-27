@@ -232,14 +232,16 @@ const CosmosResourceModal = (props: Props) => {
         <Cancel className={styles.icon} onClick={props.closeModal} />
       </div>
       {getDropdownSection(
-        modalValidation.isSubscriptionEmpty,
+        modalValidation.isSubscriptionEmpty &&
+          cosmosFormData.subscription === "",
         FORM_CONSTANTS.SUBSCRIPTION.label,
         cosmosData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
         "Create new"
       )}
       {getDropdownSection(
-        modalValidation.isResourceGroupEmpty,
+        modalValidation.isResourceGroupEmpty &&
+          cosmosFormData.resourceGroup === "",
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         cosmosData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
@@ -283,21 +285,22 @@ const CosmosResourceModal = (props: Props) => {
             {props.accountNameAvailability.message}
           </div>
         )}
-        {modalValidation.isAccountNameEmpty && (
-          <div className={styles.errorMessage}>
-            {EMPTY_FIELD(FORM_CONSTANTS.ACCOUNT_NAME.label)}
-          </div>
-        )}
+        {modalValidation.isAccountNameEmpty &&
+          cosmosFormData.accountName.length == 0 && (
+            <div className={styles.errorMessage}>
+              {EMPTY_FIELD(FORM_CONSTANTS.ACCOUNT_NAME.label)}
+            </div>
+          )}
       </div>
       {getDropdownSection(
-        modalValidation.isApiEmpty,
+        modalValidation.isApiEmpty && cosmosFormData.api === "",
         FORM_CONSTANTS.API.label,
         cosmosData.api,
         FORM_CONSTANTS.API.value,
         undefined
       )}
       {getDropdownSection(
-        modalValidation.isLocationEmpty,
+        modalValidation.isLocationEmpty && cosmosFormData.location === "",
         FORM_CONSTANTS.LOCATION.label,
         cosmosData.location,
         FORM_CONSTANTS.LOCATION.value,
