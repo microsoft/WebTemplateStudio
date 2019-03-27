@@ -16,8 +16,8 @@ This document outlines the terminology to be used to refer to the various parts 
 
 ## Generated Code
 
-- `Back End` - The back end code that is generated, for example, an express back end.
-- `Front End` - The front end code that is generated, for example, the React front end.
+- `back-end` - The back-end code that is generated, for example, an express back-end.
+- `front-end` - The front-end code that is generated, for example, the React front-end.
 - `Cosmos Database` - The Cosmos Database that is deployed for the user. Cosmos Mongo Database refers to a Cosmos database that is deployed with the Mongo API.
 - `Azure Function` - The Azure Functions that are being are being deployed to Azure.
 
@@ -25,8 +25,8 @@ This document outlines the terminology to be used to refer to the various parts 
 
 - `Extension` - Refers to the Visual Studio Extension that lies at the heart of the application in the architecture diagram above.
 - `Telemetry` - The telemetry collected by our VS Code extension, such as frameworks selected and time to generate. Collected telemetry is sent to Azure App Insights.
-- `Client/Front` End Wizard - Refers to the front end of the WebTS wizard, where all user interaction occurs. The front end wizard is created with React Typescript and is displayed through the React Panel.
-- `React Panel` - Displays the React front end wizard and communicates between the front end wizard and the extension through post messages.
+- `Client/Front` End Wizard - Refers to the front-end of the WebTS wizard, where all user interaction occurs. The front-end wizard is created with React Typescript and is displayed through the React Panel.
+- `React Panel` - Displays the React front-end wizard and communicates between the front-end wizard and the extension through post messages.
 - `Engine Core` - GitHub Repository shared between WebTS and WinTS that handles all of the logic for merging templates.
 - `Engine API` - A local server used to communicate between the typescript extension and the .NET Engine Core.
 - `CosmosDB Module` - Module for deploying Azure Resource Manager (ARM) templates to create Cosmos databases for the user.
