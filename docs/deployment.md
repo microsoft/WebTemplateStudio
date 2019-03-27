@@ -19,7 +19,7 @@ This method will require you to have [git](https://git-scm.com/downloads) instal
 
 #### Creating the App Service
 
-- Go to the [Azure Portal](https://portal.azure.com) and click on the App Services button.
+- Go to the [Azure Portal](https://portal.azure.com) and click on the _App Services_ button.
 
   ![Portal image the button is on the left](./resources/azure-appservice-portal.png)
 
@@ -42,7 +42,7 @@ This method will require you to have [git](https://git-scm.com/downloads) instal
 3. Create a resource group or use an existing one.
 4. Select the publish _code_ option.
 5. If no _app service_ exists create an _app service_ on this screen (costs money but required if one doesn't already exist).
-   1. Click on the App service button and you will be to create a new app service.
+   1. Click on the _App service_ button and you will be to create a new app service.
    2. If creating an _app service_ name it and select a location, and finally select the tier you want.
 
 ![Portal image create resource](./resources/azure-appservice-createresource.png)
@@ -51,7 +51,7 @@ This method will require you to have [git](https://git-scm.com/downloads) instal
 
 ![Portal image create resource create button](./resources/azure-appservice-createadd.png)
 
-- After clicking create you will get a notification, click the bell icon on the top right to view notifications. Click the go to resource button.
+- After clicking create you will get a notification, click the bell icon on the top right to view notifications. Click the _go to resource_ button.
 
 ![Portal image go to resource](./resources/azure-appservice-notification.png)
 
