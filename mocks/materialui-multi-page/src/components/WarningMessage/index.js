@@ -18,7 +18,6 @@ export default function index(props) {
         >
           {text}
           <button
-            type="button"
             onClick={() => onWarningClose()}
             className="close ml-2"
             aria-label="Close"
