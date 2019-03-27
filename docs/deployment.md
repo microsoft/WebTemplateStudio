@@ -11,7 +11,7 @@ One way to deploy is using Azure App Service. This service will allow you to dep
 
 ### VS Code Extension Method (Recommended)
 
-The Azure App Service extension provides an easy way to manage and deploy you web application. To learn how to deploy using their VS Code extension, see [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
+The Azure App Service extension provides an easy way to manage and deploy your web application. To learn how to deploy using their VS Code extension, see [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
 
 ### Local Git Deployment Method
 
@@ -23,7 +23,7 @@ This method will require you to have [git](https://git-scm.com/downloads) instal
 
   ![Portal image the button is on the left](./resources/azure-appservice-portal.png)
 
-- Click on the Add button in the new window that appears.
+- Click on the _Add_ button in the new window that appears.
 
   ![Portal image the add button is on the top left](./resources/azure-appservice-add.png)
 
@@ -38,7 +38,7 @@ This method will require you to have [git](https://git-scm.com/downloads) instal
 - Another screen will appear in which you are required to do the following actions:
 
 1. Enter the name of the website in the _app name_ field.
-2. Select a subscription
+2. Select a subscription.
 3. Create a resource group or use an existing one.
 4. Select the publish _code_ option.
 5. If no _app service_ exists create an _app service_ on this screen (costs money but required if one doesn't already exist).
@@ -65,7 +65,7 @@ To be able to deploy your web application, you will need to do the following set
 
 `npm install && npm build` or `yarn install && yarn build`
 
-You should then have a build folder in the root directory. After which you should run the following command which will move the production build of your client side into the server folder, while removing the old build if any.
+You should then have a build folder in the root directory. Run the following command to move the production build of your client side into the server folder. Doing so will remove any prior builds.
 
 `rm -rf server/build && mv build/ server/`
 
