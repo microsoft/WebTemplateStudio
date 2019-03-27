@@ -2,8 +2,8 @@
 
 In the root directory of the project...
 
-1. Install node modules `yarn install` or `npm install`
-2. Start development server `yarn start` or `npm start`
+1. Install node modules `yarn install` or `npm install`.
+2. Start development server `yarn start` or `npm start`.
 
 ## Next Steps
 
@@ -14,9 +14,9 @@ Replace the default images stored in /src/images.
 
 ### Adding a New Page
 
-1. Create a folder in `/src/components` with your react components
-2. Add a route for your page to `/src/App.js`
-3. Add a button to the navigation bar in `/src/components/NavBar/index.js`
+1. Create a folder in `/src/components` with your react components.
+2. Add a route for your page to `/src/App.js`.
+3. Add a button to the navigation bar in `/src/components/NavBar/index.js`.
 
 ### Cosmos Database
 
@@ -31,7 +31,7 @@ Additional documentation can be found here: [Cosmos Docs](https://github.com/Mic
 
 An Azure Function with a Node runtime stack and HTTP trigger has been deployed to Azure. Project Acorn
 has also generated a folder containing the code deployed to Azure Functions. To edit and redeploy the Azure
-Function it is recommended to install the [Azure Functions Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions). Additional documentation can be found here: [Azure Function Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/services/azure-functions.md)
+Function it is recommended to install the [Azure Functions Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions). Additional documentation can be found here: [Azure Function Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/services/azure-functions.md).
 
 ### Deployment
 
@@ -41,20 +41,20 @@ The generated templates can be deployed to Azure App Service using the following
 2. Move the build folder inside the server folder
 3. Deploy the server folder to Azure App Service using the [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
 4. If a database is used, add the environment variables defined in .env to your Application Settings
-5. Consider adding authentication and securing back end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security)
+5. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security)
 
 Full documentation for deployment to Azure App Service can be found here: //TODO Add link to deployment doc
 
 ## File Structure
 
-The front end is based on [create-react-app](https://github.com/facebook/create-react-app), and the
-back end is based on [Express Generator](https://expressjs.com/en/starter/generator.html). The front
-end is served on http://localhost:3000/ and the back end on http://localhost:3001/. During local
-development front end and back end communicate via a proxy defined in the package.json.
+The front-end is based on [create-react-app](https://github.com/facebook/create-react-app), and the
+back-end is based on [Express Generator](https://expressjs.com/en/starter/generator.html). The front
+end is served on http://localhost:3000/ and the back-end on http://localhost:3001/. During local
+development front-end and back-end communicate via a proxy defined in the package.json.
 
 ```
 .
-├── server/                         - Express server that provides API routes and serves front end
+├── server/                         - Express server that provides API routes and serves front-end
 │   ├── mongo/                      - Handles all interactions with the cosmos database
 │   ├── sql/                        - Handles all interactions with the cosmos database
 │   ├── routes/                     - Handles API calls for routes
@@ -63,7 +63,7 @@ development front end and back end communicate via a proxy defined in the packag
 │   ├── constants.js                - Defines the constants for the endpoints and port
 │   ├── sampleData.js               - Contains all sample text data for generate pages
 │   └── server.js                   - Configures Port and HTTP Server
-├── src                             - React front end
+├── src                             - React front-end
 │   ├── components                  - React components for each page
 │   ├── images                      - Default images
 │   ├── constants.js                - Contains constants for error messages and endpoints
@@ -82,4 +82,4 @@ development front end and back end communicate via a proxy defined in the packag
 - Mongo/Mongoose - https://mongoosejs.com/docs/guide.html
 - Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongoose
 
-This project was created using [Project Acorn](https://github.com/Microsoft/WebTemplateStudio)
+This project was created using [Project Acorn](https://github.com/Microsoft/WebTemplateStudio).
