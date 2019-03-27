@@ -39,6 +39,7 @@ The generated templates can be deployed to Azure App Service using the following
 2. Move the build folder inside the server folder
 3. Deploy the server folder to Azure App Service using the [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
 4. If a database is used add the environment variables defined in .env to your Application Settings
+5. Consider adding authentication and securing back end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security)
 
 Full documentation for deployment to Azure App Service can be found here: //TODO Add link to deployment doc
 
