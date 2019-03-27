@@ -37,10 +37,14 @@ const SummaryTile = ({ withIndent, title, company, version, isEditable, withoutD
         setDisabled(true);
     }
     const handleMouseEnter = () => {
-        setEditable(isEditable);
+        if (isEditable) {
+            setEditable(isEditable);
+        }
     }
     const handleMouseLeave = () => {
-        setEditable(!isEditable);
+        if (isEditable) {
+            setEditable(false);
+        }
     }
     return (
         <div className={styles.container} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
