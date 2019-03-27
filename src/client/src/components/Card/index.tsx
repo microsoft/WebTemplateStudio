@@ -8,6 +8,7 @@ import styles from "./styles.module.css";
 import { IOption } from "../../types/option";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
+import { ROUTES } from "../../utils/constants";
 
 interface IProps {
   buttonText: string;
@@ -39,7 +40,7 @@ const Card = ({
         <Link
           onClick={() => handleDetailsClick(option)}
           className={classNames(styles.link)}
-          to={"/PageDetail"}
+          to={ROUTES.PAGE_DETAILS}
         >
           Details
         </Link>
