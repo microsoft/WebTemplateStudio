@@ -405,6 +405,7 @@ export abstract class Controller {
       });
   }
 
+  // tslint:disable-next-line: max-func-body-length
   public static async handleGeneratePayloadFromClient(
     message: any
   ): Promise<any> {
@@ -451,13 +452,28 @@ export abstract class Controller {
     }
     const apiGenResult = await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
-    );
+    ).catch(error => {
+      Controller.reactPanelContext.postMessageWebview({
+        command: ExtensionCommand.UpdateGenStatus,
+        payload: {
+          templates: this.getProgressObject(false),
+          cosmos: this.getProgressObject(false),
+          azureFunctions: this.getProgressObject(false)
+        }
+      });
+    });
+
+    let progressObject = {
+      templates: this.getProgressObject(true),
+      cosmos: {},
+      azureFunctions: {}
+    };
+
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.UpdateGenStatus,
-      payload: {
-        isGenerated: true
-      }
+      payload: progressObject
     });
+
     var serviceQueue: Promise<any>[] = [];
     enginePayload.path = apiGenResult.generationOutputPath;
 
@@ -465,30 +481,57 @@ export abstract class Controller {
       serviceQueue.push(
         Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
           TelemetryEventName.FunctionsDeploy,
+          // tslint:disable-next-line: no-function-expression
           async function(this: IActionContext): Promise<void> {
-            await Controller.processFunctionDeploymentAndSendStatusToClient(
+            await Controller.deployFunctionApp(
               payload.functions,
               enginePayload.path
-            );
+            ).catch(error => {
+              progressObject = {
+                ...progressObject,
+                azureFunctions: Controller.getProgressObject(false)
+              };
+            });
           }
         )
       );
     }
 
+    progressObject = {
+      ...progressObject,
+      azureFunctions: Controller.getProgressObject(true)
+    };
+
     if (payload.selectedCosmos) {
       serviceQueue.push(
         Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
           TelemetryEventName.CosmosDBDeploy,
+          // tslint:disable-next-line: no-function-expression
           async function(this: IActionContext): Promise<void> {
             var cosmosPayload: any = payload.cosmos;
-            var dbObject = await Controller.processCosmosDeploymentAndSendStatusToClient(
-              cosmosPayload,
-              enginePayload.path
-            );
-            Controller.promptUserForCosmosReplacement(
-              enginePayload.path,
-              dbObject
-            );
+            try {
+              var dbObject = await Controller.deployCosmosResource(
+                cosmosPayload,
+                enginePayload.path
+              );
+              progressObject = {
+                ...progressObject,
+                cosmos: Controller.getProgressObject(true)
+              };
+              Controller.promptUserForCosmosReplacement(
+                enginePayload.path,
+                dbObject
+              );
+            } catch (error) {
+              progressObject = {
+                ...progressObject,
+                cosmos: Controller.getProgressObject(false)
+              };
+              Controller.reactPanelContext.postMessageWebview({
+                command: ExtensionCommand.UpdateGenStatus,
+                payload: progressObject
+              });
+            }
           }
         )
       );
@@ -803,5 +846,12 @@ export abstract class Controller {
         }
       }
     );
+  }
+
+  private static getProgressObject(didSucceed: boolean) {
+    return {
+      success: didSucceed,
+      failure: !didSucceed
+    };
   }
 }
