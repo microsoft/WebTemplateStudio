@@ -5,24 +5,43 @@ const sampleData = require("../sampleData");
 const router = express.Router();
 
 /*
- * Include this block of code if list and mongo are selected
+ * Engine: Include this block of code if list and mongo are selected
  */
-var mongoService = require("../mongo/mongoService");
+// var mongoService = require("../mongo/mongoService");
+
+// router.get(CONSTANTS.ENDPOINT.LIST, function(req, res) {
+//   mongoService.get(req, res);
+// });
+
+// router.post(CONSTANTS.ENDPOINT.LIST, function(req, res) {
+//   mongoService.create(req, res);
+// });
+
+// router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
+//   mongoService.destroy(req, res);
+// });
+
+/*
+ * Engine: Include this block of code if list and SQL API are selected
+ */
+const SQLController = require("../sql/sqlController");
+
+const sqlController = new SQLController();
 
 router.get(CONSTANTS.ENDPOINT.LIST, function(req, res) {
-  mongoService.get(req, res);
+  sqlController.get(req, res);
 });
 
 router.post(CONSTANTS.ENDPOINT.LIST, function(req, res) {
-  mongoService.create(req, res);
+  sqlController.create(req, res);
 });
 
 router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
-  mongoService.destroy(req, res);
+  sqlController.destroy(req, res);
 });
 
 /*
- * Include the following code if list is selected but Cosmos is not
+ * Engine: Include the following code if list is selected but Cosmos is not
  */
 // List Page Endpoints
 // router.get(CONSTANTS.ENDPOINT.LIST, function(req, res) {

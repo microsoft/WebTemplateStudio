@@ -8,7 +8,7 @@ function connect() {
   mongoose
     .connect(`${process.env.COSMOSDB_CONNSTR}?ssl=true&replicaSet=globaldb`, {
       auth: {
-        user: process.env.COSMODDB_USER,
+        user: process.env.COSMOSDB_USER,
         password: process.env.COSMOSDB_PASSWORD
       },
       useNewUrlParser: true

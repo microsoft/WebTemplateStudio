@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@azure/cosmos": "^2.1.5",
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
     "body-parser": "^1.18.3",
@@ -19,7 +20,8 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
