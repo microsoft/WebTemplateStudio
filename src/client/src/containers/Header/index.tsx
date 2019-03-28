@@ -20,32 +20,35 @@ const Header = (props: Props) => {
   const { isLoggedIn, email } = props;
   return (
     <div className={styles.header}>
-      <div className={styles.headerTitle}>
-        Project Acorn
-      </div>
-      {isLoggedIn && (<div className={styles.azureProfile}>
-        <div className={styles.profileName}>
-          {email}
+      <div className={styles.headerTitle}>Project Acorn</div>
+      {isLoggedIn && (
+        <div className={styles.azureProfile}>
+          <div className={styles.profileName}>{email}</div>
+          <div className={styles.button} onClick={props.startLogOutToAzure}>
+            Sign out
+          </div>
         </div>
-        <div className={styles.button} onClick={props.startLogOutToAzure}>
-          Sign out
-        </div>
-      </div>)}
+      )}
     </div>
-  )
+  );
 };
 
 const mapStateToProps = (state: any): IHeaderProps => {
   const { isLoggedIn } = state.azureProfileData;
   const { email } = state.azureProfileData.profileData;
   return {
-      isLoggedIn,
-      email,
-  }
-}
+    isLoggedIn,
+    email
+  };
+};
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  startLogOutToAzure: () => { dispatch(AzureActions.startLogOutAzure()) },
-})
+  startLogOutToAzure: () => {
+    dispatch(AzureActions.startLogOutAzure());
+  }
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

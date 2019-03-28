@@ -85,7 +85,7 @@ const mockVsCodeApi = () => ({
         });
         break;
       case EXTENSION_COMMANDS.GENERATE:
-        // @ts-ignore produces a mock generate response from VSCode in development 
+        // @ts-ignore produces a mock generate response from VSCode in development
         window.postMessage({
           command: EXTENSION_COMMANDS.PROJECT_PATH_AND_NAME_VALIDATION,
           payload: {
@@ -128,8 +128,8 @@ function vscodeApi(
         newState.vscodeObject =
           process.env.NODE_ENV === PRODUCTION
             ? //
-            // @ts-ignore because function does not exist in dev environment
-            acquireVsCodeApi()
+              // @ts-ignore because function does not exist in dev environment
+              acquireVsCodeApi()
             : mockVsCodeApi();
         return newState;
       }

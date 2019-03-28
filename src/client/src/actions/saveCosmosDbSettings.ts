@@ -8,6 +8,6 @@ const saveCosmosDbSettingsAction = (cosmosDbSettings: any) => ({
 const removeCosmosSelectionAction = (selectionIndex: number) => ({
   type: Actions.REMOVE_COSMOS_RESOURCE,
   payload: selectionIndex
-})
+});
 
 export { saveCosmosDbSettingsAction, removeCosmosSelectionAction };
