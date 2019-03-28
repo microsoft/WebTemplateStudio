@@ -170,7 +170,6 @@ export abstract class Controller {
 
   //To be addressed in next PR for page/navigation tracking
   public static trackOnPageChangeInTelemetry(payload: any): any {
-    console.log("Telem GOT: " + payload.pageName);
     Controller.Telemetry.trackWizardPageTimeToNext(payload.pageName);
   }
 
