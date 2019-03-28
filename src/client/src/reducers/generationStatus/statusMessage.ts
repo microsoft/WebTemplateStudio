@@ -6,28 +6,12 @@ import * as Actions from "../../actions/types";
 }
 */
 
-export interface IStatusMessage {
-  statusMessage: string;
-}
+const initialState = "Loading Generation Status...";
 
-const initialState = {
-  statusMessage: "Loading Generation Status..."
-};
-
-const statusMessage = (state: IStatusMessage = initialState, action: any) => {
+const statusMessage = (state: string = initialState, action: any) => {
   switch (action.type) {
     case Actions.UPDATE_TEMPLATE_GENERATION_STATUS_MESSAGE:
-      return {
-        ...state,
-        status: action.payload
-      };
-    case Actions.UPDATE_TEMPLATE_GENERATION_STATUS:
-      return {
-        ...state,
-        genStatus: {
-          ...action.payload
-        }
-      };
+      return action.payload;
     default:
       return state;
   }

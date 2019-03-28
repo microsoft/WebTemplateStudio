@@ -3,14 +3,13 @@ import { createSelector } from "reselect";
 const getTemplateGenerationStatusSelector = (state: any) =>
   state.generationStatus.genStatus;
 
-const getSyncStatus = (templates: any): string => "yo";
+const getSyncStatusSelector = (state: any): string =>
+  state.generationStatus.statusMessage;
 
-const isTemplateGenerated = (templates: any): boolean => true;
-
-const getSyncStatusSelector = createSelector(
-  getTemplateGenerationStatusSelector,
-  getSyncStatus
-);
+const isTemplateGenerated = (progressObject: any): boolean =>
+  progressObject.templates.success;
+const isTemplatesFailed = (progressObject: any): boolean =>
+  progressObject.templates.failure;
 
 const isTemplateGeneratedSelector = createSelector(
   getTemplateGenerationStatusSelector,

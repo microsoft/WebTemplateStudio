@@ -101,6 +101,24 @@ const mockVsCodeApi = () => ({
             }
           }
         });
+        // @ts-ignore mocks a generation response object
+        window.postMessage({
+          command: EXTENSION_COMMANDS.GEN_STATUS,
+          payload: {
+            templates: {
+              success: true,
+              failure: false
+            },
+            cosmos: {
+              success: false,
+              failure: false
+            },
+            azureFunctions: {
+              success: false,
+              failure: false
+            }
+          }
+        });
         break;
       case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
         // @ts-ignore produces a mock login response from VSCode in development
@@ -110,6 +128,8 @@ const mockVsCodeApi = () => ({
             outputPath: "/generic_output_path"
           }
         });
+        break;
+      case EXTENSION_COMMANDS.GEN_STATUS:
         break;
     }
   }

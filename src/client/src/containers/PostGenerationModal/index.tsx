@@ -49,6 +49,7 @@ const PostGenerationModal = (props: Props) => {
       <div className={styles.section}>Template Generation</div>
       <div className={styles.templateStatus}>
         {!isTemplateGenerated && <div>{templateGenStatus}</div>}
+        {isTemplateGenerated && <div>Generate complete</div>}
         {isTemplateGenerated && (
           <button className={styles.openProject} onClick={handleOpenProject}>
             Open Project in VSCode
