@@ -111,9 +111,9 @@ export class ReactPanel {
     ReactPanel.currentPanel = undefined;
 
     if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
-      let num = ReactPanel._process.pid;
+      let pid = ReactPanel._process.pid;
       var spawn = require("child_process").spawn;
-      spawn("taskkill", ["/pid", num, "/f", "/t"]);
+      spawn("taskkill", ["/pid", pid, "/f", "/t"]);
     } else {
       ReactPanel._process.kill();
     }
