@@ -54,18 +54,6 @@ export const CONSTANTS = {
       return `Function App ${appName} has been deployed and is ready to use!`;
     }
   },
-  FUNCTIONS_CONFIG: {
-    MAX_NAME_LEN: 60,
-    MIN_NAME_LEN: 3,
-    FUNCTION_APP_API_PATH: "/api/",
-    FUNCTION_APP_DOMAIN: ".azurewebsites.net",
-    FUNCTION_ZIP_PATH: ".scm.azurewebsites.net/api/zipdeploy",
-    FUNCTION_TEMPLATES_RELATIVE_PATH: "/src/azure-functions/templates",
-    BASE_NODE_FUNCTION_PATH: "/base/node/index.js",
-    BASE_NODE_FUNCTION_CONFIG_PATH: "/base/node/function.json",
-    APP_NODE_SETTINGS_PATH: "/app/node",
-    MAX_STORAGE_NAME: 24
-  },
   API: {
     WINDOWS_PLATFORM_VERSION: "win32",
     BASE_APPLICATION_NAME: "CoreTemplateStudio.Api",

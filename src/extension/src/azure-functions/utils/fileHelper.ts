@@ -8,6 +8,11 @@ import * as rimraf from "rimraf";
 import { CONSTANTS } from "../../constants";
 
 export namespace FileHelper {
+  const FUNCTION_TEMPLATES_RELATIVE_PATH = "/src/azure-functions/templates";
+  const BASE_NODE_FUNCTION_PATH = "/base/node/index.js";
+  const BASE_NODE_FUNCTION_CONFIG_PATH = "/base/node/function.json";
+  const APP_NODE_SETTINGS_PATH = "/app/node";
+
   export function initFunctionDirectory(
     basePath: string,
     appName: string,
@@ -34,8 +39,8 @@ export namespace FileHelper {
   function copySettingsFiles(funcAppPath: string) {
     let appSettingsPath: string = path.join(
       appRoot.toString(),
-      CONSTANTS.FUNCTIONS_CONFIG.FUNCTION_TEMPLATES_RELATIVE_PATH,
-      CONSTANTS.FUNCTIONS_CONFIG.APP_NODE_SETTINGS_PATH
+      FUNCTION_TEMPLATES_RELATIVE_PATH,
+      APP_NODE_SETTINGS_PATH
     );
     fsx.copySync(appSettingsPath, funcAppPath);
   }
@@ -45,13 +50,13 @@ export namespace FileHelper {
 
     let indexPath: string = path.join(
       appRoot.toString(),
-      CONSTANTS.FUNCTIONS_CONFIG.FUNCTION_TEMPLATES_RELATIVE_PATH,
-      CONSTANTS.FUNCTIONS_CONFIG.BASE_NODE_FUNCTION_PATH
+      FUNCTION_TEMPLATES_RELATIVE_PATH,
+      BASE_NODE_FUNCTION_PATH
     );
     let funcJsonPath: string = path.join(
       appRoot.toString(),
-      CONSTANTS.FUNCTIONS_CONFIG.FUNCTION_TEMPLATES_RELATIVE_PATH,
-      CONSTANTS.FUNCTIONS_CONFIG.BASE_NODE_FUNCTION_CONFIG_PATH
+      FUNCTION_TEMPLATES_RELATIVE_PATH,
+      BASE_NODE_FUNCTION_CONFIG_PATH
     );
 
     fs.copyFileSync(indexPath, path.join(dirPath, "index.js"));

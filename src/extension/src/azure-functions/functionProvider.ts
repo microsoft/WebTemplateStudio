@@ -37,6 +37,10 @@ export interface RuntimeObject {
   label: string;
 }
 
+const FUNCTION_APP_DOMAIN = ".azurewebsites.net";
+
+const MAX_STORAGE_NAME = 24;
+
 /*
  * Returns an array of available/implemented RuntimeObjects for functions app
  */
@@ -175,10 +179,7 @@ export class FunctionProvider {
           value: selections.subscriptionItem.subscriptionId
         },
         storageName: {
-          value: selections.functionAppName
-            .toLowerCase()
-            .replace(/[^0-9a-z]/gi, "")
-            .substring(0, CONSTANTS.FUNCTIONS_CONFIG.MAX_STORAGE_NAME)
+          value: this.convertAppNameToStorageName(selections.functionAppName)
         }
       };
 
@@ -240,6 +241,13 @@ export class FunctionProvider {
     }
   }
 
+  private convertAppNameToStorageName(appName: string): string {
+    return appName
+      .toLowerCase()
+      .replace(/[^0-9a-z]/gi, "")
+      .substring(0, MAX_STORAGE_NAME);
+  }
+
   /*
    * Sets a web client from a users selected subscription item's credentials
    */
@@ -299,13 +307,9 @@ export class FunctionProvider {
     }
 
     return await this.webClient
-      .checkNameAvailability(
-        appName + CONSTANTS.FUNCTIONS_CONFIG.FUNCTION_APP_DOMAIN,
-        "Site",
-        {
-          isFqdn: true
-        }
-      )
+      .checkNameAvailability(appName + FUNCTION_APP_DOMAIN, "Site", {
+        isFqdn: true
+      })
       .then(res => {
         return res.nameAvailable;
       })
