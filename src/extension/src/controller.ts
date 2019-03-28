@@ -71,7 +71,7 @@ export abstract class Controller {
       ExtensionCommand.GetOutputPath,
       Controller.sendOutputPathSelectionToClient
     ],
-    [ExtensionCommand.HandleTelemetry, Controller.trackOnPageChangeInTelemetry],
+    [ExtensionCommand.TrackPageSwitch, Controller.trackOnPageChangeInTelemetry],
     [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
     [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
@@ -170,6 +170,7 @@ export abstract class Controller {
 
   //To be addressed in next PR for page/navigation tracking
   public static trackOnPageChangeInTelemetry(payload: any): any {
+    console.log("Telem GOT: " + payload.pageName);
     Controller.Telemetry.trackWizardPageTimeToNext(payload.pageName);
   }
 

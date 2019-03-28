@@ -101,11 +101,11 @@ export enum ExtensionCommand {
   DeployCosmos = "deploy-cosmos",
   Generate = "generate",
   GetOutputPath = "getOutputPath",
-  HandleTelemetry = "telemetryAI",
   GetFunctionsRuntimes = "getFunctionsRuntimes",
   GetCosmosAPIs = "getCosmosAPIs",
   GetUserStatus = "getUserStatus",
-  ProjectPathAndNameValidation = "project-path-and-name-validation"
+  ProjectPathAndNameValidation = "project-path-and-name-validation",
+  TrackPageSwitch = "track-page-switch"
 }
 
 export enum TelemetryEventName {

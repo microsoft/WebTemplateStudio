@@ -83,6 +83,13 @@ class Footer extends React.Component<Props> {
       this.props.setRouteVisited(pathsNext[pathname]);
     }
   }
+  public trackPageForTelemetry = (pathname: string) => {
+    // @ts-ignore
+    this.props.vscode.postMessage({
+      command: "track-page-switch",
+      pageName: pathname
+    })
+  }
   public render() {
     // Validate the page names and do not generate if they are invalid or if there are duplicates
     const pageNames = new Set();
@@ -118,7 +125,7 @@ class Footer extends React.Component<Props> {
                   [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
                   [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
                 })}
-                onClick={() => { this.handleLinkClick(pathname) }}
+                onClick={() => { this.handleLinkClick(pathname); this.trackPageForTelemetry(pathname) }}
                 to={
                   pathname === ROUTES.REVIEW_AND_GENERATE
                     ? ROUTES.REVIEW_AND_GENERATE
