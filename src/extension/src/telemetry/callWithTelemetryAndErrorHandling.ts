@@ -7,6 +7,7 @@ import { MessageItem, window } from 'vscode';
 import { DialogResponses, DialogMessages } from '../constants';
 import { reportAnIssue } from './reportAnIssue';
 import { IParsedError, parseError } from './parseError';
+import { ExtensionContext } from 'vscode';
 
 export interface IActionContext {
     properties: TelemetryProperties;
@@ -50,19 +51,19 @@ export interface TelemetryMeasurements {
     [key: string]: number | undefined;
 }
 
-export async function callWithTelemetryAndCatchErrors<T>(
+export async function callWithTelemetryAndCatchErrors<T>(vscodeContext: ExtensionContext,
     callbackId: string, 
     callback: (this: IActionContext) => T | PromiseLike<T>, 
     telemetryReporter: ITelemetryReporter): Promise<T | undefined> {
-    const [start, context] = initContext();
+    const [start, actionContext] = initContext();
 
     try {
-        return await <Promise<T>>Promise.resolve(callback.call(context));
+        return await <Promise<T>>Promise.resolve(callback.call(actionContext));
     } catch (error) {
-        handleError(context, callbackId, error);
+        handleError(vscodeContext, actionContext, callbackId, error);
         return undefined;
     } finally {
-        handleTelemetry(context, callbackId, start, telemetryReporter);
+        handleTelemetry(actionContext, callbackId, start, telemetryReporter);
     }
 }
 function initContext(): [number, IActionContext] {
@@ -87,7 +88,7 @@ function initContext(): [number, IActionContext] {
 }
 
 // tslint:disable-next-line:no-any
-function handleError(context: IActionContext, callbackId: string, error: any): void {
+function handleError(vscodeContext: ExtensionContext, context: IActionContext, callbackId: string, error: any): void {
     const errorData: IParsedError = parseError(error);
     if (errorData.isUserCancelledError) {
         context.properties.result = 'Canceled';
@@ -115,7 +116,7 @@ function handleError(context: IActionContext, callbackId: string, error: any): v
         // don't wait
         window.showErrorMessage(message, DialogResponses.reportAnIssue).then((result: MessageItem | undefined) => {
             if (result === DialogResponses.reportAnIssue) {
-                reportAnIssue(callbackId, errorData);
+                reportAnIssue(vscodeContext, callbackId, errorData);
             }
         });
     }

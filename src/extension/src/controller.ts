@@ -3,8 +3,11 @@ import { Validator } from "./utils/validator";
 import {
   CONSTANTS,
   ExtensionCommand,
+  TelemetryEventName,
   SyncStatus,
-  AzureResourceType
+  AzureResourceType,
+  DialogMessages,
+  DialogResponses
 } from "./constants";
 import {
   AzureAuth,
@@ -31,6 +34,7 @@ import {
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
 import { ChildProcess } from "child_process";
+import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 
 export abstract class Controller {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -38,6 +42,7 @@ export abstract class Controller {
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static reactPanelContext: ReactPanel;
+  private static Telemetry: TelemetryAI;
   // This will map commands from the client to functions.
 
   private static clientCommandMap: Map<
@@ -62,12 +67,12 @@ export abstract class Controller {
       ExtensionCommand.NameCosmos,
       Controller.sendCosmosNameValidationStatusToClient
     ],
-    [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [
       ExtensionCommand.GetOutputPath,
       Controller.sendOutputPathSelectionToClient
     ],
-    [ExtensionCommand.HandleTelemetry, Controller.handleTelemetry],
+    [ExtensionCommand.HandleTelemetry, Controller.trackOnPageChangeInTelemetry],
+    [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
     [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
     [ExtensionCommand.GetUserStatus, Controller.sendUserStatus]
@@ -101,38 +106,49 @@ export abstract class Controller {
    *  @param VSCode context interface
    */
   public static async launchWizard(
-    context: vscode.ExtensionContext
-  ): Promise<ChildProcess> {
-    let process = ApiModule.StartApi(context);
-    let synced = false;
-    let syncAttempts = 0;
-    while (!synced && syncAttempts <= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-      synced = await Controller.attemptSync();
-      syncAttempts++;
-      if (!synced) {
-        await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
-      }
-    }
-    if (syncAttempts > CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-      vscode.window.showErrorMessage(
-        CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
-      );
-      return process;
-    }
+    context: vscode.ExtensionContext,
+    extensionStartTime: number
+  ): Promise<any> {
+    Controller.Telemetry = new TelemetryAI(context, extensionStartTime);
+    this.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.SyncEngine,
+      async function(this: IActionContext): Promise<ChildProcess> {
+        let process = ApiModule.StartApi(context);
+        let synced = false;
+        let syncAttempts = 0;
+        while (
+          !synced &&
+          syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
+        ) {
+          synced = await Controller.attemptSync();
+          syncAttempts++;
+          if (!synced) {
+            await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
+          }
+        }
+        if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+          vscode.window.showErrorMessage(
+            CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
+          );
+          this.properties.Status =
+            CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS;
+          return process;
+        }
 
-    Controller.reactPanelContext = ReactPanel.createOrShow(
-      context.extensionPath,
-      this.routingMessageReceieverDelegate
+        Controller.reactPanelContext = ReactPanel.createOrShow(
+          context.extensionPath,
+          Controller.routingMessageReceieverDelegate
+        );
+        Controller.Telemetry.trackExtensionStartUpTime(
+          TelemetryEventName.ExtensionLaunch
+        );
+        return process;
+      }
     );
-    return process;
   }
 
   private static timeout(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
-  // TODO: To minimize PR size, this will be edited in next PR; branch: t-trngo/telemetryIntegrationInController
-  public static handleTelemetry(payload: any): any {
-    //   Controller.Telemetry.trackDurationOnPageRouterChange(payload.pageName);
   }
 
   private static async attemptSync(): Promise<boolean> {
@@ -151,12 +167,17 @@ export abstract class Controller {
   private static handleSyncLiveData(status: SyncStatus) {
     vscode.window.showInformationMessage(`SyncStatus:${status}`);
   }
+
+  //To be addressed in next PR for page/navigation tracking
+  public static trackOnPageChangeInTelemetry(payload: any): any {
+    Controller.Telemetry.trackWizardPageTimeToNext(payload.pageName);
+  }
+
   /**
    * Returns an array of Subscription Items when the user is logged in
    *
    * */
   public static getSubscriptions() {
-    //TODO FORMAT TO {label:,  value:}
     return AzureAuth.getSubscriptions();
   }
 
@@ -252,85 +273,108 @@ export abstract class Controller {
   }
 
   public static performLogin(message: any) {
-    AzureAuth.login()
-      .then(res => {
-        const email = AzureAuth.getEmail();
-        AzureAuth.getSubscriptions()
-          .then(items => {
-            const subscriptions = items.map(subscriptionItem => {
-              return {
-                label: subscriptionItem.label,
-                value: subscriptionItem.label
-              };
-            });
-            Controller.handleValidMessage(ExtensionCommand.Login, {
-              email: email,
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.PerformLogin,
+      async function(this: IActionContext): Promise<void> {
+        await AzureAuth.login()
+          .then(res => {
+            const email = AzureAuth.getEmail();
+            AzureAuth.getSubscriptions()
+              .then(items => {
+                const subscriptions = items.map(subscriptionItem => {
+                  return {
+                    label: subscriptionItem.label,
+                    value: subscriptionItem.label
+                  };
+                });
+                Controller.handleValidMessage(ExtensionCommand.Login, {
+                  email: email,
+                  subscriptions: subscriptions
+                });
+              })
+              .catch((error: Error) => {
+                Controller.handleErrorMessage(ExtensionCommand.Login, error);
+              });
+          })
+          .catch(error => {
+            vscode.window.showErrorMessage(error);
+          });
+      }
+    );
+  }
+
+  public static sendSubscriptionsToClient(message: any) {
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.Subscriptions,
+      async function(this: IActionContext): Promise<void> {
+        await Controller.getSubscriptions()
+          .then(subscriptions => {
+            Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
               subscriptions: subscriptions
             });
           })
           .catch((error: Error) => {
-            Controller.handleErrorMessage(ExtensionCommand.Login, error);
+            Controller.handleErrorMessage(
+              ExtensionCommand.Subscriptions,
+              error
+            );
           });
-      })
-      .catch(error => {
-        vscode.window.showErrorMessage(error);
-      });
-  }
-
-  public static sendSubscriptionsToClient(message: any) {
-    Controller.getSubscriptions()
-      .then(subscriptions => {
-        Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
-          subscriptions: subscriptions
-        });
-      })
-      .catch((error: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.Subscriptions, error);
-      });
+      }
+    );
   }
 
   public static sendCosmosSubscriptionDataToClient(message: any) {
-    Controller.getSubscriptionData(
-      message.subscription,
-      AzureResourceType.Cosmos
-    )
-      .then(subscriptionDatapackage => {
-        Controller.handleValidMessage(
-          ExtensionCommand.SubscriptionDataForCosmos,
-          {
-            resourceGroups: subscriptionDatapackage.resourceGroups,
-            locations: subscriptionDatapackage.locations
-          }
-        );
-      })
-      .catch((error: Error) => {
-        Controller.handleErrorMessage(
-          ExtensionCommand.SubscriptionDataForCosmos,
-          error
-        );
-      });
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.SubscriptionData,
+      async function(this: IActionContext): Promise<void> {
+        await Controller.getSubscriptionData(
+          message.subscription,
+          AzureResourceType.Cosmos
+        )
+          .then(subscriptionDatapackage => {
+            Controller.handleValidMessage(
+              ExtensionCommand.SubscriptionDataForCosmos,
+              {
+                resourceGroups: subscriptionDatapackage.resourceGroups,
+                locations: subscriptionDatapackage.locations
+              }
+            );
+          })
+          .catch((error: Error) => {
+            Controller.handleErrorMessage(
+              ExtensionCommand.SubscriptionDataForCosmos,
+              error
+            );
+          });
+      }
+    );
   }
 
   public static sendFunctionsSubscriptionDataToClient(message: any) {
-    Controller.getSubscriptionData(
-      message.subscription,
-      AzureResourceType.Functions
-    )
-      .then(subscriptionDatapackage => {
-        Controller.handleValidMessage(
-          ExtensionCommand.SubscriptionDataForFunctions,
-          {
-            resourceGroups: subscriptionDatapackage.resourceGroups,
-            locations: subscriptionDatapackage.locations
-          }
-        );
-      })
-      .catch((error: Error) => {
-        Controller.handleErrorMessage(
-          ExtensionCommand.SubscriptionDataForFunctions,
-          error
-        );
-      });
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.SubscriptionData,
+      async function(this: IActionContext): Promise<void> {
+        await Controller.getSubscriptionData(
+          message.subscription,
+          AzureResourceType.Functions
+        )
+          .then(subscriptionDatapackage => {
+            Controller.handleValidMessage(
+              ExtensionCommand.SubscriptionDataForFunctions,
+              {
+                resourceGroups: subscriptionDatapackage.resourceGroups,
+                locations: subscriptionDatapackage.locations
+              }
+            );
+          })
+          .catch((error: Error) => {
+            Controller.handleErrorMessage(
+              ExtensionCommand.SubscriptionDataForFunctions,
+              error
+            );
+          });
+      }
+    );
   }
 
   public static sendFunctionNameValidationStatusToClient(message: any) {
@@ -364,6 +408,7 @@ export abstract class Controller {
   public static async handleGeneratePayloadFromClient(
     message: any
   ): Promise<any> {
+    Controller.Telemetry.trackWizardTotalSessionTimeToGenerate();
     var payload = message.payload;
     var enginePayload: any = payload.engine;
 
@@ -408,39 +453,71 @@ export abstract class Controller {
       enginePayload
     );
 
+    var serviceQueue: Promise<any>[] = [];
     enginePayload.path = apiGenResult.generationOutputPath;
 
     if (payload.selectedFunctions) {
-      Controller.processFunctionDeploymentAndSendStatusToClient(
-        payload.functions,
-        enginePayload.path
+      serviceQueue.push(
+        Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+          TelemetryEventName.FunctionsDeploy,
+          async function(this: IActionContext): Promise<void> {
+            await Controller.processFunctionDeploymentAndSendStatusToClient(
+              payload.functions,
+              enginePayload.path
+            );
+          }
+        )
       );
     }
 
     if (payload.selectedCosmos) {
-      var cosmosPayload: any = payload.cosmos;
-      var dbobject = await Controller.processCosmosDeploymentAndSendStatusToClient(
-        cosmosPayload,
-        enginePayload.path
-      );
-      await vscode.window
-        .showInformationMessage(
-          "Replace your DB connection string in the .env file with the generated CosmosDB connection string?",
-          ...["Yes", "No"]
-        )
-        .then(selection => {
-          if (selection === "Yes") {
-            CosmosDBDeploy.updateConnectionStringInEnvFile(
-              enginePayload.path,
-              dbobject.connectionString
+      serviceQueue.push(
+        Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+          TelemetryEventName.CosmosDBDeploy,
+          async function(this: IActionContext): Promise<void> {
+            var cosmosPayload: any = payload.cosmos;
+            var dbObject = await Controller.processCosmosDeploymentAndSendStatusToClient(
+              cosmosPayload,
+              enginePayload.path
             );
-            vscode.window.showInformationMessage("Replaced");
+            Controller.promptUserForCosmosReplacement(
+              enginePayload.path,
+              dbObject
+            );
           }
-        });
+        )
+      );
     }
+    // kick off both services asynchronously
+    Promise.all(serviceQueue);
   }
 
-  public static processFunctionDeploymentAndSendStatusToClient(
+  private static async promptUserForCosmosReplacement(
+    pathToEnv: string,
+    dbObject: DatabaseObject
+  ) {
+    return await vscode.window
+      .showInformationMessage(
+        DialogMessages.cosmosDBConnectStringReplacePrompt,
+        ...[DialogResponses.yes, DialogResponses.no]
+      )
+      .then((selection: vscode.MessageItem | undefined) => {
+        if (selection === DialogResponses.yes) {
+          var start = Date.now();
+          CosmosDBDeploy.updateConnectionStringInEnvFile(
+            pathToEnv,
+            dbObject.connectionString
+          );
+          vscode.window.showInformationMessage(
+            "Replaced file at: " + pathToEnv
+          );
+          Controller.Telemetry.trackCustomEventTime(TelemetryEventName.ConnectionStringReplace, start, Date.now());
+        }
+        return selection === DialogResponses.yes;
+      });
+  }
+
+  public static async processFunctionDeploymentAndSendStatusToClient(
     funcPayload: any,
     genPath: string
   ) {
@@ -455,7 +532,7 @@ export abstract class Controller {
      *       functionNames: ["function1", "function2", "function3"]
      *   }
      */
-    Controller.deployFunctionApp(funcPayload, genPath)
+    await Controller.deployFunctionApp(funcPayload, genPath)
       .then(() => {
         Controller.handleValidMessage(ExtensionCommand.DeployFunctions, {
           succeeded: true
@@ -689,22 +766,25 @@ export abstract class Controller {
   }
 
   private static async sendUserStatus(message: any): Promise<void> {
-    try {
-      const email = AzureAuth.getEmail();
-      AzureAuth.getSubscriptions().then(items => {
-        const subscriptions = items.map(subscriptionItem => {
-          return {
-            label: subscriptionItem.label,
-            value: subscriptionItem.label
-          };
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.GetUserLoginStatus,
+      async function (this: IActionContext){
+        try {
+        const email = AzureAuth.getEmail();
+        AzureAuth.getSubscriptions().then(items => {
+          const subscriptions = items.map(subscriptionItem => {
+            return {
+              label: subscriptionItem.label,
+              value: subscriptionItem.label
+            };
+          });
+          Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
+            email: email,
+            subscriptions: subscriptions
+          });
         });
-        Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
-          email: email,
-          subscriptions: subscriptions
-        });
-      });
-    } catch (error) {
-      Controller.handleValidMessage(ExtensionCommand.GetUserStatus, null);
-    }
+      } catch (error) {
+        Controller.handleValidMessage(ExtensionCommand.GetUserStatus, null);
+      }
+    })
   }
 }
