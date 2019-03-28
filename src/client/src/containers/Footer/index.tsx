@@ -81,6 +81,9 @@ class Footer extends React.Component<Props> {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
   public handleLinkClick = (pathname: string) => {
+    
+    this.trackPageForTelemetry(pathname);
+    
     if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
       this.props.setRouteVisited(pathsNext[pathname]);
     }
@@ -127,7 +130,9 @@ class Footer extends React.Component<Props> {
                   [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
                   [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
                 })}
-                onClick={() => { this.handleLinkClick(pathname); this.trackPageForTelemetry(pathname) }}
+                onClick={() => {
+                  this.handleLinkClick(pathname);
+                }}
                 to={
                   pathname === ROUTES.REVIEW_AND_GENERATE
                     ? ROUTES.REVIEW_AND_GENERATE
@@ -177,7 +182,14 @@ const mapStateToProps = (state: any): IStateProps => {
 };
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  setRouteVisited: (route: string) => { dispatch(setVisitedWizardPageAction(route)) },
-})
+  setRouteVisited: (route: string) => {
+    dispatch(setVisitedWizardPageAction(route));
+  }
+});
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Footer));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Footer)
+);

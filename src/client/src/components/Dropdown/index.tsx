@@ -17,11 +17,11 @@ const DropdownIndicator = (props: any) => {
   return (
     components.DropdownIndicator && (
       <components.DropdownIndicator {...props}>
-        <ArrowDown className={styles.icon}/>
+        <ArrowDown className={styles.icon} />
       </components.DropdownIndicator>
     )
   );
-}
+};
 
 const Dropdown = ({
   options,
@@ -31,7 +31,7 @@ const Dropdown = ({
 }: IDropdownProps) => {
   return (
     <Select
-      components ={{ DropdownIndicator }}
+      components={{ DropdownIndicator }}
       value={value}
       onChange={handleChange}
       styles={dropdownstyles}

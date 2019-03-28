@@ -11,19 +11,19 @@ const closeModalAction = () => ({
 });
 
 const openCosmosDbModalAction = () => {
-    return (dispatch: any) => {
-        dispatch(openModalAction(Actions.COSMOS_DB_MODAL));
-    }
-}
+  return (dispatch: any) => {
+    dispatch(openModalAction(Actions.COSMOS_DB_MODAL));
+  };
+};
 
 const openAzureFunctionsModalAction = () => {
-    return (dispatch: any) => {
-        dispatch(openModalAction(Actions.AZURE_FUNCTIONS_MODAL));
-    }
-}
+  return (dispatch: any) => {
+    dispatch(openModalAction(Actions.AZURE_FUNCTIONS_MODAL));
+  };
+};
 
 export {
-    closeModalAction,
-    openAzureFunctionsModalAction,
-    openCosmosDbModalAction,
+  closeModalAction,
+  openAzureFunctionsModalAction,
+  openCosmosDbModalAction
 };

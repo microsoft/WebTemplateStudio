@@ -1,49 +1,71 @@
 export const azureModalInitialState: any = {
-    subscription: [{
-        value: "",
-        label: ""
-    }],
-    resourceGroup: [{
-        value: "",
-        label: ""
-    }],
-    accountName: [{
-        value: "",
-        label: ""
-    }],    
-    api: [{
-        value: "",
-        label: ""
-    }],
-    location: [{
-        value: "",
-        label: ""
-    }],
+  subscription: [
+    {
+      value: "",
+      label: ""
+    }
+  ],
+  resourceGroup: [
+    {
+      value: "",
+      label: ""
+    }
+  ],
+  accountName: [
+    {
+      value: "",
+      label: ""
+    }
+  ],
+  api: [
+    {
+      value: "",
+      label: ""
+    }
+  ],
+  location: [
+    {
+      value: "",
+      label: ""
+    }
+  ]
 };
 
 export const azureFunctionModalInitialState: any = {
-    subscription: [{
-        value: "",
-        label: ""
-    }],
-    resourceGroup: [{
-        value: "",
-        label: ""
-    }],
-    appName: [{
-        value: "",
-        label: ""
-    }],    
-    location: [{
-        value: "",
-        label: ""
-    }],
-    runtimeStack: [{
-        value: "",
-        label: ""
-    }],
-    numFunctions: [{
-        value: 0,
-        label: 0
-    }]
+  subscription: [
+    {
+      value: "",
+      label: ""
+    }
+  ],
+  resourceGroup: [
+    {
+      value: "",
+      label: ""
+    }
+  ],
+  appName: [
+    {
+      value: "",
+      label: ""
+    }
+  ],
+  location: [
+    {
+      value: "",
+      label: ""
+    }
+  ],
+  runtimeStack: [
+    {
+      value: "",
+      label: ""
+    }
+  ],
+  numFunctions: [
+    {
+      value: 0,
+      label: 0
+    }
+  ]
 };

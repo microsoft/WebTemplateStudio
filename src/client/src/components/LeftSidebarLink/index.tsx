@@ -20,7 +20,7 @@ const LeftSidebarLink = ({
     if (disabled) {
       e.preventDefault();
     }
-  }
+  };
   return (
     <Link to={path} onClick={handleClick} className={styles.container}>
       {showCheck ? (

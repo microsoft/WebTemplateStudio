@@ -25,7 +25,9 @@ type Props = IDispatchProps & ISelectFrontEndFrameworkProps;
 class SelectFrontEndFramework extends React.Component<Props> {
   public componentDidMount() {
     if (this.props.getFrontendFrameworks) {
-      this.props.getFrontendFrameworks(WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP);
+      this.props.getFrontendFrameworks(
+        WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
+      );
     }
   }
   /**
@@ -43,7 +45,11 @@ class SelectFrontEndFramework extends React.Component<Props> {
   }
 
   public render() {
-    const { options, selectedFrontendFramework, selectFrontendFramework } = this.props;
+    const {
+      options,
+      selectedFrontendFramework,
+      selectFrontendFramework
+    } = this.props;
     return (
       <div>
         {this.props.options.length > 0 && (

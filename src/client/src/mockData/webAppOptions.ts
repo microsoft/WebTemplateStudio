@@ -20,6 +20,6 @@ const options: IOption[] = [
 
 const getWebAppOptions = (): Promise<IOption[]> => {
   return Promise.resolve(options);
-}
+};
 
 export default getWebAppOptions;
