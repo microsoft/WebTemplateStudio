@@ -74,6 +74,8 @@ class Footer extends React.Component<Props> {
         functions
       }
     });
+    const { pathname } = this.props.location;
+    this.trackPageForTelemetry(pathname);
   };
   public isReviewAndGenerate = (): boolean => {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;

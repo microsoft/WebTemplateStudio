@@ -40,7 +40,6 @@ export class TelemetryAI {
     }
 
     public trackWizardTotalSessionTimeToGenerate(eventName : string = TelemetryEventName.WizardSession){
-        this.trackWizardPageTimeToNext("Summary-Page");
         this.trackTimeDuration(eventName, this.wizardSessionStartTime, Date.now());
     }
 
