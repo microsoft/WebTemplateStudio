@@ -30,6 +30,8 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 - Delete Pages from Selection
 - Validation on Input for Project Name, Page Name, and File Path
 - Generate project (Material UI)
+- New Summary Page
+- Delete Pages and Services from Summary Page
 
 #### Unimplemented Features
 - Web App Deployments

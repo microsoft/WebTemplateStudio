@@ -133,37 +133,36 @@ class App extends React.Component<Props> {
   public render() {
     const { pathname } = this.props.location;
     return (
-        <React.Fragment>
-          <Header />
-          <div className={appStyles.container}>
-            <CosmosResourceModal />
-            <AzureFunctionsModal />
-            <LeftSidebar />
-            <div className={classnames({
-                [appStyles.centerView]: pathname === ROUTES.WELCOME,
-                [appStyles.centerViewCropped]: pathname !== ROUTES.WELCOME
-              })}>
-              <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
-              <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
-              <Route
-                path={ROUTES.REVIEW_AND_GENERATE}
-                component={ReviewAndGenerate}
-              />
-              <Route
-                path={ROUTES.SELECT_FRAMEWORKS}
-                component={SelectFrameworks}
-              />
-              <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
-              <Route
-                path={ROUTES.SELECT_PROJECT_TYPE}
-                component={SelectWebApp}
-              />
-              <Route exact={true} path={ROUTES.WELCOME} component={Welcome} />
-            </div>
-            <RightSidebar />
+      <React.Fragment>
+        <Header />
+        <div className={appStyles.container}>
+          <CosmosResourceModal />
+          <AzureFunctionsModal />
+          <LeftSidebar />
+          <div
+            className={classnames({
+              [appStyles.centerView]: pathname === ROUTES.WELCOME,
+              [appStyles.centerViewCropped]: pathname !== ROUTES.WELCOME
+            })}
+          >
+            <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
+            <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
+            <Route
+              path={ROUTES.REVIEW_AND_GENERATE}
+              component={ReviewAndGenerate}
+            />
+            <Route
+              path={ROUTES.SELECT_FRAMEWORKS}
+              component={SelectFrameworks}
+            />
+            <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
+            <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
+            <Route exact={true} path={ROUTES.WELCOME} component={Welcome} />
           </div>
-          <Footer />
-        </React.Fragment>
+          <RightSidebar />
+        </div>
+        <Footer />
+      </React.Fragment>
     );
   }
 }
@@ -199,7 +198,9 @@ const mapStateToProps = (state: any): IStateProps => ({
   vscode: state.vscode.vscodeObject
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

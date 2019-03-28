@@ -5,4 +5,4 @@ import cosmosDB from "./cosmosDbReducer";
 export default combineReducers({
   azureFunctions,
   cosmosDB
-})
+});

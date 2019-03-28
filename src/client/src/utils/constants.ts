@@ -65,8 +65,8 @@ const EXTENSION_COMMANDS = {
   PROJECT_PATH_AND_NAME_VALIDATION: "project-path-and-name-validation",
   SUBSCRIPTION_DATA_COSMOS: "subscriptionDataForCosmos",
   SUBSCRIPTION_DATA_FUNCTIONS: "subscriptionDataForFunctions",
-  GET_OUTPUT_PATH: "getOutputPath",
-}
+  GET_OUTPUT_PATH: "getOutputPath"
+};
 
 export {
   PRODUCTION,

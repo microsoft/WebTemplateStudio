@@ -24,7 +24,7 @@ interface IStateProps {
   projectName: string;
   outputPath: string;
   vscode: any;
-  validation: any
+  validation: any;
 }
 
 interface IDispatchProps {
@@ -35,7 +35,16 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps;
 
 const ReviewAndGenerate = (props: Props) => {
-  const { updateProjectName, updateOutputPath, vscode, outputPath, servicesRows, projectTypeRows, pagesRows, frameworkRows } = props;
+  const {
+    updateProjectName,
+    updateOutputPath,
+    vscode,
+    outputPath,
+    servicesRows,
+    projectTypeRows,
+    pagesRows,
+    frameworkRows
+  } = props;
   const handleProjectNameChange = (e: React.SyntheticEvent) => {
     let target = e.target as HTMLInputElement;
     updateProjectName(target.value);
@@ -53,9 +62,7 @@ const ReviewAndGenerate = (props: Props) => {
   };
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        5. Review and Generate Template
-      </div>
+      <div className={styles.title}>5. Review and Generate Template</div>
       <div className={styles.selectionTitle}>1. Welcome</div>
       <div className={styles.inputContainer}>
         <div className={styles.inputTitle}>Project Name:</div>
@@ -74,36 +81,63 @@ const ReviewAndGenerate = (props: Props) => {
             placeholder="Output Path"
             value={outputPath}
           />
-          <SaveSVG
-            className={styles.saveIcon}
-            onClick={handleSaveClick}
-          />
+          <SaveSVG className={styles.saveIcon} onClick={handleSaveClick} />
         </div>
       </div>
-      {!props.validation.isValidProjectName && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectNameError}</div>}
-      {!props.validation.isValidProjectPath && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectPathError}</div>}
-      <SummarySection selectionTitle="2. Project Type" selectionRows={projectTypeRows} />
-      <SummarySection selectionTitle="3. Frameworks" selectionRows={frameworkRows} />
+      {!props.validation.isValidProjectName && (
+        <div
+          style={{
+            color: "#FF6666",
+            fontSize: "12px",
+            minHeight: "18px",
+            marginBottom: "20px"
+          }}
+        >
+          {props.validation.projectNameError}
+        </div>
+      )}
+      {!props.validation.isValidProjectPath && (
+        <div
+          style={{
+            color: "#FF6666",
+            fontSize: "12px",
+            minHeight: "18px",
+            marginBottom: "20px"
+          }}
+        >
+          {props.validation.projectPathError}
+        </div>
+      )}
+      <SummarySection
+        selectionTitle="2. Project Type"
+        selectionRows={projectTypeRows}
+      />
+      <SummarySection
+        selectionTitle="3. Frameworks"
+        selectionRows={frameworkRows}
+      />
       <div className={styles.selectionContainer}>
         <div className={styles.selectionTitle}>4. Pages</div>
-          <SortablePageList pagesRows={pagesRows} />
+        <SortablePageList pagesRows={pagesRows} />
       </div>
-      <SummarySection selectionTitle="5. Services" selectionRows={servicesRows} />
+      <SummarySection
+        selectionTitle="5. Services"
+        selectionRows={servicesRows}
+      />
     </div>
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => (
-  {
-    projectTypeRows: WizardSelectors.getProjectTypeRowItemSelector(state),
-    frameworkRows: WizardSelectors.getFrameworksRowItemSelector(state),
-    servicesRows: WizardSelectors.getServicesSelector(state),
-    pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
-    projectName: WizardSelectors.getProjectName(state),
-    outputPath: WizardSelectors.getOutputPath(state),
-    vscode: state.vscode.vscodeObject,
-    validation: state.selection.validation
-  });
+const mapStateToProps = (state: any): IStateProps => ({
+  projectTypeRows: WizardSelectors.getProjectTypeRowItemSelector(state),
+  frameworkRows: WizardSelectors.getFrameworksRowItemSelector(state),
+  servicesRows: WizardSelectors.getServicesSelector(state),
+  pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
+  projectName: WizardSelectors.getProjectName(state),
+  outputPath: WizardSelectors.getOutputPath(state),
+  vscode: state.vscode.vscodeObject,
+  validation: state.selection.validation
+});
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   updateProjectName: (projectName: string) => {

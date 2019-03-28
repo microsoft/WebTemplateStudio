@@ -69,7 +69,11 @@ const SelectableCard = ({
         </div>
       </div>
       <div className={styles.cardFooter}>
-        <Link onClick={() => onDetailsClick(option)} className={classNames(styles.link)} to={"/PageDetail"}>
+        <Link
+          onClick={() => onDetailsClick(option)}
+          className={classNames(styles.link)}
+          to={"/PageDetail"}
+        >
           Details
         </Link>
         <div
@@ -79,10 +83,12 @@ const SelectableCard = ({
             [styles.cardCount]: selected && clickCount
           })}
         >
-          {clickCount || <img
-            src={process.env.REACT_APP_RELATIVE_PATH + Check}
-            className={styles.iconCheckMark}
-          />}
+          {clickCount || (
+            <img
+              src={process.env.REACT_APP_RELATIVE_PATH + Check}
+              className={styles.iconCheckMark}
+            />
+          )}
         </div>
       </div>
     </div>

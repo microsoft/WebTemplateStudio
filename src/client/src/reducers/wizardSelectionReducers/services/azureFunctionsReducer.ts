@@ -42,14 +42,14 @@ export interface IAzureFunctionsSelection {
 
 const initialState = {
   appNameAvailability: {
-      isAppNameAvailable: false,
-      message: "App name unavailable"
+    isAppNameAvailable: false,
+    message: "App name unavailable"
   },
   selection: [],
   wizardContent: {
-    serviceType: "Azure Functions",
+    serviceType: "Azure Functions"
   }
-}
+};
 
 const createFunctionNames = (numFunctions: number): string[] => {
   const functionNames = [];
@@ -57,13 +57,17 @@ const createFunctionNames = (numFunctions: number): string[] => {
     functionNames.push(`Function${i}`);
   }
   return functionNames;
-}
+};
 
-const azureFunctions = (state: IAzureFunctionsSelection = initialState, action: any) => {
+const azureFunctions = (
+  state: IAzureFunctionsSelection = initialState,
+  action: any
+) => {
   switch (action.type) {
     case Actions.UPDATE_AZURE_FUNCTION_NAMES:
-      const newFunctionNamesState = {...state};
-      newFunctionNamesState.selection[action.payload.appIndex].functionNames = action.payload.functionNames;
+      const newFunctionNamesState = { ...state };
+      newFunctionNamesState.selection[action.payload.appIndex].functionNames =
+        action.payload.functionNames;
       return newFunctionNamesState;
 
     case Actions.SET_APP_NAME_AVAILABILITY:
@@ -86,7 +90,7 @@ const azureFunctions = (state: IAzureFunctionsSelection = initialState, action: 
         const newAppState = {
           ...state,
           selection: [...newFunctionApp]
-        }
+        };
         return newAppState;
       }
       return state;
@@ -105,10 +109,10 @@ const azureFunctions = (state: IAzureFunctionsSelection = initialState, action: 
             ...action.payload,
             functionNames: createFunctionNames(action.payload.numFunctions)
           }
-        ],
+        ]
       };
       return newSelectionState;
-      
+
     default:
       return state;
   }

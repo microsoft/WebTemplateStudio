@@ -41,24 +41,21 @@ export interface ICosmosDB {
 
 const initialState = {
   accountNameAvailability: {
-      isAccountNameAvailable: false,
-      message: "Account name unavailable"
+    isAccountNameAvailable: false,
+    message: "Account name unavailable"
   },
   selection: [],
   wizardContent: {
-    serviceType: "CosmosDB",
+    serviceType: "CosmosDB"
   }
-}
+};
 
 const services = (state: ICosmosDB = initialState, action: any) => {
   switch (action.type) {
     case Actions.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
       const newSelectionState = {
         ...initialState,
-        selection: [
-          ...state.selection,
-          action.payload,
-        ],
+        selection: [...state.selection, action.payload]
       };
       return newSelectionState;
     case Actions.SET_ACCOUNT_AVAILABILITY:
@@ -71,7 +68,7 @@ const services = (state: ICosmosDB = initialState, action: any) => {
       };
       return newAvailabilityState;
     case Actions.REMOVE_COSMOS_RESOURCE:
-      const cosmosSelections = [ ...state.selection ];
+      const cosmosSelections = [...state.selection];
       cosmosSelections.splice(action.payload, 1);
       return {
         ...state,
