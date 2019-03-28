@@ -453,18 +453,20 @@ export abstract class Controller {
     const apiGenResult = await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
     ).catch(error => {
+      console.log(error);
       Controller.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.UpdateGenStatus,
         payload: {
-          templates: this.getProgressObject(false),
-          cosmos: this.getProgressObject(false),
-          azureFunctions: this.getProgressObject(false)
+          templates: Controller.getProgressObject(false),
+          cosmos: Controller.getProgressObject(false),
+          azureFunctions: Controller.getProgressObject(false)
         }
       });
+      return;
     });
 
     let progressObject = {
-      templates: this.getProgressObject(true),
+      templates: Controller.getProgressObject(true),
       cosmos: {},
       azureFunctions: {}
     };
@@ -483,24 +485,35 @@ export abstract class Controller {
           TelemetryEventName.FunctionsDeploy,
           // tslint:disable-next-line: no-function-expression
           async function(this: IActionContext): Promise<void> {
-            await Controller.deployFunctionApp(
-              payload.functions,
-              enginePayload.path
-            ).catch(error => {
+            try {
+              Controller.deployFunctionApp(
+                payload.functions,
+                enginePayload.path
+              );
+              progressObject = {
+                ...progressObject,
+                azureFunctions: Controller.getProgressObject(true)
+              };
+
+              Controller.reactPanelContext.postMessageWebview({
+                command: ExtensionCommand.UpdateGenStatus,
+                payload: progressObject
+              });
+            } catch (error) {
+              console.log(error);
               progressObject = {
                 ...progressObject,
                 azureFunctions: Controller.getProgressObject(false)
               };
-            });
+              Controller.reactPanelContext.postMessageWebview({
+                command: ExtensionCommand.UpdateGenStatus,
+                payload: progressObject
+              });
+            }
           }
         )
       );
     }
-
-    progressObject = {
-      ...progressObject,
-      azureFunctions: Controller.getProgressObject(true)
-    };
 
     if (payload.selectedCosmos) {
       serviceQueue.push(
