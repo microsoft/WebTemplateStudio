@@ -2,8 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { ReactComponent as SaveSVG } from "../../assets/folder.svg";
-import SummaryTile from "../../components/SummaryTile";
-import Table from "../../components/Table";
+import SortablePageList from "../SortablePageList";
 
 import {
   updateOutputPathAction,
@@ -14,6 +13,8 @@ import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 import styles from "./styles.module.css";
 
 import { RowType } from "../../types/rowType";
+import { EXTENSION_COMMANDS } from "../../utils/constants";
+import SummarySection from "../../components/SummarySection";
 
 interface IStateProps {
   projectTypeRows: RowType[];
@@ -34,61 +35,60 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps;
 
 const ReviewAndGenerate = (props: Props) => {
-  const handleProjectNameChange = (e: any) => {
-    props.updateProjectName(e.target.value);
+  const { updateProjectName, updateOutputPath, vscode, outputPath, servicesRows, projectTypeRows, pagesRows, frameworkRows } = props;
+  const handleProjectNameChange = (e: React.SyntheticEvent) => {
+    let target = e.target as HTMLInputElement;
+    updateProjectName(target.value);
   };
   const handleOutputPathChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
     const element = e.currentTarget as HTMLInputElement;
-    props.updateOutputPath(element.value);
+    updateOutputPath(element.value);
   };
   const handleSaveClick = () => {
-    if (process.env.NODE_ENV === "production") {
-      props.vscode.postMessage({
-        command: "getOutputPath"
-      });
-    } else {
-      // @ts-ignore produces a mock login response from VSCode in development
-      window.postMessage({
-        command: "getOutputPath",
-        outputPath: "/generic_output_path"
-      });
-    }
+    vscode.postMessage({
+      command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
+    });
   };
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Review and Generate Template</div>
-      <div className={styles.outputDetailsContainer}>
-        <div className={styles.inputContainer}>
-          <div className={styles.inputTitle}>Project Name:</div>
+      <div className={styles.title}>
+        5. Review and Generate Template
+      </div>
+      <div className={styles.selectionTitle}>1. Welcome</div>
+      <div className={styles.inputContainer}>
+        <div className={styles.inputTitle}>Project Name:</div>
+        <input
+          onChange={handleProjectNameChange}
+          placeholder="Project Name"
+          className={styles.input}
+        />
+      </div>
+      <div className={styles.inputContainer}>
+        <div className={styles.inputTitle}>Output Path:</div>
+        <div className={styles.outputPathContainer}>
           <input
-            onChange={handleProjectNameChange}
-            placeholder="Project Name"
-            className={styles.input}
-            maxLength={50}
+            onChange={handleOutputPathChange}
+            className={styles.pathInput}
+            placeholder="Output Path"
+            value={outputPath}
           />
-        </div>
-        <div className={styles.inputContainer}>
-          <div className={styles.inputTitle}>Output Path:</div>
-          <div className={styles.outputPathContainer}>
-            <input
-              onChange={handleOutputPathChange}
-              className={styles.pathInput}
-              placeholder="Output Path"
-              value={props.outputPath}
-            />
-            <SaveSVG
-              className={styles.saveIcon}
-              onClick={() => {
-                handleSaveClick();
-              }}
-            />
-          </div>
+          <SaveSVG
+            className={styles.saveIcon}
+            onClick={handleSaveClick}
+          />
         </div>
       </div>
       {!props.validation.isValidProjectName && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectNameError}</div>}
       {!props.validation.isValidProjectPath && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectPathError}</div>}
+      <SummarySection selectionTitle="2. Project Type" selectionRows={projectTypeRows} />
+      <SummarySection selectionTitle="3. Frameworks" selectionRows={frameworkRows} />
+      <div className={styles.selectionContainer}>
+        <div className={styles.selectionTitle}>4. Pages</div>
+          <SortablePageList pagesRows={pagesRows} />
+      </div>
+      <SummarySection selectionTitle="5. Services" selectionRows={servicesRows} />
     </div>
   );
 };

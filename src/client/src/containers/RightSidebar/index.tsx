@@ -88,7 +88,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const { pathname } = this.props.location;
     return (
       <React.Fragment>
-        {pathname !== ROUTES.PAGE_DETAILS && (
+        {(pathname !== ROUTES.PAGE_DETAILS && pathname !== ROUTES.REVIEW_AND_GENERATE) && (
           <div className={classNames(styles.container, {
             [styles.rightView]: pathname === ROUTES.WELCOME,
             [styles.rightViewCropped]: pathname !== ROUTES.WELCOME
