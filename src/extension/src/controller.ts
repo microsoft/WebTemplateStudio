@@ -99,7 +99,7 @@ export abstract class Controller {
     });
   }
 
-  private static routingMessageReceieverDelegate = function(message: any) {
+  private static routingMessageReceieverDelegate = function (message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -121,7 +121,7 @@ export abstract class Controller {
     Controller.Telemetry = new TelemetryAI(context, extensionStartTime);
     this.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
-      async function(this: IActionContext): Promise<ChildProcess> {
+      async function (this: IActionContext): Promise<ChildProcess> {
         let process = ApiModule.StartApi(context);
         let synced = false;
         let syncAttempts = 0;
@@ -285,7 +285,7 @@ export abstract class Controller {
   public static performLogin(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.PerformLogin,
-      async function(this: IActionContext): Promise<void> {
+      async function (this: IActionContext): Promise<void> {
         await AzureAuth.login()
           .then(res => {
             const email = AzureAuth.getEmail();
@@ -316,7 +316,7 @@ export abstract class Controller {
   public static sendSubscriptionsToClient(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.Subscriptions,
-      async function(this: IActionContext): Promise<void> {
+      async function (this: IActionContext): Promise<void> {
         await Controller.getSubscriptions()
           .then(subscriptions => {
             Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
@@ -336,7 +336,7 @@ export abstract class Controller {
   public static sendCosmosSubscriptionDataToClient(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SubscriptionData,
-      async function(this: IActionContext): Promise<void> {
+      async function (this: IActionContext): Promise<void> {
         await Controller.getSubscriptionData(
           message.subscription,
           AzureResourceType.Cosmos
@@ -363,7 +363,7 @@ export abstract class Controller {
   public static sendFunctionsSubscriptionDataToClient(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SubscriptionData,
-      async function(this: IActionContext): Promise<void> {
+      async function (this: IActionContext): Promise<void> {
         await Controller.getSubscriptionData(
           message.subscription,
           AzureResourceType.Functions
@@ -415,6 +415,7 @@ export abstract class Controller {
       });
   }
 
+  // tslint:disable-next-line: max-func-body-length
   public static async handleGeneratePayloadFromClient(
     message: any
   ): Promise<any> {
@@ -461,43 +462,86 @@ export abstract class Controller {
     }
     const apiGenResult = await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
-    );
-    var serviceQueue: Promise<any>[] = [];
-    enginePayload.path = apiGenResult.generationOutputPath;
+    ).catch(error => {
+      Controller.reactPanelContext.postMessageWebview({
+        command: ExtensionCommand.UpdateGenStatus,
+        payload: {
+          templates: this.getProgressObject(false),
+          cosmos: this.getProgressObject(false),
+          azureFunctions: this.getProgressObject(false)
+        }
+      });
+    });
+
+    let progressObject = {
+      templates: this.getProgressObject(true),
+      cosmos: {},
+      azureFunctions: {}
+    };
+
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.UpdateGenStatus,
-      payload: {
-        isGenerated: true
-      }
+      payload: progressObject
     });
+
+    var serviceQueue: Promise<any>[] = [];
+    enginePayload.path = apiGenResult.generationOutputPath;
+
     if (payload.selectedFunctions) {
       serviceQueue.push(
         Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
           TelemetryEventName.FunctionsDeploy,
-          async function(this: IActionContext): Promise<void> {
-            await Controller.processFunctionDeploymentAndSendStatusToClient(
+          // tslint:disable-next-line: no-function-expression
+          async function (this: IActionContext): Promise<void> {
+            await Controller.deployFunctionApp(
               payload.functions,
               enginePayload.path
-            );
+            ).catch(error => {
+              progressObject = {
+                ...progressObject,
+                azureFunctions: Controller.getProgressObject(false)
+              };
+            });
           }
         )
       );
     }
 
+    progressObject = {
+      ...progressObject,
+      azureFunctions: Controller.getProgressObject(true)
+    };
+
     if (payload.selectedCosmos) {
       serviceQueue.push(
         Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
           TelemetryEventName.CosmosDBDeploy,
-          async function(this: IActionContext): Promise<void> {
+          // tslint:disable-next-line: no-function-expression
+          async function (this: IActionContext): Promise<void> {
             var cosmosPayload: any = payload.cosmos;
-            var dbObject = await Controller.processCosmosDeploymentAndSendStatusToClient(
-              cosmosPayload,
-              enginePayload.path
-            );
-            Controller.promptUserForCosmosReplacement(
-              enginePayload.path,
-              dbObject
-            );
+            try {
+              var dbObject = await Controller.deployCosmosResource(
+                cosmosPayload,
+                enginePayload.path
+              );
+              progressObject = {
+                ...progressObject,
+                cosmos: Controller.getProgressObject(true)
+              };
+              Controller.promptUserForCosmosReplacement(
+                enginePayload.path,
+                dbObject
+              );
+            } catch (error) {
+              progressObject = {
+                ...progressObject,
+                cosmos: Controller.getProgressObject(false)
+              };
+              Controller.reactPanelContext.postMessageWebview({
+                command: ExtensionCommand.UpdateGenStatus,
+                payload: progressObject
+              });
+            }
           }
         )
       );
@@ -792,7 +836,7 @@ export abstract class Controller {
   private static async sendUserStatus(message: any): Promise<void> {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.GetUserLoginStatus,
-      async function(this: IActionContext) {
+      async function (this: IActionContext) {
         try {
           const email = AzureAuth.getEmail();
           AzureAuth.getSubscriptions().then(items => {
@@ -812,5 +856,12 @@ export abstract class Controller {
         }
       }
     );
+  }
+
+  private static getProgressObject(didSucceed: boolean) {
+    return {
+      success: didSucceed,
+      failure: !didSucceed
+    };
   }
 }
