@@ -1,13 +1,11 @@
 import { createSelector } from "reselect";
-import { ITemplates } from "../reducers/generationStatus/templates";
 
 const getTemplateGenerationStatusSelector = (state: any) =>
-  state.generationStatus.templates;
+  state.generationStatus.genStatus;
 
-const getSyncStatus = (templates: ITemplates): string => templates.syncStatus;
+const getSyncStatus = (templates: any): string => "yo";
 
-const isTemplateGenerated = (templates: ITemplates): boolean =>
-  templates.isGenerated;
+const isTemplateGenerated = (templates: any): boolean => true;
 
 const getSyncStatusSelector = createSelector(
   getTemplateGenerationStatusSelector,

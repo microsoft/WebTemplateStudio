@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
 
-import { templates } from "./templates";
+import { statusMessage } from "./statusMessage";
+import { genStatus } from "./genStatus";
 
 export default combineReducers({
-  templates
+  statusMessage,
+  genStatus
 });

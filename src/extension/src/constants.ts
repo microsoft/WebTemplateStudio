@@ -75,7 +75,7 @@ export const CONSTANTS = {
     Project_Title: "Project Acorn"
   },
   GENERATE_ENDPOINT: "/api/generate",
-  CONNECTION_STRING: function(
+  CONNECTION_STRING: function (
     username: string,
     password: string,
     origin: string
@@ -101,7 +101,10 @@ export enum ExtensionCommand {
   GetCosmosAPIs = "getCosmosAPIs",
   GetUserStatus = "getUserStatus",
   ProjectPathAndNameValidation = "project-path-and-name-validation",
-  TrackPageSwitch = "track-page-switch"
+  TrackPageSwitch = "track-page-switch",
+  UpdateGenStatusMessage = "update-status-message",
+  UpdateGenStatus = "update-status",
+  OpenProjectVSCode = "open-project-vscode"
 }
 
 export enum TelemetryEventName {

@@ -75,8 +75,17 @@ export abstract class Controller {
     [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
     [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
-    [ExtensionCommand.GetUserStatus, Controller.sendUserStatus]
+    [ExtensionCommand.GetUserStatus, Controller.sendUserStatus],
+    [ExtensionCommand.OpenProjectVSCode, Controller.openProjectVSCode]
   ]);
+
+  private static openProjectVSCode(message: any) {
+    console.log(message);
+    vscode.commands.executeCommand(
+      "vscode.openFolder",
+      vscode.Uri.file(message.payload.outputPath)
+    );
+  }
 
   public static sendFunctionRuntimes(message: any) {
     Controller.handleValidMessage(ExtensionCommand.GetFunctionsRuntimes, {
@@ -453,10 +462,14 @@ export abstract class Controller {
     const apiGenResult = await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
     );
-
     var serviceQueue: Promise<any>[] = [];
     enginePayload.path = apiGenResult.generationOutputPath;
-
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.UpdateGenStatus,
+      payload: {
+        isGenerated: true
+      }
+    });
     if (payload.selectedFunctions) {
       serviceQueue.push(
         Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
@@ -595,6 +608,12 @@ export abstract class Controller {
 
   private static handleGenLiveMessage(message: any) {
     vscode.window.showInformationMessage(message);
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.UpdateGenStatusMessage,
+      payload: {
+        status: message
+      }
+    });
   }
 
   public static sendOutputPathSelectionToClient(message: any) {
