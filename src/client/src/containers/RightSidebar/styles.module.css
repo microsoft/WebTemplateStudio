@@ -4,7 +4,6 @@
   text-align: center;
   padding-left: 20px;
   padding-right: 20px;
-  padding-top: 31.5px;
   padding-bottom: 20px;
 }
 
@@ -14,12 +13,23 @@
   overflow: auto;
 }
 
+.rightViewCropped,
 .rightView {
   width: 25%;
   background-color: #303030;
-  height: 100vh;
   border-left: 0.5px solid #555555;
   box-sizing: border-box;
+}
+
+.rightViewCropped {
+  height: calc(100vh - 122px);
+  margin-top: 51px;
+  margin-bottom: 71px;
+}
+
+.rightView {
+  padding-top: 102px;
+  height: 100vh;
 }
 
 .dropdown {

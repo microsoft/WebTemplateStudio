@@ -17,6 +17,8 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
+import { EMPTY_FIELD } from "../../utils/constants";
+
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
@@ -51,10 +53,26 @@ const initialState = {
 };
 
 const FORM_CONSTANTS = {
-  SUBSCRIPTION: "subscription",
-  RESOURCE_GROUP: "resourceGroup",
-  API: "api",
-  LOCATION: "location"
+  SUBSCRIPTION: {
+    label: "Subscription",
+    value: "subscription"
+  },
+  RESOURCE_GROUP: {
+    label: "Resource Group",
+    value: "resourceGroup"
+  },
+  API: {
+    label: "API",
+    value: "api"
+  },
+  LOCATION: {
+    label: "Location",
+    value: "location"
+  },
+  ACCOUNT_NAME: {
+    label: "Account Name",
+    value: "accountName"
+  }
 };
 
 const CosmosResourceModal = (props: Props) => {
@@ -87,10 +105,49 @@ const CosmosResourceModal = (props: Props) => {
 
   const [cosmosFormData, updateForm] = React.useState(initialState);
 
+  const [modalValidation, updateValidation] = React.useState({
+    isAccountNameEmpty: false,
+    isApiEmpty: false,
+    isLocationEmpty: false,
+    isSubscriptionEmpty: false,
+    isResourceGroupEmpty: false
+  });
+
+  const setModalValidation = (selections: any): boolean => {
+    let isSubscriptionEmpty: boolean = false;
+    let isResourceGroupEmpty: boolean = false;
+    let isAccountNameEmpty: boolean = false;
+    let isLocationEmpty: boolean = false;
+    let isApiEmpty: boolean = false;
+    let isAnyEmpty: boolean = false;
+
+    isSubscriptionEmpty = selections.subscription === "";
+    isResourceGroupEmpty = selections.resourceGroup === "";
+    isAccountNameEmpty = selections.accountName === "";
+    isApiEmpty = selections.api === "";
+    isLocationEmpty = selections.location === "";
+
+    isAnyEmpty =
+      isSubscriptionEmpty ||
+      isResourceGroupEmpty ||
+      isAccountNameEmpty ||
+      isLocationEmpty ||
+      isApiEmpty;
+
+    updateValidation({
+      isSubscriptionEmpty: isSubscriptionEmpty,
+      isResourceGroupEmpty: isResourceGroupEmpty,
+      isLocationEmpty: isLocationEmpty,
+      isAccountNameEmpty: isAccountNameEmpty,
+      isApiEmpty: isApiEmpty
+    });
+    return isAnyEmpty;
+  };
+
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
-    if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION) {
+    if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
       // Get resource Group and locations and set the dropdown options to them
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
@@ -106,11 +163,11 @@ const CosmosResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    props.vscode.postMessage({
-      command: EXTENSION_COMMANDS.NAME_COSMOS,
-      appName: cosmosFormData.accountName,
-      subscription: cosmosFormData.subscription
-    });
+      props.vscode.postMessage({
+        command: EXTENSION_COMMANDS.NAME_COSMOS,
+        appName: cosmosFormData.accountName,
+        subscription: cosmosFormData.subscription
+      });
   }, [cosmosFormData.accountName, props.selection]);
   React.useEffect(() => {
     if (props.selection) {
@@ -124,18 +181,19 @@ const CosmosResourceModal = (props: Props) => {
    */
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
-    const strippedInput = element.value;
     updateForm({
       ...cosmosFormData,
-      accountName: strippedInput
+      accountName: element.value
     });
   };
   const handleAddResource = () => {
-    if (isAccountNameAvailable) {
-      props.saveCosmosOptions(cosmosFormData);
+    if (setModalValidation(cosmosFormData)) {
+      return;
     }
+    props.saveCosmosOptions(cosmosFormData);
   };
   const getDropdownSection = (
+    isEmpty: boolean,
     leftHeader: string,
     options: any,
     formSectionId: string,
@@ -159,6 +217,9 @@ const CosmosResourceModal = (props: Props) => {
               : defaultValue
           }
         />
+        {isEmpty && (
+          <div className={styles.errorMessage}>{EMPTY_FIELD(leftHeader)}</div>
+        )}
       </div>
     );
   };
@@ -170,15 +231,19 @@ const CosmosResourceModal = (props: Props) => {
         <Cancel className={styles.icon} onClick={props.closeModal} />
       </div>
       {getDropdownSection(
-        "Subscription",
+        modalValidation.isSubscriptionEmpty &&
+          cosmosFormData.subscription === "",
+        FORM_CONSTANTS.SUBSCRIPTION.label,
         cosmosData.subscription,
-        FORM_CONSTANTS.SUBSCRIPTION,
+        FORM_CONSTANTS.SUBSCRIPTION.value,
         "Create new"
       )}
       {getDropdownSection(
-        "Resource Group",
+        modalValidation.isResourceGroupEmpty &&
+          cosmosFormData.resourceGroup === "",
+        FORM_CONSTANTS.RESOURCE_GROUP.label,
         cosmosData.resourceGroup,
-        FORM_CONSTANTS.RESOURCE_GROUP,
+        FORM_CONSTANTS.RESOURCE_GROUP.value,
         "Create new"
       )}
       <div
@@ -208,25 +273,36 @@ const CosmosResourceModal = (props: Props) => {
             className={styles.input}
             onChange={handleInput}
             value={cosmosFormData.accountName}
-            placeholder="Account Name"
+            placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
           />
           {isAccountNameAvailable && (
             <GreenCheck className={styles.validationIcon} />
           )}
         </div>
         {!isAccountNameAvailable && cosmosFormData.accountName.length > 0 && (
-          <div
-            style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px" }}
-          >
+          <div className={styles.errorMessage}>
             {props.accountNameAvailability.message}
           </div>
         )}
+        {modalValidation.isAccountNameEmpty &&
+          cosmosFormData.accountName.length == 0 && (
+            <div className={styles.errorMessage}>
+              {EMPTY_FIELD(FORM_CONSTANTS.ACCOUNT_NAME.label)}
+            </div>
+          )}
       </div>
-      {getDropdownSection("API", cosmosData.api, FORM_CONSTANTS.API, undefined)}
       {getDropdownSection(
-        "Location",
+        modalValidation.isApiEmpty && cosmosFormData.api === "",
+        FORM_CONSTANTS.API.label,
+        cosmosData.api,
+        FORM_CONSTANTS.API.value,
+        undefined
+      )}
+      {getDropdownSection(
+        modalValidation.isLocationEmpty && cosmosFormData.location === "",
+        FORM_CONSTANTS.LOCATION.label,
         cosmosData.location,
-        FORM_CONSTANTS.LOCATION,
+        FORM_CONSTANTS.LOCATION.value,
         undefined
       )}
       <div className={styles.buttonContainer}>

@@ -70,6 +70,13 @@ const services = (state: ICosmosDB = initialState, action: any) => {
         }
       };
       return newAvailabilityState;
+    case Actions.REMOVE_COSMOS_RESOURCE:
+      const cosmosSelections = [ ...state.selection ];
+      cosmosSelections.splice(action.payload, 1);
+      return {
+        ...state,
+        selection: cosmosSelections
+      };
     case Actions.LOG_OUT_OF_AZURE:
       return initialState;
     default:

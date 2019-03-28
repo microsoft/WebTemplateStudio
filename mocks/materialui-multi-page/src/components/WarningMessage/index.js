@@ -1,38 +1,32 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import classnames from "classnames";
+import styles from "./warningmessage.module.css";
 
-const styles = theme => ({});
-
-// Warning messages are used to display failed connections to the back end through a pop up notification
-function WarningMessage(props) {
+export default function index(props) {
+  const { open, text, onWarningClose } = props;
   return (
-    <div>
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left"
-        }}
-        open={props.open}
-        ContentProps={{
-          "aria-describedby": "message-id"
-        }}
-        message={<span id="message-id">{props.text}</span>}
-        action={[
-          <IconButton
-            key="close"
+    <React.Fragment>
+      {open && (
+        <div
+          className={classnames(
+            "alert",
+            "alert-warning",
+            "ml-3",
+            styles.warningPosition
+          )}
+          role="alert"
+        >
+          {text}
+          <button
+            type="button"
+            onClick={() => onWarningClose()}
+            className="close ml-2"
             aria-label="Close"
-            color="inherit"
-            onClick={props.onWarningClose}
           >
-            <CloseIcon />
-          </IconButton>
-        ]}
-      />
-    </div>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      )}
+    </React.Fragment>
   );
 }
-
-export default withStyles(styles)(WarningMessage);

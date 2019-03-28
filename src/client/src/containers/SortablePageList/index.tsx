@@ -13,6 +13,8 @@ import { validateName } from "../../utils/validateName";
 
 import styles from "./styles.module.css";
 
+const MAX_PAGE_NAME_LENGTH = 50;
+
 interface ISortablePageListProps {
   pages: any[];
 }
@@ -41,8 +43,10 @@ const SortablePageList = (props: Props) => {
         break;
       }
     }
-    setPages(pages);
-    props.selectPages(pages);
+    if (pages[idx].title.length < MAX_PAGE_NAME_LENGTH) {
+      setPages(pages);
+      props.selectPages(pages);
+    }
   };
   const onSortEnd = ({
     oldIndex,

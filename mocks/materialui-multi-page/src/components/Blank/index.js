@@ -1,12 +1,5 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React from "react";
 
-const styles = theme => ({});
-
-class index extends Component {
-  render() {
-    return <div />;
-  }
+export default function Blank() {
+  return <div />;
 }
-
-export default withStyles(styles)(index);

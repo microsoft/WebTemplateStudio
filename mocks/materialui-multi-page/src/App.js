@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Grid from "./components/Grid";
 import List from "./components/List";
+import Blank from "./components/Blank";
 import MasterDetail from "./components/MasterDetail";
 
 // TODO WTS: Add routes for your new pages here.
@@ -17,6 +18,7 @@ class App extends Component {
           <Route path="/list" component={List} />
           <Route path="/masterdetail" component={MasterDetail} />
           <Route path="/grid" component={Grid} />
+          <Route path="/blank" component={Blank} />
         </Switch>
         <Footer />
       </React.Fragment>

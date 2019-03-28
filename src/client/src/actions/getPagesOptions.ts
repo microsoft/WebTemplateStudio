@@ -61,6 +61,8 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
   return items.map<IOption>(val => ({
     body: val.summary,
     internalName: val.name,
+    licenses: val.licenses,
+    longDescription: val.longDescription,
     selected: val.selected,
     svgUrl: getSvgUrl(val.name),
     title: val.displayName,

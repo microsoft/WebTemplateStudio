@@ -165,7 +165,7 @@ export abstract class Controller {
       });
   }
   private static handleSyncLiveData(status: SyncStatus) {
-    vscode.window.showInformationMessage(`SyncStatus:${SyncStatus[status]}`);
+    vscode.window.showInformationMessage(`SyncStatus:${status}`);
   }
 
   //To be addressed in next PR for page/navigation tracking

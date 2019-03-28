@@ -78,7 +78,25 @@ const azureFunctions = (state: IAzureFunctionsSelection = initialState, action: 
 
     case Actions.LOG_OUT_OF_AZURE:
       return initialState;
-
+    case Actions.REMOVE_AZURE_FUNCTIONS_APP:
+      if (state.selection[0].functionNames) {
+        // the state must be deeply mutated in order to be recognized as a state change in redux
+        const newFunctionApp = [...state.selection];
+        newFunctionApp.splice(action.payload, 1);
+        const newAppState = {
+          ...state,
+          selection: [...newFunctionApp]
+        }
+        return newAppState;
+      }
+      return state;
+    case Actions.REMOVE_AZURE_FUNCTION:
+      // hardcoding 0th index because only 1 function app can currently be added
+      const newFunctionState = { ...state };
+      if (newFunctionState.selection[0].functionNames) {
+        newFunctionState.selection[0].functionNames.splice(action.payload, 1);
+      }
+      return newFunctionState;
     case Actions.SAVE_AZURE_FUNCTIONS_SETTINGS:
       const newSelectionState = {
         ...state,
