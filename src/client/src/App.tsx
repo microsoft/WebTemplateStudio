@@ -81,12 +81,7 @@ class App extends React.Component<Props> {
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           if (message.payload != null && message.payload.outputPath != null) {
-            this.props.updateOutputPath(
-              message.payload.outputPath.substring(
-                1,
-                message.payload.outputPath.length
-              )
-            );
+            this.props.updateOutputPath(message.payload.outputPath);
           }
           return;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
@@ -133,7 +128,6 @@ class App extends React.Component<Props> {
           this.props.updateTemplateGenStatusMessage(message.payload.status);
           return;
         case EXTENSION_COMMANDS.GEN_STATUS:
-          // console.log(message);
           this.props.updateTemplateGenStatus(message.payload);
           return;
       }

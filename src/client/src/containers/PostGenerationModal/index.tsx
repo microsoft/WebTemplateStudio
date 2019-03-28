@@ -39,7 +39,7 @@ const PostGenerationModal = (props: Props) => {
     vscode.postMessage({
       command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
       payload: {
-        outputPath: `${outputPath}\\${projectName}`
+        outputPath: `${outputPath}/${projectName}`
       }
     });
   };

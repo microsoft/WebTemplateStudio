@@ -684,7 +684,11 @@ export abstract class Controller {
         let path = undefined;
 
         if (res !== undefined) {
-          path = res[0].path;
+          if (process.platform === "win32") {
+            path = res[0].path.substring(1, res[0].path.length);
+          } else {
+            path = res[0].path;
+          }
         }
 
         Controller.handleValidMessage(ExtensionCommand.GetOutputPath, {
