@@ -10,8 +10,7 @@ export default function Footer() {
             <h5 className={styles.title}>Project Name</h5>
             <p className={styles.description}>
               Project Acorn was made by a group of interns in the Microsoft
-              Garage Program. This project is open source, from Microsoft with
-              love.
+              Garage Internship Program.
             </p>
           </div>
           <div className="col-2">
@@ -29,7 +28,7 @@ export default function Footer() {
                   className={styles.footerlink}
                   href="https://github.com/Microsoft/WebTemplateStudio/tree/dev/docs"
                 >
-                  Resources
+                  Documentation
                 </a>
               </li>
               <li>

@@ -8,7 +8,7 @@ import List from "./components/List";
 import Blank from "./components/Blank";
 import MasterDetail from "./components/MasterDetail";
 
-// TODO WTS: Add routes for your new pages here.
+//TODO Project Acorn: Add routes for your new pages here.
 class App extends Component {
   render() {
     return (

@@ -1,18 +1,12 @@
 .container {
-  padding: 2% 15%;
+  margin-right: 40%;
 }
 
 .title {
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-weight: bold;
   margin-bottom: 0.5em;
-}
-
-.outputDetailsContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1em;
+  margin-top: 1em;
 }
 
 .inputTitle {
@@ -27,7 +21,7 @@
   padding: 0.5em;
   width: 100%;
   font-size: 1em;
-  background-color: #696969;
+  background-color: #3C3C3C;
   border: 1px solid #ffffff;
   border-radius: 2px;
 }
@@ -49,7 +43,7 @@
   outline: none;
   text-decoration: none;
   font-size: 1em;
-  background-color: #696969;
+  background-color: #3C3C3C;
   width: 100%;
   border: none;
   margin-right: 0.25em;
@@ -66,7 +60,21 @@
 }
 
 .inputContainer {
-  width: 45%;
+  width: calc(100% - 34px);
   text-decoration: none;
   outline: none;
+  margin-bottom: 30px;
+  margin-left: 10px;
+}
+
+.tileContainer {
+  margin-bottom: 10px;
+}
+
+.selectionContainer {
+  margin-bottom: 20px;
+}
+
+.selectionTitle {
+  font-size: 18px;
 }

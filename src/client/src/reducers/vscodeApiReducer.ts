@@ -98,6 +98,15 @@ const mockVsCodeApi = () => ({
           }
         });
         break;
+      case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
+        // @ts-ignore produces a mock login response from VSCode in development
+        window.postMessage({
+          command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
+          payload: {
+            outputPath: "/generic_output_path"
+          }
+        });
+        break;
     }
   }
 });

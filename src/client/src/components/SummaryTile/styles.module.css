@@ -8,7 +8,7 @@
 .summaryTileContainer {
     display: flex;
     align-items: center;
-    background-color: blue;
+    background-color: #303030;
     padding: 11px;
     justify-content: space-between;
     width: 100%;
@@ -22,6 +22,7 @@
 .leftContainer {
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .leftIcon {
@@ -46,7 +47,6 @@
 .rightIcon:hover {
     cursor: pointer;
     padding: 3px;
-    background-color: black;
     border-radius: 3px;
 }
 
@@ -57,8 +57,9 @@
 .tileInput {
     font-size: 18px;
     font-weight: bold;
-    background-color: blue;
+    background-color: #303030;
     border: none;
+    width: 80%;
 }
 
 .tileInput:focus {
@@ -74,6 +75,7 @@
     flex-direction: column;
     justify-content: space-between;
     font-size: 12px;
+    width: 100%;
 }
 
 .indent {
