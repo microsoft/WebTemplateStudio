@@ -1,5 +1,6 @@
 import React from "react";
 
+//TODO Project Acorn: Add a new link in the NavBar for your page here.
 export default function NavBar() {
   return (
     <nav className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
