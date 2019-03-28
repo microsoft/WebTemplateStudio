@@ -101,7 +101,14 @@ const mockVsCodeApi = () => ({
             }
           }
         });
-        // @ts-ignore mocks a generation response object
+        // @ts-ignore mocks a generation status message
+        window.postMessage({
+          command: EXTENSION_COMMANDS.GEN_STATUS_MESSAGE,
+          payload: {
+            status: "updated status message..."
+          }
+        });
+        // @ts-ignore mocks a generation status object
         window.postMessage({
           command: EXTENSION_COMMANDS.GEN_STATUS,
           payload: {

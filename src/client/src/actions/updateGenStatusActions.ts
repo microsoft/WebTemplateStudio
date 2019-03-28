@@ -1,7 +1,7 @@
 import * as Actions from "./types";
 
 const updateTemplateGenerationStatusMessageAction = (status: string) => ({
-  type: Actions.UPDATE_TEMPLATE_GENERATION_STATUS,
+  type: Actions.UPDATE_TEMPLATE_GENERATION_STATUS_MESSAGE,
   payload: status
 });
 

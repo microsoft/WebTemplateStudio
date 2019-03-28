@@ -130,7 +130,7 @@ class App extends React.Component<Props> {
           this.props.setPathAndNameValidation(message.payload.validation);
           return;
         case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
-          // this.props.updateTemplateGenStatusMessage(message.payload.status);
+          this.props.updateTemplateGenStatusMessage(message.payload.status);
           return;
         case EXTENSION_COMMANDS.GEN_STATUS:
           // console.log(message);
