@@ -3,7 +3,10 @@ import { createSelector } from "reselect";
 import { RowType } from "../types/rowType";
 import { ISelected } from "../types/selected";
 import getSvgUrl from "../utils/getSvgUrl";
-import { WIZARD_CONTENT_INTERNAL_NAMES, SERVICE_KEYS } from "../utils/constants";
+import {
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  SERVICE_KEYS
+} from "../utils/constants";
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
@@ -42,11 +45,11 @@ const frameworksRowItems = (selection: any): RowType[] => {
  * resource that was created and adds it to a list that will be displayed on the
  * summary page. Currently supports Azure Functions and CosmosDB only. Information
  * provided is in line with props required by SummaryTile component.
- * 
+ *
  * @param selection selection object created by the developer
  */
 const getServices = (selection: any): any => {
-  const { services } = selection;  
+  const { services } = selection;
   const servicesRows = [];
   for (const serviceKey in services) {
     for (const selection of services[serviceKey].selection) {
@@ -57,14 +60,14 @@ const getServices = (selection: any): any => {
           company: "Microsoft",
           svgUrl: getSvgUrl(selection.internalName),
           functionNames: selection.functionNames
-        })
+        });
       } else if (serviceKey === SERVICE_KEYS.COSMOS_DB) {
         servicesRows.push({
           title: selection.accountName,
           originalTitle: "CosmosDB",
           company: "Microsoft",
           svgUrl: getSvgUrl(selection.internalName)
-        }) 
+        });
       }
     }
   }
@@ -79,7 +82,8 @@ const getPagesRowItems = (selection: any): RowType[] => {
     pagesRows.push({
       type: page.originalTitle ? page.originalTitle : page.title,
       title: page.title,
-      svgUrl: getSvgUrl(page.internalName)
+      svgUrl: getSvgUrl(page.internalName),
+      id: page.id
     });
   }
   return pagesRows;
