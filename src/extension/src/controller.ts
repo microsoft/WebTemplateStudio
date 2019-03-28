@@ -71,7 +71,7 @@ export abstract class Controller {
       ExtensionCommand.GetOutputPath,
       Controller.sendOutputPathSelectionToClient
     ],
-    [ExtensionCommand.HandleTelemetry, Controller.trackOnPageChangeInTelemetry],
+    [ExtensionCommand.TrackPageSwitch, Controller.trackOnPageChangeInTelemetry],
     [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
     [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],

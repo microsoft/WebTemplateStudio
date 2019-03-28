@@ -6,10 +6,10 @@ Check [Read Me](https://github.com/Microsoft/WebTemplateStudio/blob/master/READM
 
 Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for existing Github issues of Project
 
-## Release **VERSIONNUMBER**
+## Release __VERSIONNUMBER__
 
 #### Extension Features
-
+- Telemetry Tracking Available
 - Leverage azure-account extension for Azure Login
 - Deploy Azure Function (_Read Notes_)
 - Deploy Azure CosmosDB
@@ -17,7 +17,7 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 - Live data
 
 #### Wizard Features
-
+- Telemetry Tracking On Page Change
 - Login and Sign out of Azure Account
 - Azure Cosmos Modal
 - Populate Subscription, Resource Group, Location

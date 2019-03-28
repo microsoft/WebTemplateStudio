@@ -7,7 +7,7 @@ import { Link, withRouter } from "react-router-dom";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import { ROUTES } from "../../utils/constants";
+import { ROUTES, EXTENSION_COMMANDS } from "../../utils/constants";
 import { validateName } from "../../utils/validateName";
 
 import { IVSCode } from "../../reducers/vscodeApiReducer";
@@ -64,7 +64,7 @@ class Footer extends React.Component<Props> {
     e.preventDefault();
     // @ts-ignore
     this.props.vscode.postMessage({
-      command: "generate",
+      command: EXTENSION_COMMANDS.GENERATE,
       text: "Sending generation info...",
       payload: {
         engine,
@@ -74,15 +74,27 @@ class Footer extends React.Component<Props> {
         functions
       }
     });
+    const { pathname } = this.props.location;
+    this.trackPageForTelemetry(pathname);
   };
   public isReviewAndGenerate = (): boolean => {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
   public handleLinkClick = (pathname: string) => {
+    
+    this.trackPageForTelemetry(pathname);
+    
     if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
       this.props.setRouteVisited(pathsNext[pathname]);
     }
-  };
+  }
+  public trackPageForTelemetry = (pathname: string) => {
+    // @ts-ignore
+    this.props.vscode.postMessage({
+      command: EXTENSION_COMMANDS.TRACK_PAGE_SWITCH,
+      pageName: pathname
+    })
+  }
   public render() {
     // Validate the page names and do not generate if they are invalid or if there are duplicates
     const pageNames = new Set();

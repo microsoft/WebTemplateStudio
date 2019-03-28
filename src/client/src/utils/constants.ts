@@ -33,22 +33,22 @@ const SERVICE_KEYS = {
 };
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
+  AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
+  BLANK_PAGE: "wts.Page.Html.Blank",
+  CONTENT_GRID: "wts.Page.React.Grid",
+  COSMOS_DB: "wts.Feature.Azure.Cosmos",
+  FULL_STACK_APP: "FullStackWebApp",
+  LIST: "wts.Page.ReactNode.LongList",
+  MASTER_DETAIL: "wts.Page.React.MasterDetail",
   NODE_JS: "NodeJS",
   REACT_JS: "ReactJS",
-  MASTER_DETAIL: "wts.Page.React.MasterDetail",
-  CONTENT_GRID: "wts.Page.React.Grid",
-  LIST: "wts.Page.ReactNode.LongList",
-  BLANK_PAGE: "wts.Page.Html.Blank",
-  FULL_STACK_APP: "FullStackWebApp",
-  REST_API: "RestAPI",
-  AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
-  COSMOS_DB: "wts.Feature.Azure.Cosmos"
+  REST_API: "RestAPI"
 };
 
 const PAGE_NAME_ERROR_MESSAGES = {
   DUPLICATE_NAME: "page name has to be unique",
-  INVALID_REGEX: "page name may only contain letters, numbers, and spaces",
   EMPTY_NAME: "name cannot be empty",
+  INVALID_REGEX: "page name may only contain letters, numbers, and spaces",
   NAME_STARTS_WITH_SPACE: "page name may only start with letters or numbers"
 };
 
@@ -58,14 +58,15 @@ const EMPTY_FIELD = (fieldId: string) => {
 
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
+  GENERATE: "generate",
+  GET_OUTPUT_PATH: "getOutputPath",
   GET_USER_STATUS: "getUserStatus",
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
-  GENERATE: "generate",
   PROJECT_PATH_AND_NAME_VALIDATION: "project-path-and-name-validation",
   SUBSCRIPTION_DATA_COSMOS: "subscriptionDataForCosmos",
   SUBSCRIPTION_DATA_FUNCTIONS: "subscriptionDataForFunctions",
-  GET_OUTPUT_PATH: "getOutputPath"
+  TRACK_PAGE_SWITCH: "track-page-switch"
 };
 
 export {
