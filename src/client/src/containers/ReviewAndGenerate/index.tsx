@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { ReactComponent as SaveSVG } from "../../assets/folder.svg";
+import SummaryTile from "../../components/SummaryTile";
 import Table from "../../components/Table";
 
 import {
@@ -13,7 +14,6 @@ import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 import styles from "./styles.module.css";
 
 import { RowType } from "../../types/rowType";
-import { IVSCode } from "../../reducers/vscodeApiReducer";
 
 interface IStateProps {
   projectTypeRows: RowType[];
@@ -89,12 +89,6 @@ const ReviewAndGenerate = (props: Props) => {
       </div>
       {!props.validation.isValidProjectName && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectNameError}</div>}
       {!props.validation.isValidProjectPath && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectPathError}</div>}
-      <Table title="1. Type of Application" rowItems={props.projectTypeRows} />
-      <Table title="2. Frameworks" rowItems={props.frameworkRows} />
-      <Table title="3. Pages" rowItems={props.pagesRows} />
-      {props.servicesRows.length > 0 && (
-        <Table title="4. Services" rowItems={props.servicesRows} />
-      )}
     </div>
   );
 };

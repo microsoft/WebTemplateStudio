@@ -12,8 +12,8 @@ import { IParsedError } from "./parseError";
 /**
  * Used to open the browser to the "New Issue" page on GitHub with relevant context pre-filled in the issue body
  */
-export function reportAnIssue(actionId: string, parsedError: IParsedError): void {
-    const { extensionName, extensionVersion, bugsUrl } = getPackageInfo();
+export function reportAnIssue(vscodeContext: vscode.ExtensionContext, actionId: string, parsedError: IParsedError): void {
+    const { extensionName, extensionVersion, bugsUrl } = getPackageInfo(vscodeContext);
 
     let body: string = `
 <!-- IMPORTANT: Please be sure to remove any private information before submitting. -->
