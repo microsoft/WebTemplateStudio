@@ -21,13 +21,26 @@ const Welcome = ({ setRouteVisited }: IDispatchProps) => {
         developers with boilerplate code, easy to use templates, and automates
         the Azure deployment process, all within this wizard.
       </div>
-      <Link onClick={() => { setRouteVisited(ROUTES.SELECT_PROJECT_TYPE) }} to={ROUTES.SELECT_PROJECT_TYPE} className={buttonStyles.buttonHighlighted}>Get Started</Link>
+      <Link
+        onClick={() => {
+          setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
+        }}
+        to={ROUTES.SELECT_PROJECT_TYPE}
+        className={buttonStyles.buttonHighlighted}
+      >
+        Get Started
+      </Link>
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch : any): IDispatchProps => ({
-  setRouteVisited: (route: string) => { dispatch(setVisitedWizardPageAction(route))},
-})
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  setRouteVisited: (route: string) => {
+    dispatch(setVisitedWizardPageAction(route));
+  }
+});
 
-export default connect(null, mapDispatchToProps)(Welcome);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Welcome);

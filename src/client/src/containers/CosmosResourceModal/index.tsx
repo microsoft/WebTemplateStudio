@@ -158,11 +158,11 @@ const CosmosResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-      props.vscode.postMessage({
-        command: EXTENSION_COMMANDS.NAME_COSMOS,
-        appName: cosmosFormData.accountName,
-        subscription: cosmosFormData.subscription
-      });
+    props.vscode.postMessage({
+      command: EXTENSION_COMMANDS.NAME_COSMOS,
+      appName: cosmosFormData.accountName,
+      subscription: cosmosFormData.subscription
+    });
   }, [cosmosFormData.accountName, props.selection]);
   React.useEffect(() => {
     if (props.selection) {

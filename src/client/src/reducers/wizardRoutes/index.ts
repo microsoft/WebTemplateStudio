@@ -3,4 +3,4 @@ import isVisited from "./navigationReducer";
 
 export default combineReducers({
   isVisited
-})
+});

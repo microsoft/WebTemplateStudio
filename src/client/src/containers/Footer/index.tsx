@@ -82,7 +82,7 @@ class Footer extends React.Component<Props> {
     if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
       this.props.setRouteVisited(pathsNext[pathname]);
     }
-  }
+  };
   public render() {
     // Validate the page names and do not generate if they are invalid or if there are duplicates
     const pageNames = new Set();
@@ -118,7 +118,9 @@ class Footer extends React.Component<Props> {
                   [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
                   [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
                 })}
-                onClick={() => { this.handleLinkClick(pathname) }}
+                onClick={() => {
+                  this.handleLinkClick(pathname);
+                }}
                 to={
                   pathname === ROUTES.REVIEW_AND_GENERATE
                     ? ROUTES.REVIEW_AND_GENERATE
@@ -168,7 +170,14 @@ const mapStateToProps = (state: any): IStateProps => {
 };
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  setRouteVisited: (route: string) => { dispatch(setVisitedWizardPageAction(route)) },
-})
+  setRouteVisited: (route: string) => {
+    dispatch(setVisitedWizardPageAction(route));
+  }
+});
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Footer));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Footer)
+);

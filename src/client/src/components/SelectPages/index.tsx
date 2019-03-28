@@ -50,7 +50,7 @@ class SelectPages extends React.Component<Props> {
    * so it can show up as a selected card
    */
   public convertSelectedPagesToIndices = (pages: ISelected[]): number[] => {
-    const { options }= this.props;
+    const { options } = this.props;
     const selectedPageIndices = [];
     for (let i = 0; i < pages.length; i++) {
       for (let j = 0; j < options.length; j++) {
@@ -69,7 +69,9 @@ class SelectPages extends React.Component<Props> {
           <SelectOption
             selectOptions={selectPages}
             multiSelect={true}
-            selectedCardIndices={this.convertSelectedPagesToIndices(selectedPages)}
+            selectedCardIndices={this.convertSelectedPagesToIndices(
+              selectedPages
+            )}
             title="What pages do you need for your application?"
             options={options}
             currentCardData={selectedPages}

@@ -7,7 +7,7 @@ import appType from "./selectWebAppReducer";
 import projectName from "./updateProjectName";
 import outputPath from "./updateOutputPath";
 import services from "./services";
-import validation from './validateOutputPathAndProjectName';
+import validation from "./validateOutputPathAndProjectName";
 
 export default combineReducers({
   appType,
