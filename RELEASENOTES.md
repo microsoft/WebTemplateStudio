@@ -10,6 +10,7 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 ## Release __VERSIONNUMBER__
 
 #### Extension Features
+- Telemetry Tracking Available
 - Leverage azure-account extension for Azure Login
 - Deploy Azure Function
 - Deploy Azure CosmosDB
