@@ -1,6 +1,5 @@
 var SQLClient = require("./sqlClient");
 const CONSTANTS = require("../constants");
-const uuidv4 = require("uuid/v4");
 
 module.exports = class SQLController {
   constructor() {
@@ -18,7 +17,7 @@ module.exports = class SQLController {
   // Find all items from the {ListItem} container in Cosmos Core SQL {List} database
   async get(req, res) {
     const querySpec = {
-      query: "SELECT * FROM root r",
+      query: "SELECT r.id as _id, r.text FROM root r ORDER BY r._ts DESC",
       parameters: []
     };
 
@@ -27,7 +26,7 @@ module.exports = class SQLController {
         .query(querySpec)
         .toArray();
 
-      res.json(results.reverse());
+      res.json(results);
     } catch (error) {
       res.status(500).send(error);
     }
@@ -38,16 +37,13 @@ module.exports = class SQLController {
    */
   // Post a new item to the {ListItem} container in Cosmos Core SQL {List} database
   async create(req, res) {
-    var id = uuidv4();
     var listItem = {
-      _id: id,
-      id: id,
       text: req.body.text
     };
 
     try {
-      await this.sqlClient.container.items.create(listItem);
-      res.json(listItem);
+      let created = await this.sqlClient.container.items.create(listItem);
+      res.json({ _id: created.body.id, text: listItem.text });
     } catch (error) {
       res.status(500).send(error);
     }
@@ -62,7 +58,7 @@ module.exports = class SQLController {
     try {
       let listItem = await this.sqlClient.container.item(_id).read();
       await this.sqlClient.container.item(_id).delete();
-      res.json({ _id: listItem.body._id });
+      res.json({ _id: listItem.body.id });
     } catch (error) {
       res.status(500).send(error);
     }

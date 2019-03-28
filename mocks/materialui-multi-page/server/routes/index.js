@@ -26,7 +26,7 @@ const router = express.Router();
  */
 const SQLController = require("../sql/sqlController");
 
-var sqlController = new SQLController();
+const sqlController = new SQLController();
 
 router.get(CONSTANTS.ENDPOINT.LIST, function(req, res) {
   sqlController.get(req, res);
