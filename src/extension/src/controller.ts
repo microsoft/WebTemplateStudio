@@ -166,12 +166,16 @@ export abstract class Controller {
   }
   private static handleSyncLiveData(status: SyncStatus) {
     vscode.window.showInformationMessage(`SyncStatus:${status}`);
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.UpdateStatus,
-      payload: {
-        status
-      }
-    });
+    console.log(Controller.reactPanelContext);
+    if (Controller.reactPanelContext) {
+      console.log("I AM HERE!!");
+      Controller.reactPanelContext.postMessageWebview({
+        command: ExtensionCommand.UpdateStatus,
+        payload: {
+          status
+        }
+      });
+    }
   }
 
   //To be addressed in next PR for page/navigation tracking

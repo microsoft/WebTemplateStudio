@@ -67,7 +67,8 @@ const EXTENSION_COMMANDS = {
   SUBSCRIPTION_DATA_COSMOS: "subscriptionDataForCosmos",
   SUBSCRIPTION_DATA_FUNCTIONS: "subscriptionDataForFunctions",
   GET_OUTPUT_PATH: "getOutputPath",
-  STATUS: "update-status"
+  GEN_STATUS_MESSAGE: "update-status-message",
+  GEN_STATUS: "update-status"
 };
 
 export {

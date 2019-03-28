@@ -32,7 +32,10 @@ import AzureLogin from "./containers/AzureLogin";
 import { getSubscriptionData } from "./actions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
 import { setPathAndNameValidation } from "./actions/setPathAndNameValidation";
-import { updateTemplateGenerationStatusAction } from "./actions/updateGenStatusActions";
+import {
+  updateTemplateGenerationStatusMessageAction,
+  updateTemplateGenerationStatusAction
+} from "./actions/updateGenStatusActions";
 
 import appStyles from "./appStyles.module.css";
 
@@ -45,7 +48,8 @@ interface IDispatchProps {
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
   setPathAndNameValidation: (validation: {}) => void;
-  updateTemplateGenStatus: (status: string) => void;
+  updateTemplateGenStatusMessage: (status: string) => any;
+  updateTemplateGenStatus: (isGenerated: boolean) => any;
 }
 
 interface IStateProps {
@@ -64,6 +68,7 @@ class App extends React.Component<Props> {
     setCosmosResourceAccountNameAvailability: () => {},
     setAppNameAvailability: () => {},
     setPathAndNameValidation: () => {},
+    updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {}
   };
 
@@ -124,8 +129,11 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.PROJECT_PATH_AND_NAME_VALIDATION:
           this.props.setPathAndNameValidation(message.payload.validation);
           return;
-        case EXTENSION_COMMANDS.STATUS:
-          this.props.updateTemplateGenStatus(message.payload.status);
+        case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
+          this.props.updateTemplateGenStatusMessage(message.payload.status);
+          return;
+        case EXTENSION_COMMANDS.GEN_STATUS:
+          this.props.updateTemplateGenStatus(message.payload.isGenerated);
           return;
       }
     });
@@ -202,8 +210,11 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   setPathAndNameValidation: (validation: {}) => {
     dispatch(setPathAndNameValidation(validation));
   },
-  updateTemplateGenStatus: (status: string) => {
-    dispatch(updateTemplateGenerationStatusAction(status));
+  updateTemplateGenStatusMessage: (status: string) => {
+    dispatch(updateTemplateGenerationStatusMessageAction(status));
+  },
+  updateTemplateGenStatus: (isGenerated: boolean) => {
+    dispatch(updateTemplateGenerationStatusAction(isGenerated));
   }
 });
 
