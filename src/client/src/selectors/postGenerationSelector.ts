@@ -4,7 +4,7 @@ import { ITemplates } from "../reducers/generationStatus/templates";
 const getTemplateGenerationStatusSelector = (state: any) =>
   state.generationStatus.templates;
 
-const getSyncStatus = (templates: ITemplates): string => templates.syncStatus;
+const getSyncStatus = (templates: ITemplates): string => templates.status;
 
 const isTemplateGenerated = (templates: ITemplates): boolean =>
   templates.isGenerated;

@@ -166,6 +166,12 @@ export abstract class Controller {
   }
   private static handleSyncLiveData(status: SyncStatus) {
     vscode.window.showInformationMessage(`SyncStatus:${status}`);
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.UpdateStatus,
+      payload: {
+        status
+      }
+    });
   }
 
   //To be addressed in next PR for page/navigation tracking
@@ -511,7 +517,11 @@ export abstract class Controller {
           vscode.window.showInformationMessage(
             "Replaced file at: " + pathToEnv
           );
-          Controller.Telemetry.trackCustomEventTime(TelemetryEventName.ConnectionStringReplace, start, Date.now());
+          Controller.Telemetry.trackCustomEventTime(
+            TelemetryEventName.ConnectionStringReplace,
+            start,
+            Date.now()
+          );
         }
         return selection === DialogResponses.yes;
       });
@@ -766,25 +776,27 @@ export abstract class Controller {
   }
 
   private static async sendUserStatus(message: any): Promise<void> {
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.GetUserLoginStatus,
-      async function (this: IActionContext){
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.GetUserLoginStatus,
+      async function(this: IActionContext) {
         try {
-        const email = AzureAuth.getEmail();
-        AzureAuth.getSubscriptions().then(items => {
-          const subscriptions = items.map(subscriptionItem => {
-            return {
-              label: subscriptionItem.label,
-              value: subscriptionItem.label
-            };
+          const email = AzureAuth.getEmail();
+          AzureAuth.getSubscriptions().then(items => {
+            const subscriptions = items.map(subscriptionItem => {
+              return {
+                label: subscriptionItem.label,
+                value: subscriptionItem.label
+              };
+            });
+            Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
+              email: email,
+              subscriptions: subscriptions
+            });
           });
-          Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
-            email: email,
-            subscriptions: subscriptions
-          });
-        });
-      } catch (error) {
-        Controller.handleValidMessage(ExtensionCommand.GetUserStatus, null);
+        } catch (error) {
+          Controller.handleValidMessage(ExtensionCommand.GetUserStatus, null);
+        }
       }
-    })
+    );
   }
 }

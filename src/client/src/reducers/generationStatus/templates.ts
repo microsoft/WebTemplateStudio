@@ -10,22 +10,20 @@ import * as Actions from "../../actions/types";
 
 export interface ITemplates {
   isGenerated: boolean;
-  syncStatus: string;
+  status: string;
 }
 
 const initialState = {
   isGenerated: false,
-  syncStatus: ""
+  status: "Loading Generation Status..."
 };
 
 const templates = (state: ITemplates = initialState, action: any) => {
   switch (action.type) {
     case Actions.UPDATE_TEMPLATE_GENERATION_STATUS:
-      const { isGenerated, syncStatus } = action.payload;
       return {
         ...state,
-        isGenerated,
-        syncStatus
+        status: action.payload
       };
     default:
       return state;

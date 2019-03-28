@@ -40,3 +40,23 @@
     height: 24px;
     width: 24px;
 }
+
+.templateStatus {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.openProject {
+    display: inline-block;
+    border: none;
+    margin: 0;
+    text-decoration: none;
+    background: rgb(48, 48, 48);
+    color: #0067B8;
+    font-family: sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
