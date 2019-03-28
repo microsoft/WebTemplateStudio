@@ -124,11 +124,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 this.props.selection.backendFramework
               )}
             />
-            {showPages &&
-              <div className={styles.sidebarItem}>
-                <div className={styles.dropdownTitle}>Pages</div>
-                <SortablePageList />
-              </div>}
+            {showPages && <SortablePageList />}
             {showServices && (
               <div className={styles.sidebarItem}>
                 <div className={styles.dropdownTitle}>Services</div>

@@ -70,7 +70,6 @@ class App extends React.Component<Props> {
       const message = event.data;
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
-          console.log(message);
           if (message.payload != null && message.payload.outputPath != null) {
             this.props.updateOutputPath(
               message.payload.outputPath.substring(

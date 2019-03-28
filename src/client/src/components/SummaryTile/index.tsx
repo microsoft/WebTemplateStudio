@@ -7,7 +7,6 @@ import { withLocalPath } from "../../utils/getSvgUrl";
 
 import edit from "../../assets/edit.svg";
 import cancel from "../../assets/cancel.svg"
-import { handleInputChange } from "react-select/lib/utils";
 
 interface IProps {
     withIndent?: boolean;
@@ -52,9 +51,7 @@ const SummaryTile = ({ withIndent, title, originalTitle, company, version, isEdi
         }
     }
     const handleMouseLeave = () => {
-        if (isEditable) {
-            setEditable(false);
-        }
+        setEditable(false);
     }
     return (
         <div className={styles.container} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>

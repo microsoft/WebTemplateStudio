@@ -2,7 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { ReactComponent as SaveSVG } from "../../assets/folder.svg";
-import SummaryTile from "../../components/SummaryTile";
 import SortablePageList from "../SortablePageList";
 
 import {
@@ -36,17 +35,19 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps;
 
 const ReviewAndGenerate = (props: Props) => {
-  const handleProjectNameChange = (e: any) => {
-    props.updateProjectName(e.target.value);
+  const { updateProjectName, updateOutputPath, vscode, outputPath, servicesRows, projectTypeRows, pagesRows, frameworkRows } = props;
+  const handleProjectNameChange = (e: React.SyntheticEvent) => {
+    let target = e.target as HTMLInputElement;
+    updateProjectName(target.value);
   };
   const handleOutputPathChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
     const element = e.currentTarget as HTMLInputElement;
-    props.updateOutputPath(element.value);
+    updateOutputPath(element.value);
   };
   const handleSaveClick = () => {
-    props.vscode.postMessage({
+    vscode.postMessage({
       command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
     });
   };
@@ -71,25 +72,23 @@ const ReviewAndGenerate = (props: Props) => {
             onChange={handleOutputPathChange}
             className={styles.pathInput}
             placeholder="Output Path"
-            value={props.outputPath}
+            value={outputPath}
           />
           <SaveSVG
             className={styles.saveIcon}
-            onClick={() => {
-              handleSaveClick();
-            }}
+            onClick={handleSaveClick}
           />
         </div>
       </div>
       {!props.validation.isValidProjectName && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectNameError}</div>}
       {!props.validation.isValidProjectPath && <div style={{ color: "#FF6666", fontSize: "12px", minHeight: "18px", marginBottom: "20px" }}>{props.validation.projectPathError}</div>}
-      <SummarySection selectionTitle="2. Project Type" selectionRows={props.projectTypeRows} />
-      <SummarySection selectionTitle="3. Frameworks" selectionRows={props.frameworkRows} />
+      <SummarySection selectionTitle="2. Project Type" selectionRows={projectTypeRows} />
+      <SummarySection selectionTitle="3. Frameworks" selectionRows={frameworkRows} />
       <div className={styles.selectionContainer}>
         <div className={styles.selectionTitle}>4. Pages</div>
-          <SortablePageList pagesRows={props.pagesRows} />
+          <SortablePageList pagesRows={pagesRows} />
       </div>
-      <SummarySection selectionTitle="5. Services" selectionRows={props.servicesRows} />
+      <SummarySection selectionTitle="5. Services" selectionRows={servicesRows} />
     </div>
   );
 };

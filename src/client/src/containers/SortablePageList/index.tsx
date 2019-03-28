@@ -16,12 +16,12 @@ import styles from "./styles.module.css";
 const MAX_PAGE_NAME_LENGTH = 50;
 
 interface ISortablePageListProps {
-  pages: any[];
+  selectedPages: any[];
 }
 
 interface IStateProps {
-    pagesRows?: any[];
-    selectionTitle?: string;
+  pagesRows?: any[];
+  selectionTitle?: string;
 }
 
 interface ISortableDispatchProps {
@@ -31,14 +31,15 @@ interface ISortableDispatchProps {
 type Props = ISortablePageListProps & ISortableDispatchProps & IStateProps;
 
 const SortablePageList = (props: Props) => {
-  const [pages, setPages] = React.useState(props.pages);
+  const { selectedPages, selectPages, pagesRows } = props;
+  const [pages, setPages] = React.useState(selectedPages);
   const [isMinimized, setMinimized] = React.useState(false);
   React.useEffect(() => {
-    setPages(props.pages);
-  }, [props.pages]);
+    setPages(selectedPages);
+  }, [selectedPages]);
   const handleInputChange = (newTitle: string, idx: number) => {
     pages[idx].title = newTitle;
-    let validationResult = validateName(pages[idx].title);
+    const validationResult = validateName(pages[idx].title);
     pages[idx].error = validationResult.error;
     pages[idx].isValidTitle = validationResult.isValid;
     for (let i = 0; i < pages.length; i++) {
@@ -60,32 +61,34 @@ const SortablePageList = (props: Props) => {
     oldIndex: number;
     newIndex: number;
   }) => {
-    props.selectPages(arrayMove(pages, oldIndex, newIndex));
+    selectPages(arrayMove(pages, oldIndex, newIndex));
   };
   const handleCloseClick = (idx: number) => {
     const pagesWithOmittedIdx: ISelected[] = [...pages];
     pagesWithOmittedIdx.splice(idx, 1);
-    props.selectPages(pagesWithOmittedIdx);
+    selectPages(pagesWithOmittedIdx);
   };
   const hideOrShowText = isMinimized ? "Show" : "Hide";
   const DRAG_PIXEL_THRESHOLD = 1;
   return (
     <div className={styles.sidebarItem}>
-      {!props.pagesRows && <div className={styles.pageListContainer}>
-        <div className={styles.dropdownTitle}>Pages</div>
-        <div
-          className={styles.hideOrShow}
-          onClick={() => {
-            setMinimized(isMinimized ? false : true);
-          }}
-        >
-          {hideOrShowText}
+      {!pagesRows && (
+        <div className={styles.pageListContainer}>
+          <div className={styles.dropdownTitle}>Pages</div>
+          <div
+            className={styles.hideOrShow}
+            onClick={() => {
+              setMinimized(isMinimized ? false : true);
+            }}
+          >
+            {hideOrShowText}
+          </div>
         </div>
-      </div>}
+      )}
       {!isMinimized && (
         <SortableList
-          pages={props.pages}
-          pagesRows={props.pagesRows}
+          pages={selectedPages}
+          pagesRows={pagesRows}
           onSortEnd={onSortEnd}
           distance={DRAG_PIXEL_THRESHOLD}
           handleInputChange={handleInputChange}
@@ -98,7 +101,7 @@ const SortablePageList = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): ISortablePageListProps => ({
-  pages: state.selection.pages
+  selectedPages: state.selection.pages
 });
 
 const mapDispatchToProps = (dispatch: any): ISortableDispatchProps => ({
