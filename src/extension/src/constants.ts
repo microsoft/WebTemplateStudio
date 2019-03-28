@@ -111,7 +111,6 @@ export enum ExtensionCommand {
 export enum TelemetryEventName {
   ExtensionLaunch = "Extension-Launch-Time",
   WizardSession = "Wizard-To-Generate-Session-Time",
-  AzureLogin = "Azure-Account-Extension",
   Subscriptions = "Acquire-Subscription-Names",
   SubscriptionData = "Acquire-Subscription-Data",
   EngineGeneration = "Engine-Generation-Time",
@@ -120,7 +119,8 @@ export enum TelemetryEventName {
   PageChange = "Wizard-Page-Change",
   SyncEngine = "Sync-Engine",
   ConnectionStringReplace = "Connection-String-Replaced",
-  PerformLogin = "Perform-Login"
+  PerformLogin = "Perform-Login",
+  GetUserLoginStatus = "Get-User-Login-Status"
 }
 const localize: nls.LocalizeFunc = nls.loadMessageBundle();
 export namespace DialogResponses {

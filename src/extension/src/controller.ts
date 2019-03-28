@@ -766,22 +766,25 @@ export abstract class Controller {
   }
 
   private static async sendUserStatus(message: any): Promise<void> {
-    try {
-      const email = AzureAuth.getEmail();
-      AzureAuth.getSubscriptions().then(items => {
-        const subscriptions = items.map(subscriptionItem => {
-          return {
-            label: subscriptionItem.label,
-            value: subscriptionItem.label
-          };
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.GetUserLoginStatus,
+      async function (this: IActionContext){
+        try {
+        const email = AzureAuth.getEmail();
+        AzureAuth.getSubscriptions().then(items => {
+          const subscriptions = items.map(subscriptionItem => {
+            return {
+              label: subscriptionItem.label,
+              value: subscriptionItem.label
+            };
+          });
+          Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
+            email: email,
+            subscriptions: subscriptions
+          });
         });
-        Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
-          email: email,
-          subscriptions: subscriptions
-        });
-      });
-    } catch (error) {
-      Controller.handleValidMessage(ExtensionCommand.GetUserStatus, null);
-    }
+      } catch (error) {
+        Controller.handleValidMessage(ExtensionCommand.GetUserStatus, null);
+      }
+    })
   }
 }
