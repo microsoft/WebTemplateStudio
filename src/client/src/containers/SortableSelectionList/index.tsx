@@ -16,7 +16,7 @@ const SortableSidebarItem = SortableElement(
     page,
     idx,
     handleInputChange,
-    handleCloseClick,
+    handleCloseClick
   }: {
     page: any;
     idx: number;
@@ -43,7 +43,7 @@ const SortableSummaryTile = SortableElement(
     page,
     idx,
     handleInputChange,
-    handleCloseClick,
+    handleCloseClick
   }: {
     page: any;
     idx: number;

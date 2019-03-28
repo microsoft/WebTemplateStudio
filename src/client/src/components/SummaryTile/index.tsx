@@ -36,7 +36,7 @@ const SummaryTile = ({
   handleCloseClick,
   idx,
   handleInputChange,
-  isDraggable,
+  isDraggable
 }: IProps) => {
   const [componentTitle, setTitle] = React.useState(title);
   const [isDisabled, setDisabled] = React.useState(true);
@@ -74,7 +74,9 @@ const SummaryTile = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {isDraggable && <img className={styles.reorder} src={withLocalPath(reorder)} />}
+      {isDraggable && (
+        <img className={styles.reorder} src={withLocalPath(reorder)} />
+      )}
       <div
         className={classnames({
           [styles.indent]: withIndent,

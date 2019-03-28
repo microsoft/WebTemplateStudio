@@ -81,20 +81,19 @@ class Footer extends React.Component<Props> {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
   public handleLinkClick = (pathname: string) => {
-    
     this.trackPageForTelemetry(pathname);
-    
+
     if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
       this.props.setRouteVisited(pathsNext[pathname]);
     }
-  }
+  };
   public trackPageForTelemetry = (pathname: string) => {
     // @ts-ignore
     this.props.vscode.postMessage({
       command: EXTENSION_COMMANDS.TRACK_PAGE_SWITCH,
       pageName: pathname
-    })
-  }
+    });
+  };
   public render() {
     // Validate the page names and do not generate if they are invalid or if there are duplicates
     const pageNames = new Set();

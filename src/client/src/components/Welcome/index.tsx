@@ -30,7 +30,10 @@ const Welcome = ({ setRouteVisited }: IDispatchProps) => {
             setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
           }}
           to={ROUTES.SELECT_PROJECT_TYPE}
-          className={classnames(buttonStyles.buttonHighlighted, styles.getStarted)}
+          className={classnames(
+            buttonStyles.buttonHighlighted,
+            styles.getStarted
+          )}
         >
           Get Started
         </Link>
