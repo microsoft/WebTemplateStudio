@@ -48,6 +48,7 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 //   try {
 //     res.json(sampleData.listTextAssets);
 //   } catch (err) {
+//     console.log(err);
 //     res.status(500).send(err);
 //   }
 // });
@@ -62,6 +63,7 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 //     res.json(listItem);
 //     sampleData.listID++;
 //   } catch (err) {
+//     console.log(err);
 //     res.status(500).send(err);
 //   }
 // });
@@ -70,7 +72,7 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 //   try {
 //     const { _id } = req.params;
 //     var index = sampleData.listTextAssets.findIndex(
-//       listItem => listItem._id == _id
+//       listItem => listItem._id === Number(_id)
 //     );
 //     if (index > -1) {
 //       sampleData.listTextAssets.splice(index, 1);
@@ -79,6 +81,7 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
 //       res.status(404).send("Could not find item with id:" + _id);
 //     }
 //   } catch (err) {
+//     console.log(err);
 //     res.status(500).send(err);
 //   }
 // });
@@ -88,6 +91,7 @@ router.get(CONSTANTS.ENDPOINT.GRID, (req, res) => {
   try {
     res.json(sampleData.gridTextAssets);
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 });
@@ -97,6 +101,7 @@ router.get(CONSTANTS.ENDPOINT.MASTERDETAIL, (req, res) => {
   try {
     res.json(sampleData.masterDetailTextAssets);
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 });

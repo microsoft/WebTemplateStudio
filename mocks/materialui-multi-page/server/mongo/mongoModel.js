@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
+const CONSTANTS = require("../constants");
 
-// Define a schema for the Cosmos MongoDB (https://mongoosejs.com/docs/index.html)
-// TODO WTS: Define a schema for real data
+// TODO Project Acorn: The Cosmos Mongo Database is set up to hold a collection called ListItems which contains objects
+// with the following schema. Define your own schema for the Cosmos MongoDB using mongoose (https://mongoosejs.com/docs/index.html).
 const ListItem = mongoose.model(
-  "ListItems",
+  CONSTANTS.COSMOS.COLLECTION,
   new mongoose.Schema({
     text: String
   })

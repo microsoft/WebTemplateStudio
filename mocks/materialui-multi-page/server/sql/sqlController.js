@@ -11,10 +11,7 @@ module.exports = class SQLController {
     this.sqlClient.connect();
   }
 
-  /*
-   * Engine: Replace with container and database names (check constants.ts)
-   */
-  // Find all items from the {ListItem} container in Cosmos Core SQL {List} database
+  // Find all items from the ListItem container in Cosmos Core SQL List database
   async get(req, res) {
     const querySpec = {
       query: "SELECT r.id as _id, r.text FROM root r ORDER BY r._ts DESC",
@@ -28,14 +25,12 @@ module.exports = class SQLController {
 
       res.json(results);
     } catch (error) {
+      console.log(error);
       res.status(500).send(error);
     }
   }
 
-  /*
-   * Engine: Replace with container and database names (check constants.ts)
-   */
-  // Post a new item to the {ListItem} container in Cosmos Core SQL {List} database
+  // Post a new item to the ListItem container in Cosmos Core SQL List database
   async create(req, res) {
     var listItem = {
       text: req.body.text
@@ -45,14 +40,12 @@ module.exports = class SQLController {
       let created = await this.sqlClient.container.items.create(listItem);
       res.json({ _id: created.body.id, text: listItem.text });
     } catch (error) {
+      console.log(error);
       res.status(500).send(error);
     }
   }
 
-  /*
-   * Engine: Replace with container and database names (check constants.ts)
-   */
-  // Remove an item from the {ListItem} container in Cosmos Core SQL {List} database
+  // Remove an item from the ListItem container in Cosmos Core SQL List database
   async destroy(req, res) {
     const { _id } = req.params;
     try {
@@ -60,6 +53,7 @@ module.exports = class SQLController {
       await this.sqlClient.container.item(_id).delete();
       res.json({ _id: listItem.body.id });
     } catch (error) {
+      console.log(error);
       res.status(500).send(error);
     }
   }

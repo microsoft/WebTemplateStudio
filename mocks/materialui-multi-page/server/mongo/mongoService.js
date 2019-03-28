@@ -5,13 +5,16 @@ require("./mongoConnect").connect();
 
 // Find all list items from the nearest instance of Cosmos MongoDB
 function get(req, res) {
-  const docquery = ListItem.find({}).read(ReadPreference.NEAREST);
+  const docquery = ListItem.find({})
+    .sort({ _id: -1 })
+    .read(ReadPreference.NEAREST);
   docquery
     .exec()
     .then(listItems => {
       res.json(listItems);
     })
     .catch(err => {
+      console.log(err);
       res.status(500).send(err);
     });
 }
@@ -25,6 +28,7 @@ function create(req, res) {
       res.json(listItem);
     })
     .catch(err => {
+      console.log(err);
       res.status(500).send(err);
     });
 }
@@ -38,6 +42,7 @@ function destroy(req, res) {
       res.json(listItem);
     })
     .catch(err => {
+      console.log(err);
       res.status(500).send(err);
     });
 }
