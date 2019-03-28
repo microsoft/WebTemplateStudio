@@ -32,6 +32,8 @@ module.exports = class SQLController {
 
   // Post a new item to the ListItem container in Cosmos Core SQL List database
   async create(req, res) {
+    // TODO Project Acorn: The Cosmos Core SQL Database is set up to hold a container called ListItems which contains documents
+    // with the following schema. Define your own schema to add documents to the container here.
     var listItem = {
       text: req.body.text
     };
