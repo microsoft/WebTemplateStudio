@@ -5,6 +5,7 @@ import vscodeApi from "./vscodeApiReducer";
 import wizardContent from "./wizardContentReducers";
 import selection from "./wizardSelectionReducers";
 import wizardRoutes from "./wizardRoutes";
+import generationStatus from "./generationStatus";
 
 export default combineReducers({
   vscode: vscodeApi,
@@ -12,5 +13,6 @@ export default combineReducers({
   selection,
   azureProfileData,
   modals,
-  wizardRoutes
+  wizardRoutes,
+  generationStatus
 });

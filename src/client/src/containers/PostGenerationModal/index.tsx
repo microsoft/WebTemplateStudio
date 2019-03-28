@@ -4,8 +4,8 @@ import * as React from "react";
 import asModal from "../../components/Modal";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 
-import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
+import styles from "./styles.module.css";
 
 const PostGenerationModal = () => {
   return (
