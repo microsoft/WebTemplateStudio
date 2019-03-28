@@ -18,6 +18,7 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 - Live data
 
 #### Wizard Features
+- Telemetry Tracking On Page Change
 - Login and Sign out of Azure Account
 - Azure Cosmos Modal
 - Populate Subscription, Resource Group, Location
