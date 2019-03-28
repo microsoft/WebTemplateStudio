@@ -489,6 +489,10 @@ export abstract class Controller {
     var serviceQueue: Promise<any>[] = [];
     enginePayload.path = apiGenResult.generationOutputPath;
 
+    Controller.handleValidMessage(ExtensionCommand.GetOutputPath, {
+      outputPath: enginePayload.path
+    });
+
     if (payload.selectedFunctions) {
       serviceQueue.push(
         Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
