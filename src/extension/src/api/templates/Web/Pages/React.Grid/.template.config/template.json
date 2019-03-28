@@ -4,7 +4,7 @@
   "name": "Grid",
   "groupIdentity": "wts.Page.React.Grid",
   "identity": "wts.Page.React.Grid",
-  "description": "Grid layout of card components.",
+  "description": "A page displaying simple image and text components which are organized into a grid.",
   "tags": {
     "language": "Any",
     "type": "item",

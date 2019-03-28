@@ -6,7 +6,7 @@
   "name": "Master Detail",
   "groupIdentity": "wts.Page.React.MasterDetail",
   "identity": "wts.Page.React.MasterDetail",
-  "description": "This is a master detail which can be used for detail things.",
+  "description": "The master-detail page has a master pane and a details pane for content.",
   "tags": {
     "language": "Any",
     "type": "item",

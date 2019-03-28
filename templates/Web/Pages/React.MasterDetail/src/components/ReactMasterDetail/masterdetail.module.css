@@ -1,0 +1,17 @@
+﻿.sidebar {
+  /* full height - footer height - navbar height */
+  min-height: calc(100vh - 160px - 57px);
+}
+.sidebarText {
+  font-weight: 500;
+  font-color: #000000;
+}
+
+.breadCrumbLink {
+  color: #025fce;
+}
+
+.heading {
+  background-color: #cecece;
+  padding-top: 18em;
+}
