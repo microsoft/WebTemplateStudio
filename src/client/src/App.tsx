@@ -32,6 +32,7 @@ import AzureLogin from "./containers/AzureLogin";
 import { getSubscriptionData } from "./actions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
 import { setPathAndNameValidation } from "./actions/setPathAndNameValidation";
+import PostGenerationModal from "./containers/PostGenerationModal";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -139,6 +140,7 @@ class App extends React.Component<Props> {
         <div className={appStyles.container}>
           <CosmosResourceModal />
           <AzureFunctionsModal />
+          <PostGenerationModal isModalOpen={true} />
           <LeftSidebar />
           <div
             className={classnames({

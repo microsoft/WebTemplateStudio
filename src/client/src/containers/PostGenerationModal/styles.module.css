@@ -1,0 +1,42 @@
+.title {
+    font-weight: bold;
+}
+
+.section {
+    margin-top: 20px;
+}
+
+.footerContainer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button {
+    font-size: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.spinner {
+    height: 1em;
+    margin-right: 10px;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    animation: rotate steps(60) 1s infinite;
+    height: 24px;
+    width: 24px;
+}
