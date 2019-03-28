@@ -1,10 +1,11 @@
 import { ServiceClientCredentials } from "ms-rest";
-import { config } from "../config";
 import * as path from "path";
 import * as fs from "fs";
 import * as request from "request";
 
-export namespace ZipDeploy {
+export namespace ZipDeployHelper {
+  const FUNCTION_ZIP_DEPLOY_DOMAIN = ".scm.azurewebsites.net/api/zipdeploy";
+
   export async function zipDeploy(
     credentials: ServiceClientCredentials,
     appPath: string,
@@ -12,9 +13,7 @@ export namespace ZipDeploy {
   ): Promise<void> {
     const zipPath = path.join(appPath, "tmp", "out.zip");
 
-    const zipRequestUrl = `https://${appName.toLowerCase()}${
-      config.functionZipPath
-    }`;
+    const zipRequestUrl = `https://${appName.toLowerCase()}${FUNCTION_ZIP_DEPLOY_DOMAIN}`;
 
     let tokenCache = await (<any>credentials).tokenCache;
 
@@ -26,7 +25,7 @@ export namespace ZipDeploy {
       }
     };
 
-    fs.createReadStream(zipPath).pipe(
+    await fs.createReadStream(zipPath).pipe(
       request.post(options, (uploadZipError: any, uploadZipResponse: any) => {
         if (uploadZipError) {
           return Promise.reject(uploadZipError);

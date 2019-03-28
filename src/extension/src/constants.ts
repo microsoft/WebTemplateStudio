@@ -54,10 +54,6 @@ export const CONSTANTS = {
       return `Function App ${appName} has been deployed and is ready to use!`;
     }
   },
-  FUNCTIONS_CONFIG: {
-    MAX_NAME_LEN: 60,
-    MIN_NAME_LEN: 1
-  },
   API: {
     WINDOWS_PLATFORM_VERSION: "win32",
     BASE_APPLICATION_NAME: "CoreTemplateStudio.Api",
