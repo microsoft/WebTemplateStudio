@@ -166,16 +166,6 @@ export abstract class Controller {
   }
   private static handleSyncLiveData(status: SyncStatus) {
     vscode.window.showInformationMessage(`SyncStatus:${status}`);
-    console.log(Controller.reactPanelContext);
-    if (Controller.reactPanelContext) {
-      console.log("I AM HERE!!");
-      Controller.reactPanelContext.postMessageWebview({
-        command: ExtensionCommand.UpdateStatus,
-        payload: {
-          status
-        }
-      });
-    }
   }
 
   //To be addressed in next PR for page/navigation tracking
@@ -462,7 +452,12 @@ export abstract class Controller {
     const apiGenResult = await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
     );
-
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.UpdateGenStatus,
+      payload: {
+        isGenerated: true
+      }
+    });
     var serviceQueue: Promise<any>[] = [];
     enginePayload.path = apiGenResult.generationOutputPath;
 
@@ -604,6 +599,12 @@ export abstract class Controller {
 
   private static handleGenLiveMessage(message: any) {
     vscode.window.showInformationMessage(message);
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.UpdateGenStatusMessage,
+      payload: {
+        status: message
+      }
+    });
   }
 
   public static sendOutputPathSelectionToClient(message: any) {

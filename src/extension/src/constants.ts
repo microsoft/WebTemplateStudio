@@ -106,7 +106,8 @@ export enum ExtensionCommand {
   GetCosmosAPIs = "getCosmosAPIs",
   GetUserStatus = "getUserStatus",
   ProjectPathAndNameValidation = "project-path-and-name-validation",
-  UpdateStatus = "update-status"
+  UpdateGenStatusMessage = "update-status-message",
+  UpdateGenStatus = "update-status"
 }
 
 export enum TelemetryEventName {
