@@ -31,3 +31,16 @@
     margin-bottom: 2em;
     line-height: 1.75em;
 }
+
+.projectDetailsContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0px 15% 0px 15%;
+    box-sizing: border-box;
+}
+
+.getStarted {
+    align-self: flex-end;
+}

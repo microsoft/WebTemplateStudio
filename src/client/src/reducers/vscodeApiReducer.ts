@@ -1,6 +1,6 @@
 import * as Actions from "../actions/types";
-import { PRODUCTION } from "../utils/constants";
-import { EXTENSION_COMMANDS } from "../utils/constants";
+
+import { EXTENSION_COMMANDS, PRODUCTION } from "../utils/constants";
 
 /* State Shape
 {
@@ -21,9 +21,13 @@ export interface IVSCode {
   vscode: IVSCodeAPI;
 }
 
+export interface IVSCodeObject {
+  postMessage: (message: any) => void;
+}
+
 interface IVSCodeAPI {
   isVsCodeApiAcquired: boolean;
-  vscodeObject: any;
+  vscodeObject: IVSCodeObject;
 }
 
 /**

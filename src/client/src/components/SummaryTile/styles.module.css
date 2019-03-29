@@ -59,7 +59,7 @@
     font-weight: bold;
     background-color: #303030;
     border: none;
-    width: 80%;
+    max-width: 300px;
 }
 
 .tileInput:focus {
@@ -80,4 +80,10 @@
 
 .indent {
     margin-left: 4em;
+}
+
+.reorder {
+    height: 18px;
+    margin-right: 10px;
+    cursor: grab;
 }

@@ -19,6 +19,7 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 
 #### Wizard Features
 
+- Welcome Page Component
 - Telemetry Tracking On Page Change
 - Login and Sign out of Azure Account
 - Azure Cosmos Modal
@@ -48,6 +49,7 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 - Azure AD
 - Generate project (bootstrap -> replaces material)
 - Dynamically gain dependencies at first run (Dlls) rather than packaging with vsix.
+- Theme-matching with VSCode themes (light/dark/high-contrast)
 
 #### Notes
 

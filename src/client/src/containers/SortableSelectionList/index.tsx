@@ -49,6 +49,7 @@ const SortableSummaryTile = SortableElement(
     idx: number;
     handleInputChange: any;
     handleCloseClick?: (idx: number) => void;
+    isDraggable?: boolean;
   }) => {
     return (
       <React.Fragment>
@@ -61,6 +62,7 @@ const SortableSummaryTile = SortableElement(
             handleCloseClick={handleCloseClick}
             handleInputChange={handleInputChange}
             idx={idx + 1}
+            isDraggable={true}
           />
         </div>
       </React.Fragment>
