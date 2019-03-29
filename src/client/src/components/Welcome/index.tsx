@@ -1,12 +1,14 @@
+import classnames from "classnames";
 import * as React from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { ROUTES } from "../../utils/constants";
+import styles from "./styles.module.css";
 
 import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
+import ProjectNameAndOutput from "../../containers/ProjectNameAndOutput";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => any;
@@ -21,15 +23,21 @@ const Welcome = ({ setRouteVisited }: IDispatchProps) => {
         developers with boilerplate code, easy to use templates, and automates
         the Azure deployment process, all within this wizard.
       </div>
-      <Link
-        onClick={() => {
-          setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
-        }}
-        to={ROUTES.SELECT_PROJECT_TYPE}
-        className={buttonStyles.buttonHighlighted}
-      >
-        Get Started
-      </Link>
+      <div className={styles.projectDetailsContainer}>
+        <ProjectNameAndOutput />
+        <Link
+          onClick={() => {
+            setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
+          }}
+          to={ROUTES.SELECT_PROJECT_TYPE}
+          className={classnames(
+            buttonStyles.buttonHighlighted,
+            styles.getStarted
+          )}
+        >
+          Get Started
+        </Link>
+      </div>
     </div>
   );
 };

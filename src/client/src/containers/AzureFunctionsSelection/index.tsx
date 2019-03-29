@@ -4,14 +4,17 @@ import { connect } from "react-redux";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
+import { openAzureFunctionsModalAction } from "../../actions/modalActions";
+
 import * as getSvg from "../../utils/getSvgUrl";
 
+import styles from "./styles.module.css";
+
+import * as AzureFunctionActions from "../../actions/azureFunctionActions";
 import {
   IAzureFunctionsSelection,
   ISelectedAzureFunctionsService
 } from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
-
-import * as AzureFunctionActions from "../../actions/azureFunctionActions";
 
 interface IProps {
   functionApps: IAzureFunctionsSelection;
@@ -26,6 +29,7 @@ interface IDispatchProps {
   updateFunctionNames: (functionApp: IFunctionApp) => any;
   removeAzureFunctionApp: (appIndex: number) => any;
   removeAzureFunction: (functionIndex: number) => any;
+  openAzureFunctionsModal: () => any;
 }
 
 type Props = IProps & IDispatchProps;
@@ -42,7 +46,8 @@ const AzureFunctionsSelection = ({
   functionApps,
   updateFunctionNames,
   removeAzureFunctionApp,
-  removeAzureFunction
+  removeAzureFunction,
+  openAzureFunctionsModal
 }: Props) => {
   const { selection } = functionApps;
   const { serviceType } = functionApps.wizardContent;
@@ -57,16 +62,21 @@ const AzureFunctionsSelection = ({
     }
   };
   return (
-    <React.Fragment>
+    <div>
       {!_.isEmpty(selection) &&
         selection.map(
           (functionApp: ISelectedAzureFunctionsService, idx: number) => (
             <React.Fragment key={serviceType + functionApp.appName + idx}>
+              <div className={styles.headerContainer}>
+                <div>{serviceType}</div>
+                <div className={styles.edit} onClick={openAzureFunctionsModal}>
+                  Edit
+                </div>
+              </div>
               <DraggableSidebarItem
                 key={functionApp.appName + idx}
                 text={functionApp.appName}
                 closeSvgUrl={getSvg.getCancelSvg()}
-                itemTitle={serviceType}
                 withIndent={true}
                 idx={idx + 1}
                 handleCloseClick={removeAzureFunctionApp}
@@ -88,7 +98,7 @@ const AzureFunctionsSelection = ({
             </React.Fragment>
           )
         )}
-    </React.Fragment>
+    </div>
   );
 };
 
@@ -101,6 +111,9 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   },
   removeAzureFunction: functionIndex => {
     dispatch(AzureFunctionActions.removeAzureFunctionAction(functionIndex));
+  },
+  openAzureFunctionsModal: () => {
+    dispatch(openAzureFunctionsModalAction());
   }
 });
 

@@ -9,3 +9,21 @@
 .selectionTitle {
     font-size: 18px;
 }
+
+.headerContainerRest,
+.headerContainer {
+    display: flex;
+    margin-right: 34px;
+}
+
+.headerContainer {
+    justify-content: space-between;
+}
+
+.headerContainerRest {
+    justify-content: flex-end;
+}
+
+.editButton {
+    cursor: pointer;
+}

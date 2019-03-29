@@ -1,0 +1,10 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 26px;
+    padding-right: 22px;
+}
+
+.edit {
+    cursor: pointer;
+}
