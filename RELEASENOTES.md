@@ -6,10 +6,10 @@ Check [Read Me](https://github.com/Microsoft/WebTemplateStudio/blob/master/READM
 
 Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for existing Github issues of Project
 
-
-## Release __VERSIONNUMBER__
+## Release **VERSIONNUMBER**
 
 #### Extension Features
+
 - Leverage azure-account extension for Azure Login
 - Deploy Azure Function
 - Deploy Azure CosmosDB
@@ -17,6 +17,7 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 - Live data
 
 #### Wizard Features
+
 - Login and Sign out of Azure Account
 - Azure Cosmos Modal
 - Populate Subscription, Resource Group, Location
@@ -34,12 +35,12 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 - Delete Pages and Services from Summary Page
 
 #### Unimplemented Features
+
 - Web App Deployments
-- Azure AD 
-- Generate project (bootstrap -> replaces material) 
-- Dynamically gain dependencies at first run (Dlls) rather than packaging with vsix. 
+- Azure AD
+- Generate project (bootstrap -> replaces material)
+- Dynamically gain dependencies at first run (Dlls) rather than packaging with vsix.
 
 #### Mock Template Features
-- Master detail, Grid and List Pages 
-- Connection to MongoDB 
-- Node/Express Backend 
+
+- Centralized Error Handling in Express Back End
