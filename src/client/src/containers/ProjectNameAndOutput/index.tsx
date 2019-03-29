@@ -33,22 +33,13 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps;
 
 const ProjectNameAndOutput = (props: Props) => {
-  const handleProjectNameChange = (
-    e: React.SyntheticEvent<HTMLInputElement>
-  ) => {
-    const element = e.currentTarget as HTMLInputElement;
-    props.updateProjectName(element.value);
-  };
-  const handleOutputPathChange = (
-    e: React.SyntheticEvent<HTMLInputElement>
-  ) => {
-    const element = e.currentTarget as HTMLInputElement;
-    props.updateOutputPath(element.value);
+  React.useEffect(() => {
     if (process.env.NODE_ENV === "production") {
       // @ts-ignore
-      vscode.postMessage({
+      props.vscode.postMessage({
         command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-        projectPath: element.value
+        projectPath: props.outputPath,
+        projectName: props.projectName
       });
     } else {
       // @ts-ignore produces a mock login response from VSCode in development
@@ -62,6 +53,18 @@ const ProjectNameAndOutput = (props: Props) => {
         }
       });
     }
+  }, [props.outputPath]);
+  const handleProjectNameChange = (
+    e: React.SyntheticEvent<HTMLInputElement>
+  ) => {
+    const element = e.currentTarget as HTMLInputElement;
+    props.updateProjectName(element.value);
+  };
+  const handleOutputPathChange = (
+    e: React.SyntheticEvent<HTMLInputElement>
+  ) => {
+    const element = e.currentTarget as HTMLInputElement;
+    props.updateOutputPath(element.value);
   };
   const handleSaveClick = () => {
     props.vscode.postMessage({
