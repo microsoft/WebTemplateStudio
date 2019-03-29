@@ -105,7 +105,7 @@ export enum ExtensionCommand {
   GetFunctionsRuntimes = "getFunctionsRuntimes",
   GetCosmosAPIs = "getCosmosAPIs",
   GetUserStatus = "getUserStatus",
-  ProjectPathAndNameValidation = "project-path-and-name-validation",
+  ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status"
 }
