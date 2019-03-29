@@ -106,8 +106,12 @@ export enum ExtensionCommand {
   GetFunctionsRuntimes = "getFunctionsRuntimes",
   GetCosmosAPIs = "getCosmosAPIs",
   GetUserStatus = "getUserStatus",
+<<<<<<< HEAD
   ProjectPathAndNameValidation = "project-path-and-name-validation",
   TrackPageSwitch = "track-page-switch",
+=======
+  ProjectPathValidation = "project-path-validation",
+>>>>>>> 694d73a... Added command for path validation
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
   OpenProjectVSCode = "open-project-vscode"

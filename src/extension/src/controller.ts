@@ -74,6 +74,10 @@ export abstract class Controller {
     [ExtensionCommand.TrackPageSwitch, Controller.trackOnPageChangeInTelemetry],
     [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
+    [
+      ExtensionCommand.ProjectPathValidation,
+      Controller.handleProjectPathValidation
+    ],
     [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
     [ExtensionCommand.GetUserStatus, Controller.sendUserStatus],
     [ExtensionCommand.OpenProjectVSCode, Controller.openProjectVSCode]
@@ -387,6 +391,33 @@ export abstract class Controller {
     );
   }
 
+  public static handleProjectPathValidation(message: any) {
+    const projectPath = message.projectPath;
+    const projectName = message.projectName;
+
+    let projectPathError = "";
+    let isInvalidProjectPath = false;
+
+    let validationObject = Validator.isValidProjectPath(
+      projectPath,
+      projectName
+    );
+
+    projectPathError = validationObject.error;
+    isInvalidProjectPath = !validationObject.isValid;
+
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.ProjectPathValidation,
+      payload: {
+        projectPathValidation: {
+          isInvalidProjectPath: isInvalidProjectPath,
+          projectPathError: projectPathError
+        }
+      }
+    });
+    console.log("Sent the error");
+  }
+
   public static sendFunctionNameValidationStatusToClient(message: any) {
     Controller.validateFunctionAppName(message.appName, message.subscription)
       .then(() => {
@@ -423,43 +454,6 @@ export abstract class Controller {
     var payload = message.payload;
     var enginePayload: any = payload.engine;
 
-    var projectNameError = "";
-    var isValidProjectName = true;
-    var projectPathError = "";
-    var isValidProjectPath = true;
-
-    try {
-      Validator.isValidProjectName(enginePayload.projectName);
-    } catch (error) {
-      projectNameError = error.message;
-      isValidProjectName = false;
-    }
-
-    try {
-      Validator.isValidProjectPath(
-        enginePayload.path,
-        enginePayload.projectName
-      );
-    } catch (error) {
-      projectPathError = error.message;
-      isValidProjectPath = false;
-    }
-
-    if (!(isValidProjectName && isValidProjectPath)) {
-      // Send error to wizard, do not do anything
-      Controller.reactPanelContext.postMessageWebview({
-        command: ExtensionCommand.ProjectPathAndNameValidation,
-        payload: {
-          validation: {
-            isValidProjectName: isValidProjectName,
-            projectNameError: projectNameError,
-            isValidProjectPath: isValidProjectPath,
-            projectPathError: projectPathError
-          }
-        }
-      });
-      return;
-    }
     const apiGenResult = await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
     ).catch(error => {
