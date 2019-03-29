@@ -35,12 +35,14 @@ type Props = IStateProps & IDispatchProps;
 const ProjectNameAndOutput = (props: Props) => {
   React.useEffect(() => {
     if (process.env.NODE_ENV === "production") {
-      // @ts-ignore
-      props.vscode.postMessage({
-        command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-        projectPath: props.outputPath,
-        projectName: props.projectName
-      });
+      if (props.vscode) {
+        // @ts-ignore
+        props.vscode.postMessage({
+          command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+          projectPath: props.outputPath,
+          projectName: props.projectName
+        });
+      }
     } else {
       // @ts-ignore produces a mock login response from VSCode in development
       window.postMessage({
@@ -53,7 +55,7 @@ const ProjectNameAndOutput = (props: Props) => {
         }
       });
     }
-  }, [props.outputPath]);
+  }, [props.outputPath, props.projectName]);
   const handleProjectNameChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
