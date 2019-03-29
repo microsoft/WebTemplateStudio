@@ -28,15 +28,21 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler
-app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
-});
+// TODO Project Acorn: Add your own error handler here.
+if (process.env.NODE_ENV === "production") {
+  // Do not send stack trace of error message when in production
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.locals.error = "500: Internal Server Error";
+    res.render("error");
+  });
+} else {
+  // Log stack trace of error message while in development
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    console.log(err);
+    res.send(err);
+  });
+}
 
 module.exports = app;
