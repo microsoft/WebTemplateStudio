@@ -23,14 +23,23 @@ export abstract class Validator {
   };
 
   public static isValidProjectPath = (path: string, name: string) => {
+    let isValid = true;
+    let error = "";
+
     if (Validator.isEmpty(path)) {
-      throw Error(CONSTANTS.ERRORS.EMPTY_OUTPUT_PATH);
+      error = CONSTANTS.ERRORS.EMPTY_OUTPUT_PATH;
+      isValid = false;
     } else if (!fs.existsSync(path)) {
-      throw Error(CONSTANTS.ERRORS.INVALID_OUTPUT_PATH(path));
-    } else if (!Validator.isUniquePath(path, name)) {
-      throw Error(CONSTANTS.ERRORS.PROJECT_PATH_EXISTS(path, name));
+      error = CONSTANTS.ERRORS.INVALID_OUTPUT_PATH(path);
+      isValid = false;
+    } else if (name !== "" && !Validator.isUniquePath(path, name)) {
+      error = CONSTANTS.ERRORS.PROJECT_PATH_EXISTS(path, name);
+      isValid = false;
     }
-    return true;
+    return {
+      isValid: isValid,
+      error: error
+    };
   };
 
   public static isUniquePath = (projectPath: string, name: string) => {

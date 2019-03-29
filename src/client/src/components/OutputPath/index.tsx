@@ -9,6 +9,7 @@ interface IProps {
   handleChange: (e: React.SyntheticEvent<HTMLInputElement>) => any;
   handleSaveClick: () => any;
   value: string;
+  validation: any;
   placeholder?: string;
 }
 
@@ -16,6 +17,7 @@ const OutputPath = ({
   handleChange,
   handleSaveClick,
   value,
+  validation,
   placeholder
 }: IProps) => {
   return (
