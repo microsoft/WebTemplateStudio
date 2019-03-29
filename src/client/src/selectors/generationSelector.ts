@@ -2,6 +2,7 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { ISelected } from "../types/selected";
 import { ITemplateInfo } from "../types/templateInfo";
+import { SERVICE_KEYS } from "../utils/constants";
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
@@ -35,10 +36,13 @@ const getBackendFramework = (selection: any): string => {
 const getServices = (selection: any): ITemplateInfo[] => {
   const { services } = selection;
   const servicesInfo = [];
-  if (_.has(services, "cosmosOptions")) {
+  if (
+    _.has(services, SERVICE_KEYS.COSMOS_DB) &&
+    services.cosmosDB.selection.length > 0
+  ) {
     servicesInfo.push({
       name: "Cosmos",
-      identity: services.cosmosOptions.internalName
+      identity: services.cosmosDB.selection[0].internalName
     });
   }
   return servicesInfo;
