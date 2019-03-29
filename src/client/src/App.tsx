@@ -31,7 +31,7 @@ import {
 import AzureLogin from "./containers/AzureLogin";
 import { getSubscriptionData } from "./actions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
-import { setPathAndNameValidation } from "./actions/setPathAndNameValidation";
+import { setProjectPathValidation } from "./actions/setProjectPathValidation";
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
@@ -47,7 +47,7 @@ interface IDispatchProps {
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
-  setPathAndNameValidation: (validation: {}) => void;
+  setProjectPathValidation: (validation: {}) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: boolean) => any;
 }
@@ -67,7 +67,7 @@ class App extends React.Component<Props> {
     updateOutputPath: () => {},
     setCosmosResourceAccountNameAvailability: () => {},
     setAppNameAvailability: () => {},
-    setPathAndNameValidation: () => {},
+    setProjectPathValidation: () => {},
     updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {}
   };
@@ -121,8 +121,10 @@ class App extends React.Component<Props> {
             message: message.message
           });
           return;
-        case EXTENSION_COMMANDS.PROJECT_PATH_AND_NAME_VALIDATION:
-          this.props.setPathAndNameValidation(message.payload.validation);
+        case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
+          this.props.setProjectPathValidation(
+            message.payload.projectPathValidation
+          );
           return;
         case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
           this.props.updateTemplateGenStatusMessage(message.payload.status);
@@ -202,8 +204,8 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   setAppNameAvailability: (isAvailableObject: any) => {
     dispatch(setAppNameAvailabilityAction(isAvailableObject));
   },
-  setPathAndNameValidation: (validation: {}) => {
-    dispatch(setPathAndNameValidation(validation));
+  setProjectPathValidation: (validation: {}) => {
+    dispatch(setProjectPathValidation(validation));
   },
   updateTemplateGenStatusMessage: (status: string) => {
     dispatch(updateTemplateGenerationStatusMessageAction(status));

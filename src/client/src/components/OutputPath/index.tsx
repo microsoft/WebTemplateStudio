@@ -20,18 +20,27 @@ const OutputPath = ({
 }: IProps) => {
   return (
     <React.Fragment>
-      <Input
-        handleChange={handleChange}
-        value={value}
-        customStyle={styles.pathInput}
-        placeholder={placeholder}
-      />
-      <SaveSVG
-        className={styles.saveIcon}
-        onClick={() => {
-          handleSaveClick();
-        }}
-      />
+      <div className={styles.errorStack}>
+        <div className={styles.outputPath}>
+          <Input
+            handleChange={handleChange}
+            value={value}
+            customStyle={styles.pathInput}
+            placeholder={placeholder}
+          />
+          <SaveSVG
+            className={styles.saveIcon}
+            onClick={() => {
+              handleSaveClick();
+            }}
+          />
+        </div>
+        {validation.isInvalidProjectPath && (
+          <div className={styles.errorMessage}>
+            {validation.projectPathError}
+          </div>
+        )}
+      </div>
     </React.Fragment>
   );
 };

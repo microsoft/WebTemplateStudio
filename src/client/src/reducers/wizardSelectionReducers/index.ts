@@ -7,8 +7,8 @@ import appType from "./selectWebAppReducer";
 import projectName from "./updateProjectName";
 import outputPath from "./updateOutputPath";
 import services from "./services";
-import validation from "./validateOutputPathAndProjectName";
 import pageCount from "./pageCountReducer";
+import projectPathValidation from "./validateProjectPath";
 
 export default combineReducers({
   appType,
@@ -18,6 +18,6 @@ export default combineReducers({
   services,
   outputPath,
   projectName,
-  validation,
-  pageCount
+  pageCount,
+  projectPathValidation
 });
