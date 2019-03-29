@@ -10,18 +10,26 @@ import styles from "./styles.module.css";
 import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
 import ProjectNameAndOutput from "../../containers/ProjectNameAndOutput";
 
+import { getOutputPath } from "../../selectors/wizardSelectionSelector";
+
 interface IDispatchProps {
   setRouteVisited: (route: string) => any;
 }
 
 interface IStateProps {
   vscode: any;
-  validation: any;
+  projectPathValidation: any;
+  outputPath: string;
 }
 
 type Props = IStateProps & IDispatchProps;
 
-const Welcome = ({ setRouteVisited, validation, vscode }: Props) => {
+const Welcome = ({
+  setRouteVisited,
+  projectPathValidation,
+  vscode,
+  outputPath
+}: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>Welcome to Project Acorn</div>
@@ -34,11 +42,14 @@ const Welcome = ({ setRouteVisited, validation, vscode }: Props) => {
         <ProjectNameAndOutput />
         <Link
           onClick={event => {
-            if (validation && validation.isInvalidProjectPath) {
-              setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
-            } else {
+            if (
+              (projectPathValidation &&
+                projectPathValidation.isInvalidProjectPath) ||
+              outputPath.length === 0
+            ) {
               event.preventDefault();
             }
+            setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
           }}
           to={ROUTES.SELECT_PROJECT_TYPE}
           className={classnames(
@@ -61,7 +72,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 
 const mapStateToProps = (state: any): IStateProps => ({
   vscode: state.vscode.vscodeObject,
-  validation: state.selection.validation
+  projectPathValidation: state.selection.projectPathValidation,
+  outputPath: getOutputPath(state)
 });
 
 export default connect(
