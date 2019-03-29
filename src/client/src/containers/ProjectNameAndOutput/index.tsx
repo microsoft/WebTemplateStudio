@@ -22,6 +22,7 @@ interface IStateProps {
   vscode: IVSCodeObject;
   outputPath: string;
   projectName: string;
+  projectPathValidation: any;
 }
 
 interface IDispatchProps {
@@ -43,6 +44,24 @@ const ProjectNameAndOutput = (props: Props) => {
   ) => {
     const element = e.currentTarget as HTMLInputElement;
     props.updateOutputPath(element.value);
+    if (process.env.NODE_ENV === "production") {
+      // @ts-ignore
+      vscode.postMessage({
+        command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+        projectPath: element.value
+      });
+    } else {
+      // @ts-ignore produces a mock login response from VSCode in development
+      window.postMessage({
+        command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+        payload: {
+          projectPathValidation: {
+            isInvalidProjectPath: true,
+            projectPathError: "Invalid path"
+          }
+        }
+      });
+    }
   };
   const handleSaveClick = () => {
     props.vscode.postMessage({
@@ -61,12 +80,13 @@ const ProjectNameAndOutput = (props: Props) => {
       </div>
       <div className={styles.inputContainer}>
         <div className={styles.inputTitle}>Output Path:</div>
-        <div className={styles.outputPathContainer}>
+        <div>
           <OutputPath
             handleChange={handleOutputPathChange}
             handleSaveClick={handleSaveClick}
             value={props.outputPath}
             placeholder="Output Path"
+            validation={props.projectPathValidation}
           />
         </div>
       </div>
@@ -77,7 +97,8 @@ const ProjectNameAndOutput = (props: Props) => {
 const mapStateToProps = (state: any): IStateProps => ({
   vscode: state.vscode.vscodeObject,
   outputPath: getOutputPath(state),
-  projectName: getProjectName(state)
+  projectName: getProjectName(state),
+  projectPathValidation: state.selection.projectPathValidation
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
