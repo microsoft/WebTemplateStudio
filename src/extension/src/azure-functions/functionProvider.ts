@@ -178,7 +178,7 @@ export class FunctionProvider {
             throw new FileError(error.message);
           }
 
-          return Promise.resolve(result);
+          return result;
         });
     } catch (error) {
       if (error.constructor === FileError) {
