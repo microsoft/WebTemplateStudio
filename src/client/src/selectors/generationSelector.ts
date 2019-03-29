@@ -35,10 +35,10 @@ const getBackendFramework = (selection: any): string => {
 const getServices = (selection: any): ITemplateInfo[] => {
   const { services } = selection;
   const servicesInfo = [];
-  if (_.has(services, "cosmosOptions")) {
+  if (_.has(services, "cosmosDB") && services.cosmosDB.selection.length > 0) {
     servicesInfo.push({
       name: "Cosmos",
-      identity: services.cosmosOptions.internalName
+      identity: services.cosmosDB.selection[0].internalName
     });
   }
   return servicesInfo;
