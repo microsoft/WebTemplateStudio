@@ -80,7 +80,6 @@ export abstract class Controller {
   ]);
 
   private static openProjectVSCode(message: any) {
-    console.log(message);
     vscode.commands.executeCommand(
       "vscode.openFolder",
       vscode.Uri.file(message.payload.outputPath)

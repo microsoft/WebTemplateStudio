@@ -35,13 +35,15 @@ const PostGenerationModal = (props: Props) => {
     vscode
   } = props;
   const handleOpenProject = () => {
-    // @ts-ignore
-    vscode.postMessage({
-      command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
-      payload: {
-        outputPath
-      }
-    });
+    if (isTemplateGenerated) {
+      // @ts-ignore
+      vscode.postMessage({
+        command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
+        payload: {
+          outputPath
+        }
+      });
+    }
   };
   return (
     <div>
@@ -49,7 +51,7 @@ const PostGenerationModal = (props: Props) => {
       <div className={styles.section}>Template Generation</div>
       <div className={styles.templateStatus}>
         {!isTemplateGenerated && <div>{templateGenStatus}</div>}
-        {isTemplateGenerated && <div>Generate complete</div>}
+        {isTemplateGenerated && <div>Generation complete</div>}
         {isTemplateGenerated && (
           <button className={styles.openProject} onClick={handleOpenProject}>
             Open Project in VSCode
@@ -62,9 +64,15 @@ const PostGenerationModal = (props: Props) => {
         <div>Help</div>
         <div
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
+          onClick={handleOpenProject}
         >
-          <Spinner className={styles.spinner} />
-          Working
+          {!isTemplateGenerated && (
+            <React.Fragment>
+              <Spinner className={styles.spinner} />
+              Working
+            </React.Fragment>
+          )}
+          {isTemplateGenerated && `Open Project in VSCode`}
         </div>
       </div>
     </div>
