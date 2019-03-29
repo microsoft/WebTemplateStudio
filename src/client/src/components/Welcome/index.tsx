@@ -14,7 +14,14 @@ interface IDispatchProps {
   setRouteVisited: (route: string) => any;
 }
 
-const Welcome = ({ setRouteVisited }: IDispatchProps) => {
+interface IStateProps {
+  vscode: any;
+  validation: any;
+}
+
+type Props = IStateProps & IDispatchProps;
+
+const Welcome = ({ setRouteVisited, validation, vscode }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>Welcome to Project Acorn</div>
@@ -26,11 +33,18 @@ const Welcome = ({ setRouteVisited }: IDispatchProps) => {
       <div className={styles.projectDetailsContainer}>
         <ProjectNameAndOutput />
         <Link
-          onClick={() => {
-            setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
+          onClick={event => {
+            if (validation && validation.isInvalidProjectPath) {
+              setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
+            } else {
+              event.preventDefault();
+            }
           }}
           to={ROUTES.SELECT_PROJECT_TYPE}
-          className={classnames(buttonStyles.buttonHighlighted, styles.getStarted)}
+          className={classnames(
+            buttonStyles.buttonHighlighted,
+            styles.getStarted
+          )}
         >
           Get Started
         </Link>
@@ -45,7 +59,12 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   }
 });
 
+const mapStateToProps = (state: any): IStateProps => ({
+  vscode: state.vscode.vscodeObject,
+  validation: state.selection.validation
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Welcome);

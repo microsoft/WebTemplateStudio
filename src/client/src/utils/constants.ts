@@ -63,7 +63,7 @@ const EXTENSION_COMMANDS = {
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
   GENERATE: "generate",
-  PROJECT_PATH_AND_NAME_VALIDATION: "project-path-and-name-validation",
+  PROJECT_PATH_VALIDATION: "project-path-validation",
   SUBSCRIPTION_DATA_COSMOS: "subscriptionDataForCosmos",
   SUBSCRIPTION_DATA_FUNCTIONS: "subscriptionDataForFunctions",
   GET_OUTPUT_PATH: "getOutputPath",
