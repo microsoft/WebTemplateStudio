@@ -10,7 +10,8 @@ import styles from "./styles.module.css";
 
 import {
   getSyncStatusSelector,
-  isTemplateGeneratedSelector
+  isTemplateGeneratedSelector,
+  isServicesDeployedSelector
 } from "../../selectors/postGenerationSelector";
 import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
 import { EXTENSION_COMMANDS } from "../../utils/constants";
@@ -19,19 +20,19 @@ interface IStateProps {
   isTemplateGenerated: boolean;
   templateGenStatus: string;
   isModalOpen: boolean;
+  isServicesDeployed: boolean;
   vscode: any;
   outputPath: string;
-  projectName: string;
 }
 
 type Props = IStateProps;
 
 const PostGenerationModal = (props: Props) => {
   const {
+    isServicesDeployed,
     isTemplateGenerated,
     templateGenStatus,
     outputPath,
-    projectName,
     vscode
   } = props;
   const handleOpenProject = () => {
@@ -59,7 +60,10 @@ const PostGenerationModal = (props: Props) => {
         )}
       </div>
       <div className={styles.section}>Azure Services</div>
-      <div>Deploying services...</div>
+      {!isServicesDeployed && (
+        <div className={styles.loading}>Deploying services</div>
+      )}
+      {isServicesDeployed && <div>Services deployed</div>}
       <div className={styles.footerContainer}>
         <div>Help</div>
         <div
@@ -83,9 +87,9 @@ const mapStateToProps = (state: any): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
   isTemplateGenerated: isTemplateGeneratedSelector(state),
   templateGenStatus: getSyncStatusSelector(state),
+  isServicesDeployed: isServicesDeployedSelector(state),
   vscode: state.vscode.vscodeObject,
-  outputPath: state.selection.outputPath,
-  projectName: state.selection.projectName
+  outputPath: state.selection.outputPath
 });
 
 export default connect(mapStateToProps)(asModal(PostGenerationModal));
