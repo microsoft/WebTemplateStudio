@@ -18,7 +18,7 @@ import {
 } from "../../selectors/cosmosServiceSelector";
 import {
   getAzureFunctionsOptionsSelector,
-  isAzureFunctionsSelected
+  isAzureFunctionsSelectedSelector
 } from "../../selectors/azureFunctionsServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
@@ -180,7 +180,7 @@ const mapStateToProps = (state: any): IStateProps => {
     engine: rootSelector(state),
     selectedCosmos: isCosmosResourceCreatedSelector(state),
     cosmos: getCosmosDbSelectionSelector(state),
-    selectedFunctions: isAzureFunctionsSelected(state),
+    selectedFunctions: isAzureFunctionsSelectedSelector(state),
     functions: getAzureFunctionsOptionsSelector(state)
   };
 };

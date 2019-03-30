@@ -81,7 +81,7 @@ export abstract class Controller {
 
   private static openProjectVSCode(message: any) {
     vscode.commands.executeCommand(
-      "vscode.openFolder",
+      CONSTANTS.VSCODE_COMMAND.OPEN_FOLDER,
       vscode.Uri.file(message.payload.outputPath)
     );
   }
@@ -98,7 +98,7 @@ export abstract class Controller {
     });
   }
 
-  private static routingMessageReceieverDelegate = function (message: any) {
+  private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
@@ -120,7 +120,7 @@ export abstract class Controller {
     Controller.Telemetry = new TelemetryAI(context, extensionStartTime);
     this.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
-      async function (this: IActionContext): Promise<ChildProcess> {
+      async function(this: IActionContext): Promise<ChildProcess> {
         let process = ApiModule.StartApi(context);
         let synced = false;
         let syncAttempts = 0;
@@ -284,7 +284,7 @@ export abstract class Controller {
   public static performLogin(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.PerformLogin,
-      async function (this: IActionContext): Promise<void> {
+      async function(this: IActionContext): Promise<void> {
         await AzureAuth.login()
           .then(res => {
             const email = AzureAuth.getEmail();
@@ -315,7 +315,7 @@ export abstract class Controller {
   public static sendSubscriptionsToClient(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.Subscriptions,
-      async function (this: IActionContext): Promise<void> {
+      async function(this: IActionContext): Promise<void> {
         await Controller.getSubscriptions()
           .then(subscriptions => {
             Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
@@ -335,7 +335,7 @@ export abstract class Controller {
   public static sendCosmosSubscriptionDataToClient(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SubscriptionData,
-      async function (this: IActionContext): Promise<void> {
+      async function(this: IActionContext): Promise<void> {
         await Controller.getSubscriptionData(
           message.subscription,
           AzureResourceType.Cosmos
@@ -362,7 +362,7 @@ export abstract class Controller {
   public static sendFunctionsSubscriptionDataToClient(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SubscriptionData,
-      async function (this: IActionContext): Promise<void> {
+      async function(this: IActionContext): Promise<void> {
         await Controller.getSubscriptionData(
           message.subscription,
           AzureResourceType.Functions
@@ -497,7 +497,7 @@ export abstract class Controller {
         Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
           TelemetryEventName.FunctionsDeploy,
           // tslint:disable-next-line: no-function-expression
-          async function (this: IActionContext): Promise<void> {
+          async function(this: IActionContext): Promise<void> {
             try {
               Controller.deployFunctionApp(
                 payload.functions,
@@ -533,7 +533,7 @@ export abstract class Controller {
         Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
           TelemetryEventName.CosmosDBDeploy,
           // tslint:disable-next-line: no-function-expression
-          async function (this: IActionContext): Promise<void> {
+          async function(this: IActionContext): Promise<void> {
             var cosmosPayload: any = payload.cosmos;
             try {
               var dbObject = await Controller.deployCosmosResource(
@@ -687,7 +687,7 @@ export abstract class Controller {
         let path = undefined;
 
         if (res !== undefined) {
-          if (process.platform === "win32") {
+          if (process.platform === CONSTANTS.PLATFORM.WIN_32) {
             path = res[0].path.substring(1, res[0].path.length);
           } else {
             path = res[0].path;
@@ -856,7 +856,7 @@ export abstract class Controller {
   private static async sendUserStatus(message: any): Promise<void> {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.GetUserLoginStatus,
-      async function (this: IActionContext) {
+      async function(this: IActionContext) {
         try {
           const email = AzureAuth.getEmail();
           AzureAuth.getSubscriptions().then(items => {

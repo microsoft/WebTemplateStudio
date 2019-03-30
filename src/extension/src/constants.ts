@@ -75,7 +75,7 @@ export const CONSTANTS = {
     Project_Title: "Project Acorn"
   },
   GENERATE_ENDPOINT: "/api/generate",
-  CONNECTION_STRING: function (
+  CONNECTION_STRING: function(
     username: string,
     password: string,
     origin: string
@@ -83,7 +83,13 @@ export const CONSTANTS = {
     return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMODDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
   },
   MAX_PROJECT_NAME_LENGTH: 50,
-  PORT: "5000"
+  PORT: "5000",
+  VSCODE_COMMAND: {
+    OPEN_FOLDER: "vscode.openFolder"
+  },
+  PLATFORM: {
+    WIN_32: "win32"
+  }
 };
 
 export enum ExtensionCommand {
