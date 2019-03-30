@@ -1,4 +1,5 @@
 import * as Actions from "../../actions/types";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 /* State Shape
 {
@@ -10,7 +11,9 @@ export interface IPageCount {
   [key: string]: number;
 }
 
-const initialState = {};
+const initialState = {
+  [WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE]: 1
+};
 
 const pageCountReducer = (state: IPageCount = initialState, action: any) => {
   switch (action.type) {
