@@ -11,6 +11,10 @@ import { setDetailPageAction } from "../../actions/setDetailsPage";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 
+interface ICount {
+  [key: string]: number;
+}
+
 interface ISelectOptionProps {
   title: string;
   internalName?: string;
@@ -20,6 +24,8 @@ interface ISelectOptionProps {
   selectOptions?: (cards: ISelected[]) => void;
   options: IOption[];
   multiSelect: boolean;
+  cardTypeCount?: ICount;
+  handleCountUpdate?: (cardCount: ICount) => any;
 }
 
 interface ISelectOptionState {
@@ -57,34 +63,21 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
    * @param count
    * @param cardData
    */
-  public createTitle(
-    selectedCardIndex: number,
-    optionIndexContainingData: number,
-    count: number,
-    cardData: ISelected[]
-  ) {
+  public createTitle(optionIndexContainingData: number, count: number) {
+    const { title } = this.props.options[optionIndexContainingData];
     if (count === 1) {
-      return this.props.options[optionIndexContainingData].title;
-    } else if (selectedCardIndex > cardData.length - 1) {
-      return `${count}-${this.props.options[optionIndexContainingData].title}`;
+      return title;
     }
-    return cardData[selectedCardIndex].title;
+    return `${title}${count}`;
   }
 
   public mapIndexToCardInfo(
-    selectedCardIndex: number,
     count: number,
     internalName: string,
-    num: number,
-    currentCardData: ISelected[]
+    optionIndexContainingData: number
   ) {
-    const { defaultName } = this.props.options[num];
-    const title = this.createTitle(
-      selectedCardIndex,
-      num,
-      count,
-      currentCardData
-    );
+    const { defaultName } = this.props.options[optionIndexContainingData];
+    const title = this.createTitle(optionIndexContainingData, count);
     const cardInfo: ISelected = {
       title,
       internalName,
@@ -96,54 +89,23 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   /**
-   * Converts the index numbers of options into ids
-   * In this case, titles, but can be changed to whatever is required
-   * by the redux store.
-   *
-   * @param cardNumbers
-   */
-  public mapSelectedCardIndicesToCardInfo(
-    selectedCardIndices: number[]
-  ): ISelected[] {
-    const selectedCardsWithInfo = [];
-    const cardTypeCount: { [key: string]: number } = {};
-    const { currentCardData, options } = this.props;
-    for (
-      let selectedCardIndex = 0;
-      selectedCardIndex < selectedCardIndices.length;
-      selectedCardIndex++
-    ) {
-      const optionIndexContainingData = selectedCardIndices[selectedCardIndex];
-      const { internalName } = options[optionIndexContainingData];
-      cardTypeCount[internalName] = cardTypeCount[internalName]
-        ? cardTypeCount[internalName] + 1
-        : 1;
-      if (currentCardData) {
-        selectedCardsWithInfo.push(
-          this.mapIndexToCardInfo(
-            selectedCardIndex,
-            cardTypeCount[internalName],
-            internalName,
-            optionIndexContainingData,
-            currentCardData
-          )
-        );
-      }
-    }
-    return selectedCardsWithInfo;
-  }
-
-  /**
    * Allows more than one option to be selected at a time.
    * Updates the redux store with the selection.
    *
    * @param cardNumber
    */
-  public addOption(cardNumber: number) {
-    const { selectedCardIndices, selectOptions } = this.props;
+  public addOption(
+    cardNumber: number,
+    cardCount: number,
+    internalName: string
+  ) {
+    const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     selectedCardIndices.push(cardNumber);
-    if (selectOptions) {
-      selectOptions(this.mapSelectedCardIndicesToCardInfo(selectedCardIndices));
+    if (selectOptions && currentCardData) {
+      currentCardData.push(
+        this.mapIndexToCardInfo(cardCount, internalName, cardNumber)
+      );
+      selectOptions(currentCardData);
     }
     this.setState({
       selectedCardIndices
@@ -172,13 +134,24 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public onCardClick(cardNumber: number) {
-    const { options, multiSelect } = this.props;
-    const { unselectable } = options[cardNumber];
+    const {
+      options,
+      multiSelect,
+      cardTypeCount,
+      handleCountUpdate
+    } = this.props;
+    const { unselectable, internalName } = options[cardNumber];
     if (unselectable) {
       return;
     }
     if (multiSelect) {
-      this.addOption(cardNumber);
+      if (cardTypeCount && handleCountUpdate) {
+        cardTypeCount[internalName] = cardTypeCount[internalName]
+          ? cardTypeCount[internalName] + 1
+          : 1;
+        handleCountUpdate(cardTypeCount);
+        this.addOption(cardNumber, cardTypeCount[internalName], internalName);
+      }
     } else {
       this.exchangeOption(cardNumber);
     }

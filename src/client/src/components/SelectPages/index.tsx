@@ -3,11 +3,16 @@ import { connect } from "react-redux";
 
 import SelectOption from "../SelectOption";
 
-import { selectPagesAction } from "../../actions/selectPages";
+import {
+  selectPagesAction,
+  updatePageCountAction
+} from "../../actions/selectPages";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 import { getPagesOptionsAction } from "../../actions/getPagesOptions";
+import { getPageCount } from "../../selectors/wizardSelectionSelector";
+import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 
 interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
@@ -16,6 +21,7 @@ interface IDispatchProps {
     frontendFramework: string,
     backendFramework: string
   ) => void;
+  updatePageCount: (pageCount: IPageCount) => any;
 }
 
 interface ISelectPagesProps {
@@ -24,6 +30,7 @@ interface ISelectPagesProps {
   selectedFrontend: ISelected;
   selectedPages: ISelected[];
   selectedProjectType: ISelected;
+  pageCount: IPageCount;
 }
 
 type Props = IDispatchProps & ISelectPagesProps;
@@ -62,7 +69,13 @@ class SelectPages extends React.Component<Props> {
     return selectedPageIndices;
   };
   public render() {
-    const { options, selectPages, selectedPages } = this.props;
+    const {
+      options,
+      selectPages,
+      selectedPages,
+      pageCount,
+      updatePageCount
+    } = this.props;
     return (
       <div>
         {options.length > 0 && (
@@ -75,6 +88,8 @@ class SelectPages extends React.Component<Props> {
             title="What pages do you need for your application?"
             options={options}
             currentCardData={selectedPages}
+            cardTypeCount={pageCount}
+            handleCountUpdate={updatePageCount}
           />
         )}
       </div>
@@ -94,7 +109,8 @@ const mapStateToProps = (state: any): ISelectPagesProps => {
     selectedBackend: backendFramework,
     selectedFrontend: frontendFramework,
     selectedPages: pages,
-    selectedProjectType: appType
+    selectedProjectType: appType,
+    pageCount: getPageCount(state)
   };
 };
 
@@ -110,6 +126,9 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
+  },
+  updatePageCount: (pageCount: IPageCount) => {
+    dispatch(updatePageCountAction(pageCount));
   }
 });
 
