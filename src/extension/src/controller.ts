@@ -166,7 +166,9 @@ export abstract class Controller {
       });
   }
   private static handleSyncLiveData(status: SyncStatus) {
-    vscode.window.showInformationMessage(`SyncStatus:${status}`);
+    vscode.window.showInformationMessage(
+      CONSTANTS.INFO.SYNC_STATUS + ` ${status}`
+    );
   }
 
   //To be addressed in next PR for page/navigation tracking
@@ -510,7 +512,7 @@ export abstract class Controller {
             dbObject.connectionString
           );
           vscode.window.showInformationMessage(
-            "Replaced file at: " + pathToEnv
+            CONSTANTS.INFO.FILE_REPLACED_MESSAGE + pathToEnv
           );
           Controller.Telemetry.trackCustomEventTime(
             TelemetryEventName.ConnectionStringReplace,
