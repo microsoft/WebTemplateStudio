@@ -6,9 +6,19 @@ Check [Read Me](https://github.com/Microsoft/WebTemplateStudio/blob/master/READM
 
 Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for existing Github issues of Project
 
-## Release __VERSIONNUMBER__
+## Release **VERSIONNUMBER**
+
+## Known Issues
+
+- Post-generation modal design/ux requires feedback
+- Welcome page and summary page validation do not work
+
+## What's New
+
+- See "Wizard Features"
 
 #### Extension Features
+
 - Telemetry Tracking Available
 - Leverage azure-account extension for Azure Login
 - Deploy Azure Function (_Read Notes_)
@@ -17,6 +27,8 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 - Live data
 
 #### Wizard Features
+
+- **(NEW)** Post-generation modal
 - Welcome Page Component
 - Telemetry Tracking On Page Change
 - Login and Sign out of Azure Account
