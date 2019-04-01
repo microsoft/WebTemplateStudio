@@ -117,7 +117,7 @@ const mockVsCodeApi = () => ({
               failure: false
             },
             cosmos: {
-              success: false,
+              success: true,
               failure: false
             },
             azureFunctions: {

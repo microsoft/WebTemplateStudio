@@ -508,7 +508,6 @@ export abstract class Controller {
                 ...progressObject,
                 azureFunctions: Controller.getProgressObject(true)
               };
-
               Controller.reactPanelContext.postMessageWebview({
                 command: ExtensionCommand.UpdateGenStatus,
                 payload: progressObject
@@ -545,6 +544,10 @@ export abstract class Controller {
                 ...progressObject,
                 cosmos: Controller.getProgressObject(true)
               };
+              Controller.reactPanelContext.postMessageWebview({
+                command: ExtensionCommand.UpdateGenStatus,
+                payload: progressObject
+              });
               Controller.promptUserForCosmosReplacement(
                 enginePayload.path,
                 dbObject
