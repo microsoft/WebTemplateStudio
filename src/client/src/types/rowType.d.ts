@@ -6,4 +6,5 @@ export interface RowType {
   company?: string;
   originalTitle?: string;
   id?: string;
+  internalName?: string;
 }

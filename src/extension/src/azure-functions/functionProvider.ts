@@ -10,8 +10,7 @@ import {
   ValidationError
 } from "../errors";
 import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
-import { config } from "./config";
-import { ZipDeploy } from "./utils/zipDeployHelper";
+import { ZipDeployHelper } from "./utils/zipDeployHelper";
 import * as fs from "fs";
 import * as path from "path";
 import {
@@ -37,6 +36,10 @@ export interface RuntimeObject {
   value: Runtime;
   label: string;
 }
+
+const FUNCTION_APP_DOMAIN = ".azurewebsites.net";
+
+const MAX_STORAGE_NAME = 24;
 
 /*
  * Returns an array of available/implemented RuntimeObjects for functions app
@@ -176,10 +179,7 @@ export class FunctionProvider {
           value: selections.subscriptionItem.subscriptionId
         },
         storageName: {
-          value:
-            selections.functionAppName
-              .toLowerCase()
-              .replace(/[^0-9a-z]/gi, "") + config.storageNameSuffix
+          value: this.convertAppNameToStorageName(selections.functionAppName)
         }
       };
 
@@ -218,7 +218,7 @@ export class FunctionProvider {
         )
         .then(result => {
           setTimeout(async () => {
-            await ZipDeploy.zipDeploy(
+            await ZipDeployHelper.zipDeploy(
               selections.subscriptionItem.session.credentials,
               appPath,
               selections.functionAppName
@@ -239,6 +239,13 @@ export class FunctionProvider {
       }
       throw new DeploymentError(error.message);
     }
+  }
+
+  private convertAppNameToStorageName(appName: string): string {
+    return appName
+      .toLowerCase()
+      .replace(/[^0-9a-z]/gi, "")
+      .substring(0, MAX_STORAGE_NAME);
   }
 
   /*
@@ -300,7 +307,7 @@ export class FunctionProvider {
     }
 
     return await this.webClient
-      .checkNameAvailability(appName + config.functionAppDomain, "Site", {
+      .checkNameAvailability(appName + FUNCTION_APP_DOMAIN, "Site", {
         isFqdn: true
       })
       .then(res => {

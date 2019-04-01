@@ -54,10 +54,6 @@ export const CONSTANTS = {
       return `Function App ${appName} has been deployed and is ready to use!`;
     }
   },
-  FUNCTIONS_CONFIG: {
-    MAX_NAME_LEN: 60,
-    MIN_NAME_LEN: 1
-  },
   API: {
     WINDOWS_PLATFORM_VERSION: "win32",
     BASE_APPLICATION_NAME: "CoreTemplateStudio.Api",
@@ -101,11 +97,11 @@ export enum ExtensionCommand {
   DeployCosmos = "deploy-cosmos",
   Generate = "generate",
   GetOutputPath = "getOutputPath",
-  HandleTelemetry = "telemetryAI",
   GetFunctionsRuntimes = "getFunctionsRuntimes",
   GetCosmosAPIs = "getCosmosAPIs",
   GetUserStatus = "getUserStatus",
-  ProjectPathAndNameValidation = "project-path-and-name-validation"
+  ProjectPathAndNameValidation = "project-path-and-name-validation",
+  TrackPageSwitch = "track-page-switch"
 }
 
 export enum TelemetryEventName {

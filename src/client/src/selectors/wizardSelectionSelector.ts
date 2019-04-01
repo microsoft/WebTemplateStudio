@@ -59,14 +59,16 @@ const getServices = (selection: any): any => {
           originalTitle: "Azure Functions",
           company: "Microsoft",
           svgUrl: getSvgUrl(selection.internalName),
-          functionNames: selection.functionNames
+          functionNames: selection.functionNames,
+          internalName: selection.internalName
         });
       } else if (serviceKey === SERVICE_KEYS.COSMOS_DB) {
         servicesRows.push({
           title: selection.accountName,
           originalTitle: "CosmosDB",
           company: "Microsoft",
-          svgUrl: getSvgUrl(selection.internalName)
+          svgUrl: getSvgUrl(selection.internalName),
+          internalName: selection.internalName
         });
       }
     }

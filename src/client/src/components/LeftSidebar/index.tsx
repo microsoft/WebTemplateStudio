@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import * as React from "react";
+import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
 
 import LeftSidebarLink from "../LeftSidebarLink";
 

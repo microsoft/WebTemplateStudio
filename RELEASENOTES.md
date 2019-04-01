@@ -9,15 +9,16 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 ## Release __VERSIONNUMBER__
 
 #### Extension Features
-
+- Telemetry Tracking Available
 - Leverage azure-account extension for Azure Login
-- Deploy Azure Function
+- Deploy Azure Function (_Read Notes_)
 - Deploy Azure CosmosDB
 - Engine Template Synchronization
 - Live data
 
 #### Wizard Features
-
+- Welcome Page Component
+- Telemetry Tracking On Page Change
 - Login and Sign out of Azure Account
 - Azure Cosmos Modal
 - Populate Subscription, Resource Group, Location
@@ -34,13 +35,20 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 - New Summary Page
 - Delete Pages and Services from Summary Page
 
+#### Mock Template Features
+- Centralized Error Handling in Express Back End
+
 #### Unimplemented Features
 
 - Web App Deployments
 - Azure AD
 - Generate project (bootstrap -> replaces material)
 - Dynamically gain dependencies at first run (Dlls) rather than packaging with vsix.
+- Theme-matching with VSCode themes (light/dark/high-contrast)
 
-#### Mock Template Features
 
-- Centralized Error Handling in Express Back End
+- As of March 27, 2019 the functions deployed using Azure Functions functionality of Web Template Studio
+  are not available directly due to a bug with Kudu App Service. This affects the VScode Azure functions extension
+  too. A quick workaround is to simply restart your app from the Azure portal. This note will be removed as soon as
+  the service is working normally again.
+

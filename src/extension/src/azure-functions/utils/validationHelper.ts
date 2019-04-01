@@ -3,6 +3,9 @@ import { ValidationError } from "../../errors";
 import { CONSTANTS } from "../../constants";
 
 export namespace ValidationHelper {
+  const MAX_NAME_LEN = 60;
+  const MIN_NAME_LEN = 3;
+
   export function validate(selections: FunctionSelections): void {
     validateFunctionNames(selections.functionNames);
     validateFunctionAppName(selections.functionAppName);
@@ -10,15 +13,9 @@ export namespace ValidationHelper {
 
   function validateFunctionNames(names: string[]): void {
     for (var name of names) {
-      if (
-        name.length > CONSTANTS.FUNCTIONS_CONFIG.MAX_NAME_LEN ||
-        name.length < CONSTANTS.FUNCTIONS_CONFIG.MIN_NAME_LEN
-      ) {
+      if (name.length > MAX_NAME_LEN || name.length < MIN_NAME_LEN) {
         throw new ValidationError(
-          CONSTANTS.ERRORS.NAME_MIN_MAX(
-            CONSTANTS.FUNCTIONS_CONFIG.MIN_NAME_LEN,
-            CONSTANTS.FUNCTIONS_CONFIG.MAX_NAME_LEN
-          )
+          CONSTANTS.ERRORS.NAME_MIN_MAX(MIN_NAME_LEN, MAX_NAME_LEN)
         );
       }
       checkFunctionNameRegex(name);
@@ -34,15 +31,9 @@ export namespace ValidationHelper {
   }
 
   export function validateFunctionAppName(name: string): void {
-    if (
-      name.length > CONSTANTS.FUNCTIONS_CONFIG.MAX_NAME_LEN ||
-      name.length < CONSTANTS.FUNCTIONS_CONFIG.MIN_NAME_LEN
-    ) {
+    if (name.length > MAX_NAME_LEN || name.length < MIN_NAME_LEN) {
       throw new ValidationError(
-        CONSTANTS.ERRORS.NAME_MIN_MAX(
-          CONSTANTS.FUNCTIONS_CONFIG.MIN_NAME_LEN,
-          CONSTANTS.FUNCTIONS_CONFIG.MAX_NAME_LEN
-        )
+        CONSTANTS.ERRORS.NAME_MIN_MAX(MIN_NAME_LEN, MAX_NAME_LEN)
       );
     }
 

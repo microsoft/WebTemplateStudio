@@ -1,12 +1,13 @@
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
 import SummaryTile from "../SummaryTile";
 
-import { RowType } from "../../types/rowType";
-
 import styles from "./styles.module.css";
+
 import { IFunctionApp } from "../../containers/AzureFunctionsSelection";
+import { RowType } from "../../types/rowType";
 
 import * as AzureFunctionActions from "../../actions/azureFunctionActions";
 
@@ -14,6 +15,7 @@ interface IProps {
   selectionTitle: string;
   selectionRows: RowType[];
   isEditable?: boolean;
+  modalOpeners?: { [key: string]: () => any };
 }
 
 interface IStateProps {
@@ -33,7 +35,8 @@ const SummarySection = ({
   isEditable,
   removeAzureFunction,
   updateFunctionNames,
-  functionApps
+  functionApps,
+  modalOpeners
 }: Props) => {
   const handleAzureFuncNameChange = (newTitle: string, idx: number) => {
     const { functionNames } = functionApps.selection[0];
@@ -53,7 +56,7 @@ const SummarySection = ({
     svgUrl?: string,
     company?: string,
     originalTitle?: string,
-    isEditable?: boolean,
+    canEdit?: boolean,
     withIndent?: boolean,
     handleCloseClick?: (idx: number) => any,
     handleInputChange?: (newTitle: string, idx: number) => any,
@@ -67,7 +70,7 @@ const SummarySection = ({
           svgUrl={svgUrl}
           company={company}
           originalTitle={originalTitle}
-          isEditable={isEditable}
+          isEditable={canEdit}
           withIndent={withIndent}
           handleCloseClick={handleCloseClick}
           handleInputChange={handleInputChange}
@@ -78,9 +81,27 @@ const SummarySection = ({
   };
   return (
     <div className={styles.selectionContainer}>
-      <div className={styles.selectionTitle}>{selectionTitle}</div>
-      {selectionRows.map(selection => (
+      {selectionRows.map((selection: RowType, idx: number) => (
         <React.Fragment>
+          <div
+            className={classnames({
+              [styles.headerContainer]: idx === 0,
+              [styles.headerContainerRest]: idx > 0
+            })}
+          >
+            {idx === 0 && (
+              <div className={styles.selectionTitle}>{selectionTitle}</div>
+            )}
+            {modalOpeners && selection.internalName && (
+              <div
+                className={styles.editButton}
+                onClick={modalOpeners[selection.internalName]}
+              >
+                Edit Resource
+              </div>
+            )}
+          </div>
+
           {renderTile(
             selection.title,
             selection.svgUrl,
