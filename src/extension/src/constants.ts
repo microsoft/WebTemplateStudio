@@ -9,7 +9,7 @@ export const CONSTANTS = {
       "error.tooManyFailedSyncRequests",
       "Could not sync to template repository"
     ),
-    INVALID_COMMAND: localize("invalidCommand", "Invalid command used"),
+    INVALID_COMMAND: localize("error.invalidCommand", "Invalid command used"),
     RESOURCE_GROUP_NOT_FOUND: localize(
       "error.resourceGroupNotFound",
       "No resource group found with this name"
@@ -25,7 +25,10 @@ export const CONSTANTS = {
         functionName
       );
     },
-    LOGIN_TIMEOUT: localize("loginTimeout", "Timeout. User is not logged in"),
+    LOGIN_TIMEOUT: localize(
+      "error.loginTimeout",
+      "Timeout. User is not logged in"
+    ),
     SESSION_NOT_AVAILABLE: localize(
       "error.sessionNotAvailable",
       "There is no session available. Make sure the user is logged in."
