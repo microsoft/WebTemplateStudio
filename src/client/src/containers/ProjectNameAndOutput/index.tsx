@@ -18,6 +18,10 @@ import { EXTENSION_COMMANDS } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
+interface IProps {
+  validation: any;
+}
+
 interface IStateProps {
   vscode: IVSCodeObject;
   outputPath: string;
@@ -30,9 +34,10 @@ interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
 }
 
-type Props = IStateProps & IDispatchProps;
+type Props = IStateProps & IDispatchProps & IProps;
 
 const ProjectNameAndOutput = (props: Props) => {
+  console.log(props.validation);
   React.useEffect(() => {
     if (process.env.NODE_ENV === "production") {
       if (props.vscode) {
@@ -44,7 +49,7 @@ const ProjectNameAndOutput = (props: Props) => {
         });
       }
     } else {
-      // @ts-ignore produces a mock login response from VSCode in development
+      // @ts-ignore produces a mock validation response from VSCode in development
       window.postMessage({
         command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
         payload: {
@@ -92,6 +97,7 @@ const ProjectNameAndOutput = (props: Props) => {
             value={props.outputPath}
             placeholder="Output Path"
             validation={props.projectPathValidation}
+            isEmpty={props.validation}
           />
         </div>
       </div>
