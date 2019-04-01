@@ -138,53 +138,12 @@ export class FunctionProvider {
       throw new FileError(error.message);
     }
 
+    let template = this.getFunctionsARMTemplate();
+    let parameters = this.getFunctionsARMParameters(selections);
+
+    let deploymentParams = parameters.parameters;
+
     try {
-      let template = JSON.parse(
-        fs.readFileSync(
-          path.join(
-            appRoot.toString(),
-            "src",
-            "azure-functions",
-            "arm-templates",
-            "template.json"
-          ),
-          "utf8"
-        )
-      );
-
-      let parameters = JSON.parse(
-        fs.readFileSync(
-          path.join(
-            appRoot.toString(),
-            "src",
-            "azure-functions",
-            "arm-templates",
-            "parameters.json"
-          ),
-          "utf8"
-        )
-      );
-
-      parameters.parameters = {
-        name: {
-          value: selections.functionAppName
-        },
-        location: {
-          value: selections.location
-        },
-        runtime: {
-          value: selections.runtime
-        },
-        subscriptionId: {
-          value: selections.subscriptionItem.subscriptionId
-        },
-        storageName: {
-          value: this.convertAppNameToStorageName(selections.functionAppName)
-        }
-      };
-
-      let deploymentParams = parameters.parameters;
-
       var options: ResourceManagementModels.Deployment = {
         properties: {
           mode: "Incremental",
@@ -197,18 +156,8 @@ export class FunctionProvider {
         selections.subscriptionItem
       );
 
-      ARMFileHelper.creatDirIfNonExistent(path.join(appPath, "arm-templates"));
-      ARMFileHelper.writeObjectToJsonFile(
-        path.join(appPath, "arm-templates", "functions-template.json"),
-        template
-      );
-      ARMFileHelper.writeObjectToJsonFile(
-        path.join(appPath, "arm-templates", "functions-parameters.json"),
-        parameters
-      );
-
       /*
-       * Cosmos Client to generate a cosmos DB resource using resource group name, database name, and options *
+       * Azure Resource Client to generate a function app using resource group name, function app name, and options
        */
       await azureResourceClient.deployments
         .createOrUpdate(
@@ -216,22 +165,20 @@ export class FunctionProvider {
           selections.functionAppName,
           options
         )
-        .then(result => {
-          setTimeout(async () => {
-            await ZipDeployHelper.zipDeploy(
-              selections.subscriptionItem.session.credentials,
-              appPath,
-              selections.functionAppName
-            );
+        .then(async result => {
+          await ZipDeployHelper.zipDeploy(
+            selections.subscriptionItem.session.credentials,
+            appPath,
+            selections.functionAppName
+          );
 
-            try {
-              FileHelper.deleteTempZip(appPath);
-            } catch (error) {
-              throw new FileError(error.message);
-            }
+          try {
+            FileHelper.deleteTempZip(appPath);
+          } catch (error) {
+            throw new FileError(error.message);
+          }
 
-            return Promise.resolve(result);
-          }, 10000);
+          return result;
         });
     } catch (error) {
       if (error.constructor === FileError) {
@@ -239,6 +186,16 @@ export class FunctionProvider {
       }
       throw new DeploymentError(error.message);
     }
+
+    this.writeARMTemplatesToApp(appPath, template, parameters);
+
+    /*
+     * restarts the app to load new deployment
+     */
+    await this.webClient!.webApps.restart(
+      selections.resourceGroupItem.name,
+      selections.functionAppName
+    );
   }
 
   private convertAppNameToStorageName(appName: string): string {
@@ -246,6 +203,72 @@ export class FunctionProvider {
       .toLowerCase()
       .replace(/[^0-9a-z]/gi, "")
       .substring(0, MAX_STORAGE_NAME);
+  }
+
+  /*
+   * gets ARM template for Azure Functions
+   */
+  private getFunctionsARMTemplate(): any {
+    let templatePath = path.join(
+      appRoot.toString(),
+      "src",
+      "azure-functions",
+      "arm-templates",
+      "template.json"
+    );
+
+    return JSON.parse(fs.readFileSync(templatePath, "utf8"));
+  }
+
+  /*
+   * sets and returns ARM templates parameters with user selections
+   */
+  private getFunctionsARMParameters(selections: FunctionSelections): any {
+    let parametersPath = path.join(
+      appRoot.toString(),
+      "src",
+      "azure-functions",
+      "arm-templates",
+      "parameters.json"
+    );
+
+    let parameters = JSON.parse(fs.readFileSync(parametersPath, "utf8"));
+
+    parameters.parameters = {
+      name: {
+        value: selections.functionAppName
+      },
+      location: {
+        value: selections.location
+      },
+      runtime: {
+        value: selections.runtime
+      },
+      subscriptionId: {
+        value: selections.subscriptionItem.subscriptionId
+      },
+      storageName: {
+        value: this.convertAppNameToStorageName(selections.functionAppName)
+      }
+    };
+
+    return parameters;
+  }
+
+  private writeARMTemplatesToApp(
+    appPath: string,
+    template: any,
+    parameters: any
+  ) {
+    ARMFileHelper.creatDirIfNonExistent(path.join(appPath, "arm-templates"));
+    ARMFileHelper.writeObjectToJsonFile(
+      path.join(appPath, "arm-templates", "functions-template.json"),
+      template
+    );
+    ARMFileHelper.writeObjectToJsonFile(
+      path.join(appPath, "arm-templates", "functions-parameters.json"),
+      parameters
+    );
   }
 
   /*
