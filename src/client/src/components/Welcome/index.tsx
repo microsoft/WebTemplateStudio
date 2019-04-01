@@ -30,6 +30,7 @@ const Welcome = ({
   vscode,
   outputPath
 }: Props) => {
+  const [isOutputPathEmpty, setIsOutputPathEmpty] = React.useState(false);
   return (
     <div className={styles.container}>
       <div className={styles.header}>Welcome to Project Acorn</div>
@@ -39,17 +40,19 @@ const Welcome = ({
         the Azure deployment process, all within this wizard.
       </div>
       <div className={styles.projectDetailsContainer}>
-        <ProjectNameAndOutput />
+        <ProjectNameAndOutput validation={isOutputPathEmpty} />
         <Link
           onClick={event => {
+            event.preventDefault();
             if (
-              (projectPathValidation &&
-                projectPathValidation.isInvalidProjectPath) ||
-              outputPath.length === 0
+              outputPath.length === 0 ||
+              projectPathValidation.isInvalidProjectPath
             ) {
-              event.preventDefault();
+              setIsOutputPathEmpty(outputPath.length === 0);
+            } else {
+              setIsOutputPathEmpty(false);
+              setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
             }
-            setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
           }}
           to={ROUTES.SELECT_PROJECT_TYPE}
           className={classnames(

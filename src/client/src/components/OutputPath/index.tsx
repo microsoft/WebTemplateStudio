@@ -10,6 +10,7 @@ interface IProps {
   handleSaveClick: () => any;
   value: string;
   validation: any;
+  isEmpty: boolean;
   placeholder?: string;
 }
 
@@ -18,6 +19,7 @@ const OutputPath = ({
   handleSaveClick,
   value,
   validation,
+  isEmpty,
   placeholder
 }: IProps) => {
   return (
@@ -37,11 +39,16 @@ const OutputPath = ({
             }}
           />
         </div>
-        {validation.isInvalidProjectPath && (
+        {(validation.isInvalidProjectPath && (
           <div className={styles.errorMessage}>
             {validation.projectPathError}
           </div>
-        )}
+        )) ||
+          (isEmpty && (
+            <div className={styles.errorMessage}>
+              {"Output Path can't be empty at all"}
+            </div>
+          ))}
       </div>
     </React.Fragment>
   );
