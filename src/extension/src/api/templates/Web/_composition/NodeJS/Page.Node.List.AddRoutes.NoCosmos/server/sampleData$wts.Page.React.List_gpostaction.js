@@ -1,7 +1,8 @@
-﻿const sampleData = {};
-//{[{
+﻿//{[{
 const shortLoremIpsum = `Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.`;
 //}]}
+const sampleData = {};
+
 // This class holds sample data used by some generated pages to show how they can be used.
 // TODO Project Acorn: Delete this file once your app is using real data.
 //{[{
