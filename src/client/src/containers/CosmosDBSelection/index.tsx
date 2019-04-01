@@ -48,7 +48,6 @@ const CosmosDBSelection = ({
                 key={accountName}
                 text={accountName}
                 closeSvgUrl={getSvg.getCancelSvg()}
-                itemTitle={serviceType}
                 withIndent={true}
                 handleCloseClick={removeCosmosResource}
                 idx={idx + 1}

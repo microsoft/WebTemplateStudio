@@ -82,7 +82,8 @@ export abstract class Controller {
   private static openProjectVSCode(message: any) {
     vscode.commands.executeCommand(
       CONSTANTS.VSCODE_COMMAND.OPEN_FOLDER,
-      vscode.Uri.file(message.payload.outputPath)
+      vscode.Uri.file(message.payload.outputPath),
+      true
     );
   }
 
