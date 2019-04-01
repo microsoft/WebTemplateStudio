@@ -26,7 +26,7 @@ export abstract class Validator {
     let isValid = true;
     let error = "";
 
-    if (!fs.existsSync(path)) {
+    if (!fs.existsSync(path) && path !== "") {
       error = CONSTANTS.ERRORS.INVALID_OUTPUT_PATH(path);
       isValid = false;
     } else if (name !== "" && !Validator.isUniquePath(path, name)) {
