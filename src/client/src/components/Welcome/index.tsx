@@ -11,7 +11,10 @@ import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
 import ProjectNameAndOutput from "../../containers/ProjectNameAndOutput";
 import { FormattedMessage } from "react-intl";
 
-import { getOutputPath } from "../../selectors/wizardSelectionSelector";
+import {
+  getOutputPath,
+  getProjectNameValidation
+} from "../../selectors/wizardSelectionSelector";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => any;
@@ -21,6 +24,7 @@ interface IStateProps {
   vscode: any;
   projectPathValidation: any;
   outputPath: string;
+  projectNameValidation: any;
 }
 
 type Props = IStateProps & IDispatchProps;
@@ -86,7 +90,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 const mapStateToProps = (state: any): IStateProps => ({
   vscode: state.vscode.vscodeObject,
   projectPathValidation: state.selection.projectPathValidation,
-  outputPath: getOutputPath(state)
+  outputPath: getOutputPath(state),
+  projectNameValidation: getProjectNameValidation(state)
 });
 
 export default connect(
