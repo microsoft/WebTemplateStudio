@@ -37,7 +37,6 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps & IProps;
 
 const ProjectNameAndOutput = (props: Props) => {
-  console.log(props.validation);
   React.useEffect(() => {
     if (process.env.NODE_ENV === "production") {
       if (props.vscode) {
@@ -97,7 +96,7 @@ const ProjectNameAndOutput = (props: Props) => {
             value={props.outputPath}
             placeholder="Output Path"
             validation={props.projectPathValidation}
-            isEmpty={props.validation}
+            isEmpty={props.validation && props.outputPath.length === 0}
           />
         </div>
       </div>
