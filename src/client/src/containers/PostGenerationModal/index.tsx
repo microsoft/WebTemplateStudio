@@ -8,16 +8,11 @@ import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import {
-  getSyncStatusSelector,
-  isTemplateGeneratedSelector,
-  isServicesDeployedSelector,
-  isTemplatesFailedSelector,
-  isServicesFailureSelector,
-  isServicesSelectedSelector
-} from "../../selectors/postGenerationSelector";
+import * as PostGenSelectors from "../../selectors/postGenerationSelector";
 import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
 import { EXTENSION_COMMANDS } from "../../utils/constants";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 interface IStateProps {
   isTemplateGenerated: boolean;
@@ -27,7 +22,7 @@ interface IStateProps {
   isServicesDeployed: boolean;
   isServicesFailed: boolean;
   isServicesSelected: boolean;
-  vscode: any;
+  vscode: IVSCodeObject;
   outputPath: string;
 }
 
@@ -110,13 +105,13 @@ const PostGenerationModal = ({
 
 const mapStateToProps = (state: any): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
-  isTemplateGenerated: isTemplateGeneratedSelector(state),
-  isTemplatesFailed: isTemplatesFailedSelector(state),
-  templateGenStatus: getSyncStatusSelector(state),
-  isServicesSelected: isServicesSelectedSelector(state),
-  isServicesDeployed: isServicesDeployedSelector(state),
-  isServicesFailed: isServicesFailureSelector(state),
-  vscode: state.vscode.vscodeObject,
+  isTemplateGenerated: PostGenSelectors.isTemplateGeneratedSelector(state),
+  isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),
+  templateGenStatus: PostGenSelectors.getSyncStatusSelector(state),
+  isServicesSelected: PostGenSelectors.isServicesSelectedSelector(state),
+  isServicesDeployed: PostGenSelectors.isServicesDeployedSelector(state),
+  isServicesFailed: PostGenSelectors.isServicesFailureSelector(state),
+  vscode: getVSCodeApiSelector(state),
   outputPath: state.selection.outputPath
 });
 
