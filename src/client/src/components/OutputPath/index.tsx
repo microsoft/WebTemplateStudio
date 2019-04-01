@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { ReactComponent as SaveSVG } from "../../assets/folder.svg";
 import Input from "../Input";
+import { EMPTY_FIELD } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -46,7 +47,7 @@ const OutputPath = ({
         )) ||
           (isEmpty && (
             <div className={styles.errorMessage}>
-              {"Output Path can't be empty at all"}
+              {EMPTY_FIELD("Output path")}
             </div>
           ))}
       </div>
