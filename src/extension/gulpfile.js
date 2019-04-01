@@ -23,7 +23,6 @@ const inlineMap = true;
 const inlineSource = false;
 const outDest = "out";
 
-// If all VS Code langaues are support you can use nls.coreLanguages
 // A list of all locales supported by VSCode can be found here: https://code.visualstudio.com/docs/getstarted/locales
 const languages = [{ folderName: "en", id: "en" }];
 
@@ -33,6 +32,10 @@ gulp.task("clean", function() {
     "package.nls.*.json",
     "../../dist/wts-0.0.0-UNTRACKEDVERSION.vsix"
   ]);
+});
+
+gulp.task("internal-compile", function() {
+  return compile(false);
 });
 
 gulp.task("internal-nls-compile", function() {
@@ -58,6 +61,13 @@ gulp.task("vsce:package", function() {
 
 gulp.task(
   "compile",
+  gulp.series("clean", "internal-compile", callback => {
+    callback();
+  })
+);
+
+gulp.task(
+  "build",
   gulp.series("clean", "internal-nls-compile", "add-locales", callback => {
     callback();
   })
