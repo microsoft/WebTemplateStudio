@@ -8,10 +8,6 @@ const indexRouter = require("./routes/index");
 
 const app = express();
 
-// view engine setup
-app.set("views", path.resolve(__dirname, "views"));
-app.set("view engine", "pug");
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,15 +29,14 @@ if (process.env.NODE_ENV === "production") {
   // Do not send stack trace of error message when in production
   app.use((err, req, res, next) => {
     res.status(err.status || 500);
-    res.locals.error = "500: Internal Server Error";
-    res.render("error");
+    res.send("Error occurred while handling the request.");
   });
 } else {
   // Log stack trace of error message while in development
   app.use((err, req, res, next) => {
     res.status(err.status || 500);
     console.log(err);
-    res.send(err);
+    res.send(err.message);
   });
 }
 
