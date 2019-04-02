@@ -12,6 +12,7 @@ import styles from "./styles.module.css";
 import Check from "../../assets/check.svg";
 
 import { IOption } from "../../types/option";
+import { FormattedMessage } from "react-intl";
 
 const SelectableCard = ({
   iconPath,
@@ -74,7 +75,10 @@ const SelectableCard = ({
           className={classNames(styles.link)}
           to={"/PageDetail"}
         >
-          Details
+          <FormattedMessage
+            id="selectableCard.details"
+            defaultMessage="Details"
+          />
         </Link>
         <div
           className={classNames({

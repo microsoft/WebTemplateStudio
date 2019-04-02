@@ -9,6 +9,8 @@ import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 import { getPagesOptionsAction } from "../../actions/getPagesOptions";
 
+import { defineMessages, InjectedIntl, injectIntl } from "react-intl";
+
 interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
   getPages: (
@@ -26,7 +28,18 @@ interface ISelectPagesProps {
   selectedProjectType: ISelected;
 }
 
-type Props = IDispatchProps & ISelectPagesProps;
+interface IIntlProps {
+  intl: InjectedIntl;
+}
+
+type Props = IDispatchProps & ISelectPagesProps & IIntlProps;
+
+const messages = defineMessages({
+  pagesTitleQuestion: {
+    id: "selectPages.pagesTitleQuestion",
+    defaultMessage: "What pages do you need for your application?"
+  }
+});
 
 class SelectPages extends React.Component<Props> {
   public componentDidMount() {
@@ -62,7 +75,7 @@ class SelectPages extends React.Component<Props> {
     return selectedPageIndices;
   };
   public render() {
-    const { options, selectPages, selectedPages } = this.props;
+    const { options, selectPages, selectedPages, intl } = this.props;
     return (
       <div>
         {options.length > 0 && (
@@ -72,7 +85,7 @@ class SelectPages extends React.Component<Props> {
             selectedCardIndices={this.convertSelectedPagesToIndices(
               selectedPages
             )}
-            title="What pages do you need for your application?"
+            title={intl.formatMessage(messages.pagesTitleQuestion)}
             options={options}
             currentCardData={selectedPages}
           />
@@ -116,4 +129,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SelectPages);
+)(injectIntl(SelectPages));

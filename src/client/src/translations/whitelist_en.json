@@ -1,0 +1,20 @@
+[
+  "card.details",
+  "details.back",
+  "details.author",
+  "details.licenses",
+  "details.none",
+  "loginCard.details",
+  "loginCard.createAccount",
+  "loginCard.signIn",
+  "selectableCard.details",
+  "selectPages.pagesTitleQuestion",
+  "selectPages.webAppTitleQuestion",
+  "summarySection.editResource",
+  "welcome.header",
+  "welcome.body",
+  "welcome.getStarted",
+  "sortablePageList.duplicateName",
+  "sortablePageList.hide",
+  "sortablePageList.show"
+]

@@ -47,7 +47,6 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
 };
 
 const PAGE_NAME_ERROR_MESSAGES = {
-  DUPLICATE_NAME: "page name has to be unique",
   EMPTY_NAME: "name cannot be empty",
   INVALID_REGEX: "page name may only contain letters, numbers, and spaces",
   NAME_STARTS_WITH_SPACE: "page name may only start with letters or numbers"

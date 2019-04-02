@@ -19,7 +19,7 @@ export default class EngineAPIService {
         return response.json();
       })
       .catch((error: Error) => {
-        throw Error("request failed:" + error.toString());
+        throw Error(error.toString());
       });
   }
 
@@ -32,7 +32,7 @@ export default class EngineAPIService {
         return response.json();
       })
       .catch((error: Error) => {
-        throw Error("request failed:" + error.toString());
+        throw Error(error.toString());
       });
   }
 
@@ -56,7 +56,7 @@ export default class EngineAPIService {
         return response.json();
       })
       .catch((error: Error) => {
-        throw Error("request failed:" + error.toString());
+        throw Error(error.toString());
       });
   }
 
@@ -81,7 +81,7 @@ export default class EngineAPIService {
         return response.json();
       })
       .catch((error: Error) => {
-        throw Error("request failed:" + error.toString());
+        throw Error(error.toString());
       });
   }
 }

@@ -5,12 +5,27 @@ import backArrow from "../../assets/backarrow.svg";
 
 import { IOption } from "../../types/option";
 
+import {
+  injectIntl,
+  defineMessages,
+  InjectedIntl,
+  FormattedMessage
+} from "react-intl";
+
 interface IProps {
   detailInfo: IOption;
   handleBackClick: () => void;
+  intl?: InjectedIntl;
 }
 
-const Details = ({ detailInfo, handleBackClick }: IProps) => {
+const messages = defineMessages({
+  none: {
+    id: "details.none",
+    defaultMessage: "None"
+  }
+});
+
+const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
   return (
     <React.Fragment>
       <div className={styles.container}>
@@ -25,7 +40,7 @@ const Details = ({ detailInfo, handleBackClick }: IProps) => {
             )}
           </div>
           <div className={styles.details} onClick={handleBackClick}>
-            Back
+            <FormattedMessage id="details.back" defaultMessage="Back" />
           </div>
         </div>
         <div className={styles.detailsContainer}>
@@ -42,12 +57,26 @@ const Details = ({ detailInfo, handleBackClick }: IProps) => {
 
             <div className={styles.col}>
               <div className={styles.categoriesContainer}>
-                <div>Author:</div>
-                <div>Licenses:</div>
+                <div>
+                  <FormattedMessage
+                    id="details.author"
+                    defaultMessage="Author:"
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="details.licenses"
+                    defaultMessage="Licenses:"
+                  />
+                </div>
               </div>
               <div>
-                <div>{detailInfo.author || "None"}</div>
-                <div>{detailInfo.licenses || "None"}</div>
+                <div>
+                  {detailInfo.author || intl!.formatMessage(messages.none)}
+                </div>
+                <div>
+                  {detailInfo.licenses || intl!.formatMessage(messages.none)}
+                </div>
               </div>
             </div>
           </div>
@@ -57,4 +86,4 @@ const Details = ({ detailInfo, handleBackClick }: IProps) => {
   );
 };
 
-export default Details;
+export default injectIntl(Details);

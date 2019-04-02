@@ -6,6 +6,8 @@ import CardBody from "../CardBody";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
+import { FormattedMessage } from "react-intl";
+
 interface IProps {
   cardTitle: string;
   cardBody: string;
@@ -24,9 +26,16 @@ const LoginCard = ({ cardTitle, cardBody, svgUrl, handleClick }: IProps) => {
         <CardBody body={cardBody} />
       </div>
       <div className={styles.selectionContainer}>
-        <div className={styles.details}>Details</div>
+        <div className={styles.details}>
+          <FormattedMessage id="loginCard.details" defaultMessage="Details" />
+        </div>
         <div className={styles.buttonContainer}>
-          <div className={styles.createAccountButton}>Create Account</div>
+          <div className={styles.createAccountButton}>
+            <FormattedMessage
+              id="loginCard.createAccount"
+              defaultMessage="Create Account"
+            />
+          </div>
           <button
             onClick={handleClick}
             className={classnames(
@@ -34,7 +43,7 @@ const LoginCard = ({ cardTitle, cardBody, svgUrl, handleClick }: IProps) => {
               buttonStyles.buttonHighlighted
             )}
           >
-            Sign in
+            <FormattedMessage id="loginCard.signIn" defaultMessage="Sign In" />
           </button>
         </div>
       </div>

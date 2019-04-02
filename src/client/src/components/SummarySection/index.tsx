@@ -10,6 +10,7 @@ import { IFunctionApp } from "../../containers/AzureFunctionsSelection";
 import { RowType } from "../../types/rowType";
 
 import * as AzureFunctionActions from "../../actions/azureFunctionActions";
+import { FormattedMessage } from "react-intl";
 
 interface IProps {
   selectionTitle: string;
@@ -97,7 +98,10 @@ const SummarySection = ({
                 className={styles.editButton}
                 onClick={modalOpeners[selection.internalName]}
               >
-                Edit Resource
+                <FormattedMessage
+                  id="summarySection.editResource"
+                  defaultMessage="Edit Resource"
+                />
               </div>
             )}
           </div>
