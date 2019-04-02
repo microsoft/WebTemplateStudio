@@ -66,7 +66,8 @@ const Welcome = ({
             if (
               outputPath.length === 0 ||
               projectPathValidation.isInvalidProjectPath ||
-              projectName.length === 0
+              projectName.length === 0 ||
+              !projectNameValidation.isValid
             ) {
               event.preventDefault();
               setIsOutputPathEmpty(outputPath.length === 0);
