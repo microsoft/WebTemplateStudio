@@ -43,11 +43,11 @@ const Welcome = ({
         <ProjectNameAndOutput validation={isOutputPathEmpty} />
         <Link
           onClick={event => {
-            event.preventDefault();
             if (
               outputPath.length === 0 ||
               projectPathValidation.isInvalidProjectPath
             ) {
+              event.preventDefault();
               setIsOutputPathEmpty(outputPath.length === 0);
             } else {
               setIsOutputPathEmpty(false);

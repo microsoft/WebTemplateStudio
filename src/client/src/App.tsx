@@ -47,7 +47,7 @@ interface IDispatchProps {
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
-  setProjectPathValidation: (validation: {}) => void;
+  setProjectPathValidation: (validation: any) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: boolean) => any;
 }
@@ -204,7 +204,7 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   setAppNameAvailability: (isAvailableObject: any) => {
     dispatch(setAppNameAvailabilityAction(isAvailableObject));
   },
-  setProjectPathValidation: (validation: {}) => {
+  setProjectPathValidation: (validation: any) => {
     dispatch(setProjectPathValidation(validation));
   },
   updateTemplateGenStatusMessage: (status: string) => {
