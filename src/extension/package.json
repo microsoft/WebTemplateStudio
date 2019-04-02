@@ -48,18 +48,28 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
+    "compile": "gulp compile",
+    "build": "gulp build",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test",
-    "createVsixPackage": "rm -rf ../../dist/wts.vsix && vsce package --out ../../dist/wts-0.0.0-UNTRACKEDVERSION.vsix"
+    "createVsixPackage": "gulp package"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
     "@types/node": "^8.10.25",
+    "del": "^4.0.0",
+    "event-stream": "^4.0.1",
+    "gulp": "^4.0.0",
+    "gulp-cli": "^2.1.0",
+    "gulp-filter": "^5.1.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-typescript": "^5.0.1",
+    "run-sequence": "^2.2.1",
     "tslint": "^5.8.0",
     "typescript": "^3.1.4",
-    "vscode": "^1.1.29"
+    "vscode": "^1.1.29",
+    "vscode-nls-dev": "^3.2.6"
   },
   "extensionDependencies": [
     "ms-vscode.azure-account"
