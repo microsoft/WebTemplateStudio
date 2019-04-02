@@ -16,23 +16,26 @@ _Example Scenario_: I need a Fullstack web app that stores blog posts in a Cosmo
 ## VSIX Installation Instructions
 
 ### Prerequisites
+#### Install Azure Cosmos DB extension (One-time Only)
+- Open VSCode
+- Open the extensions Sidebar
+- Search for Azure Cosmos DB and install the extension
+
+<img src="./docs/resources/cosmos-db-extension.png">
 
 ### Install the latest Project Acorn Release
-
 #### Download the latest release
-
 - https://github.com/Microsoft/WebTemplateStudio/releases
 - Go to "Assets"
 - Download the `.vsix` file
 - Open VSCode
 - Open the extensions sidebar
 - Click on the ellipsis in the right upper corner
-- Choose _Install from VSIX_
+- Choose *Install from VSIX*
 
 <img src="./docs/resources/vsix-install-instructions.png">
 
 #### Run the Release
-
 - Press `ctrl+shift+p`to open the extension launcher
 - Type `Web Template Studio: Launch` and press `Enter` to launch the extension
 
@@ -49,7 +52,9 @@ Once you make the selections you want and click generate, you can quickly extend
 
 # Prerequisites
 
-[Git](https://git-scm.com/downloads), [Yarn](https://yarnpkg.com/en/docs/install#mac-stable), [Node.js](https://nodejs.org/en/download/), [Gulp](https://gulpjs.com/) and [VSCode](https://code.visualstudio.com/updates/v1_31) must be installed prior to running the installation or build scripts.
+[Git](https://git-scm.com/downloads), [Yarn](https://yarnpkg.com/en/docs/install#mac-stable), [Node.js](https://nodejs.org/en/download/) and [VSCode](https://code.visualstudio.com/updates/v1_31) must be installed prior to running the installation or build scripts.
+
+In VSCode, install the [Azure Cosmos DB VSCode extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-cosmosdb) because it is an extension dependency.
 
 Install [Visual Studio Code Extensions CLI](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce) using the command `yarn add global vsce`.
 
