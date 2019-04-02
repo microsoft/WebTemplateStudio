@@ -5,6 +5,8 @@ import { CONSTANTS, SyncStatus } from "./constants";
 import * as signalR from "@aspnet/signalr";
 
 export default class ApiModule {
+  private static _process: ChildProcess;
+
   public static StartApi(context: vscode.ExtensionContext): ChildProcess {
     let platform = process.platform;
 
@@ -26,8 +28,18 @@ export default class ApiModule {
     );
 
     let spawnedProcess = exec(`${apiPath}`, { cwd: apiWorkingDirectory });
-
+    ApiModule._process = spawnedProcess;
     return spawnedProcess;
+  }
+
+  public static StopApi() {
+    if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
+      let pid = ApiModule._process.pid;
+      var spawn = require("child_process").spawn;
+      spawn("taskkill", ["/pid", pid, "/f", "/t"]);
+    } else {
+      ApiModule._process.kill();
+    }
   }
 
   public static async SendSyncRequestToApi(

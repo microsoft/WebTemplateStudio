@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { CONSTANTS } from "./constants";
-import { ChildProcess } from "child_process";
+import ApiModule from "./apiModule";
 
 /**
  * Manages react webview panels
@@ -13,7 +13,6 @@ export class ReactPanel {
   public static currentPanel: ReactPanel | undefined;
 
   private static readonly viewType = "react";
-  private static _process: ChildProcess;
   private readonly _panel: vscode.WebviewPanel;
   private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
@@ -27,7 +26,6 @@ export class ReactPanel {
   // private static _controller: Controller;
 
   public static createOrShow(
-    process: ChildProcess,
     extensionPath: string,
     controllerFunctionDelegate: (message: any) => any = this
       ._controllerFunctionDelegate
@@ -35,9 +33,6 @@ export class ReactPanel {
     const column = vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
       : undefined;
-    if (process) {
-      ReactPanel._process = process;
-    }
     // If we already have a panel, show it.
     // Otherwise, create a new panel.
     if (ReactPanel.currentPanel) {
@@ -109,15 +104,7 @@ export class ReactPanel {
 
   public dispose() {
     ReactPanel.currentPanel = undefined;
-
-    if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
-      let pid = ReactPanel._process.pid;
-      var spawn = require("child_process").spawn;
-      spawn("taskkill", ["/pid", pid, "/f", "/t"]);
-    } else {
-      ReactPanel._process.kill();
-    }
-
+    ApiModule.StopApi();
     // Clean up our resources
     this._panel.dispose();
     while (this._disposables.length) {
