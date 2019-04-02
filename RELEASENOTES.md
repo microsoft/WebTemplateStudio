@@ -1,10 +1,11 @@
 # Release Notes
 
+<!-- Temporary Commented Out for Readability
 All notable changes to the extension and client will be documented in this file.
 
 Check [Read Me](https://github.com/Microsoft/WebTemplateStudio/blob/master/README.md/) for overview of Project
 
-Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for existing Github issues of Project
+Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for existing Github issues of Project -->
 
 ## Release __VERSIONNUMBER__
 <!-- 
