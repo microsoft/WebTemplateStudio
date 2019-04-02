@@ -55,7 +55,7 @@ const ProjectNameAndOutput = (props: Props) => {
         command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
         payload: {
           projectPathValidation: {
-            isInvalidProjectPath: true,
+            isInvalidProjectPath: false,
             projectPathError: "Invalid path"
           }
         }
