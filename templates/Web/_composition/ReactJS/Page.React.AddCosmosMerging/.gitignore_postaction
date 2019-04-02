@@ -1,8 +1,0 @@
-# vscode configuration
-.vscode/
-//{[{
-# Hide API Keys
-.env
-//}]}
-# production
-/server/build
