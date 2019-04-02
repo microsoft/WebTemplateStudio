@@ -16,7 +16,7 @@ _Note: If using Windows, use Git Bash_.
 
 ## Quick Start
 
-To get started, the first step is to clone this repository. To install dependencies, compile the client and the
+To get started, the first step is to clone this repository. To install dependencies, compile the client, and compile the
 extension, run:
 
 _Windows:_
@@ -34,7 +34,7 @@ bash build
 Open `src/extension` using `VSCode` and press `F5` to run the extension. Use `Ctrl+Shift+P` to open VSCode's extension
 launcher. Select `Web Template Studio: Launch` and press `Enter` to launch the extension
 
-## Developing for the Client
+## Developing the Client
 
 The client lives in the `src/client` directory. To run the client for development, navigate to `src/client` and use the command
 
@@ -62,7 +62,7 @@ _Mac/Linux:_
 bash createVsix
 ```
 
-to avoid setting permissions for the script.
+_Note: We need to use the `bash` prefix to avoid setting permissions for the script._
 
 The script will package the extension into the root directory `/dist` folder. The vsix package can be distributed and
 installed by anyone who has VSCode using the command in the extension directory:
