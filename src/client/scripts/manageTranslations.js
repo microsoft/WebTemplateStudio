@@ -1,3 +1,6 @@
+// This script was taken from https://github.com/bang88/typescript-react-intl/issues/19, it is used to extract strings
+// to be localized from typescript source to .json resource files
+
 // For default languages and languages use the VSCode language codes.
 // A list of all locales supported by VSCode can be found here: https://code.visualstudio.com/docs/getstarted/locales
 
