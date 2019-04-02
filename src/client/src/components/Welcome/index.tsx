@@ -61,7 +61,6 @@ const Welcome = ({
         <ProjectNameAndOutput validation={isOutputPathEmpty} />
         <Link
           onClick={event => {
-            event.preventDefault();
             updateProjectName(projectName);
             if (
               outputPath.length === 0 ||
@@ -71,6 +70,7 @@ const Welcome = ({
             ) {
               event.preventDefault();
               setIsOutputPathEmpty(outputPath.length === 0);
+              event.preventDefault();
             } else {
               setIsOutputPathEmpty(false);
               setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
