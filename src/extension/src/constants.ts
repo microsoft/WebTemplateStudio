@@ -1,7 +1,9 @@
 import { MessageItem } from "vscode";
 import * as nls from "vscode-nls";
 
-const localize: nls.LocalizeFunc = nls.loadMessageBundle();
+const localize: nls.LocalizeFunc = nls.config({
+  messageFormat: nls.MessageFormat.file
+})();
 
 export const CONSTANTS = {
   ERRORS: {
