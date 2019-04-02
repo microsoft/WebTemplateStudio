@@ -145,7 +145,6 @@ export abstract class Controller {
         }
 
         Controller.reactPanelContext = ReactPanel.createOrShow(
-          process,
           context.extensionPath,
           Controller.routingMessageReceieverDelegate
         );
