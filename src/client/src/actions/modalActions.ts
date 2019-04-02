@@ -22,8 +22,15 @@ const openAzureFunctionsModalAction = () => {
   };
 };
 
+const openPostGenModalAction = () => {
+  return (dispatch: any) => {
+    dispatch(openModalAction(Actions.POST_GEN_MODAL));
+  };
+};
+
 export {
   closeModalAction,
   openAzureFunctionsModalAction,
-  openCosmosDbModalAction
+  openCosmosDbModalAction,
+  openPostGenModalAction
 };

@@ -75,8 +75,17 @@ export abstract class Controller {
     [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
     [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
-    [ExtensionCommand.GetUserStatus, Controller.sendUserStatus]
+    [ExtensionCommand.GetUserStatus, Controller.sendUserStatus],
+    [ExtensionCommand.OpenProjectVSCode, Controller.openProjectVSCode]
   ]);
+
+  private static openProjectVSCode(message: any) {
+    vscode.commands.executeCommand(
+      CONSTANTS.VSCODE_COMMAND.OPEN_FOLDER,
+      vscode.Uri.file(message.payload.outputPath),
+      true
+    );
+  }
 
   public static sendFunctionRuntimes(message: any) {
     Controller.handleValidMessage(ExtensionCommand.GetFunctionsRuntimes, {
@@ -406,6 +415,7 @@ export abstract class Controller {
       });
   }
 
+  // tslint:disable-next-line: max-func-body-length
   public static async handleGeneratePayloadFromClient(
     message: any
   ): Promise<any> {
@@ -452,20 +462,67 @@ export abstract class Controller {
     }
     const apiGenResult = await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
-    );
+    ).catch(error => {
+      console.log(error);
+      Controller.reactPanelContext.postMessageWebview({
+        command: ExtensionCommand.UpdateGenStatus,
+        payload: {
+          templates: Controller.getProgressObject(false),
+          cosmos: Controller.getProgressObject(false),
+          azureFunctions: Controller.getProgressObject(false)
+        }
+      });
+      return;
+    });
+
+    let progressObject = {
+      templates: Controller.getProgressObject(true),
+      cosmos: {},
+      azureFunctions: {}
+    };
+
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.UpdateGenStatus,
+      payload: progressObject
+    });
 
     var serviceQueue: Promise<any>[] = [];
     enginePayload.path = apiGenResult.generationOutputPath;
+
+    Controller.handleValidMessage(ExtensionCommand.GetOutputPath, {
+      outputPath: enginePayload.path
+    });
 
     if (payload.selectedFunctions) {
       serviceQueue.push(
         Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
           TelemetryEventName.FunctionsDeploy,
+          // tslint:disable-next-line: no-function-expression
           async function(this: IActionContext): Promise<void> {
-            await Controller.processFunctionDeploymentAndSendStatusToClient(
-              payload.functions,
-              enginePayload.path
-            );
+            try {
+              Controller.deployFunctionApp(
+                payload.functions,
+                enginePayload.path
+              );
+              progressObject = {
+                ...progressObject,
+                azureFunctions: Controller.getProgressObject(true)
+              };
+              Controller.reactPanelContext.postMessageWebview({
+                command: ExtensionCommand.UpdateGenStatus,
+                payload: progressObject
+              });
+            } catch (error) {
+              console.log(error);
+              progressObject = {
+                ...progressObject,
+                azureFunctions: Controller.getProgressObject(false)
+              };
+              Controller.reactPanelContext.postMessageWebview({
+                command: ExtensionCommand.UpdateGenStatus,
+                payload: progressObject
+              });
+            }
           }
         )
       );
@@ -475,16 +532,36 @@ export abstract class Controller {
       serviceQueue.push(
         Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
           TelemetryEventName.CosmosDBDeploy,
+          // tslint:disable-next-line: no-function-expression
           async function(this: IActionContext): Promise<void> {
             var cosmosPayload: any = payload.cosmos;
-            var dbObject = await Controller.processCosmosDeploymentAndSendStatusToClient(
-              cosmosPayload,
-              enginePayload.path
-            );
-            Controller.promptUserForCosmosReplacement(
-              enginePayload.path,
-              dbObject
-            );
+            try {
+              var dbObject = await Controller.deployCosmosResource(
+                cosmosPayload,
+                enginePayload.path
+              );
+              progressObject = {
+                ...progressObject,
+                cosmos: Controller.getProgressObject(true)
+              };
+              Controller.reactPanelContext.postMessageWebview({
+                command: ExtensionCommand.UpdateGenStatus,
+                payload: progressObject
+              });
+              Controller.promptUserForCosmosReplacement(
+                enginePayload.path,
+                dbObject
+              );
+            } catch (error) {
+              progressObject = {
+                ...progressObject,
+                cosmos: Controller.getProgressObject(false)
+              };
+              Controller.reactPanelContext.postMessageWebview({
+                command: ExtensionCommand.UpdateGenStatus,
+                payload: progressObject
+              });
+            }
           }
         )
       );
@@ -595,6 +672,12 @@ export abstract class Controller {
 
   private static handleGenLiveMessage(message: any) {
     vscode.window.showInformationMessage(message);
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.UpdateGenStatusMessage,
+      payload: {
+        status: message
+      }
+    });
   }
 
   public static sendOutputPathSelectionToClient(message: any) {
@@ -608,7 +691,11 @@ export abstract class Controller {
         let path = undefined;
 
         if (res !== undefined) {
-          path = res[0].path;
+          if (process.platform === CONSTANTS.PLATFORM.WIN_32) {
+            path = res[0].path.substring(1, res[0].path.length);
+          } else {
+            path = res[0].path;
+          }
         }
 
         Controller.handleValidMessage(ExtensionCommand.GetOutputPath, {
@@ -793,5 +880,12 @@ export abstract class Controller {
         }
       }
     );
+  }
+
+  private static getProgressObject(didSucceed: boolean) {
+    return {
+      success: didSucceed,
+      failure: !didSucceed
+    };
   }
 }

@@ -19,6 +19,7 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 
 #### Wizard Features
 
+- **(NEW)** Post-generation modal
 - Welcome Page Component
 - Telemetry Tracking On Page Change
 - Login and Sign out of Azure Account
