@@ -6,16 +6,7 @@ Check [Read Me](https://github.com/Microsoft/WebTemplateStudio/blob/master/READM
 
 Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for existing Github issues of Project
 
-## Release **VERSIONNUMBER**
-
-## Known Issues
-
-- Post-generation modal design/ux requires feedback
-- Welcome page and summary page validation do not work
-
-## What's New
-
-- See "Wizard Features"
+## Release __VERSIONNUMBER__
 
 #### Extension Features
 
