@@ -1,0 +1,15 @@
+﻿[
+  {
+    "name": "ReactJS",
+    "displayName": "ReactJS",
+    "summary": "React is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers.",
+    "author": "Facebook",
+    "order": "1",
+    "licenses": "",
+    "platforms": [ "Web" ],
+    "languages": [ "Any" ],
+    "tags": {
+      "version": "16.8.4"
+    }
+  }
+]
