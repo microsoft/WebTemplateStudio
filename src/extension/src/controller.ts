@@ -417,7 +417,6 @@ export abstract class Controller {
         }
       }
     });
-    console.log("Sent the error");
   }
 
   public static sendFunctionNameValidationStatusToClient(message: any) {
