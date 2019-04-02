@@ -18,13 +18,15 @@ import {
 } from "../../selectors/cosmosServiceSelector";
 import {
   getAzureFunctionsOptionsSelector,
-  isAzureFunctionsSelected
+  isAzureFunctionsSelectedSelector
 } from "../../selectors/azureFunctionsServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
+import { openPostGenModalAction } from "../../actions/modalActions";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
+  openPostGenModal: () => any;
 }
 
 interface IStateProps {
@@ -59,11 +61,13 @@ class Footer extends React.Component<Props> {
       selectedCosmos,
       cosmos,
       selectedFunctions,
-      functions
+      functions,
+      vscode,
+      openPostGenModal
     } = this.props;
     e.preventDefault();
     // @ts-ignore
-    this.props.vscode.postMessage({
+    vscode.postMessage({
       command: EXTENSION_COMMANDS.GENERATE,
       text: "Sending generation info...",
       payload: {
@@ -76,6 +80,7 @@ class Footer extends React.Component<Props> {
     });
     const { pathname } = this.props.location;
     this.trackPageForTelemetry(pathname);
+    openPostGenModal();
   };
   public isReviewAndGenerate = (): boolean => {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
@@ -175,7 +180,7 @@ const mapStateToProps = (state: any): IStateProps => {
     engine: rootSelector(state),
     selectedCosmos: isCosmosResourceCreatedSelector(state),
     cosmos: getCosmosDbSelectionSelector(state),
-    selectedFunctions: isAzureFunctionsSelected(state),
+    selectedFunctions: isAzureFunctionsSelectedSelector(state),
     functions: getAzureFunctionsOptionsSelector(state)
   };
 };
@@ -183,6 +188,9 @@ const mapStateToProps = (state: any): IStateProps => {
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
+  },
+  openPostGenModal: () => {
+    dispatch(openPostGenModalAction());
   }
 });
 

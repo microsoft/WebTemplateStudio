@@ -19,6 +19,7 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 
 #### Wizard Features
 
+- **(NEW)** Post-generation modal
 - Welcome Page Component
 - Telemetry Tracking On Page Change
 - Login and Sign out of Azure Account
@@ -38,10 +39,7 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 - Delete Pages and Services from Summary Page
 
 #### Mock Template Features
-
-- Master detail, Grid and List Pages
-- Connection to MongoDB
-- Node/Express Backend
+- Centralized Error Handling in Express Back End
 
 #### Unimplemented Features
 
@@ -51,6 +49,3 @@ Check [Issues Page](https://github.com/Microsoft/WebTemplateStudio/issues/) for 
 - Dynamically gain dependencies at first run (Dlls) rather than packaging with vsix.
 - Theme-matching with VSCode themes (light/dark/high-contrast)
 
-#### Notes
-
-_No notes available_

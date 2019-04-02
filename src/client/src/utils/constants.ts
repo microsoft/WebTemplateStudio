@@ -66,7 +66,10 @@ const EXTENSION_COMMANDS = {
   PROJECT_PATH_AND_NAME_VALIDATION: "project-path-and-name-validation",
   SUBSCRIPTION_DATA_COSMOS: "subscriptionDataForCosmos",
   SUBSCRIPTION_DATA_FUNCTIONS: "subscriptionDataForFunctions",
-  TRACK_PAGE_SWITCH: "track-page-switch"
+  TRACK_PAGE_SWITCH: "track-page-switch",
+  GEN_STATUS_MESSAGE: "update-status-message",
+  GEN_STATUS: "update-status",
+  OPEN_PROJECT_IN_VSCODE: "open-project-vscode"
 };
 
 export {

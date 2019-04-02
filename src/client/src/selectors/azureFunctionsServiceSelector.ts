@@ -23,6 +23,11 @@ const isAzureFunctionsSelected = (state: any): boolean => {
   return !_.isEmpty(state.selection.services.azureFunctions.selection);
 };
 
+const isAzureFunctionsSelectedSelector = createSelector(
+  getState,
+  isAzureFunctionsSelected
+);
+
 const getAzureFunctionsOptions = (
   state: any,
   isAzureFunctionsSelected: boolean
@@ -74,5 +79,5 @@ const getFunctionsSelection = createSelector(
 export {
   getFunctionsSelection,
   getAzureFunctionsOptionsSelector,
-  isAzureFunctionsSelected
+  isAzureFunctionsSelectedSelector
 };

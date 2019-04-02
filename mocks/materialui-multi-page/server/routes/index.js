@@ -9,16 +9,16 @@ const router = express.Router();
  */
 // var mongoService = require("../mongo/mongoService");
 
-// router.get(CONSTANTS.ENDPOINT.LIST, function(req, res) {
-//   mongoService.get(req, res);
+// router.get(CONSTANTS.ENDPOINT.LIST, function(req, res, next) {
+//   mongoService.get(req, res, next);
 // });
 
-// router.post(CONSTANTS.ENDPOINT.LIST, function(req, res) {
-//   mongoService.create(req, res);
+// router.post(CONSTANTS.ENDPOINT.LIST, function(req, res, next) {
+//   mongoService.create(req, res, next);
 // });
 
-// router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
-//   mongoService.destroy(req, res);
+// router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res, next) {
+//   mongoService.destroy(req, res, next);
 // });
 
 /*
@@ -28,16 +28,16 @@ const SQLController = require("../sql/sqlController");
 
 const sqlController = new SQLController();
 
-router.get(CONSTANTS.ENDPOINT.LIST, function(req, res) {
-  sqlController.get(req, res);
+router.get(CONSTANTS.ENDPOINT.LIST, function(req, res, next) {
+  sqlController.get(req, res, next);
 });
 
-router.post(CONSTANTS.ENDPOINT.LIST, function(req, res) {
-  sqlController.create(req, res);
+router.post(CONSTANTS.ENDPOINT.LIST, function(req, res, next) {
+  sqlController.create(req, res, next);
 });
 
-router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
-  sqlController.destroy(req, res);
+router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res, next) {
+  sqlController.destroy(req, res, next);
 });
 
 /*
@@ -45,60 +45,40 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
  */
 // List Page Endpoints
 // router.get(CONSTANTS.ENDPOINT.LIST, function(req, res) {
-//   try {
-//     res.json(sampleData.listTextAssets);
-//   } catch (err) {
-//     res.status(500).send(err);
-//   }
+//   res.json(sampleData.listTextAssets);
 // });
 
 // router.post(CONSTANTS.ENDPOINT.LIST, function(req, res) {
-//   try {
-//     let listItem = {
-//       text: req.body.text,
-//       _id: sampleData.listID
-//     };
-//     sampleData.listTextAssets.unshift(listItem);
-//     res.json(listItem);
-//     sampleData.listID++;
-//   } catch (err) {
-//     res.status(500).send(err);
-//   }
+//   let listItem = {
+//     text: req.body.text,
+//     _id: sampleData.listID
+//   };
+//   sampleData.listTextAssets.unshift(listItem);
+//   res.json(listItem);
+//   sampleData.listID++;
 // });
 
 // router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
-//   try {
-//     const { _id } = req.params;
-//     var index = sampleData.listTextAssets.findIndex(
-//       listItem => listItem._id == _id
-//     );
-//     if (index > -1) {
-//       sampleData.listTextAssets.splice(index, 1);
-//       res.json({ _id: Number(_id), text: "This commented was deleted" });
-//     } else {
-//       res.status(404).send("Could not find item with id:" + _id);
-//     }
-//   } catch (err) {
-//     res.status(500).send(err);
+//   const { _id } = req.params;
+//   var index = sampleData.listTextAssets.findIndex(
+//     listItem => listItem._id === Number(_id)
+//   );
+//   if (index > -1) {
+//     sampleData.listTextAssets.splice(index, 1);
+//     res.json({ _id: Number(_id), text: "This commented was deleted" });
+//   } else {
+//     res.status(404).send("Could not find item with id:" + _id);
 //   }
 // });
 
 // Grid Page Endpoint
 router.get(CONSTANTS.ENDPOINT.GRID, (req, res) => {
-  try {
-    res.json(sampleData.gridTextAssets);
-  } catch (err) {
-    res.status(500).send(err);
-  }
+  res.json(sampleData.gridTextAssets);
 });
 
 // MasterDetail Page Endpoint
 router.get(CONSTANTS.ENDPOINT.MASTERDETAIL, (req, res) => {
-  try {
-    res.json(sampleData.masterDetailTextAssets);
-  } catch (err) {
-    res.status(500).send(err);
-  }
+  res.json(sampleData.masterDetailTextAssets);
 });
 
 module.exports = router;

@@ -6,6 +6,8 @@ const isCosmosDbModalOpen = (modal: Actions.ModalType): boolean =>
   modal === Actions.COSMOS_DB_MODAL;
 const isAzureFunctionsModalOpen = (modal: Actions.ModalType): boolean =>
   modal === Actions.AZURE_FUNCTIONS_MODAL;
+const isPostGenModalOpen = (modal: Actions.ModalType): boolean =>
+  modal === Actions.POST_GEN_MODAL;
 
 const isCosmosDbModalOpenSelector = createSelector(
   getOpenModal,
@@ -17,4 +19,13 @@ const isAzureFunctionsModalOpenSelector = createSelector(
   isAzureFunctionsModalOpen
 );
 
-export { isAzureFunctionsModalOpenSelector, isCosmosDbModalOpenSelector };
+const isPostGenModalOpenSelector = createSelector(
+  getOpenModal,
+  isPostGenModalOpen
+);
+
+export {
+  isAzureFunctionsModalOpenSelector,
+  isCosmosDbModalOpenSelector,
+  isPostGenModalOpenSelector
+};

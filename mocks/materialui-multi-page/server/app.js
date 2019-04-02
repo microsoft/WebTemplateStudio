@@ -8,10 +8,6 @@ const indexRouter = require("./routes/index");
 
 const app = express();
 
-// view engine setup
-app.set("views", path.resolve(__dirname, "views"));
-app.set("view engine", "pug");
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,15 +24,20 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler
-app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
-});
+// TODO Project Acorn: Add your own error handler here.
+if (process.env.NODE_ENV === "production") {
+  // Do not send stack trace of error message when in production
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.send("Error occurred while handling the request.");
+  });
+} else {
+  // Log stack trace of error message while in development
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    console.log(err);
+    res.send(err.message);
+  });
+}
 
 module.exports = app;

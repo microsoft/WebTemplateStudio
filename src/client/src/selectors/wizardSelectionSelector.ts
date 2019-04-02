@@ -3,15 +3,14 @@ import { createSelector } from "reselect";
 import { RowType } from "../types/rowType";
 import { ISelected } from "../types/selected";
 import getSvgUrl from "../utils/getSvgUrl";
-import {
-  WIZARD_CONTENT_INTERNAL_NAMES,
-  SERVICE_KEYS
-} from "../utils/constants";
+import { SERVICE_KEYS } from "../utils/constants";
+import { IPageCount } from "../reducers/wizardSelectionReducers/pageCountReducer";
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
 const getProjectName = (state: any): string => state.selection.projectName;
 const getOutputPath = (state: any): string => state.selection.outputPath;
+const getPageCount = (state: any): IPageCount => state.selection.pageCount;
 
 const getProjectTypeRowItems = (selection: any): RowType[] => {
   const projectType = selection.appType as ISelected;
@@ -118,5 +117,6 @@ export {
   getFrameworksRowItemSelector,
   getServicesSelector,
   getOutputPath,
-  getProjectName
+  getProjectName,
+  getPageCount
 };

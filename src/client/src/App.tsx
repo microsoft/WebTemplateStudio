@@ -16,6 +16,7 @@ import Footer from "./containers/Footer";
 import Header from "./containers/Header";
 import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
+import PostGenerationModal from "./containers/PostGenerationModal";
 
 import { EXTENSION_COMMANDS, ROUTES } from "./utils/constants";
 
@@ -27,11 +28,16 @@ import {
   setAccountAvailability,
   setAppNameAvailabilityAction
 } from "./actions/setAccountAvailability";
-import appStyles from "./appStyles.module.css";
 import AzureLogin from "./containers/AzureLogin";
 import { getSubscriptionData } from "./actions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
 import { setPathAndNameValidation } from "./actions/setPathAndNameValidation";
+import {
+  updateTemplateGenerationStatusMessageAction,
+  updateTemplateGenerationStatusAction
+} from "./actions/updateGenStatusActions";
+
+import appStyles from "./appStyles.module.css";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -42,6 +48,8 @@ interface IDispatchProps {
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
   setPathAndNameValidation: (validation: {}) => void;
+  updateTemplateGenStatusMessage: (status: string) => any;
+  updateTemplateGenStatus: (isGenerated: boolean) => any;
 }
 
 interface IStateProps {
@@ -59,7 +67,9 @@ class App extends React.Component<Props> {
     updateOutputPath: () => {},
     setCosmosResourceAccountNameAvailability: () => {},
     setAppNameAvailability: () => {},
-    setPathAndNameValidation: () => {}
+    setPathAndNameValidation: () => {},
+    updateTemplateGenStatusMessage: () => {},
+    updateTemplateGenStatus: () => {}
   };
 
   public componentDidMount() {
@@ -71,12 +81,7 @@ class App extends React.Component<Props> {
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           if (message.payload != null && message.payload.outputPath != null) {
-            this.props.updateOutputPath(
-              message.payload.outputPath.substring(
-                1,
-                message.payload.outputPath.length
-              )
-            );
+            this.props.updateOutputPath(message.payload.outputPath);
           }
           return;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
@@ -119,6 +124,12 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.PROJECT_PATH_AND_NAME_VALIDATION:
           this.props.setPathAndNameValidation(message.payload.validation);
           return;
+        case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
+          this.props.updateTemplateGenStatusMessage(message.payload.status);
+          return;
+        case EXTENSION_COMMANDS.GEN_STATUS:
+          this.props.updateTemplateGenStatus(message.payload);
+          return;
       }
     });
   }
@@ -139,6 +150,7 @@ class App extends React.Component<Props> {
         <div className={appStyles.container}>
           <CosmosResourceModal />
           <AzureFunctionsModal />
+          <PostGenerationModal />
           <LeftSidebar />
           <div
             className={classnames({
@@ -192,6 +204,12 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   },
   setPathAndNameValidation: (validation: {}) => {
     dispatch(setPathAndNameValidation(validation));
+  },
+  updateTemplateGenStatusMessage: (status: string) => {
+    dispatch(updateTemplateGenerationStatusMessageAction(status));
+  },
+  updateTemplateGenStatus: (isGenerated: boolean) => {
+    dispatch(updateTemplateGenerationStatusAction(isGenerated));
   }
 });
 
