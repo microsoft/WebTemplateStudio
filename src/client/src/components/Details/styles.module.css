@@ -24,9 +24,13 @@
   display: flex;
 }
 
-.col {
-  display: flex;
-  align-items: center;
+.licenseCategory {
+  align-self: flex-start;
+}
+
+.licenseCategory,
+.category {
+  margin-left: 0px;
 }
 
 .detailsTitle {
@@ -36,12 +40,21 @@
   margin-bottom: 1em;
 }
 
+.licenses {
+  margin-top: 0px !important;
+}
+
 .detailsDescription {
   margin-bottom: 1em;
 }
 
 .categoriesContainer {
   margin-right: 15%;
+}
+
+.metaData {
+  display: flex;
+  align-items: center;
 }
 
 .details {

@@ -39,12 +39,20 @@ interface IDispatchProps {
 type Props = IDispatchProps & ISelectOptionProps;
 
 class SelectOption extends React.Component<Props, ISelectOptionState> {
-  componentDidMount() {
-    this.setState({
+  constructor(props: Props) {
+    super(props);
+    this.state = {
       selectedCardIndices: [0]
-    });
+    };
   }
-
+  public componentDidMount() {
+    if (this.props.selectCard) {
+      this.exchangeOption(0);
+      this.setState({
+        selectedCardIndices: [0]
+      });
+    }
+  }
   public isCardSelected(cardNumber: number): boolean {
     const { selectedCardIndices } = this.props;
     if (selectedCardIndices) {
@@ -76,7 +84,9 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     internalName: string,
     optionIndexContainingData: number
   ) {
-    const { defaultName } = this.props.options[optionIndexContainingData];
+    const { defaultName, licenses } = this.props.options[
+      optionIndexContainingData
+    ];
     const title = this.createTitle(optionIndexContainingData, count);
 
     const cardInfo: ISelected = {
@@ -84,7 +94,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       internalName,
       id: title,
       defaultName,
-      isValidTitle: true
+      isValidTitle: true,
+      licenses
     };
     return cardInfo;
   }
@@ -125,12 +136,14 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     selectedCardIndices.pop();
     selectedCardIndices.push(cardNumber);
     const shorthandVersionLabel = `v${options[cardNumber].version || "1.0"}`;
+    const { title, internalName, licenses } = this.props.options[cardNumber];
 
     if (selectCard) {
       selectCard({
-        internalName: options[cardNumber].internalName,
-        title: options[cardNumber].title,
-        version: shorthandVersionLabel
+        internalName,
+        title,
+        version: shorthandVersionLabel,
+        licenses
       });
     }
     this.setState({

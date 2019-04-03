@@ -26,6 +26,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-intl": "^2.8.0",
+    "react-markdown": "^4.0.6",
     "react-modal": "^3.8.1",
     "react-redux": "^6.0.0",
     "react-router": "^4.3.1",

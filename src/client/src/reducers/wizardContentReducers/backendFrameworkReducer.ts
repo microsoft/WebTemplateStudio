@@ -21,17 +21,6 @@ const backendFrameworkOptions = (state: any = [], action: any) => {
           newState.push(frameworkToAdd);
         }
       }
-      newState.sort(
-        (a: any, b: any): number => {
-          if (a.unselectable) {
-            return 1;
-          }
-          if (b.unselectable) {
-            return -1;
-          }
-          return 0;
-        }
-      );
       return newState;
     default:
       return state;

@@ -19,9 +19,9 @@ body {
 /* ROOT FONT STYLES */
 
 * {
-  font-family: "Segoe UI Light","Segoe UI";
+  font-family: "Segoe UI Light", "Segoe UI";
   line-height: 1.5;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 /* TYPOGRAPHY */
@@ -53,7 +53,7 @@ h6 {
 p {
   font-size: 1.125rem;
   font-weight: 200;
-  line-height: 1.8;
+  margin: 0px;
 }
 
 .fontLight {
@@ -171,22 +171,24 @@ p {
 }
 
 .row::after {
-	content: "";
-	display: table;
-	clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .hiddenSm {
   display: none;
 }
 
-@media only screen and (min-width: 33.75em) {  /* 540px */
+@media only screen and (min-width: 33.75em) {
+  /* 540px */
   .container {
     width: 80%;
   }
 }
 
-@media only screen and (min-width: 45em) {  /* 720px */
+@media only screen and (min-width: 45em) {
+  /* 720px */
   .col1 {
     width: 4.33%;
   }
@@ -240,7 +242,8 @@ p {
   }
 }
 
-@media only screen and (min-width: 60em) { /* 960px */
+@media only screen and (min-width: 60em) {
+  /* 960px */
   .container {
     width: 75%;
     max-width: 60rem;
