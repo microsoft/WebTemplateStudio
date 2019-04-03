@@ -1,44 +1,47 @@
 import {
-    AzureAuth,
-    SubscriptionItem,
-    ResourceGroupItem,
-    LocationItem
-  } from "./azure-auth/azureAuth";
+  AzureAuth,
+  SubscriptionItem,
+  ResourceGroupItem,
+  LocationItem
+} from "./azure-auth/azureAuth";
 import {
-    CosmosDBDeploy,
-    CosmosDBSelections,
-    DatabaseObject,
-    GetAvailableAPIs
-  } from "./azure-cosmosDB/cosmosDbModule";
+  CosmosDBDeploy,
+  CosmosDBSelections,
+  DatabaseObject,
+  GetAvailableAPIs
+} from "./azure-cosmosDB/cosmosDbModule";
 import {
-    FunctionProvider,
-    FunctionSelections,
-    GetAvailableRuntimes
-  } from "./azure-functions/functionProvider";
+  FunctionProvider,
+  FunctionSelections,
+  GetAvailableRuntimes
+} from "./azure-functions/functionProvider";
 
-export abstract class AzureServices{
+export abstract class AzureServices {
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
-    
+
+  private static subscriptionItemList: SubscriptionItem[] = [];
+
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
 
-    public static async performLogin() {
-      return AzureAuth.login().then(res =>{
-        const email = AzureAuth.getEmail();
+  public static async performLogin() {
+    return AzureAuth.login().then(async () => {
+      const email = AzureAuth.getEmail();
 
-        const subscriptionList = AzureAuth.getSubscriptions().then(items => {
-          return items.map( subscriptionItem => {
-            return {
-              label: subscriptionItem.label,
-              value: subscriptionItem.label
-            };
-          });
-        });
-        return {
-          email: email,
-          subscriptions: subscriptionList
-        };
-      });
+      this.subscriptionItemList = await AzureAuth.getSubscriptions();
+      const subscriptionListToDisplay = this.subscriptionItemList.map(
+        subscriptionItem => {
+          return {
+            label: subscriptionItem.label,
+            value: subscriptionItem.label
+          };
+        }
+      );
+      return {
+        email: email,
+        subscriptions: subscriptionListToDisplay
+      };
+    });
   }
 }

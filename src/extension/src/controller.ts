@@ -230,7 +230,7 @@ export abstract class Controller {
           })
           .catch((error: Error) => {
             vscode.window.showErrorMessage(error.message);
-            throw error; //to catch in telemetry
+            throw error; //to log in telemetry
           });
       }
     );
