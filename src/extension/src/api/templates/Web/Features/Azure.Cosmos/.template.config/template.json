@@ -1,9 +1,9 @@
 ﻿{
   "author": "Microsoft",
-  "classifications": [ "Universal" ],
+  "classifications": ["Universal"],
   "name": "CosmosDB",
   "groupIdentity": "wts.Feature.Azure.Cosmos",
-  "identity": "wts.Feature.Azure.Cosmos",
+  "identity": "wts.Feature.Azure.Cosmos.Mongo",
   "description": "Realtime distributed database.",
   "tags": {
     "language": "Any",

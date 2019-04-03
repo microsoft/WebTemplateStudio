@@ -1,29 +1,26 @@
 ﻿{
-    "author": "Microsoft Community",
-    "classifications": [
-      "Universal"
-    ],
-    "name": "Page.React.List.AddSampleDataReadme",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.React.List.AddSampleDataReadme",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == ReactJS & $feature != wts.Feature.Azure.Cosmos & identity == wts.Page.React.List"
+    "wts.compositionFilter": "$frontendframework == ReactJS & $feature != wts.Feature.Azure.Cosmos.Mongo & identity == wts.Page.React.List"
   },
-    "sourceName": "wts.ItemName",
-    "preferNameDirectory": true,
-    "PrimaryOutputs": [
-    ],
-    "symbols": {
-      "wts.rootNamespace": {
-        "type": "parameter",
-        "replaces": "Param_RootNamespace"
-      },
-      "wts.itemNamespace": {
-        "type": "parameter",
-        "replaces": "Param_ItemNamespace"
-      }
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.itemNamespace": {
+      "type": "parameter",
+      "replaces": "Param_ItemNamespace"
     }
   }
+}
