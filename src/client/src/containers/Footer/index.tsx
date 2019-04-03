@@ -203,5 +203,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(injectIntl(Footer))
+  )(Footer)
 );

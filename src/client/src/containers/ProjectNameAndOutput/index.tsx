@@ -18,6 +18,8 @@ import { EXTENSION_COMMANDS } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
+import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
+
 interface IStateProps {
   vscode: IVSCodeObject;
   outputPath: string;
@@ -29,7 +31,26 @@ interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
 }
 
-type Props = IStateProps & IDispatchProps;
+type Props = IStateProps & IDispatchProps & InjectedIntlProps;
+
+const messages = defineMessages({
+  projectNameTitle: {
+    id: "projectName.projectNameTitle",
+    defaultMessage: "Project Name:"
+  },
+  projectName: {
+    id: "projectName.projectName",
+    defaultMessage: "Project Name"
+  },
+  outputPathTitle: {
+    id: "projectName.outputPathTitle",
+    defaultMessage: "Output Path:"
+  },
+  outputPath: {
+    id: "projectName.outputPath",
+    defaultMessage: "Output Path"
+  }
+});
 
 const ProjectNameAndOutput = (props: Props) => {
   const handleProjectNameChange = (
@@ -52,21 +73,25 @@ const ProjectNameAndOutput = (props: Props) => {
   return (
     <React.Fragment>
       <div className={styles.inputContainer}>
-        <div className={styles.inputTitle}>Project Name:</div>
+        <div className={styles.inputTitle}>
+          {props.intl.formatMessage(messages.projectNameTitle)}
+        </div>
         <Input
           handleChange={handleProjectNameChange}
           value={props.projectName}
-          placeholder="Project Name"
+          placeholder={props.intl.formatMessage(messages.projectName)}
         />
       </div>
       <div className={styles.inputContainer}>
-        <div className={styles.inputTitle}>Output Path:</div>
+        <div className={styles.inputTitle}>
+          {props.intl.formatMessage(messages.outputPathTitle)}
+        </div>
         <div className={styles.outputPathContainer}>
           <OutputPath
             handleChange={handleOutputPathChange}
             handleSaveClick={handleSaveClick}
             value={props.outputPath}
-            placeholder="Output Path"
+            placeholder={props.intl.formatMessage(messages.outputPath)}
           />
         </div>
       </div>
