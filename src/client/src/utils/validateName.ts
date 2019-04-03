@@ -9,8 +9,8 @@ export function validateName(title: string): any {
     error = PAGE_NAME_ERROR_MESSAGES.EMPTY_NAME;
   } else if (!/^[A-Za-z][A-Za-z0-9_\- ]*$/i.test(title)) {
     isValid = false;
-    if (title[0] == " ") {
-      error = PAGE_NAME_ERROR_MESSAGES.NAME_STARTS_WITH_SPACE;
+    if (/^[_\-0-9 ]*$/i.test(title[0])) {
+      error = PAGE_NAME_ERROR_MESSAGES.NAME_DOES_NOT_START_WITH_LETTER;
     } else {
       error = PAGE_NAME_ERROR_MESSAGES.INVALID_REGEX;
     }

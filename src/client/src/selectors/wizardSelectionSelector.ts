@@ -121,6 +121,6 @@ export {
   getServicesSelector,
   getOutputPath,
   getProjectName,
-  getPageCount
+  getPageCount,
   getProjectNameValidation
 };
