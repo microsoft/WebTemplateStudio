@@ -13,6 +13,7 @@ import blankpage from "../assets/blankpagewhite.svg";
 import masterdetailscreenshot from "../assets/masterdetailscreenshot.svg";
 import listscreenshot from "../assets/listscreenshot.svg";
 import gridscreenshot from "../assets/gridscreenshot.svg";
+import blankscreenshot from "../assets/blankscreenshot.svg";
 
 const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP]: fullstack,
@@ -29,7 +30,8 @@ const SVG_MAPPINGS = {
 const SVG_SCREENSHOT_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.MASTER_DETAIL]: masterdetailscreenshot,
   [WIZARD_CONTENT_INTERNAL_NAMES.CONTENT_GRID]: gridscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.LIST]: listscreenshot
+  [WIZARD_CONTENT_INTERNAL_NAMES.LIST]: listscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE]: blankscreenshot
 };
 
 export const withLocalPath = (absolutePath: string): string => {
