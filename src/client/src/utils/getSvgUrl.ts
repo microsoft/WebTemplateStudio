@@ -10,6 +10,11 @@ import cancel from "../assets/cancel.svg";
 import cosmosdb from "../assets/cosmosdbwhite.svg";
 import blankpage from "../assets/blankpagewhite.svg";
 
+import masterdetailscreenshot from "../assets/masterdetailscreenshot.svg";
+import listscreenshot from "../assets/listscreenshot.svg";
+import gridscreenshot from "../assets/gridscreenshot.svg";
+import blankscreenshot from "../assets/blankscreenshot.svg";
+
 const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP]: fullstack,
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT_JS]: react,
@@ -22,8 +27,21 @@ const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE]: blankpage
 };
 
+const SVG_SCREENSHOT_MAPPINGS = {
+  [WIZARD_CONTENT_INTERNAL_NAMES.MASTER_DETAIL]: masterdetailscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.CONTENT_GRID]: gridscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.LIST]: listscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE]: blankscreenshot
+};
+
 export const withLocalPath = (absolutePath: string): string => {
   return process.env.REACT_APP_RELATIVE_PATH + absolutePath;
+};
+
+export const screenShotMapping = (internalName: string): string | undefined => {
+  if (SVG_SCREENSHOT_MAPPINGS[internalName] !== undefined) {
+    return withLocalPath(SVG_SCREENSHOT_MAPPINGS[internalName]);
+  }
 };
 
 export default (internalName: string): string | undefined => {
