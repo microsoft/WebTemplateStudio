@@ -27,7 +27,7 @@ type Props = IDispatchProps & ISelectBackendProps & InjectedIntlProps;
 const messages = defineMessages({
   selectBackendFramework: {
     id: "selectBackendFramework.selectBackendFramework",
-    defaultMessage: "Select a back-end framework for your project."
+    defaultMessage: "3. Select a back-end framework."
   }
 });
 
