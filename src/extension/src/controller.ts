@@ -15,7 +15,7 @@ import {
   ResourceGroupError
 } from "./errors";
 import { ReactPanel } from "./reactPanel";
-import ApiModule from "./apiModule";
+import apiModule from "./apiModule";
 import { AzureServices } from "./azure/azureServices";
 import { ChildProcess } from "child_process";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
@@ -58,7 +58,6 @@ export abstract class Controller {
     [ExtensionCommand.GetUserStatus, Controller.sendUserStatus],
     [ExtensionCommand.OpenProjectVSCode, Controller.openProjectVSCode]
   ]);
-
 
   private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.clientCommandMap.get(message.command);
@@ -218,17 +217,21 @@ export abstract class Controller {
     return AzureAuth.getResourceGroupItems(subscriptionItem);
   }
 
-
-
   public static performLoginForSubscriptions(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.PerformLogin,
       async function(this: IActionContext): Promise<void> {
-        const azureSubscription = await AzureServices.performLogin();
-        Controller.handleValidMessage(ExtensionCommand.Login, {
-          email: azureSubscription.email,
-          subscriptions: azureSubscription.subscriptions
-        });
+        await AzureServices.performLogin()
+          .then(azureSubscription => {
+            Controller.handleValidMessage(ExtensionCommand.Login, {
+              email: azureSubscription.email,
+              subscriptions: azureSubscription.subscriptions
+            });
+          })
+          .catch((error: Error) => {
+            vscode.window.showErrorMessage(error.message);
+            throw error; //to catch in telemetry
+          });
       }
     );
   }
@@ -252,10 +255,6 @@ export abstract class Controller {
       }
     );
   }
-
- 
-
-
 
   // tslint:disable-next-line: max-func-body-length
   public static async handleGeneratePayloadFromClient(
@@ -412,8 +411,6 @@ export abstract class Controller {
     Promise.all(serviceQueue);
   }
 
- 
-
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ) {
@@ -487,22 +484,7 @@ export abstract class Controller {
     );
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   ///////////////////////////////////////////////////////////////////////////////////////
-
 
   public static async validateFunctionAppName(
     functionAppName: string,
@@ -582,7 +564,6 @@ export abstract class Controller {
       }
     );
   }
-
 
   private static async promptUserForCosmosReplacement(
     pathToEnv: string,
@@ -674,7 +655,6 @@ export abstract class Controller {
       });
   }
 
-
   public static sendFunctionNameValidationStatusToClient(message: any) {
     Controller.validateFunctionAppName(message.appName, message.subscription)
       .then(() => {
@@ -702,10 +682,6 @@ export abstract class Controller {
         });
       });
   }
-
-
-
-
 
   public static async validateCosmosAccountName(
     cosmosDBAccountName: string,
