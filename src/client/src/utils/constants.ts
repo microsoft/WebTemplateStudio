@@ -35,11 +35,11 @@ const SERVICE_KEYS = {
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
-  BLANK_PAGE: "wts.Page.Html.Blank",
+  BLANK_PAGE: "wts.Page.React.Blank",
   CONTENT_GRID: "wts.Page.React.Grid",
   COSMOS_DB: "wts.Feature.Azure.Cosmos",
   FULL_STACK_APP: "FullStackWebApp",
-  LIST: "wts.Page.ReactNode.LongList",
+  LIST: "wts.Page.React.List",
   MASTER_DETAIL: "wts.Page.React.MasterDetail",
   NODE_JS: "NodeJS",
   REACT_JS: "ReactJS",

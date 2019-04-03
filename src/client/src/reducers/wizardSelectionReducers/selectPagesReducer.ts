@@ -8,7 +8,7 @@ import { ISelected } from "../../types/selected";
 }
 */
 
-const DEFAULT_PAGE_NAME = "Html Blank";
+const DEFAULT_PAGE_NAME = "Blank";
 
 const pagesReducer = (
   state: ISelected[] = [
