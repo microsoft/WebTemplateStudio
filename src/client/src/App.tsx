@@ -156,8 +156,10 @@ class App extends React.Component<Props> {
           <LeftSidebar />
           <div
             className={classnames({
-              [appStyles.centerView]: pathname === ROUTES.WELCOME,
-              [appStyles.centerViewCropped]: pathname !== ROUTES.WELCOME
+              [appStyles.centerView]:
+                pathname === ROUTES.WELCOME || pathname == ROUTES.PAGE_DETAILS,
+              [appStyles.centerViewCropped]:
+                pathname !== ROUTES.WELCOME && pathname !== ROUTES.PAGE_DETAILS
             })}
           >
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
