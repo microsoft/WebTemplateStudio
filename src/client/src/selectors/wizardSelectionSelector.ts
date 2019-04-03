@@ -8,7 +8,10 @@ import { IPageCount } from "../reducers/wizardSelectionReducers/pageCountReducer
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
-const getProjectName = (state: any): string => state.selection.projectName;
+const getProjectName = (state: any): string =>
+  state.selection.projectNameObject.projectName;
+const getProjectNameValidation = (state: any): any =>
+  state.selection.projectNameObject.validation;
 const getOutputPath = (state: any): string => state.selection.outputPath;
 const getPageCount = (state: any): IPageCount => state.selection.pageCount;
 
@@ -118,5 +121,6 @@ export {
   getServicesSelector,
   getOutputPath,
   getProjectName,
-  getPageCount
+  getPageCount,
+  getProjectNameValidation
 };

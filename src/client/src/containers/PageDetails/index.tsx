@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router";
 import Details from "../../components/Details";
 import { IOption } from "../../types/option";
+import { screenShotMapping } from "../../utils/getSvgUrl";
+import styles from "./styles.module.css";
 
 interface IPageDetailsProps {
   detailsPageInfo: IOption;
@@ -12,10 +14,20 @@ type Props = IPageDetailsProps & RouteComponentProps;
 
 const PageDetails = (props: Props) => {
   return (
-    <Details
-      handleBackClick={props.history.goBack}
-      detailInfo={props.detailsPageInfo}
-    />
+    <div className={styles.detailsContainer}>
+      <Details
+        handleBackClick={props.history.goBack}
+        detailInfo={props.detailsPageInfo}
+      />
+      <div className={styles.screenShotContainer}>
+        {screenShotMapping(props.detailsPageInfo.internalName) && (
+          <img
+            className={styles.screenshot}
+            src={screenShotMapping(props.detailsPageInfo.internalName)}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 

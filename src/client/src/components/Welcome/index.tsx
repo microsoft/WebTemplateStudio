@@ -11,11 +11,38 @@ import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
 import ProjectNameAndOutput from "../../containers/ProjectNameAndOutput";
 import { FormattedMessage } from "react-intl";
 
+import { updateProjectNameAction } from "../../actions/updateProjectNameAndPath";
+
+import {
+  getOutputPath,
+  getProjectNameValidation,
+  getProjectName
+} from "../../selectors/wizardSelectionSelector";
+
 interface IDispatchProps {
   setRouteVisited: (route: string) => any;
+  updateProjectName: (projectName: string) => any;
 }
 
-const Welcome = ({ setRouteVisited }: IDispatchProps) => {
+interface IStateProps {
+  vscode: any;
+  projectPathValidation: any;
+  outputPath: string;
+  projectNameValidation: any;
+  projectName: string;
+}
+
+type Props = IStateProps & IDispatchProps;
+
+const Welcome = ({
+  setRouteVisited,
+  projectPathValidation,
+  outputPath,
+  projectNameValidation,
+  projectName,
+  updateProjectName
+}: Props) => {
+  const [isOutputPathEmpty, setIsOutputPathEmpty] = React.useState(false);
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -31,10 +58,23 @@ const Welcome = ({ setRouteVisited }: IDispatchProps) => {
         />
       </div>
       <div className={styles.projectDetailsContainer}>
-        <ProjectNameAndOutput />
+        <ProjectNameAndOutput validation={isOutputPathEmpty} />
         <Link
-          onClick={() => {
-            setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
+          onClick={event => {
+            updateProjectName(projectName);
+            if (
+              outputPath.length === 0 ||
+              projectPathValidation.isInvalidProjectPath ||
+              projectName.length === 0 ||
+              !projectNameValidation.isValid
+            ) {
+              event.preventDefault();
+              setIsOutputPathEmpty(outputPath.length === 0);
+              event.preventDefault();
+            } else {
+              setIsOutputPathEmpty(false);
+              setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
+            }
           }}
           to={ROUTES.SELECT_PROJECT_TYPE}
           className={classnames(
@@ -53,12 +93,23 @@ const Welcome = ({ setRouteVisited }: IDispatchProps) => {
 };
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  updateProjectName: (projectName: string) => {
+    dispatch(updateProjectNameAction(projectName));
+  },
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
   }
 });
 
+const mapStateToProps = (state: any): IStateProps => ({
+  vscode: state.vscode.vscodeObject,
+  projectPathValidation: state.selection.projectPathValidation,
+  outputPath: getOutputPath(state),
+  projectNameValidation: getProjectNameValidation(state),
+  projectName: getProjectName(state)
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Welcome);
