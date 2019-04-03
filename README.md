@@ -11,7 +11,17 @@ WebTS currently supports the following:
 - _Back-end_: Node.js
 - _Cloud services_: Azure Cosmos DB, Azure Functions
 
-_Example Scenario_: I need a Fullstack web app that stores blog posts in a Cosmos database.
+## Build Status
+
+| Branch  |                                                                                                                                           Build Status                                                                                                                                            |
+| :------ | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| dev     |     [![Build Status](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_apis/build/status/Web-Template-Studio-DevCI/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=dev)](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_build/latest?definitionId=275&branchName=dev)     |
+| staging | [![Build Status](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_apis/build/status/Web-Template-Studio-DevCI/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=staging)](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_build/latest?definitionId=275&branchName=staging) |
+| master  |  [![Build Status](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_apis/build/status/Web-Template-Studio-DevCI/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=master)](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_build/latest?definitionId=275&branchName=master)  |
+
+## Example Scenario
+
+I need a Fullstack web app that stores blog posts in a Cosmos database.
 
 ![Readme-app-screenshot](./docs/resources/readme-app-screenshot.png)
 
