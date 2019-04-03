@@ -90,6 +90,10 @@ const messages = defineMessages({
   addResource: {
     id: "azureFunctionsModal.addResource",
     defaultMessage: "Add Resource"
+  },
+  createFunctionApp: {
+    id: "azureFunctionsModal.createFunctionApp",
+    defaultMessage: "Create Function Application"
   }
 });
 
@@ -281,7 +285,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
   return (
     <React.Fragment>
       <div className={styles.headerContainer}>
-        <div className={styles.modalTitle}>Create Function Application</div>
+        <div className={styles.modalTitle}>
+          {props.intl.formatMessage(messages.createFunctionApp)}
+        </div>
         <Cancel className={styles.icon} onClick={props.closeModal} />
       </div>
       {getDropdownSection(

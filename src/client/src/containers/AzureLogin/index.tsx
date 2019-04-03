@@ -38,8 +38,8 @@ const messages = defineMessages({
       "Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. Sign in or create an account to get access to CosmosDB and Azure Functions from this extension"
   },
   azureLoginTitle: {
-    id="azureLogin.azureLoginTitle"
-    defaultMessage="Attach services to your web application (Optional)"
+    id: "azureLogin.azureLoginTitle",
+    defaultMessage: "Attach services to your web application (Optional)"
   }
 });
 
@@ -65,9 +65,7 @@ class AzureLogin extends React.Component<Props> {
     const { isLoggedIn, intl } = this.props;
     return (
       <div>
-        <Title>
-          {intl.formatMessage(messages.azureLoginTitle)}
-        </Title>
+        <Title>{intl.formatMessage(messages.azureLoginTitle)}</Title>
         <div className={styles.loginCard}>
           {!isLoggedIn && (
             <LoginCard

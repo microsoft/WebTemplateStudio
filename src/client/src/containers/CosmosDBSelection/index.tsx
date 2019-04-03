@@ -13,6 +13,8 @@ import { openCosmosDbModalAction } from "../../actions/modalActions";
 
 import styles from "./styles.module.css";
 
+import { injectIntl, FormattedMessage } from "react-intl";
+
 interface IProps {
   cosmosSelection: ICosmosDB;
 }
@@ -38,7 +40,10 @@ const CosmosDBSelection = ({
           <div className={styles.headerContainer}>
             <div>{serviceType}</div>
             <div className={styles.edit} onClick={openCosmosDbModal}>
-              Edit
+              <FormattedMessage
+                id="cosmosDBSelection.edit"
+                defaultMessage="Edit"
+              />
             </div>
           </div>
           {cosmosSelection.selection.map((resource: any, idx: number) => {
@@ -72,4 +77,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 export default connect(
   null,
   mapDispatchToProps
-)(CosmosDBSelection);
+)(injectIntl(CosmosDBSelection));
