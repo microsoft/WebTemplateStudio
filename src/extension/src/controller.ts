@@ -10,37 +10,17 @@ import {
   DialogResponses
 } from "./constants";
 import {
-  AzureAuth,
-  SubscriptionItem,
-  ResourceGroupItem,
-  LocationItem
-} from "./azure-auth/azureAuth";
-import {
   SubscriptionError,
   ValidationError,
   ResourceGroupError
 } from "./errors";
-import {
-  FunctionProvider,
-  FunctionSelections,
-  GetAvailableRuntimes
-} from "./azure-functions/functionProvider";
-import {
-  CosmosDBDeploy,
-  CosmosDBSelections,
-  DatabaseObject,
-  GetAvailableAPIs
-} from "./azure-cosmosDB/cosmosDbModule";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
+import { AzureServices } from "./azure/azureServices";
 import { ChildProcess } from "child_process";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 
 export abstract class Controller {
-  private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
-  private static usersFunctionSubscriptionItemCache: SubscriptionItem;
-  private static AzureFunctionProvider = new FunctionProvider();
-  private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static reactPanelContext: ReactPanel;
   private static Telemetry: TelemetryAI;
   // This will map commands from the client to functions.
@@ -49,7 +29,7 @@ export abstract class Controller {
     ExtensionCommand,
     (message: any) => void
   > = new Map([
-    [ExtensionCommand.Login, Controller.performLogin],
+    [ExtensionCommand.Login, Controller.performLoginForSubscriptions],
     [ExtensionCommand.Subscriptions, Controller.sendSubscriptionsToClient],
     [
       ExtensionCommand.SubscriptionDataForCosmos,
@@ -240,33 +220,15 @@ export abstract class Controller {
 
 
 
-  public static performLogin(message: any) {
+  public static performLoginForSubscriptions(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.PerformLogin,
       async function(this: IActionContext): Promise<void> {
-        await AzureAuth.login()
-          .then(res => {
-            const email = AzureAuth.getEmail();
-            AzureAuth.getSubscriptions()
-              .then(items => {
-                const subscriptions = items.map(subscriptionItem => {
-                  return {
-                    label: subscriptionItem.label,
-                    value: subscriptionItem.label
-                  };
-                });
-                Controller.handleValidMessage(ExtensionCommand.Login, {
-                  email: email,
-                  subscriptions: subscriptions
-                });
-              })
-              .catch((error: Error) => {
-                Controller.handleErrorMessage(ExtensionCommand.Login, error);
-              });
-          })
-          .catch(error => {
-            vscode.window.showErrorMessage(error);
-          });
+        const azureSubscription = await AzureServices.performLogin();
+        Controller.handleValidMessage(ExtensionCommand.Login, {
+          email: azureSubscription.email,
+          subscriptions: azureSubscription.subscriptions
+        });
       }
     );
   }
