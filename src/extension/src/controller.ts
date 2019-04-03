@@ -79,25 +79,6 @@ export abstract class Controller {
     [ExtensionCommand.OpenProjectVSCode, Controller.openProjectVSCode]
   ]);
 
-  private static openProjectVSCode(message: any) {
-    vscode.commands.executeCommand(
-      CONSTANTS.VSCODE_COMMAND.OPEN_FOLDER,
-      vscode.Uri.file(message.payload.outputPath),
-      true
-    );
-  }
-
-  public static sendFunctionRuntimes(message: any) {
-    Controller.handleValidMessage(ExtensionCommand.GetFunctionsRuntimes, {
-      runtimes: GetAvailableRuntimes()
-    });
-  }
-
-  public static sendCosmosAPIs(message: any) {
-    Controller.handleValidMessage(ExtensionCommand.GetCosmosAPIs, {
-      APIs: GetAvailableAPIs()
-    });
-  }
 
   private static routingMessageReceieverDelegate = function(message: any) {
     let command = Controller.clientCommandMap.get(message.command);
@@ -257,31 +238,7 @@ export abstract class Controller {
     return AzureAuth.getResourceGroupItems(subscriptionItem);
   }
 
-  public static async validateFunctionAppName(
-    functionAppName: string,
-    subscriptionLabel: string
-  ): Promise<void> {
-    await this.updateFunctionSubscriptionItemCache(subscriptionLabel);
 
-    return this.AzureFunctionProvider.checkFunctionAppName(
-      functionAppName,
-      this.usersFunctionSubscriptionItemCache
-    )
-      .then(isAvailable => {
-        if (isAvailable) {
-          return Promise.resolve();
-        } else {
-          return Promise.reject(
-            new ValidationError(
-              CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(functionAppName)
-            )
-          );
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
-  }
 
   public static performLogin(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
@@ -334,87 +291,9 @@ export abstract class Controller {
     );
   }
 
-  public static sendCosmosSubscriptionDataToClient(message: any) {
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      TelemetryEventName.SubscriptionData,
-      async function(this: IActionContext): Promise<void> {
-        await Controller.getSubscriptionData(
-          message.subscription,
-          AzureResourceType.Cosmos
-        )
-          .then(subscriptionDatapackage => {
-            Controller.handleValidMessage(
-              ExtensionCommand.SubscriptionDataForCosmos,
-              {
-                resourceGroups: subscriptionDatapackage.resourceGroups,
-                locations: subscriptionDatapackage.locations
-              }
-            );
-          })
-          .catch((error: Error) => {
-            Controller.handleErrorMessage(
-              ExtensionCommand.SubscriptionDataForCosmos,
-              error
-            );
-          });
-      }
-    );
-  }
+ 
 
-  public static sendFunctionsSubscriptionDataToClient(message: any) {
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      TelemetryEventName.SubscriptionData,
-      async function(this: IActionContext): Promise<void> {
-        await Controller.getSubscriptionData(
-          message.subscription,
-          AzureResourceType.Functions
-        )
-          .then(subscriptionDatapackage => {
-            Controller.handleValidMessage(
-              ExtensionCommand.SubscriptionDataForFunctions,
-              {
-                resourceGroups: subscriptionDatapackage.resourceGroups,
-                locations: subscriptionDatapackage.locations
-              }
-            );
-          })
-          .catch((error: Error) => {
-            Controller.handleErrorMessage(
-              ExtensionCommand.SubscriptionDataForFunctions,
-              error
-            );
-          });
-      }
-    );
-  }
 
-  public static sendFunctionNameValidationStatusToClient(message: any) {
-    Controller.validateFunctionAppName(message.appName, message.subscription)
-      .then(() => {
-        Controller.handleValidMessage(ExtensionCommand.NameFunctions, {
-          isAvailable: true
-        });
-      })
-      .catch((error: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameFunctions, error, {
-          isAvailable: false
-        });
-      });
-  }
-
-  public static sendCosmosNameValidationStatusToClient(message: any) {
-    Controller.validateCosmosAccountName(message.appName, message.subscription)
-      .then(() => {
-        Controller.handleValidMessage(ExtensionCommand.NameCosmos, {
-          isAvailable: true
-        });
-      })
-      .catch((error: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameCosmos, error, {
-          isAvailable: false
-        });
-      });
-  }
 
   // tslint:disable-next-line: max-func-body-length
   public static async handleGeneratePayloadFromClient(
@@ -571,6 +450,178 @@ export abstract class Controller {
     Promise.all(serviceQueue);
   }
 
+ 
+
+  public static async sendTemplateGenInfoToApiAndSendStatusToClient(
+    enginePayload: any
+  ) {
+    return await ApiModule.SendTemplateGenerationPayloadToApi(
+      CONSTANTS.PORT,
+      enginePayload,
+      this.handleGenLiveMessage
+    );
+  }
+
+  private static handleGenLiveMessage(message: any) {
+    vscode.window.showInformationMessage(message);
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.UpdateGenStatusMessage,
+      payload: {
+        status: message
+      }
+    });
+  }
+
+  public static sendOutputPathSelectionToClient(message: any) {
+    vscode.window
+      .showOpenDialog({
+        canSelectFiles: false,
+        canSelectFolders: true,
+        canSelectMany: false
+      })
+      .then((res: any) => {
+        let path = undefined;
+
+        if (res !== undefined) {
+          if (process.platform === CONSTANTS.PLATFORM.WIN_32) {
+            path = res[0].path.substring(1, res[0].path.length);
+          } else {
+            path = res[0].path;
+          }
+        }
+
+        Controller.handleValidMessage(ExtensionCommand.GetOutputPath, {
+          outputPath: path
+        });
+      });
+  }
+
+  public static handleValidMessage(command: ExtensionCommand, payload?: any) {
+    Controller.reactPanelContext.postMessageWebview({
+      command: command,
+      payload: payload,
+      message: ""
+    });
+  }
+
+  public static handleErrorMessage(
+    command: ExtensionCommand,
+    error: Error,
+    payload?: any
+  ) {
+    Controller.reactPanelContext.postMessageWebview({
+      command: command,
+      payload: payload,
+      message: error.message,
+      errorType: error.name
+    });
+  }
+
+  private static openProjectVSCode(message: any) {
+    vscode.commands.executeCommand(
+      CONSTANTS.VSCODE_COMMAND.OPEN_FOLDER,
+      vscode.Uri.file(message.payload.outputPath),
+      true
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////
+
+
+  public static async validateFunctionAppName(
+    functionAppName: string,
+    subscriptionLabel: string
+  ): Promise<void> {
+    await this.updateFunctionSubscriptionItemCache(subscriptionLabel);
+
+    return this.AzureFunctionProvider.checkFunctionAppName(
+      functionAppName,
+      this.usersFunctionSubscriptionItemCache
+    )
+      .then(isAvailable => {
+        if (isAvailable) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject(
+            new ValidationError(
+              CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(functionAppName)
+            )
+          );
+        }
+      })
+      .catch(error => {
+        throw error;
+      });
+  }
+  public static sendCosmosSubscriptionDataToClient(message: any) {
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.SubscriptionData,
+      async function(this: IActionContext): Promise<void> {
+        await Controller.getSubscriptionData(
+          message.subscription,
+          AzureResourceType.Cosmos
+        )
+          .then(subscriptionDatapackage => {
+            Controller.handleValidMessage(
+              ExtensionCommand.SubscriptionDataForCosmos,
+              {
+                resourceGroups: subscriptionDatapackage.resourceGroups,
+                locations: subscriptionDatapackage.locations
+              }
+            );
+          })
+          .catch((error: Error) => {
+            Controller.handleErrorMessage(
+              ExtensionCommand.SubscriptionDataForCosmos,
+              error
+            );
+          });
+      }
+    );
+  }
+
+  public static sendFunctionsSubscriptionDataToClient(message: any) {
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.SubscriptionData,
+      async function(this: IActionContext): Promise<void> {
+        await Controller.getSubscriptionData(
+          message.subscription,
+          AzureResourceType.Functions
+        )
+          .then(subscriptionDatapackage => {
+            Controller.handleValidMessage(
+              ExtensionCommand.SubscriptionDataForFunctions,
+              {
+                resourceGroups: subscriptionDatapackage.resourceGroups,
+                locations: subscriptionDatapackage.locations
+              }
+            );
+          })
+          .catch((error: Error) => {
+            Controller.handleErrorMessage(
+              ExtensionCommand.SubscriptionDataForFunctions,
+              error
+            );
+          });
+      }
+    );
+  }
+
+
   private static async promptUserForCosmosReplacement(
     pathToEnv: string,
     dbObject: DatabaseObject
@@ -661,70 +712,38 @@ export abstract class Controller {
       });
   }
 
-  public static async sendTemplateGenInfoToApiAndSendStatusToClient(
-    enginePayload: any
-  ) {
-    return await ApiModule.SendTemplateGenerationPayloadToApi(
-      CONSTANTS.PORT,
-      enginePayload,
-      this.handleGenLiveMessage
-    );
-  }
 
-  private static handleGenLiveMessage(message: any) {
-    vscode.window.showInformationMessage(message);
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.UpdateGenStatusMessage,
-      payload: {
-        status: message
-      }
-    });
-  }
-
-  public static sendOutputPathSelectionToClient(message: any) {
-    vscode.window
-      .showOpenDialog({
-        canSelectFiles: false,
-        canSelectFolders: true,
-        canSelectMany: false
+  public static sendFunctionNameValidationStatusToClient(message: any) {
+    Controller.validateFunctionAppName(message.appName, message.subscription)
+      .then(() => {
+        Controller.handleValidMessage(ExtensionCommand.NameFunctions, {
+          isAvailable: true
+        });
       })
-      .then((res: any) => {
-        let path = undefined;
-
-        if (res !== undefined) {
-          if (process.platform === CONSTANTS.PLATFORM.WIN_32) {
-            path = res[0].path.substring(1, res[0].path.length);
-          } else {
-            path = res[0].path;
-          }
-        }
-
-        Controller.handleValidMessage(ExtensionCommand.GetOutputPath, {
-          outputPath: path
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(ExtensionCommand.NameFunctions, error, {
+          isAvailable: false
         });
       });
   }
 
-  public static handleValidMessage(command: ExtensionCommand, payload?: any) {
-    Controller.reactPanelContext.postMessageWebview({
-      command: command,
-      payload: payload,
-      message: ""
-    });
+  public static sendCosmosNameValidationStatusToClient(message: any) {
+    Controller.validateCosmosAccountName(message.appName, message.subscription)
+      .then(() => {
+        Controller.handleValidMessage(ExtensionCommand.NameCosmos, {
+          isAvailable: true
+        });
+      })
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(ExtensionCommand.NameCosmos, error, {
+          isAvailable: false
+        });
+      });
   }
 
-  public static handleErrorMessage(
-    command: ExtensionCommand,
-    error: Error,
-    payload?: any
-  ) {
-    Controller.reactPanelContext.postMessageWebview({
-      command: command,
-      payload: payload,
-      message: error.message,
-      errorType: error.name
-    });
-  }
+
+
+
 
   public static async validateCosmosAccountName(
     cosmosDBAccountName: string,
@@ -830,7 +849,17 @@ export abstract class Controller {
       throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
     });
   }
+  public static sendFunctionRuntimes(message: any) {
+    Controller.handleValidMessage(ExtensionCommand.GetFunctionsRuntimes, {
+      runtimes: GetAvailableRuntimes()
+    });
+  }
 
+  public static sendCosmosAPIs(message: any) {
+    Controller.handleValidMessage(ExtensionCommand.GetCosmosAPIs, {
+      APIs: GetAvailableAPIs()
+    });
+  }
   /*
    * Caching is used for performance; when displaying live check on keystroke to wizard
    */
