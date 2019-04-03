@@ -1,8 +1,8 @@
 import ResourceManagementClient from "azure-arm-resource/lib/resource/resourceManagementClient";
 import { SubscriptionItem } from "../azure-auth/azureAuth";
 import { ServiceClientCredentials } from "ms-rest";
-import { SubscriptionError } from "../errors";
-import { CONSTANTS } from "../constants";
+import { SubscriptionError } from "../../errors";
+import { CONSTANTS } from "../../constants";
 
 export class ResourceManager {
   private AzureResourceManagementClient: ResourceManagementClient | undefined;

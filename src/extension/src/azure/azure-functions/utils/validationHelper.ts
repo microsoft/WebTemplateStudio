@@ -1,6 +1,6 @@
 import { FunctionSelections } from "../functionProvider";
-import { ValidationError } from "../../errors";
-import { CONSTANTS } from "../../constants";
+import { ValidationError } from "../../../errors";
+import { CONSTANTS } from "../../../constants";
 
 export namespace ValidationHelper {
   const MAX_NAME_LEN = 60;

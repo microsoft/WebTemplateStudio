@@ -3,8 +3,8 @@ import { extensions, commands } from "vscode";
 import { SubscriptionModels } from "azure-arm-resource";
 import { SubscriptionClient } from "../../node_modules/azure-arm-resource/lib/subscription/subscriptionClient";
 import { ResourceManagementClient } from "../../node_modules/azure-arm-resource/lib/resource/resourceManagementClient";
-import { AuthorizationError } from "../errors";
-import { CONSTANTS } from "../constants";
+import { AuthorizationError } from "../../errors";
+import { CONSTANTS } from "../../constants";
 
 const MICROSOFT_DOCUMENT_DB_PROVIDER: string = "Microsoft.DocumentDb";
 const MICROSOFT_WEB_PROVIDER: string = "Microsoft.Web";
