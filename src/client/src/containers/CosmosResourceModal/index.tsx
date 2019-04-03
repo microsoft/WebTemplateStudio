@@ -51,7 +51,7 @@ const initialState = {
   accountName: "",
   api: "",
   location: "",
-  internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
+  internalName: ""
 };
 
 const messages = defineMessages({
@@ -93,6 +93,11 @@ const messages = defineMessages({
   }
 });
 
+const DATABASE_INTERNAL_NAME_MAPPING = {
+  [FORM_CONSTANTS.SQL.value]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
+  [FORM_CONSTANTS.MONGO.value]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
+};
+
 const CosmosResourceModal = (props: Props) => {
   const FORM_CONSTANTS = {
     SUBSCRIPTION: {
@@ -114,11 +119,23 @@ const CosmosResourceModal = (props: Props) => {
     ACCOUNT_NAME: {
       label: props.intl.formatMessage(messages.accountNameLabel),
       value: "accountName"
+    },
+    INTERNAL_NAME: {
+      label: "Internal Name",
+      value: "internalName"
+    },
+    MONGO: {
+      label: "MongoDB",
+      value: "MongoDB"
+    },
+    SQL: {
+      label: "SQL",
+      value: "SQL"
     }
   };
 
   const [cosmosData, setData] = React.useState(cosmosInitialState);
-  // Hardcoding a "MongoDB" value until data can be loaded dynamically
+  // Hardcoding database options until data can be loaded dynamically
   React.useEffect(() => {
     setData({
       accountName: [
@@ -127,12 +144,7 @@ const CosmosResourceModal = (props: Props) => {
           label: ""
         }
       ],
-      api: [
-        {
-          value: "MongoDB",
-          label: "MongoDB"
-        }
-      ],
+      api: [FORM_CONSTANTS.MONGO, FORM_CONSTANTS.SQL],
       subscription: props.subscriptions,
       resourceGroup: props.subscriptionData.resourceGroups,
       location: props.subscriptionData.locations
@@ -190,9 +202,14 @@ const CosmosResourceModal = (props: Props) => {
         subscription: value
       });
     }
+
     updateForm({
       ...cosmosFormData,
-      [infoLabel]: value
+      [infoLabel]: value,
+      internalName:
+        value in DATABASE_INTERNAL_NAME_MAPPING
+          ? DATABASE_INTERNAL_NAME_MAPPING[value]
+          : cosmosFormData.internalName
     });
   };
   /**
