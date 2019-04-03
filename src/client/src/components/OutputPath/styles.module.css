@@ -1,26 +1,58 @@
 .saveIcon {
-    height: 25px;
-    transform: rotate(-90deg);
-    cursor: pointer;
+  height: 25px;
+  transform: rotate(-90deg);
+  cursor: pointer;
 }
 
 .pathInput {
-    outline: none;
-    text-decoration: none;
-    font-size: 1em;
-    background-color: #3C3C3C;
-    width: 100%;
-    border: none;
-    margin-right: 0.25em;
-    padding-left: 0px;
+  outline: none;
+  text-decoration: none;
+  font-size: 1em;
+  background-color: #3c3c3c;
+  width: 100%;
+  border: none;
+  margin-right: 0.25em;
+  padding-left: 0px;
 }
 
 .input:focus {
-    outline: none;
+  outline: none;
 }
 
 .input::placeholder,
 .pathInput::placeholder {
-    color: white;
-    opacity: 0.4;
+  color: white;
+  opacity: 0.4;
+}
+
+.errorMessage {
+  background: #5f0d0d;
+  border: 1px solid #9d2f23;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  border-radius: 2px;
+  opacity: 50%;
+}
+
+.errorStack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.outputPath {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 42px;
+  box-sizing: border-box;
+  padding: 0.5em;
+  width: 100%;
+  font-size: 1em;
+  background-color: #3c3c3c;
+  border: 1px solid #ffffff;
+  border-radius: 2px;
 }

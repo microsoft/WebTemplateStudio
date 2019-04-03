@@ -11,11 +11,27 @@ import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
 import ProjectNameAndOutput from "../../containers/ProjectNameAndOutput";
 import { FormattedMessage } from "react-intl";
 
+import { getOutputPath } from "../../selectors/wizardSelectionSelector";
+
 interface IDispatchProps {
   setRouteVisited: (route: string) => any;
 }
 
-const Welcome = ({ setRouteVisited }: IDispatchProps) => {
+interface IStateProps {
+  vscode: any;
+  projectPathValidation: any;
+  outputPath: string;
+}
+
+type Props = IStateProps & IDispatchProps;
+
+const Welcome = ({
+  setRouteVisited,
+  projectPathValidation,
+  vscode,
+  outputPath
+}: Props) => {
+  const [isOutputPathEmpty, setIsOutputPathEmpty] = React.useState(false);
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -31,10 +47,19 @@ const Welcome = ({ setRouteVisited }: IDispatchProps) => {
         />
       </div>
       <div className={styles.projectDetailsContainer}>
-        <ProjectNameAndOutput />
+        <ProjectNameAndOutput validation={isOutputPathEmpty} />
         <Link
-          onClick={() => {
-            setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
+          onClick={event => {
+            if (
+              outputPath.length === 0 ||
+              projectPathValidation.isInvalidProjectPath
+            ) {
+              event.preventDefault();
+              setIsOutputPathEmpty(outputPath.length === 0);
+            } else {
+              setIsOutputPathEmpty(false);
+              setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
+            }
           }}
           to={ROUTES.SELECT_PROJECT_TYPE}
           className={classnames(
@@ -58,7 +83,13 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   }
 });
 
+const mapStateToProps = (state: any): IStateProps => ({
+  vscode: state.vscode.vscodeObject,
+  projectPathValidation: state.selection.projectPathValidation,
+  outputPath: getOutputPath(state)
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Welcome);
