@@ -1,8 +1,10 @@
 import { AzureAccount, AzureSession } from "./azure-account.api"; // Other extensions need to copy this .d.ts to their repository.
 import { extensions, commands } from "vscode";
-import { SubscriptionModels } from "azure-arm-resource";
-import { SubscriptionClient } from "../../node_modules/azure-arm-resource/lib/subscription/subscriptionClient";
-import { ResourceManagementClient } from "../../node_modules/azure-arm-resource/lib/resource/resourceManagementClient";
+import {
+  SubscriptionModels,
+  SubscriptionClient as SC,
+  ResourceManagementClient as RMC
+} from "azure-arm-resource";
 import { AuthorizationError } from "../../errors";
 import { CONSTANTS } from "../../constants";
 
@@ -87,7 +89,7 @@ export abstract class AzureAuth {
     const subscriptionItems: SubscriptionItem[] = [];
     for (const session of this.api.sessions) {
       const credentials = session.credentials;
-      const subscriptionClient = new SubscriptionClient(credentials);
+      const subscriptionClient = new SC.SubscriptionClient(credentials);
       const subscriptions = await this.listAll(
         subscriptionClient.subscriptions,
         subscriptionClient.subscriptions.list()
@@ -111,7 +113,7 @@ export abstract class AzureAuth {
     this.initialize();
     const { session, subscription } = subscriptionItem;
     const resourceGroupItems: ResourceGroupItem[] = [];
-    const resources = new ResourceManagementClient(
+    const resources = new RMC.ResourceManagementClient(
       session.credentials,
       subscription.subscriptionId!
     );
@@ -161,7 +163,7 @@ export abstract class AzureAuth {
     }
 
     this.initializeLocations(subscriptionItem);
-    let azureResourceClient: ResourceManagementClient = new ResourceManagementClient(
+    let azureResourceClient: RMC.ResourceManagementClient = new RMC.ResourceManagementClient(
       subscriptionItem.session.credentials,
       subscriptionItem.subscription.subscriptionId!
     );
@@ -194,7 +196,7 @@ export abstract class AzureAuth {
     }
 
     this.initializeLocations(subscriptionItem);
-    let azureResourceClient: ResourceManagementClient = new ResourceManagementClient(
+    let azureResourceClient: RMC.ResourceManagementClient = new RMC.ResourceManagementClient(
       subscriptionItem.session.credentials,
       subscriptionItem.subscription.subscriptionId!
     );
@@ -228,7 +230,7 @@ export abstract class AzureAuth {
     this.initialize();
     const { session, subscription } = subscriptionItem;
     const locationList: LocationItem[] = [];
-    const subscriptionClient = new SubscriptionClient(
+    const subscriptionClient = new SC.SubscriptionClient(
       session.credentials,
       session.environment.resourceManagerEndpointUrl
     );
