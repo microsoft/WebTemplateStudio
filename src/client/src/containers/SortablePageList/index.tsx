@@ -2,13 +2,14 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
 
+import { defineMessages, injectIntl, InjectedIntl } from "react-intl";
+
 import SortableList from "../SortableSelectionList";
 
 import { selectPagesAction } from "../../actions/selectPages";
 
 import { ISelected } from "../../types/selected";
 
-import { PAGE_NAME_ERROR_MESSAGES } from "../../utils/constants";
 import { validateName } from "../../utils/validateName";
 
 import styles from "./styles.module.css";
@@ -28,7 +29,29 @@ interface ISortableDispatchProps {
   selectPages: (pages: ISelected[]) => any;
 }
 
-type Props = ISortablePageListProps & ISortableDispatchProps & IStateProps;
+interface IIntlProps {
+  intl?: InjectedIntl;
+}
+
+type Props = ISortablePageListProps &
+  ISortableDispatchProps &
+  IStateProps &
+  IIntlProps;
+
+const messages = defineMessages({
+  duplicateName: {
+    id: "sortablePageList.duplicateName",
+    defaultMessage: "page name has to be unique"
+  },
+  hide: {
+    id: "sortablePageList.hide",
+    defaultMessage: "Hide"
+  },
+  show: {
+    id: "sortablePageList.show",
+    defaultMessage: "Show"
+  }
+});
 
 const SortablePageList = (props: Props) => {
   const { selectedPages, selectPages, pagesRows } = props;
@@ -45,7 +68,7 @@ const SortablePageList = (props: Props) => {
     for (let i = 0; i < pages.length; i++) {
       if (pages[i].title === pages[idx].title && i !== idx) {
         pages[idx].isValidTitle = false;
-        pages[idx].error = PAGE_NAME_ERROR_MESSAGES.DUPLICATE_NAME;
+        pages[idx].error = props.intl!.formatMessage(messages.duplicateName);
         break;
       }
     }
@@ -68,7 +91,9 @@ const SortablePageList = (props: Props) => {
     pagesWithOmittedIdx.splice(idx, 1);
     selectPages(pagesWithOmittedIdx);
   };
-  const hideOrShowText = isMinimized ? "Show" : "Hide";
+  const hideOrShowText = isMinimized
+    ? props.intl!.formatMessage(messages.show)
+    : props.intl!.formatMessage(messages.hide);
   const DRAG_PIXEL_THRESHOLD = 1;
   return (
     <div className={styles.sidebarItem}>
@@ -113,4 +138,4 @@ const mapDispatchToProps = (dispatch: any): ISortableDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SortablePageList);
+)(injectIntl(SortablePageList));

@@ -1,6 +1,8 @@
 import classnames from "classnames";
 import * as React from "react";
 
+import { FormattedMessage } from "react-intl";
+
 import CardBody from "../CardBody";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
@@ -42,7 +44,7 @@ const Card = ({
           className={classNames(styles.link)}
           to={ROUTES.PAGE_DETAILS}
         >
-          Details
+          <FormattedMessage id="card.details" defaultMessage="Details" />
         </Link>
         <button
           onClick={handleButtonClick}

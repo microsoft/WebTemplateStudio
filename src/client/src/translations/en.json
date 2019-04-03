@@ -1,0 +1,20 @@
+{
+  "card.details": "Details",
+  "details.author": "Author:",
+  "details.back": "Back",
+  "details.licenses": "Licenses:",
+  "details.none": "None",
+  "loginCard.createAccount": "Create Account",
+  "loginCard.details": "Details",
+  "loginCard.signIn": "Sign In",
+  "selectPages.pagesTitleQuestion": "What pages do you need for your application?",
+  "selectPages.webAppTitleQuestion": "What type of web application are you building?",
+  "selectableCard.details": "Details",
+  "sortablePageList.duplicateName": "page name has to be unique",
+  "sortablePageList.hide": "Hide",
+  "sortablePageList.show": "Show",
+  "summarySection.editResource": "Edit Resource",
+  "welcome.body": "Project Acorn is a VS Code extension that quickly provides web developers with boilerplate code, easy to use templates, and automates the Azure deployment process, all within this wizard.",
+  "welcome.getStarted": "Get Started",
+  "welcome.header": "Welcome to Project Acorn"
+}

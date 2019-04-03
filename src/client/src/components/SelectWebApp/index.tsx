@@ -8,6 +8,8 @@ import SelectOption from "../SelectOption";
 import { selectWebAppAction } from "../../actions/selectWebApp";
 import { ISelected } from "../../types/selected";
 
+import { defineMessages, InjectedIntl, injectIntl } from "react-intl";
+
 interface IDispatchProps {
   selectWebApp: (selectedApp: ISelected) => void;
   getProjectTypes: () => any;
@@ -18,7 +20,18 @@ interface IStoreProps {
   type: IOption[];
 }
 
-type Props = IDispatchProps & IStoreProps;
+interface IIntlProps {
+  intl: InjectedIntl;
+}
+
+type Props = IDispatchProps & IStoreProps & IIntlProps;
+
+const messages = defineMessages({
+  webAppTitleQuestion: {
+    id: "selectPages.webAppTitleQuestion",
+    defaultMessage: "What type of web application are you building?"
+  }
+});
 
 class SelectWebApp extends React.Component<Props> {
   public componentDidMount() {
@@ -43,7 +56,7 @@ class SelectWebApp extends React.Component<Props> {
           <SelectOption
             selectCard={this.props.selectWebApp}
             multiSelect={false}
-            title="What type of web application are you building?"
+            title={this.props.intl.formatMessage(messages.webAppTitleQuestion)}
             options={this.props.type}
             selectedCardIndices={this.convertSelectionToIndexNumber(
               this.props.selectedWebApp
@@ -75,4 +88,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SelectWebApp);
+)(injectIntl(SelectWebApp));

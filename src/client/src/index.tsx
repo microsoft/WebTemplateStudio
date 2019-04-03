@@ -9,6 +9,8 @@ import App from "./App";
 import "./index.css";
 import reducers from "./reducers";
 
+import { IntlProvider } from "react-intl";
+
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(
   reducers,
@@ -17,10 +19,12 @@ const store = createStoreWithMiddleware(
 );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>,
+  <IntlProvider>
+    <Provider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
+  </IntlProvider>,
   document.getElementById("root") as HTMLElement
 );
