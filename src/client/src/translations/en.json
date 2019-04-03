@@ -1,4 +1,10 @@
 {
+  "azureFunctionsModal.appNameLabel": "App Name",
+  "azureFunctionsModal.locationLabel": "Location",
+  "azureFunctionsModal.numFunctionsLabel": "Number of functions",
+  "azureFunctionsModal.resourceGroupLabel": "Resource Group",
+  "azureFunctionsModal.runtimeStackLabel": "Runtime Stack",
+  "azureFunctionsModal.subscriptionLabel": "Subscription",
   "card.details": "Details",
   "details.author": "Author:",
   "details.back": "Back",

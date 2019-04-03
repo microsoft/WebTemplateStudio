@@ -18,6 +18,8 @@ import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getFunctionsSelection } from "../../selectors/azureFunctionsServiceSelector";
 import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector";
 
+import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
+
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
@@ -40,7 +42,7 @@ interface IStateProps {
   selection: any;
 }
 
-type Props = IDispatchProps & IStateProps;
+type Props = IDispatchProps & IStateProps & InjectedIntlProps;
 
 const initialState = {
   subscription: "",
@@ -52,34 +54,73 @@ const initialState = {
   internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
 };
 
-const FORM_CONSTANTS = {
-  SUBSCRIPTION: {
-    label: "Subscription",
-    value: "subscription"
+const messages = defineMessages({
+  subscriptionLabel: {
+    id: "azureFunctionsModal.subscriptionLabel",
+    defaultMessage: "Subscription"
   },
-  RESOURCE_GROUP: {
-    label: "Resource Group",
-    value: "resourceGroup"
+  resourceGroupLabel: {
+    id: "azureFunctionsModal.resourceGroupLabel",
+    defaultMessage: "Resource Group"
   },
-  LOCATION: {
-    label: "Location",
-    value: "location"
+  locationLabel: {
+    id: "azureFunctionsModal.locationLabel",
+    defaultMessage: "Location"
   },
-  RUNTIME_STACK: {
-    label: "Runtime Stack",
-    value: "runtimeStack"
+  runtimeStackLabel: {
+    id: "azureFunctionsModal.runtimeStackLabel",
+    defaultMessage: "Runtime Stack"
   },
-  NUM_FUNCTIONS: {
-    label: "Number of functions",
-    value: "numFunctions"
+  numFunctionsLabel: {
+    id: "azureFunctionsModal.numFunctionsLabel",
+    defaultMessage: "Number of functions"
   },
-  APP_NAME: {
-    label: "App Name",
-    value: "appName"
+  appNameLabel: {
+    id: "azureFunctionsModal.appNameLabel",
+    defaultMessage: "App Name"
+  },
+  createNew: {
+    id: "azureFunctionsModal.createNew",
+    defaultMessage: "Create New"
+  },
+  appName: {
+    id: "azureFunctionsModal.appName",
+    defaultMessage: "App Name"
+  },
+  addResource: {
+    id: "azureFunctionsModal.addResource",
+    defaultMessage: "Add Resource"
   }
-};
+});
 
-const CosmosResourceModal = (props: Props) => {
+const AzureFunctionsResourceModal = (props: Props) => {
+  const FORM_CONSTANTS = {
+    SUBSCRIPTION: {
+      label: props.intl.formatMessage(messages.subscriptionLabel),
+      value: "subscription"
+    },
+    RESOURCE_GROUP: {
+      label: props.intl.formatMessage(messages.resourceGroupLabel),
+      value: "resourceGroup"
+    },
+    LOCATION: {
+      label: props.intl.formatMessage(messages.locationLabel),
+      value: "location"
+    },
+    RUNTIME_STACK: {
+      label: props.intl.formatMessage(messages.runtimeStackLabel),
+      value: "runtimeStack"
+    },
+    NUM_FUNCTIONS: {
+      label: props.intl.formatMessage(messages.numFunctionsLabel),
+      value: "numFunctions"
+    },
+    APP_NAME: {
+      label: props.intl.formatMessage(messages.appNameLabel),
+      value: "appName"
+    }
+  };
+
   const [functionsData, setData] = React.useState(
     azureFunctionModalInitialState
   );
@@ -249,7 +290,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.SUBSCRIPTION.label,
         functionsData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
-        "Create new"
+        props.intl.formatMessage(messages.createNew)
       )}
       {getDropdownSection(
         modalValidation.isResourceGroupEmpty &&
@@ -257,7 +298,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         functionsData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
-        "Create new"
+        props.intl.formatMessage(messages.createNew)
       )}
       <div
         className={classnames({
@@ -268,7 +309,7 @@ const CosmosResourceModal = (props: Props) => {
         })}
       >
         <div className={styles.selectionHeaderContainer}>
-          <div>App Name</div>
+          <div>{props.intl.formatMessage(messages.appName)}</div>
           <div>.azurewebsites.net</div>
         </div>
         <div
@@ -331,7 +372,7 @@ const CosmosResourceModal = (props: Props) => {
           )}
           onClick={handleAddResource}
         >
-          Add Resource
+          {props.intl.formatMessage(messages.addResource)}
         </button>
       </div>
     </React.Fragment>
@@ -360,4 +401,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(asModal(CosmosResourceModal));
+)(asModal(injectIntl(AzureFunctionsResourceModal)));
