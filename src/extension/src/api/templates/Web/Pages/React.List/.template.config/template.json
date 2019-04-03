@@ -1,8 +1,6 @@
 ﻿{
   "author": "Microsoft",
-  "classifications": [
-    "Universal"
-  ],
+  "classifications": ["Universal"],
   "name": "List",
   "groupIdentity": "wts.Page.React.List",
   "identity": "wts.Page.React.List",
@@ -20,10 +18,10 @@
     "wts.genGroup": "0",
     "wts.rightClickEnabled": "true"
   },
+  "licenses": "[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)",
   "sourceName": "ReactList",
   "preferNameDirectory": true,
-  "PrimaryOutputs": [
-  ],
+  "PrimaryOutputs": [],
   "symbols": {
     "wts.rootNamespace": {
       "type": "parameter",

@@ -2,14 +2,14 @@
   {
     "name": "NodeJS",
     "displayName": "NodeJS",
-    "summary": "Node.js is a highly efficient and scalable non-blocking I/O platform that was build on top of Google Chrome V8 engine and its ECMAScript.",
+    "summary": "Node.js is an open-source, cross-platform JavaScript run-time environment that executes JavaScript outside of a browser.",
     "author": "Various",
     "order": "1",
-    "licenses": "",
     "platforms": ["Web"],
     "languages": ["Any"],
     "tags": {
       "version": "10.15.0"
-    }
+    },
+    "licenses": "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE) <br/> [Express](https://github.com/expressjs/express/blob/master/LICENSE)"
   }
 ]

@@ -18,6 +18,7 @@
     "wts.genGroup": "0",
     "wts.rightClickEnabled": "true"
   },
+  "licenses": "[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)",
   "sourceName": "ReactGrid",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
