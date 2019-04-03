@@ -4,7 +4,7 @@ import backendFramework from "./selectBackendFrameworkReducer";
 import frontendFramework from "./selectFrontendFrameworkReducer";
 import pages from "./selectPagesReducer";
 import appType from "./selectWebAppReducer";
-import projectName from "./updateProjectName";
+import projectNameObject from "./updateProjectName";
 import outputPath from "./updateOutputPath";
 import services from "./services";
 import pageCount from "./pageCountReducer";
@@ -17,7 +17,7 @@ export default combineReducers({
   pages,
   services,
   outputPath,
-  projectName,
   pageCount,
+  projectNameObject,
   projectPathValidation
 });

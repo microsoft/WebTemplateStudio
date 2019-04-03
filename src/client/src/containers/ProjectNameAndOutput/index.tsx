@@ -10,7 +10,8 @@ import {
 } from "../../actions/updateProjectNameAndPath";
 import {
   getOutputPath,
-  getProjectName
+  getProjectName,
+  getProjectNameValidation
 } from "../../selectors/wizardSelectionSelector";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -27,6 +28,7 @@ interface IStateProps {
   outputPath: string;
   projectName: string;
   projectPathValidation: any;
+  projectNameValidation: any;
 }
 
 interface IDispatchProps {
@@ -53,7 +55,7 @@ const ProjectNameAndOutput = (props: Props) => {
         command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
         payload: {
           projectPathValidation: {
-            isInvalidProjectPath: true,
+            isInvalidProjectPath: false,
             projectPathError: "Invalid path"
           }
         }
@@ -86,6 +88,11 @@ const ProjectNameAndOutput = (props: Props) => {
           value={props.projectName}
           placeholder="Project Name"
         />
+        {props.projectNameValidation.error && (
+          <div className={styles.errorMessage}>
+            {props.projectNameValidation.error}
+          </div>
+        )}
       </div>
       <div className={styles.inputContainer}>
         <div className={styles.inputTitle}>Output Path:</div>
@@ -108,7 +115,8 @@ const mapStateToProps = (state: any): IStateProps => ({
   vscode: state.vscode.vscodeObject,
   outputPath: getOutputPath(state),
   projectName: getProjectName(state),
-  projectPathValidation: state.selection.projectPathValidation
+  projectPathValidation: state.selection.projectPathValidation,
+  projectNameValidation: getProjectNameValidation(state)
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
