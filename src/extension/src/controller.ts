@@ -221,6 +221,33 @@ export abstract class Controller {
       }
     );
   }
+  public static sendCosmosNameValidationStatusToClient(message: any) {
+    AzureServices.validateCosmosAccountName(message.appName, message.subscription)
+      .then(() => {
+        Controller.handleValidMessage(ExtensionCommand.NameCosmos, {
+          isAvailable: true
+        });
+      })
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(ExtensionCommand.NameCosmos, error, {
+          isAvailable: false
+        });
+      });
+  }
+  public static sendFunctionNameValidationStatusToClient(message: any) {
+    AzureServices.validateFunctionAppName(message.appName, message.subscription)
+      .then(() => {
+        Controller.handleValidMessage(ExtensionCommand.NameFunctions, {
+          isAvailable: true
+        });
+      })
+      .catch((error: Error) => {
+        Controller.handleErrorMessage(ExtensionCommand.NameFunctions, error, {
+          isAvailable: false
+        });
+      });
+  }
+
 
   // tslint:disable-next-line: max-func-body-length
   public static async handleGeneratePayloadFromClient(
@@ -469,31 +496,7 @@ export abstract class Controller {
 
 
 
-  public static async validateFunctionAppName(
-    functionAppName: string,
-    subscriptionLabel: string
-  ): Promise<void> {
-    await this.updateFunctionSubscriptionItemCache(subscriptionLabel);
 
-    return this.AzureFunctionProvider.checkFunctionAppName(
-      functionAppName,
-      this.usersFunctionSubscriptionItemCache
-    )
-      .then(isAvailable => {
-        if (isAvailable) {
-          return Promise.resolve();
-        } else {
-          return Promise.reject(
-            new ValidationError(
-              CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(functionAppName)
-            )
-          );
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
-  }
 
 
   private static async promptUserForCosmosReplacement(
@@ -525,116 +528,6 @@ export abstract class Controller {
       });
   }
 
-  public static async processFunctionDeploymentAndSendStatusToClient(
-    funcPayload: any,
-    genPath: string
-  ) {
-    /*
-     * example:
-     *   {
-     *       appName: "YOUR_FUNCTION_APP_NAME",
-     *       subscription: "YOUR_SUBSCRIPTION_LABEL",
-     *       location: "West US",
-     *       runtime: "node",
-     *       resourceGroup: "YOUR_RESOURCE_GROUP",
-     *       functionNames: ["function1", "function2", "function3"]
-     *   }
-     */
-    await Controller.deployFunctionApp(funcPayload, genPath)
-      .then(() => {
-        Controller.handleValidMessage(ExtensionCommand.DeployFunctions, {
-          succeeded: true
-        });
-
-        vscode.window.showInformationMessage(
-          CONSTANTS.INFO.FUNCTION_APP_DEPLOYED(funcPayload.appName)
-        );
-      })
-      .catch((error: Error) => {
-        vscode.window.showErrorMessage(error.message);
-        Controller.handleErrorMessage(ExtensionCommand.DeployFunctions, error, {
-          succeeded: false
-        });
-      });
-  }
-
-  public static processCosmosDeploymentAndSendStatusToClient(
-    cosmosPayload: any,
-    genPath: string
-  ) {
-    /*
-     * example:
-     *   {
-     *       api: "MongoDB",
-     *       accountName: "YOUR_ACCOUNT_NAME",
-     *       location: "West US",
-     *       subscription: "YOUR_SUBSCRIPTION_LABEL",
-     *       resourceGroup: "YOUR_RESOURCE_GROUP"
-     *   }
-     */
-    return Controller.deployCosmosResource(cosmosPayload, genPath)
-      .then((dbObject: DatabaseObject) => {
-        Controller.handleValidMessage(ExtensionCommand.DeployCosmos, {
-          databaseObject: dbObject
-        });
-        return dbObject;
-      })
-      .catch((error: Error) => {
-        vscode.window.showErrorMessage(error.message);
-        Controller.handleErrorMessage(ExtensionCommand.DeployCosmos, error);
-        throw error;
-      });
-  }
-
-  public static sendFunctionNameValidationStatusToClient(message: any) {
-    Controller.validateFunctionAppName(message.appName, message.subscription)
-      .then(() => {
-        Controller.handleValidMessage(ExtensionCommand.NameFunctions, {
-          isAvailable: true
-        });
-      })
-      .catch((error: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameFunctions, error, {
-          isAvailable: false
-        });
-      });
-  }
-
-  public static sendCosmosNameValidationStatusToClient(message: any) {
-    Controller.validateCosmosAccountName(message.appName, message.subscription)
-      .then(() => {
-        Controller.handleValidMessage(ExtensionCommand.NameCosmos, {
-          isAvailable: true
-        });
-      })
-      .catch((error: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameCosmos, error, {
-          isAvailable: false
-        });
-      });
-  }
-
-  public static async validateCosmosAccountName(
-    cosmosDBAccountName: string,
-    subscriptionLabel: string
-  ): Promise<void> {
-    await this.updateCosmosDBSubscriptionItemCache(subscriptionLabel);
-
-    return this.AzureCosmosDBProvider.validateCosmosDBAccountName(
-      cosmosDBAccountName,
-      Controller.usersCosmosDBSubscriptionItemCache
-    )
-      .then(message => {
-        if (message === undefined || message === null || message === "") {
-          return Promise.resolve();
-        } else {
-          return Promise.reject(new ValidationError(message));
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
-  }
 
   public static async deployFunctionApp(
     selections: any,
@@ -706,18 +599,6 @@ export abstract class Controller {
     });
   }
 
-  private static async _getSubscriptionItem(
-    subscriptionLabel: string
-  ): Promise<SubscriptionItem> {
-    return AzureAuth.getSubscriptions().then(items => {
-      for (let subscriptionItem of items) {
-        if (subscriptionItem.label === subscriptionLabel) {
-          return subscriptionItem;
-        }
-      }
-      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
-    });
-  }
   public static sendFunctionRuntimes(message: any) {
     Controller.handleValidMessage(ExtensionCommand.GetFunctionsRuntimes, {
       runtimes: GetAvailableRuntimes()
@@ -728,32 +609,6 @@ export abstract class Controller {
     Controller.handleValidMessage(ExtensionCommand.GetCosmosAPIs, {
       APIs: GetAvailableAPIs()
     });
-  }
-  /*
-   * Caching is used for performance; when displaying live check on keystroke to wizard
-   */
-  private static async updateCosmosDBSubscriptionItemCache(
-    subscriptionLabel: string
-  ): Promise<void> {
-    if (
-      this.usersCosmosDBSubscriptionItemCache === undefined ||
-      subscriptionLabel !== this.usersCosmosDBSubscriptionItemCache.label
-    ) {
-      let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-      this.usersCosmosDBSubscriptionItemCache = subscriptionItem;
-    }
-  }
-
-  private static async updateFunctionSubscriptionItemCache(
-    subscriptionLabel: string
-  ): Promise<void> {
-    if (
-      this.usersFunctionSubscriptionItemCache === undefined ||
-      subscriptionLabel !== this.usersFunctionSubscriptionItemCache.label
-    ) {
-      let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-      this.usersFunctionSubscriptionItemCache = subscriptionItem;
-    }
   }
 
   private static getProgressObject(didSucceed: boolean) {
