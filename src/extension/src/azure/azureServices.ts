@@ -8,19 +8,14 @@ import {
 import {
   CosmosDBDeploy,
   CosmosDBSelections,
-  DatabaseObject,
-  GetAvailableAPIs
+  DatabaseObject
 } from "./azure-cosmosDB/cosmosDbModule";
 import {
   FunctionProvider,
-  FunctionSelections,
-  GetAvailableRuntimes
+  FunctionSelections
 } from "./azure-functions/functionProvider";
 import {
   CONSTANTS,
-  ExtensionCommand,
-  TelemetryEventName,
-  SyncStatus,
   AzureResourceType,
   DialogMessages,
   DialogResponses
