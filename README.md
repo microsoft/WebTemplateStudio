@@ -38,7 +38,7 @@ Once you make the selections you want and click generate, you can quickly extend
 
 # Documentation
 
-- [Installing the extension](/docs/Install.md)
+- [Installing the extension](/docs/install.md)
 - [Getting started with the codebase](/docs/getting-started-developers.md)
 - [Terminology for developers](/docs/Terminology.md)
 

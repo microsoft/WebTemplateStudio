@@ -47,9 +47,11 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
 };
 
 const PAGE_NAME_ERROR_MESSAGES = {
-  EMPTY_NAME: "name cannot be empty",
-  INVALID_REGEX: "page name may only contain letters, numbers, and spaces",
-  NAME_STARTS_WITH_SPACE: "page name may only start with letters or numbers"
+  DUPLICATE_NAME: "Name has to be unique",
+  INVALID_REGEX:
+    "Name may only contain letters, numbers, spaces, dashes or underscores",
+  EMPTY_NAME: "Name cannot be empty",
+  NAME_DOES_NOT_START_WITH_LETTER: "Page name may only start with letters"
 };
 
 const EMPTY_FIELD = (fieldId: string) => {
@@ -63,7 +65,7 @@ const EXTENSION_COMMANDS = {
   GET_USER_STATUS: "getUserStatus",
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
-  PROJECT_PATH_AND_NAME_VALIDATION: "project-path-and-name-validation",
+  PROJECT_PATH_VALIDATION: "project-path-validation",
   SUBSCRIPTION_DATA_COSMOS: "subscriptionDataForCosmos",
   SUBSCRIPTION_DATA_FUNCTIONS: "subscriptionDataForFunctions",
   TRACK_PAGE_SWITCH: "track-page-switch",

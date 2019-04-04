@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import { ChildProcess, exec } from "child_process";
+import { ChildProcess, execFile } from "child_process";
 import { CONSTANTS, SyncStatus } from "./constants";
 import * as signalR from "@aspnet/signalr";
 
@@ -27,7 +27,7 @@ export default class ApiModule {
       platform
     );
 
-    let spawnedProcess = exec(`${apiPath}`, { cwd: apiWorkingDirectory });
+    let spawnedProcess = execFile(`${apiPath}`, { cwd: apiWorkingDirectory });
     ApiModule._process = spawnedProcess;
     return spawnedProcess;
   }
@@ -38,7 +38,7 @@ export default class ApiModule {
       var spawn = require("child_process").spawn;
       spawn("taskkill", ["/pid", pid, "/f", "/t"]);
     } else {
-      ApiModule._process.kill();
+      ApiModule._process.kill("SIGKILL");
     }
   }
 

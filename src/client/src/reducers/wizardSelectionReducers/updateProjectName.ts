@@ -6,7 +6,10 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const projectNameReducer = (state = "", action: any) => {
+const projectNameReducer = (
+  state = { projectName: "", validation: {} },
+  action: any
+) => {
   switch (action.type) {
     case Actions.UPDATE_PROJECT_NAME:
       return action.payload;

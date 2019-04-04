@@ -1,0 +1,13 @@
+.screenshot {
+  margin-top: 100px;
+  width: 35vw;
+}
+
+.screenShotContainer {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.detailsContainer {
+  display: flex;
+}
