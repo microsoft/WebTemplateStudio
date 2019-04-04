@@ -120,7 +120,7 @@ const ProjectNameAndOutput = (props: Props) => {
         <div className={styles.inputTitle}>
           {props.intl.formatMessage(messages.outputPathTitle)}
         </div>
-        <div className={styles.outputPathContainer}>
+        <div>
           <OutputPath
             handleChange={handleOutputPathChange}
             handleSaveClick={handleSaveClick}
