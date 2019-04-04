@@ -7,17 +7,33 @@ Deploying your website to the cloud allows people to view your website by visiti
 
 One way to deploy is using Azure App Service. This service will allow you to deploy and scale web, mobile and API apps.
 
-## Getting Started with Deployment
-
 ### VS Code Extension Method (Recommended)
 
-The Azure App Service extension provides an easy way to manage and deploy your web application. To learn how to deploy using their VS Code extension, see [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
+The Azure App Service Extension provides an easy way to manage and deploy your web application.
+
+1. Download the [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice).
+2. Open the project in Visual Studio Code, and run `yarn build` or `npm build`.
+3. Move the build folder into the server folder.
+4. Click the deploy button in the Azure App Service Extension.
+
+![Azure App Service Extension Deploy Button](./resources/azure-appservice-deploy-button.png)
+
+5. When prompted on which folder to deploy, select the server folder.
+6. Click yes when prompted to update your configuration to run `npm install` on the target server.
+
+![Azure App Service Extension Update Build Notification](./resources/azure-appservice-update-build-notification.png)
+
+7. If you are using a Cosmos Database add the Cosmos Keys in the .env file to the Application Settings of your Azure App Service. To run the app in production mode set the variable NODE_ENV to production. You can add a Application Setting by right clicking the Application Settings tab in the Azure App Service Extension.
+
+![Azure App Service Extension Application Settings](./resources/azure-appservice-application-settings.png)
+
+8. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
 
 ### Local Git Deployment Method
 
 This method will require you to have [git](https://git-scm.com/downloads) installed on your computer.
 
-#### Creating the App Service
+#### Creating the App Service through the Azure Portal
 
 - Go to the [Azure Portal](https://portal.azure.com) and click on the _App Services_ button.
 
