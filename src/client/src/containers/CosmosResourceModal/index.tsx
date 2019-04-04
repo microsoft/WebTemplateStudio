@@ -44,6 +44,20 @@ interface IStateProps {
 }
 
 type Props = IDispatchProps & IStateProps & InjectedIntlProps;
+interface attributeLinks {
+  [key: string]: any;
+}
+
+const links: attributeLinks = {
+  subscription:
+    "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
+  resourceGroup: "https://ms.portal.azure.com/#create/Microsoft.ResourceGroup",
+  accountName: "https://docs.microsoft.com/en-us/azure/cosmos-db/",
+  api: null,
+  location: null
+};
+
+type Props = IDispatchProps & IStateProps & InjectedIntlProps;
 
 const initialState = {
   subscription: "",
@@ -241,7 +255,11 @@ const CosmosResourceModal = (props: Props) => {
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
           <div>{leftHeader}</div>
-          <div className={styles.createNew}>{rightHeader}</div>
+          {links[formSectionId] && (
+            <a className={styles.link} href={links[formSectionId]}>
+              Create New
+            </a>
+          )}
         </div>
         <Dropdown
           options={options}
@@ -295,10 +313,7 @@ const CosmosResourceModal = (props: Props) => {
       >
         <div className={styles.selectionHeaderContainer}>
           <div>{props.intl.formatMessage(messages.accountName)}</div>
-          <a
-            className={styles.link}
-            href="https://docs.microsoft.com/en-us/azure/cosmos-db/"
-          >
+          <a className={styles.link} href={links.accountName}>
             documents.azure.com
           </a>
         </div>
