@@ -53,8 +53,8 @@ const initialState = {
 
 const createFunctionNames = (numFunctions: number): string[] => {
   const functionNames = [];
-  for (let i = 0; i < numFunctions; i++) {
-    functionNames.push(`Function${i}`);
+  for (let i = 1; i <= numFunctions; i++) {
+    functionNames.push(`function${i}`);
   }
   return functionNames;
 };

@@ -2,9 +2,18 @@ import * as React from "react";
 
 import { ReactComponent as SaveSVG } from "../../assets/folder.svg";
 import Input from "../Input";
-import { EMPTY_FIELD } from "../../utils/constants";
+import { INTL_MESSAGES } from "../../utils/constants";
 
 import styles from "./styles.module.css";
+
+import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
+
+const messages = defineMessages({
+  outputPath: {
+    id: "outputPath.outputPath",
+    defaultMessage: "Output Path"
+  }
+});
 
 interface IProps {
   handleChange: (e: React.SyntheticEvent<HTMLInputElement>) => any;
@@ -21,8 +30,9 @@ const OutputPath = ({
   value,
   validation,
   isEmpty,
+  intl,
   placeholder
-}: IProps) => {
+}: IProps & InjectedIntlProps) => {
   return (
     <React.Fragment>
       <div className={styles.errorStack}>
@@ -47,7 +57,9 @@ const OutputPath = ({
         )) ||
           (isEmpty && (
             <div className={styles.errorMessage}>
-              {EMPTY_FIELD("Output path")}
+              {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
+                fieldId: intl.formatMessage(messages.outputPath)
+              })}
             </div>
           ))}
       </div>
@@ -55,4 +67,4 @@ const OutputPath = ({
   );
 };
 
-export default OutputPath;
+export default injectIntl(OutputPath);

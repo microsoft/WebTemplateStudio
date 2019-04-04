@@ -18,7 +18,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
-import { EMPTY_FIELD } from "../../utils/constants";
+import { INTL_MESSAGES } from "../../utils/constants";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
@@ -297,7 +297,11 @@ const CosmosResourceModal = (props: Props) => {
           disabled={disabled}
         />
         {isEmpty && (
-          <div className={styles.errorMessage}>{EMPTY_FIELD(leftHeader)}</div>
+          <div className={styles.errorMessage}>
+            {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
+              fieldId: leftHeader
+            })}
+          </div>
         )}
       </div>
     );
@@ -369,7 +373,9 @@ const CosmosResourceModal = (props: Props) => {
         {modalValidation.isAccountNameEmpty &&
           cosmosFormData.accountName.length == 0 && (
             <div className={styles.errorMessage}>
-              {EMPTY_FIELD(FORM_CONSTANTS.ACCOUNT_NAME.label)}
+              {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
+                fieldId: FORM_CONSTANTS.ACCOUNT_NAME.label
+              })}
             </div>
           )}
       </div>

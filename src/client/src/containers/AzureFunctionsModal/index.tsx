@@ -24,7 +24,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  EMPTY_FIELD
+  INTL_MESSAGES
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 
@@ -293,7 +293,11 @@ const AzureFunctionsResourceModal = (props: Props) => {
           disabled={disabled}
         />
         {isEmpty && (
-          <div className={styles.errorMessage}>{EMPTY_FIELD(leftHeader)}</div>
+          <div className={styles.errorMessage}>
+            {props.intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
+              fieldId: leftHeader
+            })}
+          </div>
         )}
       </div>
     );
@@ -374,7 +378,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
         {modalValidation.isAppNameEmpty &&
           azureFunctionsFormData.appName.length == 0 && (
             <div className={styles.errorMessage}>
-              {EMPTY_FIELD(FORM_CONSTANTS.APP_NAME.label)}
+              {props.intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
+                fieldId: leftHeader
+              })}
             </div>
           )}
       </div>
