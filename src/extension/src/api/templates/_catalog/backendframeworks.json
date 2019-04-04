@@ -6,7 +6,10 @@
     "author": "Various",
     "order": "1",
     "licenses": "",
-    "platforms": [ "Web" ],
-    "languages": [ "Any" ]
+    "platforms": ["Web"],
+    "languages": ["Any"],
+    "tags": {
+      "version": "v10.15.0"
+    }
   }
 ]

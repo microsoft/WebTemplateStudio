@@ -6,10 +6,10 @@
     "author": "Facebook",
     "order": "1",
     "licenses": "",
-    "platforms": [ "Web" ],
-    "languages": [ "Any" ],
+    "platforms": ["Web"],
+    "languages": ["Any"],
     "tags": {
-      "version": "16.8.4"
+      "version": "v16.8.4"
     }
   }
 ]

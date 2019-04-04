@@ -10,7 +10,8 @@ import * as Actions from "../../actions/types";
 const frontendFramework = (
   state = {
     title: "ReactJS",
-    internalName: "ReactJS"
+    internalName: "ReactJS",
+    version: "v16.8.4"
   },
   action: any
 ) => {
