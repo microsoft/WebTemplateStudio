@@ -43,7 +43,7 @@ The generated templates can be deployed to Azure App Service using the following
 4. If a database is used, add the environment variables defined in .env to your Application Settings.
 5. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
 
-Full documentation for deployment to Azure App Service can be found here: //TODO Add link to deployment doc
+Full documentation for deployment to Azure App Service can be found here: https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md
 
 ## File Structure
 

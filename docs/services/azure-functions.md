@@ -120,5 +120,4 @@ new changes. Once you have installed this extension, here's what you need to do 
 ### Deploying manually
 
 If you do not want to install the extension (it is _recommended_ that you install it to make your workflow easier), follow
-one of the methods in the [Azure app service zip deploy tutorial](https://docs.microsoft.com/en-us/azure/app-service/
-deploy-zip) to manually deploy your updated functions!
+one of the methods in the [Azure app service zip deploy tutorial](https://docs.microsoft.com/en-us/azure/app-service/deploy-zip) to manually deploy your updated functions!
