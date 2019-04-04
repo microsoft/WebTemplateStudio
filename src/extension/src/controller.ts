@@ -5,7 +5,7 @@ import {
   ExtensionCommand,
   TelemetryEventName,
   SyncStatus,
-  AzureResourceType,
+  AzureResourceType
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
@@ -246,28 +246,25 @@ export abstract class Controller {
       message.appName,
       message.subscription
     )
-      .then(() => {
+      .then((invalidReason: string | undefined) => {
         Controller.handleValidMessage(ExtensionCommand.NameCosmos, {
-          isAvailable: true
+          message: invalidReason,
+          isAvailable: (!invalidReason || invalidReason === undefined || invalidReason === "" || invalidReason.length === 0)
         });
       })
       .catch((error: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameCosmos, error, {
-          isAvailable: false
-        });
+        throw error; //to log in telemetry
       });
   }
   public static sendFunctionNameValidationStatusToClient(message: any) {
     AzureServices.validateFunctionAppName(message.appName, message.subscription)
-      .then(() => {
+      .then(isValid => {
         Controller.handleValidMessage(ExtensionCommand.NameFunctions, {
-          isAvailable: true
+          isAvailable: isValid
         });
       })
       .catch((error: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameFunctions, error, {
-          isAvailable: false
-        });
+        throw error; //to log in telemetry
       });
   }
 
