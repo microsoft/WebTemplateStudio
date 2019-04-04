@@ -120,12 +120,14 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
    */
   public exchangeOption(cardNumber: number) {
     const { selectedCardIndices } = this.state;
+    const { selectCard, options } = this.props;
     selectedCardIndices.pop();
     selectedCardIndices.push(cardNumber);
-    if (this.props.selectCard) {
-      this.props.selectCard({
-        title: this.props.options[cardNumber].title,
-        internalName: this.props.options[cardNumber].internalName
+    if (selectCard) {
+      selectCard({
+        internalName: options[cardNumber].internalName,
+        title: options[cardNumber].title,
+        version: options[cardNumber].version || "v1.0"
       });
     }
     this.setState({

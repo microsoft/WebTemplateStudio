@@ -32,12 +32,14 @@ const frameworksRowItems = (selection: any): RowType[] => {
     {
       type: "Front-end framework",
       title: frontendFramework.title,
-      svgUrl: getSvgUrl(frontendFramework.internalName)
+      svgUrl: getSvgUrl(frontendFramework.internalName),
+      version: frontendFramework.version
     },
     {
       type: "Back-end framework",
       title: backendFramework.title,
-      svgUrl: getSvgUrl(backendFramework.internalName)
+      svgUrl: getSvgUrl(backendFramework.internalName),
+      version: backendFramework.version
     }
   ];
 };

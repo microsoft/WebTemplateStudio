@@ -57,6 +57,7 @@ const SummarySection = ({
     svgUrl?: string,
     company?: string,
     originalTitle?: string,
+    version?: string,
     canEdit?: boolean,
     withIndent?: boolean,
     handleCloseClick?: (idx: number) => any,
@@ -67,7 +68,7 @@ const SummarySection = ({
       <div className={styles.tileContainer} key={idx}>
         <SummaryTile
           title={title}
-          version="v1.0"
+          version={version || "v1.0"}
           svgUrl={svgUrl}
           company={company}
           originalTitle={originalTitle}
@@ -111,6 +112,7 @@ const SummarySection = ({
             selection.svgUrl,
             selection.company,
             selection.originalTitle,
+            selection.version,
             isEditable
           )}
           {selection.functionNames &&
@@ -120,6 +122,7 @@ const SummarySection = ({
                 undefined,
                 undefined,
                 undefined,
+                "v1.0",
                 true,
                 true,
                 handleRemoveFunction,
