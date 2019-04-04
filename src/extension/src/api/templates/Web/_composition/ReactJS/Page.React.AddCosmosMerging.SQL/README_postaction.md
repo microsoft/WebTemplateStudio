@@ -43,8 +43,7 @@ The generated templates can be deployed to Azure App Service using the following
 - Bootstrap CSS - https://getbootstrap.com/
 - Express - https://expressjs.com/
 //{[{
-- Mongo/Mongoose - https://mongoosejs.com/docs/guide.html
-- Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongoose
+- Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/create-sql-api-nodejs
 //}]}
 
-  This project was created using [Project Acorn](https://github.com/Microsoft/WebTemplateStudio).
+  This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).

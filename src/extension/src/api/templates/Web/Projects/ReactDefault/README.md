@@ -52,4 +52,4 @@ development front-end and back-end communicate via a proxy defined in the packag
 - Bootstrap CSS - https://getbootstrap.com/
 - Express - https://expressjs.com/
 
-  This project was created using [Project Acorn](https://github.com/Microsoft/WebTemplateStudio).
+  This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
