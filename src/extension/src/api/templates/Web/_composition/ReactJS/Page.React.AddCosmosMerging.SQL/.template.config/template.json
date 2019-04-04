@@ -1,14 +1,14 @@
 ﻿{
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "Page.React.AddCosmosMerging",
+  "name": "Page.React.AddCosmosMerging.SQL",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "identity == wts.Feature.Azure.Cosmos.Mongo"
+    "wts.compositionFilter": "identity == wts.Feature.Azure.Cosmos.SQL"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

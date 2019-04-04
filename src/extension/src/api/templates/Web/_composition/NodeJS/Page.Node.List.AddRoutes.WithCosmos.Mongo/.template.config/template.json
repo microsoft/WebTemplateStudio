@@ -1,14 +1,14 @@
 ﻿{
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "Page.Node.Cosmos.AddMerging",
+  "name": "Page.Node.List.AddRoutes.WithCosmos.Mongo",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == NodeJS & identity == wts.Feature.Azure.Cosmos.Mongo & wts.type == feature"
+    "wts.compositionFilter": "identity == wts.Page.React.List & $feature == wts.Feature.Azure.Cosmos.Mongo"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
