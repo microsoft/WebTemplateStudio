@@ -11,7 +11,7 @@ const backendFramework = (
   state = {
     title: "NodeJS",
     internalName: "NodeJS",
-    version: "v10.15.0"
+    version: "10.15.0"
   },
   action: any
 ) => {
