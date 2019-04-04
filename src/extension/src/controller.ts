@@ -249,7 +249,10 @@ export abstract class Controller {
       .then((invalidReason: string | undefined) => {
         Controller.handleValidMessage(ExtensionCommand.NameCosmos, {
           message: invalidReason,
-          isAvailable: (!invalidReason || invalidReason === undefined || invalidReason === "" || invalidReason.length === 0)
+          isAvailable:
+            !invalidReason ||
+            invalidReason === undefined ||
+            invalidReason === ""
         });
       })
       .catch((error: Error) => {

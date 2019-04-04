@@ -1,4 +1,4 @@
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 import {
   AzureAuth,
   SubscriptionItem,
@@ -20,7 +20,7 @@ import {
   DialogMessages,
   DialogResponses
 } from "../constants";
-import { SubscriptionError, ValidationError, ResourceGroupError } from "../errors";
+import { SubscriptionError, ResourceGroupError } from "../errors";
 
 export abstract class AzureServices {
   private static AzureFunctionProvider = new FunctionProvider();
@@ -127,7 +127,7 @@ export abstract class AzureServices {
       this.usersCosmosDBSubscriptionItemCache
     );
   }
-  
+
   public static async validateFunctionAppName(
     functionAppName: string,
     subscriptionLabel: string
@@ -247,7 +247,7 @@ export abstract class AzureServices {
       throw new ResourceGroupError(CONSTANTS.ERRORS.RESOURCE_GROUP_NOT_FOUND);
     });
   }
-  
+
   public static async promptUserForCosmosReplacement(
     pathToEnv: string,
     dbObject: DatabaseObject
@@ -268,7 +268,10 @@ export abstract class AzureServices {
             CONSTANTS.INFO.FILE_REPLACED_MESSAGE + pathToEnv
           );
         }
-        return {userReplacedEnv: selection === DialogResponses.yes, startTime: start};
+        return {
+          userReplacedEnv: selection === DialogResponses.yes,
+          startTime: start
+        };
       });
   }
 }
