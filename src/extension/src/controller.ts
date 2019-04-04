@@ -6,14 +6,7 @@ import {
   TelemetryEventName,
   SyncStatus,
   AzureResourceType,
-  DialogMessages,
-  DialogResponses
 } from "./constants";
-import {
-  SubscriptionError,
-  ValidationError,
-  ResourceGroupError
-} from "./errors";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
 import { AzureServices } from "./azure/azureServices";
@@ -53,8 +46,6 @@ export abstract class Controller {
     ],
     [ExtensionCommand.TrackPageSwitch, Controller.trackOnPageChangeInTelemetry],
     [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
-    [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
-    [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
     [ExtensionCommand.OpenProjectVSCode, Controller.openProjectVSCode]
   ]);
 
@@ -143,7 +134,6 @@ export abstract class Controller {
     Controller.Telemetry.trackWizardPageTimeToNext(payload.pageName);
   }
 
-
   public static performLoginForSubscriptions(message: any) {
     let isLoggedIn = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
       boolean
@@ -222,7 +212,10 @@ export abstract class Controller {
     );
   }
   public static sendCosmosNameValidationStatusToClient(message: any) {
-    AzureServices.validateCosmosAccountName(message.appName, message.subscription)
+    AzureServices.validateCosmosAccountName(
+      message.appName,
+      message.subscription
+    )
       .then(() => {
         Controller.handleValidMessage(ExtensionCommand.NameCosmos, {
           isAvailable: true
@@ -247,7 +240,6 @@ export abstract class Controller {
         });
       });
   }
-
 
   // tslint:disable-next-line: max-func-body-length
   public static async handleGeneratePayloadFromClient(
@@ -385,9 +377,10 @@ export abstract class Controller {
               AzureServices.promptUserForCosmosReplacement(
                 enginePayload.path,
                 dbObject
-              ).then( //log in telemetry how long it took replacement
-                (cosmosReplaceResponse) => {
-                  if(cosmosReplaceResponse.userReplacedEnv){
+              ).then(
+                //log in telemetry how long it took replacement
+                cosmosReplaceResponse => {
+                  if (cosmosReplaceResponse.userReplacedEnv) {
                     Controller.Telemetry.trackCustomEventTime(
                       TelemetryEventName.ConnectionStringReplace,
                       cosmosReplaceResponse.startTime,
@@ -485,35 +478,6 @@ export abstract class Controller {
       vscode.Uri.file(message.payload.outputPath),
       true
     );
-  }
-
-
-
-
-
-
-
-
-
-
-  
-
-  ///////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-  public static sendFunctionRuntimes(message: any) {
-    Controller.handleValidMessage(ExtensionCommand.GetFunctionsRuntimes, {
-      runtimes: GetAvailableRuntimes()
-    });
-  }
-
-  public static sendCosmosAPIs(message: any) {
-    Controller.handleValidMessage(ExtensionCommand.GetCosmosAPIs, {
-      APIs: GetAvailableAPIs()
-    });
   }
 
   private static getProgressObject(didSucceed: boolean) {
