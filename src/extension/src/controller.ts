@@ -334,7 +334,7 @@ export abstract class Controller {
           // tslint:disable-next-line: no-function-expression
           async function(this: IActionContext): Promise<void> {
             try {
-              Controller.deployFunctionApp(
+              AzureServices.deployFunctionApp(
                 payload.functions,
                 enginePayload.path
               );
@@ -370,7 +370,7 @@ export abstract class Controller {
           async function(this: IActionContext): Promise<void> {
             var cosmosPayload: any = payload.cosmos;
             try {
-              var dbObject = await Controller.deployCosmosResource(
+              var dbObject = await AzureServices.deployCosmosResource(
                 cosmosPayload,
                 enginePayload.path
               );
@@ -501,75 +501,8 @@ export abstract class Controller {
   ///////////////////////////////////////////////////////////////////////////////////////
 
 
-  public static async deployFunctionApp(
-    selections: any,
-    appPath: string
-  ): Promise<void> {
-    await this.updateFunctionSubscriptionItemCache(selections.subscription);
 
-    let userFunctionsSelections: FunctionSelections = {
-      functionAppName: selections.appName,
-      subscriptionItem: Controller.usersFunctionSubscriptionItemCache,
-      resourceGroupItem: await this._getResourceGroupItem(
-        selections.resourceGroup,
-        Controller.usersFunctionSubscriptionItemCache
-      ),
-      location: selections.location,
-      runtime: selections.runtimeStack,
-      functionNames: selections.functionNames
-    };
 
-    let functionProvider = new FunctionProvider();
-
-    return await functionProvider.createFunctionApp(
-      userFunctionsSelections,
-      appPath
-    );
-  }
-
-  public static async deployCosmosResource(
-    selections: any,
-    genPath: string
-  ): Promise<DatabaseObject> {
-    try {
-      await Controller.validateCosmosAccountName(
-        selections.accountName,
-        selections.subscription
-      );
-    } catch (error) {
-      return Promise.reject(error);
-    }
-
-    let userCosmosDBSelection: CosmosDBSelections = {
-      cosmosAPI: selections.api,
-      cosmosDBResourceName: selections.accountName,
-      location: selections.location,
-      resourceGroupItem: await this._getResourceGroupItem(
-        selections.resourceGroup,
-        Controller.usersCosmosDBSubscriptionItemCache
-      ),
-      subscriptionItem: Controller.usersCosmosDBSubscriptionItemCache
-    };
-
-    return await this.AzureCosmosDBProvider.createCosmosDB(
-      userCosmosDBSelection,
-      genPath
-    );
-  }
-
-  private static async _getResourceGroupItem(
-    resourceName: string,
-    subscriptionItem: SubscriptionItem
-  ): Promise<ResourceGroupItem> {
-    return AzureAuth.getResourceGroupItems(subscriptionItem).then(items => {
-      for (let resourceGroup of items) {
-        if (resourceGroup.name === resourceName) {
-          return resourceGroup;
-        }
-      }
-      throw new ResourceGroupError(CONSTANTS.ERRORS.RESOURCE_GROUP_NOT_FOUND);
-    });
-  }
 
   public static sendFunctionRuntimes(message: any) {
     Controller.handleValidMessage(ExtensionCommand.GetFunctionsRuntimes, {
