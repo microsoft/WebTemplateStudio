@@ -24,12 +24,17 @@ import {
 import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
 import { openPostGenModalAction } from "../../actions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { getIsVisitedRoutesSelector } from "../../selectors/wizardNavigationSelector";
 
 import { FormattedMessage, injectIntl } from "react-intl";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
   openPostGenModal: () => any;
+}
+
+interface IVisited {
+  [key: string]: boolean;
 }
 
 interface IStateProps {
@@ -39,6 +44,7 @@ interface IStateProps {
   cosmos: any;
   selectedFunctions: boolean;
   functions: any;
+  isVisited: IVisited;
 }
 
 type Props = RouteComponentProps & IStateProps & IDispatchProps;
@@ -118,14 +124,18 @@ class Footer extends React.Component<Props> {
       }
     }
     const { pathname } = this.props.location;
+    const { showFrameworks } = this.props.isVisited;
     return (
       <div>
         {pathname !== ROUTES.PAGE_DETAILS && (
           <div className={styles.footer}>
-            <div>
-              By continuing, you agree to the terms of all the licenses in the
-              licenses section.
-            </div>
+            {
+              <div>
+                {showFrameworks &&
+                  `By continuing, you agree to the terms of all the licenses in the
+              licenses section.`}
+              </div>
+            }
             {pathname !== ROUTES.WELCOME && (
               <div className={styles.buttonContainer}>
                 <Link
@@ -189,7 +199,8 @@ const mapStateToProps = (state: any): IStateProps => ({
   selectedCosmos: isCosmosResourceCreatedSelector(state),
   cosmos: getCosmosDbSelectionSelector(state),
   selectedFunctions: isAzureFunctionsSelectedSelector(state),
-  functions: getAzureFunctionsOptionsSelector(state)
+  functions: getAzureFunctionsOptionsSelector(state),
+  isVisited: getIsVisitedRoutesSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({

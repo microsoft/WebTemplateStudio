@@ -61,3 +61,8 @@
   color: #54b4ff;
   cursor: pointer;
 }
+
+.link {
+  color: #54b4ff;
+  text-decoration: none;
+}

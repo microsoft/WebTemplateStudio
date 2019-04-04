@@ -30,6 +30,13 @@ const messages = defineMessages({
 });
 
 const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
+  const LinkRenderer = (props: any) => {
+    return (
+      <a href={props.href} className={styles.link}>
+        {props.children}
+      </a>
+    );
+  };
   return (
     <React.Fragment>
       <div className={styles.container}>
@@ -83,15 +90,21 @@ const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
                 <div className={classnames(grid.col8, styles.licenses)}>
                   {Array.isArray(detailInfo.licenses)
                     ? detailInfo.licenses.map((license: License) => {
-                        if (license !== typeof "string") {
-                          const licenseTemp = license as ILicenseObject;
-                          return (
-                            <a href={licenseTemp.url}>{licenseTemp.text}</a>
-                          );
-                        }
+                        const licenseTemp = license as ILicenseObject;
+                        return (
+                          <p>
+                            <a className={styles.link} href={licenseTemp.url}>
+                              {licenseTemp.text}
+                            </a>
+                          </p>
+                        );
                       })
-                    : <ReactMarkdown source={detailInfo.licenses} /> ||
-                      intl!.formatMessage(messages.none)}
+                    : (
+                        <ReactMarkdown
+                          source={detailInfo.licenses}
+                          renderers={{ link: LinkRenderer }}
+                        />
+                      ) || intl!.formatMessage(messages.none)}
                 </div>
                 <div>{detailInfo.version || "1.0"}</div>
               </div>
