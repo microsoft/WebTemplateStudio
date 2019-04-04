@@ -25,7 +25,6 @@ export abstract class AzureServices {
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
 
-  private static userEmail: string;
   private static subscriptionItemList: SubscriptionItem[] = [];
 
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -36,7 +35,6 @@ export abstract class AzureServices {
   }
 
   public static async getUserInfo() {
-    this.userEmail = AzureAuth.getEmail();
 
     this.subscriptionItemList = await AzureAuth.getSubscriptions();
 
@@ -49,7 +47,7 @@ export abstract class AzureServices {
       }
     );
     return {
-      email: this.userEmail,
+      email: AzureAuth.getEmail(),
       subscriptions: subscriptionListToDisplay
     };
   }
