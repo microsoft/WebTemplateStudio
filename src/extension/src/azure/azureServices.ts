@@ -19,7 +19,7 @@ import {
   DialogMessages,
   DialogResponses
 } from "../constants";
-import { SubscriptionError, ValidationError, ResourceGroupError } from "../errors";
+import { SubscriptionError, ValidationError } from "../errors";
 
 export abstract class AzureServices {
   private static AzureFunctionProvider = new FunctionProvider();
