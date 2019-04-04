@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import {
   AzureAuth,
   SubscriptionItem,
-  ResourceGroupItem,
   LocationItem
 } from "./azure-auth/azureAuth";
 import {
@@ -70,7 +69,7 @@ export abstract class AzureServices {
     if (subscriptionItem === undefined) {
       throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
     }
-    let resourceGroupItems = AzureAuth.getResourceGroupItems(
+    let resourceGroupItems = AzureAuth.getAllResourceGroupItems(
       subscriptionItem
     ).then(resourceGroups => {
       // Format
@@ -212,7 +211,7 @@ export abstract class AzureServices {
     let userFunctionsSelections: FunctionSelections = {
       functionAppName: selections.appName,
       subscriptionItem: this.usersFunctionSubscriptionItemCache,
-      resourceGroupItem: await this._getResourceGroupItem(
+      resourceGroupItem: await AzureAuth.getResourceGroupItem(
         selections.resourceGroup,
         this.usersFunctionSubscriptionItemCache
       ),
@@ -246,7 +245,7 @@ export abstract class AzureServices {
       cosmosAPI: selections.api,
       cosmosDBResourceName: selections.accountName,
       location: selections.location,
-      resourceGroupItem: await this._getResourceGroupItem(
+      resourceGroupItem: await AzureAuth.getResourceGroupItem(
         selections.resourceGroup,
         this.usersCosmosDBSubscriptionItemCache
       ),
@@ -257,21 +256,7 @@ export abstract class AzureServices {
       userCosmosDBSelection,
       genPath
     );
-  }
-  private static async _getResourceGroupItem(
-    resourceName: string,
-    subscriptionItem: SubscriptionItem
-  ): Promise<ResourceGroupItem> {
-    return AzureAuth.getResourceGroupItems(subscriptionItem).then(items => {
-      for (let resourceGroup of items) {
-        if (resourceGroup.name === resourceName) {
-          return resourceGroup;
-        }
-      }
-      throw new ResourceGroupError(CONSTANTS.ERRORS.RESOURCE_GROUP_NOT_FOUND);
-    });
-  }
-  
+  }  
   public static async promptUserForCosmosReplacement(
     pathToEnv: string,
     dbObject: DatabaseObject
