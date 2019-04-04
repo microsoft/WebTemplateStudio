@@ -6,6 +6,6 @@ export interface RowType {
   company?: string;
   originalTitle?: string;
   id?: string;
-  version?: string;
+  version: string;
   internalName?: string;
 }

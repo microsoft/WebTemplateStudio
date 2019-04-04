@@ -9,7 +9,7 @@
     "platforms": ["Web"],
     "languages": ["Any"],
     "tags": {
-      "version": "v10.15.0"
+      "version": "10.15.0"
     }
   }
 ]

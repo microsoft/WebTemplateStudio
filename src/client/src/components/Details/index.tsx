@@ -83,7 +83,7 @@ const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
                 <div>
                   {detailInfo.licenses || intl!.formatMessage(messages.none)}
                 </div>
-                <div>{detailInfo.version || "v1.0"}</div>
+                <div>{detailInfo.version || "1.0"}</div>
               </div>
             </div>
           </div>

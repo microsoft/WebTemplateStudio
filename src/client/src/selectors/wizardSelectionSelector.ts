@@ -21,7 +21,8 @@ const getProjectTypeRowItems = (selection: any): RowType[] => {
     {
       type: "Project Type",
       title: projectType.title,
-      svgUrl: getSvgUrl(projectType.internalName)
+      svgUrl: getSvgUrl(projectType.internalName),
+      version: selection.version
     }
   ];
 };
@@ -64,7 +65,8 @@ const getServices = (selection: any): any => {
           company: "Microsoft",
           svgUrl: getSvgUrl(selection.internalName),
           functionNames: selection.functionNames,
-          internalName: selection.internalName
+          internalName: selection.internalName,
+          version: selection.version
         });
       } else if (serviceKey === SERVICE_KEYS.COSMOS_DB) {
         servicesRows.push({
@@ -72,7 +74,8 @@ const getServices = (selection: any): any => {
           originalTitle: "CosmosDB",
           company: "Microsoft",
           svgUrl: getSvgUrl(selection.internalName),
-          internalName: selection.internalName
+          internalName: selection.internalName,
+          version: selection.version
         });
       }
     }
@@ -89,7 +92,8 @@ const getPagesRowItems = (selection: any): RowType[] => {
       type: page.originalTitle ? page.originalTitle : page.title,
       title: page.title,
       svgUrl: getSvgUrl(page.internalName),
-      id: page.id
+      id: page.id,
+      version: selection.version
     });
   }
   return pagesRows;

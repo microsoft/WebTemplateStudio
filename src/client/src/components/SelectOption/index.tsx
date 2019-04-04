@@ -123,11 +123,13 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const { selectCard, options } = this.props;
     selectedCardIndices.pop();
     selectedCardIndices.push(cardNumber);
+    const ver = `v${options[cardNumber].version || "1.0"}`;
+
     if (selectCard) {
       selectCard({
         internalName: options[cardNumber].internalName,
         title: options[cardNumber].title,
-        version: options[cardNumber].version || "v1.0"
+        version: ver
       });
     }
     this.setState({
