@@ -89,16 +89,6 @@ const mockVsCodeApi = () => ({
         });
         break;
       case EXTENSION_COMMANDS.GENERATE:
-        // @ts-ignore produces a mock generate response from VSCode in development
-        window.postMessage({
-          command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-          payload: {
-            validation: {
-              isValidProjectPath: false,
-              projectPathError: "project path is invalid"
-            }
-          }
-        });
         // @ts-ignore mocks a generation status message
         window.postMessage({
           command: EXTENSION_COMMANDS.GEN_STATUS_MESSAGE,
