@@ -2,7 +2,6 @@ import * as vscode from "vscode";
 import {
   AzureAuth,
   SubscriptionItem,
-  ResourceGroupItem,
   LocationItem
 } from "./azure-auth/azureAuth";
 import {
@@ -20,14 +19,13 @@ import {
   DialogMessages,
   DialogResponses
 } from "../constants";
-import { SubscriptionError, ResourceGroupError } from "../errors";
+import { SubscriptionError } from "../errors";
 
 export abstract class AzureServices {
 
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
 
-  private static userEmail: string;
   private static subscriptionItemList: SubscriptionItem[] = [];
 
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
@@ -40,7 +38,6 @@ export abstract class AzureServices {
     return await AzureAuth.logout();
   }
   public static async getUserInfo() {
-    this.userEmail = AzureAuth.getEmail();
 
     this.subscriptionItemList = await AzureAuth.getSubscriptions();
 
@@ -53,7 +50,7 @@ export abstract class AzureServices {
       }
     );
     return {
-      email: this.userEmail,
+      email: AzureAuth.getEmail(),
       subscriptions: subscriptionListToDisplay
     };
   }
@@ -73,7 +70,7 @@ export abstract class AzureServices {
     if (subscriptionItem === undefined) {
       throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
     }
-    let resourceGroupItems = AzureAuth.getResourceGroupItems(
+    let resourceGroupItems = AzureAuth.getAllResourceGroupItems(
       subscriptionItem
     ).then(resourceGroups => {
       // Format
@@ -191,7 +188,7 @@ export abstract class AzureServices {
     let userFunctionsSelections: FunctionSelections = {
       functionAppName: selections.appName,
       subscriptionItem: this.usersFunctionSubscriptionItemCache,
-      resourceGroupItem: await this._getResourceGroupItem(
+      resourceGroupItem: await AzureAuth.getResourceGroupItem(
         selections.resourceGroup,
         this.usersFunctionSubscriptionItemCache
       ),
@@ -225,7 +222,7 @@ export abstract class AzureServices {
       cosmosAPI: selections.api,
       cosmosDBResourceName: selections.accountName,
       location: selections.location,
-      resourceGroupItem: await this._getResourceGroupItem(
+      resourceGroupItem: await AzureAuth.getResourceGroupItem(
         selections.resourceGroup,
         this.usersCosmosDBSubscriptionItemCache
       ),
@@ -236,21 +233,7 @@ export abstract class AzureServices {
       userCosmosDBSelection,
       genPath
     );
-  }
-  private static async _getResourceGroupItem(
-    resourceName: string,
-    subscriptionItem: SubscriptionItem
-  ): Promise<ResourceGroupItem> {
-    return AzureAuth.getResourceGroupItems(subscriptionItem).then(items => {
-      for (let resourceGroup of items) {
-        if (resourceGroup.name === resourceName) {
-          return resourceGroup;
-        }
-      }
-      throw new ResourceGroupError(CONSTANTS.ERRORS.RESOURCE_GROUP_NOT_FOUND);
-    });
-  }
-
+  }  
   public static async promptUserForCosmosReplacement(
     pathToEnv: string,
     dbObject: DatabaseObject

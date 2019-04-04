@@ -5,7 +5,7 @@ import {
   SubscriptionClient as SC,
   ResourceManagementClient as RMC
 } from "azure-arm-resource";
-import { AuthorizationError } from "../../errors";
+import { AuthorizationError, ResourceGroupError } from "../../errors";
 import { CONSTANTS } from "../../constants";
 
 const MICROSOFT_DOCUMENT_DB_PROVIDER: string = "Microsoft.DocumentDb";
@@ -120,7 +120,7 @@ export abstract class AzureAuth {
     return subscriptionItems;
   }
 
-  public static async getResourceGroupItems(
+  public static async getAllResourceGroupItems(
     subscriptionItem: SubscriptionItem
   ): Promise<ResourceGroupItem[]> {
     this.initialize();
@@ -146,7 +146,19 @@ export abstract class AzureAuth {
     );
     return resourceGroupItems;
   }
-
+  public static async getResourceGroupItem(
+    resourceName: string,
+    subscriptionItem: SubscriptionItem
+  ): Promise<ResourceGroupItem> {
+    return this.getAllResourceGroupItems(subscriptionItem).then(items => {
+      for (let resourceGroup of items) {
+        if (resourceGroup.name === resourceName) {
+          return resourceGroup;
+        }
+      }
+      throw new ResourceGroupError(CONSTANTS.ERRORS.RESOURCE_GROUP_NOT_FOUND);
+    });
+  }
   /*
    * Returns Intersection of two locationItem arrays a and b
    */
