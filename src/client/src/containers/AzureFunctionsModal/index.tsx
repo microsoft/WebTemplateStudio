@@ -221,6 +221,7 @@ const CosmosResourceModal = (props: Props) => {
               ? props.selection.dropdownSelection[formSectionId]
               : defaultValue
           }
+          disabled={false}
         />
         {isEmpty && (
           <div className={styles.errorMessage}>{EMPTY_FIELD(leftHeader)}</div>
