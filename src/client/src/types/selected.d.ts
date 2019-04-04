@@ -7,4 +7,5 @@ export interface ISelected {
   error?: string;
   version?: string;
   licenses?: License;
+  author?: string;
 }

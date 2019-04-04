@@ -9,4 +9,5 @@ export interface IApiTemplateInfo {
   selected: boolean;
   tags: any;
   defaultName: string;
+  author: string;
 }

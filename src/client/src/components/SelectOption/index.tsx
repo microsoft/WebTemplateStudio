@@ -136,14 +136,17 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     selectedCardIndices.pop();
     selectedCardIndices.push(cardNumber);
     const shorthandVersionLabel = `v${options[cardNumber].version || "1.0"}`;
-    const { title, internalName, licenses } = this.props.options[cardNumber];
+    const { title, internalName, licenses, author } = this.props.options[
+      cardNumber
+    ];
 
     if (selectCard) {
       selectCard({
         internalName,
         title,
         version: shorthandVersionLabel,
-        licenses
+        licenses,
+        author
       });
     }
     this.setState({
