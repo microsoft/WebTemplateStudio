@@ -382,9 +382,19 @@ export abstract class Controller {
                 command: ExtensionCommand.UpdateGenStatus,
                 payload: progressObject
               });
-              Controller.promptUserForCosmosReplacement(
+              AzureServices.promptUserForCosmosReplacement(
                 enginePayload.path,
                 dbObject
+              ).then( //log in telemetry how long it took replacement
+                (cosmosReplaceResponse) => {
+                  if(cosmosReplaceResponse.userReplacedEnv){
+                    Controller.Telemetry.trackCustomEventTime(
+                      TelemetryEventName.ConnectionStringReplace,
+                      cosmosReplaceResponse.startTime,
+                      Date.now()
+                    );
+                  }
+                }
               );
             } catch (error) {
               progressObject = {
@@ -489,44 +499,6 @@ export abstract class Controller {
   
 
   ///////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-  private static async promptUserForCosmosReplacement(
-    pathToEnv: string,
-    dbObject: DatabaseObject
-  ) {
-    return await vscode.window
-      .showInformationMessage(
-        DialogMessages.cosmosDBConnectStringReplacePrompt,
-        ...[DialogResponses.yes, DialogResponses.no]
-      )
-      .then((selection: vscode.MessageItem | undefined) => {
-        if (selection === DialogResponses.yes) {
-          var start = Date.now();
-          CosmosDBDeploy.updateConnectionStringInEnvFile(
-            pathToEnv,
-            dbObject.connectionString
-          );
-          vscode.window.showInformationMessage(
-            CONSTANTS.INFO.FILE_REPLACED_MESSAGE + pathToEnv
-          );
-          Controller.Telemetry.trackCustomEventTime(
-            TelemetryEventName.ConnectionStringReplace,
-            start,
-            Date.now()
-          );
-        }
-        return selection === DialogResponses.yes;
-      });
-  }
 
 
   public static async deployFunctionApp(

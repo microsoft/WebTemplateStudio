@@ -1,3 +1,4 @@
+import * as vscode from 'vscode';
 import {
   AzureAuth,
   SubscriptionItem,
@@ -205,5 +206,31 @@ export abstract class AzureServices {
         throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
       }
     }
+  }
+
+
+
+  public static async promptUserForCosmosReplacement(
+    pathToEnv: string,
+    dbObject: DatabaseObject
+  ) {
+    return await vscode.window
+      .showInformationMessage(
+        DialogMessages.cosmosDBConnectStringReplacePrompt,
+        ...[DialogResponses.yes, DialogResponses.no]
+      )
+      .then((selection: vscode.MessageItem | undefined) => {
+        var start = Date.now();
+        if (selection === DialogResponses.yes) {
+          CosmosDBDeploy.updateConnectionStringInEnvFile(
+            pathToEnv,
+            dbObject.connectionString
+          );
+          vscode.window.showInformationMessage(
+            CONSTANTS.INFO.FILE_REPLACED_MESSAGE + pathToEnv
+          );
+        }
+        return {userReplacedEnv: selection === DialogResponses.yes, startTime: start};
+      });
   }
 }
