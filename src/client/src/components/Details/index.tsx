@@ -30,13 +30,11 @@ const messages = defineMessages({
 });
 
 const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
-  const LinkRenderer = (props: any) => {
-    return (
-      <a href={props.href} className={styles.link}>
-        {props.children}
-      </a>
-    );
-  };
+  const LinkRenderer = (props: any) => (
+    <a href={props.href} className={styles.link}>
+      {props.children}
+    </a>
+  );
   return (
     <React.Fragment>
       <div className={styles.container}>
@@ -90,11 +88,11 @@ const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
                 <div className={classnames(grid.col8, styles.licenses)}>
                   {Array.isArray(detailInfo.licenses)
                     ? detailInfo.licenses.map((license: License) => {
-                        const licenseTemp = license as ILicenseObject;
+                        const licenseObject = license as ILicenseObject;
                         return (
                           <p>
-                            <a className={styles.link} href={licenseTemp.url}>
-                              {licenseTemp.text}
+                            <a className={styles.link} href={licenseObject.url}>
+                              {licenseObject.text}
                             </a>
                           </p>
                         );
