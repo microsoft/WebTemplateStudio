@@ -15,7 +15,7 @@ import {
   ResourceGroupError
 } from "./errors";
 import { ReactPanel } from "./reactPanel";
-import apiModule from "./apiModule";
+import ApiModule from "./apiModule";
 import { AzureServices } from "./azure/azureServices";
 import { ChildProcess } from "child_process";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
@@ -30,7 +30,7 @@ export abstract class Controller {
     (message: any) => void
   > = new Map([
     [ExtensionCommand.Login, Controller.performLoginForSubscriptions],
-    [ExtensionCommand.Subscriptions, Controller.sendSubscriptionsToClient],
+    [ExtensionCommand.GetUserStatus, Controller.sendUserStatusIfLoggedIn],
     [
       ExtensionCommand.SubscriptionDataForCosmos,
       Controller.sendCosmosSubscriptionDataToClient
@@ -55,7 +55,6 @@ export abstract class Controller {
     [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     [ExtensionCommand.GetFunctionsRuntimes, Controller.sendFunctionRuntimes],
     [ExtensionCommand.GetCosmosAPIs, Controller.sendCosmosAPIs],
-    [ExtensionCommand.GetUserStatus, Controller.sendUserStatus],
     [ExtensionCommand.OpenProjectVSCode, Controller.openProjectVSCode]
   ]);
 
@@ -144,84 +143,25 @@ export abstract class Controller {
     Controller.Telemetry.trackWizardPageTimeToNext(payload.pageName);
   }
 
-  /**
-   * Returns an array of Subscription Items when the user is logged in
-   *
-   * */
-  public static getSubscriptions() {
-    return AzureAuth.getSubscriptions();
-  }
-
-  /**
-   * @param String subscription label
-   * @returns a Json object of Formatted Resource and Location strings
-   *
-   * */
-  public static async getSubscriptionData(
-    subscriptionLabel: string,
-    AzureType: AzureResourceType
-  ) {
-    let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
-    let resourceGroupItems = this.getResourceGroups(subscriptionItem).then(
-      resourceGroups => {
-        // Format
-        let formatResourceGroupList = [];
-        formatResourceGroupList.push(
-          ...resourceGroups.map(resourceGroup => {
-            return {
-              label: resourceGroup.name,
-              value: resourceGroup.name
-            };
-          })
-        );
-        return formatResourceGroupList;
-      }
-    );
-
-    var locationItems: LocationItem[] = [];
-
-    switch (AzureType) {
-      case AzureResourceType.Cosmos:
-        locationItems = await AzureAuth.getLocationsForCosmos(subscriptionItem);
-        break;
-      case AzureResourceType.Functions:
-        locationItems = await AzureAuth.getLocationsForFunctions(
-          subscriptionItem
-        );
-        break;
-    }
-
-    let locations = [];
-    locations.push(
-      ...locationItems.map(location => {
-        return {
-          label: location.locationDisplayName,
-          value: location.locationDisplayName
-        };
-      })
-    );
-
-    // Parallel setup
-    return {
-      resourceGroups: await resourceGroupItems,
-      locations: locations
-    };
-  }
-
-  /**
-   * @param SubscriptionItem subscription item interface implementation
-   * @returns a list of Resource Group Items
-   *
-   * */
-  private static async getResourceGroups(subscriptionItem: SubscriptionItem) {
-    return AzureAuth.getResourceGroupItems(subscriptionItem);
-  }
 
   public static performLoginForSubscriptions(message: any) {
+    let isLoggedIn = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
+      boolean
+    >(TelemetryEventName.PerformLogin, async function(
+      this: IActionContext
+    ): Promise<boolean> {
+      return await AzureServices.performLogin();
+    });
+
+    if (isLoggedIn) {
+      Controller.sendUserStatusIfLoggedIn(message);
+    }
+  }
+  private static async sendUserStatusIfLoggedIn(message: any): Promise<void> {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      TelemetryEventName.PerformLogin,
-      async function(this: IActionContext): Promise<void> {
-        await AzureServices.performLogin()
+      TelemetryEventName.GetUserLoginStatus,
+      async function(this: IActionContext) {
+        AzureServices.getUserInfo()
           .then(azureSubscription => {
             Controller.handleValidMessage(ExtensionCommand.Login, {
               email: azureSubscription.email,
@@ -229,28 +169,54 @@ export abstract class Controller {
             });
           })
           .catch((error: Error) => {
-            vscode.window.showErrorMessage(error.message);
+            throw error; //to log in telemetry
+          });
+      }
+    );
+  }
+  public static sendCosmosSubscriptionDataToClient(message: any) {
+    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.SubscriptionData,
+      async function(this: IActionContext): Promise<void> {
+        await AzureServices.getSubscriptionData(
+          message.subscription,
+          AzureResourceType.Cosmos
+        )
+          .then(subscriptionDatapackage => {
+            Controller.handleValidMessage(
+              ExtensionCommand.SubscriptionDataForCosmos,
+              {
+                resourceGroups: subscriptionDatapackage.resourceGroups,
+                locations: subscriptionDatapackage.locations
+              }
+            );
+          })
+          .catch((error: Error) => {
             throw error; //to log in telemetry
           });
       }
     );
   }
 
-  public static sendSubscriptionsToClient(message: any) {
+  public static sendFunctionsSubscriptionDataToClient(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      TelemetryEventName.Subscriptions,
+      TelemetryEventName.SubscriptionData,
       async function(this: IActionContext): Promise<void> {
-        await Controller.getSubscriptions()
-          .then(subscriptions => {
-            Controller.handleValidMessage(ExtensionCommand.Subscriptions, {
-              subscriptions: subscriptions
-            });
+        await AzureServices.getSubscriptionData(
+          message.subscription,
+          AzureResourceType.Functions
+        )
+          .then(subscriptionDatapackage => {
+            Controller.handleValidMessage(
+              ExtensionCommand.SubscriptionDataForFunctions,
+              {
+                resourceGroups: subscriptionDatapackage.resourceGroups,
+                locations: subscriptionDatapackage.locations
+              }
+            );
           })
           .catch((error: Error) => {
-            Controller.handleErrorMessage(
-              ExtensionCommand.Subscriptions,
-              error
-            );
+            throw error; //to log in telemetry
           });
       }
     );
@@ -484,7 +450,24 @@ export abstract class Controller {
     );
   }
 
+
+
+
+
+
+
+
+
+
+  
+
   ///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
 
   public static async validateFunctionAppName(
     functionAppName: string,
@@ -511,59 +494,7 @@ export abstract class Controller {
         throw error;
       });
   }
-  public static sendCosmosSubscriptionDataToClient(message: any) {
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      TelemetryEventName.SubscriptionData,
-      async function(this: IActionContext): Promise<void> {
-        await Controller.getSubscriptionData(
-          message.subscription,
-          AzureResourceType.Cosmos
-        )
-          .then(subscriptionDatapackage => {
-            Controller.handleValidMessage(
-              ExtensionCommand.SubscriptionDataForCosmos,
-              {
-                resourceGroups: subscriptionDatapackage.resourceGroups,
-                locations: subscriptionDatapackage.locations
-              }
-            );
-          })
-          .catch((error: Error) => {
-            Controller.handleErrorMessage(
-              ExtensionCommand.SubscriptionDataForCosmos,
-              error
-            );
-          });
-      }
-    );
-  }
 
-  public static sendFunctionsSubscriptionDataToClient(message: any) {
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      TelemetryEventName.SubscriptionData,
-      async function(this: IActionContext): Promise<void> {
-        await Controller.getSubscriptionData(
-          message.subscription,
-          AzureResourceType.Functions
-        )
-          .then(subscriptionDatapackage => {
-            Controller.handleValidMessage(
-              ExtensionCommand.SubscriptionDataForFunctions,
-              {
-                resourceGroups: subscriptionDatapackage.resourceGroups,
-                locations: subscriptionDatapackage.locations
-              }
-            );
-          })
-          .catch((error: Error) => {
-            Controller.handleErrorMessage(
-              ExtensionCommand.SubscriptionDataForFunctions,
-              error
-            );
-          });
-      }
-    );
-  }
 
   private static async promptUserForCosmosReplacement(
     pathToEnv: string,
@@ -823,31 +754,6 @@ export abstract class Controller {
       let subscriptionItem = await this._getSubscriptionItem(subscriptionLabel);
       this.usersFunctionSubscriptionItemCache = subscriptionItem;
     }
-  }
-
-  private static async sendUserStatus(message: any): Promise<void> {
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      TelemetryEventName.GetUserLoginStatus,
-      async function(this: IActionContext) {
-        try {
-          const email = AzureAuth.getEmail();
-          AzureAuth.getSubscriptions().then(items => {
-            const subscriptions = items.map(subscriptionItem => {
-              return {
-                label: subscriptionItem.label,
-                value: subscriptionItem.label
-              };
-            });
-            Controller.handleValidMessage(ExtensionCommand.GetUserStatus, {
-              email: email,
-              subscriptions: subscriptions
-            });
-          });
-        } catch (error) {
-          Controller.handleValidMessage(ExtensionCommand.GetUserStatus, null);
-        }
-      }
-    );
   }
 
   private static getProgressObject(didSucceed: boolean) {
