@@ -7,7 +7,7 @@ Deploying your website to the cloud allows people to view your website by visiti
 
 One way to deploy is using Azure App Service. This service will allow you to deploy and scale web, mobile and API apps.
 
-### VS Code Extension Method (Recommended)
+## VS Code Extension Method (Recommended)
 
 The Azure App Service Extension provides an easy way to manage and deploy your web application.
 
@@ -29,7 +29,7 @@ The Azure App Service Extension provides an easy way to manage and deploy your w
 
 8. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
 
-### Local Git Deployment Method
+## Local Git Deployment Method
 
 This method will require you to have [git](https://git-scm.com/downloads) installed on your computer.
 
