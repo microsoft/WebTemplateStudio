@@ -78,6 +78,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   ) {
     const { defaultName } = this.props.options[optionIndexContainingData];
     const title = this.createTitle(optionIndexContainingData, count);
+
     const cardInfo: ISelected = {
       title,
       internalName,
@@ -123,13 +124,13 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const { selectCard, options } = this.props;
     selectedCardIndices.pop();
     selectedCardIndices.push(cardNumber);
-    const ver = `v${options[cardNumber].version || "1.0"}`;
+    const shorthandVersionLabel = `v${options[cardNumber].version || "1.0"}`;
 
     if (selectCard) {
       selectCard({
         internalName: options[cardNumber].internalName,
         title: options[cardNumber].title,
-        version: ver
+        version: shorthandVersionLabel
       });
     }
     this.setState({
