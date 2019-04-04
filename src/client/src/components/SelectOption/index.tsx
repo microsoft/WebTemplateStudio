@@ -84,7 +84,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     internalName: string,
     optionIndexContainingData: number
   ) {
-    const { defaultName, licenses } = this.props.options[
+    const { defaultName, licenses, author } = this.props.options[
       optionIndexContainingData
     ];
     const title = this.createTitle(optionIndexContainingData, count);
@@ -95,7 +95,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       id: title,
       defaultName,
       isValidTitle: true,
-      licenses
+      licenses,
+      author
     };
     return cardInfo;
   }

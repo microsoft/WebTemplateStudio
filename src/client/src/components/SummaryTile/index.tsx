@@ -13,7 +13,7 @@ interface IProps {
   withIndent?: boolean;
   title: string;
   originalTitle?: string;
-  company?: string;
+  author?: string;
   version: string;
   isEditable?: boolean;
   svgUrl?: string;
@@ -28,7 +28,7 @@ const SummaryTile = ({
   withIndent,
   title,
   originalTitle,
-  company,
+  author,
   version,
   isEditable,
   svgUrl,
@@ -103,9 +103,9 @@ const SummaryTile = ({
                   <div>&nbsp;|&nbsp;</div>
                 </React.Fragment>
               )}
-              {company && (
+              {author && (
                 <React.Fragment>
-                  <div>{company}</div>
+                  <div>{author}</div>
                   <div>&nbsp;|&nbsp;</div>
                 </React.Fragment>
               )}

@@ -73,6 +73,7 @@ const ReviewAndGenerate = (props: Props) => {
     [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]:
       props.openAzureFunctionsModal
   };
+  console.log(frameworkRows);
   return (
     <div className={styles.container}>
       <div className={styles.title}>

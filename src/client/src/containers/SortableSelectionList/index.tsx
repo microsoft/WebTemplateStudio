@@ -59,6 +59,7 @@ const SortableSummaryTile = SortableElement(
             version="v1.0"
             svgUrl={page.svgUrl}
             isEditable={true}
+            author={page.author}
             handleCloseClick={handleCloseClick}
             handleInputChange={handleInputChange}
             idx={idx + 1}

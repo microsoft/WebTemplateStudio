@@ -22,7 +22,8 @@ const pagesReducer = (
       defaultName: DEFAULT_PAGE_NAME,
       id: DEFAULT_PAGE_NAME,
       isValidTitle: true,
-      licenses: [DEFAULT_LICENSE]
+      licenses: [DEFAULT_LICENSE],
+      author: "Microsoft"
     }
   ],
   action: any
