@@ -8,7 +8,7 @@ import { SERVICE_KEYS } from "../utils/constants";
 const getWizardSelectionsSelector = (state: any): any => state.selection;
 
 const getProjectName = (selection: any): string => {
-  const { projectName } = selection;
+  const { projectName } = selection.projectNameObject;
   return projectName;
 };
 
