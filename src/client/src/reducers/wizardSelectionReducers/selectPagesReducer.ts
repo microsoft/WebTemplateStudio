@@ -9,6 +9,10 @@ import { ISelected } from "../../types/selected";
 */
 
 const DEFAULT_PAGE_NAME = "Blank";
+const DEFAULT_LICENSE = {
+  text: "Bootstrap",
+  url: "https://github.com/twbs/bootstrap/blob/master/LICENSE"
+};
 
 const pagesReducer = (
   state: ISelected[] = [
@@ -17,7 +21,8 @@ const pagesReducer = (
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE,
       defaultName: DEFAULT_PAGE_NAME,
       id: DEFAULT_PAGE_NAME,
-      isValidTitle: true
+      isValidTitle: true,
+      licenses: [DEFAULT_LICENSE]
     }
   ],
   action: any

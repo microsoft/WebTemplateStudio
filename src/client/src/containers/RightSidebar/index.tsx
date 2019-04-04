@@ -21,6 +21,7 @@ import { selectPagesAction } from "../../actions/selectPages";
 import { ISelected } from "../../types/selected";
 import SortablePageList from "../SortablePageList";
 import styles from "./styles.module.css";
+import Licenses from "../Licenses";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 
@@ -172,6 +173,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   <ServicesSidebarItem services={this.props.services} />
                 </div>
               )}
+              <Licenses />
             </div>
           )}
       </React.Fragment>
