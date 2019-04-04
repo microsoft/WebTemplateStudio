@@ -9,6 +9,7 @@ import styles from "./styles.module.css";
 import grid from "../../css/grid.module.css";
 
 import AzureSubscriptions from "../AzureSubscriptions";
+import { EXTENSION_COMMANDS } from "../../utils/constants";
 
 interface IDispatchProps {
   startLoginToAzure: () => any;
@@ -26,7 +27,7 @@ class AzureLogin extends React.Component<Props> {
     // initiates a login command to VSCode ReactPanel class
     if (process.env.NODE_ENV === "production") {
       this.props.vscode.postMessage({
-        command: "login"
+        command: EXTENSION_COMMANDS.AZURE_LOGIN
       });
     } else {
       // @ts-ignore produces a mock login response from VSCode in development

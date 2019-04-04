@@ -23,6 +23,7 @@ import {
 import { SubscriptionError, ResourceGroupError } from "../errors";
 
 export abstract class AzureServices {
+
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
 
@@ -35,7 +36,9 @@ export abstract class AzureServices {
   public static async performLogin() {
     return await AzureAuth.login();
   }
-
+  public static async performLogout() {
+    return await AzureAuth.logout();
+  }
   public static async getUserInfo() {
     this.userEmail = AzureAuth.getEmail();
 

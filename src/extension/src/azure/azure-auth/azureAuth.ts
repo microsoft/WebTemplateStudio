@@ -36,6 +36,7 @@ interface PartialList<T> extends Array<T> {
 }
 
 export abstract class AzureAuth {
+
   private static api: AzureAccount;
 
   private static locationsCache: LocationItem[] | undefined;
@@ -65,7 +66,19 @@ export abstract class AzureAuth {
       return true;
     }
   }
-
+  public static async logout(): Promise<boolean> {
+    this.initialize();
+    if (this.api.status !== CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
+      await commands.executeCommand("azure-account.logout");
+      // Make sure it did not return from timeout
+      if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_OUT) {
+        throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
+      }
+      return true;
+    } else {
+      return true;
+    }
+  }
   public static getEmail(): string {
     this.initialize();
     if (this.api.sessions.length > 0) {

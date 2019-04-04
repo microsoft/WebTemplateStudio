@@ -60,6 +60,8 @@ const EMPTY_FIELD = (fieldId: string) => {
 
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
+  AZURE_LOGIN: "login",
+  AZURE_LOGOUT: "logout",
   GENERATE: "generate",
   GET_OUTPUT_PATH: "getOutputPath",
   GET_USER_STATUS: "getUserStatus",
