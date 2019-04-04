@@ -13,6 +13,7 @@ import styles from "./styles.module.css";
 import { RowType } from "../../types/rowType";
 
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import Title from "../../components/Title";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 
@@ -55,18 +56,17 @@ const messages = defineMessages({
   },
   reviewAndGenerate: {
     id: "review.reviewAndGenerate",
-    defaultMessage: "6. Review and Generate Template"
+    defaultMessage: "6. Your project summary."
   }
 });
 
 const ReviewAndGenerate = (props: Props) => {
   const {
-    vscode,
     servicesRows,
     projectTypeRows,
     pagesRows,
-    intl,
-    frameworkRows
+    frameworkRows,
+    intl
   } = props;
   const modalOpeners = {
     [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: props.openCosmosDbModal,
