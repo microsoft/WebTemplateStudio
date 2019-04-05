@@ -43,7 +43,6 @@ interface IStateProps {
   selection: any;
 }
 
-type Props = IDispatchProps & IStateProps & InjectedIntlProps;
 interface attributeLinks {
   [key: string]: any;
 }
