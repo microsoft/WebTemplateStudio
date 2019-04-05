@@ -14,6 +14,8 @@ import { RowType } from "../../types/rowType";
 
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
+import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
+
 interface IDispatchProps {
   openCosmosDbModal: () => any;
   openAzureFunctionsModal: () => any;
@@ -28,7 +30,34 @@ interface IStateProps {
   validation: any;
 }
 
-type Props = IStateProps & IDispatchProps;
+type Props = IStateProps & IDispatchProps & InjectedIntlProps;
+
+const messages = defineMessages({
+  welcome: {
+    id: "review.welcome",
+    defaultMessage: "1. Welcome"
+  },
+  projectType: {
+    id: "review.projectType",
+    defaultMessage: "2. Project Type"
+  },
+  frameworks: {
+    id: "review.frameworks",
+    defaultMessage: "3. Frameworks"
+  },
+  pages: {
+    id: "review.pages",
+    defaultMessage: "4. Pages"
+  },
+  services: {
+    id: "review.services",
+    defaultMessage: "5. Services"
+  },
+  reviewAndGenerate: {
+    id: "review.reviewAndGenerate",
+    defaultMessage: "6. Review and Generate Template"
+  }
+});
 
 const ReviewAndGenerate = (props: Props) => {
   const {
@@ -36,6 +65,7 @@ const ReviewAndGenerate = (props: Props) => {
     servicesRows,
     projectTypeRows,
     pagesRows,
+    intl,
     frameworkRows
   } = props;
   const modalOpeners = {
@@ -45,25 +75,31 @@ const ReviewAndGenerate = (props: Props) => {
   };
   return (
     <div className={styles.container}>
-      <div className={styles.title}>6. Review and Generate Template</div>
-      <div className={styles.selectionTitle}>1. Welcome</div>
+      <div className={styles.title}>
+        {intl.formatMessage(messages.reviewAndGenerate)}
+      </div>
+      <div className={styles.selectionTitle}>
+        {intl.formatMessage(messages.welcome)}
+      </div>
       <div className={styles.projectDetailsContainer}>
         <ProjectNameAndOutput />
       </div>
       <SummarySection
-        selectionTitle="2. Project Type"
+        selectionTitle={intl.formatMessage(messages.projectType)}
         selectionRows={projectTypeRows}
       />
       <SummarySection
-        selectionTitle="3. Frameworks"
+        selectionTitle={intl.formatMessage(messages.frameworks)}
         selectionRows={frameworkRows}
       />
       <div className={styles.selectionContainer}>
-        <div className={styles.selectionTitle}>4. Pages</div>
+        <div className={styles.selectionTitle}>
+          {intl.formatMessage(messages.pages)}
+        </div>
         <SortablePageList pagesRows={pagesRows} />
       </div>
       <SummarySection
-        selectionTitle="5. Services"
+        selectionTitle={intl.formatMessage(messages.services)}
         selectionRows={servicesRows}
         modalOpeners={modalOpeners}
       />
@@ -92,4 +128,4 @@ const mapStateToProps = (state: any): IStateProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ReviewAndGenerate);
+)(injectIntl(ReviewAndGenerate));

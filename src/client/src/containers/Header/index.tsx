@@ -1,11 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-
 import styles from "./styles.module.css";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { EXTENSION_COMMANDS } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+
+import { FormattedMessage, injectIntl } from "react-intl";
 
 interface IHeaderProps {
   vscode: IVSCodeObject;
@@ -35,7 +36,7 @@ const Header = (props: Props) => {
               });
             }}
           >
-            Sign out
+            <FormattedMessage id="header.signOut" defaultMessage="Sign out" />
           </div>
         </div>
       )}
@@ -53,6 +54,4 @@ const mapStateToProps = (state: any): IHeaderProps => {
   };
 };
 
-export default connect(
-  mapStateToProps
-)(Header);
+export default connect(mapStateToProps)(injectIntl(Header));

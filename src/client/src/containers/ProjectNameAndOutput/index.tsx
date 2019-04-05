@@ -19,6 +19,7 @@ import { EXTENSION_COMMANDS } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
+import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
 interface IProps {
   validation: any;
 }
@@ -36,7 +37,26 @@ interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
 }
 
-type Props = IStateProps & IDispatchProps & IProps;
+type Props = IStateProps & IDispatchProps & InjectedIntlProps & IProps;
+
+const messages = defineMessages({
+  projectNameTitle: {
+    id: "projectName.projectNameTitle",
+    defaultMessage: "Project Name:"
+  },
+  projectName: {
+    id: "projectName.projectName",
+    defaultMessage: "Project Name"
+  },
+  outputPathTitle: {
+    id: "projectName.outputPathTitle",
+    defaultMessage: "Output Path:"
+  },
+  outputPath: {
+    id: "projectName.outputPath",
+    defaultMessage: "Output Path"
+  }
+});
 
 const ProjectNameAndOutput = (props: Props) => {
   React.useEffect(() => {
@@ -82,11 +102,13 @@ const ProjectNameAndOutput = (props: Props) => {
   return (
     <React.Fragment>
       <div className={styles.inputContainer}>
-        <div className={styles.inputTitle}>Project Name:</div>
+        <div className={styles.inputTitle}>
+          {props.intl.formatMessage(messages.projectNameTitle)}
+        </div>
         <Input
           handleChange={handleProjectNameChange}
           value={props.projectName}
-          placeholder="Project Name"
+          placeholder={props.intl.formatMessage(messages.projectName)}
         />
         {props.projectNameValidation.error && (
           <div className={styles.errorMessage}>
@@ -95,13 +117,15 @@ const ProjectNameAndOutput = (props: Props) => {
         )}
       </div>
       <div className={styles.inputContainer}>
-        <div className={styles.inputTitle}>Output Path:</div>
+        <div className={styles.inputTitle}>
+          {props.intl.formatMessage(messages.outputPathTitle)}
+        </div>
         <div>
           <OutputPath
             handleChange={handleOutputPathChange}
             handleSaveClick={handleSaveClick}
             value={props.outputPath}
-            placeholder="Output Path"
+            placeholder={props.intl.formatMessage(messages.outputPath)}
             validation={props.projectPathValidation}
             isEmpty={props.validation && props.outputPath.length === 0}
           />
@@ -131,4 +155,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProjectNameAndOutput);
+)(injectIntl(ProjectNameAndOutput));

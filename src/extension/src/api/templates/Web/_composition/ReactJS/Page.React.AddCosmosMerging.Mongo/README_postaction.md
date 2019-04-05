@@ -19,12 +19,21 @@ Additional documentation can be found here: [Cosmos Docs](https://github.com/Mic
 
 The generated templates can be deployed to Azure App Service using the following steps:
 
+├── server/ - Express server that provides API routes and serves front-end
+//{[{
+│ ├── mongo/ - Handles all interactions with the cosmos database
+//}]}
+│ ├── routes/ - Handles API calls for routes
+│ ├── app.js - Adds middleware to the express server
+│ ├── constants.js - Defines the constants for the endpoints and port
+│ └── server.js - Configures Port and HTTP Server
 │ ├── App.jsx - React routing
 │ └── index.jsx - React root component
 //{[{
 ├── .env - API Keys
 //}]}
 └── README.md
+
 ```
 
 ## Additional Documentation
@@ -38,4 +47,4 @@ The generated templates can be deployed to Azure App Service using the following
 - Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongoose
 //}]}
 
-  This project was created using [Project Acorn](https://github.com/Microsoft/WebTemplateStudio).
+  This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).

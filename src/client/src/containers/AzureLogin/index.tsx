@@ -10,6 +10,12 @@ import grid from "../../css/grid.module.css";
 
 import AzureSubscriptions from "../AzureSubscriptions";
 import { EXTENSION_COMMANDS } from "../../utils/constants";
+import {
+  FormattedMessage,
+  InjectedIntlProps,
+  injectIntl,
+  defineMessages
+} from "react-intl";
 
 interface IDispatchProps {
   startLoginToAzure: () => any;
@@ -20,7 +26,23 @@ interface IAzureLoginProps {
   vscode: any;
 }
 
-type Props = IDispatchProps & IAzureLoginProps;
+type Props = IDispatchProps & IAzureLoginProps & InjectedIntlProps;
+
+const messages = defineMessages({
+  azureDeploymentTitle: {
+    id: "azureLogin.azureDeploymentTitle",
+    defaultMessage: "Microsoft Azure Deployment"
+  },
+  azureDeploymentBody: {
+    id: "azureLogin.azureDeploymentBody",
+    defaultMessage:
+      "Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. Sign in or create an account to get access to CosmosDB and Azure Functions from this extension"
+  },
+  azureLoginTitle: {
+    id: "azureLogin.azureLoginTitle",
+    defaultMessage: "Attach services to your web application (Optional)"
+  }
+});
 
 class AzureLogin extends React.Component<Props> {
   handleClick = () => {
@@ -41,10 +63,10 @@ class AzureLogin extends React.Component<Props> {
     }
   };
   public render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, intl } = this.props;
     return (
       <div>
-        <Title>Attach services to your web application (Optional)</Title>
+        <Title>{intl.formatMessage(messages.azureLoginTitle)}</Title>
         <div className={styles.loginCard}>
           {!isLoggedIn && (
             <LoginCard
@@ -52,8 +74,8 @@ class AzureLogin extends React.Component<Props> {
               handleClick={() => {
                 this.handleClick();
               }}
-              cardTitle="Microsoft Azure Deployment"
-              cardBody="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+              cardTitle={intl.formatMessage(messages.azureDeploymentTitle)}
+              cardBody={intl.formatMessage(messages.azureDeploymentBody)}
             />
           )}
         </div>
@@ -75,4 +97,4 @@ const mapStateToProps = (state: any): IAzureLoginProps => {
 export default connect(
   mapStateToProps,
   null
-)(AzureLogin);
+)(injectIntl(AzureLogin));

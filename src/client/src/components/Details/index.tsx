@@ -69,6 +69,12 @@ const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
                     defaultMessage="Licenses:"
                   />
                 </div>
+                <div>
+                  <FormattedMessage
+                    id="details.licenses"
+                    defaultMessage="Version:"
+                  />
+                </div>
               </div>
               <div>
                 <div>
@@ -77,6 +83,7 @@ const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
                 <div>
                   {detailInfo.licenses || intl!.formatMessage(messages.none)}
                 </div>
+                <div>{detailInfo.version || "1.0"}</div>
               </div>
             </div>
           </div>

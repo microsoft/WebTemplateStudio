@@ -10,6 +10,8 @@ import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
+import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
+
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
   getFrontendFrameworks: (projectType: string) => void;
@@ -20,7 +22,14 @@ interface ISelectFrontEndFrameworkProps {
   selectedFrontendFramework: string;
 }
 
-type Props = IDispatchProps & ISelectFrontEndFrameworkProps;
+type Props = IDispatchProps & ISelectFrontEndFrameworkProps & InjectedIntlProps;
+
+const messages = defineMessages({
+  selectFrontendFramework: {
+    id: "selectFrontendFramework.selectFrontendFramework",
+    defaultMessage: "Select a front-end framework for your project."
+  }
+});
 
 class SelectFrontEndFramework extends React.Component<Props> {
   public componentDidMount() {
@@ -48,7 +57,8 @@ class SelectFrontEndFramework extends React.Component<Props> {
     const {
       options,
       selectedFrontendFramework,
-      selectFrontendFramework
+      selectFrontendFramework,
+      intl
     } = this.props;
     return (
       <div>
@@ -56,7 +66,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
           <SelectOption
             selectCard={selectFrontendFramework}
             multiSelect={false}
-            title="Select a front-end framework for your project."
+            title={intl.formatMessage(messages.selectFrontendFramework)}
             options={options}
             selectedCardIndices={this.convertSelectionToIndexNumber(
               selectedFrontendFramework
@@ -89,4 +99,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SelectFrontEndFramework);
+)(injectIntl(SelectFrontEndFramework));

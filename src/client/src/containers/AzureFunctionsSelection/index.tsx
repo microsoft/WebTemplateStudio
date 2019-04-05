@@ -16,6 +16,8 @@ import {
   ISelectedAzureFunctionsService
 } from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
+import { FormattedMessage, injectIntl } from "react-intl";
+
 interface IProps {
   functionApps: IAzureFunctionsSelection;
 }
@@ -70,7 +72,10 @@ const AzureFunctionsSelection = ({
               <div className={styles.headerContainer}>
                 <div>{serviceType}</div>
                 <div className={styles.edit} onClick={openAzureFunctionsModal}>
-                  Edit
+                  <FormattedMessage
+                    id="azureFunctionsSelection.edit"
+                    defaultMessage="Edit"
+                  />
                 </div>
               </div>
               <DraggableSidebarItem
@@ -120,4 +125,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   null,
   mapDispatchToProps
-)(AzureFunctionsSelection);
+)(injectIntl(AzureFunctionsSelection));

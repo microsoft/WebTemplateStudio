@@ -6,8 +6,8 @@
     "author": "Facebook",
     "order": "1",
     "licenses": "",
-    "platforms": [ "Web" ],
-    "languages": [ "Any" ],
+    "platforms": ["Web"],
+    "languages": ["Any"],
     "tags": {
       "version": "16.8.4"
     }
