@@ -38,6 +38,8 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   BLANK_PAGE: "wts.Page.React.Blank",
   CONTENT_GRID: "wts.Page.React.Grid",
   COSMOS_DB: "wts.Feature.Azure.Cosmos",
+  COSMOS_DB_MONGO: "wts.Feature.Azure.Cosmos.Mongo",
+  COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
   FULL_STACK_APP: "FullStackWebApp",
   LIST: "wts.Page.React.List",
   MASTER_DETAIL: "wts.Page.React.MasterDetail",
