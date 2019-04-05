@@ -16,17 +16,17 @@ export default function Footer() {
             <ul className="list-unstyled">
               <li>
                 <a className={styles.footerlink} href="/">
-                  Link 1
+                  Example Link 1
                 </a>
               </li>
               <li>
                 <a className={styles.footerlink} href="/">
-                  Link 2
+                  Example Link 2
                 </a>
               </li>
               <li>
                 <a className={styles.footerlink} href="/">
-                  Link 3
+                  Example Link 3
                 </a>
               </li>
             </ul>
