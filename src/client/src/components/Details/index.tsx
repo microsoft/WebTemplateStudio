@@ -82,7 +82,7 @@ const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
                 <div className={classnames(styles.licenseCategory, grid.col4)}>
                   <FormattedMessage
                     id="details.licenses"
-                    defaultMessage="Version:"
+                    defaultMessage="Licenses:"
                   />
                 </div>
                 <div className={classnames(grid.col8, styles.licenses)}>
@@ -104,7 +104,17 @@ const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
                         />
                       ) || intl!.formatMessage(messages.none)}
                 </div>
-                <div>{detailInfo.version || "1.0"}</div>
+              </div>
+              <div className={classnames(styles.metaData, grid.row)}>
+                <div className={classnames(styles.category, grid.col4)}>
+                  <FormattedMessage
+                    id="details.version"
+                    defaultMessage="Version:"
+                  />
+                </div>
+                <div className={grid.col8}>
+                  <ReactMarkdown source={detailInfo.version || "1.0"} />
+                </div>
               </div>
             </div>
           </div>
