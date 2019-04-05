@@ -17,7 +17,6 @@ Replace the default images stored in /src/images.
 .
 ├── server/ - Express server that provides API routes and serves front-end
 │ ├── routes/ - Handles API calls for routes
-│ ├── views/ - Pug error page
 │ ├── app.js - Adds middleware to the express server
 //{[{
 │ ├── sampleData.js - Contains all sample text data for generate pages

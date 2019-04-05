@@ -1,14 +1,14 @@
 ﻿{
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "Page.React.List.AddSampleDataReadme",
+  "name": "Page.Node.List.AddRoutes.WithCosmos.SQL",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == ReactJS & $feature != wts.Feature.Azure.Cosmos.Mongo & $feature != wts.Feature.Azure.Cosmos.SQL & identity == wts.Page.React.List"
+    "wts.compositionFilter": "identity == wts.Page.React.List & $feature == wts.Feature.Azure.Cosmos.SQL"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
