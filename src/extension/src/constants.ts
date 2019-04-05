@@ -159,7 +159,7 @@ export const CONSTANTS = {
     LOGGED_OUT: "LoggedOut"
   },
   REACT_PANEL: {
-    Project_Title: "Project Acorn"
+    Project_Title: "Microsoft Web Template Studio"
   },
   GENERATE_ENDPOINT: "/api/generate",
   CONNECTION_STRING: function(
