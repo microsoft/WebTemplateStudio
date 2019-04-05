@@ -1,7 +1,11 @@
 .tileContainer {
-    margin-bottom: 10px;
-  }
-  
+  margin-bottom: 10px;
+}
+
 .selectionContainer {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.sidebarItem {
+  margin: 3px 15px 15px 15px;
 }
