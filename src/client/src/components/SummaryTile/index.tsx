@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 
 import styles from "./styles.module.css";
 
@@ -14,7 +15,8 @@ interface IProps {
   title: string;
   originalTitle?: string;
   author?: string;
-  version?: string;
+  serviceTitle?: FormattedMessage.MessageDescriptor;
+  version: string;
   isEditable?: boolean;
   svgUrl?: string;
   withoutEditIcon?: boolean;
@@ -26,11 +28,14 @@ interface IProps {
   subTitle?: string;
 }
 
+type Props = IProps & InjectedIntlProps;
+
 const SummaryTile = ({
   withIndent,
   title,
   originalTitle,
   author,
+  serviceTitle,
   version,
   isEditable,
   svgUrl,
@@ -40,8 +45,9 @@ const SummaryTile = ({
   handleInputChange,
   isDraggable,
   rotate,
-  subTitle
-}: IProps) => {
+  subTitle,
+  intl
+}: Props) => {
   const [componentTitle, setTitle] = React.useState(title);
   const [isDisabled, setDisabled] = React.useState(true);
   const [showEditable, setEditable] = React.useState(false);
@@ -106,9 +112,21 @@ const SummaryTile = ({
               onClick={handleClick}
             />
             <div className={styles.metaData}>
-              {subTitle ? (
-                subTitle
-              ) : (
+              {subTitle
+                ? subTitle
+                : serviceTitle && (
+                    <React.Fragment>
+                      <div>{intl.formatMessage(serviceTitle)}</div>
+                      <div>&nbsp;|&nbsp;</div>
+                    </React.Fragment>
+                  )}
+              {originalTitle && (
+                <React.Fragment>
+                  <div>{originalTitle}</div>
+                  <div>&nbsp;|&nbsp;</div>
+                </React.Fragment>
+              )}
+              {author && (
                 <React.Fragment>
                   {originalTitle && (
                     <React.Fragment>
@@ -153,4 +171,4 @@ const SummaryTile = ({
   );
 };
 
-export default SummaryTile;
+export default injectIntl(SummaryTile);

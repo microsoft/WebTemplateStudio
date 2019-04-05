@@ -5,6 +5,18 @@ import { ISelected } from "../types/selected";
 import getSvgUrl from "../utils/getSvgUrl";
 import { SERVICE_KEYS } from "../utils/constants";
 import { IPageCount } from "../reducers/wizardSelectionReducers/pageCountReducer";
+import { defineMessages } from "react-intl";
+
+const messages = defineMessages({
+  azureFunctionsOriginalTitle: {
+    id: "azureFunctions.originalTitle",
+    defaultMessage: "Azure Functions"
+  },
+  cosmosOriginalTitle: {
+    id: "cosmosDb.originalTitle",
+    defaultMessage: "CosmosDB"
+  }
+});
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
@@ -66,6 +78,7 @@ const getServices = (selection: any): any => {
           title: selection.appName,
           originalTitle: "Azure Functions",
           author: "Microsoft",
+          serviceTitle: messages.azureFunctionsOriginalTitle,
           svgUrl: getSvgUrl(selection.internalName),
           functionNames: selection.functionNames,
           internalName: selection.internalName,
@@ -76,6 +89,7 @@ const getServices = (selection: any): any => {
           title: selection.accountName,
           originalTitle: "CosmosDB",
           author: "Microsoft",
+          serviceTitle: messages.cosmosOriginalTitle,
           svgUrl: getSvgUrl(selection.internalName),
           internalName: selection.internalName,
           version: selection.version
@@ -96,7 +110,8 @@ const getPagesRowItems = (selection: any): RowType[] => {
       svgUrl: getSvgUrl(page.internalName),
       id: page.id,
       version: selection.version,
-      author: page.author
+      author: page.author,
+      originalTitle: page.originalTitle
     });
   }
   return pagesRows;
