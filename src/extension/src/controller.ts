@@ -262,12 +262,13 @@ export abstract class Controller {
       message.subscription
     )
       .then((invalidReason: string | undefined) => {
-        Controller.handleValidMessage(ExtensionCommand.NameCosmos, {
+        Controller.reactPanelContext.postMessageWebview({
+          command: ExtensionCommand.NameCosmos,
           message: invalidReason,
-          isAvailable:
+          payload: {isAvailable:
             !invalidReason ||
             invalidReason === undefined ||
-            invalidReason === ""
+            invalidReason === ""}
         });
       })
       .catch((error: Error) => {
