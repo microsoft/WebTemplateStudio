@@ -93,11 +93,6 @@ const messages = defineMessages({
   }
 });
 
-const DATABASE_INTERNAL_NAME_MAPPING = {
-  [FORM_CONSTANTS.SQL.value]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
-  [FORM_CONSTANTS.MONGO.value]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
-};
-
 const CosmosResourceModal = (props: Props) => {
   const FORM_CONSTANTS = {
     SUBSCRIPTION: {
@@ -132,6 +127,11 @@ const CosmosResourceModal = (props: Props) => {
       label: "SQL",
       value: "SQL"
     }
+  };
+
+  const DATABASE_INTERNAL_NAME_MAPPING = {
+    [FORM_CONSTANTS.SQL.value]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
+    [FORM_CONSTANTS.MONGO.value]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
   };
 
   const [cosmosData, setData] = React.useState(cosmosInitialState);
