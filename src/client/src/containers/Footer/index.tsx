@@ -24,17 +24,16 @@ import {
 import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
 import { openPostGenModalAction } from "../../actions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { getIsVisitedRoutesSelector } from "../../selectors/wizardNavigationSelector";
 
-import { FormattedMessage, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
+import {
+  getIsVisitedRoutesSelector,
+  IVisited
+} from "../../selectors/wizardNavigationSelector";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
   openPostGenModal: () => any;
-}
-
-interface IVisited {
-  [key: string]: boolean;
 }
 
 interface IStateProps {
@@ -129,13 +128,15 @@ class Footer extends React.Component<Props> {
       <div>
         {pathname !== ROUTES.PAGE_DETAILS && (
           <div className={styles.footer}>
-            {
-              <div>
-                {showFrameworks &&
-                  `By continuing, you agree to the terms of all the licenses in the
-              licenses section.`}
-              </div>
-            }
+            <div>
+              {showFrameworks && (
+                <FormattedMessage
+                  id="footer.license"
+                  defaultMessage="By continuing, you agree to the terms of all the licenses in the
+              licenses section."
+                />
+              )}
+            </div>
             {pathname !== ROUTES.WELCOME && (
               <div className={styles.buttonContainer}>
                 <Link
@@ -146,7 +147,7 @@ class Footer extends React.Component<Props> {
                       : pathsBack[pathname]
                   }
                 >
-                  Back
+                  <FormattedMessage id="footer.back" defaultMessage="Back" />
                 </Link>
                 <Link
                   className={classnames(styles.button, {
@@ -162,7 +163,7 @@ class Footer extends React.Component<Props> {
                       : pathsNext[pathname]
                   }
                 >
-                  Next
+                  <FormattedMessage id="footer.next" defaultMessage="Next" />
                 </Link>
                 <button
                   disabled={
@@ -176,13 +177,19 @@ class Footer extends React.Component<Props> {
                   })}
                   onClick={this.logMessageToVsCode}
                 >
-                  Generate
+                  <FormattedMessage
+                    id="footer.generate"
+                    defaultMessage="Generate"
+                  />
                 </button>
                 <Link
                   className={classnames(styles.button, buttonStyles.buttonDark)}
                   to={ROUTES.WELCOME}
                 >
-                  Cancel
+                  <FormattedMessage
+                    id="footer.cancel"
+                    defaultMessage="Cancel"
+                  />
                 </Link>
               </div>
             )}
