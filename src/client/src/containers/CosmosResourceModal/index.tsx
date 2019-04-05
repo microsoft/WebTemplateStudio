@@ -76,6 +76,7 @@ const FORM_CONSTANTS = {
   }
 };
 
+// tslint:disable-next-line: max-func-body-length
 const CosmosResourceModal = (props: Props) => {
   const [cosmosData, setData] = React.useState(cosmosInitialState);
   // Hardcoding a "MongoDB" value until data can be loaded dynamically
@@ -199,7 +200,11 @@ const CosmosResourceModal = (props: Props) => {
     defaultValue?: any
   ) => {
     return (
-      <div className={styles.selectionContainer}>
+      <div
+        className={classnames([styles.selectionContainer], {
+          [styles.selectionContainerDisabled]: disabled
+        })}
+      >
         <div className={styles.selectionHeaderContainer}>
           <div>{leftHeader}</div>
           <div className={styles.createNew}>{rightHeader}</div>
@@ -251,7 +256,9 @@ const CosmosResourceModal = (props: Props) => {
           [styles.selectionInputContainer]:
             !isAccountNameAvailable && cosmosFormData.accountName.length > 0,
           [styles.selectionContainer]:
-            isAccountNameAvailable || cosmosFormData.accountName.length === 0
+            isAccountNameAvailable || cosmosFormData.accountName.length === 0,
+          [styles.selectionContainerDisabled]:
+            cosmosFormData.subscription === ""
         })}
       >
         <div className={styles.selectionHeaderContainer}>
