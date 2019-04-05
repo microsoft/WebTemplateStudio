@@ -209,7 +209,7 @@ const CosmosResourceModal = (props: Props) => {
     let isLocationEmpty: boolean = false;
     let isApiEmpty: boolean = false;
     let isAnyEmpty: boolean = false;
-    console.log("Reached here");
+
     isSubscriptionEmpty = selections.subscription.value === "";
     isResourceGroupEmpty = selections.resourceGroup.value === "";
     isAccountNameEmpty = selections.accountName.value === "";
@@ -238,11 +238,11 @@ const CosmosResourceModal = (props: Props) => {
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
-    const updatedForm = {
+    let updatedForm = {
       ...cosmosFormData,
       [infoLabel]: {
-        label: value,
-        value: value
+        value: value,
+        label: value
       }
     };
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
@@ -251,6 +251,17 @@ const CosmosResourceModal = (props: Props) => {
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
         subscription: value
       });
+      updatedForm = {
+        ...cosmosFormData,
+        [infoLabel]: {
+          value: value,
+          label: value
+        },
+        resourceGroup: {
+          value: "",
+          label: ""
+        }
+      };
     }
 
     if (value in DATABASE_INTERNAL_NAME_MAPPING) {
@@ -263,7 +274,7 @@ const CosmosResourceModal = (props: Props) => {
       };
     }
 
-    updateForm({ updatedForm });
+    updateForm(updatedForm);
   };
   /**
    * Listens on account name change and validates the input in VSCode
@@ -287,7 +298,32 @@ const CosmosResourceModal = (props: Props) => {
   React.useEffect(() => {
     if (props.selection) {
       const { previousFormData } = props.selection;
-      updateForm(previousFormData);
+      updateForm({
+        subscription: {
+          label: previousFormData.subscription,
+          value: previousFormData.subscription
+        },
+        resourceGroup: {
+          label: previousFormData.resourceGroup,
+          value: previousFormData.resourceGroup
+        },
+        location: {
+          label: previousFormData.location,
+          value: previousFormData.location
+        },
+        api: {
+          label: previousFormData.api,
+          value: previousFormData.api
+        },
+        internalName: {
+          label: previousFormData.internalName,
+          value: previousFormData.internalName
+        },
+        accountName: {
+          label: previousFormData.accountName,
+          value: previousFormData.accountName
+        }
+      });
     }
   }, []);
   /**
@@ -320,6 +356,7 @@ const CosmosResourceModal = (props: Props) => {
     disabled?: boolean,
     defaultValue?: any
   ) => {
+    console.log(cosmosFormData[formSectionId]);
     return (
       <div
         className={classnames([styles.selectionContainer], {
@@ -339,7 +376,11 @@ const CosmosResourceModal = (props: Props) => {
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
           }}
-          value={props.selection ? cosmosFormData[formSectionId] : defaultValue}
+          value={
+            cosmosFormData[formSectionId].value
+              ? cosmosFormData[formSectionId]
+              : defaultValue
+          }
           disabled={disabled}
         />
         {isEmpty && (
@@ -385,7 +426,8 @@ const CosmosResourceModal = (props: Props) => {
             !isAccountNameAvailable &&
             cosmosFormData.accountName.value.length > 0,
           [styles.selectionContainer]:
-            isAccountNameAvailable || cosmosFormData.accountName.length === 0,
+            isAccountNameAvailable ||
+            cosmosFormData.accountName.value.length === 0,
           [styles.selectionContainerDisabled]:
             cosmosFormData.subscription === ""
         })}
