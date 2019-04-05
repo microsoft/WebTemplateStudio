@@ -379,7 +379,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           azureFunctionsFormData.appName.length == 0 && (
             <div className={styles.errorMessage}>
               {props.intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
-                fieldId: leftHeader
+                fieldId: FORM_CONSTANTS.APP_NAME.label
               })}
             </div>
           )}

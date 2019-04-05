@@ -298,7 +298,7 @@ const CosmosResourceModal = (props: Props) => {
         />
         {isEmpty && (
           <div className={styles.errorMessage}>
-            {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
+            {props.intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
               fieldId: leftHeader
             })}
           </div>
@@ -373,7 +373,7 @@ const CosmosResourceModal = (props: Props) => {
         {modalValidation.isAccountNameEmpty &&
           cosmosFormData.accountName.length == 0 && (
             <div className={styles.errorMessage}>
-              {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
+              {props.intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
                 fieldId: FORM_CONSTANTS.ACCOUNT_NAME.label
               })}
             </div>
