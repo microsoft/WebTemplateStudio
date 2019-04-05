@@ -6,7 +6,6 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { findDOMNode } from "react-dom";
-import ReactTooltip from "react-tooltip";
 
 import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
