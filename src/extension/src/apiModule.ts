@@ -38,7 +38,7 @@ export default class ApiModule {
   public static StopApi() {
     if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
       let pid = ApiModule._process.pid;
-      var spawn = require("child_process").spawn;
+      let spawn = require("child_process").spawn;
       spawn("taskkill", ["/pid", pid, "/f", "/t"]);
     } else {
       ApiModule._process.kill("SIGKILL");
