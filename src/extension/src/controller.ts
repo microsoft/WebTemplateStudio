@@ -166,8 +166,8 @@ export abstract class Controller {
     });
   }
 
-  public static performLoginForSubscriptions(message: any) {
-    let isLoggedIn = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
+  public static async performLoginForSubscriptions(message: any) {
+    let isLoggedIn = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
       boolean
     >(TelemetryEventName.PerformLogin, async function(
       this: IActionContext

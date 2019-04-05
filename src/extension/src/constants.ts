@@ -27,6 +27,10 @@ export const CONSTANTS = {
         functionName
       );
     },
+    LOGOUT_FAILED: localize(
+      "error.loginTimeout",
+      "Timeout. User is not logged in"
+    ),
     LOGIN_TIMEOUT: localize(
       "error.loginTimeout",
       "Timeout. User is not logged in"

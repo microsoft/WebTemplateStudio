@@ -68,16 +68,14 @@ export abstract class AzureAuth {
   }
   public static async logout(): Promise<boolean> {
     this.initialize();
-    if (this.api.status !== CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
+    if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
       await commands.executeCommand("azure-account.logout");
       // Make sure it did not return from timeout
-      if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_OUT) {
-        throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
+      if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
+        throw new AuthorizationError(CONSTANTS.ERRORS.LOGOUT_FAILED);
       }
-      return true;
-    } else {
-      return true;
-    }
+    } 
+    return true;
   }
   public static getEmail(): string {
     this.initialize();
