@@ -188,10 +188,6 @@ const CosmosResourceModal = (props: Props) => {
     });
   }, [props.subscriptionData]);
 
-  if (props.selection) {
-    console.log(props.selection.dropdownSelection);
-  }
-
   const [cosmosFormData, updateForm] = React.useState(initialState);
 
   const [modalValidation, updateValidation] = React.useState({
@@ -289,41 +285,16 @@ const CosmosResourceModal = (props: Props) => {
         timeout = undefined;
         props.vscode.postMessage({
           command: EXTENSION_COMMANDS.NAME_COSMOS,
-          appName: cosmosFormData.accountName,
-          subscription: cosmosFormData.subscription
+          appName: cosmosFormData.accountName.value,
+          subscription: cosmosFormData.subscription.value
         });
       }, 700);
     }
-  }, [cosmosFormData.accountName, props.selection]);
+  }, [cosmosFormData.accountName.value, props.selection]);
   React.useEffect(() => {
     if (props.selection) {
       const { previousFormData } = props.selection;
-      updateForm({
-        subscription: {
-          label: previousFormData.subscription,
-          value: previousFormData.subscription
-        },
-        resourceGroup: {
-          label: previousFormData.resourceGroup,
-          value: previousFormData.resourceGroup
-        },
-        location: {
-          label: previousFormData.location,
-          value: previousFormData.location
-        },
-        api: {
-          label: previousFormData.api,
-          value: previousFormData.api
-        },
-        internalName: {
-          label: previousFormData.internalName,
-          value: previousFormData.internalName
-        },
-        accountName: {
-          label: previousFormData.accountName,
-          value: previousFormData.accountName
-        }
-      });
+      updateForm(props.selection.dropdownSelection);
     }
   }, []);
   /**
@@ -356,7 +327,6 @@ const CosmosResourceModal = (props: Props) => {
     disabled?: boolean,
     defaultValue?: any
   ) => {
-    console.log(cosmosFormData[formSectionId]);
     return (
       <div
         className={classnames([styles.selectionContainer], {

@@ -57,6 +57,7 @@ const getCosmosSelectionInDropdownForm = (services: any): any => {
         };
       }
     }
+    console.log(selectionInformation);
     return selectionInformation;
   }
 };
