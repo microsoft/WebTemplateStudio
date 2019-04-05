@@ -1,89 +1,93 @@
 .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .disableHover,
 .summaryTileContainer {
-    display: flex;
-    align-items: center;
-    background-color: #303030;
-    padding: 11px;
-    justify-content: space-between;
-    width: 100%;
-    margin-right: 10px;
+  display: flex;
+  align-items: center;
+  background-color: #303030;
+  padding: 11px;
+  justify-content: space-between;
+  width: 100%;
+  margin-right: 10px;
 }
 
 .summaryTileContainer:hover {
-    outline: 2px solid #FFFFFF;
+  outline: 2px solid #ffffff;
 }
 
 .leftContainer {
-    display: flex;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .leftIcon {
-    height: 36px;
-    margin-right: 10px;
+  height: 36px;
+  margin-right: 10px;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .closeIcon,
 .rightIcon {
-    max-height: 18px;
-    padding: 3px;
+  max-height: 18px;
+  padding: 3px;
 }
 
 .closeIcon:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .rightIcon:hover {
-    cursor: pointer;
-    padding: 3px;
-    border-radius: 3px;
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 3px;
 }
 
 .spacer {
-    width: 24px;
+  width: 24px;
 }
 
 .tileInput {
-    font-size: 18px;
-    font-weight: bold;
-    background-color: #303030;
-    border: none;
-    max-width: 300px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #303030;
+  border: none;
+  max-width: 300px;
 }
 
 .tileInput:focus {
-    outline: 1px solid #FFFFFF;
+  outline: 1px solid #ffffff;
 }
 
 .metaData {
-    display: flex;
+  display: flex;
 }
 
 .tileContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-size: 12px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 12px;
+  width: 100%;
 }
 
 .indent {
-    margin-left: 4em;
+  margin-left: 4em;
 }
 
 .reorder {
-    height: 18px;
-    margin-right: 10px;
-    cursor: grab;
+  height: 18px;
+  margin-right: 10px;
+  cursor: grab;
+}
+
+.rotate {
+  transform: rotate(270deg);
 }
