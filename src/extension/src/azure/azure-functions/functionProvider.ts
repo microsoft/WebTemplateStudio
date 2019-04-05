@@ -8,7 +8,7 @@ import {
   ConnectionError,
   SubscriptionError,
   ValidationError
-} from "../errors";
+} from "../../errors";
 import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
 import { ZipDeployHelper } from "./utils/zipDeployHelper";
 import * as fs from "fs";
@@ -20,7 +20,7 @@ import {
 import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import { CONSTANTS } from "../constants";
+import { CONSTANTS } from "../../constants";
 
 /*
  * Runtime for the deployment, can be either 'dotnet' or 'node'.

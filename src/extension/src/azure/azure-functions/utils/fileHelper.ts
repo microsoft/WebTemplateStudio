@@ -5,7 +5,7 @@ import * as appRoot from "app-root-path";
 import * as archiver from "archiver";
 import { Runtime } from "../functionProvider";
 import * as rimraf from "rimraf";
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS } from "../../../constants";
 
 export namespace FileHelper {
   const FUNCTION_TEMPLATES_RELATIVE_PATH = "/src/azure-functions/templates";

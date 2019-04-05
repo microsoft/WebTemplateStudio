@@ -7,7 +7,7 @@ import {
   SubscriptionError,
   AuthorizationError,
   DeploymentError
-} from "../errors";
+} from "../../errors";
 import {
   ResourceManagementClient,
   ResourceManagementModels
@@ -15,7 +15,7 @@ import {
 import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import { CONSTANTS } from "../constants";
+import { CONSTANTS } from "../../constants";
 import fs = require('fs');
 const Url = require('url-parse');
 
