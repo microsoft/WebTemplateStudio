@@ -5,4 +5,5 @@ export interface ISelected {
   id?: string;
   isValidTitle?: boolean;
   error?: string;
+  version?: string;
 }

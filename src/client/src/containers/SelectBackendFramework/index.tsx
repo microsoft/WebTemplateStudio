@@ -10,6 +10,8 @@ import { ISelected } from "../../types/selected";
 
 import styles from "./styles.module.css";
 
+import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
+
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
   getBackendFrameworks: (projectType: string) => void;
@@ -20,7 +22,14 @@ interface ISelectBackendProps {
   selectedBackend: string;
 }
 
-type Props = IDispatchProps & ISelectBackendProps;
+type Props = IDispatchProps & ISelectBackendProps & InjectedIntlProps;
+
+const messages = defineMessages({
+  selectBackendFramework: {
+    id: "selectBackendFramework.selectBackendFramework",
+    defaultMessage: "Select a back-end framework for your project."
+  }
+});
 
 class SelectBackEndFramework extends React.Component<Props> {
   public componentDidMount() {
@@ -43,14 +52,19 @@ class SelectBackEndFramework extends React.Component<Props> {
     return [0];
   }
   public render() {
-    const { options, selectedBackend, selectBackendFramework } = this.props;
+    const {
+      options,
+      selectedBackend,
+      selectBackendFramework,
+      intl
+    } = this.props;
     return (
       <div className={styles.container}>
         {options.length > 0 && (
           <SelectOption
             selectCard={selectBackendFramework}
             multiSelect={false}
-            title="Select a back-end framework for your project."
+            title={intl.formatMessage(messages.selectBackendFramework)}
             options={options}
             selectedCardIndices={this.convertSelectionToIndexNumber(
               selectedBackend
@@ -84,4 +98,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SelectBackEndFramework);
+)(injectIntl(SelectBackEndFramework));

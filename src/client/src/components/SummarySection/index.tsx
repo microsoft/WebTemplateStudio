@@ -54,6 +54,7 @@ const SummarySection = ({
   };
   const renderTile = (
     title: string,
+    version: string,
     svgUrl?: string,
     company?: string,
     originalTitle?: string,
@@ -67,7 +68,7 @@ const SummarySection = ({
       <div className={styles.tileContainer} key={idx}>
         <SummaryTile
           title={title}
-          version="v1.0"
+          version={version}
           svgUrl={svgUrl}
           company={company}
           originalTitle={originalTitle}
@@ -108,6 +109,7 @@ const SummarySection = ({
 
           {renderTile(
             selection.title,
+            selection.version,
             selection.svgUrl,
             selection.company,
             selection.originalTitle,
@@ -117,6 +119,7 @@ const SummarySection = ({
             selection.functionNames.map((functionName, idx: number) =>
               renderTile(
                 functionName,
+                "v1.0",
                 undefined,
                 undefined,
                 undefined,

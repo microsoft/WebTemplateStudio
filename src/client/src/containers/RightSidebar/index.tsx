@@ -22,6 +22,8 @@ import { ISelected } from "../../types/selected";
 import SortablePageList from "../SortablePageList";
 import styles from "./styles.module.css";
 
+import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
+
 interface ISelectionType {
   appType: ISelected;
   backendFramework: ISelected;
@@ -50,7 +52,33 @@ interface IRightSidebarState {
   items: string[];
 }
 
-type Props = IRightSidebarProps & RouteComponentProps & IDispatchProps;
+type Props = IRightSidebarProps &
+  RouteComponentProps &
+  IDispatchProps &
+  InjectedIntlProps;
+
+const messages = defineMessages({
+  yourProjectDetails: {
+    id: "rightSidebar.yourProjectDetails",
+    defaultMessage: "Your Project Details"
+  },
+  projectType: {
+    id: "rightSidebar.projectType",
+    defaultMessage: "Project Type"
+  },
+  frontendFramework: {
+    id: "rightSidebar.frontendFramework",
+    defaultMessage: "Front-end Framework"
+  },
+  backendFramework: {
+    id: "rightSidebar.backendFramework",
+    defaultMessage: "Back-end Framework"
+  },
+  services: {
+    id: "rightSidebar.services",
+    defaultMessage: "Services"
+  }
+});
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {
@@ -91,6 +119,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       showServices
     } = this.props.isRoutesVisited;
     const { pathname } = this.props.location;
+    const { intl } = this.props;
     return (
       <React.Fragment>
         {pathname !== ROUTES.PAGE_DETAILS &&
@@ -101,13 +130,15 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 [styles.rightViewCropped]: pathname !== ROUTES.WELCOME
               })}
             >
-              <div className={styles.title}>Your Project Details</div>
+              <div className={styles.title}>
+                {intl.formatMessage(messages.yourProjectDetails)}
+              </div>
               <RightSidebarDropdown
                 options={this.props.projectTypeDropdownItems}
                 handleDropdownChange={this.handleChange.bind(this)}
                 selectDropdownOption={this.props.selectProjectType}
                 isVisible={showProjectTypes}
-                title="Project Type"
+                title={intl.formatMessage(messages.projectType)}
                 value={this.convertOptionToDropdownItem(
                   this.props.selection.appType
                 )}
@@ -117,7 +148,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 handleDropdownChange={this.handleChange.bind(this)}
                 selectDropdownOption={this.props.selectFrontendFramework}
                 isVisible={showFrameworks}
-                title="Front-end Framework"
+                title={intl.formatMessage(messages.frontendFramework)}
                 value={this.convertOptionToDropdownItem(
                   this.props.selection.frontendFramework
                 )}
@@ -127,7 +158,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 handleDropdownChange={this.handleChange.bind(this)}
                 selectDropdownOption={this.props.selectBackendFramework}
                 isVisible={showFrameworks}
-                title="Back-end Framework"
+                title={intl.formatMessage(messages.backendFramework)}
                 value={this.convertOptionToDropdownItem(
                   this.props.selection.backendFramework
                 )}
@@ -135,7 +166,9 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               {showPages && <SortablePageList />}
               {showServices && (
                 <div className={styles.sidebarItem}>
-                  <div className={styles.dropdownTitle}>Services</div>
+                  <div className={styles.dropdownTitle}>
+                    {intl.formatMessage(messages.services)}
+                  </div>
                   <ServicesSidebarItem services={this.props.services} />
                 </div>
               )}
@@ -199,5 +232,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(RightSidebar)
+  )(injectIntl(RightSidebar))
 );

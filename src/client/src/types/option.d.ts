@@ -9,6 +9,7 @@ export interface IOption {
   licenses?: string[];
   selected?: boolean;
   author?: string;
+  version?: string;
   unselectable?: boolean;
   isValidTitle?: boolean;
 }
