@@ -85,6 +85,8 @@
   "sortablePageList.duplicateName",
   "sortablePageList.hide",
   "sortablePageList.show",
+  "azureFunctions.originalTitle",
+  "cosmosDb.originalTitle",
   "constants.emptyField",
   "pageNameError.duplicateName",
   "pageNameError.emptyName",

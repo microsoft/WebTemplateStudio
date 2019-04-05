@@ -104,6 +104,10 @@ const messages = defineMessages({
   createCosmosRes: {
     id: "cosmosResourceModule.createCosmosRes",
     defaultMessage: "Create Cosmos DB Account"
+  },
+  internalName: {
+    id: "cosmosResourceModule.internalName",
+    defaultMessage: "Internal Name"
   }
 });
 
@@ -131,7 +135,7 @@ const CosmosResourceModal = (props: Props) => {
       value: "accountName"
     },
     INTERNAL_NAME: {
-      label: "Internal Name",
+      label: props.intl.formatMessage(messages.internalName),
       value: "internalName"
     },
     MONGO: {

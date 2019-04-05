@@ -32,6 +32,7 @@
   "cosmosResourceModule.apiLabel": "API",
   "cosmosResourceModule.createCosmosRes": "Create Cosmos DB Account",
   "cosmosResourceModule.createNew": "Create New",
+  "cosmosResourceModule.internalName": "Internal Name",
   "cosmosResourceModule.locationLabel": "Location",
   "cosmosResourceModule.resourceGroupLabel": "Resource Group",
   "cosmosResourceModule.subscriptionLabel": "Subscription",
