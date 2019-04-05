@@ -13,7 +13,7 @@ import { openCosmosDbModalAction } from "../../actions/modalActions";
 
 import styles from "./styles.module.css";
 
-import { injectIntl, FormattedMessage } from "react-intl";
+import { injectIntl, FormattedMessage, InjectedIntlProps } from "react-intl";
 
 interface IProps {
   cosmosSelection: ICosmosDB;
@@ -24,13 +24,14 @@ interface IDispatchProps {
   openCosmosDbModal: () => any;
 }
 
-type Props = IProps & IDispatchProps;
+type Props = IProps & IDispatchProps & InjectedIntlProps;
 
 // This component lives in "containers" because the accountName can change via redux in the future
 const CosmosDBSelection = ({
   cosmosSelection,
   removeCosmosResource,
-  openCosmosDbModal
+  openCosmosDbModal,
+  intl
 }: Props) => {
   const { serviceType } = cosmosSelection.wizardContent;
   return (
@@ -38,7 +39,7 @@ const CosmosDBSelection = ({
       {!_.isEmpty(cosmosSelection.selection) && (
         <React.Fragment>
           <div className={styles.headerContainer}>
-            <div>{serviceType}</div>
+            <div>{intl.formatMessage(serviceType)}</div>
             <div className={styles.edit} onClick={openCosmosDbModal}>
               <FormattedMessage
                 id="cosmosDBSelection.edit"

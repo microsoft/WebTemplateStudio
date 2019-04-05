@@ -1,4 +1,5 @@
 {
+  "azureFunctions.originalTitle": "Azure Functions",
   "azureFunctionsModal.addResource": "Add Resource",
   "azureFunctionsModal.appName": "App Name",
   "azureFunctionsModal.appNameLabel": "App Name",
@@ -24,6 +25,7 @@
   "card.details": "Details",
   "constants.emptyField": "{fieldId} field cannot be empty",
   "cosmosDBSelection.edit": "Edit",
+  "cosmosDb.originalTitle": "CosmosDB",
   "cosmosResourceModule.accountName": "Account Name",
   "cosmosResourceModule.accountNameLabel": "Account Name",
   "cosmosResourceModule.addResource": "Add Resource",

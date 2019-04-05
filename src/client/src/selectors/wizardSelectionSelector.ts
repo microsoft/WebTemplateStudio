@@ -7,7 +7,7 @@ import { SERVICE_KEYS } from "../utils/constants";
 import { IPageCount } from "../reducers/wizardSelectionReducers/pageCountReducer";
 import { defineMessages } from "react-intl";
 
-const messages = defineMessages({
+export const messages = defineMessages({
   azureFunctionsOriginalTitle: {
     id: "azureFunctions.originalTitle",
     defaultMessage: "Azure Functions"

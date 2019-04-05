@@ -6,7 +6,7 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const initialState = "Loading Generation Status...";
+const initialState = "...";
 
 const statusMessage = (state: string = initialState, action: any) => {
   switch (action.type) {
