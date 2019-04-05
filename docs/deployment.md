@@ -23,11 +23,11 @@ The Azure App Service Extension provides an easy way to manage and deploy your w
 
 ![Azure App Service Extension Update Build Notification](./resources/azure-appservice-update-build-notification.png)
 
-7. If you are using a Cosmos Database add the Cosmos Keys in the .env file to the Application Settings of your Azure App Service. To run the app in production mode set the variable NODE_ENV to production. You can add a Application Setting by right clicking the Application Settings tab in the Azure App Service Extension.
+7. If you are using a Cosmos Database add the Cosmos Keys in the .env file to the Application Settings of your Azure App Service. To run the app in production mode set the variable NODE_ENV to production. You can add an Application Setting by right clicking the Application Settings tab in the Azure App Service Extension.
 
 ![Azure App Service Extension Application Settings](./resources/azure-appservice-application-settings.png)
 
-8. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
+8. Consider adding authentication and securing back-end APIs by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
 
 ## Local Git Deployment Method
 
