@@ -24,6 +24,8 @@ import {
 import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
 import { openPostGenModalAction } from "../../actions/modalActions";
 
+import { FormattedMessage, injectIntl } from "react-intl";
+
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
   openPostGenModal: () => any;
@@ -127,7 +129,7 @@ class Footer extends React.Component<Props> {
                   pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]
                 }
               >
-                Back
+                <FormattedMessage id="footer.back" defaultMessage="Back" />
               </Link>
               <Link
                 className={classnames(styles.button, {
@@ -143,7 +145,7 @@ class Footer extends React.Component<Props> {
                     : pathsNext[pathname]
                 }
               >
-                Next
+                <FormattedMessage id="footer.next" defaultMessage="Next" />
               </Link>
               <button
                 disabled={
@@ -157,13 +159,16 @@ class Footer extends React.Component<Props> {
                 })}
                 onClick={this.logMessageToVsCode}
               >
-                Generate
+                <FormattedMessage
+                  id="footer.generate"
+                  defaultMessage="Generate"
+                />
               </button>
               <Link
                 className={classnames(styles.button, buttonStyles.buttonDark)}
                 to="/"
               >
-                Cancel
+                <FormattedMessage id="footer.cancel" defaultMessage="Cancel" />
               </Link>
             </div>
           </div>
