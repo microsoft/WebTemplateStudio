@@ -27,6 +27,8 @@ import {
 import styles from "./styles.module.css";
 import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
 
+import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
+
 interface IDispatchProps {
   closeModal: () => any;
   saveCosmosOptions: (cosmosOptions: any) => any;
@@ -41,7 +43,20 @@ interface IStateProps {
   selection: any;
 }
 
-type Props = IDispatchProps & IStateProps;
+interface attributeLinks {
+  [key: string]: any;
+}
+
+const links: attributeLinks = {
+  subscription:
+    "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
+  resourceGroup: "https://ms.portal.azure.com/#create/Microsoft.ResourceGroup",
+  accountName: "https://docs.microsoft.com/en-us/azure/cosmos-db/",
+  api: null,
+  location: null
+};
+
+type Props = IDispatchProps & IStateProps & InjectedIntlProps;
 
 const initialState = {
   subscription: "",
@@ -49,35 +64,91 @@ const initialState = {
   accountName: "",
   api: "",
   location: "",
-  internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
+  internalName: ""
 };
 
-const FORM_CONSTANTS = {
-  SUBSCRIPTION: {
-    label: "Subscription",
-    value: "subscription"
+const messages = defineMessages({
+  subscriptionLabel: {
+    id: "cosmosResourceModule.subscriptionLabel",
+    defaultMessage: "Subscription"
   },
-  RESOURCE_GROUP: {
-    label: "Resource Group",
-    value: "resourceGroup"
+  resourceGroupLabel: {
+    id: "cosmosResourceModule.resourceGroupLabel",
+    defaultMessage: "Resource Group"
   },
-  API: {
-    label: "API",
-    value: "api"
+  locationLabel: {
+    id: "cosmosResourceModule.locationLabel",
+    defaultMessage: "Location"
   },
-  LOCATION: {
-    label: "Location",
-    value: "location"
+  apiLabel: {
+    id: "cosmosResourceModule.apiLabel",
+    defaultMessage: "API"
   },
-  ACCOUNT_NAME: {
-    label: "Account Name",
-    value: "accountName"
+  accountNameLabel: {
+    id: "cosmosResourceModule.accountNameLabel",
+    defaultMessage: "Account Name"
+  },
+  accountName: {
+    id: "cosmosResourceModule.accountName",
+    defaultMessage: "Account Name"
+  },
+  createNew: {
+    id: "cosmosResourceModule.createNew",
+    defaultMessage: "Create New"
+  },
+  addResource: {
+    id: "cosmosResourceModule.addResource",
+    defaultMessage: "Add Resource"
+  },
+  createCosmosRes: {
+    id: "cosmosResourceModule.createCosmosRes",
+    defaultMessage: "Create Cosmos DB Account"
   }
-};
+});
 
 const CosmosResourceModal = (props: Props) => {
+  const FORM_CONSTANTS = {
+    SUBSCRIPTION: {
+      label: props.intl.formatMessage(messages.subscriptionLabel),
+      value: "subscription"
+    },
+    RESOURCE_GROUP: {
+      label: props.intl.formatMessage(messages.resourceGroupLabel),
+      value: "resourceGroup"
+    },
+    API: {
+      label: props.intl.formatMessage(messages.apiLabel),
+      value: "api"
+    },
+    LOCATION: {
+      label: props.intl.formatMessage(messages.locationLabel),
+      value: "location"
+    },
+    ACCOUNT_NAME: {
+      label: props.intl.formatMessage(messages.accountNameLabel),
+      value: "accountName"
+    },
+    INTERNAL_NAME: {
+      label: "Internal Name",
+      value: "internalName"
+    },
+    MONGO: {
+      label: "MongoDB",
+      value: "MongoDB"
+    },
+    SQL: {
+      label: "SQL",
+      value: "SQL"
+    }
+  };
+
+  const DATABASE_INTERNAL_NAME_MAPPING = {
+    [FORM_CONSTANTS.SQL.value]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
+    [FORM_CONSTANTS.MONGO.value]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
+  };
+
   const [cosmosData, setData] = React.useState(cosmosInitialState);
-  // Hardcoding a "MongoDB" value until data can be loaded dynamically
+  // Hardcoding database options until data can be loaded dynamically
   React.useEffect(() => {
     setData({
       accountName: [
@@ -86,12 +157,7 @@ const CosmosResourceModal = (props: Props) => {
           label: ""
         }
       ],
-      api: [
-        {
-          value: "MongoDB",
-          label: "MongoDB"
-        }
-      ],
+      api: [FORM_CONSTANTS.MONGO, FORM_CONSTANTS.SQL],
       subscription: props.subscriptions,
       resourceGroup: props.subscriptionData.resourceGroups,
       location: props.subscriptionData.locations
@@ -149,9 +215,14 @@ const CosmosResourceModal = (props: Props) => {
         subscription: value
       });
     }
+
     updateForm({
       ...cosmosFormData,
-      [infoLabel]: value
+      [infoLabel]: value,
+      internalName:
+        value in DATABASE_INTERNAL_NAME_MAPPING
+          ? DATABASE_INTERNAL_NAME_MAPPING[value]
+          : cosmosFormData.internalName
     });
   };
   /**
@@ -200,7 +271,11 @@ const CosmosResourceModal = (props: Props) => {
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
           <div>{leftHeader}</div>
-          <div className={styles.createNew}>{rightHeader}</div>
+          {links[formSectionId] && (
+            <a className={styles.link} href={links[formSectionId]}>
+              Create New
+            </a>
+          )}
         </div>
         <Dropdown
           options={options}
@@ -223,7 +298,9 @@ const CosmosResourceModal = (props: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <div className={styles.modalTitle}>Create Cosmos DB Account</div>
+        <div className={styles.modalTitle}>
+          {props.intl.formatMessage(messages.createCosmosRes)}
+        </div>
         <Cancel className={styles.icon} onClick={props.closeModal} />
       </div>
       {getDropdownSection(
@@ -232,7 +309,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.SUBSCRIPTION.label,
         cosmosData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
-        "Create new"
+        props.intl.formatMessage(messages.createNew)
       )}
       {getDropdownSection(
         modalValidation.isResourceGroupEmpty &&
@@ -240,7 +317,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         cosmosData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
-        "Create new"
+        props.intl.formatMessage(messages.createNew)
       )}
       <div
         className={classnames({
@@ -251,11 +328,8 @@ const CosmosResourceModal = (props: Props) => {
         })}
       >
         <div className={styles.selectionHeaderContainer}>
-          <div>Account Name</div>
-          <a
-            className={styles.link}
-            href="https://docs.microsoft.com/en-us/azure/cosmos-db/"
-          >
+          <div>{props.intl.formatMessage(messages.accountName)}</div>
+          <a className={styles.link} href={links.accountName}>
             documents.azure.com
           </a>
         </div>
@@ -306,7 +380,7 @@ const CosmosResourceModal = (props: Props) => {
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
           onClick={handleAddResource}
         >
-          Add Resource
+          {props.intl.formatMessage(messages.addResource)}
         </button>
       </div>
     </div>
@@ -335,4 +409,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(asModal(CosmosResourceModal));
+)(asModal(injectIntl(CosmosResourceModal)));

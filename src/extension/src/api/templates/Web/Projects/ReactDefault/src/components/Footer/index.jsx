@@ -9,34 +9,24 @@ export default function Footer() {
           <div className="col-8 col-md-5">
             <h5 className={styles.title}>wts.ReactDefault</h5>
             <p className={styles.description}>
-              Project Acorn was made by a group of interns in the Microsoft
-              Garage Internship Program.
+              This is placeholder text. Your web app description goes here.
             </p>
           </div>
           <div className="col-2">
             <ul className="list-unstyled">
               <li>
-                <a
-                  className={styles.footerlink}
-                  href="https://github.com/Microsoft/WebTemplateStudio"
-                >
-                  Github Page
+                <a className={styles.footerlink} href="/">
+                  Example Link
                 </a>
               </li>
               <li>
-                <a
-                  className={styles.footerlink}
-                  href="https://github.com/Microsoft/WebTemplateStudio/tree/dev/docs"
-                >
-                  Documentation
+                <a className={styles.footerlink} href="/">
+                  Example Link
                 </a>
               </li>
               <li>
-                <a
-                  className={styles.footerlink}
-                  href="https://www.microsoft.com/en-us/garage/"
-                >
-                  Microsoft Garage
+                <a className={styles.footerlink} href="/">
+                  Example Link
                 </a>
               </li>
             </ul>

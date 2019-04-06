@@ -47,8 +47,8 @@ export default class Grid extends Component {
     return (
       <React.Fragment>
         <div className={classnames("text-center", styles.header)}>
-          <h1>Project Acorn</h1>
-          <p>Full Stack boiler plate powered by Bootstrap 4.3</p>
+          <h1>Project Name</h1>
+          <p> This is placeholder text. Your web app description goes here.</p>
           <a
             href="https://github.com/Microsoft/WebTemplateStudio"
             className="btn btn-primary my-2"
