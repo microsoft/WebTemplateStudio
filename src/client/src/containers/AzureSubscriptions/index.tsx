@@ -16,6 +16,8 @@ import getAzureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
 import { setDetailPageAction } from "../../actions/setDetailsPage";
 
+import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+
 interface IDispatchProps {
   startLogOutToAzure: () => any;
   openCosmosDbModal: () => any;
@@ -34,7 +36,18 @@ interface IState {
   azureServices?: IOption[] | undefined;
 }
 
-type Props = IAzureLoginProps & IDispatchProps;
+type Props = IAzureLoginProps & IDispatchProps & InjectedIntlProps;
+
+const messages = defineMessages({
+  editResource: {
+    id: "azureSubscriptions.editResource",
+    defaultMessage: "Edit Resource"
+  },
+  addResource: {
+    id: "azureSubscriptions.addResource",
+    defaultMessage: "Add Resource"
+  }
+});
 
 class AzureSubscriptions extends React.Component<Props, IState> {
   constructor(props: any) {
@@ -59,9 +72,9 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   };
   public addOrEditResourceText = (internalName: string): string => {
     if (this.isSelectionCreated(internalName)) {
-      return "Edit Resource";
+      return this.props.intl.formatMessage(messages.editResource);
     }
-    return "Add Resource";
+    return this.props.intl.formatMessage(messages.addResource);
   };
   /**
    * Returns a function that opens a modal for a specific internalName
@@ -133,4 +146,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AzureSubscriptions);
+)(injectIntl(AzureSubscriptions));

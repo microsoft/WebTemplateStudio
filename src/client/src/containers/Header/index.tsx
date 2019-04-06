@@ -5,6 +5,8 @@ import * as AzureActions from "../../actions/logOutAzure";
 
 import styles from "./styles.module.css";
 
+import { FormattedMessage, injectIntl } from "react-intl";
+
 interface IHeaderProps {
   isLoggedIn: boolean;
   email: string;
@@ -25,7 +27,7 @@ const Header = (props: Props) => {
         <div className={styles.azureProfile}>
           <div className={styles.profileName}>{email}</div>
           <div className={styles.button} onClick={props.startLogOutToAzure}>
-            Sign out
+            <FormattedMessage id="header.signOut" defaultMessage="Sign out" />
           </div>
         </div>
       )}
@@ -51,4 +53,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Header);
+)(injectIntl(Header));

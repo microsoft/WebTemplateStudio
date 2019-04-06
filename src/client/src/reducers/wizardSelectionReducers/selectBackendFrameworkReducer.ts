@@ -10,7 +10,8 @@ import * as Actions from "../../actions/types";
 const backendFramework = (
   state = {
     title: "NodeJS",
-    internalName: "NodeJS"
+    internalName: "NodeJS",
+    version: "10.15.0"
   },
   action: any
 ) => {

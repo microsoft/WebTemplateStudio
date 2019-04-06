@@ -22,7 +22,7 @@ The generated templates can be deployed to Azure App Service using the following
 3. Deploy the server folder to Azure App Service using the [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice).
 4. If a database is used, add the environment variables defined in .env to your Application Settings.
 5. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
-   Full documentation for deployment to Azure App Service can be found here: //TODO Add link to deployment doc
+   Full documentation for deployment to Azure App Service can be found here: [Deployment Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md).
 
 ## File Structure
 
@@ -35,7 +35,6 @@ development front-end and back-end communicate via a proxy defined in the packag
 .
 ├── server/ - Express server that provides API routes and serves front-end
 │ ├── routes/ - Handles API calls for routes
-│ ├── views/ - Pug error page
 │ ├── app.js - Adds middleware to the express server
 │ ├── constants.js - Defines the constants for the endpoints and port
 │ └── server.js - Configures Port and HTTP Server
@@ -53,4 +52,4 @@ development front-end and back-end communicate via a proxy defined in the packag
 - Bootstrap CSS - https://getbootstrap.com/
 - Express - https://expressjs.com/
 
-  This project was created using [Project Acorn](https://github.com/Microsoft/WebTemplateStudio).
+  This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
