@@ -31,6 +31,7 @@ const Dropdown = ({
   value,
   disabled
 }: IDropdownProps) => {
+  React.useEffect(() => {}, [options]);
   return (
     <Select
       components={{ DropdownIndicator }}

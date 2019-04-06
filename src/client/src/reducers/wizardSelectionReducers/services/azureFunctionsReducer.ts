@@ -105,11 +105,17 @@ const azureFunctions = (
       return newFunctionState;
     case Actions.SAVE_AZURE_FUNCTIONS_SETTINGS:
       const newSelectionState = {
-        ...state,
+        ...initialState,
         selection: [
           {
-            ...action.payload,
-            functionNames: createFunctionNames(action.payload.numFunctions)
+            subscription: action.payload.subscription.value,
+            resourceGroup: action.payload.resourceGroup.value,
+            location: action.payload.location.value,
+            runtimeStack: action.payload.runtimeStack.value,
+            internalName: action.payload.internalName.value,
+            numFunctions: action.payload.numFunctions.value,
+            functionNames: createFunctionNames(action.payload.numFunctions),
+            appName: action.payload.appName.value
           }
         ]
       };
