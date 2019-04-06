@@ -132,7 +132,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             })}
           >
             {pathname !== ROUTES.REVIEW_AND_GENERATE && (
-              <React.Fragment>
+              <div>
                 <div className={styles.title}>Your Project Details</div>
                 <RightSidebarDropdown
                   options={this.props.projectTypeDropdownItems}
@@ -171,10 +171,12 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                     <ServicesSidebarItem services={this.props.services} />
                   </div>
                 )}
-              </React.Fragment>
+              </div>
             )}
-            <Licenses />
-            <About />
+            <div>
+              <Licenses />
+              <About />
+            </div>
           </div>
         )}
       </React.Fragment>
