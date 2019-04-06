@@ -25,12 +25,13 @@ import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
 import { openPostGenModalAction } from "../../actions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 import {
   getIsVisitedRoutesSelector,
-  IVisited
+  IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
+import { AppState } from "../../reducers";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -207,7 +208,7 @@ class Footer extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: getVSCodeApiSelector(state),
   engine: rootSelector(state),
   selectedCosmos: isCosmosResourceCreatedSelector(state),

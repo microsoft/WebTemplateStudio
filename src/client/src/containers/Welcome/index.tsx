@@ -20,6 +20,7 @@ import {
   getOutputPathValidation
 } from "../../selectors/wizardSelectionSelector";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { AppState } from "../../reducers";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => any;
@@ -74,7 +75,7 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   }
 });
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: getVSCodeApiSelector(state),
   projectPathValidation: getOutputPathValidation(state),
   outputPath: getOutputPath(state),

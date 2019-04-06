@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import Card from "../SelectableCard";
-import Title from "../Title";
+import Card from "../../components/SelectableCard";
+import Title from "../../components/Title";
 
 import styles from "./styles.module.css";
 

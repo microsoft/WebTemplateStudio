@@ -7,10 +7,10 @@ import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
 import PageDetails from "./containers/PageDetails";
-import SelectFrameworks from "./components/SelectFrameworks";
-import SelectPages from "./components/SelectPages";
-import SelectWebApp from "./components/SelectWebApp";
-import Welcome from "./components/Welcome";
+import SelectFrameworks from "./containers/SelectFrameworks";
+import SelectPages from "./containers/SelectPages";
+import SelectWebApp from "./containers/SelectWebApp";
+import Welcome from "./containers/Welcome";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";

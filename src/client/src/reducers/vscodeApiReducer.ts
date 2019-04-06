@@ -27,7 +27,7 @@ export interface IVSCodeObject {
 
 interface IVSCodeAPI {
   isVsCodeApiAcquired: boolean;
-  vscodeObject?: IVSCodeObject;
+  vscodeObject: IVSCodeObject;
 }
 
 /**
@@ -170,7 +170,7 @@ const mockVsCodeApi = () => ({
 function vscodeApi(
   state: IVSCodeAPI = {
     isVsCodeApiAcquired: false,
-    vscodeObject: undefined
+    vscodeObject: mockVsCodeApi()
   },
   action: {
     type: string;

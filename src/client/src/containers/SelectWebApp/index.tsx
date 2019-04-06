@@ -9,6 +9,7 @@ import { selectWebAppAction } from "../../actions/selectWebApp";
 import { ISelected } from "../../types/selected";
 
 import { defineMessages, InjectedIntl, injectIntl } from "react-intl";
+import { AppState } from "../../reducers";
 
 interface IDispatchProps {
   selectWebApp: (selectedApp: ISelected) => void;
@@ -68,7 +69,7 @@ class SelectWebApp extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): IStoreProps => {
+const mapStateToProps = (state: AppState): IStoreProps => {
   const { appType } = state.selection;
   return {
     selectedWebApp: appType,

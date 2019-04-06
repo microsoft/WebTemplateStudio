@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import SelectBackEndFramework from "../../containers/SelectBackendFramework";
-import SelectFrontEndFramework from "../../containers/SelectFrontEndFramework";
+import SelectBackEndFramework from "../SelectBackendFramework";
+import SelectFrontEndFramework from "../SelectFrontEndFramework";
 
 const SelectFrameworks = () => {
   return (

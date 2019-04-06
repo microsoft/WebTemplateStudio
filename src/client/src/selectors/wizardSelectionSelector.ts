@@ -3,7 +3,6 @@ import { createSelector } from "reselect";
 import { RowType } from "../types/rowType";
 import { ISelected } from "../types/selected";
 import getSvgUrl from "../utils/getSvgUrl";
-import { SERVICE_KEYS } from "../utils/constants";
 import { IPageCount } from "../reducers/wizardSelectionReducers/pageCountReducer";
 import { defineMessages } from "react-intl";
 
@@ -18,18 +17,21 @@ export const messages = defineMessages({
   }
 });
 import { IValidation } from "../reducers/wizardSelectionReducers/updateOutputPath";
+import { AppState } from "../reducers";
+import { SelectionState } from "../reducers/wizardSelectionReducers";
 
-// FIXME: Properly define types
-const getWizardSelectionsSelector = (state: any): any => state.selection;
-const getProjectName = (state: any): string =>
+const getWizardSelectionsSelector = (state: AppState): SelectionState =>
+  state.selection;
+const getProjectName = (state: AppState): string =>
   state.selection.projectNameObject.projectName;
-const getProjectNameValidation = (state: any): any =>
+// FIXME: Properly define types
+const getProjectNameValidation = (state: AppState): any =>
   state.selection.projectNameObject.validation;
-const getOutputPath = (state: any): string =>
+const getOutputPath = (state: AppState): string =>
   state.selection.outputPathObject.outputPath;
-const getOutputPathValidation = (state: any): IValidation =>
+const getOutputPathValidation = (state: AppState): IValidation =>
   state.selection.outputPathObject.validation;
-const getPageCount = (state: any): IPageCount => state.selection.pageCount;
+const getPageCount = (state: AppState): IPageCount => state.selection.pageCount;
 
 const isValidNameAndProjectPath = (
   projectNameValidationObject: IValidation,
@@ -60,11 +62,10 @@ const isValidNameAndProjectPathSelector = createSelector(
   isValidNameAndProjectPath
 );
 
-const getProjectTypeRowItems = (selection: any): RowType[] => {
+const getProjectTypeRowItems = (selection: SelectionState): RowType[] => {
   const projectType = selection.appType as ISelected;
   return [
     {
-      type: "Project Type",
       title: projectType.title,
       svgUrl: getSvgUrl(projectType.internalName),
       version: selection.version,
@@ -73,18 +74,16 @@ const getProjectTypeRowItems = (selection: any): RowType[] => {
   ];
 };
 
-const frameworksRowItems = (selection: any): RowType[] => {
+const frameworksRowItems = (selection: SelectionState): RowType[] => {
   const { frontendFramework, backendFramework } = selection;
   return [
     {
-      type: "Front-end framework",
       title: frontendFramework.title,
       svgUrl: getSvgUrl(frontendFramework.internalName),
       version: frontendFramework.version,
       author: frontendFramework.author
     },
     {
-      type: "Back-end framework",
       title: backendFramework.title,
       svgUrl: getSvgUrl(backendFramework.internalName),
       version: backendFramework.version,
@@ -101,44 +100,40 @@ const frameworksRowItems = (selection: any): RowType[] => {
  *
  * @param selection selection object created by the developer
  */
-const getServices = (selection: any): any => {
+
+const getServices = (selection: SelectionState): RowType[] => {
   const { services } = selection;
+  const { azureFunctions, cosmosDB } = services;
   const servicesRows = [];
-  for (const serviceKey in services) {
-    for (const selection of services[serviceKey].selection) {
-      if (serviceKey === SERVICE_KEYS.AZURE_FUNCTIONS) {
-        servicesRows.push({
-          title: selection.appName,
-          originalTitle: "Azure Functions",
-          author: "Microsoft",
-          serviceTitle: messages.azureFunctionsOriginalTitle,
-          svgUrl: getSvgUrl(selection.internalName),
-          functionNames: selection.functionNames,
-          internalName: selection.internalName,
-          version: selection.version
-        });
-      } else if (serviceKey === SERVICE_KEYS.COSMOS_DB) {
-        servicesRows.push({
-          title: selection.accountName,
-          originalTitle: "CosmosDB",
-          author: "Microsoft",
-          serviceTitle: messages.cosmosOriginalTitle,
-          svgUrl: getSvgUrl(selection.internalName),
-          internalName: selection.internalName,
-          version: selection.version
-        });
-      }
-    }
+  if (!_.isEmpty(azureFunctions.selection)) {
+    servicesRows.push({
+      title: azureFunctions.selection[0].appName,
+      originalTitle: "Azure Functions",
+      company: "Microsoft",
+      svgUrl: getSvgUrl(azureFunctions.selection[0].internalName),
+      functionNames: azureFunctions.selection[0].functionNames,
+      internalName: azureFunctions.selection[0].internalName,
+      version: "1.0"
+    });
+  }
+  if (!_.isEmpty(cosmosDB.selection)) {
+    servicesRows.push({
+      title: cosmosDB.selection[0].accountName,
+      originalTitle: "CosmosDB",
+      company: "Microsoft",
+      svgUrl: getSvgUrl(cosmosDB.selection[0].internalName),
+      internalName: cosmosDB.selection[0].internalName,
+      version: "1.0"
+    });
   }
   return servicesRows;
 };
 
-const getPagesRowItems = (selection: any): RowType[] => {
+const getPagesRowItems = (selection: SelectionState): RowType[] => {
   const { pages } = selection;
   const pagesRows = [];
   for (const page of pages) {
     pagesRows.push({
-      type: page.originalTitle ? page.originalTitle : page.title,
       title: page.title,
       svgUrl: getSvgUrl(page.internalName),
       id: page.id,

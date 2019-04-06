@@ -19,6 +19,8 @@ import Title from "../../components/Title";
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { withLocalPath } from "../../utils/getSvgUrl";
 import folder from "../../assets/folder.svg";
+import { AppState } from "../../reducers";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 interface IDispatchProps {
   openCosmosDbModal: () => any;
@@ -126,12 +128,12 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   }
 });
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   projectTypeRows: WizardSelectors.getProjectTypeRowItemSelector(state),
   frameworkRows: WizardSelectors.getFrameworksRowItemSelector(state),
   servicesRows: WizardSelectors.getServicesSelector(state),
   pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
-  vscode: state.vscode.vscodeObject,
+  vscode: getVSCodeApiSelector(state),
   validation: state.selection.validation,
   projectName: WizardSelectors.getProjectName(state),
   outputPath: WizardSelectors.getOutputPath(state)

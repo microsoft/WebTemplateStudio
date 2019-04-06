@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { ISelectedCosmosService } from "../reducers/wizardSelectionReducers/services/cosmosDbReducer";
+import { AppState } from "../reducers";
 
 interface ISelectedDropdowns {
   subscription?: IDropDownOptionType;
@@ -15,7 +16,8 @@ interface ISelectionInformation {
   dropdownSelection: ISelectedDropdowns;
   previousFormData: ISelectedCosmosService;
 }
-const getServicesSelector = (state: any): object => state.selection.services;
+const getServicesSelector = (state: AppState): object =>
+  state.selection.services;
 const isCosmosDbSelected = (services: any): boolean => {
   return !_.isEmpty(services.cosmosDB.selection);
 };

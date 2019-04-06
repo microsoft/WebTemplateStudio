@@ -5,6 +5,7 @@ import Details from "../../components/Details";
 import { IOption } from "../../types/option";
 import { screenShotMapping } from "../../utils/getSvgUrl";
 import styles from "./styles.module.css";
+import { AppState } from "../../reducers";
 
 interface IPageDetailsProps {
   detailsPageInfo: IOption;
@@ -34,7 +35,7 @@ const PageDetails = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): IPageDetailsProps => {
+const mapStateToProps = (state: AppState): IPageDetailsProps => {
   return {
     detailsPageInfo: state.wizardContent.detailsPage.data,
     isIntlFormatted: state.wizardContent.detailsPage.isIntlFormatted

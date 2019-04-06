@@ -2,15 +2,16 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SummaryTile from "../SummaryTile";
+import SummaryTile from "../../components/SummaryTile";
 
 import styles from "./styles.module.css";
 
-import { IFunctionApp } from "../../containers/AzureFunctionsSelection";
+import { IFunctionApp } from "../AzureFunctionsSelection";
 import { RowType } from "../../types/rowType";
 
 import * as AzureFunctionActions from "../../actions/azureFunctionActions";
 import { FormattedMessage } from "react-intl";
+import { AppState } from "../../reducers";
 
 interface IProps {
   selectionTitle: string;
@@ -140,7 +141,7 @@ const SummarySection = ({
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   functionApps: state.selection.services.azureFunctions
 });
 

@@ -16,6 +16,7 @@ import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
 import { getOutputPath } from "../../selectors/wizardSelectionSelector";
+import { AppState } from "../../reducers";
 
 interface IStateProps {
   isTemplateGenerated: boolean;
@@ -176,7 +177,7 @@ const PostGenerationModal = ({
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
   isTemplateGenerated: PostGenSelectors.isTemplateGeneratedSelector(state),
   isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),

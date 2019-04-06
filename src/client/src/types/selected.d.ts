@@ -8,4 +8,5 @@ export interface ISelected {
   version?: string;
   licenses?: License;
   author?: string;
+  originalTitle?: string;
 }
