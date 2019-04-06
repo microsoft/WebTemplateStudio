@@ -107,6 +107,10 @@ const messages = defineMessages({
   createFunctionApp: {
     id: "azureFunctionsModal.createFunctionApp",
     defaultMessage: "Create Function Application"
+  }
+});
+
+
 const DEFAULT_VALUE = {
   value: "Select...",
   label: "Select..."
@@ -177,77 +181,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
     }
   };
 
-const messages = defineMessages({
-  subscriptionLabel: {
-    id: "azureFunctionsModal.subscriptionLabel",
-    defaultMessage: "Subscription"
-  },
-  resourceGroupLabel: {
-    id: "azureFunctionsModal.resourceGroupLabel",
-    defaultMessage: "Resource Group"
-  },
-  locationLabel: {
-    id: "azureFunctionsModal.locationLabel",
-    defaultMessage: "Location"
-  },
-  runtimeStackLabel: {
-    id: "azureFunctionsModal.runtimeStackLabel",
-    defaultMessage: "Runtime Stack"
-  },
-  numFunctionsLabel: {
-    id: "azureFunctionsModal.numFunctionsLabel",
-    defaultMessage: "Number of functions"
-  },
-  appNameLabel: {
-    id: "azureFunctionsModal.appNameLabel",
-    defaultMessage: "App Name"
-  },
-  createNew: {
-    id: "azureFunctionsModal.createNew",
-    defaultMessage: "Create New"
-  },
-  appName: {
-    id: "azureFunctionsModal.appName",
-    defaultMessage: "App Name"
-  },
-  addResource: {
-    id: "azureFunctionsModal.addResource",
-    defaultMessage: "Add Resource"
-  },
-  createFunctionApp: {
-    id: "azureFunctionsModal.createFunctionApp",
-    defaultMessage: "Create Function Application"
-  }
-});
-
-const AzureFunctionsResourceModal = (props: Props) => {
-  const FORM_CONSTANTS = {
-    SUBSCRIPTION: {
-      label: props.intl.formatMessage(messages.subscriptionLabel),
-      value: "subscription"
-    },
-    RESOURCE_GROUP: {
-      label: props.intl.formatMessage(messages.resourceGroupLabel),
-      value: "resourceGroup"
-    },
-    LOCATION: {
-      label: props.intl.formatMessage(messages.locationLabel),
-      value: "location"
-    },
-    RUNTIME_STACK: {
-      label: props.intl.formatMessage(messages.runtimeStackLabel),
-      value: "runtimeStack"
-    },
-    NUM_FUNCTIONS: {
-      label: props.intl.formatMessage(messages.numFunctionsLabel),
-      value: "numFunctions"
-    },
-    APP_NAME: {
-      label: props.intl.formatMessage(messages.appNameLabel),
-      value: "appName"
-    }
-  };
-
   const [functionsData, setData] = React.useState(
     azureFunctionModalInitialState
   );
@@ -285,20 +218,28 @@ const AzureFunctionsResourceModal = (props: Props) => {
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
+    let updatedForm = {
+      ...azureFunctionsFormData,
+      [infoLabel]: {
+        value: value,
+        label: value
+      }
+    };
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
       // Get resource Group and locations and set the dropdown options to them
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
         subscription: value
       });
+      updatedForm = {
+        ...updatedForm,
+        resourceGroup: {
+          value: "",
+          label: ""
+        }
+      };
     }
-    updateForm({
-      ...azureFunctionsFormData,
-      [infoLabel]: {
-        label: value,
-        value: value
-      }
-    });
+    updateForm(updatedForm);
   };
   React.useEffect(() => {
     if (props.selection) {
@@ -373,9 +314,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
           }}
-          defaultValue={
-            props.selection
-              ? props.selection.dropdownSelection[formSectionId]
+          value={
+            azureFunctionsFormData[formSectionId].value
+              ? azureFunctionsFormData[formSectionId]
               : defaultValue
           }
           disabled={disabled}
@@ -414,7 +355,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
         FORM_CONSTANTS.SUBSCRIPTION.label,
         functionsData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
-        props.intl.formatMessage(messages.createNew)
+        props.intl.formatMessage(messages.createNew),
+        DEFAULT_VALUE
       )}
       {getDropdownSection(
         modalValidation.isResourceGroupEmpty &&
@@ -422,9 +364,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         functionsData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
-
         props.intl.formatMessage(messages.createNew),
-        azureFunctionsFormData.subscription === ""
+        DEFAULT_VALUE,
+        azureFunctionsFormData.subscription.value === ""
       )}
       <div
         className={classnames({
@@ -484,6 +426,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         functionsData.location,
         FORM_CONSTANTS.LOCATION.value,
         undefined,
+        DEFAULT_VALUE,
         azureFunctionsFormData.subscription === ""
       )}
       {getDropdownSection(
@@ -491,7 +434,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
           azureFunctionsFormData.runtimeStack.value === "",
         FORM_CONSTANTS.RUNTIME_STACK.label,
         functionsData.runtimeStack,
-        FORM_CONSTANTS.RUNTIME_STACK.value
+        FORM_CONSTANTS.RUNTIME_STACK.value,
+        undefined,
+        DEFAULT_VALUE
       )}
       <div className={styles.modalFooterContainer}>
         {getDropdownSection(

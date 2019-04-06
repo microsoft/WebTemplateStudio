@@ -34,6 +34,11 @@ import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
 
+const DEFAULT_VALUE = {
+  value: "Select...",
+  label: "Select..."
+};
+
 interface IDispatchProps {
   closeModal: () => any;
   saveCosmosOptions: (cosmosOptions: any) => any;
