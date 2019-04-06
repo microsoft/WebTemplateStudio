@@ -104,6 +104,7 @@ const azureFunctions = (
       }
       return newFunctionState;
     case Actions.SAVE_AZURE_FUNCTIONS_SETTINGS:
+      console.log(action.payload);
       const newSelectionState = {
         ...initialState,
         selection: [
@@ -114,11 +115,14 @@ const azureFunctions = (
             runtimeStack: action.payload.runtimeStack.value,
             internalName: action.payload.internalName.value,
             numFunctions: action.payload.numFunctions.value,
-            functionNames: createFunctionNames(action.payload.numFunctions),
+            functionNames: createFunctionNames(
+              action.payload.numFunctions.value
+            ),
             appName: action.payload.appName.value
           }
         ]
       };
+      console.log(newSelectionState);
       return newSelectionState;
 
     default:

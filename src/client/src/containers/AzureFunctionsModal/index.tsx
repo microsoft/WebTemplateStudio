@@ -294,7 +294,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
     }
     updateForm({
       ...azureFunctionsFormData,
-      [infoLabel]: value
+      [infoLabel]: {
+        label: value,
+        value: value
+      }
     });
   };
   React.useEffect(() => {
