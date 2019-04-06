@@ -1,4 +1,6 @@
 {
+  "about.templatesVersion": "Templates version:",
+  "about.wizardVersion": "Wizard version:",
   "azureFunctionsModal.addResource": "Add Resource",
   "azureFunctionsModal.appName": "App Name",
   "azureFunctionsModal.appNameLabel": "App Name",

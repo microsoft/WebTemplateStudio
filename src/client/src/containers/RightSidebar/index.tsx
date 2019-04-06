@@ -24,6 +24,7 @@ import styles from "./styles.module.css";
 import Licenses from "../Licenses";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
+import About from "../About";
 
 interface ISelectionType {
   appType: ISelected;
@@ -173,6 +174,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               </React.Fragment>
             )}
             <Licenses />
+            <About />
           </div>
         )}
       </React.Fragment>

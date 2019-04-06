@@ -35,9 +35,13 @@ import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
 } from "./actions/updateGenStatusActions";
+import { getVersionsDataAction } from "./actions/getVersionData";
 
 import appStyles from "./appStyles.module.css";
 import { startLogOutAzure } from "./actions/logOutAzure";
+import { IVersions } from "./types/version";
+import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
+import { IVSCodeObject } from "./reducers/vscodeApiReducer";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -50,10 +54,11 @@ interface IDispatchProps {
   setProjectPathValidation: (validation: any) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: boolean) => any;
+  getVersionsData: (versions: IVersions) => any;
 }
 
 interface IStateProps {
-  vscode: any;
+  vscode: IVSCodeObject;
 }
 
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
@@ -70,7 +75,8 @@ class App extends React.Component<Props> {
     setAppNameAvailability: () => {},
     setProjectPathValidation: () => {},
     updateTemplateGenStatusMessage: () => {},
-    updateTemplateGenStatus: () => {}
+    updateTemplateGenStatus: () => {},
+    getVersionsData: () => {}
   };
 
   public componentDidMount() {
@@ -135,14 +141,21 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.GEN_STATUS:
           this.props.updateTemplateGenStatus(message.payload);
           return;
+        case EXTENSION_COMMANDS.GET_VERSIONS:
+          this.props.getVersionsData(message.payload);
+          return;
       }
     });
   }
 
   public componentDidUpdate(prevProps: Props) {
-    if (this.props.vscode !== prevProps.vscode) {
-      this.props.vscode.postMessage({
+    const { vscode } = this.props;
+    if (vscode !== prevProps.vscode) {
+      vscode.postMessage({
         command: EXTENSION_COMMANDS.GET_USER_STATUS
+      });
+      vscode.postMessage({
+        command: EXTENSION_COMMANDS.GET_VERSIONS
       });
     }
   }
@@ -217,11 +230,14 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   },
   updateTemplateGenStatus: (isGenerated: boolean) => {
     dispatch(updateTemplateGenerationStatusAction(isGenerated));
+  },
+  getVersionsData: (versions: IVersions) => {
+    dispatch(getVersionsDataAction(versions));
   }
 });
 
 const mapStateToProps = (state: any): IStateProps => ({
-  vscode: state.vscode.vscodeObject
+  vscode: getVSCodeApiSelector(state)
 });
 
 export default withRouter(

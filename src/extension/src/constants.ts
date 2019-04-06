@@ -202,7 +202,8 @@ export enum ExtensionCommand {
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
-  OpenProjectVSCode = "open-project-vscode"
+  OpenProjectVSCode = "open-project-vscode",
+  GetVersions = "get-versions"
 }
 
 export enum TelemetryEventName {
