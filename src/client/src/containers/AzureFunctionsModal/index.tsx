@@ -79,7 +79,7 @@ const FORM_CONSTANTS = {
   }
 };
 
-const CosmosResourceModal = (props: Props) => {
+const AzureFunctionResourceModal = (props: Props) => {
   const [functionsData, setData] = React.useState(
     azureFunctionModalInitialState
   );
@@ -203,10 +203,15 @@ const CosmosResourceModal = (props: Props) => {
     options: any,
     formSectionId: string,
     rightHeader?: string,
+    disabled?: boolean,
     defaultValue?: any
   ) => {
     return (
-      <div className={styles.selectionContainer}>
+      <div
+        className={classnames([styles.selectionContainer], {
+          [styles.selectionContainerDisabled]: disabled
+        })}
+      >
         <div className={styles.selectionHeaderContainer}>
           <div>{leftHeader}</div>
           <div className={styles.createNew}>{rightHeader}</div>
@@ -221,7 +226,7 @@ const CosmosResourceModal = (props: Props) => {
               ? props.selection.dropdownSelection[formSectionId]
               : defaultValue
           }
-          disabled={false}
+          disabled={disabled}
         />
         {isEmpty && (
           <div className={styles.errorMessage}>{EMPTY_FIELD(leftHeader)}</div>
@@ -258,14 +263,17 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         functionsData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
-        "Create new"
+        "Create new",
+        azureFunctionsFormData.subscription === ""
       )}
       <div
         className={classnames({
           [styles.selectionInputContainer]:
             !isAppNameAvailable && azureFunctionsFormData.appName.length > 0,
           [styles.selectionContainer]:
-            isAppNameAvailable || azureFunctionsFormData.appName.length === 0
+            isAppNameAvailable || azureFunctionsFormData.appName.length === 0,
+          [styles.selectionContainerDisabled]:
+            azureFunctionsFormData.subscription === ""
         })}
       >
         <div className={styles.selectionHeaderContainer}>
@@ -283,6 +291,7 @@ const CosmosResourceModal = (props: Props) => {
             onChange={handleInput}
             value={azureFunctionsFormData.appName}
             placeholder={FORM_CONSTANTS.APP_NAME.label}
+            disabled={azureFunctionsFormData.subscription === ""}
           />
           {isAppNameAvailable && (
             <GreenCheck className={styles.validationIcon} />
@@ -305,7 +314,9 @@ const CosmosResourceModal = (props: Props) => {
           azureFunctionsFormData.location === "",
         FORM_CONSTANTS.LOCATION.label,
         functionsData.location,
-        FORM_CONSTANTS.LOCATION.value
+        FORM_CONSTANTS.LOCATION.value,
+        undefined,
+        azureFunctionsFormData.subscription === ""
       )}
       {getDropdownSection(
         modalValidation.isRuntimeStackEmpty &&
@@ -322,6 +333,7 @@ const CosmosResourceModal = (props: Props) => {
           getNumFunctionsData(),
           FORM_CONSTANTS.NUM_FUNCTIONS.value,
           undefined,
+          false,
           1
         )}
         <button
@@ -361,4 +373,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(asModal(CosmosResourceModal));
+)(asModal(AzureFunctionResourceModal));
