@@ -17,7 +17,7 @@
 
 .textContainer,
 .pagesTextContainer {
-  height: 38px;
+  min-height: 38px;
   background: #696969;
   border: 0px solid rgba(0, 0, 0, 0.5);
   display: flex;
@@ -28,7 +28,7 @@
 }
 
 .errorTextContainer {
-  height: 38px;
+  min-height: 38px;
   background: #5f0d0d;
   border: 1px solid #9d2f23;
   display: flex;
