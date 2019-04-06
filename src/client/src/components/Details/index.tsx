@@ -71,7 +71,7 @@ const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
                 </div>
                 <div>
                   <FormattedMessage
-                    id="details.licenses"
+                    id="details.version"
                     defaultMessage="Version:"
                   />
                 </div>
