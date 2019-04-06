@@ -15,6 +15,7 @@ import {
   injectIntl,
   defineMessages
 } from "react-intl";
+import { withLocalPath } from "../../utils/getSvgUrl";
 
 interface IDispatchProps {
   startLoginToAzure: () => any;
@@ -69,7 +70,7 @@ class AzureLogin extends React.Component<Props> {
         <div className={styles.loginCard}>
           {!isLoggedIn && (
             <LoginCard
-              svgUrl={`${process.env.REACT_APP_RELATIVE_PATH}${azure}`}
+              svgUrl={withLocalPath(azure)}
               handleClick={() => {
                 this.handleClick();
               }}

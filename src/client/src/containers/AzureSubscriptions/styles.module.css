@@ -11,8 +11,12 @@
 }
 
 .subscriptionCardContainer {
-  width: 40%;
+  width: 50%;
   margin-right: 0.75em;
+}
+
+.overlay {
+  opacity: 0.4;
 }
 
 .container {
