@@ -8,7 +8,7 @@ import { ROUTES } from "../../utils/constants";
 import styles from "./styles.module.css";
 
 import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
-import ProjectNameAndOutput from "../../containers/ProjectNameAndOutput";
+import ProjectNameAndOutput from "../ProjectNameAndOutput";
 import { FormattedMessage } from "react-intl";
 
 import { updateProjectNameAction } from "../../actions/updateProjectNameAndPath";
