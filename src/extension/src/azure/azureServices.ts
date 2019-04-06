@@ -1,4 +1,4 @@
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 import {
   AzureAuth,
   SubscriptionItem,
@@ -35,7 +35,6 @@ export abstract class AzureServices {
   }
 
   public static async getUserInfo() {
-
     this.subscriptionItemList = await AzureAuth.getSubscriptions();
 
     const subscriptionListToDisplay = this.subscriptionItemList.map(
@@ -134,7 +133,7 @@ export abstract class AzureServices {
         throw error;
       });
   }
-  
+
   public static async validateFunctionAppName(
     functionAppName: string,
     subscriptionLabel: string
@@ -254,7 +253,7 @@ export abstract class AzureServices {
       userCosmosDBSelection,
       genPath
     );
-  }  
+  }
   public static async promptUserForCosmosReplacement(
     pathToEnv: string,
     dbObject: DatabaseObject
@@ -275,7 +274,10 @@ export abstract class AzureServices {
             CONSTANTS.INFO.FILE_REPLACED_MESSAGE + pathToEnv
           );
         }
-        return {userReplacedEnv: selection === DialogResponses.yes, startTime: start};
+        return {
+          userReplacedEnv: selection === DialogResponses.yes,
+          startTime: start
+        };
       });
   }
 }

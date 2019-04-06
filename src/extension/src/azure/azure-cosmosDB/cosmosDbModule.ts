@@ -399,12 +399,29 @@ export class CosmosDBDeploy {
      * Throws an error if the user deleted the project directory
      * @filePath: path of .env file
      */
-    const cosmosConnectionString = Url(connectionString);
-    const cosmosEnvironmentVariables = CONSTANTS.CONNECTION_STRING(
-      cosmosConnectionString.username,
-      cosmosConnectionString.password,
-      cosmosConnectionString.origin
-    );
+    let cosmosEnvironmentVariables = "";
+    if (
+      connectionString
+        .toLowerCase()
+        .startsWith(CONSTANTS.SQL_CONNECTION_STRING_PREFIX)
+    ) {
+      const [origin, primaryKey] = connectionString
+        .split(";")
+        .map(str => str.substr(str.indexOf("=") + 1));
+
+      cosmosEnvironmentVariables = CONSTANTS.CONNECTION_STRING_SQL(
+        origin,
+        primaryKey
+      );
+    } else {
+      const cosmosConnectionString = Url(connectionString);
+      cosmosEnvironmentVariables = CONSTANTS.CONNECTION_STRING_MONGO(
+        cosmosConnectionString.username,
+        cosmosConnectionString.password,
+        cosmosConnectionString.origin
+      );
+    }
+
     const path = filePath + "/" + ".env";
     try {
       if (fs.existsSync(filePath)) {
