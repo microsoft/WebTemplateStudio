@@ -1,4 +1,5 @@
 import * as Actions from "../../actions/types";
+import { IOption } from "../../types/option";
 
 /* State Shape
 {
@@ -6,7 +7,7 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const pageOptions = (state = [], action: any) => {
+const pageOptions = (state: IOption[] = [], action: any) => {
   switch (action.type) {
     case Actions.GET_PAGES_OPTIONS_SUCCESS:
       return action.payload;
