@@ -61,7 +61,7 @@
 }
 
 .input {
-  color: #ffffff;
+  text-decoration: none;
   border: none;
   background-color: #696969;
   font-size: 1em;
@@ -80,7 +80,6 @@ input:focus {
 
 input::placeholder {
   color: white;
-  opacity: 0.4;
 }
 
 .createNew,
