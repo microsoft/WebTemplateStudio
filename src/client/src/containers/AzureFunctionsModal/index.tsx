@@ -44,6 +44,21 @@ interface IStateProps {
 
 type Props = IDispatchProps & IStateProps & InjectedIntlProps;
 
+interface attributeLinks {
+  [key: string]: any;
+}
+
+const links: attributeLinks = {
+  subscription:
+    "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
+  resourceGroup: "https://ms.portal.azure.com/#create/Microsoft.ResourceGroup",
+  appName: "https://azure.microsoft.com/en-us/services/functions/",
+  api: null,
+  location: null,
+  numFunctions: null,
+  runtimeStack: null
+};
+
 const initialState = {
   subscription: "",
   resourceGroup: "",
@@ -254,7 +269,11 @@ const AzureFunctionsResourceModal = (props: Props) => {
       <div className={styles.selectionContainer}>
         <div className={styles.selectionHeaderContainer}>
           <div>{leftHeader}</div>
-          <div className={styles.createNew}>{rightHeader}</div>
+          {links[formSectionId] && (
+            <a className={styles.link} href={links[formSectionId]}>
+              Create New
+            </a>
+          )}
         </div>
         <Dropdown
           options={options}
@@ -316,7 +335,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
       >
         <div className={styles.selectionHeaderContainer}>
           <div>{props.intl.formatMessage(messages.appName)}</div>
-          <div>.azurewebsites.net</div>
+          <a className={styles.link} href={links.appName}>
+            documents.azure.com
+          </a>
         </div>
         <div
           className={classnames(styles.inputContainer, {
