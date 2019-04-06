@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import Card from "../../components/Card";
 
 import styles from "./styles.module.css";
+import grid from "../../css/grid.module.css";
 
 import * as AzureActions from "../../actions/logOutAzure";
 import * as ModalActions from "../../actions/modalActions";

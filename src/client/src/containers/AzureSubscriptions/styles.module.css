@@ -11,8 +11,13 @@
 }
 
 .subscriptionCardContainer {
-  width: 50%;
-  margin-right: 0.75em;
+  flex-basis: 43%;
+  flex-grow: 9999;
+}
+
+.subscriptionCardContainer {
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .overlay {
@@ -21,4 +26,7 @@
 
 .container {
   display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-right: 5px;
 }
