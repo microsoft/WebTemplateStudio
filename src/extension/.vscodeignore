@@ -9,6 +9,6 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 !src/api/**
-!src/azure-cosmosDB/arm-templates
-!src/azure-functions/arm-templates
-!src/azure-functions/templates
+!src/azure/azure-cosmosDB/arm-templates
+!src/azure/azure-functions/arm-templates
+!src/azure/azure-functions/templates

@@ -1,0 +1,55 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "name": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "locationName": {
+      "type": "string"
+    },
+    "defaultExperience": {
+      "type": "string"
+    },
+    "capabilities": {
+      "type": "array"
+    },
+    "kind": {
+      "type": "string"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "apiVersion": "2015-04-08",
+      "kind": "[parameters('kind')]",
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "name": "[parameters('name')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "databaseAccountOfferType": "Standard",
+        "locations": [
+          {
+            "id": "[concat(parameters('name'), '-', parameters('location'))]",
+            "failoverPriority": 0,
+            "locationName": "[parameters('locationName')]"
+          }
+        ],
+        "enableMultipleWriteLocations": true,
+        "isVirtualNetworkFilterEnabled": false,
+        "virtualNetworkRules": [],
+        "ipRangeFilter": "",
+        "dependsOn": [],
+        "capabilities": "[parameters('capabilities')]"
+      },
+      "tags": {
+        "defaultExperience": "[parameters('defaultExperience')]",
+        "generatedBy": "Web Template Studio"
+      }
+    }
+  ],
+  "outputs": {}
+}

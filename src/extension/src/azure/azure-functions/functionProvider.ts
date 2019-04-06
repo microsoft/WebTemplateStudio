@@ -166,6 +166,8 @@ export class FunctionProvider {
           options
         )
         .then(async result => {
+          this.writeARMTemplatesToApp(appPath, template, parameters);
+
           await ZipDeployHelper.zipDeploy(
             selections.subscriptionItem.session.credentials,
             appPath,
@@ -186,8 +188,6 @@ export class FunctionProvider {
       }
       throw new DeploymentError(error.message);
     }
-
-    this.writeARMTemplatesToApp(appPath, template, parameters);
 
     /*
      * restarts the app to load new deployment
@@ -212,6 +212,7 @@ export class FunctionProvider {
     let templatePath = path.join(
       appRoot.toString(),
       "src",
+      "azure",
       "azure-functions",
       "arm-templates",
       "template.json"
@@ -227,6 +228,7 @@ export class FunctionProvider {
     let parametersPath = path.join(
       appRoot.toString(),
       "src",
+      "azure",
       "azure-functions",
       "arm-templates",
       "parameters.json"
