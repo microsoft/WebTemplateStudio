@@ -3,19 +3,9 @@ import { createSelector } from "reselect";
 import { ISelected } from "../types/selected";
 import { ITemplateInfo } from "../types/templateInfo";
 import { SERVICE_KEYS } from "../utils/constants";
+import { getOutputPath, getProjectName } from "./wizardSelectionSelector";
 
-// FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
-
-const getProjectName = (selection: any): string => {
-  const { projectName } = selection.projectNameObject;
-  return projectName;
-};
-
-const getPath = (selection: any): string => {
-  const { outputPath } = selection;
-  return outputPath;
-};
 
 const getProjectType = (selection: any): string => {
   const projectType = selection.appType as ISelected;
@@ -60,7 +50,6 @@ const getServices = (selection: any): ITemplateInfo[] => {
   return servicesInfo;
 };
 
-// FIXME: Needs to be in a format that is in line with the Core engine
 const getPages = (selection: any): ITemplateInfo[] => {
   const { pages } = selection;
   const pagesInfo = [];
@@ -72,16 +61,6 @@ const getPages = (selection: any): ITemplateInfo[] => {
   }
   return pagesInfo;
 };
-
-const getProjectNameSelector = createSelector(
-  getWizardSelectionsSelector,
-  getProjectName
-);
-
-const getPathSelector = createSelector(
-  getWizardSelectionsSelector,
-  getPath
-);
 
 const getProjectTypeSelector = createSelector(
   getWizardSelectionsSelector,
@@ -109,8 +88,8 @@ const getServicesSelector = createSelector(
 );
 
 const rootSelector = createSelector(
-  getProjectNameSelector,
-  getPathSelector,
+  getProjectName,
+  getOutputPath,
   getProjectTypeSelector,
   getFrontendFrameworkSelector,
   getBackendFrameworkSelector,
@@ -126,13 +105,13 @@ const rootSelector = createSelector(
     services
   ) => {
     return {
-      projectName: projectName,
-      path: path,
-      projectType: projectType,
-      frontendFramework: frontendFramework,
-      backendFramework: backendFramework,
-      pages: pages,
-      services: services
+      projectName,
+      path,
+      projectType,
+      frontendFramework,
+      backendFramework,
+      pages,
+      services
     };
   }
 );

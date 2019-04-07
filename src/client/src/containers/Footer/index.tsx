@@ -97,12 +97,11 @@ class Footer extends React.Component<Props> {
   };
   public handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
     const { isValidNameAndProjectPath, setRouteVisited } = this.props;
+    this.trackPageForTelemetry(pathname);
     if (!isValidNameAndProjectPath) {
       event.preventDefault();
       return;
     }
-    this.trackPageForTelemetry(pathname);
-
     if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
       setRouteVisited(pathsNext[pathname]);
     }
@@ -147,7 +146,9 @@ class Footer extends React.Component<Props> {
             </div>
             <div className={styles.buttonContainer}>
               <Link
-                className={classnames(buttonStyles.buttonDark, styles.button)}
+                className={classnames(buttonStyles.buttonDark, styles.button, {
+                  [styles.disabledOverlay]: pathname === ROUTES.WELCOME
+                })}
                 to={
                   pathsBack[pathname] === undefined
                     ? ROUTES.WELCOME
@@ -160,7 +161,9 @@ class Footer extends React.Component<Props> {
                 className={classnames(styles.button, {
                   [buttonStyles.buttonDark]:
                     this.isReviewAndGenerate() || !isValidNameAndProjectPath,
-                  [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
+                  [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate(),
+                  [styles.disabledOverlay]:
+                    !isValidNameAndProjectPath || this.isReviewAndGenerate()
                 })}
                 onClick={event => {
                   this.handleLinkClick(event, pathname);
@@ -181,7 +184,9 @@ class Footer extends React.Component<Props> {
                   [buttonStyles.buttonDark]:
                     !this.isReviewAndGenerate() || !areValidNames,
                   [buttonStyles.buttonHighlightedBorder]:
-                    this.isReviewAndGenerate() && areValidNames
+                    this.isReviewAndGenerate() && areValidNames,
+                  [styles.disabledOverlay]:
+                    !this.isReviewAndGenerate() || !areValidNames
                 })}
                 onClick={this.logMessageToVsCode}
               >

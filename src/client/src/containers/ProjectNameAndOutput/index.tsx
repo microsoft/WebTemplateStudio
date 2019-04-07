@@ -109,7 +109,7 @@ const ProjectNameAndOutput = (props: Props) => {
         />
         {props.projectNameValidation.error && (
           <div className={styles.errorMessage}>
-            {props.intl.formatMessage(props.projectNameValidation.error)}
+            {props.projectNameValidation.error}
           </div>
         )}
       </div>

@@ -51,15 +51,15 @@ const OutputPath = ({
             }}
           />
         </div>
-        {(validation && !validation.isValid && (
-          <div className={styles.errorMessage}>{validation.error}</div>
+        {(isEmpty && (
+          <div className={styles.errorMessage}>
+            {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
+              fieldId: intl.formatMessage(messages.outputPath)
+            })}
+          </div>
         )) ||
-          (isEmpty && (
-            <div className={styles.errorMessage}>
-              {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
-                fieldId: intl.formatMessage(messages.outputPath)
-              })}
-            </div>
+          (validation && !validation.isValid && (
+            <div className={styles.errorMessage}>{validation.error}</div>
           ))}
       </div>
     </React.Fragment>

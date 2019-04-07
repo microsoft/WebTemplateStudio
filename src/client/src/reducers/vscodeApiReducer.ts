@@ -90,6 +90,7 @@ const mockVsCodeApi = () => ({
         });
         break;
       case EXTENSION_COMMANDS.GENERATE:
+        console.log(message);
         // @ts-ignore mocks a generation status message
         window.postMessage({
           command: EXTENSION_COMMANDS.GEN_STATUS_MESSAGE,
