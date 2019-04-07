@@ -11,8 +11,8 @@ import * as Actions from "../../actions/types";
 
 const projectPathValidation = (state = {}, action: any) => {
   switch (action.type) {
-    case Actions.SET_PROJECT_PATH_VALIDATION:
-      return action.payload;
+    // case Actions.SET_PROJECT_PATH_VALIDATION:
+    //   return action.payload;
     default:
       return state;
   }

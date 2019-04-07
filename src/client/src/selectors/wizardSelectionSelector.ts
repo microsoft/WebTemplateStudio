@@ -24,7 +24,8 @@ const getProjectName = (state: any): string =>
   state.selection.projectNameObject.projectName;
 const getProjectNameValidation = (state: any): any =>
   state.selection.projectNameObject.validation;
-const getOutputPath = (state: any): string => state.selection.outputPath;
+const getOutputPath = (state: any): string =>
+  state.selection.outputPathObject.outputPath;
 const getPageCount = (state: any): IPageCount => state.selection.pageCount;
 
 const getProjectTypeRowItems = (selection: any): RowType[] => {
