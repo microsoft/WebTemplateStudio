@@ -30,6 +30,7 @@ import {
   getIsVisitedRoutesSelector,
   IVisited
 } from "../../selectors/wizardNavigationSelector";
+import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -44,6 +45,7 @@ interface IStateProps {
   selectedFunctions: boolean;
   functions: any;
   isVisited: IVisited;
+  isValidNameAndProjectPath: boolean;
 }
 
 type Props = RouteComponentProps & IStateProps & IDispatchProps;
@@ -93,15 +95,19 @@ class Footer extends React.Component<Props> {
   public isReviewAndGenerate = (): boolean => {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
-  public handleLinkClick = (pathname: string) => {
+  public handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
+    const { isValidNameAndProjectPath, setRouteVisited } = this.props;
+    if (!isValidNameAndProjectPath) {
+      event.preventDefault();
+      return;
+    }
     this.trackPageForTelemetry(pathname);
 
     if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
-      this.props.setRouteVisited(pathsNext[pathname]);
+      setRouteVisited(pathsNext[pathname]);
     }
   };
   public trackPageForTelemetry = (pathname: string) => {
-    // @ts-ignore
     this.props.vscode.postMessage({
       command: EXTENSION_COMMANDS.TRACK_PAGE_SWITCH,
       pageName: pathname
@@ -123,8 +129,9 @@ class Footer extends React.Component<Props> {
         break;
       }
     }
-    const { pathname } = this.props.location;
-    const { showFrameworks } = this.props.isVisited;
+    const { isValidNameAndProjectPath, location, isVisited } = this.props;
+    const { pathname } = location;
+    const { showFrameworks } = isVisited;
     return (
       <div>
         {pathname !== ROUTES.PAGE_DETAILS && (
@@ -151,11 +158,12 @@ class Footer extends React.Component<Props> {
               </Link>
               <Link
                 className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
+                  [buttonStyles.buttonDark]:
+                    this.isReviewAndGenerate() || !isValidNameAndProjectPath,
                   [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
                 })}
-                onClick={() => {
-                  this.handleLinkClick(pathname);
+                onClick={event => {
+                  this.handleLinkClick(event, pathname);
                 }}
                 to={
                   pathname === ROUTES.REVIEW_AND_GENERATE
@@ -197,7 +205,8 @@ const mapStateToProps = (state: any): IStateProps => ({
   cosmos: getCosmosDbSelectionSelector(state),
   selectedFunctions: isAzureFunctionsSelectedSelector(state),
   functions: getAzureFunctionsOptionsSelector(state),
-  isVisited: getIsVisitedRoutesSelector(state)
+  isVisited: getIsVisitedRoutesSelector(state),
+  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({

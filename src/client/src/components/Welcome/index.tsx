@@ -44,7 +44,6 @@ const Welcome = ({
   projectName,
   updateProjectName
 }: Props) => {
-  const [isOutputPathEmpty, setIsOutputPathEmpty] = React.useState(false);
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -60,35 +59,7 @@ const Welcome = ({
         />
       </div>
       <div className={styles.projectDetailsContainer}>
-        <ProjectNameAndOutput validation={isOutputPathEmpty} />
-        <Link
-          onClick={event => {
-            updateProjectName(projectName);
-            if (
-              outputPath.length === 0 ||
-              projectPathValidation.isInvalidProjectPath ||
-              projectName.length === 0 ||
-              !projectNameValidation.isValid
-            ) {
-              event.preventDefault();
-              setIsOutputPathEmpty(outputPath.length === 0);
-              event.preventDefault();
-            } else {
-              setIsOutputPathEmpty(false);
-              setRouteVisited(ROUTES.SELECT_PROJECT_TYPE);
-            }
-          }}
-          to={ROUTES.SELECT_PROJECT_TYPE}
-          className={classnames(
-            buttonStyles.buttonHighlighted,
-            styles.getStarted
-          )}
-        >
-          <FormattedMessage
-            id="welcome.getStarted"
-            defaultMessage="Get Started"
-          />
-        </Link>
+        <ProjectNameAndOutput />
       </div>
     </div>
   );

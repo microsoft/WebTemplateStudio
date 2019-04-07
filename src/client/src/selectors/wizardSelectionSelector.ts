@@ -31,6 +31,28 @@ const getOutputPathValidation = (state: any): IValidation =>
   state.selection.outputPathObject.validation;
 const getPageCount = (state: any): IPageCount => state.selection.pageCount;
 
+const isValidNameAndProjectPath = (
+  projectNameValidationObject: IValidation,
+  outputPathValidationObject: IValidation
+): boolean => {
+  if (!projectNameValidationObject || !outputPathValidationObject) {
+    return false;
+  }
+  if (
+    !projectNameValidationObject.isValid ||
+    !outputPathValidationObject.isValid
+  ) {
+    return false;
+  }
+  return true;
+};
+
+const isValidNameAndProjectPathSelector = createSelector(
+  getProjectNameValidation,
+  getOutputPathValidation,
+  isValidNameAndProjectPath
+);
+
 const getProjectTypeRowItems = (selection: any): RowType[] => {
   const projectType = selection.appType as ISelected;
   return [
@@ -151,5 +173,6 @@ export {
   getOutputPathValidation,
   getProjectName,
   getPageCount,
-  getProjectNameValidation
+  getProjectNameValidation,
+  isValidNameAndProjectPathSelector
 };

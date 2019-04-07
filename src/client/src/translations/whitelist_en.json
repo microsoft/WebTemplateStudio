@@ -21,6 +21,8 @@
   "selectPages.webAppTitleQuestion",
   "summarySection.editResource",
   "welcome.getStarted",
+  "welcome.header",
+  "welcome.body",
   "about.templatesVersion",
   "about.wizardVersion",
   "azureFunctionsModal.subscriptionLabel",

@@ -51,7 +51,7 @@ const OutputPath = ({
             }}
           />
         </div>
-        {(validation && validation.isValid && (
+        {(validation && !validation.isValid && (
           <div className={styles.errorMessage}>{validation.error}</div>
         )) ||
           (isEmpty && (

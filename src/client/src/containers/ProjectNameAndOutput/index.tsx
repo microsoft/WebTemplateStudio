@@ -23,9 +23,6 @@ import styles from "./styles.module.css";
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
-interface IProps {
-  validation: any;
-}
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -40,7 +37,7 @@ interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
 }
 
-type Props = IStateProps & IDispatchProps & InjectedIntlProps & IProps;
+type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const messages = defineMessages({
   projectNameTitle: {
@@ -68,8 +65,7 @@ const ProjectNameAndOutput = (props: Props) => {
         props.vscode.postMessage({
           command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
           projectPath: props.outputPath,
-          projectName: props.projectName,
-          withProjectPath: true
+          projectName: props.projectName
         });
       }
     }
@@ -79,8 +75,7 @@ const ProjectNameAndOutput = (props: Props) => {
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
         projectPath: props.outputPath,
-        projectName: props.projectName,
-        withProjectPath: true
+        projectName: props.projectName
       });
     }
   }, [props.outputPath]);
@@ -101,7 +96,6 @@ const ProjectNameAndOutput = (props: Props) => {
       command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
     });
   };
-  console.log(props);
   return (
     <React.Fragment>
       <div className={styles.inputContainer}>
