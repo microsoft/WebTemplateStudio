@@ -43,6 +43,7 @@ const SERVICE_KEYS = {
 };
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
+  AZURE: "wts.Feature.Azure",
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
   BLANK_PAGE: "wts.Page.React.Blank",
   CONTENT_GRID: "wts.Page.React.Grid",

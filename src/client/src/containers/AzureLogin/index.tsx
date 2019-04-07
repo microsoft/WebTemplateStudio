@@ -1,4 +1,5 @@
 import * as React from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import LoginCard from "../../components/LoginCard";
@@ -6,20 +7,17 @@ import Title from "../../components/Title";
 
 import azure from "../../assets/azure.svg";
 import styles from "./styles.module.css";
-import grid from "../../css/grid.module.css";
 
 import AzureSubscriptions from "../AzureSubscriptions";
 import { EXTENSION_COMMANDS } from "../../utils/constants";
-import {
-  FormattedMessage,
-  InjectedIntlProps,
-  injectIntl,
-  defineMessages
-} from "react-intl";
+import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+import { setDetailPageAction } from "../../actions/setDetailsPage";
+import { IOption } from "../../types/option";
 import { withLocalPath } from "../../utils/getSvgUrl";
+import { microsoftAzureDetails } from "../../mockData/azureServiceOptions";
 
 interface IDispatchProps {
-  startLoginToAzure: () => any;
+  setDetailPage: (detailPageInfo: IOption) => any;
 }
 
 interface IAzureLoginProps {
@@ -32,7 +30,7 @@ type Props = IDispatchProps & IAzureLoginProps & InjectedIntlProps;
 const messages = defineMessages({
   azureDeploymentTitle: {
     id: "azureLogin.azureDeploymentTitle",
-    defaultMessage: "Microsoft Azure Deployment"
+    defaultMessage: "Microsoft Azure"
   },
   azureDeploymentBody: {
     id: "azureLogin.azureDeploymentBody",
@@ -65,7 +63,8 @@ class AzureLogin extends React.Component<Props> {
     }
   };
   public render() {
-    const { isLoggedIn, intl } = this.props;
+    const { isLoggedIn, intl, setDetailPage } = this.props;
+    console.log(this.props);
     return (
       <div>
         <Title>{intl.formatMessage(messages.azureLoginTitle)}</Title>
@@ -78,6 +77,8 @@ class AzureLogin extends React.Component<Props> {
               }}
               cardTitle={intl.formatMessage(messages.azureDeploymentTitle)}
               cardBody={intl.formatMessage(messages.azureDeploymentBody)}
+              handleDetailsClick={setDetailPage}
+              option={microsoftAzureDetails}
             />
           )}
         </div>
@@ -96,7 +97,15 @@ const mapStateToProps = (state: any): IAzureLoginProps => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(injectIntl(AzureLogin));
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  setDetailPage: (detailPageInfo: IOption) => {
+    dispatch(setDetailPageAction(detailPageInfo));
+  }
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(injectIntl(AzureLogin))
+);

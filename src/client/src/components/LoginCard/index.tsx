@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 import CardBody from "../CardBody";
 
@@ -7,15 +8,26 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
 import { FormattedMessage } from "react-intl";
+import { IOption } from "../../types/option";
+import { ROUTES } from "../../utils/constants";
 
 interface IProps {
   cardTitle: string;
   cardBody: string;
   svgUrl: string;
   handleClick: () => void;
+  handleDetailsClick: (option: IOption) => any;
+  option: IOption;
 }
 
-const LoginCard = ({ cardTitle, cardBody, svgUrl, handleClick }: IProps) => {
+const LoginCard = ({
+  cardTitle,
+  cardBody,
+  svgUrl,
+  handleClick,
+  handleDetailsClick,
+  option
+}: IProps) => {
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cardTitle}>
@@ -26,9 +38,13 @@ const LoginCard = ({ cardTitle, cardBody, svgUrl, handleClick }: IProps) => {
         <CardBody body={cardBody} />
       </div>
       <div className={styles.selectionContainer}>
-        <div className={styles.details}>
+        <Link
+          className={styles.details}
+          onClick={() => handleDetailsClick(option)}
+          to={ROUTES.PAGE_DETAILS}
+        >
           <FormattedMessage id="loginCard.details" defaultMessage="Details" />
-        </div>
+        </Link>
         <div className={styles.buttonContainer}>
           <a
             className={styles.createAccountButton}

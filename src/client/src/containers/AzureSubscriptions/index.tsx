@@ -16,6 +16,7 @@ import getSvgUrl from "../../utils/getSvgUrl";
 
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
+import azureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
 import { setDetailPageAction } from "../../actions/setDetailsPage";
 
@@ -81,40 +82,6 @@ const messages = defineMessages({
 });
 
 class AzureSubscriptions extends React.Component<Props, IState> {
-  private formatMessage = this.props.intl.formatMessage;
-
-  private options: IOption[] = [
-    {
-      author: "Microsoft",
-      svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS),
-      title: this.formatMessage(messages.azureFunctions),
-      internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
-      longDescription: this.formatMessage(messages.azureFunctionsLongDesc),
-      body: this.formatMessage(messages.azureFunctionsBody)
-    },
-    {
-      author: "Microsoft",
-      svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
-      title: this.formatMessage(messages.cosmosResource),
-      internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
-      longDescription: this.formatMessage(messages.azureCosmosLongDesc),
-      body: this.formatMessage(messages.azureCosmosBody)
-    }
-  ];
-
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      azureServices: undefined
-    };
-  }
-
-  public async componentDidMount() {
-    const azureServices = this.options;
-    this.setState({
-      azureServices
-    });
-  }
   public isSelectionCreated = (internalName: string): boolean => {
     if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS) {
       return !_.isEmpty(this.props.azureFunctionsSelection);
@@ -148,25 +115,24 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     const { isLoggedIn, setDetailPage } = this.props;
     return (
       <div className={styles.container}>
-        {this.state.azureServices &&
-          this.state.azureServices.map(option => (
-            <div
-              key={option.title}
-              className={classnames(styles.subscriptionCardContainer, {
-                [styles.overlay]: !isLoggedIn
-              })}
-            >
-              <Card
-                option={option}
-                buttonText={this.addOrEditResourceText(option.internalName)}
-                handleButtonClick={this.getServicesModalOpener(
-                  option.internalName
-                )}
-                handleDetailsClick={setDetailPage}
-                useNormalButtons={this.isSelectionCreated(option.internalName)}
-              />
-            </div>
-          ))}
+        {azureServiceOptions.map(option => (
+          <div
+            key={option.title}
+            className={classnames(styles.subscriptionCardContainer, {
+              [styles.overlay]: !isLoggedIn
+            })}
+          >
+            <Card
+              option={option}
+              buttonText={this.addOrEditResourceText(option.internalName)}
+              handleButtonClick={this.getServicesModalOpener(
+                option.internalName
+              )}
+              handleDetailsClick={setDetailPage}
+              useNormalButtons={this.isSelectionCreated(option.internalName)}
+            />
+          </div>
+        ))}
       </div>
     );
   }
