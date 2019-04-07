@@ -49,6 +49,7 @@ interface IStateProps {
 type Props = RouteComponentProps & IStateProps & IDispatchProps;
 
 const pathsNext: any = {
+  [ROUTES.WELCOME]: ROUTES.SELECT_PROJECT_TYPE,
   [ROUTES.SELECT_PROJECT_TYPE]: ROUTES.SELECT_FRAMEWORKS,
   [ROUTES.SELECT_FRAMEWORKS]: ROUTES.SELECT_PAGES,
   [ROUTES.SELECT_PAGES]: ROUTES.AZURE_LOGIN,
@@ -137,62 +138,51 @@ class Footer extends React.Component<Props> {
                 />
               )}
             </div>
-            {pathname !== ROUTES.WELCOME && (
-              <div className={styles.buttonContainer}>
-                <Link
-                  className={classnames(buttonStyles.buttonDark, styles.button)}
-                  to={
-                    pathsBack[pathname] === undefined
-                      ? ROUTES.WELCOME
-                      : pathsBack[pathname]
-                  }
-                >
-                  <FormattedMessage id="footer.back" defaultMessage="Back" />
-                </Link>
-                <Link
-                  className={classnames(styles.button, {
-                    [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
-                    [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
-                  })}
-                  onClick={() => {
-                    this.handleLinkClick(pathname);
-                  }}
-                  to={
-                    pathname === ROUTES.REVIEW_AND_GENERATE
-                      ? ROUTES.REVIEW_AND_GENERATE
-                      : pathsNext[pathname]
-                  }
-                >
-                  <FormattedMessage id="footer.next" defaultMessage="Next" />
-                </Link>
-                <button
-                  disabled={
-                    pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
-                  }
-                  className={classnames(styles.button, {
-                    [buttonStyles.buttonDark]:
-                      !this.isReviewAndGenerate() || !areValidNames,
-                    [buttonStyles.buttonHighlightedBorder]:
-                      this.isReviewAndGenerate() && areValidNames
-                  })}
-                  onClick={this.logMessageToVsCode}
-                >
-                  <FormattedMessage
-                    id="footer.generate"
-                    defaultMessage="Generate"
-                  />
-                </button>
-                <Link
-                  className={classnames(styles.button, buttonStyles.buttonDark)}
-                  to={ROUTES.WELCOME}
-                >
-                  <FormattedMessage
-                    id="footer.cancel"
-                    defaultMessage="Cancel"
-                  />
-                </Link>
-              </div>
-            )}
+            <div className={styles.buttonContainer}>
+              <Link
+                className={classnames(buttonStyles.buttonDark, styles.button)}
+                to={
+                  pathsBack[pathname] === undefined
+                    ? ROUTES.WELCOME
+                    : pathsBack[pathname]
+                }
+              >
+                <FormattedMessage id="footer.back" defaultMessage="Back" />
+              </Link>
+              <Link
+                className={classnames(styles.button, {
+                  [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
+                  [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
+                })}
+                onClick={() => {
+                  this.handleLinkClick(pathname);
+                }}
+                to={
+                  pathname === ROUTES.REVIEW_AND_GENERATE
+                    ? ROUTES.REVIEW_AND_GENERATE
+                    : pathsNext[pathname]
+                }
+              >
+                <FormattedMessage id="footer.next" defaultMessage="Next" />
+              </Link>
+              <button
+                disabled={
+                  pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
+                }
+                className={classnames(styles.button, {
+                  [buttonStyles.buttonDark]:
+                    !this.isReviewAndGenerate() || !areValidNames,
+                  [buttonStyles.buttonHighlightedBorder]:
+                    this.isReviewAndGenerate() && areValidNames
+                })}
+                onClick={this.logMessageToVsCode}
+              >
+                <FormattedMessage
+                  id="footer.generate"
+                  defaultMessage="Generate Template"
+                />
+              </button>
+            </div>
           </div>
         )}
       </div>
