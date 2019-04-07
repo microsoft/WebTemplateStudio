@@ -17,6 +17,7 @@ export const messages = defineMessages({
     defaultMessage: "CosmosDB"
   }
 });
+import { IValidation } from "../reducers/wizardSelectionReducers/updateOutputPath";
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
@@ -26,6 +27,8 @@ const getProjectNameValidation = (state: any): any =>
   state.selection.projectNameObject.validation;
 const getOutputPath = (state: any): string =>
   state.selection.outputPathObject.outputPath;
+const getOutputPathValidation = (state: any): IValidation =>
+  state.selection.outputPathObject.validation;
 const getPageCount = (state: any): IPageCount => state.selection.pageCount;
 
 const getProjectTypeRowItems = (selection: any): RowType[] => {
@@ -145,6 +148,7 @@ export {
   getFrameworksRowItemSelector,
   getServicesSelector,
   getOutputPath,
+  getOutputPathValidation,
   getProjectName,
   getPageCount,
   getProjectNameValidation

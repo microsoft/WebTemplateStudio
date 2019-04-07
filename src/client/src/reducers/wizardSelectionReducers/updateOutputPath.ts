@@ -17,15 +17,12 @@ export interface IValidation {
 
 export interface IOutputPath {
   outputPath: string;
-  validation: IValidation;
+  validation?: IValidation;
 }
 
 const initialState = {
   outputPath: "",
-  validation: {
-    isValid: false,
-    error: ""
-  }
+  validation: undefined
 };
 
 const outputPathReducer = (state: IOutputPath = initialState, action: any) => {

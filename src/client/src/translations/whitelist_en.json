@@ -57,7 +57,6 @@
   "footer.back",
   "footer.next",
   "footer.generate",
-  "footer.cancel",
   "header.signOut",
   "postGenerationModal.failedToGenerate",
   "postGenerationModal.working",

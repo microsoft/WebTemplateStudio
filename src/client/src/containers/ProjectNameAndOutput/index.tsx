@@ -11,7 +11,8 @@ import {
 import {
   getOutputPath,
   getProjectName,
-  getProjectNameValidation
+  getProjectNameValidation,
+  getOutputPathValidation
 } from "../../selectors/wizardSelectionSelector";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -20,6 +21,8 @@ import { EXTENSION_COMMANDS } from "../../utils/constants";
 import styles from "./styles.module.css";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
 interface IProps {
   validation: any;
 }
@@ -28,8 +31,8 @@ interface IStateProps {
   vscode: IVSCodeObject;
   outputPath: string;
   projectName: string;
-  projectPathValidation: any;
-  projectNameValidation: any;
+  projectPathValidation: IValidation;
+  projectNameValidation: IValidation;
 }
 
 interface IDispatchProps {
@@ -60,28 +63,27 @@ const messages = defineMessages({
 
 const ProjectNameAndOutput = (props: Props) => {
   React.useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
-      if (props.vscode) {
-        // @ts-ignore
+    if (props.vscode) {
+      if (props.projectPathValidation) {
         props.vscode.postMessage({
           command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
           projectPath: props.outputPath,
-          projectName: props.projectName
+          projectName: props.projectName,
+          withProjectPath: true
         });
       }
-    } else {
-      // @ts-ignore produces a mock validation response from VSCode in development
-      window.postMessage({
-        command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-        payload: {
-          projectPathValidation: {
-            isInvalidProjectPath: false,
-            projectPathError: "Invalid path"
-          }
-        }
-      });
     }
   }, [props.outputPath, props.projectName]);
+  React.useEffect(() => {
+    if (props.vscode) {
+      props.vscode.postMessage({
+        command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+        projectPath: props.outputPath,
+        projectName: props.projectName,
+        withProjectPath: true
+      });
+    }
+  }, [props.outputPath]);
   const handleProjectNameChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
@@ -99,6 +101,7 @@ const ProjectNameAndOutput = (props: Props) => {
       command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
     });
   };
+  console.log(props);
   return (
     <React.Fragment>
       <div className={styles.inputContainer}>
@@ -127,7 +130,9 @@ const ProjectNameAndOutput = (props: Props) => {
             value={props.outputPath}
             placeholder={props.intl.formatMessage(messages.outputPath)}
             validation={props.projectPathValidation}
-            isEmpty={props.validation && props.outputPath.length === 0}
+            isEmpty={
+              props.projectPathValidation && props.outputPath.length === 0
+            }
           />
         </div>
       </div>
@@ -136,10 +141,10 @@ const ProjectNameAndOutput = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => ({
-  vscode: state.vscode.vscodeObject,
+  vscode: getVSCodeApiSelector(state),
   outputPath: getOutputPath(state),
   projectName: getProjectName(state),
-  projectPathValidation: state.selection.projectPathValidation,
+  projectPathValidation: getOutputPathValidation(state),
   projectNameValidation: getProjectNameValidation(state)
 });
 

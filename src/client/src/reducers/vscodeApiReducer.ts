@@ -146,6 +146,19 @@ const mockVsCodeApi = () => ({
             subscriptions: [{ value: "GIV.Hackathon", label: "GIV.Hackathon" }]
           }
         });
+      case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
+        if (message.withProjectPath) {
+          // @ts-ignore produces a mock validation response from VSCode in development
+          window.postMessage({
+            command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+            payload: {
+              projectPathValidation: {
+                isValid: false,
+                error: "Invalid path"
+              }
+            }
+          });
+        }
         break;
     }
   }

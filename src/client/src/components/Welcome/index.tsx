@@ -16,7 +16,8 @@ import { updateProjectNameAction } from "../../actions/updateProjectNameAndPath"
 import {
   getOutputPath,
   getProjectNameValidation,
-  getProjectName
+  getProjectName,
+  getOutputPathValidation
 } from "../../selectors/wizardSelectionSelector";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
@@ -104,7 +105,7 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 
 const mapStateToProps = (state: any): IStateProps => ({
   vscode: getVSCodeApiSelector(state),
-  projectPathValidation: state.selection.projectPathValidation,
+  projectPathValidation: getOutputPathValidation(state),
   outputPath: getOutputPath(state),
   projectNameValidation: getProjectNameValidation(state),
   projectName: getProjectName(state)

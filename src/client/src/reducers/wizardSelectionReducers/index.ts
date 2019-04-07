@@ -8,7 +8,6 @@ import projectNameObject from "./updateProjectName";
 import outputPathObject from "./updateOutputPath";
 import services from "./services";
 import pageCount from "./pageCountReducer";
-import projectPathValidation from "./validateProjectPath";
 import isValidatingName from "./validatingNameReducer";
 
 export default combineReducers({
@@ -19,7 +18,6 @@ export default combineReducers({
   services,
   outputPathObject,
   pageCount,
-  projectNameObject,
-  projectPathValidation,
-  isValidatingName
+  isValidatingName,
+  projectNameObject
 });

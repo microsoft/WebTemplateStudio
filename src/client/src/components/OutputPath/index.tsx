@@ -5,6 +5,7 @@ import Input from "../Input";
 import { INTL_MESSAGES } from "../../utils/constants";
 
 import styles from "./styles.module.css";
+import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
 
@@ -19,7 +20,7 @@ interface IProps {
   handleChange: (e: React.SyntheticEvent<HTMLInputElement>) => any;
   handleSaveClick: () => any;
   value: string;
-  validation: any;
+  validation?: IValidation;
   isEmpty: boolean;
   placeholder?: string;
 }
@@ -50,10 +51,8 @@ const OutputPath = ({
             }}
           />
         </div>
-        {(validation.isInvalidProjectPath && (
-          <div className={styles.errorMessage}>
-            {validation.projectPathError}
-          </div>
+        {(validation && validation.isValid && (
+          <div className={styles.errorMessage}>{validation.error}</div>
         )) ||
           (isEmpty && (
             <div className={styles.errorMessage}>
