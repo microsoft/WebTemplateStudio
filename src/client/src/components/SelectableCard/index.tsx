@@ -39,6 +39,13 @@ const SelectableCard = ({
   clickCount?: number;
   disabled: boolean | undefined;
 }) => {
+  function detailsClickWrapper(
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) {
+    event.stopPropagation();
+    onDetailsClick(option);
+  }
+
   return (
     <div
       onClick={() => {
@@ -71,7 +78,7 @@ const SelectableCard = ({
       </div>
       <div className={styles.cardFooter}>
         <Link
-          onClick={() => onDetailsClick(option)}
+          onClick={detailsClickWrapper}
           className={classNames(styles.link)}
           to={"/PageDetail"}
         >
