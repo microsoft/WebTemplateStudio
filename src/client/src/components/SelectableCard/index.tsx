@@ -13,6 +13,7 @@ import Check from "../../assets/check.svg";
 
 import { IOption } from "../../types/option";
 import { FormattedMessage } from "react-intl";
+import { ROUTES } from "../../utils/constants";
 
 const SelectableCard = ({
   iconPath,
@@ -80,7 +81,7 @@ const SelectableCard = ({
         <Link
           onClick={detailsClickWrapper}
           className={classNames(styles.link)}
-          to={"/PageDetail"}
+          to={ROUTES.PAGE_DETAILS}
         >
           <FormattedMessage
             id="selectableCard.details"
