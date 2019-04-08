@@ -1,3 +1,5 @@
+import { defineMessages } from "react-intl";
+
 const PAGE_DETAILS = "/PageDetail";
 const SELECT_PROJECT_TYPE = "/SelectWebApp";
 const SELECT_FRAMEWORKS = "/SelectFrameworks";
@@ -7,6 +9,13 @@ const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
 const WELCOME = "/";
 
 const PRODUCTION = "production";
+
+const INTL_MESSAGES = defineMessages({
+  EMPTY_FIELD: {
+    id: "constants.emptyField",
+    defaultMessage: "{fieldId} field cannot be empty"
+  }
+});
 
 const ROUTES = {
   PAGE_DETAILS,
@@ -48,18 +57,6 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   REST_API: "RestAPI"
 };
 
-const PAGE_NAME_ERROR_MESSAGES = {
-  DUPLICATE_NAME: "Name has to be unique",
-  INVALID_REGEX:
-    "Name may only contain letters, numbers, spaces, dashes or underscores",
-  EMPTY_NAME: "Name cannot be empty",
-  NAME_DOES_NOT_START_WITH_LETTER: "Page name may only start with letters"
-};
-
-const EMPTY_FIELD = (fieldId: string) => {
-  return `${fieldId} field cannot be empty`;
-};
-
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
   AZURE_LOGIN: "login",
@@ -86,6 +83,5 @@ export {
   ROUTES_ARRAY,
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  PAGE_NAME_ERROR_MESSAGES,
-  EMPTY_FIELD
+  INTL_MESSAGES
 };

@@ -9,15 +9,52 @@ import LeftSidebarLink from "../LeftSidebarLink";
 import styles from "./styles.module.css";
 
 import { ROUTES, ROUTES_ARRAY } from "../../utils/constants";
-import leftSidebarData from "../../mockData/leftSidebarData";
+
+import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+
+const messages = defineMessages({
+  welcome: {
+    id: "leftSidebar.welcome",
+    defaultMessage: "1. Welcome"
+  },
+  projectType: {
+    id: "leftSidebar.projectType",
+    defaultMessage: "2. ProjectType"
+  },
+  frameworks: {
+    id: "leftSidebar.frameworks",
+    defaultMessage: "3. Frameworks"
+  },
+  pages: {
+    id: "leftSidebar.pages",
+    defaultMessage: "4. Pages"
+  },
+  services: {
+    id: "leftSidebar.services",
+    defaultMessage: "5. Services (Optional)"
+  },
+  summary: {
+    id: "leftSidebar.summary",
+    defaultMessage: "6. Summary"
+  }
+});
 
 interface IStateProps {
   isVisited: { [key: string]: boolean };
 }
 
-type Props = RouteComponentProps & IStateProps;
+type Props = RouteComponentProps & IStateProps & InjectedIntlProps;
 
 const LeftSidebar = (props: Props) => {
+  const { formatMessage } = props.intl;
+  const leftSidebarData: string[] = [
+    formatMessage(messages.welcome),
+    formatMessage(messages.projectType),
+    formatMessage(messages.frameworks),
+    formatMessage(messages.pages),
+    formatMessage(messages.services),
+    formatMessage(messages.summary)
+  ];
   const { pathname } = props.location;
   const [currentPathIndex, setPathIndex] = React.useState(
     ROUTES_ARRAY.indexOf(pathname)
@@ -63,4 +100,4 @@ const mapStateToProps = (state: any): IStateProps => ({
   isVisited: state.wizardRoutes.isVisited
 });
 
-export default withRouter(connect(mapStateToProps)(LeftSidebar));
+export default withRouter(connect(mapStateToProps)(injectIntl(LeftSidebar)));
