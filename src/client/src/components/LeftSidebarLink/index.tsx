@@ -27,6 +27,7 @@ const LeftSidebarLink = ({
         <img
           src={process.env.REACT_APP_RELATIVE_PATH + Check}
           className={styles.icon}
+          alt="Link to a different page in the wizard"
         />
       ) : (
         <div className={styles.spacer} />

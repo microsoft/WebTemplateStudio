@@ -54,7 +54,11 @@ const DraggableSidebarItem = ({
       <div className={styles.draggablePage}>
         {(withIndent || reorderSvgUrl) && (
           <div className={styles.iconContainer}>
-            <img className={styles.reorderIcon} src={reorderSvgUrl} />
+            <img
+              className={styles.reorderIcon}
+              src={reorderSvgUrl}
+              alt="Draggable Sidebar Item"
+            />
           </div>
         )}
         <div className={styles.errorStack}>
@@ -66,7 +70,9 @@ const DraggableSidebarItem = ({
             })}
           >
             <div className={styles.inputContainer}>
-              {pageSvgUrl && <img className={styles.icon} src={pageSvgUrl} />}
+              {pageSvgUrl && (
+                <img className={styles.icon} src={pageSvgUrl} alt="Icon" />
+              )}
               {handleInputChange && (page || azureFunctionName) && idx && (
                 <input
                   className={classnames(styles.input, {
@@ -101,6 +107,7 @@ const DraggableSidebarItem = ({
           }}
           className={styles.cancelIcon}
           src={closeSvgUrl}
+          alt="Remove item from generation"
         />
       </div>
     </div>

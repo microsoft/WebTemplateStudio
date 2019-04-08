@@ -52,7 +52,9 @@ const SelectableCard = ({
       <div>
         <div className={styles.cardHeader}>
           <div className={styles.icon}>
-            {iconPath && <img src={iconPath} className={iconStyles} />}
+            {iconPath && (
+              <img src={iconPath} className={iconStyles} alt="icon" />
+            )}
           </div>
           <div
             className={classNames({
@@ -91,6 +93,7 @@ const SelectableCard = ({
             <img
               src={process.env.REACT_APP_RELATIVE_PATH + Check}
               className={styles.iconCheckMark}
+              alt="Check mark confirming item has been selected"
             />
           )}
         </div>

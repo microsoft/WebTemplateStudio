@@ -24,6 +24,7 @@ const PageDetails = (props: Props) => {
           <img
             className={styles.screenshot}
             src={screenShotMapping(props.detailsPageInfo.internalName)}
+            alt="Screenshot preview of web page that will be generated"
           />
         )}
       </div>
