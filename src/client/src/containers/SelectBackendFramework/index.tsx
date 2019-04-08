@@ -8,6 +8,8 @@ import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramewo
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+
 import styles from "./styles.module.css";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
@@ -33,9 +35,9 @@ const messages = defineMessages({
 
 class SelectBackEndFramework extends React.Component<Props> {
   public componentDidMount() {
-    // TODO: use store to get project type next time.
-    if (this.props.getBackendFrameworks !== undefined) {
-      this.props.getBackendFrameworks("FullStackWebApp");
+    const { getBackendFrameworks } = this.props;
+    if (getBackendFrameworks !== undefined) {
+      getBackendFrameworks(WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP);
     }
   }
   /**

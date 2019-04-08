@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
@@ -96,9 +97,11 @@ const SortablePageList = (props: Props) => {
     : props.intl!.formatMessage(messages.hide);
   const DRAG_PIXEL_THRESHOLD = 1;
   return (
-    <div className={styles.sidebarItem}>
+    <div>
       {!pagesRows && (
-        <div className={styles.pageListContainer}>
+        <div
+          className={classnames(styles.pageListContainer, styles.sidebarItem)}
+        >
           <div className={styles.dropdownTitle}>Pages</div>
           <div
             className={styles.hideOrShow}

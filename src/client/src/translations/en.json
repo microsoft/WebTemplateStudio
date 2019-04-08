@@ -34,6 +34,7 @@
   "footer.back": "Back",
   "footer.cancel": "Cancel",
   "footer.generate": "Generate",
+  "footer.license": "By continuing, you agree to the terms of all the licenses in the\n              licenses section.",
   "footer.next": "Next",
   "header.signOut": "Sign out",
   "loginCard.createAccount": "Create Account",

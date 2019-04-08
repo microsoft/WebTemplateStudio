@@ -22,7 +22,8 @@ const getProjectTypeRowItems = (selection: any): RowType[] => {
       type: "Project Type",
       title: projectType.title,
       svgUrl: getSvgUrl(projectType.internalName),
-      version: selection.version
+      version: selection.version,
+      author: projectType.author
     }
   ];
 };
@@ -34,13 +35,15 @@ const frameworksRowItems = (selection: any): RowType[] => {
       type: "Front-end framework",
       title: frontendFramework.title,
       svgUrl: getSvgUrl(frontendFramework.internalName),
-      version: frontendFramework.version
+      version: frontendFramework.version,
+      author: frontendFramework.author
     },
     {
       type: "Back-end framework",
       title: backendFramework.title,
       svgUrl: getSvgUrl(backendFramework.internalName),
-      version: backendFramework.version
+      version: backendFramework.version,
+      author: backendFramework.author
     }
   ];
 };
@@ -62,7 +65,7 @@ const getServices = (selection: any): any => {
         servicesRows.push({
           title: selection.appName,
           originalTitle: "Azure Functions",
-          company: "Microsoft",
+          author: "Microsoft",
           svgUrl: getSvgUrl(selection.internalName),
           functionNames: selection.functionNames,
           internalName: selection.internalName,
@@ -72,7 +75,7 @@ const getServices = (selection: any): any => {
         servicesRows.push({
           title: selection.accountName,
           originalTitle: "CosmosDB",
-          company: "Microsoft",
+          author: "Microsoft",
           svgUrl: getSvgUrl(selection.internalName),
           internalName: selection.internalName,
           version: selection.version
@@ -83,7 +86,6 @@ const getServices = (selection: any): any => {
   return servicesRows;
 };
 
-// FIXME: Needs to be in a format that is in line with the Core engine
 const getPagesRowItems = (selection: any): RowType[] => {
   const { pages } = selection;
   const pagesRows = [];
@@ -93,7 +95,8 @@ const getPagesRowItems = (selection: any): RowType[] => {
       title: page.title,
       svgUrl: getSvgUrl(page.internalName),
       id: page.id,
-      version: selection.version
+      version: selection.version,
+      author: page.author
     });
   }
   return pagesRows;
