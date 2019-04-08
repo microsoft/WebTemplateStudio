@@ -24,10 +24,7 @@ import { SubscriptionError } from "../errors";
 import { Extensible } from "../extensible";
 
 export class AzureServices extends Extensible {
-  clientCommandMap: Map<
-    ExtensionCommand,
-    (message: any) => Object
-  > = new Map([
+  clientCommandMap: Map<ExtensionCommand, (message: any) => Object> = new Map([
     [ExtensionCommand.Login, AzureServices.performLoginForSubscriptions],
     [ExtensionCommand.GetUserStatus, AzureServices.sendUserStatusIfLoggedIn],
     [ExtensionCommand.Logout, AzureServices.performLogout],
@@ -74,43 +71,35 @@ export class AzureServices extends Extensible {
         };
       }
     );
-        return {email: AzureAuth.getEmail(),
-          subscriptions: subscriptionListToDisplay};
+    return {
+      email: AzureAuth.getEmail(),
+      subscriptions: subscriptionListToDisplay
+    };
   }
   public static async performLogout() {
     return await AzureAuth.logout();
   }
 
-   // public static sendCosmosSubscriptionDataToClient(message: any) {
-  //   Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-  //     TelemetryEventName.SubscriptionData,
-  //     async function(this: IActionContext): Promise<void> {
-  //       await AzureServices.getSubscriptionData(
-  //         message.subscription,
-  //         AzureResourceType.Cosmos
-  //       )
-  //         .then(subscriptionDatapackage => {
-  //           Controller.handleValidMessage(
-  //             ExtensionCommand.SubscriptionDataForCosmos,
-  //             {
-  //               resourceGroups: subscriptionDatapackage.resourceGroups,
-  //               locations: subscriptionDatapackage.locations
-  //             }
-  //           );
-  //         })
-  //         .catch((error: Error) => {
-  //           throw error; //to log in telemetry
-  //         });
-  //     }
-  //   );
-  // }
+  public static sendCosmosSubscriptionDataToClient(message: any) {
+    return this.getSubscriptionData(
+      message.subscription,
+      AzureResourceType.Cosmos
+    );
+  }
+
+  public static sendFunctionsSubscriptionDataToClient(message: any) {
+    return this.getSubscriptionData(
+      message.subscription,
+      AzureResourceType.Functions
+    );
+  }
 
   /**
    * @param subscriptionLabel subscription label
    * @returns a Json object of Formatted Resource and Location strings
    *
    * */
-  public static async getSubscriptionData(
+  private static async getSubscriptionData(
     subscriptionLabel: string,
     AzureType: AzureResourceType
   ) {
@@ -166,16 +155,46 @@ export class AzureServices extends Extensible {
     };
   }
 
-  public static async validateCosmosAccountName(
-    cosmosDBAccountName: string,
-    subscriptionLabel: string
-  ): Promise<string | undefined> {
-    await this.updateCosmosDBSubscriptionItemCache(subscriptionLabel);
+  public static async sendCosmosNameValidationStatusToClient(message: any) {
+    await this.updateCosmosDBSubscriptionItemCache(message.subscription);
 
-    return await this.AzureCosmosDBProvider.validateCosmosDBAccountName(
-      cosmosDBAccountName,
+    let invalidReason = await this.AzureCosmosDBProvider.validateCosmosDBAccountName(
+      message.appName,
       this.usersCosmosDBSubscriptionItemCache
     );
+    return {
+      isAvailable:
+        !invalidReason || invalidReason === undefined || invalidReason === "",
+        reason: invalidReason
+    };
+  }
+
+  // {
+  //   command: ExtensionCommand.NameCosmos,
+  //   message: invalidReason,
+  //   payload: {isAvailable:
+  //     !invalidReason ||
+  //     invalidReason === undefined ||
+  //     invalidReason === ""}
+  // }
+
+  // private static async validateCosmosAccountName(
+  //   cosmosDBAccountName: string,
+  //   subscriptionLabel: string
+  // ): Promise<string | undefined> {
+  //   return await this.AzureCosmosDBProvider.validateCosmosDBAccountName(
+  //     cosmosDBAccountName,
+  //     this.usersCosmosDBSubscriptionItemCache
+  //   );
+  // }
+
+  public static async sendFunctionNameValidationStatusToClient(message: any) {
+    await this.updateFunctionSubscriptionItemCache(message.subscription);
+    let isValid = this.AzureFunctionProvider.checkFunctionAppName(
+      message.appName,
+      this.usersFunctionSubscriptionItemCache
+    );
+    return { isAvailable: isValid }
   }
 
   public static async validateFunctionAppName(
