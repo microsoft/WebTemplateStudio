@@ -220,7 +220,7 @@ const CosmosResourceModal = (props: Props) => {
         subscription: value
       });
       updatedForm = {
-        ...updateForm,
+        ...updatedForm,
         resourceGroup: {
           value: "",
           label: ""
@@ -237,12 +237,10 @@ const CosmosResourceModal = (props: Props) => {
         }
       };
     }
-
     updateForm(updatedForm);
   };
 
   React.useEffect(() => {
-    console.log("1");
     if (props.selection) {
       updateForm(props.selection.dropdownSelection);
     }
