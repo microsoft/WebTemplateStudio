@@ -13,13 +13,8 @@ interface IProps {
   withIndent?: boolean;
   title: string;
   originalTitle?: string;
-<<<<<<< HEAD
   author?: string;
-  version: string;
-=======
-  company?: string;
   version?: string;
->>>>>>> efe5c9e... change name and output component on summary page to a tile
   isEditable?: boolean;
   svgUrl?: string;
   withoutEditIcon?: boolean;
@@ -121,10 +116,10 @@ const SummaryTile = ({
                       <div>&nbsp;|&nbsp;</div>
                     </React.Fragment>
                   )}
-              {author && (
-                <React.Fragment>
-                  <div>{author}</div>
-                  <div>&nbsp;|&nbsp;</div>
+                  {author && (
+                    <React.Fragment>
+                      <div>{author}</div>
+                      <div>&nbsp;|&nbsp;</div>
                     </React.Fragment>
                   )}
                   <div>{version}</div>
