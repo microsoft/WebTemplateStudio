@@ -12,4 +12,5 @@ export interface IOption {
   version?: string;
   unselectable?: boolean;
   isValidTitle?: boolean;
+  author?: string;
 }

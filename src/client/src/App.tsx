@@ -21,7 +21,6 @@ import PostGenerationModal from "./containers/PostGenerationModal";
 import { EXTENSION_COMMANDS, ROUTES } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
-import { loadWizardContentAction } from "./actions/loadWizardContent";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
 import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
 import {
@@ -42,7 +41,6 @@ import appStyles from "./appStyles.module.css";
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;
-  loadWizardContent: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
@@ -74,7 +72,6 @@ class App extends React.Component<Props> {
 
   public componentDidMount() {
     this.props.getVSCodeApi();
-    this.props.loadWizardContent();
     // listens for a login event from VSCode
     window.addEventListener("message", event => {
       const message = event.data;
@@ -187,9 +184,6 @@ class App extends React.Component<Props> {
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   getVSCodeApi: () => {
     dispatch(getVSCodeApi());
-  },
-  loadWizardContent: () => {
-    dispatch(loadWizardContentAction());
   },
   logIntoAzure: (email: string, subscriptions: any[]) => {
     dispatch(logIntoAzureAction({ email, subscriptions }));
