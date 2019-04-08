@@ -290,13 +290,21 @@ export abstract class Controller {
   public static sendFunctionNameValidationStatusToClient(message: any) {
     AzureServices.validateFunctionAppName(message.appName, message.subscription)
       .then(isValid => {
-          Controller.reactPanelContext.postMessageWebview({
-            command: ExtensionCommand.NameFunctions,
-            message: isValid? "" : CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(message.appName),
-            payload: {isAvailable: isValid}
-          });
+        Controller.reactPanelContext.postMessageWebview({
+          command: ExtensionCommand.NameFunctions,
+          message: isValid
+            ? ""
+            : CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(message.appName),
+          payload: { isAvailable: isValid }
+        });
       })
       .catch((error: Error) => {
+        // FIXME: Danish please fix the entire function validation and remove the lines below up to the throw error; log in telemetry
+        Controller.reactPanelContext.postMessageWebview({
+          command: ExtensionCommand.NameFunctions,
+          message: error.message,
+          payload: { isAvailable: false }
+        });
         throw error; //to log in telemetry
       });
   }
