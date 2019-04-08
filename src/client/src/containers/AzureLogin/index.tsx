@@ -10,10 +10,12 @@ import styles from "./styles.module.css";
 
 import AzureSubscriptions from "../AzureSubscriptions";
 import { EXTENSION_COMMANDS } from "../../utils/constants";
-import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { setDetailPageAction } from "../../actions/setDetailsPage";
 import { IOption } from "../../types/option";
 import { withLocalPath } from "../../utils/getSvgUrl";
+import { messages } from "../../mockData/azureServiceOptions";
+
 import { microsoftAzureDetails } from "../../mockData/azureServiceOptions";
 
 interface IDispatchProps {
@@ -26,23 +28,6 @@ interface IAzureLoginProps {
 }
 
 type Props = IDispatchProps & IAzureLoginProps & InjectedIntlProps;
-
-const messages = defineMessages({
-  azureDeploymentTitle: {
-    id: "azureLogin.azureDeploymentTitle",
-    defaultMessage: "Microsoft Azure"
-  },
-  azureDeploymentBody: {
-    id: "azureLogin.azureDeploymentBody",
-    defaultMessage:
-      "Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. Sign in or create an account to get access to CosmosDB and Azure Functions from this extension"
-  },
-  azureLoginTitle: {
-    id: "azureLogin.azureLoginTitle",
-    defaultMessage:
-      "5. Get access to cloud services by signing into Azure. (Optional)"
-  }
-});
 
 class AzureLogin extends React.Component<Props> {
   handleClick = () => {
@@ -64,7 +49,6 @@ class AzureLogin extends React.Component<Props> {
   };
   public render() {
     const { isLoggedIn, intl, setDetailPage } = this.props;
-    console.log(this.props);
     return (
       <div>
         <Title>{intl.formatMessage(messages.azureLoginTitle)}</Title>
@@ -75,8 +59,8 @@ class AzureLogin extends React.Component<Props> {
               handleClick={() => {
                 this.handleClick();
               }}
-              cardTitle={intl.formatMessage(messages.azureDeploymentTitle)}
-              cardBody={intl.formatMessage(messages.azureDeploymentBody)}
+              cardTitle={intl.formatMessage(messages.azureTitle)}
+              cardBody={intl.formatMessage(messages.azureCardBody)}
               handleDetailsClick={setDetailPage}
               option={microsoftAzureDetails}
             />
@@ -99,7 +83,8 @@ const mapStateToProps = (state: any): IAzureLoginProps => {
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   setDetailPage: (detailPageInfo: IOption) => {
-    dispatch(setDetailPageAction(detailPageInfo));
+    const isIntlFormatted = true;
+    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));
   }
 });
 

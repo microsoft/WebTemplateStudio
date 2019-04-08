@@ -90,9 +90,9 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const title = this.createTitle(optionIndexContainingData, count);
 
     const cardInfo: ISelected = {
-      title,
+      title: title as string,
       internalName,
-      id: title,
+      id: title as string,
       defaultName,
       isValidTitle: true,
       licenses,
@@ -144,7 +144,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     if (selectCard) {
       selectCard({
         internalName,
-        title,
+        title: title as string,
         version: shorthandVersionLabel,
         licenses,
         author
@@ -216,8 +216,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 selected={this.isCardSelected(cardNumber)}
                 iconPath={svgUrl}
                 iconStyles={styles.icon}
-                title={title}
-                body={body}
+                title={title as string}
+                body={body as string}
                 disabled={unselectable}
                 clickCount={this.getCardCount(internalName)}
               />

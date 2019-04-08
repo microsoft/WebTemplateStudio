@@ -20,7 +20,12 @@ import azureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
 import { setDetailPageAction } from "../../actions/setDetailsPage";
 
-import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+import {
+  InjectedIntlProps,
+  injectIntl,
+  defineMessages,
+  FormattedMessage
+} from "react-intl";
 
 interface IDispatchProps {
   startLogOutToAzure: () => any;
@@ -92,9 +97,9 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   };
   public addOrEditResourceText = (internalName: string): string => {
     if (this.isSelectionCreated(internalName)) {
-      return this.formatMessage(messages.editResource);
+      return this.props.intl.formatMessage(messages.editResource);
     }
-    return this.formatMessage(messages.addResource);
+    return this.props.intl.formatMessage(messages.addResource);
   };
   /**
    * Returns a function that opens a modal for a specific internalName
@@ -112,12 +117,12 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return () => {};
   }
   public render() {
-    const { isLoggedIn, setDetailPage } = this.props;
+    const { isLoggedIn, setDetailPage, intl } = this.props;
     return (
       <div className={styles.container}>
         {azureServiceOptions.map(option => (
           <div
-            key={option.title}
+            key={JSON.stringify(option.title)}
             className={classnames(styles.subscriptionCardContainer, {
               [styles.overlay]: !isLoggedIn
             })}
@@ -150,7 +155,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
     dispatch(AzureActions.startLogOutAzure());
   },
   setDetailPage: (detailPageInfo: IOption) => {
-    dispatch(setDetailPageAction(detailPageInfo));
+    const isIntlFormatted = true;
+    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));
   },
   openCosmosDbModal: () => {
     dispatch(ModalActions.openCosmosDbModalAction());

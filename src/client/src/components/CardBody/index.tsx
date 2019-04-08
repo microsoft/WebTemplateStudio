@@ -1,9 +1,21 @@
 import * as React from "react";
+import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl";
 
 import styles from "./styles.module.css";
 
-const CardBody = ({ body }: { body: string }) => {
-  return <div className={styles.body}>{body}</div>;
+interface IProps {
+  body?: string;
+  formattedBody?: FormattedMessage.MessageDescriptor;
+}
+
+type Props = InjectedIntlProps & IProps;
+
+const CardBody = ({ body, formattedBody, intl }: Props) => {
+  return (
+    <div className={styles.body}>
+      {body || (formattedBody && intl.formatMessage(formattedBody))}
+    </div>
+  );
 };
 
-export default CardBody;
+export default injectIntl(CardBody);
