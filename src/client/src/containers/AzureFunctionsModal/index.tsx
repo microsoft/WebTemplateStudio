@@ -285,7 +285,14 @@ const AzureFunctionsResourceModal = (props: Props) => {
     });
   };
   const handleAddResource = () => {
-    if (setAzureModalValidation(azureFunctionsFormData, props.isValidatingName, props.appNameAvailability, updateValidation)) {
+    if (
+      setAzureModalValidation(
+        azureFunctionsFormData,
+        props.isValidatingName,
+        props.appNameAvailability,
+        updateValidation
+      )
+    ) {
       return;
     }
     props.saveAzureFunctionsOptions(azureFunctionsFormData);

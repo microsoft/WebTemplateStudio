@@ -242,6 +242,7 @@ const CosmosResourceModal = (props: Props) => {
   };
 
   React.useEffect(() => {
+    console.log("1");
     if (props.selection) {
       updateForm(props.selection.dropdownSelection);
     }
