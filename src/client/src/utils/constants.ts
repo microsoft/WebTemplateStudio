@@ -59,7 +59,10 @@ const PAGE_NAME_ERROR_MESSAGES = {
 const EMPTY_FIELD = (fieldId: string) => {
   return `${fieldId} field cannot be empty`;
 };
-
+const EXTENSION_MODULES = {
+  AZURE: "Azure",
+  TELEMETRY: "Telemetry"
+};
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
   AZURE_LOGIN: "login",

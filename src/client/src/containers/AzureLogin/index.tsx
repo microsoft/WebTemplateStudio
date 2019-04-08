@@ -9,7 +9,7 @@ import styles from "./styles.module.css";
 import grid from "../../css/grid.module.css";
 
 import AzureSubscriptions from "../AzureSubscriptions";
-import { EXTENSION_COMMANDS } from "../../utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import {
   FormattedMessage,
   InjectedIntlProps,
@@ -49,6 +49,7 @@ class AzureLogin extends React.Component<Props> {
     // initiates a login command to VSCode ReactPanel class
     if (process.env.NODE_ENV === "production") {
       this.props.vscode.postMessage({
+        module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.AZURE_LOGIN
       });
     } else {

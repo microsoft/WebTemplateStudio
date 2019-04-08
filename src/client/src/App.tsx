@@ -18,7 +18,7 @@ import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 
-import { EXTENSION_COMMANDS, ROUTES } from "./utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES, ROUTES } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { loadWizardContentAction } from "./actions/loadWizardContent";
@@ -145,6 +145,7 @@ class App extends React.Component<Props> {
   public componentDidUpdate(prevProps: Props) {
     if (this.props.vscode !== prevProps.vscode) {
       this.props.vscode.postMessage({
+        module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.GET_USER_STATUS
       });
     }

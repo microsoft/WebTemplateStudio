@@ -1,6 +1,6 @@
 import * as Actions from "../actions/types";
 
-import { EXTENSION_COMMANDS, PRODUCTION } from "../utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES, PRODUCTION } from "../utils/constants";
 
 /* State Shape
 {
@@ -46,6 +46,7 @@ const mockVsCodeApi = () => ({
       case EXTENSION_COMMANDS.NAME_FUNCTIONS:
         //@ts-ignore
         window.postMessage({
+          module: EXTENSION_MODULE.AZURE,
           command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
           payload: {
             isAvailable: message.appName.length > 0
@@ -57,6 +58,7 @@ const mockVsCodeApi = () => ({
       case EXTENSION_COMMANDS.NAME_COSMOS:
         //@ts-ignore
         window.postMessage({
+          module: EXTENSION_MODULE.AZURE,
           command: EXTENSION_COMMANDS.NAME_COSMOS,
           payload: {
             isAvailable: message.appName.length > 0
@@ -68,6 +70,7 @@ const mockVsCodeApi = () => ({
       case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
         // @ts-ignore produces locations and resource groups in development
         window.postMessage({
+          module: EXTENSION_MODULE.AZURE,
           command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
           payload: {
             locations: [{ label: WEST_US, value: WEST_US }],
@@ -79,6 +82,7 @@ const mockVsCodeApi = () => ({
       case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
         // @ts-ignore produces locations and resource groups in development
         window.postMessage({
+          module: EXTENSION_MODULE.AZURE,
           command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
           payload: {
             locations: [{ label: WEST_US, value: WEST_US }],

@@ -32,6 +32,7 @@ const Header = (props: Props) => {
             className={styles.button}
             onClick={() => {
               props.vscode.postMessage({
+                module: EXTENSION_MODULES.AZURE,
                 command: EXTENSION_COMMANDS.AZURE_LOGOUT
               });
             }}

@@ -5,7 +5,8 @@ import {
   ExtensionModule,
   TelemetryEventName,
   SyncStatus,
-  AzureResourceType
+  AzureResourceType,
+  ExtensionCommand
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";

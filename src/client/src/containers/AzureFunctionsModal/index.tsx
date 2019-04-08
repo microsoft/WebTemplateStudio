@@ -23,6 +23,7 @@ import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
+  EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
   EMPTY_FIELD
 } from "../../utils/constants";
@@ -215,6 +216,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
       // Get resource Group and locations and set the dropdown options to them
       props.vscode.postMessage({
+        module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
         subscription: value
       });
@@ -235,6 +237,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
    */
   React.useEffect(() => {
     props.vscode.postMessage({
+      module: EXTENSION_MODULES.AZURE,
       command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
       appName: azureFunctionsFormData.appName,
       subscription: azureFunctionsFormData.subscription

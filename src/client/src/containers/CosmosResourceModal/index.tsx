@@ -22,6 +22,7 @@ import { EMPTY_FIELD } from "../../utils/constants";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
+  EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../utils/constants";
 import styles from "./styles.module.css";
@@ -211,6 +212,7 @@ const CosmosResourceModal = (props: Props) => {
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
       // Get resource Group and locations and set the dropdown options to them
       props.vscode.postMessage({
+        module: EXTENSION_MODULE.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
         subscription: value
       });
@@ -230,6 +232,7 @@ const CosmosResourceModal = (props: Props) => {
    */
   React.useEffect(() => {
     props.vscode.postMessage({
+      module: EXTENSION_MODULE.AZURE,
       command: EXTENSION_COMMANDS.NAME_COSMOS,
       appName: cosmosFormData.accountName,
       subscription: cosmosFormData.subscription
