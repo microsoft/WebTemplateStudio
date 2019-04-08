@@ -2,17 +2,20 @@ import * as vscode from 'vscode';
 import TelemetryReporter from 'vscode-extension-telemetry';
 import { getPackageInfo } from './getPackageInfo';
 import { IActionContext, ITelemetryReporter, callWithTelemetryAndCatchErrors } from './callWithTelemetryAndErrorHandling';
-import { TelemetryEventName } from '../constants'; 
+import { TelemetryEventName, ExtensionCommand } from '../constants'; 
+import { Extensible, IPayloadResponse } from '../extensible';
 
 export type IActionContext = IActionContext;
 
-export class TelemetryAI {
+export class TelemetryAI extends Extensible{
+    clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([]);
 
     private static telemetryReporter: ITelemetryReporter;
     private wizardSessionStartTime: number;
     private pageStartTime: number;
 
     constructor(private vscodeContext: vscode.ExtensionContext, private extensionStartTime: number){
+        super();
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(vscodeContext);
         this.wizardSessionStartTime = Date.now();
         this.pageStartTime = this.wizardSessionStartTime;

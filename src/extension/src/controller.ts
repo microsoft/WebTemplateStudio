@@ -47,7 +47,7 @@ export class Controller {
     //   ExtensionCommand.GetOutputPath,
     //   Controller.sendOutputPathSelectionToClient
     // ],
-    // [ExtensionCommand.TrackPageSwitch, Controller.trackOnPageChangeInTelemetry],
+    [ExtensionCommand.TrackPageSwitch, Controller.Telemetry],
     // [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     // [
     //   ExtensionCommand.ProjectPathValidation,
