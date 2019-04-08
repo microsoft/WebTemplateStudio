@@ -30,12 +30,15 @@ const LoginCard = ({ cardTitle, cardBody, svgUrl, handleClick }: IProps) => {
           <FormattedMessage id="loginCard.details" defaultMessage="Details" />
         </div>
         <div className={styles.buttonContainer}>
-          <div className={styles.createAccountButton}>
+          <a
+            className={styles.createAccountButton}
+            href="https://azure.microsoft.com/free/"
+          >
             <FormattedMessage
               id="loginCard.createAccount"
               defaultMessage="Create Account"
             />
-          </div>
+          </a>
           <button
             onClick={handleClick}
             className={classnames(
