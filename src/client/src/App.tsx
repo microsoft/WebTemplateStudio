@@ -42,6 +42,7 @@ import { startLogOutAzure } from "./actions/logOutAzure";
 import { IVersions } from "./types/version";
 import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
+import { setAzureValidationStatusAction } from "./actions/setAzureValidationStatusAction";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -52,6 +53,7 @@ interface IDispatchProps {
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
   setProjectPathValidation: (validation: any) => void;
+  setAzureValidationStatus: (status: boolean) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: boolean) => any;
   getVersionsData: (versions: IVersions) => any;
@@ -74,6 +76,7 @@ class App extends React.Component<Props> {
     setCosmosResourceAccountNameAvailability: () => {},
     setAppNameAvailability: () => {},
     setProjectPathValidation: () => {},
+    setAzureValidationStatus: () => {},
     updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {},
     getVersionsData: () => {}
@@ -122,6 +125,7 @@ class App extends React.Component<Props> {
             isAvailable: message.payload.isAvailable,
             message: message.message
           });
+          this.props.setAzureValidationStatus(false);
           return;
 
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
@@ -129,6 +133,7 @@ class App extends React.Component<Props> {
             isAvailable: message.payload.isAvailable,
             message: message.message
           });
+          this.props.setAzureValidationStatus(false);
           return;
         case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
           this.props.setProjectPathValidation(
@@ -221,6 +226,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   },
   setProjectPathValidation: (validation: any) => {
     dispatch(setProjectPathValidation(validation));
+  },
+  setAzureValidationStatus: (status: boolean) => {
+    dispatch(setAzureValidationStatusAction(status));
   },
   updateTemplateGenStatusMessage: (status: string) => {
     dispatch(updateTemplateGenerationStatusMessageAction(status));

@@ -102,3 +102,24 @@ input::placeholder {
   font-size: 90%;
   opacity: 50%;
 }
+
+.spinner {
+  height: 1em;
+  margin-right: 10px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: rotate steps(60) 1s infinite;
+  height: 25px;
+  width: 25px;
+}
