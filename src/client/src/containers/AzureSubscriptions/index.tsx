@@ -96,10 +96,11 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return false;
   };
   public addOrEditResourceText = (internalName: string): string => {
+    const { formatMessage } = this.props.intl;
     if (this.isSelectionCreated(internalName)) {
-      return this.props.intl.formatMessage(messages.editResource);
+      return formatMessage(messages.editResource);
     }
-    return this.props.intl.formatMessage(messages.addResource);
+    return formatMessage(messages.addResource);
   };
   /**
    * Returns a function that opens a modal for a specific internalName

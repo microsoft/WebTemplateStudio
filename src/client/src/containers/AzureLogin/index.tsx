@@ -17,6 +17,7 @@ import { withLocalPath } from "../../utils/getSvgUrl";
 import { messages } from "../../mockData/azureServiceOptions";
 
 import { microsoftAzureDetails } from "../../mockData/azureServiceOptions";
+import { withLocalPath } from "../../utils/getSvgUrl";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
@@ -32,20 +33,9 @@ type Props = IDispatchProps & IAzureLoginProps & InjectedIntlProps;
 class AzureLogin extends React.Component<Props> {
   handleClick = () => {
     // initiates a login command to VSCode ReactPanel class
-    if (process.env.NODE_ENV === "production") {
-      this.props.vscode.postMessage({
-        command: EXTENSION_COMMANDS.AZURE_LOGIN
-      });
-    } else {
-      // @ts-ignore produces a mock login response from VSCode in development
-      window.postMessage({
-        command: "login",
-        payload: {
-          email: "devEnvironment2@email.com",
-          subscriptions: [{ value: "GIV.Hackathon", label: "GIV.Hackathon" }]
-        }
-      });
-    }
+    this.props.vscode.postMessage({
+      command: EXTENSION_COMMANDS.AZURE_LOGIN
+    });
   };
   public render() {
     const { isLoggedIn, intl, setDetailPage } = this.props;

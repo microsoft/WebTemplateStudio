@@ -41,21 +41,18 @@ const Details = ({
       {props.children}
     </a>
   );
-  const renderLongDescription = () => {
+  const renderFormattedData = (
+    info: string | FormattedMessage.MessageDescriptor | undefined,
+    isMarkdown: boolean
+  ) => {
     if (formatteDetailInfo) {
-      return intl.formatMessage(
-        formatteDetailInfo.longDescription as FormattedMessage.MessageDescriptor
-      );
+      return intl.formatMessage(info as FormattedMessage.MessageDescriptor);
     }
-    return <ReactMarkdown source={detailInfo.longDescription as string} />;
-  };
-  const renderTitle = () => {
-    if (formatteDetailInfo) {
-      return intl.formatMessage(
-        formatteDetailInfo.title as FormattedMessage.MessageDescriptor
-      );
+    if (isMarkdown) {
+      return <ReactMarkdown source={info as string} />;
+    } else {
+      return info;
     }
-    return detailInfo.title;
   };
   return (
     <React.Fragment>
@@ -81,9 +78,11 @@ const Details = ({
             )}
           </div>
           <div>
-            <div className={styles.detailsTitle}>{renderTitle()}</div>
+            <div className={styles.detailsTitle}>
+              {renderFormattedData(detailInfo.title, false)}
+            </div>
             <div className={styles.detailsDescription}>
-              {renderLongDescription()}
+              {renderFormattedData(detailInfo.longDescription, true)}
             </div>
             <div>
               <div className={classnames(styles.metaData, grid.row)}>
