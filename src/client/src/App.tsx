@@ -25,7 +25,7 @@ import {
   DEVELOPMENT
 } from "./utils/constants";
 
-import { getVSCodeApi } from "./actions/getVSCodeApi";
+import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
 import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
 import {

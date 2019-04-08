@@ -10,7 +10,7 @@ import {
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-import { getPagesOptionsAction } from "../../actions/getPagesOptions";
+import { getPagesOptionsAction } from "../../actions/wizardContentActions/getPagesOptions";
 import { getPageCount } from "../../selectors/wizardSelectionSelector";
 import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { getProjectTypesAction } from "../../actions/getProjectTypes";
+import { getProjectTypesAction } from "../../actions/wizardContentActions/getProjectTypes";
 import { IOption } from "../../types/option";
 import SelectOption from "../SelectOption";
 

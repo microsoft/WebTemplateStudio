@@ -5,7 +5,7 @@ import SelectOption from "../SelectOption";
 
 import { selectFrontendFramework as selectFrontendAction } from "../../actions/selectFrontEndFramework";
 
-import { getFrontendFrameworksAction } from "../../actions/getFrontendFrameworks";
+import { getFrontendFrameworksAction } from "../../actions/wizardContentActions/getFrontendFrameworks";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
