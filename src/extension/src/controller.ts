@@ -278,9 +278,11 @@ export abstract class Controller {
   public static sendFunctionNameValidationStatusToClient(message: any) {
     AzureServices.validateFunctionAppName(message.appName, message.subscription)
       .then(isValid => {
-        Controller.handleValidMessage(ExtensionCommand.NameFunctions, {
-          isAvailable: isValid
-        });
+          Controller.reactPanelContext.postMessageWebview({
+            command: ExtensionCommand.NameFunctions,
+            message: isValid? "" : CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(message.appName),
+            payload: {isAvailable: isValid}
+          });
       })
       .catch((error: Error) => {
         throw error; //to log in telemetry
