@@ -117,14 +117,14 @@ class App extends React.Component<Props> {
           // and update redux (boolean, string)
           this.props.setCosmosResourceAccountNameAvailability({
             isAvailable: message.payload.isAvailable,
-            message: message.message
+            message: message.payload.reason
           });
           return;
 
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
           this.props.setAppNameAvailability({
             isAvailable: message.payload.isAvailable,
-            message: message.message
+            message: message.payload.reason
           });
           return;
         case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
