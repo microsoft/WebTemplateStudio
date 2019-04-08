@@ -19,7 +19,6 @@ import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import { INTL_MESSAGES } from "../../utils/constants";
-import { EMPTY_FIELD } from "../../utils/constants";
 import { setCosmosModalValidation } from "./modalValidation";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
@@ -355,6 +354,7 @@ const CosmosResourceModal = (props: Props) => {
         cosmosData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
         props.intl.formatMessage(messages.createNew),
+        false,
         DEFAULT_VALUE
       )}
       {getDropdownSection(
@@ -364,8 +364,8 @@ const CosmosResourceModal = (props: Props) => {
         cosmosData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
         props.intl.formatMessage(messages.createNew),
-        DEFAULT_VALUE,
-        cosmosFormData.subscription.value === ""
+        cosmosFormData.subscription.value === "",
+        DEFAULT_VALUE
       )}
       <div
         className={classnames({
@@ -424,6 +424,7 @@ const CosmosResourceModal = (props: Props) => {
         cosmosData.api,
         FORM_CONSTANTS.API.value,
         undefined,
+        false,
         DEFAULT_VALUE
       )}
       {getDropdownSection(
@@ -432,7 +433,7 @@ const CosmosResourceModal = (props: Props) => {
         cosmosData.location,
         FORM_CONSTANTS.LOCATION.value,
         undefined,
-        DEFAULT_VALUE,
+        false,
         cosmosFormData.subscription.value === ""
       )}
       <div className={styles.buttonContainer}>

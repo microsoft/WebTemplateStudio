@@ -115,13 +115,6 @@ const messages = defineMessages({
   }
 });
 
-const DEFAULT_VALUE = {
-  value: "Select...",
-  label: "Select..."
-};
-
-type Props = IDispatchProps & IStateProps & InjectedIntlProps;
-
 interface IFunctionsState {
   [key: string]: any;
 }
@@ -367,6 +360,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         functionsData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
         props.intl.formatMessage(messages.createNew),
+        false,
         DEFAULT_VALUE
       )}
       {getDropdownSection(
@@ -376,8 +370,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
         functionsData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
         props.intl.formatMessage(messages.createNew),
-        DEFAULT_VALUE,
-        azureFunctionsFormData.subscription.value === ""
+        azureFunctionsFormData.subscription.value === "",
+        DEFAULT_VALUE
       )}
       <div
         className={classnames({
@@ -438,8 +432,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
         functionsData.location,
         FORM_CONSTANTS.LOCATION.value,
         undefined,
-        DEFAULT_VALUE,
-        azureFunctionsFormData.subscription === ""
+        azureFunctionsFormData.subscription === "",
+        DEFAULT_VALUE
       )}
       {getDropdownSection(
         modalValidation.isRuntimeStackEmpty &&
@@ -448,6 +442,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         functionsData.runtimeStack,
         FORM_CONSTANTS.RUNTIME_STACK.value,
         undefined,
+        false,
         DEFAULT_VALUE
       )}
       <div className={styles.modalFooterContainer}>
