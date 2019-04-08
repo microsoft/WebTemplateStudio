@@ -2,7 +2,7 @@ import { ExtensionCommand, CONSTANTS } from "./constants";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 
 export abstract class Extensible {
-  private static queuedCommand : (message: any) => Object;
+  private static queuedCommand : (message: any) => Promise<IPayloadResponse>;
   abstract clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>>;
   
   public routingMessageReceieverDelegate(messagePayload: any, Telemetry: TelemetryAI){

@@ -61,7 +61,7 @@ export class Controller {
 
     if (classModule) {
       let payload = await classModule.routingMessageReceieverDelegate(message, Controller.Telemetry);
-      Controller.handleValidMessage(message.command, payload);
+      Controller.handleValidMessage(message.command, payload!.payload);
     } else {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
     }
