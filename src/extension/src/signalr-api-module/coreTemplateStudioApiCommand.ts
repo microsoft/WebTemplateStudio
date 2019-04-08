@@ -1,5 +1,5 @@
 import { ICommandPayload } from "./commandPayload";
-import signalR from "@aspnet/signalr";
+import * as signalR from "@aspnet/signalr";
 
 export abstract class CoreTemplateStudioApiCommand {
   protected readonly commandPayload: ICommandPayload;

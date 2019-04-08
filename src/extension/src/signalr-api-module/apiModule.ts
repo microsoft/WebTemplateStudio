@@ -1,11 +1,14 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { ChildProcess, execFile } from "child_process";
-import { CONSTANTS } from "./constants";
+import { CONSTANTS } from "../constants";
 import * as signalR from "@aspnet/signalr";
-import { ICommandPayload } from "./signalr-api-module/commandPayload";
-import { IGenerationPayloadType } from "./types/generationPayloadType";
-import { CoreTemplateStudioApiCommand } from "./signalr-api-module/coreTemplateStudioApiCommand";
+import { ICommandPayload } from "./commandPayload";
+import { IGenerationPayloadType } from "../types/generationPayloadType";
+import { CoreTemplateStudioApiCommand } from "./coreTemplateStudioApiCommand";
+import { ISyncPayloadType } from "../types/syncPayloadType";
+import { GenerateCommand } from "./generateCommand";
+import { SyncCommand } from "./syncCommand";
 
 export default class ApiModule {
   private static _process: ChildProcess;
@@ -33,6 +36,20 @@ export default class ApiModule {
     let spawnedProcess = execFile(`${apiPath}`, { cwd: apiWorkingDirectory });
     ApiModule._process = spawnedProcess;
     return spawnedProcess;
+  }
+
+  public static async ExecuteApiCommand(
+    commandPayload: ICommandPayload
+  ): Promise<any> {
+    let command: CoreTemplateStudioApiCommand;
+
+    if ((<IGenerationPayloadType>commandPayload.payload).projectName) {
+      command = new GenerateCommand(commandPayload);
+    } else {
+      command = new SyncCommand(commandPayload);
+    }
+
+    await command.execute();
   }
 
   public static StopApi() {

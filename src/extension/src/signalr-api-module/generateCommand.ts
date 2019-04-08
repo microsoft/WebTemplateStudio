@@ -1,8 +1,30 @@
 import { CoreTemplateStudioApiCommand } from "./coreTemplateStudioApiCommand";
 import { CONSTANTS } from "../constants";
+import { IGenerationPayloadType } from "../types/generationPayloadType";
+import { IEngineGenerationPayloadType } from "../types/engineGenerationPayloadType";
 
 export class GenerateCommand extends CoreTemplateStudioApiCommand {
   async performCommandAction(connection: signalR.HubConnection): Promise<any> {
+    let body = this.makeEngineGenerationPayload(<IGenerationPayloadType>(
+      this.commandPayload.payload
+    ));
+
+    connection.on(
+      CONSTANTS.API.GEN_LIVE_MESSAGE_TRIGGER_NAME,
+      this.commandPayload.liveMessageHandler
+    );
+
+    const result = await connection
+      .invoke(CONSTANTS.API.SIGNALR_API_GENERATE_METHOD_NAME, body)
+      .catch((error: Error) => Promise.reject(error));
+
+    connection.stop();
+    return Promise.resolve(result!.value);
+  }
+
+  private makeEngineGenerationPayload(
+    payload: IGenerationPayloadType
+  ): IEngineGenerationPayloadType {
     let {
       projectName,
       path,
@@ -11,9 +33,9 @@ export class GenerateCommand extends CoreTemplateStudioApiCommand {
       backendFramework,
       pages,
       services
-    } = this.commandPayload.payload;
+    } = payload;
 
-    let body = {
+    return {
       projectName: projectName,
       genPath: path,
       projectType: projectType,
@@ -31,17 +53,5 @@ export class GenerateCommand extends CoreTemplateStudioApiCommand {
         templateid: service.identity
       }))
     };
-
-    connection.on(
-      CONSTANTS.API.GEN_LIVE_MESSAGE_TRIGGER_NAME,
-      this.commandPayload.liveMessageHandler
-    );
-
-    const result = await connection
-      .invoke(CONSTANTS.API.SIGNALR_API_GENERATE_METHOD_NAME, body)
-      .catch((error: Error) => Promise.reject(error));
-
-    connection.stop();
-    return Promise.resolve(result!.value);
   }
 }
