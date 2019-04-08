@@ -2,11 +2,9 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { ChildProcess, execFile } from "child_process";
 import { CONSTANTS } from "../constants";
-import * as signalR from "@aspnet/signalr";
 import { ICommandPayload } from "./commandPayload";
 import { IGenerationPayloadType } from "../types/generationPayloadType";
 import { CoreTemplateStudioApiCommand } from "./coreTemplateStudioApiCommand";
-import { ISyncPayloadType } from "../types/syncPayloadType";
 import { GenerateCommand } from "./generateCommand";
 import { SyncCommand } from "./syncCommand";
 
