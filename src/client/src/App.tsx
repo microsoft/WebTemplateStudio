@@ -21,7 +21,6 @@ import PostGenerationModal from "./containers/PostGenerationModal";
 import { EXTENSION_COMMANDS, ROUTES } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
-import { loadWizardContentAction } from "./actions/loadWizardContent";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
 import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
 import {
@@ -38,12 +37,13 @@ import {
 } from "./actions/updateGenStatusActions";
 
 import appStyles from "./appStyles.module.css";
+import { startLogOutAzure } from "./actions/logOutAzure";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;
-  loadWizardContent: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
+  startLogOutToAzure: () => any;
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
@@ -63,6 +63,7 @@ class App extends React.Component<Props> {
     getVSCodeApi: () => {},
     loadWizardContent: () => {},
     logIntoAzure: () => {},
+    startLogOutToAzure: () => {},
     saveSubscriptionData: () => {},
     updateOutputPath: () => {},
     setCosmosResourceAccountNameAvailability: () => {},
@@ -74,7 +75,6 @@ class App extends React.Component<Props> {
 
   public componentDidMount() {
     this.props.getVSCodeApi();
-    this.props.loadWizardContent();
     // listens for a login event from VSCode
     window.addEventListener("message", event => {
       const message = event.data;
@@ -85,7 +85,7 @@ class App extends React.Component<Props> {
           }
           return;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
-        case "login":
+        case EXTENSION_COMMANDS.AZURE_LOGIN:
           // email will be null or undefined if login didn't work correctly
           if (message.payload != null) {
             this.props.logIntoAzure(
@@ -93,6 +93,9 @@ class App extends React.Component<Props> {
               message.payload.subscriptions
             );
           }
+          return;
+        case EXTENSION_COMMANDS.AZURE_LOGOUT:
+          this.props.startLogOutToAzure();
           return;
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
@@ -188,11 +191,11 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   getVSCodeApi: () => {
     dispatch(getVSCodeApi());
   },
-  loadWizardContent: () => {
-    dispatch(loadWizardContentAction());
-  },
   logIntoAzure: (email: string, subscriptions: any[]) => {
     dispatch(logIntoAzureAction({ email, subscriptions }));
+  },
+  startLogOutToAzure: () => {
+    dispatch(startLogOutAzure());
   },
   saveSubscriptionData: (subscriptionData: any) => {
     dispatch(getSubscriptionData(subscriptionData));

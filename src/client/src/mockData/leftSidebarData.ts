@@ -1,5 +1,5 @@
 const leftSidebarData: string[] = [
-  "1. Welcome",
+  "1. Name and Output",
   "2. Project Type",
   "3. Frameworks",
   "4. Pages",

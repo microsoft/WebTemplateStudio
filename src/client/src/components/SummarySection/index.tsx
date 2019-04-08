@@ -56,7 +56,7 @@ const SummarySection = ({
     title: string,
     version: string,
     svgUrl?: string,
-    company?: string,
+    author?: string,
     originalTitle?: string,
     canEdit?: boolean,
     withIndent?: boolean,
@@ -70,7 +70,7 @@ const SummarySection = ({
           title={title}
           version={version}
           svgUrl={svgUrl}
-          company={company}
+          author={author}
           originalTitle={originalTitle}
           isEditable={canEdit}
           withIndent={withIndent}
@@ -111,7 +111,7 @@ const SummarySection = ({
             selection.title,
             selection.version,
             selection.svgUrl,
-            selection.company,
+            selection.author,
             selection.originalTitle,
             isEditable
           )}

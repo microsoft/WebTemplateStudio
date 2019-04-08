@@ -13,8 +13,8 @@ interface IProps {
   withIndent?: boolean;
   title: string;
   originalTitle?: string;
-  company?: string;
-  version: string;
+  author?: string;
+  version?: string;
   isEditable?: boolean;
   svgUrl?: string;
   withoutEditIcon?: boolean;
@@ -22,13 +22,15 @@ interface IProps {
   handleInputChange?: (newTitle: string, idx: number) => void;
   idx?: number;
   isDraggable?: boolean;
+  rotate?: boolean;
+  subTitle?: string;
 }
 
 const SummaryTile = ({
   withIndent,
   title,
   originalTitle,
-  company,
+  author,
   version,
   isEditable,
   svgUrl,
@@ -36,7 +38,9 @@ const SummaryTile = ({
   handleCloseClick,
   idx,
   handleInputChange,
-  isDraggable
+  isDraggable,
+  rotate,
+  subTitle
 }: IProps) => {
   const [componentTitle, setTitle] = React.useState(title);
   const [isDisabled, setDisabled] = React.useState(true);
@@ -85,7 +89,12 @@ const SummaryTile = ({
         })}
       >
         <div className={styles.leftContainer}>
-          <img src={svgUrl} className={styles.leftIcon} />
+          <img
+            src={svgUrl}
+            className={classnames(styles.leftIcon, {
+              [styles.rotate]: rotate
+            })}
+          />
           <div className={styles.tileContent}>
             <input
               ref={inputRef}
@@ -97,19 +106,25 @@ const SummaryTile = ({
               onClick={handleClick}
             />
             <div className={styles.metaData}>
-              {originalTitle && (
+              {subTitle ? (
+                subTitle
+              ) : (
                 <React.Fragment>
-                  <div>{originalTitle}</div>
-                  <div>&nbsp;|&nbsp;</div>
+                  {originalTitle && (
+                    <React.Fragment>
+                      <div>{originalTitle}</div>
+                      <div>&nbsp;|&nbsp;</div>
+                    </React.Fragment>
+                  )}
+                  {author && (
+                    <React.Fragment>
+                      <div>{author}</div>
+                      <div>&nbsp;|&nbsp;</div>
+                    </React.Fragment>
+                  )}
+                  <div>{version}</div>
                 </React.Fragment>
               )}
-              {company && (
-                <React.Fragment>
-                  <div>{company}</div>
-                  <div>&nbsp;|&nbsp;</div>
-                </React.Fragment>
-              )}
-              <div>{version}</div>
             </div>
           </div>
         </div>

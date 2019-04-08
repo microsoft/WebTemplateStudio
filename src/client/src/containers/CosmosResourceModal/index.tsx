@@ -5,6 +5,7 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
+import { findDOMNode } from "react-dom";
 
 import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
@@ -106,6 +107,7 @@ const messages = defineMessages({
   }
 });
 
+// tslint:disable-next-line: max-func-body-length
 const CosmosResourceModal = (props: Props) => {
   const FORM_CONSTANTS = {
     SUBSCRIPTION: {
@@ -265,10 +267,15 @@ const CosmosResourceModal = (props: Props) => {
     options: any,
     formSectionId: string,
     rightHeader?: string,
+    disabled?: boolean,
     defaultValue?: any
   ) => {
     return (
-      <div className={styles.selectionContainer}>
+      <div
+        className={classnames([styles.selectionContainer], {
+          [styles.selectionContainerDisabled]: disabled
+        })}
+      >
         <div className={styles.selectionHeaderContainer}>
           <div>{leftHeader}</div>
           {links[formSectionId] && (
@@ -287,6 +294,7 @@ const CosmosResourceModal = (props: Props) => {
               ? props.selection.dropdownSelection[formSectionId]
               : defaultValue
           }
+          disabled={disabled}
         />
         {isEmpty && (
           <div className={styles.errorMessage}>{EMPTY_FIELD(leftHeader)}</div>
@@ -317,14 +325,17 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         cosmosData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
-        props.intl.formatMessage(messages.createNew)
+        props.intl.formatMessage(messages.createNew),
+        cosmosFormData.subscription === ""
       )}
       <div
         className={classnames({
           [styles.selectionInputContainer]:
             !isAccountNameAvailable && cosmosFormData.accountName.length > 0,
           [styles.selectionContainer]:
-            isAccountNameAvailable || cosmosFormData.accountName.length === 0
+            isAccountNameAvailable || cosmosFormData.accountName.length === 0,
+          [styles.selectionContainerDisabled]:
+            cosmosFormData.subscription === ""
         })}
       >
         <div className={styles.selectionHeaderContainer}>
@@ -344,6 +355,7 @@ const CosmosResourceModal = (props: Props) => {
             onChange={handleInput}
             value={cosmosFormData.accountName}
             placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
+            disabled={cosmosFormData.subscription === ""}
           />
           {isAccountNameAvailable && (
             <GreenCheck className={styles.validationIcon} />
@@ -373,7 +385,8 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.LOCATION.label,
         cosmosData.location,
         FORM_CONSTANTS.LOCATION.value,
-        undefined
+        undefined,
+        cosmosFormData.subscription === ""
       )}
       <div className={styles.buttonContainer}>
         <button

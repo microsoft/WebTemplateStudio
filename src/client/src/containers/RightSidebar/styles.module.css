@@ -1,21 +1,20 @@
 .title {
   font-size: 16px;
   font-weight: bold;
-  text-align: center;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
+  text-align: left;
+  margin: 15px;
+  margin-bottom: 20px;
 }
 
 .container {
-  padding-top: 51px;
+  padding-top: 16.5px;
   padding-bottom: 71px;
   overflow: auto;
 }
 
 .rightViewCropped,
 .rightView {
-  width: 25%;
+  width: 400px;
   background-color: black;
   border-left: 0.5px solid #555555;
   box-sizing: border-box;
@@ -28,7 +27,7 @@
 }
 
 .rightView {
-  padding-top: 102px;
+  padding-top: 67.5px;
   height: 100vh;
 }
 

@@ -8,4 +8,5 @@ export interface RowType {
   id?: string;
   version: string;
   internalName?: string;
+  author?: string;
 }

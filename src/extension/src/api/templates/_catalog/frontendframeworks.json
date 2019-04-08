@@ -2,10 +2,10 @@
   {
     "name": "ReactJS",
     "displayName": "ReactJS",
-    "summary": "React is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers.",
+    "summary": "React is a JavaScript library created by Facebook to help developers build UI components.",
     "author": "Facebook",
     "order": "1",
-    "licenses": "",
+    "licenses": "[ReactJS](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
     "platforms": ["Web"],
     "languages": ["Any"],
     "tags": {

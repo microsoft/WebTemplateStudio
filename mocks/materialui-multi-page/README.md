@@ -29,7 +29,7 @@ Additional documentation can be found here: [Cosmos Docs](https://github.com/Mic
 
 ### Azure Functions
 
-An Azure Function with a Node runtime stack and HTTP trigger has been deployed to Azure. Project Acorn
+An Azure Function with a Node runtime stack and HTTP trigger has been deployed to Azure. Microsoft Web Template Studio
 has also generated a folder containing the code deployed to Azure Functions. To edit and redeploy the Azure
 Function it is recommended to install the [Azure Functions Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions). Additional documentation can be found here: [Azure Function Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/services/azure-functions.md).
 
@@ -82,4 +82,4 @@ development front-end and back-end communicate via a proxy defined in the packag
 - Mongo/Mongoose - https://mongoosejs.com/docs/guide.html
 - Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongoose
 
-This project was created using [Project Acorn](https://github.com/Microsoft/WebTemplateStudio).
+This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).

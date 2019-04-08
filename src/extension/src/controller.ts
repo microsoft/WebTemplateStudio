@@ -23,6 +23,7 @@ export abstract class Controller {
   > = new Map([
     [ExtensionCommand.Login, Controller.performLoginForSubscriptions],
     [ExtensionCommand.GetUserStatus, Controller.sendUserStatusIfLoggedIn],
+    [ExtensionCommand.Logout, Controller.performLogout],
     [
       ExtensionCommand.SubscriptionDataForCosmos,
       Controller.sendCosmosSubscriptionDataToClient
@@ -61,6 +62,7 @@ export abstract class Controller {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
     }
   };
+  
 
   /**
    * launchWizard
@@ -163,8 +165,8 @@ export abstract class Controller {
     });
   }
 
-  public static performLoginForSubscriptions(message: any) {
-    let isLoggedIn = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
+  public static async performLoginForSubscriptions(message: any) {
+    let isLoggedIn = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
       boolean
     >(TelemetryEventName.PerformLogin, async function(
       this: IActionContext
@@ -176,7 +178,7 @@ export abstract class Controller {
       Controller.sendUserStatusIfLoggedIn(message);
     }
   }
-  private static async sendUserStatusIfLoggedIn(message: any): Promise<void> {
+  public static async sendUserStatusIfLoggedIn(message: any): Promise<void> {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.GetUserLoginStatus,
       async function(this: IActionContext) {
@@ -193,6 +195,19 @@ export abstract class Controller {
       }
     );
   }
+
+  public static performLogout(){
+    let isLoggedOut = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<boolean>(
+      TelemetryEventName.PerformLogout,
+      async function(this: IActionContext) {
+        return await AzureServices.performLogout();
+      }
+    );
+    if(isLoggedOut){
+      Controller.handleValidMessage(ExtensionCommand.Logout);
+    }
+  }
+
   public static sendCosmosSubscriptionDataToClient(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SubscriptionData,
@@ -245,28 +260,29 @@ export abstract class Controller {
       message.appName,
       message.subscription
     )
-      .then(() => {
-        Controller.handleValidMessage(ExtensionCommand.NameCosmos, {
-          isAvailable: true
+      .then((invalidReason: string | undefined) => {
+        Controller.reactPanelContext.postMessageWebview({
+          command: ExtensionCommand.NameCosmos,
+          message: invalidReason,
+          payload: {isAvailable:
+            !invalidReason ||
+            invalidReason === undefined ||
+            invalidReason === ""}
         });
       })
       .catch((error: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameCosmos, error, {
-          isAvailable: false
-        });
+        throw error; //to log in telemetry
       });
   }
   public static sendFunctionNameValidationStatusToClient(message: any) {
     AzureServices.validateFunctionAppName(message.appName, message.subscription)
-      .then(() => {
+      .then(isValid => {
         Controller.handleValidMessage(ExtensionCommand.NameFunctions, {
-          isAvailable: true
+          isAvailable: isValid
         });
       })
       .catch((error: Error) => {
-        Controller.handleErrorMessage(ExtensionCommand.NameFunctions, error, {
-          isAvailable: false
-        });
+        throw error; //to log in telemetry
       });
   }
 

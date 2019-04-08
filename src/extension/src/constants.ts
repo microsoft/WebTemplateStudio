@@ -27,6 +27,10 @@ export const CONSTANTS = {
         functionName
       );
     },
+    LOGOUT_FAILED: localize(
+      "error.loginTimeout",
+      "Timeout. User is not logged in"
+    ),
     LOGIN_TIMEOUT: localize(
       "error.loginTimeout",
       "Timeout. User is not logged in"
@@ -159,7 +163,7 @@ export const CONSTANTS = {
     LOGGED_OUT: "LoggedOut"
   },
   REACT_PANEL: {
-    Project_Title: "Project Acorn"
+    Project_Title: "Microsoft Web Template Studio"
   },
   GENERATE_ENDPOINT: "/api/generate",
   CONNECTION_STRING: function(
@@ -181,6 +185,7 @@ export const CONSTANTS = {
 
 export enum ExtensionCommand {
   Login = "login",
+  Logout = "logout",
   Subscriptions = "subscriptions",
   SubscriptionDataForCosmos = "subscriptionDataForCosmos",
   SubscriptionDataForFunctions = "subscriptionDataForFunctions",
@@ -212,6 +217,7 @@ export enum TelemetryEventName {
   SyncEngine = "Sync-Engine",
   ConnectionStringReplace = "Connection-String-Replaced",
   PerformLogin = "Perform-Login",
+  PerformLogout = "Perform-Logout",
   GetUserLoginStatus = "Get-User-Login-Status"
 }
 

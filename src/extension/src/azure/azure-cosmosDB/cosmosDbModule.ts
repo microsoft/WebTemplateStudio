@@ -325,7 +325,6 @@ export class CosmosDBDeploy {
   private async validateUniqueCosmosDBAccountName(
     name: string
   ): Promise<string | undefined> {
-    // let client: CosmosDBManagementClient = this.createCosmosClient(userSubscriptionItem);
     if (this.SubscriptionItemCosmosClient === undefined) {
       throw new AuthorizationError(CONSTANTS.ERRORS.COSMOS_CLIENT_NOT_DEFINED);
     }
