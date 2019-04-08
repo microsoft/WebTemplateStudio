@@ -103,7 +103,7 @@ input::placeholder {
 
 .spinner {
   height: 1em;
-  margin-right: 10px;
+  margin-right: 2px;
 }
 
 @keyframes rotate {
@@ -118,6 +118,6 @@ input::placeholder {
 
 .spinner {
   animation: rotate steps(60) 1s infinite;
-  height: 25px;
-  width: 25px;
+  height: 18px;
+  width: 18px;
 }
