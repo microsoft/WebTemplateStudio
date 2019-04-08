@@ -1,8 +1,9 @@
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
 import SummarySection from "../../components/SummarySection";
-import ProjectNameAndOutput from "../ProjectNameAndOutput";
+import SummaryTile from "../../components/SummaryTile";
 import SortablePageList from "../SortablePageList";
 
 import * as ModalActions from "../../actions/modalActions";
@@ -16,6 +17,8 @@ import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import Title from "../../components/Title";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
+import { withLocalPath } from "../../utils/getSvgUrl";
+import folder from "../../assets/folder.svg";
 
 interface IDispatchProps {
   openCosmosDbModal: () => any;
@@ -29,6 +32,8 @@ interface IStateProps {
   pagesRows: RowType[];
   vscode: any;
   validation: any;
+  projectName: string;
+  outputPath: string;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
@@ -65,8 +70,10 @@ const ReviewAndGenerate = (props: Props) => {
     servicesRows,
     projectTypeRows,
     pagesRows,
+    intl,
     frameworkRows,
-    intl
+    projectName,
+    outputPath
   } = props;
   const modalOpeners = {
     [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: props.openCosmosDbModal,
@@ -78,11 +85,16 @@ const ReviewAndGenerate = (props: Props) => {
       <div className={styles.title}>
         {intl.formatMessage(messages.reviewAndGenerate)}
       </div>
-      <div className={styles.selectionTitle}>
+      <div
+        className={classnames(styles.selectionTitle, styles.selectionContainer)}
+      >
         {intl.formatMessage(messages.welcome)}
-      </div>
-      <div className={styles.projectDetailsContainer}>
-        <ProjectNameAndOutput />
+        <SummaryTile
+          rotate={true}
+          svgUrl={withLocalPath(folder)}
+          title={projectName}
+          subTitle={`${outputPath}/${projectName}`}
+        />
       </div>
       <SummarySection
         selectionTitle={intl.formatMessage(messages.projectType)}
@@ -122,7 +134,9 @@ const mapStateToProps = (state: any): IStateProps => ({
   servicesRows: WizardSelectors.getServicesSelector(state),
   pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
   vscode: state.vscode.vscodeObject,
-  validation: state.selection.validation
+  validation: state.selection.validation,
+  projectName: WizardSelectors.getProjectName(state),
+  outputPath: WizardSelectors.getOutputPath(state)
 });
 
 export default connect(
