@@ -103,6 +103,8 @@ export abstract class Controller {
           context.extensionPath,
           Controller.routingMessageReceieverDelegate
         );
+
+        Controller.getVersionAndSendToClient(context);
         Controller.Telemetry.trackExtensionStartUpTime(
           TelemetryEventName.ExtensionLaunch
         );
@@ -132,6 +134,16 @@ export abstract class Controller {
     vscode.window.showInformationMessage(
       CONSTANTS.INFO.SYNC_STATUS + ` ${status}`
     );
+  }
+
+  private static getVersionAndSendToClient(ctx: vscode.ExtensionContext) {
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetVersions,
+      payload: {
+        templatesVersion: "1.0",
+        wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
+      }
+    });
   }
 
   //To be addressed in next PR for page/navigation tracking

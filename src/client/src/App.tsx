@@ -154,9 +154,6 @@ class App extends React.Component<Props> {
       vscode.postMessage({
         command: EXTENSION_COMMANDS.GET_USER_STATUS
       });
-      vscode.postMessage({
-        command: EXTENSION_COMMANDS.GET_VERSIONS
-      });
     }
   }
 
