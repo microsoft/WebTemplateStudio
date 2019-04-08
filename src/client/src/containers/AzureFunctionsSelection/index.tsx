@@ -16,7 +16,7 @@ import {
   ISelectedAzureFunctionsService
 } from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
-import { FormattedMessage, injectIntl } from "react-intl";
+import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl";
 
 interface IProps {
   functionApps: IAzureFunctionsSelection;
@@ -34,7 +34,7 @@ interface IDispatchProps {
   openAzureFunctionsModal: () => any;
 }
 
-type Props = IProps & IDispatchProps;
+type Props = IProps & IDispatchProps & InjectedIntlProps;
 
 /**
  *  The current implementation only allows for one Azure Function application to be created.
@@ -49,7 +49,8 @@ const AzureFunctionsSelection = ({
   updateFunctionNames,
   removeAzureFunctionApp,
   removeAzureFunction,
-  openAzureFunctionsModal
+  openAzureFunctionsModal,
+  intl
 }: Props) => {
   const { selection } = functionApps;
   const { serviceType } = functionApps.wizardContent;
@@ -70,7 +71,7 @@ const AzureFunctionsSelection = ({
           (functionApp: ISelectedAzureFunctionsService, idx: number) => (
             <React.Fragment key={serviceType + functionApp.appName + idx}>
               <div className={styles.headerContainer}>
-                <div>{serviceType}</div>
+                <div>{intl.formatMessage(serviceType)}</div>
                 <div className={styles.edit} onClick={openAzureFunctionsModal}>
                   <FormattedMessage
                     id="azureFunctionsSelection.edit"

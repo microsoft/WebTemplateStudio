@@ -1,4 +1,6 @@
 import * as Actions from "../../../actions/types";
+import { messages } from "../../../selectors/wizardSelectionSelector";
+import { FormattedMessage } from "react-intl";
 
 /* State Shape
 {
@@ -31,7 +33,7 @@ export interface ISelectedAzureFunctionsService {
 }
 
 interface IServiceContent {
-  serviceType: string;
+  serviceType: FormattedMessage.MessageDescriptor;
 }
 
 export interface IAzureFunctionsSelection {
@@ -47,14 +49,14 @@ const initialState = {
   },
   selection: [],
   wizardContent: {
-    serviceType: "Azure Functions"
+    serviceType: messages.azureFunctionsOriginalTitle
   }
 };
 
 const createFunctionNames = (numFunctions: number): string[] => {
   const functionNames = [];
-  for (let i = 0; i < numFunctions; i++) {
-    functionNames.push(`Function${i}`);
+  for (let i = 1; i <= numFunctions; i++) {
+    functionNames.push(`function${i}`);
   }
   return functionNames;
 };

@@ -10,9 +10,10 @@ import * as AzureActions from "../../actions/logOutAzure";
 import * as ModalActions from "../../actions/modalActions";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
+import getSvgUrl from "../../utils/getSvgUrl";
+
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
-import getAzureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
 import { setDetailPageAction } from "../../actions/setDetailsPage";
 
@@ -46,18 +47,68 @@ const messages = defineMessages({
   addResource: {
     id: "azureSubscriptions.addResource",
     defaultMessage: "Add Resource"
+  },
+  azureFunctionsLongDesc: {
+    id: "azureSubscriptions.azureFunctionsLongDesc",
+    defaultMessage:
+      "Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure. Think of it as deploying functions that executes on pre-defined triggers instead of having to write and manage a full-fledged server yourself. One of the most commonly used triggers is an HTTPTrigger which is a function that runs whenever it receives an HTTP request. This is essentially the same as an API endpoint. Web Template Studio allows you to deploy a function app with multiple 'hello world' HTTPTrigger functions (maximum of 10) so you can get to writing your business logic as soon as possible."
+  },
+  azureFunctionsBody: {
+    id: "azureSubscriptions.azureFunctionsBody",
+    defaultMessage:
+      "Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure."
+  },
+  azureCosmosLongDesc: {
+    id: "azureSubscriptions.azureCosmosLongDesc",
+    defaultMessage:
+      "Azure Cosmos DB is Microsoft’s proprietary globally-distributed, multi-model database service for managing data on a global scale. It offers a variety of APIs for your database including Azure Table, Core (SQL), MongoDB and Gremlin (GraphQL). Web Template Studio offers you the functionality to deploy a Cosmos DB instance from the wizard itself and select an initial location to deploy your database with the ability to scale it to multiple locations at a future time. As an added feature, deploying with the MongoDB API enables you to quickly connect the project Web Template Studio generates to your database instance."
+  },
+  azureCosmosBody: {
+    id: "azureSubscriptions.azureCosmosBody",
+    defaultMessage:
+      "Cosmos DB allows you to build and scale your application with a globally distributed, multi-model database service."
+  },
+  azureFunctions: {
+    id: "azureSubscriptions.azureFunctions",
+    defaultMessage: "Azure Functions"
+  },
+  cosmosResource: {
+    id: "azureSubscriptions.cosmosResource",
+    defaultMessage: "Cosmos Resource"
   }
 });
 
 class AzureSubscriptions extends React.Component<Props, IState> {
+  private formatMessage = this.props.intl.formatMessage;
+
+  private options: IOption[] = [
+    {
+      author: "Microsoft",
+      svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS),
+      title: this.formatMessage(messages.azureFunctions),
+      internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
+      longDescription: this.formatMessage(messages.azureFunctionsLongDesc),
+      body: this.formatMessage(messages.azureFunctionsBody)
+    },
+    {
+      author: "Microsoft",
+      svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
+      title: this.formatMessage(messages.cosmosResource),
+      internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
+      longDescription: this.formatMessage(messages.azureCosmosLongDesc),
+      body: this.formatMessage(messages.azureCosmosBody)
+    }
+  ];
+
   constructor(props: any) {
     super(props);
     this.state = {
       azureServices: undefined
     };
   }
+
   public async componentDidMount() {
-    const azureServices = await getAzureServiceOptions();
+    const azureServices = this.options;
     this.setState({
       azureServices
     });
@@ -72,9 +123,9 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   };
   public addOrEditResourceText = (internalName: string): string => {
     if (this.isSelectionCreated(internalName)) {
-      return this.props.intl.formatMessage(messages.editResource);
+      return this.formatMessage(messages.editResource);
     }
-    return this.props.intl.formatMessage(messages.addResource);
+    return this.formatMessage(messages.addResource);
   };
   /**
    * Returns a function that opens a modal for a specific internalName
