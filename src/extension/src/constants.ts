@@ -204,7 +204,10 @@ export enum ExtensionCommand {
   UpdateGenStatus = "update-status",
   OpenProjectVSCode = "open-project-vscode"
 }
-
+export enum ExtensionModule {
+  Azure = "Azure",
+  Telemetry = "Telemetry"
+}
 export enum TelemetryEventName {
   ExtensionLaunch = "Extension-Launch-Time",
   WizardSession = "Wizard-To-Generate-Session-Time",

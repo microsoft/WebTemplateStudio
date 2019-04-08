@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { Validator } from "./utils/validator";
 import {
   CONSTANTS,
-  ExtensionCommand,
+  ExtensionModule,
   TelemetryEventName,
   SyncStatus,
   AzureResourceType
@@ -20,34 +20,16 @@ export class Controller {
   private static AzureService: AzureServices = new AzureServices();
   // This will map commands from the client to functions.
 
-  private static clientCommandMap: Map<
-    ExtensionCommand,
+  private static extensionModuleMap: Map<
+  ExtensionModule,
     Extensible
   > = new Map([
-    [ExtensionCommand.Login, Controller.AzureService],
-    // [ExtensionCommand.GetUserStatus, Controller.sendUserStatusIfLoggedIn],
-    // [ExtensionCommand.Logout, Controller.performLogout],
-    // [
-    //   ExtensionCommand.SubscriptionDataForCosmos,
-    //   Controller.sendCosmosSubscriptionDataToClient
-    // ],
-    // [
-    //   ExtensionCommand.SubscriptionDataForFunctions,
-    //   Controller.sendFunctionsSubscriptionDataToClient
-    // ],
-    // [
-    //   ExtensionCommand.NameFunctions,
-    //   Controller.sendFunctionNameValidationStatusToClient
-    // ],
-    // [
-    //   ExtensionCommand.NameCosmos,
-    //   Controller.sendCosmosNameValidationStatusToClient
-    // ],
+    [ExtensionModule.Azure, Controller.AzureService],
     // [
     //   ExtensionCommand.GetOutputPath,
     //   Controller.sendOutputPathSelectionToClient
     // ],
-    [ExtensionCommand.TrackPageSwitch, Controller.Telemetry],
+    [ExtensionModule.Telemetry, Controller.Telemetry],
     // [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
     // [
     //   ExtensionCommand.ProjectPathValidation,
@@ -57,12 +39,21 @@ export class Controller {
   ]);
 
   private static routingMessageReceieverDelegate = async function(message: any) {
-    let classModule = Controller.clientCommandMap.get(message.command);
+    let registeredModules = Array.from( Controller.extensionModuleMap.keys())
+    let clientCommand: string = message.command;
 
-    if (classModule) {
-      let payload = await classModule.routingMessageReceieverDelegate(message, Controller.Telemetry);
-      Controller.handleValidMessage(message.command, payload!.payload);
-    } else {
+    let extensionModule = registeredModules.find(registeredModule => clientCommand.indexOf(registeredModule.valueOf()) === 0);
+    if(extensionModule){
+    let classModule = Controller.extensionModuleMap.get(extensionModule);
+      if (classModule) {
+        let payload = await classModule.routingMessageReceieverDelegate(message, Controller.Telemetry);
+        Controller.handleValidMessage(message.command, payload!.payload);
+      }
+      else{
+        vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
+      }
+    }
+    else {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
     }
   };

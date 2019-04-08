@@ -8,7 +8,9 @@ import { Extensible, IPayloadResponse } from '../extensible';
 export type IActionContext = IActionContext;
 
 export class TelemetryAI extends Extensible{
-    clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([]);
+    clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
+        [ExtensionCommand.TrackPageSwitch, this.trackWizardPageTimeToNext],
+    ]);
 
     private static telemetryReporter: ITelemetryReporter;
     private wizardSessionStartTime: number;
@@ -37,9 +39,10 @@ export class TelemetryAI extends Extensible{
     * @param pageToTrack is the name of the page the wizard is on before the user clicks the next button; this page name will be sent to Application Insights as property
     * 
     */
-    public trackWizardPageTimeToNext(pageToTrack: string){
-        this.trackTimeDuration(TelemetryEventName.PageChange, this.pageStartTime, Date.now(), {"Page-Name": pageToTrack});
+    public async trackWizardPageTimeToNext(payload: any){
+        this.trackTimeDuration(TelemetryEventName.PageChange, this.pageStartTime, Date.now(), {"Page-Name": payload.pageName});
         this.pageStartTime = Date.now();
+        return {payload: true};
     }
 
     public trackWizardTotalSessionTimeToGenerate(eventName : string = TelemetryEventName.WizardSession){
