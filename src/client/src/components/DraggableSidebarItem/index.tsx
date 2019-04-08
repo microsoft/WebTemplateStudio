@@ -54,11 +54,13 @@ const DraggableSidebarItem = ({
       <div className={styles.draggablePage}>
         {(withIndent || reorderSvgUrl) && (
           <div className={styles.iconContainer}>
-            <img
-              className={styles.reorderIcon}
-              src={reorderSvgUrl}
-              alt="Draggable Sidebar Item"
-            />
+            {reorderSvgUrl && (
+              <img
+                className={styles.reorderIcon}
+                src={reorderSvgUrl}
+                alt="Draggable Sidebar Item"
+              />
+            )}
           </div>
         )}
         <div className={styles.errorStack}>
