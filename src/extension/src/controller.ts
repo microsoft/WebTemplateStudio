@@ -57,10 +57,10 @@ export class Controller {
   ]);
 
   private static routingMessageReceieverDelegate = async function(message: any) {
-    let command = Controller.clientCommandMap.get(message.command);
+    let classModule = Controller.clientCommandMap.get(message.command);
 
-    if (command) {
-      let payload = await command.routingMessageReceieverDelegate(message, Controller.Telemetry);
+    if (classModule) {
+      let payload = await classModule.routingMessageReceieverDelegate(message, Controller.Telemetry);
       Controller.handleValidMessage(message.command, payload);
     } else {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
