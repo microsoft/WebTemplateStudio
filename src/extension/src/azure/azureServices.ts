@@ -20,14 +20,17 @@ import {
   DialogResponses,
   ExtensionCommand
 } from "../constants";
-import { SubscriptionError } from "../errors";
-import { Extensible } from "../extensible";
+import { SubscriptionError, AuthorizationError } from "../errors";
+import { Extensible, IPayloadResponse } from "../extensible";
 
 export class AzureServices extends Extensible {
-  clientCommandMap: Map<ExtensionCommand, (message: any) => Object> = new Map([
+  clientCommandMap: Map<
+    ExtensionCommand,
+    (message: any) => Promise<IPayloadResponse>
+  > = new Map([
     [ExtensionCommand.Login, AzureServices.performLoginForSubscriptions],
     [ExtensionCommand.GetUserStatus, AzureServices.sendUserStatusIfLoggedIn],
-    [ExtensionCommand.Logout, AzureServices.performLogout],
+    [ExtensionCommand.Logout, AzureServices.performLogout]
     [
       ExtensionCommand.SubscriptionDataForCosmos,
       AzureServices.sendCosmosSubscriptionDataToClient
@@ -36,14 +39,14 @@ export class AzureServices extends Extensible {
       ExtensionCommand.SubscriptionDataForFunctions,
       AzureServices.sendFunctionsSubscriptionDataToClient
     ],
-    [
-      ExtensionCommand.NameFunctions,
-      AzureServices.sendFunctionNameValidationStatusToClient
-    ],
-    [
-      ExtensionCommand.NameCosmos,
-      AzureServices.sendCosmosNameValidationStatusToClient
-    ]
+    // [
+    //   ExtensionCommand.NameFunctions,
+    //   AzureServices.sendFunctionNameValidationStatusToClient
+    // ],
+    // [
+    //   ExtensionCommand.NameCosmos,
+    //   AzureServices.sendCosmosNameValidationStatusToClient
+    // ]
   ]);
 
   private static AzureFunctionProvider = new FunctionProvider();
@@ -54,14 +57,20 @@ export class AzureServices extends Extensible {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
 
-  public static async performLoginForSubscriptions(message: any) {
+  public static async performLoginForSubscriptions(
+    message: any
+  ): Promise<IPayloadResponse> {
     let isLoggedIn = await AzureAuth.login();
     if (isLoggedIn) {
-      AzureServices.sendUserStatusIfLoggedIn(message);
+      let userStatus = AzureServices.sendUserStatusIfLoggedIn(message);
+      return { payload: userStatus };
     }
+    throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
   }
 
-  public static async sendUserStatusIfLoggedIn(message: any) {
+  public static async sendUserStatusIfLoggedIn(
+    message: any
+  ): Promise<IPayloadResponse> {
     let azureSubscriptions = await AzureAuth.getSubscriptions();
     const subscriptionListToDisplay = azureSubscriptions.map(
       subscriptionItem => {
@@ -72,26 +81,38 @@ export class AzureServices extends Extensible {
       }
     );
     return {
-      email: AzureAuth.getEmail(),
-      subscriptions: subscriptionListToDisplay
+      payload: {
+        email: AzureAuth.getEmail(),
+        subscriptions: subscriptionListToDisplay
+      }
     };
   }
-  public static async performLogout() {
-    return await AzureAuth.logout();
+  public static async performLogout(message: any): Promise<IPayloadResponse> {
+    let success = await AzureAuth.logout();
+    let payloadResponse: IPayloadResponse = { payload: success };
+    return payloadResponse;
   }
 
-  public static sendCosmosSubscriptionDataToClient(message: any) {
-    return this.getSubscriptionData(
-      message.subscription,
-      AzureResourceType.Cosmos
-    );
+  public static async sendCosmosSubscriptionDataToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
+    return {
+      payload: await this.getSubscriptionData(
+        message.subscription,
+        AzureResourceType.Cosmos
+      )
+    };
   }
 
-  public static sendFunctionsSubscriptionDataToClient(message: any) {
-    return this.getSubscriptionData(
-      message.subscription,
-      AzureResourceType.Functions
-    );
+  public static async sendFunctionsSubscriptionDataToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
+    return {
+      payload: await this.getSubscriptionData(
+        message.subscription,
+        AzureResourceType.Functions
+      )
+    };
   }
 
   /**
@@ -165,7 +186,7 @@ export class AzureServices extends Extensible {
     return {
       isAvailable:
         !invalidReason || invalidReason === undefined || invalidReason === "",
-        reason: invalidReason
+      reason: invalidReason
     };
   }
 
@@ -194,7 +215,7 @@ export class AzureServices extends Extensible {
       message.appName,
       this.usersFunctionSubscriptionItemCache
     );
-    return { isAvailable: isValid }
+    return { isAvailable: isValid };
   }
 
   public static async validateFunctionAppName(
