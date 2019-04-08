@@ -28,7 +28,6 @@ import {
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
-import setValidationStatus from "../../reducers/wizardSelectionReducers/validatingNameReducer";
 import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
 
 interface IDispatchProps {
@@ -245,18 +244,20 @@ const AzureFunctionsResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    props.setValidationStatus(true);
-    if (timeout) {
-      clearTimeout(timeout);
+    if (azureFunctionsFormData.appName != "") {
+      props.setValidationStatus(true);
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      timeout = setTimeout(() => {
+        timeout = undefined;
+        props.vscode.postMessage({
+          appName: azureFunctionsFormData.appName,
+          command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
+          subscription: azureFunctionsFormData.subscription
+        });
+      }, 700);
     }
-    timeout = setTimeout(() => {
-      timeout = undefined;
-      props.vscode.postMessage({
-        appName: azureFunctionsFormData.appName,
-        command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
-        subscription: azureFunctionsFormData.subscription
-      });
-    }, 700);
   }, [azureFunctionsFormData.appName, props.selection]);
   /**
    * To obtain the input value, must cast as HTMLInputElement

@@ -30,7 +30,6 @@ import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceS
 
 import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
 import { Dispatch } from "redux";
-import setValidationStatus from "../../reducers/wizardSelectionReducers/validatingNameReducer";
 import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
 
 interface IDispatchProps {
@@ -244,18 +243,20 @@ const CosmosResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    props.setValidationStatus(true);
-    if (timeout) {
-      clearTimeout(timeout);
+    if (cosmosFormData.accountName != "") {
+      props.setValidationStatus(true);
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      timeout = setTimeout(() => {
+        timeout = undefined;
+        props.vscode.postMessage({
+          command: EXTENSION_COMMANDS.NAME_COSMOS,
+          appName: cosmosFormData.accountName,
+          subscription: cosmosFormData.subscription
+        });
+      }, 700);
     }
-    timeout = setTimeout(() => {
-      timeout = undefined;
-      props.vscode.postMessage({
-        command: EXTENSION_COMMANDS.NAME_COSMOS,
-        appName: cosmosFormData.accountName,
-        subscription: cosmosFormData.subscription
-      });
-    }, 700);
   }, [cosmosFormData.accountName, props.selection]);
   React.useEffect(() => {
     if (props.selection) {
