@@ -82,7 +82,7 @@ const LeftSidebar = (props: Props) => {
                       idx > currentPathIndex && !isVisited[ROUTES_ARRAY[idx]],
                     [styles.itemBorderTop]: idx === 0
                   })}
-                  key={`${sidebartitle}`}
+                  key={sidebartitle}
                 >
                   <LeftSidebarLink
                     disabled={!isVisited[ROUTES_ARRAY[idx]]}
@@ -96,10 +96,7 @@ const LeftSidebar = (props: Props) => {
               );
             })}
           </div>
-          <a
-            href="https://github.com/Microsoft/WebTemplateStudio/issues"
-            className={styles.feedback}
-          >
+          <a href="https://aka.ms/give-feedback" className={styles.feedback}>
             <FormattedMessage
               id="leftSidebar.giveFeedback"
               defaultMessage="Give Feedback"
