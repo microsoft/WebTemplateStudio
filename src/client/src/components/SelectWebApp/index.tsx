@@ -29,7 +29,7 @@ type Props = IDispatchProps & IStoreProps & IIntlProps;
 const messages = defineMessages({
   webAppTitleQuestion: {
     id: "selectPages.webAppTitleQuestion",
-    defaultMessage: "What type of web application are you building?"
+    defaultMessage: "2. Select a project type."
   }
 });
 
