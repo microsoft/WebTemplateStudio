@@ -1,4 +1,4 @@
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 import {
   AzureAuth,
   SubscriptionItem,
@@ -17,11 +17,37 @@ import {
   CONSTANTS,
   AzureResourceType,
   DialogMessages,
-  DialogResponses
+  DialogResponses,
+  ExtensionCommand
 } from "../constants";
 import { SubscriptionError } from "../errors";
+import { Extensible } from "../extensible";
 
-export abstract class AzureServices {
+export class AzureServices extends Extensible {
+  clientCommandMap: Map<
+    ExtensionCommand,
+    (message: any) => Object
+  > = new Map([
+    [ExtensionCommand.Login, AzureServices.performLoginForSubscriptions],
+    [ExtensionCommand.GetUserStatus, AzureServices.sendUserStatusIfLoggedIn],
+    [ExtensionCommand.Logout, AzureServices.performLogout],
+    [
+      ExtensionCommand.SubscriptionDataForCosmos,
+      AzureServices.sendCosmosSubscriptionDataToClient
+    ],
+    [
+      ExtensionCommand.SubscriptionDataForFunctions,
+      AzureServices.sendFunctionsSubscriptionDataToClient
+    ],
+    [
+      ExtensionCommand.NameFunctions,
+      AzureServices.sendFunctionNameValidationStatusToClient
+    ],
+    [
+      ExtensionCommand.NameCosmos,
+      AzureServices.sendCosmosNameValidationStatusToClient
+    ]
+  ]);
 
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
@@ -31,17 +57,16 @@ export abstract class AzureServices {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
 
-  public static async performLogin() {
-    return await AzureAuth.login();
+  public static async performLoginForSubscriptions(message: any) {
+    let isLoggedIn = await AzureAuth.login();
+    if (isLoggedIn) {
+      AzureServices.sendUserStatusIfLoggedIn(message);
+    }
   }
-  public static async performLogout() {
-    return await AzureAuth.logout();
-  }
-  public static async getUserInfo() {
 
-    this.subscriptionItemList = await AzureAuth.getSubscriptions();
-
-    const subscriptionListToDisplay = this.subscriptionItemList.map(
+  public static async sendUserStatusIfLoggedIn(message: any) {
+    let azureSubscriptions = await AzureAuth.getSubscriptions();
+    const subscriptionListToDisplay = azureSubscriptions.map(
       subscriptionItem => {
         return {
           label: subscriptionItem.label,
@@ -49,11 +74,36 @@ export abstract class AzureServices {
         };
       }
     );
-    return {
-      email: AzureAuth.getEmail(),
-      subscriptions: subscriptionListToDisplay
-    };
+        return {email: AzureAuth.getEmail(),
+          subscriptions: subscriptionListToDisplay};
   }
+  public static async performLogout() {
+    return await AzureAuth.logout();
+  }
+
+   // public static sendCosmosSubscriptionDataToClient(message: any) {
+  //   Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+  //     TelemetryEventName.SubscriptionData,
+  //     async function(this: IActionContext): Promise<void> {
+  //       await AzureServices.getSubscriptionData(
+  //         message.subscription,
+  //         AzureResourceType.Cosmos
+  //       )
+  //         .then(subscriptionDatapackage => {
+  //           Controller.handleValidMessage(
+  //             ExtensionCommand.SubscriptionDataForCosmos,
+  //             {
+  //               resourceGroups: subscriptionDatapackage.resourceGroups,
+  //               locations: subscriptionDatapackage.locations
+  //             }
+  //           );
+  //         })
+  //         .catch((error: Error) => {
+  //           throw error; //to log in telemetry
+  //         });
+  //     }
+  //   );
+  // }
 
   /**
    * @param subscriptionLabel subscription label
@@ -233,7 +283,7 @@ export abstract class AzureServices {
       userCosmosDBSelection,
       genPath
     );
-  }  
+  }
   public static async promptUserForCosmosReplacement(
     pathToEnv: string,
     dbObject: DatabaseObject

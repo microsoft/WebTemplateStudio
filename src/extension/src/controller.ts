@@ -12,53 +12,56 @@ import ApiModule from "./apiModule";
 import { AzureServices } from "./azure/azureServices";
 import { ChildProcess } from "child_process";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
+import { Extensible } from "./extensible";
 
-export abstract class Controller {
+export class Controller {
   private static reactPanelContext: ReactPanel;
   private static Telemetry: TelemetryAI;
+  private static AzureService: AzureServices = new AzureServices();
   // This will map commands from the client to functions.
 
   private static clientCommandMap: Map<
     ExtensionCommand,
-    (message: any) => void
+    Extensible
   > = new Map([
-    [ExtensionCommand.Login, Controller.performLoginForSubscriptions],
-    [ExtensionCommand.GetUserStatus, Controller.sendUserStatusIfLoggedIn],
-    [ExtensionCommand.Logout, Controller.performLogout],
-    [
-      ExtensionCommand.SubscriptionDataForCosmos,
-      Controller.sendCosmosSubscriptionDataToClient
-    ],
-    [
-      ExtensionCommand.SubscriptionDataForFunctions,
-      Controller.sendFunctionsSubscriptionDataToClient
-    ],
-    [
-      ExtensionCommand.NameFunctions,
-      Controller.sendFunctionNameValidationStatusToClient
-    ],
-    [
-      ExtensionCommand.NameCosmos,
-      Controller.sendCosmosNameValidationStatusToClient
-    ],
-    [
-      ExtensionCommand.GetOutputPath,
-      Controller.sendOutputPathSelectionToClient
-    ],
-    [ExtensionCommand.TrackPageSwitch, Controller.trackOnPageChangeInTelemetry],
-    [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
-    [
-      ExtensionCommand.ProjectPathValidation,
-      Controller.handleProjectPathValidation
-    ],
-    [ExtensionCommand.OpenProjectVSCode, Controller.openProjectVSCode]
+    [ExtensionCommand.Login, Controller.AzureService],
+    // [ExtensionCommand.GetUserStatus, Controller.sendUserStatusIfLoggedIn],
+    // [ExtensionCommand.Logout, Controller.performLogout],
+    // [
+    //   ExtensionCommand.SubscriptionDataForCosmos,
+    //   Controller.sendCosmosSubscriptionDataToClient
+    // ],
+    // [
+    //   ExtensionCommand.SubscriptionDataForFunctions,
+    //   Controller.sendFunctionsSubscriptionDataToClient
+    // ],
+    // [
+    //   ExtensionCommand.NameFunctions,
+    //   Controller.sendFunctionNameValidationStatusToClient
+    // ],
+    // [
+    //   ExtensionCommand.NameCosmos,
+    //   Controller.sendCosmosNameValidationStatusToClient
+    // ],
+    // [
+    //   ExtensionCommand.GetOutputPath,
+    //   Controller.sendOutputPathSelectionToClient
+    // ],
+    // [ExtensionCommand.TrackPageSwitch, Controller.trackOnPageChangeInTelemetry],
+    // [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
+    // [
+    //   ExtensionCommand.ProjectPathValidation,
+    //   Controller.handleProjectPathValidation
+    // ],
+    // [ExtensionCommand.OpenProjectVSCode, Controller.openProjectVSCode]
   ]);
 
-  private static routingMessageReceieverDelegate = function(message: any) {
+  private static routingMessageReceieverDelegate = async function(message: any) {
     let command = Controller.clientCommandMap.get(message.command);
 
     if (command) {
-      command(message);
+      let payload = await command.routingMessageReceieverDelegate(message, Controller.Telemetry);
+      Controller.handleValidMessage(message.command, payload);
     } else {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
     }
@@ -165,73 +168,29 @@ export abstract class Controller {
       }
     });
   }
-
-  public static async performLoginForSubscriptions(message: any) {
-    let isLoggedIn = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
-      boolean
-    >(TelemetryEventName.PerformLogin, async function(
-      this: IActionContext
-    ): Promise<boolean> {
-      return await AzureServices.performLogin();
-    });
-
-    if (isLoggedIn) {
-      Controller.sendUserStatusIfLoggedIn(message);
-    }
-  }
-  public static async sendUserStatusIfLoggedIn(message: any): Promise<void> {
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      TelemetryEventName.GetUserLoginStatus,
-      async function(this: IActionContext) {
-        AzureServices.getUserInfo()
-          .then(azureSubscription => {
-            Controller.handleValidMessage(ExtensionCommand.Login, {
-              email: azureSubscription.email,
-              subscriptions: azureSubscription.subscriptions
-            });
-          })
-          .catch((error: Error) => {
-            throw error; //to log in telemetry
-          });
-      }
-    );
-  }
-
-  public static performLogout(){
-    let isLoggedOut = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<boolean>(
-      TelemetryEventName.PerformLogout,
-      async function(this: IActionContext) {
-        return await AzureServices.performLogout();
-      }
-    );
-    if(isLoggedOut){
-      Controller.handleValidMessage(ExtensionCommand.Logout);
-    }
-  }
-
-  public static sendCosmosSubscriptionDataToClient(message: any) {
-    Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      TelemetryEventName.SubscriptionData,
-      async function(this: IActionContext): Promise<void> {
-        await AzureServices.getSubscriptionData(
-          message.subscription,
-          AzureResourceType.Cosmos
-        )
-          .then(subscriptionDatapackage => {
-            Controller.handleValidMessage(
-              ExtensionCommand.SubscriptionDataForCosmos,
-              {
-                resourceGroups: subscriptionDatapackage.resourceGroups,
-                locations: subscriptionDatapackage.locations
-              }
-            );
-          })
-          .catch((error: Error) => {
-            throw error; //to log in telemetry
-          });
-      }
-    );
-  }
+  // public static sendCosmosSubscriptionDataToClient(message: any) {
+  //   Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+  //     TelemetryEventName.SubscriptionData,
+  //     async function(this: IActionContext): Promise<void> {
+  //       await AzureServices.getSubscriptionData(
+  //         message.subscription,
+  //         AzureResourceType.Cosmos
+  //       )
+  //         .then(subscriptionDatapackage => {
+  //           Controller.handleValidMessage(
+  //             ExtensionCommand.SubscriptionDataForCosmos,
+  //             {
+  //               resourceGroups: subscriptionDatapackage.resourceGroups,
+  //               locations: subscriptionDatapackage.locations
+  //             }
+  //           );
+  //         })
+  //         .catch((error: Error) => {
+  //           throw error; //to log in telemetry
+  //         });
+  //     }
+  //   );
+  // }
 
   public static sendFunctionsSubscriptionDataToClient(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
