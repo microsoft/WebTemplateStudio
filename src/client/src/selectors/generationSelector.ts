@@ -2,7 +2,16 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { ISelected } from "../types/selected";
 import { ITemplateInfo } from "../types/templateInfo";
-import { SERVICE_KEYS } from "../utils/constants";
+import {
+  SERVICE_KEYS,
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  COSMOS_APIS
+} from "../utils/constants";
+
+const DATABASE_INTERNAL_NAME_MAPPING = {
+  [COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
+  [COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
+};
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
@@ -42,7 +51,8 @@ const getServices = (selection: any): ITemplateInfo[] => {
   ) {
     servicesInfo.push({
       name: "Cosmos",
-      identity: services.cosmosDB.selection[0].internalName
+      identity:
+        DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.selection[0].api]
     });
   }
   return servicesInfo;

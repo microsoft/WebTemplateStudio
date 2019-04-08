@@ -42,6 +42,11 @@ const SERVICE_KEYS = {
   AZURE_FUNCTIONS: "azureFunctions"
 };
 
+const COSMOS_APIS = {
+  MONGO: "MongoDB",
+  SQL: "SQL"
+};
+
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
   BLANK_PAGE: "wts.Page.React.Blank",
@@ -82,5 +87,6 @@ export {
   ROUTES_ARRAY,
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  INTL_MESSAGES
+  INTL_MESSAGES,
+  COSMOS_APIS
 };
