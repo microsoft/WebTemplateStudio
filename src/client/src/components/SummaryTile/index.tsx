@@ -89,7 +89,9 @@ const SummaryTile = ({
         })}
       >
         <div className={styles.leftContainer}>
-          <img src={svgUrl} className={styles.leftIcon} alt="icon" />
+          {svgUrl && (
+            <img src={svgUrl} className={styles.leftIcon} alt="icon" />
+          )}
           <div className={styles.tileContent}>
             <input
               ref={inputRef}
