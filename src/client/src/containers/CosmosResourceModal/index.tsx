@@ -56,6 +56,7 @@ interface IStateProps {
 }
 
 let timeout: NodeJS.Timeout | undefined;
+type Props = IDispatchProps & IStateProps & InjectedIntlProps;
 
 interface attributeLinks {
   [key: string]: any;
@@ -68,29 +69,6 @@ const links: attributeLinks = {
   accountName: "https://docs.microsoft.com/en-us/azure/cosmos-db/",
   api: null,
   location: null
-};
-
-type Props = IDispatchProps & IStateProps & InjectedIntlProps;
-
-interface CosmosDb {
-  [key: string]: any;
-}
-const initialState: CosmosDb = {
-  subscription: { value: "", label: "" },
-  resourceGroup: { value: "", label: "" },
-  accountName: { value: "", label: "" },
-  api: {
-    value: "",
-    label: ""
-  },
-  location: {
-    value: "",
-    label: ""
-  },
-  internalName: {
-    value: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
-    label: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
-  }
 };
 
 const messages = defineMessages({
@@ -136,7 +114,27 @@ const messages = defineMessages({
   }
 });
 
-// tslint:disable-next-line: max-func-body-length
+interface CosmosDb {
+  [key: string]: any;
+}
+const initialState: CosmosDb = {
+  subscription: { value: "", label: "" },
+  resourceGroup: { value: "", label: "" },
+  accountName: { value: "", label: "" },
+  api: {
+    value: "",
+    label: ""
+  },
+  location: {
+    value: "",
+    label: ""
+  },
+  internalName: {
+    value: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
+    label: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
+  }
+};
+
 const CosmosResourceModal = (props: Props) => {
   const FORM_CONSTANTS = {
     SUBSCRIPTION: {
@@ -197,6 +195,14 @@ const CosmosResourceModal = (props: Props) => {
 
   const [cosmosFormData, updateForm] = React.useState(initialState);
 
+  const [modalValidation, updateValidation] = React.useState({
+    isAccountNameEmpty: false,
+    isApiEmpty: false,
+    isLocationEmpty: false,
+    isSubscriptionEmpty: false,
+    isResourceGroupEmpty: false
+  });
+
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
@@ -214,11 +220,7 @@ const CosmosResourceModal = (props: Props) => {
         subscription: value
       });
       updatedForm = {
-        ...cosmosFormData,
-        [infoLabel]: {
-          value: value,
-          label: value
-        },
+        ...updateForm,
         resourceGroup: {
           value: "",
           label: ""
@@ -239,13 +241,11 @@ const CosmosResourceModal = (props: Props) => {
     updateForm(updatedForm);
   };
 
-  const [modalValidation, updateValidation] = React.useState({
-    isAccountNameEmpty: false,
-    isApiEmpty: false,
-    isLocationEmpty: false,
-    isSubscriptionEmpty: false,
-    isResourceGroupEmpty: false
-  });
+  React.useEffect(() => {
+    if (props.selection) {
+      updateForm(props.selection.dropdownSelection);
+    }
+  }, []);
   /**
    * Listens on account name change and validates the input in VSCode
    */
@@ -265,11 +265,7 @@ const CosmosResourceModal = (props: Props) => {
       }, 700);
     }
   }, [cosmosFormData.accountName.value]);
-  React.useEffect(() => {
-    if (props.selection) {
-      updateForm(props.selection.dropdownSelection);
-    }
-  }, []);
+
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget

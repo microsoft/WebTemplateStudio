@@ -32,6 +32,11 @@ import styles from "./styles.module.css";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
 
+const DEFAULT_VALUE = {
+  value: "Select...",
+  label: "Select..."
+};
+
 interface IDispatchProps {
   closeModal: () => any;
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => any;
@@ -110,7 +115,6 @@ const messages = defineMessages({
   }
 });
 
-
 const DEFAULT_VALUE = {
   value: "Select...",
   label: "Select..."
@@ -151,7 +155,7 @@ const initialState: IFunctionsState = {
     value: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
     label: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
   }
-});
+};
 
 const AzureFunctionsResourceModal = (props: Props) => {
   const FORM_CONSTANTS = {
@@ -241,10 +245,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
     }
     updateForm(updatedForm);
   };
+
   React.useEffect(() => {
     if (props.selection) {
-      const { previousFormData } = props.selection;
-      updateForm(previousFormData);
+      updateForm(props.selection.dropdownSelection);
     }
   }, []);
   /**
@@ -374,7 +378,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
             !isAppNameAvailable &&
             azureFunctionsFormData.appName.value.length > 0,
           [styles.selectionContainer]:
-            isAppNameAvailable || azureFunctionsFormData.appName.value.length === 0,
+            isAppNameAvailable ||
+            azureFunctionsFormData.appName.value.length === 0,
           [styles.selectionContainerDisabled]:
             azureFunctionsFormData.subscription.value === ""
         })}
