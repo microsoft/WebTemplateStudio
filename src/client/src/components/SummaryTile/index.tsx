@@ -16,7 +16,7 @@ interface IProps {
   originalTitle?: string;
   author?: string;
   serviceTitle?: FormattedMessage.MessageDescriptor;
-  version: string;
+  version?: string;
   isEditable?: boolean;
   svgUrl?: string;
   withoutEditIcon?: boolean;
