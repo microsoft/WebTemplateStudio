@@ -24,6 +24,7 @@ import styles from "./styles.module.css";
 import Licenses from "../Licenses";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
+import About from "../About";
 
 interface ISelectionType {
   appType: ISelected;
@@ -131,7 +132,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             })}
           >
             {pathname !== ROUTES.REVIEW_AND_GENERATE && (
-              <React.Fragment>
+              <div>
                 <div className={styles.title}>Your Project Details</div>
                 <RightSidebarDropdown
                   options={this.props.projectTypeDropdownItems}
@@ -170,9 +171,12 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                     <ServicesSidebarItem services={this.props.services} />
                   </div>
                 )}
-              </React.Fragment>
+              </div>
             )}
-            <Licenses />
+            <div>
+              <Licenses />
+              <About />
+            </div>
           </div>
         )}
       </React.Fragment>

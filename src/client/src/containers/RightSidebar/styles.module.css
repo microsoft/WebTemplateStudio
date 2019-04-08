@@ -24,6 +24,7 @@
   height: calc(100vh - 122px);
   margin-top: 51px;
   margin-bottom: 71px;
+  padding-bottom: 0px;
 }
 
 .rightView {
@@ -66,4 +67,10 @@
 .iconContainer {
   display: flex;
   align-items: center;
+}
+
+.selection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

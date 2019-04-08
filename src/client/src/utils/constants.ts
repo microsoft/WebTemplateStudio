@@ -72,7 +72,8 @@ const EXTENSION_COMMANDS = {
   TRACK_PAGE_SWITCH: "track-page-switch",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
-  OPEN_PROJECT_IN_VSCODE: "open-project-vscode"
+  OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
+  GET_VERSIONS: "get-versions"
 };
 
 export {

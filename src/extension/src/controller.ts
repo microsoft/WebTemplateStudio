@@ -63,7 +63,6 @@ export abstract class Controller {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
     }
   };
-  
 
   /**
    * launchWizard
@@ -104,6 +103,8 @@ export abstract class Controller {
           context.extensionPath,
           Controller.routingMessageReceieverDelegate
         );
+
+        Controller.getVersionAndSendToClient(context);
         Controller.Telemetry.trackExtensionStartUpTime(
           TelemetryEventName.ExtensionLaunch
         );
@@ -133,6 +134,16 @@ export abstract class Controller {
     vscode.window.showInformationMessage(
       CONSTANTS.INFO.SYNC_STATUS + ` ${status}`
     );
+  }
+
+  private static getVersionAndSendToClient(ctx: vscode.ExtensionContext) {
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetVersions,
+      payload: {
+        templatesVersion: "1.0",
+        wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
+      }
+    });
   }
 
   //To be addressed in next PR for page/navigation tracking
@@ -197,14 +208,13 @@ export abstract class Controller {
     );
   }
 
-  public static performLogout(){
-    let isLoggedOut = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<boolean>(
-      TelemetryEventName.PerformLogout,
-      async function(this: IActionContext) {
-        return await AzureServices.performLogout();
-      }
-    );
-    if(isLoggedOut){
+  public static performLogout() {
+    let isLoggedOut = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
+      boolean
+    >(TelemetryEventName.PerformLogout, async function(this: IActionContext) {
+      return await AzureServices.performLogout();
+    });
+    if (isLoggedOut) {
       Controller.handleValidMessage(ExtensionCommand.Logout);
     }
   }
@@ -265,10 +275,12 @@ export abstract class Controller {
         Controller.reactPanelContext.postMessageWebview({
           command: ExtensionCommand.NameCosmos,
           message: invalidReason,
-          payload: {isAvailable:
-            !invalidReason ||
-            invalidReason === undefined ||
-            invalidReason === ""}
+          payload: {
+            isAvailable:
+              !invalidReason ||
+              invalidReason === undefined ||
+              invalidReason === ""
+          }
         });
       })
       .catch((error: Error) => {
