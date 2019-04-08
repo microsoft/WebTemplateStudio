@@ -27,7 +27,7 @@ type Props = IDispatchProps & ISelectFrontEndFrameworkProps & InjectedIntlProps;
 const messages = defineMessages({
   selectFrontendFramework: {
     id: "selectFrontendFramework.selectFrontendFramework",
-    defaultMessage: "Select a front-end framework for your project."
+    defaultMessage: "3. Select a front-end framework."
   }
 });
 

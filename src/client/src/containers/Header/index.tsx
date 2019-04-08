@@ -1,13 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import * as AzureActions from "../../actions/logOutAzure";
-
 import styles from "./styles.module.css";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { EXTENSION_COMMANDS } from "../../utils/constants";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import { FormattedMessage, injectIntl } from "react-intl";
 
 interface IHeaderProps {
+  vscode: IVSCodeObject;
   isLoggedIn: boolean;
   email: string;
 }
@@ -22,11 +24,18 @@ const Header = (props: Props) => {
   const { isLoggedIn, email } = props;
   return (
     <div className={styles.header}>
-      <div className={styles.headerTitle}>Project Acorn</div>
+      <div className={styles.headerTitle}>Web Template Studio</div>
       {isLoggedIn && (
         <div className={styles.azureProfile}>
           <div className={styles.profileName}>{email}</div>
-          <div className={styles.button} onClick={props.startLogOutToAzure}>
+          <div
+            className={styles.button}
+            onClick={() => {
+              props.vscode.postMessage({
+                command: EXTENSION_COMMANDS.AZURE_LOGOUT
+              });
+            }}
+          >
             <FormattedMessage id="header.signOut" defaultMessage="Sign out" />
           </div>
         </div>
@@ -39,18 +48,10 @@ const mapStateToProps = (state: any): IHeaderProps => {
   const { isLoggedIn } = state.azureProfileData;
   const { email } = state.azureProfileData.profileData;
   return {
+    vscode: getVSCodeApiSelector(state),
     isLoggedIn,
     email
   };
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  startLogOutToAzure: () => {
-    dispatch(AzureActions.startLogOutAzure());
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(Header));
+export default connect(mapStateToProps)(injectIntl(Header));

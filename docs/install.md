@@ -5,7 +5,7 @@
 Web Template Studio runs as a VSCode extension and hence you'll need to have _VScode_ installed.
 Also, you'll need _Node_ and _npm_/_yarn_ to run the generated templates.
 
-## Installing the latest Project Acorn Release
+## Installing the latest Microsoft Web Template Studio Release
 
 1. Get the latest release from Web Template Studio [Github releases](https://github.com/Microsoft/WebTemplateStudio/releases)
 2. Scroll down to _Assets_ and download the `.vsix` file

@@ -7,5 +7,5 @@ import Footer from "./components/Footer";
 //{[{
 import wts.ItemName from "./components/wts.ItemName";
 //}]}
-//TODO Project Acorn: Add routes for your new pages here.
+//TODO Web Template Studio: Add routes for your new pages here.
 class App extends Component {

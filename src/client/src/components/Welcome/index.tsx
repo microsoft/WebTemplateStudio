@@ -48,13 +48,13 @@ const Welcome = ({
       <div className={styles.header}>
         <FormattedMessage
           id="welcome.header"
-          defaultMessage="Welcome to Project Acorn"
+          defaultMessage="Welcome to Web Template Studio"
         />
       </div>
       <div className={styles.body}>
         <FormattedMessage
           id="welcome.body"
-          defaultMessage="Project Acorn is a VS Code extension that quickly provides web developers with boilerplate code, easy to use templates, and automates the Azure deployment process, all within this wizard."
+          defaultMessage="Enter a project name and output path, then click next to get started."
         />
       </div>
       <div className={styles.projectDetailsContainer}>

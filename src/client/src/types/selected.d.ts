@@ -6,4 +6,6 @@ export interface ISelected {
   isValidTitle?: boolean;
   error?: string;
   version?: string;
+  licenses?: License;
+  author?: string;
 }

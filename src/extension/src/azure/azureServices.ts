@@ -19,9 +19,10 @@ import {
   DialogMessages,
   DialogResponses
 } from "../constants";
-import { SubscriptionError, ValidationError } from "../errors";
+import { SubscriptionError } from "../errors";
 
 export abstract class AzureServices {
+
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
 
@@ -33,7 +34,9 @@ export abstract class AzureServices {
   public static async performLogin() {
     return await AzureAuth.login();
   }
-
+  public static async performLogout() {
+    return await AzureAuth.logout();
+  }
   public static async getUserInfo() {
 
     this.subscriptionItemList = await AzureAuth.getSubscriptions();
@@ -116,49 +119,25 @@ export abstract class AzureServices {
   public static async validateCosmosAccountName(
     cosmosDBAccountName: string,
     subscriptionLabel: string
-  ): Promise<void> {
+  ): Promise<string | undefined> {
     await this.updateCosmosDBSubscriptionItemCache(subscriptionLabel);
 
-    return this.AzureCosmosDBProvider.validateCosmosDBAccountName(
+    return await this.AzureCosmosDBProvider.validateCosmosDBAccountName(
       cosmosDBAccountName,
       this.usersCosmosDBSubscriptionItemCache
-    )
-      .then(message => {
-        if (message === undefined || message === null || message === "") {
-          return Promise.resolve();
-        } else {
-          return Promise.reject(new ValidationError(message));
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
+    );
   }
-  
+
   public static async validateFunctionAppName(
     functionAppName: string,
     subscriptionLabel: string
-  ): Promise<void> {
+  ): Promise<boolean | undefined> {
     await this.updateFunctionSubscriptionItemCache(subscriptionLabel);
 
     return this.AzureFunctionProvider.checkFunctionAppName(
       functionAppName,
       this.usersFunctionSubscriptionItemCache
-    )
-      .then(isAvailable => {
-        if (isAvailable) {
-          return Promise.resolve();
-        } else {
-          return Promise.reject(
-            new ValidationError(
-              CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(functionAppName)
-            )
-          );
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
+    );
   }
 
   /*
@@ -275,7 +254,10 @@ export abstract class AzureServices {
             CONSTANTS.INFO.FILE_REPLACED_MESSAGE + pathToEnv
           );
         }
-        return {userReplacedEnv: selection === DialogResponses.yes, startTime: start};
+        return {
+          userReplacedEnv: selection === DialogResponses.yes,
+          startTime: start
+        };
       });
   }
 }

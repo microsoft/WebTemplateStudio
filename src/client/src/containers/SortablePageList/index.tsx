@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
@@ -63,7 +64,7 @@ const SortablePageList = (props: Props) => {
   const handleInputChange = (newTitle: string, idx: number) => {
     pages[idx].title = newTitle;
     const validationResult = validateName(pages[idx].title);
-    pages[idx].error = validationResult.error;
+    pages[idx].error = props.intl!.formatMessage(validationResult.error);
     pages[idx].isValidTitle = validationResult.isValid;
     for (let i = 0; i < pages.length; i++) {
       if (pages[i].title === pages[idx].title && i !== idx) {
@@ -96,9 +97,11 @@ const SortablePageList = (props: Props) => {
     : props.intl!.formatMessage(messages.hide);
   const DRAG_PIXEL_THRESHOLD = 1;
   return (
-    <div className={styles.sidebarItem}>
+    <div>
       {!pagesRows && (
-        <div className={styles.pageListContainer}>
+        <div
+          className={classnames(styles.pageListContainer, styles.sidebarItem)}
+        >
           <div className={styles.dropdownTitle}>Pages</div>
           <div
             className={styles.hideOrShow}
