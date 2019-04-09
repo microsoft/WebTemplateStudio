@@ -16,32 +16,32 @@ import { GenerationExperience } from "./generationExperience";
 
 export class Controller {
   public static reactPanelContext: ReactPanel;
-  public Telemetry: TelemetryAI;
-  private AzureService: AzureServices = new AzureServices();
+  public static Telemetry: TelemetryAI;
+  private AzureService: AzureServices;
   private GenExperience: GenerationExperience;
-  private Validator: Validator = new Validator();
+  private Validator: Validator;
   // This will map commands from the client to functions.
 
-  private extensionModuleMap: Map<ExtensionModule, Extensible> = new Map(
-    [
+  private static extensionModuleMap: Map<ExtensionModule, Extensible>;
+  private defineExtensionModule() {
+    Controller.extensionModuleMap = new Map([
+      [ExtensionModule.Telemetry, Controller.Telemetry],
       [ExtensionModule.Azure, this.AzureService],
       [ExtensionModule.Validator, this.Validator],
-      [ExtensionModule.Telemetry, this.Telemetry],
       [ExtensionModule.Generate, this.GenExperience]
-    ]
-  );
+    ]);
+  }
 
-  private async routingMessageReceieverDelegate(
-    message: any
-  ) {
+  private async routingMessageReceieverDelegate(message: any) {
     let extensionModule = message.module;
 
     if (extensionModule) {
-      let classModule = this.extensionModuleMap.get(extensionModule);
+      let classModule = Controller.extensionModuleMap.get(extensionModule);
       if (classModule) {
-        let responsePayload = await classModule.callCommandSpecifiedByPayload(
+        let responsePayload = await Extensible.callCommandWithClass(
           message,
-          this.Telemetry
+          classModule,
+          Controller.Telemetry
         );
         if (responsePayload) {
           Controller.handleValidMessage(message.command, responsePayload);
@@ -52,17 +52,20 @@ export class Controller {
     } else {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
     }
-  };
+  }
 
   constructor(
     private context: vscode.ExtensionContext,
     private extensionStartTime: number
-  ){
-    this.Telemetry = new TelemetryAI(this.context, this.extensionStartTime);
-    this.GenExperience  = new GenerationExperience(
+  ) {
+    Controller.Telemetry = new TelemetryAI(this.context, this.extensionStartTime);
+    this.Validator = new Validator();
+    this.AzureService = new AzureServices();
+    this.GenExperience = new GenerationExperience(
       Controller.reactPanelContext,
-      this.Telemetry
+      Controller.Telemetry
     );
+    this.defineExtensionModule();
     this.launchWizard(this.context, this.extensionStartTime);
   }
 
@@ -75,36 +78,31 @@ export class Controller {
     context: vscode.ExtensionContext,
     extensionStartTime: number
   ): Promise<any> {
-        let process = ApiModule.StartApi(context);
-        let synced = false;
-        let syncAttempts = 0;
-        while (
-          !synced &&
-          syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
-        ) {
-          synced = await Controller.attemptSync();
-          syncAttempts++;
-          if (!synced) {
-            await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
-          }
-        }
-        if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-          process.kill();
-          throw new Error(
-            CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
-          );
-        }
+    let process = ApiModule.StartApi(context);
+    let synced = false;
+    let syncAttempts = 0;
+    while (!synced && syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+      synced = await Controller.attemptSync();
+      syncAttempts++;
+      if (!synced) {
+        await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
+      }
+    }
+    if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+      process.kill();
+      throw new Error(CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS);
+    }
 
-        Controller.reactPanelContext = ReactPanel.createOrShow(
-          context.extensionPath,
-          this.routingMessageReceieverDelegate
-        );
+    Controller.reactPanelContext = ReactPanel.createOrShow(
+      context.extensionPath,
+      this.routingMessageReceieverDelegate
+    );
 
-        this.getVersionAndSendToClient(context);        
-        this.Telemetry.trackExtensionStartUpTime(
-          TelemetryEventName.ExtensionLaunch
-        );
-        return process;
+    this.getVersionAndSendToClient(context);
+    Controller.Telemetry.trackExtensionStartUpTime(
+      TelemetryEventName.ExtensionLaunch
+    );
+    return process;
   }
 
   private static timeout(ms: number) {
@@ -134,7 +132,7 @@ export class Controller {
       command: ExtensionCommand.GetVersions,
       payload: {
         templatesVersion: "1.0",
-        wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
+        wizardVersion: Controller.Telemetry.getExtensionVersionNumber(ctx)
       }
     });
   }
@@ -158,12 +156,12 @@ export class Controller {
     });
   }
 
-  public static handleValidMessage(command: ExtensionCommand, payload?: any) {
-    this.reactPanelContext.postMessageWebview({
-      command: command,
-      payload: payload,
-      message: ""
-    });
+  private static handleValidMessage(
+    commandName: ExtensionCommand,
+    responsePayload?: any
+  ) {
+    responsePayload.command = commandName;
+    this.reactPanelContext.postMessageWebview(responsePayload);
   }
 
   public static handleErrorMessage(
@@ -179,7 +177,6 @@ export class Controller {
     });
   }
 
-  
   dispose() {
     throw new Error("Method not implemented.");
   }
