@@ -14,6 +14,7 @@
 }
 
 .createAccountButton {
+  text-decoration: none;
   color: #54b4ff;
 }
 
