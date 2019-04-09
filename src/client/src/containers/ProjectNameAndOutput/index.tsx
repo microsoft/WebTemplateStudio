@@ -66,6 +66,7 @@ const ProjectNameAndOutput = (props: Props) => {
         props.vscode.postMessage({
           module: EXTENSION_MODULES.VALIDATOR,
           command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+          track: false,
           projectPath: props.outputPath,
           projectName: props.projectName
         });
@@ -99,7 +100,8 @@ const ProjectNameAndOutput = (props: Props) => {
   const handleSaveClick = () => {
     props.vscode.postMessage({
       module: EXTENSION_MODULES.VALIDATOR,
-      command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
+      command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
+      track: false
     });
   };
   return (

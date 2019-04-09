@@ -10,7 +10,7 @@ import styles from "./styles.module.css";
 
 import * as PostGenSelectors from "../../selectors/postGenerationSelector";
 import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
-import { EXTENSION_COMMANDS } from "../../utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
@@ -100,7 +100,9 @@ const PostGenerationModal = ({
     if (isTemplateGenerated) {
       // @ts-ignore
       vscode.postMessage({
+        module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
+        track: true,
         payload: {
           outputPath
         }

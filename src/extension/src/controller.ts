@@ -16,14 +16,14 @@ import { Extensible } from "./extensible";
 import { GenerationExperience } from "./generationExperience";
 
 export class Controller {
-  public static reactPanelContext: ReactPanel;
-  public static Telemetry: TelemetryAI;
-  private static AzureService: AzureServices = new AzureServices();
-  private static GenExperience: GenerationExperience = new GenerationExperience(
+  public reactPanelContext: ReactPanel;
+  public Telemetry: TelemetryAI;
+  private AzureService: AzureServices = new AzureServices();
+  private GenExperience: GenerationExperience = new GenerationExperience(
     Controller.reactPanelContext,
     Controller.Telemetry
   );
-  private static Validator: Validator = new Validator();
+  private Validator: Validator = new Validator();
   // This will map commands from the client to functions.
 
   private static extensionModuleMap: Map<ExtensionModule, Extensible> = new Map(
@@ -49,7 +49,7 @@ export class Controller {
       if (classModule) {
         let payload = await classModule.callCommandSpecifiedByPayload(
           message,
-          Controller.Telemetry
+          Telemetry
         );
         if (payload) {
           Controller.handleValidMessage(message.command, payload.payload);
@@ -61,6 +61,13 @@ export class Controller {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
     }
   };
+
+  constructor(
+    context: vscode.ExtensionContext,
+    extensionStartTime: number
+  ){
+
+  }
 
   /**
    * launchWizard

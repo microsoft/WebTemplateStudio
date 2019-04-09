@@ -7,16 +7,21 @@ export abstract class Extensible {
   
   public callCommandSpecifiedByPayload(messagePayload: any, Telemetry: TelemetryAI){
     Extensible.queuedCommand = this.clientCommandMap.get(messagePayload.command)!;
-
-    return Telemetry.callWithTelemetryAndCatchHandleErrors(messagePayload.command, async function (this: IActionContext){
-      if (Extensible.queuedCommand) {
+    if (Extensible.queuedCommand) {
+      if(messagePayload.track){
+        return Telemetry.callWithTelemetryAndCatchHandleErrors(messagePayload.command, async function (this: IActionContext){
+          return Extensible.queuedCommand(messagePayload);
+        });
+      }
+      else{
         return Extensible.queuedCommand(messagePayload);
       }
-      else {
-        // vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
-        throw Error(CONSTANTS.ERRORS.INVALID_COMMAND);
-      }
-    });
+    }
+    else {
+      // vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
+      throw Error(CONSTANTS.ERRORS.INVALID_COMMAND);
+    }
+
   }
 }
 

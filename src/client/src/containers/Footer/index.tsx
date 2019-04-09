@@ -72,6 +72,7 @@ class Footer extends React.Component<Props> {
     vscode.postMessage({
       module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
+      track: false,
       text: "Sending generation info...",
       payload: {
         engine,
@@ -100,6 +101,7 @@ class Footer extends React.Component<Props> {
     this.props.vscode.postMessage({
       module: EXTENSION_MODULES.TELEMETRY,
       command: EXTENSION_COMMANDS.TRACK_PAGE_SWITCH,
+      track: false,
       pageName: pathname
     });
   };

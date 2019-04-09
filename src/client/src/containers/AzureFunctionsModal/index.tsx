@@ -218,6 +218,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       props.vscode.postMessage({
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
+        track: true,
         subscription: value
       });
     }
@@ -239,6 +240,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
     props.vscode.postMessage({
       module: EXTENSION_MODULES.AZURE,
       command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
+      track: false,
       appName: azureFunctionsFormData.appName,
       subscription: azureFunctionsFormData.subscription
     });

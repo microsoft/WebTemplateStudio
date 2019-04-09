@@ -146,7 +146,8 @@ class App extends React.Component<Props> {
     if (this.props.vscode !== prevProps.vscode) {
       this.props.vscode.postMessage({
         module: EXTENSION_MODULES.AZURE,
-        command: EXTENSION_COMMANDS.GET_USER_STATUS
+        command: EXTENSION_COMMANDS.GET_USER_STATUS,
+        track: true
       });
     }
   }

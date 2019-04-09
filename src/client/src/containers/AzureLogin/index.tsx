@@ -50,7 +50,8 @@ class AzureLogin extends React.Component<Props> {
     if (process.env.NODE_ENV === "production") {
       this.props.vscode.postMessage({
         module: EXTENSION_MODULES.AZURE,
-        command: EXTENSION_COMMANDS.AZURE_LOGIN
+        command: EXTENSION_COMMANDS.AZURE_LOGIN,
+        track: true
       });
     } else {
       // @ts-ignore produces a mock login response from VSCode in development

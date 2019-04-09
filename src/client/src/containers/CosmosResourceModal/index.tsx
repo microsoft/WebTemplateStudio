@@ -214,6 +214,7 @@ const CosmosResourceModal = (props: Props) => {
       props.vscode.postMessage({
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
+        track: true,
         subscription: value
       });
     }
@@ -234,6 +235,7 @@ const CosmosResourceModal = (props: Props) => {
     props.vscode.postMessage({
       module: EXTENSION_MODULES.AZURE,
       command: EXTENSION_COMMANDS.NAME_COSMOS,
+      track: false,
       appName: cosmosFormData.accountName,
       subscription: cosmosFormData.subscription
     });
