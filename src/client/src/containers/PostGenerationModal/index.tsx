@@ -15,8 +15,8 @@ import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
-import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 import { AppState } from "../../reducers";
+import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 
 interface IStateProps {
   isTemplateGenerated: boolean;

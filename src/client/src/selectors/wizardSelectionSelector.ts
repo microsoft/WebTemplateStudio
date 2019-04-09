@@ -24,8 +24,7 @@ const getWizardSelectionsSelector = (state: AppState): SelectionState =>
   state.selection;
 const getProjectName = (state: AppState): string =>
   state.selection.projectNameObject.projectName;
-// FIXME: Properly define types
-const getProjectNameValidation = (state: AppState): any =>
+const getProjectNameValidation = (state: AppState): IValidation =>
   state.selection.projectNameObject.validation;
 const getOutputPath = (state: AppState): string =>
   state.selection.outputPathObject.outputPath;
