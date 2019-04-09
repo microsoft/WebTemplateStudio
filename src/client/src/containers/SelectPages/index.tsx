@@ -6,7 +6,7 @@ import SelectOption from "../SelectOption";
 import {
   selectPagesAction,
   updatePageCountAction
-} from "../../actions/selectPages";
+} from "../../actions/wizardSelectionActions/selectPages";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";

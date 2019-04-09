@@ -1,5 +1,5 @@
 import { ISelected } from "../../types/selected";
-import { WIZARD_SELECTION_TYPEKEYS } from "./typekeys";
+import { WIZARD_SELECTION_TYPEKEYS } from "./typeKeys";
 
 export interface ISelectBackendAction {
   type: WIZARD_SELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK;

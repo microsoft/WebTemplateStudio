@@ -8,9 +8,9 @@ import { withRouter } from "react-router-dom";
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
 import ServicesSidebarItem from "../../components/ServicesSidebarItem";
 
-import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
-import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/selectFrontEndFramework";
-import { selectWebAppAction } from "../../actions/selectWebApp";
+import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
+import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
+import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectWebApp";
 
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 import {
@@ -20,7 +20,7 @@ import {
 
 import { ROUTES } from "../../utils/constants";
 
-import { selectPagesAction } from "../../actions/selectPages";
+import { selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
 import { ISelected } from "../../types/selected";
 import SortablePageList from "../SortablePageList";
 import styles from "./styles.module.css";

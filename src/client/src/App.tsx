@@ -27,7 +27,7 @@ import {
 
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
-import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
+import { updateOutputPathAction } from "./actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   setAccountAvailability,
   setAppNameAvailabilityAction
@@ -35,7 +35,7 @@ import {
 import AzureLogin from "./containers/AzureLogin";
 import { getSubscriptionData } from "./actions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
-import { setProjectPathValidation } from "./actions/setProjectPathValidation";
+import { setProjectPathValidation } from "./actions/wizardSelectionActions/setProjectPathValidation";
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction

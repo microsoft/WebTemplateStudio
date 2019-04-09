@@ -5,7 +5,7 @@ import { getProjectTypesAction } from "../../actions/wizardContentActions/getPro
 import { IOption } from "../../types/option";
 import SelectOption from "../SelectOption";
 
-import { selectWebAppAction } from "../../actions/selectWebApp";
+import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectWebApp";
 import { ISelected } from "../../types/selected";
 
 import { defineMessages, InjectedIntl, injectIntl } from "react-intl";

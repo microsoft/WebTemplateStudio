@@ -1,5 +1,6 @@
-import * as Actions from "../../actions/types";
+import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
 import { IValidation } from "./updateOutputPath";
+import { AnyAction } from "redux";
 
 /* State Shape
 {
@@ -11,7 +12,7 @@ import { IValidation } from "./updateOutputPath";
 }
 */
 
-interface IProjectName {
+export interface IProjectName {
   projectName: string;
   validation: IValidation;
 }
@@ -26,10 +27,10 @@ const initialState = {
 
 const projectNameReducer = (
   state: IProjectName = initialState,
-  action: any
+  action: AnyAction
 ) => {
   switch (action.type) {
-    case Actions.UPDATE_PROJECT_NAME:
+    case WIZARD_SELECTION_TYPEKEYS.UPDATE_PROJECT_NAME:
       return action.payload;
     default:
       return state;

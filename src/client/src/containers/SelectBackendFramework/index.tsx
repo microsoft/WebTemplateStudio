@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import SelectOption from "../SelectOption";
 
 import { getBackendFrameworksAction } from "../../actions/wizardContentActions/getBackendFrameworks";
-import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
+import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 

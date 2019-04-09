@@ -1,4 +1,4 @@
-import * as Actions from "./types";
+import { WIZARD_CONTENT_TYPEKEYS } from "../actions/wizardContentActions/typeKeys";
 import EngineAPIService from "../services/EngineAPIService";
 import { IApiTemplateInfo } from "../types/apiTemplateInfo";
 import { IOption } from "../types/option";
@@ -39,7 +39,7 @@ const getPagesOptionsAction = (
 
 const getPagesOptionsSuccess = (pagesOptions: IOption[]) => ({
   payload: pagesOptions,
-  type: Actions.GET_PAGES_OPTIONS_SUCCESS
+  type: WIZARD_CONTENT_TYPEKEYS.GET_PAGES_OPTIONS_SUCCESS
 });
 
 function getApiTemplateInfoFromJson(items: any[]): IApiTemplateInfo[] {

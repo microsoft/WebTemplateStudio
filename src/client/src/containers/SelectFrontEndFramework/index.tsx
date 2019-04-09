@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import SelectOption from "../SelectOption";
 
-import { selectFrontendFramework as selectFrontendAction } from "../../actions/selectFrontEndFramework";
+import { selectFrontendFramework as selectFrontendAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
 
 import { getFrontendFrameworksAction } from "../../actions/wizardContentActions/getFrontendFrameworks";
 import { IOption } from "../../types/option";

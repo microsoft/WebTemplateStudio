@@ -7,7 +7,7 @@ import OutputPath from "../../components/OutputPath";
 import {
   updateOutputPathAction,
   updateProjectNameAction
-} from "../../actions/updateProjectNameAndPath";
+} from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   getOutputPath,
   getProjectName,

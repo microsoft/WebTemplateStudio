@@ -11,7 +11,7 @@ import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
 import ProjectNameAndOutput from "../ProjectNameAndOutput";
 import { FormattedMessage } from "react-intl";
 
-import { updateProjectNameAction } from "../../actions/updateProjectNameAndPath";
+import { updateProjectNameAction } from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
 
 import {
   getOutputPath,

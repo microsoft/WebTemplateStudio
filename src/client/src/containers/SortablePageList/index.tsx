@@ -7,7 +7,7 @@ import { defineMessages, injectIntl, InjectedIntl } from "react-intl";
 
 import SortableList from "../../components/SortableSelectionList";
 
-import { selectPagesAction } from "../../actions/selectPages";
+import { selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
 
 import { ISelected } from "../../types/selected";
 
