@@ -27,14 +27,11 @@ const outDest = "out";
 const languages = [{ folderName: "en", id: "en" }];
 
 gulp.task("clean", function() {
-  return del(
-    [
-      "out/**",
-      "package.nls.*.json",
-      "../../dist/wts-0.0.0-UNTRACKEDVERSION.vsix"
-    ],
-    { force: true }
-  );
+  return del([
+    "out/**",
+    "package.nls.*.json",
+    "../../dist/wts-0.0.0-UNTRACKEDVERSION.vsix"
+  ]);
 });
 
 gulp.task("internal-compile", function() {
