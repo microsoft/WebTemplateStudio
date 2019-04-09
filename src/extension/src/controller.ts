@@ -19,49 +19,48 @@ export class Controller {
   public static reactPanelContext: ReactPanel;
   public static Telemetry: TelemetryAI;
   private static AzureService: AzureServices = new AzureServices();
-  private static GenExperience: GenerationExperience = new GenerationExperience(Controller.reactPanelContext, Controller.Telemetry);
+  private static GenExperience: GenerationExperience = new GenerationExperience(
+    Controller.reactPanelContext,
+    Controller.Telemetry
+  );
+  private static Validator: Validator = new Validator();
   // This will map commands from the client to functions.
 
-  private static extensionModuleMap: Map<
-  ExtensionModule,
-    Extensible
-  > = new Map([
-    [ExtensionModule.Azure, Controller.AzureService],
-    // [
-    //   ExtensionCommand.GetOutputPath,
-    //   Controller.sendOutputPathSelectionToClient
-    // ],
-    [ExtensionModule.Telemetry, Controller.Telemetry],
-    [ExtensionModule.Generate, Controller.GenExperience],
-    // [
-    //   ExtensionCommand.ProjectPathValidation,
-    //   Controller.handleProjectPathValidation
-    // ],
-  ]);
+  private static extensionModuleMap: Map<ExtensionModule, Extensible> = new Map(
+    [
+      [ExtensionModule.Azure, Controller.AzureService],
+      [ExtensionModule.Validator, Controller.Validator],
+      [ExtensionModule.Telemetry, Controller.Telemetry],
+      [ExtensionModule.Generate, Controller.GenExperience]
+      // [
+      //   ExtensionCommand.ProjectPathValidation,
+      //   Controller.handleProjectPathValidation
+      // ],
+    ]
+  );
 
-  private static routingMessageReceieverDelegate = async function(message: any) {
-    let registeredModules = Array.from( Controller.extensionModuleMap.keys())
-    let clientCommand: string = message.command;
+  private static routingMessageReceieverDelegate = async function(
+    message: any
+  ) {
     let extensionModule = message.module;
 
-
-    if(extensionModule){
+    if (extensionModule) {
       let classModule = Controller.extensionModuleMap.get(extensionModule);
       if (classModule) {
-        let payload = await classModule.callFunctionSpecifiedByPayload(message, Controller.Telemetry);
-        if(payload){
+        let payload = await classModule.callFunctionSpecifiedByPayload(
+          message,
+          Controller.Telemetry
+        );
+        if (payload) {
           Controller.handleValidMessage(message.command, payload.payload);
         }
-      }
-      else{
+      } else {
         vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
       }
-    }
-    else {
+    } else {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
     }
   };
-  
 
   /**
    * launchWizard
@@ -158,7 +157,7 @@ export class Controller {
       }
     });
   }
- 
+
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ) {
@@ -177,30 +176,6 @@ export class Controller {
         status: message
       }
     });
-  }
-
-  public static sendOutputPathSelectionToClient(message: any) {
-    vscode.window
-      .showOpenDialog({
-        canSelectFiles: false,
-        canSelectFolders: true,
-        canSelectMany: false
-      })
-      .then((res: any) => {
-        let path = undefined;
-
-        if (res !== undefined) {
-          if (process.platform === CONSTANTS.PLATFORM.WIN_32) {
-            path = res[0].path.substring(1, res[0].path.length);
-          } else {
-            path = res[0].path;
-          }
-        }
-
-        Controller.handleValidMessage(ExtensionCommand.GetOutputPath, {
-          outputPath: path
-        });
-      });
   }
 
   public static handleValidMessage(command: ExtensionCommand, payload?: any) {
@@ -224,4 +199,3 @@ export class Controller {
     });
   }
 }
-

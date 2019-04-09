@@ -1,15 +1,51 @@
-import { CONSTANTS } from "../constants";
+import * as vscode from "vscode";
+import { CONSTANTS, ExtensionCommand } from "../constants";
 import fs = require("fs");
 import path = require("path");
+import { Extensible, IPayloadResponse } from "../extensible";
 
-export abstract class Validator {
+export class Validator extends Extensible {
+  clientCommandMap: Map<
+    ExtensionCommand,
+    (message: any) => Promise<IPayloadResponse>
+  > = new Map([
+    [ExtensionCommand.GetOutputPath, Validator.sendOutputPathSelectionToClient]
+  ]);
+
+  public static async sendOutputPathSelectionToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
+    return vscode.window
+      .showOpenDialog({
+        canSelectFiles: false,
+        canSelectFolders: true,
+        canSelectMany: false
+      })
+      .then((res: any) => {
+        let path = undefined;
+
+        if (res !== undefined) {
+          if (process.platform === CONSTANTS.PLATFORM.WIN_32) {
+            path = res[0].path.substring(1, res[0].path.length);
+          } else {
+            path = res[0].path;
+          }
+        }
+        return {
+          payload: {
+            outputPath: path
+          }
+        };
+      });
+  }
+
   public static isAlphaNumeric = (name: string) => {
     return /^[\w ]+$/i.test(name);
-  };
+  }
 
   public static isEmpty = (name: string) => {
     return name === "" || name === undefined;
-  };
+  }
 
   public static isValidProjectName = (name: string) => {
     if (Validator.isEmpty(name)) {
@@ -20,7 +56,7 @@ export abstract class Validator {
       throw Error(CONSTANTS.ERRORS.PROJECT_NAME_LENGTH_EXCEEDED_MAX);
     }
     return true;
-  };
+  }
 
   public static isValidProjectPath = (path: string, name: string) => {
     let isValid = true;
@@ -37,9 +73,9 @@ export abstract class Validator {
       isValid: isValid,
       error: error
     };
-  };
+  }
 
   public static isUniquePath = (projectPath: string, name: string) => {
     return !fs.existsSync(path.join(projectPath, name));
-  };
+  }
 }

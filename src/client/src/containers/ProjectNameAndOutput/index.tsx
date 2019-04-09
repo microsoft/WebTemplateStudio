@@ -64,6 +64,7 @@ const ProjectNameAndOutput = (props: Props) => {
       if (props.vscode) {
         // @ts-ignore
         props.vscode.postMessage({
+          module: EXTENSION_MODULES.VALIDATOR,
           command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
           projectPath: props.outputPath,
           projectName: props.projectName
@@ -72,6 +73,7 @@ const ProjectNameAndOutput = (props: Props) => {
     } else {
       // @ts-ignore produces a mock validation response from VSCode in development
       window.postMessage({
+        module: EXTENSION_MODULES.VALIDATOR,
         command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
         payload: {
           projectPathValidation: {
