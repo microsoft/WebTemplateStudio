@@ -1,16 +1,15 @@
 .loginContainer {
-  border: 0.5px solid #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: 0.5px solid var(--vscode-editor-foreground);
   padding: 1em;
   border-radius: 4px;
-  background-color: #252526;
+  background-color: var(--vscode-notificationCenterHeader-background);
 }
 
 .selectionContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #0067b8;
+  color: var(--vscode-textLink-foreground);
 }
 
 .buttonContainer {
@@ -41,7 +40,7 @@
 }
 
 .details {
-  color: #54b4ff;
+  color: var(--vscode-textLink-foreground);
 }
 
 .icon {

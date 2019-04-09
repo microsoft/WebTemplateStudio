@@ -8,19 +8,18 @@ export default {
   }),
   singleValue: (base: any) => ({
     ...base,
-    color: "#FFFFFF"
+    color: "var(--vscode-editor-foreground);"
   }),
   placeholder: (base: any) => ({
     ...base,
-    color: "#FFFFFF"
+    color: "var(--vscode-textLink-foreground);"
   }),
   control: (base: any, state: any): any => ({
     ...base,
     color: "white",
-    border: 0,
-    background: "#696969",
-    // match with the menu
-    borderRadius: "2px",
+    border: "1px solid var(--vscode-menu-foreground)",
+    borderRadius: 0,
+    background: "var(--vscode-notificationCenterHeader-background)",
     // Removes weird border around container
     boxShadow: state.isFocused ? null : null,
     "&:hover": {

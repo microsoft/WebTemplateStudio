@@ -9,7 +9,7 @@
   overflow: auto;
   width: 100%;
   box-sizing: border-box;
-  background-color: black;
+  background-color: var(--vscode-editor-background);
 }
 
 .centerView {
@@ -28,5 +28,5 @@
   left: 40px;
   right: 40px;
   bottom: 40px;
-  background-color: black;
+  background-color: var(--vscode-editor-background);
 }

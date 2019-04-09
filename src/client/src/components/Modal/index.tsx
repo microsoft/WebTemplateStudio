@@ -35,7 +35,7 @@ const customStyles = {
     borderRadius: "4px",
     width: "40%",
     padding: "2.4%",
-    background: "#303030"
+    background: "var(--vscode-menu-background)"
   }
 };
 

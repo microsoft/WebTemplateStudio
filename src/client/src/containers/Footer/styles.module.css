@@ -1,6 +1,6 @@
 .footer {
   position: absolute;
-  background-color: #4c4c4c;
+  background-color: var(--vscode-badge-background);
   padding: 15px;
   bottom: 0;
   width: 100%;

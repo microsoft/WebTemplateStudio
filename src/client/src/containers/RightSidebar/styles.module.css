@@ -15,7 +15,7 @@
 .rightViewCropped,
 .rightView {
   width: 400px;
-  background-color: black;
+  background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #555555;
   box-sizing: border-box;
 }

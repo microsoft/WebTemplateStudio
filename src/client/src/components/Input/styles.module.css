@@ -3,7 +3,13 @@
     padding: 0.5em;
     width: 100%;
     font-size: 1em;
-    background-color: #3C3C3C;
-    border: 1px solid #ffffff;
-    border-radius: 2px;
+    height: 38px;
+    background-color: var(--vscode-input-background);
+    border: 1px solid var(--vscode-menu-foreground);
+    color: var(--vscode-input-foreground);
 }
+
+.input::placeholder {
+    color: var(--vscode-input-placeholderForeground);
+    opacity: 0.4;
+} 

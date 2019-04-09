@@ -23,7 +23,7 @@ const messages = defineMessages({
   },
   projectType: {
     id: "leftSidebar.projectType",
-    defaultMessage: "2. ProjectType"
+    defaultMessage: "2. Project Type"
   },
   frameworks: {
     id: "leftSidebar.frameworks",

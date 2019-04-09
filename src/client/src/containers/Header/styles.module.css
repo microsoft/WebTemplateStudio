@@ -1,9 +1,8 @@
 .header {
-    z-index: 1;
     position: absolute;
     width: 100%;
     padding: 12px 24px;
-    background-color: black;
+    background-color: var(--vscode-editor-background);
     border-bottom: 0.5px solid #7f7f7f;
     display: flex;
     justify-content: space-between;
