@@ -13,7 +13,6 @@ import { EXTENSION_COMMANDS } from "../../utils/constants";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { setDetailPageAction } from "../../actions/setDetailsPage";
 import { IOption } from "../../types/option";
-import { withLocalPath } from "../../utils/getSvgUrl";
 import { messages } from "../../mockData/azureServiceOptions";
 
 import { microsoftAzureDetails } from "../../mockData/azureServiceOptions";
