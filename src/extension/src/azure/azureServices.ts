@@ -176,50 +176,59 @@ export class AzureServices extends Extensible {
     };
   }
 
-  public static async sendCosmosNameValidationStatusToClient(message: any): Promise<IPayloadResponse> {
+  public static async sendCosmosNameValidationStatusToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
     await this.updateCosmosDBSubscriptionItemCache(message.subscription);
 
-    let invalidReason = await this.AzureCosmosDBProvider.validateCosmosDBAccountName(
+    return await this.AzureCosmosDBProvider.validateCosmosDBAccountName(
       message.appName,
       this.usersCosmosDBSubscriptionItemCache
-    );
-    return {payload: {
-      isAvailable:
-        !invalidReason || invalidReason === undefined || invalidReason === "",
-      reason: invalidReason
-    }}
+    )
+      .then((invalidReason: string | undefined) => {
+        return {
+          payload: {
+            isAvailable:
+              !invalidReason ||
+              invalidReason === undefined ||
+              invalidReason === "",
+            reason: invalidReason
+          }
+        };
+      })
+      .catch((error: Error) => {
+        throw error; //to log in telemetry
+      });
   }
-
   public static async sendFunctionNameValidationStatusToClient(message: any) {
     await this.updateFunctionSubscriptionItemCache(message.subscription);
-    let isValid = this.AzureFunctionProvider.checkFunctionAppName(
+    return this.AzureFunctionProvider.checkFunctionAppName(
       message.appName,
       this.usersFunctionSubscriptionItemCache
-    );
-    return {payload: { isAvailable: isValid }};
-  }
+    )
+      .then(isValid => {
+        return {
+          payload: {
+            isAvailable: isValid,
+            message: isValid
+              ? ""
+              : CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(
+                  message.appName
+                )
+          }
+        };
+      })
+      .catch((error: Error) => {
+        // FIXME: Error validation shouldn't throw an error
 
-
-
-  private static async validateCosmosAccountName(
-    cosmosDBAccountName: string,
-    subscriptionLabel: string
-  ): Promise<string | undefined> {
-    return await this.AzureCosmosDBProvider.validateCosmosDBAccountName(
-      cosmosDBAccountName,
-      this.usersCosmosDBSubscriptionItemCache
-    );
-  }
-  public static async validateFunctionAppName(
-    functionAppName: string,
-    subscriptionLabel: string
-  ): Promise<boolean | undefined> {
-    await this.updateFunctionSubscriptionItemCache(subscriptionLabel);
-
-    return this.AzureFunctionProvider.checkFunctionAppName(
-      functionAppName,
-      this.usersFunctionSubscriptionItemCache
-    );
+        return {
+          payload: {
+            isAvailable: false,
+            reason: error.message
+          }
+        };
+        // throw error; //to log in telemetry
+      });
   }
 
   /*
@@ -292,10 +301,10 @@ export class AzureServices extends Extensible {
     genPath: string
   ): Promise<DatabaseObject> {
     try {
-      await this.validateCosmosAccountName(
-        selections.accountName,
-        selections.subscription
-      );
+      await this.sendCosmosNameValidationStatusToClient({
+        accountName: selections.accountName,
+        subscription: selections.subscription
+      });
     } catch (error) {
       return Promise.reject(error);
     }

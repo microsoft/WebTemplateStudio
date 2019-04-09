@@ -39,12 +39,12 @@ export class Controller {
     if (extensionModule) {
       let classModule = this.extensionModuleMap.get(extensionModule);
       if (classModule) {
-        let payload = await classModule.callCommandSpecifiedByPayload(
+        let responsePayload = await classModule.callCommandSpecifiedByPayload(
           message,
           this.Telemetry
         );
-        if (payload) {
-          Controller.handleValidMessage(message.command, payload.payload);
+        if (responsePayload) {
+          Controller.handleValidMessage(message.command, responsePayload);
         }
       } else {
         vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
