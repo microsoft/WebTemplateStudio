@@ -24,8 +24,7 @@ export const setCosmosModalValidation = (
     isLocationEmpty ||
     isApiEmpty;
 
-  const { message } = accountNameAvailability;
-  const accountNameErrorExists = message != null && message.length > 0;
+  const { isAccountNameAvailable } = accountNameAvailability;
 
   updateValidation({
     isSubscriptionEmpty: isSubscriptionEmpty,
@@ -34,5 +33,5 @@ export const setCosmosModalValidation = (
     isAccountNameEmpty: isAccountNameEmpty,
     isApiEmpty: isApiEmpty
   });
-  return isAnyEmpty || isValidatingName || accountNameErrorExists;
+  return isAnyEmpty || isValidatingName || !isAccountNameAvailable;
 };

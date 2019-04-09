@@ -27,8 +27,7 @@ export const setAzureModalValidation = (
     isRuntimeStackEmpty ||
     isNumFunctionsZero;
 
-  const { message } = appNameAvailability;
-  const appNameErrorExists = message != null && message.length > 0;
+  const { isAppNameAvailable } = appNameAvailability;
 
   updateValidation({
     isSubscriptionEmpty: isSubscriptionEmpty,
@@ -38,5 +37,5 @@ export const setAzureModalValidation = (
     isLocationEmpty: isLocationEmpty,
     isRuntimeStackEmpty: isRuntimeStackEmpty
   });
-  return isAnyEmpty || appNameErrorExists || isValidatingName;
+  return isAnyEmpty || !isAppNameAvailable || isValidatingName;
 };
