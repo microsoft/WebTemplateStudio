@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Check from "../../assets/check.svg";
 
 import styles from "./styles.module.css";
+import { withLocalPath } from "../../utils/getSvgUrl";
 
 const LeftSidebarLink = ({
   text,
@@ -25,7 +26,7 @@ const LeftSidebarLink = ({
     <Link to={path} onClick={handleClick} className={styles.container}>
       {showCheck ? (
         <img
-          src={process.env.REACT_APP_RELATIVE_PATH + Check}
+          src={withLocalPath(Check)}
           className={styles.icon}
           alt="Link to a different page in the wizard"
         />

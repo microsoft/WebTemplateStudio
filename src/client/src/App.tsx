@@ -44,6 +44,10 @@ import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
 import { setAzureValidationStatusAction } from "./actions/setAzureValidationStatusAction";
 
+if (process.env.NODE_ENV === "development") {
+  require("./css/themes.css");
+}
+
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;

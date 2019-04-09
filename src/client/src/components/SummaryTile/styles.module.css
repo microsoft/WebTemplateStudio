@@ -8,7 +8,7 @@
 .summaryTileContainer {
   display: flex;
   align-items: center;
-  background-color: #303030;
+  background-color: var(--vscode-notificationCenterHeader-background);
   padding: 11px;
   justify-content: space-between;
   width: 100%;
@@ -16,7 +16,7 @@
 }
 
 .summaryTileContainer:hover {
-  outline: 2px solid #ffffff;
+  outline: 2px solid var(--vscode-editor-foreground);
 }
 
 .leftContainer {
@@ -57,13 +57,14 @@
 .tileInput {
   font-size: 18px;
   font-weight: bold;
-  background-color: #303030;
+  background-color: var(--vscode-notificationCenterHeader-background);
   border: none;
   max-width: 300px;
+  color: var(--vscode-editor-foreground);
 }
 
 .tileInput:focus {
-  outline: 1px solid #ffffff;
+  outline: 1px solid var(--vscode-editor-foreground)
 }
 
 .metaData {

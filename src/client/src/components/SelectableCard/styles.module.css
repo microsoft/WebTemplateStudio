@@ -1,11 +1,10 @@
 .container {
-  border: 0.5px solid #ffffff;
-  padding: 16px;
   margin-right: 12px;
   margin-bottom: 12px;
-  border-radius: 4px;
   cursor: pointer;
-  background-color: #252526;
+  padding: 12px;
+  background-color: var(--vscode-notificationCenterHeader-background);
+  border: 0.5px solid var(--vscode-editor-foreground);
 }
 
 .selected,
@@ -14,9 +13,9 @@
 }
 
 .selected {
-  /* Account for lost padding on select with border */
-  padding: 13.5px;
-  border: 3px solid #ffffff;
+  padding: 12.5px;
+  border: none;
+  outline: 3px solid var(--vscode-editor-foreground);
 }
 
 .cardCount,

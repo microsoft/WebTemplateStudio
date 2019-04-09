@@ -6,6 +6,7 @@
 .text {
     font-weight: bold;
     padding: 18px 0px;
+    color: var(--vscode-editor-foreground);
 }
 
 .textSelected {

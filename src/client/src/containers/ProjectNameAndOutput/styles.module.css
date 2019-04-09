@@ -29,8 +29,8 @@
 }
 
 .errorMessage {
-  background: #5f0d0d;
-  border: 1px solid #9d2f23;
+  background: var(--vscode-inputValidation-errorBackground);
+  border: 1px solid var(--vscode-inputValidation-errorBorder);
   display: flex;
   justify-content: space-between;
   align-items: center;
