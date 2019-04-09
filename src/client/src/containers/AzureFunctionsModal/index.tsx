@@ -108,6 +108,10 @@ const messages = defineMessages({
     id: "azureFunctionsModal.appName",
     defaultMessage: "App Name"
   },
+  editResource: {
+    id: "azureFunctionsModal.editResource",
+    defaultMessage: "Edit Resource"
+  },
   addResource: {
     id: "azureFunctionsModal.addResource",
     defaultMessage: "Add Resource"
@@ -482,7 +486,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
           )}
           onClick={handleAddResource}
         >
-          {props.intl.formatMessage(messages.addResource)}
+          {(props.selection &&
+            props.intl.formatMessage(messages.editResource)) ||
+            props.intl.formatMessage(messages.addResource)}
         </button>
       </div>
     </React.Fragment>

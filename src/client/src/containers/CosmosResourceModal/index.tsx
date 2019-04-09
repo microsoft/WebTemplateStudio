@@ -108,6 +108,10 @@ const messages = defineMessages({
     id: "cosmosResourceModule.addResource",
     defaultMessage: "Add Resource"
   },
+  editResource: {
+    id: "cosmosResourceModule.editResource",
+    defaultMessage: "Edit Resource"
+  },
   createCosmosRes: {
     id: "cosmosResourceModule.createCosmosRes",
     defaultMessage: "Create Cosmos DB Account"
@@ -444,7 +448,9 @@ const CosmosResourceModal = (props: Props) => {
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
           onClick={handleAddResource}
         >
-          {props.intl.formatMessage(messages.addResource)}
+          {(props.selection &&
+            props.intl.formatMessage(messages.editResource)) ||
+            props.intl.formatMessage(messages.addResource)}
         </button>
       </div>
     </div>
