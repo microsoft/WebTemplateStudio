@@ -10,46 +10,38 @@ import {
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./apiModule";
 import { AzureServices } from "./azure/azureServices";
-import { ChildProcess } from "child_process";
-import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
+import { TelemetryAI } from "./telemetry/telemetryAI";
 import { Extensible } from "./extensible";
 import { GenerationExperience } from "./generationExperience";
 
 export class Controller {
-  public reactPanelContext: ReactPanel;
+  public static reactPanelContext: ReactPanel;
   public Telemetry: TelemetryAI;
   private AzureService: AzureServices = new AzureServices();
-  private GenExperience: GenerationExperience = new GenerationExperience(
-    Controller.reactPanelContext,
-    Controller.Telemetry
-  );
+  private GenExperience: GenerationExperience;
   private Validator: Validator = new Validator();
   // This will map commands from the client to functions.
 
-  private static extensionModuleMap: Map<ExtensionModule, Extensible> = new Map(
+  private extensionModuleMap: Map<ExtensionModule, Extensible> = new Map(
     [
-      [ExtensionModule.Azure, Controller.AzureService],
-      [ExtensionModule.Validator, Controller.Validator],
-      [ExtensionModule.Telemetry, Controller.Telemetry],
-      [ExtensionModule.Generate, Controller.GenExperience]
-      // [
-      //   ExtensionCommand.ProjectPathValidation,
-      //   Controller.handleProjectPathValidation
-      // ],
+      [ExtensionModule.Azure, this.AzureService],
+      [ExtensionModule.Validator, this.Validator],
+      [ExtensionModule.Telemetry, this.Telemetry],
+      [ExtensionModule.Generate, this.GenExperience]
     ]
   );
 
-  private static routingMessageReceieverDelegate = async function(
+  private async routingMessageReceieverDelegate(
     message: any
   ) {
     let extensionModule = message.module;
 
     if (extensionModule) {
-      let classModule = Controller.extensionModuleMap.get(extensionModule);
+      let classModule = this.extensionModuleMap.get(extensionModule);
       if (classModule) {
         let payload = await classModule.callCommandSpecifiedByPayload(
           message,
-          Telemetry
+          this.Telemetry
         );
         if (payload) {
           Controller.handleValidMessage(message.command, payload.payload);
@@ -63,10 +55,15 @@ export class Controller {
   };
 
   constructor(
-    context: vscode.ExtensionContext,
-    extensionStartTime: number
+    private context: vscode.ExtensionContext,
+    private extensionStartTime: number
   ){
-
+    this.Telemetry = new TelemetryAI(this.context, this.extensionStartTime);
+    this.GenExperience  = new GenerationExperience(
+      Controller.reactPanelContext,
+      this.Telemetry
+    );
+    this.launchWizard(this.context, this.extensionStartTime);
   }
 
   /**
@@ -74,14 +71,10 @@ export class Controller {
    * Will launch the api, sync templates then pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public static async launchWizard(
+  public async launchWizard(
     context: vscode.ExtensionContext,
     extensionStartTime: number
   ): Promise<any> {
-    Controller.Telemetry = new TelemetryAI(context, extensionStartTime);
-    this.Telemetry.callWithTelemetryAndCatchHandleErrors(
-      TelemetryEventName.SyncEngine,
-      async function(this: IActionContext): Promise<ChildProcess> {
         let process = ApiModule.StartApi(context);
         let synced = false;
         let syncAttempts = 0;
@@ -104,14 +97,12 @@ export class Controller {
 
         Controller.reactPanelContext = ReactPanel.createOrShow(
           context.extensionPath,
-          Controller.routingMessageReceieverDelegate
+          this.routingMessageReceieverDelegate
         );
-        Controller.Telemetry.trackExtensionStartUpTime(
+        this.Telemetry.trackExtensionStartUpTime(
           TelemetryEventName.ExtensionLaunch
         );
         return process;
-      }
-    );
   }
 
   private static timeout(ms: number) {
@@ -149,7 +140,7 @@ export class Controller {
 
   private static handleGenLiveMessage(message: any) {
     vscode.window.showInformationMessage(message);
-    Controller.reactPanelContext.postMessageWebview({
+    this.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.UpdateGenStatusMessage,
       payload: {
         status: message
@@ -158,7 +149,7 @@ export class Controller {
   }
 
   public static handleValidMessage(command: ExtensionCommand, payload?: any) {
-    Controller.reactPanelContext.postMessageWebview({
+    this.reactPanelContext.postMessageWebview({
       command: command,
       payload: payload,
       message: ""
@@ -170,7 +161,7 @@ export class Controller {
     error: Error,
     payload?: any
   ) {
-    Controller.reactPanelContext.postMessageWebview({
+    this.reactPanelContext.postMessageWebview({
       command: command,
       payload: payload,
       message: error.message,
