@@ -47,7 +47,7 @@ export class Controller {
     if (extensionModule) {
       let classModule = Controller.extensionModuleMap.get(extensionModule);
       if (classModule) {
-        let payload = await classModule.callFunctionSpecifiedByPayload(
+        let payload = await classModule.callCommandSpecifiedByPayload(
           message,
           Controller.Telemetry
         );
@@ -89,12 +89,10 @@ export class Controller {
           }
         }
         if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-          vscode.window.showErrorMessage(
+          process.kill();
+          throw new Error(
             CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
           );
-          this.properties.Status =
-            CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS;
-          return process;
         }
 
         Controller.reactPanelContext = ReactPanel.createOrShow(
@@ -130,32 +128,6 @@ export class Controller {
     vscode.window.showInformationMessage(
       CONSTANTS.INFO.SYNC_STATUS + ` ${status}`
     );
-  }
-
-  public static handleProjectPathValidation(message: any) {
-    const projectPath = message.projectPath;
-    const projectName = message.projectName;
-
-    let projectPathError = "";
-    let isInvalidProjectPath = false;
-
-    let validationObject = Validator.isValidProjectPath(
-      projectPath,
-      projectName
-    );
-
-    projectPathError = validationObject.error;
-    isInvalidProjectPath = !validationObject.isValid;
-
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.ProjectPathValidation,
-      payload: {
-        projectPathValidation: {
-          isInvalidProjectPath: isInvalidProjectPath,
-          projectPathError: projectPathError
-        }
-      }
-    });
   }
 
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(

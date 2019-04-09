@@ -9,7 +9,8 @@ export class Validator extends Extensible {
     ExtensionCommand,
     (message: any) => Promise<IPayloadResponse>
   > = new Map([
-    [ExtensionCommand.GetOutputPath, Validator.sendOutputPathSelectionToClient]
+    [ExtensionCommand.GetOutputPath, Validator.sendOutputPathSelectionToClient],
+    [ExtensionCommand.ProjectPathValidation, Validator.handleProjectPathValidation]
   ]);
 
   public static async sendOutputPathSelectionToClient(
@@ -39,26 +40,32 @@ export class Validator extends Extensible {
       });
   }
 
-  public static isAlphaNumeric = (name: string) => {
-    return /^[\w ]+$/i.test(name);
+  public static async handleProjectPathValidation(message: any): Promise<IPayloadResponse> {
+    const projectPath = message.projectPath;
+    const projectName = message.projectName;
+
+    let projectPathError = "";
+    let isInvalidProjectPath = false;
+
+    let validationObject = Validator.isValidProjectPath(
+      projectPath,
+      projectName
+    );
+
+    projectPathError = validationObject.error;
+    isInvalidProjectPath = !validationObject.isValid;
+
+    return {
+      payload: {
+        projectPathValidation: {
+          isInvalidProjectPath: isInvalidProjectPath,
+          projectPathError: projectPathError
+        }
+      }
+    };
   }
 
-  public static isEmpty = (name: string) => {
-    return name === "" || name === undefined;
-  }
-
-  public static isValidProjectName = (name: string) => {
-    if (Validator.isEmpty(name)) {
-      throw Error(CONSTANTS.ERRORS.EMPTY_PROJECT_NAME);
-    } else if (!Validator.isAlphaNumeric(name)) {
-      throw Error(CONSTANTS.ERRORS.INVALID_PROJECT_NAME(name));
-    } else if (name.length > CONSTANTS.MAX_PROJECT_NAME_LENGTH) {
-      throw Error(CONSTANTS.ERRORS.PROJECT_NAME_LENGTH_EXCEEDED_MAX);
-    }
-    return true;
-  }
-
-  public static isValidProjectPath = (path: string, name: string) => {
+  private static isValidProjectPath = (path: string, name: string) => {
     let isValid = true;
     let error = "";
 
@@ -75,7 +82,7 @@ export class Validator extends Extensible {
     };
   }
 
-  public static isUniquePath = (projectPath: string, name: string) => {
+  private static isUniquePath = (projectPath: string, name: string) => {
     return !fs.existsSync(path.join(projectPath, name));
   }
 }
