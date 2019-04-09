@@ -88,9 +88,10 @@ const LeftSidebar = (props: Props) => {
                     disabled={!isVisited[ROUTES_ARRAY[idx]]}
                     path={ROUTES_ARRAY[idx]}
                     text={sidebartitle}
-                    showCheck={
+                    visitedCheck={
                       idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]]
                     }
+                    isSelected={idx === currentPathIndex}
                   />
                 </div>
               );
