@@ -57,7 +57,16 @@ const services = (state: ICosmosDB = initialState, action: any) => {
     case Actions.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
       const newSelectionState = {
         ...initialState,
-        selection: [action.payload]
+        selection: [
+          {
+            subscription: action.payload.subscription.value,
+            resourceGroup: action.payload.resourceGroup.value,
+            location: action.payload.location.value,
+            api: action.payload.api.value,
+            accountName: action.payload.accountName.value,
+            internalName: action.payload.internalName.value
+          }
+        ]
       };
       return newSelectionState;
     case Actions.SET_ACCOUNT_AVAILABILITY:
