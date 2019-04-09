@@ -29,11 +29,13 @@ import {
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
+import { setAppNameAvailabilityAction } from "../../actions/setAccountAvailability";
 
 interface IDispatchProps {
   closeModal: () => any;
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => any;
   setValidationStatus: (status: boolean) => Dispatch;
+  setAppNameAvailability: (isAvailableObject: any) => any;
 }
 
 interface IStateProps {
@@ -204,8 +206,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       isRuntimeStackEmpty ||
       isNumFunctionsZero;
 
-    const { message } = props.appNameAvailability;
-    const appNameErrorExists = message != null && message.length > 0;
+    const { isAppNameAvailable } = props.appNameAvailability;
 
     updateValidation({
       isAppNameEmpty,
@@ -216,7 +217,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       isSubscriptionEmpty
     });
 
-    return isAnyEmpty || appNameErrorExists || props.isValidatingName;
+    return isAnyEmpty || !isAppNameAvailable || props.isValidatingName;
   };
 
   const handleDropdown = (infoLabel: string, value: string) => {
@@ -234,12 +235,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       [infoLabel]: value
     });
   };
-  React.useEffect(() => {
-    if (props.selection) {
-      const { previousFormData } = props.selection;
-      updateForm(previousFormData);
-    }
-  }, []);
+
   /**
    * Listens on account name change and validates the input in VSCode
    */
@@ -259,6 +255,19 @@ const AzureFunctionsResourceModal = (props: Props) => {
       }, 700);
     }
   }, [azureFunctionsFormData.appName, props.selection]);
+
+  React.useEffect(() => {
+    if (props.selection) {
+      const { previousFormData } = props.selection;
+      updateForm(previousFormData);
+    } else {
+      props.setAppNameAvailability({
+        isAvailable: false,
+        message: ""
+      });
+    }
+  }, []);
+
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
@@ -465,6 +474,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => {
     dispatch(saveAzureFunctionsSettingsAction(azureFunctionsOptions));
   },
+  setAppNameAvailability: (isAvailableObject: any) =>
+    dispatch(setAppNameAvailabilityAction(isAvailableObject)),
   setValidationStatus: (status: boolean) =>
     dispatch(setAzureValidationStatusAction(status))
 });

@@ -5,7 +5,6 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import { findDOMNode } from "react-dom";
 
 import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
@@ -31,11 +30,15 @@ import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceS
 import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
+import { setAccountAvailability } from "../../actions/setAccountAvailability";
 
 interface IDispatchProps {
   closeModal: () => any;
   saveCosmosOptions: (cosmosOptions: any) => any;
   setValidationStatus: (status: boolean) => Dispatch;
+  setCosmosResourceAccountNameAvailability: (
+    isAvailableObject: any
+  ) => Dispatch;
 }
 
 interface IStateProps {
@@ -207,8 +210,8 @@ const CosmosResourceModal = (props: Props) => {
       isLocationEmpty ||
       isApiEmpty;
 
-    const { message } = props.accountNameAvailability;
-    const accountNameErrorExists = message != null && message.length > 0;
+    const { isAccountNameAvailable } = props.accountNameAvailability;
+
     updateValidation({
       isAccountNameEmpty,
       isApiEmpty,
@@ -216,7 +219,7 @@ const CosmosResourceModal = (props: Props) => {
       isResourceGroupEmpty,
       isSubscriptionEmpty
     });
-    return isAnyEmpty || props.isValidatingName || accountNameErrorExists;
+    return isAnyEmpty || props.isValidatingName || !isAccountNameAvailable;
   };
 
   const handleDropdown = (infoLabel: string, value: string) => {
@@ -262,6 +265,11 @@ const CosmosResourceModal = (props: Props) => {
     if (props.selection) {
       const { previousFormData } = props.selection;
       updateForm(previousFormData);
+    } else {
+      props.setCosmosResourceAccountNameAvailability({
+        isAvailable: false,
+        message: ""
+      });
     }
   }, []);
   /**
@@ -447,6 +455,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   saveCosmosOptions: (cosmosOptions: any) => {
     dispatch(saveCosmosDbSettingsAction(cosmosOptions));
   },
+  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) =>
+    dispatch(setAccountAvailability(isAvailableObject)),
   setValidationStatus: (status: boolean) =>
     dispatch(setAzureValidationStatusAction(status))
 });
