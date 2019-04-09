@@ -116,6 +116,7 @@ const SummaryTile = ({
                 ? subTitle
                 : serviceTitle && (
                     <React.Fragment>
+                      <div>{intl.formatMessage(serviceTitle)}</div>
                       <div>&nbsp;|&nbsp;</div>
                     </React.Fragment>
                   )}
