@@ -71,8 +71,8 @@ export class AzureServices extends Extensible {
   public static async sendUserStatusIfLoggedIn(
     message: any
   ): Promise<IPayloadResponse> {
-    let azureSubscriptions = await AzureAuth.getSubscriptions();
-    const subscriptionListToDisplay = azureSubscriptions.map(
+    AzureServices.subscriptionItemList = await AzureAuth.getSubscriptions();
+    const subscriptionListToDisplay = AzureServices.subscriptionItemList.map(
       subscriptionItem => {
         return {
           label: subscriptionItem.label,
@@ -97,7 +97,7 @@ export class AzureServices extends Extensible {
     message: any
   ): Promise<IPayloadResponse> {
     return {
-      payload: await this.getSubscriptionData(
+      payload: await AzureServices.getSubscriptionData(
         message.subscription,
         AzureResourceType.Cosmos
       )
@@ -108,7 +108,7 @@ export class AzureServices extends Extensible {
     message: any
   ): Promise<IPayloadResponse> {
     return {
-      payload: await this.getSubscriptionData(
+      payload: await AzureServices.getSubscriptionData(
         message.subscription,
         AzureResourceType.Functions
       )
@@ -124,7 +124,7 @@ export class AzureServices extends Extensible {
     subscriptionLabel: string,
     AzureType: AzureResourceType
   ) {
-    let subscriptionItem = this.subscriptionItemList.find(
+    let subscriptionItem = AzureServices.subscriptionItemList.find(
       subscriptionItem => subscriptionItem.label === subscriptionLabel
     );
     if (subscriptionItem === undefined) {
@@ -179,11 +179,11 @@ export class AzureServices extends Extensible {
   public static async sendCosmosNameValidationStatusToClient(
     message: any
   ): Promise<IPayloadResponse> {
-    await this.updateCosmosDBSubscriptionItemCache(message.subscription);
+    await AzureServices.updateCosmosDBSubscriptionItemCache(message.subscription);
 
-    return await this.AzureCosmosDBProvider.validateCosmosDBAccountName(
+    return await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(
       message.appName,
-      this.usersCosmosDBSubscriptionItemCache
+      AzureServices.usersCosmosDBSubscriptionItemCache
     )
       .then((invalidReason: string | undefined) => {
         return {
@@ -201,10 +201,10 @@ export class AzureServices extends Extensible {
       });
   }
   public static async sendFunctionNameValidationStatusToClient(message: any) {
-    await this.updateFunctionSubscriptionItemCache(message.subscription);
-    return this.AzureFunctionProvider.checkFunctionAppName(
+    await AzureServices.updateFunctionSubscriptionItemCache(message.subscription);
+    return AzureServices.AzureFunctionProvider.checkFunctionAppName(
       message.appName,
-      this.usersFunctionSubscriptionItemCache
+      AzureServices.usersFunctionSubscriptionItemCache
     )
       .then(isValid => {
         return {
@@ -238,14 +238,14 @@ export class AzureServices extends Extensible {
     subscriptionLabel: string
   ): Promise<void> {
     if (
-      this.usersCosmosDBSubscriptionItemCache === undefined ||
-      subscriptionLabel !== this.usersCosmosDBSubscriptionItemCache.label
+      AzureServices.usersCosmosDBSubscriptionItemCache === undefined ||
+      subscriptionLabel !== AzureServices.usersCosmosDBSubscriptionItemCache.label
     ) {
-      let subscriptionItem = this.subscriptionItemList.find(
+      let subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
       );
       if (subscriptionItem) {
-        this.usersCosmosDBSubscriptionItemCache = subscriptionItem;
+        AzureServices.usersCosmosDBSubscriptionItemCache = subscriptionItem;
       } else {
         throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
       }
@@ -256,14 +256,14 @@ export class AzureServices extends Extensible {
     subscriptionLabel: string
   ): Promise<void> {
     if (
-      this.usersFunctionSubscriptionItemCache === undefined ||
-      subscriptionLabel !== this.usersFunctionSubscriptionItemCache.label
+      AzureServices.usersFunctionSubscriptionItemCache === undefined ||
+      subscriptionLabel !== AzureServices.usersFunctionSubscriptionItemCache.label
     ) {
-      let subscriptionItem = this.subscriptionItemList.find(
+      let subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
       );
       if (subscriptionItem) {
-        this.usersFunctionSubscriptionItemCache = subscriptionItem;
+        AzureServices.usersFunctionSubscriptionItemCache = subscriptionItem;
       } else {
         throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
       }
@@ -274,14 +274,14 @@ export class AzureServices extends Extensible {
     selections: any,
     appPath: string
   ): Promise<void> {
-    await this.updateFunctionSubscriptionItemCache(selections.subscription);
+    await AzureServices.updateFunctionSubscriptionItemCache(selections.subscription);
 
     let userFunctionsSelections: FunctionSelections = {
       functionAppName: selections.appName,
-      subscriptionItem: this.usersFunctionSubscriptionItemCache,
+      subscriptionItem: AzureServices.usersFunctionSubscriptionItemCache,
       resourceGroupItem: await AzureAuth.getResourceGroupItem(
         selections.resourceGroup,
-        this.usersFunctionSubscriptionItemCache
+        AzureServices.usersFunctionSubscriptionItemCache
       ),
       location: selections.location,
       runtime: selections.runtimeStack,
@@ -301,7 +301,7 @@ export class AzureServices extends Extensible {
     genPath: string
   ): Promise<DatabaseObject> {
     try {
-      await this.sendCosmosNameValidationStatusToClient({
+      await AzureServices.sendCosmosNameValidationStatusToClient({
         accountName: selections.accountName,
         subscription: selections.subscription
       });
@@ -315,12 +315,12 @@ export class AzureServices extends Extensible {
       location: selections.location,
       resourceGroupItem: await AzureAuth.getResourceGroupItem(
         selections.resourceGroup,
-        this.usersCosmosDBSubscriptionItemCache
+        AzureServices.usersCosmosDBSubscriptionItemCache
       ),
-      subscriptionItem: this.usersCosmosDBSubscriptionItemCache
+      subscriptionItem: AzureServices.usersCosmosDBSubscriptionItemCache
     };
 
-    return await this.AzureCosmosDBProvider.createCosmosDB(
+    return await AzureServices.AzureCosmosDBProvider.createCosmosDB(
       userCosmosDBSelection,
       genPath
     );
