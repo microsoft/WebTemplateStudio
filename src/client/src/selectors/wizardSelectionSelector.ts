@@ -68,7 +68,7 @@ const getProjectTypeRowItems = (selection: SelectionState): RowType[] => {
     {
       title: projectType.title,
       svgUrl: getSvgUrl(projectType.internalName),
-      version: selection.version,
+      version: selection.appType.version,
       author: projectType.author
     }
   ];
@@ -137,7 +137,7 @@ const getPagesRowItems = (selection: SelectionState): RowType[] => {
       title: page.title,
       svgUrl: getSvgUrl(page.internalName),
       id: page.id,
-      version: selection.version,
+      version: page.version as string,
       author: page.author,
       originalTitle: page.originalTitle
     });

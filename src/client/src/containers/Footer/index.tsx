@@ -45,7 +45,7 @@ interface IStateProps {
   cosmos: any;
   selectedFunctions: boolean;
   functions: any;
-  isVisited: IVisited;
+  isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
 }
 

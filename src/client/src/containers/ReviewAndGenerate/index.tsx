@@ -2,7 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SummarySection from "../../components/SummarySection";
+import SummarySection from "../SummarySection";
 import SummaryTile from "../../components/SummaryTile";
 import SortablePageList from "../SortablePageList";
 
@@ -33,7 +33,6 @@ interface IStateProps {
   servicesRows: RowType[];
   pagesRows: RowType[];
   vscode: any;
-  validation: any;
   projectName: string;
   outputPath: string;
 }
@@ -134,7 +133,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   servicesRows: WizardSelectors.getServicesSelector(state),
   pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
   vscode: getVSCodeApiSelector(state),
-  validation: state.selection.validation,
   projectName: WizardSelectors.getProjectName(state),
   outputPath: WizardSelectors.getOutputPath(state)
 });
