@@ -1,5 +1,8 @@
 .container {
   padding-top: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .itemBorder {
@@ -20,9 +23,17 @@
 }
 
 .leftView {
-  width: 20%;
+  width: 350px;
   background-color: black;
   height: 100vh;
   border-right: 0.5px solid #555555;
   box-sizing: border-box;
+  height: calc(100vh - 70.625px);
+}
+
+.feedback {
+  text-align: center;
+  color: #54b4ff;
+  text-decoration: none;
+  margin-bottom: 10px;
 }

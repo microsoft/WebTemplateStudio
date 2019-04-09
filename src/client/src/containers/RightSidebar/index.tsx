@@ -21,8 +21,10 @@ import { selectPagesAction } from "../../actions/selectPages";
 import { ISelected } from "../../types/selected";
 import SortablePageList from "../SortablePageList";
 import styles from "./styles.module.css";
+import Licenses from "../Licenses";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
+import About from "../About";
 
 interface ISelectionType {
   appType: ISelected;
@@ -122,58 +124,61 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const { intl } = this.props;
     return (
       <React.Fragment>
-        {pathname !== ROUTES.PAGE_DETAILS &&
-          pathname !== ROUTES.REVIEW_AND_GENERATE && (
-            <div
-              className={classNames(styles.container, {
-                [styles.rightView]: pathname === ROUTES.WELCOME,
-                [styles.rightViewCropped]: pathname !== ROUTES.WELCOME
-              })}
-            >
-              <div className={styles.title}>
-                {intl.formatMessage(messages.yourProjectDetails)}
-              </div>
-              <RightSidebarDropdown
-                options={this.props.projectTypeDropdownItems}
-                handleDropdownChange={this.handleChange.bind(this)}
-                selectDropdownOption={this.props.selectProjectType}
-                isVisible={showProjectTypes}
-                title={intl.formatMessage(messages.projectType)}
-                value={this.convertOptionToDropdownItem(
-                  this.props.selection.appType
-                )}
-              />
-              <RightSidebarDropdown
-                options={this.props.frontendDropdownItems}
-                handleDropdownChange={this.handleChange.bind(this)}
-                selectDropdownOption={this.props.selectFrontendFramework}
-                isVisible={showFrameworks}
-                title={intl.formatMessage(messages.frontendFramework)}
-                value={this.convertOptionToDropdownItem(
-                  this.props.selection.frontendFramework
-                )}
-              />
-              <RightSidebarDropdown
-                options={this.props.backendDropdownItems}
-                handleDropdownChange={this.handleChange.bind(this)}
-                selectDropdownOption={this.props.selectBackendFramework}
-                isVisible={showFrameworks}
-                title={intl.formatMessage(messages.backendFramework)}
-                value={this.convertOptionToDropdownItem(
-                  this.props.selection.backendFramework
-                )}
-              />
-              {showPages && <SortablePageList />}
-              {showServices && (
-                <div className={styles.sidebarItem}>
-                  <div className={styles.dropdownTitle}>
-                    {intl.formatMessage(messages.services)}
+        {pathname !== ROUTES.PAGE_DETAILS && (
+          <div
+            className={classNames(styles.container, {
+              [styles.rightView]: pathname === ROUTES.WELCOME,
+              [styles.rightViewCropped]: pathname !== ROUTES.WELCOME
+            })}
+          >
+            {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+              <div>
+                <div className={styles.title}>Your Project Details</div>
+                <RightSidebarDropdown
+                  options={this.props.projectTypeDropdownItems}
+                  handleDropdownChange={this.handleChange.bind(this)}
+                  selectDropdownOption={this.props.selectProjectType}
+                  isVisible={showProjectTypes}
+                  title="Project Type"
+                  value={this.convertOptionToDropdownItem(
+                    this.props.selection.appType
+                  )}
+                />
+                <RightSidebarDropdown
+                  options={this.props.frontendDropdownItems}
+                  handleDropdownChange={this.handleChange.bind(this)}
+                  selectDropdownOption={this.props.selectFrontendFramework}
+                  isVisible={showFrameworks}
+                  title="Front-end Framework"
+                  value={this.convertOptionToDropdownItem(
+                    this.props.selection.frontendFramework
+                  )}
+                />
+                <RightSidebarDropdown
+                  options={this.props.backendDropdownItems}
+                  handleDropdownChange={this.handleChange.bind(this)}
+                  selectDropdownOption={this.props.selectBackendFramework}
+                  isVisible={showFrameworks}
+                  title="Back-end Framework"
+                  value={this.convertOptionToDropdownItem(
+                    this.props.selection.backendFramework
+                  )}
+                />
+                {showPages && <SortablePageList />}
+                {showServices && (
+                  <div className={styles.sidebarItem}>
+                    <div className={styles.dropdownTitle}>Services</div>
+                    <ServicesSidebarItem services={this.props.services} />
                   </div>
-                  <ServicesSidebarItem services={this.props.services} />
-                </div>
-              )}
+                )}
+              </div>
+            )}
+            <div>
+              <Licenses />
+              <About />
             </div>
-          )}
+          </div>
+        )}
       </React.Fragment>
     );
   }

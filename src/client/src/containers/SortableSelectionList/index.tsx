@@ -59,6 +59,7 @@ const SortableSummaryTile = SortableElement(
             version="v1.0"
             svgUrl={page.svgUrl}
             isEditable={true}
+            author={page.author}
             handleCloseClick={handleCloseClick}
             handleInputChange={handleInputChange}
             idx={idx + 1}
@@ -87,21 +88,23 @@ const SortableList = SortableContainer(
   }) => {
     return (
       <div>
-        {!pagesRows &&
-          pages.map((page: any, idx: number) => {
-            return (
-              <SortableSidebarItem
-                key={page.id}
-                index={idx}
-                idx={idx}
-                page={page}
-                handleInputChange={handleInputChange}
-                handleCloseClick={handleCloseClick}
-              />
-            );
-          })
-        // index prop required by react-sortable, while idx used for updating redux state changes
-        }
+        <div className={styles.sidebarItem}>
+          {!pagesRows &&
+            pages.map((page: any, idx: number) => {
+              return (
+                <SortableSidebarItem
+                  key={page.id}
+                  index={idx}
+                  idx={idx}
+                  page={page}
+                  handleInputChange={handleInputChange}
+                  handleCloseClick={handleCloseClick}
+                />
+              );
+            })
+          // index prop required by react-sortable, while idx used for updating redux state changes
+          }
+        </div>
         {pagesRows &&
           pagesRows.map((page: any, idx: number) => {
             return (

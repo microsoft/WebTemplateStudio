@@ -63,5 +63,10 @@ export class TelemetryAI extends Extensible{
     public callWithTelemetryAndCatchHandleErrors<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{
         return callWithTelemetryAndCatchErrors(this.vscodeContext, callbackId,callback, TelemetryAI.telemetryReporter);
     }
+
+    public getExtensionVersionNumber(ctx: vscode.ExtensionContext){
+        const { extensionVersion } = getPackageInfo(ctx);
+        return extensionVersion;
+    }
 }
 

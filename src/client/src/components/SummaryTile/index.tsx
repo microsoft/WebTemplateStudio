@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 
 import styles from "./styles.module.css";
 
@@ -13,8 +14,9 @@ interface IProps {
   withIndent?: boolean;
   title: string;
   originalTitle?: string;
-  company?: string;
-  version: string;
+  author?: string;
+  serviceTitle?: FormattedMessage.MessageDescriptor;
+  version?: string;
   isEditable?: boolean;
   svgUrl?: string;
   withoutEditIcon?: boolean;
@@ -22,13 +24,18 @@ interface IProps {
   handleInputChange?: (newTitle: string, idx: number) => void;
   idx?: number;
   isDraggable?: boolean;
+  rotate?: boolean;
+  subTitle?: string;
 }
+
+type Props = IProps & InjectedIntlProps;
 
 const SummaryTile = ({
   withIndent,
   title,
   originalTitle,
-  company,
+  author,
+  serviceTitle,
   version,
   isEditable,
   svgUrl,
@@ -36,8 +43,11 @@ const SummaryTile = ({
   handleCloseClick,
   idx,
   handleInputChange,
-  isDraggable
-}: IProps) => {
+  isDraggable,
+  rotate,
+  subTitle,
+  intl
+}: Props) => {
   const [componentTitle, setTitle] = React.useState(title);
   const [isDisabled, setDisabled] = React.useState(true);
   const [showEditable, setEditable] = React.useState(false);
@@ -85,7 +95,12 @@ const SummaryTile = ({
         })}
       >
         <div className={styles.leftContainer}>
-          <img src={svgUrl} className={styles.leftIcon} />
+          <img
+            src={svgUrl}
+            className={classnames(styles.leftIcon, {
+              [styles.rotate]: rotate
+            })}
+          />
           <div className={styles.tileContent}>
             <input
               ref={inputRef}
@@ -97,19 +112,37 @@ const SummaryTile = ({
               onClick={handleClick}
             />
             <div className={styles.metaData}>
+              {subTitle
+                ? subTitle
+                : serviceTitle && (
+                    <React.Fragment>
+                      <div>{intl.formatMessage(serviceTitle)}</div>
+                      <div>&nbsp;|&nbsp;</div>
+                    </React.Fragment>
+                  )}
               {originalTitle && (
                 <React.Fragment>
                   <div>{originalTitle}</div>
                   <div>&nbsp;|&nbsp;</div>
                 </React.Fragment>
               )}
-              {company && (
+              {author && (
                 <React.Fragment>
-                  <div>{company}</div>
-                  <div>&nbsp;|&nbsp;</div>
+                  {originalTitle && (
+                    <React.Fragment>
+                      <div>{originalTitle}</div>
+                      <div>&nbsp;|&nbsp;</div>
+                    </React.Fragment>
+                  )}
+                  {author && (
+                    <React.Fragment>
+                      <div>{author}</div>
+                      <div>&nbsp;|&nbsp;</div>
+                    </React.Fragment>
+                  )}
+                  <div>{version}</div>
                 </React.Fragment>
               )}
-              <div>{version}</div>
             </div>
           </div>
         </div>
@@ -138,4 +171,4 @@ const SummaryTile = ({
   );
 };
 
-export default SummaryTile;
+export default injectIntl(SummaryTile);

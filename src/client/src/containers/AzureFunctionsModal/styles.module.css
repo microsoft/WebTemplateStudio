@@ -14,6 +14,10 @@
   margin-bottom: 2em;
 }
 
+.selectionContainerDisabled {
+  opacity: 0.5;
+}
+
 .selectionHeaderContainer {
   display: flex;
   justify-content: space-between;
@@ -78,7 +82,6 @@ input:focus {
 
 input::placeholder {
   color: white;
-  opacity: 0.4;
 }
 
 .createNew,
@@ -98,4 +101,25 @@ input::placeholder {
   border-radius: 2px;
   font-size: 90%;
   opacity: 50%;
+}
+
+.spinner {
+  height: 1em;
+  margin-right: 2px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: rotate steps(60) 1s infinite;
+  height: 18px;
+  width: 18px;
 }

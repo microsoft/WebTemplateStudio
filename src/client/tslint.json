@@ -17,6 +17,7 @@
     "no-duplicate-variable": true,
     "no-empty": false,
     "no-relative-imports": false,
+    "max-func-body-length": false,
     "curly": true,
     "class-name": true,
     "triple-equals": false,

@@ -10,7 +10,7 @@ import styles from "./styles.module.css";
 import { ROUTES, EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { validateName } from "../../utils/validateName";
 
-import { IVSCode } from "../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { rootSelector } from "../../selectors/generationSelector";
 import {
   getCosmosDbSelectionSelector,
@@ -23,8 +23,13 @@ import {
 
 import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
 import { openPostGenModalAction } from "../../actions/modalActions";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
-import { FormattedMessage, injectIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
+import {
+  getIsVisitedRoutesSelector,
+  IVisited
+} from "../../selectors/wizardNavigationSelector";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -32,17 +37,17 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  vscode?: IVSCode;
+  vscode: IVSCodeObject;
   engine: any;
   selectedCosmos: boolean;
   cosmos: any;
   selectedFunctions: boolean;
   functions: any;
+  isVisited: IVisited;
 }
 
 type Props = RouteComponentProps & IStateProps & IDispatchProps;
 
-// TODO: Reconfigure with proper navigation using redux
 const pathsNext: any = {
   [ROUTES.SELECT_PROJECT_TYPE]: ROUTES.SELECT_FRAMEWORKS,
   [ROUTES.SELECT_FRAMEWORKS]: ROUTES.SELECT_PAGES,
@@ -122,59 +127,76 @@ class Footer extends React.Component<Props> {
       }
     }
     const { pathname } = this.props.location;
+    const { showFrameworks } = this.props.isVisited;
     return (
       <div>
-        {pathname !== "/" && pathname !== ROUTES.PAGE_DETAILS && (
+        {pathname !== ROUTES.PAGE_DETAILS && (
           <div className={styles.footer}>
-            <div className={styles.buttonContainer}>
-              <Link
-                className={classnames(buttonStyles.buttonDark, styles.button)}
-                to={
-                  pathsBack[pathname] === undefined ? "/" : pathsBack[pathname]
-                }
-              >
-                <FormattedMessage id="footer.back" defaultMessage="Back" />
-              </Link>
-              <Link
-                className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
-                  [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
-                })}
-                onClick={() => {
-                  this.handleLinkClick(pathname);
-                }}
-                to={
-                  pathname === ROUTES.REVIEW_AND_GENERATE
-                    ? ROUTES.REVIEW_AND_GENERATE
-                    : pathsNext[pathname]
-                }
-              >
-                <FormattedMessage id="footer.next" defaultMessage="Next" />
-              </Link>
-              <button
-                disabled={
-                  pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
-                }
-                className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]:
-                    !this.isReviewAndGenerate() || !areValidNames,
-                  [buttonStyles.buttonHighlightedBorder]:
-                    this.isReviewAndGenerate() && areValidNames
-                })}
-                onClick={this.logMessageToVsCode}
-              >
+            <div>
+              {showFrameworks && (
                 <FormattedMessage
-                  id="footer.generate"
-                  defaultMessage="Generate"
+                  id="footer.license"
+                  defaultMessage="By continuing, you agree to the terms of all the licenses in the
+              licenses section."
                 />
-              </button>
-              <Link
-                className={classnames(styles.button, buttonStyles.buttonDark)}
-                to="/"
-              >
-                <FormattedMessage id="footer.cancel" defaultMessage="Cancel" />
-              </Link>
+              )}
             </div>
+            {pathname !== ROUTES.WELCOME && (
+              <div className={styles.buttonContainer}>
+                <Link
+                  className={classnames(buttonStyles.buttonDark, styles.button)}
+                  to={
+                    pathsBack[pathname] === undefined
+                      ? ROUTES.WELCOME
+                      : pathsBack[pathname]
+                  }
+                >
+                  <FormattedMessage id="footer.back" defaultMessage="Back" />
+                </Link>
+                <Link
+                  className={classnames(styles.button, {
+                    [buttonStyles.buttonDark]: this.isReviewAndGenerate(),
+                    [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate()
+                  })}
+                  onClick={() => {
+                    this.handleLinkClick(pathname);
+                  }}
+                  to={
+                    pathname === ROUTES.REVIEW_AND_GENERATE
+                      ? ROUTES.REVIEW_AND_GENERATE
+                      : pathsNext[pathname]
+                  }
+                >
+                  <FormattedMessage id="footer.next" defaultMessage="Next" />
+                </Link>
+                <button
+                  disabled={
+                    pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
+                  }
+                  className={classnames(styles.button, {
+                    [buttonStyles.buttonDark]:
+                      !this.isReviewAndGenerate() || !areValidNames,
+                    [buttonStyles.buttonHighlightedBorder]:
+                      this.isReviewAndGenerate() && areValidNames
+                  })}
+                  onClick={this.logMessageToVsCode}
+                >
+                  <FormattedMessage
+                    id="footer.generate"
+                    defaultMessage="Generate"
+                  />
+                </button>
+                <Link
+                  className={classnames(styles.button, buttonStyles.buttonDark)}
+                  to={ROUTES.WELCOME}
+                >
+                  <FormattedMessage
+                    id="footer.cancel"
+                    defaultMessage="Cancel"
+                  />
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -182,17 +204,15 @@ class Footer extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): IStateProps => {
-  const { vscode } = state;
-  return {
-    vscode: vscode.vscodeObject,
-    engine: rootSelector(state),
-    selectedCosmos: isCosmosResourceCreatedSelector(state),
-    cosmos: getCosmosDbSelectionSelector(state),
-    selectedFunctions: isAzureFunctionsSelectedSelector(state),
-    functions: getAzureFunctionsOptionsSelector(state)
-  };
-};
+const mapStateToProps = (state: any): IStateProps => ({
+  vscode: getVSCodeApiSelector(state),
+  engine: rootSelector(state),
+  selectedCosmos: isCosmosResourceCreatedSelector(state),
+  cosmos: getCosmosDbSelectionSelector(state),
+  selectedFunctions: isAzureFunctionsSelectedSelector(state),
+  functions: getAzureFunctionsOptionsSelector(state),
+  isVisited: getIsVisitedRoutesSelector(state)
+});
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   setRouteVisited: (route: string) => {

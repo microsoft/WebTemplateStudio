@@ -99,6 +99,8 @@ export class Controller {
           context.extensionPath,
           this.routingMessageReceieverDelegate
         );
+
+        this.getVersionAndSendToClient(context);        
         this.Telemetry.trackExtensionStartUpTime(
           TelemetryEventName.ExtensionLaunch
         );
@@ -127,7 +129,15 @@ export class Controller {
       CONSTANTS.INFO.SYNC_STATUS + ` ${status}`
     );
   }
-
+  private getVersionAndSendToClient(ctx: vscode.ExtensionContext) {
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetVersions,
+      payload: {
+        templatesVersion: "1.0",
+        wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
+      }
+    });
+  }
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ) {

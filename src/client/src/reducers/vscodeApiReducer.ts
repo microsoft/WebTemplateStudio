@@ -128,6 +128,16 @@ const mockVsCodeApi = () => ({
           }
         });
         break;
+      case EXTENSION_COMMANDS.GET_VERSIONS:
+        // @ts-ignore produces a mock login response from VSCode in development
+        window.postMessage({
+          command: EXTENSION_COMMANDS.GET_VERSIONS,
+          payload: {
+            wizardVersion: "1.x",
+            templatesVersion: "1.x"
+          }
+        });
+        break;
       case EXTENSION_COMMANDS.GEN_STATUS:
         break;
     }

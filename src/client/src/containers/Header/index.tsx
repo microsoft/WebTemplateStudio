@@ -24,7 +24,7 @@ const Header = (props: Props) => {
   const { isLoggedIn, email } = props;
   return (
     <div className={styles.header}>
-      <div className={styles.headerTitle}>Project Acorn</div>
+      <div className={styles.headerTitle}>Web Template Studio</div>
       {isLoggedIn && (
         <div className={styles.azureProfile}>
           <div className={styles.profileName}>{email}</div>

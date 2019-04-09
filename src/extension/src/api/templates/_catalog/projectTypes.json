@@ -2,11 +2,11 @@
   {
     "name": "FullStackWebApp",
     "displayName": "Fullstack Web Application",
-    "summary": "An end to end web application, which includes frontend (e.g. React) backend (e.g. Node) and database.",
+    "summary": "An end-to-end web application which includes front-end, back-end and database components.",
     "author": "Microsoft",
     "order": "1",
     "licenses": "",
-    "platforms": [ "Web" ],
-    "languages": [ "Any" ]
+    "platforms": ["Web"],
+    "languages": ["Any"]
   }
 ]

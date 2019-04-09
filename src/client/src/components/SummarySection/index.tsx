@@ -56,9 +56,10 @@ const SummarySection = ({
     title: string,
     version: string,
     svgUrl?: string,
-    company?: string,
+    author?: string,
     originalTitle?: string,
     canEdit?: boolean,
+    serviceTitle?: FormattedMessage.MessageDescriptor,
     withIndent?: boolean,
     handleCloseClick?: (idx: number) => any,
     handleInputChange?: (newTitle: string, idx: number) => any,
@@ -70,8 +71,9 @@ const SummarySection = ({
           title={title}
           version={version}
           svgUrl={svgUrl}
-          company={company}
+          author={author}
           originalTitle={originalTitle}
+          serviceTitle={serviceTitle}
           isEditable={canEdit}
           withIndent={withIndent}
           handleCloseClick={handleCloseClick}
@@ -111,9 +113,10 @@ const SummarySection = ({
             selection.title,
             selection.version,
             selection.svgUrl,
-            selection.company,
+            selection.author,
             selection.originalTitle,
-            isEditable
+            isEditable,
+            selection.serviceTitle
           )}
           {selection.functionNames &&
             selection.functionNames.map((functionName, idx: number) =>
@@ -124,6 +127,7 @@ const SummarySection = ({
                 undefined,
                 undefined,
                 true,
+                undefined,
                 true,
                 handleRemoveFunction,
                 handleAzureFuncNameChange,
