@@ -2,7 +2,7 @@ import * as Actions from "./types";
 import { validateName } from "../utils/validateName";
 
 const updateProjectNameAction = (projectName: string) => {
-  const validation = validateName(projectName);
+  const validation = validateName(projectName, "project");
   const projectNameObject = {
     projectName: projectName,
     validation: validation

@@ -53,7 +53,7 @@ const PAGE_NAME_ERROR_MESSAGES = {
   INVALID_REGEX:
     "Name may only contain letters, numbers, spaces, dashes or underscores",
   EMPTY_NAME: "Name cannot be empty",
-  NAME_DOES_NOT_START_WITH_LETTER: "Page name may only start with letters"
+  NAME_DOES_NOT_START_WITH_LETTER: "Name may only start with letters"
 };
 
 const EMPTY_FIELD = (fieldId: string) => {
