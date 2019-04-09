@@ -81,6 +81,7 @@
   "projectName.outputPathTitle": "Output Path:",
   "projectName.projectName": "Project Name",
   "projectName.projectNameTitle": "Project Name:",
+  "projectNameError.invalidRegex": "Name may only contain letters, numbers, dashes or underscores",
   "review.frameworks": "3. Frameworks",
   "review.pages": "4. Pages",
   "review.projectType": "2. Project Type",
