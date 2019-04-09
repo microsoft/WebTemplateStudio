@@ -404,11 +404,12 @@ const CosmosResourceModal = (props: Props) => {
           )}
           {isValidatingName && <Spinner className={styles.spinner} />}
         </div>
-        {!isAccountNameAvailable && cosmosFormData.accountName.length > 0 && (
-          <div className={styles.errorMessage}>
-            {props.accountNameAvailability.message}
-          </div>
-        )}
+        {!isAccountNameAvailable &&
+          cosmosFormData.accountName.value.length > 0 && (
+            <div className={styles.errorMessage}>
+              {props.accountNameAvailability.message}
+            </div>
+          )}
         {modalValidation.isAccountNameEmpty &&
           cosmosFormData.accountName.value.length == 0 && (
             <div className={styles.errorMessage}>
