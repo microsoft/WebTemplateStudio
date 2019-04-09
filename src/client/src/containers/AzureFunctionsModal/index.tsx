@@ -436,7 +436,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         functionsData.location,
         FORM_CONSTANTS.LOCATION.value,
         undefined,
-        azureFunctionsFormData.subscription === "",
+        azureFunctionsFormData.subscription.value === "",
         DEFAULT_VALUE
       )}
       {getDropdownSection(

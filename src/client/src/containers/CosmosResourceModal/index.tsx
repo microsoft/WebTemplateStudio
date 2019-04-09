@@ -435,8 +435,8 @@ const CosmosResourceModal = (props: Props) => {
         cosmosData.location,
         FORM_CONSTANTS.LOCATION.value,
         undefined,
-        false,
-        cosmosFormData.subscription.value === ""
+        cosmosFormData.subscription.value === "",
+        DEFAULT_VALUE
       )}
       <div className={styles.buttonContainer}>
         <button
