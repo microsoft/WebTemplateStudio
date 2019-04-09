@@ -1,4 +1,6 @@
 import * as Actions from "../../../actions/types";
+import { FormattedMessage } from "react-intl";
+import { messages } from "../../../selectors/wizardSelectionSelector";
 
 /* State Shape
 {
@@ -30,7 +32,7 @@ export interface ISelectedCosmosService {
 }
 
 interface IServiceContent {
-  serviceType: string;
+  serviceType: FormattedMessage.MessageDescriptor;
 }
 
 export interface ICosmosDB {
@@ -46,7 +48,7 @@ const initialState = {
   },
   selection: [],
   wizardContent: {
-    serviceType: "CosmosDB"
+    serviceType: messages.cosmosOriginalTitle
   }
 };
 

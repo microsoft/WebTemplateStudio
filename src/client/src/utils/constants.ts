@@ -1,3 +1,5 @@
+import { defineMessages } from "react-intl";
+
 const PAGE_DETAILS = "/PageDetail";
 const SELECT_PROJECT_TYPE = "/SelectWebApp";
 const SELECT_FRAMEWORKS = "/SelectFrameworks";
@@ -7,6 +9,13 @@ const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
 const WELCOME = "/";
 
 const PRODUCTION = "production";
+
+const INTL_MESSAGES = defineMessages({
+  EMPTY_FIELD: {
+    id: "constants.emptyField",
+    defaultMessage: "{fieldId} field cannot be empty"
+  }
+});
 
 const ROUTES = {
   PAGE_DETAILS,
@@ -62,6 +71,8 @@ const EMPTY_FIELD = (fieldId: string) => {
 
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
+  AZURE_LOGIN: "login",
+  AZURE_LOGOUT: "logout",
   GENERATE: "generate",
   GET_OUTPUT_PATH: "getOutputPath",
   GET_USER_STATUS: "getUserStatus",
@@ -73,7 +84,8 @@ const EXTENSION_COMMANDS = {
   TRACK_PAGE_SWITCH: "track-page-switch",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
-  OPEN_PROJECT_IN_VSCODE: "open-project-vscode"
+  OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
+  GET_VERSIONS: "get-versions"
 };
 
 export {
@@ -83,6 +95,5 @@ export {
   ROUTES_ARRAY,
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  PAGE_NAME_ERROR_MESSAGES,
-  EMPTY_FIELD
+  INTL_MESSAGES
 };

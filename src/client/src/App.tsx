@@ -35,23 +35,32 @@ import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
 } from "./actions/updateGenStatusActions";
+import { getVersionsDataAction } from "./actions/getVersionData";
 
 import appStyles from "./appStyles.module.css";
+import { startLogOutAzure } from "./actions/logOutAzure";
+import { IVersions } from "./types/version";
+import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
+import { IVSCodeObject } from "./reducers/vscodeApiReducer";
+import { setAzureValidationStatusAction } from "./actions/setAzureValidationStatusAction";
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
+  startLogOutToAzure: () => any;
   saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   setAppNameAvailability: (isAvailableObject: any) => any;
   setProjectPathValidation: (validation: any) => void;
+  setAzureValidationStatus: (status: boolean) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: boolean) => any;
+  getVersionsData: (versions: IVersions) => any;
 }
 
 interface IStateProps {
-  vscode: any;
+  vscode: IVSCodeObject;
 }
 
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
@@ -61,13 +70,16 @@ class App extends React.Component<Props> {
     getVSCodeApi: () => {},
     loadWizardContent: () => {},
     logIntoAzure: () => {},
+    startLogOutToAzure: () => {},
     saveSubscriptionData: () => {},
     updateOutputPath: () => {},
     setCosmosResourceAccountNameAvailability: () => {},
     setAppNameAvailability: () => {},
     setProjectPathValidation: () => {},
+    setAzureValidationStatus: () => {},
     updateTemplateGenStatusMessage: () => {},
-    updateTemplateGenStatus: () => {}
+    updateTemplateGenStatus: () => {},
+    getVersionsData: () => {}
   };
 
   public componentDidMount() {
@@ -82,7 +94,7 @@ class App extends React.Component<Props> {
           }
           return;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
-        case "login":
+        case EXTENSION_COMMANDS.AZURE_LOGIN:
           // email will be null or undefined if login didn't work correctly
           if (message.payload != null) {
             this.props.logIntoAzure(
@@ -90,6 +102,9 @@ class App extends React.Component<Props> {
               message.payload.subscriptions
             );
           }
+          return;
+        case EXTENSION_COMMANDS.AZURE_LOGOUT:
+          this.props.startLogOutToAzure();
           return;
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
@@ -110,6 +125,7 @@ class App extends React.Component<Props> {
             isAvailable: message.payload.isAvailable,
             message: message.message
           });
+          this.props.setAzureValidationStatus(false);
           return;
 
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
@@ -117,6 +133,7 @@ class App extends React.Component<Props> {
             isAvailable: message.payload.isAvailable,
             message: message.message
           });
+          this.props.setAzureValidationStatus(false);
           return;
         case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
           this.props.setProjectPathValidation(
@@ -129,13 +146,17 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.GEN_STATUS:
           this.props.updateTemplateGenStatus(message.payload);
           return;
+        case EXTENSION_COMMANDS.GET_VERSIONS:
+          this.props.getVersionsData(message.payload);
+          return;
       }
     });
   }
 
   public componentDidUpdate(prevProps: Props) {
-    if (this.props.vscode !== prevProps.vscode) {
-      this.props.vscode.postMessage({
+    const { vscode } = this.props;
+    if (vscode !== prevProps.vscode) {
+      vscode.postMessage({
         command: EXTENSION_COMMANDS.GET_USER_STATUS
       });
     }
@@ -188,6 +209,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   logIntoAzure: (email: string, subscriptions: any[]) => {
     dispatch(logIntoAzureAction({ email, subscriptions }));
   },
+  startLogOutToAzure: () => {
+    dispatch(startLogOutAzure());
+  },
   saveSubscriptionData: (subscriptionData: any) => {
     dispatch(getSubscriptionData(subscriptionData));
   },
@@ -203,16 +227,22 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   setProjectPathValidation: (validation: any) => {
     dispatch(setProjectPathValidation(validation));
   },
+  setAzureValidationStatus: (status: boolean) => {
+    dispatch(setAzureValidationStatusAction(status));
+  },
   updateTemplateGenStatusMessage: (status: string) => {
     dispatch(updateTemplateGenerationStatusMessageAction(status));
   },
   updateTemplateGenStatus: (isGenerated: boolean) => {
     dispatch(updateTemplateGenerationStatusAction(isGenerated));
+  },
+  getVersionsData: (versions: IVersions) => {
+    dispatch(getVersionsDataAction(versions));
   }
 });
 
 const mapStateToProps = (state: any): IStateProps => ({
-  vscode: state.vscode.vscodeObject
+  vscode: getVSCodeApiSelector(state)
 });
 
 export default withRouter(

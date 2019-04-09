@@ -24,6 +24,7 @@ export abstract class Controller {
   > = new Map([
     [ExtensionCommand.Login, Controller.performLoginForSubscriptions],
     [ExtensionCommand.GetUserStatus, Controller.sendUserStatusIfLoggedIn],
+    [ExtensionCommand.Logout, Controller.performLogout],
     [
       ExtensionCommand.SubscriptionDataForCosmos,
       Controller.sendCosmosSubscriptionDataToClient
@@ -102,6 +103,8 @@ export abstract class Controller {
           context.extensionPath,
           Controller.routingMessageReceieverDelegate
         );
+
+        Controller.getVersionAndSendToClient(context);
         Controller.Telemetry.trackExtensionStartUpTime(
           TelemetryEventName.ExtensionLaunch
         );
@@ -131,6 +134,16 @@ export abstract class Controller {
     vscode.window.showInformationMessage(
       CONSTANTS.INFO.SYNC_STATUS + ` ${status}`
     );
+  }
+
+  private static getVersionAndSendToClient(ctx: vscode.ExtensionContext) {
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetVersions,
+      payload: {
+        templatesVersion: "1.0",
+        wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
+      }
+    });
   }
 
   //To be addressed in next PR for page/navigation tracking
@@ -164,8 +177,8 @@ export abstract class Controller {
     });
   }
 
-  public static performLoginForSubscriptions(message: any) {
-    let isLoggedIn = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
+  public static async performLoginForSubscriptions(message: any) {
+    let isLoggedIn = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
       boolean
     >(TelemetryEventName.PerformLogin, async function(
       this: IActionContext
@@ -177,7 +190,7 @@ export abstract class Controller {
       Controller.sendUserStatusIfLoggedIn(message);
     }
   }
-  private static async sendUserStatusIfLoggedIn(message: any): Promise<void> {
+  public static async sendUserStatusIfLoggedIn(message: any): Promise<void> {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.GetUserLoginStatus,
       async function(this: IActionContext) {
@@ -194,6 +207,18 @@ export abstract class Controller {
       }
     );
   }
+
+  public static performLogout() {
+    let isLoggedOut = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
+      boolean
+    >(TelemetryEventName.PerformLogout, async function(this: IActionContext) {
+      return await AzureServices.performLogout();
+    });
+    if (isLoggedOut) {
+      Controller.handleValidMessage(ExtensionCommand.Logout);
+    }
+  }
+
   public static sendCosmosSubscriptionDataToClient(message: any) {
     Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SubscriptionData,
@@ -250,10 +275,12 @@ export abstract class Controller {
         Controller.reactPanelContext.postMessageWebview({
           command: ExtensionCommand.NameCosmos,
           message: invalidReason,
-          payload: {isAvailable:
-            !invalidReason ||
-            invalidReason === undefined ||
-            invalidReason === ""}
+          payload: {
+            isAvailable:
+              !invalidReason ||
+              invalidReason === undefined ||
+              invalidReason === ""
+          }
         });
       })
       .catch((error: Error) => {
@@ -263,11 +290,21 @@ export abstract class Controller {
   public static sendFunctionNameValidationStatusToClient(message: any) {
     AzureServices.validateFunctionAppName(message.appName, message.subscription)
       .then(isValid => {
-        Controller.handleValidMessage(ExtensionCommand.NameFunctions, {
-          isAvailable: isValid
+        Controller.reactPanelContext.postMessageWebview({
+          command: ExtensionCommand.NameFunctions,
+          message: isValid
+            ? ""
+            : CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(message.appName),
+          payload: { isAvailable: isValid }
         });
       })
       .catch((error: Error) => {
+        // FIXME: Error validation shouldn't throw an error
+        Controller.reactPanelContext.postMessageWebview({
+          command: ExtensionCommand.NameFunctions,
+          message: error.message,
+          payload: { isAvailable: false }
+        });
         throw error; //to log in telemetry
       });
   }

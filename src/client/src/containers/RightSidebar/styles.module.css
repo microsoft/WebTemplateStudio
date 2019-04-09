@@ -1,14 +1,13 @@
 .title {
   font-size: 16px;
   font-weight: bold;
-  text-align: center;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
+  text-align: left;
+  margin: 15px;
+  margin-bottom: 20px;
 }
 
 .container {
-  padding-top: 51px;
+  padding-top: 16.5px;
   padding-bottom: 71px;
   overflow: auto;
 }
@@ -25,10 +24,11 @@
   height: calc(100vh - 122px);
   margin-top: 51px;
   margin-bottom: 71px;
+  padding-bottom: 0px;
 }
 
 .rightView {
-  padding-top: 102px;
+  padding-top: 67.5px;
   height: 100vh;
 }
 
@@ -67,4 +67,10 @@
 .iconContainer {
   display: flex;
   align-items: center;
+}
+
+.selection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

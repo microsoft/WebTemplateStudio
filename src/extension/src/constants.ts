@@ -27,6 +27,10 @@ export const CONSTANTS = {
         functionName
       );
     },
+    LOGOUT_FAILED: localize(
+      "error.loginTimeout",
+      "Timeout. User is not logged in"
+    ),
     LOGIN_TIMEOUT: localize(
       "error.loginTimeout",
       "Timeout. User is not logged in"
@@ -159,16 +163,20 @@ export const CONSTANTS = {
     LOGGED_OUT: "LoggedOut"
   },
   REACT_PANEL: {
-    Project_Title: "Project Acorn"
+    Project_Title: "Microsoft Web Template Studio"
   },
   GENERATE_ENDPOINT: "/api/generate",
-  CONNECTION_STRING: function(
+  CONNECTION_STRING_MONGO: function(
     username: string,
     password: string,
     origin: string
   ) {
     return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMOSDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
   },
+  CONNECTION_STRING_SQL: function(origin: string, primaryKey: string) {
+    return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
+  },
+  SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
   MAX_PROJECT_NAME_LENGTH: 50,
   PORT: "5000",
   VSCODE_COMMAND: {
@@ -181,6 +189,7 @@ export const CONSTANTS = {
 
 export enum ExtensionCommand {
   Login = "login",
+  Logout = "logout",
   Subscriptions = "subscriptions",
   SubscriptionDataForCosmos = "subscriptionDataForCosmos",
   SubscriptionDataForFunctions = "subscriptionDataForFunctions",
@@ -197,7 +206,8 @@ export enum ExtensionCommand {
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
-  OpenProjectVSCode = "open-project-vscode"
+  OpenProjectVSCode = "open-project-vscode",
+  GetVersions = "get-versions"
 }
 
 export enum TelemetryEventName {
@@ -212,6 +222,7 @@ export enum TelemetryEventName {
   SyncEngine = "Sync-Engine",
   ConnectionStringReplace = "Connection-String-Replaced",
   PerformLogin = "Perform-Login",
+  PerformLogout = "Perform-Logout",
   GetUserLoginStatus = "Get-User-Login-Status"
 }
 

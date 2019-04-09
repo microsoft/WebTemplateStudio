@@ -8,6 +8,7 @@ import styles from "./styles.module.css";
 
 interface IDropdownProps {
   options: IDropDownOptionType[];
+  disabled?: boolean;
   defaultValue?: IDropDownOptionType;
   handleChange?: (e: any) => void;
   value?: IDropDownOptionType | undefined;
@@ -27,7 +28,8 @@ const Dropdown = ({
   options,
   defaultValue,
   handleChange,
-  value
+  value,
+  disabled
 }: IDropdownProps) => {
   return (
     <Select
@@ -39,6 +41,7 @@ const Dropdown = ({
       defaultValue={defaultValue}
       options={options}
       menuPlacement="auto"
+      isDisabled={disabled}
     />
   );
 };

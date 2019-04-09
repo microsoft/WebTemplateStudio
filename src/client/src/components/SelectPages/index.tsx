@@ -44,7 +44,7 @@ type Props = IDispatchProps & ISelectPagesProps & IIntlProps;
 const messages = defineMessages({
   pagesTitleQuestion: {
     id: "selectPages.pagesTitleQuestion",
-    defaultMessage: "What pages do you need for your application?"
+    defaultMessage: "4. Select pages for your application."
   }
 });
 

@@ -1,4 +1,4 @@
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 import {
   AzureAuth,
   SubscriptionItem,
@@ -22,6 +22,7 @@ import {
 import { SubscriptionError } from "../errors";
 
 export abstract class AzureServices {
+
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
 
@@ -33,9 +34,10 @@ export abstract class AzureServices {
   public static async performLogin() {
     return await AzureAuth.login();
   }
-
+  public static async performLogout() {
+    return await AzureAuth.logout();
+  }
   public static async getUserInfo() {
-
     this.subscriptionItemList = await AzureAuth.getSubscriptions();
 
     const subscriptionListToDisplay = this.subscriptionItemList.map(
@@ -230,7 +232,7 @@ export abstract class AzureServices {
       userCosmosDBSelection,
       genPath
     );
-  }  
+  }
   public static async promptUserForCosmosReplacement(
     pathToEnv: string,
     dbObject: DatabaseObject

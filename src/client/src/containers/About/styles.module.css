@@ -1,0 +1,17 @@
+.title {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.container {
+  margin: 15px;
+}
+
+.link {
+  text-decoration: none;
+  color: #54b4ff;
+}
+
+.name {
+  margin-bottom: 1.5em;
+}

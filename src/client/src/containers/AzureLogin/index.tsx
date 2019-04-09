@@ -9,6 +9,7 @@ import styles from "./styles.module.css";
 import grid from "../../css/grid.module.css";
 
 import AzureSubscriptions from "../AzureSubscriptions";
+import { EXTENSION_COMMANDS } from "../../utils/constants";
 import {
   FormattedMessage,
   InjectedIntlProps,
@@ -39,7 +40,8 @@ const messages = defineMessages({
   },
   azureLoginTitle: {
     id: "azureLogin.azureLoginTitle",
-    defaultMessage: "Attach services to your web application (Optional)"
+    defaultMessage:
+      "5. Get access to cloud services by signing into Azure. (Optional)"
   }
 });
 
@@ -48,7 +50,7 @@ class AzureLogin extends React.Component<Props> {
     // initiates a login command to VSCode ReactPanel class
     if (process.env.NODE_ENV === "production") {
       this.props.vscode.postMessage({
-        command: "login"
+        command: EXTENSION_COMMANDS.AZURE_LOGIN
       });
     } else {
       // @ts-ignore produces a mock login response from VSCode in development
