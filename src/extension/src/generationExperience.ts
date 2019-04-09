@@ -18,6 +18,7 @@ export class GenerationExperience extends Extensible{
       super();
       
     }
+    ////TODO: MAKE GEN CALL CLIENTCOMMANDMAP FUNCTIONS VIA TO WRAP TELEMETRY AUTOMATICALLY
     // tslint:disable-next-line: max-func-body-length
     public async handleGeneratePayloadFromClient(
       message: any
@@ -96,7 +97,7 @@ export class GenerationExperience extends Extensible{
   
       if (payload.selectedCosmos) {
         serviceQueue.push(
-          Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+          this.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.CosmosDBDeploy,
             // tslint:disable-next-line: no-function-expression
             async function(this: IActionContext): Promise<void> {
@@ -121,11 +122,12 @@ export class GenerationExperience extends Extensible{
                   //log in telemetry how long it took replacement
                   cosmosReplaceResponse => {
                     if (cosmosReplaceResponse.userReplacedEnv) {
-                      Controller.Telemetry.trackCustomEventTime(
-                        TelemetryEventName.ConnectionStringReplace,
-                        cosmosReplaceResponse.startTime,
-                        Date.now()
-                      );
+                      // Temporary Disable
+                      // this.Telemetry.trackCustomEventTime(
+                      //   TelemetryEventName.ConnectionStringReplace,
+                      //   cosmosReplaceResponse.startTime,
+                      //   Date.now()
+                      // );
                     }
                   }
                 );

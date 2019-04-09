@@ -17,6 +17,6 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-  // controller.dispose();
+  controller.dispose();
   ApiModule.StopApi();
 }

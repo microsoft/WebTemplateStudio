@@ -168,4 +168,9 @@ export class Controller {
       errorType: error.name
     });
   }
+
+  
+  dispose() {
+    throw new Error("Method not implemented.");
+  }
 }
