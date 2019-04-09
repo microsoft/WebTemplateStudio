@@ -299,7 +299,7 @@ export abstract class Controller {
         });
       })
       .catch((error: Error) => {
-        // FIXME: Danish please fix the entire function validation and remove the lines below up to the throw error; log in telemetry
+        // FIXME: Error validation shouldn't throw an error
         Controller.reactPanelContext.postMessageWebview({
           command: ExtensionCommand.NameFunctions,
           message: error.message,
