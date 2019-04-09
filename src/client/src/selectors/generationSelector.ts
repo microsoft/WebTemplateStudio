@@ -41,7 +41,6 @@ const getBackendFramework = (selection: any): string => {
   return backendFramework.internalName;
 };
 
-// only works for Cosmos right now
 const getServices = (selection: any): ITemplateInfo[] => {
   const { services } = selection;
   const servicesInfo = [];
@@ -55,6 +54,19 @@ const getServices = (selection: any): ITemplateInfo[] => {
         DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.selection[0].api]
     });
   }
+
+  if (
+    _.has(services, SERVICE_KEYS.AZURE_FUNCTIONS) &&
+    services.azureFunctions.selection.length > 0
+  ) {
+    for (const funcName of services.azureFunctions.selection[0].functionNames) {
+      servicesInfo.push({
+        name: funcName,
+        identity: services.azureFunctions.selection[0].internalName
+      });
+    }
+  }
+
   return servicesInfo;
 };
 

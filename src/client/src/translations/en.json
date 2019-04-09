@@ -1,4 +1,6 @@
 {
+  "about.templatesVersion": "Templates version:",
+  "about.wizardVersion": "Wizard version:",
   "azureFunctions.originalTitle": "Azure Functions",
   "azureFunctionsModal.addResource": "Add Resource",
   "azureFunctionsModal.appName": "App Name",
@@ -48,6 +50,7 @@
   "footer.next": "Next",
   "header.signOut": "Sign out",
   "leftSidebar.frameworks": "3. Frameworks",
+  "leftSidebar.giveFeedback": "Give Feedback",
   "leftSidebar.pages": "4. Pages",
   "leftSidebar.projectType": "2. ProjectType",
   "leftSidebar.services": "5. Services (Optional)",

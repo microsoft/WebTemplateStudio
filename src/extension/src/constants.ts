@@ -166,13 +166,17 @@ export const CONSTANTS = {
     Project_Title: "Microsoft Web Template Studio"
   },
   GENERATE_ENDPOINT: "/api/generate",
-  CONNECTION_STRING: function(
+  CONNECTION_STRING_MONGO: function(
     username: string,
     password: string,
     origin: string
   ) {
     return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMOSDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
   },
+  CONNECTION_STRING_SQL: function(origin: string, primaryKey: string) {
+    return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
+  },
+  SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
   MAX_PROJECT_NAME_LENGTH: 50,
   PORT: "5000",
   VSCODE_COMMAND: {
@@ -202,7 +206,8 @@ export enum ExtensionCommand {
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
-  OpenProjectVSCode = "open-project-vscode"
+  OpenProjectVSCode = "open-project-vscode",
+  GetVersions = "get-versions"
 }
 
 export enum TelemetryEventName {

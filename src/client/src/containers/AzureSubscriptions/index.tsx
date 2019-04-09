@@ -1,10 +1,12 @@
 import _ from "lodash";
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
 import Card from "../../components/Card";
 
 import styles from "./styles.module.css";
+import grid from "../../css/grid.module.css";
 
 import * as AzureActions from "../../actions/logOutAzure";
 import * as ModalActions from "../../actions/modalActions";
@@ -145,29 +147,27 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   public render() {
     const { isLoggedIn, setDetailPage } = this.props;
     return (
-      this.props.isLoggedIn && (
-        <div className={styles.container}>
-          {this.state.azureServices &&
-            this.state.azureServices.map(option => (
-              <div
-                key={option.title}
-                className={styles.subscriptionCardContainer}
-              >
-                <Card
-                  option={option}
-                  buttonText={this.addOrEditResourceText(option.internalName)}
-                  handleButtonClick={this.getServicesModalOpener(
-                    option.internalName
-                  )}
-                  handleDetailsClick={setDetailPage}
-                  useNormalButtons={this.isSelectionCreated(
-                    option.internalName
-                  )}
-                />
-              </div>
-            ))}
-        </div>
-      )
+      <div className={styles.container}>
+        {this.state.azureServices &&
+          this.state.azureServices.map(option => (
+            <div
+              key={option.title}
+              className={classnames(styles.subscriptionCardContainer, {
+                [styles.overlay]: !isLoggedIn
+              })}
+            >
+              <Card
+                option={option}
+                buttonText={this.addOrEditResourceText(option.internalName)}
+                handleButtonClick={this.getServicesModalOpener(
+                  option.internalName
+                )}
+                handleDetailsClick={setDetailPage}
+                useNormalButtons={this.isSelectionCreated(option.internalName)}
+              />
+            </div>
+          ))}
+      </div>
     );
   }
 }

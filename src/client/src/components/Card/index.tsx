@@ -28,15 +28,17 @@ const Card = ({
   useNormalButtons
 }: IProps) => {
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.cardTitleContainer}>
-        {option.svgUrl && (
-          <img className={styles.icon} src={option.svgUrl} alt="icon" />
-        )}
-        <div className={styles.cardTitle}>{option.title}</div>
-      </div>
-      <div className={styles.cardBody}>
-        <CardBody body={option.body} />
+    <div className={styles.container}>
+      <div>
+        <div className={styles.cardTitleContainer}>
+          {option.svgUrl && (
+            <img className={styles.icon} src={option.svgUrl} alt="icon" />
+          )}
+          <div className={styles.cardTitle}>{option.title}</div>
+        </div>
+        <div className={styles.cardBody}>
+          <CardBody body={option.body} />
+        </div>
       </div>
       <div className={styles.selectionContainer}>
         <Link

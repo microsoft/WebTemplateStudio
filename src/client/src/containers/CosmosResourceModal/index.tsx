@@ -13,7 +13,7 @@ import asModal from "../../components/Modal";
 import { closeModalAction } from "../../actions/modalActions";
 import { saveCosmosDbSettingsAction } from "../../actions/saveCosmosDbSettings";
 import { azureModalInitialState as cosmosInitialState } from "../../mockData/cosmosDbModalData";
-
+import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
@@ -30,10 +30,13 @@ import styles from "./styles.module.css";
 import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
 
 import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
+import { Dispatch } from "redux";
+import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
 
 interface IDispatchProps {
   closeModal: () => any;
   saveCosmosOptions: (cosmosOptions: any) => any;
+  setValidationStatus: (status: boolean) => Dispatch;
 }
 
 interface IStateProps {
@@ -41,9 +44,12 @@ interface IStateProps {
   vscode: any;
   subscriptionData: any;
   subscriptions: [];
+  isValidatingName: boolean;
   accountNameAvailability: any;
   selection: any;
 }
+
+let timeout: NodeJS.Timeout | undefined;
 
 interface attributeLinks {
   [key: string]: any;
@@ -197,14 +203,16 @@ const CosmosResourceModal = (props: Props) => {
       isLocationEmpty ||
       isApiEmpty;
 
+    const { message } = props.accountNameAvailability;
+    const accountNameErrorExists = message != null && message.length > 0;
     updateValidation({
-      isSubscriptionEmpty: isSubscriptionEmpty,
-      isResourceGroupEmpty: isResourceGroupEmpty,
-      isLocationEmpty: isLocationEmpty,
-      isAccountNameEmpty: isAccountNameEmpty,
-      isApiEmpty: isApiEmpty
+      isAccountNameEmpty,
+      isApiEmpty,
+      isLocationEmpty,
+      isResourceGroupEmpty,
+      isSubscriptionEmpty
     });
-    return isAnyEmpty;
+    return isAnyEmpty || props.isValidatingName || accountNameErrorExists;
   };
 
   const handleDropdown = (infoLabel: string, value: string) => {
@@ -227,11 +235,20 @@ const CosmosResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    props.vscode.postMessage({
-      command: EXTENSION_COMMANDS.NAME_COSMOS,
-      appName: cosmosFormData.accountName,
-      subscription: cosmosFormData.subscription
-    });
+    if (cosmosFormData.accountName != "") {
+      props.setValidationStatus(true);
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      timeout = setTimeout(() => {
+        timeout = undefined;
+        props.vscode.postMessage({
+          command: EXTENSION_COMMANDS.NAME_COSMOS,
+          appName: cosmosFormData.accountName,
+          subscription: cosmosFormData.subscription
+        });
+      }, 700);
+    }
   }, [cosmosFormData.accountName, props.selection]);
   React.useEffect(() => {
     if (props.selection) {
@@ -303,6 +320,7 @@ const CosmosResourceModal = (props: Props) => {
     );
   };
   const { isAccountNameAvailable } = props.accountNameAvailability;
+  const { isValidatingName } = props;
   return (
     <div>
       <div className={styles.headerContainer}>
@@ -357,9 +375,10 @@ const CosmosResourceModal = (props: Props) => {
             placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
             disabled={cosmosFormData.subscription === ""}
           />
-          {isAccountNameAvailable && (
+          {isAccountNameAvailable && !isValidatingName && (
             <GreenCheck className={styles.validationIcon} />
           )}
+          {isValidatingName && <Spinner className={styles.spinner} />}
         </div>
         {!isAccountNameAvailable && cosmosFormData.accountName.length > 0 && (
           <div className={styles.errorMessage}>
@@ -403,13 +422,14 @@ const CosmosResourceModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => ({
-  isModalOpen: isCosmosDbModalOpenSelector(state),
-  vscode: state.vscode.vscodeObject,
-  subscriptionData: state.azureProfileData.subscriptionData,
-  subscriptions: state.azureProfileData.profileData.subscriptions,
   accountNameAvailability:
     state.selection.services.cosmosDB.accountNameAvailability,
-  selection: getCosmosSelectionInDropdownForm(state)
+  isModalOpen: isCosmosDbModalOpenSelector(state),
+  isValidatingName: state.selection.isValidatingName,
+  selection: getCosmosSelectionInDropdownForm(state),
+  subscriptionData: state.azureProfileData.subscriptionData,
+  subscriptions: state.azureProfileData.profileData.subscriptions,
+  vscode: state.vscode.vscodeObject
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
@@ -418,7 +438,9 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   },
   saveCosmosOptions: (cosmosOptions: any) => {
     dispatch(saveCosmosDbSettingsAction(cosmosOptions));
-  }
+  },
+  setValidationStatus: (status: boolean) =>
+    dispatch(setAzureValidationStatusAction(status))
 });
 
 export default connect(
