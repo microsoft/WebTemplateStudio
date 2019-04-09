@@ -9,10 +9,6 @@
   color: var(--vscode-editor-foreground);
 }
 
-.textSelected {
-  color: var(--vscode-editor-background);
-}
-
 .selected path {
   fill: white;
 }
@@ -27,6 +23,10 @@
   height: 1em;
   width: 1em;
   padding-left: 1em;
+}
+
+.textSelected {
+  color: #cccccc;
 }
 
 .icon path {

@@ -14,6 +14,7 @@ import Check from "../../assets/check.svg";
 import { IOption } from "../../types/option";
 import { FormattedMessage } from "react-intl";
 import { ROUTES } from "../../utils/constants";
+import { getSvg } from "../../utils/getSvgUrl";
 
 const SelectableCard = ({
   iconPath,
@@ -60,7 +61,8 @@ const SelectableCard = ({
       <div>
         <div className={styles.cardHeader}>
           <div className={styles.icon}>
-            {iconPath && <img src={iconPath} className={iconStyles} />}
+            {getSvg(option.internalName) ||
+              (iconPath && <img src={iconPath} className={iconStyles} />)}
           </div>
           <div
             className={classNames({
