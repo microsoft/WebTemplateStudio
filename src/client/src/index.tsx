@@ -19,7 +19,7 @@ const store = createStoreWithMiddleware(
 );
 
 ReactDOM.render(
-  <IntlProvider>
+  <IntlProvider textComponent={React.Fragment}>
     <Provider store={store}>
       <Router>
         <App />
