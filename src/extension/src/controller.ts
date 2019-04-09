@@ -5,7 +5,6 @@ import {
   ExtensionModule,
   TelemetryEventName,
   SyncStatus,
-  AzureResourceType,
   ExtensionCommand
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
@@ -14,11 +13,13 @@ import { AzureServices } from "./azure/azureServices";
 import { ChildProcess } from "child_process";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 import { Extensible } from "./extensible";
+import { GenerationExperience } from "./generationExperience";
 
 export class Controller {
-  private static reactPanelContext: ReactPanel;
-  private static Telemetry: TelemetryAI;
+  public static reactPanelContext: ReactPanel;
+  public static Telemetry: TelemetryAI;
   private static AzureService: AzureServices = new AzureServices();
+  private static GenExperience: GenerationExperience = new GenerationExperience(Controller.reactPanelContext, Controller.Telemetry);
   // This will map commands from the client to functions.
 
   private static extensionModuleMap: Map<
@@ -31,24 +32,26 @@ export class Controller {
     //   Controller.sendOutputPathSelectionToClient
     // ],
     [ExtensionModule.Telemetry, Controller.Telemetry],
-    // [ExtensionCommand.Generate, Controller.handleGeneratePayloadFromClient],
+    [ExtensionModule.Generate, Controller.GenExperience],
     // [
     //   ExtensionCommand.ProjectPathValidation,
     //   Controller.handleProjectPathValidation
     // ],
-    // [ExtensionCommand.OpenProjectVSCode, Controller.openProjectVSCode]
   ]);
 
   private static routingMessageReceieverDelegate = async function(message: any) {
     let registeredModules = Array.from( Controller.extensionModuleMap.keys())
     let clientCommand: string = message.command;
+    let extensionModule = message.module;
 
-    let extensionModule = registeredModules.find(registeredModule => clientCommand.indexOf(registeredModule.valueOf()) === 0);
+
     if(extensionModule){
-    let classModule = Controller.extensionModuleMap.get(extensionModule);
+      let classModule = Controller.extensionModuleMap.get(extensionModule);
       if (classModule) {
-        let payload = await classModule.routingMessageReceieverDelegate(message, Controller.Telemetry);
-        Controller.handleValidMessage(message.command, payload!.payload);
+        let payload = await classModule.callFunctionSpecifiedByPayload(message, Controller.Telemetry);
+        if(payload){
+          Controller.handleValidMessage(message.command, payload.payload);
+        }
       }
       else{
         vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
@@ -130,11 +133,6 @@ export class Controller {
     );
   }
 
-  //To be addressed in next PR for page/navigation tracking
-  public static trackOnPageChangeInTelemetry(payload: any): any {
-    Controller.Telemetry.trackWizardPageTimeToNext(payload.pageName);
-  }
-
   public static handleProjectPathValidation(message: any) {
     const projectPath = message.projectPath;
     const projectName = message.projectName;
@@ -161,135 +159,6 @@ export class Controller {
     });
   }
  
-  // tslint:disable-next-line: max-func-body-length
-  public static async handleGeneratePayloadFromClient(
-    message: any
-  ): Promise<any> {
-    Controller.Telemetry.trackWizardTotalSessionTimeToGenerate();
-    var payload = message.payload;
-    var enginePayload: any = payload.engine;
-
-    const apiGenResult = await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
-      enginePayload
-    ).catch(error => {
-      console.log(error);
-      Controller.reactPanelContext.postMessageWebview({
-        command: ExtensionCommand.UpdateGenStatus,
-        payload: {
-          templates: Controller.getProgressObject(false),
-          cosmos: Controller.getProgressObject(false),
-          azureFunctions: Controller.getProgressObject(false)
-        }
-      });
-      return;
-    });
-
-    let progressObject = {
-      templates: Controller.getProgressObject(true),
-      cosmos: {},
-      azureFunctions: {}
-    };
-
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.UpdateGenStatus,
-      payload: progressObject
-    });
-
-    var serviceQueue: Promise<any>[] = [];
-    enginePayload.path = apiGenResult.generationOutputPath;
-
-    Controller.handleValidMessage(ExtensionCommand.GetOutputPath, {
-      outputPath: enginePayload.path
-    });
-
-    if (payload.selectedFunctions) {
-      serviceQueue.push(
-        Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-          TelemetryEventName.FunctionsDeploy,
-          // tslint:disable-next-line: no-function-expression
-          async function(this: IActionContext): Promise<void> {
-            try {
-              AzureServices.deployFunctionApp(
-                payload.functions,
-                enginePayload.path
-              );
-              progressObject = {
-                ...progressObject,
-                azureFunctions: Controller.getProgressObject(true)
-              };
-              Controller.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject
-              });
-            } catch (error) {
-              console.log(error);
-              progressObject = {
-                ...progressObject,
-                azureFunctions: Controller.getProgressObject(false)
-              };
-              Controller.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject
-              });
-            }
-          }
-        )
-      );
-    }
-
-    if (payload.selectedCosmos) {
-      serviceQueue.push(
-        Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
-          TelemetryEventName.CosmosDBDeploy,
-          // tslint:disable-next-line: no-function-expression
-          async function(this: IActionContext): Promise<void> {
-            var cosmosPayload: any = payload.cosmos;
-            try {
-              var dbObject = await AzureServices.deployCosmosResource(
-                cosmosPayload,
-                enginePayload.path
-              );
-              progressObject = {
-                ...progressObject,
-                cosmos: Controller.getProgressObject(true)
-              };
-              Controller.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject
-              });
-              AzureServices.promptUserForCosmosReplacement(
-                enginePayload.path,
-                dbObject
-              ).then(
-                //log in telemetry how long it took replacement
-                cosmosReplaceResponse => {
-                  if (cosmosReplaceResponse.userReplacedEnv) {
-                    Controller.Telemetry.trackCustomEventTime(
-                      TelemetryEventName.ConnectionStringReplace,
-                      cosmosReplaceResponse.startTime,
-                      Date.now()
-                    );
-                  }
-                }
-              );
-            } catch (error) {
-              progressObject = {
-                ...progressObject,
-                cosmos: Controller.getProgressObject(false)
-              };
-              Controller.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject
-              });
-            }
-          }
-        )
-      );
-    }
-    // kick off both services asynchronously
-    Promise.all(serviceQueue);
-  }
-
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ) {
@@ -354,19 +223,5 @@ export class Controller {
       errorType: error.name
     });
   }
-
-  private static openProjectVSCode(message: any) {
-    vscode.commands.executeCommand(
-      CONSTANTS.VSCODE_COMMAND.OPEN_FOLDER,
-      vscode.Uri.file(message.payload.outputPath),
-      true
-    );
-  }
-
-  private static getProgressObject(didSucceed: boolean) {
-    return {
-      success: didSucceed,
-      failure: !didSucceed
-    };
-  }
 }
+

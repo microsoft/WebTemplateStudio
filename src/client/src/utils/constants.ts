@@ -61,7 +61,9 @@ const EMPTY_FIELD = (fieldId: string) => {
 };
 const EXTENSION_MODULES = {
   AZURE: "Azure",
-  TELEMETRY: "Telemetry"
+  GENERATE: "GenerateExperience",
+  TELEMETRY: "Telemetry",
+  VALIDATOR: "Validator"
 };
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
@@ -83,6 +85,7 @@ const EXTENSION_COMMANDS = {
 
 export {
   PRODUCTION,
+  EXTENSION_MODULES,
   EXTENSION_COMMANDS,
   ROUTES,
   ROUTES_ARRAY,

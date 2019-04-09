@@ -212,7 +212,7 @@ const CosmosResourceModal = (props: Props) => {
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
       // Get resource Group and locations and set the dropdown options to them
       props.vscode.postMessage({
-        module: EXTENSION_MODULE.AZURE,
+        module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
         subscription: value
       });
@@ -232,7 +232,7 @@ const CosmosResourceModal = (props: Props) => {
    */
   React.useEffect(() => {
     props.vscode.postMessage({
-      module: EXTENSION_MODULE.AZURE,
+      module: EXTENSION_MODULES.AZURE,
       command: EXTENSION_COMMANDS.NAME_COSMOS,
       appName: cosmosFormData.accountName,
       subscription: cosmosFormData.subscription

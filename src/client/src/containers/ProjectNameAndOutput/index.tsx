@@ -15,7 +15,7 @@ import {
 } from "../../selectors/wizardSelectionSelector";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { EXTENSION_COMMANDS } from "../../utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -96,6 +96,7 @@ const ProjectNameAndOutput = (props: Props) => {
   };
   const handleSaveClick = () => {
     props.vscode.postMessage({
+      module: EXTENSION_MODULES.VALIDATOR,
       command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
     });
   };

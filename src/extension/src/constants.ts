@@ -206,7 +206,9 @@ export enum ExtensionCommand {
 }
 export enum ExtensionModule {
   Azure = "Azure",
-  Telemetry = "Telemetry"
+  Generate = "GenerateExperience",
+  Telemetry = "Telemetry",
+  Validator = "Validator"
 }
 export enum TelemetryEventName {
   ExtensionLaunch = "Extension-Launch-Time",

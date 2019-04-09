@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import styles from "./styles.module.css";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { EXTENSION_COMMANDS } from "../../utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import { FormattedMessage, injectIntl } from "react-intl";

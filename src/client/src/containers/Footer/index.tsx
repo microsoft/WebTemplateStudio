@@ -70,7 +70,7 @@ class Footer extends React.Component<Props> {
     e.preventDefault();
     // @ts-ignore
     vscode.postMessage({
-      module: EXTENSION_MODULES.AZURE,
+      module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
       text: "Sending generation info...",
       payload: {

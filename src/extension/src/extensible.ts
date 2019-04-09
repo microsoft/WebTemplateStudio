@@ -5,7 +5,7 @@ export abstract class Extensible {
   private static queuedCommand : (message: any) => Promise<IPayloadResponse>;
   abstract clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>>;
   
-  public routingMessageReceieverDelegate(messagePayload: any, Telemetry: TelemetryAI){
+  public callFunctionSpecifiedByPayload(messagePayload: any, Telemetry: TelemetryAI){
     Extensible.queuedCommand = this.clientCommandMap.get(messagePayload.command)!;
 
     return Telemetry.callWithTelemetryAndCatchHandleErrors(messagePayload.command, async function (this: IActionContext){
