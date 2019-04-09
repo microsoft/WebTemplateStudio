@@ -1,5 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { ReactComponent as FullStack } from "../../assets/fullstack.svg";
 
 import Input from "../../components/Input";
 import OutputPath from "../../components/OutputPath";
@@ -110,6 +111,7 @@ const ProjectNameAndOutput = (props: Props) => {
   };
   return (
     <React.Fragment>
+      <FullStack className={styles.test} />
       <div className={styles.inputContainer}>
         <div className={styles.inputTitle}>
           {props.intl.formatMessage(messages.projectNameTitle)}

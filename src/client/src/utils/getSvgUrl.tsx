@@ -1,5 +1,8 @@
+import * as React from "react";
+
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants";
 import fullstack from "../assets/fullstackwhite.svg";
+import { ReactComponent as FullStack } from "../assets/fullstack.svg";
 import react from "../assets/react.svg";
 import node from "../assets/nodeJS.svg";
 import masterdetailwhite from "../assets/masterdetailwhite.svg";
@@ -17,7 +20,6 @@ import gridscreenshot from "../assets/gridscreenshot.svg";
 import blankscreenshot from "../assets/blankscreenshot.svg";
 
 const SVG_MAPPINGS = {
-  [WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP]: fullstack,
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT_JS]: react,
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS]: node,
   [WIZARD_CONTENT_INTERNAL_NAMES.MASTER_DETAIL]: masterdetailwhite,
@@ -27,6 +29,12 @@ const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: cosmosdb,
   [WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE]: blankpage,
   [WIZARD_CONTENT_INTERNAL_NAMES.AZURE]: azure
+};
+
+const SVG_MAPPINGS2 = {
+  [WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP]: (style: string) => (
+    <FullStack className={style} />
+  )
 };
 
 const SVG_SCREENSHOT_MAPPINGS = {
@@ -46,9 +54,15 @@ export const screenShotMapping = (internalName: string): string | undefined => {
   }
 };
 
+export const getSvg = (internalName: string, style?: string) => {
+  if (SVG_MAPPINGS2[internalName]) {
+    return SVG_MAPPINGS2[internalName](style || "");
+  }
+};
+
 export default (internalName: string): string | undefined => {
   if (SVG_MAPPINGS[internalName] !== undefined) {
-    return withLocalPath(SVG_MAPPINGS[internalName]);
+    return SVG_MAPPINGS[internalName];
   }
 };
 

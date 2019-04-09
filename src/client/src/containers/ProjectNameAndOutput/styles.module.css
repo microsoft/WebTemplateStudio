@@ -39,3 +39,7 @@
   opacity: 50%;
   min-height: 38px;
 }
+
+.test path {
+  fill: red;
+}
