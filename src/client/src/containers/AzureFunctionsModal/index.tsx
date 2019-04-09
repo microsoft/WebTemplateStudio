@@ -224,6 +224,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
     };
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
       // Get resource Group and locations and set the dropdown options to them
+      setData({
+        ...functionsData,
+        resourceGroup: []
+      });
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
         subscription: value

@@ -214,6 +214,7 @@ const CosmosResourceModal = (props: Props) => {
     };
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
       // Get resource Group and locations and set the dropdown options to them
+      setData({ ...cosmosData, resourceGroup: [] });
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
         subscription: value
