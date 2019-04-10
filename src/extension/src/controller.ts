@@ -136,25 +136,6 @@ export class Controller {
       }
     });
   }
-  public static async sendTemplateGenInfoToApiAndSendStatusToClient(
-    enginePayload: any
-  ) {
-    return await ApiModule.ExecuteApiCommand({
-      port: CONSTANTS.PORT,
-      payload: enginePayload,
-      liveMessageHandler: this.handleGenLiveMessage
-    });
-  }
-
-  private static handleGenLiveMessage(message: any) {
-    vscode.window.showInformationMessage(message);
-    this.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.UpdateGenStatusMessage,
-      payload: {
-        status: message
-      }
-    });
-  }
 
   private static handleValidMessage(
     commandName: ExtensionCommand,

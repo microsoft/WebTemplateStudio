@@ -4,10 +4,10 @@ import { ExtensionCommand, TelemetryEventName, CONSTANTS } from "./constants";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 import { ReactPanel } from "./reactPanel";
 import { AzureServices } from "./azure/azureServices";
-import { Controller } from "./controller";
+import ApiModule from "./signalr-api-module/apiModule";
 
 export class GenerationExperience extends WizardServant{
-  private static reactPanel : ReactPanel;
+  private static reactPanelContext: ReactPanel;
     clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
       [ExtensionCommand.Generate, this.handleGeneratePayloadFromClient],
       [ExtensionCommand.OpenProjectVSCode, GenerationExperience.openProjectVSCode]
@@ -17,6 +17,7 @@ export class GenerationExperience extends WizardServant{
      */
     constructor(private reactPanelContext: ReactPanel, private Telemetry: TelemetryAI) {
       super();
+      GenerationExperience.reactPanelContext = this.reactPanelContext;
       
     }
     ////TODO: MAKE GEN CALL CLIENTCOMMANDMAP FUNCTIONS VIA TO WRAP TELEMETRY AUTOMATICALLY
@@ -28,11 +29,11 @@ export class GenerationExperience extends WizardServant{
       var payload = message.payload;
       var enginePayload: any = payload.engine;
   
-      const apiGenResult = await Controller.sendTemplateGenInfoToApiAndSendStatusToClient(
+      const apiGenResult = await this.sendTemplateGenInfoToApiAndSendStatusToClient(
         enginePayload
       ).catch(error => {
         console.log(error);
-        Controller.reactPanelContext.postMessageWebview({
+        this.reactPanelContext.postMessageWebview({
           command: ExtensionCommand.UpdateGenStatus,
           payload: {
             templates: GenerationExperience.getProgressObject(false),
@@ -76,7 +77,7 @@ export class GenerationExperience extends WizardServant{
                   ...progressObject,
                   azureFunctions: GenerationExperience.getProgressObject(true)
                 };
-                Controller.reactPanelContext.postMessageWebview({
+                GenerationExperience.reactPanelContext.postMessageWebview({
                   command: ExtensionCommand.UpdateGenStatus,
                   payload: progressObject
                 });
@@ -86,7 +87,7 @@ export class GenerationExperience extends WizardServant{
                   ...progressObject,
                   azureFunctions: GenerationExperience.getProgressObject(false)
                 };
-                Controller.reactPanelContext.postMessageWebview({
+                GenerationExperience.reactPanelContext.postMessageWebview({
                   command: ExtensionCommand.UpdateGenStatus,
                   payload: progressObject
                 });
@@ -112,7 +113,7 @@ export class GenerationExperience extends WizardServant{
                   ...progressObject,
                   cosmos: GenerationExperience.getProgressObject(true)
                 };
-                Controller.reactPanelContext.postMessageWebview({
+                GenerationExperience.reactPanelContext.postMessageWebview({
                   command: ExtensionCommand.UpdateGenStatus,
                   payload: progressObject
                 });
@@ -137,7 +138,7 @@ export class GenerationExperience extends WizardServant{
                   ...progressObject,
                   cosmos: GenerationExperience.getProgressObject(false)
                 };
-                Controller.reactPanelContext.postMessageWebview({
+                GenerationExperience.reactPanelContext.postMessageWebview({
                   command: ExtensionCommand.UpdateGenStatus,
                   payload: progressObject
                 });
@@ -150,6 +151,27 @@ export class GenerationExperience extends WizardServant{
       Promise.all(serviceQueue);
       return {payload: true}
     }
+
+    public async sendTemplateGenInfoToApiAndSendStatusToClient(
+      enginePayload: any
+    ) {
+      return await ApiModule.ExecuteApiCommand({
+        port: CONSTANTS.PORT,
+        payload: enginePayload,
+        liveMessageHandler: this.handleGenLiveMessage
+      });
+    }
+  
+    private handleGenLiveMessage(message: any) {
+      vscode.window.showInformationMessage(message);
+      this.reactPanelContext.postMessageWebview({
+        command: ExtensionCommand.UpdateGenStatusMessage,
+        payload: {
+          status: message
+        }
+      });
+    }
+
     private static async openProjectVSCode(message: any): Promise<IPayloadResponse> {
       vscode.commands.executeCommand(
         CONSTANTS.VSCODE_COMMAND.OPEN_FOLDER,
