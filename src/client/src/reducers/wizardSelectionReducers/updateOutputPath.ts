@@ -1,4 +1,5 @@
 import * as Actions from "../../actions/types";
+import { FormattedMessage } from "react-intl";
 
 /* State Shape
 {
@@ -12,7 +13,7 @@ import * as Actions from "../../actions/types";
 
 export interface IValidation {
   isValid: boolean;
-  error: string;
+  error: string | FormattedMessage.MessageDescriptor;
 }
 
 export interface IOutputPath {

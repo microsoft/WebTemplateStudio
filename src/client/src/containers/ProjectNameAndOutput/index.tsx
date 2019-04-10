@@ -20,7 +20,12 @@ import { EXTENSION_COMMANDS } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
-import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
+import {
+  injectIntl,
+  defineMessages,
+  InjectedIntlProps,
+  FormattedMessage
+} from "react-intl";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
 
@@ -109,7 +114,8 @@ const ProjectNameAndOutput = (props: Props) => {
         />
         {props.projectNameValidation.error && (
           <div className={styles.errorMessage}>
-            {props.projectNameValidation.error}
+            {props.intl.formatMessage(props.projectNameValidation
+              .error as FormattedMessage.MessageDescriptor)}
           </div>
         )}
       </div>
