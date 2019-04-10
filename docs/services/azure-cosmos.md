@@ -31,6 +31,10 @@ database connection string once it's available (usually within 5-6 minutes). Thi
 connection string in your _.env_ file with the new connection string. _**Note:**_ For advanced users, the _arm templates_
 used to deploy your application are also available under the _arm-templates_ directory (in your generated project).
 
+## Protecting Your Keys
+
+Never make your API keys public or check in your API keys in to version control. The generated project stores API keys in the .env file. The .env file is excluded from version control in the `.gitignore`.
+
 ## How this works
 
 Web Template Studio uses an arm-template for Cosmos (generated under the _arm-templates_ directory) to deploy
