@@ -12,7 +12,7 @@ The wizard for Web Template Studio collects basic diagnostics telemetry and usag
 
 ## Usage Telemetry
 
-Here are the properties that are collected by Web Template Studio using Application Insights API:
+Through the Application Insights API, telemetry events are collected to gather basic information regarding Web Template Studio extension usage. The following table describes the Telemetry Events we collect:
 
 |     **Property**      | **Note**                                                                                             |
 | :-------------------: | ---------------------------------------------------------------------------------------------------- |
