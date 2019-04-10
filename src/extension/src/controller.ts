@@ -50,7 +50,7 @@ export class Controller {
         vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
       }
     } else {
-      vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
+      vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_MODULE);
     }
   }
 

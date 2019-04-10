@@ -8,6 +8,7 @@ import ApiModule from "./signalr-api-module/apiModule";
 
 export class GenerationExperience extends WizardServant{
   private static reactPanelContext: ReactPanel;
+  private static Telemetry: TelemetryAI;
     clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
       [ExtensionCommand.Generate, this.handleGeneratePayloadFromClient],
       [ExtensionCommand.OpenProjectVSCode, GenerationExperience.openProjectVSCode]
@@ -18,14 +19,14 @@ export class GenerationExperience extends WizardServant{
     constructor(private reactPanelContext: ReactPanel, private Telemetry: TelemetryAI) {
       super();
       GenerationExperience.reactPanelContext = this.reactPanelContext;
-      
+      GenerationExperience.Telemetry = this.Telemetry;
     }
     ////TODO: MAKE GEN CALL CLIENTCOMMANDMAP FUNCTIONS VIA TO WRAP TELEMETRY AUTOMATICALLY
     // tslint:disable-next-line: max-func-body-length
     public async handleGeneratePayloadFromClient(
       message: any
     ): Promise<IPayloadResponse> {
-      this.Telemetry.trackWizardTotalSessionTimeToGenerate();
+      GenerationExperience.Telemetry.trackWizardTotalSessionTimeToGenerate();
       var payload = message.payload;
       var enginePayload: any = payload.engine;
   
@@ -33,7 +34,7 @@ export class GenerationExperience extends WizardServant{
         enginePayload
       ).catch(error => {
         console.log(error);
-        this.reactPanelContext.postMessageWebview({
+        GenerationExperience.reactPanelContext.postMessageWebview({
           command: ExtensionCommand.UpdateGenStatus,
           payload: {
             templates: GenerationExperience.getProgressObject(false),
@@ -50,7 +51,7 @@ export class GenerationExperience extends WizardServant{
         azureFunctions: {}
       };
   
-      this.reactPanelContext.postMessageWebview({
+      GenerationExperience.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.UpdateGenStatus,
         payload: progressObject
       });
@@ -58,13 +59,13 @@ export class GenerationExperience extends WizardServant{
       var serviceQueue: Promise<any>[] = [];
       enginePayload.path = apiGenResult.generationOutputPath;
   
-      this.reactPanelContext.postMessageWebview({command: ExtensionCommand.GetOutputPath, 
+      GenerationExperience.reactPanelContext.postMessageWebview({command: ExtensionCommand.GetOutputPath, 
        payload: {outputPath: enginePayload.path}
       });
   
       if (payload.selectedFunctions) {
         serviceQueue.push(
-          this.Telemetry.callWithTelemetryAndCatchHandleErrors(
+          GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.FunctionsDeploy,
             // tslint:disable-next-line: no-function-expression
             async function(this: IActionContext): Promise<void> {
@@ -99,7 +100,7 @@ export class GenerationExperience extends WizardServant{
   
       if (payload.selectedCosmos) {
         serviceQueue.push(
-          this.Telemetry.callWithTelemetryAndCatchHandleErrors(
+          GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.CosmosDBDeploy,
             // tslint:disable-next-line: no-function-expression
             async function(this: IActionContext): Promise<void> {
@@ -125,11 +126,11 @@ export class GenerationExperience extends WizardServant{
                   cosmosReplaceResponse => {
                     if (cosmosReplaceResponse.userReplacedEnv) {
                       // Temporary Disable
-                      // this.Telemetry.trackCustomEventTime(
-                      //   TelemetryEventName.ConnectionStringReplace,
-                      //   cosmosReplaceResponse.startTime,
-                      //   Date.now()
-                      // );
+                      GenerationExperience.Telemetry.trackCustomEventTime(
+                        TelemetryEventName.ConnectionStringReplace,
+                        cosmosReplaceResponse.startTime,
+                        Date.now()
+                      );
                     }
                   }
                 );
@@ -164,7 +165,7 @@ export class GenerationExperience extends WizardServant{
   
     private handleGenLiveMessage(message: any) {
       vscode.window.showInformationMessage(message);
-      this.reactPanelContext.postMessageWebview({
+      GenerationExperience.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.UpdateGenStatusMessage,
         payload: {
           status: message

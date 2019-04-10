@@ -5,6 +5,7 @@
   "details.licenses",
   "details.version",
   "details.none",
+  "leftSidebar.giveFeedback",
   "leftSidebar.welcome",
   "leftSidebar.projectType",
   "leftSidebar.frameworks",
@@ -54,7 +55,6 @@
   "cosmosResourceModule.addResource",
   "cosmosResourceModule.createCosmosRes",
   "cosmosResourceModule.internalName",
-  "footer.license",
   "footer.back",
   "footer.next",
   "footer.generate",
@@ -99,5 +99,5 @@
   "pageNameError.duplicateName",
   "pageNameError.emptyName",
   "pageNameError.invalidRegex",
-  "pageNameError.nameStartLetter"
+  "projectNameError.invalidRegex"
 ]
