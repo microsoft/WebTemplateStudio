@@ -3,30 +3,14 @@
   justify-content: space-between;
 }
 
-.centerViewCropped,
 .centerView {
+  display: flex;
   padding: 0px 0.75em 0px 0.75em;
   overflow: auto;
   width: 100%;
   box-sizing: border-box;
   background-color: var(--vscode-editor-background);
-}
-
-.centerView {
-  height: 100vh;
-}
-
-.centerViewCropped {
   height: calc(100vh - 122px);
   margin-top: 51px;
   margin-bottom: 71px;
-}
-
-.cosmosDbModalStyle {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  right: 40px;
-  bottom: 40px;
-  background-color: var(--vscode-editor-background);
 }

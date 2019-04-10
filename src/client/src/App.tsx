@@ -176,14 +176,7 @@ class App extends React.Component<Props> {
           <AzureFunctionsModal />
           <PostGenerationModal />
           <LeftSidebar />
-          <div
-            className={classnames({
-              [appStyles.centerView]:
-                pathname === ROUTES.WELCOME || pathname == ROUTES.PAGE_DETAILS,
-              [appStyles.centerViewCropped]:
-                pathname !== ROUTES.WELCOME && pathname !== ROUTES.PAGE_DETAILS
-            })}
-          >
+          <div className={appStyles.centerView}>
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
             <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
             <Route
