@@ -20,7 +20,7 @@
 
 .signInButton {
   margin-left: 10px;
-  font-size: 1em;
+  font-size: var(--vscode-editor-font-size);
   border: none;
 }
 
@@ -42,6 +42,8 @@
 
 .details {
   color: var(--vscode-textLink-foreground);
+  font-size: var(--vscode-editor-font-size);
+  text-decoration: none;
 }
 
 .icon {

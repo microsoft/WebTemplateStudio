@@ -24,7 +24,7 @@
 }
 
 .button {
-    color: #54B4FF;
+    color: var(--vscode-textLink-foreground);
 }
 
 .button:hover {

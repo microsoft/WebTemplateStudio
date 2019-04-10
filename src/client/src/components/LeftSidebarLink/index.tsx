@@ -32,7 +32,7 @@ const LeftSidebarLink = ({
         <Check
           className={classnames(styles.icon, {
             [styles.visitedIcon]: visitedCheck,
-            [styles.selectedIcon]: isSelected
+            [styles.selected]: isSelected
           })}
         />
       ) : (

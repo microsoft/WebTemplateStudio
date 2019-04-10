@@ -31,6 +31,10 @@
   align-self: center;
 }
 
+.iconCheckMark path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .hidden {
   display: none;
 }
@@ -44,7 +48,7 @@
 }
 
 .button {
-  color: #54b4ff;
+  color: var(--vscode-textLink-foreground);
 }
 
 .cardFooter {
@@ -83,7 +87,7 @@
 }
 
 .link {
-  color: #54b4ff;
+  color: var(--vscode-textLink-foreground);
   font-size: 15px;
   text-decoration: none;
 }
@@ -95,7 +99,7 @@
 
 .cardCount {
   text-align: center;
-  background-color: #555555;
+  border: 1px solid var(--vscode-editor-foreground);
   height: 22px;
   width: 22px;
   padding: 3px;

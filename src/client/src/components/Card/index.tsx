@@ -48,7 +48,7 @@ const Card = ({
       <div className={styles.selectionContainer}>
         <Link
           onClick={() => handleDetailsClick(option)}
-          className={classNames(styles.link)}
+          className={styles.details}
           to={ROUTES.PAGE_DETAILS}
         >
           <FormattedMessage id="card.details" defaultMessage="Details" />

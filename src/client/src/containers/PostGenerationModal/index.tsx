@@ -166,12 +166,12 @@ const PostGenerationModal = ({
       {servicesMessage()}
       <div className={styles.footerContainer}>
         <div>{intl.formatMessage(messages.help)}</div>
-        <div
+        <button
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
           onClick={handleOpenProject}
         >
           {generationMessage()}
-        </div>
+        </button>
       </div>
     </div>
   );

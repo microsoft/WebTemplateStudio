@@ -45,7 +45,7 @@ import { IVSCodeObject } from "./reducers/vscodeApiReducer";
 import { setAzureValidationStatusAction } from "./actions/setAzureValidationStatusAction";
 
 if (process.env.NODE_ENV === "development") {
-  require("./css/themeslight.css");
+  require("./css/themes.css");
 }
 
 interface IDispatchProps {
@@ -179,11 +179,8 @@ class App extends React.Component<Props> {
           <PostGenerationModal />
           <LeftSidebar />
           <div
-            className={classnames({
-              [appStyles.centerView]:
-                pathname === ROUTES.WELCOME || pathname == ROUTES.PAGE_DETAILS,
-              [appStyles.centerViewCropped]:
-                pathname !== ROUTES.WELCOME && pathname !== ROUTES.PAGE_DETAILS
+            className={classnames(appStyles.centerView, {
+              [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS
             })}
           >
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />

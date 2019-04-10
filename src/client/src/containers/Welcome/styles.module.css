@@ -1,11 +1,8 @@
 .container {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding-top: 25%;
-    padding-left: 20%;
-    padding-right: 20%;
+    align-self: center;
+    width: 100%;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 .container>div {

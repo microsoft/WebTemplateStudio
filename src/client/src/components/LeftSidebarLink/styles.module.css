@@ -10,7 +10,7 @@
 }
 
 .selected path {
-  fill: white;
+  fill: #cccccc !important;
 }
 
 .container {

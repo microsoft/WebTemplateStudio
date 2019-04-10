@@ -9,6 +9,7 @@
   display: flex;
   align-items: center;
   background-color: var(--vscode-notificationCenterHeader-background);
+  border: 1px solid var(--vscode-editorGroup-border);
   padding: 11px;
   justify-content: space-between;
   width: 100%;
@@ -38,6 +39,13 @@
 .rightIcon {
   max-height: 18px;
   padding: 3px;
+}
+
+.leftIcon path,
+.reorder path,
+.closeIcon path,
+.rightIcon path {
+  fill: var(--vscode-editor-foreground);
 }
 
 .closeIcon:hover {

@@ -54,6 +54,7 @@ const SummarySection = ({
     removeAzureFunction(functionIndex);
   };
   const renderTile = (
+    internalName: string | undefined,
     title: string,
     version: string,
     svgUrl?: string,
@@ -72,6 +73,7 @@ const SummarySection = ({
           title={title}
           version={version}
           svgUrl={svgUrl}
+          internalName={internalName}
           author={author}
           originalTitle={originalTitle}
           serviceTitle={serviceTitle}
@@ -111,6 +113,7 @@ const SummarySection = ({
           </div>
 
           {renderTile(
+            selection.internalName,
             selection.title,
             selection.version,
             selection.svgUrl,
@@ -122,6 +125,7 @@ const SummarySection = ({
           {selection.functionNames &&
             selection.functionNames.map((functionName, idx: number) =>
               renderTile(
+                undefined,
                 functionName,
                 "v1.0",
                 undefined,
