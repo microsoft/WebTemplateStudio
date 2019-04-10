@@ -62,7 +62,8 @@
 }
 
 .cancelIcon {
-  height: 12px;
+  height: 15px;
+  width: 15px;
   margin-left: 10px;
   padding-top: 13px;
 }
@@ -73,13 +74,14 @@
 
 .icon {
   margin-right: 0px;
+  height: 25px;
+  width: 25px;
 }
 
-.icon,
 .reorderIcon {
-  height: 20px;
-  width: 20px;
-  cursor: row-resize;
+  height: 18px;
+  width: 18px;
+  cursor: grab;
 }
 
 .cancelIcon path,

@@ -2,6 +2,8 @@ import classnames from "classnames";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 
+import { ReactComponent as BackArrow } from "../../assets/backarrow.svg";
+
 import styles from "./styles.module.css";
 import grid from "../../css/grid.module.css";
 import backArrow from "../../assets/backarrow.svg";
@@ -41,10 +43,9 @@ const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
         <div className={styles.backContainer}>
           <div>
             {backArrow && (
-              <img
+              <BackArrow
                 onClick={handleBackClick}
                 className={styles.backIcon}
-                src={process.env.REACT_APP_RELATIVE_PATH + backArrow}
               />
             )}
           </div>

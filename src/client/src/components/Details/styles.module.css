@@ -4,6 +4,10 @@
   padding-right: 20px;
 }
 
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .backIcon {
   height: 24px;
   margin-right: 1em;
