@@ -33,9 +33,14 @@ const getPageCount = (state: any): IPageCount => state.selection.pageCount;
 
 const isValidNameAndProjectPath = (
   projectNameValidationObject: IValidation,
-  outputPathValidationObject: IValidation
+  outputPathValidationObject: IValidation,
+  outputPath: string,
+  projectName: string
 ): boolean => {
   if (!projectNameValidationObject || !outputPathValidationObject) {
+    return false;
+  }
+  if (outputPath === "" || projectName === "") {
     return false;
   }
   if (
@@ -50,6 +55,8 @@ const isValidNameAndProjectPath = (
 const isValidNameAndProjectPathSelector = createSelector(
   getProjectNameValidation,
   getOutputPathValidation,
+  getOutputPath,
+  getProjectName,
   isValidNameAndProjectPath
 );
 
