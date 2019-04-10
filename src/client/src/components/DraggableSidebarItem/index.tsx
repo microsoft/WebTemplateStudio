@@ -1,6 +1,8 @@
 import classnames from "classnames";
 import * as React from "react";
 
+import { getSvg } from "../../utils/getSvgUrl";
+
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 
@@ -66,7 +68,10 @@ const DraggableSidebarItem = ({
             })}
           >
             <div className={styles.inputContainer}>
-              {pageSvgUrl && <img className={styles.icon} src={pageSvgUrl} />}
+              {pageSvgUrl &&
+                ((page && getSvg(page.internalName, styles.icon)) || (
+                  <img className={styles.icon} src={pageSvgUrl} />
+                ))}
               {handleInputChange && (page || azureFunctionName) && idx && (
                 <input
                   className={classnames(styles.input, {
