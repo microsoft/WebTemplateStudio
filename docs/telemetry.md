@@ -8,7 +8,7 @@ The wizard for Web Template Studio collects basic diagnostics telemetry and usag
 
 - **Diagnostics telemetry:** Unhandled error and exceptions that happened while running the
   wizard are logged with Application Insights. This includes the stack trace of the error
-- **Usage telemetry:** Usage telemetry includes wizard usage and user selections.
+- **Usage telemetry:** including wizard usage and user selections.
 
 ## Usage Telemetry
 
