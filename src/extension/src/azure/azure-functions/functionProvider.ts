@@ -5,7 +5,6 @@ import {
   FileError,
   DeploymentError,
   AuthorizationError,
-  ConnectionError,
   SubscriptionError,
   ValidationError
 } from "../../errors";
@@ -21,6 +20,7 @@ import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import { CONSTANTS } from "../../constants";
+import { FunctionValidationResult } from "./utils/validationHelper";
 
 /*
  * Runtime for the deployment, can be either 'dotnet' or 'node'.
@@ -107,7 +107,13 @@ export class FunctionProvider {
     selections: FunctionSelections,
     appPath: string
   ): Promise<void> {
-    ValidationHelper.validate(selections); // throws validation error on failure
+    let validationStatus: FunctionValidationResult = ValidationHelper.validate(
+      selections
+    );
+
+    if (!validationStatus.isValid) {
+      throw new ValidationError(validationStatus.message);
+    }
 
     let isUnique = await this.checkFunctionAppName(
       selections.functionAppName,
@@ -312,23 +318,29 @@ export class FunctionProvider {
    *
    * @param subscriptionItem Subscription Item for user's selected subscription/random subscription for user
    *
-   * @returns Promise<boolean> True if the app name is available, false if it isn't
-   *   catch errors as required
+   * @returns Promise<string | undefined> Returns an error message if function name is invalid or not
+   * available. Returns undefined otherwise
+   *
    */
   public async checkFunctionAppName(
     appName: string,
     subscriptionItem: SubscriptionItem
-  ): Promise<boolean | undefined> {
+  ): Promise<string | undefined> {
     try {
       this.setWebClient(subscriptionItem);
     } catch (error) {
-      throw new AuthorizationError(error.message);
+      return error.message;
     }
 
-    ValidationHelper.validateFunctionAppName(appName);
+    let validationStatus: FunctionValidationResult = ValidationHelper.validateFunctionAppName(
+      appName
+    );
+    if (!validationStatus.isValid) {
+      return validationStatus.message;
+    }
 
     if (this.webClient === undefined) {
-      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
+      return CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED;
     }
 
     return await this.webClient
@@ -336,10 +348,14 @@ export class FunctionProvider {
         isFqdn: true
       })
       .then(res => {
-        return res.nameAvailable;
+        if (res.nameAvailable) {
+          return undefined;
+        } else {
+          return CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(appName);
+        }
       })
       .catch(error => {
-        throw new ConnectionError(error.message);
+        return error.message;
       });
   }
 }
