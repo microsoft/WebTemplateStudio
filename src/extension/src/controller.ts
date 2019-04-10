@@ -164,18 +164,6 @@ export class Controller {
     this.reactPanelContext.postMessageWebview(responsePayload);
   }
 
-  public static handleErrorMessage(
-    command: ExtensionCommand,
-    error: Error,
-    payload?: any
-  ) {
-    this.reactPanelContext.postMessageWebview({
-      command: command,
-      payload: payload,
-      message: error.message,
-      errorType: error.name
-    });
-  }
 
   dispose() {
     throw new Error("Method not implemented.");

@@ -210,7 +210,7 @@ export class AzureServices extends Extensible {
         return {
           payload: {
             isAvailable: isValid,
-            message: isValid
+            reason: isValid
               ? ""
               : CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(
                   message.appName

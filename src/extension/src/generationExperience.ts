@@ -7,6 +7,7 @@ import { AzureServices } from "./azure/azureServices";
 import { Controller } from "./controller";
 
 export class GenerationExperience extends Extensible{
+  private static reactPanel : ReactPanel;
     clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
       [ExtensionCommand.Generate, this.handleGeneratePayloadFromClient],
       [ExtensionCommand.OpenProjectVSCode, GenerationExperience.openProjectVSCode]
