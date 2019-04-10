@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import * as React from "react";
 
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl";
 
 import CardBody from "../CardBody";
 
@@ -20,23 +20,30 @@ interface IProps {
   useNormalButtons?: boolean;
 }
 
+type Props = IProps & InjectedIntlProps;
+
 const Card = ({
   option,
   buttonText,
   handleButtonClick,
   handleDetailsClick,
-  useNormalButtons
-}: IProps) => {
+  useNormalButtons,
+  intl
+}: Props) => {
+  const formattedBody = option.body as FormattedMessage.MessageDescriptor;
+  const formattedTitle = option.title as FormattedMessage.MessageDescriptor;
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cardTitleContainer}>
         {option.svgUrl && (
           <img className={styles.icon} src={option.svgUrl} alt="icon" />
         )}
-        <div className={styles.cardTitle}>{option.title}</div>
+        <div className={styles.cardTitle}>
+          {intl.formatMessage(formattedTitle)}
+        </div>
       </div>
       <div className={styles.cardBody}>
-        <CardBody body={option.body} />
+        <CardBody formattedBody={formattedBody} />
       </div>
       <div className={styles.selectionContainer}>
         <Link
@@ -60,4 +67,4 @@ const Card = ({
   );
 };
 
-export default Card;
+export default injectIntl(Card);

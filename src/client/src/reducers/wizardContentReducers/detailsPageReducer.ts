@@ -2,7 +2,10 @@ import * as Actions from "../../actions/types";
 
 /* State Shape
 {
-    details: {}
+    details: {
+      data: IOption,
+      isIntlFormatted: boolean
+    }
 }
 */
 

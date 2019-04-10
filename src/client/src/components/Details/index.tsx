@@ -18,8 +18,9 @@ import {
 
 interface IProps {
   detailInfo: IOption;
+  formatteDetailInfo?: IOption;
   handleBackClick: () => void;
-  intl?: InjectedIntl;
+  intl: InjectedIntl;
 }
 
 const messages = defineMessages({
@@ -29,12 +30,39 @@ const messages = defineMessages({
   }
 });
 
-const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
+const Details = ({
+  detailInfo,
+  formatteDetailInfo,
+  handleBackClick,
+  intl
+}: IProps) => {
   const LinkRenderer = (props: any) => (
     <a href={props.href} className={styles.link}>
       {props.children}
     </a>
   );
+  const renderFormattedData = (
+    info: string | FormattedMessage.MessageDescriptor | undefined,
+    isMarkdown: boolean
+  ) => {
+    if (formatteDetailInfo) {
+      if (isMarkdown) {
+        return (
+          <ReactMarkdown
+            source={intl.formatMessage(
+              info as FormattedMessage.MessageDescriptor
+            )}
+          />
+        );
+      }
+      return intl.formatMessage(info as FormattedMessage.MessageDescriptor);
+    }
+    if (isMarkdown) {
+      return <ReactMarkdown source={info as string} />;
+    } else {
+      return info;
+    }
+  };
   return (
     <React.Fragment>
       <div className={styles.container}>
@@ -59,9 +87,14 @@ const Details = ({ detailInfo, handleBackClick, intl }: IProps) => {
             )}
           </div>
           <div>
-            <div className={styles.detailsTitle}>{detailInfo.title}</div>
+            <div className={styles.detailsTitle}>
+              {renderFormattedData(detailInfo.title, false)}
+            </div>
             <div className={styles.detailsDescription}>
-              <ReactMarkdown source={detailInfo.longDescription} />
+              {renderFormattedData(
+                detailInfo.longDescription,
+                !!formatteDetailInfo
+              )}
             </div>
             <div>
               <div className={classnames(styles.metaData, grid.row)}>

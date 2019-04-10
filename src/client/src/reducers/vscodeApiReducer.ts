@@ -72,7 +72,8 @@ const mockVsCodeApi = () => ({
           payload: {
             locations: [{ label: WEST_US, value: WEST_US }],
             resourceGroups: [
-              { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK }
+              { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK },
+              { label: "ResourceGroupMock2", value: "ResourceGroupMock2" }
             ]
           }
         });
@@ -135,6 +136,16 @@ const mockVsCodeApi = () => ({
         });
         break;
       case EXTENSION_COMMANDS.GEN_STATUS:
+        break;
+      case EXTENSION_COMMANDS.AZURE_LOGIN:
+        // @ts-ignore produces a mock login response from VSCode in development
+        window.postMessage({
+          command: "login",
+          payload: {
+            email: "devEnvironment2@email.com",
+            subscriptions: [{ value: "GIV.Hackathon", label: "GIV.Hackathon" }]
+          }
+        });
         break;
     }
   }

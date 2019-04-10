@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { Controller } from "./controller";
-import ApiModule from "./apiModule";
+import ApiModule from "./signalr-api-module/apiModule";
 
 export function activate(context: vscode.ExtensionContext) {
   // Launch the client wizard assuming it has been built

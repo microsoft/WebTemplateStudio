@@ -11,10 +11,24 @@
 }
 
 .subscriptionCardContainer {
-  width: 40%;
-  margin-right: 0.75em;
+  flex-basis: 43%;
+  flex-grow: 9999;
+}
+
+.subscriptionCardContainer {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 16px;
+  background-color: #303030;
+}
+
+.overlay {
+  opacity: 0.4;
 }
 
 .container {
   display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-right: 5px;
 }
