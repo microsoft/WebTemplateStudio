@@ -3,11 +3,11 @@ import TelemetryReporter from 'vscode-extension-telemetry';
 import { getPackageInfo } from './getPackageInfo';
 import { IActionContext, ITelemetryReporter, callWithTelemetryAndCatchErrors } from './callWithTelemetryAndErrorHandling';
 import { TelemetryEventName, ExtensionCommand } from '../constants'; 
-import { Extensible, IPayloadResponse } from '../extensible';
+import { WizardServant, IPayloadResponse } from '../wizardServant';
 
 export type IActionContext = IActionContext;
 
-export class TelemetryAI extends Extensible{
+export class TelemetryAI extends WizardServant{
     clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
         [ExtensionCommand.TrackPageSwitch, this.trackWizardPageTimeToNext],
     ]);

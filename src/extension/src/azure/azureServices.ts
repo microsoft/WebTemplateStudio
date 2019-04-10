@@ -21,9 +21,9 @@ import {
   ExtensionCommand
 } from "../constants";
 import { SubscriptionError, AuthorizationError } from "../errors";
-import { Extensible, IPayloadResponse } from "../extensible";
+import { WizardServant, IPayloadResponse } from "../wizardServant";
 
-export class AzureServices extends Extensible {
+export class AzureServices extends WizardServant {
   clientCommandMap: Map<
     ExtensionCommand,
     (message: any) => Promise<IPayloadResponse>

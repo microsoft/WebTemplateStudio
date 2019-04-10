@@ -2,9 +2,9 @@ import * as vscode from "vscode";
 import { CONSTANTS, ExtensionCommand } from "../constants";
 import fs = require("fs");
 import path = require("path");
-import { Extensible, IPayloadResponse } from "../extensible";
+import { WizardServant, IPayloadResponse } from "../wizardServant";
 
-export class Validator extends Extensible {
+export class Validator extends WizardServant {
   clientCommandMap: Map<
     ExtensionCommand,
     (message: any) => Promise<IPayloadResponse>

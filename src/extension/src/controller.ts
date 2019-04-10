@@ -11,7 +11,7 @@ import { ReactPanel } from "./reactPanel";
 import ApiModule from "./signalr-api-module/apiModule";
 import { AzureServices } from "./azure/azureServices";
 import { TelemetryAI } from "./telemetry/telemetryAI";
-import { Extensible } from "./extensible";
+import { WizardServant } from "./wizardServant";
 import { GenerationExperience } from "./generationExperience";
 
 export class Controller {
@@ -22,7 +22,7 @@ export class Controller {
   private Validator: Validator;
   // This will map commands from the client to functions.
 
-  private static extensionModuleMap: Map<ExtensionModule, Extensible>;
+  private static extensionModuleMap: Map<ExtensionModule, WizardServant>;
   private defineExtensionModule() {
     Controller.extensionModuleMap = new Map([
       [ExtensionModule.Telemetry, Controller.Telemetry],
@@ -38,7 +38,7 @@ export class Controller {
     if (extensionModule) {
       let classModule = Controller.extensionModuleMap.get(extensionModule);
       if (classModule) {
-        let responsePayload = await Extensible.callCommandWithClass(
+        let responsePayload = await WizardServant.callCommandWithClass(
           message,
           classModule,
           Controller.Telemetry

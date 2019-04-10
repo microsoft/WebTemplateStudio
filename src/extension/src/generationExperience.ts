@@ -1,12 +1,12 @@
 import * as vscode from "vscode";
-import { Extensible, IPayloadResponse } from "./extensible";
+import { WizardServant, IPayloadResponse } from "./wizardServant";
 import { ExtensionCommand, TelemetryEventName, CONSTANTS } from "./constants";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 import { ReactPanel } from "./reactPanel";
 import { AzureServices } from "./azure/azureServices";
 import { Controller } from "./controller";
 
-export class GenerationExperience extends Extensible{
+export class GenerationExperience extends WizardServant{
   private static reactPanel : ReactPanel;
     clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
       [ExtensionCommand.Generate, this.handleGeneratePayloadFromClient],
