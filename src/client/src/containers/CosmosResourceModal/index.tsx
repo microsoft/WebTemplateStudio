@@ -13,12 +13,13 @@ import asModal from "../../components/Modal";
 import { closeModalAction } from "../../actions/modalActions";
 import { saveCosmosDbSettingsAction } from "../../actions/saveCosmosDbSettings";
 import { azureModalInitialState as cosmosInitialState } from "../../mockData/cosmosDbModalData";
-
+import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
 import { INTL_MESSAGES } from "../../utils/constants";
+import { setCosmosModalValidation } from "./modalValidation";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
@@ -29,10 +30,18 @@ import styles from "./styles.module.css";
 import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
 
 import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
+import { Dispatch } from "redux";
+import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
+
+const DEFAULT_VALUE = {
+  value: "Select...",
+  label: "Select..."
+};
 
 interface IDispatchProps {
   closeModal: () => any;
   saveCosmosOptions: (cosmosOptions: any) => any;
+  setValidationStatus: (status: boolean) => Dispatch;
 }
 
 interface IStateProps {
@@ -40,9 +49,13 @@ interface IStateProps {
   vscode: any;
   subscriptionData: any;
   subscriptions: [];
+  isValidatingName: boolean;
   accountNameAvailability: any;
   selection: any;
 }
+
+let timeout: NodeJS.Timeout | undefined;
+type Props = IDispatchProps & IStateProps & InjectedIntlProps;
 
 interface attributeLinks {
   [key: string]: any;
@@ -55,17 +68,6 @@ const links: attributeLinks = {
   accountName: "https://docs.microsoft.com/en-us/azure/cosmos-db/",
   api: null,
   location: null
-};
-
-type Props = IDispatchProps & IStateProps & InjectedIntlProps;
-
-const initialState = {
-  subscription: "",
-  resourceGroup: "",
-  accountName: "",
-  api: "",
-  location: "",
-  internalName: ""
 };
 
 const messages = defineMessages({
@@ -111,7 +113,27 @@ const messages = defineMessages({
   }
 });
 
-// tslint:disable-next-line: max-func-body-length
+interface CosmosDb {
+  [key: string]: any;
+}
+const initialState: CosmosDb = {
+  subscription: { value: "", label: "" },
+  resourceGroup: { value: "", label: "" },
+  accountName: { value: "", label: "" },
+  api: {
+    value: "",
+    label: ""
+  },
+  location: {
+    value: "",
+    label: ""
+  },
+  internalName: {
+    value: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
+    label: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
+  }
+};
+
 const CosmosResourceModal = (props: Props) => {
   const FORM_CONSTANTS = {
     SUBSCRIPTION: {
@@ -180,73 +202,69 @@ const CosmosResourceModal = (props: Props) => {
     isResourceGroupEmpty: false
   });
 
-  const setModalValidation = (selections: any): boolean => {
-    let isSubscriptionEmpty: boolean = false;
-    let isResourceGroupEmpty: boolean = false;
-    let isAccountNameEmpty: boolean = false;
-    let isLocationEmpty: boolean = false;
-    let isApiEmpty: boolean = false;
-    let isAnyEmpty: boolean = false;
-
-    isSubscriptionEmpty = selections.subscription === "";
-    isResourceGroupEmpty = selections.resourceGroup === "";
-    isAccountNameEmpty = selections.accountName === "";
-    isApiEmpty = selections.api === "";
-    isLocationEmpty = selections.location === "";
-
-    isAnyEmpty =
-      isSubscriptionEmpty ||
-      isResourceGroupEmpty ||
-      isAccountNameEmpty ||
-      isLocationEmpty ||
-      isApiEmpty;
-
-    updateValidation({
-      isSubscriptionEmpty: isSubscriptionEmpty,
-      isResourceGroupEmpty: isResourceGroupEmpty,
-      isLocationEmpty: isLocationEmpty,
-      isAccountNameEmpty: isAccountNameEmpty,
-      isApiEmpty: isApiEmpty
-    });
-    return isAnyEmpty;
-  };
-
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
+    let updatedForm = {
+      ...cosmosFormData,
+      [infoLabel]: {
+        value: value,
+        label: value
+      }
+    };
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
       // Get resource Group and locations and set the dropdown options to them
+      setData({ ...cosmosData, resourceGroup: [] });
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
         subscription: value
       });
+      updatedForm = {
+        ...updatedForm,
+        resourceGroup: {
+          value: "",
+          label: ""
+        }
+      };
     }
 
-    updateForm({
-      ...cosmosFormData,
-      [infoLabel]: value,
-      internalName:
-        value in DATABASE_INTERNAL_NAME_MAPPING
-          ? DATABASE_INTERNAL_NAME_MAPPING[value]
-          : cosmosFormData.internalName
-    });
+    if (value in DATABASE_INTERNAL_NAME_MAPPING) {
+      updatedForm = {
+        ...updatedForm,
+        internalName: {
+          label: DATABASE_INTERNAL_NAME_MAPPING[value],
+          value: DATABASE_INTERNAL_NAME_MAPPING[value]
+        }
+      };
+    }
+    updateForm(updatedForm);
   };
+
+  React.useEffect(() => {
+    if (props.selection) {
+      updateForm(props.selection.dropdownSelection);
+    }
+  }, []);
   /**
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    props.vscode.postMessage({
-      command: EXTENSION_COMMANDS.NAME_COSMOS,
-      appName: cosmosFormData.accountName,
-      subscription: cosmosFormData.subscription
-    });
-  }, [cosmosFormData.accountName, props.selection]);
-  React.useEffect(() => {
-    if (props.selection) {
-      const { previousFormData } = props.selection;
-      updateForm(previousFormData);
+    if (cosmosFormData.accountName.value != "") {
+      props.setValidationStatus(true);
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      timeout = setTimeout(() => {
+        timeout = undefined;
+        props.vscode.postMessage({
+          command: EXTENSION_COMMANDS.NAME_COSMOS,
+          appName: cosmosFormData.accountName.value,
+          subscription: cosmosFormData.subscription.value
+        });
+      }, 700);
     }
-  }, []);
+  }, [cosmosFormData.accountName.value]);
+
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
@@ -256,11 +274,21 @@ const CosmosResourceModal = (props: Props) => {
     const strippedInput = element.value;
     updateForm({
       ...cosmosFormData,
-      accountName: strippedInput
+      accountName: {
+        value: strippedInput,
+        label: strippedInput
+      }
     });
   };
   const handleAddResource = () => {
-    if (setModalValidation(cosmosFormData)) {
+    if (
+      setCosmosModalValidation(
+        cosmosFormData,
+        props.isValidatingName,
+        props.accountNameAvailability,
+        updateValidation
+      )
+    ) {
       return;
     }
     props.saveCosmosOptions(cosmosFormData);
@@ -293,9 +321,9 @@ const CosmosResourceModal = (props: Props) => {
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
           }}
-          defaultValue={
-            props.selection
-              ? props.selection.dropdownSelection[formSectionId]
+          value={
+            cosmosFormData[formSectionId].value
+              ? cosmosFormData[formSectionId]
               : defaultValue
           }
           disabled={disabled}
@@ -311,6 +339,7 @@ const CosmosResourceModal = (props: Props) => {
     );
   };
   const { isAccountNameAvailable } = props.accountNameAvailability;
+  const { isValidatingName } = props;
   return (
     <div>
       <div className={styles.headerContainer}>
@@ -321,29 +350,34 @@ const CosmosResourceModal = (props: Props) => {
       </div>
       {getDropdownSection(
         modalValidation.isSubscriptionEmpty &&
-          cosmosFormData.subscription === "",
+          cosmosFormData.subscription.value === "",
         FORM_CONSTANTS.SUBSCRIPTION.label,
         cosmosData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
-        props.intl.formatMessage(messages.createNew)
+        props.intl.formatMessage(messages.createNew),
+        false,
+        DEFAULT_VALUE
       )}
       {getDropdownSection(
         modalValidation.isResourceGroupEmpty &&
-          cosmosFormData.resourceGroup === "",
+          cosmosFormData.resourceGroup.value === "",
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         cosmosData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
         props.intl.formatMessage(messages.createNew),
-        cosmosFormData.subscription === ""
+        cosmosFormData.subscription.value === "",
+        DEFAULT_VALUE
       )}
       <div
         className={classnames({
           [styles.selectionInputContainer]:
-            !isAccountNameAvailable && cosmosFormData.accountName.length > 0,
+            !isAccountNameAvailable &&
+            cosmosFormData.accountName.value.length > 0,
           [styles.selectionContainer]:
-            isAccountNameAvailable || cosmosFormData.accountName.length === 0,
+            isAccountNameAvailable ||
+            cosmosFormData.accountName.value.length === 0,
           [styles.selectionContainerDisabled]:
-            cosmosFormData.subscription === ""
+            cosmosFormData.subscription.value === ""
         })}
       >
         <div className={styles.selectionHeaderContainer}>
@@ -355,27 +389,30 @@ const CosmosResourceModal = (props: Props) => {
         <div
           className={classnames(styles.inputContainer, {
             [styles.borderRed]:
-              !isAccountNameAvailable && cosmosFormData.accountName.length > 0
+              !isAccountNameAvailable &&
+              cosmosFormData.accountName.value.length > 0
           })}
         >
           <input
             className={styles.input}
             onChange={handleInput}
-            value={cosmosFormData.accountName}
+            value={cosmosFormData.accountName.value}
             placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
-            disabled={cosmosFormData.subscription === ""}
+            disabled={cosmosFormData.subscription.value === ""}
           />
-          {isAccountNameAvailable && (
+          {isAccountNameAvailable && !isValidatingName && (
             <GreenCheck className={styles.validationIcon} />
           )}
+          {isValidatingName && <Spinner className={styles.spinner} />}
         </div>
-        {!isAccountNameAvailable && cosmosFormData.accountName.length > 0 && (
-          <div className={styles.errorMessage}>
-            {props.accountNameAvailability.message}
-          </div>
-        )}
+        {!isAccountNameAvailable &&
+          cosmosFormData.accountName.value.length > 0 && (
+            <div className={styles.errorMessage}>
+              {props.accountNameAvailability.message}
+            </div>
+          )}
         {modalValidation.isAccountNameEmpty &&
-          cosmosFormData.accountName.length == 0 && (
+          cosmosFormData.accountName.value.length == 0 && (
             <div className={styles.errorMessage}>
               {props.intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
                 fieldId: FORM_CONSTANTS.ACCOUNT_NAME.label
@@ -384,19 +421,22 @@ const CosmosResourceModal = (props: Props) => {
           )}
       </div>
       {getDropdownSection(
-        modalValidation.isApiEmpty && cosmosFormData.api === "",
+        modalValidation.isApiEmpty && cosmosFormData.api.value === "",
         FORM_CONSTANTS.API.label,
         cosmosData.api,
         FORM_CONSTANTS.API.value,
-        undefined
+        undefined,
+        false,
+        DEFAULT_VALUE
       )}
       {getDropdownSection(
-        modalValidation.isLocationEmpty && cosmosFormData.location === "",
+        modalValidation.isLocationEmpty && cosmosFormData.location.value === "",
         FORM_CONSTANTS.LOCATION.label,
         cosmosData.location,
         FORM_CONSTANTS.LOCATION.value,
         undefined,
-        cosmosFormData.subscription === ""
+        cosmosFormData.subscription.value === "",
+        DEFAULT_VALUE
       )}
       <div className={styles.buttonContainer}>
         <button
@@ -411,13 +451,14 @@ const CosmosResourceModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => ({
-  isModalOpen: isCosmosDbModalOpenSelector(state),
-  vscode: state.vscode.vscodeObject,
-  subscriptionData: state.azureProfileData.subscriptionData,
-  subscriptions: state.azureProfileData.profileData.subscriptions,
   accountNameAvailability:
     state.selection.services.cosmosDB.accountNameAvailability,
-  selection: getCosmosSelectionInDropdownForm(state)
+  isModalOpen: isCosmosDbModalOpenSelector(state),
+  isValidatingName: state.selection.isValidatingName,
+  selection: getCosmosSelectionInDropdownForm(state),
+  subscriptionData: state.azureProfileData.subscriptionData,
+  subscriptions: state.azureProfileData.profileData.subscriptions,
+  vscode: state.vscode.vscodeObject
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
@@ -426,7 +467,9 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   },
   saveCosmosOptions: (cosmosOptions: any) => {
     dispatch(saveCosmosDbSettingsAction(cosmosOptions));
-  }
+  },
+  setValidationStatus: (status: boolean) =>
+    dispatch(setAzureValidationStatusAction(status))
 });
 
 export default connect(

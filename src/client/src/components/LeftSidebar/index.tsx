@@ -3,14 +3,18 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
+import {
+  InjectedIntlProps,
+  injectIntl,
+  defineMessages,
+  FormattedMessage
+} from "react-intl";
 
 import LeftSidebarLink from "../LeftSidebarLink";
 
 import styles from "./styles.module.css";
 
 import { ROUTES, ROUTES_ARRAY } from "../../utils/constants";
-
-import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
 
 const messages = defineMessages({
   welcome: {
@@ -67,29 +71,37 @@ const LeftSidebar = (props: Props) => {
     <React.Fragment>
       {pathname !== ROUTES.PAGE_DETAILS && (
         <div className={classnames(styles.leftView, styles.container)}>
-          {leftSidebarData.map((sidebartitle, idx) => {
-            return (
-              <div
-                className={classnames(styles.itemBorder, {
-                  [styles.currentPath]: idx === currentPathIndex,
-                  [styles.visitedPath]: isVisited[ROUTES_ARRAY[idx]],
-                  [styles.nextPath]:
-                    idx > currentPathIndex && !isVisited[ROUTES_ARRAY[idx]],
-                  [styles.itemBorderTop]: idx === 0
-                })}
-                key={`${sidebartitle}`}
-              >
-                <LeftSidebarLink
-                  disabled={!isVisited[ROUTES_ARRAY[idx]]}
-                  path={ROUTES_ARRAY[idx]}
-                  text={sidebartitle}
-                  showCheck={
-                    idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]]
-                  }
-                />
-              </div>
-            );
-          })}
+          <div>
+            {leftSidebarData.map((sidebartitle, idx) => {
+              return (
+                <div
+                  className={classnames(styles.itemBorder, {
+                    [styles.currentPath]: idx === currentPathIndex,
+                    [styles.visitedPath]: isVisited[ROUTES_ARRAY[idx]],
+                    [styles.nextPath]:
+                      idx > currentPathIndex && !isVisited[ROUTES_ARRAY[idx]],
+                    [styles.itemBorderTop]: idx === 0
+                  })}
+                  key={sidebartitle}
+                >
+                  <LeftSidebarLink
+                    disabled={!isVisited[ROUTES_ARRAY[idx]]}
+                    path={ROUTES_ARRAY[idx]}
+                    text={sidebartitle}
+                    showCheck={
+                      idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]]
+                    }
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <a href="https://aka.ms/give-feedback" className={styles.feedback}>
+            <FormattedMessage
+              id="leftSidebar.giveFeedback"
+              defaultMessage="Give Feedback"
+            />
+          </a>
         </div>
       )}
     </React.Fragment>

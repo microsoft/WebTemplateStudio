@@ -1,9 +1,8 @@
 .loginContainer {
-  border: 0.5px solid #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 16px;
-  border-radius: 4px;
   background-color: #303030;
+  margin-right: 15px;
 }
 
 .selectionContainer {
@@ -14,6 +13,7 @@
 }
 
 .createAccountButton {
+  text-decoration: none;
   color: #54b4ff;
 }
 
@@ -41,6 +41,15 @@
 
 .details {
   color: #54b4ff;
+  background: none;
+  border: none;
+  text-decoration: none;
+  font-size: 1em;
+  padding: 0px;
+}
+
+.details:hover {
+  cursor: pointer;
 }
 
 .icon {

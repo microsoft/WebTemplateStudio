@@ -16,7 +16,7 @@ export default function MasterDetailPage(props) {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb bg-white">
               <li className="breadcrumb-item">
-                <a className={styles.breadCrumbLink} href="/masterdetail">
+                <a className={styles.breadCrumbLink} href="/ReactMasterDetail">
                   ReactMasterDetail
                 </a>
               </li>

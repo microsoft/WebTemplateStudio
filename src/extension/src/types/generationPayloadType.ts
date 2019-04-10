@@ -1,4 +1,4 @@
-interface IGenerationPayloadType {
+export interface IGenerationPayloadType {
   backendFramework: string;
   frontendFramework: string;
   pages: any;

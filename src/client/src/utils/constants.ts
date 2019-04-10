@@ -43,6 +43,7 @@ const SERVICE_KEYS = {
 };
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
+  AZURE: "wts.Feature.Azure",
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
   BLANK_PAGE: "wts.Page.React.Blank",
   CONTENT_GRID: "wts.Page.React.Grid",
@@ -55,6 +56,18 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   NODE_JS: "NodeJS",
   REACT_JS: "ReactJS",
   REST_API: "RestAPI"
+};
+
+const PAGE_NAME_ERROR_MESSAGES = {
+  DUPLICATE_NAME: "Name has to be unique",
+  INVALID_REGEX:
+    "Name may only contain letters, numbers, spaces, dashes or underscores",
+  EMPTY_NAME: "Name cannot be empty",
+  NAME_DOES_NOT_START_WITH_LETTER: "Name may only start with letters"
+};
+
+const EMPTY_FIELD = (fieldId: string) => {
+  return `${fieldId} field cannot be empty`;
 };
 
 // Define extension commands here that should be received from the extension
@@ -72,7 +85,8 @@ const EXTENSION_COMMANDS = {
   TRACK_PAGE_SWITCH: "track-page-switch",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
-  OPEN_PROJECT_IN_VSCODE: "open-project-vscode"
+  OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
+  GET_VERSIONS: "get-versions"
 };
 
 export {

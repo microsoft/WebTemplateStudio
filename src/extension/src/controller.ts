@@ -4,11 +4,10 @@ import {
   CONSTANTS,
   ExtensionCommand,
   TelemetryEventName,
-  SyncStatus,
   AzureResourceType
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
-import ApiModule from "./apiModule";
+import ApiModule from "./signalr-api-module/apiModule";
 import { AzureServices } from "./azure/azureServices";
 import { ChildProcess } from "child_process";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
@@ -63,7 +62,6 @@ export abstract class Controller {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
     }
   };
-  
 
   /**
    * launchWizard
@@ -104,6 +102,8 @@ export abstract class Controller {
           context.extensionPath,
           Controller.routingMessageReceieverDelegate
         );
+
+        Controller.getVersionAndSendToClient(context);
         Controller.Telemetry.trackExtensionStartUpTime(
           TelemetryEventName.ExtensionLaunch
         );
@@ -117,11 +117,11 @@ export abstract class Controller {
   }
 
   private static async attemptSync(): Promise<boolean> {
-    return await ApiModule.SendSyncRequestToApi(
-      CONSTANTS.PORT,
-      CONSTANTS.API.PATH_TO_TEMPLATES,
-      this.handleSyncLiveData
-    )
+    return await ApiModule.ExecuteApiCommand({
+      port: CONSTANTS.PORT,
+      payload: { path: CONSTANTS.API.PATH_TO_TEMPLATES },
+      liveMessageHandler: this.handleSyncLiveData
+    })
       .then(() => {
         return true;
       })
@@ -129,10 +129,20 @@ export abstract class Controller {
         return false;
       });
   }
-  private static handleSyncLiveData(status: SyncStatus) {
+  private static handleSyncLiveData(status: string) {
     vscode.window.showInformationMessage(
       CONSTANTS.INFO.SYNC_STATUS + ` ${status}`
     );
+  }
+
+  private static getVersionAndSendToClient(ctx: vscode.ExtensionContext) {
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetVersions,
+      payload: {
+        templatesVersion: "1.0",
+        wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
+      }
+    });
   }
 
   //To be addressed in next PR for page/navigation tracking
@@ -197,14 +207,13 @@ export abstract class Controller {
     );
   }
 
-  public static performLogout(){
-    let isLoggedOut = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<boolean>(
-      TelemetryEventName.PerformLogout,
-      async function(this: IActionContext) {
-        return await AzureServices.performLogout();
-      }
-    );
-    if(isLoggedOut){
+  public static performLogout() {
+    let isLoggedOut = Controller.Telemetry.callWithTelemetryAndCatchHandleErrors<
+      boolean
+    >(TelemetryEventName.PerformLogout, async function(this: IActionContext) {
+      return await AzureServices.performLogout();
+    });
+    if (isLoggedOut) {
       Controller.handleValidMessage(ExtensionCommand.Logout);
     }
   }
@@ -265,10 +274,12 @@ export abstract class Controller {
         Controller.reactPanelContext.postMessageWebview({
           command: ExtensionCommand.NameCosmos,
           message: invalidReason,
-          payload: {isAvailable:
-            !invalidReason ||
-            invalidReason === undefined ||
-            invalidReason === ""}
+          payload: {
+            isAvailable:
+              !invalidReason ||
+              invalidReason === undefined ||
+              invalidReason === ""
+          }
         });
       })
       .catch((error: Error) => {
@@ -278,11 +289,21 @@ export abstract class Controller {
   public static sendFunctionNameValidationStatusToClient(message: any) {
     AzureServices.validateFunctionAppName(message.appName, message.subscription)
       .then(isValid => {
-        Controller.handleValidMessage(ExtensionCommand.NameFunctions, {
-          isAvailable: isValid
+        Controller.reactPanelContext.postMessageWebview({
+          command: ExtensionCommand.NameFunctions,
+          message: isValid
+            ? ""
+            : CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(message.appName),
+          payload: { isAvailable: isValid }
         });
       })
       .catch((error: Error) => {
+        // FIXME: Error validation shouldn't throw an error
+        Controller.reactPanelContext.postMessageWebview({
+          command: ExtensionCommand.NameFunctions,
+          message: error.message,
+          payload: { isAvailable: false }
+        });
         throw error; //to log in telemetry
       });
   }
@@ -419,11 +440,11 @@ export abstract class Controller {
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ) {
-    return await ApiModule.SendTemplateGenerationPayloadToApi(
-      CONSTANTS.PORT,
-      enginePayload,
-      this.handleGenLiveMessage
-    );
+    return await ApiModule.ExecuteApiCommand({
+      port: CONSTANTS.PORT,
+      payload: enginePayload,
+      liveMessageHandler: this.handleGenLiveMessage
+    });
   }
 
   private static handleGenLiveMessage(message: any) {

@@ -1,10 +1,12 @@
 import _ from "lodash";
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
 import Card from "../../components/Card";
 
 import styles from "./styles.module.css";
+import grid from "../../css/grid.module.css";
 
 import * as AzureActions from "../../actions/logOutAzure";
 import * as ModalActions from "../../actions/modalActions";
@@ -14,10 +16,16 @@ import getSvgUrl from "../../utils/getSvgUrl";
 
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
+import azureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
 import { setDetailPageAction } from "../../actions/setDetailsPage";
 
-import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+import {
+  InjectedIntlProps,
+  injectIntl,
+  defineMessages,
+  FormattedMessage
+} from "react-intl";
 
 interface IDispatchProps {
   startLogOutToAzure: () => any;
@@ -79,40 +87,6 @@ const messages = defineMessages({
 });
 
 class AzureSubscriptions extends React.Component<Props, IState> {
-  private formatMessage = this.props.intl.formatMessage;
-
-  private options: IOption[] = [
-    {
-      author: "Microsoft",
-      svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS),
-      title: this.formatMessage(messages.azureFunctions),
-      internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
-      longDescription: this.formatMessage(messages.azureFunctionsLongDesc),
-      body: this.formatMessage(messages.azureFunctionsBody)
-    },
-    {
-      author: "Microsoft",
-      svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
-      title: this.formatMessage(messages.cosmosResource),
-      internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
-      longDescription: this.formatMessage(messages.azureCosmosLongDesc),
-      body: this.formatMessage(messages.azureCosmosBody)
-    }
-  ];
-
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      azureServices: undefined
-    };
-  }
-
-  public async componentDidMount() {
-    const azureServices = this.options;
-    this.setState({
-      azureServices
-    });
-  }
   public isSelectionCreated = (internalName: string): boolean => {
     if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS) {
       return !_.isEmpty(this.props.azureFunctionsSelection);
@@ -122,10 +96,11 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return false;
   };
   public addOrEditResourceText = (internalName: string): string => {
+    const { formatMessage } = this.props.intl;
     if (this.isSelectionCreated(internalName)) {
-      return this.formatMessage(messages.editResource);
+      return formatMessage(messages.editResource);
     }
-    return this.formatMessage(messages.addResource);
+    return formatMessage(messages.addResource);
   };
   /**
    * Returns a function that opens a modal for a specific internalName
@@ -143,31 +118,28 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return () => {};
   }
   public render() {
-    const { isLoggedIn, setDetailPage } = this.props;
+    const { isLoggedIn, setDetailPage, intl } = this.props;
     return (
-      this.props.isLoggedIn && (
-        <div className={styles.container}>
-          {this.state.azureServices &&
-            this.state.azureServices.map(option => (
-              <div
-                key={option.title}
-                className={styles.subscriptionCardContainer}
-              >
-                <Card
-                  option={option}
-                  buttonText={this.addOrEditResourceText(option.internalName)}
-                  handleButtonClick={this.getServicesModalOpener(
-                    option.internalName
-                  )}
-                  handleDetailsClick={setDetailPage}
-                  useNormalButtons={this.isSelectionCreated(
-                    option.internalName
-                  )}
-                />
-              </div>
-            ))}
-        </div>
-      )
+      <div className={styles.container}>
+        {azureServiceOptions.map(option => (
+          <div
+            key={JSON.stringify(option.title)}
+            className={classnames(styles.subscriptionCardContainer, {
+              [styles.overlay]: !isLoggedIn
+            })}
+          >
+            <Card
+              option={option}
+              buttonText={this.addOrEditResourceText(option.internalName)}
+              handleButtonClick={this.getServicesModalOpener(
+                option.internalName
+              )}
+              handleDetailsClick={setDetailPage}
+              useNormalButtons={this.isSelectionCreated(option.internalName)}
+            />
+          </div>
+        ))}
+      </div>
     );
   }
 }
@@ -184,7 +156,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
     dispatch(AzureActions.startLogOutAzure());
   },
   setDetailPage: (detailPageInfo: IOption) => {
-    dispatch(setDetailPageAction(detailPageInfo));
+    const isIntlFormatted = true;
+    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));
   },
   openCosmosDbModal: () => {
     dispatch(ModalActions.openCosmosDbModalAction());

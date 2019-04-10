@@ -63,8 +63,10 @@ const SortablePageList = (props: Props) => {
   }, [selectedPages]);
   const handleInputChange = (newTitle: string, idx: number) => {
     pages[idx].title = newTitle;
-    const validationResult = validateName(pages[idx].title);
-    pages[idx].error = props.intl!.formatMessage(validationResult.error);
+    const validationResult = validateName(pages[idx].title, "page");
+    if (validationResult.error) {
+      pages[idx].error = props.intl!.formatMessage(validationResult.error);
+    }
     pages[idx].isValidTitle = validationResult.isValid;
     for (let i = 0; i < pages.length; i++) {
       if (pages[i].title === pages[idx].title && i !== idx) {

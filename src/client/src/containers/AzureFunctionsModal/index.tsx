@@ -12,13 +12,15 @@ import asModal from "../../components/Modal";
 import { saveAzureFunctionsSettingsAction } from "../../actions/azureFunctionActions";
 import { closeModalAction } from "../../actions/modalActions";
 import { azureFunctionModalInitialState } from "../../mockData/cosmosDbModalData";
-
+import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getFunctionsSelection } from "../../selectors/azureFunctionsServiceSelector";
 import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector";
 
 import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
+
+import { setAzureModalValidation } from "./modalValidation";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
@@ -27,10 +29,18 @@ import {
   INTL_MESSAGES
 } from "../../utils/constants";
 import styles from "./styles.module.css";
+import { Dispatch } from "redux";
+import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
+
+const DEFAULT_VALUE = {
+  value: "Select...",
+  label: "Select..."
+};
 
 interface IDispatchProps {
   closeModal: () => any;
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => any;
+  setValidationStatus: (status: boolean) => Dispatch;
 }
 
 interface IStateProps {
@@ -38,6 +48,7 @@ interface IStateProps {
   vscode: any;
   subscriptionData: any;
   subscriptions: [];
+  isValidatingName: boolean;
   appNameAvailability: any;
   selection: any;
 }
@@ -48,6 +59,8 @@ interface attributeLinks {
   [key: string]: any;
 }
 
+let timeout: NodeJS.Timeout | undefined;
+
 const links: attributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
@@ -57,16 +70,6 @@ const links: attributeLinks = {
   location: null,
   numFunctions: null,
   runtimeStack: null
-};
-
-const initialState = {
-  subscription: "",
-  resourceGroup: "",
-  appName: "",
-  runtimeStack: "",
-  location: "",
-  numFunctions: 0,
-  internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
 };
 
 const messages = defineMessages({
@@ -111,6 +114,41 @@ const messages = defineMessages({
     defaultMessage: "Create Function Application"
   }
 });
+
+interface IFunctionsState {
+  [key: string]: any;
+}
+
+const initialState: IFunctionsState = {
+  subscription: {
+    value: "",
+    label: ""
+  },
+  resourceGroup: {
+    value: "",
+    label: ""
+  },
+  appName: {
+    value: "",
+    label: ""
+  },
+  runtimeStack: {
+    value: "",
+    label: ""
+  },
+  location: {
+    value: "",
+    label: ""
+  },
+  numFunctions: {
+    value: 0,
+    label: 0
+  },
+  internalName: {
+    value: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
+    label: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
+  }
+};
 
 const AzureFunctionsResourceModal = (props: Props) => {
   const FORM_CONSTANTS = {
@@ -174,72 +212,61 @@ const AzureFunctionsResourceModal = (props: Props) => {
     isNumFunctionsZero: false
   });
 
-  const setModalValidation = (selections: any): boolean => {
-    let isSubscriptionEmpty: boolean = false;
-    let isResourceGroupEmpty: boolean = false;
-    let isAppNameEmpty: boolean = false;
-    let isLocationEmpty: boolean = false;
-    let isNumFunctionsZero: boolean = false;
-    let isRuntimeStackEmpty: boolean = false;
-    let isAnyEmpty: boolean = false;
-
-    isSubscriptionEmpty = selections.subscription === "";
-    isResourceGroupEmpty = selections.resourceGroup === "";
-    isAppNameEmpty = selections.appName === "";
-    isNumFunctionsZero = selections.numFunctions === 0;
-    isLocationEmpty = selections.location === "";
-    isRuntimeStackEmpty = selections.runtimeStack == "";
-
-    isAnyEmpty =
-      isSubscriptionEmpty ||
-      isResourceGroupEmpty ||
-      isAppNameEmpty ||
-      isLocationEmpty ||
-      isRuntimeStackEmpty ||
-      isNumFunctionsZero;
-
-    updateValidation({
-      isSubscriptionEmpty: isSubscriptionEmpty,
-      isResourceGroupEmpty: isResourceGroupEmpty,
-      isAppNameEmpty: isAppNameEmpty,
-      isNumFunctionsZero: isNumFunctionsZero,
-      isLocationEmpty: isLocationEmpty,
-      isRuntimeStackEmpty: isRuntimeStackEmpty
-    });
-    return isAnyEmpty;
-  };
-
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
     // Populate resource groups on received commands
+    let updatedForm = {
+      ...azureFunctionsFormData,
+      [infoLabel]: {
+        value: value,
+        label: value
+      }
+    };
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
       // Get resource Group and locations and set the dropdown options to them
+      setData({
+        ...functionsData,
+        resourceGroup: []
+      });
       props.vscode.postMessage({
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
         subscription: value
       });
+      updatedForm = {
+        ...updatedForm,
+        resourceGroup: {
+          value: "",
+          label: ""
+        }
+      };
     }
-    updateForm({
-      ...azureFunctionsFormData,
-      [infoLabel]: value
-    });
+    updateForm(updatedForm);
   };
+
   React.useEffect(() => {
     if (props.selection) {
-      const { previousFormData } = props.selection;
-      updateForm(previousFormData);
+      updateForm(props.selection.dropdownSelection);
     }
   }, []);
   /**
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    props.vscode.postMessage({
-      command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
-      appName: azureFunctionsFormData.appName,
-      subscription: azureFunctionsFormData.subscription
-    });
-  }, [azureFunctionsFormData.appName, props.selection]);
+    if (azureFunctionsFormData.appName.value != "") {
+      props.setValidationStatus(true);
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      timeout = setTimeout(() => {
+        timeout = undefined;
+        props.vscode.postMessage({
+          appName: azureFunctionsFormData.appName.value,
+          command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
+          subscription: azureFunctionsFormData.subscription.value
+        });
+      }, 700);
+    }
+  }, [azureFunctionsFormData.appName.value]);
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
@@ -248,11 +275,21 @@ const AzureFunctionsResourceModal = (props: Props) => {
     const element = e.currentTarget as HTMLInputElement;
     updateForm({
       ...azureFunctionsFormData,
-      appName: element.value
+      appName: {
+        value: element.value,
+        label: element.value
+      }
     });
   };
   const handleAddResource = () => {
-    if (setModalValidation(azureFunctionsFormData)) {
+    if (
+      setAzureModalValidation(
+        azureFunctionsFormData,
+        props.isValidatingName,
+        props.appNameAvailability,
+        updateValidation
+      )
+    ) {
       return;
     }
     props.saveAzureFunctionsOptions(azureFunctionsFormData);
@@ -285,9 +322,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
           }}
-          defaultValue={
-            props.selection
-              ? props.selection.dropdownSelection[formSectionId]
+          value={
+            azureFunctionsFormData[formSectionId].value
+              ? azureFunctionsFormData[formSectionId]
               : defaultValue
           }
           disabled={disabled}
@@ -311,6 +348,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
     return dropDownArray;
   };
   const { isAppNameAvailable } = props.appNameAvailability;
+  const { isValidatingName } = props;
   return (
     <React.Fragment>
       <div className={styles.headerContainer}>
@@ -321,30 +359,34 @@ const AzureFunctionsResourceModal = (props: Props) => {
       </div>
       {getDropdownSection(
         modalValidation.isSubscriptionEmpty &&
-          azureFunctionsFormData.subscription === "",
+          azureFunctionsFormData.subscription.value === "",
         FORM_CONSTANTS.SUBSCRIPTION.label,
         functionsData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
-        props.intl.formatMessage(messages.createNew)
+        props.intl.formatMessage(messages.createNew),
+        false,
+        DEFAULT_VALUE
       )}
       {getDropdownSection(
         modalValidation.isResourceGroupEmpty &&
-          azureFunctionsFormData.resourceGroup === "",
+          azureFunctionsFormData.resourceGroup.value === "",
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         functionsData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
-
         props.intl.formatMessage(messages.createNew),
-        azureFunctionsFormData.subscription === ""
+        azureFunctionsFormData.subscription.value === "",
+        DEFAULT_VALUE
       )}
       <div
         className={classnames({
           [styles.selectionInputContainer]:
-            !isAppNameAvailable && azureFunctionsFormData.appName.length > 0,
+            !isAppNameAvailable &&
+            azureFunctionsFormData.appName.value.length > 0,
           [styles.selectionContainer]:
-            isAppNameAvailable || azureFunctionsFormData.appName.length === 0,
+            isAppNameAvailable ||
+            azureFunctionsFormData.appName.value.length === 0,
           [styles.selectionContainerDisabled]:
-            azureFunctionsFormData.subscription === ""
+            azureFunctionsFormData.subscription.value === ""
         })}
       >
         <div className={styles.selectionHeaderContainer}>
@@ -356,27 +398,30 @@ const AzureFunctionsResourceModal = (props: Props) => {
         <div
           className={classnames(styles.inputContainer, {
             [styles.borderRed]:
-              !isAppNameAvailable && azureFunctionsFormData.appName.length > 0
+              !isAppNameAvailable &&
+              azureFunctionsFormData.appName.value.length > 0
           })}
         >
           <input
             className={styles.input}
             onChange={handleInput}
-            value={azureFunctionsFormData.appName}
+            value={azureFunctionsFormData.appName.value}
             placeholder={FORM_CONSTANTS.APP_NAME.label}
             disabled={azureFunctionsFormData.subscription === ""}
           />
-          {isAppNameAvailable && (
+          {isAppNameAvailable && !isValidatingName && (
             <GreenCheck className={styles.validationIcon} />
           )}
+          {isValidatingName && <Spinner className={styles.spinner} />}
         </div>
-        {!isAppNameAvailable && azureFunctionsFormData.appName.length > 0 && (
-          <div className={styles.errorMessage}>
-            {props.appNameAvailability.message}
-          </div>
-        )}
+        {!isAppNameAvailable &&
+          azureFunctionsFormData.appName.value.length > 0 && (
+            <div className={styles.errorMessage}>
+              {props.appNameAvailability.message}
+            </div>
+          )}
         {modalValidation.isAppNameEmpty &&
-          azureFunctionsFormData.appName.length == 0 && (
+          azureFunctionsFormData.appName.value.length == 0 && (
             <div className={styles.errorMessage}>
               {props.intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
                 fieldId: FORM_CONSTANTS.APP_NAME.label
@@ -386,24 +431,28 @@ const AzureFunctionsResourceModal = (props: Props) => {
       </div>
       {getDropdownSection(
         modalValidation.isLocationEmpty &&
-          azureFunctionsFormData.location === "",
+          azureFunctionsFormData.location.value === "",
         FORM_CONSTANTS.LOCATION.label,
         functionsData.location,
         FORM_CONSTANTS.LOCATION.value,
         undefined,
-        azureFunctionsFormData.subscription === ""
+        azureFunctionsFormData.subscription.value === "",
+        DEFAULT_VALUE
       )}
       {getDropdownSection(
         modalValidation.isRuntimeStackEmpty &&
-          azureFunctionsFormData.runtimeStack === "",
+          azureFunctionsFormData.runtimeStack.value === "",
         FORM_CONSTANTS.RUNTIME_STACK.label,
         functionsData.runtimeStack,
-        FORM_CONSTANTS.RUNTIME_STACK.value
+        FORM_CONSTANTS.RUNTIME_STACK.value,
+        undefined,
+        false,
+        DEFAULT_VALUE
       )}
       <div className={styles.modalFooterContainer}>
         {getDropdownSection(
           modalValidation.isNumFunctionsZero &&
-            azureFunctionsFormData.numFunctions === 0,
+            azureFunctionsFormData.numFunctions.value === 0,
           FORM_CONSTANTS.NUM_FUNCTIONS.label,
           getNumFunctionsData(),
           FORM_CONSTANTS.NUM_FUNCTIONS.value,
@@ -433,6 +482,7 @@ const mapStateToProps = (state: any): IStateProps => ({
   subscriptions: state.azureProfileData.profileData.subscriptions,
   appNameAvailability:
     state.selection.services.azureFunctions.appNameAvailability,
+  isValidatingName: state.selection.isValidatingName,
   selection: getFunctionsSelection(state)
 });
 
@@ -442,7 +492,9 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   },
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => {
     dispatch(saveAzureFunctionsSettingsAction(azureFunctionsOptions));
-  }
+  },
+  setValidationStatus: (status: boolean) =>
+    dispatch(setAzureValidationStatusAction(status))
 });
 
 export default connect(
