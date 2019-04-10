@@ -53,7 +53,6 @@
   "cosmosResourceModule.addResource",
   "cosmosResourceModule.createCosmosRes",
   "cosmosResourceModule.internalName",
-  "footer.license",
   "footer.back",
   "footer.next",
   "footer.generate",
@@ -94,7 +93,6 @@
   "sortablePageList.show",
   "azureLogin.azureTitle",
   "azureLogin.azureCardBody",
-  "azureLogin.longDescription",
   "azureLogin.azureLoginTitle",
   "azureFunctions.Title",
   "azureFunctions.longDescription",
@@ -107,5 +105,5 @@
   "pageNameError.duplicateName",
   "pageNameError.emptyName",
   "pageNameError.invalidRegex",
-  "pageNameError.nameStartLetter"
+  "projectNameError.invalidRegex"
 ]
