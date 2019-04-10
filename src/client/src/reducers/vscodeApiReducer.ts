@@ -141,6 +141,16 @@ const mockVsCodeApi = () => ({
         break;
       case EXTENSION_COMMANDS.GEN_STATUS:
         break;
+      case EXTENSION_COMMANDS.AZURE_LOGIN:
+        // @ts-ignore produces a mock login response from VSCode in development
+        window.postMessage({
+          command: "login",
+          payload: {
+            email: "devEnvironment2@email.com",
+            subscriptions: [{ value: "GIV.Hackathon", label: "GIV.Hackathon" }]
+          }
+        });
+        break;
     }
   }
 });

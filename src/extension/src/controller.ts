@@ -13,6 +13,7 @@ import { AzureServices } from "./azure/azureServices";
 import { TelemetryAI } from "./telemetry/telemetryAI";
 import { WizardServant } from "./wizardServant";
 import { GenerationExperience } from "./generationExperience";
+import { ISyncReturnType } from "./types/syncReturnType";
 
 export class Controller {
   public static reactPanelContext: ReactPanel;
@@ -78,29 +79,40 @@ export class Controller {
     context: vscode.ExtensionContext,
     extensionStartTime: number
   ): Promise<any> {
-    let process = ApiModule.StartApi(context);
-    let synced = false;
-    let syncAttempts = 0;
-    while (!synced && syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-      synced = await Controller.attemptSync();
-      syncAttempts++;
-      if (!synced) {
-        await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
-      }
-    }
-    if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-      process.kill();
-      throw new Error(CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS);
-    }
+let process = ApiModule.StartApi(context);
+let syncObject: ISyncReturnType = {
+  successfullySynced: false,
+  templatesVersion: ""
+};
+let syncAttempts = 0;
+while (
+  !syncObject.successfullySynced &&
+  syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
+) {
+  syncObject = await Controller.attemptSync();
+  syncAttempts++;
+  if (!syncObject.successfullySynced) {
+    await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
+  }
+}
+if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+  vscode.window.showErrorMessage(
+    CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
+  );
+  return process;
+}
 
     Controller.reactPanelContext = ReactPanel.createOrShow(
       context.extensionPath,
       this.routingMessageReceieverDelegate
     );
 
-    this.getVersionAndSendToClient(context);
-    Controller.Telemetry.trackExtensionStartUpTime(
-      TelemetryEventName.ExtensionLaunch
+Controller.getVersionAndSendToClient(
+  context,
+  syncObject.templatesVersion
+);
+Controller.Telemetry.trackExtensionStartUpTime(
+  TelemetryEventName.ExtensionLaunch
     );
     return process;
   }
@@ -109,30 +121,39 @@ export class Controller {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  private static async attemptSync(): Promise<boolean> {
+  private static async attemptSync(): Promise<ISyncReturnType> {
     return await ApiModule.ExecuteApiCommand({
       port: CONSTANTS.PORT,
       payload: { path: CONSTANTS.API.PATH_TO_TEMPLATES },
       liveMessageHandler: this.handleSyncLiveData
     })
-      .then(() => {
-        return true;
+      .then((syncResult: any) => {
+        return {
+          successfullySynced: true,
+          templatesVersion: syncResult.templatesVersion
+        };
       })
       .catch(() => {
-        return false;
+        return { successfullySynced: false, templatesVersion: "" };
       });
   }
-  private static handleSyncLiveData(status: string) {
-    vscode.window.showInformationMessage(
-      CONSTANTS.INFO.SYNC_STATUS + ` ${status}`
-    );
+  private static handleSyncLiveData(status: string, progress?: number) {
+    let output = `Template Status: ${status}`;
+    if (progress) {
+      output += ` ${progress}%`;
+    }
+    vscode.window.setStatusBarMessage(output);
   }
-  private getVersionAndSendToClient(ctx: vscode.ExtensionContext) {
+
+  private static getVersionAndSendToClient(
+    ctx: vscode.ExtensionContext,
+    templatesVersion: string
+  ) {
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetVersions,
       payload: {
-        templatesVersion: "1.0",
-        wizardVersion: Controller.Telemetry.getExtensionVersionNumber(ctx)
+        templatesVersion,
+        wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
       }
     });
   }

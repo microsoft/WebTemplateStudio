@@ -8,22 +8,25 @@ import styles from "./styles.module.css";
 
 interface IPageDetailsProps {
   detailsPageInfo: IOption;
+  isIntlFormatted: boolean;
 }
 
 type Props = IPageDetailsProps & RouteComponentProps;
 
 const PageDetails = (props: Props) => {
+  const { history, detailsPageInfo, isIntlFormatted } = props;
   return (
     <div className={styles.detailsContainer}>
       <Details
-        handleBackClick={props.history.goBack}
-        detailInfo={props.detailsPageInfo}
+        handleBackClick={history.goBack}
+        detailInfo={detailsPageInfo}
+        formatteDetailInfo={isIntlFormatted ? detailsPageInfo : undefined}
       />
       <div className={styles.screenShotContainer}>
-        {screenShotMapping(props.detailsPageInfo.internalName) && (
+        {screenShotMapping(detailsPageInfo.internalName) && (
           <img
             className={styles.screenshot}
-            src={screenShotMapping(props.detailsPageInfo.internalName)}
+            src={screenShotMapping(detailsPageInfo.internalName)}
           />
         )}
       </div>
@@ -33,7 +36,8 @@ const PageDetails = (props: Props) => {
 
 const mapStateToProps = (state: any): IPageDetailsProps => {
   return {
-    detailsPageInfo: state.wizardContent.detailsPage
+    detailsPageInfo: state.wizardContent.detailsPage.data,
+    isIntlFormatted: state.wizardContent.detailsPage.isIntlFormatted
   };
 };
 
