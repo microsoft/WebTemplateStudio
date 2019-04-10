@@ -243,11 +243,6 @@ const CosmosResourceModal = (props: Props) => {
     updateForm(updatedForm);
   };
 
-  React.useEffect(() => {
-    if (props.selection) {
-      updateForm(props.selection.dropdownSelection);
-    }
-  }, []);
   /**
    * Listens on account name change and validates the input in VSCode
    */
@@ -270,8 +265,7 @@ const CosmosResourceModal = (props: Props) => {
 
   React.useEffect(() => {
     if (props.selection) {
-      const { previousFormData } = props.selection;
-      updateForm(previousFormData);
+      updateForm(props.selection.dropdownSelection);
     } else {
       props.setCosmosResourceAccountNameAvailability({
         isAvailable: false,

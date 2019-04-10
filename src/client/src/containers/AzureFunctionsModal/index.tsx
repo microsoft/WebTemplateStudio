@@ -267,8 +267,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
 
   React.useEffect(() => {
     if (props.selection) {
-      const { previousFormData } = props.selection;
-      updateForm(previousFormData);
+      updateForm(props.selection.dropdownSelection);
     } else {
       props.setAppNameAvailability({
         isAvailable: false,
