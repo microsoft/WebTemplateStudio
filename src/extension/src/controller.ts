@@ -11,6 +11,7 @@ import ApiModule from "./signalr-api-module/apiModule";
 import { AzureServices } from "./azure/azureServices";
 import { ChildProcess } from "child_process";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
+import { ISyncReturnType } from "./types/syncReturnType";
 
 export abstract class Controller {
   private static reactPanelContext: ReactPanel;
@@ -77,18 +78,24 @@ export abstract class Controller {
       TelemetryEventName.SyncEngine,
       async function(this: IActionContext): Promise<ChildProcess> {
         let process = ApiModule.StartApi(context);
-        let synced = false;
+        let syncObject: ISyncReturnType = {
+          successfullySynced: false,
+          templatesVersion: ""
+        };
+
         let syncAttempts = 0;
+
         while (
-          !synced &&
+          !syncObject.successfullySynced &&
           syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
         ) {
-          synced = await Controller.attemptSync();
+          syncObject = await Controller.attemptSync();
           syncAttempts++;
-          if (!synced) {
+          if (!syncObject.successfullySynced) {
             await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
           }
         }
+
         if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
           vscode.window.showErrorMessage(
             CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
@@ -103,7 +110,10 @@ export abstract class Controller {
           Controller.routingMessageReceieverDelegate
         );
 
-        Controller.getVersionAndSendToClient(context);
+        Controller.getVersionAndSendToClient(
+          context,
+          syncObject.templatesVersion
+        );
         Controller.Telemetry.trackExtensionStartUpTime(
           TelemetryEventName.ExtensionLaunch
         );
@@ -116,30 +126,39 @@ export abstract class Controller {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  private static async attemptSync(): Promise<boolean> {
+  private static async attemptSync(): Promise<ISyncReturnType> {
     return await ApiModule.ExecuteApiCommand({
       port: CONSTANTS.PORT,
       payload: { path: CONSTANTS.API.PATH_TO_TEMPLATES },
       liveMessageHandler: this.handleSyncLiveData
     })
-      .then(() => {
-        return true;
+      .then((syncResult: any) => {
+        return {
+          successfullySynced: true,
+          templatesVersion: syncResult.templatesVersion
+        };
       })
       .catch(() => {
-        return false;
+        return { successfullySynced: false, templatesVersion: "" };
       });
   }
-  private static handleSyncLiveData(status: string) {
-    vscode.window.showInformationMessage(
-      CONSTANTS.INFO.SYNC_STATUS + ` ${status}`
-    );
+
+  private static handleSyncLiveData(status: string, progress?: number) {
+    let output = `Template Status: ${status}`;
+    if (progress) {
+      output += ` ${progress}%`;
+    }
+    vscode.window.setStatusBarMessage(output);
   }
 
-  private static getVersionAndSendToClient(ctx: vscode.ExtensionContext) {
+  private static getVersionAndSendToClient(
+    ctx: vscode.ExtensionContext,
+    templatesVersion: string
+  ) {
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetVersions,
       payload: {
-        templatesVersion: "1.0",
+        templatesVersion,
         wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
       }
     });

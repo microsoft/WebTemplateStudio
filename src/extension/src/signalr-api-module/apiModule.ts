@@ -47,7 +47,7 @@ export default class ApiModule {
       command = new SyncCommand(commandPayload);
     }
 
-    await command.execute();
+    return await command.execute();
   }
 
   public static StopApi() {

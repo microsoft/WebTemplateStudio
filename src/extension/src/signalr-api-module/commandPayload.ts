@@ -5,5 +5,5 @@ type CommandPayload = IGenerationPayloadType | ISyncPayloadType;
 export interface ICommandPayload {
   payload: CommandPayload;
   port: number;
-  liveMessageHandler: (message: string) => any;
+  liveMessageHandler: (message: string, progress?: number) => any;
 }
