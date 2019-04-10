@@ -31,6 +31,10 @@
   align-self: center;
 }
 
+.iconCheckMark path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .hidden {
   display: none;
 }
@@ -95,7 +99,7 @@
 
 .cardCount {
   text-align: center;
-  background-color: #555555;
+  background-color: var(--vscode-menu-separatorBackground);
   height: 22px;
   width: 22px;
   padding: 3px;

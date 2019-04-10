@@ -1,7 +1,10 @@
 .saveIcon {
   height: 25px;
-  transform: rotate(-90deg);
   cursor: pointer;
+}
+
+.saveIcon path {
+  fill: var(--vscode-editor-foreground);
 }
 
 .pathInput {

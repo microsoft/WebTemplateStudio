@@ -45,7 +45,7 @@ import { IVSCodeObject } from "./reducers/vscodeApiReducer";
 import { setAzureValidationStatusAction } from "./actions/setAzureValidationStatusAction";
 
 if (process.env.NODE_ENV === "development") {
-  require("./css/themeslight.css");
+  require("./css/themes.css");
 }
 
 interface IDispatchProps {

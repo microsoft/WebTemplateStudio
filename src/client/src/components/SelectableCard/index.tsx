@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 
 import CardBody from "../CardBody";
 import CardTitle from "../CardTitle";
+import { ReactComponent as Check } from "../../assets/check.svg";
 
 import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
-import Check from "../../assets/check.svg";
+// import Check from "../../assets/check.svg";
 
 import { IOption } from "../../types/option";
 import { FormattedMessage } from "react-intl";
@@ -97,12 +98,7 @@ const SelectableCard = ({
             [styles.cardCount]: selected && clickCount
           })}
         >
-          {clickCount || (
-            <img
-              src={process.env.REACT_APP_RELATIVE_PATH + Check}
-              className={styles.iconCheckMark}
-            />
-          )}
+          {clickCount || <Check className={styles.iconCheckMark} />}
         </div>
       </div>
     </div>

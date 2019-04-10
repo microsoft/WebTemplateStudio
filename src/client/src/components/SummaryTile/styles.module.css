@@ -40,6 +40,13 @@
   padding: 3px;
 }
 
+.leftIcon path,
+.reorder path,
+.closeIcon path,
+.rightIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .closeIcon:hover {
   cursor: pointer;
 }
