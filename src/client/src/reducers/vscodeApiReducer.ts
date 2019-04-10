@@ -75,7 +75,8 @@ const mockVsCodeApi = () => ({
           payload: {
             locations: [{ label: WEST_US, value: WEST_US }],
             resourceGroups: [
-              { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK }
+              { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK },
+              { label: "ResourceGroupMock2", value: "ResourceGroupMock2" }
             ]
           }
         });

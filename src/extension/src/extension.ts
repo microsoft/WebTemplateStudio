@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { Controller } from "./controller";
-import ApiModule from "./apiModule";
+import ApiModule from "./signalr-api-module/apiModule";
 
 
 var controller: Controller;

@@ -4,11 +4,11 @@ import {
   CONSTANTS,
   ExtensionModule,
   TelemetryEventName,
-  SyncStatus,
-  ExtensionCommand
+  ExtensionCommand,
+  
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
-import ApiModule from "./apiModule";
+import ApiModule from "./signalr-api-module/apiModule";
 import { AzureServices } from "./azure/azureServices";
 import { TelemetryAI } from "./telemetry/telemetryAI";
 import { Extensible } from "./extensible";
@@ -110,11 +110,11 @@ export class Controller {
   }
 
   private static async attemptSync(): Promise<boolean> {
-    return await ApiModule.SendSyncRequestToApi(
-      CONSTANTS.PORT,
-      CONSTANTS.API.PATH_TO_TEMPLATES,
-      this.handleSyncLiveData
-    )
+    return await ApiModule.ExecuteApiCommand({
+      port: CONSTANTS.PORT,
+      payload: { path: CONSTANTS.API.PATH_TO_TEMPLATES },
+      liveMessageHandler: this.handleSyncLiveData
+    })
       .then(() => {
         return true;
       })
@@ -122,7 +122,7 @@ export class Controller {
         return false;
       });
   }
-  private static handleSyncLiveData(status: SyncStatus) {
+  private static handleSyncLiveData(status: string) {
     vscode.window.showInformationMessage(
       CONSTANTS.INFO.SYNC_STATUS + ` ${status}`
     );
@@ -139,11 +139,11 @@ export class Controller {
   public static async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ) {
-    return await ApiModule.SendTemplateGenerationPayloadToApi(
-      CONSTANTS.PORT,
-      enginePayload,
-      this.handleGenLiveMessage
-    );
+    return await ApiModule.ExecuteApiCommand({
+      port: CONSTANTS.PORT,
+      payload: enginePayload,
+      liveMessageHandler: this.handleGenLiveMessage
+    });
   }
 
   private static handleGenLiveMessage(message: any) {

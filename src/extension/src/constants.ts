@@ -178,7 +178,7 @@ export const CONSTANTS = {
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
   MAX_PROJECT_NAME_LENGTH: 50,
-  PORT: "5000",
+  PORT: 5000,
   VSCODE_COMMAND: {
     OPEN_FOLDER: "vscode.openFolder"
   },
@@ -263,18 +263,6 @@ export namespace DialogMessages {
     "dialog.cosmosDBConnectStringReplacePrompt",
     "Replace your DB connection string in the .env file with the generated CosmosDB connection string?"
   );
-}
-export enum SyncStatus {
-  None = 0,
-  Updating = 1,
-  Updated = 2,
-  CheckingForUpdates = 3,
-  NoUpdates = 4,
-  Acquiring = 5,
-  Preparing = 6,
-  NewWizardVersionAvailable = 7,
-  Ready = 8,
-  ErrorAcquiring = 9
 }
 
 export enum AzureResourceType {
