@@ -46,6 +46,15 @@ const Details = ({
     isMarkdown: boolean
   ) => {
     if (formatteDetailInfo) {
+      if (isMarkdown) {
+        return (
+          <ReactMarkdown
+            source={intl.formatMessage(
+              info as FormattedMessage.MessageDescriptor
+            )}
+          />
+        );
+      }
       return intl.formatMessage(info as FormattedMessage.MessageDescriptor);
     }
     if (isMarkdown) {
