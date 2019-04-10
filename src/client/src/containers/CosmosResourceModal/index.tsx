@@ -108,9 +108,9 @@ const messages = defineMessages({
     id: "cosmosResourceModule.addResource",
     defaultMessage: "Add Resource"
   },
-  editResource: {
-    id: "cosmosResourceModule.editResource",
-    defaultMessage: "Edit Resource"
+  saveChanges: {
+    id: "cosmosResourceModule.saveChanges",
+    defaultMessage: "Save Changes"
   },
   createCosmosRes: {
     id: "cosmosResourceModule.createCosmosRes",
@@ -449,7 +449,7 @@ const CosmosResourceModal = (props: Props) => {
           onClick={handleAddResource}
         >
           {(props.selection &&
-            props.intl.formatMessage(messages.editResource)) ||
+            props.intl.formatMessage(messages.saveChanges)) ||
             props.intl.formatMessage(messages.addResource)}
         </button>
       </div>
