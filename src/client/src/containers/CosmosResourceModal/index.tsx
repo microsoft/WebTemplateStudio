@@ -261,7 +261,7 @@ const CosmosResourceModal = (props: Props) => {
         });
       }, 700);
     }
-  }, [cosmosFormData.accountName, props.selection]);
+  }, [cosmosFormData.accountName]);
 
   React.useEffect(() => {
     if (props.selection) {
