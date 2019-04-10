@@ -71,9 +71,14 @@
   cursor: pointer;
 }
 
+.icon {
+  margin-right: 0px;
+}
+
 .icon,
 .reorderIcon {
   height: 20px;
+  width: 20px;
   cursor: row-resize;
 }
 

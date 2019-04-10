@@ -16,7 +16,6 @@ import styles from "./styles.module.css";
 const DraggableSidebarItem = ({
   page,
   text,
-  closeSvgUrl,
   pageSvgUrl,
   reorderSvgUrl,
   itemTitle,
@@ -71,10 +70,9 @@ const DraggableSidebarItem = ({
             })}
           >
             <div className={styles.inputContainer}>
-              {pageSvgUrl &&
-                ((page && getSvg(page.internalName, styles.icon)) || (
-                  <img className={styles.icon} src={pageSvgUrl} />
-                ))}
+              {(page && getSvg(page.internalName, styles.icon)) || (
+                <img className={styles.icon} src={pageSvgUrl} />
+              )}
               {handleInputChange && (page || azureFunctionName) && idx && (
                 <input
                   className={classnames(styles.input, {
