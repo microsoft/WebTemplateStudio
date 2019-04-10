@@ -16,23 +16,44 @@ const messages = defineMessages({
   },
   nameStartLetter: {
     id: "pageNameError.nameStartLetter",
-    defaultMessage: "Page name may only start with letters"
+    defaultMessage: "Name may only start with letters"
+  },
+  invalidProjectName: {
+    id: "projectNameError.invalidRegex",
+    defaultMessage:
+      "Name may only contain letters, numbers, dashes or underscores"
   }
 });
 
-export function validateName(title: string): any {
+const INVALID_PROJECT_NAME =
+  "Name may only contain letters, numbers, dashes or underscores";
+
+export function validateName(title: string, type: string): any {
   let isValid = true;
   let error;
 
   if (/^[ ]*$/.test(title)) {
     isValid = false;
     error = messages.emptyName;
-  } else if (!/^[A-Za-z][A-Za-z0-9_\- ]*$/i.test(title)) {
-    isValid = false;
-    if (/^[_\-0-9 ]*$/i.test(title[0])) {
-      error = messages.nameStartLetter;
-    } else {
-      error = messages.invalidRegex;
+  }
+
+  if (type === "page") {
+    if (!/^[A-Za-z][A-Za-z0-9_\- ]*$/i.test(title)) {
+      isValid = false;
+      if (/^[_\-0-9 ]*$/i.test(title[0])) {
+        error = messages.nameStartLetter;
+      } else {
+        error = messages.invalidRegex;
+      }
+    }
+  } else if (type === "project") {
+    if (!/^[A-Za-z][A-Za-z0-9_\-]*$/i.test(title)) {
+      isValid = false;
+      if (/^[_\-0-9]*$/i.test(title[0])) {
+        error = messages.nameStartLetter;
+      } else {
+        error = messages.invalidProjectName;
+      }
     }
   }
   return {
