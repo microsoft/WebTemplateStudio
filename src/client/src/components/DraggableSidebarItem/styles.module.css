@@ -77,6 +77,12 @@
   cursor: row-resize;
 }
 
+.cancelIcon path,
+.icon path,
+.reorderIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .inputContainer {
   display: flex;
   align-items: center;

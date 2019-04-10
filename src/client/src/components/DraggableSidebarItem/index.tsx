@@ -1,6 +1,9 @@
 import classnames from "classnames";
 import * as React from "react";
 
+import { ReactComponent as Reorder } from "../../assets/reorder.svg";
+import { ReactComponent as CloseSVG } from "../../assets/cancel.svg";
+
 import { getSvg } from "../../utils/getSvgUrl";
 
 import { ISelected } from "../../types/selected";
@@ -56,7 +59,7 @@ const DraggableSidebarItem = ({
       <div className={styles.draggablePage}>
         {(withIndent || reorderSvgUrl) && (
           <div className={styles.iconContainer}>
-            <img className={styles.reorderIcon} src={reorderSvgUrl} />
+            <Reorder className={styles.reorderIcon} />
           </div>
         )}
         <div className={styles.errorStack}>
@@ -100,12 +103,11 @@ const DraggableSidebarItem = ({
             </div>
           )}
         </div>
-        <img
+        <CloseSVG
           onClick={() => {
             idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
           }}
           className={styles.cancelIcon}
-          src={closeSvgUrl}
         />
       </div>
     </div>
