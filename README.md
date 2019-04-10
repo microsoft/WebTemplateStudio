@@ -44,7 +44,7 @@ Once you make the selections you want and click generate, you can quickly extend
 
 # Privacy Statement
 
-This extension logs basic [telemetry](/docs/telemetry.md) for what is being selected. We'll add Telemetry Data to
+This extension logs basic [telemetry](/docs/telemetry.md) for what is being selected. We are in the process of creating a telemetry data page to summarize usage trends.
 this repository once it's available. Please read [Microsoft Privacy Statement](https://privacy.microsoft.com/en-US/privacystatement) for more information.
 
 # Contributing
