@@ -82,7 +82,9 @@ export abstract class Controller {
           successfullySynced: false,
           templatesVersion: ""
         };
+
         let syncAttempts = 0;
+
         while (
           !syncObject.successfullySynced &&
           syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
@@ -93,6 +95,7 @@ export abstract class Controller {
             await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
           }
         }
+
         if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
           vscode.window.showErrorMessage(
             CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
@@ -139,6 +142,7 @@ export abstract class Controller {
         return { successfullySynced: false, templatesVersion: "" };
       });
   }
+
   private static handleSyncLiveData(status: string, progress?: number) {
     let output = `Template Status: ${status}`;
     if (progress) {
