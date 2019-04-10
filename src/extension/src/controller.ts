@@ -135,14 +135,16 @@ export abstract class Controller {
           templatesVersion: syncResult.templatesVersion
         };
       })
-      .catch(error => {
+      .catch(() => {
         return { successfullySynced: false, templatesVersion: "" };
       });
   }
-  private static handleSyncLiveData(status: string) {
-    vscode.window.showInformationMessage(
-      CONSTANTS.INFO.SYNC_STATUS + ` ${status}`
-    );
+  private static handleSyncLiveData(status: string, progress?: number) {
+    let output = `Template Status: ${status}`;
+    if (progress) {
+      output += ` ${progress}%`;
+    }
+    vscode.window.setStatusBarMessage(output);
   }
 
   private static getVersionAndSendToClient(
