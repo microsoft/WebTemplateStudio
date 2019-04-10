@@ -82,7 +82,10 @@ const Details = ({
               {renderFormattedData(detailInfo.title, false)}
             </div>
             <div className={styles.detailsDescription}>
-              {renderFormattedData(detailInfo.longDescription, true)}
+              {renderFormattedData(
+                detailInfo.longDescription,
+                !!formatteDetailInfo
+              )}
             </div>
             <div>
               <div className={classnames(styles.metaData, grid.row)}>
