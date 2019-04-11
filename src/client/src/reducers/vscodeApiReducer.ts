@@ -90,6 +90,7 @@ const mockVsCodeApi = () => ({
         });
         break;
       case EXTENSION_COMMANDS.GENERATE:
+        console.log(message);
         // @ts-ignore mocks a generation status message
         window.postMessage({
           command: EXTENSION_COMMANDS.GEN_STATUS_MESSAGE,
@@ -144,6 +145,17 @@ const mockVsCodeApi = () => ({
           payload: {
             email: "devEnvironment2@email.com",
             subscriptions: [{ value: "GIV.Hackathon", label: "GIV.Hackathon" }]
+          }
+        });
+      case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
+        // @ts-ignore produces a mock validation response from VSCode in development
+        window.postMessage({
+          command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+          payload: {
+            projectPathValidation: {
+              isValid: true,
+              error: ""
+            }
           }
         });
         break;

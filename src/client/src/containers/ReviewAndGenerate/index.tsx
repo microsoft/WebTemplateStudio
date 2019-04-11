@@ -82,9 +82,7 @@ const ReviewAndGenerate = (props: Props) => {
   };
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        {intl.formatMessage(messages.reviewAndGenerate)}
-      </div>
+      <Title>{intl.formatMessage(messages.reviewAndGenerate)}</Title>
       <div
         className={classnames(styles.selectionTitle, styles.selectionContainer)}
       >

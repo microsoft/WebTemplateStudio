@@ -7,7 +7,6 @@
   "details.none",
   "leftSidebar.giveFeedback",
   "leftSidebar.welcome",
-  "leftSidebar.projectType",
   "leftSidebar.frameworks",
   "leftSidebar.pages",
   "leftSidebar.services",
@@ -20,7 +19,6 @@
   "selectPages.pagesTitleQuestion",
   "selectPages.webAppTitleQuestion",
   "summarySection.editResource",
-  "welcome.getStarted",
   "about.templatesVersion",
   "about.wizardVersion",
   "azureFunctionsModal.subscriptionLabel",
@@ -57,7 +55,6 @@
   "footer.back",
   "footer.next",
   "footer.generate",
-  "footer.cancel",
   "header.signOut",
   "postGenerationModal.failedToGenerate",
   "postGenerationModal.working",
@@ -94,7 +91,6 @@
   "sortablePageList.show",
   "azureLogin.azureTitle",
   "azureLogin.azureCardBody",
-  "azureLogin.longDescription",
   "azureLogin.azureLoginTitle",
   "azureFunctions.Title",
   "azureFunctions.longDescription",
@@ -107,5 +103,5 @@
   "pageNameError.duplicateName",
   "pageNameError.emptyName",
   "pageNameError.invalidRegex",
-  "pageNameError.nameStartLetter"
+  "projectNameError.invalidRegex"
 ]

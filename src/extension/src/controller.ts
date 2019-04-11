@@ -173,23 +173,18 @@ export abstract class Controller {
     const projectPath = message.projectPath;
     const projectName = message.projectName;
 
-    let projectPathError = "";
-    let isInvalidProjectPath = false;
-
     let validationObject = Validator.isValidProjectPath(
       projectPath,
       projectName
     );
 
-    projectPathError = validationObject.error;
-    isInvalidProjectPath = !validationObject.isValid;
-
+    const { error, isValid } = validationObject;
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.ProjectPathValidation,
       payload: {
         projectPathValidation: {
-          isInvalidProjectPath: isInvalidProjectPath,
-          projectPathError: projectPathError
+          isValid,
+          error
         }
       }
     });

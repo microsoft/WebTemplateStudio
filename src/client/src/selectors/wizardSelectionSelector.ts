@@ -17,6 +17,7 @@ export const messages = defineMessages({
     defaultMessage: "CosmosDB"
   }
 });
+import { IValidation } from "../reducers/wizardSelectionReducers/updateOutputPath";
 
 // FIXME: Properly define types
 const getWizardSelectionsSelector = (state: any): any => state.selection;
@@ -24,8 +25,40 @@ const getProjectName = (state: any): string =>
   state.selection.projectNameObject.projectName;
 const getProjectNameValidation = (state: any): any =>
   state.selection.projectNameObject.validation;
-const getOutputPath = (state: any): string => state.selection.outputPath;
+const getOutputPath = (state: any): string =>
+  state.selection.outputPathObject.outputPath;
+const getOutputPathValidation = (state: any): IValidation =>
+  state.selection.outputPathObject.validation;
 const getPageCount = (state: any): IPageCount => state.selection.pageCount;
+
+const isValidNameAndProjectPath = (
+  projectNameValidationObject: IValidation,
+  outputPathValidationObject: IValidation,
+  outputPath: string,
+  projectName: string
+): boolean => {
+  if (!projectNameValidationObject || !outputPathValidationObject) {
+    return false;
+  }
+  if (outputPath === "" || projectName === "") {
+    return false;
+  }
+  if (
+    !projectNameValidationObject.isValid ||
+    !outputPathValidationObject.isValid
+  ) {
+    return false;
+  }
+  return true;
+};
+
+const isValidNameAndProjectPathSelector = createSelector(
+  getProjectNameValidation,
+  getOutputPathValidation,
+  getOutputPath,
+  getProjectName,
+  isValidNameAndProjectPath
+);
 
 const getProjectTypeRowItems = (selection: any): RowType[] => {
   const projectType = selection.appType as ISelected;
@@ -144,7 +177,9 @@ export {
   getFrameworksRowItemSelector,
   getServicesSelector,
   getOutputPath,
+  getOutputPathValidation,
   getProjectName,
   getPageCount,
-  getProjectNameValidation
+  getProjectNameValidation,
+  isValidNameAndProjectPathSelector
 };
