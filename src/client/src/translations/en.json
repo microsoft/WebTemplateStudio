@@ -13,7 +13,10 @@
   "azureFunctionsModal.numFunctionsLabel": "Number of functions",
   "azureFunctionsModal.resourceGroupLabel": "Resource Group",
   "azureFunctionsModal.runtimeStackLabel": "Runtime Stack",
+<<<<<<< HEAD
   "azureFunctionsModal.saveChanges": "Save Changes",
+=======
+>>>>>>> c1d4adb... added keyboard nav to welcome page
   "azureFunctionsModal.subscriptionLabel": "Subscription",
   "azureFunctionsSelection.edit": "Edit",
   "azureLogin.azureCardBody": "Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. Sign in or create an account to get access to CosmosDB and Azure Functions from this extension",
@@ -44,7 +47,10 @@
   "cosmosResourceModule.internalName": "Internal Name",
   "cosmosResourceModule.locationLabel": "Location",
   "cosmosResourceModule.resourceGroupLabel": "Resource Group",
+<<<<<<< HEAD
   "cosmosResourceModule.saveChanges": "Save Changes",
+=======
+>>>>>>> c1d4adb... added keyboard nav to welcome page
   "cosmosResourceModule.subscriptionLabel": "Subscription",
   "details.author": "Author:",
   "details.back": "Back",
