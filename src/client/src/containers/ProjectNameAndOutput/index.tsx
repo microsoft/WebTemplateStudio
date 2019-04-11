@@ -65,11 +65,23 @@ const messages = defineMessages({
 
 const ProjectNameAndOutput = (props: Props) => {
   React.useEffect(() => {
-    if (props.projectPathValidation) {
+    if (props.vscode) {
+      if (props.projectPathValidation) {
+        props.vscode.postMessage({
+          module: EXTENSION_MODULES.VALIDATOR,
+          command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+          track: false,
+          projectPath: props.outputPath,
+          projectName: props.projectName
+        });
+      }
+    }
+  }, [props.outputPath, props.projectName]);
+  React.useEffect(() => {
+    if (props.vscode) {
       props.vscode.postMessage({
         module: EXTENSION_MODULES.VALIDATOR,
         command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-        track: false,
         projectPath: props.outputPath,
         projectName: props.projectName
       });

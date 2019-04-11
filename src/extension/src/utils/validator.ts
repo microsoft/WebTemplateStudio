@@ -58,8 +58,8 @@ export class Validator extends WizardServant {
     return {
       payload: {
         projectPathValidation: {
-          isInvalidProjectPath: isInvalidProjectPath,
-          projectPathError: projectPathError
+          isValid: !isInvalidProjectPath,
+          error: projectPathError
         }
       }
     };
