@@ -114,33 +114,21 @@ const SummaryTile = ({
             <div className={styles.metaData}>
               {subTitle
                 ? subTitle
-                : serviceTitle && (
-                    <React.Fragment>
-                      <div>{intl.formatMessage(serviceTitle)}</div>
-                      <div>&nbsp;|&nbsp;</div>
-                    </React.Fragment>
-                  )}
-              {originalTitle && (
-                <React.Fragment>
-                  <div>{originalTitle}</div>
-                  <div>&nbsp;|&nbsp;</div>
-                </React.Fragment>
-              )}
-              {author && (
-                <React.Fragment>
-                  {originalTitle && (
+                : originalTitle && (
                     <React.Fragment>
                       <div>{originalTitle}</div>
                       <div>&nbsp;|&nbsp;</div>
                     </React.Fragment>
                   )}
-                  {author && (
+              {author && (
+                <React.Fragment>
+                  {author && <div>{author}</div>}
+                  {version && (
                     <React.Fragment>
-                      <div>{author}</div>
                       <div>&nbsp;|&nbsp;</div>
+                      <div>{version}</div>
                     </React.Fragment>
                   )}
-                  <div>{version}</div>
                 </React.Fragment>
               )}
             </div>
