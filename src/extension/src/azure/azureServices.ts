@@ -70,21 +70,25 @@ export class AzureServices extends WizardServant {
   public static async sendUserStatusIfLoggedIn(
     message: any
   ): Promise<IPayloadResponse> {
-    AzureServices.subscriptionItemList = await AzureAuth.getSubscriptions();
-    const subscriptionListToDisplay = AzureServices.subscriptionItemList.map(
-      subscriptionItem => {
-        return {
-          label: subscriptionItem.label,
-          value: subscriptionItem.label
-        };
-      }
-    );
-    return {
-      payload: {
-        email: AzureAuth.getEmail(),
-        subscriptions: subscriptionListToDisplay
-      }
-    };
+    if (AzureAuth.getEmail()) {
+      AzureServices.subscriptionItemList = await AzureAuth.getSubscriptions();
+      const subscriptionListToDisplay = AzureServices.subscriptionItemList.map(
+        subscriptionItem => {
+          return {
+            label: subscriptionItem.label,
+            value: subscriptionItem.label
+          };
+        }
+      );
+      return {
+        payload: {
+          email: AzureAuth.getEmail(),
+          subscriptions: subscriptionListToDisplay
+        }
+      };
+    } else {
+      return { payload: null };
+    }
   }
   public static async performLogout(message: any): Promise<IPayloadResponse> {
     let success = await AzureAuth.logout();
@@ -178,7 +182,9 @@ export class AzureServices extends WizardServant {
   public static async sendCosmosNameValidationStatusToClient(
     message: any
   ): Promise<IPayloadResponse> {
-    await AzureServices.updateCosmosDBSubscriptionItemCache(message.subscription);
+    await AzureServices.updateCosmosDBSubscriptionItemCache(
+      message.subscription
+    );
 
     return await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(
       message.appName,
@@ -200,7 +206,9 @@ export class AzureServices extends WizardServant {
       });
   }
   public static async sendFunctionNameValidationStatusToClient(message: any) {
-    await AzureServices.updateFunctionSubscriptionItemCache(message.subscription);
+    await AzureServices.updateFunctionSubscriptionItemCache(
+      message.subscription
+    );
     return AzureServices.AzureFunctionProvider.checkFunctionAppName(
       message.appName,
       AzureServices.usersFunctionSubscriptionItemCache
@@ -238,7 +246,8 @@ export class AzureServices extends WizardServant {
   ): Promise<void> {
     if (
       AzureServices.usersCosmosDBSubscriptionItemCache === undefined ||
-      subscriptionLabel !== AzureServices.usersCosmosDBSubscriptionItemCache.label
+      subscriptionLabel !==
+        AzureServices.usersCosmosDBSubscriptionItemCache.label
     ) {
       let subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
@@ -256,7 +265,8 @@ export class AzureServices extends WizardServant {
   ): Promise<void> {
     if (
       AzureServices.usersFunctionSubscriptionItemCache === undefined ||
-      subscriptionLabel !== AzureServices.usersFunctionSubscriptionItemCache.label
+      subscriptionLabel !==
+        AzureServices.usersFunctionSubscriptionItemCache.label
     ) {
       let subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
@@ -273,7 +283,9 @@ export class AzureServices extends WizardServant {
     selections: any,
     appPath: string
   ): Promise<void> {
-    await AzureServices.updateFunctionSubscriptionItemCache(selections.subscription);
+    await AzureServices.updateFunctionSubscriptionItemCache(
+      selections.subscription
+    );
 
     let userFunctionsSelections: FunctionSelections = {
       functionAppName: selections.appName,
