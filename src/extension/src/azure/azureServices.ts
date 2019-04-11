@@ -62,8 +62,7 @@ export class AzureServices extends WizardServant {
   ): Promise<IPayloadResponse> {
     let isLoggedIn = await AzureAuth.login();
     if (isLoggedIn) {
-      let userStatus = AzureServices.sendUserStatusIfLoggedIn(message);
-      return { payload: userStatus };
+      return AzureServices.sendUserStatusIfLoggedIn(message);
     }
     throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
   }
