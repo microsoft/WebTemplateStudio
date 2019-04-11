@@ -4,8 +4,7 @@ import {
   CONSTANTS,
   ExtensionModule,
   TelemetryEventName,
-  ExtensionCommand,
-  
+  ExtensionCommand
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./signalr-api-module/apiModule";
@@ -59,13 +58,13 @@ export class Controller {
     private context: vscode.ExtensionContext,
     private extensionStartTime: number
   ) {
-    Controller.Telemetry = new TelemetryAI(this.context, this.extensionStartTime);
+    Controller.Telemetry = new TelemetryAI(
+      this.context,
+      this.extensionStartTime
+    );
     this.Validator = new Validator();
     this.AzureService = new AzureServices();
-    this.GenExperience = new GenerationExperience(
-      Controller.reactPanelContext,
-      Controller.Telemetry
-    );
+    this.GenExperience = new GenerationExperience(Controller.Telemetry);
     this.defineExtensionModule();
     this.launchWizard(this.context, this.extensionStartTime);
   }
@@ -79,40 +78,38 @@ export class Controller {
     context: vscode.ExtensionContext,
     extensionStartTime: number
   ): Promise<any> {
-let process = ApiModule.StartApi(context);
-let syncObject: ISyncReturnType = {
-  successfullySynced: false,
-  templatesVersion: ""
-};
-let syncAttempts = 0;
-while (
-  !syncObject.successfullySynced &&
-  syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
-) {
-  syncObject = await Controller.attemptSync();
-  syncAttempts++;
-  if (!syncObject.successfullySynced) {
-    await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
-  }
-}
-if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-  vscode.window.showErrorMessage(
-    CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
-  );
-  return process;
-}
+    let process = ApiModule.StartApi(context);
+    let syncObject: ISyncReturnType = {
+      successfullySynced: false,
+      templatesVersion: ""
+    };
+    let syncAttempts = 0;
+    while (
+      !syncObject.successfullySynced &&
+      syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
+    ) {
+      syncObject = await Controller.attemptSync();
+      syncAttempts++;
+      if (!syncObject.successfullySynced) {
+        await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
+      }
+    }
+    if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+      vscode.window.showErrorMessage(
+        CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
+      );
+      return process;
+    }
 
     Controller.reactPanelContext = ReactPanel.createOrShow(
       context.extensionPath,
       this.routingMessageReceieverDelegate
     );
+    GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
-Controller.getVersionAndSendToClient(
-  context,
-  syncObject.templatesVersion
-);
-Controller.Telemetry.trackExtensionStartUpTime(
-  TelemetryEventName.ExtensionLaunch
+    Controller.getVersionAndSendToClient(context, syncObject.templatesVersion);
+    Controller.Telemetry.trackExtensionStartUpTime(
+      TelemetryEventName.ExtensionLaunch
     );
     return process;
   }
@@ -165,7 +162,6 @@ Controller.Telemetry.trackExtensionStartUpTime(
     responsePayload.command = commandName;
     this.reactPanelContext.postMessageWebview(responsePayload);
   }
-
 
   dispose() {
     throw new Error("Method not implemented.");

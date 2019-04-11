@@ -16,11 +16,15 @@ export class GenerationExperience extends WizardServant{
     /**
      *
      */
-    constructor(private reactPanelContext: ReactPanel, private Telemetry: TelemetryAI) {
+    constructor(private Telemetry: TelemetryAI) {
       super();
-      GenerationExperience.reactPanelContext = this.reactPanelContext;
       GenerationExperience.Telemetry = this.Telemetry;
     }
+
+    public static setReactPanel(reactPanelContext: ReactPanel){
+      GenerationExperience.reactPanelContext = reactPanelContext;
+    }
+
     ////TODO: MAKE GEN CALL CLIENTCOMMANDMAP FUNCTIONS VIA TO WRAP TELEMETRY AUTOMATICALLY
     // tslint:disable-next-line: max-func-body-length
     public async handleGeneratePayloadFromClient(
@@ -163,7 +167,7 @@ export class GenerationExperience extends WizardServant{
       });
     }
   
-    private handleGenLiveMessage(message: any) {
+    private handleGenLiveMessage(message: string) {
       vscode.window.showInformationMessage(message);
       GenerationExperience.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.UpdateGenStatusMessage,
