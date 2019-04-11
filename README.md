@@ -40,7 +40,12 @@ Once you make the selections you want and click generate, you can quickly extend
 
 - [Installing the extension](/docs/install.md)
 - [Getting started with the codebase](/docs/getting-started-developers.md)
-- [Terminology for developers](/docs/Terminology.md)
+- [Terminology for developers](/docs/terminology.md)
+
+# Privacy Statement
+
+This extension logs basic [telemetry](/docs/telemetry.md) for what is being selected. We are in the process of creating a telemetry data page to summarize usage trends.
+this repository once it's available. Please read [Microsoft Privacy Statement](https://privacy.microsoft.com/en-US/privacystatement) for more information.
 
 # Contributing
 

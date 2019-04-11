@@ -1,12 +1,14 @@
 .buttonHighlightedBorder {
     background-color: #0067B8;
     color: white;
-    border: 0.5px solid white;
+    outline: 1px solid white;
 }
 
 .buttonHighlighted {
     background-color: #0067B8;
-    color: white !important; /* To be removed after Demo Redmond, repaced with css variables */
+    color: white !important;
+    outline: 1px solid #FFFFFF;
+    /* To be removed after Demo Redmond, repaced with css variables */
 }
 
 .buttonLight,
@@ -14,19 +16,18 @@
 .buttonHighlightedBorder,
 .buttonDark {
     text-decoration: none;
-    outline: none;
-    border-radius: 2px;
     padding: 0.5em 1em;
     cursor: pointer;
+    border: none;
 }
 
 .buttonLight {
     background-color: white;
-    border: 0.5px solid black;
+    border: 1px solid black;
 }
 
 .buttonDark {
-    background-color: #696969;
-    border: 0.5px solid #FFFFFF;
-    color: white !important; /* To be removed after Demo Redmond, repaced with css variables */
+    background-color: #313131;
+    outline: 1px solid #FFFFFF;
+    color: white !important;
 }

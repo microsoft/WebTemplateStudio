@@ -2,20 +2,19 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { ISelected } from "../types/selected";
 import { ITemplateInfo } from "../types/templateInfo";
-import { SERVICE_KEYS } from "../utils/constants";
+import { getOutputPath, getProjectName } from "./wizardSelectionSelector";
+import {
+  SERVICE_KEYS,
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  COSMOS_APIS
+} from "../utils/constants";
 
-// FIXME: Properly define types
+const DATABASE_INTERNAL_NAME_MAPPING = {
+  [COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
+  [COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
+};
+
 const getWizardSelectionsSelector = (state: any): any => state.selection;
-
-const getProjectName = (selection: any): string => {
-  const { projectName } = selection.projectNameObject;
-  return projectName;
-};
-
-const getPath = (selection: any): string => {
-  const { outputPath } = selection;
-  return outputPath;
-};
 
 const getProjectType = (selection: any): string => {
   const projectType = selection.appType as ISelected;
@@ -41,7 +40,8 @@ const getServices = (selection: any): ITemplateInfo[] => {
   ) {
     servicesInfo.push({
       name: "Cosmos",
-      identity: services.cosmosDB.selection[0].internalName
+      identity:
+        DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.selection[0].api]
     });
   }
 
@@ -60,7 +60,6 @@ const getServices = (selection: any): ITemplateInfo[] => {
   return servicesInfo;
 };
 
-// FIXME: Needs to be in a format that is in line with the Core engine
 const getPages = (selection: any): ITemplateInfo[] => {
   const { pages } = selection;
   const pagesInfo = [];
@@ -72,16 +71,6 @@ const getPages = (selection: any): ITemplateInfo[] => {
   }
   return pagesInfo;
 };
-
-const getProjectNameSelector = createSelector(
-  getWizardSelectionsSelector,
-  getProjectName
-);
-
-const getPathSelector = createSelector(
-  getWizardSelectionsSelector,
-  getPath
-);
 
 const getProjectTypeSelector = createSelector(
   getWizardSelectionsSelector,
@@ -109,8 +98,8 @@ const getServicesSelector = createSelector(
 );
 
 const rootSelector = createSelector(
-  getProjectNameSelector,
-  getPathSelector,
+  getProjectName,
+  getOutputPath,
   getProjectTypeSelector,
   getFrontendFrameworkSelector,
   getBackendFrameworkSelector,
@@ -126,13 +115,13 @@ const rootSelector = createSelector(
     services
   ) => {
     return {
-      projectName: projectName,
-      path: path,
-      projectType: projectType,
-      frontendFramework: frontendFramework,
-      backendFramework: backendFramework,
-      pages: pages,
-      services: services
+      projectName,
+      path,
+      projectType,
+      frontendFramework,
+      backendFramework,
+      pages,
+      services
     };
   }
 );

@@ -5,7 +5,6 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import { findDOMNode } from "react-dom";
 
 import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
@@ -25,7 +24,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  WIZARD_CONTENT_INTERNAL_NAMES
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  COSMOS_APIS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
@@ -33,6 +33,7 @@ import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceS
 import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
+import { setAccountAvailability } from "../../actions/setAccountAvailability";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -43,6 +44,9 @@ interface IDispatchProps {
   closeModal: () => any;
   saveCosmosOptions: (cosmosOptions: any) => any;
   setValidationStatus: (status: boolean) => Dispatch;
+  setCosmosResourceAccountNameAvailability: (
+    isAvailableObject: any
+  ) => Dispatch;
 }
 
 interface IStateProps {
@@ -163,17 +167,12 @@ const CosmosResourceModal = (props: Props) => {
     },
     MONGO: {
       label: "MongoDB",
-      value: "MongoDB"
+      value: COSMOS_APIS.MONGO
     },
     SQL: {
       label: "SQL",
-      value: "SQL"
+      value: COSMOS_APIS.SQL
     }
-  };
-
-  const DATABASE_INTERNAL_NAME_MAPPING = {
-    [FORM_CONSTANTS.SQL.value]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
-    [FORM_CONSTANTS.MONGO.value]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
   };
 
   const [cosmosData, setData] = React.useState(cosmosInitialState);
@@ -231,23 +230,9 @@ const CosmosResourceModal = (props: Props) => {
       };
     }
 
-    if (value in DATABASE_INTERNAL_NAME_MAPPING) {
-      updatedForm = {
-        ...updatedForm,
-        internalName: {
-          label: DATABASE_INTERNAL_NAME_MAPPING[value],
-          value: DATABASE_INTERNAL_NAME_MAPPING[value]
-        }
-      };
-    }
     updateForm(updatedForm);
   };
 
-  React.useEffect(() => {
-    if (props.selection) {
-      updateForm(props.selection.dropdownSelection);
-    }
-  }, []);
   /**
    * Listens on account name change and validates the input in VSCode
    */
@@ -268,7 +253,18 @@ const CosmosResourceModal = (props: Props) => {
         });
       }, 700);
     }
-  }, [cosmosFormData.accountName.value]);
+  }, [cosmosFormData.accountName]);
+
+  React.useEffect(() => {
+    if (props.selection) {
+      updateForm(props.selection.dropdownSelection);
+    } else {
+      props.setCosmosResourceAccountNameAvailability({
+        isAvailable: false,
+        message: ""
+      });
+    }
+  }, []);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement
@@ -473,6 +469,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   saveCosmosOptions: (cosmosOptions: any) => {
     dispatch(saveCosmosDbSettingsAction(cosmosOptions));
   },
+  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) =>
+    dispatch(setAccountAvailability(isAvailableObject)),
   setValidationStatus: (status: boolean) =>
     dispatch(setAzureValidationStatusAction(status))
 });

@@ -32,6 +32,7 @@ import {
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
+import { setAppNameAvailabilityAction } from "../../actions/setAccountAvailability";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -42,6 +43,7 @@ interface IDispatchProps {
   closeModal: () => any;
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => any;
   setValidationStatus: (status: boolean) => Dispatch;
+  setAppNameAvailability: (isAvailableObject: any) => any;
 }
 
 interface IStateProps {
@@ -246,11 +248,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
     updateForm(updatedForm);
   };
 
-  React.useEffect(() => {
-    if (props.selection) {
-      updateForm(props.selection.dropdownSelection);
-    }
-  }, []);
   /**
    * Listens on account name change and validates the input in VSCode
    */
@@ -271,7 +268,19 @@ const AzureFunctionsResourceModal = (props: Props) => {
         });
       }, 700);
     }
-  }, [azureFunctionsFormData.appName.value]);
+  }, [azureFunctionsFormData.appName]);
+
+  React.useEffect(() => {
+    if (props.selection) {
+      updateForm(props.selection.dropdownSelection);
+    } else {
+      props.setAppNameAvailability({
+        isAvailable: false,
+        message: ""
+      });
+    }
+  }, []);
+
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
@@ -498,6 +507,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => {
     dispatch(saveAzureFunctionsSettingsAction(azureFunctionsOptions));
   },
+  setAppNameAvailability: (isAvailableObject: any) =>
+    dispatch(setAppNameAvailabilityAction(isAvailableObject)),
   setValidationStatus: (status: boolean) =>
     dispatch(setAzureValidationStatusAction(status))
 });

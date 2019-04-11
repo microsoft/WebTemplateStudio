@@ -13,6 +13,7 @@ import { TelemetryAI } from "./telemetry/telemetryAI";
 import { WizardServant } from "./wizardServant";
 import { GenerationExperience } from "./generationExperience";
 import { ISyncReturnType } from "./types/syncReturnType";
+import { ChildProcess } from "child_process";
 
 export class Controller {
   public static reactPanelContext: ReactPanel;
@@ -77,7 +78,7 @@ export class Controller {
   public async launchWizard(
     context: vscode.ExtensionContext,
     extensionStartTime: number
-  ): Promise<any> {
+  ): Promise<ChildProcess> {
     let process = ApiModule.StartApi(context);
     let syncObject: ISyncReturnType = {
       successfullySynced: false,
@@ -134,6 +135,7 @@ export class Controller {
         return { successfullySynced: false, templatesVersion: "" };
       });
   }
+
   private static handleSyncLiveData(status: string, progress?: number) {
     let output = `Template Status: ${status}`;
     if (progress) {

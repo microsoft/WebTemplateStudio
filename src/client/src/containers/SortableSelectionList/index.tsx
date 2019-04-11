@@ -55,6 +55,7 @@ const SortableSummaryTile = SortableElement(
       <React.Fragment>
         <div className={styles.tileContainer}>
           <SummaryTile
+            originalTitle={page.id}
             title={page.title}
             version="v1.0"
             svgUrl={page.svgUrl}
