@@ -15,6 +15,7 @@ import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
+import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 
 interface IStateProps {
   isTemplateGenerated: boolean;
@@ -184,7 +185,7 @@ const mapStateToProps = (state: any): IStateProps => ({
   isServicesDeployed: PostGenSelectors.isServicesDeployedSelector(state),
   isServicesFailed: PostGenSelectors.isServicesFailureSelector(state),
   vscode: getVSCodeApiSelector(state),
-  outputPath: state.selection.outputPath
+  outputPath: getOutputPath(state)
 });
 
 export default connect(mapStateToProps)(
