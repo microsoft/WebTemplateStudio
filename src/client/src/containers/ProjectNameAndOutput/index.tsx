@@ -82,6 +82,7 @@ const ProjectNameAndOutput = (props: Props) => {
       props.vscode.postMessage({
         module: EXTENSION_MODULES.VALIDATOR,
         command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+        track: false,
         projectPath: props.outputPath,
         projectName: props.projectName
       });
