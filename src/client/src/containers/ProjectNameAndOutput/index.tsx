@@ -18,7 +18,7 @@ import {
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 
-import stylesModuleCss from "./styles.module.css";
+import styles from "./styles.module.css";
 
 import {
   injectIntl,
