@@ -26,6 +26,7 @@ interface IProps {
   isDraggable?: boolean;
   rotate?: boolean;
   subTitle?: string;
+  error?: string | FormattedMessage.MessageDescriptor;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -46,7 +47,8 @@ const SummaryTile = ({
   isDraggable,
   rotate,
   subTitle,
-  intl
+  intl,
+  error
 }: Props) => {
   const [componentTitle, setTitle] = React.useState(title);
   const [isDisabled, setDisabled] = React.useState(true);
@@ -126,17 +128,24 @@ const SummaryTile = ({
                       <div>&nbsp;|&nbsp;</div>
                     </React.Fragment>
                   )}
-              {author && (
+              {originalTitle && (
                 <React.Fragment>
-                  {author && <div>{author}</div>}
-                  {version && (
-                    <React.Fragment>
-                      <div>&nbsp;|&nbsp;</div>
-                      <div>{version}</div>
-                    </React.Fragment>
-                  )}
+                  <div>{originalTitle}</div>
+                  <div>&nbsp;|&nbsp;</div>
                 </React.Fragment>
               )}
+              {(error && <div className={styles.errorMessage}>{error}</div>) ||
+                (author && (
+                  <React.Fragment>
+                    {author && <div>{author}</div>}
+                    {version && (
+                      <React.Fragment>
+                        <div>&nbsp;|&nbsp;</div>
+                        <div>{version}</div>
+                      </React.Fragment>
+                    )}
+                  </React.Fragment>
+                ))}
             </div>
           </div>
         </div>
