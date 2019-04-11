@@ -150,18 +150,19 @@ const SummaryTile = ({
           <EditSVG className={styles.rightIcon} onClick={handleClick} />
         )}
       </div>
-      <CloseSVG
-        onClick={() => {
-          if (handleCloseClick && idx) {
-            // component index based at 1, so -1 for correction
-            handleCloseClick(idx - 1);
-          }
-        }}
-        className={classnames(styles.closeIcon, {
-          [styles.hidden]: !showEditable || !isEditable
-        })}
-      />
-      {!showEditable && <div className={styles.spacer} />}
+      <div className={styles.spacer}>
+        <CloseSVG
+          onClick={() => {
+            if (handleCloseClick && idx) {
+              // component index based at 1, so -1 for correction
+              handleCloseClick(idx - 1);
+            }
+          }}
+          className={classnames(styles.closeIcon, {
+            [styles.hidden]: !showEditable || !isEditable
+          })}
+        />
+      </div>
     </div>
   );
 };

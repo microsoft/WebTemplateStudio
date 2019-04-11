@@ -100,7 +100,6 @@ const PostGenerationModal = ({
 }: Props) => {
   const handleOpenProject = () => {
     if (isTemplateGenerated) {
-      // @ts-ignore
       vscode.postMessage({
         module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,

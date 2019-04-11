@@ -1,15 +1,14 @@
 .input {
-    box-sizing: border-box;
-    padding: 0.5em;
-    width: 100%;
-    font-size: 1em;
-    height: 38px;
-    background-color: var(--vscode-input-background);
-    border: 1px solid var(--vscode-editor-foreground);
-    color: var(--vscode-input-foreground);
+  box-sizing: border-box;
+  padding: 0.5em;
+  width: 100%;
+  font-size: 1em;
+  height: 38px;
+  background-color: var(--vscode-input-background);
+  border: 0.5px solid var(--vscode-editor-foreground);
+  color: var(--vscode-editor-foreground);
 }
 
 .input::placeholder {
-    color: var(--vscode-input-placeholderForeground);
-    opacity: 0.4;
+  color: var(--vscode-input-placeholderForeground);
 }

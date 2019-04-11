@@ -19,7 +19,7 @@
 .pagesTextContainer {
   min-height: 38px;
   background-color: var(--vscode-input-background);
-  border: 1px solid var(--vscode-editor-foreground);
+  border: 0.5px solid var(--vscode-menu-foreground);
   color: var(--vscode-input-foreground);
   display: flex;
   justify-content: space-between;
@@ -30,7 +30,7 @@
 .errorTextContainer {
   min-height: 38px;
   background: var(--vscode-inputValidation-errorBackground);
-  border: 1px solid var(--vscode-inputValidation-errorBorder);
+  border: 0.5px solid var(--vscode-inputValidation-errorBorder);
   color: var(--vscode-editor-foreground);
   display: flex;
   justify-content: space-between;
@@ -104,7 +104,7 @@
   font-size: 1em;
   box-sizing: border-box;
   background-color: var(--vscode-input-background);
-  color: var(--vscode-input-foreground);
+  color: var(--vscode-editor-foreground);
   border: none;
 }
 

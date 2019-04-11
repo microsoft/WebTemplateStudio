@@ -26,6 +26,10 @@
   margin-right: 10px;
 }
 
+.spinner path {
+  stroke: #ffffff;
+}
+
 @keyframes rotate {
   from {
     transform: rotate(0deg);

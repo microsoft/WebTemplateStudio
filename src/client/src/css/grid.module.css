@@ -19,7 +19,7 @@ body {
 }
 
 a {
-  
+  font-weight: var(--vscode-editor-font-weight);
 }
 
 /* ROOT FONT STYLES */
@@ -56,8 +56,8 @@ h6 {
 }
 
 p {
-  font-size: 1.125rem;
-  font-weight: 200;
+  font-size: var(--vscode-editor-font-size);
+  font-weight: var(--vscode-editor-font-weight);
   margin: 0px;
 }
 

@@ -8,7 +8,7 @@ export default {
   }),
   singleValue: (base: any) => ({
     ...base,
-    color: "var(--vscode-menu-foreground);"
+    color: "var(--vscode-editor-foreground);"
   }),
   placeholder: (base: any) => ({
     ...base,
@@ -17,7 +17,7 @@ export default {
   control: (base: any, state: any): any => ({
     ...base,
     color: "white",
-    border: "1px solid var(--vscode-editor-foreground)",
+    border: "0.5px solid var(--vscode-menu-foreground)",
     borderRadius: 0,
     background: "var(--vscode-input-background)",
     "&:hover": {
@@ -40,7 +40,7 @@ export default {
     ...base,
     // override border radius to match the box
     borderRadius: 0,
-    border: "1px solid var(--vscode-editor-foreground)",
+    border: "0.5px solid var(--vscode-editor-foreground)",
     // beautify the word cut by adding a dash see https://caniuse.com/#search=hyphens for the compatibility
     hyphens: "auto",
     // kill the gap when opening up or down

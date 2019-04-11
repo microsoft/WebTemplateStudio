@@ -25,7 +25,6 @@
 .input::placeholder,
 .pathInput::placeholder {
   color: var(--vscode-input-placeholderForeground);
-  opacity: 0.4;
 }
 
 .errorMessage {
