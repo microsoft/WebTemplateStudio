@@ -27,7 +27,12 @@ const LeftSidebarLink = ({
     }
   };
   return (
-    <Link to={path} onClick={handleClick} className={styles.container}>
+    <Link
+      tabIndex={disabled ? -1 : 0}
+      to={path}
+      onClick={handleClick}
+      className={styles.container}
+    >
       {visitedCheck || isSelected ? (
         <Check
           className={classnames(styles.icon, {
