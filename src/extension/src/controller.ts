@@ -67,7 +67,7 @@ export class Controller {
     this.AzureService = new AzureServices();
     this.GenExperience = new GenerationExperience(Controller.Telemetry);
     this.defineExtensionModule();
-    this.launchWizard(this.context, this.extensionStartTime);
+    this.launchWizard(this.context);
   }
 
   /**
@@ -76,8 +76,7 @@ export class Controller {
    *  @param VSCode context interface
    */
   public async launchWizard(
-    context: vscode.ExtensionContext,
-    extensionStartTime: number
+    context: vscode.ExtensionContext
   ): Promise<ChildProcess> {
     let process = ApiModule.StartApi(context);
     let syncObject: ISyncReturnType = {
