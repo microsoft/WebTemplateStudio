@@ -8,11 +8,11 @@ export default {
   }),
   singleValue: (base: any) => ({
     ...base,
-    color: "var(--vscode-editor-foreground);"
+    color: "var(--vscode-menu-foreground);"
   }),
   placeholder: (base: any) => ({
     ...base,
-    color: "var(--vscode-textLink-foreground);"
+    color: "var(--vscode-menu-foreground);"
   }),
   control: (base: any, state: any): any => ({
     ...base,
@@ -27,16 +27,12 @@ export default {
   }),
   option: (provided: any, state: any) => ({
     ...provided,
-    backgroundColor: state.isSelected
-      ? "#DFDFDF"
-      : state.isFocused
-      ? "#DFDFDF"
-      : "none",
-    color: state.isSelected && "black",
+    backgroundColor: state.isFocused && "var(--vscode-menu-foreground)",
+    color: state.isFocused && "var(--vscode-editor-background)",
     "&:hover": {
-      background: "#DFDFDF",
+      background: "var(--vscode-menu-foreground",
       border: 0,
-      color: "black"
+      color: "var(--vscode-editor-background)"
     },
     cursor: "pointer"
   }),

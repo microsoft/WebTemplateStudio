@@ -50,6 +50,10 @@
   margin-right: 0.2em;
 }
 
+.validationIcon path {
+  fill: var(--vscode-editorMarkerNavigationWarning-background);
+}
+
 .inputContainer {
   display: flex;
   align-items: center;
@@ -65,6 +69,7 @@
   text-decoration: none;
   border: none;
   background-color: var(--vscode-input-background);
+  color: var(--vscode-editor-foreground);
   font-size: 1em;
   width: 100%;
   margin-right: 10px;
@@ -99,6 +104,10 @@ input::placeholder {
 .spinner {
   height: 1em;
   margin-right: 2px;
+}
+
+.spinner path {
+  stroke: var(--vscode-editor-foreground);
 }
 
 @keyframes rotate {

@@ -52,8 +52,8 @@
   border: none;
   margin: 0;
   text-decoration: none;
-  background: var(--vscode-editor-background);
-  color: #0067b8;
+  background: var(--vscode-menu-background);
+  color: var(--vscode-textLink-foreground);
   font-family: sans-serif;
   font-size: 1rem;
   cursor: pointer;
