@@ -36,7 +36,6 @@ interface PartialList<T> extends Array<T> {
 }
 
 export abstract class AzureAuth {
-
   private static api: AzureAccount;
 
   private static locationsCache: LocationItem[] | undefined;
@@ -74,7 +73,7 @@ export abstract class AzureAuth {
       if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
         throw new AuthorizationError(CONSTANTS.ERRORS.LOGOUT_FAILED);
       }
-    } 
+    }
     return true;
   }
   public static getEmail(): string {
@@ -185,7 +184,7 @@ export abstract class AzureAuth {
       return Promise.reject(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
 
-    this.initializeLocations(subscriptionItem);
+    await this.initializeLocations(subscriptionItem);
     let azureResourceClient: RMC.ResourceManagementClient = new RMC.ResourceManagementClient(
       subscriptionItem.session.credentials,
       subscriptionItem.subscription.subscriptionId!
@@ -218,7 +217,7 @@ export abstract class AzureAuth {
       return Promise.reject(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
 
-    this.initializeLocations(subscriptionItem);
+    await this.initializeLocations(subscriptionItem);
     let azureResourceClient: RMC.ResourceManagementClient = new RMC.ResourceManagementClient(
       subscriptionItem.session.credentials,
       subscriptionItem.subscription.subscriptionId!
