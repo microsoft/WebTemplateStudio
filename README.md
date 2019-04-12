@@ -19,6 +19,12 @@ WebTS currently supports the following:
 | staging | [![Build Status](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_apis/build/status/Web-Template-Studio-DevCI/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=staging)](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_build/latest?definitionId=275&branchName=staging) |
 | master  |  [![Build Status](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_apis/build/status/Web-Template-Studio-DevCI/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=master)](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_build/latest?definitionId=275&branchName=master)  |
 
+# Documentation
+
+- [Installing the extension](/docs/install.md)
+- [Getting started with the codebase](/docs/getting-started-developers.md)
+- [Terminology for developers](/docs/terminology.md)
+
 ## Example Scenario
 
 I need a Fullstack web app that stores blog posts in a Cosmos database.
@@ -36,27 +42,20 @@ Web Template Studio approaches web app creation using the following four attribu
 
 Once you make the selections you want and click generate, you can quickly extend the generated code.
 
-# Documentation
-
-- [Installing the extension](/docs/install.md)
-- [Getting started with the codebase](/docs/getting-started-developers.md)
-- [Terminology for developers](/docs/terminology.md)
-
 # Privacy Statement
 
 This extension logs basic [telemetry](/docs/telemetry.md) for what is being selected. We are in the process of creating a telemetry data page to summarize usage trends.
 this repository once it's available. Please read [Microsoft Privacy Statement](https://privacy.microsoft.com/en-US/privacystatement) for more information.
 
-# Contributing
+The extension does [log basic telemetry](docs/telemetry.md) for what is being selected. We are in the process of creating a [Telemetry Data](docs/telemetryData.md) page to summarize usage trends. Please read the [Microsoft privacy statement](http://go.microsoft.com/fwlink/?LinkId=521839) for more information.
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
+## Contributing
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+Do you want to contribute? We would love to have you help out. Here are our [contribution guidelines](CONTRIBUTING.md).
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+## Frameworks and libraries in generated code not created by our team
+**Frameworks**
+- [TBD](https://github.com/)
+
+**Libraries**
+- [TBD](https://github.com/)
