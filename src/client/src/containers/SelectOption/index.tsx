@@ -48,8 +48,14 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     };
   }
   public componentDidMount() {
-    if (this.props.selectCard) {
+    const {selectCard, selectOptions, options} = this.props;
+    if (selectCard) {
       this.exchangeOption(0);
+      this.setState({
+        selectedCardIndices: [0]
+      });
+    } else if (selectOptions) {
+      this.addOption(0, 1, options[0].internalName);
       this.setState({
         selectedCardIndices: [0]
       });

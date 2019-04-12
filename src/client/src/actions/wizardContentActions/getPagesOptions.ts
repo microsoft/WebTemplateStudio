@@ -64,7 +64,7 @@ function getApiTemplateInfoFromJson(items: any[]): IApiTemplateInfo[] {
     tags: val.tags,
     defaultName: val.defaultName,
     author: val.author
-  }));
+  })).sort((a: IApiTemplateInfo, b: IApiTemplateInfo) => a.position - b.position)
 }
 
 function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
@@ -74,12 +74,18 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
     licenses: val.licenses,
     longDescription: val.longDescription,
     selected: val.selected,
-    svgUrl: getSvgUrl(val.name),
+    svgUrl: getSvgUrl(getGroupIdentityFromIdentity(val.name)),
     title: val.displayName,
     defaultName: val.defaultName,
     isValidTitle: true,
     author: val.author
   }));
+}
+
+function getGroupIdentityFromIdentity(identity:string): string {
+  const identitySplit = identity.split(".");
+  identitySplit.splice(2, 1);
+  return identitySplit.join(".");
 }
 
 export { getPagesOptionsAction, getPagesOptionsSuccess };

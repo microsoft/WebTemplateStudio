@@ -16,22 +16,9 @@ const DEFAULT_LICENSE = {
   text: "Bootstrap",
   url: "https://github.com/twbs/bootstrap/blob/master/LICENSE"
 };
-const initialState = [
-  {
-    title: DEFAULT_PAGE_NAME,
-    internalName: WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE,
-    defaultName: DEFAULT_PAGE_NAME,
-    id: DEFAULT_PAGE_NAME,
-    isValidTitle: true,
-    licenses: [DEFAULT_LICENSE],
-    author: "Microsoft",
-    version: "1.0",
-    originalTitle: DEFAULT_PAGE_NAME
-  }
-];
 
 const pagesReducer = (
-  state: ISelected[] = initialState,
+  state: ISelected[] = [],
   action: WizardSelectionActionType | WizardInfoType
 ) => {
   switch (action.type) {
@@ -39,7 +26,7 @@ const pagesReducer = (
       const newPages: ISelected[] = [...action.payload];
       return newPages;
     case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
-      return initialState;
+      return [];
     default:
       return state;
   }

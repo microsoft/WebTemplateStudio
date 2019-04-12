@@ -16,6 +16,7 @@ import azure from "../assets/azure.svg";
 import azurefunctions from "../assets/azurefunctions.svg";
 import cancel from "../assets/cancel.svg";
 import cosmosdb from "../assets/cosmosdb.svg";
+import angular from "../assets/angular.svg";
 
 import masterdetailscreenshot from "../assets/masterdetailscreenshot.svg";
 import listscreenshot from "../assets/listscreenshot.svg";
@@ -24,6 +25,7 @@ import blankscreenshot from "../assets/blankscreenshot.svg";
 
 const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT_JS]: react,
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_JS]: angular,
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS]: node,
   [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: azurefunctions,
   [WIZARD_CONTENT_INTERNAL_NAMES.AZURE]: azure,

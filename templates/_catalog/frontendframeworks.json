@@ -6,10 +6,23 @@
     "author": "Facebook",
     "order": "1",
     "licenses": "[ReactJS](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
-    "platforms": ["Web"],
-    "languages": ["Any"],
+    "platforms": [ "Web" ],
+    "languages": [ "Any" ],
     "tags": {
       "version": "16.8.4"
+    }
+  },
+  {
+    "name": "AngularJS",
+    "displayName": "AngularJS",
+    "summary": "AngularJS is an open source, front-end web application framework mainly mainted by Google to develop single page applications.",
+    "author": "Google",
+    "order": "1",
+    "licenses": "[AngularJS](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)",
+    "platforms": [ "Web" ],
+    "languages": [ "Any" ],
+    "tags": {
+      "version": "7.2.0"
     }
   }
 ]

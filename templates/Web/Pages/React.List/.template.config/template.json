@@ -2,7 +2,7 @@
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "List",
-  "groupIdentity": "wts.Page.React.List",
+  "groupIdentity": "wts.Page.List",
   "identity": "wts.Page.React.List",
   "description": "The list page allows you to add and remove text from an adaptive list.",
   "tags": {
