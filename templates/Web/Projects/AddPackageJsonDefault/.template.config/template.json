@@ -2,8 +2,8 @@
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "AddPackageJsonDefault",
-  "groupIdentity": "wts.Proj.PackageJsonDefault",
-  "identity": "wts.Proj.PackageJsonDefault",
+  "groupIdentity": "wts.Proj.AddPackageJsonDefault",
+  "identity": "wts.Proj.AddPackageJsonDefault",
   "description": "",
   "tags": {
     "language": "Any",
