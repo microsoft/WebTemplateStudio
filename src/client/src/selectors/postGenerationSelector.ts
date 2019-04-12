@@ -4,6 +4,7 @@ import { IServiceStatus } from "../reducers/generationStatus/genStatus";
 import { isCosmosResourceCreatedSelector } from "./cosmosServiceSelector";
 import { isAzureFunctionsSelectedSelector } from "./azureFunctionsServiceSelector";
 import { AppState } from "../reducers";
+import CosmosDBSelection from "../containers/CosmosDBSelection";
 
 const getGenerationStatusSelector = (state: AppState) =>
   state.generationStatus.genStatus;
@@ -56,32 +57,69 @@ const isTemplatesFailedSelector = createSelector(
   isTemplatesFailed
 );
 
-const isServicesDeployed = (
+// const isServicesDeployed = (
+//   isCosmosSelected: boolean,
+//   isCosmosSuccess: boolean,
+//   isCosmosFailure: boolean,
+//   isFunctionsSelected: boolean,
+//   isAzureFunctionsSuccess: boolean,
+//   isAzureFunctionsFailure: boolean
+// ): boolean => {
+//   let isDeployed = true;
+//   if (isCosmosSelected) {
+//     isDeployed = false;
+//     if (isCosmosSuccess) {
+//       isDeployed = true;
+//     } else if (isCosmosFailure) {
+//       isDeployed = false;
+//     }
+//   }
+//   if (isFunctionsSelected) {
+//     isDeployed = false;
+//     if (isAzureFunctionsSuccess) {
+//       isDeployed = true;
+//     } else if (isAzureFunctionsFailure) {
+//       isDeployed = false;
+//     }
+//   }
+//   return isDeployed;
+// };
+
+interface IDeployStatus {
+  title: string;
+  isSelected: boolean;
+  isDeployed: boolean;
+  isFailed: boolean;
+}
+
+export interface IAzureServiceStatus {
+  [key: string]: IDeployStatus;
+  cosmosdb: IDeployStatus;
+  azureFunctions: IDeployStatus;
+}
+
+const servicesToDeploy = (
   isCosmosSelected: boolean,
   isCosmosSuccess: boolean,
   isCosmosFailure: boolean,
   isFunctionsSelected: boolean,
   isAzureFunctionsSuccess: boolean,
   isAzureFunctionsFailure: boolean
-): boolean => {
-  let isDeployed = true;
-  if (isCosmosSelected) {
-    isDeployed = false;
-    if (isCosmosSuccess) {
-      isDeployed = true;
-    } else if (isCosmosFailure) {
-      isDeployed = false;
+): IAzureServiceStatus => {
+  return {
+    cosmosdb: {
+      title: "Cosmos DB",
+      isSelected: isCosmosSelected,
+      isDeployed: isCosmosSuccess,
+      isFailed: isCosmosFailure
+    },
+    azureFunctions: {
+      title: "AzureFunctions",
+      isSelected: isFunctionsSelected,
+      isDeployed: isAzureFunctionsSuccess,
+      isFailed: isAzureFunctionsFailure
     }
-  }
-  if (isFunctionsSelected) {
-    isDeployed = false;
-    if (isAzureFunctionsSuccess) {
-      isDeployed = true;
-    } else if (isAzureFunctionsFailure) {
-      isDeployed = false;
-    }
-  }
-  return isDeployed;
+  };
 };
 
 const isServicesFailure = (
@@ -96,7 +134,7 @@ const isServicesDeployedSelector = createSelector(
   isAzureFunctionsSelectedSelector,
   isAzureFunctionsDeployedSuccessSelector,
   isAzureFunctionsDeployedFailureSelector,
-  isServicesDeployed
+  servicesToDeploy
 );
 
 const isServicesFailureSelector = createSelector(

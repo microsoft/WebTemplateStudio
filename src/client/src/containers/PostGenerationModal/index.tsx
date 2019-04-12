@@ -67,7 +67,7 @@ const messages = defineMessages({
   },
   help: {
     id: "postGenerationModal.help",
-    defaultMessage: "Help"
+    defaultMessage: "Report an issue"
   },
   azureServices: {
     id: "postGenerationModal.azureServices",
@@ -126,9 +126,6 @@ const PostGenerationModal = ({
     return intl.formatMessage(messages.unknownStatus);
   };
   const servicesMessage = () => {
-    if (!isServicesSelected) {
-      return intl.formatMessage(messages.noServicesToDeploy);
-    }
     if (isServicesFailed) {
       return intl.formatMessage(messages.failedDeploy);
     } else if (isServicesDeployed) {
@@ -159,12 +156,21 @@ const PostGenerationModal = ({
           </button>
         )}
       </div>
-      <div className={styles.section}>
-        {intl.formatMessage(messages.azureServices)}
-      </div>
-      {servicesMessage()}
+      {isServicesSelected && (
+        <div>
+          <div className={styles.section}>
+            {intl.formatMessage(messages.azureServices)}
+          </div>
+          {servicesMessage()}
+        </div>
+      )}
       <div className={styles.footerContainer}>
-        <div>{intl.formatMessage(messages.help)}</div>
+        <a
+          className={styles.link}
+          href="https://github.com/Microsoft/WebTemplateStudio/issues"
+        >
+          {intl.formatMessage(messages.help)}
+        </a>
         <button
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
           onClick={handleOpenProject}
