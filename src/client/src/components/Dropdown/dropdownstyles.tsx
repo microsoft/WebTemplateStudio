@@ -17,7 +17,7 @@ export default {
   control: (base: any, state: any): any => ({
     ...base,
     color: "white",
-    border: "0.5px solid var(--vscode-menu-foreground)",
+    border: "0.5px solid var(--vscode-editor-foreground)",
     borderRadius: 0,
     background: "var(--vscode-input-background)",
     "&:hover": {

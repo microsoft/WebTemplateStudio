@@ -42,26 +42,28 @@ const Card = ({
           {intl.formatMessage(formattedTitle)}
         </div>
       </div>
-      <div className={styles.cardBody}>
-        <CardBody formattedBody={formattedBody} />
-      </div>
-      <div className={styles.selectionContainer}>
-        <Link
-          onClick={() => handleDetailsClick(option)}
-          className={styles.details}
-          to={ROUTES.PAGE_DETAILS}
-        >
-          <FormattedMessage id="card.details" defaultMessage="Details" />
-        </Link>
-        <button
-          onClick={handleButtonClick}
-          className={classnames(styles.signInButton, {
-            [buttonStyles.buttonHighlighted]: !useNormalButtons,
-            [buttonStyles.buttonDark]: useNormalButtons
-          })}
-        >
-          {buttonText}
-        </button>
+      <div className={styles.cardContent}>
+        <div className={styles.cardBody}>
+          <CardBody formattedBody={formattedBody} />
+        </div>
+        <div className={styles.selectionContainer}>
+          <Link
+            onClick={() => handleDetailsClick(option)}
+            className={styles.details}
+            to={ROUTES.PAGE_DETAILS}
+          >
+            <FormattedMessage id="card.details" defaultMessage="Details" />
+          </Link>
+          <button
+            onClick={handleButtonClick}
+            className={classnames(styles.signInButton, {
+              [buttonStyles.buttonHighlighted]: !useNormalButtons,
+              [buttonStyles.buttonDark]: useNormalButtons
+            })}
+          >
+            {buttonText}
+          </button>
+        </div>
       </div>
     </div>
   );

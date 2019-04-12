@@ -104,7 +104,7 @@ input::placeholder {
   margin-right: 2px;
 }
 
-.spinner {
+.spinner path {
   stroke: var(--vscode-editor-foreground);
 }
 
