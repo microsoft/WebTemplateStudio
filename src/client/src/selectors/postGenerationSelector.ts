@@ -59,34 +59,6 @@ const isTemplatesFailedSelector = createSelector(
   isTemplatesFailed
 );
 
-// const isServicesDeployed = (
-//   isCosmosSelected: boolean,
-//   isCosmosSuccess: boolean,
-//   isCosmosFailure: boolean,
-//   isFunctionsSelected: boolean,
-//   isAzureFunctionsSuccess: boolean,
-//   isAzureFunctionsFailure: boolean
-// ): boolean => {
-//   let isDeployed = true;
-//   if (isCosmosSelected) {
-//     isDeployed = false;
-//     if (isCosmosSuccess) {
-//       isDeployed = true;
-//     } else if (isCosmosFailure) {
-//       isDeployed = false;
-//     }
-//   }
-//   if (isFunctionsSelected) {
-//     isDeployed = false;
-//     if (isAzureFunctionsSuccess) {
-//       isDeployed = true;
-//     } else if (isAzureFunctionsFailure) {
-//       isDeployed = false;
-//     }
-//   }
-//   return isDeployed;
-// };
-
 export interface IDeployStatus {
   title: FormattedMessage.MessageDescriptor;
   isSelected: boolean;
@@ -129,7 +101,7 @@ const isServicesFailure = (
   isFunctionsFailure: boolean
 ): boolean => isCosmosFailure && isFunctionsFailure;
 
-const isServicesDeployedSelector = createSelector(
+const servicesToDeploySelector = createSelector(
   isCosmosResourceCreatedSelector,
   isCosmosDeployedSuccessSelector,
   isCosmosDeployedFailureSelector,
@@ -156,11 +128,32 @@ const isServicesSelectedSelector = createSelector(
   isServicesSelected
 );
 
+const isServicesDeployed = (services: IAzureServiceStatus): boolean => {
+  const { cosmosdb, azureFunctions } = services;
+  if (cosmosdb.isSelected) {
+    if (!cosmosdb.isDeployed) {
+      return false;
+    }
+  }
+  if (azureFunctions.isSelected) {
+    if (!azureFunctions.isDeployed) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const isServicesDeployedSelector = createSelector(
+  servicesToDeploySelector,
+  isServicesDeployed
+);
+
 export {
   getSyncStatusSelector,
   isTemplateGeneratedSelector,
   isServicesDeployedSelector,
   isServicesFailureSelector,
   isTemplatesFailedSelector,
-  isServicesSelectedSelector
+  isServicesSelectedSelector,
+  servicesToDeploySelector
 };

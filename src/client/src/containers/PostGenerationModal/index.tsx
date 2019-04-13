@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
+import ReactMarkdown from "react-markdown";
 
 import asModal from "../../components/Modal";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
@@ -14,13 +15,15 @@ import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
-import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getOutputPath } from "../../selectors/wizardSelectionSelector";
+import { strings as messages } from "./strings";
 
 interface IStateProps {
   isTemplateGenerated: boolean;
   isTemplatesFailed: boolean;
+  isServicesDeployed: boolean;
   templateGenStatus: string;
   isModalOpen: boolean;
   serviceStatus: PostGenSelectors.IAzureServiceStatus;
@@ -31,52 +34,10 @@ interface IStateProps {
 
 type Props = IStateProps & InjectedIntlProps;
 
-const messages = defineMessages({
-  failedToGenerate: {
-    id: "postGenerationModal.failedToGenerate",
-    defaultMessage: "Templates failed to generate."
-  },
-  working: {
-    id: "postGenerationModal.working",
-    defaultMessage: "Working"
-  },
-  openInCode: {
-    id: "postGenerationModal.openInCode",
-    defaultMessage: "Open Project in VSCode"
-  },
-  unknownStatus: {
-    id: "postGenerationModal.unknownStatus",
-    defaultMessage: "Unknown Status"
-  },
-  noServicesToDeploy: {
-    id: "postGenerationModal.noServicesToDeploy",
-    defaultMessage: "No services to deploy."
-  },
-  help: {
-    id: "postGenerationModal.help",
-    defaultMessage: "Report an issue"
-  },
-  azureServices: {
-    id: "postGenerationModal.azureServices",
-    defaultMessage: "Azure Services"
-  },
-  generationStatus: {
-    id: "postGenerationModal.generationStatus",
-    defaultMessage: "Generation Status"
-  },
-  generationComplete: {
-    id: "postGenerationModal.generationComplete",
-    defaultMessage: "Generation complete"
-  },
-  templateGeneration: {
-    id: "postGenerationModal.templateGeneration",
-    defaultMessage: "Template Generation"
-  }
-});
-
 const PostGenerationModal = ({
   serviceStatus,
   isTemplateGenerated,
+  isServicesDeployed,
   templateGenStatus,
   outputPath,
   vscode,
@@ -84,6 +45,12 @@ const PostGenerationModal = ({
   isTemplatesFailed,
   isServicesSelected
 }: Props) => {
+  const { formatMessage } = intl;
+  const LinkRenderer = (props: any) => (
+    <a href={props.href} className={styles.link}>
+      {props.children}
+    </a>
+  );
   const handleOpenProject = () => {
     if (isTemplateGenerated) {
       vscode.postMessage({
@@ -98,35 +65,50 @@ const PostGenerationModal = ({
   };
   const generationMessage = () => {
     if (isTemplatesFailed) {
-      return "Restart Wizard";
-    } else if (!isTemplateGenerated) {
+      return formatMessage(messages.restartWizard);
+    } else if (!isTemplateGenerated || !isServicesDeployed) {
       return (
         <React.Fragment>
           <Spinner className={styles.spinner} />
-          {intl.formatMessage(messages.working)}
+          {formatMessage(messages.working)}
         </React.Fragment>
       );
     } else if (isTemplateGenerated) {
-      return intl.formatMessage(messages.openInCode);
+      return formatMessage(messages.closeWizard);
     }
-    return intl.formatMessage(messages.unknownStatus);
+    return formatMessage(messages.unknownStatus);
   };
   const renderServiceStatus = () => {
     if (isTemplatesFailed) {
-      return "ERROR: Halted due to template error.";
+      return formatMessage(messages.deploymentHalted);
     }
     return Object.keys(serviceStatus).map((service: string) => {
-      const serviceTitle = intl.formatMessage(serviceStatus[service].title);
+      const serviceTitle = formatMessage(serviceStatus[service].title);
       if (serviceStatus[service].isSelected) {
         if (serviceStatus[service].isFailed) {
-          return <div>{`ERROR: ${serviceTitle} failed to deploy.`}</div>;
+          return (
+            <div>{`${formatMessage(
+              messages.error
+            )} ${serviceTitle} ${formatMessage(
+              messages.deploymentFailure
+            )}`}</div>
+          );
         }
         if (serviceStatus[service].isDeployed) {
-          return <div>{`${serviceTitle} is deployed on Azure.`}</div>;
+          return (
+            <ReactMarkdown
+              source={`${serviceTitle} ${formatMessage(
+                messages.deploymentSuccess
+              )}`}
+              renderers={{ link: LinkRenderer }}
+            />
+          );
         }
         return (
           <div className={styles.loading}>
-            {`Deploying ${intl.formatMessage(serviceStatus[service].title)}`}
+            {`${formatMessage(messages.isDeploying)} ${formatMessage(
+              serviceStatus[service].title
+            )}`}
           </div>
         );
       }
@@ -135,31 +117,31 @@ const PostGenerationModal = ({
   return (
     <div>
       <div className={styles.title}>
-        {intl.formatMessage(messages.generationStatus)}
+        {formatMessage(messages.generationStatus)}
       </div>
       <div className={styles.section}>
-        {intl.formatMessage(messages.templateGeneration)}
+        {formatMessage(messages.templateGeneration)}
       </div>
       <div className={styles.templateStatus}>
         <div>
-          {isTemplatesFailed && "ERROR: Templates could not be generated"}
+          {isTemplatesFailed && formatMessage(messages.failedToGenerate)}
         </div>
         {!isTemplateGenerated && !isTemplatesFailed && (
           <div>{templateGenStatus}</div>
         )}
-        {isTemplateGenerated && (
-          <div>{intl.formatMessage(messages.generationComplete)}</div>
+        {isTemplateGenerated && !isTemplatesFailed && (
+          <div>{formatMessage(messages.generationComplete)}</div>
         )}
-        {isTemplateGenerated && (
+        {isTemplateGenerated && !isTemplatesFailed && (
           <button className={styles.openProject} onClick={handleOpenProject}>
-            {intl.formatMessage(messages.openInCode)}
+            {formatMessage(messages.openInCode)}
           </button>
         )}
       </div>
       {isServicesSelected && (
         <div>
           <div className={styles.section}>
-            {intl.formatMessage(messages.azureServices)}
+            {formatMessage(messages.azureServices)}
           </div>
           {renderServiceStatus()}
         </div>
@@ -169,7 +151,7 @@ const PostGenerationModal = ({
           className={styles.link}
           href="https://github.com/Microsoft/WebTemplateStudio/issues"
         >
-          {intl.formatMessage(messages.help)}
+          {formatMessage(messages.help)}
         </a>
         <button
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
@@ -184,13 +166,14 @@ const PostGenerationModal = ({
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
+  isServicesDeployed: PostGenSelectors.isServicesDeployedSelector(state),
+  isServicesSelected: PostGenSelectors.isServicesSelectedSelector(state),
   isTemplateGenerated: PostGenSelectors.isTemplateGeneratedSelector(state),
   isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),
+  outputPath: getOutputPath(state),
+  serviceStatus: PostGenSelectors.servicesToDeploySelector(state),
   templateGenStatus: PostGenSelectors.getSyncStatusSelector(state),
-  isServicesSelected: PostGenSelectors.isServicesSelectedSelector(state),
-  serviceStatus: PostGenSelectors.isServicesDeployedSelector(state),
-  vscode: getVSCodeApiSelector(state),
-  outputPath: getOutputPath(state)
+  vscode: getVSCodeApiSelector(state)
 });
 
 export default connect(mapStateToProps)(
