@@ -1,6 +1,6 @@
 import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
 import { ISelected } from "../../types/selected";
-import { AnyAction } from "redux";
+import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 
 /* State Shape
 {
@@ -8,14 +8,13 @@ import { AnyAction } from "redux";
 }
 */
 
-// TODO: Default state to remove once API is hooked up
 const backendFramework = (
   state: ISelected = {
     title: "",
     internalName: "",
     version: ""
   },
-  action: AnyAction
+  action: WizardSelectionActionType
 ) => {
   switch (action.type) {
     case WIZARD_SELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK:

@@ -1,7 +1,8 @@
 import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
 import { MODAL_TYPEKEYS } from "../../actions/modalActions/typeKeys";
+import { AnyAction } from "redux";
 
-const openModal = (state = null, action: any) => {
+const openModal = (state = null, action: AnyAction) => {
   switch (action.type) {
     case MODAL_TYPEKEYS.OPEN_MODAL:
       return action.payload;

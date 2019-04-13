@@ -1,5 +1,6 @@
-import { IMetadata } from "../../types/metadata";
 import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
+import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType";
+import { IDetail } from "../../actions/wizardInfoActions/setDetailsPage";
 
 /* State Shape
 {
@@ -11,19 +12,25 @@ import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
 */
 
 const initialState = {
-  name: "",
-  displayName: "",
-  summary: "",
-  longDescription: "",
-  position: 0,
-  svgUrl: undefined,
-  licenses: [],
-  selected: false,
-  author: "",
-  tags: undefined
+  isIntlFormatted: false,
+  data: {
+    title: "",
+    internalName: "",
+    body: "",
+    name: "",
+    displayName: "",
+    summary: "",
+    longDescription: "",
+    position: 0,
+    svgUrl: undefined,
+    licenses: [],
+    selected: false,
+    author: "",
+    tags: undefined
+  }
 };
 
-const detailPage = (state: IMetadata = initialState, action: any) => {
+const detailPage = (state: IDetail = initialState, action: WizardInfoType) => {
   switch (action.type) {
     case WIZARD_INFO_TYPEKEYS.SET_DETAILS_PAGE_INFO:
       return action.payload;

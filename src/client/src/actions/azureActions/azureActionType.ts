@@ -1,5 +1,4 @@
 import {
-  IFunctionApp,
   IUpdateFunctionNamesAction,
   ISaveAzureFunctionsSettings,
   IRemoveAzureFunction,
@@ -19,7 +18,6 @@ import { IAzureValidationStatus } from "./setAzureValidationStatusAction";
 import { IGetSubscription } from "./subscriptionData";
 
 type AzureActionType =
-  | IFunctionApp
   | IUpdateFunctionNamesAction
   | ISaveAzureFunctionsSettings
   | IRemoveAzureFunction

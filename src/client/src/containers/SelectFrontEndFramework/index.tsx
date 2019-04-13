@@ -20,7 +20,7 @@ interface IDispatchProps {
 
 interface ISelectFrontEndFrameworkProps {
   options: IOption[];
-  selectedFrontendFramework: string;
+  selectedFrontendFramework: ISelected;
 }
 
 type Props = IDispatchProps & ISelectFrontEndFrameworkProps & InjectedIntlProps;

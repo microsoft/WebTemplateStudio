@@ -1,6 +1,7 @@
 import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
 import { FormattedMessage } from "react-intl";
 import { messages } from "../../../selectors/wizardSelectionSelector";
+import AzureActionType from "../../../actions/azureActions/azureActionType";
 
 /* State Shape
 {
@@ -52,7 +53,7 @@ const initialState = {
   }
 };
 
-const services = (state: ICosmosDB = initialState, action: any) => {
+const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
   switch (action.type) {
     case AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
       const newSelectionState = {

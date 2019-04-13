@@ -18,6 +18,7 @@ import { messages } from "../../mockData/azureServiceOptions";
 import { microsoftAzureDetails } from "../../mockData/azureServiceOptions";
 import { withLocalPath } from "../../utils/getSvgUrl";
 import { AppState } from "../../reducers";
+import { IMetadata } from "../../types/metadata";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;

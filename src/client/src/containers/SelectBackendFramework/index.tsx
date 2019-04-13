@@ -22,7 +22,7 @@ interface IDispatchProps {
 
 interface ISelectBackendProps {
   options: IOption[];
-  selectedBackend: string;
+  selectedBackend: ISelected;
 }
 
 type Props = IDispatchProps & ISelectBackendProps & InjectedIntlProps;

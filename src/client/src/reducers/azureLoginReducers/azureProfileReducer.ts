@@ -1,4 +1,5 @@
 import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
+import AzureActionType from "../../actions/azureActions/azureActionType";
 
 /* State Shape
 {
@@ -16,7 +17,10 @@ const initialState = {
   subscriptions: {}
 };
 
-const profileData = (state: IAzureProfile = initialState, action: any) => {
+const profileData = (
+  state: IAzureProfile = initialState,
+  action: AzureActionType
+) => {
   switch (action.type) {
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
       return initialState;

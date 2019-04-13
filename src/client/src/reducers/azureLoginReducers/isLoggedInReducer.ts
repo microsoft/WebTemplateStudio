@@ -1,4 +1,5 @@
 import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
+import AzureActionType from "../../actions/azureActions/azureActionType";
 
 /* State Shape
 {
@@ -6,7 +7,7 @@ import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
 }
 */
 
-const profileData = (state: boolean = false, action: any) => {
+const profileData = (state: boolean = false, action: AzureActionType) => {
   switch (action.type) {
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
       return false;

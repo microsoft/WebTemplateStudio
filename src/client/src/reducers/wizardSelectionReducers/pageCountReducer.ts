@@ -1,6 +1,6 @@
 import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
-import { AnyAction } from "redux";
+import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 
 /* State Shape
 {
@@ -18,7 +18,7 @@ const initialState = {
 
 const pageCountReducer = (
   state: IPageCount = initialState,
-  action: AnyAction
+  action: WizardSelectionActionType
 ) => {
   switch (action.type) {
     case WIZARD_SELECTION_TYPEKEYS.UPDATE_PAGE_COUNT:

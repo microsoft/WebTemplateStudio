@@ -30,7 +30,8 @@ import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
 import { updateOutputPathAction } from "./actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   setAccountAvailability,
-  setAppNameAvailabilityAction
+  setAppNameAvailabilityAction,
+  IAvailabilityFromExtension
 } from "./actions/azureActions/setAccountAvailability";
 import AzureLogin from "./containers/AzureLogin";
 import { getSubscriptionData } from "./actions/azureActions/subscriptionData";
@@ -48,6 +49,7 @@ import { IVersions } from "./types/version";
 import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
 import { setAzureValidationStatusAction } from "./actions/azureActions/setAzureValidationStatusAction";
+import { IServiceStatus } from "./reducers/generationStatus/genStatus";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -59,12 +61,16 @@ interface IDispatchProps {
   logIntoAzure: (email: string, subscriptions: []) => void;
   startLogOutToAzure: () => any;
   saveSubscriptionData: (subscriptionData: any) => void;
-  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
-  setAppNameAvailability: (isAvailableObject: any) => any;
+  setCosmosResourceAccountNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => any;
+  setAppNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => any;
   setProjectPathValidation: (validation: any) => void;
   setAzureValidationStatus: (status: boolean) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
-  updateTemplateGenStatus: (isGenerated: boolean) => any;
+  updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
 }
 
@@ -241,7 +247,7 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   updateTemplateGenStatusMessage: (status: string) => {
     dispatch(updateTemplateGenerationStatusMessageAction(status));
   },
-  updateTemplateGenStatus: (isGenerated: boolean) => {
+  updateTemplateGenStatus: (isGenerated: IServiceStatus) => {
     dispatch(updateTemplateGenerationStatusAction(isGenerated));
   },
   getVersionsData: (versions: IVersions) => {

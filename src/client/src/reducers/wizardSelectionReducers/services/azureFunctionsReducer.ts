@@ -1,6 +1,7 @@
 import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
 import { messages } from "../../../selectors/wizardSelectionSelector";
 import { FormattedMessage } from "react-intl";
+import AzureActionType from "../../../actions/azureActions/azureActionType";
 
 /* State Shape
 {
@@ -64,7 +65,7 @@ const createFunctionNames = (numFunctions: number): string[] => {
 
 const azureFunctions = (
   state: IAzureFunctionsSelection = initialState,
-  action: any
+  action: AzureActionType
 ) => {
   switch (action.type) {
     case AZURE_TYPEKEYS.UPDATE_AZURE_FUNCTION_NAMES:

@@ -17,8 +17,8 @@ interface ISelectionInformation {
   previousFormData: ISelectedAzureFunctionsService;
 }
 
-const getState = (state: AppState): any => state;
-const getServicesSelector = (state: AppState): any => state.selection.services;
+const getState = (state: AppState): AppState => state;
+const getServicesSelector = (state: AppState) => state.selection.services;
 
 const isAzureFunctionsSelected = (state: AppState): boolean => {
   return !_.isEmpty(state.selection.services.azureFunctions.selection);

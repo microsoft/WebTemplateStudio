@@ -1,5 +1,5 @@
 import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
-import { AnyAction } from "redux";
+import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 
 /* State Shape
 {
@@ -17,7 +17,7 @@ interface IProjectPathValidation {
 
 const projectPathValidation = (
   state: IProjectPathValidation = {},
-  action: AnyAction
+  action: WizardSelectionActionType
 ) => {
   switch (action.type) {
     case WIZARD_SELECTION_TYPEKEYS.SET_PROJECT_PATH_VALIDATION:

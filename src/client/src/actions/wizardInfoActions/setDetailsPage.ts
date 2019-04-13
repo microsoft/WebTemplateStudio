@@ -1,5 +1,6 @@
 import { IOption } from "../../types/option";
 import { WIZARD_INFO_TYPEKEYS } from "./typeKeys";
+import { IMetadata } from "../../types/metadata";
 
 export interface IDetail {
   data: IOption;

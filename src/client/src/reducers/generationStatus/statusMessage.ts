@@ -1,4 +1,5 @@
 import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
+import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType";
 
 /* State Shape
 {
@@ -8,7 +9,10 @@ import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
 
 const initialState = "...";
 
-const statusMessage = (state: string = initialState, action: any) => {
+const statusMessage = (
+  state: string = initialState,
+  action: WizardInfoType
+) => {
   switch (action.type) {
     case WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS_MESSAGE:
       return action.payload;

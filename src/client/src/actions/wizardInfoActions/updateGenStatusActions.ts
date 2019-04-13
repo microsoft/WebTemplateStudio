@@ -1,4 +1,5 @@
 import { WIZARD_INFO_TYPEKEYS } from "./typeKeys";
+import { IServiceStatus } from "../../reducers/generationStatus/genStatus";
 
 export interface IUpdateGenStatusMessage {
   type: WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS_MESSAGE;
@@ -7,7 +8,7 @@ export interface IUpdateGenStatusMessage {
 
 export interface IUpdateGenStatus {
   type: WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS;
-  payload: boolean;
+  payload: IServiceStatus;
 }
 
 const updateTemplateGenerationStatusMessageAction = (status: string) => ({
@@ -16,7 +17,7 @@ const updateTemplateGenerationStatusMessageAction = (status: string) => ({
 });
 
 const updateTemplateGenerationStatusAction = (
-  isGenerated: boolean
+  isGenerated: IServiceStatus
 ): IUpdateGenStatus => ({
   type: WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS,
   payload: isGenerated

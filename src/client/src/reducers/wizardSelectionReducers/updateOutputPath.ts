@@ -1,6 +1,6 @@
 import { FormattedMessage } from "react-intl";
 import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
-import { AnyAction } from "redux";
+import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 
 /* State Shape
 {
@@ -29,7 +29,7 @@ const initialState = {
 
 const outputPathReducer = (
   state: IOutputPath = initialState,
-  action: AnyAction
+  action: WizardSelectionActionType
 ) => {
   switch (action.type) {
     case WIZARD_SELECTION_TYPEKEYS.UPDATE_OUTPUT_PATH:
