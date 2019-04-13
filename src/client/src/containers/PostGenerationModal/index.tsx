@@ -76,6 +76,12 @@ const PostGenerationModal = ({
     if (isTemplatesFailed) {
       resetWizard();
     }
+    if (isTemplateGenerated && isServicesDeployed) {
+      vscode.postMessage({
+        module: EXTENSION_MODULES.GENERATE,
+        command: EXTENSION_COMMANDS.CLOSE_WIZARD
+      });
+    }
   };
   const generationMessage = () => {
     if (isTemplatesFailed) {
@@ -87,7 +93,7 @@ const PostGenerationModal = ({
           {formatMessage(messages.working)}
         </React.Fragment>
       );
-    } else if (isTemplateGenerated) {
+    } else if (isTemplateGenerated && isServicesDeployed) {
       return formatMessage(messages.closeWizard);
     }
     return formatMessage(messages.unknownStatus);
