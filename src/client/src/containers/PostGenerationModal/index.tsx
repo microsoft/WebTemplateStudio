@@ -23,8 +23,7 @@ interface IStateProps {
   isTemplatesFailed: boolean;
   templateGenStatus: string;
   isModalOpen: boolean;
-  isServicesDeployed: boolean;
-  isServicesFailed: boolean;
+  serviceStatus: PostGenSelectors.IAzureServiceStatus;
   isServicesSelected: boolean;
   vscode: IVSCodeObject;
   outputPath: string;
@@ -53,18 +52,6 @@ const messages = defineMessages({
     id: "postGenerationModal.noServicesToDeploy",
     defaultMessage: "No services to deploy."
   },
-  failedDeploy: {
-    id: "postGenerationModal.failedDeploy",
-    defaultMessage: "Services failed to deploy."
-  },
-  deployedServices: {
-    id: "postGenerationModal.deployedServices",
-    defaultMessage: "Deployed services."
-  },
-  deployingServices: {
-    id: "postGenerationModal.deployingServices",
-    defaultMessage: "Deploying services"
-  },
   help: {
     id: "postGenerationModal.help",
     defaultMessage: "Report an issue"
@@ -88,14 +75,13 @@ const messages = defineMessages({
 });
 
 const PostGenerationModal = ({
-  isServicesDeployed,
+  serviceStatus,
   isTemplateGenerated,
   templateGenStatus,
   outputPath,
   vscode,
   intl,
   isTemplatesFailed,
-  isServicesFailed,
   isServicesSelected
 }: Props) => {
   const handleOpenProject = () => {
@@ -112,7 +98,7 @@ const PostGenerationModal = ({
   };
   const generationMessage = () => {
     if (isTemplatesFailed) {
-      return intl.formatMessage(messages.failedToGenerate);
+      return "Restart Wizard";
     } else if (!isTemplateGenerated) {
       return (
         <React.Fragment>
@@ -125,17 +111,26 @@ const PostGenerationModal = ({
     }
     return intl.formatMessage(messages.unknownStatus);
   };
-  const servicesMessage = () => {
-    if (isServicesFailed) {
-      return intl.formatMessage(messages.failedDeploy);
-    } else if (isServicesDeployed) {
-      return intl.formatMessage(messages.deployedServices);
+  const renderServiceStatus = () => {
+    if (isTemplatesFailed) {
+      return "ERROR: Halted due to template error.";
     }
-    return (
-      <div className={styles.loading}>
-        {intl.formatMessage(messages.deployingServices)}
-      </div>
-    );
+    return Object.keys(serviceStatus).map((service: string) => {
+      const serviceTitle = intl.formatMessage(serviceStatus[service].title);
+      if (serviceStatus[service].isSelected) {
+        if (serviceStatus[service].isFailed) {
+          return <div>{`ERROR: ${serviceTitle} failed to deploy.`}</div>;
+        }
+        if (serviceStatus[service].isDeployed) {
+          return <div>{`${serviceTitle} is deployed on Azure.`}</div>;
+        }
+        return (
+          <div className={styles.loading}>
+            {`Deploying ${intl.formatMessage(serviceStatus[service].title)}`}
+          </div>
+        );
+      }
+    });
   };
   return (
     <div>
@@ -146,7 +141,12 @@ const PostGenerationModal = ({
         {intl.formatMessage(messages.templateGeneration)}
       </div>
       <div className={styles.templateStatus}>
-        {!isTemplateGenerated && <div>{templateGenStatus}</div>}
+        <div>
+          {isTemplatesFailed && "ERROR: Templates could not be generated"}
+        </div>
+        {!isTemplateGenerated && !isTemplatesFailed && (
+          <div>{templateGenStatus}</div>
+        )}
         {isTemplateGenerated && (
           <div>{intl.formatMessage(messages.generationComplete)}</div>
         )}
@@ -161,7 +161,7 @@ const PostGenerationModal = ({
           <div className={styles.section}>
             {intl.formatMessage(messages.azureServices)}
           </div>
-          {servicesMessage()}
+          {renderServiceStatus()}
         </div>
       )}
       <div className={styles.footerContainer}>
@@ -188,8 +188,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),
   templateGenStatus: PostGenSelectors.getSyncStatusSelector(state),
   isServicesSelected: PostGenSelectors.isServicesSelectedSelector(state),
-  isServicesDeployed: PostGenSelectors.isServicesDeployedSelector(state),
-  isServicesFailed: PostGenSelectors.isServicesFailureSelector(state),
+  serviceStatus: PostGenSelectors.isServicesDeployedSelector(state),
   vscode: getVSCodeApiSelector(state),
   outputPath: getOutputPath(state)
 });

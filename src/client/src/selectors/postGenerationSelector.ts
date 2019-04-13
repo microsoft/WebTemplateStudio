@@ -1,10 +1,12 @@
 import { createSelector } from "reselect";
+import { FormattedMessage } from "react-intl";
 
 import { IServiceStatus } from "../reducers/generationStatus/genStatus";
 import { isCosmosResourceCreatedSelector } from "./cosmosServiceSelector";
 import { isAzureFunctionsSelectedSelector } from "./azureFunctionsServiceSelector";
 import { AppState } from "../reducers";
 import CosmosDBSelection from "../containers/CosmosDBSelection";
+import { messages } from "../mockData/azureServiceOptions";
 
 const getGenerationStatusSelector = (state: AppState) =>
   state.generationStatus.genStatus;
@@ -85,8 +87,8 @@ const isTemplatesFailedSelector = createSelector(
 //   return isDeployed;
 // };
 
-interface IDeployStatus {
-  title: string;
+export interface IDeployStatus {
+  title: FormattedMessage.MessageDescriptor;
   isSelected: boolean;
   isDeployed: boolean;
   isFailed: boolean;
@@ -108,13 +110,13 @@ const servicesToDeploy = (
 ): IAzureServiceStatus => {
   return {
     cosmosdb: {
-      title: "Cosmos DB",
+      title: messages.cosmosTitle,
       isSelected: isCosmosSelected,
       isDeployed: isCosmosSuccess,
       isFailed: isCosmosFailure
     },
     azureFunctions: {
-      title: "AzureFunctions",
+      title: messages.azureFunctionsTitle,
       isSelected: isFunctionsSelected,
       isDeployed: isAzureFunctionsSuccess,
       isFailed: isAzureFunctionsFailure
