@@ -23,6 +23,7 @@ import { setCosmosModalValidation } from "./modalValidation";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
+  EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
   COSMOS_APIS
 } from "../../utils/constants";
@@ -215,7 +216,9 @@ const CosmosResourceModal = (props: Props) => {
       // Get resource Group and locations and set the dropdown options to them
       setData({ ...cosmosData, resourceGroup: [] });
       props.vscode.postMessage({
+        module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
+        track: true,
         subscription: value
       });
       updatedForm = {
@@ -242,7 +245,9 @@ const CosmosResourceModal = (props: Props) => {
       timeout = setTimeout(() => {
         timeout = undefined;
         props.vscode.postMessage({
+          module: EXTENSION_MODULES.AZURE,
           command: EXTENSION_COMMANDS.NAME_COSMOS,
+          track: false,
           appName: cosmosFormData.accountName.value,
           subscription: cosmosFormData.subscription.value
         });

@@ -25,6 +25,7 @@ import { setAzureModalValidation } from "./modalValidation";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
+  EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES
 } from "../../utils/constants";
@@ -231,7 +232,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
         resourceGroup: []
       });
       props.vscode.postMessage({
+        module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
+        track: true,
         subscription: value
       });
       updatedForm = {
@@ -257,8 +260,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
       timeout = setTimeout(() => {
         timeout = undefined;
         props.vscode.postMessage({
-          appName: azureFunctionsFormData.appName.value,
+          module: EXTENSION_MODULES.AZURE,
           command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
+          track: false,
+          appName: azureFunctionsFormData.appName.value,
           subscription: azureFunctionsFormData.subscription.value
         });
       }, 700);

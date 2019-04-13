@@ -12,6 +12,7 @@ export const CONSTANTS = {
       "Could not sync to template repository"
     ),
     INVALID_COMMAND: localize("error.invalidCommand", "Invalid command used"),
+    INVALID_MODULE: localize("error.invalidModule", "Invalid module called"),
     RESOURCE_GROUP_NOT_FOUND: localize(
       "error.resourceGroupNotFound",
       "No resource group found with this name"
@@ -209,7 +210,12 @@ export enum ExtensionCommand {
   OpenProjectVSCode = "open-project-vscode",
   GetVersions = "get-versions"
 }
-
+export enum ExtensionModule {
+  Azure = "Azure",
+  Generate = "GenerateExperience",
+  Telemetry = "Telemetry",
+  Validator = "Validator"
+}
 export enum TelemetryEventName {
   ExtensionLaunch = "Extension-Launch-Time",
   WizardSession = "Wizard-To-Generate-Session-Time",

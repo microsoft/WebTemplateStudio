@@ -7,7 +7,7 @@ import { Link, withRouter } from "react-router-dom";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import { ROUTES, EXTENSION_COMMANDS } from "../../utils/constants";
+import { ROUTES, EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { validateName } from "../../utils/validateName";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -78,7 +78,9 @@ class Footer extends React.Component<Props> {
     e.preventDefault();
     // @ts-ignore
     vscode.postMessage({
+      module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
+      track: false,
       text: "Sending generation info...",
       payload: {
         engine,
@@ -108,7 +110,9 @@ class Footer extends React.Component<Props> {
   };
   public trackPageForTelemetry = (pathname: string) => {
     this.props.vscode.postMessage({
+      module: EXTENSION_MODULES.TELEMETRY,
       command: EXTENSION_COMMANDS.TRACK_PAGE_SWITCH,
+      track: false,
       pageName: pathname
     });
   };

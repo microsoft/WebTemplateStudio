@@ -18,7 +18,7 @@ import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 
-import { EXTENSION_COMMANDS, ROUTES } from "./utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES, ROUTES } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
@@ -123,7 +123,7 @@ class App extends React.Component<Props> {
           // and update redux (boolean, string)
           this.props.setCosmosResourceAccountNameAvailability({
             isAvailable: message.payload.isAvailable,
-            message: message.message
+            message: message.payload.reason
           });
           this.props.setAzureValidationStatus(false);
           return;
@@ -131,7 +131,7 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
           this.props.setAppNameAvailability({
             isAvailable: message.payload.isAvailable,
-            message: message.message
+            message: message.payload.reason
           });
           this.props.setAzureValidationStatus(false);
           return;
@@ -157,7 +157,9 @@ class App extends React.Component<Props> {
     const { vscode } = this.props;
     if (vscode !== prevProps.vscode) {
       vscode.postMessage({
-        command: EXTENSION_COMMANDS.GET_USER_STATUS
+        module: EXTENSION_MODULES.AZURE,
+        command: EXTENSION_COMMANDS.GET_USER_STATUS,
+        track: true
       });
     }
   }

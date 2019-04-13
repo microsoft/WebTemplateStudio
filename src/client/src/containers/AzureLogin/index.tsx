@@ -9,7 +9,7 @@ import azure from "../../assets/azure.svg";
 import styles from "./styles.module.css";
 
 import AzureSubscriptions from "../AzureSubscriptions";
-import { EXTENSION_COMMANDS } from "../../utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { setDetailPageAction } from "../../actions/setDetailsPage";
 import { IOption } from "../../types/option";
@@ -32,9 +32,12 @@ type Props = IDispatchProps & IAzureLoginProps & InjectedIntlProps;
 class AzureLogin extends React.Component<Props> {
   handleClick = () => {
     // initiates a login command to VSCode ReactPanel class
-    this.props.vscode.postMessage({
-      command: EXTENSION_COMMANDS.AZURE_LOGIN
-    });
+
+      this.props.vscode.postMessage({
+        module: EXTENSION_MODULES.AZURE,
+        command: EXTENSION_COMMANDS.AZURE_LOGIN,
+        track: true
+      });
   };
   public render() {
     const { isLoggedIn, intl, setDetailPage } = this.props;
