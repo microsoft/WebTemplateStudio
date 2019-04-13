@@ -54,7 +54,29 @@ const initialState = {
   }
 };
 
-const createFunctionNames = (numFunctions: number): string[] => {
+const createFunctionNames = (
+  numFunctions: number,
+  prevFunctionNames?: string[]
+): string[] => {
+  if (prevFunctionNames) {
+    if (prevFunctionNames.length >= numFunctions) {
+      const numFunctionsToDelete = prevFunctionNames.length - numFunctions;
+      const startIndex = prevFunctionNames.length - numFunctionsToDelete;
+      prevFunctionNames.splice(startIndex, numFunctionsToDelete);
+    } else {
+      const numFunctionsToCreate = numFunctions - prevFunctionNames.length;
+      let lastNumberUsed = 1;
+      for (let i = 1; i <= numFunctionsToCreate; i++) {
+        let functionName = `function${lastNumberUsed}`;
+        while (prevFunctionNames.includes(functionName)) {
+          lastNumberUsed++;
+          functionName = `function${lastNumberUsed}`;
+        }
+        prevFunctionNames.push(functionName);
+      }
+    }
+    return [...prevFunctionNames];
+  }
   const functionNames = [];
   for (let i = 1; i <= numFunctions; i++) {
     functionNames.push(`function${i}`);
@@ -116,7 +138,8 @@ const azureFunctions = (
             internalName: action.payload.internalName.value,
             numFunctions: action.payload.numFunctions.value,
             functionNames: createFunctionNames(
-              action.payload.numFunctions.value
+              action.payload.numFunctions.value,
+              state.selection[0] ? state.selection[0].functionNames : undefined
             ),
             appName: action.payload.appName.value
           }
