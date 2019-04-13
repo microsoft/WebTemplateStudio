@@ -19,6 +19,10 @@ import { AppState } from "../../reducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 import { strings as messages } from "./strings";
+import {
+  resetWizardAction,
+  IRESET_WIZARD
+} from "../../actions/resetWizardAction";
 
 interface IStateProps {
   isTemplateGenerated: boolean;
@@ -32,7 +36,11 @@ interface IStateProps {
   outputPath: string;
 }
 
-type Props = IStateProps & InjectedIntlProps;
+interface IDispatchProps {
+  resetWizard: () => any;
+}
+
+type Props = IStateProps & InjectedIntlProps & IDispatchProps;
 
 const PostGenerationModal = ({
   serviceStatus,
@@ -43,7 +51,8 @@ const PostGenerationModal = ({
   vscode,
   intl,
   isTemplatesFailed,
-  isServicesSelected
+  isServicesSelected,
+  resetWizard
 }: Props) => {
   const { formatMessage } = intl;
   const LinkRenderer = (props: any) => (
@@ -61,6 +70,11 @@ const PostGenerationModal = ({
           outputPath
         }
       });
+    }
+  };
+  const handleClick = () => {
+    if (isTemplatesFailed) {
+      resetWizard();
     }
   };
   const generationMessage = () => {
@@ -155,7 +169,7 @@ const PostGenerationModal = ({
         </a>
         <button
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
-          onClick={handleOpenProject}
+          onClick={handleClick}
         >
           {generationMessage()}
         </button>
@@ -176,6 +190,13 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: getVSCodeApiSelector(state)
 });
 
-export default connect(mapStateToProps)(
-  asModal(injectIntl(PostGenerationModal))
-);
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  resetWizard: () => {
+    dispatch(resetWizardAction());
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(asModal(injectIntl(PostGenerationModal)));
