@@ -17,7 +17,6 @@ interface IProps {
   selectionTitle: string;
   selectionRows: RowType[];
   isEditable?: boolean;
-  modalOpeners?: { [key: string]: () => any };
 }
 
 interface IStateProps {
@@ -37,8 +36,7 @@ const SummarySection = ({
   isEditable,
   removeAzureFunction,
   updateFunctionNames,
-  functionApps,
-  modalOpeners
+  functionApps
 }: Props) => {
   const handleAzureFuncNameChange = (newTitle: string, idx: number) => {
     const { functionNames } = functionApps.selection[0];
@@ -96,17 +94,6 @@ const SummarySection = ({
           >
             {idx === 0 && (
               <div className={styles.selectionTitle}>{selectionTitle}</div>
-            )}
-            {modalOpeners && selection.internalName && (
-              <div
-                className={styles.editButton}
-                onClick={modalOpeners[selection.internalName]}
-              >
-                <FormattedMessage
-                  id="summarySection.editResource"
-                  defaultMessage="Edit Resource"
-                />
-              </div>
             )}
           </div>
 
