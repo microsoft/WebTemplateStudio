@@ -9,7 +9,7 @@ import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 import { removeCosmosSelectionAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import { ICosmosDB } from "../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
 
-import { openCosmosDbModalAction } from "../../actions/modalActions";
+import { openCosmosDbModalAction } from "../../actions/modalActions/modalActions";
 
 import styles from "./styles.module.css";
 

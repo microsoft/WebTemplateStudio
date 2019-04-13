@@ -7,13 +7,13 @@ import Card from "../../components/Card";
 
 import styles from "./styles.module.css";
 import * as AzureActions from "../../actions/azureActions/logOutAzure";
-import * as ModalActions from "../../actions/modalActions";
+import * as ModalActions from "../../actions/modalActions/modalActions";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 import azureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
-import { setDetailPageAction } from "../../actions/setDetailsPage";
+import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 
 import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
 import { AppState } from "../../reducers";

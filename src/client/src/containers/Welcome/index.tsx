@@ -7,7 +7,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import { ROUTES } from "../../utils/constants";
 import styles from "./styles.module.css";
 
-import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
+import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import ProjectNameAndOutput from "../ProjectNameAndOutput";
 import { FormattedMessage } from "react-intl";
 

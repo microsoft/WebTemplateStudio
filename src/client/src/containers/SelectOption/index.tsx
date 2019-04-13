@@ -6,7 +6,7 @@ import Title from "../../components/Title";
 
 import styles from "./styles.module.css";
 
-import { setDetailPageAction } from "../../actions/setDetailsPage";
+import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";

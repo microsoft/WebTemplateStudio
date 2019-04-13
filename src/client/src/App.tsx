@@ -39,8 +39,8 @@ import { setProjectPathValidation } from "./actions/wizardSelectionActions/setPr
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
-} from "./actions/updateGenStatusActions";
-import { getVersionsDataAction } from "./actions/getVersionData";
+} from "./actions/wizardInfoActions/updateGenStatusActions";
+import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
 
 import appStyles from "./appStyles.module.css";
 import { startLogOutAzure } from "./actions/azureActions/logOutAzure";

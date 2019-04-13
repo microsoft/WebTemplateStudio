@@ -1,5 +1,5 @@
-import * as Actions from "../../actions/types";
 import { ROUTES } from "../../utils/constants";
+import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
 
 export interface IRoutes {
   [key: string]: boolean;
@@ -16,7 +16,7 @@ const initialState = {
 
 const wizardNavigation = (state: IRoutes = initialState, action: any) => {
   switch (action.type) {
-    case Actions.SET_VISITED_WIZARD_PAGE:
+    case WIZARD_INFO_TYPEKEYS.SET_VISITED_WIZARD_PAGE:
       const newSelectionState = {
         ...state,
         [action.payload]: true

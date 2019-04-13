@@ -11,7 +11,7 @@ import styles from "./styles.module.css";
 import AzureSubscriptions from "../AzureSubscriptions";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { setDetailPageAction } from "../../actions/setDetailsPage";
+import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 import { IOption } from "../../types/option";
 import { messages } from "../../mockData/azureServiceOptions";
 

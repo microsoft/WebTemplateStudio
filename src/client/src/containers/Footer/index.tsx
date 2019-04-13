@@ -7,7 +7,11 @@ import { Link, withRouter } from "react-router-dom";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import { ROUTES, EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
+import {
+  ROUTES,
+  EXTENSION_COMMANDS,
+  EXTENSION_MODULES
+} from "../../utils/constants";
 import { validateName } from "../../utils/validateName";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -21,8 +25,8 @@ import {
   isAzureFunctionsSelectedSelector
 } from "../../selectors/azureFunctionsServiceSelector";
 
-import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
-import { openPostGenModalAction } from "../../actions/modalActions";
+import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
+import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import { FormattedMessage, injectIntl } from "react-intl";

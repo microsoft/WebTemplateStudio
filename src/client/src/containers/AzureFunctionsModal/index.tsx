@@ -10,7 +10,7 @@ import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
 import { saveAzureFunctionsSettingsAction } from "../../actions/azureActions/azureFunctionActions";
-import { closeModalAction } from "../../actions/modalActions";
+import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { azureFunctionModalInitialState } from "../../mockData/cosmosDbModalData";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";

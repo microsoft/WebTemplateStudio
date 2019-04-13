@@ -1,5 +1,5 @@
-import * as Actions from "../../actions/types";
 import { IMetadata } from "../../types/metadata";
+import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
 
 /* State Shape
 {
@@ -25,7 +25,7 @@ const initialState = {
 
 const detailPage = (state: IMetadata = initialState, action: any) => {
   switch (action.type) {
-    case Actions.SET_DETAILS_PAGE_INFO:
+    case WIZARD_INFO_TYPEKEYS.SET_DETAILS_PAGE_INFO:
       return action.payload;
     default:
       return state;

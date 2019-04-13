@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
-import { openAzureFunctionsModalAction } from "../../actions/modalActions";
+import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalActions";
 
 import * as getSvg from "../../utils/getSvgUrl";
 

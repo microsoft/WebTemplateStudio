@@ -6,7 +6,7 @@ import SummarySection from "../SummarySection";
 import SummaryTile from "../../components/SummaryTile";
 import SortablePageList from "../SortablePageList";
 
-import * as ModalActions from "../../actions/modalActions";
+import * as ModalActions from "../../actions/modalActions/modalActions";
 import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 
 import styles from "./styles.module.css";

@@ -18,7 +18,7 @@ import {
 import { IAzureValidationStatus } from "./setAzureValidationStatusAction";
 import { IGetSubscription } from "./subscriptionData";
 
-export type AzureActionType =
+type AzureActionType =
   | IFunctionApp
   | IUpdateFunctionNamesAction
   | ISaveAzureFunctionsSettings
@@ -33,3 +33,5 @@ export type AzureActionType =
   | ISetAzureFunctionsAppNameAvailability
   | IAzureValidationStatus
   | IGetSubscription;
+
+export default AzureActionType;
