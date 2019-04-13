@@ -7,6 +7,11 @@
   border: 0.5px solid var(--vscode-editor-foreground);
 }
 
+.container:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+  border: 0.5px solid var(--vscode-contrastActiveBorder);
+}
+
 .selected,
 .button {
   font-size: 15px;
@@ -16,6 +21,12 @@
   padding: 12.5px;
   border: none;
   outline: 3px solid var(--vscode-editor-foreground);
+}
+
+.selected:focus {
+  padding: 12.5px;
+  border: none;
+  outline: 3px solid var(--vscode-contrastActiveBorder);
 }
 
 .cardCount,
@@ -90,6 +101,10 @@
   color: var(--vscode-textLink-foreground);
   font-size: var(--vscode-editor-font-size);
   text-decoration: none;
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .unselectable {

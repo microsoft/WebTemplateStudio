@@ -49,11 +49,19 @@ const SelectableCard = ({
     onDetailsClick(option);
   }
 
+  const keyDownHandler = (event: any) => {
+    if (event.keyCode === 13) {
+      onCardClick(cardNumber);
+    }
+  };
+
   return (
     <div
+      tabIndex={0}
       onClick={() => {
         onCardClick(cardNumber);
       }}
+      onKeyDown={keyDownHandler}
       className={classNames(styles.container, styles.boundingBox, {
         [styles.selected]: selected,
         [styles.unselectable]: disabled

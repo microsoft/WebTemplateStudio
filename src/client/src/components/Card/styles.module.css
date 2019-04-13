@@ -31,6 +31,10 @@
   border: none;
 }
 
+.signInButton:focus {
+  outline: 1.5px solid var(--vscode-contrastActiveBorder);
+}
+
 .cardTitle {
   margin-left: 10px;
   font-weight: bold;
@@ -51,6 +55,10 @@
   color: var(--vscode-textLink-foreground);
   font-size: var(--vscode-editor-font-size);
   text-decoration: none;
+}
+
+.details:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .icon {

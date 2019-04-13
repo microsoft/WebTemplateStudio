@@ -23,6 +23,18 @@ type Props = IHeaderProps & IDispatchProps;
 
 const Header = (props: Props) => {
   const { isLoggedIn, email } = props;
+  const signOutClick = () => {
+    props.vscode.postMessage({
+      module: EXTENSION_MODULES.AZURE,
+      command: EXTENSION_COMMANDS.AZURE_LOGOUT,
+      track: true
+    });
+  };
+  const keyDownClick = (event: any) => {
+    if (event.keyCode === 13) {
+      signOutClick();
+    }
+  };
   return (
     <div className={styles.header}>
       <div className={styles.headerTitle}>Web Template Studio</div>
@@ -31,13 +43,9 @@ const Header = (props: Props) => {
           <div className={styles.profileName}>{email}</div>
           <div
             className={styles.button}
-            onClick={() => {
-              props.vscode.postMessage({
-                module: EXTENSION_MODULES.AZURE,
-                command: EXTENSION_COMMANDS.AZURE_LOGOUT,
-                track: true
-              });
-            }}
+            tabIndex={0}
+            onClick={signOutClick}
+            onKeyDown={keyDownClick}
           >
             <FormattedMessage id="header.signOut" defaultMessage="Sign out" />
           </div>

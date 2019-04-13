@@ -37,3 +37,7 @@
   text-decoration: none;
   margin-bottom: 10px;
 }
+
+.feedback:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}

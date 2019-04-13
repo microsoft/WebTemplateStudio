@@ -40,6 +40,10 @@
   height: 50%;
 }
 
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .icon {
   cursor: pointer;
   height: 12px;
@@ -87,6 +91,14 @@ input::placeholder {
 .link {
   text-decoration: none;
   color: var(--vscode-textLink-foreground);
+}
+
+.createNew:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .errorMessage {

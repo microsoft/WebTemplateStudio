@@ -44,6 +44,11 @@ const Details = ({
       {props.children}
     </a>
   );
+  const keyDownHandler = (event: any) => {
+    if (event.keyCode === 13) {
+      handleBackClick();
+    }
+  };
   const renderFormattedData = (
     info: string | FormattedMessage.MessageDescriptor | undefined,
     isMarkdown: boolean
@@ -76,16 +81,16 @@ const Details = ({
     <React.Fragment>
       <div className={styles.container}>
         <div className={styles.backContainer}>
-          <div>
-            {backArrow && (
-              <BackArrow
-                onClick={handleBackClick}
-                className={styles.backIcon}
-              />
-            )}
-          </div>
-          <div className={styles.details} onClick={handleBackClick}>
-            <FormattedMessage id="details.back" defaultMessage="Back" />
+          <div
+            tabIndex={0}
+            onClick={handleBackClick}
+            onKeyDown={keyDownHandler}
+            className={styles.innerBackContainer}
+          >
+            {backArrow && <BackArrow className={styles.backIcon} />}
+            <div className={styles.details}>
+              <FormattedMessage id="details.back" defaultMessage="Back" />
+            </div>
           </div>
         </div>
         <div className={styles.detailsContainer}>

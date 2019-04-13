@@ -333,8 +333,12 @@ const AzureFunctionsResourceModal = (props: Props) => {
         <div className={styles.selectionHeaderContainer}>
           <div>{leftHeader}</div>
           {links[formSectionId] && (
-            <a className={styles.link} href={links[formSectionId]}>
-              Create New
+            <a
+              tabIndex={disabled ? -1 : 0}
+              className={styles.link}
+              href={links[formSectionId]}
+            >
+              {props.intl.formatMessage(messages.createNew)}
             </a>
           )}
         </div>
@@ -412,7 +416,11 @@ const AzureFunctionsResourceModal = (props: Props) => {
       >
         <div className={styles.selectionHeaderContainer}>
           <div>{props.intl.formatMessage(messages.appName)}</div>
-          <a className={styles.link} href={links.appName}>
+          <a
+            tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
+            className={styles.link}
+            href={links.appName}
+          >
             documents.azure.com
           </a>
         </div>
@@ -429,6 +437,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
             value={azureFunctionsFormData.appName.value}
             placeholder={FORM_CONSTANTS.APP_NAME.label}
             disabled={azureFunctionsFormData.subscription === ""}
+            tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
           />
           {isAppNameAvailable && !isValidatingName && (
             <GreenCheck className={styles.validationIcon} />

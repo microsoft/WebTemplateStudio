@@ -319,8 +319,12 @@ const CosmosResourceModal = (props: Props) => {
         <div className={styles.selectionHeaderContainer}>
           <div>{leftHeader}</div>
           {links[formSectionId] && (
-            <a className={styles.link} href={links[formSectionId]}>
-              Create New
+            <a
+              tabIndex={disabled! ? -1 : 0}
+              className={styles.link}
+              href={links[formSectionId]}
+            >
+              {props.intl.formatMessage(messages.createNew)}
             </a>
           )}
         </div>
@@ -390,7 +394,11 @@ const CosmosResourceModal = (props: Props) => {
       >
         <div className={styles.selectionHeaderContainer}>
           <div>{props.intl.formatMessage(messages.accountName)}</div>
-          <a className={styles.link} href={links.accountName}>
+          <a
+            tabIndex={cosmosFormData.subscription.value === "" ? -1 : 0}
+            className={styles.link}
+            href={links.accountName}
+          >
             documents.azure.com
           </a>
         </div>

@@ -127,6 +127,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
               handleButtonClick={this.getServicesModalOpener(
                 option.internalName
               )}
+              disabled={!isLoggedIn}
               handleDetailsClick={setDetailPage}
               useNormalButtons={this.isSelectionCreated(option.internalName)}
             />

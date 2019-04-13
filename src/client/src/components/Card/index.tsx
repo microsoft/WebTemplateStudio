@@ -15,6 +15,7 @@ import { ROUTES } from "../../utils/constants";
 interface IProps {
   buttonText: string;
   option: IOption;
+  disabled?: boolean;
   handleButtonClick: () => void;
   handleDetailsClick: (detailPageInfo: IOption) => void;
   useNormalButtons?: boolean;
@@ -25,6 +26,7 @@ type Props = IProps & InjectedIntlProps;
 const Card = ({
   option,
   buttonText,
+  disabled,
   handleButtonClick,
   handleDetailsClick,
   useNormalButtons,
@@ -51,6 +53,7 @@ const Card = ({
             onClick={() => handleDetailsClick(option)}
             className={styles.details}
             to={ROUTES.PAGE_DETAILS}
+            tabIndex={disabled! ? -1 : 0}
           >
             <FormattedMessage id="card.details" defaultMessage="Details" />
           </Link>
@@ -60,6 +63,7 @@ const Card = ({
               [buttonStyles.buttonHighlighted]: !useNormalButtons,
               [buttonStyles.buttonDark]: useNormalButtons
             })}
+            tabIndex={disabled! ? -1 : 0}
           >
             {buttonText}
           </button>

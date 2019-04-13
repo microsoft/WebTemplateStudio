@@ -1,10 +1,15 @@
 .saveIcon {
   height: 25px;
   cursor: pointer;
+  padding-bottom: 1px;
 }
 
 .saveIcon path {
   fill: var(--vscode-editor-foreground);
+}
+
+.saveIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .pathInput {

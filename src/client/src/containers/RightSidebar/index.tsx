@@ -143,7 +143,9 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           >
             {pathname !== ROUTES.REVIEW_AND_GENERATE && (
               <div>
-                <div className={styles.title}>Your Project Details</div>
+                <div className={styles.title}>
+                  {this.props.intl.formatMessage(messages.yourProjectDetails)}
+                </div>
                 <RightSidebarDropdown
                   options={this.props.projectTypeDropdownItems}
                   handleDropdownChange={this.handleChange.bind(this)}

@@ -19,6 +19,10 @@
   color: var(--vscode-textLink-foreground);
 }
 
+.createAccountButton:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .buttonContainer {
   display: flex;
   align-items: center;
@@ -28,6 +32,10 @@
   font-size: 1em;
   margin-left: 10px;
   border: none;
+}
+
+.signInButton:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .cardTitle {
@@ -52,6 +60,10 @@
 
 .details:hover {
   cursor: pointer;
+}
+
+.details:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .icon {

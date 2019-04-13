@@ -39,6 +39,14 @@ const DraggableSidebarItem = ({
   withLargeIndent?: boolean;
   handleCloseClick?: (idx: number) => void;
 }) => {
+  const handleKeyDown = (event: any) => {
+    if (event.keyCode === 13) {
+      handleCloseOnClick();
+    }
+  };
+  const handleCloseOnClick = () => {
+    idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
+  };
   return (
     <div>
       {itemTitle && (
@@ -103,9 +111,9 @@ const DraggableSidebarItem = ({
           )}
         </div>
         <CloseSVG
-          onClick={() => {
-            idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
-          }}
+          tabIndex={0}
+          onClick={handleCloseOnClick}
+          onKeyDown={handleKeyDown}
           className={styles.cancelIcon}
         />
       </div>

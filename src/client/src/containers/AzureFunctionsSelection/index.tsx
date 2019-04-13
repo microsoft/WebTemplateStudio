@@ -68,6 +68,11 @@ const AzureFunctionsSelection = ({
       });
     }
   };
+  const onEditKeyDownHandler = (event: any) => {
+    if (event.keyCode === 13) {
+      openAzureFunctionsModal();
+    }
+  };
   return (
     <div>
       {!_.isEmpty(selection) &&
@@ -76,7 +81,12 @@ const AzureFunctionsSelection = ({
             <React.Fragment key={serviceType + functionApp.appName + idx}>
               <div className={styles.headerContainer}>
                 <div>{intl.formatMessage(serviceType)}</div>
-                <div className={styles.edit} onClick={openAzureFunctionsModal}>
+                <div
+                  tabIndex={0}
+                  className={styles.edit}
+                  onClick={openAzureFunctionsModal}
+                  onKeyDown={onEditKeyDownHandler}
+                >
                   <FormattedMessage
                     id="azureFunctionsSelection.edit"
                     defaultMessage="Edit"
