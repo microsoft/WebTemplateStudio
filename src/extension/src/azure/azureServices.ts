@@ -136,7 +136,6 @@ export class AzureServices extends WizardServant {
     let resourceGroupItems = AzureAuth.getAllResourceGroupItems(
       subscriptionItem
     ).then(resourceGroups => {
-      // Format
       let formatResourceGroupList = [];
       formatResourceGroupList.push(
         ...resourceGroups.map(resourceGroup => {
@@ -172,7 +171,6 @@ export class AzureServices extends WizardServant {
       })
     );
 
-    // Parallel setup
     return {
       resourceGroups: await resourceGroupItems,
       locations: locations
@@ -234,7 +232,6 @@ export class AzureServices extends WizardServant {
             reason: error.message
           }
         };
-        // throw error; //to log in telemetry
       });
   }
 

@@ -21,8 +21,10 @@ export class Controller {
   private AzureService: AzureServices;
   private GenExperience: GenerationExperience;
   private Validator: Validator;
-  // This will map commands from the client to functions.
 
+  /**
+   *  Defines the WizardServant modules to which wizard client commands are routed
+   */
   private static extensionModuleMap: Map<ExtensionModule, WizardServant>;
   private defineExtensionModule() {
     Controller.extensionModuleMap = new Map([
@@ -33,13 +35,17 @@ export class Controller {
     ]);
   }
 
+  /**
+   * This is the function behavior map passed to the ReactPanel (wizard client)
+   * @param message The payload received from the wizard client. Message payload must include field 'module'
+   */
   private async routingMessageReceieverDelegate(message: any) {
     let extensionModule = message.module;
 
     if (extensionModule) {
       let classModule = Controller.extensionModuleMap.get(extensionModule);
       if (classModule) {
-        let responsePayload = await WizardServant.callCommandWithClass(
+        let responsePayload = await WizardServant.executeWizardCommandOnServantClass(
           message,
           classModule,
           Controller.Telemetry
