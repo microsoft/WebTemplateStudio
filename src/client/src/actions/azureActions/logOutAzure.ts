@@ -1,13 +1,17 @@
-import * as Actions from "./types";
+import { AZURE_TYPEKEYS } from "./typeKeys";
+import logout from "../../mockData/logout";
+import { Dispatch } from "react";
 
-import logout from "../mockData/logout";
+export interface ILogout {
+  type: AZURE_TYPEKEYS.LOG_OUT_OF_AZURE;
+}
 
-const logOutAzureAction = () => ({
-  type: Actions.LOG_OUT_OF_AZURE
+const logOutAzureAction = (): ILogout => ({
+  type: AZURE_TYPEKEYS.LOG_OUT_OF_AZURE
 });
 
 const startLogOutAzure = () => {
-  return async (dispatch: any) => {
+  return async (dispatch: Dispatch<ILogout>) => {
     // Can dispatch a spinner here until login completes
     try {
       const loginData = await logout();

@@ -10,7 +10,7 @@ import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions";
-import { saveCosmosDbSettingsAction } from "../../actions/saveCosmosDbSettings";
+import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import { azureModalInitialState as cosmosInitialState } from "../../mockData/cosmosDbModalData";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
@@ -32,8 +32,8 @@ import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceS
 
 import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
 import { Dispatch } from "redux";
-import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
-import { setAccountAvailability } from "../../actions/setAccountAvailability";
+import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
+import { setAccountAvailability } from "../../actions/azureActions/setAccountAvailability";
 
 const DEFAULT_VALUE = {
   value: "Select...",

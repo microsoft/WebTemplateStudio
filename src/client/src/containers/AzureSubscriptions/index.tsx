@@ -6,8 +6,7 @@ import { connect } from "react-redux";
 import Card from "../../components/Card";
 
 import styles from "./styles.module.css";
-
-import * as AzureActions from "../../actions/logOutAzure";
+import * as AzureActions from "../../actions/azureActions/logOutAzure";
 import * as ModalActions from "../../actions/modalActions";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";

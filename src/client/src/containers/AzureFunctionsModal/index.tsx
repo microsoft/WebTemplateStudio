@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
-import { saveAzureFunctionsSettingsAction } from "../../actions/azureFunctionActions";
+import { saveAzureFunctionsSettingsAction } from "../../actions/azureActions/azureFunctionActions";
 import { closeModalAction } from "../../actions/modalActions";
 import { azureFunctionModalInitialState } from "../../mockData/cosmosDbModalData";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
@@ -31,8 +31,8 @@ import {
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
-import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
-import { setAppNameAvailabilityAction } from "../../actions/setAccountAvailability";
+import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
+import { setAppNameAvailabilityAction } from "../../actions/azureActions/setAccountAvailability";
 import { AppState } from "../../reducers";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 

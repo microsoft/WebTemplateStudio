@@ -1,7 +1,8 @@
-import * as Actions from "../../actions/types";
+import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
+
 const setValidationStatus = (state = false, action: any) => {
   switch (action.type) {
-    case Actions.SET_VALIDATION_STATUS:
+    case AZURE_TYPEKEYS.SET_VALIDATION_STATUS:
       return action.payload;
     default:
       return state;

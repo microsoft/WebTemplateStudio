@@ -62,7 +62,8 @@ function getApiTemplateInfoFromJson(items: any[]): IApiTemplateInfo[] {
     summary: val.description,
     svgUrl: val.icon,
     tags: val.tags,
-    defaultName: val.defaultName
+    defaultName: val.defaultName,
+    author: val.author
   }));
 }
 
@@ -76,7 +77,8 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
     svgUrl: getSvgUrl(val.name),
     title: val.displayName,
     defaultName: val.defaultName,
-    isValidTitle: true
+    isValidTitle: true,
+    author: val.author
   }));
 }
 

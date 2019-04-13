@@ -6,7 +6,7 @@ import * as getSvg from "../../utils/getSvgUrl";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
-import { removeCosmosSelectionAction } from "../../actions/saveCosmosDbSettings";
+import { removeCosmosSelectionAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import { ICosmosDB } from "../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
 
 import { openCosmosDbModalAction } from "../../actions/modalActions";

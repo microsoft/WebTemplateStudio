@@ -10,7 +10,7 @@ import * as getSvg from "../../utils/getSvgUrl";
 
 import styles from "./styles.module.css";
 
-import * as AzureFunctionActions from "../../actions/azureFunctionActions";
+import * as AzureFunctionActions from "../../actions/azureActions/azureFunctionActions";
 import {
   IAzureFunctionsSelection,
   ISelectedAzureFunctionsService

@@ -9,7 +9,7 @@ import styles from "./styles.module.css";
 import { IFunctionApp } from "../AzureFunctionsSelection";
 import { RowType } from "../../types/rowType";
 
-import * as AzureFunctionActions from "../../actions/azureFunctionActions";
+import * as AzureFunctionActions from "../../actions/azureActions/azureFunctionActions";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../../reducers";
 

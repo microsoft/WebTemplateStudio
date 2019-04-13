@@ -26,14 +26,14 @@ import {
 } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
-import { logIntoAzureAction } from "./actions/logIntoAzure";
+import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
 import { updateOutputPathAction } from "./actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   setAccountAvailability,
   setAppNameAvailabilityAction
-} from "./actions/setAccountAvailability";
+} from "./actions/azureActions/setAccountAvailability";
 import AzureLogin from "./containers/AzureLogin";
-import { getSubscriptionData } from "./actions/subscriptionData";
+import { getSubscriptionData } from "./actions/azureActions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
 import { setProjectPathValidation } from "./actions/wizardSelectionActions/setProjectPathValidation";
 import {
@@ -43,11 +43,11 @@ import {
 import { getVersionsDataAction } from "./actions/getVersionData";
 
 import appStyles from "./appStyles.module.css";
-import { startLogOutAzure } from "./actions/logOutAzure";
+import { startLogOutAzure } from "./actions/azureActions/logOutAzure";
 import { IVersions } from "./types/version";
 import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
-import { setAzureValidationStatusAction } from "./actions/setAzureValidationStatusAction";
+import { setAzureValidationStatusAction } from "./actions/azureActions/setAzureValidationStatusAction";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
