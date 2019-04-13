@@ -107,26 +107,6 @@ export class FunctionProvider {
     selections: FunctionSelections,
     appPath: string
   ): Promise<void> {
-    let validationStatus: FunctionValidationResult = ValidationHelper.validate(
-      selections
-    );
-
-    if (!validationStatus.isValid) {
-      throw new ValidationError(validationStatus.message);
-    }
-
-    let isUnique = await this.checkFunctionAppName(
-      selections.functionAppName,
-      selections.subscriptionItem
-    );
-    if (!isUnique) {
-      throw new ValidationError(
-        CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(
-          selections.functionAppName
-        )
-      );
-    }
-
     try {
       this.setWebClient(selections.subscriptionItem);
     } catch (error) {
@@ -179,20 +159,16 @@ export class FunctionProvider {
             appPath,
             selections.functionAppName
           );
-
-          try {
-            FileHelper.deleteTempZip(appPath);
-          } catch (error) {
-            throw new FileError(error.message);
-          }
-
           return result;
         });
     } catch (error) {
-      if (error.constructor === FileError) {
-        throw error;
-      }
       throw new DeploymentError(error.message);
+    }
+
+    try {
+      FileHelper.deleteTempZip(appPath);
+    } catch (error) {
+      throw new FileError(error.message);
     }
 
     /*

@@ -28,7 +28,9 @@ export namespace ValidationHelper {
     return { isValid: true, message: "" };
   }
 
-  function validateFunctionNames(names: string[]): FunctionValidationResult {
+  export function validateFunctionNames(
+    names: string[]
+  ): FunctionValidationResult {
     for (var name of names) {
       if (name.length > MAX_NAME_LEN || name.length < MIN_NAME_LEN) {
         return {
