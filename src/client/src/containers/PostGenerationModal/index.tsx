@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router";
 import ReactMarkdown from "react-markdown";
 
 import asModal from "../../components/Modal";
@@ -11,7 +12,11 @@ import styles from "./styles.module.css";
 
 import * as PostGenSelectors from "../../selectors/postGenerationSelector";
 import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
-import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
+import {
+  EXTENSION_COMMANDS,
+  EXTENSION_MODULES,
+  ROUTES
+} from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
@@ -19,10 +24,7 @@ import { AppState } from "../../reducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 import { strings as messages } from "./strings";
-import {
-  resetWizardAction,
-  IRESET_WIZARD
-} from "../../actions/resetWizardAction";
+import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 
 interface IStateProps {
   isTemplateGenerated: boolean;
@@ -40,7 +42,10 @@ interface IDispatchProps {
   resetWizard: () => any;
 }
 
-type Props = IStateProps & InjectedIntlProps & IDispatchProps;
+type Props = IStateProps &
+  InjectedIntlProps &
+  IDispatchProps &
+  RouteComponentProps;
 
 const PostGenerationModal = ({
   serviceStatus,
@@ -52,7 +57,8 @@ const PostGenerationModal = ({
   intl,
   isTemplatesFailed,
   isServicesSelected,
-  resetWizard
+  resetWizard,
+  history
 }: Props) => {
   const { formatMessage } = intl;
   const LinkRenderer = (props: any) => (
@@ -75,6 +81,7 @@ const PostGenerationModal = ({
   const handleClick = () => {
     if (isTemplatesFailed) {
       resetWizard();
+      history.push(ROUTES.WELCOME);
     }
     if (isTemplateGenerated && isServicesDeployed) {
       vscode.postMessage({
@@ -202,7 +209,9 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(asModal(injectIntl(PostGenerationModal)));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(asModal(injectIntl(PostGenerationModal)))
+);
