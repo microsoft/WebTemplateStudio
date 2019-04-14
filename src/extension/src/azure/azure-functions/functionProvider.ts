@@ -5,8 +5,7 @@ import {
   FileError,
   DeploymentError,
   AuthorizationError,
-  SubscriptionError,
-  ValidationError
+  SubscriptionError
 } from "../../errors";
 import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
 import { ZipDeployHelper } from "./utils/zipDeployHelper";
