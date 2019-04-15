@@ -43,21 +43,29 @@ type Props = IDispatchProps & ISelectOptionProps;
 class SelectOption extends React.Component<Props, ISelectOptionState> {
   constructor(props: Props) {
     super(props);
+    const { selectedCardIndices } = props;
     this.state = {
-      selectedCardIndices: [0]
+      selectedCardIndices
     };
   }
   public componentDidMount() {
-    const {selectCard, selectOptions, options} = this.props;
+    const {
+      selectCard,
+      selectOptions,
+      options,
+      selectedCardIndices
+    } = this.props;
     if (selectCard) {
-      this.exchangeOption(0);
+      this.exchangeOption(selectedCardIndices[0]);
       this.setState({
-        selectedCardIndices: [0]
+        selectedCardIndices
       });
     } else if (selectOptions) {
-      this.addOption(0, 1, options[0].internalName);
+      if (selectedCardIndices.length === 0) {
+        this.onCardClick(0);
+      }
       this.setState({
-        selectedCardIndices: [0]
+        selectedCardIndices
       });
     }
   }
@@ -237,7 +245,9 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<RootAction>
+): IDispatchProps => ({
   setDetailPage: (detailPageInfo: IOption) => {
     dispatch(setDetailPageAction(detailPageInfo));
   }

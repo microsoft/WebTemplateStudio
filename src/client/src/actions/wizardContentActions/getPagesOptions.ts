@@ -52,19 +52,23 @@ const getPagesOptionsSuccess = (
 });
 
 function getApiTemplateInfoFromJson(items: any[]): IApiTemplateInfo[] {
-  return items.map<IApiTemplateInfo>(val => ({
-    displayName: val.name,
-    licenses: val.licenses,
-    longDescription: val.richDescription,
-    name: val.templateId,
-    position: val.displayOrder,
-    selected: false,
-    summary: val.description,
-    svgUrl: val.icon,
-    tags: val.tags,
-    defaultName: val.defaultName,
-    author: val.author
-  })).sort((a: IApiTemplateInfo, b: IApiTemplateInfo) => a.position - b.position)
+  return items
+    .map<IApiTemplateInfo>(val => ({
+      displayName: val.name,
+      licenses: val.licenses,
+      longDescription: val.richDescription,
+      name: getGroupIdentityFromIdentity(val.templateId),
+      position: val.displayOrder,
+      selected: false,
+      summary: val.description,
+      svgUrl: val.icon,
+      tags: val.tags,
+      defaultName: val.defaultName,
+      author: val.author
+    }))
+    .sort(
+      (a: IApiTemplateInfo, b: IApiTemplateInfo) => a.position - b.position
+    );
 }
 
 function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
@@ -74,7 +78,7 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
     licenses: val.licenses,
     longDescription: val.longDescription,
     selected: val.selected,
-    svgUrl: getSvgUrl(getGroupIdentityFromIdentity(val.name)),
+    svgUrl: getSvgUrl(val.name),
     title: val.displayName,
     defaultName: val.defaultName,
     isValidTitle: true,
@@ -82,7 +86,7 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
   }));
 }
 
-function getGroupIdentityFromIdentity(identity:string): string {
+function getGroupIdentityFromIdentity(identity: string): string {
   const identitySplit = identity.split(".");
   identitySplit.splice(2, 1);
   return identitySplit.join(".");
