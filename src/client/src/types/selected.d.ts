@@ -1,3 +1,5 @@
+import { FormattedMessage } from "react-intl";
+
 export interface ISelected {
   title: string;
   defaultName?: string;

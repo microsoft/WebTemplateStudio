@@ -26,6 +26,7 @@ interface IProps {
   isDraggable?: boolean;
   rotate?: boolean;
   subTitle?: string;
+  error?: string | FormattedMessage.MessageDescriptor;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -46,7 +47,8 @@ const SummaryTile = ({
   isDraggable,
   rotate,
   subTitle,
-  intl
+  intl,
+  error
 }: Props) => {
   const [componentTitle, setTitle] = React.useState(title);
   const [isDisabled, setDisabled] = React.useState(true);
@@ -100,12 +102,12 @@ const SummaryTile = ({
       >
         <div className={styles.leftContainer}>
           {svgUrl && (
-          <img
-            src={svgUrl}
-            className={classnames(styles.leftIcon, {
-              [styles.rotate]: rotate
-            })}
-          />
+            <img
+              src={svgUrl}
+              className={classnames(styles.leftIcon, {
+                [styles.rotate]: rotate
+              })}
+            />
           )}
           <div className={styles.tileContent}>
             <input
@@ -118,21 +120,27 @@ const SummaryTile = ({
               onClick={handleClick}
             />
             <div className={styles.metaData}>
-              {subTitle
-                ? subTitle
-                : originalTitle && (
-                    <React.Fragment>
-                      <div>{originalTitle}</div>
-                      <div>&nbsp;|&nbsp;</div>
-                    </React.Fragment>
-                  )}
-              {author && (
+              {(error && (
+                <div className={styles.errorMessage}>{error}</div>
+              )) || (
                 <React.Fragment>
-                  {author && <div>{author}</div>}
-                  {version && (
+                  {subTitle
+                    ? subTitle
+                    : originalTitle && (
+                        <React.Fragment>
+                          <div>{originalTitle}</div>
+                          <div>&nbsp;|&nbsp;</div>
+                        </React.Fragment>
+                      )}
+                  {author && (
                     <React.Fragment>
-                      <div>&nbsp;|&nbsp;</div>
-                      <div>{version}</div>
+                      {author && <div>{author}</div>}
+                      {version && (
+                        <React.Fragment>
+                          <div>&nbsp;|&nbsp;</div>
+                          <div>{version}</div>
+                        </React.Fragment>
+                      )}
                     </React.Fragment>
                   )}
                 </React.Fragment>
