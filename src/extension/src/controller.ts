@@ -7,9 +7,11 @@ import {
   ExtensionCommand
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
+// tslint:disable-next-line: import-name
 import ApiModule from "./signalr-api-module/apiModule";
 import { AzureServices } from "./azure/azureServices";
 import { TelemetryAI } from "./telemetry/telemetryAI";
+import { Logger } from "./utils/logger";
 import { WizardServant } from "./wizardServant";
 import { GenerationExperience } from "./generationExperience";
 import { ISyncReturnType } from "./types/syncReturnType";
@@ -18,6 +20,7 @@ import { ChildProcess } from "child_process";
 export class Controller {
   public static reactPanelContext: ReactPanel;
   public static Telemetry: TelemetryAI;
+  public static Logger: Logger;
   private AzureService: AzureServices;
   private GenExperience: GenerationExperience;
   private Validator: Validator;
@@ -63,6 +66,7 @@ export class Controller {
       this.context,
       this.extensionStartTime
     );
+    Controller.Logger = new Logger(Controller.getExtensionName(context));
     this.Validator = new Validator();
     this.AzureService = new AzureServices();
     this.GenExperience = new GenerationExperience(Controller.Telemetry);
@@ -143,6 +147,9 @@ export class Controller {
     vscode.window.setStatusBarMessage(output);
   }
 
+  private static getExtensionName(ctx: vscode.ExtensionContext) {
+    return this.Telemetry.getExtensionName(ctx);
+  }
   private static getVersionAndSendToClient(
     ctx: vscode.ExtensionContext,
     templatesVersion: string
