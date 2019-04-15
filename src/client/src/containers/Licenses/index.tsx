@@ -10,13 +10,13 @@ import { ILicenseObject } from "../../types/license";
 import styles from "./styles.module.css";
 import {
   getIsVisitedRoutesSelector,
-  IVisited
+  IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
 
 interface IStateProps {
   frameworkLicenses: string[];
   pageLicenses: ILicenseObject[];
-  isVisited: IVisited;
+  isVisited: IVisitedPages;
 }
 
 type Props = IStateProps;

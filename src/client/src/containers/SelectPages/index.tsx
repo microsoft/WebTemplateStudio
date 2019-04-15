@@ -15,6 +15,7 @@ import { getPageCount } from "../../selectors/wizardSelectionSelector";
 import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 
 import { defineMessages, InjectedIntl, injectIntl } from "react-intl";
+import { AppState } from "../../reducers";
 
 interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
@@ -111,7 +112,7 @@ class SelectPages extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): ISelectPagesProps => {
+const mapStateToProps = (state: AppState): ISelectPagesProps => {
   const { pageOptions } = state.wizardContent;
   const { pages } = state.selection;
   const { appType } = state.selection;

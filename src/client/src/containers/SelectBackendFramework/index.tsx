@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SelectOption from "../../components/SelectOption";
+import SelectOption from "../SelectOption";
 
 import { getBackendFrameworksAction } from "../../actions/getBackendFrameworks";
 import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
@@ -13,6 +13,7 @@ import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import styles from "./styles.module.css";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
+import { AppState } from "../../reducers";
 
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
@@ -78,7 +79,7 @@ class SelectBackEndFramework extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): ISelectBackendProps => {
+const mapStateToProps = (state: AppState): ISelectBackendProps => {
   const { backendOptions } = state.wizardContent;
   const { backendFramework } = state.selection;
 

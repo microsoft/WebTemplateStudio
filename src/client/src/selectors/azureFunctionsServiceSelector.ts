@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { ISelectedAzureFunctionsService } from "../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
+import { AppState } from "../reducers";
 
 interface ISelectedDropdowns {
   subscription?: IDropDownOptionType;
@@ -16,10 +17,10 @@ interface ISelectionInformation {
   previousFormData: ISelectedAzureFunctionsService;
 }
 
-const getState = (state: any): any => state;
-const getServicesSelector = (state: any): any => state.selection.services;
+const getState = (state: AppState): any => state;
+const getServicesSelector = (state: AppState): any => state.selection.services;
 
-const isAzureFunctionsSelected = (state: any): boolean => {
+const isAzureFunctionsSelected = (state: AppState): boolean => {
   return !_.isEmpty(state.selection.services.azureFunctions.selection);
 };
 
@@ -29,7 +30,7 @@ const isAzureFunctionsSelectedSelector = createSelector(
 );
 
 const getAzureFunctionsOptions = (
-  state: any,
+  state: AppState,
   isAzureFunctionsSelected: boolean
 ): any => {
   if (isAzureFunctionsSelected) {

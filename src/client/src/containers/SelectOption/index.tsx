@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import Card from "../SelectableCard";
-import Title from "../Title";
+import SelectableCard from "../../components/SelectableCard";
+import Title from "../../components/Title";
 
 import styles from "./styles.module.css";
 
@@ -205,7 +205,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
           {options.map((option, cardNumber) => {
             const { svgUrl, title, body, unselectable, internalName } = option;
             return (
-              <Card
+              <SelectableCard
                 key={`${cardNumber} ${title}`}
                 onCardClick={(cardNumber: number) => {
                   this.onCardClick(cardNumber);

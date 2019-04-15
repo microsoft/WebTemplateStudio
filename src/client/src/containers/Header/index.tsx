@@ -7,6 +7,7 @@ import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import { FormattedMessage, injectIntl } from "react-intl";
+import { AppState } from "../../reducers";
 
 interface IHeaderProps {
   vscode: IVSCodeObject;
@@ -46,7 +47,7 @@ const Header = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): IHeaderProps => {
+const mapStateToProps = (state: AppState): IHeaderProps => {
   const { isLoggedIn } = state.azureProfileData;
   const { email } = state.azureProfileData.profileData;
   return {

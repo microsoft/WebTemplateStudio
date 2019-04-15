@@ -5,7 +5,7 @@ import { arrayMove } from "react-sortable-hoc";
 
 import { defineMessages, injectIntl, InjectedIntl } from "react-intl";
 
-import SortableList from "../SortableSelectionList";
+import SortableList from "../../components/SortableSelectionList";
 
 import { selectPagesAction } from "../../actions/selectPages";
 
@@ -14,6 +14,7 @@ import { ISelected } from "../../types/selected";
 import { validateName } from "../../utils/validateName";
 
 import styles from "./styles.module.css";
+import { AppState } from "../../reducers";
 
 const MAX_PAGE_NAME_LENGTH = 50;
 
@@ -130,7 +131,7 @@ const SortablePageList = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): ISortablePageListProps => ({
+const mapStateToProps = (state: AppState): ISortablePageListProps => ({
   selectedPages: state.selection.pages
 });
 

@@ -3,11 +3,12 @@ import { createSelector } from "reselect";
 import { IServiceStatus } from "../reducers/generationStatus/genStatus";
 import { isCosmosResourceCreatedSelector } from "./cosmosServiceSelector";
 import { isAzureFunctionsSelectedSelector } from "./azureFunctionsServiceSelector";
+import { AppState } from "../reducers";
 
-const getGenerationStatusSelector = (state: any) =>
+const getGenerationStatusSelector = (state: AppState) =>
   state.generationStatus.genStatus;
 
-const getSyncStatusSelector = (state: any): string =>
+const getSyncStatusSelector = (state: AppState): string =>
   state.generationStatus.statusMessage;
 
 const isTemplateGenerated = (progressObject: IServiceStatus): boolean =>

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
-import DraggableSidebarItem from "../../components/DraggableSidebarItem";
-import SummaryTile from "../../components/SummaryTile";
+import DraggableSidebarItem from "../DraggableSidebarItem";
+import SummaryTile from "../SummaryTile";
 
 import styles from "./styles.module.css";
 
