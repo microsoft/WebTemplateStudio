@@ -1,4 +1,7 @@
 import * as vscode from "vscode";
+import * as path from "path";
+import * as fs from "fs";
+import * as os from "os";
 import { Validator } from "./utils/validator";
 import {
   CONSTANTS,
@@ -78,6 +81,13 @@ export class Controller {
   public async launchWizard(
     context: vscode.ExtensionContext
   ): Promise<ChildProcess> {
+    if (os.platform() !== CONSTANTS.PLATFORM.WIN_32) {
+      const enginePath = path.resolve(
+        this.context.extensionPath,
+        CONSTANTS.ENGINE_DIRECTORY
+      );
+      fs.chmodSync(enginePath, 0o755);
+    }
     let process = ApiModule.StartApi(context);
     let syncObject: ISyncReturnType = {
       successfullySynced: false,

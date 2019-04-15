@@ -167,6 +167,7 @@ export const CONSTANTS = {
     Project_Title: "Microsoft Web Template Studio"
   },
   GENERATE_ENDPOINT: "/api/generate",
+  ENGINE_DIRECTORY: "./src/api/darwin/CoreTemplateStudio.Api",
   CONNECTION_STRING_MONGO: function(
     username: string,
     password: string,
