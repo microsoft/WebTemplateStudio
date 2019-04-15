@@ -85,7 +85,11 @@ const SummaryTile = ({
       onMouseLeave={handleMouseLeave}
     >
       {isDraggable && (
-        <img className={styles.reorder} src={withLocalPath(reorder)} />
+        <img
+          className={styles.reorder}
+          src={withLocalPath(reorder)}
+          alt="Drag to reorder item"
+        />
       )}
       <div
         className={classnames({
@@ -95,12 +99,14 @@ const SummaryTile = ({
         })}
       >
         <div className={styles.leftContainer}>
+          {svgUrl && (
           <img
             src={svgUrl}
             className={classnames(styles.leftIcon, {
               [styles.rotate]: rotate
             })}
           />
+          )}
           <div className={styles.tileContent}>
             <input
               ref={inputRef}
@@ -139,10 +145,12 @@ const SummaryTile = ({
             src={withLocalPath(edit)}
             className={styles.rightIcon}
             onClick={handleClick}
+            alt="Click to edit item name"
           />
         )}
       </div>
       <img
+        alt="Remove item from generation"
         src={withLocalPath(cancel)}
         onClick={() => {
           if (handleCloseClick && idx) {

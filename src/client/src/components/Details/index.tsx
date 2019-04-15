@@ -73,6 +73,7 @@ const Details = ({
                 onClick={handleBackClick}
                 className={styles.backIcon}
                 src={process.env.REACT_APP_RELATIVE_PATH + backArrow}
+                alt="Back to previous page"
               />
             )}
           </div>
@@ -83,7 +84,7 @@ const Details = ({
         <div className={styles.detailsContainer}>
           <div>
             {detailInfo.svgUrl && (
-              <img className={styles.icon} src={detailInfo.svgUrl} />
+              <img className={styles.icon} src={detailInfo.svgUrl} alt="icon" />
             )}
           </div>
           <div>
