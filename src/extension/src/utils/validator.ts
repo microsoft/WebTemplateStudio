@@ -10,7 +10,10 @@ export class Validator extends WizardServant {
     (message: any) => Promise<IPayloadResponse>
   > = new Map([
     [ExtensionCommand.GetOutputPath, Validator.sendOutputPathSelectionToClient],
-    [ExtensionCommand.ProjectPathValidation, Validator.handleProjectPathValidation]
+    [
+      ExtensionCommand.ProjectPathValidation,
+      Validator.handleProjectPathValidation
+    ]
   ]);
 
   public static async sendOutputPathSelectionToClient(
@@ -26,7 +29,7 @@ export class Validator extends WizardServant {
         let path = undefined;
 
         if (res !== undefined) {
-          if (process.platform === CONSTANTS.PLATFORM.WIN_32) {
+          if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
             path = res[0].path.substring(1, res[0].path.length);
           } else {
             path = res[0].path;
@@ -40,7 +43,9 @@ export class Validator extends WizardServant {
       });
   }
 
-  public static async handleProjectPathValidation(message: any): Promise<IPayloadResponse> {
+  public static async handleProjectPathValidation(
+    message: any
+  ): Promise<IPayloadResponse> {
     const projectPath = message.projectPath;
     const projectName = message.projectName;
 
@@ -80,9 +85,9 @@ export class Validator extends WizardServant {
       isValid: isValid,
       error: error
     };
-  }
+  };
 
   private static isUniquePath = (projectPath: string, name: string) => {
     return !fs.existsSync(path.join(projectPath, name));
-  }
+  };
 }

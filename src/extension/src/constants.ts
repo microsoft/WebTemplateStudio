@@ -183,9 +183,6 @@ export const CONSTANTS = {
   PORT: 5000,
   VSCODE_COMMAND: {
     OPEN_FOLDER: "vscode.openFolder"
-  },
-  PLATFORM: {
-    WIN_32: "win32"
   }
 };
 
