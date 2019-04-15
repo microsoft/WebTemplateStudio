@@ -189,6 +189,7 @@ export const CONSTANTS = {
 };
 
 export enum ExtensionCommand {
+  Log = "log",
   Login = "login",
   Logout = "logout",
   Subscriptions = "subscriptions",

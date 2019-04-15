@@ -1,15 +1,45 @@
 import * as vscode from "vscode";
+import { WizardServant, IPayloadResponse } from "../wizardServant";
+const fs = require("fs");
+import { ExtensionCommand } from "../constants";
 
-export namespace Logger {
-  export let outputChannel = vscode.window.createOutputChannel("WTS");
-  export let outputContent = "";
-    export let loggingFile: fopen("path");
-  export function appendLog(message: string) {
-    outputChannel.appendLine(message);
-    // TO DO: APPEND TO OUTPUT FILE
-    outputContent.concat(message);
+export class Logger extends WizardServant {
+  clientCommandMap: Map<
+    ExtensionCommand,
+    (message: any) => Promise<IPayloadResponse>
+  > = new Map([[ExtensionCommand.Log, Logger.receiveLogfromWizard]]);
+  private static outputChannel: vscode.OutputChannel;
+  private static outputContent: string = "";
+  private static loggingFile = Logger.getLoggingFile();
+  public static getLoggingFile() {
+    return fs.open("./logs/LOG_FILE", "a");
   }
-  export function display() {
-    outputChannel.show(true);
+  public static initializeOutputChannel(extensionName: string): void {
+    if (Logger.outputChannel === undefined) {
+      Logger.outputChannel = vscode.window.createOutputChannel(extensionName);
+    }
+  }
+  public static appendLog(message: string): void {
+    if (Logger.outputChannel === undefined) {
+      Logger.initializeOutputChannel("Web Template Studio");
+    }
+    Logger.outputChannel.appendLine(message);
+    Logger.outputContent.concat(message, "\n");
+  }
+  public static display(): void {
+    if (Logger.outputChannel === undefined) {
+      Logger.initializeOutputChannel("Web Template Studio");
+    }
+    Logger.outputChannel.show(true);
+    Logger.loggingFile.appendLine(Logger.outputContent);
+    Logger.outputContent = "";
+  }
+  private static async receiveLogfromWizard(
+    message: any
+  ): Promise<IPayloadResponse> {
+    Logger.appendLog(message.input);
+    return {
+      payload: null
+    };
   }
 }

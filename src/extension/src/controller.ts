@@ -66,7 +66,7 @@ export class Controller {
       this.context,
       this.extensionStartTime
     );
-    Controller.Logger = new Logger(Controller.getExtensionName(context));
+    Logger.initializeOutputChannel(Controller.getExtensionName(context));
     this.Validator = new Validator();
     this.AzureService = new AzureServices();
     this.GenExperience = new GenerationExperience(Controller.Telemetry);
