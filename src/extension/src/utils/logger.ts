@@ -12,6 +12,12 @@ export class Logger extends WizardServant {
   private static outputContent: string = "";
   private static loggingFile = Logger.getLoggingFile();
   public static getLoggingFile() {
+    fs.readdir("./logs", (error: any, items: any) => {
+      for (var i = 0; i < items.length; i++) {
+        // TODO: Check oldest log file if they are 5 and delete the 5th one
+        // Otherwise, create a new file
+      }
+    });
     return fs.open("./logs/LOG_FILE", "a");
   }
   public static initializeOutputChannel(extensionName: string): void {
