@@ -193,7 +193,7 @@ const PostGenerationModal = ({
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
-  isServicesDeployed: PostGenSelectors.isServicesDeployedSelector(state),
+  isServicesDeployed: PostGenSelectors.isServicesDeployedOrFinishedSelector(state),
   isServicesSelected: PostGenSelectors.isServicesSelectedSelector(state),
   isTemplateGenerated: PostGenSelectors.isTemplateGeneratedSelector(state),
   isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),

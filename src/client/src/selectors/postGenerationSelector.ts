@@ -128,30 +128,27 @@ const isServicesSelectedSelector = createSelector(
   isServicesSelected
 );
 
-const isServicesDeployed = (services: IAzureServiceStatus): boolean => {
+const isServicesDeployedOrFinished = (services: IAzureServiceStatus): boolean => {
   const { cosmosdb, azureFunctions } = services;
+  let isFinished = false;
   if (cosmosdb.isSelected) {
-    if (!cosmosdb.isDeployed) {
-      return false;
-    }
+    isFinished = cosmosdb.isDeployed || cosmosdb.isFailed;
   }
   if (azureFunctions.isSelected) {
-    if (!azureFunctions.isDeployed) {
-      return false;
-    }
+    isFinished = azureFunctions.isDeployed || azureFunctions.isFailed;
   }
-  return true;
+  return isFinished;
 };
 
-const isServicesDeployedSelector = createSelector(
+const isServicesDeployedOrFinishedSelector = createSelector(
   servicesToDeploySelector,
-  isServicesDeployed
+  isServicesDeployedOrFinished
 );
 
 export {
   getSyncStatusSelector,
   isTemplateGeneratedSelector,
-  isServicesDeployedSelector,
+  isServicesDeployedOrFinishedSelector,
   isServicesFailureSelector,
   isTemplatesFailedSelector,
   isServicesSelectedSelector,
