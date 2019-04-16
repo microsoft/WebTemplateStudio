@@ -4,6 +4,13 @@ import fs = require("fs");
 import { ExtensionCommand } from "../constants";
 import path = require("path");
 
+type LogType = "INFO" | "WARNING" | "ERROR";
+type LogSource = "WIZARD" | "EXTENSION";
+type ILoggingPayload = {
+  type: LogType;
+  data: string;
+};
+
 const OUTPUT_CHANNEL_DEFAULT = "Web Template Studio";
 const LOG_FILENAME_PREFIX = "LOG_WTS_LOCAL";
 const GET_LOG_PATH = (filename: string) => {
@@ -18,7 +25,7 @@ export class Logger extends WizardServant {
   private static outputChannel: vscode.OutputChannel;
   private static outputContent: string = "";
   private static loggingFile = Logger.getLoggingFile();
-  public static getLoggingFile() {
+  public static getLoggingFile(): string {
     let items = fs.readdirSync("./logs");
     let oldestFileDate: number = 0;
     let oldestFile: string = "";
@@ -47,12 +54,16 @@ export class Logger extends WizardServant {
       Logger.outputChannel = vscode.window.createOutputChannel(extensionName);
     }
   }
-  public static appendLog(message: string): void {
+  public static appendLog(
+    source: LogSource,
+    type: LogType,
+    data: string
+  ): void {
     if (Logger.outputChannel === undefined) {
       Logger.initializeOutputChannel(OUTPUT_CHANNEL_DEFAULT);
     }
-    Logger.outputChannel.appendLine(message);
-    Logger.outputContent.concat(message, "\n");
+    Logger.outputChannel.appendLine(source.concat("-", type, ":", data));
+    Logger.outputContent.concat(source, "-", type, ":", data, "\n");
   }
   public static display(): void {
     if (Logger.outputChannel === undefined) {
@@ -63,9 +74,9 @@ export class Logger extends WizardServant {
     Logger.outputContent = "";
   }
   private static async receiveLogfromWizard(
-    message: any
+    message: ILoggingPayload
   ): Promise<IPayloadResponse> {
-    Logger.appendLog(message.input);
+    Logger.appendLog("WIZARD", message.type, message.data);
     Logger.display();
     return {
       payload: null
