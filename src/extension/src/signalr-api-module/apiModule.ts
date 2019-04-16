@@ -1,5 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
+import * as os from "os";
+import * as fs from "fs";
 import { ChildProcess, execFile } from "child_process";
 import { CONSTANTS } from "../constants";
 import { ICommandPayload } from "./commandPayload";
@@ -30,6 +32,10 @@ export default class ApiModule {
       "api",
       platform
     );
+
+    if (os.platform() !== CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
+      fs.chmodSync(apiPath, 0o755);
+    }
 
     let spawnedProcess = execFile(`${apiPath}`, { cwd: apiWorkingDirectory });
     ApiModule._process = spawnedProcess;
