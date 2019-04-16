@@ -47,11 +47,13 @@ export class Logger extends WizardServant {
       // Delete oldest file
       fs.unlinkSync(oldestFile);
     }
-    let currentDate = new Date().toLocaleDateString(undefined, {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric"
-    });
+    let currentDate = new Date()
+      .toLocaleDateString(undefined, {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      })
+      .replace("/", "");
     return GET_LOG_PATH(LOG_FILENAME_PREFIX.concat("_", currentDate));
   }
   public static initializeOutputChannel(extensionName: string): void {
