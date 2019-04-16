@@ -187,32 +187,34 @@ export const CONSTANTS = {
 };
 
 export enum ExtensionCommand {
-  Login = "login",
-  Logout = "logout",
-  Subscriptions = "subscriptions",
-  SubscriptionDataForCosmos = "subscriptionDataForCosmos",
-  SubscriptionDataForFunctions = "subscriptionDataForFunctions",
-  NameFunctions = "name-functions",
-  NameCosmos = "name-cosmos",
-  DeployFunctions = "deploy-functions",
-  DeployCosmos = "deploy-cosmos",
-  Generate = "generate",
-  GetOutputPath = "getOutputPath",
-  GetFunctionsRuntimes = "getFunctionsRuntimes",
-  GetCosmosAPIs = "getCosmosAPIs",
-  GetUserStatus = "getUserStatus",
-  TrackPageSwitch = "track-page-switch",
-  ProjectPathValidation = "project-path-validation",
-  UpdateGenStatusMessage = "update-status-message",
-  UpdateGenStatus = "update-status",
-  OpenProjectVSCode = "open-project-vscode",
-  GetVersions = "get-versions"
+    Login = "login",
+    Logout = "logout",
+    Subscriptions = "subscriptions",
+    SubscriptionDataForCosmos = "subscriptionDataForCosmos",
+    SubscriptionDataForFunctions = "subscriptionDataForFunctions",
+    NameFunctions = "name-functions",
+    NameCosmos = "name-cosmos",
+    DeployFunctions = "deploy-functions",
+    DeployCosmos = "deploy-cosmos",
+    Generate = "generate",
+    GetOutputPath = "getOutputPath",
+    GetFunctionsRuntimes = "getFunctionsRuntimes",
+    GetCosmosAPIs = "getCosmosAPIs",
+    GetUserStatus = "getUserStatus",
+    TrackPageSwitch = "track-page-switch",
+    ProjectPathValidation = "project-path-validation",
+    UpdateGenStatusMessage = "update-status-message",
+    UpdateGenStatus = "update-status",
+    OpenProjectVSCode = "open-project-vscode",
+    GetVersions = "get-versions",
+    ResetPages = "reset-pages"
 }
 export enum ExtensionModule {
   Azure = "Azure",
   Generate = "GenerateExperience",
   Telemetry = "Telemetry",
-  Validator = "Validator"
+  Validator = "Validator",
+  VSCodeUI = "VSCodeUI"
 }
 export enum TelemetryEventName {
   ExtensionLaunch = "Extension-Launch-Time",
@@ -261,6 +263,10 @@ export namespace DialogMessages {
   export const cosmosDBConnectStringReplacePrompt: string = localize(
     "dialog.cosmosDBConnectStringReplacePrompt",
     "Replace your DB connection string in the .env file with the generated CosmosDB connection string?"
+  );
+  export const resetPagesPrompt: string = localize(
+    "dialog.resetPagesPrompt",
+    "Switching Frameworks will reset pages in your queue. Are you sure you want to proceed?"
   );
 }
 
