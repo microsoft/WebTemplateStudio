@@ -102,13 +102,13 @@
 }
 
 .errorMessage {
-  background: #5f0d0d;
-  border: 1px solid #9d2f23;
+  background: var(--vscode-inputValidation-errorBackground);
+  border: 0.5px solid var(--vscode-inputValidation-errorBorder);
+  color: var(--vscode-editor-foreground);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
-  border-radius: 2px;
   opacity: 50%;
   min-height: 38px;
   font-size: 15px;
