@@ -82,19 +82,50 @@ const SummaryTile = ({
   const handleMouseLeave = () => {
     setEditable(false);
   };
+  const handleOnFocus = () => {
+    if (isEditable) {
+      setEditable(isEditable);
+    }
+  };
+  const onCloseClick = () => {
+    if (handleCloseClick && idx) {
+      // component index based at 1, so -1 for correction
+      handleCloseClick(idx - 1);
+    }
+  };
+  const onCloseKeyDown = (event: any) => {
+    if (event.keyCode === 13) {
+      onCloseClick();
+    } else if (event.keyCode === 9) {
+      setEditable(false);
+    }
+  };
+  const onEditKeyDown = (event: any) => {
+    if (event.keyCode === 13) {
+      handleClick();
+    }
+  };
+  const onSummaryTileLeave = (event: any) => {
+    if (event.shiftKey && event.keyCode === 9) {
+      setEditable(false);
+    }
+  };
   return (
     <div
       className={styles.container}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onFocus={handleOnFocus}
     >
       {isDraggable && <ReorderSVG className={styles.reorder} />}
       <div
+        tabIndex={isEditable ? 0 : -1}
         className={classnames({
           [styles.indent]: withIndent,
           [styles.summaryTileContainer]: isEditable,
           [styles.disableHover]: !isEditable
         })}
+        onKeyDown={onSummaryTileLeave}
       >
         <div className={styles.leftContainer}>
           {showFolderIcon ? (
@@ -147,17 +178,19 @@ const SummaryTile = ({
           </div>
         </div>
         {showEditable && !withoutEditIcon && (
-          <EditSVG className={styles.rightIcon} onClick={handleClick} />
+          <EditSVG
+            tabIndex={0}
+            className={styles.rightIcon}
+            onClick={handleClick}
+            onKeyDown={onEditKeyDown}
+          />
         )}
       </div>
       <div className={styles.spacer}>
         <CloseSVG
-          onClick={() => {
-            if (handleCloseClick && idx) {
-              // component index based at 1, so -1 for correction
-              handleCloseClick(idx - 1);
-            }
-          }}
+          tabIndex={0}
+          onClick={onCloseClick}
+          onKeyDown={onCloseKeyDown}
           className={classnames(styles.closeIcon, {
             [styles.hidden]: !showEditable || !isEditable
           })}

@@ -46,7 +46,18 @@
 
 .icon {
   cursor: pointer;
-  height: 12px;
+  height: 15px;
+  width: 15px;
+  padding: 1px;
+  margin-right: 2px;
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.icon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .validationIcon {

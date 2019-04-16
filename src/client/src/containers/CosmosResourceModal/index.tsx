@@ -352,13 +352,25 @@ const CosmosResourceModal = (props: Props) => {
   };
   const { isAccountNameAvailable } = props.accountNameAvailability;
   const { isValidatingName } = props;
+  const cancelKeyDownHandler = (event: any) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.keyCode === 13) {
+      props.closeModal();
+    }
+  };
   return (
     <div>
       <div className={styles.headerContainer}>
         <div className={styles.modalTitle}>
           {props.intl.formatMessage(messages.createCosmosRes)}
         </div>
-        <Cancel className={styles.icon} onClick={props.closeModal} />
+        <Cancel
+          tabIndex={0}
+          className={styles.icon}
+          onClick={props.closeModal}
+          onKeyDown={cancelKeyDownHandler}
+        />
       </div>
       {getDropdownSection(
         modalValidation.isSubscriptionEmpty &&

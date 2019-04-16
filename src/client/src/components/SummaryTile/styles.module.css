@@ -20,6 +20,10 @@
   outline: 2px solid var(--vscode-editor-foreground);
 }
 
+.summaryTileContainer:focus {
+  outline: 2px solid var(--vscode-contrastActiveBorder);
+}
+
 .leftContainer {
   display: flex;
   align-items: center;
@@ -52,10 +56,18 @@
   cursor: pointer;
 }
 
+.closeIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .rightIcon:hover {
   cursor: pointer;
   padding: 3px;
   border-radius: 3px;
+}
+
+.rightIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .spacer {
@@ -72,7 +84,7 @@
 }
 
 .tileInput:focus {
-  outline: 1px solid var(--vscode-editor-foreground)
+  outline: 1px solid var(--vscode-editor-foreground);
 }
 
 .metaData {
