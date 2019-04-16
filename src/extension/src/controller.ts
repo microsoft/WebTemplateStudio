@@ -98,6 +98,7 @@ export class Controller {
       vscode.window.showErrorMessage(
         CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
       );
+      ApiModule.StopApi();
       return process;
     }
 
