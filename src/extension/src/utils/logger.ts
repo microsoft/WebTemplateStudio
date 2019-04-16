@@ -27,7 +27,7 @@ export class Logger extends WizardServant {
   private static loggingFile = Logger.getLoggingFile();
   public static getLoggingFile(): string {
     let items = fs.readdirSync("./logs");
-    let oldestFileDate: number = 0;
+    let oldestFileDate: Date = new Date(Date.now());
     let oldestFile: string = "";
     let logFilesCount: number = 0;
     // Get oldest file
@@ -35,8 +35,8 @@ export class Logger extends WizardServant {
       if (items[i].length > LOG_FILENAME_PREFIX.length) {
         if (items[i].startsWith(LOG_FILENAME_PREFIX)) {
           logFilesCount += 1;
-          let currentFileDate = fs.statSync(GET_LOG_PATH(items[i])).birthtimeMs;
-          if (oldestFileDate === 0 || oldestFileDate > currentFileDate) {
+          let currentFileDate = fs.statSync(GET_LOG_PATH(items[i])).ctime;
+          if (oldestFileDate > currentFileDate) {
             oldestFileDate = currentFileDate;
             oldestFile = items[i];
           }
@@ -47,11 +47,17 @@ export class Logger extends WizardServant {
       // Delete oldest file
       fs.unlinkSync(oldestFile);
     }
-    return GET_LOG_PATH(LOG_FILENAME_PREFIX.concat("_", Date.now().toString()));
+    let currentDate = new Date().toLocaleDateString(undefined, {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    });
+    return GET_LOG_PATH(LOG_FILENAME_PREFIX.concat("_", currentDate));
   }
   public static initializeOutputChannel(extensionName: string): void {
     if (Logger.outputChannel === undefined) {
       Logger.outputChannel = vscode.window.createOutputChannel(extensionName);
+      this.appendLog("EXTENSION", "INFO", ">>>>>>>>> Launched");
     }
   }
   public static appendLog(
