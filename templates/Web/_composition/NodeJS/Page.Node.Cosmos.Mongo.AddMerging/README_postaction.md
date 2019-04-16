@@ -33,10 +33,8 @@ The generated templates can be deployed to Azure App Service using the following
 
 ## Additional Documentation
 
-- React - https://reactjs.org/
-- React Router - https://reacttraining.com/react-router/
 - Bootstrap CSS - https://getbootstrap.com/
-- Express - https://expressjs.com/
+//^^
 //{[{
 - Mongo/Mongoose - https://mongoosejs.com/docs/guide.html
 - Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongoose
