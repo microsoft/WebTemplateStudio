@@ -130,12 +130,12 @@ const isServicesSelectedSelector = createSelector(
 
 const isServicesDeployedOrFinished = (services: IAzureServiceStatus): boolean => {
   const { cosmosdb, azureFunctions } = services;
-  let isFinished = false;
+  let isFinished = true;
   if (cosmosdb.isSelected) {
-    isFinished = cosmosdb.isDeployed || cosmosdb.isFailed;
+    isFinished = isFinished && (cosmosdb.isDeployed || cosmosdb.isFailed);
   }
   if (azureFunctions.isSelected) {
-    isFinished = azureFunctions.isDeployed || azureFunctions.isFailed;
+    isFinished = isFinished && (azureFunctions.isDeployed || azureFunctions.isFailed);
   }
   return isFinished;
 };
