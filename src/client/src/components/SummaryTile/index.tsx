@@ -1,6 +1,11 @@
 import classnames from "classnames";
 import * as React from "react";
-import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+import {
+  injectIntl,
+  InjectedIntlProps,
+  FormattedMessage,
+  defineMessages
+} from "react-intl";
 
 import styles from "./styles.module.css";
 
@@ -9,6 +14,13 @@ import { withLocalPath } from "../../utils/getSvgUrl";
 import cancel from "../../assets/cancel.svg";
 import edit from "../../assets/edit.svg";
 import reorder from "../../assets/reorder.svg";
+
+const messages = defineMessages({
+  changeItemName: {
+    id: "summaryTile.changeItemName",
+    defaultMessage: "Change Item Name"
+  }
+});
 
 interface IProps {
   withIndent?: boolean;
@@ -103,6 +115,7 @@ const SummaryTile = ({
           />
           <div className={styles.tileContent}>
             <input
+              aria-label={intl.formatMessage(messages.changeItemName)}
               ref={inputRef}
               className={styles.tileInput}
               value={componentTitle}
