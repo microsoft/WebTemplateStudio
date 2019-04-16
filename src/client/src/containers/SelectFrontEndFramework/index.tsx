@@ -12,6 +12,8 @@ import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
+import RootAction from "../../actions/ActionType";
+import { ThunkDispatch } from "redux-thunk";
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
@@ -88,7 +90,7 @@ const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   selectFrontendFramework: (framework: ISelected) => {
     dispatch(selectFrontendAction(framework));
   },

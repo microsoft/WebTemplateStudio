@@ -12,6 +12,8 @@ import { RowType } from "../../types/rowType";
 import * as AzureFunctionActions from "../../actions/azureActions/azureFunctionActions";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../../reducers";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 interface IProps {
   selectionTitle: string;
@@ -149,7 +151,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   functionApps: state.selection.services.azureFunctions
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   updateFunctionNames: (functionApp: IFunctionApp) => {
     dispatch(AzureFunctionActions.updateAzureFunctionNamesAction(functionApp));
   },

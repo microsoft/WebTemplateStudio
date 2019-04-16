@@ -17,6 +17,8 @@ import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsP
 
 import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
 import { AppState } from "../../reducers";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   startLogOutToAzure: () => any;
@@ -142,7 +144,7 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => ({
   cosmosDbSelection: state.selection.services.cosmosDB.selection
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   startLogOutToAzure: () => {
     dispatch(AzureActions.startLogOutAzure());
   },

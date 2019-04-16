@@ -19,6 +19,8 @@ import { microsoftAzureDetails } from "../../mockData/azureServiceOptions";
 import { withLocalPath } from "../../utils/getSvgUrl";
 import { AppState } from "../../reducers";
 import { IMetadata } from "../../types/metadata";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
@@ -75,7 +77,7 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
     dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));

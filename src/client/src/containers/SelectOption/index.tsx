@@ -10,6 +10,8 @@ import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsP
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 interface ICount {
   [key: string]: number;
@@ -229,7 +231,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 }
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   setDetailPage: (detailPageInfo: IOption) => {
     dispatch(setDetailPageAction(detailPageInfo));
   }

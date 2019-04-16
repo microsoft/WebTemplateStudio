@@ -33,7 +33,10 @@ import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceS
 import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
-import { setAccountAvailability } from "../../actions/azureActions/setAccountAvailability";
+import { setAccountAvailability, IAvailabilityFromExtension } from "../../actions/azureActions/setAccountAvailability";
+import { AppState } from "../../reducers";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -43,10 +46,10 @@ const DEFAULT_VALUE = {
 interface IDispatchProps {
   closeModal: () => any;
   saveCosmosOptions: (cosmosOptions: any) => any;
-  setValidationStatus: (status: boolean) => Dispatch;
+  setValidationStatus: (status: boolean) => any;
   setCosmosResourceAccountNameAvailability: (
     isAvailableObject: any
-  ) => Dispatch;
+  ) => any;
 }
 
 interface IStateProps {
@@ -457,7 +460,7 @@ const CosmosResourceModal = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   accountNameAvailability:
     state.selection.services.cosmosDB.accountNameAvailability,
   isModalOpen: isCosmosDbModalOpenSelector(state),
@@ -468,14 +471,14 @@ const mapStateToProps = (state: any): IStateProps => ({
   vscode: state.vscode.vscodeObject
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   closeModal: () => {
     dispatch(closeModalAction());
   },
   saveCosmosOptions: (cosmosOptions: any) => {
     dispatch(saveCosmosDbSettingsAction(cosmosOptions));
   },
-  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) =>
+  setCosmosResourceAccountNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
     dispatch(setAccountAvailability(isAvailableObject)),
   setValidationStatus: (status: boolean) =>
     dispatch(setAzureValidationStatusAction(status))

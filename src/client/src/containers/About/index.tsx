@@ -6,6 +6,7 @@ import styles from "./styles.module.css";
 import { getVersionsSelector } from "../../selectors/vscodeApiSelector";
 import { IVersions } from "../../types/version";
 import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
+import { AppState } from "../../reducers";
 
 interface IStateProps {
   versions: IVersions;
@@ -43,7 +44,7 @@ const About = ({ versions, intl }: Props) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: AppState) => ({
   versions: getVersionsSelector(state)
 });
 

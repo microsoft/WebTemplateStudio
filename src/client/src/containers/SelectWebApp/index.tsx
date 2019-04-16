@@ -10,6 +10,8 @@ import { ISelected } from "../../types/selected";
 
 import { defineMessages, InjectedIntl, injectIntl } from "react-intl";
 import { AppState } from "../../reducers";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectWebApp: (selectedApp: ISelected) => void;
@@ -77,7 +79,7 @@ const mapStateToProps = (state: AppState): IStoreProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   selectWebApp: (selectedApp: ISelected) => {
     dispatch(selectWebAppAction(selectedApp));
   },

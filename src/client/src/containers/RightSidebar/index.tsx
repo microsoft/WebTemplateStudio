@@ -37,6 +37,8 @@ interface ISelectionType {
 }
 import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -226,7 +228,7 @@ function convertOptionToDropdownItem(option: any): IDropDownOptionType {
   };
 }
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   selectBackendFramework: (framework: ISelected) => {
     dispatch(selectBackendFrameworkAction(framework));
   },

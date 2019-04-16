@@ -32,9 +32,10 @@ import {
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
-import { setAppNameAvailabilityAction } from "../../actions/azureActions/setAccountAvailability";
+import { setAppNameAvailabilityAction, IAvailabilityFromExtension } from "../../actions/azureActions/setAccountAvailability";
 import { AppState } from "../../reducers";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import RootAction from "../../actions/ActionType";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -44,8 +45,8 @@ const DEFAULT_VALUE = {
 interface IDispatchProps {
   closeModal: () => any;
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => any;
-  setValidationStatus: (status: boolean) => Dispatch;
-  setAppNameAvailability: (isAvailableObject: any) => any;
+  setValidationStatus: (status: boolean) => any;
+  setAppNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => any;
 }
 
 interface IStateProps {
@@ -508,14 +509,14 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selection: getFunctionsSelection(state)
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   closeModal: () => {
     dispatch(closeModalAction());
   },
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => {
     dispatch(saveAzureFunctionsSettingsAction(azureFunctionsOptions));
   },
-  setAppNameAvailability: (isAvailableObject: any) =>
+  setAppNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
     dispatch(setAppNameAvailabilityAction(isAvailableObject)),
   setValidationStatus: (status: boolean) =>
     dispatch(setAzureValidationStatusAction(status))

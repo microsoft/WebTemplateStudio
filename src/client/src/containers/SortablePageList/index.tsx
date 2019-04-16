@@ -15,6 +15,8 @@ import { validateName } from "../../utils/validateName";
 
 import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 const MAX_PAGE_NAME_LENGTH = 50;
 
@@ -136,7 +138,7 @@ const mapStateToProps = (state: AppState): ISortablePageListProps => ({
   selectedPages: state.selection.pages
 });
 
-const mapDispatchToProps = (dispatch: any): ISortableDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): ISortableDispatchProps => ({
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
   }

@@ -21,6 +21,8 @@ import {
 } from "../../selectors/wizardSelectionSelector";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { AppState } from "../../reducers";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => any;
@@ -66,7 +68,7 @@ const Welcome = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   updateProjectName: (projectName: string) => {
     dispatch(updateProjectNameAction(projectName));
   },

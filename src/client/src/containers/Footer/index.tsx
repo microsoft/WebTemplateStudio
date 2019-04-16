@@ -36,6 +36,8 @@ import {
 } from "../../selectors/wizardNavigationSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
 import { AppState } from "../../reducers";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -223,7 +225,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
   },

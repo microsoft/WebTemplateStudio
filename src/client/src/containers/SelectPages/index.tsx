@@ -16,6 +16,8 @@ import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountRedu
 
 import { defineMessages, InjectedIntl, injectIntl } from "react-intl";
 import { AppState } from "../../reducers";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
@@ -129,7 +131,7 @@ const mapStateToProps = (state: AppState): ISelectPagesProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   getPages: (
     projectType: string,
     frontendFramework: string,
