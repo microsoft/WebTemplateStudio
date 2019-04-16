@@ -1,7 +1,14 @@
 import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-const fs = require("fs");
+import fs = require("fs");
 import { ExtensionCommand } from "../constants";
+import path = require("path");
+
+const OUTPUT_CHANNEL_DEFAULT = "Web Template Studio";
+const LOG_FILENAME_PREFIX = "LOG_WTS_LOCAL";
+const GET_LOG_PATH = (filename: string) => {
+  return path.join("./log", filename);
+};
 
 export class Logger extends WizardServant {
   clientCommandMap: Map<
@@ -12,13 +19,28 @@ export class Logger extends WizardServant {
   private static outputContent: string = "";
   private static loggingFile = Logger.getLoggingFile();
   public static getLoggingFile() {
-    fs.readdir("./logs", (error: any, items: any) => {
-      for (var i = 0; i < items.length; i++) {
-        // TODO: Check oldest log file if they are 5 and delete the 5th one
-        // Otherwise, create a new file
+    let items = fs.readdirSync("./logs");
+    let oldestFileDate: number = 0;
+    let oldestFile: string = "";
+    let logFilesCount: number = 0;
+    // Get oldest file
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].length > LOG_FILENAME_PREFIX.length) {
+        if (items[i].startsWith(LOG_FILENAME_PREFIX)) {
+          logFilesCount += 1;
+          let currentFileDate = fs.statSync(GET_LOG_PATH(items[i])).birthtimeMs;
+          if (oldestFileDate === 0 || oldestFileDate > currentFileDate) {
+            oldestFileDate = currentFileDate;
+            oldestFile = items[i];
+          }
+        }
       }
-    });
-    return fs.open("./logs/LOG_FILE", "a");
+    }
+    if (logFilesCount >= 5) {
+      // Delete oldest file
+      fs.unlinkSync(oldestFile);
+    }
+    return GET_LOG_PATH(LOG_FILENAME_PREFIX.concat("_", Date.now().toString()));
   }
   public static initializeOutputChannel(extensionName: string): void {
     if (Logger.outputChannel === undefined) {
@@ -27,23 +49,24 @@ export class Logger extends WizardServant {
   }
   public static appendLog(message: string): void {
     if (Logger.outputChannel === undefined) {
-      Logger.initializeOutputChannel("Web Template Studio");
+      Logger.initializeOutputChannel(OUTPUT_CHANNEL_DEFAULT);
     }
     Logger.outputChannel.appendLine(message);
     Logger.outputContent.concat(message, "\n");
   }
   public static display(): void {
     if (Logger.outputChannel === undefined) {
-      Logger.initializeOutputChannel("Web Template Studio");
+      Logger.initializeOutputChannel(OUTPUT_CHANNEL_DEFAULT);
     }
     Logger.outputChannel.show(true);
-    Logger.loggingFile.appendLine(Logger.outputContent);
+    fs.appendFileSync(Logger.loggingFile, Logger.outputContent);
     Logger.outputContent = "";
   }
   private static async receiveLogfromWizard(
     message: any
   ): Promise<IPayloadResponse> {
     Logger.appendLog(message.input);
+    Logger.display();
     return {
       payload: null
     };
