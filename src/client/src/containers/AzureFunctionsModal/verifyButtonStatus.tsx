@@ -1,8 +1,8 @@
-export const setAzureModalValidation = (
+export const setFunctionsModalButtonStatus = (
   selections: any,
   isValidatingName: boolean,
   appNameAvailability: any,
-  updateValidation: (selectionIsEmptyBooleans: any) => void
+  setFormIsSendable: (status: boolean) => void
 ): boolean => {
   let isSubscriptionEmpty: boolean = false;
   let isResourceGroupEmpty: boolean = false;
@@ -29,13 +29,9 @@ export const setAzureModalValidation = (
 
   const { isAppNameAvailable } = appNameAvailability;
 
-  updateValidation({
-    isSubscriptionEmpty: isSubscriptionEmpty,
-    isResourceGroupEmpty: isResourceGroupEmpty,
-    isAppNameEmpty: isAppNameEmpty,
-    isNumFunctionsZero: isNumFunctionsZero,
-    isLocationEmpty: isLocationEmpty,
-    isRuntimeStackEmpty: isRuntimeStackEmpty
-  });
-  return isAnyEmpty || !isAppNameAvailable || isValidatingName;
+  const isDisabled = isAnyEmpty || isValidatingName || !isAppNameAvailable;
+
+  setFormIsSendable(!isDisabled);
+
+  return isDisabled;
 };

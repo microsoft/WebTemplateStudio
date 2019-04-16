@@ -1,8 +1,8 @@
-export const setCosmosModalValidation = (
+export const setCosmosModalButtonStatus = (
   selections: any,
   isValidatingName: boolean,
   accountNameAvailability: any,
-  updateValidation: (selectionIsEmptyBooleans: any) => void
+  setFormIsSendable: (status: boolean) => void
 ): boolean => {
   let isSubscriptionEmpty: boolean = false;
   let isResourceGroupEmpty: boolean = false;
@@ -25,13 +25,10 @@ export const setCosmosModalValidation = (
     isApiEmpty;
 
   const { isAccountNameAvailable } = accountNameAvailability;
+  
+  const isDisabled =  isAnyEmpty || isValidatingName || !isAccountNameAvailable;
+  
+  setFormIsSendable(!isDisabled);
 
-  updateValidation({
-    isSubscriptionEmpty: isSubscriptionEmpty,
-    isResourceGroupEmpty: isResourceGroupEmpty,
-    isLocationEmpty: isLocationEmpty,
-    isAccountNameEmpty: isAccountNameEmpty,
-    isApiEmpty: isApiEmpty
-  });
-  return isAnyEmpty || isValidatingName || !isAccountNameAvailable;
+  return isDisabled;
 };

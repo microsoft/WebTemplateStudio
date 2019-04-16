@@ -18,9 +18,9 @@ import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getFunctionsSelection } from "../../selectors/azureFunctionsServiceSelector";
 import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector";
 
-import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
-import { setAzureModalValidation } from "./modalValidation";
+import { setFunctionsModalButtonStatus } from "./verifyButtonStatus";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
@@ -39,6 +39,8 @@ import {
 import { AppState } from "../../reducers";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import RootAction from "../../actions/ActionType";
+import { messages } from "./messages";
+import classNames from "classnames";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -82,77 +84,6 @@ const links: attributeLinks = {
   numFunctions: null,
   runtimeStack: null
 };
-
-const messages = defineMessages({
-  subscriptionLabel: {
-    id: "azureFunctionsModal.subscriptionLabel",
-    defaultMessage: "Subscription"
-  },
-  ariaSubscriptionLabel: {
-    id: "azureFunctionsModal.ariaSubscriptionLabel",
-    defaultMessage: "Subscription Drop Down"
-  },
-  resourceGroupLabel: {
-    id: "azureFunctionsModal.resourceGroupLabel",
-    defaultMessage: "Resource Group"
-  },
-  ariaResourceGroupLabel: {
-    id: "azureFunctionsModal.ariaResourceGroupLabel",
-    defaultMessage: "Resource Group Drop Down"
-  },
-  locationLabel: {
-    id: "azureFunctionsModal.locationLabel",
-    defaultMessage: "Location"
-  },
-  ariaLocationLabel: {
-    id: "azureFunctionsModal.ariaLocationLabel",
-    defaultMessage: "Location Drop Down"
-  },
-  runtimeStackLabel: {
-    id: "azureFunctionsModal.runtimeStackLabel",
-    defaultMessage: "Runtime Stack"
-  },
-  ariaRuntimeStackLabel: {
-    id: "azureFunctionsModal.ariaRuntimeStackLabel",
-    defaultMessage: "Runtime Stack Drop Down"
-  },
-  numFunctionsLabel: {
-    id: "azureFunctionsModal.numFunctionsLabel",
-    defaultMessage: "Number of functions"
-  },
-  ariaNumFunctionsLabel: {
-    id: "azureFunctionsModal.ariaNumFunctionsLabel",
-    defaultMessage: "Number of functions Drop Down"
-  },
-  appNameLabel: {
-    id: "azureFunctionsModal.appNameLabel",
-    defaultMessage: "App Name"
-  },
-  ariaAppNameLabel: {
-    id: "azureFunctionsModal.ariaAppNameLabel",
-    defaultMessage: "App Name Input"
-  },
-  createNew: {
-    id: "azureFunctionsModal.createNew",
-    defaultMessage: "Create New"
-  },
-  appName: {
-    id: "azureFunctionsModal.appName",
-    defaultMessage: "App Name"
-  },
-  saveChanges: {
-    id: "azureFunctionsModal.saveChanges",
-    defaultMessage: "Save Changes"
-  },
-  addResource: {
-    id: "azureFunctionsModal.addResource",
-    defaultMessage: "Add Resource"
-  },
-  createFunctionApp: {
-    id: "azureFunctionsModal.createFunctionApp",
-    defaultMessage: "Create Function Application"
-  }
-});
 
 interface IFunctionsState {
   [key: string]: any;
@@ -220,6 +151,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
   const [functionsData, setData] = React.useState(
     azureFunctionModalInitialState
   );
+
   // Hardcoding a "node" value until data can be loaded dynamically
   React.useEffect(() => {
     setData({
@@ -242,14 +174,17 @@ const AzureFunctionsResourceModal = (props: Props) => {
   }, [props.subscriptionData]);
   const [azureFunctionsFormData, updateForm] = React.useState(initialState);
 
-  const [modalValidation, updateValidation] = React.useState({
-    isAppNameEmpty: false,
-    isRuntimeStackEmpty: false,
-    isLocationEmpty: false,
-    isSubscriptionEmpty: false,
-    isResourceGroupEmpty: false,
-    isNumFunctionsZero: false
-  });
+  const [formIsSendable, setFormIsSendable] = React.useState(false);
+
+  const handleChange = (updatedFunctionsForm: IFunctionsState) => {
+    setFunctionsModalButtonStatus(
+      updatedFunctionsForm,
+      props.isValidatingName,
+      props.appNameAvailability,
+      setFormIsSendable
+    );
+    updateForm(updatedFunctionsForm);
+  };
 
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
@@ -281,7 +216,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         }
       };
     }
-    updateForm(updatedForm);
+    handleChange(updatedForm);
   };
 
   /**
@@ -308,7 +243,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
 
   React.useEffect(() => {
     if (props.selection) {
-      updateForm(props.selection.dropdownSelection);
+      handleChange(props.selection.dropdownSelection);
     } else {
       props.setAppNameAvailability({
         isAvailable: false,
@@ -317,13 +252,22 @@ const AzureFunctionsResourceModal = (props: Props) => {
     }
   }, []);
 
+  React.useEffect(() => {
+    setFunctionsModalButtonStatus(
+      azureFunctionsFormData,
+      props.isValidatingName,
+      props.appNameAvailability,
+      setFormIsSendable
+    );
+  }, [props.isValidatingName]);
+
   /**
    * To obtain the input value, must cast as HTMLInputElement
    * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
    */
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
-    updateForm({
+    handleChange({
       ...azureFunctionsFormData,
       appName: {
         value: element.value,
@@ -331,21 +275,19 @@ const AzureFunctionsResourceModal = (props: Props) => {
       }
     });
   };
+
+  const getButtonClassNames = () => {
+    const buttonClass = formIsSendable
+      ? buttonStyles.buttonHighlighted
+      : buttonStyles.buttonDark;
+
+    return classNames(buttonClass, styles.button, styles.selectionContainer);
+  };
+
   const handleAddResource = () => {
-    if (
-      setAzureModalValidation(
-        azureFunctionsFormData,
-        props.isValidatingName,
-        props.appNameAvailability,
-        updateValidation
-      )
-    ) {
-      return;
-    }
     props.saveAzureFunctionsOptions(azureFunctionsFormData);
   };
   const getDropdownSection = (
-    isEmpty: boolean,
     leftHeader: string,
     options: any,
     formSectionId: string,
@@ -385,13 +327,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
           }
           disabled={disabled}
         />
-        {isEmpty && (
-          <div className={styles.errorMessage}>
-            {props.intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
-              fieldId: leftHeader
-            })}
-          </div>
-        )}
       </div>
     );
   };
@@ -426,8 +361,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
         />
       </div>
       {getDropdownSection(
-        modalValidation.isSubscriptionEmpty &&
-          azureFunctionsFormData.subscription.value === "",
         FORM_CONSTANTS.SUBSCRIPTION.label,
         functionsData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
@@ -437,8 +370,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
         DEFAULT_VALUE
       )}
       {getDropdownSection(
-        modalValidation.isResourceGroupEmpty &&
-          azureFunctionsFormData.resourceGroup.value === "",
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         functionsData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
@@ -496,18 +427,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
               {props.appNameAvailability.message}
             </div>
           )}
-        {modalValidation.isAppNameEmpty &&
-          azureFunctionsFormData.appName.value.length == 0 && (
-            <div className={styles.errorMessage}>
-              {props.intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
-                fieldId: FORM_CONSTANTS.APP_NAME.label
-              })}
-            </div>
-          )}
       </div>
       {getDropdownSection(
-        modalValidation.isLocationEmpty &&
-          azureFunctionsFormData.location.value === "",
         FORM_CONSTANTS.LOCATION.label,
         functionsData.location,
         FORM_CONSTANTS.LOCATION.value,
@@ -517,8 +438,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
         DEFAULT_VALUE
       )}
       {getDropdownSection(
-        modalValidation.isRuntimeStackEmpty &&
-          azureFunctionsFormData.runtimeStack.value === "",
         FORM_CONSTANTS.RUNTIME_STACK.label,
         functionsData.runtimeStack,
         FORM_CONSTANTS.RUNTIME_STACK.value,
@@ -529,8 +448,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
       )}
       <div className={styles.modalFooterContainer}>
         {getDropdownSection(
-          modalValidation.isNumFunctionsZero &&
-            azureFunctionsFormData.numFunctions.value === 0,
           FORM_CONSTANTS.NUM_FUNCTIONS.label,
           getNumFunctionsData(),
           FORM_CONSTANTS.NUM_FUNCTIONS.value,
@@ -540,12 +457,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
           1
         )}
         <button
-          className={classnames(
-            buttonStyles.buttonHighlighted,
-            styles.button,
-            styles.selectionContainer
-          )}
+          className={getButtonClassNames()}
           onClick={handleAddResource}
+          disabled={!formIsSendable}
         >
           {(props.selection &&
             props.intl.formatMessage(messages.saveChanges)) ||

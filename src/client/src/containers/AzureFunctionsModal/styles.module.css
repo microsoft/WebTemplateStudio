@@ -44,6 +44,11 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+.button:disabled {
+  opacity: 0.5;
+  outline: none;
+}
+
 .icon {
   cursor: pointer;
   height: 15px;
