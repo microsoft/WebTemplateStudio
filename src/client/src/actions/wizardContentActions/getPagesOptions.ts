@@ -57,7 +57,7 @@ function getApiTemplateInfoFromJson(items: any[]): IApiTemplateInfo[] {
       displayName: val.name,
       licenses: val.licenses,
       longDescription: val.richDescription,
-      name: getGroupIdentityFromIdentity(val.templateId),
+      name: val.templateId,
       position: val.displayOrder,
       selected: false,
       summary: val.description,

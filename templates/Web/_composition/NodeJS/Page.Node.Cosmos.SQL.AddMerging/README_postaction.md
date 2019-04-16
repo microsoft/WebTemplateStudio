@@ -1,9 +1,5 @@
-﻿### Adding a New Page
-
-1. Create a folder in `/src/components` with your react components.
-2. Add a route for your page to `/src/App.js`.
-3. Add a button to the navigation bar in `/src/components/NavBar/index.js`.
-
+﻿## Next Steps
+//^^
 //{[{
 
 ### Cosmos Database
@@ -21,7 +17,7 @@ The generated templates can be deployed to Azure App Service using the following
 
 ├── server/ - Express server that provides API routes and serves front-end
 //{[{
-│ ├── mongo/ - Handles all interactions with the cosmos database
+│ ├── sql/ - Handles all interactions with the cosmos database
 //}]}
 │ ├── routes/ - Handles API calls for routes
 │ ├── app.js - Adds middleware to the express server
@@ -38,13 +34,10 @@ The generated templates can be deployed to Azure App Service using the following
 
 ## Additional Documentation
 
-- React - https://reactjs.org/
-- React Router - https://reacttraining.com/react-router/
 - Bootstrap CSS - https://getbootstrap.com/
-- Express - https://expressjs.com/
+//^^
 //{[{
-- Mongo/Mongoose - https://mongoosejs.com/docs/guide.html
-- Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongoose
+- Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/create-sql-api-nodejs
 //}]}
 
   This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
