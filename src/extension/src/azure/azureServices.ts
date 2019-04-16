@@ -17,11 +17,37 @@ import {
   CONSTANTS,
   AzureResourceType,
   DialogMessages,
-  DialogResponses
+  DialogResponses,
+  ExtensionCommand
 } from "../constants";
-import { SubscriptionError } from "../errors";
+import { SubscriptionError, AuthorizationError } from "../errors";
+import { WizardServant, IPayloadResponse } from "../wizardServant";
 
-export abstract class AzureServices {
+export class AzureServices extends WizardServant {
+  clientCommandMap: Map<
+    ExtensionCommand,
+    (message: any) => Promise<IPayloadResponse>
+  > = new Map([
+    [ExtensionCommand.Login, AzureServices.performLoginForSubscriptions],
+    [ExtensionCommand.GetUserStatus, AzureServices.sendUserStatusIfLoggedIn],
+    [ExtensionCommand.Logout, AzureServices.performLogout],
+    [
+      ExtensionCommand.SubscriptionDataForCosmos,
+      AzureServices.sendCosmosSubscriptionDataToClient
+    ],
+    [
+      ExtensionCommand.SubscriptionDataForFunctions,
+      AzureServices.sendFunctionsSubscriptionDataToClient
+    ],
+    [
+      ExtensionCommand.NameFunctions,
+      AzureServices.sendFunctionNameValidationStatusToClient
+    ],
+    [
+      ExtensionCommand.NameCosmos,
+      AzureServices.sendCosmosNameValidationStatusToClient
+    ]
+  ]);
 
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
@@ -31,26 +57,64 @@ export abstract class AzureServices {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
 
-  public static async performLogin() {
-    return await AzureAuth.login();
+  public static async performLoginForSubscriptions(
+    message: any
+  ): Promise<IPayloadResponse> {
+    let isLoggedIn = await AzureAuth.login();
+    if (isLoggedIn) {
+      return AzureServices.sendUserStatusIfLoggedIn(message);
+    }
+    throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
   }
-  public static async performLogout() {
-    return await AzureAuth.logout();
-  }
-  public static async getUserInfo() {
-    this.subscriptionItemList = await AzureAuth.getSubscriptions();
 
-    const subscriptionListToDisplay = this.subscriptionItemList.map(
-      subscriptionItem => {
-        return {
-          label: subscriptionItem.label,
-          value: subscriptionItem.label
-        };
-      }
-    );
+  public static async sendUserStatusIfLoggedIn(
+    message: any
+  ): Promise<IPayloadResponse> {
+    if (AzureAuth.getEmail()) {
+      AzureServices.subscriptionItemList = await AzureAuth.getSubscriptions();
+      const subscriptionListToDisplay = AzureServices.subscriptionItemList.map(
+        subscriptionItem => {
+          return {
+            label: subscriptionItem.label,
+            value: subscriptionItem.label
+          };
+        }
+      );
+      return {
+        payload: {
+          email: AzureAuth.getEmail(),
+          subscriptions: subscriptionListToDisplay
+        }
+      };
+    } else {
+      return { payload: null };
+    }
+  }
+  public static async performLogout(message: any): Promise<IPayloadResponse> {
+    let success = await AzureAuth.logout();
+    let payloadResponse: IPayloadResponse = { payload: success };
+    return payloadResponse;
+  }
+
+  public static async sendCosmosSubscriptionDataToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
     return {
-      email: AzureAuth.getEmail(),
-      subscriptions: subscriptionListToDisplay
+      payload: await AzureServices.getSubscriptionData(
+        message.subscription,
+        AzureResourceType.Cosmos
+      )
+    };
+  }
+
+  public static async sendFunctionsSubscriptionDataToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
+    return {
+      payload: await AzureServices.getSubscriptionData(
+        message.subscription,
+        AzureResourceType.Functions
+      )
     };
   }
 
@@ -59,11 +123,11 @@ export abstract class AzureServices {
    * @returns a Json object of Formatted Resource and Location strings
    *
    * */
-  public static async getSubscriptionData(
+  private static async getSubscriptionData(
     subscriptionLabel: string,
     AzureType: AzureResourceType
   ) {
-    let subscriptionItem = this.subscriptionItemList.find(
+    let subscriptionItem = AzureServices.subscriptionItemList.find(
       subscriptionItem => subscriptionItem.label === subscriptionLabel
     );
     if (subscriptionItem === undefined) {
@@ -115,28 +179,63 @@ export abstract class AzureServices {
     };
   }
 
-  public static async validateCosmosAccountName(
-    cosmosDBAccountName: string,
-    subscriptionLabel: string
-  ): Promise<string | undefined> {
-    await this.updateCosmosDBSubscriptionItemCache(subscriptionLabel);
-
-    return await this.AzureCosmosDBProvider.validateCosmosDBAccountName(
-      cosmosDBAccountName,
-      this.usersCosmosDBSubscriptionItemCache
+  public static async sendCosmosNameValidationStatusToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
+    await AzureServices.updateCosmosDBSubscriptionItemCache(
+      message.subscription
     );
+
+    return await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(
+      message.appName,
+      AzureServices.usersCosmosDBSubscriptionItemCache
+    )
+      .then((invalidReason: string | undefined) => {
+        return {
+          payload: {
+            isAvailable:
+              !invalidReason ||
+              invalidReason === undefined ||
+              invalidReason === "",
+            reason: invalidReason
+          }
+        };
+      })
+      .catch((error: Error) => {
+        throw error; //to log in telemetry
+      });
   }
-
-  public static async validateFunctionAppName(
-    functionAppName: string,
-    subscriptionLabel: string
-  ): Promise<boolean | undefined> {
-    await this.updateFunctionSubscriptionItemCache(subscriptionLabel);
-
-    return this.AzureFunctionProvider.checkFunctionAppName(
-      functionAppName,
-      this.usersFunctionSubscriptionItemCache
+  public static async sendFunctionNameValidationStatusToClient(message: any) {
+    await AzureServices.updateFunctionSubscriptionItemCache(
+      message.subscription
     );
+    return AzureServices.AzureFunctionProvider.checkFunctionAppName(
+      message.appName,
+      AzureServices.usersFunctionSubscriptionItemCache
+    )
+      .then(isValid => {
+        return {
+          payload: {
+            isAvailable: isValid,
+            reason: isValid
+              ? ""
+              : CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(
+                  message.appName
+                )
+          }
+        };
+      })
+      .catch((error: Error) => {
+        // FIXME: Error validation shouldn't throw an error
+
+        return {
+          payload: {
+            isAvailable: false,
+            reason: error.message
+          }
+        };
+        // throw error; //to log in telemetry
+      });
   }
 
   /*
@@ -146,14 +245,15 @@ export abstract class AzureServices {
     subscriptionLabel: string
   ): Promise<void> {
     if (
-      this.usersCosmosDBSubscriptionItemCache === undefined ||
-      subscriptionLabel !== this.usersCosmosDBSubscriptionItemCache.label
+      AzureServices.usersCosmosDBSubscriptionItemCache === undefined ||
+      subscriptionLabel !==
+        AzureServices.usersCosmosDBSubscriptionItemCache.label
     ) {
-      let subscriptionItem = this.subscriptionItemList.find(
+      let subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
       );
       if (subscriptionItem) {
-        this.usersCosmosDBSubscriptionItemCache = subscriptionItem;
+        AzureServices.usersCosmosDBSubscriptionItemCache = subscriptionItem;
       } else {
         throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
       }
@@ -164,14 +264,15 @@ export abstract class AzureServices {
     subscriptionLabel: string
   ): Promise<void> {
     if (
-      this.usersFunctionSubscriptionItemCache === undefined ||
-      subscriptionLabel !== this.usersFunctionSubscriptionItemCache.label
+      AzureServices.usersFunctionSubscriptionItemCache === undefined ||
+      subscriptionLabel !==
+        AzureServices.usersFunctionSubscriptionItemCache.label
     ) {
-      let subscriptionItem = this.subscriptionItemList.find(
+      let subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
       );
       if (subscriptionItem) {
-        this.usersFunctionSubscriptionItemCache = subscriptionItem;
+        AzureServices.usersFunctionSubscriptionItemCache = subscriptionItem;
       } else {
         throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
       }
@@ -182,14 +283,16 @@ export abstract class AzureServices {
     selections: any,
     appPath: string
   ): Promise<void> {
-    await this.updateFunctionSubscriptionItemCache(selections.subscription);
+    await AzureServices.updateFunctionSubscriptionItemCache(
+      selections.subscription
+    );
 
     let userFunctionsSelections: FunctionSelections = {
       functionAppName: selections.appName,
-      subscriptionItem: this.usersFunctionSubscriptionItemCache,
+      subscriptionItem: AzureServices.usersFunctionSubscriptionItemCache,
       resourceGroupItem: await AzureAuth.getResourceGroupItem(
         selections.resourceGroup,
-        this.usersFunctionSubscriptionItemCache
+        AzureServices.usersFunctionSubscriptionItemCache
       ),
       location: selections.location,
       runtime: selections.runtimeStack,
@@ -209,10 +312,10 @@ export abstract class AzureServices {
     genPath: string
   ): Promise<DatabaseObject> {
     try {
-      await this.validateCosmosAccountName(
-        selections.accountName,
-        selections.subscription
-      );
+      await AzureServices.sendCosmosNameValidationStatusToClient({
+        accountName: selections.accountName,
+        subscription: selections.subscription
+      });
     } catch (error) {
       return Promise.reject(error);
     }
@@ -223,12 +326,12 @@ export abstract class AzureServices {
       location: selections.location,
       resourceGroupItem: await AzureAuth.getResourceGroupItem(
         selections.resourceGroup,
-        this.usersCosmosDBSubscriptionItemCache
+        AzureServices.usersCosmosDBSubscriptionItemCache
       ),
-      subscriptionItem: this.usersCosmosDBSubscriptionItemCache
+      subscriptionItem: AzureServices.usersCosmosDBSubscriptionItemCache
     };
 
-    return await this.AzureCosmosDBProvider.createCosmosDB(
+    return await AzureServices.AzureCosmosDBProvider.createCosmosDB(
       userCosmosDBSelection,
       genPath
     );

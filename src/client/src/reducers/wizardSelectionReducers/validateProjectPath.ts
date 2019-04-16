@@ -1,0 +1,29 @@
+import * as Actions from "../../actions/types";
+
+/* State Shape
+{
+    projectPathValidation: {
+        isInvalidProjectPath: boolean,
+        projectPathError: string
+    }
+}
+*/
+
+interface IProjectPathValidation {
+  isInvalidProjectPath?: boolean;
+  projectPathError?: string;
+}
+
+const projectPathValidation = (
+  state: IProjectPathValidation = {},
+  action: any
+) => {
+  switch (action.type) {
+    case Actions.SET_PROJECT_PATH_VALIDATION:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export default projectPathValidation;

@@ -1,4 +1,5 @@
 import * as Actions from "../../actions/types";
+import { ISelected } from "../../types/selected";
 
 /* State Shape
 {

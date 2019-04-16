@@ -81,7 +81,7 @@ export abstract class AzureAuth {
     if (this.api.sessions.length > 0) {
       return this.api.sessions[0].userId;
     } else {
-      throw new AuthorizationError(CONSTANTS.ERRORS.SESSION_NOT_AVAILABLE);
+      return "";
     }
   }
 

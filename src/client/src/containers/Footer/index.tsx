@@ -7,7 +7,7 @@ import { Link, withRouter } from "react-router-dom";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import { ROUTES, EXTENSION_COMMANDS } from "../../utils/constants";
+import { ROUTES, EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { validateName } from "../../utils/validateName";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -25,12 +25,13 @@ import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
 import { openPostGenModalAction } from "../../actions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 import {
   getIsVisitedRoutesSelector,
-  IVisited
+  IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
+import { AppState } from "../../reducers";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -44,7 +45,7 @@ interface IStateProps {
   cosmos: any;
   selectedFunctions: boolean;
   functions: any;
-  isVisited: IVisited;
+  isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
 }
 
@@ -78,7 +79,9 @@ class Footer extends React.Component<Props> {
     e.preventDefault();
     // @ts-ignore
     vscode.postMessage({
+      module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
+      track: false,
       text: "Sending generation info...",
       payload: {
         engine,
@@ -108,7 +111,9 @@ class Footer extends React.Component<Props> {
   };
   public trackPageForTelemetry = (pathname: string) => {
     this.props.vscode.postMessage({
+      module: EXTENSION_MODULES.TELEMETRY,
       command: EXTENSION_COMMANDS.TRACK_PAGE_SWITCH,
+      track: false,
       pageName: pathname
     });
   };
@@ -203,7 +208,7 @@ class Footer extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: getVSCodeApiSelector(state),
   engine: rootSelector(state),
   selectedCosmos: isCosmosResourceCreatedSelector(state),

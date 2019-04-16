@@ -26,6 +26,7 @@ interface IProps {
   isDraggable?: boolean;
   rotate?: boolean;
   subTitle?: string;
+  error?: string | FormattedMessage.MessageDescriptor;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -46,7 +47,8 @@ const SummaryTile = ({
   isDraggable,
   rotate,
   subTitle,
-  intl
+  intl,
+  error
 }: Props) => {
   const [componentTitle, setTitle] = React.useState(title);
   const [isDisabled, setDisabled] = React.useState(true);
@@ -85,7 +87,11 @@ const SummaryTile = ({
       onMouseLeave={handleMouseLeave}
     >
       {isDraggable && (
-        <img className={styles.reorder} src={withLocalPath(reorder)} />
+        <img
+          className={styles.reorder}
+          src={withLocalPath(reorder)}
+          alt="Drag to reorder item"
+        />
       )}
       <div
         className={classnames({
@@ -95,12 +101,14 @@ const SummaryTile = ({
         })}
       >
         <div className={styles.leftContainer}>
-          <img
-            src={svgUrl}
-            className={classnames(styles.leftIcon, {
-              [styles.rotate]: rotate
-            })}
-          />
+          {svgUrl && (
+            <img
+              src={svgUrl}
+              className={classnames(styles.leftIcon, {
+                [styles.rotate]: rotate
+              })}
+            />
+          )}
           <div className={styles.tileContent}>
             <input
               ref={inputRef}
@@ -112,21 +120,27 @@ const SummaryTile = ({
               onClick={handleClick}
             />
             <div className={styles.metaData}>
-              {subTitle
-                ? subTitle
-                : originalTitle && (
-                    <React.Fragment>
-                      <div>{originalTitle}</div>
-                      <div>&nbsp;|&nbsp;</div>
-                    </React.Fragment>
-                  )}
-              {author && (
+              {(error && (
+                <div className={styles.errorMessage}>{error}</div>
+              )) || (
                 <React.Fragment>
-                  {author && <div>{author}</div>}
-                  {version && (
+                  {subTitle
+                    ? subTitle
+                    : originalTitle && (
+                        <React.Fragment>
+                          <div>{originalTitle}</div>
+                          <div>&nbsp;|&nbsp;</div>
+                        </React.Fragment>
+                      )}
+                  {author && (
                     <React.Fragment>
-                      <div>&nbsp;|&nbsp;</div>
-                      <div>{version}</div>
+                      {author && <div>{author}</div>}
+                      {version && (
+                        <React.Fragment>
+                          <div>&nbsp;|&nbsp;</div>
+                          <div>{version}</div>
+                        </React.Fragment>
+                      )}
                     </React.Fragment>
                   )}
                 </React.Fragment>
@@ -139,10 +153,12 @@ const SummaryTile = ({
             src={withLocalPath(edit)}
             className={styles.rightIcon}
             onClick={handleClick}
+            alt="Click to edit item name"
           />
         )}
       </div>
       <img
+        alt="Remove item from generation"
         src={withLocalPath(cancel)}
         onClick={() => {
           if (handleCloseClick && idx) {

@@ -12,6 +12,7 @@ export const CONSTANTS = {
       "Could not sync to template repository"
     ),
     INVALID_COMMAND: localize("error.invalidCommand", "Invalid command used"),
+    INVALID_MODULE: localize("error.invalidModule", "Invalid module called"),
     RESOURCE_GROUP_NOT_FOUND: localize(
       "error.resourceGroupNotFound",
       "No resource group found with this name"
@@ -153,7 +154,7 @@ export const CONSTANTS = {
     GEN_LIVE_MESSAGE_TRIGGER_NAME: "genMessage",
     SIGNALR_API_SYNC_METHOD_NAME: "SyncTemplates",
     SIGNALR_API_GENERATE_METHOD_NAME: "Generate",
-    MAX_SYNC_REQUEST_ATTEMPTS: 11,
+    MAX_SYNC_REQUEST_ATTEMPTS: 21,
     SYNC_RETRY_WAIT_TIME: 200
   },
   AZURE_LOGIN_STATUS: {
@@ -166,6 +167,7 @@ export const CONSTANTS = {
     Project_Title: "Microsoft Web Template Studio"
   },
   GENERATE_ENDPOINT: "/api/generate",
+  ENGINE_DIRECTORY: "./src/api/darwin/CoreTemplateStudio.Api",
   CONNECTION_STRING_MONGO: function(
     username: string,
     password: string,
@@ -181,9 +183,6 @@ export const CONSTANTS = {
   PORT: 5000,
   VSCODE_COMMAND: {
     OPEN_FOLDER: "vscode.openFolder"
-  },
-  PLATFORM: {
-    WIN_32: "win32"
   }
 };
 
@@ -209,7 +208,12 @@ export enum ExtensionCommand {
   OpenProjectVSCode = "open-project-vscode",
   GetVersions = "get-versions"
 }
-
+export enum ExtensionModule {
+  Azure = "Azure",
+  Generate = "GenerateExperience",
+  Telemetry = "Telemetry",
+  Validator = "Validator"
+}
 export enum TelemetryEventName {
   ExtensionLaunch = "Extension-Launch-Time",
   WizardSession = "Wizard-To-Generate-Session-Time",

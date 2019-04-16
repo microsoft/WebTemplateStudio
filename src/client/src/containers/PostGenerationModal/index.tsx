@@ -10,11 +10,13 @@ import styles from "./styles.module.css";
 
 import * as PostGenSelectors from "../../selectors/postGenerationSelector";
 import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
-import { EXTENSION_COMMANDS } from "../../utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
+import { AppState } from "../../reducers";
+import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 
 interface IStateProps {
   isTemplateGenerated: boolean;
@@ -100,7 +102,9 @@ const PostGenerationModal = ({
     if (isTemplateGenerated) {
       // @ts-ignore
       vscode.postMessage({
+        module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
+        track: true,
         payload: {
           outputPath
         }
@@ -173,7 +177,7 @@ const PostGenerationModal = ({
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
   isTemplateGenerated: PostGenSelectors.isTemplateGeneratedSelector(state),
   isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),
@@ -182,7 +186,7 @@ const mapStateToProps = (state: any): IStateProps => ({
   isServicesDeployed: PostGenSelectors.isServicesDeployedSelector(state),
   isServicesFailed: PostGenSelectors.isServicesFailureSelector(state),
   vscode: getVSCodeApiSelector(state),
-  outputPath: state.selection.outputPath
+  outputPath: getOutputPath(state)
 });
 
 export default connect(mapStateToProps)(

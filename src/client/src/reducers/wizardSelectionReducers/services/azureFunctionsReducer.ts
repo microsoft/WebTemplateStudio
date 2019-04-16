@@ -28,6 +28,7 @@ export interface ISelectedAzureFunctionsService {
   appName: string;
   runtimeStack: string;
   location: string;
+  internalName: string;
   numFunctions: number;
   functionNames?: string[];
 }

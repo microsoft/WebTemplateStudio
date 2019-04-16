@@ -2,17 +2,22 @@ import * as vscode from 'vscode';
 import TelemetryReporter from 'vscode-extension-telemetry';
 import { getPackageInfo } from './getPackageInfo';
 import { IActionContext, ITelemetryReporter, callWithTelemetryAndCatchErrors } from './callWithTelemetryAndErrorHandling';
-import { TelemetryEventName } from '../constants'; 
+import { TelemetryEventName, ExtensionCommand } from '../constants'; 
+import { WizardServant, IPayloadResponse } from '../wizardServant';
 
 export type IActionContext = IActionContext;
 
-export class TelemetryAI {
+export class TelemetryAI extends WizardServant{
+    clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
+        [ExtensionCommand.TrackPageSwitch, this.trackWizardPageTimeToNext],
+    ]);
 
     private static telemetryReporter: ITelemetryReporter;
     private wizardSessionStartTime: number;
     private pageStartTime: number;
 
     constructor(private vscodeContext: vscode.ExtensionContext, private extensionStartTime: number){
+        super();
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(vscodeContext);
         this.wizardSessionStartTime = Date.now();
         this.pageStartTime = this.wizardSessionStartTime;
@@ -34,9 +39,10 @@ export class TelemetryAI {
     * @param pageToTrack is the name of the page the wizard is on before the user clicks the next button; this page name will be sent to Application Insights as property
     * 
     */
-    public trackWizardPageTimeToNext(pageToTrack: string){
-        this.trackTimeDuration(TelemetryEventName.PageChange, this.pageStartTime, Date.now(), {"Page-Name": pageToTrack});
+    public async trackWizardPageTimeToNext(payload: any){
+        this.trackTimeDuration(TelemetryEventName.PageChange, this.pageStartTime, Date.now(), {"Page-Name": payload.pageName});
         this.pageStartTime = Date.now();
+        return {payload: true};
     }
 
     public trackWizardTotalSessionTimeToGenerate(eventName : string = TelemetryEventName.WizardSession){

@@ -6,10 +6,20 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const profileData = (state = {}, action: any) => {
+interface IAzureProfile {
+  email: string | undefined;
+  subscriptions: any;
+}
+
+const initialState = {
+  email: undefined,
+  subscriptions: {}
+};
+
+const profileData = (state: IAzureProfile = initialState, action: any) => {
   switch (action.type) {
     case Actions.LOG_OUT_OF_AZURE:
-      return {};
+      return initialState;
     case Actions.LOG_IN_TO_AZURE:
       const newState = {
         ...state,

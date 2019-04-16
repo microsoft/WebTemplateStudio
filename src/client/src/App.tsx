@@ -7,10 +7,10 @@ import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
 import PageDetails from "./containers/PageDetails";
-import SelectFrameworks from "./components/SelectFrameworks";
-import SelectPages from "./components/SelectPages";
-import SelectWebApp from "./components/SelectWebApp";
-import Welcome from "./components/Welcome";
+import SelectFrameworks from "./containers/SelectFrameworks";
+import SelectPages from "./containers/SelectPages";
+import SelectWebApp from "./containers/SelectWebApp";
+import Welcome from "./containers/Welcome";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";
@@ -18,7 +18,7 @@ import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 
-import { EXTENSION_COMMANDS, ROUTES } from "./utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES, ROUTES } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
@@ -123,7 +123,7 @@ class App extends React.Component<Props> {
           // and update redux (boolean, string)
           this.props.setCosmosResourceAccountNameAvailability({
             isAvailable: message.payload.isAvailable,
-            message: message.message
+            message: message.payload.reason
           });
           this.props.setAzureValidationStatus(false);
           return;
@@ -131,7 +131,7 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
           this.props.setAppNameAvailability({
             isAvailable: message.payload.isAvailable,
-            message: message.message
+            message: message.payload.reason
           });
           this.props.setAzureValidationStatus(false);
           return;
@@ -157,7 +157,9 @@ class App extends React.Component<Props> {
     const { vscode } = this.props;
     if (vscode !== prevProps.vscode) {
       vscode.postMessage({
-        command: EXTENSION_COMMANDS.GET_USER_STATUS
+        module: EXTENSION_MODULES.AZURE,
+        command: EXTENSION_COMMANDS.GET_USER_STATUS,
+        track: true
       });
     }
   }

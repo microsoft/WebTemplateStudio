@@ -19,16 +19,8 @@ _Note: If using Windows, use Git Bash_.
 To get started, the first step is to clone this repository. To install dependencies, compile the client, and compile the
 extension, run:
 
-_Windows:_
-
 ```
 ./build
-```
-
-_Mac/Linux_
-
-```
-bash build
 ```
 
 Open `src/extension` using `VSCode` and press `F5` to run the extension. Use `Ctrl+Shift+P` to open VSCode's extension
@@ -50,19 +42,9 @@ _**Note: You cannot sideload the VSIX and build/run the extension through Extens
 
 The installation script `createVsix` will build the extension package (_.vsix_) for you.
 
-_Windows:_
-
 ```
 ./createVsix
 ```
-
-_Mac/Linux:_
-
-```
-bash createVsix
-```
-
-_Note: We need to use the `bash` prefix to avoid setting permissions for the script._
 
 The script will package the extension into the root directory `/dist` folder. The vsix package can be distributed and
 installed by anyone who has VSCode using the command in the extension directory:

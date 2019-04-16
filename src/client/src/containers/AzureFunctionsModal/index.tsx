@@ -25,6 +25,7 @@ import { setAzureModalValidation } from "./modalValidation";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
+  EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES
 } from "../../utils/constants";
@@ -32,6 +33,8 @@ import styles from "./styles.module.css";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
 import { setAppNameAvailabilityAction } from "../../actions/setAccountAvailability";
+import { AppState } from "../../reducers";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -106,6 +109,10 @@ const messages = defineMessages({
   appName: {
     id: "azureFunctionsModal.appName",
     defaultMessage: "App Name"
+  },
+  saveChanges: {
+    id: "azureFunctionsModal.saveChanges",
+    defaultMessage: "Save Changes"
   },
   addResource: {
     id: "azureFunctionsModal.addResource",
@@ -231,7 +238,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
         resourceGroup: []
       });
       props.vscode.postMessage({
+        module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
+        track: true,
         subscription: value
       });
       updatedForm = {
@@ -257,8 +266,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
       timeout = setTimeout(() => {
         timeout = undefined;
         props.vscode.postMessage({
-          appName: azureFunctionsFormData.appName.value,
+          module: EXTENSION_MODULES.AZURE,
           command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
+          track: false,
+          appName: azureFunctionsFormData.appName.value,
           subscription: azureFunctionsFormData.subscription.value
         });
       }, 700);
@@ -477,16 +488,18 @@ const AzureFunctionsResourceModal = (props: Props) => {
           )}
           onClick={handleAddResource}
         >
-          {props.intl.formatMessage(messages.addResource)}
+          {(props.selection &&
+            props.intl.formatMessage(messages.saveChanges)) ||
+            props.intl.formatMessage(messages.addResource)}
         </button>
       </div>
     </React.Fragment>
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAzureFunctionsModalOpenSelector(state),
-  vscode: state.vscode.vscodeObject,
+  vscode: getVSCodeApiSelector(state),
   subscriptionData: state.azureProfileData.subscriptionData,
   subscriptions: state.azureProfileData.profileData.subscriptions,
   appNameAvailability:

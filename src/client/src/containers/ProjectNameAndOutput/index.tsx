@@ -16,7 +16,7 @@ import {
 } from "../../selectors/wizardSelectionSelector";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { EXTENSION_COMMANDS } from "../../utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -28,6 +28,7 @@ import {
 } from "react-intl";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
+import { AppState } from "../../reducers";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -68,7 +69,9 @@ const ProjectNameAndOutput = (props: Props) => {
     if (props.vscode) {
       if (props.projectPathValidation) {
         props.vscode.postMessage({
+          module: EXTENSION_MODULES.VALIDATOR,
           command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+          track: false,
           projectPath: props.outputPath,
           projectName: props.projectName
         });
@@ -78,7 +81,9 @@ const ProjectNameAndOutput = (props: Props) => {
   React.useEffect(() => {
     if (props.vscode) {
       props.vscode.postMessage({
+        module: EXTENSION_MODULES.VALIDATOR,
         command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+        track: false,
         projectPath: props.outputPath,
         projectName: props.projectName
       });
@@ -98,7 +103,9 @@ const ProjectNameAndOutput = (props: Props) => {
   };
   const handleSaveClick = () => {
     props.vscode.postMessage({
-      command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
+      module: EXTENSION_MODULES.VALIDATOR,
+      command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
+      track: false
     });
   };
   return (
@@ -140,7 +147,7 @@ const ProjectNameAndOutput = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: getVSCodeApiSelector(state),
   outputPath: getOutputPath(state),
   projectName: getProjectName(state),

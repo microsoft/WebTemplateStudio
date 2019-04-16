@@ -3,10 +3,11 @@ import { connect } from "react-redux";
 
 import styles from "./styles.module.css";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { EXTENSION_COMMANDS } from "../../utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import { FormattedMessage, injectIntl } from "react-intl";
+import { AppState } from "../../reducers";
 
 interface IHeaderProps {
   vscode: IVSCodeObject;
@@ -32,7 +33,9 @@ const Header = (props: Props) => {
             className={styles.button}
             onClick={() => {
               props.vscode.postMessage({
-                command: EXTENSION_COMMANDS.AZURE_LOGOUT
+                module: EXTENSION_MODULES.AZURE,
+                command: EXTENSION_COMMANDS.AZURE_LOGOUT,
+                track: true
               });
             }}
           >
@@ -44,7 +47,7 @@ const Header = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): IHeaderProps => {
+const mapStateToProps = (state: AppState): IHeaderProps => {
   const { isLoggedIn } = state.azureProfileData;
   const { email } = state.azureProfileData.profileData;
   return {

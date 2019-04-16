@@ -1,8 +1,9 @@
 import * as React from "react";
+import { FormattedMessage } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
-import DraggableSidebarItem from "../../components/DraggableSidebarItem";
-import SummaryTile from "../../components/SummaryTile";
+import DraggableSidebarItem from "../DraggableSidebarItem";
+import SummaryTile from "../SummaryTile";
 
 import styles from "./styles.module.css";
 
@@ -43,13 +44,15 @@ const SortableSummaryTile = SortableElement(
     page,
     idx,
     handleInputChange,
-    handleCloseClick
+    handleCloseClick,
+    error
   }: {
     page: any;
     idx: number;
     handleInputChange: any;
     handleCloseClick?: (idx: number) => void;
     isDraggable?: boolean;
+    error?: string | FormattedMessage.MessageDescriptor;
   }) => {
     return (
       <React.Fragment>
@@ -65,6 +68,7 @@ const SortableSummaryTile = SortableElement(
             handleInputChange={handleInputChange}
             idx={idx + 1}
             isDraggable={true}
+            error={error}
           />
         </div>
       </React.Fragment>
@@ -116,6 +120,7 @@ const SortableList = SortableContainer(
                 page={page}
                 handleInputChange={handleInputChange}
                 handleCloseClick={handleCloseClick}
+                error={pages[idx].error}
               />
             );
           })}

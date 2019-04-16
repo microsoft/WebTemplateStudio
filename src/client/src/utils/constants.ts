@@ -9,6 +9,7 @@ const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
 const WELCOME = "/";
 
 const PRODUCTION = "production";
+const DEVELOPMENT = "development";
 
 const INTL_MESSAGES = defineMessages({
   EMPTY_FIELD: {
@@ -63,6 +64,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   REST_API: "RestAPI"
 };
 
+
 const PAGE_NAME_ERROR_MESSAGES = {
   DUPLICATE_NAME: "Name has to be unique",
   INVALID_REGEX:
@@ -75,6 +77,12 @@ const EMPTY_FIELD = (fieldId: string) => {
   return `${fieldId} field cannot be empty`;
 };
 
+const EXTENSION_MODULES = {
+  AZURE: "Azure",
+  GENERATE: "GenerateExperience",
+  TELEMETRY: "Telemetry",
+  VALIDATOR: "Validator"
+};
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
   AZURE_LOGIN: "login",
@@ -96,11 +104,13 @@ const EXTENSION_COMMANDS = {
 
 export {
   PRODUCTION,
+  EXTENSION_MODULES,
   EXTENSION_COMMANDS,
   ROUTES,
   ROUTES_ARRAY,
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
-  COSMOS_APIS
+  COSMOS_APIS,
+  DEVELOPMENT
 };
