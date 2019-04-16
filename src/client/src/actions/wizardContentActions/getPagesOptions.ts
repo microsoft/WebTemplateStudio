@@ -78,7 +78,7 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
     licenses: val.licenses,
     longDescription: val.longDescription,
     selected: val.selected,
-    svgUrl: getSvgUrl(val.name),
+    svgUrl: getSvgUrl(getGroupIdentityFromIdentity(val.name)),
     title: val.displayName,
     defaultName: val.defaultName,
     isValidTitle: true,
