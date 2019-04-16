@@ -5,10 +5,10 @@ import SelectFrontEndFramework from "../SelectFrontEndFramework";
 
 const SelectFrameworks = () => {
   return (
-    <div>
+    <main>
       <SelectFrontEndFramework />
       <SelectBackEndFramework />
-    </div>
+    </main>
   );
 };
 

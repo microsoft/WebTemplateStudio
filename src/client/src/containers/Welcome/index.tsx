@@ -46,7 +46,7 @@ const Welcome = ({
   updateProjectName
 }: Props) => {
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <div className={styles.header}>
         <FormattedMessage
           id="welcome.header"
@@ -62,7 +62,7 @@ const Welcome = ({
       <div className={styles.projectDetailsContainer}>
         <ProjectNameAndOutput />
       </div>
-    </div>
+    </main>
   );
 };
 

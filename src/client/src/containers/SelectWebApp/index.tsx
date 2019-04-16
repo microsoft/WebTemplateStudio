@@ -52,7 +52,7 @@ class SelectWebApp extends React.Component<Props> {
 
   public render() {
     return (
-      <div>
+      <main>
         {this.props.type.length > 0 && (
           <SelectOption
             selectCard={this.props.selectWebApp}
@@ -64,7 +64,7 @@ class SelectWebApp extends React.Component<Props> {
             )}
           />
         )}
-      </div>
+      </main>
     );
   }
 }

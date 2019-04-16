@@ -85,7 +85,7 @@ const SummarySection = ({
     );
   };
   return (
-    <div className={styles.selectionContainer}>
+    <main className={styles.selectionContainer}>
       {selectionRows.map((selection: RowType, idx: number) => (
         <React.Fragment>
           <div
@@ -137,7 +137,7 @@ const SummarySection = ({
             )}
         </React.Fragment>
       ))}
-    </div>
+    </main>
   );
 };
 

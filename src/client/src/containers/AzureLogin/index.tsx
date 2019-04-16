@@ -43,7 +43,7 @@ class AzureLogin extends React.Component<Props> {
   public render() {
     const { isLoggedIn, intl, setDetailPage } = this.props;
     return (
-      <div>
+      <main>
         <Title>{intl.formatMessage(messages.azureLoginTitle)}</Title>
         <div className={styles.loginCard}>
           {!isLoggedIn && (
@@ -60,7 +60,7 @@ class AzureLogin extends React.Component<Props> {
           )}
         </div>
         <AzureSubscriptions />
-      </div>
+      </main>
     );
   }
 }

@@ -92,7 +92,7 @@ class SelectPages extends React.Component<Props> {
       updatePageCount
     } = this.props;
     return (
-      <div>
+      <main>
         {options.length > 0 && (
           <SelectOption
             selectOptions={selectPages}
@@ -107,7 +107,7 @@ class SelectPages extends React.Component<Props> {
             handleCountUpdate={updatePageCount}
           />
         )}
-      </div>
+      </main>
     );
   }
 }
