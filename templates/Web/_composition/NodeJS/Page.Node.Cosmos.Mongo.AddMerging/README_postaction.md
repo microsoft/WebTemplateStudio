@@ -23,8 +23,7 @@ The generated templates can be deployed to Azure App Service using the following
 │ ├── app.js - Adds middleware to the express server
 │ ├── constants.js - Defines the constants for the endpoints and port
 │ └── server.js - Configures Port and HTTP Server
-│ ├── App.jsx - React routing
-│ └── index.jsx - React root component
+//^^
 //{[{
 ├── .env - API Keys
 //}]}
