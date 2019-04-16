@@ -9,7 +9,8 @@
     "platforms": [ "Web" ],
     "languages": [ "Any" ],
     "tags": {
-      "version": "16.8.4"
+      "version": "16.8.4",
+      "preview": false
     }
   },
   {
@@ -22,7 +23,8 @@
     "platforms": [ "Web" ],
     "languages": [ "Any" ],
     "tags": {
-      "version": "7.2.0"
+      "version": "7.2.0",
+      "preview": true
     }
   }
 ]
