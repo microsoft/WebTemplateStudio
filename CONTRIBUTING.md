@@ -1,16 +1,16 @@
 # Contributing to Web Template Studio
 
-The foundation of _Web Template Studio_ is to get Web developer's up and running with a new
-web app incorporating cloud services on Azure as fast as possible.
+The foundation of _Web Template Studio_ is to get developers up and running with a new
+web app that incorporates cloud services on Azure as fast as possible.
 
-Using Web Template Studio, a developer should be able to select their preferred web
-frameworks, pages and Azure cloud services and we generate the boilerplate code for them.
-The generated code should not only follow best practices and design guidelines, but also
-include comments to guide the developer through the logic and how to add functionality to
+Using Web Template Studio, a developer can select their preferred web
+frameworks, pages and Azure cloud services to generate boilerplate code for their web app.
+The generated code not only follows best practices and design guidelines, but also
+includes comments to guide the developer through the logic and adding functionality to
 the code.
 
-Also remember that the Pull Requests must be done against the **[dev branch](https://github.com/Microsoft/WebTemplateStudio/tree/dev)**. You should also rebase off dev before
-the PR as well.
+Pull Requests must be done against the **[dev branch](https://github.com/Microsoft/WebTemplateStudio/tree/dev)**. 
+You should also rebase off dev before the PR as well.
 
 ## Legal
 
@@ -28,10 +28,10 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 ## Before you begin
 
-While we're grateful for any and all contributions, we don't want you to waste anyone's time. Please consider the following points before you start working on any contribution.
+While we're grateful for any and all contributions, we don't want you to waste anyone's time. Please consider the following points before you start working on any contributions.
 
 - Please comment on an issue to let us know you're interested in working on something before you start the work. Not only does this avoid multiple people unexpectedly working on the same thing at the same time but it enables us to make sure everyone is clear on what should be done to implement any new functionality. It's less work for everyone, in the long run, to establish this up front.
-- The code that is output in the generated projects may end up in thousands of apps so it must be of the highest quality. Expect it to be reviewed very thoroughly and it must meet our standards for style, structure, and format. There are details below and automated tests to verify their use.
+- The code that is outputted in the generated projects may end up in thousands of apps so it must be of the highest quality. Expect it to be reviewed very thoroughly. It must meet our standards for style, structure, and format. There are details below and automated tests to verify their use.
 - Get familiar with the automated tests that are part of the project. With so many possible combinations of output, it's impossible to verify everything manually. You will need to make sure they all pass.
 - When adding anything new it should be created to work with all supported frameworks. If this is going to be a problem, discuss it before beginning work.
 - New features and services shouldn't break or hide old features and services. For ex: Adding
