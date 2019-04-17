@@ -7,13 +7,12 @@ import {
   ExtensionCommand
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
-import ApiModule from "./signalr-api-module/apiModule";
+import { ApiModule } from "./signalr-api-module/apiModule";
 import { AzureServices } from "./azure/azureServices";
-import { TelemetryAI } from "./telemetry/telemetryAI";
+import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 import { WizardServant } from "./wizardServant";
 import { GenerationExperience } from "./generationExperience";
-import { ISyncReturnType } from "./types/syncReturnType";
-import { ChildProcess } from "child_process";
+import { LaunchExperience } from "./launchExperience";
 
 export class Controller {
   public static reactPanelContext: ReactPanel;
@@ -81,80 +80,39 @@ export class Controller {
    * Will launch the api, sync templates then pass in a routing function delegate to the ReactPanel
    *  @param VSCode context interface
    */
-  public async launchWizard(
-    context: vscode.ExtensionContext
-  ): Promise<ChildProcess> {
-    let process = ApiModule.StartApi(context);
-    let syncObject: ISyncReturnType = {
-      successfullySynced: false,
-      templatesVersion: ""
-    };
-    let syncAttempts = 0;
-    while (
-      !syncObject.successfullySynced &&
-      syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
-    ) {
-      syncObject = await Controller.attemptSync();
-      syncAttempts++;
-      if (!syncObject.successfullySynced) {
-        await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
+  public async launchWizard(context: vscode.ExtensionContext): Promise<any> {
+    const syncObject = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.SyncEngine,
+      async function(this: IActionContext) {
+        return await LaunchExperience.launchApiSyncModule(context).catch(error => {
+          ApiModule.StopApi();
+          throw error;
+        });
       }
-    }
-    if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-      vscode.window.showErrorMessage(
-        CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
+    );
+
+    if (syncObject) {
+      Controller.reactPanelContext = ReactPanel.createOrShow(
+        context.extensionPath,
+        this.routingMessageReceieverDelegate
       );
-      return process;
+      GenerationExperience.setReactPanel(Controller.reactPanelContext);
+
+      Controller.getVersionAndSendToClient(
+        context,
+        syncObject.templatesVersion
+      );
+      Controller.Telemetry.trackExtensionStartUpTime(
+        TelemetryEventName.ExtensionLaunch
+      );
     }
-
-    Controller.reactPanelContext = ReactPanel.createOrShow(
-      context.extensionPath,
-      this.routingMessageReceieverDelegate
-    );
-    GenerationExperience.setReactPanel(Controller.reactPanelContext);
-
-    Controller.getVersionAndSendToClient(context, syncObject.templatesVersion);
-    Controller.Telemetry.trackExtensionStartUpTime(
-      TelemetryEventName.ExtensionLaunch
-    );
-    return process;
-  }
-
-  private static timeout(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  private static async attemptSync(): Promise<ISyncReturnType> {
-    return await ApiModule.ExecuteApiCommand({
-      port: CONSTANTS.PORT,
-      payload: { path: CONSTANTS.API.PATH_TO_TEMPLATES },
-      liveMessageHandler: this.handleSyncLiveData
-    })
-      .then((syncResult: any) => {
-        return {
-          successfullySynced: true,
-          templatesVersion: syncResult.templatesVersion
-        };
-      })
-      .catch(() => {
-        return { successfullySynced: false, templatesVersion: "" };
-      });
-  }
-
-  private static handleSyncLiveData(status: string, progress?: number) {
-    let output = `Template Status: ${status}`;
-    if (progress) {
-      output += ` ${progress}%`;
-    }
-    vscode.window.setStatusBarMessage(output);
   }
 
   private static getVersionAndSendToClient(
     ctx: vscode.ExtensionContext,
     templatesVersion: string
   ) {
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetVersions,
+    Controller.handleValidMessage(ExtensionCommand.GetVersions, {
       payload: {
         templatesVersion,
         wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
@@ -171,6 +129,6 @@ export class Controller {
   }
 
   dispose() {
-    throw new Error("Method not implemented.");
+    ApiModule.StopApi();
   }
 }
