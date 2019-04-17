@@ -103,6 +103,7 @@ const azureFunctions = (
       const newFunctionState = { ...state };
       if (newFunctionState.selection[0].functionNames) {
         newFunctionState.selection[0].functionNames.splice(action.payload, 1);
+        newFunctionState.selection[0].numFunctions--;
       }
       return newFunctionState;
     case AZURE_TYPEKEYS.SAVE_AZURE_FUNCTIONS_SETTINGS:
