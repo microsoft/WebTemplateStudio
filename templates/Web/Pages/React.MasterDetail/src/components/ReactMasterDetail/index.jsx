@@ -15,9 +15,13 @@ export default class ReactMasterDetail extends Component {
       currentDisplayTabIndex: 0,
       masterDetailText: [
         {
-          paragraph: "",
+          shortDescription: "",
+          longDescription: "",
           title: "",
-          tabName: "",
+          status: "",
+          shipTo: "",
+          orderTotal: 0.0,
+          orderDate: "",
           id: 0
         }
       ]
@@ -67,7 +71,7 @@ export default class ReactMasterDetail extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <React.Fragment>
+      <main>
         <div className="container-fluid">
           <div className="row">
             <div
@@ -82,7 +86,7 @@ export default class ReactMasterDetail extends Component {
                 {masterDetailText.map((textAssets, index) => (
                   <MasterDetailSideBarTab
                     onDisplayTabClick={this.handleDisplayTabClick}
-                    tabText={textAssets.tabName}
+                    tabText={textAssets.title}
                     image={GreyAvatar}
                     index={index}
                     key={textAssets.id}
@@ -100,7 +104,7 @@ export default class ReactMasterDetail extends Component {
           text={WarningMessageText}
           onWarningClose={this.handleWarningClose}
         />
-      </React.Fragment>
+      </main>
     );
   }
 }

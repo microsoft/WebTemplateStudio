@@ -3,7 +3,14 @@ import classnames from "classnames";
 import styles from "./masterdetail.module.css";
 
 export default function MasterDetailPage(props) {
-  const { title, paragraph } = props.textSampleData;
+  const {
+    longDescription,
+    title,
+    status,
+    shipTo,
+    orderTotal,
+    orderDate
+  } = props.textSampleData;
   return (
     <div className="col">
       <div className={classnames("row", styles.heading)}>
@@ -14,7 +21,7 @@ export default function MasterDetailPage(props) {
       <div className="row">
         <div className="col-12 mt-3">
           <nav aria-label="breadcrumb">
-            <ol className="breadcrumb bg-white">
+            <ol className="breadcrumb bg-white mb-0">
               <li className="breadcrumb-item">
                 <a className={styles.breadCrumbLink} href="/ReactMasterDetail">
                   ReactMasterDetail
@@ -26,8 +33,17 @@ export default function MasterDetailPage(props) {
             </ol>
           </nav>
         </div>
-        <div className="col-md-8 col-12">
-          <p className="ml-3">{paragraph}</p>
+        <div className="col-md-8 col-12 ml-3 mb-5">
+          <p className={styles.title}>Status</p>
+          <p>{status}</p>
+          <p className={styles.title}>Order Date</p>
+          <p>{orderDate}</p>
+          <p className={styles.title}>Ship To</p>
+          <p>{shipTo}</p>
+          <p className={styles.title}>Order Total</p>
+          <p>{orderTotal}</p>
+          <p className={styles.title}>Description</p>
+          <p>{longDescription}</p>
         </div>
       </div>
     </div>

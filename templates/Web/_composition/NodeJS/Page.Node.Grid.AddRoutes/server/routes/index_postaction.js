@@ -10,7 +10,7 @@ const router = express.Router();
 //{[{
 // Grid Page Endpoint
 router.get(CONSTANTS.ENDPOINT.GRID, (req, res) => {
-  res.json(sampleData.gridTextAssets);
+  res.json(sampleData.textAssets);
 });
 //}]}
 

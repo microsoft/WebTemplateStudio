@@ -50,7 +50,7 @@ export default class Grid extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <React.Fragment>
+      <main>
         <div className={classnames("text-center", styles.header)}>
           <h1>Project Name</h1>
           <p> This is placeholder text. Your web app description goes here.</p>
@@ -71,8 +71,8 @@ export default class Grid extends Component {
             {gridTextAssets.map(textAssets => (
               <GridComponent
                 key={textAssets.id}
-                header={textAssets.header}
-                description={textAssets.description}
+                header={textAssets.title}
+                description={textAssets.shortDescription}
                 image={GreyBox}
               />
             ))}
@@ -83,7 +83,7 @@ export default class Grid extends Component {
           text={WarningMessageText}
           onWarningClose={this.handleWarningClose}
         />
-      </React.Fragment>
+      </main>
     );
   }
 }
