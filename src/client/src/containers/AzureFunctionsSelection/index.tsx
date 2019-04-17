@@ -148,6 +148,7 @@ const AzureFunctionsSelection = ({
                       closeSvgUrl={getSvg.getCancelSvg()}
                       withLargeIndent={true}
                       azureFunctionName={functionName}
+                      isAzureFunction={true}
                       handleInputChange={handleInputChange}
                       idx={idx + 1}
                       handleCloseClick={removeAzureFunction}
