@@ -86,6 +86,7 @@ const AzureFunctionsSelection = ({
                   className={styles.edit}
                   onClick={openAzureFunctionsModal}
                   onKeyDown={onEditKeyDownHandler}
+                  role="button"
                 >
                   <FormattedMessage
                     id="azureFunctionsSelection.edit"
