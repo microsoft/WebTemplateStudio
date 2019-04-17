@@ -216,7 +216,7 @@ export enum ExtensionModule {
   Generate = "GenerateExperience",
   Telemetry = "Telemetry",
   Validator = "Validator",
-  VSCodeUI = "VSCodeUI"
+  VSCodeUI = "VSCodeUI",
   Logger = "Logger"
 }
 
