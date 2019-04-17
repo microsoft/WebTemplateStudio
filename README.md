@@ -19,7 +19,7 @@ Docs to provide useful insights.
 - [Getting started with the codebase](/docs/getting-started-developers.md)
 - [Terminology for developers](/docs/terminology.md)
 
-## Instruction to use
+## Instruction To Use
 - Open **VSCode**
 - Press `ctrl+shift+p`to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension
