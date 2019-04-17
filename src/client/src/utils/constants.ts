@@ -64,7 +64,6 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   REST_API: "RestAPI"
 };
 
-
 const PAGE_NAME_ERROR_MESSAGES = {
   DUPLICATE_NAME: "Name has to be unique",
   INVALID_REGEX:

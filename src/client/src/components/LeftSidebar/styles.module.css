@@ -24,7 +24,7 @@
 
 .leftView {
   width: 350px;
-  background-color: black;
+  background-color: var(--vscode-editor-background);
   height: 100vh;
   border-right: 0.5px solid #555555;
   box-sizing: border-box;
@@ -33,7 +33,7 @@
 
 .feedback {
   text-align: center;
-  color: #54b4ff;
+  color: var(--vscode-textLink-foreground);
   text-decoration: none;
   margin-bottom: 10px;
 }

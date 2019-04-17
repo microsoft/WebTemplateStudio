@@ -1,34 +1,47 @@
 .textSelected,
 .text {
-    font-size: 1em;  
+  font-size: 1em;
 }
 
 .text {
-    font-weight: bold;
-    padding: 18px 0px;
+  font-weight: bold;
+  padding: 18px 0px;
+  color: var(--vscode-editor-foreground);
 }
 
-.textSelected {
-    color: white;
-    background-color: #0067B8;
+.selected path {
+  fill: #ffffff !important;
 }
 
 .container {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .icon {
-    height: 1em;
-    padding-left: 1em;
+  height: 1em;
+  width: 1em;
+  padding-left: 1em;
+}
+
+.textSelected {
+  color: #ffffff;
+}
+
+.icon path {
+  fill: var(--vscode-editor-background);
+}
+
+.visitedIcon path {
+  fill: var(--vscode-editor-foreground);
 }
 
 .spacer {
-    padding-left: 2em;
+  padding-left: 2em;
 }
 
 .spacer,
 .icon {
-    padding-right: 0.5em;
+  padding-right: 0.5em;
 }

@@ -6,14 +6,10 @@ import { connect } from "react-redux";
 import Card from "../../components/Card";
 
 import styles from "./styles.module.css";
-import grid from "../../css/grid.module.css";
 
 import * as AzureActions from "../../actions/logOutAzure";
 import * as ModalActions from "../../actions/modalActions";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
-
-import getSvgUrl from "../../utils/getSvgUrl";
-
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 import azureServiceOptions from "../../mockData/azureServiceOptions";
@@ -114,7 +110,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return () => {};
   }
   public render() {
-    const { isLoggedIn, setDetailPage, intl } = this.props;
+    const { isLoggedIn, setDetailPage } = this.props;
     return (
       <div className={styles.container}>
         {azureServiceOptions.map(option => (

@@ -107,14 +107,14 @@ const SortablePageList = (props: Props) => {
           className={classnames(styles.pageListContainer, styles.sidebarItem)}
         >
           <div className={styles.dropdownTitle}>Pages</div>
-          <div
+          <button
             className={styles.hideOrShow}
             onClick={() => {
               setMinimized(isMinimized ? false : true);
             }}
           >
             {hideOrShowText}
-          </div>
+          </button>
         </div>
       )}
       {!isMinimized && (

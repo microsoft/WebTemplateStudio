@@ -89,7 +89,7 @@ const ReviewAndGenerate = (props: Props) => {
       >
         {intl.formatMessage(messages.welcome)}
         <SummaryTile
-          rotate={true}
+          showFolderIcon={true}
           svgUrl={withLocalPath(folder)}
           title={projectName}
           subTitle={`${outputPath}/${projectName}`}

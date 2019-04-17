@@ -8,21 +8,18 @@ export default {
   }),
   singleValue: (base: any) => ({
     ...base,
-    color: "#FFFFFF"
+    color: "var(--vscode-editor-foreground);"
   }),
   placeholder: (base: any) => ({
     ...base,
-    color: "#FFFFFF"
+    color: "var(--vscode-menu-foreground);"
   }),
   control: (base: any, state: any): any => ({
     ...base,
     color: "white",
-    border: 0,
-    background: "#696969",
-    // match with the menu
-    borderRadius: "2px",
-    // Removes weird border around container
-    boxShadow: state.isFocused ? null : null,
+    border: "0.5px solid var(--vscode-editor-foreground)",
+    borderRadius: 0,
+    background: "var(--vscode-input-background)",
     "&:hover": {
       outline: "0.5px solid rgba(0,0,0,0.5)"
     },
@@ -30,12 +27,12 @@ export default {
   }),
   option: (provided: any, state: any) => ({
     ...provided,
-    background: state.isSelected ? "#DFDFDF" : "none",
-    color: state.isSelected && "black",
+    backgroundColor: state.isFocused && "var(--vscode-menu-foreground)",
+    color: state.isFocused && "var(--vscode-editor-background)",
     "&:hover": {
-      background: "#DFDFDF",
+      background: "var(--vscode-menu-foreground",
       border: 0,
-      color: "black"
+      color: "var(--vscode-editor-background)"
     },
     cursor: "pointer"
   }),
@@ -43,11 +40,12 @@ export default {
     ...base,
     // override border radius to match the box
     borderRadius: 0,
+    border: "0.5px solid var(--vscode-editor-foreground)",
     // beautify the word cut by adding a dash see https://caniuse.com/#search=hyphens for the compatibility
     hyphens: "auto",
     // kill the gap when opening up or down
-    marginTop: 1,
-    marginBottom: 1,
+    marginTop: 0,
+    marginBottom: 0,
     textAlign: "left",
     // prevent menu to scroll y
     wordWrap: "break-word"
@@ -56,6 +54,6 @@ export default {
     ...base,
     // kill the white space on first and last option
     padding: 0,
-    background: "#696969"
+    background: "var(--vscode-editor-background)"
   })
 };

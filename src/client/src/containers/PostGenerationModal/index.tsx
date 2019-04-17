@@ -100,7 +100,6 @@ const PostGenerationModal = ({
 }: Props) => {
   const handleOpenProject = () => {
     if (isTemplateGenerated) {
-      // @ts-ignore
       vscode.postMessage({
         module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
@@ -166,12 +165,12 @@ const PostGenerationModal = ({
       {servicesMessage()}
       <div className={styles.footerContainer}>
         <div>{intl.formatMessage(messages.help)}</div>
-        <div
+        <button
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
           onClick={handleOpenProject}
         >
           {generationMessage()}
-        </div>
+        </button>
       </div>
     </div>
   );

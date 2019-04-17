@@ -1,14 +1,17 @@
 .saveIcon {
   height: 25px;
-  transform: rotate(-90deg);
   cursor: pointer;
+}
+
+.saveIcon path {
+  fill: var(--vscode-editor-foreground);
 }
 
 .pathInput {
   outline: none;
   text-decoration: none;
   font-size: 1em;
-  background-color: #3c3c3c;
+  background-color: var(--vscode-input-background);
   width: 100%;
   border: none;
   margin-right: 0.25em;
@@ -21,18 +24,16 @@
 
 .input::placeholder,
 .pathInput::placeholder {
-  color: white;
-  opacity: 0.4;
+  color: var(--vscode-input-placeholderForeground);
 }
 
 .errorMessage {
-  background: #5f0d0d;
-  border: 1px solid #9d2f23;
+  background: var(--vscode-inputValidation-errorBackground);
+  border: 1px solid var(--vscode-inputValidation-errorBorder);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
-  border-radius: 2px;
   opacity: 50%;
   min-height: 38px;
 }
@@ -53,7 +54,6 @@
   padding: 0.5em;
   width: 100%;
   font-size: 1em;
-  background-color: #3c3c3c;
-  border: 1px solid #ffffff;
-  border-radius: 2px;
+  background-color: var(--vscode-input-background);
+  border: 1px solid var(--vscode-editor-foreground);
 }

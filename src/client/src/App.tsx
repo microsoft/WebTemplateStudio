@@ -7,7 +7,7 @@ import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
 import PageDetails from "./containers/PageDetails";
-import SelectFrameworks from "./containers/SelectFrameworks";
+import SelectFrameworks from "./components/SelectFrameworks";
 import SelectPages from "./containers/SelectPages";
 import SelectWebApp from "./containers/SelectWebApp";
 import Welcome from "./containers/Welcome";
@@ -18,7 +18,12 @@ import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 
-import { EXTENSION_COMMANDS, EXTENSION_MODULES, ROUTES } from "./utils/constants";
+import {
+  EXTENSION_COMMANDS,
+  EXTENSION_MODULES,
+  ROUTES,
+  DEVELOPMENT
+} from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/getVSCodeApi";
 import { logIntoAzureAction } from "./actions/logIntoAzure";
@@ -43,6 +48,10 @@ import { IVersions } from "./types/version";
 import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
 import { setAzureValidationStatusAction } from "./actions/setAzureValidationStatusAction";
+
+if (process.env.NODE_ENV === DEVELOPMENT) {
+  require("./css/themes.css");
+}
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -175,11 +184,8 @@ class App extends React.Component<Props> {
           <PostGenerationModal />
           <LeftSidebar />
           <div
-            className={classnames({
-              [appStyles.centerView]:
-                pathname === ROUTES.WELCOME || pathname == ROUTES.PAGE_DETAILS,
-              [appStyles.centerViewCropped]:
-                pathname !== ROUTES.WELCOME && pathname !== ROUTES.PAGE_DETAILS
+            className={classnames(appStyles.centerView, {
+              [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS
             })}
           >
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
