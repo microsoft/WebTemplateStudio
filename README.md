@@ -21,7 +21,7 @@ Docs to provide useful insights.
 
 ## Instruction To Use
 - Open **VSCode**
-- Press `ctrl+shift+p`to open VSCode's extension launcher
+- Press `ctrl+shift+p` in Windows/Linux or `⇧⌘P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension
 
 ## Example Scenario
