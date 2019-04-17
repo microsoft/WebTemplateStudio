@@ -18,7 +18,7 @@ export const strings = defineMessages({
     defaultMessage: "ERROR:"
   },
   deploymentFailure: {
-    id: "postGenerationModal.error",
+    id: "postGenerationModal.deploymentFailure",
     defaultMessage: "failed to deploy."
   },
   closeWizard: {
