@@ -10,6 +10,7 @@ import styles from "./styles.module.css";
 import { FormattedMessage } from "react-intl";
 import { IOption } from "../../types/option";
 import { ROUTES } from "../../utils/constants";
+import { IMetadata } from "../../types/metadata";
 
 interface IProps {
   cardTitle: string;

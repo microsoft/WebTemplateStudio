@@ -4,19 +4,23 @@ import { connect } from "react-redux";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
-import { openAzureFunctionsModalAction } from "../../actions/modalActions";
+import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalActions";
 
 import * as getSvg from "../../utils/getSvgUrl";
 
 import styles from "./styles.module.css";
 
-import * as AzureFunctionActions from "../../actions/azureFunctionActions";
+import * as AzureFunctionActions from "../../actions/azureActions/azureFunctionActions";
 import {
   IAzureFunctionsSelection,
   ISelectedAzureFunctionsService
 } from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
 import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { AppState } from "../../reducers";
 
 interface IProps {
   functionApps: IAzureFunctionsSelection;
@@ -108,7 +112,7 @@ const AzureFunctionsSelection = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   updateFunctionNames: (functionApp: IFunctionApp) => {
     dispatch(AzureFunctionActions.updateAzureFunctionNamesAction(functionApp));
   },

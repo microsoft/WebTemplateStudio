@@ -23,8 +23,6 @@ export class ReactPanel {
     }
   };
 
-  // private static _controller: Controller;
-
   public static createOrShow(
     extensionPath: string,
     controllerFunctionDelegate: (message: any) => any = this
@@ -94,14 +92,6 @@ export class ReactPanel {
       this._disposables
     );
   }
-
-  // TODO: this should be removed
-  public doRefactor() {
-    // Send a message to the webview webview.
-    // You can send any JSON serializable data.
-    this._panel.webview.postMessage({ command: "refactor" });
-  }
-
   public dispose() {
     ReactPanel.currentPanel = undefined;
     ApiModule.StopApi();

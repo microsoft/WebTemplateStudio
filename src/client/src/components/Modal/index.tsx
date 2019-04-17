@@ -32,10 +32,10 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    borderRadius: "4px",
+    borderRadius: "0px",
     width: "40%",
     padding: "2.4%",
-    background: "#303030"
+    background: "var(--vscode-menu-background)"
   }
 };
 

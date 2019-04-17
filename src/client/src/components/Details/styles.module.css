@@ -1,7 +1,12 @@
 .icon {
   height: 48px;
+  width: 48px;
   margin-right: 48px;
   padding-right: 20px;
+}
+
+.backIcon path {
+  fill: var(--vscode-editor-foreground);
 }
 
 .backIcon {
@@ -59,11 +64,13 @@
 }
 
 .details {
-  color: #54b4ff;
+  padding-top: 2px;
+  color: var(--vscode-textLink-foreground);
   cursor: pointer;
 }
 
 .link {
-  color: #54b4ff;
+  color: var(--vscode-textLink-foreground);
+  font-weight: var(--vscode-editor-font-weight);
   text-decoration: none;
 }

@@ -9,15 +9,16 @@ import styles from "./styles.module.css";
 import { IFunctionApp } from "../AzureFunctionsSelection";
 import { RowType } from "../../types/rowType";
 
-import * as AzureFunctionActions from "../../actions/azureFunctionActions";
+import * as AzureFunctionActions from "../../actions/azureActions/azureFunctionActions";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../../reducers";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 interface IProps {
   selectionTitle: string;
   selectionRows: RowType[];
   isEditable?: boolean;
-  modalOpeners?: { [key: string]: () => any };
 }
 
 interface IStateProps {
@@ -37,8 +38,7 @@ const SummarySection = ({
   isEditable,
   removeAzureFunction,
   updateFunctionNames,
-  functionApps,
-  modalOpeners
+  functionApps
 }: Props) => {
   const handleAzureFuncNameChange = (newTitle: string, idx: number) => {
     const { functionNames } = functionApps.selection[0];
@@ -54,6 +54,7 @@ const SummarySection = ({
     removeAzureFunction(functionIndex);
   };
   const renderTile = (
+    internalName: string | undefined,
     title: string,
     version: string,
     svgUrl?: string,
@@ -72,6 +73,7 @@ const SummarySection = ({
           title={title}
           version={version}
           svgUrl={svgUrl}
+          internalName={internalName}
           author={author}
           originalTitle={originalTitle}
           serviceTitle={serviceTitle}
@@ -97,20 +99,10 @@ const SummarySection = ({
             {idx === 0 && (
               <div className={styles.selectionTitle}>{selectionTitle}</div>
             )}
-            {modalOpeners && selection.internalName && (
-              <div
-                className={styles.editButton}
-                onClick={modalOpeners[selection.internalName]}
-              >
-                <FormattedMessage
-                  id="summarySection.editResource"
-                  defaultMessage="Edit Resource"
-                />
-              </div>
-            )}
           </div>
 
           {renderTile(
+            selection.internalName,
             selection.title,
             selection.version,
             selection.svgUrl,
@@ -122,6 +114,7 @@ const SummarySection = ({
           {selection.functionNames &&
             selection.functionNames.map((functionName, idx: number) =>
               renderTile(
+                undefined,
                 functionName,
                 "v1.0",
                 undefined,
@@ -145,7 +138,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   functionApps: state.selection.services.azureFunctions
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   updateFunctionNames: (functionApp: IFunctionApp) => {
     dispatch(AzureFunctionActions.updateAzureFunctionNamesAction(functionApp));
   },
