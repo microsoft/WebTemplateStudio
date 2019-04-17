@@ -61,6 +61,7 @@ const SortableSummaryTile = SortableElement(
             originalTitle={page.id}
             title={page.title}
             version="v1.0"
+            internalName={page.internalName}
             svgUrl={page.svgUrl}
             isEditable={true}
             author={page.author}

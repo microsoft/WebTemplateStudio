@@ -1,14 +1,26 @@
 import classnames from "classnames";
 import * as React from "react";
-import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+import {
+  injectIntl,
+  InjectedIntlProps,
+  FormattedMessage,
+  defineMessages
+} from "react-intl";
+
+import { ReactComponent as CloseSVG } from "../../assets/cancel.svg";
+import { ReactComponent as EditSVG } from "../../assets/edit.svg";
+import { ReactComponent as ReorderSVG } from "../../assets/reorder.svg";
+import { ReactComponent as FolderSVG } from "../../assets/folder.svg";
 
 import styles from "./styles.module.css";
+import getSvgUrl, { getSvg } from "../../utils/getSvgUrl";
 
-import { withLocalPath } from "../../utils/getSvgUrl";
-
-import cancel from "../../assets/cancel.svg";
-import edit from "../../assets/edit.svg";
-import reorder from "../../assets/reorder.svg";
+const messages = defineMessages({
+  changeItemName: {
+    id: "summaryTile.changeItemName",
+    defaultMessage: "Change Item Name"
+  }
+});
 
 interface IProps {
   withIndent?: boolean;
@@ -19,12 +31,13 @@ interface IProps {
   version?: string;
   isEditable?: boolean;
   svgUrl?: string;
+  internalName?: string;
   withoutEditIcon?: boolean;
   handleCloseClick?: (idx: number) => void;
   handleInputChange?: (newTitle: string, idx: number) => void;
   idx?: number;
   isDraggable?: boolean;
-  rotate?: boolean;
+  showFolderIcon?: boolean;
   subTitle?: string;
   error?: string | FormattedMessage.MessageDescriptor;
 }
@@ -39,13 +52,14 @@ const SummaryTile = ({
   serviceTitle,
   version,
   isEditable,
+  internalName,
   svgUrl,
   withoutEditIcon,
   handleCloseClick,
   idx,
   handleInputChange,
   isDraggable,
-  rotate,
+  showFolderIcon,
   subTitle,
   intl,
   error
@@ -86,13 +100,7 @@ const SummaryTile = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {isDraggable && (
-        <img
-          className={styles.reorder}
-          src={withLocalPath(reorder)}
-          alt="Drag to reorder item"
-        />
-      )}
+      {isDraggable && <ReorderSVG className={styles.reorder} />}
       <div
         className={classnames({
           [styles.indent]: withIndent,
@@ -101,16 +109,19 @@ const SummaryTile = ({
         })}
       >
         <div className={styles.leftContainer}>
-          {svgUrl && (
-            <img
-              src={svgUrl}
-              className={classnames(styles.leftIcon, {
-                [styles.rotate]: rotate
-              })}
-            />
+          {showFolderIcon ? (
+            <FolderSVG className={styles.leftIcon} />
+          ) : (
+            getSvg(internalName as string, styles.leftIcon) || (
+              <img
+                src={getSvgUrl(internalName as string)}
+                className={styles.leftIcon}
+              />
+            )
           )}
           <div className={styles.tileContent}>
             <input
+              aria-label={intl.formatMessage(messages.changeItemName)}
               ref={inputRef}
               className={styles.tileInput}
               value={componentTitle}
@@ -149,28 +160,22 @@ const SummaryTile = ({
           </div>
         </div>
         {showEditable && !withoutEditIcon && (
-          <img
-            src={withLocalPath(edit)}
-            className={styles.rightIcon}
-            onClick={handleClick}
-            alt="Click to edit item name"
-          />
+          <EditSVG className={styles.rightIcon} onClick={handleClick} />
         )}
       </div>
-      <img
-        alt="Remove item from generation"
-        src={withLocalPath(cancel)}
-        onClick={() => {
-          if (handleCloseClick && idx) {
-            // component index based at 1, so -1 for correction
-            handleCloseClick(idx - 1);
-          }
-        }}
-        className={classnames(styles.closeIcon, {
-          [styles.hidden]: !showEditable || !isEditable
-        })}
-      />
-      {!showEditable && <div className={styles.spacer} />}
+      <div className={styles.spacer}>
+        <CloseSVG
+          onClick={() => {
+            if (handleCloseClick && idx) {
+              // component index based at 1, so -1 for correction
+              handleCloseClick(idx - 1);
+            }
+          }}
+          className={classnames(styles.closeIcon, {
+            [styles.hidden]: !showEditable || !isEditable
+          })}
+        />
+      </div>
     </div>
   );
 };

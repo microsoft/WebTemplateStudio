@@ -19,6 +19,24 @@ export default class List extends Component {
     this.handleAddListItem = this.handleAddListItem.bind(this);
   }
 
+  // Get the sample data from the back end
+  componentDidMount() {
+    fetch(CONSTANTS.ENDPOINT.LIST)
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then(result => this.setState({ list: result }))
+      .catch(error =>
+        this.setState({
+          WarningMessageOpen: true,
+          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
+        })
+      );
+  }
+
   handleDeleteListItem(listItem) {
     fetch(`${CONSTANTS.ENDPOINT.LIST}/${listItem._id}`, { method: "DELETE" })
       .then(response => {
@@ -86,24 +104,6 @@ export default class List extends Component {
       WarningMessageOpen: false,
       WarningMessageText: ""
     });
-  }
-
-  // Get the sample data from the back end
-  componentDidMount() {
-    fetch(CONSTANTS.ENDPOINT.LIST)
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-      .then(result => this.setState({ list: result }))
-      .catch(error =>
-        this.setState({
-          WarningMessageOpen: true,
-          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
-        })
-      );
   }
 
   render() {

@@ -7,4 +7,5 @@
 
 .edit {
     cursor: pointer;
+    color: var(--vscode-textLink-foreground);
 }

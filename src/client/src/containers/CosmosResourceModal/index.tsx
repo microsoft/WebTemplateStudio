@@ -9,8 +9,8 @@ import { connect } from "react-redux";
 import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
-import { closeModalAction } from "../../actions/modalActions";
-import { saveCosmosDbSettingsAction } from "../../actions/saveCosmosDbSettings";
+import { closeModalAction } from "../../actions/modalActions/modalActions";
+import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import { azureModalInitialState as cosmosInitialState } from "../../mockData/cosmosDbModalData";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
@@ -32,8 +32,11 @@ import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceS
 
 import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
 import { Dispatch } from "redux";
-import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
-import { setAccountAvailability } from "../../actions/setAccountAvailability";
+import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
+import { setAccountAvailability, IAvailabilityFromExtension } from "../../actions/azureActions/setAccountAvailability";
+import { AppState } from "../../reducers";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -43,10 +46,10 @@ const DEFAULT_VALUE = {
 interface IDispatchProps {
   closeModal: () => any;
   saveCosmosOptions: (cosmosOptions: any) => any;
-  setValidationStatus: (status: boolean) => Dispatch;
+  setValidationStatus: (status: boolean) => any;
   setCosmosResourceAccountNameAvailability: (
     isAvailableObject: any
-  ) => Dispatch;
+  ) => any;
 }
 
 interface IStateProps {
@@ -80,21 +83,41 @@ const messages = defineMessages({
     id: "cosmosResourceModule.subscriptionLabel",
     defaultMessage: "Subscription"
   },
+  ariaSubscriptionLabel: {
+    id: "cosmosResourceModule.ariaSubscriptionLabel",
+    defaultMessage: "Subscription Drop Down"
+  },
   resourceGroupLabel: {
     id: "cosmosResourceModule.resourceGroupLabel",
     defaultMessage: "Resource Group"
+  },
+  ariaResourceGroupLabel: {
+    id: "cosmosResourceModule.ariaResourceGroupLabel",
+    defaultMessage: "Resource Group Drop Down"
   },
   locationLabel: {
     id: "cosmosResourceModule.locationLabel",
     defaultMessage: "Location"
   },
+  ariaLocationLabel: {
+    id: "cosmosResourceModule.ariaLocationLabel",
+    defaultMessage: "Location Drop Down"
+  },
   apiLabel: {
     id: "cosmosResourceModule.apiLabel",
     defaultMessage: "API"
   },
+  ariaApiLabel: {
+    id: "cosmosResourceModule.ariaApiLabel",
+    defaultMessage: "API Drop Down"
+  },
   accountNameLabel: {
     id: "cosmosResourceModule.accountNameLabel",
     defaultMessage: "Account Name"
+  },
+  ariaAccountNameLabel: {
+    id: "cosmosResourceModule.ariaAccountNameLabel",
+    defaultMessage: "Account Name Input"
   },
   accountName: {
     id: "cosmosResourceModule.accountName",
@@ -303,6 +326,7 @@ const CosmosResourceModal = (props: Props) => {
     leftHeader: string,
     options: any,
     formSectionId: string,
+    ariaLabel: string,
     rightHeader?: string,
     disabled?: boolean,
     defaultValue?: any
@@ -322,6 +346,7 @@ const CosmosResourceModal = (props: Props) => {
           )}
         </div>
         <Dropdown
+          ariaLabel={ariaLabel}
           options={options}
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
@@ -359,6 +384,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.SUBSCRIPTION.label,
         cosmosData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
+        props.intl.formatMessage(messages.ariaSubscriptionLabel),
         props.intl.formatMessage(messages.createNew),
         false,
         DEFAULT_VALUE
@@ -369,6 +395,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         cosmosData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
+        props.intl.formatMessage(messages.ariaResourceGroupLabel),
         props.intl.formatMessage(messages.createNew),
         cosmosFormData.subscription.value === "",
         DEFAULT_VALUE
@@ -399,6 +426,7 @@ const CosmosResourceModal = (props: Props) => {
           })}
         >
           <input
+            aria-label={props.intl.formatMessage(messages.ariaAccountNameLabel)}
             className={styles.input}
             onChange={handleInput}
             value={cosmosFormData.accountName.value}
@@ -430,6 +458,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.API.label,
         cosmosData.api,
         FORM_CONSTANTS.API.value,
+        props.intl.formatMessage(messages.ariaApiLabel),
         undefined,
         false,
         DEFAULT_VALUE
@@ -439,6 +468,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.LOCATION.label,
         cosmosData.location,
         FORM_CONSTANTS.LOCATION.value,
+        props.intl.formatMessage(messages.ariaLocationLabel),
         undefined,
         cosmosFormData.subscription.value === "",
         DEFAULT_VALUE
@@ -457,7 +487,7 @@ const CosmosResourceModal = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   accountNameAvailability:
     state.selection.services.cosmosDB.accountNameAvailability,
   isModalOpen: isCosmosDbModalOpenSelector(state),
@@ -468,14 +498,14 @@ const mapStateToProps = (state: any): IStateProps => ({
   vscode: state.vscode.vscodeObject
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   closeModal: () => {
     dispatch(closeModalAction());
   },
   saveCosmosOptions: (cosmosOptions: any) => {
     dispatch(saveCosmosDbSettingsAction(cosmosOptions));
   },
-  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) =>
+  setCosmosResourceAccountNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
     dispatch(setAccountAvailability(isAvailableObject)),
   setValidationStatus: (status: boolean) =>
     dispatch(setAzureValidationStatusAction(status))

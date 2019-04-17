@@ -11,4 +11,5 @@ export interface ISelected {
   licenses?: License;
   author?: string;
   originalTitle?: string;
+  version?: string;
 }

@@ -1,4 +1,5 @@
-import * as Actions from "../../actions/types";
+import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
+import AzureActionType from "../../actions/azureActions/azureActionType";
 
 /* State Shape
 {
@@ -21,10 +22,10 @@ const initialState = {
 
 const subscriptionData = (
   state: ISubscriptionData = initialState,
-  action: any
+  action: AzureActionType
 ) => {
   switch (action.type) {
-    case Actions.GET_SUBSCRIPTION_DATA:
+    case AZURE_TYPEKEYS.GET_SUBSCRIPTION_DATA:
       return action.payload;
     default:
       return state;

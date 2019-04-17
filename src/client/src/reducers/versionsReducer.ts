@@ -1,5 +1,5 @@
-import * as Actions from "../actions/types";
 import { IVersions } from "../types/version";
+import { WIZARD_INFO_TYPEKEYS } from "../actions/wizardInfoActions/typeKeys";
 
 /* State Shape
 {
@@ -17,7 +17,7 @@ const initialState = {
 
 const versions = (state: IVersions = initialState, action: any) => {
   switch (action.type) {
-    case Actions.GET_VERSIONS:
+    case WIZARD_INFO_TYPEKEYS.GET_VERSIONS:
       return action.payload;
     default:
       return state;
