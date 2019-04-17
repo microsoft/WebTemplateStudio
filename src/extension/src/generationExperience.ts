@@ -126,10 +126,8 @@ export class GenerationExperience extends WizardServant{
                   enginePayload.path,
                   dbObject
                 ).then(
-                  //log in telemetry how long it took replacement
                   cosmosReplaceResponse => {
                     if (cosmosReplaceResponse.userReplacedEnv) {
-                      // Temporary Disable
                       GenerationExperience.Telemetry.trackCustomEventTime(
                         TelemetryEventName.ConnectionStringReplace,
                         cosmosReplaceResponse.startTime,
