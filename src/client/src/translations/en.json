@@ -129,7 +129,6 @@
   "sortablePageList.hide": "Hide",
   "sortablePageList.pages": "Pages",
   "sortablePageList.show": "Show",
-  "summarySection.editResource": "Edit Resource",
   "summaryTile.changeItemName": "Change Item Name",
   "welcome.body": "Project Acorn is a VS Code extension that quickly provides web developers with boilerplate code, easy to use templates, and automates the Azure deployment process, all within this wizard.",
   "welcome.header": "Welcome to Project Acorn"
