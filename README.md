@@ -19,6 +19,11 @@ Docs to provide useful insights.
 - [Getting started with the codebase](/docs/getting-started-developers.md)
 - [Terminology for developers](/docs/terminology.md)
 
+## Instruction to use
+- Open **VSCode**
+- Press `ctrl+shift+p`to open VSCode's extension launcher
+- Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension
+
 ## Example Scenario
 
 I need a Fullstack web app that stores blog posts in a Cosmos database.
