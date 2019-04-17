@@ -6,16 +6,18 @@ import SelectOption from "../SelectOption";
 import {
   selectPagesAction,
   updatePageCountAction
-} from "../../actions/selectPages";
+} from "../../actions/wizardSelectionActions/selectPages";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-import { getPagesOptionsAction } from "../../actions/getPagesOptions";
+import { getPagesOptionsAction } from "../../actions/wizardContentActions/getPagesOptions";
 import { getPageCount } from "../../selectors/wizardSelectionSelector";
 import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 
 import { defineMessages, InjectedIntl, injectIntl } from "react-intl";
 import { AppState } from "../../reducers";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
@@ -92,7 +94,7 @@ class SelectPages extends React.Component<Props> {
       updatePageCount
     } = this.props;
     return (
-      <main>
+      <div>
         {options.length > 0 && (
           <SelectOption
             selectOptions={selectPages}
@@ -107,7 +109,7 @@ class SelectPages extends React.Component<Props> {
             handleCountUpdate={updatePageCount}
           />
         )}
-      </main>
+      </div>
     );
   }
 }
@@ -129,7 +131,9 @@ const mapStateToProps = (state: AppState): ISelectPagesProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   getPages: (
     projectType: string,
     frontendFramework: string,

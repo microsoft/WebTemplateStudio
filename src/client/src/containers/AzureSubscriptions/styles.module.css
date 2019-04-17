@@ -3,13 +3,6 @@
   margin-bottom: 3%;
 }
 
-.hr {
-  border: none;
-  height: 1px;
-  color: #333;
-  background-color: #333;
-}
-
 .subscriptionCardContainer {
   flex-basis: 43%;
   flex-grow: 9999;
@@ -18,8 +11,9 @@
 .subscriptionCardContainer {
   margin-right: 10px;
   margin-bottom: 10px;
-  padding: 16px;
-  background-color: #303030;
+  padding: 15px;
+  background-color: var(--vscode-sideBar-background);
+  border: 1px solid var(--vscode-editorGroup-border);
 }
 
 .overlay {

@@ -1,4 +1,5 @@
-import * as Actions from "../../actions/types";
+import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
+import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType";
 
 /* State Shape
 {
@@ -8,10 +9,15 @@ import * as Actions from "../../actions/types";
 
 const initialState = "...";
 
-const statusMessage = (state: string = initialState, action: any) => {
+const statusMessage = (
+  state: string = initialState,
+  action: WizardInfoType
+) => {
   switch (action.type) {
-    case Actions.UPDATE_TEMPLATE_GENERATION_STATUS_MESSAGE:
+    case WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS_MESSAGE:
       return action.payload;
+    case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
+      return initialState;
     default:
       return state;
   }

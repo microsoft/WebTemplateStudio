@@ -15,6 +15,7 @@ import { ROUTES } from "../../utils/constants";
 interface IProps {
   buttonText: string;
   option: IOption;
+  disabled?: boolean;
   handleButtonClick: () => void;
   handleDetailsClick: (detailPageInfo: IOption) => void;
   useNormalButtons?: boolean;
@@ -25,6 +26,7 @@ type Props = IProps & InjectedIntlProps;
 const Card = ({
   option,
   buttonText,
+  disabled,
   handleButtonClick,
   handleDetailsClick,
   useNormalButtons,
@@ -42,26 +44,30 @@ const Card = ({
           {intl.formatMessage(formattedTitle)}
         </div>
       </div>
-      <div className={styles.cardBody}>
-        <CardBody formattedBody={formattedBody} />
-      </div>
-      <div className={styles.selectionContainer}>
-        <Link
-          onClick={() => handleDetailsClick(option)}
-          className={classNames(styles.link)}
-          to={ROUTES.PAGE_DETAILS}
-        >
-          <FormattedMessage id="card.details" defaultMessage="Details" />
-        </Link>
-        <button
-          onClick={handleButtonClick}
-          className={classnames(styles.signInButton, {
-            [buttonStyles.buttonHighlighted]: !useNormalButtons,
-            [buttonStyles.buttonDark]: useNormalButtons
-          })}
-        >
-          {buttonText}
-        </button>
+      <div className={styles.cardContent}>
+        <div className={styles.cardBody}>
+          <CardBody formattedBody={formattedBody} />
+        </div>
+        <div className={styles.selectionContainer}>
+          <Link
+            onClick={() => handleDetailsClick(option)}
+            className={styles.details}
+            to={ROUTES.PAGE_DETAILS}
+            tabIndex={disabled! ? -1 : 0}
+          >
+            <FormattedMessage id="card.details" defaultMessage="Details" />
+          </Link>
+          <button
+            onClick={handleButtonClick}
+            className={classnames(styles.signInButton, {
+              [buttonStyles.buttonHighlighted]: !useNormalButtons,
+              [buttonStyles.buttonDark]: useNormalButtons
+            })}
+            tabIndex={disabled! ? -1 : 0}
+          >
+            {buttonText}
+          </button>
+        </div>
       </div>
     </div>
   );

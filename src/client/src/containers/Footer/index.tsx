@@ -7,7 +7,11 @@ import { Link, withRouter } from "react-router-dom";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import { ROUTES, EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
+import {
+  ROUTES,
+  EXTENSION_COMMANDS,
+  EXTENSION_MODULES
+} from "../../utils/constants";
 import { validateName } from "../../utils/validateName";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -21,8 +25,8 @@ import {
   isAzureFunctionsSelectedSelector
 } from "../../selectors/azureFunctionsServiceSelector";
 
-import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
-import { openPostGenModalAction } from "../../actions/modalActions";
+import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
+import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import { FormattedMessage, injectIntl } from "react-intl";
@@ -32,6 +36,8 @@ import {
 } from "../../selectors/wizardNavigationSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
 import { AppState } from "../../reducers";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -151,6 +157,7 @@ class Footer extends React.Component<Props> {
             </div>
             <div className={styles.buttonContainer}>
               <Link
+                tabIndex={pathname === ROUTES.WELCOME ? -1 : 0}
                 className={classnames(buttonStyles.buttonDark, styles.button, {
                   [styles.disabledOverlay]: pathname === ROUTES.WELCOME
                 })}
@@ -163,6 +170,11 @@ class Footer extends React.Component<Props> {
                 <FormattedMessage id="footer.back" defaultMessage="Back" />
               </Link>
               <Link
+                tabIndex={
+                  !isValidNameAndProjectPath || this.isReviewAndGenerate()
+                    ? -1
+                    : 0
+                }
                 className={classnames(styles.button, {
                   [buttonStyles.buttonDark]:
                     this.isReviewAndGenerate() || !isValidNameAndProjectPath,
@@ -219,7 +231,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
   },

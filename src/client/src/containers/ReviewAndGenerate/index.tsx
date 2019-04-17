@@ -6,7 +6,7 @@ import SummarySection from "../SummarySection";
 import SummaryTile from "../../components/SummaryTile";
 import SortablePageList from "../SortablePageList";
 
-import * as ModalActions from "../../actions/modalActions";
+import * as ModalActions from "../../actions/modalActions/modalActions";
 import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 
 import styles from "./styles.module.css";
@@ -21,6 +21,8 @@ import { withLocalPath } from "../../utils/getSvgUrl";
 import folder from "../../assets/folder.svg";
 import { AppState } from "../../reducers";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   openCosmosDbModal: () => any;
@@ -76,11 +78,6 @@ const ReviewAndGenerate = (props: Props) => {
     projectName,
     outputPath
   } = props;
-  const modalOpeners = {
-    [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: props.openCosmosDbModal,
-    [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]:
-      props.openAzureFunctionsModal
-  };
   return (
     <div className={styles.container}>
       <Title>{intl.formatMessage(messages.reviewAndGenerate)}</Title>
@@ -89,7 +86,7 @@ const ReviewAndGenerate = (props: Props) => {
       >
         {intl.formatMessage(messages.welcome)}
         <SummaryTile
-          rotate={true}
+          showFolderIcon={true}
           svgUrl={withLocalPath(folder)}
           title={projectName}
           subTitle={`${outputPath}/${projectName}`}
@@ -112,13 +109,12 @@ const ReviewAndGenerate = (props: Props) => {
       <SummarySection
         selectionTitle={intl.formatMessage(messages.services)}
         selectionRows={servicesRows}
-        modalOpeners={modalOpeners}
       />
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   openCosmosDbModal: () => {
     dispatch(ModalActions.openCosmosDbModalAction());
   },

@@ -20,8 +20,16 @@ import {
   DialogResponses,
   ExtensionCommand
 } from "../constants";
-import { SubscriptionError, AuthorizationError } from "../errors";
+import {
+  SubscriptionError,
+  AuthorizationError,
+  ValidationError
+} from "../errors";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
+import {
+  FunctionValidationResult,
+  ValidationHelper
+} from "./azure-functions/utils/validationHelper";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -136,7 +144,6 @@ export class AzureServices extends WizardServant {
     let resourceGroupItems = AzureAuth.getAllResourceGroupItems(
       subscriptionItem
     ).then(resourceGroups => {
-      // Format
       let formatResourceGroupList = [];
       formatResourceGroupList.push(
         ...resourceGroups.map(resourceGroup => {
@@ -172,7 +179,6 @@ export class AzureServices extends WizardServant {
       })
     );
 
-    // Parallel setup
     return {
       resourceGroups: await resourceGroupItems,
       locations: locations
@@ -205,7 +211,10 @@ export class AzureServices extends WizardServant {
         throw error; //to log in telemetry
       });
   }
-  public static async sendFunctionNameValidationStatusToClient(message: any) {
+
+  public static async sendFunctionNameValidationStatusToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
     await AzureServices.updateFunctionSubscriptionItemCache(
       message.subscription
     );
@@ -213,28 +222,19 @@ export class AzureServices extends WizardServant {
       message.appName,
       AzureServices.usersFunctionSubscriptionItemCache
     )
-      .then(isValid => {
+      .then((invalidReason: string | undefined) => {
         return {
           payload: {
-            isAvailable: isValid,
-            reason: isValid
-              ? ""
-              : CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(
-                  message.appName
-                )
+            isAvailable:
+              !invalidReason ||
+              invalidReason === undefined ||
+              invalidReason === "",
+            reason: invalidReason
           }
         };
       })
       .catch((error: Error) => {
-        // FIXME: Error validation shouldn't throw an error
-
-        return {
-          payload: {
-            isAvailable: false,
-            reason: error.message
-          }
-        };
-        // throw error; //to log in telemetry
+        throw error; //to log in telemetry
       });
   }
 
@@ -299,9 +299,27 @@ export class AzureServices extends WizardServant {
       functionNames: selections.functionNames
     };
 
-    let functionProvider = new FunctionProvider();
+    let functionNamesValidation: FunctionValidationResult = ValidationHelper.validateFunctionNames(
+      userFunctionsSelections.functionNames
+    );
+    if (!functionNamesValidation.isValid) {
+      throw new ValidationError(functionNamesValidation.message);
+    }
 
-    return await functionProvider.createFunctionApp(
+    await AzureServices.AzureFunctionProvider.checkFunctionAppName(
+      userFunctionsSelections.functionAppName,
+      userFunctionsSelections.subscriptionItem
+    )
+      .then(invalidReason => {
+        if (invalidReason !== undefined && invalidReason === "") {
+          throw new ValidationError(invalidReason);
+        }
+      })
+      .catch((error: Error) => {
+        throw error; //to log in telemetry
+      });
+
+    return await AzureServices.AzureFunctionProvider.createFunctionApp(
       userFunctionsSelections,
       appPath
     );
@@ -311,14 +329,9 @@ export class AzureServices extends WizardServant {
     selections: any,
     genPath: string
   ): Promise<DatabaseObject> {
-    try {
-      await AzureServices.sendCosmosNameValidationStatusToClient({
-        accountName: selections.accountName,
-        subscription: selections.subscription
-      });
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    await AzureServices.updateCosmosDBSubscriptionItemCache(
+      selections.subscription
+    );
 
     let userCosmosDBSelection: CosmosDBSelections = {
       cosmosAPI: selections.api,
@@ -330,6 +343,19 @@ export class AzureServices extends WizardServant {
       ),
       subscriptionItem: AzureServices.usersCosmosDBSubscriptionItemCache
     };
+
+    await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(
+      userCosmosDBSelection.cosmosDBResourceName,
+      userCosmosDBSelection.subscriptionItem
+    )
+      .then(invalidReason => {
+        if (invalidReason !== undefined && invalidReason === "") {
+          throw new ValidationError(invalidReason);
+        }
+      })
+      .catch((error: Error) => {
+        throw error; //to log in telemetry
+      });
 
     return await AzureServices.AzureCosmosDBProvider.createCosmosDB(
       userCosmosDBSelection,

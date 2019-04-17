@@ -206,7 +206,8 @@ export enum ExtensionCommand {
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
   OpenProjectVSCode = "open-project-vscode",
-  GetVersions = "get-versions"
+  GetVersions = "get-versions",
+  CloseWizard = "close-wizard"
 }
 export enum ExtensionModule {
   Azure = "Azure",

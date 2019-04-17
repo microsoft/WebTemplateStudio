@@ -17,7 +17,7 @@ type Props = IPageDetailsProps & RouteComponentProps;
 const PageDetails = (props: Props) => {
   const { history, detailsPageInfo, isIntlFormatted } = props;
   return (
-    <main className={styles.detailsContainer}>
+    <div className={styles.detailsContainer}>
       <Details
         handleBackClick={history.goBack}
         detailInfo={detailsPageInfo}
@@ -32,7 +32,7 @@ const PageDetails = (props: Props) => {
           />
         )}
       </div>
-    </main>
+    </div>
   );
 };
 

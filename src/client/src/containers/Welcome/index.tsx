@@ -7,11 +7,11 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import { ROUTES } from "../../utils/constants";
 import styles from "./styles.module.css";
 
-import { setVisitedWizardPageAction } from "../../actions/setVisitedWizardPage";
+import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import ProjectNameAndOutput from "../ProjectNameAndOutput";
 import { FormattedMessage } from "react-intl";
 
-import { updateProjectNameAction } from "../../actions/updateProjectNameAndPath";
+import { updateProjectNameAction } from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
 
 import {
   getOutputPath,
@@ -21,6 +21,8 @@ import {
 } from "../../selectors/wizardSelectionSelector";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { AppState } from "../../reducers";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => any;
@@ -46,7 +48,7 @@ const Welcome = ({
   updateProjectName
 }: Props) => {
   return (
-    <main className={styles.container}>
+    <div className={styles.container}>
       <div className={styles.header}>
         <FormattedMessage
           id="welcome.header"
@@ -62,11 +64,13 @@ const Welcome = ({
       <div className={styles.projectDetailsContainer}>
         <ProjectNameAndOutput />
       </div>
-    </main>
+    </div>
   );
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<RootAction>
+): IDispatchProps => ({
   updateProjectName: (projectName: string) => {
     dispatch(updateProjectNameAction(projectName));
   },

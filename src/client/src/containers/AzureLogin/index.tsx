@@ -11,13 +11,16 @@ import styles from "./styles.module.css";
 import AzureSubscriptions from "../AzureSubscriptions";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { setDetailPageAction } from "../../actions/setDetailsPage";
+import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 import { IOption } from "../../types/option";
 import { messages } from "../../mockData/azureServiceOptions";
 
 import { microsoftAzureDetails } from "../../mockData/azureServiceOptions";
 import { withLocalPath } from "../../utils/getSvgUrl";
 import { AppState } from "../../reducers";
+import { IMetadata } from "../../types/metadata";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
@@ -43,7 +46,7 @@ class AzureLogin extends React.Component<Props> {
   public render() {
     const { isLoggedIn, intl, setDetailPage } = this.props;
     return (
-      <main>
+      <div>
         <Title>{intl.formatMessage(messages.azureLoginTitle)}</Title>
         <div className={styles.loginCard}>
           {!isLoggedIn && (
@@ -60,7 +63,7 @@ class AzureLogin extends React.Component<Props> {
           )}
         </div>
         <AzureSubscriptions />
-      </main>
+      </div>
     );
   }
 }
@@ -74,7 +77,9 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<RootAction>
+): IDispatchProps => ({
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
     dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));

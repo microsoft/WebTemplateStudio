@@ -2,6 +2,9 @@ import classnames from "classnames";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 
+import { ReactComponent as BackArrow } from "../../assets/backarrow.svg";
+import { getSvg } from "../../utils/getSvgUrl";
+
 import styles from "./styles.module.css";
 import grid from "../../css/grid.module.css";
 import backArrow from "../../assets/backarrow.svg";
@@ -41,6 +44,11 @@ const Details = ({
       {props.children}
     </a>
   );
+  const keyDownHandler = (event: any) => {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      handleBackClick();
+    }
+  };
   const renderFormattedData = (
     info: string | FormattedMessage.MessageDescriptor | undefined,
     isMarkdown: boolean
@@ -52,13 +60,19 @@ const Details = ({
             source={intl.formatMessage(
               info as FormattedMessage.MessageDescriptor
             )}
+            renderers={{ link: LinkRenderer }}
           />
         );
       }
       return intl.formatMessage(info as FormattedMessage.MessageDescriptor);
     }
     if (isMarkdown) {
-      return <ReactMarkdown source={info as string} />;
+      return (
+        <ReactMarkdown
+          source={info as string}
+          renderers={{ link: LinkRenderer }}
+        />
+      );
     } else {
       return info;
     }
@@ -67,35 +81,35 @@ const Details = ({
     <React.Fragment>
       <div className={styles.container}>
         <div className={styles.backContainer}>
-          <div>
-            {backArrow && (
-              <img
-                onClick={handleBackClick}
-                className={styles.backIcon}
-                src={process.env.REACT_APP_RELATIVE_PATH + backArrow}
-                alt="Back to previous page"
-              />
-            )}
-          </div>
-          <div className={styles.details} onClick={handleBackClick}>
-            <FormattedMessage id="details.back" defaultMessage="Back" />
+          <div
+            tabIndex={0}
+            onClick={handleBackClick}
+            onKeyDown={keyDownHandler}
+            className={styles.innerBackContainer}
+          >
+            {backArrow && <BackArrow className={styles.backIcon} />}
+            <div className={styles.details}>
+              <FormattedMessage id="details.back" defaultMessage="Back" />
+            </div>
           </div>
         </div>
         <div className={styles.detailsContainer}>
           <div>
-            {detailInfo.svgUrl && (
-              <img className={styles.icon} src={detailInfo.svgUrl} alt="icon" />
-            )}
+            {detailInfo.internalName &&
+              (getSvg(detailInfo.internalName, styles.icon) || (
+                <img
+                  className={styles.icon}
+                  src={detailInfo.svgUrl}
+                  alt="icon"
+                />
+              ))}
           </div>
           <div>
             <div className={styles.detailsTitle}>
               {renderFormattedData(detailInfo.title, false)}
             </div>
             <div className={styles.detailsDescription}>
-              {renderFormattedData(
-                detailInfo.longDescription,
-                !!formatteDetailInfo
-              )}
+              {renderFormattedData(detailInfo.longDescription, true)}
             </div>
             <div>
               <div className={classnames(styles.metaData, grid.row)}>

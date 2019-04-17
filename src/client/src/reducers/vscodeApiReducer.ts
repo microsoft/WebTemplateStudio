@@ -1,11 +1,7 @@
-import * as Actions from "../actions/types";
-
-import {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
-  PRODUCTION
-} from "../utils/constants";
+import { VSCODE_TYPEKEYS } from "../actions/vscodeApiActions/typeKeys";
+import { PRODUCTION } from "../utils/constants";
 import mockVsCodeApi from "../mockData/mockVsCodeApi";
+import { IVSCodeAPIActionType } from "../actions/vscodeApiActions/getVSCodeApi";
 
 /* State Shape
 {
@@ -34,12 +30,10 @@ function vscodeApi(
     isVsCodeApiAcquired: false,
     vscodeObject: mockVsCodeApi()
   },
-  action: {
-    type: string;
-  }
+  action: IVSCodeAPIActionType
 ) {
   switch (action.type) {
-    case Actions.GET_VSCODE_API:
+    case VSCODE_TYPEKEYS.GET_VSCODE_API:
       if (!state.isVsCodeApiAcquired) {
         const newState = { ...state };
         newState.isVsCodeApiAcquired = true;

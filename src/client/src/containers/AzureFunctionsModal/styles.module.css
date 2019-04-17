@@ -40,14 +40,37 @@
   height: 50%;
 }
 
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .icon {
   cursor: pointer;
-  height: 12px;
+  height: 15px;
+  width: 15px;
+  padding: 1px;
+  margin-right: 2px;
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.icon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
 }
 
 .validationIcon {
   height: 15px;
   margin-right: 0.2em;
+}
+
+.validationIcon path {
+  fill: var(--vscode-editorMarkerNavigationWarning-background);
 }
 
 .inputContainer {
@@ -57,23 +80,18 @@
   outline: none;
   padding: 9px;
   box-sizing: border-box;
-  background-color: #696969;
-  border: 0.5px solid rgba(0, 0, 0, 0.5);
-  border-radius: 2px;
+  background-color: var(--vscode-input-background);
+  border: 1px solid var(--vscode-editor-foreground);
 }
 
 .input {
   text-decoration: none;
   border: none;
-  background-color: #696969;
+  background-color: var(--vscode-input-background);
+  color: var(--vscode-editor-foreground);
   font-size: 1em;
   width: 100%;
   margin-right: 10px;
-}
-
-.borderRed {
-  border: 1px solid #ff6666;
-  padding: 8.5px;
 }
 
 input:focus {
@@ -81,24 +99,31 @@ input:focus {
 }
 
 input::placeholder {
-  color: white;
+  color: var(--vscode-input-placeholderForeground);
 }
 
 .createNew,
 .link {
   text-decoration: none;
-  color: #54b4ff;
+  color: var(--vscode-textLink-foreground);
+}
+
+.createNew:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .errorMessage {
   height: 38px;
-  background: #5f0d0d;
-  border: 1px solid #9d2f23;
+  background: var(--vscode-inputValidation-errorBackground);
+  border: 1px solid var(--vscode-inputValidation-errorBorder);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
-  border-radius: 2px;
   font-size: 90%;
   opacity: 50%;
 }
@@ -106,6 +131,10 @@ input::placeholder {
 .spinner {
   height: 1em;
   margin-right: 2px;
+}
+
+.spinner path {
+  stroke: var(--vscode-editor-foreground);
 }
 
 @keyframes rotate {

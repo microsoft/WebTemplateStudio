@@ -13,6 +13,10 @@ const messages = defineMessages({
   outputPath: {
     id: "outputPath.outputPath",
     defaultMessage: "Output Path"
+  },
+  ariaOutputPathLabel: {
+    id: "outputPath.ariaOutputPath",
+    defaultMessage: "Input for Output Path"
   }
 });
 
@@ -34,21 +38,28 @@ const OutputPath = ({
   intl,
   placeholder
 }: IProps & InjectedIntlProps) => {
+  const handleKeyDown = (event: any) => {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      handleSaveClick();
+    }
+  };
+
   return (
     <React.Fragment>
       <div className={styles.errorStack}>
         <div className={styles.outputPath}>
           <Input
             handleChange={handleChange}
+            ariaLabel={intl.formatMessage(messages.ariaOutputPathLabel)}
             value={value}
             customStyle={styles.pathInput}
             placeholder={placeholder}
           />
           <SaveSVG
+            tabIndex={0}
             className={styles.saveIcon}
-            onClick={() => {
-              handleSaveClick();
-            }}
+            onClick={handleSaveClick}
+            onKeyDown={handleKeyDown}
           />
         </div>
         {(isEmpty && (

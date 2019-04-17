@@ -7,7 +7,7 @@ import { defineMessages, injectIntl, InjectedIntl } from "react-intl";
 
 import SortableList from "../../components/SortableSelectionList";
 
-import { selectPagesAction } from "../../actions/selectPages";
+import { selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
 
 import { ISelected } from "../../types/selected";
 
@@ -15,6 +15,8 @@ import { validateName } from "../../utils/validateName";
 
 import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 const MAX_PAGE_NAME_LENGTH = 50;
 
@@ -52,6 +54,10 @@ const messages = defineMessages({
   show: {
     id: "sortablePageList.show",
     defaultMessage: "Show"
+  },
+  pages: {
+    id: "sortablePageList.pages",
+    defaultMessage: "Pages"
   }
 });
 
@@ -106,15 +112,17 @@ const SortablePageList = (props: Props) => {
         <div
           className={classnames(styles.pageListContainer, styles.sidebarItem)}
         >
-          <div className={styles.dropdownTitle}>Pages</div>
-          <div
+          <div className={styles.dropdownTitle}>
+            {props.intl!.formatMessage(messages.pages)}
+          </div>
+          <button
             className={styles.hideOrShow}
             onClick={() => {
               setMinimized(isMinimized ? false : true);
             }}
           >
             {hideOrShowText}
-          </div>
+          </button>
         </div>
       )}
       {!isMinimized && (
@@ -136,7 +144,7 @@ const mapStateToProps = (state: AppState): ISortablePageListProps => ({
   selectedPages: state.selection.pages
 });
 
-const mapDispatchToProps = (dispatch: any): ISortableDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): ISortableDispatchProps => ({
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
   }

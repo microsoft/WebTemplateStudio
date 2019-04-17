@@ -1,33 +1,38 @@
 .header {
-    z-index: 1;
-    position: absolute;
-    width: 100%;
-    padding: 12px 24px;
-    background-color: black;
-    border-bottom: 0.5px solid #7f7f7f;
-    display: flex;
-    justify-content: space-between;
-    box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  padding: 12px 24px;
+  background-color: var(--vscode-editor-background);
+  border-bottom: 0.5px solid #7f7f7f;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
 }
 
 .headerTitle {
-    font-weight: bold;
-    font-size: 18px;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .azureProfile {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .profileName {
-    margin-right: 2em;
+  margin-right: 2em;
 }
 
 .button {
-    color: #54B4FF;
+  color: var(--vscode-textLink-foreground);
+  padding: 1px;
 }
 
 .button:hover {
-    cursor: pointer;
+  cursor: pointer;
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
