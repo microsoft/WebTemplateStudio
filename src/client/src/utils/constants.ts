@@ -98,7 +98,8 @@ const EXTENSION_COMMANDS = {
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
-  GET_VERSIONS: "get-versions"
+  GET_VERSIONS: "get-versions",
+  CLOSE_WIZARD: "close-wizard"
 };
 
 export {

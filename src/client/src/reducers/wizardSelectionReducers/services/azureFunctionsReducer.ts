@@ -2,6 +2,8 @@ import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
 import { messages } from "../../../selectors/wizardSelectionSelector";
 import { FormattedMessage } from "react-intl";
 import AzureActionType from "../../../actions/azureActions/azureActionType";
+import { WIZARD_INFO_TYPEKEYS } from "../../../actions/wizardInfoActions/typeKeys";
+import WizardInfoType from "../../../actions/wizardInfoActions/wizardInfoActionType";
 
 /* State Shape
 {
@@ -55,7 +57,29 @@ const initialState = {
   }
 };
 
-const createFunctionNames = (numFunctions: number): string[] => {
+const createFunctionNames = (
+  numFunctions: number,
+  prevFunctionNames?: string[]
+): string[] => {
+  if (prevFunctionNames) {
+    if (prevFunctionNames.length >= numFunctions) {
+      const numFunctionsToDelete = prevFunctionNames.length - numFunctions;
+      const startIndex = prevFunctionNames.length - numFunctionsToDelete;
+      prevFunctionNames.splice(startIndex, numFunctionsToDelete);
+    } else {
+      const numFunctionsToCreate = numFunctions - prevFunctionNames.length;
+      let lastNumberUsed = 1;
+      for (let i = 1; i <= numFunctionsToCreate; i++) {
+        let functionName = `function${lastNumberUsed}`;
+        while (prevFunctionNames.includes(functionName)) {
+          lastNumberUsed++;
+          functionName = `function${lastNumberUsed}`;
+        }
+        prevFunctionNames.push(functionName);
+      }
+    }
+    return [...prevFunctionNames];
+  }
   const functionNames = [];
   for (let i = 1; i <= numFunctions; i++) {
     functionNames.push(`function${i}`);
@@ -65,7 +89,7 @@ const createFunctionNames = (numFunctions: number): string[] => {
 
 const azureFunctions = (
   state: IAzureFunctionsSelection = initialState,
-  action: AzureActionType
+  action: AzureActionType | WizardInfoType
 ) => {
   switch (action.type) {
     case AZURE_TYPEKEYS.UPDATE_AZURE_FUNCTION_NAMES:
@@ -83,7 +107,7 @@ const azureFunctions = (
         }
       };
       return newAvailabilityState;
-
+    case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
       return initialState;
     case AZURE_TYPEKEYS.REMOVE_AZURE_FUNCTIONS_APP:
@@ -117,7 +141,8 @@ const azureFunctions = (
             internalName: action.payload.internalName.value,
             numFunctions: action.payload.numFunctions.value,
             functionNames: createFunctionNames(
-              action.payload.numFunctions.value
+              action.payload.numFunctions.value,
+              state.selection[0] ? state.selection[0].functionNames : undefined
             ),
             appName: action.payload.appName.value
           }

@@ -78,11 +78,6 @@ const ReviewAndGenerate = (props: Props) => {
     projectName,
     outputPath
   } = props;
-  const modalOpeners = {
-    [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: props.openCosmosDbModal,
-    [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]:
-      props.openAzureFunctionsModal
-  };
   return (
     <div className={styles.container}>
       <Title>{intl.formatMessage(messages.reviewAndGenerate)}</Title>
@@ -114,7 +109,6 @@ const ReviewAndGenerate = (props: Props) => {
       <SummarySection
         selectionTitle={intl.formatMessage(messages.services)}
         selectionRows={servicesRows}
-        modalOpeners={modalOpeners}
       />
     </div>
   );

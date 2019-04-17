@@ -2,6 +2,8 @@ import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
 import { FormattedMessage } from "react-intl";
 import { messages } from "../../../selectors/wizardSelectionSelector";
 import AzureActionType from "../../../actions/azureActions/azureActionType";
+import { WIZARD_INFO_TYPEKEYS } from "../../../actions/wizardInfoActions/typeKeys";
+import WizardInfoType from "../../../actions/wizardInfoActions/wizardInfoActionType";
 
 /* State Shape
 {
@@ -53,7 +55,10 @@ const initialState = {
   }
 };
 
-const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
+const services = (
+  state: ICosmosDB = initialState,
+  action: AzureActionType | WizardInfoType
+) => {
   switch (action.type) {
     case AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
       const newSelectionState = {
@@ -86,6 +91,7 @@ const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
         ...state,
         selection: cosmosSelections
       };
+    case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
       return initialState;
     default:

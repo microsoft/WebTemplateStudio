@@ -13,6 +13,10 @@ const messages = defineMessages({
   outputPath: {
     id: "outputPath.outputPath",
     defaultMessage: "Output Path"
+  },
+  ariaOutputPathLabel: {
+    id: "outputPath.ariaOutputPath",
+    defaultMessage: "Input for Output Path"
   }
 });
 
@@ -46,6 +50,7 @@ const OutputPath = ({
         <div className={styles.outputPath}>
           <Input
             handleChange={handleChange}
+            ariaLabel={intl.formatMessage(messages.ariaOutputPathLabel)}
             value={value}
             customStyle={styles.pathInput}
             placeholder={placeholder}

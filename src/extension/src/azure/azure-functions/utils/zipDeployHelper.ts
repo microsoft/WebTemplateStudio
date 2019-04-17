@@ -28,9 +28,9 @@ export namespace ZipDeployHelper {
     await fs.createReadStream(zipPath).pipe(
       request.post(options, (uploadZipError: any, uploadZipResponse: any) => {
         if (uploadZipError) {
-          return Promise.reject(uploadZipError);
+          throw uploadZipError;
         } else {
-          return Promise.resolve(uploadZipResponse);
+          return uploadZipResponse;
         }
       })
     );

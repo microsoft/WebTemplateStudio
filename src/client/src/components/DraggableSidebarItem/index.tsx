@@ -9,6 +9,15 @@ import { getSvg } from "../../utils/getSvgUrl";
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 
+import { injectIntl, InjectedIntl, defineMessages } from "react-intl";
+
+const messages = defineMessages({
+  changeItemName: {
+    id: "draggableSidebarItem.changeItemName",
+    defaultMessage: "Change Item Name"
+  }
+});
+
 /**
  * Takes in either a page (type ISelected) or text, but not both
  * If a page is given, then text prop will not be rendered
@@ -24,7 +33,8 @@ const DraggableSidebarItem = ({
   azureFunctionName,
   withIndent,
   withLargeIndent,
-  handleCloseClick
+  handleCloseClick,
+  intl
 }: {
   page?: ISelected;
   text?: string;
@@ -38,6 +48,7 @@ const DraggableSidebarItem = ({
   withIndent?: boolean;
   withLargeIndent?: boolean;
   handleCloseClick?: (idx: number) => void;
+  intl: InjectedIntl;
 }) => {
   const handleKeyDown = (event: any) => {
     if (event.keyCode === 13) {
@@ -84,6 +95,7 @@ const DraggableSidebarItem = ({
                 ))}
               {handleInputChange && (page || azureFunctionName) && idx && (
                 <input
+                  aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input, {
                     [styles.azureFunctionNameInput]: azureFunctionName
                   })}
@@ -121,4 +133,4 @@ const DraggableSidebarItem = ({
   );
 };
 
-export default DraggableSidebarItem;
+export default injectIntl(DraggableSidebarItem);
