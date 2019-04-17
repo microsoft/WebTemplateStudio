@@ -15,6 +15,7 @@ import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
+import { AppState } from "../../reducers";
 import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 
 interface IStateProps {
@@ -99,7 +100,6 @@ const PostGenerationModal = ({
 }: Props) => {
   const handleOpenProject = () => {
     if (isTemplateGenerated) {
-      // @ts-ignore
       vscode.postMessage({
         module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
@@ -165,18 +165,18 @@ const PostGenerationModal = ({
       {servicesMessage()}
       <div className={styles.footerContainer}>
         <div>{intl.formatMessage(messages.help)}</div>
-        <div
+        <button
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
           onClick={handleOpenProject}
         >
           {generationMessage()}
-        </div>
+        </button>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
   isTemplateGenerated: PostGenSelectors.isTemplateGeneratedSelector(state),
   isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),

@@ -36,7 +36,6 @@ export class GenerationExperience extends WizardServant {
     GenerationExperience.Telemetry.trackWizardTotalSessionTimeToGenerate();
     var payload = message.payload;
     var enginePayload: any = payload.engine;
-
     const apiGenResult = await this.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
     ).catch(error => {

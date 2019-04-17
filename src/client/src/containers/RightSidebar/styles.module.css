@@ -12,10 +12,9 @@
   overflow: auto;
 }
 
-.rightViewCropped,
-.rightView {
+.rightViewCropped {
   width: 400px;
-  background-color: black;
+  background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #555555;
   box-sizing: border-box;
 }
@@ -25,11 +24,6 @@
   margin-top: 51px;
   margin-bottom: 71px;
   padding-bottom: 0px;
-}
-
-.rightView {
-  padding-top: 67.5px;
-  height: 100vh;
 }
 
 .dropdown {

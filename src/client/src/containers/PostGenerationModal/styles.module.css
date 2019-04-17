@@ -26,6 +26,10 @@
   margin-right: 10px;
 }
 
+.spinner path {
+  stroke: #ffffff;
+}
+
 @keyframes rotate {
   from {
     transform: rotate(0deg);
@@ -52,8 +56,8 @@
   border: none;
   margin: 0;
   text-decoration: none;
-  background: rgb(48, 48, 48);
-  color: #0067b8;
+  background: var(--vscode-menu-background);
+  color: var(--vscode-textLink-foreground);
   font-family: sans-serif;
   font-size: 1rem;
   cursor: pointer;
@@ -72,7 +76,8 @@
   vertical-align: bottom;
   -webkit-animation: ellipsis steps(4, end) 900ms infinite;
   animation: ellipsis steps(4, end) 900ms infinite;
-  content: "\2026"; /* ascii code for the ellipsis character */
+  content: "\2026";
+  /* ascii code for the ellipsis character */
   width: 0px;
 }
 

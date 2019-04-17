@@ -2,6 +2,9 @@ import classnames from "classnames";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 
+import { ReactComponent as BackArrow } from "../../assets/backarrow.svg";
+import { getSvg } from "../../utils/getSvgUrl";
+
 import styles from "./styles.module.css";
 import grid from "../../css/grid.module.css";
 import backArrow from "../../assets/backarrow.svg";
@@ -52,13 +55,19 @@ const Details = ({
             source={intl.formatMessage(
               info as FormattedMessage.MessageDescriptor
             )}
+            renderers={{ link: LinkRenderer }}
           />
         );
       }
       return intl.formatMessage(info as FormattedMessage.MessageDescriptor);
     }
     if (isMarkdown) {
-      return <ReactMarkdown source={info as string} />;
+      return (
+        <ReactMarkdown
+          source={info as string}
+          renderers={{ link: LinkRenderer }}
+        />
+      );
     } else {
       return info;
     }
@@ -69,10 +78,9 @@ const Details = ({
         <div className={styles.backContainer}>
           <div>
             {backArrow && (
-              <img
+              <BackArrow
                 onClick={handleBackClick}
                 className={styles.backIcon}
-                src={process.env.REACT_APP_RELATIVE_PATH + backArrow}
               />
             )}
           </div>
@@ -82,19 +90,21 @@ const Details = ({
         </div>
         <div className={styles.detailsContainer}>
           <div>
-            {detailInfo.svgUrl && (
-              <img className={styles.icon} src={detailInfo.svgUrl} />
-            )}
+            {detailInfo.internalName &&
+              (getSvg(detailInfo.internalName, styles.icon) || (
+                <img
+                  className={styles.icon}
+                  src={detailInfo.svgUrl}
+                  alt="icon"
+                />
+              ))}
           </div>
           <div>
             <div className={styles.detailsTitle}>
               {renderFormattedData(detailInfo.title, false)}
             </div>
             <div className={styles.detailsDescription}>
-              {renderFormattedData(
-                detailInfo.longDescription,
-                !!formatteDetailInfo
-              )}
+              {renderFormattedData(detailInfo.longDescription, true)}
             </div>
             <div>
               <div className={classnames(styles.metaData, grid.row)}>

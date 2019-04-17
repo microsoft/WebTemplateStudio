@@ -6,14 +6,17 @@ import * as getSvg from "../../utils/getSvgUrl";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
-import { removeCosmosSelectionAction } from "../../actions/saveCosmosDbSettings";
+import { removeCosmosSelectionAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import { ICosmosDB } from "../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
 
-import { openCosmosDbModalAction } from "../../actions/modalActions";
+import { openCosmosDbModalAction } from "../../actions/modalActions/modalActions";
 
 import styles from "./styles.module.css";
 
 import { injectIntl, FormattedMessage, InjectedIntlProps } from "react-intl";
+import { ThunkDispatch } from "redux-thunk";
+import { AppState } from "../../reducers";
+import RootAction from "../../actions/ActionType";
 
 interface IProps {
   cosmosSelection: ICosmosDB;
@@ -66,7 +69,7 @@ const CosmosDBSelection = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>) => ({
   removeCosmosResource: (selectionIndex: number) => {
     dispatch(removeCosmosSelectionAction(selectionIndex));
   },

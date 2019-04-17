@@ -1,4 +1,5 @@
-import * as Actions from "../../actions/types";
+import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
+import AzureActionType from "../../actions/azureActions/azureActionType";
 
 /* State Shape
 {
@@ -6,11 +7,24 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const profileData = (state = {}, action: any) => {
+interface IAzureProfile {
+  email: string | undefined;
+  subscriptions: any;
+}
+
+const initialState = {
+  email: undefined,
+  subscriptions: {}
+};
+
+const profileData = (
+  state: IAzureProfile = initialState,
+  action: AzureActionType
+) => {
   switch (action.type) {
-    case Actions.LOG_OUT_OF_AZURE:
-      return {};
-    case Actions.LOG_IN_TO_AZURE:
+    case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
+      return initialState;
+    case AZURE_TYPEKEYS.LOG_IN_TO_AZURE:
       const newState = {
         ...state,
         email: action.payload.email,

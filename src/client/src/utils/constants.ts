@@ -9,6 +9,7 @@ const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
 const WELCOME = "/";
 
 const PRODUCTION = "production";
+const DEVELOPMENT = "development";
 
 const INTL_MESSAGES = defineMessages({
   EMPTY_FIELD: {
@@ -63,7 +64,6 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   REST_API: "RestAPI"
 };
 
-
 const PAGE_NAME_ERROR_MESSAGES = {
   DUPLICATE_NAME: "Name has to be unique",
   INVALID_REGEX:
@@ -110,5 +110,6 @@ export {
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
-  COSMOS_APIS
+  COSMOS_APIS,
+  DEVELOPMENT
 };

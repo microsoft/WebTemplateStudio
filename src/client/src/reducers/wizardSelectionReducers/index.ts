@@ -10,7 +10,7 @@ import services from "./services";
 import pageCount from "./pageCountReducer";
 import isValidatingName from "./validatingNameReducer";
 
-export default combineReducers({
+const selectionStateReducer = combineReducers({
   appType,
   frontendFramework,
   backendFramework,
@@ -21,3 +21,6 @@ export default combineReducers({
   isValidatingName,
   projectNameObject
 });
+
+export default selectionStateReducer;
+export type SelectionState = ReturnType<typeof selectionStateReducer>;

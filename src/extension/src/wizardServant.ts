@@ -2,11 +2,14 @@ import { ExtensionCommand, CONSTANTS } from "./constants";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 
 export abstract class WizardServant {
-  // private static queuedCommand : (message: any) => Promise<IPayloadResponse>;
   abstract clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>>;
   private _commandBidding = (message: any) => {return new Promise(()=> {payload: ""})};
-
-  public static callCommandWithClass(messagePayload: any, classModule: WizardServant, Telemetry: TelemetryAI){
+/** 
+ * @param messagePayload The payload given from the client; includes the wizard command and arguments to be called 
+ * @param classModule The context of the wizardservant; needs to be passed in so that execution of the command will be on the given context 
+ * @param Telemetry Provides the ability to wrap functions commands with Telemetry 
+*/
+  public static executeWizardCommandOnServantClass(messagePayload: any, classModule: WizardServant, Telemetry: TelemetryAI){
     classModule._commandBidding = classModule.clientCommandMap.get(messagePayload.command)!;
     if(classModule._commandBidding){
       if(messagePayload.track){
@@ -19,7 +22,6 @@ export abstract class WizardServant {
       }
     }    
     else {
-      // vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
       return Telemetry.callWithTelemetryAndCatchHandleErrors(messagePayload.command, async function (this: IActionContext){
       throw Error(CONSTANTS.ERRORS.INVALID_COMMAND + ":" + messagePayload.command);
       });

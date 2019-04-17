@@ -11,12 +11,16 @@ import styles from "./styles.module.css";
 import AzureSubscriptions from "../AzureSubscriptions";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { setDetailPageAction } from "../../actions/setDetailsPage";
+import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 import { IOption } from "../../types/option";
 import { messages } from "../../mockData/azureServiceOptions";
 
 import { microsoftAzureDetails } from "../../mockData/azureServiceOptions";
 import { withLocalPath } from "../../utils/getSvgUrl";
+import { AppState } from "../../reducers";
+import { IMetadata } from "../../types/metadata";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
@@ -33,11 +37,11 @@ class AzureLogin extends React.Component<Props> {
   handleClick = () => {
     // initiates a login command to VSCode ReactPanel class
 
-      this.props.vscode.postMessage({
-        module: EXTENSION_MODULES.AZURE,
-        command: EXTENSION_COMMANDS.AZURE_LOGIN,
-        track: true
-      });
+    this.props.vscode.postMessage({
+      module: EXTENSION_MODULES.AZURE,
+      command: EXTENSION_COMMANDS.AZURE_LOGIN,
+      track: true
+    });
   };
   public render() {
     const { isLoggedIn, intl, setDetailPage } = this.props;
@@ -64,7 +68,7 @@ class AzureLogin extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): IAzureLoginProps => {
+const mapStateToProps = (state: AppState): IAzureLoginProps => {
   const { isLoggedIn } = state.azureProfileData;
   const { vscodeObject } = state.vscode;
   return {
@@ -73,7 +77,7 @@ const mapStateToProps = (state: any): IAzureLoginProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
     dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));

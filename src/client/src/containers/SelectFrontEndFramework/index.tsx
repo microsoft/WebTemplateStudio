@@ -1,16 +1,19 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SelectOption from "../../components/SelectOption";
+import SelectOption from "../SelectOption";
 
-import { selectFrontendFramework as selectFrontendAction } from "../../actions/selectFrontEndFramework";
+import { selectFrontendFramework as selectFrontendAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
 
-import { getFrontendFrameworksAction } from "../../actions/getFrontendFrameworks";
+import { getFrontendFrameworksAction } from "../../actions/wizardContentActions/getFrontendFrameworks";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
+import { AppState } from "../../reducers";
+import RootAction from "../../actions/ActionType";
+import { ThunkDispatch } from "redux-thunk";
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
@@ -19,7 +22,7 @@ interface IDispatchProps {
 
 interface ISelectFrontEndFrameworkProps {
   options: IOption[];
-  selectedFrontendFramework: string;
+  selectedFrontendFramework: ISelected;
 }
 
 type Props = IDispatchProps & ISelectFrontEndFrameworkProps & InjectedIntlProps;
@@ -78,7 +81,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): ISelectFrontEndFrameworkProps => {
+const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
   const { frontendOptions } = state.wizardContent;
   const { frontendFramework } = state.selection;
   return {
@@ -87,7 +90,7 @@ const mapStateToProps = (state: any): ISelectFrontEndFrameworkProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   selectFrontendFramework: (framework: ISelected) => {
     dispatch(selectFrontendAction(framework));
   },

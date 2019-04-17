@@ -9,5 +9,8 @@
 
 .link {
   text-decoration: none;
-  color: #54b4ff;
+  font-size: var(--vscode-editor-font-size);
+  color: var(--vscode-textLink-foreground);
+  font-weight: var(--vscode-editor-font-weight);
+  margin-left: 10px;
 }

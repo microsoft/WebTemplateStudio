@@ -1,4 +1,4 @@
-import * as Actions from "../../actions/types";
+import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
 
 export interface IStatus {
   success: boolean;
@@ -26,7 +26,7 @@ const initialState = {
 
 const genStatus = (state: IServiceStatus = initialState, action: any) => {
   switch (action.type) {
-    case Actions.UPDATE_TEMPLATE_GENERATION_STATUS:
+    case WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS:
       return {
         ...action.payload
       };

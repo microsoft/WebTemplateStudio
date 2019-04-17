@@ -9,8 +9,8 @@ import { connect } from "react-redux";
 import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
-import { closeModalAction } from "../../actions/modalActions";
-import { saveCosmosDbSettingsAction } from "../../actions/saveCosmosDbSettings";
+import { closeModalAction } from "../../actions/modalActions/modalActions";
+import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import { azureModalInitialState as cosmosInitialState } from "../../mockData/cosmosDbModalData";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
@@ -32,8 +32,11 @@ import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceS
 
 import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
 import { Dispatch } from "redux";
-import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
-import { setAccountAvailability } from "../../actions/setAccountAvailability";
+import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
+import { setAccountAvailability, IAvailabilityFromExtension } from "../../actions/azureActions/setAccountAvailability";
+import { AppState } from "../../reducers";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -43,10 +46,10 @@ const DEFAULT_VALUE = {
 interface IDispatchProps {
   closeModal: () => any;
   saveCosmosOptions: (cosmosOptions: any) => any;
-  setValidationStatus: (status: boolean) => Dispatch;
+  setValidationStatus: (status: boolean) => any;
   setCosmosResourceAccountNameAvailability: (
     isAvailableObject: any
-  ) => Dispatch;
+  ) => any;
 }
 
 interface IStateProps {
@@ -107,6 +110,10 @@ const messages = defineMessages({
   addResource: {
     id: "cosmosResourceModule.addResource",
     defaultMessage: "Add Resource"
+  },
+  saveChanges: {
+    id: "cosmosResourceModule.saveChanges",
+    defaultMessage: "Save Changes"
   },
   createCosmosRes: {
     id: "cosmosResourceModule.createCosmosRes",
@@ -444,14 +451,16 @@ const CosmosResourceModal = (props: Props) => {
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
           onClick={handleAddResource}
         >
-          {props.intl.formatMessage(messages.addResource)}
+          {(props.selection &&
+            props.intl.formatMessage(messages.saveChanges)) ||
+            props.intl.formatMessage(messages.addResource)}
         </button>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   accountNameAvailability:
     state.selection.services.cosmosDB.accountNameAvailability,
   isModalOpen: isCosmosDbModalOpenSelector(state),
@@ -462,14 +471,14 @@ const mapStateToProps = (state: any): IStateProps => ({
   vscode: state.vscode.vscodeObject
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   closeModal: () => {
     dispatch(closeModalAction());
   },
   saveCosmosOptions: (cosmosOptions: any) => {
     dispatch(saveCosmosDbSettingsAction(cosmosOptions));
   },
-  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) =>
+  setCosmosResourceAccountNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
     dispatch(setAccountAvailability(isAvailableObject)),
   setValidationStatus: (status: boolean) =>
     dispatch(setAzureValidationStatusAction(status))

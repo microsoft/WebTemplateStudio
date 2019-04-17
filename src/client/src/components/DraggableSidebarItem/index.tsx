@@ -1,6 +1,11 @@
 import classnames from "classnames";
 import * as React from "react";
 
+import { ReactComponent as Reorder } from "../../assets/reorder.svg";
+import { ReactComponent as CloseSVG } from "../../assets/cancel.svg";
+
+import { getSvg } from "../../utils/getSvgUrl";
+
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 
@@ -11,7 +16,6 @@ import styles from "./styles.module.css";
 const DraggableSidebarItem = ({
   page,
   text,
-  closeSvgUrl,
   pageSvgUrl,
   reorderSvgUrl,
   itemTitle,
@@ -52,11 +56,11 @@ const DraggableSidebarItem = ({
         </div>
       )}
       <div className={styles.draggablePage}>
-        {(withIndent || reorderSvgUrl) && (
-          <div className={styles.iconContainer}>
-            <img className={styles.reorderIcon} src={reorderSvgUrl} />
-          </div>
-        )}
+        <div className={styles.iconContainer}>
+          {!(withIndent || withLargeIndent) && (
+            <Reorder className={styles.reorderIcon} />
+          )}
+        </div>
         <div className={styles.errorStack}>
           <div
             className={classnames({
@@ -66,7 +70,10 @@ const DraggableSidebarItem = ({
             })}
           >
             <div className={styles.inputContainer}>
-              {pageSvgUrl && <img className={styles.icon} src={pageSvgUrl} />}
+              {reorderSvgUrl &&
+                (getSvg(page!.internalName, styles.icon) || (
+                  <img className={styles.icon} src={pageSvgUrl} />
+                ))}
               {handleInputChange && (page || azureFunctionName) && idx && (
                 <input
                   className={classnames(styles.input, {
@@ -95,12 +102,11 @@ const DraggableSidebarItem = ({
             </div>
           )}
         </div>
-        <img
+        <CloseSVG
           onClick={() => {
             idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
           }}
           className={styles.cancelIcon}
-          src={closeSvgUrl}
         />
       </div>
     </div>

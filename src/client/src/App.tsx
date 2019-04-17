@@ -8,9 +8,9 @@ import * as Redux from "redux";
 import LeftSidebar from "./components/LeftSidebar";
 import PageDetails from "./containers/PageDetails";
 import SelectFrameworks from "./components/SelectFrameworks";
-import SelectPages from "./components/SelectPages";
-import SelectWebApp from "./components/SelectWebApp";
-import Welcome from "./components/Welcome";
+import SelectPages from "./containers/SelectPages";
+import SelectWebApp from "./containers/SelectWebApp";
+import Welcome from "./containers/Welcome";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";
@@ -18,31 +18,42 @@ import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 
-import { EXTENSION_COMMANDS, EXTENSION_MODULES, ROUTES } from "./utils/constants";
+import {
+  EXTENSION_COMMANDS,
+  EXTENSION_MODULES,
+  ROUTES,
+  DEVELOPMENT
+} from "./utils/constants";
 
-import { getVSCodeApi } from "./actions/getVSCodeApi";
-import { logIntoAzureAction } from "./actions/logIntoAzure";
-import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
+import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
+import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
+import { updateOutputPathAction } from "./actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   setAccountAvailability,
-  setAppNameAvailabilityAction
-} from "./actions/setAccountAvailability";
+  setAppNameAvailabilityAction,
+  IAvailabilityFromExtension
+} from "./actions/azureActions/setAccountAvailability";
 import AzureLogin from "./containers/AzureLogin";
-import { getSubscriptionData } from "./actions/subscriptionData";
+import { getSubscriptionData } from "./actions/azureActions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
-import { setProjectPathValidation } from "./actions/setProjectPathValidation";
+import { setProjectPathValidation } from "./actions/wizardSelectionActions/setProjectPathValidation";
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
-} from "./actions/updateGenStatusActions";
-import { getVersionsDataAction } from "./actions/getVersionData";
+} from "./actions/wizardInfoActions/updateGenStatusActions";
+import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
 
 import appStyles from "./appStyles.module.css";
-import { startLogOutAzure } from "./actions/logOutAzure";
+import { startLogOutAzure } from "./actions/azureActions/logOutAzure";
 import { IVersions } from "./types/version";
 import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
-import { setAzureValidationStatusAction } from "./actions/setAzureValidationStatusAction";
+import { setAzureValidationStatusAction } from "./actions/azureActions/setAzureValidationStatusAction";
+import { IServiceStatus } from "./reducers/generationStatus/genStatus";
+
+if (process.env.NODE_ENV === DEVELOPMENT) {
+  require("./css/themes.css");
+}
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
@@ -50,12 +61,16 @@ interface IDispatchProps {
   logIntoAzure: (email: string, subscriptions: []) => void;
   startLogOutToAzure: () => any;
   saveSubscriptionData: (subscriptionData: any) => void;
-  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
-  setAppNameAvailability: (isAvailableObject: any) => any;
+  setCosmosResourceAccountNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => any;
+  setAppNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => any;
   setProjectPathValidation: (validation: any) => void;
   setAzureValidationStatus: (status: boolean) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
-  updateTemplateGenStatus: (isGenerated: boolean) => any;
+  updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
 }
 
@@ -175,11 +190,8 @@ class App extends React.Component<Props> {
           <PostGenerationModal />
           <LeftSidebar />
           <div
-            className={classnames({
-              [appStyles.centerView]:
-                pathname === ROUTES.WELCOME || pathname == ROUTES.PAGE_DETAILS,
-              [appStyles.centerViewCropped]:
-                pathname !== ROUTES.WELCOME && pathname !== ROUTES.PAGE_DETAILS
+            className={classnames(appStyles.centerView, {
+              [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS
             })}
           >
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
@@ -235,7 +247,7 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   updateTemplateGenStatusMessage: (status: string) => {
     dispatch(updateTemplateGenerationStatusMessageAction(status));
   },
-  updateTemplateGenStatus: (isGenerated: boolean) => {
+  updateTemplateGenStatus: (isGenerated: IServiceStatus) => {
     dispatch(updateTemplateGenerationStatusAction(isGenerated));
   },
   getVersionsData: (versions: IVersions) => {

@@ -1,4 +1,6 @@
-import * as Actions from "../../actions/types";
+import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
+import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType";
+import { IDetail } from "../../actions/wizardInfoActions/setDetailsPage";
 
 /* State Shape
 {
@@ -9,9 +11,28 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const detailPage = (state = {}, action: any) => {
+const initialState = {
+  isIntlFormatted: false,
+  data: {
+    title: "",
+    internalName: "",
+    body: "",
+    name: "",
+    displayName: "",
+    summary: "",
+    longDescription: "",
+    position: 0,
+    svgUrl: undefined,
+    licenses: [],
+    selected: false,
+    author: "",
+    tags: undefined
+  }
+};
+
+const detailPage = (state: IDetail = initialState, action: WizardInfoType) => {
   switch (action.type) {
-    case Actions.SET_DETAILS_PAGE_INFO:
+    case WIZARD_INFO_TYPEKEYS.SET_DETAILS_PAGE_INFO:
       return action.payload;
     default:
       return state;

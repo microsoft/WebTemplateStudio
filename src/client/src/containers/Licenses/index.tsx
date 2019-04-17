@@ -10,13 +10,14 @@ import { ILicenseObject } from "../../types/license";
 import styles from "./styles.module.css";
 import {
   getIsVisitedRoutesSelector,
-  IVisited
+  IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
+import { AppState } from "../../reducers";
 
 interface IStateProps {
   frameworkLicenses: string[];
   pageLicenses: ILicenseObject[];
-  isVisited: IVisited;
+  isVisited: IVisitedPages;
 }
 
 type Props = IStateProps;
@@ -51,7 +52,7 @@ const Licenses = ({ frameworkLicenses, pageLicenses, isVisited }: Props) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: AppState) => ({
   frameworkLicenses: getFrameworkLicensesSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   pageLicenses: getPageLicencesSelector(state)

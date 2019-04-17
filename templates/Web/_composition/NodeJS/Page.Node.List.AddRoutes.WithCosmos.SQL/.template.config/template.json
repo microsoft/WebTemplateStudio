@@ -22,5 +22,18 @@
       "type": "parameter",
       "replaces": "Param_ItemNamespace"
     }
-  }
+  },
+  "postActions": [
+    {
+      "description": "Add Cosmos Sql Dependencies",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'@azure/cosmos': '^2.1.5', 'dotenv': '^6.2.0'}",
+        "key": "dependencies",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    }
+  ]
 }
