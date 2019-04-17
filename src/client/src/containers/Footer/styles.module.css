@@ -17,6 +17,10 @@
   font-size: 1em;
 }
 
+.button:hover {
+  color: #ffffff;
+}
+
 .button:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
