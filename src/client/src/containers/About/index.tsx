@@ -22,6 +22,10 @@ const messages = defineMessages({
   wizardVersion: {
     id: "about.wizardVersion",
     defaultMessage: "Wizard version:"
+  },
+  about: {
+    id: "about.about",
+    defaultMessage: "About"
   }
 });
 
@@ -29,7 +33,7 @@ const About = ({ versions, intl }: Props) => {
   const { templatesVersion, wizardVersion } = versions;
   return (
     <div className={styles.container}>
-      <div className={styles.title}>About</div>
+      <div className={styles.title}>{intl.formatMessage(messages.about)}</div>
       <div className={styles.name}>Web Template Studio</div>
       <a className={styles.link} href="https://aka.ms/webts">
         https://aka.ms/webts

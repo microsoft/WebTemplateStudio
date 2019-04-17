@@ -12,6 +12,10 @@
   color: var(--vscode-textLink-foreground);
 }
 
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .name {
   margin-bottom: 1.5em;
 }

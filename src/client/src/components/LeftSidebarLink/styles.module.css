@@ -19,6 +19,10 @@
   text-decoration: none;
 }
 
+.container:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .icon {
   height: 1em;
   width: 1em;

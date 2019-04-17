@@ -38,6 +38,12 @@ const OutputPath = ({
   intl,
   placeholder
 }: IProps & InjectedIntlProps) => {
+  const handleKeyDown = (event: any) => {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      handleSaveClick();
+    }
+  };
+
   return (
     <React.Fragment>
       <div className={styles.errorStack}>
@@ -50,10 +56,10 @@ const OutputPath = ({
             placeholder={placeholder}
           />
           <SaveSVG
+            tabIndex={0}
             className={styles.saveIcon}
-            onClick={() => {
-              handleSaveClick();
-            }}
+            onClick={handleSaveClick}
+            onKeyDown={handleKeyDown}
           />
         </div>
         {(isEmpty && (

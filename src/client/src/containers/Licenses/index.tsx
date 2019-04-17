@@ -8,6 +8,7 @@ import {
 import { ILicenseObject } from "../../types/license";
 
 import styles from "./styles.module.css";
+import { injectIntl, InjectedIntlProps, defineMessages } from "react-intl";
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
@@ -20,9 +21,21 @@ interface IStateProps {
   isVisited: IVisitedPages;
 }
 
-type Props = IStateProps;
+type Props = IStateProps & InjectedIntlProps;
 
-const Licenses = ({ frameworkLicenses, pageLicenses, isVisited }: Props) => {
+const messages = defineMessages({
+  licenses: {
+    id: "licenses.licenses",
+    defaultMessage: "Licenses"
+  }
+});
+
+const Licenses = ({
+  frameworkLicenses,
+  pageLicenses,
+  isVisited,
+  intl
+}: Props) => {
   const LinkRenderer = (props: any) => {
     return (
       <a href={props.href} className={styles.link}>
@@ -32,7 +45,9 @@ const Licenses = ({ frameworkLicenses, pageLicenses, isVisited }: Props) => {
   };
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Licenses</div>
+      <div className={styles.title}>
+        {intl.formatMessage(messages.licenses)}
+      </div>
       {frameworkLicenses.map((license: string) => (
         <ReactMarkdown
           key={license}
@@ -58,4 +73,4 @@ const mapStateToProps = (state: AppState) => ({
   pageLicenses: getPageLicencesSelector(state)
 });
 
-export default connect(mapStateToProps)(Licenses);
+export default connect(mapStateToProps)(injectIntl(Licenses));

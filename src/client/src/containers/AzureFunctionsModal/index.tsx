@@ -32,7 +32,10 @@ import {
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
-import { setAppNameAvailabilityAction, IAvailabilityFromExtension } from "../../actions/azureActions/setAccountAvailability";
+import {
+  setAppNameAvailabilityAction,
+  IAvailabilityFromExtension
+} from "../../actions/azureActions/setAccountAvailability";
 import { AppState } from "../../reducers";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import RootAction from "../../actions/ActionType";
@@ -46,7 +49,9 @@ interface IDispatchProps {
   closeModal: () => any;
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => any;
   setValidationStatus: (status: boolean) => any;
-  setAppNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => any;
+  setAppNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => any;
 }
 
 interface IStateProps {
@@ -358,8 +363,12 @@ const AzureFunctionsResourceModal = (props: Props) => {
         <div className={styles.selectionHeaderContainer}>
           <div>{leftHeader}</div>
           {links[formSectionId] && (
-            <a className={styles.link} href={links[formSectionId]}>
-              Create New
+            <a
+              tabIndex={disabled ? -1 : 0}
+              className={styles.link}
+              href={links[formSectionId]}
+            >
+              {props.intl.formatMessage(messages.createNew)}
             </a>
           )}
         </div>
@@ -396,13 +405,25 @@ const AzureFunctionsResourceModal = (props: Props) => {
   };
   const { isAppNameAvailable } = props.appNameAvailability;
   const { isValidatingName } = props;
+  const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      event.preventDefault();
+      event.stopPropagation();
+      props.closeModal();
+    }
+  };
   return (
     <React.Fragment>
       <div className={styles.headerContainer}>
         <div className={styles.modalTitle}>
           {props.intl.formatMessage(messages.createFunctionApp)}
         </div>
-        <Cancel className={styles.icon} onClick={props.closeModal} />
+        <Cancel
+          tabIndex={0}
+          className={styles.icon}
+          onClick={props.closeModal}
+          onKeyDown={cancelKeyDownHandler}
+        />
       </div>
       {getDropdownSection(
         modalValidation.isSubscriptionEmpty &&
@@ -440,7 +461,11 @@ const AzureFunctionsResourceModal = (props: Props) => {
       >
         <div className={styles.selectionHeaderContainer}>
           <div>{props.intl.formatMessage(messages.appName)}</div>
-          <a className={styles.link} href={links.appName}>
+          <a
+            tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
+            className={styles.link}
+            href={links.appName}
+          >
             documents.azure.com
           </a>
         </div>
@@ -458,6 +483,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
             value={azureFunctionsFormData.appName.value}
             placeholder={FORM_CONSTANTS.APP_NAME.label}
             disabled={azureFunctionsFormData.subscription === ""}
+            tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
           />
           {isAppNameAvailable && !isValidatingName && (
             <GreenCheck className={styles.validationIcon} />
@@ -541,7 +567,9 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selection: getFunctionsSelection(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<RootAction>
+): IDispatchProps => ({
   closeModal: () => {
     dispatch(closeModalAction());
   },

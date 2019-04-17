@@ -54,6 +54,10 @@ const messages = defineMessages({
   show: {
     id: "sortablePageList.show",
     defaultMessage: "Show"
+  },
+  pages: {
+    id: "sortablePageList.pages",
+    defaultMessage: "Pages"
   }
 });
 
@@ -108,7 +112,9 @@ const SortablePageList = (props: Props) => {
         <div
           className={classnames(styles.pageListContainer, styles.sidebarItem)}
         >
-          <div className={styles.dropdownTitle}>Pages</div>
+          <div className={styles.dropdownTitle}>
+            {props.intl!.formatMessage(messages.pages)}
+          </div>
           <button
             className={styles.hideOrShow}
             onClick={() => {

@@ -17,6 +17,10 @@
   font-size: 1em;
 }
 
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .buttonContainer {
   display: flex;
   align-items: center;

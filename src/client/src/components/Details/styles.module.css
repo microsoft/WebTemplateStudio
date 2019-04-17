@@ -26,6 +26,16 @@
   margin-bottom: 4em;
 }
 
+.innerBackContainer {
+  padding-left: 1px;
+  padding-right: 2px;
+  display: flex;
+}
+
+.innerBackContainer:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .detailsContainer {
   display: flex;
 }
@@ -69,8 +79,16 @@
   cursor: pointer;
 }
 
+.details:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .link {
   color: var(--vscode-textLink-foreground);
   font-weight: var(--vscode-editor-font-weight);
   text-decoration: none;
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }

@@ -40,9 +40,24 @@
   height: 50%;
 }
 
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .icon {
   cursor: pointer;
-  height: 12px;
+  height: 15px;
+  width: 15px;
+  padding: 1px;
+  margin-right: 2px;
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.icon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .icon path {
@@ -91,6 +106,14 @@ input::placeholder {
 .link {
   text-decoration: none;
   color: var(--vscode-textLink-foreground);
+}
+
+.createNew:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .errorMessage {

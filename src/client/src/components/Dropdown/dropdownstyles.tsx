@@ -17,8 +17,11 @@ export default {
   control: (base: any, state: any): any => ({
     ...base,
     color: "white",
-    border: "0.5px solid var(--vscode-editor-foreground)",
+    border: state.isFocused
+      ? "1px solid var(--vscode-contrastActiveBorder)"
+      : "0.5px solid var(--vscode-editor-foreground)",
     borderRadius: 0,
+    boxShadow: "none",
     background: "var(--vscode-input-background)",
     "&:hover": {
       outline: "0.5px solid rgba(0,0,0,0.5)"
