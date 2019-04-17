@@ -110,7 +110,7 @@ const mockVsCodeApi = () => ({
                   failure: false
                 },
                 azureFunctions: {
-                  success: false,
+                  success: true,
                   failure: false
                 }
               }
