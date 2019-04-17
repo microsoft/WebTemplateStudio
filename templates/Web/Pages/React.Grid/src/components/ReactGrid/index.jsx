@@ -45,7 +45,7 @@ export default class ReactGrid extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <main>
         <div className={classnames("text-center", styles.header)}>
           <h1>Param_ProjectName</h1>
           <p>This is placeholder text. Your web app description goes here.</p>
@@ -66,8 +66,8 @@ export default class ReactGrid extends Component {
             {this.state.gridTextAssets.map(textAssets => (
               <GridComponent
                 key={textAssets.id}
-                header={textAssets.header}
-                description={textAssets.description}
+                header={textAssets.title}
+                description={textAssets.shortDescription}
                 image={GreyBox}
               />
             ))}
@@ -78,7 +78,7 @@ export default class ReactGrid extends Component {
           text={this.state.WarningMessageText}
           onWarningClose={this.handleWarningClose}
         />
-      </React.Fragment>
+      </main>
     );
   }
 }

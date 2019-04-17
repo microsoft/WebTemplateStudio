@@ -114,18 +114,18 @@ export default class ReactList extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <div className="container">
+      <main className="container">
         <div className="row">
           <div className="col mt-5 p-0">
             <h3>Bootstrap ReactList Template</h3>
           </div>
-          <div className="col-12 p-0">
+          <ul className="col-12 p-0">
             <ListForm
               onAddListItem={this.handleAddListItem}
               onChangeInputText={this.handleChangeInputText}
               textField={textField}
             />
-          </div>
+          </ul>
           {list.map(listItem => (
             <ListItem
               key={listItem._id}
@@ -139,7 +139,7 @@ export default class ReactList extends Component {
             onWarningClose={this.handleWarningClose}
           />
         </div>
-      </div>
+      </main>
     );
   }
 }
