@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { CONSTANTS } from "./constants";
-import ApiModule from "./signalr-api-module/apiModule";
+import { ApiModule } from "./signalr-api-module/apiModule";
 
 /**
  * Manages react webview panels
