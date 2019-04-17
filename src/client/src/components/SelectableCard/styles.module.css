@@ -3,7 +3,7 @@
   margin-bottom: 12px;
   cursor: pointer;
   padding: 12px;
-  background-color: var(--vscode-notificationCenterHeader-background);
+  background-color: var(--vscode-sideBar-background);
   border: 0.5px solid var(--vscode-editor-foreground);
 }
 
