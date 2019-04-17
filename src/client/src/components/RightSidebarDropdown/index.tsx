@@ -30,6 +30,7 @@ const RightSidebarDropdown = (props: IProps) => {
                 props.selectDropdownOption
               );
             }}
+            ariaLabel={props.title}
             options={props.options}
             value={props.value}
           />

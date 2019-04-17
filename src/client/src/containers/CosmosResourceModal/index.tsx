@@ -83,21 +83,41 @@ const messages = defineMessages({
     id: "cosmosResourceModule.subscriptionLabel",
     defaultMessage: "Subscription"
   },
+  ariaSubscriptionLabel: {
+    id: "cosmosResourceModule.ariaSubscriptionLabel",
+    defaultMessage: "Subscription Drop Down"
+  },
   resourceGroupLabel: {
     id: "cosmosResourceModule.resourceGroupLabel",
     defaultMessage: "Resource Group"
+  },
+  ariaResourceGroupLabel: {
+    id: "cosmosResourceModule.ariaResourceGroupLabel",
+    defaultMessage: "Resource Group Drop Down"
   },
   locationLabel: {
     id: "cosmosResourceModule.locationLabel",
     defaultMessage: "Location"
   },
+  ariaLocationLabel: {
+    id: "cosmosResourceModule.ariaLocationLabel",
+    defaultMessage: "Location Drop Down"
+  },
   apiLabel: {
     id: "cosmosResourceModule.apiLabel",
     defaultMessage: "API"
   },
+  ariaApiLabel: {
+    id: "cosmosResourceModule.ariaApiLabel",
+    defaultMessage: "API Drop Down"
+  },
   accountNameLabel: {
     id: "cosmosResourceModule.accountNameLabel",
     defaultMessage: "Account Name"
+  },
+  ariaAccountNameLabel: {
+    id: "cosmosResourceModule.ariaAccountNameLabel",
+    defaultMessage: "Account Name Input"
   },
   accountName: {
     id: "cosmosResourceModule.accountName",
@@ -306,6 +326,7 @@ const CosmosResourceModal = (props: Props) => {
     leftHeader: string,
     options: any,
     formSectionId: string,
+    ariaLabel: string,
     rightHeader?: string,
     disabled?: boolean,
     defaultValue?: any
@@ -325,6 +346,7 @@ const CosmosResourceModal = (props: Props) => {
           )}
         </div>
         <Dropdown
+          ariaLabel={ariaLabel}
           options={options}
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
@@ -362,6 +384,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.SUBSCRIPTION.label,
         cosmosData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
+        props.intl.formatMessage(messages.ariaSubscriptionLabel),
         props.intl.formatMessage(messages.createNew),
         false,
         DEFAULT_VALUE
@@ -372,6 +395,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         cosmosData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
+        props.intl.formatMessage(messages.ariaResourceGroupLabel),
         props.intl.formatMessage(messages.createNew),
         cosmosFormData.subscription.value === "",
         DEFAULT_VALUE
@@ -402,6 +426,7 @@ const CosmosResourceModal = (props: Props) => {
           })}
         >
           <input
+            aria-label={props.intl.formatMessage(messages.ariaAccountNameLabel)}
             className={styles.input}
             onChange={handleInput}
             value={cosmosFormData.accountName.value}
@@ -433,6 +458,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.API.label,
         cosmosData.api,
         FORM_CONSTANTS.API.value,
+        props.intl.formatMessage(messages.ariaApiLabel),
         undefined,
         false,
         DEFAULT_VALUE
@@ -442,6 +468,7 @@ const CosmosResourceModal = (props: Props) => {
         FORM_CONSTANTS.LOCATION.label,
         cosmosData.location,
         FORM_CONSTANTS.LOCATION.value,
+        props.intl.formatMessage(messages.ariaLocationLabel),
         undefined,
         cosmosFormData.subscription.value === "",
         DEFAULT_VALUE

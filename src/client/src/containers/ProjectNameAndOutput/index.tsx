@@ -56,6 +56,10 @@ const messages = defineMessages({
     id: "projectName.projectName",
     defaultMessage: "Project Name"
   },
+  ariaProjectNameLabel: {
+    id: "projectName.ariaProjectName",
+    defaultMessage: "Project Name Input"
+  },
   outputPathTitle: {
     id: "projectName.outputPathTitle",
     defaultMessage: "Output Path:"
@@ -118,6 +122,7 @@ const ProjectNameAndOutput = (props: Props) => {
         </div>
         <Input
           handleChange={handleProjectNameChange}
+          ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
           value={props.projectName}
           placeholder={props.intl.formatMessage(messages.projectName)}
         />
