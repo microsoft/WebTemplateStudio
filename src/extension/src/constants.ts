@@ -187,6 +187,7 @@ export const CONSTANTS = {
 };
 
 export enum ExtensionCommand {
+  Log = "log",
   Login = "login",
   Logout = "logout",
   Subscriptions = "subscriptions",
@@ -213,8 +214,10 @@ export enum ExtensionModule {
   Azure = "Azure",
   Generate = "GenerateExperience",
   Telemetry = "Telemetry",
-  Validator = "Validator"
+  Validator = "Validator",
+  Logger = "Logger"
 }
+
 export enum TelemetryEventName {
   ExtensionLaunch = "Extension-Launch-Time",
   WizardSession = "Wizard-To-Generate-Session-Time",
