@@ -45,7 +45,7 @@ const Details = ({
     </a>
   );
   const keyDownHandler = (event: any) => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 || event.keyCode === 32) {
       handleBackClick();
     }
   };

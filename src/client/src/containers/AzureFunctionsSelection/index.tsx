@@ -69,7 +69,7 @@ const AzureFunctionsSelection = ({
     }
   };
   const onEditKeyDownHandler = (event: any) => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 || event.keyCode === 32) {
       openAzureFunctionsModal();
     }
   };
@@ -122,7 +122,9 @@ const AzureFunctionsSelection = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   updateFunctionNames: (functionApp: IFunctionApp) => {
     dispatch(AzureFunctionActions.updateAzureFunctionNamesAction(functionApp));
   },

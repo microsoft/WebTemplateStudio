@@ -31,7 +31,7 @@ const Header = (props: Props) => {
     });
   };
   const keyDownClick = (event: any) => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 || event.keyCode === 32) {
       signOutClick();
     }
   };

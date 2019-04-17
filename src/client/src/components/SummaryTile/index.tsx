@@ -106,14 +106,14 @@ const SummaryTile = ({
     }
   };
   const onCloseKeyDown = (event: any) => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 || event.keyCode === 32) {
       onCloseClick();
     } else if (event.keyCode === 9) {
       setEditable(false);
     }
   };
   const onEditKeyDown = (event: any) => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 || event.keyCode === 32) {
       handleClick();
     }
   };
