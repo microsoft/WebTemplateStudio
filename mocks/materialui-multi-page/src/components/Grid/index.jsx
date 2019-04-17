@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import classnames from "classnames";
 import GridComponent from "./GridComponent";
 import WarningMessage from "../WarningMessage";
 import GreyBox from "../../images/GreyBox.svg";
 import styles from "./grid.module.css";
-import classnames from "classnames";
 import CONSTANTS from "../../constants";
 
 export default class Grid extends Component {
@@ -16,13 +16,6 @@ export default class Grid extends Component {
     };
 
     this.handleWarningClose = this.handleWarningClose.bind(this);
-  }
-
-  handleWarningClose() {
-    this.setState({
-      WarningMessageOpen: false,
-      WarningMessageText: ""
-    });
   }
 
   // Get the text sample data from the back end
@@ -43,7 +36,19 @@ export default class Grid extends Component {
       );
   }
 
+  handleWarningClose() {
+    this.setState({
+      WarningMessageOpen: false,
+      WarningMessageText: ""
+    });
+  }
+
   render() {
+    const {
+      gridTextAssets,
+      WarningMessageOpen,
+      WarningMessageText
+    } = this.state;
     return (
       <React.Fragment>
         <div className={classnames("text-center", styles.header)}>
@@ -63,7 +68,7 @@ export default class Grid extends Component {
           </div>
 
           <div className="row justify-content-around text-center pb-5">
-            {this.state.gridTextAssets.map(textAssets => (
+            {gridTextAssets.map(textAssets => (
               <GridComponent
                 key={textAssets.id}
                 header={textAssets.header}
@@ -74,8 +79,8 @@ export default class Grid extends Component {
           </div>
         </div>
         <WarningMessage
-          open={this.state.WarningMessageOpen}
-          text={this.state.WarningMessageText}
+          open={WarningMessageOpen}
+          text={WarningMessageText}
           onWarningClose={this.handleWarningClose}
         />
       </React.Fragment>
