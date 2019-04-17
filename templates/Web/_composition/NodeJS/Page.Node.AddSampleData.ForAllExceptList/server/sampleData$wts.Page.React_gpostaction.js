@@ -1,37 +1,24 @@
-const sampleData = {};
-
-const longLoremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus
-non enim praesent elementum facilisis leo vel. Risus at ultrices mi
-tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non
-tellus. Convallis convallis tellus id interdum velit laoreet id donec
-ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl
-suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod
-quis viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet
-proin fermentum leo. Mauris commodo quis imperdiet massa tincidunt. Cras
-tincidunt lobortis feugiat vivamus at augue. At augue eget arcu dictum
-varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt.
-Lorem donec massa sapien faucibus et molestie ac.`;
-
+﻿//{[{
 const shortLoremIpsum = `Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.`;
-
+//}]}
+const sampleData = {};
+//{[{
+const longLoremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus
+  non enim praesent elementum facilisis leo vel. Risus at ultrices mi
+  tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non
+  tellus. Convallis convallis tellus id interdum velit laoreet id donec
+  ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl
+  suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod
+  quis viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet
+  proin fermentum leo. Mauris commodo quis imperdiet massa tincidunt. Cras
+  tincidunt lobortis feugiat vivamus at augue. At augue eget arcu dictum
+  varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt.
+  Lorem donec massa sapien faucibus et molestie ac.`;
+//}]}
 // This class holds sample data used by some generated pages to show how they can be used.
 // TODO Web Template Studio: Delete this file once your app is using real data.
-
-// TODO Web Template Studio: If you use a database replace this ID with the ID created by the database
-sampleData.listID = 3;
-
-sampleData.listTextAssets = [
-  {
-    text: shortLoremIpsum,
-    _id: 1
-  },
-  {
-    text: shortLoremIpsum,
-    _id: 2
-  }
-];
-
+//{[{
 sampleData.textAssets = [
   {
     shortDescription: shortLoremIpsum,
@@ -124,5 +111,6 @@ sampleData.textAssets = [
     id: 9
   }
 ];
+//}]}
 
 module.exports = sampleData;

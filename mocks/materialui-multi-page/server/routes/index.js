@@ -73,12 +73,12 @@ router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res, next) {
 
 // Grid Page Endpoint
 router.get(CONSTANTS.ENDPOINT.GRID, (req, res) => {
-  res.json(sampleData.gridTextAssets);
+  res.json(sampleData.textAssets);
 });
 
 // MasterDetail Page Endpoint
 router.get(CONSTANTS.ENDPOINT.MASTERDETAIL, (req, res) => {
-  res.json(sampleData.masterDetailTextAssets);
+  res.json(sampleData.textAssets);
 });
 
 module.exports = router;

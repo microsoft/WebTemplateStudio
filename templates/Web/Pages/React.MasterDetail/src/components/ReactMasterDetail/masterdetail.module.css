@@ -4,7 +4,11 @@
 }
 .sidebarText {
   font-weight: 500;
-  font-color: #000000;
+}
+
+.title {
+  font-weight: 700;
+  margin-bottom: 0;
 }
 
 .breadCrumbLink {

@@ -65,12 +65,20 @@
 .cancelIcon {
   height: 15px;
   width: 15px;
-  margin-left: 10px;
-  padding-top: 13px;
+  margin-left: 8px;
+  margin-top: 13px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 1px;
+  padding-right: 1px;
 }
 
 .cancelIcon:hover {
   cursor: pointer;
+}
+
+.cancelIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .icon {

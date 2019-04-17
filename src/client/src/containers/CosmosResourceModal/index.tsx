@@ -33,7 +33,10 @@ import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceS
 import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
-import { setAccountAvailability, IAvailabilityFromExtension } from "../../actions/azureActions/setAccountAvailability";
+import {
+  setAccountAvailability,
+  IAvailabilityFromExtension
+} from "../../actions/azureActions/setAccountAvailability";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
@@ -47,9 +50,7 @@ interface IDispatchProps {
   closeModal: () => any;
   saveCosmosOptions: (cosmosOptions: any) => any;
   setValidationStatus: (status: boolean) => any;
-  setCosmosResourceAccountNameAvailability: (
-    isAvailableObject: any
-  ) => any;
+  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
 }
 
 interface IStateProps {
@@ -340,8 +341,12 @@ const CosmosResourceModal = (props: Props) => {
         <div className={styles.selectionHeaderContainer}>
           <div>{leftHeader}</div>
           {links[formSectionId] && (
-            <a className={styles.link} href={links[formSectionId]}>
-              Create New
+            <a
+              tabIndex={disabled! ? -1 : 0}
+              className={styles.link}
+              href={links[formSectionId]}
+            >
+              {props.intl.formatMessage(messages.createNew)}
             </a>
           )}
         </div>
@@ -370,13 +375,25 @@ const CosmosResourceModal = (props: Props) => {
   };
   const { isAccountNameAvailable } = props.accountNameAvailability;
   const { isValidatingName } = props;
+  const cancelKeyDownHandler = (event: any) => {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      event.preventDefault();
+      event.stopPropagation();
+      props.closeModal();
+    }
+  };
   return (
     <div>
       <div className={styles.headerContainer}>
         <div className={styles.modalTitle}>
           {props.intl.formatMessage(messages.createCosmosRes)}
         </div>
-        <Cancel className={styles.icon} onClick={props.closeModal} />
+        <Cancel
+          tabIndex={0}
+          className={styles.icon}
+          onClick={props.closeModal}
+          onKeyDown={cancelKeyDownHandler}
+        />
       </div>
       {getDropdownSection(
         modalValidation.isSubscriptionEmpty &&
@@ -414,7 +431,11 @@ const CosmosResourceModal = (props: Props) => {
       >
         <div className={styles.selectionHeaderContainer}>
           <div>{props.intl.formatMessage(messages.accountName)}</div>
-          <a className={styles.link} href={links.accountName}>
+          <a
+            tabIndex={cosmosFormData.subscription.value === "" ? -1 : 0}
+            className={styles.link}
+            href={links.accountName}
+          >
             documents.azure.com
           </a>
         </div>
@@ -498,15 +519,18 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: state.vscode.vscodeObject
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   closeModal: () => {
     dispatch(closeModalAction());
   },
   saveCosmosOptions: (cosmosOptions: any) => {
     dispatch(saveCosmosDbSettingsAction(cosmosOptions));
   },
-  setCosmosResourceAccountNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
-    dispatch(setAccountAvailability(isAvailableObject)),
+  setCosmosResourceAccountNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => dispatch(setAccountAvailability(isAvailableObject)),
   setValidationStatus: (status: boolean) =>
     dispatch(setAzureValidationStatusAction(status))
 });

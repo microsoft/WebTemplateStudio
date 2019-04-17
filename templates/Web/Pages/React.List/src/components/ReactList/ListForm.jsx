@@ -12,7 +12,7 @@ export default function ListForm(props) {
         placeholder="Add text here..."
         aria-label="Add text here..."
       />
-      <button class="btn btn-primary ml-2" onClick={onAddListItem}>
+      <button className="btn btn-primary ml-2" onClick={onAddListItem}>
         Submit
       </button>
     </div>

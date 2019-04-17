@@ -37,13 +37,23 @@ const CosmosDBSelection = ({
   intl
 }: Props) => {
   const { serviceType } = cosmosSelection.wizardContent;
+  const onEditKeyDownHandler = (event: any) => {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      openCosmosDbModal();
+    }
+  };
   return (
     <React.Fragment>
       {!_.isEmpty(cosmosSelection.selection) && (
         <React.Fragment>
           <div className={styles.headerContainer}>
             <div>{intl.formatMessage(serviceType)}</div>
-            <div className={styles.edit} onClick={openCosmosDbModal}>
+            <div
+              tabIndex={0}
+              className={styles.edit}
+              onClick={openCosmosDbModal}
+              onKeyDown={onEditKeyDownHandler}
+            >
               <FormattedMessage
                 id="cosmosDBSelection.edit"
                 defaultMessage="Edit"
@@ -69,7 +79,9 @@ const CosmosDBSelection = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>) => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+) => ({
   removeCosmosResource: (selectionIndex: number) => {
     dispatch(removeCosmosSelectionAction(selectionIndex));
   },

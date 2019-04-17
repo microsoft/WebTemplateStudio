@@ -14,3 +14,7 @@
   font-weight: var(--vscode-editor-font-weight);
   margin-left: 10px;
 }
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}

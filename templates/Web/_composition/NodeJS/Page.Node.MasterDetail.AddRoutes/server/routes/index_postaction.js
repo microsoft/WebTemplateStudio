@@ -10,7 +10,7 @@ const router = express.Router();
 //{[{
 // MasterDetail Page Endpoint
 router.get(CONSTANTS.ENDPOINT.MASTERDETAIL, (req, res) => {
-  res.json(sampleData.masterDetailTextAssets);
+  res.json(sampleData.textAssets);
 });
 //}]}
 

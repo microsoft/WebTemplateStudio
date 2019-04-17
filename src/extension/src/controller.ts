@@ -13,6 +13,7 @@ import { ChildProcess } from "child_process";
 import { VSCodeUI } from "./utils/vscodeUI";
 import { AzureServices } from "./azure/azureServices";
 import { TelemetryAI } from "./telemetry/telemetryAI";
+import { Logger } from "./utils/logger";
 import { WizardServant } from "./wizardServant";
 import { GenerationExperience } from "./generationExperience";
 
@@ -20,6 +21,7 @@ export class Controller {
   public static reactPanelContext: ReactPanel;
   public static Telemetry: TelemetryAI;
   private vscodeUI: VSCodeUI;
+  public static Logger: Logger;
   private AzureService: AzureServices;
   private GenExperience: GenerationExperience;
   private Validator: Validator;
@@ -34,7 +36,8 @@ export class Controller {
       [ExtensionModule.VSCodeUI, this.vscodeUI],
       [ExtensionModule.Azure, this.AzureService],
       [ExtensionModule.Validator, this.Validator],
-      [ExtensionModule.Generate, this.GenExperience]
+      [ExtensionModule.Generate, this.GenExperience],
+      [ExtensionModule.Logger, Controller.Logger]
     ]);
   }
 
@@ -73,6 +76,7 @@ export class Controller {
       this.extensionStartTime
     );
     this.vscodeUI = new VSCodeUI();
+    Logger.initializeOutputChannel(Controller.getExtensionName(context));
     this.Validator = new Validator();
     this.AzureService = new AzureServices();
     this.GenExperience = new GenerationExperience(Controller.Telemetry);
@@ -154,6 +158,9 @@ export class Controller {
     vscode.window.setStatusBarMessage(output);
   }
 
+  private static getExtensionName(ctx: vscode.ExtensionContext) {
+    return this.Telemetry.getExtensionName(ctx);
+  }
   private static getVersionAndSendToClient(
     ctx: vscode.ExtensionContext,
     templatesVersion: string

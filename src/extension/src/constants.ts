@@ -187,6 +187,7 @@ export const CONSTANTS = {
 };
 
 export enum ExtensionCommand {
+  Log = "log",
   Login = "login",
   Logout = "logout",
   Subscriptions = "subscriptions",
@@ -216,7 +217,9 @@ export enum ExtensionModule {
   Telemetry = "Telemetry",
   Validator = "Validator",
   VSCodeUI = "VSCodeUI"
+  Logger = "Logger"
 }
+
 export enum TelemetryEventName {
   ExtensionLaunch = "Extension-Launch-Time",
   WizardSession = "Wizard-To-Generate-Session-Time",
