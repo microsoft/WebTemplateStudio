@@ -31,7 +31,8 @@ export class Controller {
       [ExtensionModule.Telemetry, Controller.Telemetry],
       [ExtensionModule.Azure, this.AzureService],
       [ExtensionModule.Validator, this.Validator],
-      [ExtensionModule.Generate, this.GenExperience]
+      [ExtensionModule.Generate, this.GenExperience],
+      [ExtensionModule.Logger, Controller.Logger]
     ]);
   }
 
