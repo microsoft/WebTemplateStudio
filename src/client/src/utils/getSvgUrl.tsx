@@ -11,12 +11,12 @@ import svgStyles from "./svgStyles.module.css";
 
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants";
 import react from "../assets/react.svg";
+import angular from "../assets/angular.svg";
 import node from "../assets/nodeJS.svg";
 import azure from "../assets/azure.svg";
 import azurefunctions from "../assets/azurefunctions.svg";
 import cancel from "../assets/cancel.svg";
 import cosmosdb from "../assets/cosmosdb.svg";
-import angular from "../assets/angular.svg";
 
 import masterdetailscreenshot from "../assets/masterdetailscreenshot.svg";
 import listscreenshot from "../assets/listscreenshot.svg";
@@ -36,25 +36,41 @@ const SVG_REACTCOMPONENT_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP]: (style: string) => (
     <FullStack className={classnames(style, svgStyles.icon)} />
   ),
-  [WIZARD_CONTENT_INTERNAL_NAMES.MASTER_DETAIL]: (style: string) => (
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_MASTER_DETAIL]: (style: string) => (
     <MasterDetail className={classnames(style, svgStyles.icon)} />
   ),
-  [WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE]: (style: string) => (
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_BLANK_PAGE]: (style: string) => (
     <BlankPage className={classnames(style, svgStyles.icon)} />
   ),
-  [WIZARD_CONTENT_INTERNAL_NAMES.CONTENT_GRID]: (style: string) => (
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_CONTENT_GRID]: (style: string) => (
     <ContentGrid className={classnames(style, svgStyles.icon)} />
   ),
-  [WIZARD_CONTENT_INTERNAL_NAMES.LIST]: (style: string) => (
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_LIST]: (style: string) => (
+    <List className={classnames(style, svgStyles.icon)} />
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_MASTER_DETAIL]: (style: string) => (
+    <MasterDetail className={classnames(style, svgStyles.icon)} />
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_BLANK_PAGE]: (style: string) => (
+    <BlankPage className={classnames(style, svgStyles.icon)} />
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_CONTENT_GRID]: (style: string) => (
+    <ContentGrid className={classnames(style, svgStyles.icon)} />
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_LIST]: (style: string) => (
     <List className={classnames(style, svgStyles.icon)} />
   )
 };
 
 const SVG_SCREENSHOT_MAPPINGS = {
-  [WIZARD_CONTENT_INTERNAL_NAMES.MASTER_DETAIL]: masterdetailscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.CONTENT_GRID]: gridscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.LIST]: listscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE]: blankscreenshot
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_MASTER_DETAIL]: masterdetailscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_MASTER_DETAIL]: masterdetailscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_CONTENT_GRID]: gridscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_CONTENT_GRID]: gridscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_LIST]: listscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_LIST]: listscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_BLANK_PAGE]: blankscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_BLANK_PAGE]: blankscreenshot
 };
 
 export const withLocalPath = (absolutePath: string): string => {

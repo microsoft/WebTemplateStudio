@@ -16,6 +16,7 @@ import styles from "./styles.module.css";
 
 import { ROUTES, ROUTES_ARRAY } from "../../utils/constants";
 import { IRoutes } from "../../reducers/wizardRoutes/navigationReducer";
+import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
 
 const messages = defineMessages({
   welcome: {
@@ -50,6 +51,7 @@ const messages = defineMessages({
 
 interface IStateProps {
   isVisited: IRoutes;
+  isValidNameAndProjectPath: boolean;
 }
 
 type Props = RouteComponentProps & IStateProps & InjectedIntlProps;
@@ -71,7 +73,7 @@ const LeftSidebar = (props: Props) => {
   React.useEffect(() => {
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
   });
-  const { isVisited, intl } = props;
+  const { isVisited, intl, isValidNameAndProjectPath } = props;
   return (
     <React.Fragment>
       {pathname !== ROUTES.PAGE_DETAILS && (
@@ -85,15 +87,21 @@ const LeftSidebar = (props: Props) => {
                 <div
                   className={classnames(styles.itemBorder, {
                     [styles.currentPath]: idx === currentPathIndex,
-                    [styles.visitedPath]: isVisited[ROUTES_ARRAY[idx]],
+                    [styles.visitedPath]:
+                      isVisited[ROUTES_ARRAY[idx]] && isValidNameAndProjectPath,
                     [styles.nextPath]:
-                      idx > currentPathIndex && !isVisited[ROUTES_ARRAY[idx]],
+                      idx > currentPathIndex &&
+                      (!isVisited[ROUTES_ARRAY[idx]] ||
+                        !isValidNameAndProjectPath),
                     [styles.itemBorderTop]: idx === 0
                   })}
                   key={sidebartitle}
                 >
                   <LeftSidebarLink
-                    disabled={!isVisited[ROUTES_ARRAY[idx]]}
+                    disabled={
+                      !isVisited[ROUTES_ARRAY[idx]] ||
+                      !isValidNameAndProjectPath
+                    }
                     path={ROUTES_ARRAY[idx]}
                     text={sidebartitle}
                     visitedCheck={
@@ -118,7 +126,8 @@ const LeftSidebar = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => ({
-  isVisited: state.wizardRoutes.isVisited
+  isVisited: state.wizardRoutes.isVisited,
+  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
 });
 
 export default withRouter(connect(mapStateToProps)(injectIntl(LeftSidebar)));

@@ -295,7 +295,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
     rightHeader?: string,
     disabled?: boolean,
     defaultValue?: any,
-    openDropdownUpwards?: boolean,
+    openDropdownUpwards?: boolean
   ) => {
     return (
       <div

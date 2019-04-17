@@ -209,7 +209,8 @@ export enum ExtensionCommand {
   OpenProjectVSCode = "open-project-vscode",
   GetVersions = "get-versions",
   CloseWizard = "close-wizard",
-  ResetPages = "reset-pages"
+  ResetPages = "reset-pages",
+  GetPreviewStatus = "get-preview"
 }
 export enum ExtensionModule {
   Azure = "Azure",

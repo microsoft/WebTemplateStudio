@@ -7,7 +7,7 @@ import {
   ExtensionCommand
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
-import ApiModule from "./signalr-api-module/apiModule";
+import { ApiModule } from "./signalr-api-module/apiModule";
 import { ISyncReturnType } from "./types/syncReturnType";
 import { ChildProcess } from "child_process";
 import { VSCodeUI } from "./utils/vscodeUI";
@@ -175,13 +175,26 @@ export class Controller {
     });
   }
 
-  private static loadUserSettings(){
-    let outputPathDefault = vscode.workspace.getConfiguration().get<string>("wts.output.path");
-    if(outputPathDefault){
+  private static loadUserSettings() {
+    let outputPathDefault = vscode.workspace
+      .getConfiguration()
+      .get<string>("wts.output.path");
+    const preview = vscode.workspace
+      .getConfiguration()
+      .get<boolean>("wts.preview.mode");
+    if (outputPathDefault) {
       Controller.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.GetOutputPath,
         payload: {
           outputPath: outputPathDefault
+        }
+      });
+    }
+    if (preview !== undefined) {
+      Controller.reactPanelContext.postMessageWebview({
+        command: ExtensionCommand.GetPreviewStatus,
+        payload: {
+          preview: preview
         }
       });
     }
@@ -196,6 +209,6 @@ export class Controller {
   }
 
   dispose() {
-    throw new Error("Method not implemented.");
+    ApiModule.StopApi();
   }
 }

@@ -4,7 +4,7 @@ import { ExtensionCommand, TelemetryEventName, CONSTANTS } from "./constants";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 import { ReactPanel } from "./reactPanel";
 import { AzureServices } from "./azure/azureServices";
-import ApiModule from "./signalr-api-module/apiModule";
+import { ApiModule } from "./signalr-api-module/apiModule";
 import { Controller } from "./controller";
 
 export class GenerationExperience extends WizardServant {

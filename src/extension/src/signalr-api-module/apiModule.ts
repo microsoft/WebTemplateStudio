@@ -10,7 +10,7 @@ import { CoreTemplateStudioApiCommand } from "./coreTemplateStudioApiCommand";
 import { GenerateCommand } from "./generateCommand";
 import { SyncCommand } from "./syncCommand";
 
-export default class ApiModule {
+export class ApiModule {
   private static _process: ChildProcess;
 
   public static StartApi(context: vscode.ExtensionContext): ChildProcess {

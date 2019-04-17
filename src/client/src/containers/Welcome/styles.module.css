@@ -1,44 +1,44 @@
 .container {
-    align-self: center;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  align-self: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.container>div {
-    flex: 1 0 100%;
+.container > div {
+  flex: 1 0 100%;
 }
 
-.flex>div:first-child {
-    flex: 0 1 100%;
+.flex > div:first-child {
+  flex: 0 1 100%;
 }
 
 .header {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    margin: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px;
 }
 
 .body {
-    font-size: 14px;
-    text-align: center;
-    line-height: 20px;
-    margin: 10px;
-    margin-bottom: 2em;
-    line-height: 1.75em;
+  font-size: 14px;
+  text-align: center;
+  line-height: 20px;
+  margin: 10px;
+  margin-bottom: 2em;
+  line-height: 1.75em;
 }
 
 .projectDetailsContainer {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: flex-end;
-    box-sizing: border-box;
-    width: 50%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  width: 50%;
 }
 
 .getStarted {
-    align-self: flex-end;
+  align-self: flex-end;
 }
