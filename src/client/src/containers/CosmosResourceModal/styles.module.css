@@ -43,6 +43,10 @@
   height: 12px;
 }
 
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .validationIcon {
   height: 15px;
   margin-right: 0.2em;
