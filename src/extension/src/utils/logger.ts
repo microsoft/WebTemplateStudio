@@ -1,21 +1,35 @@
 import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import fs = require("fs");
+// import fs = require("fs");
 import { ExtensionCommand } from "../constants";
 import path = require("path");
-
-type LogType = "INFO" | "WARNING" | "ERROR";
-type LogSource = "WIZARD" | "EXTENSION";
+import log4js = require("log4js");
+type LogLevel = "trace" | "debug" | "info" | "warn" | "error" | "fatal";
+type LogSource = "WIZARD" | "EXTENSION" | "CORE";
 type ILoggingPayload = {
-  type: LogType;
+  level: LogLevel;
   data: string;
 };
 
+const ABSOLUTE_LOG_PATH = path.join(__dirname, "../../logs");
 const OUTPUT_CHANNEL_DEFAULT = "Web Template Studio";
-const LOG_FILENAME_PREFIX = "LOG_WTS_LOCAL";
-const GET_LOG_PATH = (filename: string) => {
-  return path.join("./log", filename);
-};
+
+log4js.configure({
+  appenders: {
+    webtemplatestudio: {
+      type: "file",
+      filename: path.join(ABSOLUTE_LOG_PATH, "wts.log"),
+      pattern: ".yyyy-MM-dd",
+      daysToKeep: 5
+    }
+  },
+  categories: {
+    default: {
+      appenders: ["webtemplatestudio"],
+      level: "all"
+    }
+  }
+});
 
 export class Logger extends WizardServant {
   clientCommandMap: Map<
@@ -24,68 +38,38 @@ export class Logger extends WizardServant {
   > = new Map([[ExtensionCommand.Log, Logger.receiveLogfromWizard]]);
   private static outputChannel: vscode.OutputChannel;
   private static outputContent: string = "";
-  private static loggingFile = Logger.getLoggingFile();
-  public static getLoggingFile(): string {
-    let items = fs.readdirSync("./logs");
-    let oldestFileDate: Date = new Date(Date.now());
-    let oldestFile: string = "";
-    let logFilesCount: number = 0;
-    // Get oldest file
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].length > LOG_FILENAME_PREFIX.length) {
-        if (items[i].startsWith(LOG_FILENAME_PREFIX)) {
-          logFilesCount += 1;
-          let currentFileDate = fs.statSync(GET_LOG_PATH(items[i])).ctime;
-          if (oldestFileDate > currentFileDate) {
-            oldestFileDate = currentFileDate;
-            oldestFile = items[i];
-          }
-        }
-      }
-    }
-    if (logFilesCount >= 5) {
-      // Delete oldest file
-      fs.unlinkSync(oldestFile);
-    }
-    let currentDate = new Date()
-      .toLocaleDateString(undefined, {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-      })
-      .replace("/", "");
-    return GET_LOG_PATH(LOG_FILENAME_PREFIX.concat("_", currentDate));
-  }
+  private static logger: log4js.Logger = log4js.getLogger();
   public static initializeOutputChannel(extensionName: string): void {
     if (Logger.outputChannel === undefined) {
       Logger.outputChannel = vscode.window.createOutputChannel(extensionName);
-      this.appendLog("EXTENSION", "INFO", ">>>>>>>>> Launched");
     }
+    Logger.appendLog("EXTENSION", "info", " >>>>>>> Launched ");
+    Logger.display("info");
   }
   public static appendLog(
     source: LogSource,
-    type: LogType,
+    level: LogLevel,
     data: string
   ): void {
     if (Logger.outputChannel === undefined) {
       Logger.initializeOutputChannel(OUTPUT_CHANNEL_DEFAULT);
     }
-    Logger.outputChannel.appendLine(source.concat("-", type, ":", data));
-    Logger.outputContent.concat(source, "-", type, ":", data, "\n");
+    Logger.outputChannel.appendLine(source.concat("-", level, ":", data));
+    Logger.outputContent = Logger.outputContent.concat(source, "-", data, "\n");
   }
-  public static display(): void {
+  public static display(level: LogLevel): void {
     if (Logger.outputChannel === undefined) {
       Logger.initializeOutputChannel(OUTPUT_CHANNEL_DEFAULT);
     }
     Logger.outputChannel.show(true);
-    fs.appendFileSync(Logger.loggingFile, Logger.outputContent);
+    Logger.logger[level](Logger.outputContent);
     Logger.outputContent = "";
   }
   private static async receiveLogfromWizard(
     message: ILoggingPayload
   ): Promise<IPayloadResponse> {
-    Logger.appendLog("WIZARD", message.type, message.data);
-    Logger.display();
+    Logger.appendLog("WIZARD", message.level, message.data);
+    Logger.display(message.level);
     return {
       payload: null
     };
