@@ -1,4 +1,5 @@
 import * as Actions from "../../actions/types";
+import { IOption } from "../../types/option";
 
 /* State Shape
 {
@@ -6,7 +7,7 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const backendFrameworkOptions = (state: any = [], action: any) => {
+const backendFrameworkOptions = (state: IOption[] = [], action: any) => {
   switch (action.type) {
     case Actions.GET_BACKEND_FRAMEWORKS_SUCCESS:
       const newState = [...state];

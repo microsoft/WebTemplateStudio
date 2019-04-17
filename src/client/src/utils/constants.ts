@@ -9,6 +9,7 @@ const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
 const WELCOME = "/";
 
 const PRODUCTION = "production";
+const DEVELOPMENT = "development";
 
 const INTL_MESSAGES = defineMessages({
   EMPTY_FIELD: {
@@ -110,5 +111,6 @@ export {
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
-  COSMOS_APIS
+  COSMOS_APIS,
+  DEVELOPMENT
 };

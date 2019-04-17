@@ -2,7 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SummarySection from "../../components/SummarySection";
+import SummarySection from "../SummarySection";
 import SummaryTile from "../../components/SummaryTile";
 import SortablePageList from "../SortablePageList";
 
@@ -19,6 +19,8 @@ import Title from "../../components/Title";
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { withLocalPath } from "../../utils/getSvgUrl";
 import folder from "../../assets/folder.svg";
+import { AppState } from "../../reducers";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 interface IDispatchProps {
   openCosmosDbModal: () => any;
@@ -31,7 +33,6 @@ interface IStateProps {
   servicesRows: RowType[];
   pagesRows: RowType[];
   vscode: any;
-  validation: any;
   projectName: string;
   outputPath: string;
 }
@@ -126,13 +127,12 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   }
 });
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   projectTypeRows: WizardSelectors.getProjectTypeRowItemSelector(state),
   frameworkRows: WizardSelectors.getFrameworksRowItemSelector(state),
   servicesRows: WizardSelectors.getServicesSelector(state),
   pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
-  vscode: state.vscode.vscodeObject,
-  validation: state.selection.validation,
+  vscode: getVSCodeApiSelector(state),
   projectName: WizardSelectors.getProjectName(state),
   outputPath: WizardSelectors.getOutputPath(state)
 });

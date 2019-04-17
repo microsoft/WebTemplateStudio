@@ -1,4 +1,5 @@
 import * as Actions from "../../actions/types";
+import { ISelected } from "../../types/selected";
 
 /* State Shape
 {
@@ -7,7 +8,7 @@ import * as Actions from "../../actions/types";
 */
 
 const webAppReducer = (
-  state = {
+  state: ISelected = {
     title: "Fullstack Web Application",
     internalName: "FullStackWebApp"
   },

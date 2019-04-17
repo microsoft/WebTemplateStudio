@@ -13,7 +13,10 @@ import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../
 import { selectWebAppAction } from "../../actions/selectWebApp";
 
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
-import { getIsVisitedRoutesSelector } from "../../selectors/wizardNavigationSelector";
+import {
+  getIsVisitedRoutesSelector,
+  IVisitedPages
+} from "../../selectors/wizardNavigationSelector";
 
 import { ROUTES } from "../../utils/constants";
 
@@ -32,6 +35,8 @@ interface ISelectionType {
   frontendFramework: ISelected;
   pages: ISelected[];
 }
+import { AppState } from "../../reducers";
+import { SelectionState } from "../../reducers/wizardSelectionReducers";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -41,12 +46,12 @@ interface IDispatchProps {
 }
 
 interface IRightSidebarProps {
-  selection: ISelectionType;
+  selection: SelectionState;
   projectTypeDropdownItems: IDropDownOptionType[];
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
   services: any;
-  isRoutesVisited: any;
+  isRoutesVisited: IVisitedPages;
 }
 
 interface IRightSidebarState {
@@ -108,9 +113,15 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     this.props.selectPages(pages);
   };
   public convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
+    if (option.internalName && option.title) {
+      return {
+        value: option.internalName,
+        label: option.title
+      };
+    }
     return {
-      value: option.internalName,
-      label: option.title
+      value: "",
+      label: ""
     };
   }
   public render() {
@@ -184,7 +195,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   }
 }
 
-const mapStateToProps = (state: any): IRightSidebarProps => ({
+const mapStateToProps = (state: AppState): IRightSidebarProps => ({
   selection: state.selection,
   projectTypeDropdownItems: convertOptionsToDropdownItems(
     state.wizardContent.projectTypes

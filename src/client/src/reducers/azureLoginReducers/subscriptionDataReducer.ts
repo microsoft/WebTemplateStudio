@@ -9,7 +9,20 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const subscriptionData = (state = {}, action: any) => {
+interface ISubscriptionData {
+  locations: any[];
+  resourceGroups: any[];
+}
+
+const initialState = {
+  locations: [],
+  resourceGroups: []
+};
+
+const subscriptionData = (
+  state: ISubscriptionData = initialState,
+  action: any
+) => {
   switch (action.type) {
     case Actions.GET_SUBSCRIPTION_DATA:
       return action.payload;

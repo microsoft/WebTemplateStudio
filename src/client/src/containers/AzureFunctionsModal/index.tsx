@@ -33,6 +33,8 @@ import styles from "./styles.module.css";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
 import { setAppNameAvailabilityAction } from "../../actions/setAccountAvailability";
+import { AppState } from "../../reducers";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -107,6 +109,10 @@ const messages = defineMessages({
   appName: {
     id: "azureFunctionsModal.appName",
     defaultMessage: "App Name"
+  },
+  saveChanges: {
+    id: "azureFunctionsModal.saveChanges",
+    defaultMessage: "Save Changes"
   },
   addResource: {
     id: "azureFunctionsModal.addResource",
@@ -482,16 +488,18 @@ const AzureFunctionsResourceModal = (props: Props) => {
           )}
           onClick={handleAddResource}
         >
-          {props.intl.formatMessage(messages.addResource)}
+          {(props.selection &&
+            props.intl.formatMessage(messages.saveChanges)) ||
+            props.intl.formatMessage(messages.addResource)}
         </button>
       </div>
     </React.Fragment>
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAzureFunctionsModalOpenSelector(state),
-  vscode: state.vscode.vscodeObject,
+  vscode: getVSCodeApiSelector(state),
   subscriptionData: state.azureProfileData.subscriptionData,
   subscriptions: state.azureProfileData.profileData.subscriptions,
   appNameAvailability:

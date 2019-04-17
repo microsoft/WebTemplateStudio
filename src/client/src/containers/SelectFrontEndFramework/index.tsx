@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SelectOption from "../../components/SelectOption";
+import SelectOption from "../SelectOption";
 
 import { selectFrontendFramework as selectFrontendAction } from "../../actions/selectFrontEndFramework";
 
@@ -11,6 +11,7 @@ import { ISelected } from "../../types/selected";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
+import { AppState } from "../../reducers";
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
@@ -78,7 +79,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any): ISelectFrontEndFrameworkProps => {
+const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
   const { frontendOptions } = state.wizardContent;
   const { frontendFramework } = state.selection;
   return {

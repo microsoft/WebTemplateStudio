@@ -1,7 +1,7 @@
 import * as Actions from "../../actions/types";
 import { ROUTES } from "../../utils/constants";
 
-interface IRoutes {
+export interface IRoutes {
   [key: string]: boolean;
 }
 

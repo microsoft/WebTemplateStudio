@@ -6,7 +6,7 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const profileData = (state = false, action: any) => {
+const profileData = (state: boolean = false, action: any) => {
   switch (action.type) {
     case Actions.LOG_OUT_OF_AZURE:
       return false;

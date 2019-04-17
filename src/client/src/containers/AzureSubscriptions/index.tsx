@@ -20,12 +20,8 @@ import azureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
 import { setDetailPageAction } from "../../actions/setDetailsPage";
 
-import {
-  InjectedIntlProps,
-  injectIntl,
-  defineMessages,
-  FormattedMessage
-} from "react-intl";
+import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+import { AppState } from "../../reducers";
 
 interface IDispatchProps {
   startLogOutToAzure: () => any;
@@ -144,7 +140,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   }
 }
 
-const mapStateToProps = (state: any): IAzureLoginProps => ({
+const mapStateToProps = (state: AppState): IAzureLoginProps => ({
   isLoggedIn: state.azureProfileData.isLoggedIn,
   isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
   azureFunctionsSelection: state.selection.services.azureFunctions.selection,
