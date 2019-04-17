@@ -49,12 +49,12 @@ const Welcome = ({
 }: Props) => {
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
+      <h1 className={styles.header}>
         <FormattedMessage
           id="welcome.header"
           defaultMessage="Welcome to Web Template Studio"
         />
-      </div>
+      </h1>
       <div className={styles.body}>
         <FormattedMessage
           id="welcome.body"
