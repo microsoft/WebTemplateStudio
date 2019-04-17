@@ -3,14 +3,14 @@
 The foundation of _Web Template Studio_ is to get Web developer's up and running with a new
 web app incorporating cloud services on Azure as fast as possible.
 
-A developer should be able to quickly select features, add pages and cloud services and
-have a solid foundation to start with. The starting code will follow best practices and
-design guidelines, be accessible and be commented to help aid in enabling everything a
-developer needs to get started and understand **why** something is like it is.
+Using Web Template Studio, a developer should be able to select their preferred web
+frameworks, pages and Azure cloud services and we generate the boilerplate code for them.
+The generated code should not only follow best practices and design guidelines, but also
+include comments to guide the developer through the logic and how to add functionality to
+the code.
 
-That's why many of the guidelines of this document are obvious and serve only one purpose: **Simplicity.**
-
-Also remember that the Pull Requests must be done against the **[dev branch](https://github.com/Microsoft/WebTemplateStudio/tree/dev)**.
+Also remember that the Pull Requests must be done against the **[dev branch](https://github.com/Microsoft/WebTemplateStudio/tree/dev)**. You should also rebase off dev before
+the PR as well.
 
 ## Legal
 
@@ -53,7 +53,6 @@ Every contribution has to come with:
 
 - If you've included a new template, make sure it meets the [web accesibility standard](https://www.w3.org/WAI/standards-guidelines/wcag/) and is compatible with other templates.
 
-- You tested your code your MacOS, Windows and Linux.
 - You've run all existing tests to make sure you've not broken anything. Manual testing
   must be done against all PRs following the testing plan while unit tests are not in place.
 - PR has to target dev branch.
@@ -62,7 +61,7 @@ PR has to be validated by at least two core members before being merged. Once me
 
 ## Quality insurance for pull requests for updating the Wizard
 
-We encourage developers to follow the following guidances when submitting pull requests for the wizard:
+We encourage developers to consider the following guidelines when submitting pull requests for the wizard:
 
 - The Wizard must be usable and efficient with keyboard only.
 - Tab order must be logical.
@@ -79,7 +78,6 @@ for JavaScript.
 
 ## Documentation
 
-- DO NOT expect that your code is so well designed that it needs no documentation. No code is that intuitive.
 - DO provide great documentation with all new features and code.
 - DO use readable and self-documenting identifier names.
 - DO use consistent naming and terminology.
