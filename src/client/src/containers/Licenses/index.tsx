@@ -12,6 +12,7 @@ import {
   getIsVisitedRoutesSelector,
   IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
+import { AppState } from "../../reducers";
 
 interface IStateProps {
   frameworkLicenses: string[];
@@ -51,7 +52,7 @@ const Licenses = ({ frameworkLicenses, pageLicenses, isVisited }: Props) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: AppState) => ({
   frameworkLicenses: getFrameworkLicensesSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   pageLicenses: getPageLicencesSelector(state)

@@ -4,3 +4,7 @@
     margin-left: 3px;
     margin-right: 4px;
 }
+
+.icon path {
+    fill: var(--vscode-editor-foreground);
+}

@@ -13,15 +13,20 @@ body {
   padding: 0;
   left: 0;
   top: 0;
-  font-size: 100%;
+  font-size: var(--vscode-editor-font-size);
+  color: var(--vscode-editor-foreground);
+  font-weight: var(--vscode-editor-font-weight);
+}
+
+a {
+  font-weight: var(--vscode-editor-font-weight);
 }
 
 /* ROOT FONT STYLES */
 
 * {
-  font-family: "Segoe UI Light", "Segoe UI";
+  font-family: var(--vscode-editor-font-family);
   line-height: 1.5;
-  color: #ffffff;
 }
 
 /* TYPOGRAPHY */
@@ -51,8 +56,8 @@ h6 {
 }
 
 p {
-  font-size: 1.125rem;
-  font-weight: 200;
+  font-size: var(--vscode-editor-font-size);
+  font-weight: var(--vscode-editor-font-weight);
   margin: 0px;
 }
 

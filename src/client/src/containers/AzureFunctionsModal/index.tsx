@@ -9,8 +9,8 @@ import { connect } from "react-redux";
 import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
-import { saveAzureFunctionsSettingsAction } from "../../actions/azureFunctionActions";
-import { closeModalAction } from "../../actions/modalActions";
+import { saveAzureFunctionsSettingsAction } from "../../actions/azureActions/azureFunctionActions";
+import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { azureFunctionModalInitialState } from "../../mockData/cosmosDbModalData";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
@@ -31,10 +31,11 @@ import {
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
-import { setAzureValidationStatusAction } from "../../actions/setAzureValidationStatusAction";
-import { setAppNameAvailabilityAction } from "../../actions/setAccountAvailability";
+import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
+import { setAppNameAvailabilityAction, IAvailabilityFromExtension } from "../../actions/azureActions/setAccountAvailability";
 import { AppState } from "../../reducers";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import RootAction from "../../actions/ActionType";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -44,8 +45,8 @@ const DEFAULT_VALUE = {
 interface IDispatchProps {
   closeModal: () => any;
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => any;
-  setValidationStatus: (status: boolean) => Dispatch;
-  setAppNameAvailability: (isAvailableObject: any) => any;
+  setValidationStatus: (status: boolean) => any;
+  setAppNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => any;
 }
 
 interface IStateProps {
@@ -82,25 +83,49 @@ const messages = defineMessages({
     id: "azureFunctionsModal.subscriptionLabel",
     defaultMessage: "Subscription"
   },
+  ariaSubscriptionLabel: {
+    id: "azureFunctionsModal.ariaSubscriptionLabel",
+    defaultMessage: "Subscription Drop Down"
+  },
   resourceGroupLabel: {
     id: "azureFunctionsModal.resourceGroupLabel",
     defaultMessage: "Resource Group"
+  },
+  ariaResourceGroupLabel: {
+    id: "azureFunctionsModal.ariaResourceGroupLabel",
+    defaultMessage: "Resource Group Drop Down"
   },
   locationLabel: {
     id: "azureFunctionsModal.locationLabel",
     defaultMessage: "Location"
   },
+  ariaLocationLabel: {
+    id: "azureFunctionsModal.ariaLocationLabel",
+    defaultMessage: "Location Drop Down"
+  },
   runtimeStackLabel: {
     id: "azureFunctionsModal.runtimeStackLabel",
     defaultMessage: "Runtime Stack"
+  },
+  ariaRuntimeStackLabel: {
+    id: "azureFunctionsModal.ariaRuntimeStackLabel",
+    defaultMessage: "Runtime Stack Drop Down"
   },
   numFunctionsLabel: {
     id: "azureFunctionsModal.numFunctionsLabel",
     defaultMessage: "Number of functions"
   },
+  ariaNumFunctionsLabel: {
+    id: "azureFunctionsModal.ariaNumFunctionsLabel",
+    defaultMessage: "Number of functions Drop Down"
+  },
   appNameLabel: {
     id: "azureFunctionsModal.appNameLabel",
     defaultMessage: "App Name"
+  },
+  ariaAppNameLabel: {
+    id: "azureFunctionsModal.ariaAppNameLabel",
+    defaultMessage: "App Name Input"
   },
   createNew: {
     id: "azureFunctionsModal.createNew",
@@ -319,6 +344,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
     leftHeader: string,
     options: any,
     formSectionId: string,
+    ariaLabel: string,
     rightHeader?: string,
     disabled?: boolean,
     defaultValue?: any
@@ -338,6 +364,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           )}
         </div>
         <Dropdown
+          ariaLabel={ariaLabel}
           options={options}
           handleChange={option => {
             handleDropdown(formSectionId, option.value);
@@ -383,6 +410,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         FORM_CONSTANTS.SUBSCRIPTION.label,
         functionsData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
+        props.intl.formatMessage(messages.ariaSubscriptionLabel),
         props.intl.formatMessage(messages.createNew),
         false,
         DEFAULT_VALUE
@@ -393,6 +421,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         functionsData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
+        props.intl.formatMessage(messages.ariaResourceGroupLabel),
         props.intl.formatMessage(messages.createNew),
         azureFunctionsFormData.subscription.value === "",
         DEFAULT_VALUE
@@ -423,6 +452,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           })}
         >
           <input
+            aria-label={props.intl.formatMessage(messages.ariaAppNameLabel)}
             className={styles.input}
             onChange={handleInput}
             value={azureFunctionsFormData.appName.value}
@@ -455,6 +485,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         FORM_CONSTANTS.LOCATION.label,
         functionsData.location,
         FORM_CONSTANTS.LOCATION.value,
+        props.intl.formatMessage(messages.ariaLocationLabel),
         undefined,
         azureFunctionsFormData.subscription.value === "",
         DEFAULT_VALUE
@@ -465,6 +496,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         FORM_CONSTANTS.RUNTIME_STACK.label,
         functionsData.runtimeStack,
         FORM_CONSTANTS.RUNTIME_STACK.value,
+        props.intl.formatMessage(messages.ariaRuntimeStackLabel),
         undefined,
         false,
         DEFAULT_VALUE
@@ -476,6 +508,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           FORM_CONSTANTS.NUM_FUNCTIONS.label,
           getNumFunctionsData(),
           FORM_CONSTANTS.NUM_FUNCTIONS.value,
+          props.intl.formatMessage(messages.ariaNumFunctionsLabel),
           undefined,
           false,
           1
@@ -508,14 +541,14 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selection: getFunctionsSelection(state)
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   closeModal: () => {
     dispatch(closeModalAction());
   },
   saveAzureFunctionsOptions: (azureFunctionsOptions: any) => {
     dispatch(saveAzureFunctionsSettingsAction(azureFunctionsOptions));
   },
-  setAppNameAvailability: (isAvailableObject: any) =>
+  setAppNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
     dispatch(setAppNameAvailabilityAction(isAvailableObject)),
   setValidationStatus: (status: boolean) =>
     dispatch(setAzureValidationStatusAction(status))

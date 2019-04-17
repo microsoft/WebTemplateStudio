@@ -1,5 +1,8 @@
-import * as Actions from "../../actions/types";
+import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 import { ISelected } from "../../types/selected";
+import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
+import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
+import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType";
 
 /* State Shape
 {
@@ -7,16 +10,22 @@ import { ISelected } from "../../types/selected";
 }
 */
 
+const initialState = {
+  title: "Fullstack Web Application",
+  internalName: "FullStackWebApp",
+  version: "",
+  author: ""
+};
+
 const webAppReducer = (
-  state: ISelected = {
-    title: "Fullstack Web Application",
-    internalName: "FullStackWebApp"
-  },
-  action: any
+  state: ISelected = initialState,
+  action: WizardSelectionActionType | WizardInfoType
 ) => {
   switch (action.type) {
-    case Actions.SELECT_WEB_APP:
+    case WIZARD_SELECTION_TYPEKEYS.SELECT_WEB_APP:
       return action.payload;
+    case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
+      return initialState;
     default:
       return state;
   }

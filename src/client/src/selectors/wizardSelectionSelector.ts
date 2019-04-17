@@ -66,8 +66,8 @@ const getProjectTypeRowItems = (selection: SelectionState): RowType[] => {
   return [
     {
       title: projectType.title,
-      svgUrl: getSvgUrl(projectType.internalName),
-      version: selection.appType.version,
+      internalName: projectType.internalName,
+      version: selection.appType.version!,
       author: projectType.author
     }
   ];
@@ -78,14 +78,14 @@ const frameworksRowItems = (selection: SelectionState): RowType[] => {
   return [
     {
       title: frontendFramework.title,
-      svgUrl: getSvgUrl(frontendFramework.internalName),
-      version: frontendFramework.version,
+      internalName: frontendFramework.internalName,
+      version: frontendFramework.version!,
       author: frontendFramework.author
     },
     {
       title: backendFramework.title,
-      svgUrl: getSvgUrl(backendFramework.internalName),
-      version: backendFramework.version,
+      internalName: backendFramework.internalName,
+      version: backendFramework.version!,
       author: backendFramework.author
     }
   ];
@@ -134,7 +134,7 @@ const getPagesRowItems = (selection: SelectionState): RowType[] => {
   for (const page of pages) {
     pagesRows.push({
       title: page.title,
-      svgUrl: getSvgUrl(page.internalName),
+      internalName: page.internalName,
       id: page.id,
       version: page.version as string,
       author: page.author,

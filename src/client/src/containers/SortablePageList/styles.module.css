@@ -15,4 +15,9 @@
 
 .hideOrShow {
     cursor: pointer;
+    color: var(--vscode-textLink-foreground);
+    margin-right: 15px;
+    border: none;
+    font-size: var(--vscode-editor-font-size);
+    background-color: var(--vscode-editor-background);
 }

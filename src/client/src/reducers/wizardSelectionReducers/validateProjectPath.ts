@@ -1,4 +1,7 @@
-import * as Actions from "../../actions/types";
+import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
+import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
+import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
+import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType";
 
 /* State Shape
 {
@@ -14,13 +17,17 @@ interface IProjectPathValidation {
   projectPathError?: string;
 }
 
+const initialState = {};
+
 const projectPathValidation = (
-  state: IProjectPathValidation = {},
-  action: any
+  state: IProjectPathValidation = initialState,
+  action: WizardSelectionActionType | WizardInfoType
 ) => {
   switch (action.type) {
-    case Actions.SET_PROJECT_PATH_VALIDATION:
+    case WIZARD_SELECTION_TYPEKEYS.SET_PROJECT_PATH_VALIDATION:
       return action.payload;
+    case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
+      return initialState;
     default:
       return state;
   }

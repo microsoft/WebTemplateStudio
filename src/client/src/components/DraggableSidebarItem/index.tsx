@@ -1,8 +1,22 @@
 import classnames from "classnames";
 import * as React from "react";
 
+import { ReactComponent as Reorder } from "../../assets/reorder.svg";
+import { ReactComponent as CloseSVG } from "../../assets/cancel.svg";
+
+import { getSvg } from "../../utils/getSvgUrl";
+
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
+
+import { injectIntl, InjectedIntl, defineMessages } from "react-intl";
+
+const messages = defineMessages({
+  changeItemName: {
+    id: "draggableSidebarItem.changeItemName",
+    defaultMessage: "Change Item Name"
+  }
+});
 
 /**
  * Takes in either a page (type ISelected) or text, but not both
@@ -11,7 +25,6 @@ import styles from "./styles.module.css";
 const DraggableSidebarItem = ({
   page,
   text,
-  closeSvgUrl,
   pageSvgUrl,
   reorderSvgUrl,
   itemTitle,
@@ -20,7 +33,8 @@ const DraggableSidebarItem = ({
   azureFunctionName,
   withIndent,
   withLargeIndent,
-  handleCloseClick
+  handleCloseClick,
+  intl
 }: {
   page?: ISelected;
   text?: string;
@@ -34,6 +48,7 @@ const DraggableSidebarItem = ({
   withIndent?: boolean;
   withLargeIndent?: boolean;
   handleCloseClick?: (idx: number) => void;
+  intl: InjectedIntl;
 }) => {
   return (
     <div>
@@ -52,17 +67,11 @@ const DraggableSidebarItem = ({
         </div>
       )}
       <div className={styles.draggablePage}>
-        {(withIndent || reorderSvgUrl) && (
-          <div className={styles.iconContainer}>
-            {reorderSvgUrl && (
-              <img
-                className={styles.reorderIcon}
-                src={reorderSvgUrl}
-                alt="Draggable Sidebar Item"
-              />
-            )}
-          </div>
-        )}
+        <div className={styles.iconContainer}>
+          {!(withIndent || withLargeIndent) && (
+            <Reorder className={styles.reorderIcon} />
+          )}
+        </div>
         <div className={styles.errorStack}>
           <div
             className={classnames({
@@ -72,11 +81,13 @@ const DraggableSidebarItem = ({
             })}
           >
             <div className={styles.inputContainer}>
-              {pageSvgUrl && (
-                <img className={styles.icon} src={pageSvgUrl} alt="Icon" />
-              )}
+              {reorderSvgUrl &&
+                (getSvg(page!.internalName, styles.icon) || (
+                  <img className={styles.icon} src={pageSvgUrl} />
+                ))}
               {handleInputChange && (page || azureFunctionName) && idx && (
                 <input
+                  aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input, {
                     [styles.azureFunctionNameInput]: azureFunctionName
                   })}
@@ -103,17 +114,15 @@ const DraggableSidebarItem = ({
             </div>
           )}
         </div>
-        <img
+        <CloseSVG
           onClick={() => {
             idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
           }}
           className={styles.cancelIcon}
-          src={closeSvgUrl}
-          alt="Remove item from generation"
         />
       </div>
     </div>
   );
 };
 
-export default DraggableSidebarItem;
+export default injectIntl(DraggableSidebarItem);

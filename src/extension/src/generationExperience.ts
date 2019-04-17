@@ -14,7 +14,11 @@ export class GenerationExperience extends WizardServant {
     (message: any) => Promise<IPayloadResponse>
   > = new Map([
     [ExtensionCommand.Generate, this.handleGeneratePayloadFromClient],
-    [ExtensionCommand.OpenProjectVSCode, GenerationExperience.openProjectVSCode]
+    [
+      ExtensionCommand.OpenProjectVSCode,
+      GenerationExperience.openProjectVSCode
+    ],
+    [ExtensionCommand.CloseWizard, this.handleCloseWizard]
   ]);
   /**
    *
@@ -28,6 +32,11 @@ export class GenerationExperience extends WizardServant {
     GenerationExperience.reactPanelContext = reactPanelContext;
   }
 
+  public async handleCloseWizard() {
+    GenerationExperience.reactPanelContext.dispose();
+    return { payload: true };
+  }
+
   ////TODO: MAKE GEN CALL CLIENTCOMMANDMAP FUNCTIONS VIA TO WRAP TELEMETRY AUTOMATICALLY
   // tslint:disable-next-line: max-func-body-length
   public async handleGeneratePayloadFromClient(
@@ -36,7 +45,6 @@ export class GenerationExperience extends WizardServant {
     GenerationExperience.Telemetry.trackWizardTotalSessionTimeToGenerate();
     var payload = message.payload;
     var enginePayload: any = payload.engine;
-
     const apiGenResult = await this.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
     ).catch(error => {
@@ -78,7 +86,7 @@ export class GenerationExperience extends WizardServant {
           // tslint:disable-next-line: no-function-expression
           async function(this: IActionContext): Promise<void> {
             try {
-              AzureServices.deployFunctionApp(
+              await AzureServices.deployFunctionApp(
                 payload.functions,
                 enginePayload.path
               );
@@ -91,7 +99,6 @@ export class GenerationExperience extends WizardServant {
                 payload: progressObject
               });
             } catch (error) {
-              console.log(error);
               progressObject = {
                 ...progressObject,
                 azureFunctions: GenerationExperience.getProgressObject(false)
