@@ -1,6 +1,7 @@
-import * as Actions from "../../../actions/types";
+import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
 import { FormattedMessage } from "react-intl";
 import { messages } from "../../../selectors/wizardSelectionSelector";
+import AzureActionType from "../../../actions/azureActions/azureActionType";
 
 /* State Shape
 {
@@ -17,7 +18,7 @@ import { messages } from "../../../selectors/wizardSelectionSelector";
 }
 */
 
-interface IAvailability {
+export interface IAvailability {
   isAccountNameAvailable: boolean;
   message: string;
 }
@@ -52,9 +53,9 @@ const initialState = {
   }
 };
 
-const services = (state: ICosmosDB = initialState, action: any) => {
+const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
   switch (action.type) {
-    case Actions.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
+    case AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
       const newSelectionState = {
         ...initialState,
         selection: [
@@ -69,7 +70,7 @@ const services = (state: ICosmosDB = initialState, action: any) => {
         ]
       };
       return newSelectionState;
-    case Actions.SET_ACCOUNT_AVAILABILITY:
+    case AZURE_TYPEKEYS.SET_ACCOUNT_AVAILABILITY:
       const newAvailabilityState = {
         ...state,
         accountNameAvailability: {
@@ -78,14 +79,14 @@ const services = (state: ICosmosDB = initialState, action: any) => {
         }
       };
       return newAvailabilityState;
-    case Actions.REMOVE_COSMOS_RESOURCE:
+    case AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE:
       const cosmosSelections = [...state.selection];
       cosmosSelections.splice(action.payload, 1);
       return {
         ...state,
         selection: cosmosSelections
       };
-    case Actions.LOG_OUT_OF_AZURE:
+    case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
       return initialState;
     default:
       return state;

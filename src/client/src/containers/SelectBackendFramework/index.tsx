@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 
 import SelectOption from "../SelectOption";
 
-import { getBackendFrameworksAction } from "../../actions/getBackendFrameworks";
-import { selectBackendFrameworkAction } from "../../actions/selectBackEndFramework";
+import { getBackendFrameworksAction } from "../../actions/wizardContentActions/getBackendFrameworks";
+import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 
@@ -14,6 +14,8 @@ import styles from "./styles.module.css";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
@@ -22,7 +24,7 @@ interface IDispatchProps {
 
 interface ISelectBackendProps {
   options: IOption[];
-  selectedBackend: string;
+  selectedBackend: ISelected;
 }
 
 type Props = IDispatchProps & ISelectBackendProps & InjectedIntlProps;
@@ -89,7 +91,7 @@ const mapStateToProps = (state: AppState): ISelectBackendProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   selectBackendFramework: (backendFramework: ISelected) => {
     dispatch(selectBackendFrameworkAction(backendFramework));
   },

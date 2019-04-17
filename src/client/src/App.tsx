@@ -25,29 +25,31 @@ import {
   DEVELOPMENT
 } from "./utils/constants";
 
-import { getVSCodeApi } from "./actions/getVSCodeApi";
-import { logIntoAzureAction } from "./actions/logIntoAzure";
-import { updateOutputPathAction } from "./actions/updateProjectNameAndPath";
+import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
+import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
+import { updateOutputPathAction } from "./actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   setAccountAvailability,
-  setAppNameAvailabilityAction
-} from "./actions/setAccountAvailability";
+  setAppNameAvailabilityAction,
+  IAvailabilityFromExtension
+} from "./actions/azureActions/setAccountAvailability";
 import AzureLogin from "./containers/AzureLogin";
-import { getSubscriptionData } from "./actions/subscriptionData";
+import { getSubscriptionData } from "./actions/azureActions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
-import { setProjectPathValidation } from "./actions/setProjectPathValidation";
+import { setProjectPathValidation } from "./actions/wizardSelectionActions/setProjectPathValidation";
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
-} from "./actions/updateGenStatusActions";
-import { getVersionsDataAction } from "./actions/getVersionData";
+} from "./actions/wizardInfoActions/updateGenStatusActions";
+import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
 
 import appStyles from "./appStyles.module.css";
-import { startLogOutAzure } from "./actions/logOutAzure";
+import { startLogOutAzure } from "./actions/azureActions/logOutAzure";
 import { IVersions } from "./types/version";
 import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
-import { setAzureValidationStatusAction } from "./actions/setAzureValidationStatusAction";
+import { setAzureValidationStatusAction } from "./actions/azureActions/setAzureValidationStatusAction";
+import { IServiceStatus } from "./reducers/generationStatus/genStatus";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -59,12 +61,16 @@ interface IDispatchProps {
   logIntoAzure: (email: string, subscriptions: []) => void;
   startLogOutToAzure: () => any;
   saveSubscriptionData: (subscriptionData: any) => void;
-  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
-  setAppNameAvailability: (isAvailableObject: any) => any;
+  setCosmosResourceAccountNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => any;
+  setAppNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => any;
   setProjectPathValidation: (validation: any) => void;
   setAzureValidationStatus: (status: boolean) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
-  updateTemplateGenStatus: (isGenerated: boolean) => any;
+  updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
 }
 
@@ -241,7 +247,7 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   updateTemplateGenStatusMessage: (status: string) => {
     dispatch(updateTemplateGenerationStatusMessageAction(status));
   },
-  updateTemplateGenStatus: (isGenerated: boolean) => {
+  updateTemplateGenStatus: (isGenerated: IServiceStatus) => {
     dispatch(updateTemplateGenerationStatusAction(isGenerated));
   },
   getVersionsData: (versions: IVersions) => {

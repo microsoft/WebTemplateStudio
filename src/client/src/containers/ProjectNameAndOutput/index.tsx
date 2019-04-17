@@ -7,7 +7,7 @@ import OutputPath from "../../components/OutputPath";
 import {
   updateOutputPathAction,
   updateProjectNameAction
-} from "../../actions/updateProjectNameAndPath";
+} from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   getOutputPath,
   getProjectName,
@@ -29,6 +29,8 @@ import {
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
 import { AppState } from "../../reducers";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -155,7 +157,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   projectNameValidation: getProjectNameValidation(state)
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   updateProjectName: (projectName: string) => {
     dispatch(updateProjectNameAction(projectName));
   },

@@ -79,13 +79,13 @@ const frameworksRowItems = (selection: SelectionState): RowType[] => {
     {
       title: frontendFramework.title,
       internalName: frontendFramework.internalName,
-      version: frontendFramework.version,
+      version: frontendFramework.version!,
       author: frontendFramework.author
     },
     {
       title: backendFramework.title,
       internalName: backendFramework.internalName,
-      version: backendFramework.version,
+      version: backendFramework.version!,
       author: backendFramework.author
     }
   ];

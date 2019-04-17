@@ -1,5 +1,6 @@
-import * as Actions from "../../actions/types";
 import { FormattedMessage } from "react-intl";
+import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
+import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 
 /* State Shape
 {
@@ -26,14 +27,17 @@ const initialState = {
   validation: undefined
 };
 
-const outputPathReducer = (state: IOutputPath = initialState, action: any) => {
+const outputPathReducer = (
+  state: IOutputPath = initialState,
+  action: WizardSelectionActionType
+) => {
   switch (action.type) {
-    case Actions.UPDATE_OUTPUT_PATH:
+    case WIZARD_SELECTION_TYPEKEYS.UPDATE_OUTPUT_PATH:
       return {
         ...state,
         outputPath: action.payload
       };
-    case Actions.SET_PROJECT_PATH_VALIDATION:
+    case WIZARD_SELECTION_TYPEKEYS.SET_PROJECT_PATH_VALIDATION:
       return {
         ...state,
         validation: {

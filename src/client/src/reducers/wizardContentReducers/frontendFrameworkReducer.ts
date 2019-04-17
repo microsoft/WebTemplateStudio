@@ -1,4 +1,5 @@
-import * as Actions from "../../actions/types";
+import { WIZARD_CONTENT_TYPEKEYS } from "../../actions/wizardContentActions/typeKeys";
+import WizardContentActionType from "../../actions/wizardContentActions/wizardContentActionType";
 import { IOption } from "../../types/option";
 
 /* State Shape
@@ -7,9 +8,12 @@ import { IOption } from "../../types/option";
 }
 */
 
-const frontendFrameworkOptions = (state: IOption[] = [], action: any) => {
+const frontendFrameworkOptions = (
+  state: IOption[] = [],
+  action: WizardContentActionType
+) => {
   switch (action.type) {
-    case Actions.GET_FRONTEND_FRAMEWORKS_SUCCESS:
+    case WIZARD_CONTENT_TYPEKEYS.GET_FRONTEND_FRAMEWORKS_SUCCESS:
       const newState = [...state];
       for (const frameworkToAdd of action.payload) {
         let found = false;

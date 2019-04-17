@@ -1,6 +1,7 @@
-import * as Actions from "../../../actions/types";
+import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
 import { messages } from "../../../selectors/wizardSelectionSelector";
 import { FormattedMessage } from "react-intl";
+import AzureActionType from "../../../actions/azureActions/azureActionType";
 
 /* State Shape
 {
@@ -64,16 +65,16 @@ const createFunctionNames = (numFunctions: number): string[] => {
 
 const azureFunctions = (
   state: IAzureFunctionsSelection = initialState,
-  action: any
+  action: AzureActionType
 ) => {
   switch (action.type) {
-    case Actions.UPDATE_AZURE_FUNCTION_NAMES:
+    case AZURE_TYPEKEYS.UPDATE_AZURE_FUNCTION_NAMES:
       const newFunctionNamesState = { ...state };
       newFunctionNamesState.selection[action.payload.appIndex].functionNames =
         action.payload.functionNames;
       return newFunctionNamesState;
 
-    case Actions.SET_APP_NAME_AVAILABILITY:
+    case AZURE_TYPEKEYS.SET_APP_NAME_AVAILABILITY:
       const newAvailabilityState = {
         ...state,
         appNameAvailability: {
@@ -83,9 +84,9 @@ const azureFunctions = (
       };
       return newAvailabilityState;
 
-    case Actions.LOG_OUT_OF_AZURE:
+    case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
       return initialState;
-    case Actions.REMOVE_AZURE_FUNCTIONS_APP:
+    case AZURE_TYPEKEYS.REMOVE_AZURE_FUNCTIONS_APP:
       if (state.selection[0].functionNames) {
         // the state must be deeply mutated in order to be recognized as a state change in redux
         const newFunctionApp = [...state.selection];
@@ -97,14 +98,14 @@ const azureFunctions = (
         return newAppState;
       }
       return state;
-    case Actions.REMOVE_AZURE_FUNCTION:
+    case AZURE_TYPEKEYS.REMOVE_AZURE_FUNCTION:
       // hardcoding 0th index because only 1 function app can currently be added
       const newFunctionState = { ...state };
       if (newFunctionState.selection[0].functionNames) {
         newFunctionState.selection[0].functionNames.splice(action.payload, 1);
       }
       return newFunctionState;
-    case Actions.SAVE_AZURE_FUNCTIONS_SETTINGS:
+    case AZURE_TYPEKEYS.SAVE_AZURE_FUNCTIONS_SETTINGS:
       const newSelectionState = {
         ...initialState,
         selection: [

@@ -1,6 +1,7 @@
-import * as Actions from "../../actions/types";
+import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import { ISelected } from "../../types/selected";
+import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
 
 /* State Shape
 {
@@ -26,10 +27,10 @@ const pagesReducer = (
       author: "Microsoft"
     }
   ],
-  action: any
+  action: WizardSelectionActionType
 ) => {
   switch (action.type) {
-    case Actions.SELECT_PAGES:
+    case WIZARD_SELECTION_TYPEKEYS.SELECT_PAGES:
       const newPages: ISelected[] = [...action.payload];
       return newPages;
     default:
