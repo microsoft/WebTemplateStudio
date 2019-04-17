@@ -5,6 +5,7 @@ import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 import { ReactPanel } from "./reactPanel";
 import { AzureServices } from "./azure/azureServices";
 import ApiModule from "./signalr-api-module/apiModule";
+import { Controller } from "./controller";
 
 export class GenerationExperience extends WizardServant {
   private static reactPanelContext: ReactPanel;
@@ -14,7 +15,11 @@ export class GenerationExperience extends WizardServant {
     (message: any) => Promise<IPayloadResponse>
   > = new Map([
     [ExtensionCommand.Generate, this.handleGeneratePayloadFromClient],
-    [ExtensionCommand.OpenProjectVSCode, GenerationExperience.openProjectVSCode]
+    [
+      ExtensionCommand.OpenProjectVSCode,
+      GenerationExperience.openProjectVSCode
+    ],
+    [ExtensionCommand.CloseWizard, this.handleCloseWizard]
   ]);
   /**
    *
@@ -26,6 +31,11 @@ export class GenerationExperience extends WizardServant {
 
   public static setReactPanel(reactPanelContext: ReactPanel) {
     GenerationExperience.reactPanelContext = reactPanelContext;
+  }
+
+  public async handleCloseWizard() {
+    Controller.reactPanelContext.dispose();
+    return { payload: true };
   }
 
   ////TODO: MAKE GEN CALL CLIENTCOMMANDMAP FUNCTIONS VIA TO WRAP TELEMETRY AUTOMATICALLY

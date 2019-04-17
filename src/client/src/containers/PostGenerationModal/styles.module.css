@@ -5,6 +5,7 @@
 
 .section {
   margin-top: 20px;
+  font-weight: bold;
 }
 
 .footerContainer {
@@ -91,4 +92,10 @@
   to {
     width: 1.25em;
   }
+}
+
+.link {
+  color: var(--vscode-textLink-foreground);
+  font-weight: var(--vscode-editor-font-weight);
+  text-decoration: none;
 }

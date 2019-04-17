@@ -10,6 +10,7 @@ export enum MODAL_TYPEKEYS {
 }
 
 export type ModalType =
+  | null
   | MODAL_TYPES.COSMOS_DB_MODAL
   | MODAL_TYPES.AZURE_FUNCTIONS_MODAL
   | MODAL_TYPES.POST_GEN_MODAL;
