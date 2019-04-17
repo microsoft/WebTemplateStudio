@@ -41,6 +41,10 @@ const messages = defineMessages({
   summary: {
     id: "leftSidebar.summary",
     defaultMessage: "6. Summary"
+  },
+  ariaNavLabel: {
+    id: "leftSideBar.ariaNavLabel",
+    defaultMessage: "Navigate between pages in the Wizard"
   }
 });
 
@@ -67,9 +71,9 @@ const LeftSidebar = (props: Props) => {
   React.useEffect(() => {
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
   });
-  const { isVisited } = props;
+  const { isVisited, intl } = props;
   return (
-    <React.Fragment>
+    <nav aria-label={intl.formatMessage(messages.ariaNavLabel)}>
       {pathname !== ROUTES.PAGE_DETAILS && (
         <div className={classnames(styles.leftView, styles.container)}>
           <div>
@@ -106,7 +110,7 @@ const LeftSidebar = (props: Props) => {
           </a>
         </div>
       )}
-    </React.Fragment>
+    </nav>
   );
 };
 
