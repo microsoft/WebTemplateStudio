@@ -1,6 +1,5 @@
 import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-// import fs = require("fs");
 import { ExtensionCommand } from "../constants";
 import path = require("path");
 import log4js = require("log4js");
