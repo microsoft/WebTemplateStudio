@@ -17,7 +17,9 @@ export default {
   control: (base: any, state: any): any => ({
     ...base,
     color: "white",
-    border: state.isFocused && "1px solid var(--vscode-contrastActiveBorder)",
+    border: state.isFocused
+      ? "1px solid var(--vscode-contrastActiveBorder)"
+      : "0.5px solid var(--vscode-editor-foreground)",
     borderRadius: 0,
     boxShadow: "none",
     background: "var(--vscode-input-background)",
