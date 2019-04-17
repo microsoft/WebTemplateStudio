@@ -47,6 +47,8 @@
 .button:disabled {
   opacity: 0.5;
   outline: none;
+  background-color: var(--vscode-badge-background);
+  cursor: default;
 }
 
 .icon {
