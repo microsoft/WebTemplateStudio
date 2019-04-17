@@ -7,7 +7,6 @@ import {
   ExtensionCommand
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
-// tslint:disable-next-line: import-name
 import ApiModule from "./signalr-api-module/apiModule";
 import { AzureServices } from "./azure/azureServices";
 import { TelemetryAI } from "./telemetry/telemetryAI";
