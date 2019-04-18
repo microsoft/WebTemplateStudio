@@ -109,14 +109,14 @@ const PostGenerationModal = ({
     if (isTemplatesFailed) {
       return formatMessage(messages.deploymentHalted);
     }
-    return Object.keys(serviceStatus).map((service: string) => {
+    return Object.keys(serviceStatus).map((service: string, idx: number) => {
       const serviceTitle = formatMessage(serviceStatus[service].title);
       if (serviceStatus[service].isSelected) {
         if (serviceStatus[service].isFailed) {
           return (
-            <div>{`${formatMessage(
-              messages.error
-            )} ${serviceTitle} ${formatMessage(
+            <div
+              key={`${messages.error.defaultMessage}${idx}`}
+            >{`${formatMessage(messages.error)} ${serviceTitle} ${formatMessage(
               messages.deploymentFailure
             )}`}</div>
           );
@@ -127,12 +127,16 @@ const PostGenerationModal = ({
               source={`${serviceTitle} ${formatMessage(
                 messages.deploymentSuccess
               )}`}
+              key={`${messages.deploymentSuccess.defaultMessage}${idx}`}
               renderers={{ link: LinkRenderer }}
             />
           );
         }
         return (
-          <div className={styles.loading}>
+          <div
+            className={styles.loading}
+            key={`${messages.isDeploying.defaultMessage}${idx}`}
+          >
             {`${formatMessage(messages.isDeploying)} ${formatMessage(
               serviceStatus[service].title
             )}`}
@@ -193,7 +197,9 @@ const PostGenerationModal = ({
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
-  isServicesDeployed: PostGenSelectors.isServicesDeployedOrFinishedSelector(state),
+  isServicesDeployed: PostGenSelectors.isServicesDeployedOrFinishedSelector(
+    state
+  ),
   isServicesSelected: PostGenSelectors.isServicesSelectedSelector(state),
   isTemplateGenerated: PostGenSelectors.isTemplateGeneratedSelector(state),
   isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),
