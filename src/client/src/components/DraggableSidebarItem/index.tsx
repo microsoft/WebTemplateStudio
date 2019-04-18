@@ -36,7 +36,8 @@ const DraggableSidebarItem = ({
   withLargeIndent,
   handleCloseClick,
   intl,
-  customInputStyle
+  customInputStyle,
+  isAzureFunction
 }: {
   page?: ISelected;
   text?: string;
@@ -52,6 +53,7 @@ const DraggableSidebarItem = ({
   handleCloseClick?: (idx: number) => void;
   intl: InjectedIntl;
   customInputStyle?: string;
+  isAzureFunction?: boolean;
 }) => {
   const handleKeyDown = (event: any) => {
     if (event.keyCode === 13 || event.keyCode === 32) {
@@ -96,11 +98,11 @@ const DraggableSidebarItem = ({
                 (getSvg(page!.internalName, styles.icon) || (
                   <img className={styles.icon} src={pageSvgUrl} />
                 ))}
-              {handleInputChange && (page || azureFunctionName) && idx && (
+              {handleInputChange && (page || isAzureFunction) && idx && (
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input, {
-                    [styles.azureFunctionNameInput]: azureFunctionName
+                    [styles.azureFunctionNameInput]: isAzureFunction
                   })}
                   value={page ? page.title : azureFunctionName!.title}
                   onChange={e => {
