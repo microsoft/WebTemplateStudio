@@ -65,7 +65,6 @@
   "cosmosResourceModule.saveChanges",
   "cosmosResourceModule.createCosmosRes",
   "cosmosResourceModule.internalName",
-  "footer.license",
   "footer.back",
   "footer.next",
   "footer.generate",

@@ -1,24 +1,28 @@
 {
-  "name": "__EXTENSIONNAME__",
-  "displayName": "__DISPLAYNAME__",
-  "description": "An extension that helps developers get started quickly when building web apps by generating web templates which encourage best code practices.",
-  "version": "0.0.0-UNTRACKEDVERSION",
-  "publisher": "__PUBLISHER__",
+  "name": "webts",
+  "displayName": "Web Template Studio",
+  "description": "Web Template Studio enables developers to quickly scaffold full-stack web applications with cloud services.",
+  "version": "1.9.3",
+  "publisher": "Microsoft",
   "aiKey": "__AIKEY__",
   "engines": {
-    "vscode": "^1.30.0"
+    "vscode": "^1.32.0"
   },
   "categories": [
     "Other"
   ],
   "galleryBanner": {
-    "color": "#3c3c3c",
-    "theme": "dark"
+    "color": "#40409c",
+    "theme": "light"
   },
-  "icon": "",
+  "icon": "resources/WebTemplateStudioLogo_blueBackground.png",
   "keywords": [
     "Garage",
-    "Web Application"
+    "Web Application",
+    "Boilerplate",
+    "React",
+    "Express",
+    "Scaffolding"
   ],
   "preview": true,
   "homepage": "https://github.com/Microsoft/WebTemplateStudio/blob/master/README.md",
