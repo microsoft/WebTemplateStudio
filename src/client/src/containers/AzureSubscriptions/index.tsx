@@ -6,26 +6,19 @@ import { connect } from "react-redux";
 import Card from "../../components/Card";
 
 import styles from "./styles.module.css";
-import grid from "../../css/grid.module.css";
-
-import * as AzureActions from "../../actions/logOutAzure";
-import * as ModalActions from "../../actions/modalActions";
+import * as AzureActions from "../../actions/azureActions/logOutAzure";
+import * as ModalActions from "../../actions/modalActions/modalActions";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
-
-import getSvgUrl from "../../utils/getSvgUrl";
-
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 import azureServiceOptions from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
-import { setDetailPageAction } from "../../actions/setDetailsPage";
+import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 
-import {
-  InjectedIntlProps,
-  injectIntl,
-  defineMessages,
-  FormattedMessage
-} from "react-intl";
+import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+import { AppState } from "../../reducers";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   startLogOutToAzure: () => any;
@@ -118,7 +111,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return () => {};
   }
   public render() {
-    const { isLoggedIn, setDetailPage, intl } = this.props;
+    const { isLoggedIn, setDetailPage } = this.props;
     return (
       <div className={styles.container}>
         {azureServiceOptions.map(option => (
@@ -134,6 +127,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
               handleButtonClick={this.getServicesModalOpener(
                 option.internalName
               )}
+              disabled={!isLoggedIn}
               handleDetailsClick={setDetailPage}
               useNormalButtons={this.isSelectionCreated(option.internalName)}
             />
@@ -144,14 +138,14 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   }
 }
 
-const mapStateToProps = (state: any): IAzureLoginProps => ({
+const mapStateToProps = (state: AppState): IAzureLoginProps => ({
   isLoggedIn: state.azureProfileData.isLoggedIn,
   isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
   azureFunctionsSelection: state.selection.services.azureFunctions.selection,
   cosmosDbSelection: state.selection.services.cosmosDB.selection
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   startLogOutToAzure: () => {
     dispatch(AzureActions.startLogOutAzure());
   },

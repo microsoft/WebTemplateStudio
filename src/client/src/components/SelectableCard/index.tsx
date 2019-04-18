@@ -5,15 +5,17 @@ import { Link } from "react-router-dom";
 
 import CardBody from "../CardBody";
 import CardTitle from "../CardTitle";
+import { ReactComponent as Check } from "../../assets/check.svg";
 
 import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
-import Check from "../../assets/check.svg";
+// import Check from "../../assets/check.svg";
 
 import { IOption } from "../../types/option";
 import { FormattedMessage } from "react-intl";
 import { ROUTES } from "../../utils/constants";
+import { getSvg } from "../../utils/getSvgUrl";
 
 const SelectableCard = ({
   iconPath,
@@ -47,11 +49,19 @@ const SelectableCard = ({
     onDetailsClick(option);
   }
 
+  const keyDownHandler = (event: any) => {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      onCardClick(cardNumber);
+    }
+  };
+
   return (
     <div
+      tabIndex={0}
       onClick={() => {
         onCardClick(cardNumber);
       }}
+      onKeyDown={keyDownHandler}
       className={classNames(styles.container, styles.boundingBox, {
         [styles.selected]: selected,
         [styles.unselectable]: disabled
@@ -60,7 +70,10 @@ const SelectableCard = ({
       <div>
         <div className={styles.cardHeader}>
           <div className={styles.icon}>
-            {iconPath && <img src={iconPath} className={iconStyles} />}
+            {getSvg(option.internalName, iconStyles) ||
+              (iconPath && (
+                <img src={iconPath} className={iconStyles} alt="icon" />
+              ))}
           </div>
           <div
             className={classNames({
@@ -95,12 +108,7 @@ const SelectableCard = ({
             [styles.cardCount]: selected && clickCount
           })}
         >
-          {clickCount || (
-            <img
-              src={process.env.REACT_APP_RELATIVE_PATH + Check}
-              className={styles.iconCheckMark}
-            />
-          )}
+          {clickCount || <Check className={styles.iconCheckMark} />}
         </div>
       </div>
     </div>

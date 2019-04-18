@@ -1,0 +1,43 @@
+.container {
+    align-self: center;
+    width: 100%;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.container>div {
+    flex: 1 0 100%;
+}
+
+.flex>div:first-child {
+    flex: 0 1 100%;
+}
+
+.header {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+}
+
+.body {
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    margin: 10px;
+    margin-bottom: 2em;
+    line-height: 1.75em;
+}
+
+.projectDetailsContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0px 15% 0px 15%;
+    box-sizing: border-box;
+}
+
+.getStarted {
+    align-self: flex-end;
+}

@@ -1,4 +1,5 @@
-import * as Actions from "../../actions/types";
+import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
+import AzureActionType from "../../actions/azureActions/azureActionType";
 
 /* State Shape
 {
@@ -6,13 +7,13 @@ import * as Actions from "../../actions/types";
 }
 */
 
-const profileData = (state = false, action: any) => {
+const profileData = (state: boolean = false, action: AzureActionType) => {
   switch (action.type) {
-    case Actions.LOG_OUT_OF_AZURE:
+    case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
       return false;
-    case Actions.LOG_IN_TO_AZURE:
+    case AZURE_TYPEKEYS.LOG_IN_TO_AZURE:
       return true;
-    case Actions.IS_LOGGED_IN_TO_AZURE:
+    case AZURE_TYPEKEYS.IS_LOGGED_IN_TO_AZURE:
     default:
       return state;
   }

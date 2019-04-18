@@ -1,6 +1,7 @@
 .screenshot {
   margin-top: 100px;
   width: 35vw;
+  border: 1px solid var(--vscode-editor-foreground);
 }
 
 .screenShotContainer {

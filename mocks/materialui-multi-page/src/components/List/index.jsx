@@ -19,6 +19,24 @@ export default class List extends Component {
     this.handleAddListItem = this.handleAddListItem.bind(this);
   }
 
+  // Get the sample data from the back end
+  componentDidMount() {
+    fetch(CONSTANTS.ENDPOINT.LIST)
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then(result => this.setState({ list: result }))
+      .catch(error =>
+        this.setState({
+          WarningMessageOpen: true,
+          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
+        })
+      );
+  }
+
   handleDeleteListItem(listItem) {
     fetch(`${CONSTANTS.ENDPOINT.LIST}/${listItem._id}`, { method: "DELETE" })
       .then(response => {
@@ -88,24 +106,6 @@ export default class List extends Component {
     });
   }
 
-  // Get the sample data from the back end
-  componentDidMount() {
-    fetch(CONSTANTS.ENDPOINT.LIST)
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-      .then(result => this.setState({ list: result }))
-      .catch(error =>
-        this.setState({
-          WarningMessageOpen: true,
-          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
-        })
-      );
-  }
-
   render() {
     const {
       textField,
@@ -114,18 +114,18 @@ export default class List extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <div className="container">
+      <main className="container">
         <div className="row">
           <div className="col mt-5 p-0">
             <h3>Bootstrap List Template</h3>
           </div>
-          <div className="col-12 p-0">
+          <ul className="col-12 p-0">
             <ListForm
               onAddListItem={this.handleAddListItem}
               onChangeInputText={this.handleChangeInputText}
               textField={textField}
             />
-          </div>
+          </ul>
           {list.map(listItem => (
             <ListItem
               key={listItem._id}
@@ -139,7 +139,7 @@ export default class List extends Component {
             onWarningClose={this.handleWarningClose}
           />
         </div>
-      </div>
+      </main>
     );
   }
 }

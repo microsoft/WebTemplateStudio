@@ -12,6 +12,7 @@ interface IDropdownProps {
   defaultValue?: IDropDownOptionType;
   handleChange?: (e: any) => void;
   value?: IDropDownOptionType | undefined;
+  ariaLabel: string;
 }
 
 const DropdownIndicator = (props: any) => {
@@ -29,15 +30,17 @@ const Dropdown = ({
   defaultValue,
   handleChange,
   value,
-  disabled
+  disabled,
+  ariaLabel
 }: IDropdownProps) => {
   return (
     <Select
+      aria-label={ariaLabel}
       components={{ DropdownIndicator }}
       value={value}
       onChange={handleChange}
       styles={dropdownstyles}
-      isSearchable={false}
+      isSearchable={true}
       defaultValue={defaultValue}
       options={options}
       menuPlacement="auto"

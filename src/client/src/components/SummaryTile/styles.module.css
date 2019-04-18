@@ -8,7 +8,8 @@
 .summaryTileContainer {
   display: flex;
   align-items: center;
-  background-color: #303030;
+  background-color: var(--vscode-sideBar-background);
+  border: 1px solid var(--vscode-editorGroup-border);
   padding: 11px;
   justify-content: space-between;
   width: 100%;
@@ -16,7 +17,11 @@
 }
 
 .summaryTileContainer:hover {
-  outline: 2px solid #ffffff;
+  outline: 2px solid var(--vscode-editor-foreground);
+}
+
+.summaryTileContainer:focus {
+  outline: 2px solid var(--vscode-contrastActiveBorder);
 }
 
 .leftContainer {
@@ -40,14 +45,29 @@
   padding: 3px;
 }
 
+.leftIcon path,
+.reorder path,
+.closeIcon path,
+.rightIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .closeIcon:hover {
   cursor: pointer;
+}
+
+.closeIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .rightIcon:hover {
   cursor: pointer;
   padding: 3px;
   border-radius: 3px;
+}
+
+.rightIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .spacer {
@@ -57,13 +77,14 @@
 .tileInput {
   font-size: 18px;
   font-weight: bold;
-  background-color: #303030;
+  background-color: var(--vscode-sideBar-background);
   border: none;
   max-width: 300px;
+  color: var(--vscode-editor-foreground);
 }
 
 .tileInput:focus {
-  outline: 1px solid #ffffff;
+  outline: 1px solid var(--vscode-editor-foreground);
 }
 
 .metaData {
@@ -90,4 +111,17 @@
 
 .rotate {
   transform: rotate(270deg);
+}
+
+.errorMessage {
+  background: var(--vscode-inputValidation-errorBackground);
+  border: 0.5px solid var(--vscode-inputValidation-errorBorder);
+  color: var(--vscode-editor-foreground);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  opacity: 50%;
+  min-height: 38px;
+  font-size: 15px;
 }

@@ -15,8 +15,6 @@ Lorem donec massa sapien faucibus et molestie ac.`;
 
 const shortLoremIpsum = `Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.`;
 
-const header = "Heading";
-
 // This class holds sample data used by some generated pages to show how they can be used.
 // TODO Web Template Studio: Delete this file once your app is using real data.
 
@@ -34,102 +32,96 @@ sampleData.listTextAssets = [
   }
 ];
 
-sampleData.gridTextAssets = [
+sampleData.textAssets = [
   {
-    description: shortLoremIpsum,
-    header: header,
+    shortDescription: shortLoremIpsum,
+    longDescription: longLoremIpsum,
+    title: "Company A",
+    status: "Closed",
+    shipTo: "Francisco Pérez-Olaeta",
+    orderTotal: 2490.0,
+    orderDate: new Date(2017, 5, 24).toDateString(),
     id: 1
   },
   {
-    description: shortLoremIpsum,
-    header: header,
+    shortDescription: shortLoremIpsum,
+    longDescription: longLoremIpsum,
+    title: "Company B",
+    status: "Closed",
+    shipTo: "Soo Jung Lee",
+    orderTotal: 1760.0,
+    orderDate: new Date(2017, 5, 24).toDateString(),
     id: 2
   },
   {
-    description: shortLoremIpsum,
-    header: header,
+    shortDescription: shortLoremIpsum,
+    longDescription: longLoremIpsum,
+    title: "Company C",
+    status: "Shipped",
+    shipTo: "Run Liu",
+    orderTotal: 665.0,
+    orderDate: new Date(2017, 6, 3).toDateString(),
     id: 3
   },
   {
-    description: shortLoremIpsum,
-    header: header,
+    shortDescription: shortLoremIpsum,
+    longDescription: longLoremIpsum,
+    title: "Company D",
+    status: "Shipped",
+    shipTo: "Soo Jung Lee",
+    orderTotal: 560.0,
+    orderDate: new Date(2017, 6, 5).toDateString(),
     id: 4
   },
   {
-    description: shortLoremIpsum,
-    header: header,
+    shortDescription: shortLoremIpsum,
+    longDescription: longLoremIpsum,
+    title: "Company E",
+    status: "New",
+    shipTo: "John Rodman",
+    orderTotal: 810.0,
+    orderDate: new Date(2017, 6, 7).toDateString(),
     id: 5
   },
   {
-    description: shortLoremIpsum,
-    header: header,
+    shortDescription: shortLoremIpsum,
+    longDescription: longLoremIpsum,
+    title: "Company F",
+    status: "New",
+    shipTo: "Elizabeth Andersen",
+    orderTotal: 196.5,
+    orderDate: new Date(2017, 6, 7).toDateString(),
     id: 6
   },
   {
-    description: shortLoremIpsum,
-    header: header,
+    shortDescription: shortLoremIpsum,
+    longDescription: longLoremIpsum,
+    title: "Company G",
+    status: "Closed",
+    shipTo: "Peter Krschne",
+    orderTotal: 270.0,
+    orderDate: new Date(2017, 6, 11).toDateString(),
     id: 7
   },
   {
-    description: shortLoremIpsum,
-    header: header,
+    shortDescription: shortLoremIpsum,
+    longDescription: longLoremIpsum,
+    title: "Company H",
+    status: "Closed",
+    shipTo: "Sven Mortensen",
+    orderTotal: 736.0,
+    orderDate: new Date(2017, 6, 14).toDateString(),
     id: 8
   },
   {
-    description: shortLoremIpsum,
-    header: header,
+    shortDescription: shortLoremIpsum,
+    longDescription: longLoremIpsum,
+    title: "Company I",
+    status: "Shipped",
+    shipTo: "Anna Bedecs",
+    orderTotal: 800.0,
+    orderDate: new Date(2017, 6, 18).toDateString(),
     id: 9
-  }
-];
-
-sampleData.masterDetailTextAssets = [
-  {
-    paragraph: longLoremIpsum,
-    title: "Company A",
-    tabName: "Company A",
-    id: 0
-  },
-  {
-    paragraph: longLoremIpsum,
-    title: "Company B",
-    tabName: "Company B",
-    id: 1
-  },
-  {
-    paragraph: longLoremIpsum,
-    title: "Company C",
-    tabName: "Company C",
-    id: 2
-  },
-  {
-    paragraph: longLoremIpsum,
-    title: "Company D",
-    tabName: "Company D",
-    id: 3
-  },
-  {
-    paragraph: longLoremIpsum,
-    title: "Company E",
-    tabName: "Company E",
-    id: 4
-  },
-  {
-    paragraph: longLoremIpsum,
-    title: "Company F",
-    tabName: "Company F",
-    id: 5
-  },
-  {
-    paragraph: longLoremIpsum,
-    title: "Company G",
-    tabName: "Company G",
-    id: 6
-  },
-  {
-    paragraph: longLoremIpsum,
-    title: "Company H",
-    tabName: "Company H",
-    id: 7
   }
 ];
 

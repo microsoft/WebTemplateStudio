@@ -15,26 +15,19 @@ export default class MasterDetail extends Component {
       currentDisplayTabIndex: 0,
       masterDetailText: [
         {
-          paragraph: "",
+          shortDescription: "",
+          longDescription: "",
           title: "",
-          tabName: "",
+          status: "",
+          shipTo: "",
+          orderTotal: 0.0,
+          orderDate: "",
           id: 0
         }
       ]
     };
     this.handleDisplayTabClick = this.handleDisplayTabClick.bind(this);
     this.handleWarningClose = this.handleWarningClose.bind(this);
-  }
-
-  handleWarningClose() {
-    this.setState({
-      WarningMessageOpen: false,
-      WarningMessageText: ""
-    });
-  }
-
-  handleDisplayTabClick(id) {
-    this.setState({ currentDisplayTabIndex: id });
   }
 
   // Get the sample data from the back end
@@ -59,6 +52,17 @@ export default class MasterDetail extends Component {
       );
   }
 
+  handleWarningClose() {
+    this.setState({
+      WarningMessageOpen: false,
+      WarningMessageText: ""
+    });
+  }
+
+  handleDisplayTabClick(id) {
+    this.setState({ currentDisplayTabIndex: id });
+  }
+
   render() {
     const {
       masterDetailText,
@@ -67,7 +71,7 @@ export default class MasterDetail extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <React.Fragment>
+      <main>
         <div className="container-fluid">
           <div className="row">
             <div
@@ -78,11 +82,11 @@ export default class MasterDetail extends Component {
                 styles.sidebar
               )}
             >
-              <div class="list-group list-group-flush border-bottom">
+              <div className="list-group list-group-flush border-bottom">
                 {masterDetailText.map((textAssets, index) => (
                   <MasterDetailSideBarTab
                     onDisplayTabClick={this.handleDisplayTabClick}
-                    tabText={textAssets.tabName}
+                    tabText={textAssets.title}
                     image={GreyAvatar}
                     index={index}
                     key={textAssets.id}
@@ -100,7 +104,7 @@ export default class MasterDetail extends Component {
           text={WarningMessageText}
           onWarningClose={this.handleWarningClose}
         />
-      </React.Fragment>
+      </main>
     );
   }
 }

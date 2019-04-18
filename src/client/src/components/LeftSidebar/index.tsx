@@ -15,6 +15,7 @@ import LeftSidebarLink from "../LeftSidebarLink";
 import styles from "./styles.module.css";
 
 import { ROUTES, ROUTES_ARRAY } from "../../utils/constants";
+import { IRoutes } from "../../reducers/wizardRoutes/navigationReducer";
 
 const messages = defineMessages({
   welcome: {
@@ -44,7 +45,7 @@ const messages = defineMessages({
 });
 
 interface IStateProps {
-  isVisited: { [key: string]: boolean };
+  isVisited: IRoutes;
 }
 
 type Props = RouteComponentProps & IStateProps & InjectedIntlProps;
@@ -88,9 +89,10 @@ const LeftSidebar = (props: Props) => {
                     disabled={!isVisited[ROUTES_ARRAY[idx]]}
                     path={ROUTES_ARRAY[idx]}
                     text={sidebartitle}
-                    showCheck={
+                    visitedCheck={
                       idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]]
                     }
+                    isSelected={idx === currentPathIndex}
                   />
                 </div>
               );

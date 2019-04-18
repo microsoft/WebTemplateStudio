@@ -8,7 +8,7 @@ import wizardRoutes from "./wizardRoutes";
 import generationStatus from "./generationStatus";
 import versions from "./versionsReducer";
 
-export default combineReducers({
+const rootReducer = combineReducers({
   vscode: vscodeApi,
   wizardContent,
   selection,
@@ -18,3 +18,6 @@ export default combineReducers({
   generationStatus,
   versions
 });
+
+export type AppState = ReturnType<typeof rootReducer>;
+export default rootReducer;

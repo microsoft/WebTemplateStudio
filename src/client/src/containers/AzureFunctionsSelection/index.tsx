@@ -4,19 +4,23 @@ import { connect } from "react-redux";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
-import { openAzureFunctionsModalAction } from "../../actions/modalActions";
+import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalActions";
 
 import * as getSvg from "../../utils/getSvgUrl";
 
 import styles from "./styles.module.css";
 
-import * as AzureFunctionActions from "../../actions/azureFunctionActions";
+import * as AzureFunctionActions from "../../actions/azureActions/azureFunctionActions";
 import {
   IAzureFunctionsSelection,
   ISelectedAzureFunctionsService
 } from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
 import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { AppState } from "../../reducers";
 
 interface IProps {
   functionApps: IAzureFunctionsSelection;
@@ -64,6 +68,11 @@ const AzureFunctionsSelection = ({
       });
     }
   };
+  const onEditKeyDownHandler = (event: any) => {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      openAzureFunctionsModal();
+    }
+  };
   return (
     <div>
       {!_.isEmpty(selection) &&
@@ -72,7 +81,12 @@ const AzureFunctionsSelection = ({
             <React.Fragment key={serviceType + functionApp.appName + idx}>
               <div className={styles.headerContainer}>
                 <div>{intl.formatMessage(serviceType)}</div>
-                <div className={styles.edit} onClick={openAzureFunctionsModal}>
+                <div
+                  tabIndex={0}
+                  className={styles.edit}
+                  onClick={openAzureFunctionsModal}
+                  onKeyDown={onEditKeyDownHandler}
+                >
                   <FormattedMessage
                     id="azureFunctionsSelection.edit"
                     defaultMessage="Edit"
@@ -108,7 +122,9 @@ const AzureFunctionsSelection = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   updateFunctionNames: (functionApp: IFunctionApp) => {
     dispatch(AzureFunctionActions.updateAzureFunctionNamesAction(functionApp));
   },

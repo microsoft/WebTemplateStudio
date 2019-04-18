@@ -7,7 +7,7 @@ import OutputPath from "../../components/OutputPath";
 import {
   updateOutputPathAction,
   updateProjectNameAction
-} from "../../actions/updateProjectNameAndPath";
+} from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   getOutputPath,
   getProjectName,
@@ -28,6 +28,9 @@ import {
 } from "react-intl";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
+import { AppState } from "../../reducers";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -52,6 +55,10 @@ const messages = defineMessages({
   projectName: {
     id: "projectName.projectName",
     defaultMessage: "Project Name"
+  },
+  ariaProjectNameLabel: {
+    id: "projectName.ariaProjectName",
+    defaultMessage: "Project Name Input"
   },
   outputPathTitle: {
     id: "projectName.outputPathTitle",
@@ -115,6 +122,7 @@ const ProjectNameAndOutput = (props: Props) => {
         </div>
         <Input
           handleChange={handleProjectNameChange}
+          ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
           value={props.projectName}
           placeholder={props.intl.formatMessage(messages.projectName)}
         />
@@ -146,7 +154,7 @@ const ProjectNameAndOutput = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: getVSCodeApiSelector(state),
   outputPath: getOutputPath(state),
   projectName: getProjectName(state),
@@ -154,7 +162,7 @@ const mapStateToProps = (state: any): IStateProps => ({
   projectNameValidation: getProjectNameValidation(state)
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   updateProjectName: (projectName: string) => {
     dispatch(updateProjectNameAction(projectName));
   },

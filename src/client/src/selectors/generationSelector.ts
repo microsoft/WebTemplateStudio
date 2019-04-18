@@ -8,13 +8,14 @@ import {
   WIZARD_CONTENT_INTERNAL_NAMES,
   COSMOS_APIS
 } from "../utils/constants";
+import { AppState } from "../reducers";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {
   [COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
   [COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
 };
 
-const getWizardSelectionsSelector = (state: any): any => state.selection;
+const getWizardSelectionsSelector = (state: AppState): any => state.selection;
 
 const getProjectType = (selection: any): string => {
   const projectType = selection.appType as ISelected;

@@ -6,14 +6,17 @@ import * as getSvg from "../../utils/getSvgUrl";
 
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
-import { removeCosmosSelectionAction } from "../../actions/saveCosmosDbSettings";
+import { removeCosmosSelectionAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import { ICosmosDB } from "../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
 
-import { openCosmosDbModalAction } from "../../actions/modalActions";
+import { openCosmosDbModalAction } from "../../actions/modalActions/modalActions";
 
 import styles from "./styles.module.css";
 
 import { injectIntl, FormattedMessage, InjectedIntlProps } from "react-intl";
+import { ThunkDispatch } from "redux-thunk";
+import { AppState } from "../../reducers";
+import RootAction from "../../actions/ActionType";
 
 interface IProps {
   cosmosSelection: ICosmosDB;
@@ -34,13 +37,23 @@ const CosmosDBSelection = ({
   intl
 }: Props) => {
   const { serviceType } = cosmosSelection.wizardContent;
+  const onEditKeyDownHandler = (event: any) => {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      openCosmosDbModal();
+    }
+  };
   return (
     <React.Fragment>
       {!_.isEmpty(cosmosSelection.selection) && (
         <React.Fragment>
           <div className={styles.headerContainer}>
             <div>{intl.formatMessage(serviceType)}</div>
-            <div className={styles.edit} onClick={openCosmosDbModal}>
+            <div
+              tabIndex={0}
+              className={styles.edit}
+              onClick={openCosmosDbModal}
+              onKeyDown={onEditKeyDownHandler}
+            >
               <FormattedMessage
                 id="cosmosDBSelection.edit"
                 defaultMessage="Edit"
@@ -66,7 +79,9 @@ const CosmosDBSelection = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+) => ({
   removeCosmosResource: (selectionIndex: number) => {
     dispatch(removeCosmosSelectionAction(selectionIndex));
   },

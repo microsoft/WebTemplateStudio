@@ -64,6 +64,11 @@ export class TelemetryAI extends WizardServant{
         return callWithTelemetryAndCatchErrors(this.vscodeContext, callbackId,callback, TelemetryAI.telemetryReporter);
     }
 
+    public getExtensionName(ctx: vscode.ExtensionContext) {
+        const { extensionName } = getPackageInfo(ctx);
+        return extensionName;
+      }
+
     public getExtensionVersionNumber(ctx: vscode.ExtensionContext){
         const { extensionVersion } = getPackageInfo(ctx);
         return extensionVersion;

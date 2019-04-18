@@ -1,11 +1,15 @@
 .container {
-  border: 0.5px solid #ffffff;
-  padding: 16px;
   margin-right: 12px;
   margin-bottom: 12px;
-  border-radius: 4px;
   cursor: pointer;
-  background-color: #252526;
+  padding: 12px;
+  background-color: var(--vscode-sideBar-background);
+  border: 0.5px solid var(--vscode-editor-foreground);
+}
+
+.container:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+  border: 0.5px solid var(--vscode-contrastActiveBorder);
 }
 
 .selected,
@@ -14,9 +18,15 @@
 }
 
 .selected {
-  /* Account for lost padding on select with border */
-  padding: 13.5px;
-  border: 3px solid #ffffff;
+  padding: 12.5px;
+  border: none;
+  outline: 3px solid var(--vscode-editor-foreground);
+}
+
+.selected:focus {
+  padding: 12.5px;
+  border: none;
+  outline: 3px solid var(--vscode-contrastActiveBorder);
 }
 
 .cardCount,
@@ -32,6 +42,10 @@
   align-self: center;
 }
 
+.iconCheckMark path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .hidden {
   display: none;
 }
@@ -45,7 +59,7 @@
 }
 
 .button {
-  color: #54b4ff;
+  color: var(--vscode-textLink-foreground);
 }
 
 .cardFooter {
@@ -84,9 +98,13 @@
 }
 
 .link {
-  color: #54b4ff;
-  font-size: 15px;
+  color: var(--vscode-textLink-foreground);
+  font-size: var(--vscode-editor-font-size);
   text-decoration: none;
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .unselectable {
@@ -96,9 +114,9 @@
 
 .cardCount {
   text-align: center;
-  background-color: #555555;
+  border: 1px solid var(--vscode-editor-foreground);
   height: 22px;
   width: 22px;
   padding: 3px;
-  border-radius: 50%
+  border-radius: 50%;
 }

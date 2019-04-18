@@ -1,3 +1,5 @@
+import { FormattedMessage } from "react-intl";
+
 export interface ISelected {
   title: string;
   defaultName?: string;
@@ -8,4 +10,6 @@ export interface ISelected {
   version?: string;
   licenses?: License;
   author?: string;
+  originalTitle?: string;
+  version?: string;
 }

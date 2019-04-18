@@ -1,6 +1,7 @@
 .footer {
   position: absolute;
-  background-color: #4c4c4c;
+  background-color: var(--vscode-badge-background);
+  border-top: 1px solid var(--vscode-editorGroup-border);
   padding: 15px;
   bottom: 0;
   width: 100%;
@@ -14,6 +15,14 @@
 .button {
   margin-left: 1em;
   font-size: 1em;
+}
+
+.button:hover {
+  color: #ffffff;
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .buttonContainer {

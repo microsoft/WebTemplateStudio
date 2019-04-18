@@ -1,20 +1,25 @@
+import classnames from "classnames";
 import * as React from "react";
 import { Link } from "react-router-dom";
 
-import Check from "../../assets/check.svg";
+// import Check from "../../assets/check.svg";
+import { ReactComponent as Check } from "../../assets/check.svg";
 
 import styles from "./styles.module.css";
+import { withLocalPath } from "../../utils/getSvgUrl";
 
 const LeftSidebarLink = ({
   text,
-  showCheck,
+  visitedCheck,
   path,
-  disabled
+  disabled,
+  isSelected
 }: {
   text: string;
-  showCheck: boolean;
+  visitedCheck: boolean;
   path: string;
   disabled: boolean;
+  isSelected: boolean;
 }) => {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     if (disabled) {
@@ -22,16 +27,29 @@ const LeftSidebarLink = ({
     }
   };
   return (
-    <Link to={path} onClick={handleClick} className={styles.container}>
-      {showCheck ? (
-        <img
-          src={process.env.REACT_APP_RELATIVE_PATH + Check}
-          className={styles.icon}
+    <Link
+      tabIndex={disabled ? -1 : 0}
+      to={path}
+      onClick={handleClick}
+      className={styles.container}
+    >
+      {visitedCheck || isSelected ? (
+        <Check
+          className={classnames(styles.icon, {
+            [styles.visitedIcon]: visitedCheck,
+            [styles.selected]: isSelected
+          })}
         />
       ) : (
         <div className={styles.spacer} />
       )}
-      <div className={styles.text}>{text}</div>
+      <div
+        className={classnames(styles.text, {
+          [styles.textSelected]: isSelected
+        })}
+      >
+        {text}
+      </div>
     </Link>
   );
 };

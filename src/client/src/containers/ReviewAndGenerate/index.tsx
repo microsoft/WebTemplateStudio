@@ -2,11 +2,11 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SummarySection from "../../components/SummarySection";
+import SummarySection from "../SummarySection";
 import SummaryTile from "../../components/SummaryTile";
 import SortablePageList from "../SortablePageList";
 
-import * as ModalActions from "../../actions/modalActions";
+import * as ModalActions from "../../actions/modalActions/modalActions";
 import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 
 import styles from "./styles.module.css";
@@ -19,6 +19,10 @@ import Title from "../../components/Title";
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { withLocalPath } from "../../utils/getSvgUrl";
 import folder from "../../assets/folder.svg";
+import { AppState } from "../../reducers";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   openCosmosDbModal: () => any;
@@ -31,7 +35,6 @@ interface IStateProps {
   servicesRows: RowType[];
   pagesRows: RowType[];
   vscode: any;
-  validation: any;
   projectName: string;
   outputPath: string;
 }
@@ -75,11 +78,6 @@ const ReviewAndGenerate = (props: Props) => {
     projectName,
     outputPath
   } = props;
-  const modalOpeners = {
-    [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: props.openCosmosDbModal,
-    [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]:
-      props.openAzureFunctionsModal
-  };
   return (
     <div className={styles.container}>
       <Title>{intl.formatMessage(messages.reviewAndGenerate)}</Title>
@@ -88,7 +86,7 @@ const ReviewAndGenerate = (props: Props) => {
       >
         {intl.formatMessage(messages.welcome)}
         <SummaryTile
-          rotate={true}
+          showFolderIcon={true}
           svgUrl={withLocalPath(folder)}
           title={projectName}
           subTitle={`${outputPath}/${projectName}`}
@@ -111,13 +109,12 @@ const ReviewAndGenerate = (props: Props) => {
       <SummarySection
         selectionTitle={intl.formatMessage(messages.services)}
         selectionRows={servicesRows}
-        modalOpeners={modalOpeners}
       />
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
   openCosmosDbModal: () => {
     dispatch(ModalActions.openCosmosDbModalAction());
   },
@@ -126,13 +123,12 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   }
 });
 
-const mapStateToProps = (state: any): IStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   projectTypeRows: WizardSelectors.getProjectTypeRowItemSelector(state),
   frameworkRows: WizardSelectors.getFrameworksRowItemSelector(state),
   servicesRows: WizardSelectors.getServicesSelector(state),
   pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
-  vscode: state.vscode.vscodeObject,
-  validation: state.selection.validation,
+  vscode: getVSCodeApiSelector(state),
   projectName: WizardSelectors.getProjectName(state),
   outputPath: WizardSelectors.getOutputPath(state)
 });

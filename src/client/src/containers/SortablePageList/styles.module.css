@@ -1,18 +1,29 @@
 .dropdownTitle {
-    font-weight: bold;
-    margin-bottom: 3px;
+  font-weight: bold;
+  margin-bottom: 3px;
 }
 
 .sidebarItem {
-    margin-left: 15px;
-    margin-right: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .pageListContainer {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .hideOrShow {
-    cursor: pointer;
+  cursor: pointer;
+  color: var(--vscode-textLink-foreground);
+  margin-right: 22.5px;
+  padding-right: 1px;
+  padding-left: 1px;
+  border: none;
+  font-size: var(--vscode-editor-font-size);
+  background-color: var(--vscode-editor-background);
+}
+
+.hideOrShow:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }

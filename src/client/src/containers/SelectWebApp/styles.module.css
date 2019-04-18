@@ -1,0 +1,15 @@
+.title {
+  font-size: 18px;
+  padding: 24px 24px;
+  font-weight: bold;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.icon {
+  height: 36px;
+}

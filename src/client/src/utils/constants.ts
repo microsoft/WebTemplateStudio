@@ -9,6 +9,7 @@ const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
 const WELCOME = "/";
 
 const PRODUCTION = "production";
+const DEVELOPMENT = "development";
 
 const INTL_MESSAGES = defineMessages({
   EMPTY_FIELD: {
@@ -63,7 +64,6 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   REST_API: "RestAPI"
 };
 
-
 const PAGE_NAME_ERROR_MESSAGES = {
   DUPLICATE_NAME: "Name has to be unique",
   INVALID_REGEX:
@@ -98,7 +98,8 @@ const EXTENSION_COMMANDS = {
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
-  GET_VERSIONS: "get-versions"
+  GET_VERSIONS: "get-versions",
+  CLOSE_WIZARD: "close-wizard"
 };
 
 export {
@@ -110,5 +111,6 @@ export {
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
-  COSMOS_APIS
+  COSMOS_APIS,
+  DEVELOPMENT
 };
