@@ -122,6 +122,7 @@ export class Controller {
     );
     GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
+    Controller.loadUserSettings();
     Controller.getVersionAndSendToClient(context, syncObject.templatesVersion);
     Controller.Telemetry.trackExtensionStartUpTime(
       TelemetryEventName.ExtensionLaunch
@@ -172,6 +173,18 @@ export class Controller {
         wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
       }
     });
+  }
+
+  private static loadUserSettings(){
+    let outputPathDefault = vscode.workspace.getConfiguration().get<string>("wts.output.path");
+    if(outputPathDefault){
+      Controller.reactPanelContext.postMessageWebview({
+        command: ExtensionCommand.GetOutputPath,
+        payload: {
+          outputPath: outputPathDefault
+        }
+      });
+    }
   }
 
   private static handleValidMessage(
