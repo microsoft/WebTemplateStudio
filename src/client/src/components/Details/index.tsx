@@ -82,6 +82,7 @@ const Details = ({
       <div className={styles.container}>
         <div className={styles.backContainer}>
           <div
+            role="button"
             tabIndex={0}
             onClick={handleBackClick}
             onKeyDown={keyDownHandler}
