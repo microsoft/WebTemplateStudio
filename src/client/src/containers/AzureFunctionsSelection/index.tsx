@@ -94,6 +94,7 @@ const AzureFunctionsSelection = ({
                 </div>
               </div>
               <DraggableSidebarItem
+                customInputStyle={styles.input}
                 key={functionApp.appName + idx}
                 text={functionApp.appName}
                 closeSvgUrl={getSvg.getCancelSvg()}
