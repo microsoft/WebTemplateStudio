@@ -17,8 +17,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 
-import { INTL_MESSAGES } from "../../utils/constants";
-import { setCosmosModalValidation } from "./modalValidation";
+import { setCosmosModalButtonStatus } from "./verifyButtonStatus";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
@@ -30,7 +29,7 @@ import {
 import styles from "./styles.module.css";
 import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
 
-import { InjectedIntlProps, defineMessages, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
 import {
@@ -40,6 +39,8 @@ import {
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import { messages } from "./messages";
+import classNames from "classnames";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -78,73 +79,6 @@ const links: attributeLinks = {
   api: null,
   location: null
 };
-
-const messages = defineMessages({
-  subscriptionLabel: {
-    id: "cosmosResourceModule.subscriptionLabel",
-    defaultMessage: "Subscription"
-  },
-  ariaSubscriptionLabel: {
-    id: "cosmosResourceModule.ariaSubscriptionLabel",
-    defaultMessage: "Subscription Drop Down"
-  },
-  resourceGroupLabel: {
-    id: "cosmosResourceModule.resourceGroupLabel",
-    defaultMessage: "Resource Group"
-  },
-  ariaResourceGroupLabel: {
-    id: "cosmosResourceModule.ariaResourceGroupLabel",
-    defaultMessage: "Resource Group Drop Down"
-  },
-  locationLabel: {
-    id: "cosmosResourceModule.locationLabel",
-    defaultMessage: "Location"
-  },
-  ariaLocationLabel: {
-    id: "cosmosResourceModule.ariaLocationLabel",
-    defaultMessage: "Location Drop Down"
-  },
-  apiLabel: {
-    id: "cosmosResourceModule.apiLabel",
-    defaultMessage: "API"
-  },
-  ariaApiLabel: {
-    id: "cosmosResourceModule.ariaApiLabel",
-    defaultMessage: "API Drop Down"
-  },
-  accountNameLabel: {
-    id: "cosmosResourceModule.accountNameLabel",
-    defaultMessage: "Account Name"
-  },
-  ariaAccountNameLabel: {
-    id: "cosmosResourceModule.ariaAccountNameLabel",
-    defaultMessage: "Account Name Input"
-  },
-  accountName: {
-    id: "cosmosResourceModule.accountName",
-    defaultMessage: "Account Name"
-  },
-  createNew: {
-    id: "cosmosResourceModule.createNew",
-    defaultMessage: "Create New"
-  },
-  addResource: {
-    id: "cosmosResourceModule.addResource",
-    defaultMessage: "Add Resource"
-  },
-  saveChanges: {
-    id: "cosmosResourceModule.saveChanges",
-    defaultMessage: "Save Changes"
-  },
-  createCosmosRes: {
-    id: "cosmosResourceModule.createCosmosRes",
-    defaultMessage: "Create Cosmos DB Account"
-  },
-  internalName: {
-    id: "cosmosResourceModule.internalName",
-    defaultMessage: "Internal Name"
-  }
-});
 
 interface CosmosDb {
   [key: string]: any;
@@ -221,14 +155,25 @@ const CosmosResourceModal = (props: Props) => {
   }, [props.subscriptionData]);
 
   const [cosmosFormData, updateForm] = React.useState(initialState);
+  const [formIsSendable, setFormIsSendable] = React.useState(false);
 
-  const [modalValidation, updateValidation] = React.useState({
-    isAccountNameEmpty: false,
-    isApiEmpty: false,
-    isLocationEmpty: false,
-    isSubscriptionEmpty: false,
-    isResourceGroupEmpty: false
-  });
+  const handleChange = (updatedCosmosForm: CosmosDb) => {
+    setCosmosModalButtonStatus(
+      updatedCosmosForm,
+      props.isValidatingName,
+      props.accountNameAvailability,
+      setFormIsSendable
+    );
+    updateForm(updatedCosmosForm);
+  };
+
+  const getButtonClassNames = () => {
+    const buttonClass = formIsSendable
+      ? buttonStyles.buttonHighlighted
+      : buttonStyles.buttonDark;
+
+    return classNames(buttonClass, styles.button, styles.selectionContainer);
+  };
 
   const handleDropdown = (infoLabel: string, value: string) => {
     // Send command to extension on change
@@ -258,8 +203,17 @@ const CosmosResourceModal = (props: Props) => {
       };
     }
 
-    updateForm(updatedForm);
+    handleChange(updatedForm);
   };
+
+  React.useEffect(() => {
+    setCosmosModalButtonStatus(
+      cosmosFormData,
+      props.isValidatingName,
+      props.accountNameAvailability,
+      setFormIsSendable
+    );
+  }, [props.isValidatingName]);
 
   /**
    * Listens on account name change and validates the input in VSCode
@@ -285,7 +239,7 @@ const CosmosResourceModal = (props: Props) => {
 
   React.useEffect(() => {
     if (props.selection) {
-      updateForm(props.selection.dropdownSelection);
+      handleChange(props.selection.dropdownSelection);
     } else {
       props.setCosmosResourceAccountNameAvailability({
         isAvailable: false,
@@ -301,7 +255,7 @@ const CosmosResourceModal = (props: Props) => {
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
     const strippedInput = element.value;
-    updateForm({
+    handleChange({
       ...cosmosFormData,
       accountName: {
         value: strippedInput,
@@ -310,20 +264,9 @@ const CosmosResourceModal = (props: Props) => {
     });
   };
   const handleAddResource = () => {
-    if (
-      setCosmosModalValidation(
-        cosmosFormData,
-        props.isValidatingName,
-        props.accountNameAvailability,
-        updateValidation
-      )
-    ) {
-      return;
-    }
     props.saveCosmosOptions(cosmosFormData);
   };
   const getDropdownSection = (
-    isEmpty: boolean,
     leftHeader: string,
     options: any,
     formSectionId: string,
@@ -363,13 +306,6 @@ const CosmosResourceModal = (props: Props) => {
           }
           disabled={disabled}
         />
-        {isEmpty && (
-          <div className={styles.errorMessage}>
-            {props.intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
-              fieldId: leftHeader
-            })}
-          </div>
-        )}
       </div>
     );
   };
@@ -396,8 +332,6 @@ const CosmosResourceModal = (props: Props) => {
         />
       </div>
       {getDropdownSection(
-        modalValidation.isSubscriptionEmpty &&
-          cosmosFormData.subscription.value === "",
         FORM_CONSTANTS.SUBSCRIPTION.label,
         cosmosData.subscription,
         FORM_CONSTANTS.SUBSCRIPTION.value,
@@ -407,8 +341,6 @@ const CosmosResourceModal = (props: Props) => {
         DEFAULT_VALUE
       )}
       {getDropdownSection(
-        modalValidation.isResourceGroupEmpty &&
-          cosmosFormData.resourceGroup.value === "",
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         cosmosData.resourceGroup,
         FORM_CONSTANTS.RESOURCE_GROUP.value,
@@ -465,17 +397,8 @@ const CosmosResourceModal = (props: Props) => {
               {props.accountNameAvailability.message}
             </div>
           )}
-        {modalValidation.isAccountNameEmpty &&
-          cosmosFormData.accountName.value.length == 0 && (
-            <div className={styles.errorMessage}>
-              {props.intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
-                fieldId: FORM_CONSTANTS.ACCOUNT_NAME.label
-              })}
-            </div>
-          )}
       </div>
       {getDropdownSection(
-        modalValidation.isApiEmpty && cosmosFormData.api.value === "",
         FORM_CONSTANTS.API.label,
         cosmosData.api,
         FORM_CONSTANTS.API.value,
@@ -485,7 +408,6 @@ const CosmosResourceModal = (props: Props) => {
         DEFAULT_VALUE
       )}
       {getDropdownSection(
-        modalValidation.isLocationEmpty && cosmosFormData.location.value === "",
         FORM_CONSTANTS.LOCATION.label,
         cosmosData.location,
         FORM_CONSTANTS.LOCATION.value,
@@ -496,7 +418,8 @@ const CosmosResourceModal = (props: Props) => {
       )}
       <div className={styles.buttonContainer}>
         <button
-          className={classnames(buttonStyles.buttonHighlighted, styles.button)}
+          className={getButtonClassNames()}
+          disabled={!formIsSendable}
           onClick={handleAddResource}
         >
           {(props.selection &&
