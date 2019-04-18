@@ -48,16 +48,16 @@ const Licenses = ({
       <div className={styles.title}>
         {intl.formatMessage(messages.licenses)}
       </div>
-      {frameworkLicenses.map((license: string) => (
+      {frameworkLicenses.map((license: string, idx: number) => (
         <ReactMarkdown
-          key={license}
+          key={`${license} + ${idx}`}
           source={license}
           renderers={{ link: LinkRenderer }}
         />
       ))}
       {isVisited.showPages &&
         pageLicenses.map((license: ILicenseObject) => (
-          <p>
+          <p key={license.url}>
             <a key={license.text} className={styles.link} href={license.url}>
               {license.text}
             </a>

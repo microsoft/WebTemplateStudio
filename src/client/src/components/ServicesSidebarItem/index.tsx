@@ -30,7 +30,7 @@ const ServicesSidebarItem = ({ services }: Props) => {
   return (
     <React.Fragment>
       {Object.keys(services).map(serviceName => {
-        return renderService(serviceName);
+        return <div key={serviceName}>{renderService(serviceName)}</div>;
       })}
     </React.Fragment>
   );
