@@ -22,7 +22,8 @@ import {
 } from "../../selectors/cosmosServiceSelector";
 import {
   getAzureFunctionsOptionsSelector,
-  isAzureFunctionsSelectedSelector
+  isAzureFunctionsSelectedSelector,
+  getAzureFunctionsNamesSelector
 } from "../../selectors/azureFunctionsServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
@@ -44,6 +45,7 @@ import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelecti
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import { IFunctionName } from "../AzureFunctionsSelection";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -59,6 +61,7 @@ interface IStateProps {
   functions: any;
   isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
+  functionNames?: IFunctionName[];
 }
 
 type Props = RouteComponentProps &
@@ -156,9 +159,9 @@ class Footer extends React.Component<Props> {
         break;
       }
     }
-    if (areValidNames && this.props.functions) {
-      for (const functionName of this.props.functions.functionNames) {
-        areValidNames = validateName(functionName, "function").isValid;
+    if (areValidNames && this.props.functionNames) {
+      for (const functionName of this.props.functionNames) {
+        areValidNames = functionName.isValidTitle;
         if (functionNames.has(functionName)) {
           areValidNames = false;
         } else {
@@ -257,6 +260,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selectedCosmos: isCosmosResourceCreatedSelector(state),
   cosmos: getCosmosDbSelectionSelector(state),
   selectedFunctions: isAzureFunctionsSelectedSelector(state),
+  functionNames: getAzureFunctionsNamesSelector(state),
   functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)

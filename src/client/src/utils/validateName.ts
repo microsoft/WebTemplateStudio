@@ -1,4 +1,4 @@
-import { defineMessages } from "react-intl";
+import { defineMessages, FormattedMessage } from "react-intl";
 
 const messages = defineMessages({
   duplicateName: {
@@ -38,7 +38,7 @@ const INVALID_PROJECT_NAME =
 
 export function validateName(title: string, type: string): any {
   let isValid = true;
-  let error;
+  let error: FormattedMessage.MessageDescriptor | undefined;
 
   if (/^[ ]*$/.test(title)) {
     isValid = false;

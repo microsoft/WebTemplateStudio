@@ -65,8 +65,8 @@ const SummarySection = ({
         functionNames[idx].title,
         "function"
       );
-      if (!validationResult.isValidTitle) {
-        functionNames[idx].error = validationResult.error;
+      if (validationResult.error) {
+        functionNames[idx].error = intl.formatMessage(validationResult.error);
       }
       functionNames[idx].isValidTitle = validationResult.isValid;
       for (let i = 0; i < functionNames.length; i++) {

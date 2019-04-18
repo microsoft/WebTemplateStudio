@@ -20,6 +20,12 @@ interface ISelectionInformation {
 const getState = (state: AppState): AppState => state;
 const getServicesSelector = (state: AppState) => state.selection.services;
 
+const getAzureFunctionsNamesSelector = (state: AppState) => {
+  if (state.selection.services.azureFunctions.selection[0]) {
+    return state.selection.services.azureFunctions.selection[0].functionNames;
+  }
+};
+
 const isAzureFunctionsSelected = (state: AppState): boolean => {
   return !_.isEmpty(state.selection.services.azureFunctions.selection);
 };
@@ -92,5 +98,6 @@ const getFunctionsSelection = createSelector(
 export {
   getFunctionsSelection,
   getAzureFunctionsOptionsSelector,
-  isAzureFunctionsSelectedSelector
+  isAzureFunctionsSelectedSelector,
+  getAzureFunctionsNamesSelector
 };

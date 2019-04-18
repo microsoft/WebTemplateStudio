@@ -81,6 +81,7 @@ const AzureFunctionsSelection = ({
     const { functionNames } = functionApps.selection[0];
     if (functionNames) {
       functionNames[idx].title = newTitle;
+      functionNames[idx].error = "";
       const validationResult = validateName(
         functionNames[idx].title,
         "function"
