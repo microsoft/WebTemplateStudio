@@ -16,19 +16,31 @@ import {
   ISelectedAzureFunctionsService
 } from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
-import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl";
+import {
+  FormattedMessage,
+  injectIntl,
+  InjectedIntlProps,
+  defineMessages
+} from "react-intl";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
+import { validateName } from "../../utils/validateName";
 
 interface IProps {
   functionApps: IAzureFunctionsSelection;
 }
 
+export interface IFunctionName {
+  title: string;
+  isValidTitle: boolean;
+  error: string;
+}
+
 export interface IFunctionApp {
   appIndex: number;
-  functionNames: string[];
+  functionNames: IFunctionName[];
 }
 
 interface IDispatchProps {
@@ -39,6 +51,13 @@ interface IDispatchProps {
 }
 
 type Props = IProps & IDispatchProps & InjectedIntlProps;
+
+const messages = defineMessages({
+  duplicateFunctionName: {
+    id: "functionName.duplicateName",
+    defaultMessage: "Function name has to be unique"
+  }
+});
 
 /**
  *  The current implementation only allows for one Azure Function application to be created.
@@ -61,7 +80,25 @@ const AzureFunctionsSelection = ({
   const handleInputChange = (newTitle: string, idx: number) => {
     const { functionNames } = functionApps.selection[0];
     if (functionNames) {
-      functionNames[idx] = newTitle;
+      functionNames[idx].title = newTitle;
+      functionNames[idx].error = "";
+      const validationResult = validateName(
+        functionNames[idx].title,
+        "function"
+      );
+      if (validationResult.error) {
+        functionNames[idx].error = intl.formatMessage(validationResult.error);
+      }
+      functionNames[idx].isValidTitle = validationResult.isValid;
+      for (let i = 0; i < functionNames.length; i++) {
+        if (functionNames[i].title === functionNames[idx].title && i !== idx) {
+          functionNames[idx].isValidTitle = false;
+          functionNames[idx].error = intl.formatMessage(
+            messages.duplicateFunctionName
+          );
+          break;
+        }
+      }
       updateFunctionNames({
         appIndex: 0,
         functionNames
@@ -105,7 +142,7 @@ const AzureFunctionsSelection = ({
               />
               {functionApp.functionNames &&
                 functionApp.functionNames.map(
-                  (functionName: string, idx: number) => (
+                  (functionName: IFunctionName, idx: number) => (
                     <DraggableSidebarItem
                       key={functionApp.appName + idx.toString()}
                       closeSvgUrl={getSvg.getCancelSvg()}
