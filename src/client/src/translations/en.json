@@ -68,8 +68,10 @@
   "footer.back": "Back",
   "footer.generate": "Generate Template",
   "footer.license": "By continuing, you agree to the terms of all the licenses in the\n              licenses section.",
+  "footer.navAriaLabel": "Navigate between pages and generate templates",
   "footer.next": "Next",
   "header.signOut": "Sign out",
+  "leftSideBar.ariaNavLabel": "Navigate between pages in the Wizard",
   "leftSidebar.frameworks": "3. Frameworks",
   "leftSidebar.giveFeedback": "Give Feedback",
   "leftSidebar.pages": "4. Pages",
@@ -129,7 +131,6 @@
   "sortablePageList.hide": "Hide",
   "sortablePageList.pages": "Pages",
   "sortablePageList.show": "Show",
-  "summarySection.editResource": "Edit Resource",
   "summaryTile.changeItemName": "Change Item Name",
   "welcome.body": "Project Acorn is a VS Code extension that quickly provides web developers with boilerplate code, easy to use templates, and automates the Azure deployment process, all within this wizard.",
   "welcome.header": "Welcome to Project Acorn"
