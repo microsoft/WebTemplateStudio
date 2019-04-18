@@ -73,7 +73,6 @@
   "licenses.licenses",
   "postGenerationModal.deploymentHalted",
   "postGenerationModal.restartWizard",
-  "postGenerationModal.error",
   "postGenerationModal.closeWizard",
   "postGenerationModal.success",
   "postGenerationModal.isDeploying",
