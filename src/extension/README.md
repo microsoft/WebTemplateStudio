@@ -13,20 +13,6 @@ Docs to provide useful insights.
 - Press `ctrl+shift+p` in Windows/Linux or `⇧⌘P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension
 
-## Build Status
-
-| Branch  |                                                                                                                                           Build Status                                                                                                                                            |
-| :------ | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| dev     |     [![Build Status](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_apis/build/status/Web-Template-Studio-DevCI/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=dev)](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_build/latest?definitionId=275&branchName=dev)     |
-| staging | [![Build Status](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_apis/build/status/Web-Template-Studio-DevCI/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=staging)](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_build/latest?definitionId=275&branchName=staging) |
-| master  |  [![Build Status](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_apis/build/status/Web-Template-Studio-DevCI/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=master)](https://microsoftgarage.visualstudio.com/Intern%20GitHub/_build/latest?definitionId=275&branchName=master)  |
-
-## Example Scenario
-
-I need a full-stack web app that stores data in a Cosmos database.
-
-![Readme-app-screenshot](./resources/readme-app-screenshot.png)
-
 ## Features
 
 Web Template Studio approaches web app creation using the following four attribute sets:
