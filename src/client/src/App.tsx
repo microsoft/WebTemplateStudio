@@ -52,7 +52,7 @@ import { setAzureValidationStatusAction } from "./actions/azureActions/setAzureV
 import { IServiceStatus } from "./reducers/generationStatus/genStatus";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
-  require("./css/themeslight.css");
+  require("./css/themes.css");
 }
 
 interface IDispatchProps {

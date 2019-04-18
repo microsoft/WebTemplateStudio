@@ -34,7 +34,8 @@ const DraggableSidebarItem = ({
   withIndent,
   withLargeIndent,
   handleCloseClick,
-  intl
+  intl,
+  customInputStyle
 }: {
   page?: ISelected;
   text?: string;
@@ -49,6 +50,7 @@ const DraggableSidebarItem = ({
   withLargeIndent?: boolean;
   handleCloseClick?: (idx: number) => void;
   intl: InjectedIntl;
+  customInputStyle?: string;
 }) => {
   const handleKeyDown = (event: any) => {
     if (event.keyCode === 13 || event.keyCode === 32) {
@@ -82,7 +84,7 @@ const DraggableSidebarItem = ({
         </div>
         <div className={styles.errorStack}>
           <div
-            className={classnames({
+            className={classnames(customInputStyle, {
               [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
               [styles.textContainer]: !withIndent,
               [styles.largeIndentContainer]: withLargeIndent

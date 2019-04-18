@@ -65,6 +65,7 @@ const CosmosDBSelection = ({
             const { accountName } = resource;
             return (
               <DraggableSidebarItem
+                customInputStyle={styles.input}
                 key={accountName}
                 text={accountName}
                 closeSvgUrl={getSvg.getCancelSvg()}

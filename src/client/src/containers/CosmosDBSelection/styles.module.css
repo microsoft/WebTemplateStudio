@@ -17,3 +17,8 @@
 .edit:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
+
+.input {
+  color: var(--vscode-editor-foreground);
+  background-color: var(--vscode-sideBar-background);
+}
