@@ -189,7 +189,8 @@ class App extends React.Component<Props> {
           <AzureFunctionsModal />
           <PostGenerationModal />
           <LeftSidebar />
-          <div
+
+          <main
             className={classnames(appStyles.centerView, {
               [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS
             })}
@@ -207,7 +208,7 @@ class App extends React.Component<Props> {
             <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
             <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
             <Route exact={true} path={ROUTES.WELCOME} component={Welcome} />
-          </div>
+          </main>
           <RightSidebar />
         </div>
         <Footer />
