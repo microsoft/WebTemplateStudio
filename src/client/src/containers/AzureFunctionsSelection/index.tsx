@@ -36,6 +36,7 @@ export interface IFunctionName {
   title: string;
   isValidTitle: boolean;
   error: string;
+  id: string;
 }
 
 export interface IFunctionApp {

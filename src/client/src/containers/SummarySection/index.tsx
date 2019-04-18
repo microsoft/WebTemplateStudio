@@ -100,10 +100,11 @@ const SummarySection = ({
     handleCloseClick?: (idx: number) => any,
     handleInputChange?: (newTitle: string, idx: number) => any,
     idx?: number,
-    error?: string | FormattedMessage.MessageDescriptor
+    error?: string | FormattedMessage.MessageDescriptor,
+    id?: string
   ) => {
     return (
-      <div className={styles.tileContainer} key={idx}>
+      <div className={styles.tileContainer} key={id ? id : idx}>
         <SummaryTile
           title={title}
           version={version}
@@ -152,7 +153,7 @@ const SummarySection = ({
               renderTile(
                 undefined,
                 functionName.title,
-                "v1.0",
+                "",
                 undefined,
                 undefined,
                 undefined,
@@ -162,7 +163,8 @@ const SummarySection = ({
                 handleRemoveFunction,
                 handleAzureFuncNameChange,
                 idx + 1,
-                functionName.error
+                functionName.error,
+                functionName.id
               )
             )}
         </div>
