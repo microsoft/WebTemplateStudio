@@ -1,9 +1,9 @@
 {
-  "name": "webts",
-  "displayName": "Web Template Studio",
+  "name": "__EXTENSIONNAME__",
+  "displayName": "__DISPLAYNAME__",
   "description": "Web Template Studio enables developers to quickly scaffold full-stack web applications with cloud services.",
-  "version": "1.9.3",
-  "publisher": "Microsoft",
+  "version": "0.0.0-UNTRACKEDVERSION",
+  "publisher": "__PUBLISHER__",
   "aiKey": "__AIKEY__",
   "engines": {
     "vscode": "^1.32.0"
