@@ -22,6 +22,14 @@ const messages = defineMessages({
     id: "projectNameError.invalidRegex",
     defaultMessage:
       "Name may only contain letters, numbers, dashes or underscores"
+  },
+  functionNameInvalidFirstLetter: {
+    id: "FunctionNameError.invalidFunctionStartLetter",
+    defaultMessage: "Name may only start with letters or numbers"
+  },
+  invalidFunctionName: {
+    id: "FunctionNameError.invalidRegex",
+    defaultMessage: "Name may only contain letters, numbers or dashes"
   }
 });
 
@@ -53,6 +61,15 @@ export function validateName(title: string, type: string): any {
         error = messages.nameStartLetter;
       } else {
         error = messages.invalidProjectName;
+      }
+    }
+  } else if (type === "function") {
+    if (!/^[A-Za-z0-9][A-Za-z0-9-]*[a-zA-Z0-9]$/.test(title)) {
+      isValid = false;
+      if (/^[-]$/.test(title[0])) {
+        error = messages.functionNameInvalidFirstLetter;
+      } else {
+        error = messages.invalidFunctionName;
       }
     }
   }

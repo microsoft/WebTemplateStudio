@@ -4,13 +4,20 @@ import { connect } from "react-redux";
 
 import SummaryTile from "../../components/SummaryTile";
 
+import { validateName } from "../../utils/validateName";
+
 import styles from "./styles.module.css";
 
 import { IFunctionApp } from "../AzureFunctionsSelection";
 import { RowType } from "../../types/rowType";
 
 import * as AzureFunctionActions from "../../actions/azureActions/azureFunctionActions";
-import { FormattedMessage } from "react-intl";
+import {
+  FormattedMessage,
+  injectIntl,
+  InjectedIntlProps,
+  defineMessages
+} from "react-intl";
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
@@ -30,7 +37,14 @@ interface IDispatchProps {
   removeAzureFunction: (functionIndex: number) => any;
 }
 
-type Props = IDispatchProps & IProps & IStateProps;
+type Props = IDispatchProps & IProps & IStateProps & InjectedIntlProps;
+
+const messages = defineMessages({
+  duplicateFunctionName: {
+    id: "functionName.duplicateName",
+    defaultMessage: "Function name has to be unique"
+  }
+});
 
 const SummarySection = ({
   selectionTitle,
@@ -38,12 +52,31 @@ const SummarySection = ({
   isEditable,
   removeAzureFunction,
   updateFunctionNames,
-  functionApps
+  functionApps,
+  intl
 }: Props) => {
   const handleAzureFuncNameChange = (newTitle: string, idx: number) => {
     const { functionNames } = functionApps.selection[0];
-    if (functionNames != null) {
-      functionNames[idx] = newTitle;
+    if (functionNames) {
+      functionNames[idx].title = newTitle;
+      functionNames[idx].error = "";
+      const validationResult = validateName(
+        functionNames[idx].title,
+        "function"
+      );
+      if (!validationResult.isValidTitle) {
+        functionNames[idx].error = validationResult.error;
+      }
+      functionNames[idx].isValidTitle = validationResult.isValid;
+      for (let i = 0; i < functionNames.length; i++) {
+        if (functionNames[i].title === functionNames[idx].title && i !== idx) {
+          functionNames[idx].isValidTitle = false;
+          functionNames[idx].error = intl.formatMessage(
+            messages.duplicateFunctionName
+          );
+          break;
+        }
+      }
       updateFunctionNames({
         appIndex: 0,
         functionNames
@@ -65,7 +98,8 @@ const SummarySection = ({
     withIndent?: boolean,
     handleCloseClick?: (idx: number) => any,
     handleInputChange?: (newTitle: string, idx: number) => any,
-    idx?: number
+    idx?: number,
+    error?: string | FormattedMessage.MessageDescriptor
   ) => {
     return (
       <div className={styles.tileContainer} key={idx}>
@@ -82,6 +116,7 @@ const SummarySection = ({
           handleCloseClick={handleCloseClick}
           handleInputChange={handleInputChange}
           idx={idx}
+          error={error}
         />
       </div>
     );
@@ -115,7 +150,7 @@ const SummarySection = ({
             selection.functionNames.map((functionName, idx: number) =>
               renderTile(
                 undefined,
-                functionName,
+                functionName.title,
                 "v1.0",
                 undefined,
                 undefined,
@@ -125,7 +160,8 @@ const SummarySection = ({
                 true,
                 handleRemoveFunction,
                 handleAzureFuncNameChange,
-                idx + 1
+                idx + 1,
+                functionName.error
               )
             )}
         </div>
@@ -152,4 +188,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SummarySection);
+)(injectIntl(SummarySection));
