@@ -34,7 +34,19 @@ const getAzureFunctionsOptions = (
   isAzureFunctionsSelected: boolean
 ): any => {
   if (isAzureFunctionsSelected) {
-    return state.selection.services.azureFunctions.selection[0];
+    let selections = state.selection.services.azureFunctions.selection[0];
+    let updatedSelections;
+    if (selections.functionNames) {
+      updatedSelections = {
+        ...selections,
+        functionNames: selections.functionNames.map(functionNameObject => {
+          return functionNameObject.title;
+        })
+      };
+    } else {
+      updatedSelections = selections;
+    }
+    return updatedSelections;
   }
 };
 const getAzureFunctionsOptionsSelector = createSelector(

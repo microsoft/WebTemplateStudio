@@ -126,6 +126,7 @@ class Footer extends React.Component<Props> {
   public render() {
     // Validate the page names and do not generate if they are invalid or if there are duplicates
     const pageNames = new Set();
+    const functionNames = new Set();
     let areValidNames = true;
     for (const page of this.props.engine.pages) {
       const pageName = page.name;
@@ -139,6 +140,20 @@ class Footer extends React.Component<Props> {
         break;
       }
     }
+    if (areValidNames && this.props.functions) {
+      for (const functionName of this.props.functions.functionNames) {
+        areValidNames = validateName(functionName, "function").isValid;
+        if (functionNames.has(functionName)) {
+          areValidNames = false;
+        } else {
+          functionNames.add(functionName);
+        }
+        if (!areValidNames) {
+          break;
+        }
+      }
+    }
+
     const { isValidNameAndProjectPath, location, isVisited } = this.props;
     const { pathname } = location;
     const { showFrameworks } = isVisited;
@@ -231,7 +246,9 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
   },

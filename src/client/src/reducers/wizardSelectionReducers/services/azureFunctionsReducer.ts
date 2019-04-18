@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 import AzureActionType from "../../../actions/azureActions/azureActionType";
 import { WIZARD_INFO_TYPEKEYS } from "../../../actions/wizardInfoActions/typeKeys";
 import WizardInfoType from "../../../actions/wizardInfoActions/wizardInfoActionType";
+import { IFunctionName } from "../../../containers/AzureFunctionsSelection";
 
 /* State Shape
 {
@@ -33,7 +34,7 @@ export interface ISelectedAzureFunctionsService {
   location: string;
   internalName: string;
   numFunctions: number;
-  functionNames?: string[];
+  functionNames?: IFunctionName[];
 }
 
 interface IServiceContent {
@@ -59,8 +60,8 @@ const initialState = {
 
 const createFunctionNames = (
   numFunctions: number,
-  prevFunctionNames?: string[]
-): string[] => {
+  prevFunctionNames?: IFunctionName[]
+): IFunctionName[] => {
   if (prevFunctionNames) {
     if (prevFunctionNames.length >= numFunctions) {
       const numFunctionsToDelete = prevFunctionNames.length - numFunctions;
@@ -70,19 +71,27 @@ const createFunctionNames = (
       const numFunctionsToCreate = numFunctions - prevFunctionNames.length;
       let lastNumberUsed = 1;
       for (let i = 1; i <= numFunctionsToCreate; i++) {
-        let functionName = `function${lastNumberUsed}`;
+        let functionName = {
+          title: `function${lastNumberUsed}`,
+          isValidTitle: true,
+          error: ""
+        };
         while (prevFunctionNames.includes(functionName)) {
           lastNumberUsed++;
-          functionName = `function${lastNumberUsed}`;
+          functionName.title = `function${lastNumberUsed}`;
         }
         prevFunctionNames.push(functionName);
       }
     }
     return [...prevFunctionNames];
   }
-  const functionNames = [];
+  const functionNames: IFunctionName[] = [];
   for (let i = 1; i <= numFunctions; i++) {
-    functionNames.push(`function${i}`);
+    functionNames.push({
+      title: `function${i}`,
+      isValidTitle: true,
+      error: ""
+    });
   }
   return functionNames;
 };
