@@ -89,7 +89,7 @@ const SummarySection = ({
   return (
     <div className={styles.selectionContainer}>
       {selectionRows.map((selection: RowType, idx: number) => (
-        <React.Fragment>
+        <div key={JSON.stringify(`${selection.svgUrl} + ${idx}`)}>
           <div
             className={classnames({
               [styles.headerContainer]: idx === 0,
@@ -128,7 +128,7 @@ const SummarySection = ({
                 idx + 1
               )
             )}
-        </React.Fragment>
+        </div>
       ))}
     </div>
   );
@@ -138,7 +138,9 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   functionApps: state.selection.services.azureFunctions
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<RootAction>
+): IDispatchProps => ({
   updateFunctionNames: (functionApp: IFunctionApp) => {
     dispatch(AzureFunctionActions.updateAzureFunctionNamesAction(functionApp));
   },
