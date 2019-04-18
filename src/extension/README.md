@@ -36,6 +36,10 @@ We are still extremely early in development and are looking for feedback for roa
 
 Do you want to contribute? We would love to have you help out. Here are our [contribution guidelines](CONTRIBUTING.md).
 
+## Reporting Security Issues
+
+Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) at secure@microsoft.com. You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the MSRC PGP key, can be found in the Security TechCenter.
+
 ## License
 
 This code is distributed under the terms and conditions of the [MIT license](LICENSE.md).
