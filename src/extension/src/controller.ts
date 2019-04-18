@@ -8,17 +8,19 @@ import {
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
 import ApiModule from "./signalr-api-module/apiModule";
+import { ISyncReturnType } from "./types/syncReturnType";
+import { ChildProcess } from "child_process";
+import { VSCodeUI } from "./utils/vscodeUI";
 import { AzureServices } from "./azure/azureServices";
 import { TelemetryAI } from "./telemetry/telemetryAI";
 import { Logger } from "./utils/logger";
 import { WizardServant } from "./wizardServant";
 import { GenerationExperience } from "./generationExperience";
-import { ISyncReturnType } from "./types/syncReturnType";
-import { ChildProcess } from "child_process";
 
 export class Controller {
   public static reactPanelContext: ReactPanel;
   public static Telemetry: TelemetryAI;
+  private vscodeUI: VSCodeUI;
   public static Logger: Logger;
   private AzureService: AzureServices;
   private GenExperience: GenerationExperience;
@@ -31,6 +33,7 @@ export class Controller {
   private defineExtensionModule() {
     Controller.extensionModuleMap = new Map([
       [ExtensionModule.Telemetry, Controller.Telemetry],
+      [ExtensionModule.VSCodeUI, this.vscodeUI],
       [ExtensionModule.Azure, this.AzureService],
       [ExtensionModule.Validator, this.Validator],
       [ExtensionModule.Generate, this.GenExperience],
@@ -72,6 +75,7 @@ export class Controller {
       this.context,
       this.extensionStartTime
     );
+    this.vscodeUI = new VSCodeUI();
     Logger.initializeOutputChannel(Controller.getExtensionName(context));
     this.Validator = new Validator();
     this.AzureService = new AzureServices();

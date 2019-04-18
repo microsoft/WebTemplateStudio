@@ -36,5 +36,6 @@
   "dialog.skipForNow": "Skip for now",
   "dialog.reportAnIssue": "Report an issue",
   "dialog.multilineError": "An error has occured. Check output window for more details.",
-  "dialog.cosmosDBConnectStringReplacePrompt": "Replace your DB connection string in the .env file with the generated CosmosDB connection string?"
+  "dialog.cosmosDBConnectStringReplacePrompt": "Replace your DB connection string in the .env file with the generated CosmosDB connection string?",
+  "dialog.resetPagesPrompt": "Switching Frameworks will reset pages in your queue. Are you sure you want to proceed?"
 }
