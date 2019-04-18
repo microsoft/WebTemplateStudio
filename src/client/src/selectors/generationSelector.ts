@@ -9,30 +9,32 @@ import {
   COSMOS_APIS
 } from "../utils/constants";
 import { AppState } from "../reducers";
+import { SelectionState } from "../reducers/wizardSelectionReducers";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {
   [COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
   [COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
 };
 
-const getWizardSelectionsSelector = (state: AppState): any => state.selection;
+const getWizardSelectionsSelector = (state: AppState): SelectionState =>
+  state.selection;
 
-const getProjectType = (selection: any): string => {
+const getProjectType = (selection: SelectionState): string => {
   const projectType = selection.appType as ISelected;
   return projectType.internalName;
 };
 
-const getFrontendFramework = (selection: any): string => {
+const getFrontendFramework = (selection: SelectionState): string => {
   const { frontendFramework } = selection;
   return frontendFramework.internalName;
 };
 
-const getBackendFramework = (selection: any): string => {
+const getBackendFramework = (selection: SelectionState): string => {
   const { backendFramework } = selection;
   return backendFramework.internalName;
 };
 
-const getServices = (selection: any): ITemplateInfo[] => {
+const getServices = (selection: SelectionState): ITemplateInfo[] => {
   const { services } = selection;
   const servicesInfo = [];
   if (
@@ -50,18 +52,21 @@ const getServices = (selection: any): ITemplateInfo[] => {
     _.has(services, SERVICE_KEYS.AZURE_FUNCTIONS) &&
     services.azureFunctions.selection.length > 0
   ) {
-    for (const funcName of services.azureFunctions.selection[0].functionNames) {
-      servicesInfo.push({
-        name: funcName,
-        identity: services.azureFunctions.selection[0].internalName
-      });
+    const { functionNames } = services.azureFunctions.selection[0];
+    if (functionNames) {
+      for (const funcName of functionNames) {
+        servicesInfo.push({
+          name: funcName.title,
+          identity: services.azureFunctions.selection[0].internalName
+        });
+      }
     }
   }
 
   return servicesInfo;
 };
 
-const getPages = (selection: any): ITemplateInfo[] => {
+const getPages = (selection: SelectionState): ITemplateInfo[] => {
   const { pages } = selection;
   const pagesInfo = [];
   for (const page of pages) {

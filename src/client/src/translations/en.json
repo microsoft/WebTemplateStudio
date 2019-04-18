@@ -1,4 +1,6 @@
 {
+  "FunctionNameError.invalidFunctionStartLetter": "Name may only start with letters or numbers",
+  "FunctionNameError.invalidRegex": "Name may only contain letters, numbers or dashes",
   "about.about": "About",
   "about.reportAnIssue": "Report an issue",
   "about.templatesVersion": "Templates version:",
@@ -71,6 +73,7 @@
   "footer.license": "By continuing, you agree to the terms of all the licenses in the\n              licenses section.",
   "footer.navAriaLabel": "Navigate between pages and generate templates",
   "footer.next": "Next",
+  "functionName.duplicateName": "Function name has to be unique",
   "header.signOut": "Sign out",
   "leftSideBar.ariaNavLabel": "Navigate between pages in the Wizard",
   "leftSidebar.frameworks": "3. Frameworks",
