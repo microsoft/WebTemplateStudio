@@ -135,16 +135,21 @@ const Details = ({
                 </div>
                 <div className={classnames(grid.col8, styles.licenses)}>
                   {Array.isArray(detailInfo.licenses)
-                    ? detailInfo.licenses.map((license: License) => {
-                        const licenseObject = license as ILicenseObject;
-                        return (
-                          <p>
-                            <a className={styles.link} href={licenseObject.url}>
-                              {licenseObject.text}
-                            </a>
-                          </p>
-                        );
-                      })
+                    ? detailInfo.licenses.map(
+                        (license: License, idx: number) => {
+                          const licenseObject = license as ILicenseObject;
+                          return (
+                            <p key={license + idx.toString()}>
+                              <a
+                                className={styles.link}
+                                href={licenseObject.url}
+                              >
+                                {licenseObject.text}
+                              </a>
+                            </p>
+                          );
+                        }
+                      )
                     : (
                         <ReactMarkdown
                           source={detailInfo.licenses}
