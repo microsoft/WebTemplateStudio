@@ -73,9 +73,12 @@ const LeftSidebar = (props: Props) => {
   });
   const { isVisited, intl } = props;
   return (
-    <nav aria-label={intl.formatMessage(messages.ariaNavLabel)}>
+    <React.Fragment>
       {pathname !== ROUTES.PAGE_DETAILS && (
-        <div className={classnames(styles.leftView, styles.container)}>
+        <nav
+          className={classnames(styles.leftView, styles.container)}
+          aria-label={intl.formatMessage(messages.ariaNavLabel)}
+        >
           <div>
             {leftSidebarData.map((sidebartitle, idx) => {
               return (
@@ -108,9 +111,9 @@ const LeftSidebar = (props: Props) => {
               defaultMessage="Give Feedback"
             />
           </a>
-        </div>
+        </nav>
       )}
-    </nav>
+    </React.Fragment>
   );
 };
 

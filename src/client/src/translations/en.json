@@ -1,5 +1,6 @@
 {
   "about.about": "About",
+  "about.reportAnIssue": "Report an issue",
   "about.templatesVersion": "Templates version:",
   "about.wizardVersion": "Wizard version:",
   "azureFunctions.Title": "Azure Functions",
