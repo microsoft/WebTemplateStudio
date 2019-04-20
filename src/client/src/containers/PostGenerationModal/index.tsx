@@ -32,6 +32,7 @@ interface IStateProps {
   isServicesDeployed: boolean;
   templateGenStatus: string;
   isModalOpen: boolean;
+  isPostGenModalOpen: boolean;
   serviceStatus: PostGenSelectors.IAzureServiceStatus;
   isServicesSelected: boolean;
   vscode: IVSCodeObject;
@@ -197,6 +198,7 @@ const PostGenerationModal = ({
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
+  isPostGenModalOpen: isPostGenModalOpenSelector(state),
   isServicesDeployed: PostGenSelectors.isServicesDeployedOrFinishedSelector(
     state
   ),
