@@ -39,7 +39,7 @@ export const strings = defineMessages({
   },
   openInCode: {
     id: "postGenerationModal.openInCode",
-    defaultMessage: "Open Project in VSCode"
+    defaultMessage: "Open Project in VSCode."
   },
   unknownStatus: {
     id: "postGenerationModal.unknownStatus",
@@ -63,7 +63,7 @@ export const strings = defineMessages({
   },
   generationComplete: {
     id: "postGenerationModal.generationComplete",
-    defaultMessage: "Generation complete"
+    defaultMessage: "Generation complete."
   },
   templateGeneration: {
     id: "postGenerationModal.templateGeneration",
