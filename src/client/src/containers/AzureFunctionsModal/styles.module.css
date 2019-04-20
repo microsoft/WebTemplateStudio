@@ -92,7 +92,7 @@
   padding: 9px;
   box-sizing: border-box;
   background-color: var(--vscode-input-background);
-  border: 1px solid var(--vscode-editor-foreground);
+  border: 0.5px solid var(--vscode-editor-foreground);
 }
 
 .input {

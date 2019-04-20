@@ -93,13 +93,13 @@
 }
 
 .body {
-  margin-top: 15px;
+  margin-top: 16px;
   margin-bottom: 10px;
 }
 
 .link {
   color: var(--vscode-textLink-foreground);
-  font-size: var(--vscode-editor-font-size);
+  font-size: 14px;
   text-decoration: none;
 }
 

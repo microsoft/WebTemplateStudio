@@ -48,12 +48,12 @@
 .cardTitleContainer {
   display: flex;
   align-items: center;
-  margin-bottom: 1em;
+  margin-bottom: 16px;
 }
 
 .details {
   color: var(--vscode-textLink-foreground);
-  font-size: var(--vscode-editor-font-size);
+  font-size: 14px;
   text-decoration: none;
 }
 
