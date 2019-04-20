@@ -35,7 +35,8 @@
   text-align: center;
   color: var(--vscode-textLink-foreground);
   text-decoration: none;
-  margin-bottom: 10px;
+  margin-bottom: 19px;
+  font-size: 14px;
 }
 
 .feedback:focus {
