@@ -43,23 +43,23 @@ type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 const messages = defineMessages({
   welcome: {
     id: "review.welcome",
-    defaultMessage: "1. Welcome"
+    defaultMessage: "Welcome"
   },
   projectType: {
     id: "review.projectType",
-    defaultMessage: "2. Project Type"
+    defaultMessage: "Project Type"
   },
   frameworks: {
     id: "review.frameworks",
-    defaultMessage: "3. Frameworks"
+    defaultMessage: "Frameworks"
   },
   pages: {
     id: "review.pages",
-    defaultMessage: "4. Pages"
+    defaultMessage: "Pages"
   },
   services: {
     id: "review.services",
-    defaultMessage: "5. Services"
+    defaultMessage: "Services"
   },
   reviewAndGenerate: {
     id: "review.reviewAndGenerate",
@@ -79,10 +79,10 @@ const ReviewAndGenerate = (props: Props) => {
   return (
     <div className={styles.container}>
       <Title>{intl.formatMessage(messages.reviewAndGenerate)}</Title>
-      <div
-        className={classnames(styles.selectionTitle, styles.selectionContainer)}
-      >
-        {intl.formatMessage(messages.welcome)}
+      <div className={styles.selectionContainer}>
+        <div className={styles.selectionTitle}>
+          {intl.formatMessage(messages.welcome)}
+        </div>
         <SummaryTile
           showFolderIcon={true}
           svgUrl={withLocalPath(folder)}

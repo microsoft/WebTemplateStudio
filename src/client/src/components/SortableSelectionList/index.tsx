@@ -94,9 +94,9 @@ const SortableList = SortableContainer(
   }) => {
     return (
       <div>
-        <div className={styles.sidebarItem}>
-          {!isSummaryPage &&
-            pages.map((page: ISelected, idx: number) => {
+        {!isSummaryPage && (
+          <div className={styles.sidebarItem}>
+            {pages.map((page: ISelected, idx: number) => {
               return (
                 <SortableSidebarItem
                   key={page.id}
@@ -108,9 +108,10 @@ const SortableList = SortableContainer(
                 />
               );
             })
-          // index prop required by react-sortable, while idx used for updating redux state changes
-          }
-        </div>
+            // index prop required by react-sortable, while idx used for updating redux state changes
+            }
+          </div>
+        )}
         {isSummaryPage &&
           pages.map((page: ISelected, idx: number) => {
             return (
