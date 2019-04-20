@@ -381,8 +381,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         DEFAULT_VALUE
       )}
       <div
-        className={classnames({
-          [styles.selectionInputContainer]: true,
+        className={classnames(styles.selectionInputContainer, {
           [styles.selectionContainer]:
             isAppNameAvailable ||
             azureFunctionsFormData.appName.value.length === 0,
