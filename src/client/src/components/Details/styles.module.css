@@ -19,14 +19,13 @@
 }
 
 .container {
-  margin: 2em;
-  padding: 2em;
-  max-width: 40em;
+  margin: 48px;
+  max-width: 65%;
 }
 
 .backContainer {
   display: flex;
-  margin-bottom: 4em;
+  margin-bottom: 48px;
 }
 
 .innerBackContainer {
@@ -65,10 +64,11 @@
 
 .licenses {
   margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .detailsDescription {
-  margin-bottom: 1em;
+  margin-bottom: 0px;
 }
 
 .categoriesContainer {
