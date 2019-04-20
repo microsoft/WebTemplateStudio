@@ -172,12 +172,18 @@ const SummaryTile = ({
                     : originalTitle && (
                         <React.Fragment>
                           <div>{originalTitle}</div>
-                          <div>&nbsp;|&nbsp;</div>
                         </React.Fragment>
                       )}
                   {author && (
                     <React.Fragment>
-                      {author && <div>{author}</div>}
+                      {author && (
+                        <div>
+                          {(subTitle || originalTitle) && (
+                            <span>&nbsp;|&nbsp;</span>
+                          )}
+                          {author}
+                        </div>
+                      )}
                       {version && (
                         <React.Fragment>
                           <div>&nbsp;|&nbsp;</div>
