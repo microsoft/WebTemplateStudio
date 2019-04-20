@@ -152,20 +152,21 @@ const SummaryTile = ({
             )
           )}
           <div className={styles.tileContent}>
-            <input
-              aria-label={intl.formatMessage(messages.changeItemName)}
-              ref={inputRef}
-              className={styles.tileInput}
-              value={componentTitle}
-              onChange={handleChange}
-              disabled={isDisabled}
-              onBlur={handleFocusOut}
-              onClick={handleClick}
-            />
+            <div className={styles.errorStack}>
+              <input
+                aria-label={intl.formatMessage(messages.changeItemName)}
+                ref={inputRef}
+                className={styles.tileInput}
+                value={componentTitle}
+                onChange={handleChange}
+                disabled={isDisabled}
+                onBlur={handleFocusOut}
+                onClick={handleClick}
+              />
+              {error && <div className={styles.errorMessage}>{error}</div>}
+            </div>
             <div className={styles.metaData}>
-              {(error && (
-                <div className={styles.errorMessage}>{error}</div>
-              )) || (
+              {
                 <React.Fragment>
                   {subTitle
                     ? subTitle
@@ -193,7 +194,7 @@ const SummaryTile = ({
                     </React.Fragment>
                   )}
                 </React.Fragment>
-              )}
+              }
             </div>
           </div>
         </div>

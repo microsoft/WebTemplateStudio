@@ -124,4 +124,13 @@
   opacity: 50%;
   min-height: 38px;
   font-size: 15px;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 1;
+  max-width: 300px;
+}
+
+.errorStack {
+  display: block;
+  position: relative;
 }
