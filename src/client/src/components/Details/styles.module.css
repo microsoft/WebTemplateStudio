@@ -1,8 +1,11 @@
 .icon {
-  height: 48px;
-  width: 48px;
-  margin-right: 48px;
-  padding-right: 20px;
+  height: 36px;
+  width: 36px;
+  margin-right: 16px;
+}
+
+.spacer {
+  margin-right: 52px;
 }
 
 .backIcon path {
@@ -36,8 +39,14 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+.headerContainer,
 .detailsContainer {
   display: flex;
+  margin-bottom: 12px;
+}
+
+.headerContainer {
+  align-items: center;
 }
 
 .licenseCategory {
@@ -51,9 +60,7 @@
 
 .detailsTitle {
   font-weight: bold;
-  font-size: 24px;
-  margin-top: 0.5em;
-  margin-bottom: 1em;
+  font-size: 20px;
 }
 
 .licenses {
@@ -75,6 +82,7 @@
 
 .details {
   padding-top: 2px;
+  font-size: 14px;
   color: var(--vscode-textLink-foreground);
   cursor: pointer;
 }

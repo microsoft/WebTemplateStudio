@@ -94,21 +94,18 @@ const Details = ({
             </div>
           </div>
         </div>
-        <div className={styles.detailsContainer}>
-          <div>
-            {detailInfo.internalName &&
-              (getSvg(detailInfo.internalName, styles.icon) || (
-                <img
-                  className={styles.icon}
-                  src={detailInfo.svgUrl}
-                  alt="icon"
-                />
-              ))}
+        <div className={styles.headerContainer}>
+          {detailInfo.internalName &&
+            (getSvg(detailInfo.internalName, styles.icon) || (
+              <img className={styles.icon} src={detailInfo.svgUrl} alt="icon" />
+            ))}
+          <div className={styles.detailsTitle}>
+            {renderFormattedData(detailInfo.title, false)}
           </div>
+        </div>
+        <div className={styles.detailsContainer}>
+          <div className={styles.spacer} />
           <div>
-            <div className={styles.detailsTitle}>
-              {renderFormattedData(detailInfo.title, false)}
-            </div>
             <div className={styles.detailsDescription}>
               {renderFormattedData(detailInfo.longDescription, true)}
             </div>
