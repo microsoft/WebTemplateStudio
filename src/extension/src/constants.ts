@@ -144,6 +144,10 @@ export const CONSTANTS = {
       "info.fileReplacedMessage",
       "Replaced file at: "
     ),
+    STARTING_GENERATION_SERVER: localize(
+      "info.startingServerMessage",
+      "Starting Generation Server"
+    ),
     SYNC_STATUS: localize("info.syncStatus", "Sync Status: ")
   },
   API: {
