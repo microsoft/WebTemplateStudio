@@ -71,7 +71,7 @@ export default class ReactMasterDetail extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <main>
+      <main id="mainContent">
         <div className="container-fluid">
           <div className="row">
             <div

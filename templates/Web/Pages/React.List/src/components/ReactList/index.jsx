@@ -114,7 +114,7 @@ export default class ReactList extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <main className="container">
+      <main id="mainContent" className="container">
         <div className="row">
           <div className="col mt-5 p-0">
             <h3>Bootstrap ReactList Template</h3>
