@@ -1,7 +1,7 @@
 ﻿[
   {
-    "name": "React",
-    "displayName": "ReactJS",
+    "name": "ReactJS",
+    "displayName": "React",
     "summary": "React is a JavaScript library created by Facebook to help developers build UI components.",
     "author": "Facebook",
     "order": "1",
