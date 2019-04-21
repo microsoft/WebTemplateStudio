@@ -120,9 +120,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const { formatMessage } = intl;
     const { frontendOptions, backendOptions, projectTypes } = contentOptions;
     return (
-      <div role="complementary">
+      <React.Fragment>
         {pathname !== ROUTES.PAGE_DETAILS && (
           <div
+            role="complementary"
             className={classNames(styles.container, styles.rightViewCropped)}
           >
             {pathname !== ROUTES.REVIEW_AND_GENERATE && (
@@ -180,7 +181,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             </div>
           </div>
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }
