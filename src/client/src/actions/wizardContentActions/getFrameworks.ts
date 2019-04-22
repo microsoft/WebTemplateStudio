@@ -2,6 +2,7 @@ import EngineAPIService from "../../services/EngineAPIService";
 import getSvgUrl from "../../utils/getSvgUrl";
 import { IMetadata } from "../../types/metadata";
 import { IOption } from "../../types/option";
+import { API } from "../../services/constants";
 
 type FrameworkType = "frontend" | "backend";
 
@@ -11,7 +12,7 @@ export const getFrameworks = async (
   type: FrameworkType,
   isPreview: boolean
 ): Promise<IOption[]> => {
-  const api = new EngineAPIService("5000", undefined);
+  const api = new EngineAPIService(API.PORT, undefined);
   try {
     const frameworksJson = await api.getFrameworks(projectType);
 

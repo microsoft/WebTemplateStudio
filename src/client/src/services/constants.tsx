@@ -15,5 +15,6 @@ export const API = {
     Path: "path",
     Platform: "platform",
     ProjectType: "projectType"
-  }
+  },
+  PORT: 9052
 };

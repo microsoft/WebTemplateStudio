@@ -37,7 +37,11 @@ export class ApiModule {
       fs.chmodSync(apiPath, 0o755);
     }
 
-    let spawnedProcess = execFile(`${apiPath}`, { cwd: apiWorkingDirectory });
+    let spawnedProcess = execFile(
+      `${apiPath}`,
+      [`--urls=http://localhost:${CONSTANTS.PORT}`],
+      { cwd: apiWorkingDirectory }
+    );
     ApiModule._process = spawnedProcess;
     return spawnedProcess;
   }

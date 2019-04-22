@@ -184,7 +184,7 @@ export const CONSTANTS = {
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
   MAX_PROJECT_NAME_LENGTH: 50,
-  PORT: 5000,
+  PORT: 9052,
   VSCODE_COMMAND: {
     OPEN_FOLDER: "vscode.openFolder"
   }
