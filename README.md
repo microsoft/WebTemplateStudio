@@ -1,6 +1,6 @@
 # Web Template Studio
 
-Web Template Studio (_WebTS_) is a Visual Studio Code Extension that accelerates the creation of new Web apps using a
+Web Template Studio (_WebTS_) is a Visual Studio Code Extension that accelerates the creation of new web applications using a
 wizard-based experience. WebTS enables developers to generate boilerplate code for a web application
 by choosing between different front-end frameworks, back-end frameworks, pages and cloud services.
 The resulting Web application is well-formed, readable code that incorporates cloud services on
