@@ -4,13 +4,7 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {},
-  "scripts": {
-    "start": "concurrently \"react-scripts start\" \"nodemon server/server.js\"",
-    "start-frontend": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+  "scripts": {},
   "eslintConfig": {
     "extends": "react-app"
   },

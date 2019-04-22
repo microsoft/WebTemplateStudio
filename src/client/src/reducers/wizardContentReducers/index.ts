@@ -4,13 +4,15 @@ import frontendOptions from "./frontendFrameworkReducer";
 import pageOptions from "./pagesOptionsReducer";
 import projectTypes from "./projectTypeReducer";
 import detailsPage from "./detailsPageReducer";
+import previewStatus from "./previewReducer";
 
 const wizardContentReducer = combineReducers({
   backendOptions,
   frontendOptions,
   pageOptions,
   projectTypes,
-  detailsPage
+  detailsPage,
+  previewStatus
 });
 
 export default wizardContentReducer;

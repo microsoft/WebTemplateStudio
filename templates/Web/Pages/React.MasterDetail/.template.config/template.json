@@ -2,7 +2,7 @@
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "Master Detail",
-  "groupIdentity": "wts.Page.React.MasterDetail",
+  "groupIdentity": "wts.Page.MasterDetail",
   "identity": "wts.Page.React.MasterDetail",
   "description": "The master-detail page has a master pane and a details pane for content.",
   "tags": {

@@ -17,10 +17,15 @@ export const getFrontendFrameworksSuccess = (
 });
 
 // thunk
-export const getFrontendFrameworksAction = (projectType: string) => {
+export const getFrontendFrameworksAction = (
+  projectType: string,
+  isPreview: boolean
+) => {
   return async (dispatch: Dispatch<WizardContentActionType>) => {
     return dispatch(
-      getFrontendFrameworksSuccess(await getFrameworks(projectType, "frontend"))
+      getFrontendFrameworksSuccess(
+        await getFrameworks(projectType, "frontend", isPreview)
+      )
     );
   };
 };

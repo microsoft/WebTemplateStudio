@@ -1,7 +1,5 @@
 import * as vscode from "vscode";
 import { Controller } from "./controller";
-import ApiModule from "./signalr-api-module/apiModule";
-
 
 var controller: Controller;
 export function activate(context: vscode.ExtensionContext) {
@@ -17,5 +15,4 @@ export function activate(context: vscode.ExtensionContext) {
 
 export function deactivate() {
   controller.dispose();
-  ApiModule.StopApi();
 }

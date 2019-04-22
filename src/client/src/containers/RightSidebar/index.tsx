@@ -24,7 +24,11 @@ import {
 } from "../../selectors/wizardNavigationSelector";
 
 import styles from "./styles.module.css";
-import { ROUTES } from "../../utils/constants";
+import {
+  ROUTES,
+  EXTENSION_COMMANDS,
+  EXTENSION_MODULES
+} from "../../utils/constants";
 import messages from "./strings";
 
 import { ISelected } from "../../types/selected";
@@ -34,6 +38,9 @@ import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 import { WizardContentType } from "../../reducers/wizardContentReducers";
 import { IOption } from "../../types/option";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -48,6 +55,8 @@ interface IRightSidebarProps {
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
   services: any;
+  vscode: IVSCodeObject;
+  isValidNameAndProjectPath: boolean;
   isRoutesVisited: IVisitedPages;
   contentOptions: WizardContentType;
 }
@@ -87,6 +96,22 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       }
     });
   }
+  public handleFrameworkChange(option: IDropDownOptionType) {
+    const { frontendFramework, pages } = this.props.selection;
+    const { vscode } = this.props;
+    if (frontendFramework.internalName !== option.value) {
+      vscode.postMessage({
+        module: EXTENSION_MODULES.VSCODEUI,
+        command: EXTENSION_COMMANDS.RESET_PAGES,
+        track: false,
+        text: "Sending framework change request...",
+        payload: {
+          internalName: option.value,
+          pagesLength: pages.length
+        }
+      });
+    }
+  }
   /**
    * Changes the title of the page type that was chosen
    * Saves changes into the redux
@@ -116,7 +141,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       showServices
     } = this.props.isRoutesVisited;
     const { pathname } = this.props.location;
-    const { intl, contentOptions } = this.props;
+    const { intl, contentOptions, isValidNameAndProjectPath } = this.props;
     const { formatMessage } = intl;
     const { frontendOptions, backendOptions, projectTypes } = contentOptions;
     return (
@@ -144,7 +169,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 />
                 <RightSidebarDropdown
                   options={this.props.frontendDropdownItems}
-                  handleDropdownChange={this.handleChange.bind(this)}
+                  handleDropdownChange={
+                    (showPages && this.handleFrameworkChange.bind(this)) ||
+                    this.handleChange.bind(this)
+                  }
                   selectDropdownOption={this.props.selectFrontendFramework}
                   isVisible={showFrameworks}
                   title={formatMessage(messages.frontendFramework)}
@@ -152,6 +180,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                     this.props.selection.frontendFramework
                   )}
                   optionsData={frontendOptions}
+                  disabled={!isValidNameAndProjectPath}
                 />
                 <RightSidebarDropdown
                   options={this.props.backendDropdownItems}
@@ -186,22 +215,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   }
 }
 
-const mapStateToProps = (state: AppState): IRightSidebarProps => ({
-  selection: state.selection,
-  projectTypeDropdownItems: convertOptionsToDropdownItems(
-    state.wizardContent.projectTypes
-  ),
-  frontendDropdownItems: convertOptionsToDropdownItems(
-    state.wizardContent.frontendOptions
-  ),
-  backendDropdownItems: convertOptionsToDropdownItems(
-    state.wizardContent.backendOptions
-  ),
-  services: getServicesSelector(state),
-  isRoutesVisited: getIsVisitedRoutesSelector(state),
-  contentOptions: state.wizardContent
-});
-
 function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
   const dropDownItems = [];
   for (const option of options) {
@@ -220,6 +233,24 @@ function convertOptionToDropdownItem(option: any): IDropDownOptionType {
     label: option.title
   };
 }
+
+const mapStateToProps = (state: AppState): IRightSidebarProps => ({
+  selection: state.selection,
+  projectTypeDropdownItems: convertOptionsToDropdownItems(
+    state.wizardContent.projectTypes
+  ),
+  frontendDropdownItems: convertOptionsToDropdownItems(
+    state.wizardContent.frontendOptions
+  ),
+  backendDropdownItems: convertOptionsToDropdownItems(
+    state.wizardContent.backendOptions
+  ),
+  vscode: getVSCodeApiSelector(state),
+  services: getServicesSelector(state),
+  isRoutesVisited: getIsVisitedRoutesSelector(state),
+  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
+  contentOptions: state.wizardContent
+});
 
 const mapDispatchToProps = (
   dispatch: Dispatch<RootAction>

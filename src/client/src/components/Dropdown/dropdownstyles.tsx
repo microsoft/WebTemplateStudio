@@ -6,7 +6,7 @@ export default {
     ...base,
     display: "none"
   }),
-  singleValue: (base: any) => ({
+  singleValue: (base: any, state: any) => ({
     ...base,
     color: "var(--vscode-editor-foreground);"
   }),
@@ -17,6 +17,7 @@ export default {
   control: (base: any, state: any): any => ({
     ...base,
     color: "white",
+    opacity: state.isDisabled ? 0.5 : 1,
     border: state.isFocused
       ? "1px solid var(--vscode-contrastActiveBorder)"
       : "0.5px solid var(--vscode-editor-foreground)",
@@ -53,7 +54,7 @@ export default {
     // prevent menu to scroll y
     wordWrap: "break-word"
   }),
-  menuList: (base: any) => ({
+  menuList: (base: any, state: any) => ({
     ...base,
     // kill the white space on first and last option
     padding: 0,
