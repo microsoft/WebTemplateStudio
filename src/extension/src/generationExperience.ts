@@ -180,7 +180,6 @@ export class GenerationExperience extends WizardServant {
   }
 
   private handleGenLiveMessage(message: string) {
-    vscode.window.showInformationMessage(message);
     GenerationExperience.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.UpdateGenStatusMessage,
       payload: {
