@@ -54,7 +54,6 @@ const SortableSummaryTile = SortableElement(
     isDraggable?: boolean;
     error?: string | FormattedMessage.MessageDescriptor;
   }) => {
-    console.log(page);
     return (
       <React.Fragment>
         <div className={styles.tileContainer}>
