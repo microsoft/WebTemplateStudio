@@ -56,6 +56,7 @@ import { ISelected } from "./types/selected";
 import { AppState } from "./reducers";
 import { IOption } from "./types/option";
 import { setPreviewStatusAction } from "./actions/wizardContentActions/setPreviewStatus";
+import { setPortAction } from "./actions/wizardContentActions/setPort";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -81,6 +82,7 @@ interface IDispatchProps {
   resetPageSelection: () => any;
   selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
+  setPort: (port: number) => void;
 }
 
 interface IStateProps {
@@ -105,7 +107,8 @@ class App extends React.Component<Props> {
     updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {},
     getVersionsData: () => {},
-    setPreviewStatus: () => {}
+    setPreviewStatus: () => {},
+    setPort: () => {}
   };
 
   public componentDidMount() {
@@ -201,6 +204,8 @@ class App extends React.Component<Props> {
           return;
         case EXTENSION_COMMANDS.GET_PREVIEW_STATUS:
           this.props.setPreviewStatus(message.payload.preview);
+        case EXTENSION_COMMANDS.GET_PORT:
+          this.props.setPort(message.payload.port);
       }
     });
   }
@@ -299,6 +304,9 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   },
   setPreviewStatus: (isPreview: boolean) => {
     dispatch(setPreviewStatusAction(isPreview));
+  },
+  setPort: (port: number) => {
+    dispatch(setPortAction(port));
   }
 });
 

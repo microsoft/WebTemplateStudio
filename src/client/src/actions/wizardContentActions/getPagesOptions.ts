@@ -15,10 +15,11 @@ export interface IPageOptionsActionType {
 const getPagesOptionsAction = (
   projectType: string,
   frontendFramework: string,
-  backendFramework: string
+  backendFramework: string,
+  serverPort: number
 ) => {
   return async (dispatch: Dispatch<WizardContentActionType>) => {
-    const api = new EngineAPIService(API.PORT, undefined);
+    const api = new EngineAPIService(serverPort, undefined);
 
     try {
       const pagesJson = await api.getPages(

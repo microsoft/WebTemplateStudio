@@ -15,12 +15,13 @@ import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectWebApp: (selectedApp: ISelected) => void;
-  getProjectTypes: () => any;
+  getProjectTypes: (serverPort: number) => any;
 }
 
 interface IStoreProps {
   selectedWebApp: ISelected;
   type: IOption[];
+  serverPort: number;
 }
 
 interface IIntlProps {
@@ -38,8 +39,9 @@ const messages = defineMessages({
 
 class SelectWebApp extends React.Component<Props> {
   public componentDidMount() {
-    if (this.props.getProjectTypes !== undefined) {
-      this.props.getProjectTypes();
+    const { getProjectTypes, serverPort } = this.props;
+    if (getProjectTypes) {
+      getProjectTypes(serverPort);
     }
   }
 
@@ -72,10 +74,12 @@ class SelectWebApp extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): IStoreProps => {
+  const { serverPort } = state.wizardContent;
   const { appType } = state.selection;
   return {
     selectedWebApp: appType,
-    type: state.wizardContent.projectTypes
+    type: state.wizardContent.projectTypes,
+    serverPort
   };
 };
 
@@ -85,8 +89,8 @@ const mapDispatchToProps = (
   selectWebApp: (selectedApp: ISelected) => {
     dispatch(selectWebAppAction(selectedApp));
   },
-  getProjectTypes: () => {
-    dispatch(getProjectTypesAction());
+  getProjectTypes: (serverPort: number) => {
+    dispatch(getProjectTypesAction(serverPort));
   }
 });
 

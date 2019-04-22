@@ -102,16 +102,16 @@ export class Controller {
     context: vscode.ExtensionContext,
     launchExperience: LaunchExperience
   ): Promise<void> {
-    ApiModule.StartApi(context);
-
     const syncObject = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
       async function(this: IActionContext) {
-        return await launchExperience.launchApiSyncModule().catch(error => {
-          console.log(error);
-          ApiModule.StopApi();
-          throw error;
-        });
+        return await launchExperience
+          .launchApiSyncModule(context)
+          .catch(error => {
+            console.log(error);
+            ApiModule.StopApi();
+            throw error;
+          });
       }
     );
 
@@ -123,6 +123,8 @@ export class Controller {
       GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
       Controller.loadUserSettings();
+      Controller.sendPortToClient();
+
       Controller.getVersionAndSendToClient(
         context,
         syncObject.templatesVersion
@@ -136,6 +138,7 @@ export class Controller {
   private static getExtensionName(ctx: vscode.ExtensionContext) {
     return this.Telemetry.getExtensionName(ctx);
   }
+
   private static getVersionAndSendToClient(
     ctx: vscode.ExtensionContext,
     templatesVersion: string
@@ -145,6 +148,17 @@ export class Controller {
       payload: {
         templatesVersion,
         wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
+      }
+    });
+  }
+
+  private static sendPortToClient() {
+    const port = ApiModule.GetLastUsedPort();
+
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetPort,
+      payload: {
+        port
       }
     });
   }

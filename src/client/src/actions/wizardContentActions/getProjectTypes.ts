@@ -8,9 +8,9 @@ import { Dispatch } from "react";
 import { API } from "../../services/constants";
 
 // thunk
-export const getProjectTypesAction = () => {
+export const getProjectTypesAction = (serverPort: number) => {
   return async (dispatch: Dispatch<WizardContentActionType>) => {
-    const api = new EngineAPIService(API.PORT, undefined);
+    const api = new EngineAPIService(serverPort, undefined);
 
     try {
       const projectTypesJson = await api.getProjectTypes();

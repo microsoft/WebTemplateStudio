@@ -184,7 +184,7 @@ export const CONSTANTS = {
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
   MAX_PROJECT_NAME_LENGTH: 50,
-  PORT: 9052,
+  START_PORT: 9502,
   VSCODE_COMMAND: {
     OPEN_FOLDER: "vscode.openFolder"
   }
@@ -213,6 +213,7 @@ export enum ExtensionCommand {
   OpenProjectVSCode = "open-project-vscode",
   GetVersions = "get-versions",
   CloseWizard = "close-wizard",
+  GetPort = "get-port",
   ResetPages = "reset-pages",
   GetPreviewStatus = "get-preview"
 }
