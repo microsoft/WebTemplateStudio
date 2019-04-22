@@ -152,10 +152,10 @@ export class Controller {
   private static loadUserSettings() {
     let outputPathDefault = vscode.workspace
       .getConfiguration()
-      .get<string>("wts.output.path");
+      .get<string>("wts.defaultOutputPath");
     const preview = vscode.workspace
       .getConfiguration()
-      .get<boolean>("wts.preview.mode");
+      .get<boolean>("wts.enablePreviewMode");
     if (outputPathDefault) {
       Controller.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.GetOutputPath,

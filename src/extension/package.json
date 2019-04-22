@@ -49,18 +49,18 @@
       "type": "object",
       "title": "%webTemplateStudioExtension.commands.wts%",
       "properties": {
-        "wts.output.path": {
+        "wts.defaultOutputPath": {
           "type": "string",
           "default": "",
           "description": "Load a default output path on wizard launch."
         },
-        "wts.enable.telemetry": {
-          "type:": "boolean",
+        "wts.enableTelemetry": {
+          "type": "boolean",
           "default": true,
           "description": "Enable collecting information regarding usage of application"
         },
-        "wts.preview.mode": {
-          "type:": "boolean",
+        "wts.enablePreviewMode": {
+          "type": "boolean",
           "default": false,
           "description": "Enable new and upcoming features; Warning: may be unstable."
         }
