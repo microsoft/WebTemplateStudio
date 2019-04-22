@@ -33,7 +33,6 @@ interface IStateProps {
   projectTypeRows: RowType[];
   frameworkRows: RowType[];
   servicesRows: RowType[];
-  pagesRows: RowType[];
   vscode: any;
   projectName: string;
   outputPath: string;
@@ -72,7 +71,6 @@ const ReviewAndGenerate = (props: Props) => {
   const {
     servicesRows,
     projectTypeRows,
-    pagesRows,
     intl,
     frameworkRows,
     projectName,
@@ -104,7 +102,7 @@ const ReviewAndGenerate = (props: Props) => {
         <div className={styles.selectionTitle}>
           {intl.formatMessage(messages.pages)}
         </div>
-        <SortablePageList pagesRows={pagesRows} />
+        <SortablePageList isSummaryPage={true} />
       </div>
       <SummarySection
         selectionTitle={intl.formatMessage(messages.services)}
@@ -114,7 +112,9 @@ const ReviewAndGenerate = (props: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   openCosmosDbModal: () => {
     dispatch(ModalActions.openCosmosDbModalAction());
   },
@@ -127,7 +127,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   projectTypeRows: WizardSelectors.getProjectTypeRowItemSelector(state),
   frameworkRows: WizardSelectors.getFrameworksRowItemSelector(state),
   servicesRows: WizardSelectors.getServicesSelector(state),
-  pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
   vscode: getVSCodeApiSelector(state),
   projectName: WizardSelectors.getProjectName(state),
   outputPath: WizardSelectors.getOutputPath(state)
