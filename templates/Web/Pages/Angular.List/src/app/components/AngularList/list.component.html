@@ -3,11 +3,11 @@
     <div class="col mt-5 p-0">
       <h3>Angular AngularList Template</h3>
     </div>
-    <ul class="col-12 p-0">
+    <div class="col-12 p-0">
       <app-list-form
         (inputTextEventEmitter)="handleAddListItem($event)"
       ></app-list-form>
-    </ul>
+    </div>
     <app-list-item
       class="col-12 mb-3 border"
       *ngFor="let listItem of listItems"

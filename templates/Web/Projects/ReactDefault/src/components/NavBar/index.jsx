@@ -13,7 +13,8 @@ export default function NavBar() {
         <a className="navbar-brand" href="/">
           wts.ReactDefault
         </a>
-        <div className="navbar-nav" />
+        <div className="navbar-nav">
+        </div>
       </nav>
     </React.Fragment>
   );

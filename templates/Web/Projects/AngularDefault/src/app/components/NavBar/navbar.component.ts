@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit } from "@angular/core";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-header",
@@ -6,7 +7,10 @@
   styleUrls: ["./navbar.component.css"]
 })
 export class HeaderComponent implements OnInit {
-  constructor() {}
+  skipLinkPath: string;
+  constructor(private location: Location) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.skipLinkPath = `${this.location.path()}#mainContent`;
+  }
 }
