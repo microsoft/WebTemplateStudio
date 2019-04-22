@@ -423,10 +423,10 @@ export class CosmosDBDeploy {
       );
     }
 
-    const path = filePath + "/" + ".env";
+    const envPath = path.join(filePath, ".env");
     try {
       if (fs.existsSync(filePath)) {
-        fs.writeFileSync(path, cosmosEnvironmentVariables);
+        fs.writeFileSync(envPath, cosmosEnvironmentVariables);
       }
     } catch (err) {
       throw new Error(err);
