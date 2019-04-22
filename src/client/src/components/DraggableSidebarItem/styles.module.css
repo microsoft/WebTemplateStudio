@@ -104,6 +104,7 @@
 .inputContainer {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .azureFunctionNameInput,
@@ -116,6 +117,10 @@
   background-color: var(--vscode-input-background);
   color: var(--vscode-editor-foreground);
   border: none;
+}
+
+.disabledInput {
+  padding-left: 0px;
 }
 
 .azureFunctionNameInput {

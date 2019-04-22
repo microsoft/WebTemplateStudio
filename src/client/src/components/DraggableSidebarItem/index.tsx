@@ -98,7 +98,7 @@ const DraggableSidebarItem = ({
                 (getSvg(page!.internalName, styles.icon) || (
                   <img className={styles.icon} src={pageSvgUrl} />
                 ))}
-              {handleInputChange && (page || isAzureFunction) && idx && (
+              {handleInputChange && (page || isAzureFunction) && idx ? (
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input, {
@@ -111,8 +111,17 @@ const DraggableSidebarItem = ({
                     }
                   }}
                 />
+              ) : (
+                <input
+                  className={classnames(
+                    styles.disabledInput,
+                    styles.input,
+                    customInputStyle
+                  )}
+                  value={text}
+                  disabled={true}
+                />
               )}
-              <div>{text}</div>
             </div>
           </div>
           {((page && !page.isValidTitle) ||
