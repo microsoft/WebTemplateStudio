@@ -6,7 +6,7 @@ by choosing between different front-end frameworks, back-end frameworks, pages a
 The resulting Web application is well-formed, readable code that incorporates cloud services on
 Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to
 Docs to provide useful insights. WebTS was created using TypeScript and React. Different combinations of generated code
-are merged together by [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio) which was made using .NET Core.
+are merged together by [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio), which was made using .NET Core.
 
 ## Build Status
 
