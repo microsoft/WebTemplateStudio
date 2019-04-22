@@ -198,14 +198,16 @@ const SummaryTile = ({
             </div>
           </div>
         </div>
-        {showEditable && !withoutEditIcon && (
-          <EditSVG
-            tabIndex={0}
-            className={styles.rightIcon}
-            onClick={handleClick}
-            onKeyDown={onEditKeyDown}
-          />
-        )}
+        <div className={styles.editSpacer}>
+          {showEditable && !withoutEditIcon && (
+            <EditSVG
+              tabIndex={0}
+              className={styles.rightIcon}
+              onClick={handleClick}
+              onKeyDown={onEditKeyDown}
+            />
+          )}
+        </div>
       </div>
       <div className={styles.spacer}>
         <CloseSVG

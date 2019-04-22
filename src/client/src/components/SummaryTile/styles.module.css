@@ -41,8 +41,13 @@
 
 .closeIcon,
 .rightIcon {
-  max-height: 18px;
+  height: 18px;
+  width: 18px;
   padding: 3px;
+}
+
+.rightIcon {
+  margin-left: 10px;
 }
 
 .leftIcon path,
@@ -74,13 +79,20 @@
   width: 24px;
 }
 
+.editSpacer {
+  width: 30px;
+  margin-right: 10px;
+}
+
 .tileInput {
   font-size: 18px;
   font-weight: bold;
   background-color: var(--vscode-sideBar-background);
   border: none;
-  max-width: 300px;
+  max-width: 100%;
   color: var(--vscode-editor-foreground);
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .tileInput:focus {
@@ -127,7 +139,7 @@
   box-sizing: border-box;
   position: absolute;
   z-index: 1;
-  max-width: 300px;
+  max-width: 100%;
 }
 
 .errorStack {
