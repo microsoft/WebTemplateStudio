@@ -21,11 +21,14 @@ import {
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import { removeCosmosSelectionAction } from "../../actions/azureActions/saveCosmosDbSettings";
 
 interface IProps {
   selectionTitle: string;
   selectionRows: RowType[];
   isEditable?: boolean;
+  canDelete?: boolean;
 }
 
 interface IStateProps {
@@ -35,6 +38,8 @@ interface IStateProps {
 interface IDispatchProps {
   updateFunctionNames: (functionApp: IFunctionApp) => any;
   removeAzureFunction: (functionIndex: number) => any;
+  removeCosmosResource: (selectionIndex: number) => any;
+  removeAzureFunctionApp: (appIndex: number) => any;
 }
 
 type Props = IDispatchProps & IProps & IStateProps & InjectedIntlProps;
@@ -53,7 +58,10 @@ const SummarySection = ({
   removeAzureFunction,
   updateFunctionNames,
   functionApps,
-  intl
+  intl,
+  canDelete,
+  removeCosmosResource,
+  removeAzureFunctionApp
 }: Props) => {
   const handleAzureFuncNameChange = (newTitle: string, idx: number) => {
     const { functionNames } = functionApps.selection[0];
@@ -87,6 +95,23 @@ const SummarySection = ({
   const handleRemoveFunction = (functionIndex: number) => {
     removeAzureFunction(functionIndex);
   };
+  const handleRemoveCosmosResource = () => {
+    const COSMOS_RESOURCE_INDEX = 0;
+    removeCosmosResource(COSMOS_RESOURCE_INDEX);
+  };
+  const handleRemoveAzureFunctionApp = () => {
+    const AZURE_FUNCTIONS_APP_INDEX = 0;
+    removeAzureFunctionApp(AZURE_FUNCTIONS_APP_INDEX);
+  };
+  const handleRemoveResourceMap = {
+    [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: handleRemoveCosmosResource,
+    [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: handleRemoveAzureFunctionApp
+  };
+  const getRemovalResourceHandler = (internalName?: string) => {
+    if (internalName) {
+      return handleRemoveResourceMap[internalName];
+    }
+  };
   const renderTile = (
     internalName: string | undefined,
     title: string,
@@ -101,7 +126,8 @@ const SummarySection = ({
     handleInputChange?: (newTitle: string, idx: number) => any,
     idx?: number,
     error?: string | FormattedMessage.MessageDescriptor,
-    id?: string
+    id?: string,
+    canDelete?: boolean
   ) => {
     return (
       <div className={styles.tileContainer} key={id ? id : idx}>
@@ -119,6 +145,7 @@ const SummarySection = ({
           handleInputChange={handleInputChange}
           idx={idx}
           error={error}
+          canDelete={canDelete}
         />
       </div>
     );
@@ -137,7 +164,6 @@ const SummarySection = ({
               <div className={styles.selectionTitle}>{selectionTitle}</div>
             )}
           </div>
-
           {renderTile(
             selection.internalName,
             selection.title,
@@ -145,8 +171,15 @@ const SummarySection = ({
             selection.svgUrl,
             selection.author,
             selection.originalTitle,
-            isEditable,
-            selection.serviceTitle
+            isEditable || canDelete,
+            selection.serviceTitle,
+            undefined,
+            getRemovalResourceHandler(selection.internalName),
+            undefined,
+            idx + 1,
+            undefined,
+            undefined,
+            canDelete
           )}
           {selection.functionNames &&
             selection.functionNames.map((functionName, idx: number) =>
@@ -185,6 +218,12 @@ const mapDispatchToProps = (
   },
   removeAzureFunction: functionIndex => {
     dispatch(AzureFunctionActions.removeAzureFunctionAction(functionIndex));
+  },
+  removeCosmosResource: (selectionIndex: number) => {
+    dispatch(removeCosmosSelectionAction(selectionIndex));
+  },
+  removeAzureFunctionApp: (appIndex: number) => {
+    dispatch(AzureFunctionActions.removeAzureFunctionAppAction(appIndex));
   }
 });
 

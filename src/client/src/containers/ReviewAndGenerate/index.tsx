@@ -13,7 +13,10 @@ import styles from "./styles.module.css";
 
 import { RowType } from "../../types/rowType";
 
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import {
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  SERVICE_KEYS
+} from "../../utils/constants";
 import Title from "../../components/Title";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
@@ -107,6 +110,7 @@ const ReviewAndGenerate = (props: Props) => {
       <SummarySection
         selectionTitle={intl.formatMessage(messages.services)}
         selectionRows={servicesRows}
+        canDelete={true}
       />
     </div>
   );

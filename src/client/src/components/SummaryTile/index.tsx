@@ -40,6 +40,7 @@ interface IProps {
   showFolderIcon?: boolean;
   subTitle?: string;
   error?: string | FormattedMessage.MessageDescriptor;
+  canDelete?: boolean;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -62,7 +63,8 @@ const SummaryTile = ({
   showFolderIcon,
   subTitle,
   intl,
-  error
+  error,
+  canDelete
 }: Props) => {
   const [componentTitle, setTitle] = React.useState(title);
   const [isDisabled, setDisabled] = React.useState(true);
@@ -199,7 +201,7 @@ const SummaryTile = ({
           </div>
         </div>
         <div className={styles.editSpacer}>
-          {showEditable && !withoutEditIcon && (
+          {showEditable && !withoutEditIcon && !canDelete && (
             <EditSVG
               tabIndex={0}
               className={styles.rightIcon}
