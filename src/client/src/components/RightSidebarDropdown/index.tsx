@@ -17,6 +17,7 @@ interface IProps {
   title: string;
   isVisible: boolean;
   value: IDropDownOptionType;
+  disabled?: boolean;
   optionsData: IOption[];
 }
 
@@ -34,6 +35,7 @@ const RightSidebarDropdown = (props: IProps) => {
                 props.optionsData
               );
             }}
+            disabled={props.disabled}
             ariaLabel={props.title}
             options={props.options}
             value={props.value}

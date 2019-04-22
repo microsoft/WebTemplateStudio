@@ -274,7 +274,7 @@ const CosmosResourceModal = (props: Props) => {
     rightHeader?: string,
     disabled?: boolean,
     defaultValue?: any,
-    openDropdownUpwards?: true,
+    openDropdownUpwards?: true
   ) => {
     return (
       <div
@@ -417,7 +417,7 @@ const CosmosResourceModal = (props: Props) => {
         undefined,
         cosmosFormData.subscription.value === "",
         DEFAULT_VALUE,
-        true,
+        true
       )}
       <div className={styles.buttonContainer}>
         <button

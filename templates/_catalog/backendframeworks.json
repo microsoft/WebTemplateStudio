@@ -1,7 +1,7 @@
 ﻿[
   {
     "name": "NodeJS",
-    "displayName": "NodeJS",
+    "displayName": "Node.js/Express",
     "summary": "Node.js is an open-source, cross-platform JavaScript run-time environment that executes JavaScript outside of a browser.",
     "author": "Various",
     "order": "1",
@@ -9,7 +9,8 @@
     "platforms": ["Web"],
     "languages": ["Any"],
     "tags": {
-      "version": "10.15.0"
+      "version": "10.15.0",
+      "preview": false
     }
   }
 ]

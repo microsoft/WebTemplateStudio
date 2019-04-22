@@ -49,16 +49,21 @@ const COSMOS_APIS = {
 };
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
+  ANGULAR_JS: "AngularJS",
   AZURE: "wts.Feature.Azure",
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
-  BLANK_PAGE: "wts.Page.React.Blank",
-  CONTENT_GRID: "wts.Page.React.Grid",
+  REACT_BLANK_PAGE: "wts.Page.React.Blank",
+  REACT_CONTENT_GRID: "wts.Page.React.Grid",
+  REACT_MASTER_DETAIL: "wts.Page.React.MasterDetail",
+  REACT_LIST: "wts.Page.React.List",
+  ANGULAR_BLANK_PAGE: "wts.Page.Angular.Blank",
+  ANGULAR_CONTENT_GRID: "wts.Page.Angular.Grid",
+  ANGULAR_MASTER_DETAIL: "wts.Page.Angular.MasterDetail",
+  ANGULAR_LIST: "wts.Page.Angular.List",
   COSMOS_DB: "wts.Feature.Azure.Cosmos",
   COSMOS_DB_MONGO: "wts.Feature.Azure.Cosmos.Mongo",
   COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
   FULL_STACK_APP: "FullStackWebApp",
-  LIST: "wts.Page.React.List",
-  MASTER_DETAIL: "wts.Page.React.MasterDetail",
   NODE_JS: "NodeJS",
   REACT_JS: "ReactJS",
   REST_API: "RestAPI"
@@ -80,7 +85,8 @@ const EXTENSION_MODULES = {
   AZURE: "Azure",
   GENERATE: "GenerateExperience",
   TELEMETRY: "Telemetry",
-  VALIDATOR: "Validator"
+  VALIDATOR: "Validator",
+  VSCODEUI: "VSCodeUI"
 };
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
@@ -99,7 +105,9 @@ const EXTENSION_COMMANDS = {
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
   GET_VERSIONS: "get-versions",
-  CLOSE_WIZARD: "close-wizard"
+  CLOSE_WIZARD: "close-wizard",
+  RESET_PAGES: "reset-pages",
+  GET_PREVIEW_STATUS: "get-preview"
 };
 
 export {

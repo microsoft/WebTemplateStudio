@@ -19,12 +19,13 @@ import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
-  getBackendFrameworks: (projectType: string) => void;
+  getBackendFrameworks: (projectType: string, isPreview: boolean) => void;
 }
 
 interface ISelectBackendProps {
   options: IOption[];
   selectedBackend: ISelected;
+  isPreview: boolean;
 }
 
 type Props = IDispatchProps & ISelectBackendProps & InjectedIntlProps;
@@ -38,9 +39,12 @@ const messages = defineMessages({
 
 class SelectBackEndFramework extends React.Component<Props> {
   public componentDidMount() {
-    const { getBackendFrameworks } = this.props;
+    const { getBackendFrameworks, isPreview } = this.props;
     if (getBackendFrameworks !== undefined) {
-      getBackendFrameworks(WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP);
+      getBackendFrameworks(
+        WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+        isPreview
+      );
     }
   }
   /**
@@ -82,21 +86,24 @@ class SelectBackEndFramework extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): ISelectBackendProps => {
-  const { backendOptions } = state.wizardContent;
+  const { backendOptions, previewStatus } = state.wizardContent;
   const { backendFramework } = state.selection;
 
   return {
+    isPreview: previewStatus,
     options: backendOptions,
     selectedBackend: backendFramework
   };
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   selectBackendFramework: (backendFramework: ISelected) => {
     dispatch(selectBackendFrameworkAction(backendFramework));
   },
-  getBackendFrameworks: (projectType: string) => {
-    dispatch(getBackendFrameworksAction(projectType));
+  getBackendFrameworks: (projectType: string, isPreview: boolean) => {
+    dispatch(getBackendFrameworksAction(projectType, isPreview));
   }
 });
 

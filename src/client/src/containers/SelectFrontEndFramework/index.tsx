@@ -8,21 +8,35 @@ import { selectFrontendFramework as selectFrontendAction } from "../../actions/w
 import { getFrontendFrameworksAction } from "../../actions/wizardContentActions/getFrontendFrameworks";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import {
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  EXTENSION_MODULES,
+  EXTENSION_COMMANDS
+} from "../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 import { ThunkDispatch } from "redux-thunk";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import {
+  getIsVisitedRoutesSelector,
+  IVisitedPages
+} from "../../selectors/wizardNavigationSelector";
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
-  getFrontendFrameworks: (projectType: string) => void;
+  getFrontendFrameworks: (projectType: string, isPreview: boolean) => void;
 }
 
 interface ISelectFrontEndFrameworkProps {
   options: IOption[];
   selectedFrontendFramework: ISelected;
+  vscode: IVSCodeObject;
+  isPreview: boolean;
+  isRoutesVisited: IVisitedPages;
+  selectedPages: ISelected[];
 }
 
 type Props = IDispatchProps & ISelectFrontEndFrameworkProps & InjectedIntlProps;
@@ -36,10 +50,42 @@ const messages = defineMessages({
 
 class SelectFrontEndFramework extends React.Component<Props> {
   public componentDidMount() {
-    if (this.props.getFrontendFrameworks) {
-      this.props.getFrontendFrameworks(
-        WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
+    const { getFrontendFrameworks, isPreview } = this.props;
+    if (getFrontendFrameworks) {
+      getFrontendFrameworks(
+        WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+        isPreview
       );
+    }
+  }
+
+  public handleFrameworkChange(option: ISelected) {
+    const {
+      vscode,
+      selectedFrontendFramework,
+      selectFrontendFramework,
+      selectedPages
+    } = this.props;
+
+    const { showPages } = this.props.isRoutesVisited;
+
+    if (
+      showPages &&
+      selectedFrontendFramework.internalName &&
+      selectedFrontendFramework.internalName !== option.internalName
+    ) {
+      vscode.postMessage({
+        module: EXTENSION_MODULES.VSCODEUI,
+        command: EXTENSION_COMMANDS.RESET_PAGES,
+        track: false,
+        text: "Sending framework change request...",
+        payload: {
+          internalName: option.internalName,
+          pagesLength: selectedPages.length
+        }
+      });
+    } else {
+      selectFrontendFramework(option);
     }
   }
   /**
@@ -57,17 +103,12 @@ class SelectFrontEndFramework extends React.Component<Props> {
   }
 
   public render() {
-    const {
-      options,
-      selectedFrontendFramework,
-      selectFrontendFramework,
-      intl
-    } = this.props;
+    const { options, selectedFrontendFramework, intl } = this.props;
     return (
       <div>
         {this.props.options.length > 0 && (
           <SelectOption
-            selectCard={selectFrontendFramework}
+            selectCard={this.handleFrameworkChange.bind(this)}
             multiSelect={false}
             title={intl.formatMessage(messages.selectFrontendFramework)}
             options={options}
@@ -82,20 +123,28 @@ class SelectFrontEndFramework extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
-  const { frontendOptions } = state.wizardContent;
+  const { frontendOptions, previewStatus } = state.wizardContent;
   const { frontendFramework } = state.selection;
+  const { pages } = state.selection;
+
   return {
+    isPreview: previewStatus,
+    isRoutesVisited: getIsVisitedRoutesSelector(state),
     options: frontendOptions,
-    selectedFrontendFramework: frontendFramework
+    selectedFrontendFramework: frontendFramework,
+    selectedPages: pages,
+    vscode: getVSCodeApiSelector(state)
   };
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   selectFrontendFramework: (framework: ISelected) => {
     dispatch(selectFrontendAction(framework));
   },
-  getFrontendFrameworks: (projectType: string) => {
-    dispatch(getFrontendFrameworksAction(projectType));
+  getFrontendFrameworks: (projectType: string, isPreview: boolean) => {
+    dispatch(getFrontendFrameworksAction(projectType, isPreview));
   }
 });
 

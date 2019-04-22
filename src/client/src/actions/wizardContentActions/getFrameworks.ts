@@ -8,14 +8,17 @@ type FrameworkType = "frontend" | "backend";
 // thunk
 export const getFrameworks = async (
   projectType: string,
-  type: FrameworkType
+  type: FrameworkType,
+  isPreview: boolean
 ): Promise<IOption[]> => {
   const api = new EngineAPIService("5000", undefined);
   try {
     const frameworksJson = await api.getFrameworks(projectType);
 
     if (frameworksJson.detail == null) {
-      return getOptionalFromMetadata(getMetadataFromJson(frameworksJson, type));
+      return getOptionalFromMetadata(
+        getMetadataFromJson(frameworksJson, type, isPreview)
+      );
     } else {
       console.log("FAILED");
       return [];
@@ -26,36 +29,40 @@ export const getFrameworks = async (
   }
 };
 
-function getMetadataFromJson(items: any[], type: FrameworkType): IMetadata[] {
+function getMetadataFromJson(
+  items: any[],
+  type: FrameworkType,
+  isPreview: boolean
+): IMetadata[] {
   return items
     .map<IMetadata>(val => ({
-      name: val.name,
-      displayName: val.displayName,
-      summary: val.summary,
-      longDescription: val.description,
-      position: val.order,
-      licenses: val.licenses,
-      svgUrl: val.icon,
-      tags: val.tags,
       author: val.author,
-      selected: false
+      displayName: val.displayName,
+      licenses: val.licenses,
+      longDescription: val.description,
+      name: val.name,
+      position: val.order,
+      selected: false,
+      summary: val.summary,
+      svgUrl: val.icon,
+      tags: val.tags
     }))
     .filter((val: IMetadata) => {
-      return val.tags.type === type;
+      return val.tags.type === type && (isPreview || !val.tags.preview);
     });
 }
 
 function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
   return items.map<IOption>(val => ({
-    title: val.displayName,
-    internalName: val.name,
+    author: val.author,
     body: val.summary,
+    internalName: val.name,
+    licenses: val.licenses,
     longDescription: val.longDescription,
     position: val.position,
-    svgUrl: getSvgUrl(val.name),
     selected: val.selected,
-    author: val.author,
-    licenses: val.licenses,
+    svgUrl: getSvgUrl(val.name),
+    title: val.displayName,
     version: val.tags!.version
   }));
 }

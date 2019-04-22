@@ -144,6 +144,10 @@ export const CONSTANTS = {
       "info.fileReplacedMessage",
       "Replaced file at: "
     ),
+    STARTING_GENERATION_SERVER: localize(
+      "info.startingServerMessage",
+      "Starting Generation Server"
+    ),
     SYNC_STATUS: localize("info.syncStatus", "Sync Status: ")
   },
   API: {
@@ -209,7 +213,8 @@ export enum ExtensionCommand {
   OpenProjectVSCode = "open-project-vscode",
   GetVersions = "get-versions",
   CloseWizard = "close-wizard",
-  ResetPages = "reset-pages"
+  ResetPages = "reset-pages",
+  GetPreviewStatus = "get-preview"
 }
 export enum ExtensionModule {
   Azure = "Azure",

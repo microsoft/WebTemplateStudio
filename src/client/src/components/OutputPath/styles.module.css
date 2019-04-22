@@ -12,6 +12,10 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+.saveIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .pathInput {
   outline: none;
   text-decoration: none;

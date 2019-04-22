@@ -17,10 +17,15 @@ export const getBackendFrameworksSuccess = (
 });
 
 // thunk
-export const getBackendFrameworksAction = (projectType: string) => {
+export const getBackendFrameworksAction = (
+  projectType: string,
+  isPreview: boolean
+) => {
   return async (dispatch: Dispatch<WizardContentActionType>) => {
     return dispatch(
-      getBackendFrameworksSuccess(await getFrameworks(projectType, "backend"))
+      getBackendFrameworksSuccess(
+        await getFrameworks(projectType, "backend", isPreview)
+      )
     );
   };
 };
