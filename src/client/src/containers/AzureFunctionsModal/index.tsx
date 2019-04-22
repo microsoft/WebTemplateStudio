@@ -381,13 +381,14 @@ const AzureFunctionsResourceModal = (props: Props) => {
         DEFAULT_VALUE
       )}
       <div
-        className={classnames(styles.selectionInputContainer, {
-          [styles.selectionContainer]:
-            isAppNameAvailable ||
-            azureFunctionsFormData.appName.value.length === 0,
-          [styles.selectionContainerDisabled]:
-            azureFunctionsFormData.subscription.value === ""
-        })}
+        className={classnames(
+          styles.selectionInputContainer,
+          styles.selectionContainer,
+          {
+            [styles.selectionContainerDisabled]:
+              azureFunctionsFormData.subscription.value === ""
+          }
+        )}
       >
         <div className={styles.selectionHeaderContainer}>
           <div>{props.intl.formatMessage(messages.appName)}</div>

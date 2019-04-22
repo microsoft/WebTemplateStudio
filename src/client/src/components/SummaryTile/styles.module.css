@@ -43,7 +43,6 @@
 .rightIcon {
   height: 18px;
   width: 18px;
-  padding: 3px;
 }
 
 .rightIcon {
@@ -67,8 +66,6 @@
 
 .rightIcon:hover {
   cursor: pointer;
-  padding: 3px;
-  border-radius: 3px;
 }
 
 .rightIcon:focus {
@@ -81,7 +78,7 @@
 
 .editSpacer {
   width: 30px;
-  margin-right: 10px;
+  padding: 3px;
 }
 
 .tileInput {

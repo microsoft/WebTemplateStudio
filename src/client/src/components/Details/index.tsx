@@ -46,7 +46,7 @@ const Details = ({
   );
   const ParagraphRenderer = (props: any) => (
     <React.Fragment>
-      <p className={styles.test}>{props.children}</p>
+      <p className={styles.longDescription}>{props.children}</p>
       <br />
     </React.Fragment>
   );

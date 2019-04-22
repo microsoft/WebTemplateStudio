@@ -19,6 +19,7 @@
   "outputPath.outputPath",
   "outputPath.ariaOutputPath",
   "selectableCard.details",
+  "selectableCard.selected",
   "summaryTile.changeItemName",
   "about.reportAnIssue",
   "about.templatesVersion",

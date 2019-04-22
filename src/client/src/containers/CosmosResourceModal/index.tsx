@@ -172,7 +172,7 @@ const CosmosResourceModal = (props: Props) => {
       ? buttonStyles.buttonHighlighted
       : buttonStyles.buttonDark;
 
-    return classNames(buttonClass, styles.button, styles.selectionContainer);
+    return classNames(buttonClass, styles.button);
   };
 
   const handleDropdown = (infoLabel: string, value: string) => {

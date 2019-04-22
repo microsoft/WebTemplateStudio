@@ -36,7 +36,7 @@
 }
 
 .iconCheckMark {
-  padding-left: 5px;
+  margin-left: 8px;
   height: 18px;
   width: 18px;
   align-self: center;
@@ -66,7 +66,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-height: 22px;
+  min-height: 30px;
 }
 
 .icon {
@@ -119,4 +119,9 @@
   width: 22px;
   padding: 3px;
   border-radius: 50%;
+}
+
+.selectedText {
+  display: flex;
+  font-size: 14px;
 }

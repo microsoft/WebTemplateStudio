@@ -78,6 +78,7 @@
 .metaData {
   display: flex;
   align-items: center;
+  width: 80% !important;
 }
 
 .details {
@@ -99,4 +100,8 @@
 
 .link:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.longDescription {
+  line-height: 1.75em;
 }

@@ -11,7 +11,7 @@
 }
 
 .selectionContainer {
-  margin-bottom: 2em;
+  margin-top: 2em;
 }
 
 .selectionContainerDisabled {
@@ -38,6 +38,7 @@
   font-size: 1em;
   border: none;
   height: 50%;
+  align-self: flex-end;
 }
 
 .button:focus {
