@@ -40,6 +40,8 @@ const FUNCTION_APP_DOMAIN = ".azurewebsites.net";
 
 const MAX_STORAGE_NAME = 24;
 
+const FUNCTIONS_DEPLOYMENT_SUFFIX = "-functions";
+
 /*
  * Returns an array of available/implemented RuntimeObjects for functions app
  */
@@ -147,7 +149,7 @@ export class FunctionProvider {
       await azureResourceClient.deployments
         .createOrUpdate(
           selections.resourceGroupItem.name,
-          selections.functionAppName,
+          selections.functionAppName + FUNCTIONS_DEPLOYMENT_SUFFIX,
           options
         )
         .then(async result => {
@@ -180,10 +182,15 @@ export class FunctionProvider {
   }
 
   private convertAppNameToStorageName(appName: string): string {
-    return appName
-      .toLowerCase()
-      .replace(/[^0-9a-z]/gi, "")
-      .substring(0, MAX_STORAGE_NAME);
+    return (
+      appName
+        .toLowerCase()
+        .replace(/[^0-9a-z]/gi, "")
+        .substring(0, MAX_STORAGE_NAME - 4) +
+      Math.random()
+        .toString(36)
+        .slice(-4)
+    );
   }
 
   /*

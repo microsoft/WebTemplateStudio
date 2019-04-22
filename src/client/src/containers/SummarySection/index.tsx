@@ -138,7 +138,9 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   functionApps: state.selection.services.azureFunctions
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<RootAction>
+): IDispatchProps => ({
   updateFunctionNames: (functionApp: IFunctionApp) => {
     dispatch(AzureFunctionActions.updateAzureFunctionNamesAction(functionApp));
   },

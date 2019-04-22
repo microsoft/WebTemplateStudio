@@ -79,7 +79,9 @@ const mapStateToProps = (state: AppState): IStoreProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   selectWebApp: (selectedApp: ISelected) => {
     dispatch(selectWebAppAction(selectedApp));
   },

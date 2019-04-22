@@ -294,7 +294,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
     ariaLabel: string,
     rightHeader?: string,
     disabled?: boolean,
-    defaultValue?: any
+    defaultValue?: any,
+    openDropdownUpwards?: boolean,
   ) => {
     return (
       <div
@@ -326,6 +327,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
               : defaultValue
           }
           disabled={disabled}
+          openDropdownUpwards={openDropdownUpwards}
         />
       </div>
     );
@@ -435,7 +437,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
         props.intl.formatMessage(messages.ariaLocationLabel),
         undefined,
         azureFunctionsFormData.subscription.value === "",
-        DEFAULT_VALUE
+        DEFAULT_VALUE,
+        true
       )}
       {getDropdownSection(
         FORM_CONSTANTS.RUNTIME_STACK.label,
@@ -454,7 +457,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
           props.intl.formatMessage(messages.ariaNumFunctionsLabel),
           undefined,
           false,
-          1
+          1,
+          true
         )}
         <button
           className={getButtonClassNames()}

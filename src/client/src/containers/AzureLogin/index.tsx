@@ -77,7 +77,9 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<RootAction>
+): IDispatchProps => ({
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
     dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));

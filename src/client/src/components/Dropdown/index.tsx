@@ -13,6 +13,7 @@ interface IDropdownProps {
   handleChange?: (e: any) => void;
   value?: IDropDownOptionType | undefined;
   ariaLabel: string;
+  openDropdownUpwards?: boolean;
 }
 
 const DropdownIndicator = (props: any) => {
@@ -31,7 +32,8 @@ const Dropdown = ({
   handleChange,
   value,
   disabled,
-  ariaLabel
+  ariaLabel,
+  openDropdownUpwards
 }: IDropdownProps) => {
   return (
     <Select
@@ -43,7 +45,7 @@ const Dropdown = ({
       isSearchable={true}
       defaultValue={defaultValue}
       options={options}
-      menuPlacement="auto"
+      menuPlacement={openDropdownUpwards ? "top" : "auto"}
       isDisabled={disabled}
     />
   );

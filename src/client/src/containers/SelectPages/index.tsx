@@ -131,7 +131,9 @@ const mapStateToProps = (state: AppState): ISelectPagesProps => {
   };
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   getPages: (
     projectType: string,
     frontendFramework: string,

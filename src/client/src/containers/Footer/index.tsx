@@ -29,7 +29,13 @@ import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setV
 import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
-import { FormattedMessage, injectIntl } from "react-intl";
+import {
+  FormattedMessage,
+  defineMessages,
+  InjectedIntlProps,
+  injectIntl
+} from "react-intl";
+
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
@@ -55,7 +61,10 @@ interface IStateProps {
   isValidNameAndProjectPath: boolean;
 }
 
-type Props = RouteComponentProps & IStateProps & IDispatchProps;
+type Props = RouteComponentProps &
+  IStateProps &
+  IDispatchProps &
+  InjectedIntlProps;
 
 const pathsNext: any = {
   [ROUTES.WELCOME]: ROUTES.SELECT_PROJECT_TYPE,
@@ -70,6 +79,13 @@ const pathsBack: any = {
   [ROUTES.AZURE_LOGIN]: ROUTES.SELECT_PAGES,
   [ROUTES.REVIEW_AND_GENERATE]: ROUTES.AZURE_LOGIN
 };
+
+const messages = defineMessages({
+  navAriaLabel: {
+    id: "footer.navAriaLabel",
+    defaultMessage: "Navigate between pages and generate templates"
+  }
+});
 
 class Footer extends React.Component<Props> {
   public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -139,11 +155,11 @@ class Footer extends React.Component<Props> {
         break;
       }
     }
-    const { isValidNameAndProjectPath, location, isVisited } = this.props;
+    const { isValidNameAndProjectPath, location, isVisited, intl } = this.props;
     const { pathname } = location;
     const { showFrameworks } = isVisited;
     return (
-      <div>
+      <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
         {pathname !== ROUTES.PAGE_DETAILS && (
           <div className={styles.footer}>
             <div>
@@ -215,7 +231,7 @@ class Footer extends React.Component<Props> {
             </div>
           </div>
         )}
-      </div>
+      </nav>
     );
   }
 }
@@ -231,7 +247,9 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
   },
@@ -244,5 +262,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Footer)
+  )(injectIntl(Footer))
 );
