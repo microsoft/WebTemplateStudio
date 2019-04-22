@@ -62,7 +62,7 @@
         "wts.enablePreviewMode": {
           "type": "boolean",
           "default": false,
-          "description": "Enable new and upcoming features; Warning: may be unstable."
+          "description": "Enable upcoming features; Warning: may cause stability issues."
         }
       }
     }
