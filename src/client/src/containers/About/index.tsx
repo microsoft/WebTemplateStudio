@@ -5,7 +5,12 @@ import { ILicenseObject } from "../../types/license";
 import styles from "./styles.module.css";
 import { getVersionsSelector } from "../../selectors/vscodeApiSelector";
 import { IVersions } from "../../types/version";
-import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
+import {
+  defineMessages,
+  InjectedIntlProps,
+  injectIntl,
+  FormattedMessage
+} from "react-intl";
 import { AppState } from "../../reducers";
 
 interface IStateProps {
@@ -34,10 +39,26 @@ const About = ({ versions, intl }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>{intl.formatMessage(messages.about)}</div>
-      <div className={styles.name}>Web Template Studio</div>
-      <a className={styles.link} href="https://aka.ms/webts">
-        https://aka.ms/webts
-      </a>
+      <p>
+        <a
+          className={styles.link}
+          href="https://github.com/Microsoft/WebTemplateStudio"
+        >
+          Web Template Studio
+        </a>
+      </p>
+      <br />
+      <p>
+        <a
+          className={styles.link}
+          href="https://github.com/Microsoft/WebTemplateStudio/issues"
+        >
+          <FormattedMessage
+            id="about.reportAnIssue"
+            defaultMessage="Report an issue"
+          />
+        </a>
+      </p>
       <div>
         {intl.formatMessage(messages.templatesVersion) + ` ${templatesVersion}`}
       </div>

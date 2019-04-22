@@ -162,7 +162,9 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   projectNameValidation: getProjectNameValidation(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<RootAction>
+): IDispatchProps => ({
   updateProjectName: (projectName: string) => {
     dispatch(updateProjectNameAction(projectName));
   },

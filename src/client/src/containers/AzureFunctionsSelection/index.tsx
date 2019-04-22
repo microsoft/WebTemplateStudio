@@ -86,6 +86,7 @@ const AzureFunctionsSelection = ({
                   className={styles.edit}
                   onClick={openAzureFunctionsModal}
                   onKeyDown={onEditKeyDownHandler}
+                  role="button"
                 >
                   <FormattedMessage
                     id="azureFunctionsSelection.edit"
@@ -94,6 +95,7 @@ const AzureFunctionsSelection = ({
                 </div>
               </div>
               <DraggableSidebarItem
+                customInputStyle={styles.input}
                 key={functionApp.appName + idx}
                 text={functionApp.appName}
                 closeSvgUrl={getSvg.getCancelSvg()}

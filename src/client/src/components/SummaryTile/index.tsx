@@ -131,6 +131,7 @@ const SummaryTile = ({
     >
       {isDraggable && <ReorderSVG className={styles.reorder} />}
       <div
+        role="button"
         tabIndex={isEditable ? 0 : -1}
         className={classnames({
           [styles.indent]: withIndent,

@@ -57,6 +57,7 @@ const SelectableCard = ({
 
   return (
     <div
+      role="button"
       tabIndex={0}
       onClick={() => {
         onCardClick(cardNumber);

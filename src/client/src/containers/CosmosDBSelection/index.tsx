@@ -49,6 +49,7 @@ const CosmosDBSelection = ({
           <div className={styles.headerContainer}>
             <div>{intl.formatMessage(serviceType)}</div>
             <div
+              role="button"
               tabIndex={0}
               className={styles.edit}
               onClick={openCosmosDbModal}
@@ -64,6 +65,7 @@ const CosmosDBSelection = ({
             const { accountName } = resource;
             return (
               <DraggableSidebarItem
+                customInputStyle={styles.input}
                 key={accountName}
                 text={accountName}
                 closeSvgUrl={getSvg.getCancelSvg()}
