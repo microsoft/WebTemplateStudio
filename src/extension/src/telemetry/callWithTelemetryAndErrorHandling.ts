@@ -134,7 +134,7 @@ function handleTelemetry(
         /**
          * WTS App Specific Telemetry Collection Enabled
          */
-        let enabledTelemetry = workspace.getConfiguration().get<boolean>("wts.enable.telemetry");
+        let enabledTelemetry = workspace.getConfiguration().get<boolean>("wts.enableTelemetry");
     // For suppressTelemetry=true, ignore successful results
     if (enabledTelemetry && !(context.suppressTelemetry)) {
         const end: number = Date.now();
