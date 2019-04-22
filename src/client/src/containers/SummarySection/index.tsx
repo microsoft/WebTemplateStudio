@@ -137,7 +137,6 @@ const SummarySection = ({
               <div className={styles.selectionTitle}>{selectionTitle}</div>
             )}
           </div>
-
           {renderTile(
             selection.internalName,
             selection.title,

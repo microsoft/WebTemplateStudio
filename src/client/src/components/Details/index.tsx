@@ -116,18 +116,20 @@ const Details = ({
               {renderFormattedData(detailInfo.longDescription, true)}
             </div>
             <div>
-              <div className={classnames(styles.metaData, grid.row)}>
-                <div className={classnames(styles.category, grid.col3)}>
-                  <FormattedMessage
-                    id="details.author"
-                    defaultMessage="Author:"
-                  />
+              {detailInfo.author && (
+                <div className={classnames(styles.metaData, grid.row)}>
+                  <div className={classnames(styles.category, grid.col3)}>
+                    <FormattedMessage
+                      id="details.author"
+                      defaultMessage="Author:"
+                    />
+                  </div>
+                  <div className={grid.col8}>
+                    {<ReactMarkdown source={detailInfo.author} /> ||
+                      intl!.formatMessage(messages.none)}
+                  </div>
                 </div>
-                <div className={grid.col8}>
-                  {<ReactMarkdown source={detailInfo.author} /> ||
-                    intl!.formatMessage(messages.none)}
-                </div>
-              </div>
+              )}
             </div>
             <div>
               {detailInfo.licenses && (
