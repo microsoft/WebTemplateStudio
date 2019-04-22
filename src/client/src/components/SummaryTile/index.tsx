@@ -122,6 +122,11 @@ const SummaryTile = ({
       setEditable(false);
     }
   };
+  const handleKeyDown = (event: any) => {
+    if (event.keyCode === 13) {
+      handleFocusOut();
+    }
+  };
   return (
     <div
       className={styles.container}
@@ -152,7 +157,7 @@ const SummaryTile = ({
             )
           )}
           <div className={styles.tileContent}>
-            <div className={styles.errorStack}>
+            <div className={styles.errorStack} onDoubleClick={handleClick}>
               <input
                 aria-label={intl.formatMessage(messages.changeItemName)}
                 ref={inputRef}
@@ -161,7 +166,7 @@ const SummaryTile = ({
                 onChange={handleChange}
                 disabled={isDisabled}
                 onBlur={handleFocusOut}
-                onClick={handleClick}
+                onKeyDown={handleKeyDown}
               />
               {error && <div className={styles.errorMessage}>{error}</div>}
             </div>
