@@ -13,6 +13,7 @@
   height: calc(100vh - 122px);
   margin-top: 51px;
   margin-bottom: 71px;
+  justify-content: flex-start;
 }
 
 .centerViewMaxHeight {

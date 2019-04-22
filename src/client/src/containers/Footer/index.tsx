@@ -22,7 +22,8 @@ import {
 } from "../../selectors/cosmosServiceSelector";
 import {
   getAzureFunctionsOptionsSelector,
-  isAzureFunctionsSelectedSelector
+  isAzureFunctionsSelectedSelector,
+  getAzureFunctionsNamesSelector
 } from "../../selectors/azureFunctionsServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
@@ -44,6 +45,7 @@ import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelecti
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import { IFunctionName } from "../AzureFunctionsSelection";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -59,6 +61,7 @@ interface IStateProps {
   functions: any;
   isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
+  functionNames?: IFunctionName[];
 }
 
 type Props = RouteComponentProps &
@@ -142,6 +145,7 @@ class Footer extends React.Component<Props> {
   public render() {
     // Validate the page names and do not generate if they are invalid or if there are duplicates
     const pageNames = new Set();
+    const functionNames = new Set();
     let areValidNames = true;
     for (const page of this.props.engine.pages) {
       const pageName = page.name;
@@ -155,6 +159,20 @@ class Footer extends React.Component<Props> {
         break;
       }
     }
+    if (areValidNames && this.props.functionNames) {
+      for (const functionName of this.props.functionNames) {
+        areValidNames = functionName.isValidTitle;
+        if (functionNames.has(functionName)) {
+          areValidNames = false;
+        } else {
+          functionNames.add(functionName);
+        }
+        if (!areValidNames) {
+          break;
+        }
+      }
+    }
+
     const { isValidNameAndProjectPath, location, isVisited, intl } = this.props;
     const { pathname } = location;
     const { showFrameworks } = isVisited;
@@ -242,6 +260,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selectedCosmos: isCosmosResourceCreatedSelector(state),
   cosmos: getCosmosDbSelectionSelector(state),
   selectedFunctions: isAzureFunctionsSelectedSelector(state),
+  functionNames: getAzureFunctionsNamesSelector(state),
   functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)

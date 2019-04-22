@@ -45,7 +45,7 @@ type Props = ISortablePageListProps &
 const messages = defineMessages({
   duplicateName: {
     id: "sortablePageList.duplicateName",
-    defaultMessage: "page name has to be unique"
+    defaultMessage: "Page name has to be unique"
   },
   hide: {
     id: "sortablePageList.hide",
@@ -144,7 +144,9 @@ const mapStateToProps = (state: AppState): ISortablePageListProps => ({
   selectedPages: state.selection.pages
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>): ISortableDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<RootAction>
+): ISortableDispatchProps => ({
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
   }

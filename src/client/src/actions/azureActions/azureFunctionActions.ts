@@ -1,8 +1,9 @@
 import { AZURE_TYPEKEYS } from "./typeKeys";
+import { IFunctionName } from "../../containers/AzureFunctionsSelection";
 
 export interface IFunctionApp {
   appIndex: number;
-  functionNames: string[];
+  functionNames: IFunctionName[];
 }
 
 export interface IUpdateFunctionNamesAction {
@@ -27,7 +28,7 @@ export interface IRemoveAzureFunctionApp {
 
 const updateAzureFunctionNamesAction = (functionApp: {
   appIndex: number;
-  functionNames: string[];
+  functionNames: IFunctionName[];
 }): IUpdateFunctionNamesAction => ({
   type: AZURE_TYPEKEYS.UPDATE_AZURE_FUNCTION_NAMES,
   payload: functionApp

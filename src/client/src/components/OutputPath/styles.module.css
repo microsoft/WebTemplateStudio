@@ -41,6 +41,7 @@
   padding: 0px 10px;
   opacity: 50%;
   min-height: 38px;
+  overflow: auto;
 }
 
 .errorStack {

@@ -44,7 +44,28 @@
         "title": "%webTemplateStudioExtension.commands.wizardLaunch%",
         "category": "%webTemplateStudioExtension.commands.wts%"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "%webTemplateStudioExtension.commands.wts%",
+      "properties": {
+        "wts.output.path": {
+          "type": "string",
+          "default": "",
+          "description": "Load a default output path on wizard launch."
+        },
+        "wts.enable.telemetry": {
+          "type:": "boolean",
+          "default": true,
+          "description": "Enable collecting information regarding usage of application"
+        },
+        "wts.preview.mode": {
+          "type:": "boolean",
+          "default": false,
+          "description": "Enable new and upcoming features; Warning: may be unstable."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
