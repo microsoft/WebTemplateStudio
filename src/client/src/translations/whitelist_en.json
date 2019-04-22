@@ -42,6 +42,7 @@
   "azureFunctionsModal.addResource",
   "azureFunctionsModal.createFunctionApp",
   "azureFunctionsSelection.edit",
+  "functionName.duplicateName",
   "azureSubscriptions.editResource",
   "azureSubscriptions.addResource",
   "azureSubscriptions.azureFunctionsLongDesc",
@@ -67,7 +68,6 @@
   "cosmosResourceModule.saveChanges",
   "cosmosResourceModule.createCosmosRes",
   "cosmosResourceModule.internalName",
-  "footer.license",
   "footer.back",
   "footer.next",
   "footer.generate",
@@ -126,5 +126,7 @@
   "pageNameError.duplicateName",
   "pageNameError.emptyName",
   "pageNameError.invalidRegex",
-  "projectNameError.invalidRegex"
+  "projectNameError.invalidRegex",
+  "FunctionNameError.invalidFunctionStartLetter",
+  "FunctionNameError.invalidRegex"
 ]

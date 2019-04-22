@@ -68,6 +68,23 @@ class SelectPages extends React.Component<Props> {
       );
     }
   }
+
+  public componentDidUpdate(newProps: ISelectPagesProps) {
+    if (newProps.options.length == 0) {
+      const {
+        getPages,
+        selectedBackend,
+        selectedFrontend,
+        selectedProjectType
+      } = this.props;
+      getPages(
+        selectedProjectType.internalName,
+        selectedFrontend.internalName,
+        selectedBackend.internalName
+      );
+    }
+  }
+
   /**
    * Maps the selected page of the user and saves its state
    * so it can show up as a selected card

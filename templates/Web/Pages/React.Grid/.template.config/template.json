@@ -2,7 +2,7 @@
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "Grid",
-  "groupIdentity": "wts.Page.React.Grid",
+  "groupIdentity": "wts.Page.Grid",
   "identity": "wts.Page.React.Grid",
   "description": "A page displaying simple image and text components which are organized into a grid.",
   "tags": {

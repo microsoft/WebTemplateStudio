@@ -10,7 +10,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == NodeJS & identity == wts.Page.React.Grid"
+    "wts.compositionFilter": "$backendframework == NodeJS & groupIdentity == wts.Page.Grid"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,

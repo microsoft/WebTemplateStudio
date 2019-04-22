@@ -85,7 +85,6 @@ const mockVsCodeApi = () => ({
           );
           break;
         case EXTENSION_COMMANDS.GENERATE:
-          console.log(message);
           // @ts-ignore mocks a generation status message
           window.postMessage(
             {
@@ -125,6 +124,15 @@ const mockVsCodeApi = () => ({
               command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
               payload: {
                 outputPath: "/generic_output_path"
+              }
+            },
+            "*"
+          );
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_PREVIEW_STATUS,
+              payload: {
+                preview: true
               }
             },
             "*"
@@ -174,6 +182,17 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
+        case EXTENSION_COMMANDS.RESET_PAGES:
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.RESET_PAGES,
+              payload: {
+                internalName: message.payload.internalName,
+                resetPages: true
+              }
+            },
+            "*"
+          );
       }
     }
   }
