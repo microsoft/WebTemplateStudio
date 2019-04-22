@@ -273,7 +273,8 @@ const CosmosResourceModal = (props: Props) => {
     ariaLabel: string,
     rightHeader?: string,
     disabled?: boolean,
-    defaultValue?: any
+    defaultValue?: any,
+    openDropdownUpwards?: true
   ) => {
     return (
       <div
@@ -305,6 +306,7 @@ const CosmosResourceModal = (props: Props) => {
               : defaultValue
           }
           disabled={disabled}
+          openDropdownUpwards={openDropdownUpwards}
         />
       </div>
     );
@@ -414,7 +416,8 @@ const CosmosResourceModal = (props: Props) => {
         props.intl.formatMessage(messages.ariaLocationLabel),
         undefined,
         cosmosFormData.subscription.value === "",
-        DEFAULT_VALUE
+        DEFAULT_VALUE,
+        true
       )}
       <div className={styles.buttonContainer}>
         <button

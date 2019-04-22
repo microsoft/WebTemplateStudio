@@ -42,6 +42,7 @@ const Header = (props: Props) => {
         <div className={styles.azureProfile}>
           <div className={styles.profileName}>{email}</div>
           <div
+            role="button"
             className={styles.button}
             tabIndex={0}
             onClick={signOutClick}

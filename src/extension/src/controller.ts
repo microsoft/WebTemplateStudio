@@ -7,18 +7,20 @@ import {
   ExtensionCommand
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
-import ApiModule from "./signalr-api-module/apiModule";
+import { ApiModule } from "./signalr-api-module/apiModule";
+import { VSCodeUI } from "./utils/vscodeUI";
 import { AzureServices } from "./azure/azureServices";
-import { TelemetryAI } from "./telemetry/telemetryAI";
+import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 import { Logger } from "./utils/logger";
 import { WizardServant } from "./wizardServant";
 import { GenerationExperience } from "./generationExperience";
-import { ISyncReturnType } from "./types/syncReturnType";
-import { ChildProcess } from "child_process";
+import { IVSCodeProgressType } from "./types/vscodeProgressType";
+import { LaunchExperience } from "./launchExperience";
 
 export class Controller {
   public static reactPanelContext: ReactPanel;
   public static Telemetry: TelemetryAI;
+  private vscodeUI: VSCodeUI;
   public static Logger: Logger;
   private AzureService: AzureServices;
   private GenExperience: GenerationExperience;
@@ -31,6 +33,7 @@ export class Controller {
   private defineExtensionModule() {
     Controller.extensionModuleMap = new Map([
       [ExtensionModule.Telemetry, Controller.Telemetry],
+      [ExtensionModule.VSCodeUI, this.vscodeUI],
       [ExtensionModule.Azure, this.AzureService],
       [ExtensionModule.Validator, this.Validator],
       [ExtensionModule.Generate, this.GenExperience],
@@ -72,12 +75,22 @@ export class Controller {
       this.context,
       this.extensionStartTime
     );
+    this.vscodeUI = new VSCodeUI();
     Logger.initializeOutputChannel(Controller.getExtensionName(context));
     this.Validator = new Validator();
     this.AzureService = new AzureServices();
     this.GenExperience = new GenerationExperience(Controller.Telemetry);
     this.defineExtensionModule();
-    this.launchWizard(this.context);
+    vscode.window.withProgress(
+      {
+        location: vscode.ProgressLocation.Notification,
+        title: "Launching WebTS"
+      },
+      async (progress: vscode.Progress<IVSCodeProgressType>) => {
+        const launchExperience = new LaunchExperience(progress);
+        await this.launchWizard(this.context, launchExperience);
+      }
+    );
   }
 
   /**
@@ -86,72 +99,38 @@ export class Controller {
    *  @param VSCode context interface
    */
   public async launchWizard(
-    context: vscode.ExtensionContext
-  ): Promise<ChildProcess> {
-    let process = ApiModule.StartApi(context);
-    let syncObject: ISyncReturnType = {
-      successfullySynced: false,
-      templatesVersion: ""
-    };
-    let syncAttempts = 0;
-    while (
-      !syncObject.successfullySynced &&
-      syncAttempts < CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS
-    ) {
-      syncObject = await Controller.attemptSync();
-      syncAttempts++;
-      if (!syncObject.successfullySynced) {
-        await Controller.timeout(CONSTANTS.API.SYNC_RETRY_WAIT_TIME);
+    context: vscode.ExtensionContext,
+    launchExperience: LaunchExperience
+  ): Promise<void> {
+    ApiModule.StartApi(context);
+
+    const syncObject = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+      TelemetryEventName.SyncEngine,
+      async function(this: IActionContext) {
+        return await launchExperience.launchApiSyncModule().catch(error => {
+          console.log(error);
+          ApiModule.StopApi();
+          throw error;
+        });
       }
-    }
-    if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
-      vscode.window.showErrorMessage(
-        CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS
+    );
+
+    if (syncObject) {
+      Controller.reactPanelContext = ReactPanel.createOrShow(
+        context.extensionPath,
+        this.routingMessageReceieverDelegate
       );
-      ApiModule.StopApi();
-      return process;
+      GenerationExperience.setReactPanel(Controller.reactPanelContext);
+
+      Controller.loadUserSettings();
+      Controller.getVersionAndSendToClient(
+        context,
+        syncObject.templatesVersion
+      );
+      Controller.Telemetry.trackExtensionStartUpTime(
+        TelemetryEventName.ExtensionLaunch
+      );
     }
-
-    Controller.reactPanelContext = ReactPanel.createOrShow(
-      context.extensionPath,
-      this.routingMessageReceieverDelegate
-    );
-    GenerationExperience.setReactPanel(Controller.reactPanelContext);
-
-    Controller.getVersionAndSendToClient(context, syncObject.templatesVersion);
-    Controller.Telemetry.trackExtensionStartUpTime(
-      TelemetryEventName.ExtensionLaunch
-    );
-    return process;
-  }
-
-  private static timeout(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  private static async attemptSync(): Promise<ISyncReturnType> {
-    return await ApiModule.ExecuteApiCommand({
-      port: CONSTANTS.PORT,
-      payload: { path: CONSTANTS.API.PATH_TO_TEMPLATES },
-      liveMessageHandler: this.handleSyncLiveData
-    })
-      .then((syncResult: any) => {
-        return {
-          successfullySynced: true,
-          templatesVersion: syncResult.templatesVersion
-        };
-      })
-      .catch(() => {
-        return { successfullySynced: false, templatesVersion: "" };
-      });
-  }
-
-  private static handleSyncLiveData(status: string, progress?: number) {
-    let output = `Template Status: ${status}`;
-    if (progress) {
-      output += ` ${progress}%`;
-    }
-    vscode.window.setStatusBarMessage(output);
   }
 
   private static getExtensionName(ctx: vscode.ExtensionContext) {
@@ -170,6 +149,31 @@ export class Controller {
     });
   }
 
+  private static loadUserSettings() {
+    let outputPathDefault = vscode.workspace
+      .getConfiguration()
+      .get<string>("wts.defaultOutputPath");
+    const preview = vscode.workspace
+      .getConfiguration()
+      .get<boolean>("wts.enablePreviewMode");
+    if (outputPathDefault) {
+      Controller.reactPanelContext.postMessageWebview({
+        command: ExtensionCommand.GetOutputPath,
+        payload: {
+          outputPath: outputPathDefault
+        }
+      });
+    }
+    if (preview !== undefined) {
+      Controller.reactPanelContext.postMessageWebview({
+        command: ExtensionCommand.GetPreviewStatus,
+        payload: {
+          preview: preview
+        }
+      });
+    }
+  }
+
   private static handleValidMessage(
     commandName: ExtensionCommand,
     responsePayload?: any
@@ -179,6 +183,6 @@ export class Controller {
   }
 
   dispose() {
-    throw new Error("Method not implemented.");
+    ApiModule.StopApi();
   }
 }

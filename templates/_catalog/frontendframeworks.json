@@ -1,7 +1,7 @@
 ﻿[
   {
     "name": "ReactJS",
-    "displayName": "ReactJS",
+    "displayName": "React",
     "summary": "React is a JavaScript library created by Facebook to help developers build UI components.",
     "author": "Facebook",
     "order": "1",
@@ -9,7 +9,22 @@
     "platforms": ["Web"],
     "languages": ["Any"],
     "tags": {
-      "version": "16.8.4"
+      "version": "16.8.4",
+      "preview": false
+    }
+  },
+  {
+    "name": "AngularJS",
+    "displayName": "AngularJS",
+    "summary": "AngularJS is an open source, front-end web application framework mainly mainted by Google to develop single page applications.",
+    "author": "Google",
+    "order": "1",
+    "licenses": "[AngularJS](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)",
+    "platforms": ["Web"],
+    "languages": ["Any"],
+    "tags": {
+      "version": "7.2.0",
+      "preview": true
     }
   }
 ]

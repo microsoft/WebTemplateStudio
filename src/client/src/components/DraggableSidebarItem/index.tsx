@@ -10,6 +10,7 @@ import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 
 import { injectIntl, InjectedIntl, defineMessages } from "react-intl";
+import { IFunctionName } from "../../containers/AzureFunctionsSelection";
 
 const messages = defineMessages({
   changeItemName: {
@@ -34,7 +35,9 @@ const DraggableSidebarItem = ({
   withIndent,
   withLargeIndent,
   handleCloseClick,
-  intl
+  intl,
+  customInputStyle,
+  isAzureFunction
 }: {
   page?: ISelected;
   text?: string;
@@ -44,11 +47,13 @@ const DraggableSidebarItem = ({
   itemTitle?: string;
   handleInputChange?: (e: any, idx: number) => void;
   idx?: number;
-  azureFunctionName?: string;
+  azureFunctionName?: IFunctionName;
   withIndent?: boolean;
   withLargeIndent?: boolean;
   handleCloseClick?: (idx: number) => void;
   intl: InjectedIntl;
+  customInputStyle?: string;
+  isAzureFunction?: boolean;
 }) => {
   const handleKeyDown = (event: any) => {
     if (event.keyCode === 13 || event.keyCode === 32) {
@@ -82,7 +87,7 @@ const DraggableSidebarItem = ({
         </div>
         <div className={styles.errorStack}>
           <div
-            className={classnames({
+            className={classnames(customInputStyle, {
               [styles.pagesTextContainer]: withIndent || reorderSvgUrl,
               [styles.textContainer]: !withIndent,
               [styles.largeIndentContainer]: withLargeIndent
@@ -93,13 +98,13 @@ const DraggableSidebarItem = ({
                 (getSvg(page!.internalName, styles.icon) || (
                   <img className={styles.icon} src={pageSvgUrl} />
                 ))}
-              {handleInputChange && (page || azureFunctionName) && idx && (
+              {handleInputChange && (page || isAzureFunction) && idx && (
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input, {
-                    [styles.azureFunctionNameInput]: azureFunctionName
+                    [styles.azureFunctionNameInput]: isAzureFunction
                   })}
-                  value={page ? page.title : azureFunctionName}
+                  value={page ? page.title : azureFunctionName!.title}
                   onChange={e => {
                     if (handleInputChange && idx) {
                       handleInputChange(e.target.value, idx - 1);
@@ -110,15 +115,18 @@ const DraggableSidebarItem = ({
               <div>{text}</div>
             </div>
           </div>
-          {page && !page.isValidTitle && (
+          {((page && !page.isValidTitle) ||
+            (azureFunctionName && !azureFunctionName.isValidTitle)) && (
             <div
               className={classnames({
-                [styles.errorTextContainer]: withIndent || reorderSvgUrl,
+                [styles.errorTextContainer]:
+                  withIndent || reorderSvgUrl || true,
                 [styles.textContainer]: !withIndent,
                 [styles.largeIndentContainer]: withLargeIndent
               })}
             >
-              {page.error}
+              {(page && page.error) ||
+                (azureFunctionName && azureFunctionName.error)}
             </div>
           )}
         </div>

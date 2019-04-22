@@ -2,7 +2,7 @@
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "Blank",
-  "groupIdentity": "wts.Page.React.Blank",
+  "groupIdentity": "wts.Page.Blank",
   "identity": "wts.Page.React.Blank",
   "description": "A blank page for you to build your web application from scratch.",
   "tags": {
@@ -14,7 +14,7 @@
     "wts.frontendframework": "ReactJS",
     "wts.backendframework": "all",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1",
+    "wts.displayOrder": "0",
     "wts.genGroup": "0",
     "wts.rightClickEnabled": "true",
     "wts.licenses": "[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)"

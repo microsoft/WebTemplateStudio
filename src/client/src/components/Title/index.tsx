@@ -3,7 +3,7 @@ import * as React from "react";
 import styles from "./styles.module.css";
 
 const Title = ({ children }: { children: string }) => {
-  return <div className={styles.title}>{children}</div>;
+  return <h1 className={styles.title}>{children}</h1>;
 };
 
 export default Title;

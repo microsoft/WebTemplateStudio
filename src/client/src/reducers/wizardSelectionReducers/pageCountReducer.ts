@@ -14,9 +14,7 @@ export interface IPageCount {
   [key: string]: number;
 }
 
-const initialState = {
-  [WIZARD_CONTENT_INTERNAL_NAMES.BLANK_PAGE]: 1
-};
+const initialState = {};
 
 const pageCountReducer = (
   state: IPageCount = initialState,

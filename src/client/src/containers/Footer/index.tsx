@@ -22,14 +22,21 @@ import {
 } from "../../selectors/cosmosServiceSelector";
 import {
   getAzureFunctionsOptionsSelector,
-  isAzureFunctionsSelectedSelector
+  isAzureFunctionsSelectedSelector,
+  getAzureFunctionsNamesSelector
 } from "../../selectors/azureFunctionsServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
-import { FormattedMessage, injectIntl } from "react-intl";
+import {
+  FormattedMessage,
+  defineMessages,
+  InjectedIntlProps,
+  injectIntl
+} from "react-intl";
+
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
@@ -38,6 +45,7 @@ import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelecti
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import { IFunctionName } from "../AzureFunctionsSelection";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -53,9 +61,13 @@ interface IStateProps {
   functions: any;
   isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
+  functionNames?: IFunctionName[];
 }
 
-type Props = RouteComponentProps & IStateProps & IDispatchProps;
+type Props = RouteComponentProps &
+  IStateProps &
+  IDispatchProps &
+  InjectedIntlProps;
 
 const pathsNext: any = {
   [ROUTES.WELCOME]: ROUTES.SELECT_PROJECT_TYPE,
@@ -70,6 +82,13 @@ const pathsBack: any = {
   [ROUTES.AZURE_LOGIN]: ROUTES.SELECT_PAGES,
   [ROUTES.REVIEW_AND_GENERATE]: ROUTES.AZURE_LOGIN
 };
+
+const messages = defineMessages({
+  navAriaLabel: {
+    id: "footer.navAriaLabel",
+    defaultMessage: "Navigate between pages and generate templates"
+  }
+});
 
 class Footer extends React.Component<Props> {
   public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -126,6 +145,7 @@ class Footer extends React.Component<Props> {
   public render() {
     // Validate the page names and do not generate if they are invalid or if there are duplicates
     const pageNames = new Set();
+    const functionNames = new Set();
     let areValidNames = true;
     for (const page of this.props.engine.pages) {
       const pageName = page.name;
@@ -139,11 +159,25 @@ class Footer extends React.Component<Props> {
         break;
       }
     }
-    const { isValidNameAndProjectPath, location, isVisited } = this.props;
+    if (areValidNames && this.props.functionNames) {
+      for (const functionName of this.props.functionNames) {
+        areValidNames = functionName.isValidTitle;
+        if (functionNames.has(functionName)) {
+          areValidNames = false;
+        } else {
+          functionNames.add(functionName);
+        }
+        if (!areValidNames) {
+          break;
+        }
+      }
+    }
+
+    const { isValidNameAndProjectPath, location, isVisited, intl } = this.props;
     const { pathname } = location;
     const { showFrameworks } = isVisited;
     return (
-      <div>
+      <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
         {pathname !== ROUTES.PAGE_DETAILS && (
           <div className={styles.footer}>
             <div>
@@ -215,7 +249,7 @@ class Footer extends React.Component<Props> {
             </div>
           </div>
         )}
-      </div>
+      </nav>
     );
   }
 }
@@ -226,12 +260,15 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selectedCosmos: isCosmosResourceCreatedSelector(state),
   cosmos: getCosmosDbSelectionSelector(state),
   selectedFunctions: isAzureFunctionsSelectedSelector(state),
+  functionNames: getAzureFunctionsNamesSelector(state),
   functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
   },
@@ -244,5 +281,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Footer)
+  )(injectIntl(Footer))
 );

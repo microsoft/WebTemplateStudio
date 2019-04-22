@@ -50,9 +50,15 @@ import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
 import { setAzureValidationStatusAction } from "./actions/azureActions/setAzureValidationStatusAction";
 import { IServiceStatus } from "./reducers/generationStatus/genStatus";
+import { resetPagesAction } from "./actions/wizardSelectionActions/selectPages";
+import { selectFrontendFramework } from "./actions/wizardSelectionActions/selectFrontEndFramework";
+import { ISelected } from "./types/selected";
+import { AppState } from "./reducers";
+import { IOption } from "./types/option";
+import { setPreviewStatusAction } from "./actions/wizardContentActions/setPreviewStatus";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
-  require("./css/themeslight.css");
+  require("./css/themes.css");
 }
 
 interface IDispatchProps {
@@ -72,10 +78,14 @@ interface IDispatchProps {
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
+  resetPageSelection: () => any;
+  selectFrontend: (frontendFramework: ISelected) => any;
+  setPreviewStatus: (isPreview: boolean) => void;
 }
 
 interface IStateProps {
   vscode: IVSCodeObject;
+  frontendOptions: IOption[];
 }
 
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
@@ -94,7 +104,8 @@ class App extends React.Component<Props> {
     setAzureValidationStatus: () => {},
     updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {},
-    getVersionsData: () => {}
+    getVersionsData: () => {},
+    setPreviewStatus: () => {}
   };
 
   public componentDidMount() {
@@ -164,6 +175,32 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.GET_VERSIONS:
           this.props.getVersionsData(message.payload);
           return;
+        case EXTENSION_COMMANDS.RESET_PAGES:
+          if (message.payload.resetPages) {
+            this.props.frontendOptions.map((frontend: IOption) => {
+              if (frontend.internalName === message.payload.internalName) {
+                const {
+                  title,
+                  internalName,
+                  version,
+                  author,
+                  licenses
+                } = frontend;
+                this.props.selectFrontend({
+                  title: title as string,
+                  internalName,
+                  version,
+                  author,
+                  licenses
+                });
+              }
+            });
+            this.props.resetPageSelection();
+            this.props.history.push(ROUTES.SELECT_PAGES);
+          }
+          return;
+        case EXTENSION_COMMANDS.GET_PREVIEW_STATUS:
+          this.props.setPreviewStatus(message.payload.preview);
       }
     });
   }
@@ -189,7 +226,8 @@ class App extends React.Component<Props> {
           <AzureFunctionsModal />
           <PostGenerationModal />
           <LeftSidebar />
-          <div
+
+          <main
             className={classnames(appStyles.centerView, {
               [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS
             })}
@@ -207,7 +245,7 @@ class App extends React.Component<Props> {
             <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
             <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
             <Route exact={true} path={ROUTES.WELCOME} component={Welcome} />
-          </div>
+          </main>
           <RightSidebar />
         </div>
         <Footer />
@@ -252,11 +290,21 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   },
   getVersionsData: (versions: IVersions) => {
     dispatch(getVersionsDataAction(versions));
+  },
+  resetPageSelection: () => {
+    dispatch(resetPagesAction());
+  },
+  selectFrontend: (frontendFramework: ISelected) => {
+    dispatch(selectFrontendFramework(frontendFramework));
+  },
+  setPreviewStatus: (isPreview: boolean) => {
+    dispatch(setPreviewStatusAction(isPreview));
   }
 });
 
-const mapStateToProps = (state: any): IStateProps => ({
-  vscode: getVSCodeApiSelector(state)
+const mapStateToProps = (state: AppState): IStateProps => ({
+  vscode: getVSCodeApiSelector(state),
+  frontendOptions: state.wizardContent.frontendOptions
 });
 
 export default withRouter(

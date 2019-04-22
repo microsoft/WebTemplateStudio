@@ -50,6 +50,8 @@ export interface APIObject {
   label: string;
 }
 
+const COSMOS_DEPLOYMENT_SUFFIX = "-cosmos";
+
 /*
  * Returns an array of available/implemented APIObjects for cosmos
  */
@@ -247,7 +249,7 @@ export class CosmosDBDeploy {
        */
       await azureResourceClient.deployments.createOrUpdate(
         resourceGroup,
-        databaseName,
+        databaseName + COSMOS_DEPLOYMENT_SUFFIX,
         options
       );
 

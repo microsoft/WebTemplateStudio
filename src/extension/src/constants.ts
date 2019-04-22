@@ -144,6 +144,10 @@ export const CONSTANTS = {
       "info.fileReplacedMessage",
       "Replaced file at: "
     ),
+    STARTING_GENERATION_SERVER: localize(
+      "info.startingServerMessage",
+      "Starting Generation Server"
+    ),
     SYNC_STATUS: localize("info.syncStatus", "Sync Status: ")
   },
   API: {
@@ -208,13 +212,16 @@ export enum ExtensionCommand {
   UpdateGenStatus = "update-status",
   OpenProjectVSCode = "open-project-vscode",
   GetVersions = "get-versions",
-  CloseWizard = "close-wizard"
+  CloseWizard = "close-wizard",
+  ResetPages = "reset-pages",
+  GetPreviewStatus = "get-preview"
 }
 export enum ExtensionModule {
   Azure = "Azure",
   Generate = "GenerateExperience",
   Telemetry = "Telemetry",
   Validator = "Validator",
+  VSCodeUI = "VSCodeUI",
   Logger = "Logger"
 }
 
@@ -265,6 +272,10 @@ export namespace DialogMessages {
   export const cosmosDBConnectStringReplacePrompt: string = localize(
     "dialog.cosmosDBConnectStringReplacePrompt",
     "Replace your DB connection string in the .env file with the generated CosmosDB connection string?"
+  );
+  export const resetPagesPrompt: string = localize(
+    "dialog.resetPagesPrompt",
+    "Switching Frameworks will reset pages in your queue. Are you sure you want to proceed?"
   );
 }
 

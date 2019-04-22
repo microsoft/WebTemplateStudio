@@ -12,6 +12,10 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+.saveIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .pathInput {
   outline: none;
   text-decoration: none;
@@ -41,6 +45,7 @@
   padding: 0px 10px;
   opacity: 50%;
   min-height: 38px;
+  overflow: auto;
 }
 
 .errorStack {
