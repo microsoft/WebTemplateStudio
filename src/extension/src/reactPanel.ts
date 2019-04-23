@@ -96,7 +96,9 @@ export class ReactPanel {
   public dispose() {
     ReactPanel.currentPanel = undefined;
     ApiModule.StopApi();
-    Logger.outputChannel.clear();
+    if (Logger.outputChannel) {
+      Logger.outputChannel.clear();
+    }
     // Clean up our resources
     this._panel.dispose();
     while (this._disposables.length) {
