@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { MessageItem, window, workspace } from 'vscode';
+import { MessageItem, window } from 'vscode';
 import { DialogResponses, DialogMessages } from '../constants';
 import { reportAnIssue } from './reportAnIssue';
 import { IParsedError, parseError } from './parseError';
