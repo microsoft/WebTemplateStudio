@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    // Engine: Add if Azure Functions selected
+    "ms-azuretools.vscode-azurefunctions",
+    // Engine: Add if Cosmos DB selected
+    "ms-azuretools.vscode-cosmosdb"
+  ]
+}

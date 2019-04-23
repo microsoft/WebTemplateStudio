@@ -1,0 +1,13 @@
+{
+  // Engine: Add azureFunctions.* if azure functions selected
+  "azureFunctions.projectRuntime": "~2",
+  "azureFunctions.projectLanguage": "JavaScript",
+  // Engine: change `appName` to users azure functions appName
+  "azureFunctions.deploySubpath": "appName",
+  "azureFunctions.preDeployTask": "func: extensions install",
+  "files.exclude": {
+    "obj": true,
+    "bin": true
+  },
+  "debug.internalConsoleOptions": "neverOpen"
+}

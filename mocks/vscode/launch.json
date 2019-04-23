@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Frontend",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-scripts",
+      "args": ["--inspect-brk=9230", "start"],
+      "cwd": "${workspaceFolder}",
+      "internalConsoleOptions": "neverOpen",
+      "preLaunchTask": "frontend-install",
+      "port": 9230
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Server",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
+      "runtimeArgs": ["--inspect-brk=9231"],
+      "program": "${workspaceFolder}/server/server.js",
+      "restart": true,
+      "internalConsoleOptions": "neverOpen",
+      "preLaunchTask": "server-install",
+      "port": 9231
+    },
+    {
+      "name": "Attach to Node Functions",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "preLaunchTask": "func: host start"
+    }
+  ]
+}

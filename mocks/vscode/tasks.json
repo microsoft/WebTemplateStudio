@@ -1,0 +1,33 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "func",
+      "command": "host start",
+      "problemMatcher": "$func-watch",
+      "dependsOn": "func: extensions install",
+      "isBackground": true,
+      "options": {
+        // Engine: change `appName` to users azure functions appName
+        "cwd": "${workspaceFolder}/appName"
+      }
+    },
+    {
+      "label": "server-install",
+      "type": "npm",
+      "script": "install",
+      "path": "server/",
+      "problemMatcher": []
+    },
+    {
+      "label": "frontend-install",
+      "type": "npm",
+      "script": "install",
+      "problemMatcher": []
+    },
+    {
+      "label": "dependency-install",
+      "dependsOn": ["server-install", "frontend-install"]
+    }
+  ]
+}
