@@ -22,6 +22,10 @@
   align-items: center;
 }
 
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .spinner {
   height: 1em;
   margin-right: 10px;
@@ -98,4 +102,8 @@
   color: var(--vscode-textLink-foreground);
   font-weight: var(--vscode-editor-font-weight);
   text-decoration: none;
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
