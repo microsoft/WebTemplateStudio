@@ -79,6 +79,9 @@ export class Controller {
     this.Validator = new Validator();
     this.AzureService = new AzureServices();
     this.GenExperience = new GenerationExperience(Controller.Telemetry);
+    Logger.initializeOutputChannel(
+      Controller.Telemetry.getExtensionName(this.context)
+    );
     this.defineExtensionModule();
     vscode.window.withProgress(
       {
