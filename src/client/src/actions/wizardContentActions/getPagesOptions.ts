@@ -5,6 +5,7 @@ import getSvgUrl from "../../utils/getSvgUrl";
 import { WIZARD_CONTENT_TYPEKEYS } from "./typeKeys";
 import WizardContentActionType from "./wizardContentActionType";
 import { Dispatch } from "react";
+import { API } from "../../services/constants";
 
 export interface IPageOptionsActionType {
   type: WIZARD_CONTENT_TYPEKEYS.GET_PAGES_OPTIONS_SUCCESS;
@@ -14,11 +15,11 @@ export interface IPageOptionsActionType {
 const getPagesOptionsAction = (
   projectType: string,
   frontendFramework: string,
-  backendFramework: string
+  backendFramework: string,
+  serverPort: number
 ) => {
   return async (dispatch: Dispatch<WizardContentActionType>) => {
-    const port = "5000";
-    const api = new EngineAPIService(port, undefined);
+    const api = new EngineAPIService(serverPort, undefined);
 
     try {
       const pagesJson = await api.getPages(

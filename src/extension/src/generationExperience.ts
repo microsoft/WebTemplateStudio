@@ -173,7 +173,7 @@ export class GenerationExperience extends WizardServant {
     enginePayload: any
   ) {
     return await ApiModule.ExecuteApiCommand({
-      port: CONSTANTS.PORT,
+      port: ApiModule.GetLastUsedPort(),
       payload: enginePayload,
       liveMessageHandler: this.handleGenLiveMessage
     });

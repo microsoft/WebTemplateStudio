@@ -11,7 +11,11 @@ export class LaunchExperience {
     LaunchExperience._progressObject = progressObject;
   }
 
-  public async launchApiSyncModule() {
+  public async launchApiSyncModule(
+    context: vscode.ExtensionContext
+  ): Promise<ISyncReturnType> {
+    await ApiModule.StartApi(context);
+
     LaunchExperience._progressObject.report({
       message: CONSTANTS.INFO.STARTING_GENERATION_SERVER
     });
@@ -35,7 +39,8 @@ export class LaunchExperience {
       ApiModule.StopApi();
       throw new Error(CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS);
     }
-    return syncObject;
+
+    return { ...syncObject };
   }
 
   private timeout(ms: number) {
@@ -44,7 +49,7 @@ export class LaunchExperience {
 
   private async attemptSync(): Promise<ISyncReturnType> {
     return await ApiModule.ExecuteApiCommand({
-      port: CONSTANTS.PORT,
+      port: ApiModule.GetLastUsedPort(),
       payload: { path: CONSTANTS.API.PATH_TO_TEMPLATES },
       liveMessageHandler: this.handleSyncLiveData
     })
