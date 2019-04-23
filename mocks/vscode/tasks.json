@@ -1,6 +1,7 @@
 {
   "version": "2.0.0",
   "tasks": [
+    // Engine: Add if azure functions is selected
     {
       "type": "func",
       "command": "host start",
@@ -13,21 +14,10 @@
       }
     },
     {
-      "label": "server-install",
-      "type": "npm",
-      "script": "install",
-      "path": "server/",
-      "problemMatcher": []
-    },
-    {
       "label": "frontend-install",
       "type": "npm",
       "script": "install",
       "problemMatcher": []
-    },
-    {
-      "label": "dependency-install",
-      "dependsOn": ["server-install", "frontend-install"]
     }
   ]
 }

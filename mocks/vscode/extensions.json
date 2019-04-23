@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "msjsdiag.debugger-for-chrome",
     // Engine: Add if Azure Functions selected
     "ms-azuretools.vscode-azurefunctions",
     // Engine: Add if Cosmos DB selected

@@ -1,15 +1,21 @@
 {
   "version": "0.2.0",
+  "compounds": [
+    {
+      "name": "Launch Frontend and Debug Server",
+      "configurations": ["Launch Frontend", "Debug Server"]
+    }
+  ],
   "configurations": [
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug Frontend",
+      "name": "Launch Frontend",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-scripts",
       "args": ["--inspect-brk=9230", "start"],
       "cwd": "${workspaceFolder}",
-      "internalConsoleOptions": "neverOpen",
       "preLaunchTask": "frontend-install",
+      "internalConsoleOptions": "neverOpen",
       "port": 9230
     },
     {
@@ -21,9 +27,9 @@
       "program": "${workspaceFolder}/server/server.js",
       "restart": true,
       "internalConsoleOptions": "neverOpen",
-      "preLaunchTask": "server-install",
       "port": 9231
     },
+    // Engine: Add if azure functions is selected
     {
       "name": "Attach to Node Functions",
       "type": "node",
