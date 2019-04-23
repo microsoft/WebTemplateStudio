@@ -128,22 +128,6 @@ const getServices = (selection: SelectionState): RowType[] => {
   return servicesRows;
 };
 
-const getPagesRowItems = (selection: SelectionState): RowType[] => {
-  const { pages } = selection;
-  const pagesRows = [];
-  for (const page of pages) {
-    pagesRows.push({
-      title: page.title,
-      internalName: page.internalName,
-      id: page.id,
-      version: page.version as string,
-      author: page.author,
-      originalTitle: page.originalTitle
-    });
-  }
-  return pagesRows;
-};
-
 const getProjectTypeRowItemSelector = createSelector(
   getWizardSelectionsSelector,
   getProjectTypeRowItems
@@ -154,18 +138,12 @@ const getFrameworksRowItemSelector = createSelector(
   frameworksRowItems
 );
 
-const getPagesRowItemsSelector = createSelector(
-  getWizardSelectionsSelector,
-  getPagesRowItems
-);
-
 const getServicesSelector = createSelector(
   getWizardSelectionsSelector,
   getServices
 );
 
 export {
-  getPagesRowItemsSelector,
   getProjectTypeRowItemSelector,
   getWizardSelectionsSelector,
   getFrameworksRowItemSelector,

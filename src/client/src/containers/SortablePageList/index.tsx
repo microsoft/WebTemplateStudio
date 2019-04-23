@@ -25,7 +25,7 @@ interface ISortablePageListProps {
 }
 
 interface IStateProps {
-  pagesRows?: any[];
+  isSummaryPage?: boolean;
   selectionTitle?: string;
 }
 
@@ -62,7 +62,7 @@ const messages = defineMessages({
 });
 
 const SortablePageList = (props: Props) => {
-  const { selectedPages, selectPages, pagesRows } = props;
+  const { selectedPages, selectPages, isSummaryPage } = props;
   const [pages, setPages] = React.useState(selectedPages);
   const [isMinimized, setMinimized] = React.useState(false);
   React.useEffect(() => {
@@ -108,7 +108,7 @@ const SortablePageList = (props: Props) => {
   const DRAG_PIXEL_THRESHOLD = 1;
   return (
     <div>
-      {!pagesRows && (
+      {!isSummaryPage && (
         <div
           className={classnames(styles.pageListContainer, styles.sidebarItem)}
         >
@@ -128,7 +128,7 @@ const SortablePageList = (props: Props) => {
       {!isMinimized && (
         <SortableList
           pages={selectedPages}
-          pagesRows={pagesRows}
+          isSummaryPage={isSummaryPage}
           onSortEnd={onSortEnd}
           distance={DRAG_PIXEL_THRESHOLD}
           handleInputChange={handleInputChange}
