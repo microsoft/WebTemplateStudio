@@ -76,7 +76,6 @@ export class Controller {
       this.extensionStartTime
     );
     this.vscodeUI = new VSCodeUI();
-    Logger.initializeOutputChannel(Controller.getExtensionName(context));
     this.Validator = new Validator();
     this.AzureService = new AzureServices();
     this.GenExperience = new GenerationExperience(Controller.Telemetry);

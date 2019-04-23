@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { CONSTANTS } from "./constants";
 import { ApiModule } from "./signalr-api-module/apiModule";
+import { Logger } from "./utils/logger";
 
 /**
  * Manages react webview panels
@@ -95,6 +96,7 @@ export class ReactPanel {
   public dispose() {
     ReactPanel.currentPanel = undefined;
     ApiModule.StopApi();
+    Logger.outputChannel.clear();
     // Clean up our resources
     this._panel.dispose();
     while (this._disposables.length) {
