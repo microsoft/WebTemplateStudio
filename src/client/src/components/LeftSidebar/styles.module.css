@@ -28,14 +28,15 @@
   height: 100vh;
   border-right: 0.5px solid #555555;
   box-sizing: border-box;
-  height: calc(100vh - 70.625px);
+  height: calc(100vh - 53px);
 }
 
 .feedback {
   text-align: center;
   color: var(--vscode-textLink-foreground);
   text-decoration: none;
-  margin-bottom: 10px;
+  margin-bottom: 19px;
+  font-size: 14px;
 }
 
 .feedback:focus {

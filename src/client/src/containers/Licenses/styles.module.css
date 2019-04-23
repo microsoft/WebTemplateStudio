@@ -1,10 +1,12 @@
 .title {
   font-weight: bold;
   margin-bottom: 3px;
+  font-size: 14px;
 }
 
 .container {
   margin: 15px;
+  margin-bottom: 30px;
 }
 
 .link {

@@ -1,8 +1,10 @@
 .dropdownTitle {
   font-weight: bold;
   margin-bottom: 3px;
+  font-size: 14px;
 }
 
 .sidebarItem {
   margin: 15px;
+  margin-bottom: 30px;
 }

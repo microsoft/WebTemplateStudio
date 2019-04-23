@@ -1,15 +1,17 @@
 .screenshot {
   margin-top: 100px;
-  width: 35vw;
+  width: 100%;
   border: 1px solid var(--vscode-editor-foreground);
 }
 
 .screenShotContainer {
+  max-width: 42%;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 48px;
 }
 
 .detailsContainer {
   display: flex;
-  margin-top: 51px; /*Height of the Title Bar */
+  margin-top: 51px;
+  /*Height of the Title Bar */
 }

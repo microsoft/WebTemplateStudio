@@ -381,16 +381,14 @@ const AzureFunctionsResourceModal = (props: Props) => {
         DEFAULT_VALUE
       )}
       <div
-        className={classnames({
-          [styles.selectionInputContainer]:
-            !isAppNameAvailable &&
-            azureFunctionsFormData.appName.value.length > 0,
-          [styles.selectionContainer]:
-            isAppNameAvailable ||
-            azureFunctionsFormData.appName.value.length === 0,
-          [styles.selectionContainerDisabled]:
-            azureFunctionsFormData.subscription.value === ""
-        })}
+        className={classnames(
+          styles.selectionInputContainer,
+          styles.selectionContainer,
+          {
+            [styles.selectionContainerDisabled]:
+              azureFunctionsFormData.subscription.value === ""
+          }
+        )}
       >
         <div className={styles.selectionHeaderContainer}>
           <div>{props.intl.formatMessage(messages.appName)}</div>
@@ -402,33 +400,31 @@ const AzureFunctionsResourceModal = (props: Props) => {
             documents.azure.com
           </a>
         </div>
-        <div
-          className={classnames(styles.inputContainer, {
-            [styles.borderRed]:
-              !isAppNameAvailable &&
-              azureFunctionsFormData.appName.value.length > 0
-          })}
-        >
-          <input
-            aria-label={props.intl.formatMessage(messages.ariaAppNameLabel)}
-            className={styles.input}
-            onChange={handleInput}
-            value={azureFunctionsFormData.appName.value}
-            placeholder={FORM_CONSTANTS.APP_NAME.label}
-            disabled={azureFunctionsFormData.subscription === ""}
-            tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
-          />
-          {isAppNameAvailable && !isValidatingName && (
-            <GreenCheck className={styles.validationIcon} />
-          )}
-          {isValidatingName && <Spinner className={styles.spinner} />}
+        <div className={styles.errorStack}>
+          <div className={styles.inputContainer}>
+            <input
+              aria-label={props.intl.formatMessage(messages.ariaAppNameLabel)}
+              className={styles.input}
+              onChange={handleInput}
+              value={azureFunctionsFormData.appName.value}
+              placeholder={FORM_CONSTANTS.APP_NAME.label}
+              disabled={azureFunctionsFormData.subscription === ""}
+              tabIndex={
+                azureFunctionsFormData.subscription.value === "" ? -1 : 0
+              }
+            />
+            {isAppNameAvailable && !isValidatingName && (
+              <GreenCheck className={styles.validationIcon} />
+            )}
+            {isValidatingName && <Spinner className={styles.spinner} />}
+          </div>
+          {!isAppNameAvailable &&
+            azureFunctionsFormData.appName.value.length > 0 && (
+              <div className={styles.errorMessage}>
+                {props.appNameAvailability.message}
+              </div>
+            )}
         </div>
-        {!isAppNameAvailable &&
-          azureFunctionsFormData.appName.value.length > 0 && (
-            <div className={styles.errorMessage}>
-              {props.appNameAvailability.message}
-            </div>
-          )}
       </div>
       {getDropdownSection(
         FORM_CONSTANTS.LOCATION.label,

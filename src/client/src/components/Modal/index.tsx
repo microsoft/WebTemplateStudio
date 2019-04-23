@@ -16,32 +16,35 @@ import Modal from "react-modal";
  * Custom styling guidance:
  * https://reactcommunity.org/react-modal/styles/
  */
-const customStyles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.6)"
-  },
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    borderRadius: "0px",
-    width: "40%",
-    padding: "2.4%",
-    background: "var(--vscode-menu-background)"
-  }
+const getCustomStyles = (isPostGenModalOpen: boolean) => {
+  return {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.6)"
+    },
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "0px",
+      width: isPostGenModalOpen ? "30%" : "40%",
+      padding: "2.4%",
+      background: "var(--vscode-menu-background)"
+    }
+  };
 };
 
 interface IProps {
   closeModal: () => any;
   isModalOpen: boolean;
+  isPostGenModalOpen: boolean;
 }
 
 const asModal = <P extends object>(
@@ -50,15 +53,17 @@ const asModal = <P extends object>(
   return class extends React.Component<P & IProps> {
     static defaultProps = {
       isModalOpen: false,
+      isPostGenModalOpen: false,
       closeModal: () => {}
     };
     render() {
+      const { isPostGenModalOpen } = this.props;
       return (
         <Modal
           isOpen={this.props.isModalOpen}
           onRequestClose={this.props.closeModal}
           contentLabel="Modal Display"
-          style={customStyles}
+          style={getCustomStyles(isPostGenModalOpen)}
           ariaHideApp={false}
         >
           <WrappedComponent {...this.props as P} />
