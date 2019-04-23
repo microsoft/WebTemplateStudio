@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { MessageItem, window, workspace } from 'vscode';
+import { MessageItem, window } from 'vscode';
 import { DialogResponses, DialogMessages } from '../constants';
 import { reportAnIssue } from './reportAnIssue';
 import { IParsedError, parseError } from './parseError';
@@ -134,9 +134,8 @@ function handleTelemetry(
         /**
          * WTS App Specific Telemetry Collection Enabled
          */
-        let enabledTelemetry = workspace.getConfiguration().get<boolean>("wts.enableTelemetry");
     // For suppressTelemetry=true, ignore successful results
-    if (enabledTelemetry && !(context.suppressTelemetry)) {
+    if (!(context.suppressTelemetry)) {
         const end: number = Date.now();
         context.measurements.duration = (end - start) / 1000;
 
