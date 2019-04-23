@@ -58,6 +58,14 @@ const initialState = {
   }
 };
 
+const getFunctionNames = (functionNames: IFunctionName[]): string[] => {
+  const names: string[] = [];
+  functionNames.forEach((functionName: IFunctionName) => {
+    names.push(functionName.title);
+  });
+  return names;
+};
+
 const createFunctionNames = (
   numFunctions: number,
   prevFunctionNames?: IFunctionName[]
@@ -78,7 +86,9 @@ const createFunctionNames = (
           error: "",
           id: title
         };
-        while (prevFunctionNames.includes(functionName)) {
+        while (
+          getFunctionNames(prevFunctionNames).includes(functionName.title)
+        ) {
           lastNumberUsed++;
           functionName.title = `function${lastNumberUsed}`;
         }
