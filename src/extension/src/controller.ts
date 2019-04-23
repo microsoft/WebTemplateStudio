@@ -134,10 +134,6 @@ export class Controller {
     }
   }
 
-  private static getExtensionName(ctx: vscode.ExtensionContext) {
-    return this.Telemetry.getExtensionName(ctx);
-  }
-
   private static getVersionAndSendToClient(
     ctx: vscode.ExtensionContext,
     templatesVersion: string
