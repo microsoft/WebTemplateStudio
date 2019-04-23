@@ -11,7 +11,7 @@
 }
 
 .selectionContainer {
-  margin-bottom: 2em;
+  margin-top: 2em;
 }
 
 .selectionContainerDisabled {
@@ -25,7 +25,7 @@
 }
 
 .selectionInputContainer {
-  margin-bottom: 14px;
+  margin-bottom: 26px;
 }
 
 .modalFooterContainer {
@@ -38,6 +38,7 @@
   font-size: 1em;
   border: none;
   height: 50%;
+  align-self: flex-end;
 }
 
 .button:focus {
@@ -92,7 +93,7 @@
   padding: 9px;
   box-sizing: border-box;
   background-color: var(--vscode-input-background);
-  border: 1px solid var(--vscode-editor-foreground);
+  border: 0.5px solid var(--vscode-editor-foreground);
 }
 
 .input {
@@ -137,6 +138,10 @@ input::placeholder {
   padding: 0px 10px;
   font-size: 90%;
   opacity: 50%;
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
 }
 
 .spinner {
@@ -162,4 +167,9 @@ input::placeholder {
   animation: rotate steps(60) 1s infinite;
   height: 18px;
   width: 18px;
+}
+
+.errorStack {
+  display: block;
+  position: relative;
 }

@@ -50,7 +50,7 @@ export default class Grid extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <main>
+      <main id="mainContent">
         <div className={classnames("text-center", styles.header)}>
           <h1>Project Name</h1>
           <p> This is placeholder text. Your web app description goes here.</p>

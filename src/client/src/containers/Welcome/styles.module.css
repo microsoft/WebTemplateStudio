@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
 .container > div {
@@ -36,7 +38,7 @@
   flex-direction: column;
   justify-content: flex-end;
   box-sizing: border-box;
-  width: 50%;
+  width: 80%;
 }
 
 .getStarted {

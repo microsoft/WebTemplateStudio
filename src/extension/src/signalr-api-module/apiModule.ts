@@ -9,11 +9,15 @@ import { IGenerationPayloadType } from "../types/generationPayloadType";
 import { CoreTemplateStudioApiCommand } from "./coreTemplateStudioApiCommand";
 import { GenerateCommand } from "./generateCommand";
 import { SyncCommand } from "./syncCommand";
+import * as portfinder from "portfinder";
 
 export class ApiModule {
-  private static _process: ChildProcess;
+  private static _processes: ChildProcess[] = [];
+  private static _lastUsedPort: number | undefined;
 
-  public static StartApi(context: vscode.ExtensionContext): ChildProcess {
+  public static async StartApi(
+    context: vscode.ExtensionContext
+  ): Promise<void> {
     let platform = process.platform;
 
     let executableName = CONSTANTS.API.BASE_APPLICATION_NAME;
@@ -37,9 +41,18 @@ export class ApiModule {
       fs.chmodSync(apiPath, 0o755);
     }
 
-    let spawnedProcess = execFile(`${apiPath}`, { cwd: apiWorkingDirectory });
-    ApiModule._process = spawnedProcess;
-    return spawnedProcess;
+    const port = await portfinder.getPortPromise({
+      port: CONSTANTS.START_PORT
+    });
+
+    let spawnedProcess = execFile(
+      `${apiPath}`,
+      [`--urls=http://localhost:${port}`],
+      { cwd: apiWorkingDirectory }
+    );
+
+    ApiModule._processes.push(spawnedProcess);
+    ApiModule._lastUsedPort = port;
   }
 
   public static async ExecuteApiCommand(
@@ -56,13 +69,28 @@ export class ApiModule {
     return await command.execute();
   }
 
-  public static StopApi() {
-    if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
-      let pid = ApiModule._process.pid;
-      let spawn = require("child_process").spawn;
-      spawn("taskkill", ["/pid", pid, "/f", "/t"]);
-    } else {
-      ApiModule._process.kill("SIGKILL");
+  public static GetLastUsedPort(): number {
+    if (ApiModule._lastUsedPort) {
+      return ApiModule._lastUsedPort;
     }
+
+    throw new Error(
+      "getLastUsedPort() was called before a port was allocated to the engine"
+    );
+  }
+
+  public static StopApi() {
+    ApiModule._processes.forEach(_process => {
+      if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
+        let pid = _process.pid;
+        let spawn = require("child_process").spawn;
+        spawn("taskkill", ["/pid", pid, "/f", "/t"]);
+      } else {
+        _process.kill("SIGKILL");
+      }
+    });
+
+    ApiModule._lastUsedPort = undefined;
+    ApiModule._processes = [];
   }
 }

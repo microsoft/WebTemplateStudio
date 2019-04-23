@@ -102,6 +102,7 @@
   color: var(--vscode-textLink-foreground);
   font-weight: var(--vscode-editor-font-weight);
   text-decoration: none;
+  font-size: 14px;
 }
 
 .link:focus {

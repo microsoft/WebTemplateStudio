@@ -114,7 +114,7 @@ export default class List extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <main className="container">
+      <main className="container" id="mainContent">
         <div className="row">
           <div className="col mt-5 p-0">
             <h3>Bootstrap List Template</h3>

@@ -172,7 +172,7 @@ const CosmosResourceModal = (props: Props) => {
       ? buttonStyles.buttonHighlighted
       : buttonStyles.buttonDark;
 
-    return classNames(buttonClass, styles.button, styles.selectionContainer);
+    return classNames(buttonClass, styles.button);
   };
 
   const handleDropdown = (infoLabel: string, value: string) => {
@@ -352,10 +352,7 @@ const CosmosResourceModal = (props: Props) => {
         DEFAULT_VALUE
       )}
       <div
-        className={classnames({
-          [styles.selectionInputContainer]:
-            !isAccountNameAvailable &&
-            cosmosFormData.accountName.value.length > 0,
+        className={classnames(styles.selectionInputContainer, {
           [styles.selectionContainer]:
             isAccountNameAvailable ||
             cosmosFormData.accountName.value.length === 0,
@@ -373,32 +370,30 @@ const CosmosResourceModal = (props: Props) => {
             documents.azure.com
           </a>
         </div>
-        <div
-          className={classnames(styles.inputContainer, {
-            [styles.borderRed]:
-              !isAccountNameAvailable &&
-              cosmosFormData.accountName.value.length > 0
-          })}
-        >
-          <input
-            aria-label={props.intl.formatMessage(messages.ariaAccountNameLabel)}
-            className={styles.input}
-            onChange={handleInput}
-            value={cosmosFormData.accountName.value}
-            placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
-            disabled={cosmosFormData.subscription.value === ""}
-          />
-          {isAccountNameAvailable && !isValidatingName && (
-            <GreenCheck className={styles.validationIcon} />
-          )}
-          {isValidatingName && <Spinner className={styles.spinner} />}
+        <div className={styles.errorStack}>
+          <div className={styles.inputContainer}>
+            <input
+              aria-label={props.intl.formatMessage(
+                messages.ariaAccountNameLabel
+              )}
+              className={styles.input}
+              onChange={handleInput}
+              value={cosmosFormData.accountName.value}
+              placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
+              disabled={cosmosFormData.subscription.value === ""}
+            />
+            {isAccountNameAvailable && !isValidatingName && (
+              <GreenCheck className={styles.validationIcon} />
+            )}
+            {isValidatingName && <Spinner className={styles.spinner} />}
+          </div>
+          {!isAccountNameAvailable &&
+            cosmosFormData.accountName.value.length > 0 && (
+              <div className={styles.errorMessage}>
+                {props.accountNameAvailability.message}
+              </div>
+            )}
         </div>
-        {!isAccountNameAvailable &&
-          cosmosFormData.accountName.value.length > 0 && (
-            <div className={styles.errorMessage}>
-              {props.accountNameAvailability.message}
-            </div>
-          )}
       </div>
       {getDropdownSection(
         FORM_CONSTANTS.API.label,

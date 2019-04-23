@@ -1,9 +1,12 @@
 # Web Template Studio
 
-Web Template Studio (_WebTS_) is a Visual Studio Code Extension that accelerates the creation of new Web apps using a
-wizard-based experience. The resulting Web application is well-formed, readable code that incorporates cloud services on
+Web Template Studio (_WebTS_) is a Visual Studio Code Extension that accelerates the creation of new web applications using a
+wizard-based experience. WebTS enables developers to generate boilerplate code for a web application
+by choosing between different front-end frameworks, back-end frameworks, pages and cloud services.
+The resulting web app is well-formed, readable code that incorporates cloud services on
 Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to
-Docs to provide useful insights.
+Docs to provide useful insights. WebTS was created using TypeScript and React. Different combinations of generated code
+are merged together by [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio), which was made using .NET Core.
 
 ## Build Status
 
@@ -20,13 +23,14 @@ Docs to provide useful insights.
 - [Terminology for developers](/docs/terminology.md)
 
 ## Instruction To Use
+
 - Open **VSCode**
 - Press `ctrl+shift+p` in Windows/Linux or `⇧⌘P` in Mac to open VSCode's extension launcher
 - Type/Select `Web Template Studio: Launch` and press `Enter` to launch the extension
 
 ## Example Scenario
 
-I need a Fullstack web app that stores blog posts in a Cosmos database.
+I need a full-stack web app that stores data in a Cosmos database.
 
 ![Readme-app-screenshot](./docs/resources/readme-app-screenshot.png)
 
@@ -45,13 +49,17 @@ Once you make the selections you want and click generate, you can quickly extend
 
 Please use [GitHub issues](https://github.com/Microsoft/WebTemplateStudio/issues) for feedback, questions or comments.
 
-If you have specific feature requests or would like to vote on what others are recommending, please go to the [GitHub issues](https://github.com/Microsoft/WebTemplateStudio/issues) section as well.  We would love to see what you are thinking.
+If you have specific feature requests or would like to vote on what others are recommending, please go to the [GitHub issues](https://github.com/Microsoft/WebTemplateStudio/issues) section as well. We would love to see what you are thinking.
 
-We are still extremely early in development and are looking for feedback for roadmap.  Currently we are in the process of stabilizing our React / Node.js golden path.
+We are still extremely early in development and are looking for feedback for roadmap. Currently we are in the process of stabilizing our React / Node.js golden path.
 
 ## Contributing
 
 Do you want to contribute? We would love to have you help out. Here are our [contribution guidelines](CONTRIBUTING.md).
+
+## Reporting Security Issues
+
+Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) at secure@microsoft.com. You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the MSRC PGP key, can be found in the Security TechCenter.
 
 ## License
 
@@ -62,8 +70,11 @@ This code is distributed under the terms and conditions of the [MIT license](LIC
 The extension does [log basic telemetry](docs/telemetry.md) for what is being selected. We are in the process of creating a [Telemetry Data](docs/telemetryData.md) page to summarize usage trends. Please read the [Microsoft privacy statement](http://go.microsoft.com/fwlink/?LinkId=521839) for more information.
 
 ## Frameworks and libraries in generated code not created by our team
+
 **Frameworks**
+
 - [TBD](https://github.com/)
 
 **Libraries**
+
 - [TBD](https://github.com/)

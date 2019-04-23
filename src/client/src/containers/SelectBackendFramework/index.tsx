@@ -19,12 +19,17 @@ import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
-  getBackendFrameworks: (projectType: string, isPreview: boolean) => void;
+  getBackendFrameworks: (
+    projectType: string,
+    isPreview: boolean,
+    serverPort: number
+  ) => void;
 }
 
 interface ISelectBackendProps {
   options: IOption[];
   selectedBackend: ISelected;
+  serverPort: number;
   isPreview: boolean;
 }
 
@@ -39,11 +44,12 @@ const messages = defineMessages({
 
 class SelectBackEndFramework extends React.Component<Props> {
   public componentDidMount() {
-    const { getBackendFrameworks, isPreview } = this.props;
+    const { getBackendFrameworks, isPreview, serverPort } = this.props;
     if (getBackendFrameworks !== undefined) {
       getBackendFrameworks(
         WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
-        isPreview
+        isPreview,
+        serverPort
       );
     }
   }
@@ -86,13 +92,14 @@ class SelectBackEndFramework extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): ISelectBackendProps => {
-  const { backendOptions, previewStatus } = state.wizardContent;
+  const { backendOptions, previewStatus, serverPort } = state.wizardContent;
   const { backendFramework } = state.selection;
 
   return {
     isPreview: previewStatus,
     options: backendOptions,
-    selectedBackend: backendFramework
+    selectedBackend: backendFramework,
+    serverPort
   };
 };
 
@@ -102,8 +109,12 @@ const mapDispatchToProps = (
   selectBackendFramework: (backendFramework: ISelected) => {
     dispatch(selectBackendFrameworkAction(backendFramework));
   },
-  getBackendFrameworks: (projectType: string, isPreview: boolean) => {
-    dispatch(getBackendFrameworksAction(projectType, isPreview));
+  getBackendFrameworks: (
+    projectType: string,
+    isPreview: boolean,
+    serverPort: number
+  ) => {
+    dispatch(getBackendFrameworksAction(projectType, isPreview, serverPort));
   }
 });
 

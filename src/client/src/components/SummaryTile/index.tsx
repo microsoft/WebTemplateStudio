@@ -152,32 +152,39 @@ const SummaryTile = ({
             )
           )}
           <div className={styles.tileContent}>
-            <input
-              aria-label={intl.formatMessage(messages.changeItemName)}
-              ref={inputRef}
-              className={styles.tileInput}
-              value={componentTitle}
-              onChange={handleChange}
-              disabled={isDisabled}
-              onBlur={handleFocusOut}
-              onClick={handleClick}
-            />
+            <div className={styles.errorStack}>
+              <input
+                aria-label={intl.formatMessage(messages.changeItemName)}
+                ref={inputRef}
+                className={styles.tileInput}
+                value={componentTitle}
+                onChange={handleChange}
+                disabled={isDisabled}
+                onBlur={handleFocusOut}
+                onClick={handleClick}
+              />
+              {error && <div className={styles.errorMessage}>{error}</div>}
+            </div>
             <div className={styles.metaData}>
-              {(error && (
-                <div className={styles.errorMessage}>{error}</div>
-              )) || (
+              {
                 <React.Fragment>
                   {subTitle
                     ? subTitle
                     : originalTitle && (
                         <React.Fragment>
                           <div>{originalTitle}</div>
-                          <div>&nbsp;|&nbsp;</div>
                         </React.Fragment>
                       )}
                   {author && (
                     <React.Fragment>
-                      {author && <div>{author}</div>}
+                      {author && (
+                        <div>
+                          {(subTitle || originalTitle) && (
+                            <span>&nbsp;|&nbsp;</span>
+                          )}
+                          {author}
+                        </div>
+                      )}
                       {version && (
                         <React.Fragment>
                           <div>&nbsp;|&nbsp;</div>
@@ -187,18 +194,20 @@ const SummaryTile = ({
                     </React.Fragment>
                   )}
                 </React.Fragment>
-              )}
+              }
             </div>
           </div>
         </div>
-        {showEditable && !withoutEditIcon && (
-          <EditSVG
-            tabIndex={0}
-            className={styles.rightIcon}
-            onClick={handleClick}
-            onKeyDown={onEditKeyDown}
-          />
-        )}
+        <div className={styles.editSpacer}>
+          {showEditable && !withoutEditIcon && (
+            <EditSVG
+              tabIndex={0}
+              className={styles.rightIcon}
+              onClick={handleClick}
+              onKeyDown={onEditKeyDown}
+            />
+          )}
+        </div>
       </div>
       <div className={styles.spacer}>
         <CloseSVG

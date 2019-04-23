@@ -184,7 +184,7 @@ export const CONSTANTS = {
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
   MAX_PROJECT_NAME_LENGTH: 50,
-  PORT: 5000,
+  START_PORT: 9502,
   VSCODE_COMMAND: {
     OPEN_FOLDER: "vscode.openFolder"
   }
@@ -195,17 +195,17 @@ export enum ExtensionCommand {
   Login = "login",
   Logout = "logout",
   Subscriptions = "subscriptions",
-  SubscriptionDataForCosmos = "subscriptionDataForCosmos",
-  SubscriptionDataForFunctions = "subscriptionDataForFunctions",
+  SubscriptionDataForCosmos = "subscription-data-for-cosmos",
+  SubscriptionDataForFunctions = "subscription-data-for-functions",
   NameFunctions = "name-functions",
   NameCosmos = "name-cosmos",
   DeployFunctions = "deploy-functions",
   DeployCosmos = "deploy-cosmos",
   Generate = "generate",
-  GetOutputPath = "getOutputPath",
-  GetFunctionsRuntimes = "getFunctionsRuntimes",
-  GetCosmosAPIs = "getCosmosAPIs",
-  GetUserStatus = "getUserStatus",
+  GetOutputPath = "get-output-path",
+  GetFunctionsRuntimes = "get-functions-runtimes",
+  GetCosmosAPIs = "get-cosmos-apis",
+  GetUserStatus = "get-user-status",
   TrackPageSwitch = "track-page-switch",
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
@@ -213,6 +213,7 @@ export enum ExtensionCommand {
   OpenProjectVSCode = "open-project-vscode",
   GetVersions = "get-versions",
   CloseWizard = "close-wizard",
+  GetPort = "get-port",
   ResetPages = "reset-pages",
   GetPreviewStatus = "get-preview"
 }

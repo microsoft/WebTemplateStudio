@@ -24,7 +24,8 @@ interface IDispatchProps {
   getPages: (
     projectType: string,
     frontendFramework: string,
-    backendFramework: string
+    backendFramework: string,
+    serverPort: number
   ) => void;
   updatePageCount: (pageCount: IPageCount) => any;
 }
@@ -34,6 +35,7 @@ interface ISelectPagesProps {
   selectedBackend: ISelected;
   selectedFrontend: ISelected;
   selectedPages: ISelected[];
+  serverPort: number;
   selectedProjectType: ISelected;
   pageCount: IPageCount;
 }
@@ -57,14 +59,16 @@ class SelectPages extends React.Component<Props> {
       getPages,
       selectedBackend,
       selectedFrontend,
-      selectedProjectType
+      selectedProjectType,
+      serverPort
     } = this.props;
 
     if (getPages !== undefined) {
       getPages(
         selectedProjectType.internalName,
         selectedFrontend.internalName,
-        selectedBackend.internalName
+        selectedBackend.internalName,
+        serverPort
       );
     }
   }
@@ -75,12 +79,15 @@ class SelectPages extends React.Component<Props> {
         getPages,
         selectedBackend,
         selectedFrontend,
-        selectedProjectType
+        selectedProjectType,
+        serverPort
       } = this.props;
+
       getPages(
         selectedProjectType.internalName,
         selectedFrontend.internalName,
-        selectedBackend.internalName
+        selectedBackend.internalName,
+        serverPort
       );
     }
   }
@@ -132,7 +139,7 @@ class SelectPages extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): ISelectPagesProps => {
-  const { pageOptions } = state.wizardContent;
+  const { pageOptions, serverPort } = state.wizardContent;
   const { pages } = state.selection;
   const { appType } = state.selection;
   const { frontendFramework } = state.selection;
@@ -143,6 +150,7 @@ const mapStateToProps = (state: AppState): ISelectPagesProps => {
     selectedBackend: backendFramework,
     selectedFrontend: frontendFramework,
     selectedPages: pages,
+    serverPort,
     selectedProjectType: appType,
     pageCount: getPageCount(state)
   };
@@ -154,10 +162,16 @@ const mapDispatchToProps = (
   getPages: (
     projectType: string,
     frontendFramework: string,
-    backendFramework: string
+    backendFramework: string,
+    serverPort: number
   ) => {
     dispatch(
-      getPagesOptionsAction(projectType, frontendFramework, backendFramework)
+      getPagesOptionsAction(
+        projectType,
+        frontendFramework,
+        backendFramework,
+        serverPort
+      )
     );
   },
   selectPages: (pages: ISelected[]) => {
