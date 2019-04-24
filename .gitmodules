@@ -1,4 +1,4 @@
 [submodule "src/CoreTemplateStudio"]
 	path = src/CoreTemplateStudio
 	url = https://github.com/Microsoft/CoreTemplateStudio.git
-	branch = master
+	branch = dev
