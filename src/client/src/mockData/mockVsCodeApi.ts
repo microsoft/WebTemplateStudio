@@ -102,7 +102,7 @@ const mockVsCodeApi = () => ({
               payload: {
                 templates: {
                   success: false,
-                  failure: false
+                  failure: true
                 },
                 cosmos: {
                   success: true,
