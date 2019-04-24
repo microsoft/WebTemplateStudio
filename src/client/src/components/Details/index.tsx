@@ -103,7 +103,7 @@ const Details = ({
         <div className={styles.headerContainer}>
           {detailInfo.internalName &&
             (getSvg(detailInfo.internalName, styles.icon) || (
-              <img className={styles.icon} src={detailInfo.svgUrl} alt="icon" />
+              <img className={styles.icon} src={detailInfo.svgUrl} alt="" />
             ))}
           <div className={styles.detailsTitle}>
             {renderFormattedData(detailInfo.title, false)}

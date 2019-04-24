@@ -32,7 +32,7 @@ const LoginCard = ({
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cardTitle}>
-        <img className={styles.icon} src={svgUrl} alt="icon" />
+        <img className={styles.icon} src={svgUrl} alt="" />
         {cardTitle}
       </div>
       <div className={styles.cardBody}>
