@@ -116,7 +116,7 @@ const LeftSidebar = (props: Props) => {
           <a href="https://aka.ms/give-feedback" className={styles.feedback}>
             <FormattedMessage
               id="leftSidebar.giveFeedback"
-              defaultMessage="Give Feedback"
+              defaultMessage="Give feedback"
             />
           </a>
         </nav>
