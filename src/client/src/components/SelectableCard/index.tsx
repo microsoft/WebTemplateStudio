@@ -73,7 +73,7 @@ const SelectableCard = ({
           <div className={styles.icon}>
             {getSvg(option.internalName, iconStyles) ||
               (iconPath && (
-                <img src={iconPath} className={iconStyles} alt="icon" />
+                <img src={iconPath} className={iconStyles} alt="" />
               ))}
           </div>
           <div

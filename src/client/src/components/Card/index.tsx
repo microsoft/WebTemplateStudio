@@ -38,7 +38,7 @@ const Card = ({
     <div className={styles.loginContainer}>
       <div className={styles.cardTitleContainer}>
         {option.svgUrl && (
-          <img className={styles.icon} src={option.svgUrl} alt="icon" />
+          <img className={styles.icon} src={option.svgUrl} alt="" />
         )}
         <div className={styles.cardTitle}>
           {intl.formatMessage(formattedTitle)}

@@ -153,6 +153,7 @@ const SummaryTile = ({
           ) : (
             getSvg(internalName as string, styles.leftIcon) || (
               <img
+                alt=""
                 src={getSvgUrl(internalName as string)}
                 className={styles.leftIcon}
               />
