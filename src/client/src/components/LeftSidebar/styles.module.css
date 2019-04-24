@@ -6,7 +6,7 @@
   margin-top: 51px;
   margin-bottom: 53px;
   padding-top: 10%;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .itemBorder {
