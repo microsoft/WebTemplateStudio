@@ -164,7 +164,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       runtimeStack: [
         {
           value: "node",
-          label: "node"
+          label: "JavaScript"
         }
       ],
       subscription: props.subscriptions,
