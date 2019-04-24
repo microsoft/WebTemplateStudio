@@ -148,9 +148,11 @@ const azureFunctions = (
     case AZURE_TYPEKEYS.REMOVE_AZURE_FUNCTION:
       // hardcoding 0th index because only 1 function app can currently be added
       const newFunctionState = { ...state };
-      if (newFunctionState.selection[0].functionNames) {
-        newFunctionState.selection[0].functionNames.splice(action.payload, 1);
-        newFunctionState.selection[0].numFunctions--;
+      const { functionNames } = newFunctionState.selection[0];
+      if (functionNames) {
+        functionNames.splice(action.payload, 1);
+        newFunctionState.selection[0].functionNames = functionNames;
+        newFunctionState.selection[0].numFunctions = functionNames.length;
       }
       return newFunctionState;
     case AZURE_TYPEKEYS.SAVE_AZURE_FUNCTIONS_SETTINGS:
