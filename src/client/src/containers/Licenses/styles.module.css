@@ -11,9 +11,9 @@
 
 .link {
   text-decoration: none;
-  font-size: var(--vscode-editor-font-size);
+  font-size: var(--vscode-font-size);
   color: var(--vscode-textLink-foreground);
-  font-weight: var(--vscode-editor-font-weight);
+  font-weight: var(--vscode-font-weight);
   margin-left: 10px;
 }
 
