@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: space-between;
   color: var(--vscode-textLink-foreground);
-  font-size: var(--vscode-editor-font-size);
+  font-size: var(--vscode-font-size);
 }
 
 .createAccountButton {

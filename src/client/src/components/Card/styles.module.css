@@ -27,7 +27,7 @@
 
 .signInButton {
   margin-left: 10px;
-  font-size: var(--vscode-editor-font-size);
+  font-size: var(--vscode-font-size);
   border: none;
 }
 
