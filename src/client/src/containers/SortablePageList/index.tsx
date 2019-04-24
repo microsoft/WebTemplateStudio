@@ -114,7 +114,7 @@ const SortablePageList = (props: Props) => {
         >
           <div className={styles.dropdownTitle}>
             {`${props.intl!.formatMessage(messages.pages)} (${
-              pages.length > 0 ? pages.length : ""
+              pages.length >= 0 ? pages.length : ""
             })`}
           </div>
           <button
