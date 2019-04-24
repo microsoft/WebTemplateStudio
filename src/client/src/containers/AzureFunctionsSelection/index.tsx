@@ -55,7 +55,7 @@ type Props = IProps & IDispatchProps & InjectedIntlProps;
 
 const messages = defineMessages({
   duplicateFunctionName: {
-    id: "functionName.duplicateName",
+    id: "azureFunctionsSelection.duplicateName",
     defaultMessage: "Function name has to be unique"
   }
 });
@@ -116,7 +116,7 @@ const AzureFunctionsSelection = ({
       {!_.isEmpty(selection) &&
         selection.map(
           (functionApp: ISelectedAzureFunctionsService, idx: number) => (
-            <React.Fragment key={serviceType + functionApp.appName + idx}>
+            <React.Fragment key={serviceType + functionApp.appName.value + idx}>
               <div className={styles.headerContainer}>
                 <div>{intl.formatMessage(serviceType)}</div>
                 <div
@@ -134,8 +134,8 @@ const AzureFunctionsSelection = ({
               </div>
               <DraggableSidebarItem
                 customInputStyle={styles.input}
-                key={functionApp.appName + idx}
-                text={functionApp.appName}
+                key={functionApp.appName.value + idx}
+                text={functionApp.appName.value}
                 closeSvgUrl={getSvg.getCancelSvg()}
                 withIndent={true}
                 idx={idx + 1}
