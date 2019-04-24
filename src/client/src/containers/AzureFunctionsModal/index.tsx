@@ -148,11 +148,13 @@ const AzureFunctionsResourceModal = (props: Props) => {
     }
   };
 
+  // The data we are presenting to the user (available resource groups, locations)
   const [functionsData, setData] = React.useState(
     azureFunctionModalInitialState
   );
 
   // Hardcoding a "node" value until data can be loaded dynamically
+  // Updates the data we are presenting to the user when the subscription changes
   React.useEffect(() => {
     setData({
       appName: [
@@ -172,10 +174,12 @@ const AzureFunctionsResourceModal = (props: Props) => {
       location: props.subscriptionData.locations
     });
   }, [props.subscriptionData]);
-  const [azureFunctionsFormData, updateForm] = React.useState(initialState);
 
+  // The data the user has entered into the modal
+  const [azureFunctionsFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
 
+  // Updates the data the user enters (azureFunctionsFormData) as the user types
   const handleChange = (updatedFunctionsForm: IFunctionsState) => {
     setFunctionsModalButtonStatus(
       updatedFunctionsForm,
@@ -223,8 +227,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    if (azureFunctionsFormData.appName.value != "") {
-      props.setValidationStatus(true);
       if (timeout) {
         clearTimeout(timeout);
       }
@@ -238,7 +240,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
           subscription: azureFunctionsFormData.subscription.value
         });
       }, 700);
-    }
   }, [azureFunctionsFormData.appName]);
 
   React.useEffect(() => {
@@ -267,6 +268,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
    */
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
+
+    // Changes in account name will trigger an update in validation status
+    // Set validation status here to avoid premature error messages
+    props.setValidationStatus(true);
     handleChange({
       ...azureFunctionsFormData,
       appName: {
@@ -418,7 +423,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
             )}
             {isValidatingName && <Spinner className={styles.spinner} />}
           </div>
-          {!isAppNameAvailable &&
+          {!isValidatingName && !isAppNameAvailable &&
             azureFunctionsFormData.appName.value.length > 0 && (
               <div className={styles.errorMessage}>
                 {props.appNameAvailability.message}
