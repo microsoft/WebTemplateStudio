@@ -204,8 +204,10 @@ class App extends React.Component<Props> {
           return;
         case EXTENSION_COMMANDS.GET_PREVIEW_STATUS:
           this.props.setPreviewStatus(message.payload.preview);
+          return;
         case EXTENSION_COMMANDS.GET_PORT:
           this.props.setPort(message.payload.port);
+          return;
       }
     });
   }
