@@ -79,20 +79,17 @@ const createFunctionNames = (
       const numFunctionsToCreate = numFunctions - prevFunctionNames.length;
       let lastNumberUsed = 1;
       for (let i = 1; i <= numFunctionsToCreate; i++) {
-        const title = `function${lastNumberUsed}`;
-        let functionName: IFunctionName = {
+        let title = `function${lastNumberUsed}`;
+        while (getFunctionNames(prevFunctionNames).includes(title)) {
+          lastNumberUsed++;
+          title = `function${lastNumberUsed}`;
+        }
+        prevFunctionNames.push({
           title,
           isValidTitle: true,
           error: "",
           id: title
-        };
-        while (
-          getFunctionNames(prevFunctionNames).includes(functionName.title)
-        ) {
-          lastNumberUsed++;
-          functionName.title = `function${lastNumberUsed}`;
-        }
-        prevFunctionNames.push(functionName);
+        });
       }
     }
     return [...prevFunctionNames];
