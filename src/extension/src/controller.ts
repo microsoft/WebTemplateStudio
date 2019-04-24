@@ -76,10 +76,12 @@ export class Controller {
       this.extensionStartTime
     );
     this.vscodeUI = new VSCodeUI();
-    Logger.initializeOutputChannel(Controller.getExtensionName(context));
     this.Validator = new Validator();
     this.AzureService = new AzureServices();
     this.GenExperience = new GenerationExperience(Controller.Telemetry);
+    Logger.initializeOutputChannel(
+      Controller.Telemetry.getExtensionName(this.context)
+    );
     this.defineExtensionModule();
     vscode.window.withProgress(
       {
@@ -133,10 +135,6 @@ export class Controller {
         TelemetryEventName.ExtensionLaunch
       );
     }
-  }
-
-  private static getExtensionName(ctx: vscode.ExtensionContext) {
-    return this.Telemetry.getExtensionName(ctx);
   }
 
   private static getVersionAndSendToClient(
