@@ -227,6 +227,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
+    if (azureFunctionsFormData.appName.value != "") {
       if (timeout) {
         clearTimeout(timeout);
       }
@@ -240,6 +241,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           subscription: azureFunctionsFormData.subscription.value
         });
       }, 700);
+    }
   }, [azureFunctionsFormData.appName]);
 
   React.useEffect(() => {

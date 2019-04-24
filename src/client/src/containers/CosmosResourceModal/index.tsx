@@ -224,6 +224,7 @@ const CosmosResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
+    if (cosmosFormData.accountName.value != "") {
       if (timeout) {
         clearTimeout(timeout);
       }
@@ -237,6 +238,7 @@ const CosmosResourceModal = (props: Props) => {
           subscription: cosmosFormData.subscription.value
         });
       }, 700);
+    }
   }, [cosmosFormData.accountName]);
 
   React.useEffect(() => {
