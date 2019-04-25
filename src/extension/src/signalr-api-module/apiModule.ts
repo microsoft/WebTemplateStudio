@@ -12,7 +12,7 @@ import { SyncCommand } from "./syncCommand";
 import * as portfinder from "portfinder";
 
 export class ApiModule {
-  private static _processes: ChildProcess[] = [];
+  private static _process: ChildProcess | undefined;
   private static _lastUsedPort: number | undefined;
 
   public static async StartApi(
@@ -50,8 +50,11 @@ export class ApiModule {
       [`--urls=http://localhost:${port}`],
       { cwd: apiWorkingDirectory }
     );
+    if (ApiModule._process) {
+      ApiModule.StopApi();
+      ApiModule._process = spawnedProcess;
+    }
 
-    ApiModule._processes.push(spawnedProcess);
     ApiModule._lastUsedPort = port;
   }
 
@@ -80,17 +83,17 @@ export class ApiModule {
   }
 
   public static StopApi() {
-    ApiModule._processes.forEach(_process => {
+    if (ApiModule._process) {
       if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
-        let pid = _process.pid;
+        let pid = ApiModule._process.pid;
         let spawn = require("child_process").spawn;
         spawn("taskkill", ["/pid", pid, "/f", "/t"]);
       } else {
-        _process.kill("SIGKILL");
+        ApiModule._process.kill("SIGKILL");
       }
-    });
+    }
 
     ApiModule._lastUsedPort = undefined;
-    ApiModule._processes = [];
+    ApiModule._process = undefined;
   }
 }
