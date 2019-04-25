@@ -26,6 +26,16 @@ import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 
+interface LinksDict {
+  [serviceId: string]: string;
+}
+const links: LinksDict = {
+  "Azure Functions":
+    "[Azure](https://portal.azure.com/#blade/WebsitesExtension/FunctionsIFrameBladeMain)",
+  "Cosmos DB":
+    "[Azure](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts)"
+};
+
 interface IStateProps {
   isTemplateGenerated: boolean;
   isTemplatesFailed: boolean;
@@ -127,7 +137,7 @@ const PostGenerationModal = ({
             <ReactMarkdown
               source={`${serviceTitle} ${formatMessage(
                 messages.deploymentSuccess
-              )}`}
+              )} ${links[serviceTitle]}`}
               key={`${messages.deploymentSuccess.defaultMessage}${idx}`}
               renderers={{ link: LinkRenderer }}
             />

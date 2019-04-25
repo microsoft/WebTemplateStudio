@@ -27,7 +27,7 @@ export const strings = defineMessages({
   },
   deploymentSuccess: {
     id: "postGenerationModal.success",
-    defaultMessage: "is deployed on [Azure](https://ms.portal.azure.com/)."
+    defaultMessage: "is deployed on"
   },
   isDeploying: {
     id: "postGenerationModal.isDeploying",
