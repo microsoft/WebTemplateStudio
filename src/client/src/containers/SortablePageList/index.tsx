@@ -113,7 +113,9 @@ const SortablePageList = (props: Props) => {
           className={classnames(styles.pageListContainer, styles.sidebarItem)}
         >
           <div className={styles.dropdownTitle}>
-            {props.intl!.formatMessage(messages.pages)}
+            {`${props.intl!.formatMessage(messages.pages)} (${
+              pages.length >= 0 ? pages.length : ""
+            })`}
           </div>
           <button
             className={styles.hideOrShow}
