@@ -1,8 +1,8 @@
 Web Template Studio is a [Visual Studio Code Extension](https://code.visualstudio.com/api) built in [Typescript](https://www.typescriptlang.org/)/[React.js](https://reactjs.org/). It leverages the templating engine ([Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio)) used by [Windows Template Studio](https://github.com/Microsoft/WindowsTemplateStudio). For more info on the terminology, please refer to the [terminology document](./terminology.md).
 
-([Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio)) serves both Web and Windows Template Studios in merging the templates selected by the user. For more information on Core Template Studio, refer to its [documentation](https://github.com/Microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md).
+[Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio) serves both Web and Windows Template Studios in merging the templates selected by the user. For more information on Core Template Studio, refer to its [documentation](https://github.com/Microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md).
 
-[Web Template studio](https://github.com/Microsoft/WebTemplateStudio) has two major components. The extension's backend (referred to as the extension), which is written in [Typescript](https://www.typescriptlang.org/) and the front-end wizard (referred to as the client), written in [React.tsx](https://www.typescriptlang.org/docs/handbook/jsx.html).
+[Web Template studio](https://github.com/Microsoft/WebTemplateStudio) has two major components. The extension's backend (referred to as the [extension](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/extension)), which is written in [Typescript](https://www.typescriptlang.org/) and the front-end wizard (referred to as the [client](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/client)), written in [React.tsx](https://www.typescriptlang.org/docs/handbook/jsx.html).
 
 Here is a diagram that illustrates the high level functionality of each of the components:
 
@@ -33,18 +33,19 @@ panel.webview.onDidReceiveMessage(
   message => {
     switch (message.command) {
       case "sendEmailCommand":
+        // message.payload.email = example@email.com
         return;
       // other commands
     }
   },
   undefined,
-  context.subscriptions
+  undefined
 );
 ```
 
     receives the email.
 
-    We receive all the commands from the extension in App.tsx and receive all the commands from the wizard in the controller.ts. You will find the documentation very helpful if you need more info on the WebView API.
+We receive all the commands from the extension in [App.tsx](https://github.com/Microsoft/WebTemplateStudio/blob/dev/src/client/src/App.tsx) and receive all the commands from the wizard in the [controller.ts](https://github.com/Microsoft/WebTemplateStudio/blob/dev/src/extension/src/controller.ts). You will find the documentation very helpful if you need more info on the Webview API.
 
 ## **Separating the UI from the Logic**:
 
@@ -54,8 +55,10 @@ We will briefly discuss the architecture of the extension and the wizard:
 
 ## **Client**:
 
-As previously mentioned, the client is written in React.js. It keeps track of the state using Redux. If you are not familiar with Redux, we suggest familiarizing yourself with it before you start development on the wizard.
+    As previously mentioned, the client is written in React.js. It keeps track of the state using Redux. If you are not familiar with Redux, we suggest familiarizing yourself with it before you start development on the wizard.
 
 ## **Extension**:
 
-TODO: Explain the architecture of the extension and the key concepts to contribute.
+    TODO: Explain the architecture of the extension and the key concepts to contribute.
+
+For more details about how to make specific contributions to the project (Adding templates, services, etc) please refer to the [FAQ](./faq.md) section.
