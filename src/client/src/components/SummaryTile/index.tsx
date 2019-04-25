@@ -83,7 +83,9 @@ const SummaryTile = ({
     setTitle(target.value);
   };
   const handleClick = () => {
-    setDisabled(false);
+    if (isEditable && !canDelete) {
+      setDisabled(false);
+    }
   };
   const handleFocusOut = () => {
     setDisabled(true);
