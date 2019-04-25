@@ -1,14 +1,14 @@
-Web Template Studio is a Visual Studio Code Extension built in Typescript/React.tsx. It leverages the templating engine (Core Template Studio) used by Windows Template Studio. For more info on the terminology, please refer to the terminology document.
+Web Template Studio is a [Visual Studio Code Extension](https://code.visualstudio.com/api) built in [Typescript](https://www.typescriptlang.org/)/[React.js](https://reactjs.org/). It leverages the templating engine ([Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio)) used by [Windows Template Studio](https://github.com/Microsoft/WindowsTemplateStudio). For more info on the terminology, please refer to the [terminology document](./terminology.md).
 
-Core Template Studio serves both Web and Windows Template Studios in merging the templates selected by the user. For more information on Core Template Studio, refer to its documentation.
+([Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio)) serves both Web and Windows Template Studios in merging the templates selected by the user. For more information on Core Template Studio, refer to its [documentation](https://github.com/Microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md).
 
-Web Template studio has two major components. The extension's backend (referred to as the extension), which is written in Typescript and the front-end wizard (referred to as the client), written in React.tsx.
+[Web Template studio](https://github.com/Microsoft/WebTemplateStudio) has two major components. The extension's backend (referred to as the extension), which is written in [Typescript](https://www.typescriptlang.org/) and the front-end wizard (referred to as the client), written in [React.tsx](https://www.typescriptlang.org/docs/handbook/jsx.html).
 
 Here is a diagram that illustrates the high level functionality of each of the components:
 
 ![Architecture Diagram](./arch-diagram.png)
 
-Before the extension is ready to run, the build script compiles the wizard's React code into javascript that gets injected into html, which then gets served using VSCode's Webview API. As the extension is launching, it starts up the Engine (which will by default run on PORT 9502) and updates the cache with the updated templates (if any where added). The Engine will keep listening to the extension's requests such as generation, etc.
+Before the extension is ready to run, the build script compiles the wizard's React code into javascript that gets injected into html, which then gets served using [VSCode's Webview API](https://code.visualstudio.com/api/extension-guides/webview). Visit [this page](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/install.md) to know more about how to run the extension. As the extension is launching, it starts up the Engine (which will by default run on PORT 9502) and updates the cache with the updated templates (if any were added). The Engine will keep listening to the extension's requests such as generation, etc.
 
 We will discuss the two components separately later. There are a few important concepts that will help you get started on development quickly:
 
@@ -44,7 +44,7 @@ panel.webview.onDidReceiveMessage(
 
     receives the email.
 
-    We receive all the commands from the extension in App.tsx and receive all the commands from the wizard in the controller.ts.
+    We receive all the commands from the extension in App.tsx and receive all the commands from the wizard in the controller.ts. You will find the documentation very helpful if you need more info on the WebView API.
 
 ## **Separating the UI from the Logic**:
 
@@ -57,3 +57,5 @@ We will briefly discuss the architecture of the extension and the wizard:
 As previously mentioned, the client is written in React.js. It keeps track of the state using Redux. If you are not familiar with Redux, we suggest familiarizing yourself with it before you start development on the wizard.
 
 ## **Extension**:
+
+TODO: Explain the architecture of the extension and the key concepts to contribute.
