@@ -145,7 +145,7 @@ const AzureFunctionsSelection = ({
                 functionApp.functionNames.map(
                   (functionName: IFunctionName, idx: number) => (
                     <DraggableSidebarItem
-                      key={functionApp.appName + idx.toString()}
+                      key={functionApp.appName.value + idx.toString()}
                       closeSvgUrl={getSvg.getCancelSvg()}
                       withLargeIndent={true}
                       azureFunctionName={functionName}

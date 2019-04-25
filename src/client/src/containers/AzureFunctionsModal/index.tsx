@@ -239,7 +239,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         });
       }, 700);
     }
-  }, [azureFunctionsFormData.appName]);
+  }, [azureFunctionsFormData.appName.value]);
 
   React.useEffect(() => {
     if (props.selection) {
