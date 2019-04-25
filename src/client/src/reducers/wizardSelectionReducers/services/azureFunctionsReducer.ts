@@ -58,6 +58,14 @@ const initialState = {
   }
 };
 
+const getFunctionNames = (functionNames: IFunctionName[]): string[] => {
+  const names: string[] = [];
+  functionNames.forEach((functionName: IFunctionName) => {
+    names.push(functionName.title);
+  });
+  return names;
+};
+
 const createFunctionNames = (
   numFunctions: number,
   prevFunctionNames?: IFunctionName[]
@@ -71,18 +79,17 @@ const createFunctionNames = (
       const numFunctionsToCreate = numFunctions - prevFunctionNames.length;
       let lastNumberUsed = 1;
       for (let i = 1; i <= numFunctionsToCreate; i++) {
-        const title = `function${lastNumberUsed}`;
-        let functionName: IFunctionName = {
+        let title = `function${lastNumberUsed}`;
+        while (getFunctionNames(prevFunctionNames).includes(title)) {
+          lastNumberUsed++;
+          title = `function${lastNumberUsed}`;
+        }
+        prevFunctionNames.push({
           title,
           isValidTitle: true,
           error: "",
           id: title
-        };
-        while (prevFunctionNames.includes(functionName)) {
-          lastNumberUsed++;
-          functionName.title = `function${lastNumberUsed}`;
-        }
-        prevFunctionNames.push(functionName);
+        });
       }
     }
     return [...prevFunctionNames];
@@ -138,9 +145,11 @@ const azureFunctions = (
     case AZURE_TYPEKEYS.REMOVE_AZURE_FUNCTION:
       // hardcoding 0th index because only 1 function app can currently be added
       const newFunctionState = { ...state };
-      if (newFunctionState.selection[0].functionNames) {
-        newFunctionState.selection[0].functionNames.splice(action.payload, 1);
-        newFunctionState.selection[0].numFunctions--;
+      const { functionNames } = newFunctionState.selection[0];
+      if (functionNames) {
+        functionNames.splice(action.payload, 1);
+        newFunctionState.selection[0].functionNames = functionNames;
+        newFunctionState.selection[0].numFunctions = functionNames.length;
       }
       return newFunctionState;
     case AZURE_TYPEKEYS.SAVE_AZURE_FUNCTIONS_SETTINGS:
