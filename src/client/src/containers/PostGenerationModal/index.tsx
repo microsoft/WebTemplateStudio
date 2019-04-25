@@ -122,7 +122,6 @@ const PostGenerationModal = ({
     }
     return Object.keys(serviceStatus).map((service: string, idx: number) => {
       const serviceTitle = formatMessage(serviceStatus[service].title);
-      console.log(serviceTitle);
       if (serviceStatus[service].isSelected) {
         if (serviceStatus[service].isFailed) {
           return (
