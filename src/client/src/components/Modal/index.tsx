@@ -36,7 +36,8 @@ const getCustomStyles = (isPostGenModalOpen: boolean) => {
       borderRadius: "0px",
       width: isPostGenModalOpen ? "30%" : "40%",
       padding: "2.4%",
-      background: "var(--vscode-menu-background)"
+      background: "var(--vscode-menu-background)",
+      border: "0.5px solid var(--vscode-editor-foreground)"
     }
   };
 };

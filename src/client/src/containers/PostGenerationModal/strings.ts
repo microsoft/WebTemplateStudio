@@ -39,7 +39,7 @@ export const strings = defineMessages({
   },
   openInCode: {
     id: "postGenerationModal.openInCode",
-    defaultMessage: "Open Project in VSCode."
+    defaultMessage: "Open project in VSCode."
   },
   unknownStatus: {
     id: "postGenerationModal.unknownStatus",
