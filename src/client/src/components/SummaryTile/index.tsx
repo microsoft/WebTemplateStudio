@@ -180,13 +180,19 @@ const SummaryTile = ({
               <div className={styles.metaData}>
                 {
                   <React.Fragment>
-                    {subTitle
-                      ? subTitle
-                      : originalTitle && (
-                          <React.Fragment>
-                            <div>{originalTitle}</div>
-                          </React.Fragment>
-                        )}
+                    {subTitle ? (
+                      <input
+                        className={styles.subTitle}
+                        value={subTitle}
+                        disabled={true}
+                      />
+                    ) : (
+                      originalTitle && (
+                        <React.Fragment>
+                          <div>{originalTitle}</div>
+                        </React.Fragment>
+                      )
+                    )}
                     {author && (
                       <React.Fragment>
                         {author && (
