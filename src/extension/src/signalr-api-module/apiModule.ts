@@ -51,11 +51,11 @@ export class ApiModule {
       { cwd: apiWorkingDirectory }
     );
     if (ApiModule._process) {
-      ApiModule.StopApi();
+      ApiModule.KillProcess(spawnedProcess);
+    } else {
       ApiModule._process = spawnedProcess;
+      ApiModule._lastUsedPort = port;
     }
-
-    ApiModule._lastUsedPort = port;
   }
 
   public static async ExecuteApiCommand(
@@ -84,16 +84,20 @@ export class ApiModule {
 
   public static StopApi() {
     if (ApiModule._process) {
-      if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
-        let pid = ApiModule._process.pid;
-        let spawn = require("child_process").spawn;
-        spawn("taskkill", ["/pid", pid, "/f", "/t"]);
-      } else {
-        ApiModule._process.kill("SIGKILL");
-      }
+      ApiModule.KillProcess(ApiModule._process);
     }
 
     ApiModule._lastUsedPort = undefined;
     ApiModule._process = undefined;
+  }
+
+  private static KillProcess(processToKill: ChildProcess) {
+    if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
+      let pid = processToKill.pid;
+      let spawn = require("child_process").spawn;
+      spawn("taskkill", ["/pid", pid, "/f", "/t"]);
+    } else {
+      processToKill.kill("SIGKILL");
+    }
   }
 }
