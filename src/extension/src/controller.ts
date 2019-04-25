@@ -194,6 +194,13 @@ export class Controller {
     this.reactPanelContext.postMessageWebview(responsePayload);
   }
 
+  showReactPanel() {
+    ReactPanel.createOrShow(
+      this.context.extensionPath,
+      this.routingMessageReceieverDelegate
+    );
+  }
+
   dispose() {
     ApiModule.StopApi();
   }
