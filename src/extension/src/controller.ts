@@ -195,10 +195,12 @@ export class Controller {
   }
 
   showReactPanel() {
-    ReactPanel.createOrShow(
-      this.context.extensionPath,
-      this.routingMessageReceieverDelegate
-    );
+    if (ReactPanel.currentPanel) {
+      ReactPanel.createOrShow(
+        this.context.extensionPath,
+        this.routingMessageReceieverDelegate
+      );
+    }
   }
 
   dispose() {

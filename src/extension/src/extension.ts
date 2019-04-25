@@ -9,7 +9,6 @@ export function activate(context: vscode.ExtensionContext) {
       async () => {
         if (controller) {
           controller.showReactPanel();
-          vscode.window.showInformationMessage("Wizard is already running.");
           return;
         }
         controller = new Controller(context, Date.now());
