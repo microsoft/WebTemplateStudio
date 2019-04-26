@@ -14,8 +14,8 @@ We will discuss the two components separately later. There are a few important c
 
 ## **Communication**
 
-    The wizard runs in an isolated environment, and mimics how applications run on a browser. For example, the wizard does not have access to the local storage of the user, or any of the OS's resources/actions. For this reason, most of the logic is done in the extension. The wizard communicates with the extension using the WebView API, with a command defined for each function (look at the extension's constants file and the wizard's constants file to see the currently defined commands).
-    For example, if we want to send the email of a user from the extension to the wizard, you can use the vscode object to do so:
+The wizard runs in an isolated environment, and mimics how applications run on a browser. For example, the wizard does not have access to the local storage of the user, or any of the OS's resources/actions. For this reason, most of the logic is done in the extension. The wizard communicates with the extension using the WebView API, with a command defined for each function (look at the extension's constants file and the wizard's constants file to see the currently defined commands).
+For example, if we want to send the email of a user from the extension to the wizard, you can use the vscode object to do so:
 
 ```js
 vscode.postMessage({
@@ -49,16 +49,16 @@ We receive all the commands from the extension in [App.tsx](https://github.com/M
 
 ## **Separating the UI from the Logic**:
 
-    One of our main concerns is increasing the speed of the wizard and making it as light as possible. Therefore, the wizard does not perform any expensive computations, and does not make any API requests. Most of these actions are done in the extension. So as the user navigates through the wizard, the selections are validated in the wizard and stored. When the user clicks generate, these selections will then be sent to the extension, which will deal with them synchronously. The extension starts with the templates (if any were selected), which will get sent to the Engine (Core Template Studio). After their successful generation, the extension uses Azure SDK to deploy the resources if the user selects any.
+One of our main concerns is increasing the speed of the wizard and making it as light as possible. Therefore, the wizard does not perform any expensive computations, and does not make any API requests. Most of these actions are done in the extension. So as the user navigates through the wizard, the selections are validated in the wizard and stored. When the user clicks generate, these selections will then be sent to the extension, which will deal with them synchronously. The extension starts with the templates (if any were selected), which will get sent to the Engine (Core Template Studio). After their successful generation, the extension uses Azure SDK to deploy the resources if the user selects any.
 
 We will briefly discuss the architecture of the extension and the wizard:
 
 ## **Client**:
 
-    As previously mentioned, the client is written in React.js. It keeps track of the state using Redux. If you are not familiar with Redux, we suggest familiarizing yourself with it before you start development on the wizard.
+As previously mentioned, the client is written in React.js. It keeps track of the state using Redux. If you are not familiar with Redux, we suggest familiarizing yourself with it before you start development on the wizard.
 
 ## **Extension**:
 
-    TODO: Explain the architecture of the extension and the key concepts to contribute.
+TODO: Explain the architecture of the extension and the key concepts to contribute.
 
 For more details about how to make specific contributions to the project (Adding templates, services, etc) please refer to the [FAQ](./faq.md) section.
