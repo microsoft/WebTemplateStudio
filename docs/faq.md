@@ -20,4 +20,4 @@
    If you are not familiar with React-Redux. We suggest familarizing yourself with it before contributing to the wizard.
    To add a card for a service, you need to define that option in azureServiceOptions. We suggest you use the wizard a few times in the dev environment to understand the workflow of adding a service in the wizard.
 
-   The high level description is the objects in azureServiceOptions get mapped to the Card component. The mapping takes place in AzureSubscriptions container. We recommend you add a details page to every service since our target audience includes beginner developers.
+   At a high level is the objects in azureServiceOptions get mapped to the Card component. The mapping takes place in AzureSubscriptions container. We recommend you add a details page to every service since our target audience includes beginner developers.
