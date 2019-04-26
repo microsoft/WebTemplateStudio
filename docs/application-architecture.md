@@ -66,4 +66,4 @@ To communicate with the user-facing React Wizard, VS Code extension API exposes 
 
 The controller acts as a router to and for behavior. The flow of command from client starts when the `postMessage()` gets called in the client and the reactpanel object in the extension receives it. With the argument payload `message: any` from the client, there is a property specified within message called `module`. This tells the controller which service module the message payload should be routed to. 
 
-For more details about how to make specific contributions to the project (Adding templates, services, etc) please refer to the [FAQ](./faq.md) section.
+For more details about how to make specific contributions to the project (adding templates, services, etc.) please refer to the [FAQ](./faq.md) section.
