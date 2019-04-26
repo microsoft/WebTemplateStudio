@@ -96,20 +96,20 @@ The extension does [log basic telemetry](docs/telemetry.md) for what is being se
 
 **Developer Interns**
 
-[Kai Bailey](https://www.linkedin.com/in/kai-bailey/),
-[Sahil Tara](https://www.linkedin.com/in/sahiltara/),
 [Amr Sharaf](https://www.linkedin.com/in/amr-sharaf/),
-[Trevor Ngo](https://www.linkedin.com/in/trevor-ngo-vy/),
 [Danish Dua](https://www.linkedin.com/in/dandua98/),
-[Kelly Ng](https://www.linkedin.com/in/ngkelly3/)
+[Kai Bailey](https://www.linkedin.com/in/kai-bailey/),
+[Kelly Ng](https://www.linkedin.com/in/ngkelly3/),
+[Sahil Tara](https://www.linkedin.com/in/sahiltara/),
+[Trevor Ngo](https://www.linkedin.com/in/trevor-ngo-vy/)
 
 **Coaches**
 
-[Tejbir Sodhan](https://www.linkedin.com/in/tejbirsodhan/),
 [Kirill Shchetynin](https://github.com/KirillShchetinin),
-[Mohannad Abwah](https://www.linkedin.com/in/mohannad-abwah-1156944a/),
 [Lucas Wang](https://www.linkedin.com/in/uxfool/),
-[Mark Schramm](https://www.linkedin.com/in/markschramm/)
+[Mark Schramm](https://www.linkedin.com/in/markschramm/),
+[Mohannad Abwah](https://www.linkedin.com/in/mohannad-abwah-1156944a/),
+[Tejbir Sodhan](https://www.linkedin.com/in/tejbirsodhan/)
 
 **Sponsor**
 
