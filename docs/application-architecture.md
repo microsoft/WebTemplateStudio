@@ -15,7 +15,7 @@ The two components will be discussed separately later. There are a few important
 ## **Communication**
 
 The wizard runs in an isolated environment, and mimics how applications run on a browser. For example, the wizard does not have access to the local storage of the user, or any of the OS's resources/actions. For this reason, most of the logic is done in the extension. The wizard communicates with the extension using the WebView API, with a command defined for each function (look at the extension's constants file and the wizard's constants file to see the currently defined commands).
-For example, if we want to send the email of a user from the extension to the wizard, you can use the vscode object to do so:
+For example, if we want to send the email of a user from the extension to the wizard, you can use the VSCode object to do so:
 
 ```js
 vscode.postMessage({
