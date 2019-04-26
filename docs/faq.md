@@ -2,7 +2,7 @@
 
 ## **FAQs**:
 
-1. **How can I add functionality for another Azure cloud service like SQL Server?**
+1. **How can I add functionality for another Azure Cloud Service like SQL Server?**
 
    Before you start working on a service, make sure it does not conflict with any of our contribution [guidelines](https://github.com/Microsoft/WebTemplateStudio/blob/dev/CONTRIBUTING.md). To implement the functionality of a new service in the extension, make sure you familiarize yourself with how Cosmos DB is deployed in the [AzureServices](https://github.com/Microsoft/WebTemplateStudio/blob/dev/src/extension/src/azure/azureServices.ts) class. Typically, every service will have a directory with its name (for example azure-sql) in the [azure](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/extension/src/azure) directory (assuming it is an Azure Service). The class should define functions that handle the service's deployment details. You should then define a function in AzureServices class that deals with the deployment (for example deploySQLServer). Since this function will be called on a command, it needs to implement the interface for command functions.
 
