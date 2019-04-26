@@ -2,7 +2,7 @@ Web Template Studio is a [Visual Studio Code Extension](https://code.visualstudi
 
 [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio) serves both Web and Windows Template Studios in merging the templates selected by the user. For more information on Core Template Studio, refer to its [documentation](https://github.com/Microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md).
 
-[Web Template studio](https://github.com/Microsoft/WebTemplateStudio) has two major components. The extension's backend (referred to as the [extension](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/extension)), which is written in [Typescript](https://www.typescriptlang.org/) and the front-end wizard (referred to as the [client](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/client)), written in [React.tsx](https://www.typescriptlang.org/docs/handbook/jsx.html).
+[Web Template Studio](https://github.com/Microsoft/WebTemplateStudio) has two major components. The extension's backend (referred to as the [extension](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/extension)), which is written in [Typescript](https://www.typescriptlang.org/) and the front-end wizard (referred to as the [client](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/client)), written in [React.tsx](https://www.typescriptlang.org/docs/handbook/jsx.html).
 
 Here is a diagram that illustrates the high level functionality of each of the components:
 
