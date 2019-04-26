@@ -12,7 +12,7 @@ import { SyncCommand } from "./syncCommand";
 import * as portfinder from "portfinder";
 
 export class ApiModule {
-  private static _processes: ChildProcess[] = [];
+  private static _process: ChildProcess | undefined;
   private static _lastUsedPort: number | undefined;
 
   public static async StartApi(
@@ -50,9 +50,12 @@ export class ApiModule {
       [`--urls=http://localhost:${port}`],
       { cwd: apiWorkingDirectory }
     );
-
-    ApiModule._processes.push(spawnedProcess);
-    ApiModule._lastUsedPort = port;
+    if (ApiModule._process) {
+      ApiModule.KillProcess(spawnedProcess);
+    } else {
+      ApiModule._process = spawnedProcess;
+      ApiModule._lastUsedPort = port;
+    }
   }
 
   public static async ExecuteApiCommand(
@@ -80,17 +83,21 @@ export class ApiModule {
   }
 
   public static StopApi() {
-    ApiModule._processes.forEach(_process => {
-      if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
-        let pid = _process.pid;
-        let spawn = require("child_process").spawn;
-        spawn("taskkill", ["/pid", pid, "/f", "/t"]);
-      } else {
-        _process.kill("SIGKILL");
-      }
-    });
+    if (ApiModule._process) {
+      ApiModule.KillProcess(ApiModule._process);
+    }
 
     ApiModule._lastUsedPort = undefined;
-    ApiModule._processes = [];
+    ApiModule._process = undefined;
+  }
+
+  private static KillProcess(processToKill: ChildProcess) {
+    if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
+      let pid = processToKill.pid;
+      let spawn = require("child_process").spawn;
+      spawn("taskkill", ["/pid", pid, "/f", "/t"]);
+    } else {
+      processToKill.kill("SIGKILL");
+    }
   }
 }
