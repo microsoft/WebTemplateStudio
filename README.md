@@ -67,16 +67,54 @@ Security issues and bugs should be reported privately, via email, to the Microso
 
 This code is distributed under the terms and conditions of the [MIT license](LICENSE.md).
 
-# Privacy Statement
+## Privacy Statement
 
 The extension does [log basic telemetry](docs/telemetry.md) for what is being selected. We are in the process of creating a [Telemetry Data](docs/telemetryData.md) page to summarize usage trends. Please read the [Microsoft privacy statement](http://go.microsoft.com/fwlink/?LinkId=521839) for more information.
 
-## Frameworks and libraries in generated code not created by our team
+## Frameworks in Generated Code Not Created by Our Team
 
-**Frameworks**
+- [React](https://reactjs.org/)
+- [Create-React-App](https://github.com/facebook/create-react-app)
+- [Express](https://expressjs.com/)
+- [Express Generator](https://expressjs.com/en/starter/generator.html)
+- [Bootstrap](https://getbootstrap.com/)
+- [Angular](https://angular.io/)
+- [Angular CLI](https://angular.io/cli)
+- [Vue](https://vuejs.org/)
+- [Vue CLI](https://cli.vuejs.org/)
+- [Node.js](https://nodejs.org/en/)
 
-- [TBD](https://github.com/)
+## Acknowledgments
 
-**Libraries**
+**Design Intern**
 
-- [TBD](https://github.com/)
+[Jimmy Hsu](https://www.linkedin.com/in/jimmy-hsu-650b7bbb/)
+
+**PM Intern**
+
+[Imho Traore](https://www.linkedin.com/in/imho-traore/)
+
+**Developer Interns**
+
+[Kai Bailey](https://www.linkedin.com/in/kai-bailey/),
+[Sahil Tara](https://www.linkedin.com/in/sahiltara/),
+[Amr Sharaf](https://www.linkedin.com/in/amr-sharaf/),
+[Trevor Ngo](https://www.linkedin.com/in/trevor-ngo-vy/),
+[Danish Dua](https://www.linkedin.com/in/dandua98/),
+[Kelly Ng](https://www.linkedin.com/in/ngkelly3/)
+
+**Coaches**
+
+[Tejbir Sodhan](https://www.linkedin.com/in/tejbirsodhan/),
+[Kirill Shchetynin](https://github.com/KirillShchetinin),
+[Mohannad Abwah](https://www.linkedin.com/in/mohannad-abwah-1156944a/),
+[Lucas Wang](https://www.linkedin.com/in/uxfool/),
+[Mark Schramm](https://www.linkedin.com/in/markschramm/)
+
+**Sponsor**
+
+[Clint Rutkas](https://www.linkedin.com/in/clintrutkas/)
+
+**Program Manager**
+
+[Stephane Morichere-Matte](https://www.linkedin.com/in/stephanemoricherematte/)
