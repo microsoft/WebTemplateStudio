@@ -3,6 +3,7 @@ import * as path from "path";
 import { CONSTANTS } from "./constants";
 import { ApiModule } from "./signalr-api-module/apiModule";
 import { Logger } from "./utils/logger";
+import { deactivate } from "./extension";
 
 /**
  * Manages react webview panels
@@ -107,6 +108,7 @@ export class ReactPanel {
         x.dispose();
       }
     }
+    deactivate();
   }
 
   private _getHtmlForWebview() {
