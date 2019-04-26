@@ -64,6 +64,6 @@ The extension back-end is responsible for running all services pertaining to the
 
 To communicate with the user-facing React Wizard, VS Code extension API exposes the `PostMessage()` function to communicate with the extension and vice versa. The behavior of a received message from the wizard is defined in a function delegate that gets passed to the ReactPanel from the controller.
 
-The controller acts as a router to and for behavior. The flow of command from client starts when the `postMessage()` gets called in the client and the reactpanel object in the extension receives it. With the argument payload `message: any` from the client, there is a property specified within message called `module`. This tells the controller to which service module the message payload should be routed. 
+The controller acts as a router to and for behavior. The flow of command from client starts when the `postMessage()` gets called in the client and the reactpanel object in the extension receives it. With the argument payload `message: any` from the client, there is a property specified within message called `module`. This tells the controller which service module the message payload should be routed to. 
 
 For more details about how to make specific contributions to the project (Adding templates, services, etc) please refer to the [FAQ](./faq.md) section.
