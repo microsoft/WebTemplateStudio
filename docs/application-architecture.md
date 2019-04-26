@@ -10,7 +10,7 @@ Here is a diagram that illustrates the high level functionality of each of the c
 
 Before the extension is ready to run, the build script compiles the wizard's React code into JavaScript that gets injected into html, which then gets served using [VSCode's Webview API](https://code.visualstudio.com/api/extension-guides/webview). Visit [this page](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/install.md) to know more about how to run the extension. As the extension is launching, it starts up the Engine (which will by default run on PORT 9502) and updates the cache with the updated templates (if any were added). The Engine will keep listening to the extension's requests such as generation, etc.
 
-We will discuss the two components separately later. There are a few important concepts that will help you get started on development quickly:
+The two components will be discussed separately later. There are a few important concepts that will help you get started on development quickly:
 
 ## **Communication**
 
