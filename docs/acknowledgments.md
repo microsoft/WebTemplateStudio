@@ -6,10 +6,6 @@ Microsoft Web Template Studio was initially built by a great group of interns fr
 
 [Jimmy Hsu](https://www.linkedin.com/in/jimmy-hsu-650b7bbb/)
 
-**PM Intern**
-
-[Imho Traore](https://www.linkedin.com/in/imho-traore/)
-
 **Developer Interns**
 
 [Amr Sharaf](https://www.linkedin.com/in/amr-sharaf/),
@@ -18,6 +14,10 @@ Microsoft Web Template Studio was initially built by a great group of interns fr
 [Kelly Ng](https://www.linkedin.com/in/ngkelly3/),
 [Sahil Tara](https://www.linkedin.com/in/sahiltara/),
 [Trevor Ngo](https://www.linkedin.com/in/trevor-ngo-vy/)
+
+**Project Manager Intern**
+
+[Imho Traore](https://www.linkedin.com/in/imho-traore/)
 
 **Coaches**
 
