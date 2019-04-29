@@ -29,5 +29,5 @@ Microsoft Web Template Studio was initially built by a great group of interns fr
 
 **Program Managers**
 
-[Clint Rutkas](https://www.linkedin.com/in/clintrutkas/)
+[Clint Rutkas](https://www.linkedin.com/in/clintrutkas/),
 [Stephane Morichere-Matte](https://www.linkedin.com/in/stephanemoricherematte/)
