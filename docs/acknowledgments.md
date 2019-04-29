@@ -1,6 +1,6 @@
-* Acknowledgments
+# Acknowledgments
 
-Microsoft Web Template Studio was initially built by a great group of interns from the Microsoft Garage.
+Microsoft Web Template Studio was initially built by a great group of interns from the Microsoft Garage.  This full list of individuals that helped build the project during the first quarter of 2019.
 
 **Design Intern**
 
