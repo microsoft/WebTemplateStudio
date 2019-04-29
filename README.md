@@ -86,35 +86,4 @@ The extension does [log basic telemetry](docs/telemetry.md) for what is being se
 
 ## Acknowledgments
 
-**Design Intern**
-
-[Jimmy Hsu](https://www.linkedin.com/in/jimmy-hsu-650b7bbb/)
-
-**PM Intern**
-
-[Imho Traore](https://www.linkedin.com/in/imho-traore/)
-
-**Developer Interns**
-
-[Amr Sharaf](https://www.linkedin.com/in/amr-sharaf/),
-[Danish Dua](https://www.linkedin.com/in/dandua98/),
-[Kai Bailey](https://www.linkedin.com/in/kai-bailey/),
-[Kelly Ng](https://www.linkedin.com/in/ngkelly3/),
-[Sahil Tara](https://www.linkedin.com/in/sahiltara/),
-[Trevor Ngo](https://www.linkedin.com/in/trevor-ngo-vy/)
-
-**Coaches**
-
-[Kirill Shchetynin](https://github.com/KirillShchetinin),
-[Lucas Wang](https://www.linkedin.com/in/uxfool/),
-[Mark Schramm](https://www.linkedin.com/in/markschramm/),
-[Mohannad Abwah](https://www.linkedin.com/in/mohannad-abwah-1156944a/),
-[Tejbir Sodhan](https://www.linkedin.com/in/tejbirsodhan/)
-
-**Sponsor**
-
-[Clint Rutkas](https://www.linkedin.com/in/clintrutkas/)
-
-**Program Manager**
-
-[Stephane Morichere-Matte](https://www.linkedin.com/in/stephanemoricherematte/)
+Microsoft Web Template Studio was [initially created by Microsoft Garage interns](docs/acknowledgments.md).  We hope many more continue with the project 
