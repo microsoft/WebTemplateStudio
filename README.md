@@ -1,8 +1,8 @@
-# Web Template Studio
+# Microsoft Web Template Studio
 
 <img src="https://img.shields.io/badge/platform-linux--64%20%7C%20win--64%20%7C%20osx--64%20-lightgrey.svg" alt="Platforms Supported: MacOSX, Linux, Windows"/> <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: We are using the MIT License"></a> <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg" alt="We are welcoming PRS!"></a>
 
-Web Template Studio (_WebTS_) is a Visual Studio Code Extension that accelerates the creation of new web applications using a
+Microsoft Web Template Studio (_WebTS_) is a Visual Studio Code Extension that accelerates the creation of new web applications using a
 wizard-based experience. WebTS enables developers to generate boilerplate code for a web application
 by choosing between different front-end frameworks, back-end frameworks, pages and cloud services.
 The resulting web app is well-formed, readable code that incorporates cloud services on
@@ -86,35 +86,4 @@ The extension does [log basic telemetry](docs/telemetry.md) for what is being se
 
 ## Acknowledgments
 
-**Design Intern**
-
-[Jimmy Hsu](https://www.linkedin.com/in/jimmy-hsu-650b7bbb/)
-
-**PM Intern**
-
-[Imho Traore](https://www.linkedin.com/in/imho-traore/)
-
-**Developer Interns**
-
-[Amr Sharaf](https://www.linkedin.com/in/amr-sharaf/),
-[Danish Dua](https://www.linkedin.com/in/dandua98/),
-[Kai Bailey](https://www.linkedin.com/in/kai-bailey/),
-[Kelly Ng](https://www.linkedin.com/in/ngkelly3/),
-[Sahil Tara](https://www.linkedin.com/in/sahiltara/),
-[Trevor Ngo](https://www.linkedin.com/in/trevor-ngo-vy/)
-
-**Coaches**
-
-[Kirill Shchetynin](https://github.com/KirillShchetinin),
-[Lucas Wang](https://www.linkedin.com/in/uxfool/),
-[Mark Schramm](https://www.linkedin.com/in/markschramm/),
-[Mohannad Abwah](https://www.linkedin.com/in/mohannad-abwah-1156944a/),
-[Tejbir Sodhan](https://www.linkedin.com/in/tejbirsodhan/)
-
-**Sponsor**
-
-[Clint Rutkas](https://www.linkedin.com/in/clintrutkas/)
-
-**Program Manager**
-
-[Stephane Morichere-Matte](https://www.linkedin.com/in/stephanemoricherematte/)
+Microsoft Web Template Studio was [initially created by Microsoft Garage interns](docs/acknowledgments.md).  We hope many more continue with the project 
