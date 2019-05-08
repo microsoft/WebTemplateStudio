@@ -113,12 +113,6 @@ const LeftSidebar = (props: Props) => {
               );
             })}
           </div>
-          <a href="https://aka.ms/give-feedback" className={styles.feedback}>
-            <FormattedMessage
-              id="leftSidebar.giveFeedback"
-              defaultMessage="Give feedback"
-            />
-          </a>
         </nav>
       )}
     </React.Fragment>
