@@ -57,6 +57,8 @@ import { AppState } from "./reducers";
 import { IOption } from "./types/option";
 import { setPreviewStatusAction } from "./actions/wizardContentActions/setPreviewStatus";
 import { setPortAction } from "./actions/wizardContentActions/setPort";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "./actions/ActionType";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -261,7 +263,7 @@ class App extends React.Component<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, void, RootAction>): IDispatchProps => ({
   getVSCodeApi: () => {
     dispatch(getVSCodeApi());
   },
