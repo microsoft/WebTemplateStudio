@@ -1,5 +1,5 @@
 import * as React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
 
 import LoginCard from "../../components/LoginCard";
@@ -31,7 +31,7 @@ interface IAzureLoginProps {
   vscode: any;
 }
 
-type Props = IDispatchProps & IAzureLoginProps & InjectedIntlProps;
+type Props = IDispatchProps & IAzureLoginProps & InjectedIntlProps & RouteComponentProps;
 
 class AzureLogin extends React.Component<Props> {
   handleClick = () => {
