@@ -51,7 +51,7 @@ export const strings = defineMessages({
   },
   help: {
     id: "postGenerationModal.help",
-    defaultMessage: "Report an issue"
+    defaultMessage: "Give Feedback or Report an issue"
   },
   azureServices: {
     id: "postGenerationModal.azureServices",
