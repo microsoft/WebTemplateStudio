@@ -5,7 +5,7 @@ export interface IGetSubscription {
   payload: any;
 }
 
-export const getSubscriptionData = (subscriptionData: any) => ({
+export const getSubscriptionData = (subscriptionData: any): IGetSubscription => ({
   type: AZURE_TYPEKEYS.GET_SUBSCRIPTION_DATA,
   payload: subscriptionData
 });
