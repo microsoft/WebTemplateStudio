@@ -8,7 +8,7 @@ Also, you'll need [_Node_](https://nodejs.org/en/download/) and _npm_/[_yarn_](h
 ## Where is the offical release?
 We are currently early in our development phase and only have a dev nightly on Visual Studio Marketplace.
 
-## Nightly dev branch build
+## Installing the nightly dev branch build _perferred_
 Head over to [Visual Studio Marketplace’s Web Template Studio page](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WebTemplateStudio-dev-nightly) and click “[install](vscode:extension/WASTeamAccount.WebTemplateStudio-dev-nightly)” 😊.  
 
 ## Installing the latest Microsoft Web Template Studio release manually
