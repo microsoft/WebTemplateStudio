@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .disableHover,
@@ -13,7 +14,8 @@
   padding: 11px;
   justify-content: space-between;
   width: 100%;
-  margin-right: 10px;
+  margin-right: 11px;
+  box-sizing: border-box;
 }
 
 .summaryTileContainer:hover {
@@ -84,6 +86,15 @@
 .tileInput {
   font-size: 18px;
   font-weight: bold;
+  background-color: var(--vscode-sideBar-background);
+  border: none;
+  max-width: 100%;
+  color: var(--vscode-editor-foreground);
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.subTitle {
   background-color: var(--vscode-sideBar-background);
   border: none;
   max-width: 100%;

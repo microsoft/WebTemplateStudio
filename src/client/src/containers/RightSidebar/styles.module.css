@@ -15,7 +15,7 @@
 .rightViewCropped {
   width: 400px;
   background-color: var(--vscode-editor-background);
-  border-left: 0.5px solid #555555;
+  border-left: 0.5px solid #7f7f7f;
   box-sizing: border-box;
 }
 
@@ -24,10 +24,6 @@
   margin-top: 51px;
   margin-bottom: 53px;
   padding-bottom: 0px;
-}
-
-.dropdown {
-  background-color: red;
 }
 
 .dropdownTitle {

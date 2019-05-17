@@ -2,7 +2,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: 15%;
+  box-sizing: border-box;
+  margin-top: 51px;
+  margin-bottom: 53px;
+  padding-top: 10%;
+  overflow: auto;
 }
 
 .itemBorder {
@@ -26,9 +30,9 @@
   width: 350px;
   background-color: var(--vscode-editor-background);
   height: 100vh;
-  border-right: 0.5px solid #555555;
+  border-right: 0.5px solid #7f7f7f;
   box-sizing: border-box;
-  height: calc(100vh - 53px);
+  height: calc(100vh - 104px);
 }
 
 .feedback {
@@ -36,6 +40,7 @@
   color: var(--vscode-textLink-foreground);
   text-decoration: none;
   margin-bottom: 19px;
+  margin-top: 19px;
   font-size: 14px;
 }
 

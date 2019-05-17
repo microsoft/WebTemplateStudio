@@ -55,7 +55,7 @@ const About = ({ versions, intl }: Props) => {
         >
           <FormattedMessage
             id="about.reportAnIssue"
-            defaultMessage="Report an issue"
+            defaultMessage="Give Feedback or Report an issue"
           />
         </a>
       </p>

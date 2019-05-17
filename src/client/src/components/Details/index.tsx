@@ -118,7 +118,7 @@ const Details = ({
             <div>
               {detailInfo.author && (
                 <div className={classnames(styles.metaData, grid.row)}>
-                  <div className={classnames(styles.category, grid.col3)}>
+                  <div className={classnames(styles.category, styles.colWidth)}>
                     <FormattedMessage
                       id="details.author"
                       defaultMessage="Author:"
@@ -135,7 +135,10 @@ const Details = ({
               {detailInfo.licenses && (
                 <div className={classnames(styles.metaData, grid.row)}>
                   <div
-                    className={classnames(styles.licenseCategory, grid.col3)}
+                    className={classnames(
+                      styles.licenseCategory,
+                      styles.colWidth
+                    )}
                   >
                     <FormattedMessage
                       id="details.licenses"
@@ -170,7 +173,7 @@ const Details = ({
               )}
               {detailInfo.version && (
                 <div className={classnames(styles.metaData, grid.row)}>
-                  <div className={classnames(styles.category, grid.col3)}>
+                  <div className={classnames(styles.category, styles.colWidth)}>
                     <FormattedMessage
                       id="details.version"
                       defaultMessage="Version:"
