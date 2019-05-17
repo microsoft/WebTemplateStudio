@@ -117,8 +117,8 @@ export class ReactPanel {
       "react",
       "asset-manifest.json"
     ));
-    const mainScript = manifest["main.js"];
-    const mainStyle = manifest["main.css"];
+    const mainScript = manifest.files["main.js"];
+    const mainStyle = manifest.files["main.css"];
 
     const scriptPathOnDisk = vscode.Uri.file(
       path.join(this._extensionPath, "react", mainScript)
