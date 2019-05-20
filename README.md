@@ -24,6 +24,9 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 - [Getting started with the codebase](/docs/getting-started-developers.md)
 - [Terminology for developers](/docs/terminology.md)
 
+## Known Issues:
+- [#392](https://github.com/microsoft/WebTemplateStudio/issues/392) Linux build off code signing server has files MIA.
+
 ## Instruction To Use
 
 - Open **VSCode**
