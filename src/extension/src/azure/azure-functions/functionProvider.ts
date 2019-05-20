@@ -49,7 +49,7 @@ export function GetAvailableRuntimes(): RuntimeObject[] {
   return [
     {
       value: "node",
-      label: "Node.JS"
+      label: "JavaScript"
     }
   ];
 }
