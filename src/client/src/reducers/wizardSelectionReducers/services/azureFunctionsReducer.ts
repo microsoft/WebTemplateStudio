@@ -27,13 +27,14 @@ interface IAvailability {
 }
 
 export interface ISelectedAzureFunctionsService {
-  subscription: string;
-  resourceGroup: string;
-  appName: string;
-  runtimeStack: string;
-  location: string;
-  internalName: string;
-  numFunctions: number;
+  [key: string]: IDropDownOptionType | IFunctionName[] | undefined;
+  subscription: IDropDownOptionType;
+  resourceGroup: IDropDownOptionType;
+  appName: IDropDownOptionType;
+  runtimeStack: IDropDownOptionType;
+  location: IDropDownOptionType;
+  internalName: IDropDownOptionType;
+  numFunctions: IDropDownOptionType;
   functionNames?: IFunctionName[];
 }
 
@@ -149,7 +150,10 @@ const azureFunctions = (
       if (functionNames) {
         functionNames.splice(action.payload, 1);
         newFunctionState.selection[0].functionNames = functionNames;
-        newFunctionState.selection[0].numFunctions = functionNames.length;
+        newFunctionState.selection[0].numFunctions = {
+          label: functionNames.length,
+          value: functionNames.length
+        };
       }
       return newFunctionState;
     case AZURE_TYPEKEYS.SAVE_AZURE_FUNCTIONS_SETTINGS:
@@ -157,17 +161,17 @@ const azureFunctions = (
         ...initialState,
         selection: [
           {
-            subscription: action.payload.subscription.value,
-            resourceGroup: action.payload.resourceGroup.value,
-            location: action.payload.location.value,
-            runtimeStack: action.payload.runtimeStack.value,
-            internalName: action.payload.internalName.value,
-            numFunctions: action.payload.numFunctions.value,
+            subscription: action.payload.subscription,
+            resourceGroup: action.payload.resourceGroup,
+            location: action.payload.location,
+            runtimeStack: action.payload.runtimeStack,
+            internalName: action.payload.internalName,
+            numFunctions: action.payload.numFunctions,
             functionNames: createFunctionNames(
               action.payload.numFunctions.value,
               state.selection[0] ? state.selection[0].functionNames : undefined
             ),
-            appName: action.payload.appName.value
+            appName: action.payload.appName
           }
         ]
       };

@@ -106,12 +106,12 @@ const getServices = (selection: SelectionState): RowType[] => {
   const servicesRows = [];
   if (!_.isEmpty(azureFunctions.selection)) {
     servicesRows.push({
-      title: azureFunctions.selection[0].appName,
+      title: azureFunctions.selection[0].appName.value,
       originalTitle: "Azure Functions",
       company: "Microsoft",
-      svgUrl: getSvgUrl(azureFunctions.selection[0].internalName),
+      svgUrl: getSvgUrl(azureFunctions.selection[0].internalName.value),
       functionNames: azureFunctions.selection[0].functionNames,
-      internalName: azureFunctions.selection[0].internalName,
+      internalName: azureFunctions.selection[0].internalName.value,
       version: "1.0"
     });
   }
