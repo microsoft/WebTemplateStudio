@@ -22,9 +22,8 @@ import {
   InjectedIntlProps,
   defineMessages
 } from "react-intl";
-import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import { validateName } from "../../utils/validateName";
 

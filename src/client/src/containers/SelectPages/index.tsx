@@ -74,7 +74,7 @@ class SelectPages extends React.Component<Props> {
   }
 
   public componentDidUpdate(newProps: ISelectPagesProps) {
-    if (newProps.options.length == 0) {
+    if (newProps.options.length === 0) {
       const {
         getPages,
         selectedBackend,

@@ -69,18 +69,6 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   REST_API: "RestAPI"
 };
 
-const PAGE_NAME_ERROR_MESSAGES = {
-  DUPLICATE_NAME: "Name has to be unique",
-  INVALID_REGEX:
-    "Name may only contain letters, numbers, spaces, dashes or underscores",
-  EMPTY_NAME: "Name cannot be empty",
-  NAME_DOES_NOT_START_WITH_LETTER: "Name may only start with letters"
-};
-
-const EMPTY_FIELD = (fieldId: string) => {
-  return `${fieldId} field cannot be empty`;
-};
-
 const EXTENSION_MODULES = {
   AZURE: "Azure",
   GENERATE: "GenerateExperience",

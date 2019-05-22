@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -13,10 +12,6 @@ import styles from "./styles.module.css";
 
 import { RowType } from "../../types/rowType";
 
-import {
-  WIZARD_CONTENT_INTERNAL_NAMES,
-  SERVICE_KEYS
-} from "../../utils/constants";
 import Title from "../../components/Title";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
