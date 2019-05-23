@@ -46,7 +46,7 @@ type Props = IDispatchProps & IProps & IStateProps & InjectedIntlProps;
 
 const messages = defineMessages({
   duplicateFunctionName: {
-    id: "functionName.duplicateName",
+    id: "summarySection.duplicateName",
     defaultMessage: "Function name has to be unique"
   }
 });
