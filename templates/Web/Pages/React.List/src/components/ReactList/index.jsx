@@ -59,7 +59,7 @@ export default class ReactList extends Component {
   }
 
   handleAddListItem(e) {
-    e.preventDeafult()
+    e.preventDefault()
     // Warning Pop Up if the user submits an empty message
     if (!this.state.textField) {
       this.setState({
