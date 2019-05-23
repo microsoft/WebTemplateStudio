@@ -166,7 +166,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       runtimeStack: [
         {
           value: "node",
-          label: "node"
+          label: "JavaScript"
         }
       ],
       subscription: props.subscriptions,
@@ -190,14 +190,14 @@ const AzureFunctionsResourceModal = (props: Props) => {
     updateForm(updatedFunctionsForm);
   };
 
-  const handleDropdown = (infoLabel: string, value: string) => {
+  const handleDropdown = (infoLabel: string, option: IDropDownOptionType) => {
     // Send command to extension on change
     // Populate resource groups on received commands
     let updatedForm = {
       ...azureFunctionsFormData,
       [infoLabel]: {
-        value: value,
-        label: value
+        value: option.value,
+        label: option.label
       }
     };
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
@@ -210,7 +210,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
         track: true,
-        subscription: value
+        subscription: option.value
       });
       updatedForm = {
         ...updatedForm,
@@ -242,7 +242,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         });
       }, 700);
     }
-  }, [azureFunctionsFormData.appName]);
+  }, [azureFunctionsFormData.appName.value]);
 
   React.useEffect(() => {
     if (props.selection) {
@@ -326,7 +326,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           ariaLabel={ariaLabel}
           options={options}
           handleChange={option => {
-            handleDropdown(formSectionId, option.value);
+            handleDropdown(formSectionId, option);
           }}
           value={
             azureFunctionsFormData[formSectionId].value
