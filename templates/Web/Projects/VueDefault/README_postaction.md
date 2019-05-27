@@ -9,9 +9,9 @@ In the root directory of the project...
 //{[{
 ### Adding a New Page
 
-1. Create a folder in `/src/components` with your react components.
-2. Add a route for your page to `/src/App.js`.
-3. Add a button to the navigation bar in `/src/components/NavBar/index.js`.
+1. Create a file in `/src/views` with your Vue Template.
+2. Add a route for your page to `/src/router/index.js`.
+3. Add a button to the navigation bar in `/src/components/NavBar.vue`.
 //}]}
 ### Deployment
 
@@ -26,7 +26,7 @@ The generated templates can be deployed to Azure App Service using the following
 
 ## File Structure
 //{[{
-The front-end is based on [create-react-app](https://github.com/facebook/create-react-app).
+The front-end is based on [Vue CLI](https://cli.vuejs.org/).
 //}]}
 The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/.
 
@@ -35,17 +35,21 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 //^^
 /{[{
 ├── src - Vue front-end
-│ ├── components - React components for each page
-│ ├── App.jsx - React routing
-│ └── index.jsx - React root component
+│   ├── assets/                     - Default images
+│   ├── components/                 - Common Vue components shared between different views
+│   ├── router/                     - Vue routes
+│   ├── views/                      - The main pages displayed
+│   ├── constants.js                - Contains constants for error messages and endpoints
+│   ├── App.vue                     - Base Vue template
+│   └── main.js                     - Root Vue Component
 //}]}
 └── README.md
 ```
 
 ## Additional Documentation
 //{[{
-- React - https://reactjs.org/
-- React Router - https://reacttraining.com/react-router/
+- Vue - https://vuejs.org/v2/guide/
+- Vue Router - https://router.vuejs.org/
 //}]}
 - Bootstrap CSS - https://getbootstrap.com/
 
