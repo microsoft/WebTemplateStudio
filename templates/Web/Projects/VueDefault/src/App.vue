@@ -1,20 +1,20 @@
 <template>
   <div>
-    <NavBar/>
+    <TheNavBar/>
     <router-view></router-view>
-    <Footer/>
+    <TheFooter/>
   </div>
 </template>
 
 <script>
-import NavBar from "./components/NavBar.vue";
-import Footer from "./components/Footer.vue";
+import TheNavBar from "./components/TheNavBar.vue";
+import TheFooter from "./components/TheFooter.vue";
 
 export default {
   name: "app",
   components: {
-    NavBar,
-    Footer
+    TheNavBar,
+    TheFooter
   }
 };
 </script>
