@@ -49,7 +49,7 @@ const COSMOS_APIS = {
 };
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
-  ANGULAR_JS: "AngularJS",
+  ANGULAR_JS: "Angular",
   AZURE: "wts.Feature.Azure",
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
