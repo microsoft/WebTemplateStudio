@@ -3,7 +3,7 @@
 export default function ListForm(props) {
   const { onAddListItem, textField, onChangeInputText } = props;
   return (
-    <div className="input-group my-3">
+    <form onSubmit={onAddListItem} className="input-group my-3">
       <input
         type="text"
         onChange={event => onChangeInputText(event, "textField")}
@@ -12,9 +12,9 @@ export default function ListForm(props) {
         placeholder="Add text here..."
         aria-label="Add text here..."
       />
-      <button className="btn btn-primary ml-2" onClick={onAddListItem}>
+      <button type="submit" className="btn btn-primary ml-2">
         Submit
       </button>
-    </div>
+    </form>
   );
 }
