@@ -73,7 +73,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'start': 'concurrently \"react-scripts start\" \"nodemon server/server.js\"', 'start-frontend': 'react-scripts start', 'build': 'react-scripts build', 'test': 'react-scripts test', 'eject': 'react-scripts eject'}",
+        "dict": "{'start': 'concurrently \"react-scripts start\" \"nodemon server/server.js\"', 'start-frontend': 'react-scripts start', 'build': 'react-scripts build && mv build server', 'test': 'react-scripts test', 'eject': 'react-scripts eject'}",
         "key": "scripts",
         "jsonPath": "package.json"
       },
