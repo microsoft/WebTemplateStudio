@@ -34,12 +34,10 @@ export abstract class WizardServant {
                 );
             } else {
                 try {
-                    let payloadResponse = classModule._commandBidding(
-                        messagePayload
-                    );
+                    return classModule._commandBidding(messagePayload);
                 } catch (error) {
                     // To ensure error gets logged and report an issue experience launches
-                    Telemetry.callWithTelemetryAndCatchHandleErrors(
+                    return Telemetry.callWithTelemetryAndCatchHandleErrors(
                         messagePayload.command,
                         async function(this: IActionContext) {
                             throw error;
