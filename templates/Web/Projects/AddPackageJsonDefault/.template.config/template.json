@@ -10,7 +10,7 @@
     "type": "project",
     "wts.type": "project",
     "wts.projecttype": "all",
-    "wts.frontendframework": "ReactJS|AngularJS",
+    "wts.frontendframework": "ReactJS|Angular",
     "wts.backendframework": "NodeJS",
     "wts.platform": "Web",
     "wts.version": "1.0.0",

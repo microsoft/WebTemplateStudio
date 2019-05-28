@@ -11,7 +11,7 @@
     "wts.type": "page",
     "wts.platform": "Web",
     "wts.projecttype": "FullStackWebApp",
-    "wts.frontendframework": "AngularJS",
+    "wts.frontendframework": "Angular",
     "wts.backendframework": "all",
     "wts.version": "1.0.0",
     "wts.displayOrder": "0",
