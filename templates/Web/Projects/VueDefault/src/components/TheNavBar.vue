@@ -1,4 +1,4 @@
-//TODO Web Template Studio: Add a new link in the NavBar for your page here.
+﻿//TODO Web Template Studio: Add a new link in the NavBar for your page here.
 // A skip link is included as an accesibility best practice. For more information visit https://www.w3.org/WAI/WCAG21/Techniques/general/G1.
 <template>
   <div>
