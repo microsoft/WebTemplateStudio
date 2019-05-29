@@ -5,6 +5,9 @@ import { ISelected } from "../types/selected";
 import getSvgUrl from "../utils/getSvgUrl";
 import { IPageCount } from "../reducers/wizardSelectionReducers/pageCountReducer";
 import { defineMessages } from "react-intl";
+import { IValidation } from "../reducers/wizardSelectionReducers/updateOutputPath";
+import { AppState } from "../reducers";
+import { SelectionState } from "../reducers/wizardSelectionReducers";
 
 export const messages = defineMessages({
   azureFunctionsOriginalTitle: {
@@ -16,9 +19,6 @@ export const messages = defineMessages({
     defaultMessage: "CosmosDB"
   }
 });
-import { IValidation } from "../reducers/wizardSelectionReducers/updateOutputPath";
-import { AppState } from "../reducers";
-import { SelectionState } from "../reducers/wizardSelectionReducers";
 
 const getWizardSelectionsSelector = (state: AppState): SelectionState =>
   state.selection;

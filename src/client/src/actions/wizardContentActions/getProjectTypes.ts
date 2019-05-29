@@ -5,7 +5,6 @@ import { getProjectTypesSuccess } from "./getProjectTypesSuccess";
 import getSvgUrl from "../../utils/getSvgUrl";
 import WizardContentActionType from "./wizardContentActionType";
 import { Dispatch } from "react";
-import { API } from "../../services/constants";
 
 // thunk
 export const getProjectTypesAction = (serverPort: number) => {

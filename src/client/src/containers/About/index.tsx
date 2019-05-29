@@ -1,7 +1,5 @@
-import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import { ILicenseObject } from "../../types/license";
 
 import styles from "./styles.module.css";
 import { getVersionsSelector } from "../../selectors/vscodeApiSelector";

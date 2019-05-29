@@ -2,7 +2,6 @@ import EngineAPIService from "../../services/EngineAPIService";
 import getSvgUrl from "../../utils/getSvgUrl";
 import { IMetadata } from "../../types/metadata";
 import { IOption } from "../../types/option";
-import { API } from "../../services/constants";
 
 type FrameworkType = "frontend" | "backend";
 

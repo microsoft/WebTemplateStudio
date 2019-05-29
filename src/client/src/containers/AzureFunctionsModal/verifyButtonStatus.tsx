@@ -17,7 +17,7 @@ export const setFunctionsModalButtonStatus = (
   isAppNameEmpty = selections.appName.value === "";
   isNumFunctionsZero = selections.numFunctions.value === 0;
   isLocationEmpty = selections.location.value === "";
-  isRuntimeStackEmpty = selections.runtimeStack.value == "";
+  isRuntimeStackEmpty = selections.runtimeStack.value === "";
 
   isAnyEmpty =
     isSubscriptionEmpty ||
