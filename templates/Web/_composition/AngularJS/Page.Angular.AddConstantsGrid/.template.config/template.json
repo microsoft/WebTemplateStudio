@@ -11,7 +11,7 @@
     "wts.platform": "Web",
     "wts.compositionOrder": 2,
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == AngularJS & identity == wts.Page.Angular.Grid"
+    "wts.compositionFilter": "$frontendframework == Angular & identity == wts.Page.Angular.Grid"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
