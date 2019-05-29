@@ -31,3 +31,11 @@
   outline: 1px solid var(--vscode-editor-foreground);
   color: var(--vscode-editor-foreground) !important;
 }
+
+.buttonCursorDefault {
+  cursor: default;
+}
+
+.buttonCursorPointer {
+  cursor: pointer;
+}
