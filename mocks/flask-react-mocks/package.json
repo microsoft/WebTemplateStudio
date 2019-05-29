@@ -25,7 +25,7 @@
     "nodemon": "^1.18.10"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts start\" \"nodemon server/server.js\"",
+    "start": "concurrently \"react-scripts start\" \"python server/server.py\"",
     "start-frontend": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
