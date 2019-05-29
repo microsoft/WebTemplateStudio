@@ -1,4 +1,6 @@
-﻿export default class ListForm extends React.Component {
+﻿import React, {Component} from 'react'
+
+export default class ListForm extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
