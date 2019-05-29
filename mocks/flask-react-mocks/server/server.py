@@ -43,5 +43,12 @@ def getGrid():
         sampleGridData
     )
 
+# MasterDetail Endpoint
+@app.route(CONSTANTS['ENDPOINT']['MASTERDETAIL'])
+def getMasterDetail():
+    return jsonify(
+        sampleGridData
+    )
+
 if __name__ == '__main__':
    app.run(debug=True, port=CONSTANTS['PORT'])
