@@ -3,7 +3,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Route, RouteComponentProps } from "react-router-dom";
-import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
 import PageDetails from "./containers/PageDetails";

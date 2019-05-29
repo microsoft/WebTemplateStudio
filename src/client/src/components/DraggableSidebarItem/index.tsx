@@ -96,7 +96,7 @@ const DraggableSidebarItem = ({
             <div className={styles.inputContainer}>
               {reorderSvgUrl &&
                 (getSvg(page!.internalName, styles.icon) || (
-                  <img className={styles.icon} src={pageSvgUrl} />
+                  <img className={styles.icon} src={pageSvgUrl} alt="" />
                 ))}
               {handleInputChange && (page || isAzureFunction) && idx ? (
                 <input

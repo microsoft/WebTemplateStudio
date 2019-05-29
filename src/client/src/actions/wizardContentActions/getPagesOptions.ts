@@ -5,7 +5,6 @@ import getSvgUrl from "../../utils/getSvgUrl";
 import { WIZARD_CONTENT_TYPEKEYS } from "./typeKeys";
 import WizardContentActionType from "./wizardContentActionType";
 import { Dispatch } from "react";
-import { API } from "../../services/constants";
 
 export interface IPageOptionsActionType {
   type: WIZARD_CONTENT_TYPEKEYS.GET_PAGES_OPTIONS_SUCCESS;

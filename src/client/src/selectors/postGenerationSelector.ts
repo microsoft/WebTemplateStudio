@@ -5,7 +5,6 @@ import { IServiceStatus } from "../reducers/generationStatus/genStatus";
 import { isCosmosResourceCreatedSelector } from "./cosmosServiceSelector";
 import { isAzureFunctionsSelectedSelector } from "./azureFunctionsServiceSelector";
 import { AppState } from "../reducers";
-import CosmosDBSelection from "../containers/CosmosDBSelection";
 import { messages } from "../mockData/azureServiceOptions";
 
 const getGenerationStatusSelector = (state: AppState) =>

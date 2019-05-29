@@ -1,10 +1,6 @@
-import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
-import buttonStyles from "../../css/buttonStyles.module.css";
-import { ROUTES } from "../../utils/constants";
 import styles from "./styles.module.css";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
