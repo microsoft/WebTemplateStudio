@@ -66,7 +66,7 @@ const messages = defineMessages({
   },
   reviewAndGenerate: {
     id: "review.reviewAndGenerate",
-    defaultMessage: "6. Your project summary."
+    defaultMessage: "Your project summary."
   }
 });
 
