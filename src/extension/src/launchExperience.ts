@@ -50,7 +50,7 @@ export class LaunchExperience {
   private async attemptSync(): Promise<ISyncReturnType> {
     let pathToTemplates: string;
 
-    if (process.env.DEBUG === "yes") {
+    if (process.env.NODE_ENV === "dev") {
       pathToTemplates = CONSTANTS.API.DEVELOPMENT_PATH_TO_TEMPLATES;
     } else {
       pathToTemplates = CONSTANTS.API.PRODUCTION_PATH_TO_TEMPLATES;
