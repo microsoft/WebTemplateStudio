@@ -6,8 +6,7 @@ import { withRouter } from "react-router-dom";
 import {
   InjectedIntlProps,
   injectIntl,
-  defineMessages,
-  FormattedMessage
+  defineMessages
 } from "react-intl";
 
 import LeftSidebarLink from "../LeftSidebarLink";

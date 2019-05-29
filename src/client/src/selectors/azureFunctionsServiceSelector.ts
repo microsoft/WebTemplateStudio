@@ -2,7 +2,6 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { ISelectedAzureFunctionsService } from "../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 import { AppState } from "../reducers";
-import { SelectionState } from "../reducers/wizardSelectionReducers/index";
 import { ServiceState } from "../reducers/wizardSelectionReducers/services/index";
 
 interface ISelectedDropdowns {

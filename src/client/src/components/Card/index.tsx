@@ -9,7 +9,6 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import { IOption } from "../../types/option";
 import { Link } from "react-router-dom";
-import classNames from "classnames";
 import { ROUTES } from "../../utils/constants";
 
 interface IProps {
