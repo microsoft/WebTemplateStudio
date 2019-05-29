@@ -36,5 +36,12 @@ def deleteListItem(id):
         {'_id': id, 'text': 'This comment was deleted'}
     )
 
+# Grid Endpoint
+@app.route(CONSTANTS['ENDPOINT']['GRID'])
+def getGrid():
+    return jsonify(
+        sampleGridData
+    )
+
 if __name__ == '__main__':
    app.run(debug=True, port=CONSTANTS['PORT'])
