@@ -141,7 +141,8 @@ const DraggableSidebarItem = ({
             </div>
           )}
         </div>
-        {(totalPageCount !== undefined ? totalPageCount > 1 : true) && <CloseSVG
+        {(totalPageCount !== undefined ? totalPageCount > 1 : true) && 
+        <CloseSVG
           tabIndex={0}
           onClick={handleCloseOnClick}
           onKeyDown={handleKeyDown}
