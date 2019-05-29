@@ -57,10 +57,13 @@ const Card = ({
             <FormattedMessage id="card.details" defaultMessage="Details" />
           </Link>
           <button
+            disabled={disabled!}
             onClick={handleButtonClick}
             className={classnames(styles.signInButton, {
               [buttonStyles.buttonHighlighted]: !useNormalButtons,
-              [buttonStyles.buttonDark]: useNormalButtons
+              [buttonStyles.buttonDark]: useNormalButtons,
+              [buttonStyles.buttonCursorDefault]: disabled,
+              [buttonStyles.buttonCursorPointer]: !disabled
             })}
             tabIndex={disabled! ? -1 : 0}
           >
