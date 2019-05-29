@@ -26,6 +26,7 @@
   "azureFunctionsModal.runtimeStackLabel": "Runtime Stack",
   "azureFunctionsModal.saveChanges": "Save Changes",
   "azureFunctionsModal.subscriptionLabel": "Subscription",
+  "azureFunctionsSelection.duplicateName": "Function name has to be unique",
   "azureFunctionsSelection.edit": "Edit",
   "azureLogin.azureCardBody": "Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. Sign in or create an account to get access to CosmosDB and Azure Functions from this extension",
   "azureLogin.azureLoginTitle": "5. Attach services to your web application (Optional)",
@@ -73,7 +74,6 @@
   "footer.license": "By continuing, you agree to the terms of all the licenses in the\n              licenses section.",
   "footer.navAriaLabel": "Navigate between pages and generate templates",
   "footer.next": "Next",
-  "functionName.duplicateName": "Function name has to be unique",
   "header.signOut": "Sign out",
   "leftSideBar.ariaNavLabel": "Navigate between pages in the Wizard",
   "leftSidebar.frameworks": "3. Frameworks",
@@ -136,6 +136,7 @@
   "sortablePageList.hide": "Hide",
   "sortablePageList.pages": "Pages",
   "sortablePageList.show": "Show",
+  "summarySection.duplicateName": "Function name has to be unique",
   "summaryTile.changeItemName": "Change Item Name",
   "welcome.body": "Project Acorn is a VS Code extension that quickly provides web developers with boilerplate code, easy to use templates, and automates the Azure deployment process, all within this wizard.",
   "welcome.header": "Welcome to Project Acorn"

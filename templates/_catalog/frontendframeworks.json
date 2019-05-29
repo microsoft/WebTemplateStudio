@@ -14,12 +14,12 @@
     }
   },
   {
-    "name": "AngularJS",
-    "displayName": "AngularJS",
-    "summary": "AngularJS is an open source, front-end web application framework mainly mainted by Google to develop single page applications.",
+    "name": "Angular",
+    "displayName": "Angular",
+    "summary": "Angular is an open source, front-end web application framework mainly mainted by Google to develop single page applications.",
     "author": "Google",
     "order": "1",
-    "licenses": "[AngularJS](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)",
+    "licenses": "[Angular](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)",
     "platforms": ["Web"],
     "languages": ["Any"],
     "tags": {
