@@ -10,7 +10,7 @@
     "type": "project",
     "wts.type": "project",
     "wts.projecttype": "FullStackWebApp",
-    "wts.frontendframework": "AngularJS",
+    "wts.frontendframework": "Angular",
     "wts.backendframework": "all",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
