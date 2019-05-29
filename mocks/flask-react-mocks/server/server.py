@@ -1,5 +1,8 @@
 from flask import Flask
 from flask import jsonify
+from flask import request
+from flask import make_response
+import ast
 app = Flask(__name__)
 
 sampleData = [
@@ -16,6 +19,16 @@ def sayHello():
 def getList():
     return jsonify(
         sampleData
+    )
+
+@app.route('/api/list', methods = ['POST'])
+def addListItem():
+    data = request.data.decode('utf-8')
+    data = ast.literal_eval(data)
+    listItem = {'_id': 3, 'text': data['text']}
+    sampleData.append(listItem)
+    return jsonify(
+        listItem
     )
 
 if __name__ == '__main__':
