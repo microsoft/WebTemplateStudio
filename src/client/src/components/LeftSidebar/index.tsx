@@ -19,8 +19,8 @@ import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelecti
 
 const messages = defineMessages({
   welcome: {
-    id: "leftSidebar.welcome",
-    defaultMessage: "1. Welcome"
+    id: "leftSidebar.newProject",
+    defaultMessage: "1. New Project"
   },
   projectType: {
     id: "leftSidebar.projectType",
