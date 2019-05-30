@@ -98,8 +98,14 @@ sampleGridData = [
 
 sampleData = {
     'listTextAssets': [
-        {'_id': 1, 'text': 'This is the list item 1'},
-        {'_id': 2, 'text': 'This is the list item 2'}
+        {
+          '_id': 1,
+          'text': shortLoremIpsum
+        },
+        {
+          '_id': 2,
+          'text': shortLoremIpsum
+        }
     ],
     'listId': 3
 }
