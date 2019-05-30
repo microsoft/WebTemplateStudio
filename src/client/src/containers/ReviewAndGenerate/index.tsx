@@ -40,8 +40,8 @@ type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const messages = defineMessages({
   welcome: {
-    id: "review.welcome",
-    defaultMessage: "Welcome"
+    id: "review.newProject",
+    defaultMessage: "New Project"
   },
   projectType: {
     id: "review.projectType",

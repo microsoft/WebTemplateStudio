@@ -11,7 +11,7 @@ In the root directory of the project...
 
 1. Create a file in `/src/views` with your Vue Template.
 2. Add a route for your page to `/src/router/index.js`.
-3. Add a button to the navigation bar in `/src/components/NavBar.vue`.
+3. Add a button to the navigation bar in `/src/components/TheNavBar.vue`.
 //}]}
 ### Deployment
 
