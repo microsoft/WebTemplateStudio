@@ -28,13 +28,13 @@ def addListItem():
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<int:id>', methods=['DELETE'])
 def deleteListItem(id):
-    listItemToRemove = [listItem for listItem in sampleData['listTextAssets'] if listItem['_id'] == id]
-    if(len(listItemToRemove) == 0):
-        return make_response(jsonify({'error': 'Could not find an item with given id'}))
-    sampleData['listTextAssets'] = [listItem for listItem in sampleData['listTextAssets'] if listItem['_id'] != id]
-    return jsonify(
-        {'_id': id, 'text': 'This comment was deleted'}
-    )
+    for i in range(len(sampleData['listTextAssets'])): 
+        if sampleData['listTextAssets'][i]['_id'] == id: 
+            del sampleData['listTextAssets'][i] 
+            return jsonify(
+                {'_id': id, 'text': 'This comment was deleted'}
+            )
+    return jsonify({'error': 'Could not find an item with given id'})
 
 # Grid Endpoint
 @app.route(CONSTANTS['ENDPOINT']['GRID'])
