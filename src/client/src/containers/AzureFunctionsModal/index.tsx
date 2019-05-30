@@ -26,8 +26,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  WIZARD_CONTENT_INTERNAL_NAMES,
-  INTL_MESSAGES
+  WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
@@ -227,7 +226,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    if (azureFunctionsFormData.appName.value != "") {
+    if (azureFunctionsFormData.appName.value !== "") {
       if (timeout) {
         clearTimeout(timeout);
       }

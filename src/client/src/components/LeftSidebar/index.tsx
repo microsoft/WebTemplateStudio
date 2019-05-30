@@ -6,8 +6,7 @@ import { withRouter } from "react-router-dom";
 import {
   InjectedIntlProps,
   injectIntl,
-  defineMessages,
-  FormattedMessage
+  defineMessages
 } from "react-intl";
 
 import LeftSidebarLink from "../LeftSidebarLink";
@@ -20,8 +19,8 @@ import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelecti
 
 const messages = defineMessages({
   welcome: {
-    id: "leftSidebar.welcome",
-    defaultMessage: "1. Welcome"
+    id: "leftSidebar.newProject",
+    defaultMessage: "1. New Project"
   },
   projectType: {
     id: "leftSidebar.projectType",

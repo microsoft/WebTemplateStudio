@@ -6,7 +6,7 @@ const SELECT_FRAMEWORKS = "/SelectFrameworks";
 const SELECT_PAGES = "/SelectPages";
 const AZURE_LOGIN = "/AzureLogin";
 const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
-const WELCOME = "/";
+const NEW_PROJECT = "/";
 
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
@@ -25,12 +25,12 @@ const ROUTES = {
   SELECT_PAGES,
   AZURE_LOGIN,
   REVIEW_AND_GENERATE,
-  WELCOME
+  NEW_PROJECT
 };
 
 // Presents the routes in the order of the wizard
 const ROUTES_ARRAY = [
-  WELCOME,
+  NEW_PROJECT,
   SELECT_PROJECT_TYPE,
   SELECT_FRAMEWORKS,
   SELECT_PAGES,
@@ -67,18 +67,6 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   NODE_JS: "NodeJS",
   REACT_JS: "ReactJS",
   REST_API: "RestAPI"
-};
-
-const PAGE_NAME_ERROR_MESSAGES = {
-  DUPLICATE_NAME: "Name has to be unique",
-  INVALID_REGEX:
-    "Name may only contain letters, numbers, spaces, dashes or underscores",
-  EMPTY_NAME: "Name cannot be empty",
-  NAME_DOES_NOT_START_WITH_LETTER: "Name may only start with letters"
-};
-
-const EMPTY_FIELD = (fieldId: string) => {
-  return `${fieldId} field cannot be empty`;
 };
 
 const EXTENSION_MODULES = {

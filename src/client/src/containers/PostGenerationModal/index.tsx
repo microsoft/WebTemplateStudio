@@ -92,7 +92,7 @@ const PostGenerationModal = ({
   const handleClick = () => {
     if (isTemplatesFailed) {
       resetWizard();
-      history.push(ROUTES.WELCOME);
+      history.push(ROUTES.NEW_PROJECT);
     }
     if (isTemplateGenerated && isServicesDeployed) {
       vscode.postMessage({

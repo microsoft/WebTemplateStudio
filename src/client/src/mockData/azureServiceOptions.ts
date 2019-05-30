@@ -20,7 +20,7 @@ export const messages = defineMessages({
   },
   azureLoginTitle: {
     id: "azureLogin.azureLoginTitle",
-    defaultMessage: "5. Attach services to your web application (Optional)"
+    defaultMessage: "Attach services to your web application (Optional)"
   },
   azureFunctionsTitle: {
     id: "azureFunctions.Title",
