@@ -37,7 +37,8 @@ const DraggableSidebarItem = ({
   handleCloseClick,
   intl,
   customInputStyle,
-  isAzureFunction
+  isAzureFunction,
+  totalPageCount
 }: {
   page?: ISelected;
   text?: string;
@@ -54,6 +55,7 @@ const DraggableSidebarItem = ({
   intl: InjectedIntl;
   customInputStyle?: string;
   isAzureFunction?: boolean;
+  totalPageCount?: number;
 }) => {
   const handleKeyDown = (event: any) => {
     if (event.keyCode === 13 || event.keyCode === 32) {
@@ -139,12 +141,14 @@ const DraggableSidebarItem = ({
             </div>
           )}
         </div>
+        {(totalPageCount !== undefined ? totalPageCount > 1 : true) && 
         <CloseSVG
           tabIndex={0}
           onClick={handleCloseOnClick}
           onKeyDown={handleKeyDown}
           className={styles.cancelIcon}
         />
+        }
       </div>
     </div>
   );
