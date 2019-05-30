@@ -9,7 +9,7 @@ In the root directory of the project...
 
 ### Sample Data
 
-Replace the sample data stored in /server/sampleData.js.
+Replace the sample data stored in /server/sampleData.py.
 Replace the default images stored in /src/images.
 
 ### Adding a New Page
@@ -48,21 +48,18 @@ Full documentation for deployment to Azure App Service can be found here: https:
 ## File Structure
 
 The front-end is based on [create-react-app](https://github.com/facebook/create-react-app), and the
-back-end is based on [Express Generator](https://expressjs.com/en/starter/generator.html). The front
+back-end is based on [Flask](https://github.com/pallets/flask). The front
 end is served on http://localhost:3000/ and the back-end on http://localhost:3001/. During local
 development front-end and back-end communicate via a proxy defined in the package.json.
 
 ```
 .
-├── server/                         - Express server that provides API routes and serves front-end
+├── server/                         - Flask server that provides API routes and serves front-end
 │   ├── mongo/                      - Handles all interactions with the cosmos database
 │   ├── sql/                        - Handles all interactions with the cosmos database
-│   ├── routes/                     - Handles API calls for routes
-│   ├── views/                      - Pug error page
-│   ├── app.js                      - Adds middleware to the express server
-│   ├── constants.js                - Defines the constants for the endpoints and port
-│   ├── sampleData.js               - Contains all sample text data for generate pages
-│   └── server.js                   - Configures Port and HTTP Server
+│   ├── constants.py                - Defines the constants for the endpoints and port
+│   ├── sampleData.py               - Contains all sample text data for generate pages
+│   └── server.py                   - Configures Port and HTTP Server and provides API routes
 ├── src                             - React front-end
 │   ├── components                  - React components for each page
 │   ├── images                      - Default images
@@ -78,8 +75,7 @@ development front-end and back-end communicate via a proxy defined in the packag
 - React - https://reactjs.org/
 - React Router - https://reacttraining.com/react-router/
 - Bootstrap CSS - https://getbootstrap.com/
-- Express - https://expressjs.com/
-- Mongo/Mongoose - https://mongoosejs.com/docs/guide.html
+- Flask - http://flask.pocoo.org/
 - Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongoose
 
 This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
