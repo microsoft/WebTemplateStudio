@@ -7,7 +7,7 @@ export interface IRoutes {
 }
 
 const initialState = {
-  [ROUTES.WELCOME]: true,
+  [ROUTES.NEW_PROJECT]: true,
   [ROUTES.SELECT_PROJECT_TYPE]: false,
   [ROUTES.SELECT_FRAMEWORKS]: false,
   [ROUTES.SELECT_PAGES]: false,
