@@ -9,7 +9,7 @@ import PageDetails from "./containers/PageDetails";
 import SelectFrameworks from "./components/SelectFrameworks";
 import SelectPages from "./containers/SelectPages";
 import SelectWebApp from "./containers/SelectWebApp";
-import Welcome from "./containers/Welcome";
+import NewProject from "./containers/NewProject";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";
@@ -252,7 +252,7 @@ class App extends React.Component<Props> {
             />
             <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
             <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
-            <Route exact={true} path={ROUTES.WELCOME} component={Welcome} />
+            <Route exact={true} path={ROUTES.NEW_PROJECT} component={NewProject} />
           </main>
           <RightSidebar />
         </div>
