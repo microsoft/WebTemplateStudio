@@ -86,6 +86,8 @@
   "loginCard.createAccount": "Create Account",
   "loginCard.details": "Details",
   "loginCard.signIn": "Sign In",
+  "newProject.body": "Enter a project name and output path, then click next to get started.",
+  "newProject.header": "Welcome to Web Template Studio",
   "outputPath.ariaOutputPath": "Input for Output Path",
   "outputPath.outputPath": "Output Path",
   "pageNameError.duplicateName": "Name has to be unique",
@@ -137,7 +139,5 @@
   "sortablePageList.pages": "Pages",
   "sortablePageList.show": "Show",
   "summarySection.duplicateName": "Function name has to be unique",
-  "summaryTile.changeItemName": "Change Item Name",
-  "welcome.body": "Project Acorn is a VS Code extension that quickly provides web developers with boilerplate code, easy to use templates, and automates the Azure deployment process, all within this wizard.",
-  "welcome.header": "Welcome to Project Acorn"
+  "summaryTile.changeItemName": "Change Item Name"
 }
