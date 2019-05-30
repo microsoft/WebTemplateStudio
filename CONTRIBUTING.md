@@ -49,9 +49,9 @@ Every contribution has to come with:
 - If you've changed the UI:
 
   - Be sure you are including screenshots to show the changes.
-  - Be sure you have reviewed the [web accesibility standard](https://www.w3.org/WAI/standards-guidelines/wcag/).
+  - Be sure you have reviewed the [web accessibility standard](https://www.w3.org/WAI/standards-guidelines/wcag/).
 
-- If you've included a new template, make sure it meets the [web accesibility standard](https://www.w3.org/WAI/standards-guidelines/wcag/) and is compatible with other templates.
+- If you've included a new template, make sure it meets the [web accessibility standard](https://www.w3.org/WAI/standards-guidelines/wcag/) and is compatible with other templates.
 
 - You've run all existing tests to make sure you've not broken anything. Manual testing
   must be done against all PRs following the testing plan while unit tests are not in place.
