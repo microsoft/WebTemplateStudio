@@ -5,16 +5,13 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
-    "dotenv": "^6.2.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "3.0.1",
-    "uuid": "^3.3.2"
+    "react-scripts": "3.0.1"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0",
-    "nodemon": "^1.18.10"
+    "concurrently": "^4.1.0"
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"python server/server.py\"",
