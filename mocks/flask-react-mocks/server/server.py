@@ -20,7 +20,7 @@ def addListItem():
     data = request.data.decode('utf-8')
     data = ast.literal_eval(data)
     listItem = {'_id': sampleData['listId'], 'text': data['text']}
-    sampleData['listTextAssets'].append(listItem)
+    sampleData['listTextAssets'].insert(0, listItem)
     sampleData['listId'] += 1
     return jsonify(
         listItem
