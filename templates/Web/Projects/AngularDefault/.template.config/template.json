@@ -84,7 +84,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'ng': 'ng', 'start': 'concurrently \"ng serve --port=3000 --o --proxy-config proxy.config.json\" \"nodemon server/server.js\"', 'build': 'ng build', 'test': 'ng test', 'lint': 'ng lint', 'e2e': 'ng e2e'}",
+        "dict": "{'start-frontend': 'ng serve --port=3000 --o --proxy-config proxy.config.json', 'ng': 'ng', 'build': 'ng build', 'test': 'ng test', 'lint': 'ng lint', 'e2e': 'ng e2e'}",
         "key": "scripts",
         "jsonPath": "package.json"
       },
