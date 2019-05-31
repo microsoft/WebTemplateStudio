@@ -1,4 +1,4 @@
-﻿import React, {Component} from 'react'
+﻿import React, {Component} from 'react';
 
 export default class ListForm extends Component {
   constructor(props) {
@@ -15,9 +15,9 @@ export default class ListForm extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault()
-    this.props.onAddListItem(this.state.textField)
-    this.setState({textField: ""})
+    e.preventDefault();
+    this.props.onAddListItem(this.state.textField);
+    this.setState({textField: ""});
   }
 
   render() {

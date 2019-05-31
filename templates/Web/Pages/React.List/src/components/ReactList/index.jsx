@@ -102,7 +102,6 @@ export default class ReactList extends Component {
 
   render() {
     const {
-      textField,
       list,
       WarningMessageOpen,
       WarningMessageText
@@ -116,8 +115,6 @@ export default class ReactList extends Component {
           <div className="col-12 p-0">
             <ListForm
               onAddListItem={this.handleAddListItem}
-              onChangeInputText={this.handleChangeInputText}
-              textField={textField}
             />
           </div>
           {list.map(listItem => (
