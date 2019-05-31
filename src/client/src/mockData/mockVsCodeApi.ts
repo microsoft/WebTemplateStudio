@@ -68,6 +68,7 @@ const mockVsCodeApi = () => ({
             },
             "*"
           );
+          break;
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
           // produces locations and resource groups in development
           window.postMessage(
@@ -167,6 +168,7 @@ const mockVsCodeApi = () => ({
             },
             "*"
           );
+          break;
         case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
           // produces a mock validation response from VSCode in development
           window.postMessage(

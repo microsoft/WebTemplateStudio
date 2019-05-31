@@ -12,6 +12,7 @@ import svgStyles from "./svgStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants";
 import react from "../assets/react.svg";
 import angular from "../assets/angular.svg";
+import vue from "../assets/vue.svg";
 import node from "../assets/nodeJS.svg";
 import azure from "../assets/azure.svg";
 import azurefunctions from "../assets/azurefunctions.svg";
@@ -26,6 +27,7 @@ import blankscreenshot from "../assets/blankscreenshot.svg";
 const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT_JS]: react,
   [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR]: angular,
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE]: vue,
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS]: node,
   [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: azurefunctions,
   [WIZARD_CONTENT_INTERNAL_NAMES.AZURE]: azure,
@@ -59,18 +61,34 @@ const SVG_REACTCOMPONENT_MAPPINGS = {
   ),
   [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_LIST]: (style: string) => (
     <List className={classnames(style, svgStyles.icon)} />
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_MASTER_DETAIL]: (style: string) => (
+    <MasterDetail className={classnames(style, svgStyles.icon)} />
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_BLANK_PAGE]: (style: string) => (
+    <BlankPage className={classnames(style, svgStyles.icon)} />
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_CONTENT_GRID]: (style: string) => (
+    <ContentGrid className={classnames(style, svgStyles.icon)} />
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_LIST]: (style: string) => (
+    <List className={classnames(style, svgStyles.icon)} />
   )
 };
 
 const SVG_SCREENSHOT_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT_MASTER_DETAIL]: masterdetailscreenshot,
   [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_MASTER_DETAIL]: masterdetailscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_MASTER_DETAIL]: masterdetailscreenshot,
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT_CONTENT_GRID]: gridscreenshot,
   [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_CONTENT_GRID]: gridscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_CONTENT_GRID]: gridscreenshot,
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT_LIST]: listscreenshot,
   [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_LIST]: listscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_LIST]: listscreenshot,
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT_BLANK_PAGE]: blankscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_BLANK_PAGE]: blankscreenshot
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_BLANK_PAGE]: blankscreenshot,
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_BLANK_PAGE]: blankscreenshot
 };
 
 export const withLocalPath = (absolutePath: string): string => {

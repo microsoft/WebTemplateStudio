@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -13,10 +12,6 @@ import styles from "./styles.module.css";
 
 import { RowType } from "../../types/rowType";
 
-import {
-  WIZARD_CONTENT_INTERNAL_NAMES,
-  SERVICE_KEYS
-} from "../../utils/constants";
 import Title from "../../components/Title";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
@@ -45,8 +40,8 @@ type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const messages = defineMessages({
   welcome: {
-    id: "review.welcome",
-    defaultMessage: "Welcome"
+    id: "review.newProject",
+    defaultMessage: "New Project"
   },
   projectType: {
     id: "review.projectType",
@@ -66,7 +61,7 @@ const messages = defineMessages({
   },
   reviewAndGenerate: {
     id: "review.reviewAndGenerate",
-    defaultMessage: "6. Your project summary."
+    defaultMessage: "Your project summary."
   }
 });
 

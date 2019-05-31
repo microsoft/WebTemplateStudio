@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { ReactComponent as Check } from "../../assets/check.svg";
 
 import styles from "./styles.module.css";
-import { withLocalPath } from "../../utils/getSvgUrl";
 
 const LeftSidebarLink = ({
   text,

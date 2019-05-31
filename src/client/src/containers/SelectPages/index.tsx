@@ -49,7 +49,7 @@ type Props = IDispatchProps & ISelectPagesProps & IIntlProps;
 const messages = defineMessages({
   pagesTitleQuestion: {
     id: "selectPages.pagesTitleQuestion",
-    defaultMessage: "4. Select pages for your application."
+    defaultMessage: "Select pages for your application."
   }
 });
 
@@ -74,7 +74,7 @@ class SelectPages extends React.Component<Props> {
   }
 
   public componentDidUpdate(newProps: ISelectPagesProps) {
-    if (newProps.options.length == 0) {
+    if (newProps.options.length === 0) {
       const {
         getPages,
         selectedBackend,
