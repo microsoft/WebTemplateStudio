@@ -1,0 +1,83 @@
+﻿{
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "ReactDefault",
+  "groupIdentity": "wts.Proj.ReactDefault",
+  "identity": "wts.Proj.ReactDefault",
+  "description": "",
+  "tags": {
+    "language": "Any",
+    "type": "project",
+    "wts.type": "project",
+    "wts.projecttype": "FullStackWebApp",
+    "wts.frontendframework": "ReactJS",
+    "wts.backendframework": "all",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.displayOrder": "1"
+  },
+  "sourceName": "wts.ReactDefault",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.userName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_UserName"
+    },
+    "wts.wizardVersion": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_Wizard.Version"
+    },
+    "wts.templatesVersion": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_Templates.Version"
+    },
+    "wts.generationProjectType": {
+      "type": "parameter",
+      "replaces": "Param_ProjectType"
+    },
+    "wts.generationFramework": {
+      "type": "parameter",
+      "replaces": "Param_Framework"
+    },
+    "wts.generationPlatform": {
+      "type": "parameter",
+      "replaces": "Param_Platform"
+    },
+    "copyrightYear": {
+      "type": "generated",
+      "generator": "now",
+      "replaces": "1976",
+      "parameters": {
+        "format": "yyyy"
+      }
+    }
+  },
+  "postActions": [
+    {
+      "description": "Add React Dependencies",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'bootstrap': '^4.3.1', 'classnames': '^2.2.6', 'react': '^16.8.4', 'react-dom': '^16.8.4', 'react-router-dom': '^4.3.1', 'react-scripts': '2.1.8'}",
+        "key": "dependencies",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    },
+    {
+      "description": "Add React Build Scripts",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'start': 'concurrently \"react-scripts start\" \"nodemon server/server.js\"', 'start-frontend': 'react-scripts start', 'build': 'react-scripts build && mv build server', 'test': 'react-scripts test', 'eject': 'react-scripts eject'}",
+        "key": "scripts",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    }
+  ]
+}

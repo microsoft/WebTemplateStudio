@@ -1,0 +1,94 @@
+﻿{
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "AngularDefault",
+  "groupIdentity": "wts.Proj.AngularDefault",
+  "identity": "wts.Proj.AngularDefault",
+  "description": "",
+  "tags": {
+    "language": "Any",
+    "type": "project",
+    "wts.type": "project",
+    "wts.projecttype": "FullStackWebApp",
+    "wts.frontendframework": "Angular",
+    "wts.backendframework": "all",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.displayOrder": "1"
+  },
+  "sourceName": "wts.AngularDefault",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.userName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_UserName"
+    },
+    "wts.wizardVersion": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_Wizard.Version"
+    },
+    "wts.templatesVersion": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_Templates.Version"
+    },
+    "wts.generationProjectType": {
+      "type": "parameter",
+      "replaces": "Param_ProjectType"
+    },
+    "wts.generationFramework": {
+      "type": "parameter",
+      "replaces": "Param_Framework"
+    },
+    "wts.generationPlatform": {
+      "type": "parameter",
+      "replaces": "Param_Platform"
+    },
+    "copyrightYear": {
+      "type": "generated",
+      "generator": "now",
+      "replaces": "1976",
+      "parameters": {
+        "format": "yyyy"
+      }
+    }
+  },
+  "postActions": [
+    {
+      "description": "Add Angular Dependencies",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'bootstrap': '^4.3.1', '@angular/animations': '~7.2.0', '@angular/common': '~7.2.0', '@angular/compiler': '~7.2.0', '@angular/core': '~7.2.0', '@angular/forms': '~7.2.0', '@angular/platform-browser': '~7.2.0', '@angular/platform-browser-dynamic': '~7.2.0', '@angular/router': '~7.2.0', 'core-js': '^2.5.4', 'rxjs': '~6.3.3', 'tslib': '^1.9.0', 'zone.js': '~0.8.26'}",
+        "key": "dependencies",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    },
+    {
+      "description": "Add Angular Dev Dependencies",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'@angular-devkit/build-angular': '~0.13.0', '@angular/cli': '~7.3.5', '@angular/compiler-cli': '~7.2.0', '@angular/language-service': '~7.2.0', '@types/jasmine': '~2.8.8', '@types/jasminewd2': '~2.0.3', '@types/node': '~8.9.4', 'codelyzer': '~4.5.0', 'jasmine-core': '~2.99.1', 'jasmine-spec-reporter': '~4.2.1', 'karma': '~4.0.0', 'karma-chrome-launcher': '~2.2.0', 'karma-coverage-istanbul-reporter': '~2.0.1', 'karma-jasmine': '~1.1.2', 'karma-jasmine-html-reporter': '^0.2.2', 'protractor': '~5.4.0', 'ts-node': '~7.0.0', 'tslint': '~5.11.0', 'typescript': '~3.2.2'}",
+        "key": "devDependencies",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    },
+    {
+      "description": "Add Angular Build Scripts",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'ng': 'ng', 'start': 'concurrently \"ng serve --port=3000 --o --proxy-config proxy.config.json\" \"nodemon server/server.js\"', 'build': 'ng build', 'test': 'ng test', 'lint': 'ng lint', 'e2e': 'ng e2e'}",
+        "key": "scripts",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    }
+  ]
+}

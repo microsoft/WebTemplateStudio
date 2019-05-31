@@ -1,0 +1,16 @@
+﻿<form (submit)="onAddListItem()" class="input-group my-3">
+    <input
+      type="text"
+      [ngModelOptions]="{standalone: true}"
+      [(ngModel)]="textField"
+      class="form-control"
+      placeholder="Add text here..."
+      aria-label="Add text here..."
+    />
+    <button
+      type="submit"
+      class="btn btn-primary ml-2"
+    >
+      Submit
+    </button>
+</form>
