@@ -12,5 +12,19 @@
       "version": "10.15.0",
       "preview": false
     }
+  },
+  {
+    "name": "Flask",
+    "displayName": "Flask",
+    "summary": "Here should be the summary for Flask.",
+    "author": "Various",
+    "order": "1",
+    "licenses": "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE)  \n[ExpressJS](https://github.com/expressjs/express/blob/master/LICENSE)  \n[ExpressJS Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
+    "platforms": ["Web"],
+    "languages": ["Any"],
+    "tags": {
+      "version": "10.15.0",
+      "preview": true
+    }
   }
 ]
