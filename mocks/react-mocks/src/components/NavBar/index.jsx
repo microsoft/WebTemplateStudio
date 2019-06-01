@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./navbar.module.css";
 
 //TODO Web Template Studio: Add a new link in the NavBar for your page here.
@@ -7,25 +8,25 @@ export default function NavBar() {
   return (
     <React.Fragment>
       <div className={styles.skipLink}>
-        <a href="#mainContent">Skip to Main Content</a>
+        <Link to="#mainContent">Skip to Main Content</Link>
       </div>
       <nav className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           Project Name
-        </a>
+        </Link>
         <div className="navbar-nav">
-          <a className="nav-item nav-link active" href="/masterdetail">
+          <Link className="nav-item nav-link active" to="/masterdetail">
             Master Detail
-          </a>
-          <a className="nav-item nav-link active" href="/grid">
+          </Link>
+          <Link className="nav-item nav-link active" to="/grid">
             Content Grid
-          </a>
-          <a className="nav-item nav-link active" href="/list">
+          </Link>
+          <Link className="nav-item nav-link active" to="/list">
             List
-          </a>
-          <a className="nav-item nav-link active" href="/blank">
+          </Link>
+          <Link className="nav-item nav-link active" to="/blank">
             Blank
-          </a>
+          </Link>
         </div>
       </nav>
     </React.Fragment>
