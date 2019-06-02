@@ -1,4 +1,4 @@
-## File Structure
+﻿## File Structure
 
 //{[{
 The back-end is based on [Flask](https://github.com/pallets/flask).
