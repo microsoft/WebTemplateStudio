@@ -8,7 +8,7 @@ export default function NavBar() {
   return (
     <React.Fragment>
       <div className={styles.skipLink}>
-        <Link to="#mainContent">Skip to Main Content</Link>
+        <a href="#mainContent">Skip to Main Content</a>
       </div>
       <nav className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
         <Link className="navbar-brand" to="/">
