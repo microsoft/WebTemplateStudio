@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { GridComponent } from './grid.component';
-import { GridBoxComponent } from './GridBox/grid-box.component'
-import { WarningMessageModule } from 'src/app/sharedComponents/warning-message.module';
+import { GridBoxComponent } from './GridBox/grid-box.component';
+import { WarningMessageModule } from 'src/app/shared/warning-message/warning-message.module';
 
 @NgModule({
   declarations: [
