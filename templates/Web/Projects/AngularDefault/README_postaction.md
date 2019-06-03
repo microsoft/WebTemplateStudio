@@ -19,7 +19,7 @@ In the root directory of the project...
 
 ## File Structure
 //{[{
-The front-end is based on [Angular cli "ng"](https://cli.angular.io/).
+The front-end is based on [Angular cli "ng"](https://angular.io/cli).
 //}]}
 The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/.
 
@@ -38,7 +38,7 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 ## Additional Documentation
 
 //{[{
-- Angular Docs - https://docs.angularjs.org/guide
+- Angular Docs - https://angular.io/docs
 - Angular Router - https://angular.io/guide/router
 //}]}
 - Bootstrap CSS - https://getbootstrap.com/
