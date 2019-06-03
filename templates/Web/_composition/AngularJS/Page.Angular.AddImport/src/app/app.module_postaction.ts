@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/NavBar/navbar.component';
 import { FooterComponent } from './components/Footer/footer.component';
 //{[{
-import {wts.ItemNameModule} from './components/wts.ItemName/wts.ItemName.module';
+import {wts.ItemNameModule} from './app-shell/wts.ItemName/wts.ItemName.module';
 //}]}
 @NgModule({
   declarations: [
