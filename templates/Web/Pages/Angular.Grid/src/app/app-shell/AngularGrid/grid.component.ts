@@ -10,7 +10,7 @@ import { GridService } from './grid.service';
 })
 export class GridComponent implements OnInit {
 
-  GreyBox = require('../../images/GreyBox.svg') as string;
+  GreyBox = require('src/assets/GreyBox.svg') as string; // TODO: update path and at the html use the svg, use mat-icon
   WarningMessageText = CONSTANTS.ERROR_MESSAGE.GRID_GET;
   WarningMessageOpen = false;
   gridTextAssets: IGridTextItem[] = [

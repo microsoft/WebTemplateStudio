@@ -10,7 +10,7 @@ import { MasterDetailService } from './master-detail.service';
 })
 export class MasterDetailComponent implements OnInit {
 
-  GreyAvatar = require('../../images/GreyAvatar.svg') as string;
+  GreyAvatar = require('src/assets/GreyAvatar.svg') as string; // TODO: change path and register with Module, also used in mastr-details-sidebar-component
   WarningMessageText = CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET;
   WarningMessageOpen = false;
   currentDisplayTabIndex = 0;
