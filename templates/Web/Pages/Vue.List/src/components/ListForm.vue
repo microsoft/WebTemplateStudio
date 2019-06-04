@@ -1,5 +1,5 @@
 ﻿<template>
-  <form class="input-group my-3" @submit.prevent v-on:submit="$emit('onAddListItem')">
+  <form class="input-group my-3" v-on:submit.prevent="$emit('onAddListItem')">
     <input
       v-bind:value="value"
       v-on:input="$emit('input', $event.target.value)"
