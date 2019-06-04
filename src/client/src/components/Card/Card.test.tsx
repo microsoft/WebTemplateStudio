@@ -1,11 +1,10 @@
 import * as React from "react";
 import { shallow } from "enzyme";
-import { Card } from "./index.tsx";
-import { CardBody } from "../CardBody/index.tsx";
+import { Card } from "./index";
 
 describe("Card", () => {
   let props: any;
-  let wrapper: Card;
+  let wrapper: any;
 
   beforeEach(() => {
     props = {
