@@ -1,21 +1,22 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import { Card } from "./index.tsx";
+import { CardBody } from "../CardBody/index.tsx";
 
 describe("Card", () => {
-  let props;
-  let wrapper;
+  let props: any;
+  let wrapper: Card;
 
   beforeEach(() => {
     props = {
       option: {
         body: {
           id: "cosmosResourceModule.addResource",
-          defaultMessage: "cosmosResourceModule.addResource"
+          defaultMessage: "Add Resource"
         },
         title: {
           id: "cosmosResourceModule.addResource",
-          defaultMessage: "cosmosResourceModule.addResource"
+          defaultMessage: "Add Resource"
         }
       },
       buttonText: "Test",
@@ -32,7 +33,8 @@ describe("Card", () => {
     expect(wrapper).toBeDefined();
   });
 
-  it("Card has a button", () => {
-    expect(wrapper).contains;
+  it("should have 1 button", () => {
+    const buttons = wrapper.find("button");
+    expect(buttons.length).toBe(1);
   });
 });
