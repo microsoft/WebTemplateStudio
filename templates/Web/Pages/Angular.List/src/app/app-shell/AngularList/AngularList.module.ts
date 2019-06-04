@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ListComponent } from './list.component';
 import { ListFormComponent } from './ListForm/list-form.component';
 import { ListItemComponent } from './ListItem/list-item';
-import { WarningMessageModule } from 'src/app/sharedComponents/warning-message.module';
+import { WarningMessageModule } from 'src/app/shared/warning-message/warning-message.module';
 
 @NgModule({
   declarations: [
