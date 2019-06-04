@@ -6,7 +6,7 @@ const SELECT_FRAMEWORKS = "/SelectFrameworks";
 const SELECT_PAGES = "/SelectPages";
 const AZURE_LOGIN = "/AzureLogin";
 const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
-const WELCOME = "/";
+const NEW_PROJECT = "/";
 
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
@@ -25,12 +25,12 @@ const ROUTES = {
   SELECT_PAGES,
   AZURE_LOGIN,
   REVIEW_AND_GENERATE,
-  WELCOME
+  NEW_PROJECT
 };
 
 // Presents the routes in the order of the wizard
 const ROUTES_ARRAY = [
-  WELCOME,
+  NEW_PROJECT,
   SELECT_PROJECT_TYPE,
   SELECT_FRAMEWORKS,
   SELECT_PAGES,
@@ -66,7 +66,12 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   FULL_STACK_APP: "FullStackWebApp",
   NODE_JS: "NodeJS",
   REACT_JS: "ReactJS",
-  REST_API: "RestAPI"
+  REST_API: "RestAPI",
+  VUE: "Vue",
+  VUE_BLANK_PAGE: "wts.Page.Vue.Blank",
+  VUE_CONTENT_GRID: "wts.Page.Vue.Grid",
+  VUE_MASTER_DETAIL: "wts.Page.Vue.MasterDetail",
+  VUE_LIST: "wts.Page.Vue.List"
 };
 
 const EXTENSION_MODULES = {
