@@ -3,12 +3,14 @@
     return (
       <React.Fragment>
         <NavBar />
-        <Switch>
-        //^^
-        //{[{
-          < Route path = "/wts.ItemName" component = { wts.ItemName } />
-        //}]}
-        </Switch>
+        <BrowserRouter>
+          <Switch>
+          //^^
+          //{[{
+            <Route path = "/wts.ItemName" component = { wts.ItemName } />
+          //}]}
+          </Switch>
+        </BrowserRouter>
         <Footer />
       </React.Fragment>
     );
