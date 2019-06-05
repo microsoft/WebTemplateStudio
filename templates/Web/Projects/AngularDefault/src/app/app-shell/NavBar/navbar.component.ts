@@ -1,10 +1,10 @@
-﻿import { Component, OnInit } from "@angular/core";
-import { Location } from "@angular/common";
+﻿import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: "app-header",
-  templateUrl: "./navbar.component.html",
-  styleUrls: ["./navbar.component.css"]
+  selector: 'app-header',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
 export class HeaderComponent implements OnInit {
   skipLinkPath: string;

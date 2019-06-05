@@ -12,25 +12,25 @@ import { IListItem } from './ListItem/list-item';
 export class ListService {
     private listUrl = CONSTANTS.ENDPOINT.LIST;
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient) {}
 
     getListItems(): Observable<IListItem[]> {
         return this.http.get<IListItem[]>(this.listUrl);
     }
 
-    addListItem(inputText: string): Observable<IListItem>{
+    addListItem(inputText: string): Observable<IListItem> {
         const httpOptions = {
             headers: new HttpHeaders({
               'Content-Type':  'application/json'
             })
           };
-        let body = JSON.stringify({
+        const body = JSON.stringify({
             text: inputText
           });
         return this.http.post<IListItem>(this.listUrl, body, httpOptions);
     }
 
-    deleteListItem(id: number): Observable<IListItem>{
+    deleteListItem(id: number): Observable<IListItem> {
         return this.http.delete<IListItem>(`${CONSTANTS.ENDPOINT.LIST}/${id}`);
     }
 }
