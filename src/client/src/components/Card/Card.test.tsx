@@ -28,7 +28,7 @@ describe("Card", () => {
     wrapper = shallow(<Card {...props} />);
   });
 
-  it("renders Card without crashing", () => {
+  it("renders without crashing", () => {
     expect(wrapper).toBeDefined();
   });
 

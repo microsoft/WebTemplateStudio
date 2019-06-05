@@ -12,7 +12,7 @@ describe("App", () => {
     wrapper = shallow(<App {...props} />);
   });
 
-  it("renders App without crashing", () => {
+  it("renders without crashing", () => {
     expect(wrapper).toBeDefined();
   });
 });
