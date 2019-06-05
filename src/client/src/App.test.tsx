@@ -5,8 +5,8 @@ import { shallow } from "enzyme";
 import App from "./App";
 
 describe("App", () => {
-  let props;
-  let wrapper;
+  let props: any;
+  let wrapper: any;
 
   beforeEach(() => {
     props = {};
