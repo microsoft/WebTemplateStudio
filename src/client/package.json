@@ -66,6 +66,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/enzyme": "^3.9.3",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "react-intl-translations-manager": "^5.0.3",
