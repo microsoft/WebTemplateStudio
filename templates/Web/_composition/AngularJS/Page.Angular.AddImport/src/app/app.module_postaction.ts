@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './app-shell/NavBar/navbar.component';
+import { HeaderComponent } from './app-shell/nav-bar/nav-bar.component';
 import { FooterComponent } from './app-shell/Footer/footer.component';
 //{[{
 import {wts.ItemNameModule} from './app-shell/wts.ItemName/wts.ItemName.module';
