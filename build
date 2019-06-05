@@ -1,5 +1,4 @@
 yarn --cwd ./src/client install
-yarn --cwd ./src/client test
 yarn --cwd ./src/client build
 yarn --cwd ./src/extension install
 yarn --cwd ./src/extension build
