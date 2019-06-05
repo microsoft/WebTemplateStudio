@@ -7,7 +7,6 @@
           *ngFor="let textAssets of masterDetailText; let i = index"
           (onDisplayTabClickEventEmitter)="handleDisplayTabClick($event)"
           [tabText]="textAssets.title"
-          [image]="GreyAvatar"
           [index]="i"
           [key]="textAssets.id"
         ></app-master-detail-sidebartab>
