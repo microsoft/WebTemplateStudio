@@ -8,7 +8,6 @@
 export class MasterDetailSideBarTabComponent implements OnInit {
 
   @Input() tabText: string;
-  @Input() image: string;
   @Input() index: number;
   @Input() key: number;
   @Output() displayTabClickEventEmitter = new EventEmitter<number>();
