@@ -1,5 +1,6 @@
 import { CoreTemplateStudioApiCommand } from "./coreTemplateStudioApiCommand";
 import { CONSTANTS } from "../constants";
+import { Logger } from "../utils/logger";
 
 export class SyncCommand extends CoreTemplateStudioApiCommand {
   async performCommandAction(connection: signalR.HubConnection): Promise<any> {
@@ -11,11 +12,12 @@ export class SyncCommand extends CoreTemplateStudioApiCommand {
     const result = await connection
       .invoke(
         CONSTANTS.API.SIGNALR_API_SYNC_METHOD_NAME,
-        "Web",
-        this.commandPayload.payload!.path,
-        "Any"
+        this.commandPayload.payload!.path
       )
-      .catch((error: Error) => Promise.reject(error));
+      .catch((error: Error) => {
+        Logger.appendLog("EXTENSION", "error", error.message);
+        Promise.reject(error);
+      });
 
     connection.stop();
 
