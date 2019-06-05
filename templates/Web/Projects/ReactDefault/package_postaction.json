@@ -1,0 +1,7 @@
+  },
+//{[{
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+//}]}
+  "browserslist": [
