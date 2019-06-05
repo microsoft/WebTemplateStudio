@@ -50,7 +50,7 @@
     "build": "yarn manage:translations && node ./scripts/build-non-split.js",
     "postbuild": "rm -rf ../extension/react && mv build ../extension/react",
     "manage:translations": "node scripts/manageTranslations.js",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "format": "prettier --write src/**/*.{ts,tsx}",
