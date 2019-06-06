@@ -11,7 +11,7 @@ export class MasterDetailService {
 
   private listUrl = CONSTANTS.ENDPOINT.MASTERDETAIL;
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
 
   getMasterDetailItems(): Observable<IMasterDetailText[]> {
       return this.http.get<IMasterDetailText[]>(this.listUrl);

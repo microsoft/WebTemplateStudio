@@ -10,14 +10,14 @@ export class MasterDetailSideBarTabComponent implements OnInit {
   @Input() tabText: string;
   @Input() index: number;
   @Input() key: number;
-  @Output() onDisplayTabClickEventEmitter = new EventEmitter<number>();
+  @Output() displayTabClickEventEmitter = new EventEmitter<number>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  onDisplayTabClick(){
-    this.onDisplayTabClickEventEmitter.emit(this.index);
+  onDisplayTabClick() {
+    this.displayTabClickEventEmitter.emit(this.index);
   }
 }

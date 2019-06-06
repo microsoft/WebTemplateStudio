@@ -26,7 +26,7 @@ export class ListComponent implements OnInit {
     );
   }
 
-  handleAddListItem(inputText: string){
+  handleAddListItem(inputText: string) {
     if (!inputText) {
       this.WarningMessageOpen = true,
       this.WarningMessageText = CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE;
@@ -43,7 +43,7 @@ export class ListComponent implements OnInit {
     );
   }
 
-  handleDeleteListItem(id: number){
+  handleDeleteListItem(id: number) {
 
     this.listService.deleteListItem(id).subscribe(
       response => {
@@ -57,6 +57,6 @@ export class ListComponent implements OnInit {
   }
   handleWarningClose(open: boolean) {
     this.WarningMessageOpen = open;
-    this.WarningMessageText = "";
+    this.WarningMessageText = '';
   }
 }

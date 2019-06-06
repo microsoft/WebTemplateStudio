@@ -45,6 +45,6 @@ export class GridComponent implements OnInit {
   }
   handleWarningClose(open: boolean) {
     this.WarningMessageOpen = open;
-    this.WarningMessageText = "";
+    this.WarningMessageText = '';
   }
 }
