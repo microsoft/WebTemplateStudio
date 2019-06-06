@@ -14,7 +14,7 @@ export class MasterDetailPageComponent implements OnInit {
   }
 
 }
-export interface IMasterDetailText{
+export interface IMasterDetailText {
   paragraph: string;
   title: string;
   tabName: string;

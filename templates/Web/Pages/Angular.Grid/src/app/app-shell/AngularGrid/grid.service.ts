@@ -11,7 +11,7 @@ export class GridService {
 
   private listUrl = CONSTANTS.ENDPOINT.GRID;
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
 
   getGridItems(): Observable<IGridTextItem[]> {
       return this.http.get<IGridTextItem[]>(this.listUrl);
