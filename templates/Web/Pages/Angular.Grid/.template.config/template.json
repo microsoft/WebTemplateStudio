@@ -1,7 +1,7 @@
 ﻿{
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "Grid",
+  "name": "grid",
   "groupIdentity": "wts.Page.Grid",
   "identity": "wts.Page.Angular.Grid",
   "description": "A page displaying simple image and text components which are organized into a grid.",

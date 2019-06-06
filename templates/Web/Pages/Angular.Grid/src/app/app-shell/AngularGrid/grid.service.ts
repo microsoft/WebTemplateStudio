@@ -2,7 +2,7 @@
 import { CONSTANTS } from 'src/constants';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IGridTextItem } from './GridBox/grid-box.component';
+import { IGridTextItem } from './grid-box/grid-box.component';
 
 @Injectable({
   providedIn: 'root'

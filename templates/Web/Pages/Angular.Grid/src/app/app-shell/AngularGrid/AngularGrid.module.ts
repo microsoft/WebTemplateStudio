@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 
 import { GridComponent } from './grid.component';
-import { GridBoxComponent } from './GridBox/grid-box.component';
+import { GridBoxComponent } from './grid-box/grid-box.component';
 import { WarningMessageModule } from 'src/app/shared/warning-message/warning-message.module';
 
 @NgModule({
