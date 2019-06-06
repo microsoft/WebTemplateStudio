@@ -50,7 +50,7 @@
     "build": "yarn manage:translations && node ./scripts/build-non-split.js",
     "postbuild": "rm -rf ../extension/react && mv build ../extension/react",
     "manage:translations": "node scripts/manageTranslations.js",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "format": "prettier --write src/**/*.{ts,tsx}",
@@ -66,6 +66,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/enzyme": "^3.9.3",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.13.2",
     "react-intl-translations-manager": "^5.0.3",
     "tslint-config-prettier": "^1.18.0",
     "tslint-microsoft-contrib": "^6.1.0",
