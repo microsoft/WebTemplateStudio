@@ -10,7 +10,7 @@ export class MasterDetailSidebarTabComponent implements OnInit {
   @Input() tabText: string;
   @Input() index: number;
   @Input() key: number;
-  @Output() displayTabClickEventEmitter = new EventEmitter<number>();
+  @Output() displayTabClick = new EventEmitter<number>();
 
   constructor() { }
 
@@ -18,6 +18,6 @@ export class MasterDetailSidebarTabComponent implements OnInit {
   }
 
   onDisplayTabClick() {
-    this.displayTabClickEventEmitter.emit(this.index);
+    this.displayTabClick.emit(this.index);
   }
 }

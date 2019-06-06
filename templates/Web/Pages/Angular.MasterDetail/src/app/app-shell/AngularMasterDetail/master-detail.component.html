@@ -5,7 +5,7 @@
         <app-master-detail-sidebar-tab
           class="list-group list-group-flush border-bottom"
           *ngFor="let textAssets of masterDetailText; let i = index"
-          (displayTabClickEventEmitter)="handleDisplayTabClick($event)"
+          (displayTabClick)="handleDisplayTabClick($event)"
           [tabText]="textAssets.title"
           [index]="i"
           [key]="textAssets.id"
@@ -21,7 +21,7 @@
   <app-warning-message
     *ngIf="WarningMessageOpen"
     [text]="WarningMessageText"
-    (WarningMessageOpenEventEmitter)="handleWarningClose($event)"
+    (WarningMessageOpen)="handleWarningClose($event)"
   >
   </app-warning-message>
 </main>

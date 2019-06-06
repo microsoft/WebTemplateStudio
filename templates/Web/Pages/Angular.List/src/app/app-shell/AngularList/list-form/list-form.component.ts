@@ -6,7 +6,7 @@
 })
 export class ListFormComponent implements OnInit {
   textField: string;
-  @Output() inputTextEventEmitter = new EventEmitter<string>();
+  @Output() inputText = new EventEmitter<string>();
 
   constructor() { }
 
@@ -14,7 +14,7 @@ export class ListFormComponent implements OnInit {
   }
 
   onAddListItem() {
-    this.inputTextEventEmitter.emit(this.textField);
+    this.inputText.emit(this.textField);
     this.textField = '';
   }
 }
