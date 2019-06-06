@@ -1,7 +1,7 @@
 ﻿<form (submit)="onAddListItem()" class="input-group my-3">
     <input
       type="text"
-      [ngModelOptions]="{standalone: true}"
+      name="textField"
       [(ngModel)]="textField"
       class="form-control"
       placeholder="Add text here..."
