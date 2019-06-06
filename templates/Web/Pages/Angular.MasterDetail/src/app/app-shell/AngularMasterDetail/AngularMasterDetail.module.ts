@@ -5,6 +5,7 @@ import { MasterDetailComponent } from './master-detail.component';
 import { MasterDetailSideBarTabComponent } from './MasterDetailSideBarTab/master-detail-SideBarTab';
 import { WarningMessageModule } from 'src/app/shared/warning-message/warning-message.module';
 import { MasterDetailPageComponent } from './MasterDetailPage/master-detail-page.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { MasterDetailPageComponent } from './MasterDetailPage/master-detail-page
   imports: [
     CommonModule,
     WarningMessageModule,
+    MatIconModule,
     RouterModule.forChild([
       { path: 'AngularMasterDetail', component: MasterDetailComponent},
     ]),

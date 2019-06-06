@@ -2,6 +2,8 @@
 import { CONSTANTS } from 'src/constants';
 import { IMasterDetailText } from './MasterDetailPage/master-detail-page.component';
 import { MasterDetailService } from './master-detail.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   selector: 'app-master-detail',
@@ -10,13 +12,16 @@ import { MasterDetailService } from './master-detail.service';
 })
 export class MasterDetailComponent implements OnInit {
 
-  GreyAvatar = require('../../images/GreyAvatar.svg') as string;
   WarningMessageText = CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET;
   WarningMessageOpen = false;
   currentDisplayTabIndex = 0;
   masterDetailText: IMasterDetailText[] = [];
 
-  constructor(private masterDetailService: MasterDetailService) { }
+  constructor(private masterDetailService: MasterDetailService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+        'grey-avatar',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/GreyAvatar.svg'));
+  }
 
   ngOnInit() {
     this.masterDetailService.getMasterDetailItems().subscribe(

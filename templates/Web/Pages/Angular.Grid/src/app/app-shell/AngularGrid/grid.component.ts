@@ -2,6 +2,8 @@
 import { CONSTANTS } from '../../../constants';
 import { IGridTextItem } from './GridBox/grid-box.component';
 import { GridService } from './grid.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   selector: 'app-grid',
@@ -10,7 +12,6 @@ import { GridService } from './grid.service';
 })
 export class GridComponent implements OnInit {
 
-  GreyBox = require('../../images/GreyBox.svg') as string;
   WarningMessageText = CONSTANTS.ERROR_MESSAGE.GRID_GET;
   WarningMessageOpen = false;
   gridTextAssets: IGridTextItem[] = [
@@ -25,7 +26,11 @@ export class GridComponent implements OnInit {
       id: 1
     }
   ];
-  constructor(private gridService: GridService) { }
+  constructor(private gridService: GridService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'grey-box',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/GreyBox.svg'));
+  }
 
   ngOnInit() {
     this.gridService.getGridItems().subscribe(
