@@ -8,14 +8,14 @@ export class ListItemComponent implements OnInit {
   // tslint:disable-next-line
   @Input() _id : number;
   @Input() text: string;
-  @Output() deleteTextEventEmitter = new EventEmitter<number>();
+  @Output() deleteText = new EventEmitter<number>();
   constructor() { }
 
   ngOnInit() {
   }
 
   onDeleteListItem() {
-    this.deleteTextEventEmitter.emit(this._id);
+    this.deleteText.emit(this._id);
   }
 
 }
