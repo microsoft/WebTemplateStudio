@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CONSTANTS } from 'src/constants';
-import { IMasterDetailText } from './MasterDetailPage/master-detail-page.component';
+import { IMasterDetailText } from './master-detail-page/master-detail-page.component';
 import { MasterDetailService } from './master-detail.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
