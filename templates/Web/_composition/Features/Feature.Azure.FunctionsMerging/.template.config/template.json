@@ -1,7 +1,7 @@
 ﻿{
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "Page.Angular.AddFunctionsMerging",
+  "name": "Feature.Azure.FunctionsMerging",
   "tags": {
     "language": "Any",
     "type": "item",
