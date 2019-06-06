@@ -17,3 +17,10 @@ export class MasterDetailService {
       return this.http.get<IMasterDetailText[]>(this.listUrl);
   }
 }
+
+export interface IMasterDetailText {
+  paragraph: string;
+  title: string;
+  tabName: string;
+  id: number;
+}
