@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { ListComponent } from './list.component';
-import { ListFormComponent } from './ListForm/list-form.component';
-import { ListItemComponent } from './ListItem/list-item';
+import { ListFormComponent } from './list-form/list-form.component';
+import { ListItemComponent } from './list-item/list-item';
 import { WarningMessageModule } from 'src/app/shared/warning-message/warning-message.module';
 
 @NgModule({

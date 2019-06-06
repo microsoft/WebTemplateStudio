@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { IListItem } from './ListItem/list-item';
+import { IListItem } from './list-item/list-item';
 import { ListService } from './list.service';
 import { CONSTANTS } from '../../../constants';
 

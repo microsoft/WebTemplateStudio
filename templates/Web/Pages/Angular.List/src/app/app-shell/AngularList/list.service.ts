@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { CONSTANTS } from '../../../constants';
 
-import { IListItem } from './ListItem/list-item';
+import { IListItem } from './list-item/list-item';
 
 @Injectable({
     providedIn: 'root'
