@@ -19,7 +19,7 @@ export class GridBoxComponent implements OnInit {
 
 }
 
-export interface IGridTextItem{
+export interface IGridTextItem {
   description: string;
   header: string;
   id: number;

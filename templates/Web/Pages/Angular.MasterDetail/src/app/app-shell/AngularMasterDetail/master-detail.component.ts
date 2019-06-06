@@ -30,12 +30,12 @@ export class MasterDetailComponent implements OnInit {
     );
   }
 
-  handleDisplayTabClick(id: number){
+  handleDisplayTabClick(id: number) {
     this.currentDisplayTabIndex = id;
   }
   handleWarningClose(open: boolean) {
     this.WarningMessageOpen = open;
-    this.WarningMessageText = "";
+    this.WarningMessageText = '';
   }
 }
 
