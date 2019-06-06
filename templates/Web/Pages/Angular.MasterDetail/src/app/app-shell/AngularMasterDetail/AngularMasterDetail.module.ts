@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MasterDetailComponent } from './master-detail.component';
 import { MasterDetailSidebarTabComponent } from './master-detail-sidebar-tab/master-detail-sidebar-tab';
 import { WarningMessageModule } from 'src/app/shared/warning-message/warning-message.module';
-import { MasterDetailPageComponent } from './MasterDetailPage/master-detail-page.component';
+import { MasterDetailPageComponent } from './master-detail-page/master-detail-page.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
