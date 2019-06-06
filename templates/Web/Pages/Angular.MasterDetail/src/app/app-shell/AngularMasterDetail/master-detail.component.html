@@ -5,7 +5,7 @@
         <app-master-detail-sidebartab
           class="list-group list-group-flush border-bottom"
           *ngFor="let textAssets of masterDetailText; let i = index"
-          (onDisplayTabClickEventEmitter)="handleDisplayTabClick($event)"
+          (displayTabClickEventEmitter)="handleDisplayTabClick($event)"
           [tabText]="textAssets.title"
           [image]="GreyAvatar"
           [index]="i"
