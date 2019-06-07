@@ -1,7 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CONSTANTS } from '../../../constants';
-import { IGridTextItem } from './GridBox/grid-box.component';
-import { GridService } from './grid.service';
+import { GridService, IGridTextItem } from './grid.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 

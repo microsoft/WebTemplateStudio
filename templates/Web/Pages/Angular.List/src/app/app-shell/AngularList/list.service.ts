@@ -4,8 +4,6 @@ import { Observable } from 'rxjs';
 
 import { CONSTANTS } from '../../../constants';
 
-import { IListItem } from './ListItem/list-item';
-
 @Injectable({
     providedIn: 'root'
 })
@@ -34,3 +32,10 @@ export class ListService {
         return this.http.delete<IListItem>(`${CONSTANTS.ENDPOINT.LIST}/${id}`);
     }
 }
+
+
+export interface IListItem {
+  _id: number;
+  text: string;
+}
+

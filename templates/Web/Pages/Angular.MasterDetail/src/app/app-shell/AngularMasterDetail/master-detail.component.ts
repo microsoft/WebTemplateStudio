@@ -1,9 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CONSTANTS } from 'src/constants';
-import { IMasterDetailText } from './MasterDetailPage/master-detail-page.component';
-import { MasterDetailService } from './master-detail.service';
+import { MasterDetailService, IMasterDetailText } from './master-detail.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
+
 
 @Component({
   selector: 'app-master-detail',
