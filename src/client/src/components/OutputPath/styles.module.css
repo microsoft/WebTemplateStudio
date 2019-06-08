@@ -46,13 +46,16 @@
   opacity: 50%;
   min-height: 38px;
   overflow: auto;
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
 }
 
 .errorStack {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  display: block;
+  position: relative;
 }
 
 .outputPath {
@@ -65,5 +68,5 @@
   width: 100%;
   font-size: 1em;
   background-color: var(--vscode-input-background);
-  border: 1px solid var(--vscode-editor-foreground);
+  border: 0.5px solid var(--vscode-editor-foreground);
 }

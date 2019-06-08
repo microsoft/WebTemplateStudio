@@ -26,8 +26,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  WIZARD_CONTENT_INTERNAL_NAMES,
-  INTL_MESSAGES
+  WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
@@ -148,11 +147,13 @@ const AzureFunctionsResourceModal = (props: Props) => {
     }
   };
 
+  // The data we are presenting to the user (available resource groups, locations)
   const [functionsData, setData] = React.useState(
     azureFunctionModalInitialState
   );
 
   // Hardcoding a "node" value until data can be loaded dynamically
+  // Updates the data we are presenting to the user when the subscription changes
   React.useEffect(() => {
     setData({
       appName: [
@@ -164,7 +165,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       runtimeStack: [
         {
           value: "node",
-          label: "node"
+          label: "JavaScript"
         }
       ],
       subscription: props.subscriptions,
@@ -172,10 +173,12 @@ const AzureFunctionsResourceModal = (props: Props) => {
       location: props.subscriptionData.locations
     });
   }, [props.subscriptionData]);
-  const [azureFunctionsFormData, updateForm] = React.useState(initialState);
 
+  // The data the user has entered into the modal
+  const [azureFunctionsFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
 
+  // Updates the data the user enters (azureFunctionsFormData) as the user types
   const handleChange = (updatedFunctionsForm: IFunctionsState) => {
     setFunctionsModalButtonStatus(
       updatedFunctionsForm,
@@ -186,14 +189,14 @@ const AzureFunctionsResourceModal = (props: Props) => {
     updateForm(updatedFunctionsForm);
   };
 
-  const handleDropdown = (infoLabel: string, value: string) => {
+  const handleDropdown = (infoLabel: string, option: IDropDownOptionType) => {
     // Send command to extension on change
     // Populate resource groups on received commands
     let updatedForm = {
       ...azureFunctionsFormData,
       [infoLabel]: {
-        value: value,
-        label: value
+        value: option.value,
+        label: option.label
       }
     };
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
@@ -206,7 +209,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
         track: true,
-        subscription: value
+        subscription: option.value
       });
       updatedForm = {
         ...updatedForm,
@@ -223,8 +226,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    if (azureFunctionsFormData.appName.value != "") {
-      props.setValidationStatus(true);
+    if (azureFunctionsFormData.appName.value !== "") {
       if (timeout) {
         clearTimeout(timeout);
       }
@@ -239,7 +241,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         });
       }, 700);
     }
-  }, [azureFunctionsFormData.appName]);
+  }, [azureFunctionsFormData.appName.value]);
 
   React.useEffect(() => {
     if (props.selection) {
@@ -267,6 +269,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
    */
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
+
+    // Changes in account name will trigger an update in validation status
+    // Set validation status here to avoid premature error messages
+    props.setValidationStatus(true);
     handleChange({
       ...azureFunctionsFormData,
       appName: {
@@ -319,7 +325,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           ariaLabel={ariaLabel}
           options={options}
           handleChange={option => {
-            handleDropdown(formSectionId, option.value);
+            handleDropdown(formSectionId, option);
           }}
           value={
             azureFunctionsFormData[formSectionId].value
@@ -381,16 +387,14 @@ const AzureFunctionsResourceModal = (props: Props) => {
         DEFAULT_VALUE
       )}
       <div
-        className={classnames({
-          [styles.selectionInputContainer]:
-            !isAppNameAvailable &&
-            azureFunctionsFormData.appName.value.length > 0,
-          [styles.selectionContainer]:
-            isAppNameAvailable ||
-            azureFunctionsFormData.appName.value.length === 0,
-          [styles.selectionContainerDisabled]:
-            azureFunctionsFormData.subscription.value === ""
-        })}
+        className={classnames(
+          styles.selectionInputContainer,
+          styles.selectionContainer,
+          {
+            [styles.selectionContainerDisabled]:
+              azureFunctionsFormData.subscription.value === ""
+          }
+        )}
       >
         <div className={styles.selectionHeaderContainer}>
           <div>{props.intl.formatMessage(messages.appName)}</div>
@@ -402,33 +406,31 @@ const AzureFunctionsResourceModal = (props: Props) => {
             documents.azure.com
           </a>
         </div>
-        <div
-          className={classnames(styles.inputContainer, {
-            [styles.borderRed]:
-              !isAppNameAvailable &&
-              azureFunctionsFormData.appName.value.length > 0
-          })}
-        >
-          <input
-            aria-label={props.intl.formatMessage(messages.ariaAppNameLabel)}
-            className={styles.input}
-            onChange={handleInput}
-            value={azureFunctionsFormData.appName.value}
-            placeholder={FORM_CONSTANTS.APP_NAME.label}
-            disabled={azureFunctionsFormData.subscription === ""}
-            tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
-          />
-          {isAppNameAvailable && !isValidatingName && (
-            <GreenCheck className={styles.validationIcon} />
-          )}
-          {isValidatingName && <Spinner className={styles.spinner} />}
+        <div className={styles.errorStack}>
+          <div className={styles.inputContainer}>
+            <input
+              aria-label={props.intl.formatMessage(messages.ariaAppNameLabel)}
+              className={styles.input}
+              onChange={handleInput}
+              value={azureFunctionsFormData.appName.value}
+              placeholder={FORM_CONSTANTS.APP_NAME.label}
+              disabled={azureFunctionsFormData.subscription === ""}
+              tabIndex={
+                azureFunctionsFormData.subscription.value === "" ? -1 : 0
+              }
+            />
+            {isAppNameAvailable && !isValidatingName && (
+              <GreenCheck className={styles.validationIcon} />
+            )}
+            {isValidatingName && <Spinner className={styles.spinner} />}
+          </div>
+          {!isValidatingName && !isAppNameAvailable &&
+            azureFunctionsFormData.appName.value.length > 0 && (
+              <div className={styles.errorMessage}>
+                {props.appNameAvailability.message}
+              </div>
+            )}
         </div>
-        {!isAppNameAvailable &&
-          azureFunctionsFormData.appName.value.length > 0 && (
-            <div className={styles.errorMessage}>
-              {props.appNameAvailability.message}
-            </div>
-          )}
       </div>
       {getDropdownSection(
         FORM_CONSTANTS.LOCATION.label,

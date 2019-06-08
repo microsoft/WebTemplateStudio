@@ -19,12 +19,13 @@ export const getFrontendFrameworksSuccess = (
 // thunk
 export const getFrontendFrameworksAction = (
   projectType: string,
-  isPreview: boolean
+  isPreview: boolean,
+  serverPort: number
 ) => {
   return async (dispatch: Dispatch<WizardContentActionType>) => {
     return dispatch(
       getFrontendFrameworksSuccess(
-        await getFrameworks(projectType, "frontend", isPreview)
+        await getFrameworks(projectType, "frontend", isPreview, serverPort)
       )
     );
   };

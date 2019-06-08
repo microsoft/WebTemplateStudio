@@ -1,8 +1,15 @@
 .icon {
-  height: 48px;
-  width: 48px;
-  margin-right: 48px;
-  padding-right: 20px;
+  height: 36px;
+  width: 36px;
+  margin-right: 16px;
+}
+
+.spacer {
+  margin-right: 52px;
+}
+
+.backIcon path {
+  fill: var(--vscode-editor-foreground);
 }
 
 .backIcon path {
@@ -16,14 +23,13 @@
 }
 
 .container {
-  margin: 2em;
-  padding: 2em;
-  max-width: 40em;
+  margin: 48px;
+  max-width: 65%;
 }
 
 .backContainer {
   display: flex;
-  margin-bottom: 4em;
+  margin-bottom: 48px;
 }
 
 .innerBackContainer {
@@ -36,8 +42,14 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+.headerContainer,
 .detailsContainer {
   display: flex;
+  margin-bottom: 12px;
+}
+
+.headerContainer {
+  align-items: center;
 }
 
 .licenseCategory {
@@ -51,17 +63,16 @@
 
 .detailsTitle {
   font-weight: bold;
-  font-size: 24px;
-  margin-top: 0.5em;
-  margin-bottom: 1em;
+  font-size: 20px;
 }
 
 .licenses {
   margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .detailsDescription {
-  margin-bottom: 1em;
+  margin-bottom: 0px;
 }
 
 .categoriesContainer {
@@ -71,10 +82,12 @@
 .metaData {
   display: flex;
   align-items: center;
+  width: 80% !important;
 }
 
 .details {
   padding-top: 2px;
+  font-size: 14px;
   color: var(--vscode-textLink-foreground);
   cursor: pointer;
 }
@@ -85,10 +98,18 @@
 
 .link {
   color: var(--vscode-textLink-foreground);
-  font-weight: var(--vscode-editor-font-weight);
+  font-weight: var(--vscode-font-weight);
   text-decoration: none;
 }
 
 .link:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.longDescription {
+  line-height: 1.75em;
+}
+
+.colWidth {
+  width: 70px;
 }

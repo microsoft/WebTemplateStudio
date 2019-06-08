@@ -9,7 +9,6 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import { IOption } from "../../types/option";
 import { Link } from "react-router-dom";
-import classNames from "classnames";
 import { ROUTES } from "../../utils/constants";
 
 interface IProps {
@@ -23,7 +22,7 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-const Card = ({
+export const Card = ({
   option,
   buttonText,
   disabled,
@@ -38,7 +37,7 @@ const Card = ({
     <div className={styles.loginContainer}>
       <div className={styles.cardTitleContainer}>
         {option.svgUrl && (
-          <img className={styles.icon} src={option.svgUrl} alt="icon" />
+          <img className={styles.icon} src={option.svgUrl} alt="" />
         )}
         <div className={styles.cardTitle}>
           {intl.formatMessage(formattedTitle)}
@@ -58,10 +57,13 @@ const Card = ({
             <FormattedMessage id="card.details" defaultMessage="Details" />
           </Link>
           <button
+            disabled={disabled!}
             onClick={handleButtonClick}
             className={classnames(styles.signInButton, {
               [buttonStyles.buttonHighlighted]: !useNormalButtons,
-              [buttonStyles.buttonDark]: useNormalButtons
+              [buttonStyles.buttonDark]: useNormalButtons,
+              [buttonStyles.buttonCursorDefault]: disabled,
+              [buttonStyles.buttonCursorPointer]: !disabled
             })}
             tabIndex={disabled! ? -1 : 0}
           >

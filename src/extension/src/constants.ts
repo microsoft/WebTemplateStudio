@@ -153,13 +153,14 @@ export const CONSTANTS = {
   API: {
     WINDOWS_PLATFORM_VERSION: "win32",
     BASE_APPLICATION_NAME: "CoreTemplateStudio.Api",
-    PATH_TO_TEMPLATES: "..",
+    PRODUCTION_PATH_TO_TEMPLATES: "..",
+    DEVELOPMENT_PATH_TO_TEMPLATES: "../../../../..",
     SYNC_LIVE_MESSAGE_TRIGGER_NAME: "syncMessage",
     GEN_LIVE_MESSAGE_TRIGGER_NAME: "genMessage",
     SIGNALR_API_SYNC_METHOD_NAME: "SyncTemplates",
     SIGNALR_API_GENERATE_METHOD_NAME: "Generate",
-    MAX_SYNC_REQUEST_ATTEMPTS: 21,
-    SYNC_RETRY_WAIT_TIME: 200
+    MAX_SYNC_REQUEST_ATTEMPTS: 51,
+    SYNC_RETRY_WAIT_TIME: 250
   },
   AZURE_LOGIN_STATUS: {
     LOGGED_IN: "LoggedIn",
@@ -184,7 +185,7 @@ export const CONSTANTS = {
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
   MAX_PROJECT_NAME_LENGTH: 50,
-  PORT: 5000,
+  START_PORT: 9502,
   VSCODE_COMMAND: {
     OPEN_FOLDER: "vscode.openFolder"
   }
@@ -195,17 +196,17 @@ export enum ExtensionCommand {
   Login = "login",
   Logout = "logout",
   Subscriptions = "subscriptions",
-  SubscriptionDataForCosmos = "subscriptionDataForCosmos",
-  SubscriptionDataForFunctions = "subscriptionDataForFunctions",
+  SubscriptionDataForCosmos = "subscription-data-for-cosmos",
+  SubscriptionDataForFunctions = "subscription-data-for-functions",
   NameFunctions = "name-functions",
   NameCosmos = "name-cosmos",
   DeployFunctions = "deploy-functions",
   DeployCosmos = "deploy-cosmos",
   Generate = "generate",
-  GetOutputPath = "getOutputPath",
-  GetFunctionsRuntimes = "getFunctionsRuntimes",
-  GetCosmosAPIs = "getCosmosAPIs",
-  GetUserStatus = "getUserStatus",
+  GetOutputPath = "get-output-path",
+  GetFunctionsRuntimes = "get-functions-runtimes",
+  GetCosmosAPIs = "get-cosmos-apis",
+  GetUserStatus = "get-user-status",
   TrackPageSwitch = "track-page-switch",
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
@@ -213,6 +214,7 @@ export enum ExtensionCommand {
   OpenProjectVSCode = "open-project-vscode",
   GetVersions = "get-versions",
   CloseWizard = "close-wizard",
+  GetPort = "get-port",
   ResetPages = "reset-pages",
   GetPreviewStatus = "get-preview"
 }

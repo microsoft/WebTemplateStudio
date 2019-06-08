@@ -4,7 +4,7 @@ import * as constants from "./constants";
 export default class EngineAPIService {
   private API: string;
 
-  constructor(port: string, url: string | undefined) {
+  constructor(port: number, url: string | undefined) {
     if (url === undefined) {
       this.API = "http://localhost:" + port;
     } else {

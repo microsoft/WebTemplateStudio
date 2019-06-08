@@ -17,12 +17,14 @@ const SortableSidebarItem = SortableElement(
     page,
     idx,
     handleInputChange,
-    handleCloseClick
+    handleCloseClick,
+    totalPageCount
   }: {
     page: any;
     idx: number;
     handleInputChange: any;
     handleCloseClick?: (idx: number) => void;
+    totalPageCount: number;
   }) => {
     return (
       <DraggableSidebarItem
@@ -33,6 +35,7 @@ const SortableSidebarItem = SortableElement(
         handleInputChange={handleInputChange}
         handleCloseClick={handleCloseClick}
         idx={idx + 1}
+        totalPageCount={totalPageCount}
       />
     );
     // use idx+1 to prevent falsiness of 0th value
@@ -58,7 +61,7 @@ const SortableSummaryTile = SortableElement(
       <React.Fragment>
         <div className={styles.tileContainer}>
           <SummaryTile
-            originalTitle={page.id}
+            originalTitle={page.defaultName}
             title={page.title}
             version="v1.0"
             internalName={page.internalName}
@@ -83,20 +86,21 @@ const SortableSummaryTile = SortableElement(
 const SortableList = SortableContainer(
   ({
     pages,
-    pagesRows,
+    isSummaryPage,
     handleInputChange,
     handleCloseClick
   }: {
     pages: ISelected[];
-    pagesRows?: any[];
+    isSummaryPage?: boolean;
     handleInputChange: any;
     handleCloseClick?: (idx: number) => void;
   }) => {
+    const totalPageCount = pages.length;
     return (
       <div>
-        <div className={styles.sidebarItem}>
-          {!pagesRows &&
-            pages.map((page: any, idx: number) => {
+        {!isSummaryPage && (
+          <div className={styles.sidebarItem}>
+            {pages.map((page: ISelected, idx: number) => {
               return (
                 <SortableSidebarItem
                   key={page.id}
@@ -105,14 +109,16 @@ const SortableList = SortableContainer(
                   page={page}
                   handleInputChange={handleInputChange}
                   handleCloseClick={handleCloseClick}
+                  totalPageCount={totalPageCount}
                 />
               );
             })
-          // index prop required by react-sortable, while idx used for updating redux state changes
-          }
-        </div>
-        {pagesRows &&
-          pagesRows.map((page: any, idx: number) => {
+            // index prop required by react-sortable, while idx used for updating redux state changes
+            }
+          </div>
+        )}
+        {isSummaryPage &&
+          pages.map((page: ISelected, idx: number) => {
             return (
               <SortableSummaryTile
                 key={`item-${page.id}`}
@@ -121,7 +127,7 @@ const SortableList = SortableContainer(
                 page={page}
                 handleInputChange={handleInputChange}
                 handleCloseClick={handleCloseClick}
-                error={pages[idx].error}
+                error={page.error}
               />
             );
           })}

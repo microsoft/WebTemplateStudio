@@ -2,8 +2,10 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { ISelectedAzureFunctionsService } from "../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 import { AppState } from "../reducers";
+import { ServiceState } from "../reducers/wizardSelectionReducers/services/index";
 
 interface ISelectedDropdowns {
+  [key: string]: IDropDownOptionType | undefined;
   subscription?: IDropDownOptionType;
   resourceGroup?: IDropDownOptionType;
   appName?: IDropDownOptionType;
@@ -18,7 +20,8 @@ interface ISelectionInformation {
 }
 
 const getState = (state: AppState): AppState => state;
-const getServicesSelector = (state: AppState) => state.selection.services;
+const getServicesSelector = (state: AppState): ServiceState =>
+  state.selection.services;
 
 const getAzureFunctionsNamesSelector = (state: AppState) => {
   if (state.selection.services.azureFunctions.selection[0]) {
@@ -44,10 +47,16 @@ const getAzureFunctionsOptions = (
     let updatedSelections;
     if (selections.functionNames) {
       updatedSelections = {
-        ...selections,
         functionNames: selections.functionNames.map(functionNameObject => {
           return functionNameObject.title;
-        })
+        }),
+        appName: selections.appName.value,
+        internalName: selections.internalName.value,
+        location: selections.location.value,
+        numFunctions: selections.numFunctions.value,
+        resourceGroup: selections.resourceGroup.value,
+        runtimeStack: selections.runtimeStack.value,
+        subscription: selections.subscription.value
       };
     } else {
       updatedSelections = selections;
@@ -70,20 +79,24 @@ const getAzureFunctionsOptionsSelector = createSelector(
  * @param services
  * @param isAzureFunctionsSelected
  */
-const getAzureFunctionsSelectionInDropdownForm = (services: any): any => {
+const getAzureFunctionsSelectionInDropdownForm = (
+  services: ServiceState
+): any => {
   const { selection } = services.azureFunctions;
   if (!_.isEmpty(selection)) {
     const selectionInformation: ISelectionInformation = {
       dropdownSelection: {},
       previousFormData: selection[0]
     };
-    for (const selectionKey in selection[0]) {
+    for (const selectionKey in selectionInformation.previousFormData) {
+      let selectionInfo = selectionInformation.previousFormData[
+        selectionKey
+      ] as IDropDownOptionType;
       if (selectionKey) {
-        // @ts-ignore to allow dynamic key selection
         selectionInformation.dropdownSelection[selectionKey] = {
-          value: selection[0][selectionKey],
-          label: selection[0][selectionKey]
-        };
+          value: selectionInfo.value,
+          label: selectionInfo.label
+        } as IDropDownOptionType;
       }
     }
     return selectionInformation;

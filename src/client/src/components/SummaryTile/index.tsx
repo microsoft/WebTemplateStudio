@@ -40,6 +40,7 @@ interface IProps {
   showFolderIcon?: boolean;
   subTitle?: string;
   error?: string | FormattedMessage.MessageDescriptor;
+  canDelete?: boolean;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -62,7 +63,8 @@ const SummaryTile = ({
   showFolderIcon,
   subTitle,
   intl,
-  error
+  error,
+  canDelete
 }: Props) => {
   const [componentTitle, setTitle] = React.useState(title);
   const [isDisabled, setDisabled] = React.useState(true);
@@ -81,7 +83,9 @@ const SummaryTile = ({
     setTitle(target.value);
   };
   const handleClick = () => {
-    setDisabled(false);
+    if (isEditable && !canDelete) {
+      setDisabled(false);
+    }
   };
   const handleFocusOut = () => {
     setDisabled(true);
@@ -122,6 +126,11 @@ const SummaryTile = ({
       setEditable(false);
     }
   };
+  const handleKeyDown = (event: any) => {
+    if (event.keyCode === 13) {
+      handleFocusOut();
+    }
+  };
   return (
     <div
       className={styles.container}
@@ -131,84 +140,106 @@ const SummaryTile = ({
     >
       {isDraggable && <ReorderSVG className={styles.reorder} />}
       <div
-        role="button"
-        tabIndex={isEditable ? 0 : -1}
-        className={classnames({
-          [styles.indent]: withIndent,
-          [styles.summaryTileContainer]: isEditable,
-          [styles.disableHover]: !isEditable
+        className={classnames(styles.container, {
+          [styles.indent]: withIndent
         })}
         onKeyDown={onSummaryTileLeave}
       >
-        <div className={styles.leftContainer}>
-          {showFolderIcon ? (
-            <FolderSVG className={styles.leftIcon} />
-          ) : (
-            getSvg(internalName as string, styles.leftIcon) || (
-              <img
-                src={getSvgUrl(internalName as string)}
-                className={styles.leftIcon}
-              />
-            )
-          )}
-          <div className={styles.tileContent}>
-            <input
-              aria-label={intl.formatMessage(messages.changeItemName)}
-              ref={inputRef}
-              className={styles.tileInput}
-              value={componentTitle}
-              onChange={handleChange}
-              disabled={isDisabled}
-              onBlur={handleFocusOut}
-              onClick={handleClick}
-            />
-            <div className={styles.metaData}>
-              {(error && (
-                <div className={styles.errorMessage}>{error}</div>
-              )) || (
-                <React.Fragment>
-                  {subTitle
-                    ? subTitle
-                    : originalTitle && (
+        <div
+          role="button"
+          tabIndex={isEditable ? 0 : -1}
+          className={classnames({
+            [styles.summaryTileContainer]: isEditable,
+            [styles.disableHover]: !isEditable
+          })}
+          onKeyDown={onSummaryTileLeave}
+        >
+          <div className={styles.leftContainer}>
+            {showFolderIcon ? (
+              <FolderSVG className={styles.leftIcon} />
+            ) : (
+              getSvg(internalName as string, styles.leftIcon) || (
+                <img
+                  alt=""
+                  src={getSvgUrl(internalName as string)}
+                  className={styles.leftIcon}
+                />
+              )
+            )}
+            <div className={styles.tileContent}>
+              <div className={styles.errorStack} onDoubleClick={handleClick}>
+                <input
+                  aria-label={intl.formatMessage(messages.changeItemName)}
+                  ref={inputRef}
+                  className={styles.tileInput}
+                  value={componentTitle}
+                  onChange={handleChange}
+                  disabled={isDisabled}
+                  onBlur={handleFocusOut}
+                  onKeyDown={handleKeyDown}
+                />
+                {error && <div className={styles.errorMessage}>{error}</div>}
+              </div>
+              <div className={styles.metaData}>
+                {
+                  <React.Fragment>
+                    {subTitle ? (
+                      <input
+                        className={styles.subTitle}
+                        value={subTitle}
+                        disabled={true}
+                      />
+                    ) : (
+                      originalTitle && (
                         <React.Fragment>
                           <div>{originalTitle}</div>
-                          <div>&nbsp;|&nbsp;</div>
                         </React.Fragment>
-                      )}
-                  {author && (
-                    <React.Fragment>
-                      {author && <div>{author}</div>}
-                      {version && (
-                        <React.Fragment>
-                          <div>&nbsp;|&nbsp;</div>
-                          <div>{version}</div>
-                        </React.Fragment>
-                      )}
-                    </React.Fragment>
-                  )}
-                </React.Fragment>
-              )}
+                      )
+                    )}
+                    {author && (
+                      <React.Fragment>
+                        {author && (
+                          <div>
+                            {(subTitle || originalTitle) && (
+                              <span>&nbsp;|&nbsp;</span>
+                            )}
+                            {author}
+                          </div>
+                        )}
+                        {version && (
+                          <React.Fragment>
+                            <div>&nbsp;|&nbsp;</div>
+                            <div>{version}</div>
+                          </React.Fragment>
+                        )}
+                      </React.Fragment>
+                    )}
+                  </React.Fragment>
+                }
+              </div>
             </div>
           </div>
+          <div className={styles.editSpacer}>
+            {showEditable && !withoutEditIcon && !canDelete && (
+              <EditSVG
+                tabIndex={0}
+                className={styles.rightIcon}
+                onClick={handleClick}
+                onKeyDown={onEditKeyDown}
+              />
+            )}
+          </div>
         </div>
-        {showEditable && !withoutEditIcon && (
-          <EditSVG
+        <div className={styles.spacer}>
+          <CloseSVG
             tabIndex={0}
-            className={styles.rightIcon}
-            onClick={handleClick}
-            onKeyDown={onEditKeyDown}
+            onClick={onCloseClick}
+            onKeyDown={onCloseKeyDown}
+            className={classnames(styles.closeIcon, {
+              [styles.hidden]: !showEditable || !isEditable
+            })}
           />
-        )}
-      </div>
-      <div className={styles.spacer}>
-        <CloseSVG
-          tabIndex={0}
-          onClick={onCloseClick}
-          onKeyDown={onCloseKeyDown}
-          className={classnames(styles.closeIcon, {
-            [styles.hidden]: !showEditable || !isEditable
-          })}
-        />
+        </div>
       </div>
     </div>
   );

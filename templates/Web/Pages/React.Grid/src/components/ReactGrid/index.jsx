@@ -50,7 +50,7 @@ export default class ReactGrid extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <main>
+      <main id="mainContent">
         <div className={classnames("text-center", styles.header)}>
           <h1>Param_ProjectName</h1>
           <p>This is placeholder text. Your web app description goes here.</p>

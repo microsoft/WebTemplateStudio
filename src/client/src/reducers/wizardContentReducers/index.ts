@@ -5,6 +5,7 @@ import pageOptions from "./pagesOptionsReducer";
 import projectTypes from "./projectTypeReducer";
 import detailsPage from "./detailsPageReducer";
 import previewStatus from "./previewReducer";
+import serverPort from "./portReducer";
 
 const wizardContentReducer = combineReducers({
   backendOptions,
@@ -12,6 +13,7 @@ const wizardContentReducer = combineReducers({
   pageOptions,
   projectTypes,
   detailsPage,
+  serverPort,
   previewStatus
 });
 
