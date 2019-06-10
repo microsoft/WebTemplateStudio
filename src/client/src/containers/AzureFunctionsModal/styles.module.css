@@ -50,6 +50,7 @@
   outline: none;
   background-color: var(--vscode-badge-background);
   cursor: default;
+<<<<<<< HEAD
 }
 
 .button:focus {
@@ -61,6 +62,8 @@
   outline: none;
   background-color: var(--vscode-badge-background);
   cursor: default;
+=======
+>>>>>>> dev
 }
 
 .icon {

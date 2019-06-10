@@ -58,13 +58,6 @@
   fill: var(--vscode-editor-foreground);
 }
 
-.leftIcon path,
-.reorder path,
-.closeIcon path,
-.rightIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
 .closeIcon:hover {
   cursor: pointer;
 }
@@ -75,10 +68,6 @@
 
 .rightIcon:hover {
   cursor: pointer;
-}
-
-.rightIcon:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .rightIcon:focus {

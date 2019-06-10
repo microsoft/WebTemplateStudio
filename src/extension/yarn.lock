@@ -3845,6 +3845,7 @@ streamroller@^1.0.4:
     debug "^3.1.0"
     fs-extra "^7.0.0"
     lodash "^4.17.10"
+<<<<<<< HEAD
 
 streamroller@^1.0.4:
   version "1.0.4"
@@ -3856,6 +3857,8 @@ streamroller@^1.0.4:
     debug "^3.1.0"
     fs-extra "^7.0.0"
     lodash "^4.17.10"
+=======
+>>>>>>> dev
 
 string-width@^1.0.1, string-width@^1.0.2:
   version "1.0.2"

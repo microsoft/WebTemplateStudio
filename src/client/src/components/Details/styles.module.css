@@ -12,10 +12,6 @@
   fill: var(--vscode-editor-foreground);
 }
 
-.backIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
 .backIcon {
   height: 24px;
   margin-right: 1em;

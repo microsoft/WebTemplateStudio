@@ -32,10 +32,13 @@
 
 .spinner path {
   stroke: #ffffff;
+<<<<<<< HEAD
 }
 
 .spinner path {
   stroke: #ffffff;
+=======
+>>>>>>> dev
 }
 
 @keyframes rotate {

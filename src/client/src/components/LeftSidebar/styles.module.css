@@ -47,7 +47,3 @@
 .feedback:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
-
-.feedback:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
