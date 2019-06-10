@@ -7,6 +7,8 @@ app = Flask(__name__)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
+    # Todo: This return statement needs to be replaced by the index.html page
+    # of compiled front-end application once we figure out how deployment works 
     return 'You want path: %s' % path
 
 if __name__ == '__main__':
