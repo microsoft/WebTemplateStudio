@@ -6,7 +6,7 @@
         <Switch>
         //^^
         //{[{
-          < Route path = "/wts.ItemName" component = { wts.ItemName } />
+          <Route path = "/wts.ItemName" component = { wts.ItemName } />
         //}]}
         </Switch>
         <Footer />

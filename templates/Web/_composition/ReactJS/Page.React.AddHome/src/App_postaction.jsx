@@ -5,7 +5,7 @@
         <NavBar />
         <Switch>
         //{[{
-          < Redirect exact path = "/" to = "/Param_HomePageName" />
+          <Redirect exact path = "/" to = "/Param_HomePageName" />
         //}]}
         </Switch>
         <Footer />

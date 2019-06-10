@@ -1,0 +1,43 @@
+﻿{
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "Master Detail",
+  "groupIdentity": "wts.Page.MasterDetail",
+  "identity": "wts.Page.Vue.MasterDetail",
+  "description": "The master-detail page has a master pane and a details pane for content.",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "page",
+    "wts.platform": "Web",
+    "wts.projecttype": "FullStackWebApp",
+    "wts.frontendframework": "Vue",
+    "wts.backendframework": "all",
+    "wts.version": "1.0.0",
+    "wts.displayOrder": "1",
+    "wts.genGroup": "0",
+    "wts.rightClickEnabled": "true",
+    "wts.licenses": "[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)"
+  },
+  "sourceName": "VueMasterDetail",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.itemNamespace": {
+      "type": "parameter",
+      "replaces": "Param_ItemNamespace"
+    },
+    "baseclass": {
+      "type": "parameter",
+      "replaces": "System.ComponentModel.INotifyPropertyChanged"
+    },
+    "setter": {
+      "type": "parameter",
+      "replaces": "Param_Setter"
+    }
+  }
+}

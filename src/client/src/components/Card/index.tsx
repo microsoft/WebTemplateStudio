@@ -22,7 +22,7 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-const Card = ({
+export const Card = ({
   option,
   buttonText,
   disabled,
