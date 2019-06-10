@@ -10,7 +10,7 @@
     "wts.type": "composition",
 	"wts.platform" : "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == AngularJS & wts.type == page"
+    "wts.compositionFilter": "$frontendframework == Angular & wts.type == page"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,

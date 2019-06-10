@@ -57,7 +57,7 @@ const getServices = (selection: SelectionState): ITemplateInfo[] => {
       for (const funcName of functionNames) {
         servicesInfo.push({
           name: funcName.title,
-          identity: services.azureFunctions.selection[0].internalName
+          identity: services.azureFunctions.selection[0].internalName.value
         });
       }
     }

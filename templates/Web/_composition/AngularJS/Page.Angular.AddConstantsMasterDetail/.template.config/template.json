@@ -9,7 +9,7 @@
     "wts.platform": "Web",
     "wts.compositionOrder": 4,
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == AngularJS & identity == wts.Page.Angular.MasterDetail"
+    "wts.compositionFilter": "$frontendframework == Angular & identity == wts.Page.Angular.MasterDetail"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

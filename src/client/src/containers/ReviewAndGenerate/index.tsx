@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -13,7 +12,6 @@ import styles from "./styles.module.css";
 
 import { RowType } from "../../types/rowType";
 
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import Title from "../../components/Title";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
@@ -33,7 +31,6 @@ interface IStateProps {
   projectTypeRows: RowType[];
   frameworkRows: RowType[];
   servicesRows: RowType[];
-  pagesRows: RowType[];
   vscode: any;
   projectName: string;
   outputPath: string;
@@ -43,28 +40,28 @@ type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const messages = defineMessages({
   welcome: {
-    id: "review.welcome",
-    defaultMessage: "1. Welcome"
+    id: "review.newProject",
+    defaultMessage: "New Project"
   },
   projectType: {
     id: "review.projectType",
-    defaultMessage: "2. Project Type"
+    defaultMessage: "Project Type"
   },
   frameworks: {
     id: "review.frameworks",
-    defaultMessage: "3. Frameworks"
+    defaultMessage: "Frameworks"
   },
   pages: {
     id: "review.pages",
-    defaultMessage: "4. Pages"
+    defaultMessage: "Pages"
   },
   services: {
     id: "review.services",
-    defaultMessage: "5. Services"
+    defaultMessage: "Services"
   },
   reviewAndGenerate: {
     id: "review.reviewAndGenerate",
-    defaultMessage: "6. Your project summary."
+    defaultMessage: "Your project summary."
   }
 });
 
@@ -72,7 +69,6 @@ const ReviewAndGenerate = (props: Props) => {
   const {
     servicesRows,
     projectTypeRows,
-    pagesRows,
     intl,
     frameworkRows,
     projectName,
@@ -81,10 +77,10 @@ const ReviewAndGenerate = (props: Props) => {
   return (
     <div className={styles.container}>
       <Title>{intl.formatMessage(messages.reviewAndGenerate)}</Title>
-      <div
-        className={classnames(styles.selectionTitle, styles.selectionContainer)}
-      >
-        {intl.formatMessage(messages.welcome)}
+      <div className={styles.selectionContainer}>
+        <div className={styles.selectionTitle}>
+          {intl.formatMessage(messages.welcome)}
+        </div>
         <SummaryTile
           showFolderIcon={true}
           svgUrl={withLocalPath(folder)}
@@ -104,17 +100,20 @@ const ReviewAndGenerate = (props: Props) => {
         <div className={styles.selectionTitle}>
           {intl.formatMessage(messages.pages)}
         </div>
-        <SortablePageList pagesRows={pagesRows} />
+        <SortablePageList isSummaryPage={true} />
       </div>
       <SummarySection
         selectionTitle={intl.formatMessage(messages.services)}
         selectionRows={servicesRows}
+        canDelete={true}
       />
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   openCosmosDbModal: () => {
     dispatch(ModalActions.openCosmosDbModalAction());
   },
@@ -127,7 +126,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   projectTypeRows: WizardSelectors.getProjectTypeRowItemSelector(state),
   frameworkRows: WizardSelectors.getFrameworksRowItemSelector(state),
   servicesRows: WizardSelectors.getServicesSelector(state),
-  pagesRows: WizardSelectors.getPagesRowItemsSelector(state),
   vscode: getVSCodeApiSelector(state),
   projectName: WizardSelectors.getProjectName(state),
   outputPath: WizardSelectors.getOutputPath(state)

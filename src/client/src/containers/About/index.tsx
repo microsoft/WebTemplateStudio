@@ -1,6 +1,5 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { ILicenseObject } from "../../types/license";
 
 import styles from "./styles.module.css";
 import { getVersionsSelector } from "../../selectors/vscodeApiSelector";
@@ -39,7 +38,7 @@ const About = ({ versions, intl }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>{intl.formatMessage(messages.about)}</div>
-      <p>
+      <p className={styles.repo}>
         <a
           className={styles.link}
           href="https://github.com/Microsoft/WebTemplateStudio"
@@ -47,7 +46,6 @@ const About = ({ versions, intl }: Props) => {
           Web Template Studio
         </a>
       </p>
-      <br />
       <p>
         <a
           className={styles.link}
@@ -55,7 +53,7 @@ const About = ({ versions, intl }: Props) => {
         >
           <FormattedMessage
             id="about.reportAnIssue"
-            defaultMessage="Report an issue"
+            defaultMessage="Give Feedback or Report an issue"
           />
         </a>
       </p>

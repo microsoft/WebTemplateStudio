@@ -6,7 +6,7 @@
 .title {
   font-size: 1.4em;
   font-weight: bold;
-  margin-bottom: 0.5em;
+  margin-bottom: 8px;
   margin-top: 1em;
 }
 
@@ -15,11 +15,13 @@
 }
 
 .selectionContainer {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .selectionTitle {
   font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
 .projectDetailsContainer {

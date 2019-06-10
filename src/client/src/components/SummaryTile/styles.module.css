@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .disableHover,
@@ -13,7 +14,8 @@
   padding: 11px;
   justify-content: space-between;
   width: 100%;
-  margin-right: 10px;
+  margin-right: 11px;
+  box-sizing: border-box;
 }
 
 .summaryTileContainer:hover {
@@ -41,8 +43,19 @@
 
 .closeIcon,
 .rightIcon {
-  max-height: 18px;
-  padding: 3px;
+  height: 18px;
+  width: 18px;
+}
+
+.rightIcon {
+  margin-left: 10px;
+}
+
+.leftIcon path,
+.reorder path,
+.closeIcon path,
+.rightIcon path {
+  fill: var(--vscode-editor-foreground);
 }
 
 .leftIcon path,
@@ -62,8 +75,10 @@
 
 .rightIcon:hover {
   cursor: pointer;
-  padding: 3px;
-  border-radius: 3px;
+}
+
+.rightIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .rightIcon:focus {
@@ -74,13 +89,29 @@
   width: 24px;
 }
 
+.editSpacer {
+  width: 30px;
+  padding: 3px;
+}
+
 .tileInput {
   font-size: 18px;
   font-weight: bold;
   background-color: var(--vscode-sideBar-background);
   border: none;
-  max-width: 300px;
+  max-width: 100%;
   color: var(--vscode-editor-foreground);
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.subTitle {
+  background-color: var(--vscode-sideBar-background);
+  border: none;
+  max-width: 100%;
+  color: var(--vscode-editor-foreground);
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .tileInput:focus {
@@ -124,4 +155,13 @@
   opacity: 50%;
   min-height: 38px;
   font-size: 15px;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 1;
+  max-width: 100%;
+}
+
+.errorStack {
+  display: block;
+  position: relative;
 }
