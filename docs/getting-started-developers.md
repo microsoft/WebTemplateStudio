@@ -53,7 +53,7 @@ installed by anyone who has VSCode using the command in the extension directory:
 code --install-extension [extensionName].vsix
 ```
 
-`webts-0.0.0-UNTRACKEDVERSION.vsix` is the default extensionName.
+`wts-0.0.0-UNTRACKEDVERSION.vsix` is the default extensionName.
 
 Alternatively, copy the extension into your extensions directory. For _Windows_, it is
 `%USERPROFILE%\.vscode\extensions`. For _Mac/Linux_, it is `~/.vscode/extensions` (By Default).

@@ -26,23 +26,12 @@ import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 
-interface LinksDict {
-  [serviceId: string]: string;
-}
-const links: LinksDict = {
-  "Azure Functions":
-    "[Azure](https://portal.azure.com/#blade/WebsitesExtension/FunctionsIFrameBladeMain)",
-  "Cosmos DB":
-    "[Azure](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts)"
-};
-
 interface IStateProps {
   isTemplateGenerated: boolean;
   isTemplatesFailed: boolean;
   isServicesDeployed: boolean;
   templateGenStatus: string;
   isModalOpen: boolean;
-  isPostGenModalOpen: boolean;
   serviceStatus: PostGenSelectors.IAzureServiceStatus;
   isServicesSelected: boolean;
   vscode: IVSCodeObject;
@@ -92,7 +81,7 @@ const PostGenerationModal = ({
   const handleClick = () => {
     if (isTemplatesFailed) {
       resetWizard();
-      history.push(ROUTES.NEW_PROJECT);
+      history.push(ROUTES.WELCOME);
     }
     if (isTemplateGenerated && isServicesDeployed) {
       vscode.postMessage({
@@ -137,7 +126,7 @@ const PostGenerationModal = ({
             <ReactMarkdown
               source={`${serviceTitle} ${formatMessage(
                 messages.deploymentSuccess
-              )} ${links[serviceTitle]}`}
+              )}`}
               key={`${messages.deploymentSuccess.defaultMessage}${idx}`}
               renderers={{ link: LinkRenderer }}
             />
@@ -208,7 +197,6 @@ const PostGenerationModal = ({
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
-  isPostGenModalOpen: isPostGenModalOpenSelector(state),
   isServicesDeployed: PostGenSelectors.isServicesDeployedOrFinishedSelector(
     state
   ),

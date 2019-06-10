@@ -5,9 +5,6 @@ import { ISelected } from "../types/selected";
 import getSvgUrl from "../utils/getSvgUrl";
 import { IPageCount } from "../reducers/wizardSelectionReducers/pageCountReducer";
 import { defineMessages } from "react-intl";
-import { IValidation } from "../reducers/wizardSelectionReducers/updateOutputPath";
-import { AppState } from "../reducers";
-import { SelectionState } from "../reducers/wizardSelectionReducers";
 
 export const messages = defineMessages({
   azureFunctionsOriginalTitle: {
@@ -19,6 +16,9 @@ export const messages = defineMessages({
     defaultMessage: "CosmosDB"
   }
 });
+import { IValidation } from "../reducers/wizardSelectionReducers/updateOutputPath";
+import { AppState } from "../reducers";
+import { SelectionState } from "../reducers/wizardSelectionReducers";
 
 const getWizardSelectionsSelector = (state: AppState): SelectionState =>
   state.selection;
@@ -106,12 +106,12 @@ const getServices = (selection: SelectionState): RowType[] => {
   const servicesRows = [];
   if (!_.isEmpty(azureFunctions.selection)) {
     servicesRows.push({
-      title: azureFunctions.selection[0].appName.value,
+      title: azureFunctions.selection[0].appName,
       originalTitle: "Azure Functions",
       company: "Microsoft",
-      svgUrl: getSvgUrl(azureFunctions.selection[0].internalName.value),
+      svgUrl: getSvgUrl(azureFunctions.selection[0].internalName),
       functionNames: azureFunctions.selection[0].functionNames,
-      internalName: azureFunctions.selection[0].internalName.value,
+      internalName: azureFunctions.selection[0].internalName,
       version: "1.0"
     });
   }
@@ -128,6 +128,22 @@ const getServices = (selection: SelectionState): RowType[] => {
   return servicesRows;
 };
 
+const getPagesRowItems = (selection: SelectionState): RowType[] => {
+  const { pages } = selection;
+  const pagesRows = [];
+  for (const page of pages) {
+    pagesRows.push({
+      title: page.title,
+      internalName: page.internalName,
+      id: page.id,
+      version: page.version as string,
+      author: page.author,
+      originalTitle: page.originalTitle
+    });
+  }
+  return pagesRows;
+};
+
 const getProjectTypeRowItemSelector = createSelector(
   getWizardSelectionsSelector,
   getProjectTypeRowItems
@@ -138,12 +154,18 @@ const getFrameworksRowItemSelector = createSelector(
   frameworksRowItems
 );
 
+const getPagesRowItemsSelector = createSelector(
+  getWizardSelectionsSelector,
+  getPagesRowItems
+);
+
 const getServicesSelector = createSelector(
   getWizardSelectionsSelector,
   getServices
 );
 
 export {
+  getPagesRowItemsSelector,
   getProjectTypeRowItemSelector,
   getWizardSelectionsSelector,
   getFrameworksRowItemSelector,

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import LoginCard from "../../components/LoginCard";
@@ -18,6 +18,7 @@ import { messages } from "../../mockData/azureServiceOptions";
 import { microsoftAzureDetails } from "../../mockData/azureServiceOptions";
 import { withLocalPath } from "../../utils/getSvgUrl";
 import { AppState } from "../../reducers";
+import { IMetadata } from "../../types/metadata";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 
@@ -30,7 +31,7 @@ interface IAzureLoginProps {
   vscode: any;
 }
 
-type Props = IDispatchProps & IAzureLoginProps & InjectedIntlProps & RouteComponentProps;
+type Props = IDispatchProps & IAzureLoginProps & InjectedIntlProps;
 
 class AzureLogin extends React.Component<Props> {
   handleClick = () => {

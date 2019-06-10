@@ -10,9 +10,9 @@
   width: 100%;
   box-sizing: border-box;
   background-color: var(--vscode-editor-background);
-  height: calc(100vh - 104px);
+  height: calc(100vh - 122px);
   margin-top: 51px;
-  margin-bottom: 53px;
+  margin-bottom: 71px;
   justify-content: flex-start;
 }
 

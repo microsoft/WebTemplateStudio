@@ -1,6 +1,10 @@
+import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
+import buttonStyles from "../../css/buttonStyles.module.css";
+import { ROUTES } from "../../utils/constants";
 import styles from "./styles.module.css";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
@@ -35,7 +39,7 @@ interface IStateProps {
 
 type Props = IStateProps & IDispatchProps;
 
-const NewProject = ({
+const Welcome = ({
   setRouteVisited,
   projectPathValidation,
   outputPath,
@@ -47,13 +51,13 @@ const NewProject = ({
     <div className={styles.container}>
       <h1 className={styles.header}>
         <FormattedMessage
-          id="newProject.header"
+          id="welcome.header"
           defaultMessage="Welcome to Web Template Studio"
         />
       </h1>
       <div className={styles.body}>
         <FormattedMessage
-          id="newProject.body"
+          id="welcome.body"
           defaultMessage="Enter a project name and output path, then click next to get started."
         />
       </div>
@@ -86,4 +90,4 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NewProject);
+)(Welcome);

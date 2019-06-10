@@ -22,8 +22,9 @@ import {
   InjectedIntlProps,
   defineMessages
 } from "react-intl";
+import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
-import { ThunkDispatch } from "redux-thunk";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import { validateName } from "../../utils/validateName";
 
@@ -35,7 +36,6 @@ export interface IFunctionName {
   title: string;
   isValidTitle: boolean;
   error: string;
-  id: string;
 }
 
 export interface IFunctionApp {
@@ -54,7 +54,7 @@ type Props = IProps & IDispatchProps & InjectedIntlProps;
 
 const messages = defineMessages({
   duplicateFunctionName: {
-    id: "azureFunctionsSelection.duplicateName",
+    id: "functionName.duplicateName",
     defaultMessage: "Function name has to be unique"
   }
 });
@@ -115,7 +115,7 @@ const AzureFunctionsSelection = ({
       {!_.isEmpty(selection) &&
         selection.map(
           (functionApp: ISelectedAzureFunctionsService, idx: number) => (
-            <React.Fragment key={serviceType + functionApp.appName.value + idx}>
+            <React.Fragment key={serviceType + functionApp.appName + idx}>
               <div className={styles.headerContainer}>
                 <div>{intl.formatMessage(serviceType)}</div>
                 <div
@@ -133,8 +133,8 @@ const AzureFunctionsSelection = ({
               </div>
               <DraggableSidebarItem
                 customInputStyle={styles.input}
-                key={functionApp.appName.value + idx}
-                text={functionApp.appName.value}
+                key={functionApp.appName + idx}
+                text={functionApp.appName}
                 closeSvgUrl={getSvg.getCancelSvg()}
                 withIndent={true}
                 idx={idx + 1}
@@ -144,7 +144,7 @@ const AzureFunctionsSelection = ({
                 functionApp.functionNames.map(
                   (functionName: IFunctionName, idx: number) => (
                     <DraggableSidebarItem
-                      key={functionApp.appName.value + idx.toString()}
+                      key={functionApp.appName + idx.toString()}
                       closeSvgUrl={getSvg.getCancelSvg()}
                       withLargeIndent={true}
                       azureFunctionName={functionName}

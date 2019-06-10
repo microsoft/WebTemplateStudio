@@ -11,7 +11,7 @@ export interface IUpdateGenStatus {
   payload: IServiceStatus;
 }
 
-const updateTemplateGenerationStatusMessageAction = (status: string): IUpdateGenStatusMessage => ({
+const updateTemplateGenerationStatusMessageAction = (status: string) => ({
   type: WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS_MESSAGE,
   payload: status
 });

@@ -7,9 +7,9 @@ import WizardContentActionType from "./wizardContentActionType";
 import { Dispatch } from "react";
 
 // thunk
-export const getProjectTypesAction = (serverPort: number) => {
+export const getProjectTypesAction = () => {
   return async (dispatch: Dispatch<WizardContentActionType>) => {
-    const api = new EngineAPIService(serverPort, undefined);
+    const api = new EngineAPIService("5000", undefined);
 
     try {
       const projectTypesJson = await api.getProjectTypes();
@@ -53,6 +53,7 @@ function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
     position: val.position,
     svgUrl: getSvgUrl(val.name),
     selected: val.selected,
-    licenses: val.licenses
+    licenses: val.licenses,
+    author: val.author
   }));
 }

@@ -15,6 +15,7 @@ export default class ReactList extends Component {
 
     this.handleWarningClose = this.handleWarningClose.bind(this);
     this.handleDeleteListItem = this.handleDeleteListItem.bind(this);
+    this.handleChangeInputText = this.handleChangeInputText.bind(this);
     this.handleAddListItem = this.handleAddListItem.bind(this);
   }
 
@@ -57,9 +58,9 @@ export default class ReactList extends Component {
       });
   }
 
-  handleAddListItem(textField) {
+  handleAddListItem() {
     // Warning Pop Up if the user submits an empty message
-    if (!textField) {
+    if (!this.state.textField) {
       this.setState({
         WarningMessageOpen: true,
         WarningMessageText: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
@@ -71,7 +72,7 @@ export default class ReactList extends Component {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        text: textField
+        text: this.state.textField
       })
     })
       .then(response => {
@@ -82,7 +83,8 @@ export default class ReactList extends Component {
       })
       .then(result =>
         this.setState(prevState => ({
-          list: [result, ...prevState.list]
+          list: [result, ...prevState.list],
+          textField: ""
         }))
       )
       .catch(error =>
@@ -91,6 +93,10 @@ export default class ReactList extends Component {
           WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`
         })
       );
+  }
+
+  handleChangeInputText(event, name) {
+    this.setState({ [name]: event.target.value });
   }
 
   handleWarningClose() {
@@ -102,12 +108,13 @@ export default class ReactList extends Component {
 
   render() {
     const {
+      textField,
       list,
       WarningMessageOpen,
       WarningMessageText
     } = this.state;
     return (
-      <main id="mainContent" className="container">
+      <main className="container">
         <div className="row">
           <div className="col mt-5 p-0">
             <h3>Bootstrap ReactList Template</h3>
@@ -115,6 +122,8 @@ export default class ReactList extends Component {
           <ul className="col-12 p-0">
             <ListForm
               onAddListItem={this.handleAddListItem}
+              onChangeInputText={this.handleChangeInputText}
+              textField={textField}
             />
           </ul>
           {list.map(listItem => (

@@ -70,7 +70,7 @@ type Props = RouteComponentProps &
   InjectedIntlProps;
 
 const pathsNext: any = {
-  [ROUTES.NEW_PROJECT]: ROUTES.SELECT_PROJECT_TYPE,
+  [ROUTES.WELCOME]: ROUTES.SELECT_PROJECT_TYPE,
   [ROUTES.SELECT_PROJECT_TYPE]: ROUTES.SELECT_FRAMEWORKS,
   [ROUTES.SELECT_FRAMEWORKS]: ROUTES.SELECT_PAGES,
   [ROUTES.SELECT_PAGES]: ROUTES.AZURE_LOGIN,
@@ -191,13 +191,13 @@ class Footer extends React.Component<Props> {
             </div>
             <div className={styles.buttonContainer}>
               <Link
-                tabIndex={pathname === ROUTES.NEW_PROJECT ? -1 : 0}
+                tabIndex={pathname === ROUTES.WELCOME ? -1 : 0}
                 className={classnames(buttonStyles.buttonDark, styles.button, {
-                  [styles.disabledOverlay]: pathname === ROUTES.NEW_PROJECT
+                  [styles.disabledOverlay]: pathname === ROUTES.WELCOME
                 })}
                 to={
                   pathsBack[pathname] === undefined
-                    ? ROUTES.NEW_PROJECT
+                    ? ROUTES.WELCOME
                     : pathsBack[pathname]
                 }
               >

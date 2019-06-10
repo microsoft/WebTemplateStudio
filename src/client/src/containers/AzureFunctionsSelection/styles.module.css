@@ -21,5 +21,4 @@
 .input {
   background-color: var(--vscode-sideBar-background);
   color: var(--vscode-editor-foreground);
-  text-overflow: ellipsis;
 }

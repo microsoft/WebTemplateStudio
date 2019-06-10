@@ -13,19 +13,19 @@ body {
   padding: 0;
   left: 0;
   top: 0;
-  font-size: var(--vscode-font-size);
+  font-size: var(--vscode-editor-font-size);
   color: var(--vscode-editor-foreground);
-  font-weight: var(--vscode-font-weight);
+  font-weight: var(--vscode-editor-font-weight);
 }
 
 a {
-  font-weight: var(--vscode-font-weight);
+  font-weight: var(--vscode-editor-font-weight);
 }
 
 /* ROOT FONT STYLES */
 
 * {
-  font-family: var(--vscode-font-family);
+  font-family: var(--vscode-editor-font-family);
   line-height: 1.5;
 }
 
@@ -56,8 +56,8 @@ h6 {
 }
 
 p {
-  font-size: var(--vscode-font-size);
-  font-weight: var(--vscode-font-weight);
+  font-size: var(--vscode-editor-font-size);
+  font-weight: var(--vscode-editor-font-weight);
   margin: 0px;
 }
 
@@ -186,7 +186,6 @@ p {
 }
 
 @media only screen and (min-width: 33.75em) {
-
   /* 540px */
   .container {
     width: 80%;
@@ -194,7 +193,6 @@ p {
 }
 
 @media only screen and (min-width: 45em) {
-
   /* 720px */
   .col1 {
     width: 4.33%;
@@ -250,7 +248,6 @@ p {
 }
 
 @media only screen and (min-width: 60em) {
-
   /* 960px */
   .container {
     width: 75%;

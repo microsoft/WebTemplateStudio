@@ -62,9 +62,7 @@ export class GenerationExperience extends WizardServant {
     });
 
     let progressObject = {
-      templates: GenerationExperience.getProgressObject(
-        apiGenResult !== undefined
-      ),
+      templates: GenerationExperience.getProgressObject(true),
       cosmos: {},
       azureFunctions: {}
     };
@@ -75,12 +73,7 @@ export class GenerationExperience extends WizardServant {
     });
 
     var serviceQueue: Promise<any>[] = [];
-
-    if (apiGenResult) {
-      enginePayload.path = apiGenResult.generationOutputPath;
-    } else {
-      return { payload: undefined };
-    }
+    enginePayload.path = apiGenResult.generationOutputPath;
 
     GenerationExperience.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetOutputPath,
@@ -173,14 +166,14 @@ export class GenerationExperience extends WizardServant {
     }
     // kick off both services asynchronously
     Promise.all(serviceQueue);
-    return { payload: undefined };
+    return { payload: true };
   }
 
   public async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ) {
     return await ApiModule.ExecuteApiCommand({
-      port: ApiModule.GetLastUsedPort(),
+      port: CONSTANTS.PORT,
       payload: enginePayload,
       liveMessageHandler: this.handleGenLiveMessage
     });

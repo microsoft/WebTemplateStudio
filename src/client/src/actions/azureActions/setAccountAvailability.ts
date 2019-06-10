@@ -1,4 +1,5 @@
 import { AZURE_TYPEKEYS } from "./typeKeys";
+import { IAvailability } from "../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
 
 export interface IAvailabilityFromExtension {
   isAvailable: boolean;

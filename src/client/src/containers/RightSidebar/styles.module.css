@@ -3,7 +3,7 @@
   font-weight: bold;
   text-align: left;
   margin: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .container {
@@ -15,30 +15,28 @@
 .rightViewCropped {
   width: 400px;
   background-color: var(--vscode-editor-background);
-  border-left: 0.5px solid #7f7f7f;
+  border-left: 0.5px solid #555555;
   box-sizing: border-box;
 }
 
 .rightViewCropped {
-  height: calc(100vh - 104px);
+  height: calc(100vh - 122px);
   margin-top: 51px;
-  margin-bottom: 53px;
+  margin-bottom: 71px;
   padding-bottom: 0px;
+}
+
+.dropdown {
+  background-color: red;
 }
 
 .dropdownTitle {
   font-weight: bold;
   margin-bottom: 3px;
-  font-size: 14px;
 }
 
 .sidebarItem {
   margin: 15px;
-  margin-bottom: 30px;
-}
-
-.sortablePages {
-  margin-bottom: 30px;
 }
 
 .draggablePage {

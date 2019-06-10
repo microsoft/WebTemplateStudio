@@ -1,4 +1,4 @@
 interface IDropDownOptionType {
-  value: any;
-  label: any;
+  value: string;
+  label: string;
 }

@@ -1,28 +1,24 @@
 {
   "name": "__EXTENSIONNAME__",
   "displayName": "__DISPLAYNAME__",
-  "description": "Web Template Studio enables developers to quickly scaffold full-stack web applications with cloud services.",
+  "description": "An extension that helps developers get started quickly when building web apps by generating web templates which encourage best code practices.",
   "version": "0.0.0-UNTRACKEDVERSION",
   "publisher": "__PUBLISHER__",
   "aiKey": "__AIKEY__",
   "engines": {
-    "vscode": "^1.32.0"
+    "vscode": "^1.30.0"
   },
   "categories": [
     "Other"
   ],
   "galleryBanner": {
-    "color": "#eff1f3",
-    "theme": "light"
+    "color": "#3c3c3c",
+    "theme": "dark"
   },
-  "icon": "resources/WebTemplateStudioLogo_blueBackground.png",
+  "icon": "",
   "keywords": [
     "Garage",
-    "Web Application",
-    "Boilerplate",
-    "React",
-    "Express",
-    "Scaffolding"
+    "Web Application"
   ],
   "preview": true,
   "homepage": "https://github.com/Microsoft/WebTemplateStudio/blob/master/README.md",
@@ -58,6 +54,11 @@
           "default": "",
           "description": "Load a default output path on wizard launch."
         },
+        "wts.enableTelemetry": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable collecting information regarding usage of application"
+        },
         "wts.enablePreviewMode": {
           "type": "boolean",
           "default": false,
@@ -88,7 +89,7 @@
     "run-sequence": "^2.2.1",
     "tslint": "^5.8.0",
     "typescript": "^3.1.4",
-    "vscode": "^1.1.32",
+    "vscode": "^1.1.29",
     "vscode-nls-dev": "^3.2.6"
   },
   "extensionDependencies": [
@@ -115,7 +116,6 @@
     "ms-rest-azure": "^2.6.0",
     "node-fetch": "^2.3.0",
     "opn": "^5.5.0",
-    "portfinder": "^1.0.20",
     "rimraf": "^2.6.3",
     "tslint-microsoft-contrib": "^6.1.0",
     "url-parse": "^1.4.4",

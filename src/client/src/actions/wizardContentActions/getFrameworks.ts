@@ -9,10 +9,9 @@ type FrameworkType = "frontend" | "backend";
 export const getFrameworks = async (
   projectType: string,
   type: FrameworkType,
-  isPreview: boolean,
-  serverPort: number
+  isPreview: boolean
 ): Promise<IOption[]> => {
-  const api = new EngineAPIService(serverPort, undefined);
+  const api = new EngineAPIService("5000", undefined);
   try {
     const frameworksJson = await api.getFrameworks(projectType);
 

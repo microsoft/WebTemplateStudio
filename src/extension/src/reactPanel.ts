@@ -2,8 +2,6 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { CONSTANTS } from "./constants";
 import { ApiModule } from "./signalr-api-module/apiModule";
-import { Logger } from "./utils/logger";
-import { deactivate } from "./extension";
 
 /**
  * Manages react webview panels
@@ -97,9 +95,6 @@ export class ReactPanel {
   public dispose() {
     ReactPanel.currentPanel = undefined;
     ApiModule.StopApi();
-    if (Logger.outputChannel) {
-      Logger.outputChannel.clear();
-    }
     // Clean up our resources
     this._panel.dispose();
     while (this._disposables.length) {
@@ -108,7 +103,6 @@ export class ReactPanel {
         x.dispose();
       }
     }
-    deactivate();
   }
 
   private _getHtmlForWebview() {
@@ -117,8 +111,8 @@ export class ReactPanel {
       "react",
       "asset-manifest.json"
     ));
-    const mainScript = manifest.files["main.js"];
-    const mainStyle = manifest.files["main.css"];
+    const mainScript = manifest["main.js"];
+    const mainStyle = manifest["main.css"];
 
     const scriptPathOnDisk = vscode.Uri.file(
       path.join(this._extensionPath, "react", mainScript)

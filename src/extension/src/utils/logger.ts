@@ -35,13 +35,15 @@ export class Logger extends WizardServant {
     ExtensionCommand,
     (message: any) => Promise<IPayloadResponse>
   > = new Map([[ExtensionCommand.Log, Logger.receiveLogfromWizard]]);
-  public static outputChannel: vscode.OutputChannel;
+  private static outputChannel: vscode.OutputChannel;
+  private static outputContent: string = "";
   private static logger: log4js.Logger = log4js.getLogger();
   public static initializeOutputChannel(extensionName: string): void {
     if (Logger.outputChannel === undefined) {
       Logger.outputChannel = vscode.window.createOutputChannel(extensionName);
     }
-    Logger.appendLog("EXTENSION", "info", "Launched");
+    Logger.appendLog("EXTENSION", "info", " >>>>>>> Launched ");
+    Logger.display("info");
   }
   public static appendLog(
     source: LogSource,
@@ -51,16 +53,16 @@ export class Logger extends WizardServant {
     if (Logger.outputChannel === undefined) {
       Logger.initializeOutputChannel(OUTPUT_CHANNEL_DEFAULT);
     }
-    Logger.logger[level]("[", source, "] ", data);
-    Logger.outputChannel.appendLine(
-      "[".concat(new Date().toLocaleString(), "]", "[", source, "] ", data)
-    );
+    Logger.outputChannel.appendLine(source.concat("-", level, ":", data));
+    Logger.outputContent = Logger.outputContent.concat(source, "-", data, "\n");
   }
   public static display(level: LogLevel): void {
     if (Logger.outputChannel === undefined) {
       Logger.initializeOutputChannel(OUTPUT_CHANNEL_DEFAULT);
     }
     Logger.outputChannel.show(true);
+    Logger.logger[level](Logger.outputContent);
+    Logger.outputContent = "";
   }
   private static async receiveLogfromWizard(
     message: ILoggingPayload

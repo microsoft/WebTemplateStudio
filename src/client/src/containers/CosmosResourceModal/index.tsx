@@ -30,6 +30,7 @@ import styles from "./styles.module.css";
 import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
+import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
 import {
   setAccountAvailability,
@@ -136,11 +137,8 @@ const CosmosResourceModal = (props: Props) => {
     }
   };
 
-  // The data we are presenting to the user (available resource groups, locations, api's)
   const [cosmosData, setData] = React.useState(cosmosInitialState);
-
   // Hardcoding database options until data can be loaded dynamically
-  // Updates the data we are presenting to the user when the subscription changes
   React.useEffect(() => {
     setData({
       accountName: [
@@ -156,11 +154,9 @@ const CosmosResourceModal = (props: Props) => {
     });
   }, [props.subscriptionData]);
 
-  // The data the user has entered into the modal
   const [cosmosFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
 
-  // Updates the data the user enters (cosmosFormData) as the user types
   const handleChange = (updatedCosmosForm: CosmosDb) => {
     setCosmosModalButtonStatus(
       updatedCosmosForm,
@@ -171,13 +167,12 @@ const CosmosResourceModal = (props: Props) => {
     updateForm(updatedCosmosForm);
   };
 
-  // Disable add resource button until all data fields have been entered
   const getButtonClassNames = () => {
     const buttonClass = formIsSendable
       ? buttonStyles.buttonHighlighted
       : buttonStyles.buttonDark;
 
-    return classNames(buttonClass, styles.button);
+    return classNames(buttonClass, styles.button, styles.selectionContainer);
   };
 
   const handleDropdown = (infoLabel: string, value: string) => {
@@ -207,6 +202,7 @@ const CosmosResourceModal = (props: Props) => {
         }
       };
     }
+
     handleChange(updatedForm);
   };
 
@@ -223,7 +219,8 @@ const CosmosResourceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    if (cosmosFormData.accountName.value !== "") {
+    if (cosmosFormData.accountName.value != "") {
+      props.setValidationStatus(true);
       if (timeout) {
         clearTimeout(timeout);
       }
@@ -258,10 +255,6 @@ const CosmosResourceModal = (props: Props) => {
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
     const strippedInput = element.value;
-
-    // Changes in account name will trigger an update in validation status
-    // Set validation status here to avoid premature error messages
-    props.setValidationStatus(true);
     handleChange({
       ...cosmosFormData,
       accountName: {
@@ -359,7 +352,10 @@ const CosmosResourceModal = (props: Props) => {
         DEFAULT_VALUE
       )}
       <div
-        className={classnames(styles.selectionInputContainer, {
+        className={classnames({
+          [styles.selectionInputContainer]:
+            !isAccountNameAvailable &&
+            cosmosFormData.accountName.value.length > 0,
           [styles.selectionContainer]:
             isAccountNameAvailable ||
             cosmosFormData.accountName.value.length === 0,
@@ -377,30 +373,32 @@ const CosmosResourceModal = (props: Props) => {
             documents.azure.com
           </a>
         </div>
-        <div className={styles.errorStack}>
-          <div className={styles.inputContainer}>
-            <input
-              aria-label={props.intl.formatMessage(
-                messages.ariaAccountNameLabel
-              )}
-              className={styles.input}
-              onChange={handleInput}
-              value={cosmosFormData.accountName.value}
-              placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
-              disabled={cosmosFormData.subscription.value === ""}
-            />
-            {isAccountNameAvailable && !isValidatingName && (
-              <GreenCheck className={styles.validationIcon} />
-            )}
-            {isValidatingName && <Spinner className={styles.spinner} />}
-          </div>
-          {!isValidatingName && !isAccountNameAvailable &&
-            cosmosFormData.accountName.value.length > 0 && (
-              <div className={styles.errorMessage}>
-                {props.accountNameAvailability.message}
-              </div>
-            )}
+        <div
+          className={classnames(styles.inputContainer, {
+            [styles.borderRed]:
+              !isAccountNameAvailable &&
+              cosmosFormData.accountName.value.length > 0
+          })}
+        >
+          <input
+            aria-label={props.intl.formatMessage(messages.ariaAccountNameLabel)}
+            className={styles.input}
+            onChange={handleInput}
+            value={cosmosFormData.accountName.value}
+            placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
+            disabled={cosmosFormData.subscription.value === ""}
+          />
+          {isAccountNameAvailable && !isValidatingName && (
+            <GreenCheck className={styles.validationIcon} />
+          )}
+          {isValidatingName && <Spinner className={styles.spinner} />}
         </div>
+        {!isAccountNameAvailable &&
+          cosmosFormData.accountName.value.length > 0 && (
+            <div className={styles.errorMessage}>
+              {props.accountNameAvailability.message}
+            </div>
+          )}
       </div>
       {getDropdownSection(
         FORM_CONSTANTS.API.label,

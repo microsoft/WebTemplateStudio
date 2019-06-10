@@ -22,8 +22,6 @@
 }
 
 .inputContainer {
-  display: block;
-  position: relative;
   width: 100%;
   text-decoration: none;
   outline: none;
@@ -33,14 +31,11 @@
 .errorMessage {
   background: var(--vscode-inputValidation-errorBackground);
   border: 1px solid var(--vscode-inputValidation-errorBorder);
-  box-sizing: border-box;
-  position: absolute;
-  z-index: 1;
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
+  border-radius: 2px;
   opacity: 50%;
   min-height: 38px;
 }

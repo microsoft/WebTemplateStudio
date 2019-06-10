@@ -36,7 +36,7 @@
 }
 
 .iconCheckMark {
-  margin-left: 8px;
+  padding-left: 5px;
   height: 18px;
   width: 18px;
   align-self: center;
@@ -66,7 +66,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 30px;
+  max-height: 22px;
 }
 
 .icon {
@@ -89,17 +89,17 @@
 }
 
 .titleLeftJustified {
-  margin-left: 10px;
+  margin-left: 0px;
 }
 
 .body {
-  margin-top: 16px;
+  margin-top: 15px;
   margin-bottom: 10px;
 }
 
 .link {
   color: var(--vscode-textLink-foreground);
-  font-size: 14px;
+  font-size: var(--vscode-editor-font-size);
   text-decoration: none;
 }
 
@@ -119,9 +119,4 @@
   width: 22px;
   padding: 3px;
   border-radius: 50%;
-}
-
-.selectedText {
-  display: flex;
-  font-size: 14px;
 }

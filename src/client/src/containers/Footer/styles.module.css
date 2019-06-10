@@ -2,13 +2,13 @@
   position: absolute;
   background-color: var(--vscode-badge-background);
   border-top: 1px solid var(--vscode-editorGroup-border);
-  padding: 10px;
+  padding: 15px;
   bottom: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 50px;
+  min-height: 72px;
   box-sizing: border-box;
 }
 

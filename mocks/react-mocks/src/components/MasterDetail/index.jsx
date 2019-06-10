@@ -71,7 +71,7 @@ export default class MasterDetail extends Component {
       WarningMessageText
     } = this.state;
     return (
-      <main id="mainContent">
+      <main>
         <div className="container-fluid">
           <div className="row">
             <div

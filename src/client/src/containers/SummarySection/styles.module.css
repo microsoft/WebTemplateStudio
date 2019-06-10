@@ -3,13 +3,11 @@
 }
 
 .selectionContainer {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .selectionTitle {
   font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
 }
 
 .headerContainerRest,

@@ -5,6 +5,9 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {},
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "proxy": "http://localhost:3001",
   "browserslist": [
     ">0.2%",

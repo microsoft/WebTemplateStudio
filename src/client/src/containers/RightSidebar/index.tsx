@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
@@ -192,9 +193,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   )}
                   optionsData={backendOptions}
                 />
-                <div className={styles.sortablePages}>
-                  {showPages && <SortablePageList />}
-                </div>
+                {showPages && <SortablePageList />}
                 {showServices && (
                   <div className={styles.sidebarItem}>
                     <div className={styles.dropdownTitle}>

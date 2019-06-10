@@ -15,13 +15,12 @@ import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectWebApp: (selectedApp: ISelected) => void;
-  getProjectTypes: (serverPort: number) => any;
+  getProjectTypes: () => any;
 }
 
 interface IStoreProps {
   selectedWebApp: ISelected;
   type: IOption[];
-  serverPort: number;
 }
 
 interface IIntlProps {
@@ -33,15 +32,14 @@ type Props = IDispatchProps & IStoreProps & IIntlProps;
 const messages = defineMessages({
   webAppTitleQuestion: {
     id: "selectPages.webAppTitleQuestion",
-    defaultMessage: "Select a project type."
+    defaultMessage: "2. Select a project type."
   }
 });
 
 class SelectWebApp extends React.Component<Props> {
   public componentDidMount() {
-    const { getProjectTypes, serverPort } = this.props;
-    if (getProjectTypes) {
-      getProjectTypes(serverPort);
+    if (this.props.getProjectTypes !== undefined) {
+      this.props.getProjectTypes();
     }
   }
 
@@ -74,12 +72,10 @@ class SelectWebApp extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): IStoreProps => {
-  const { serverPort } = state.wizardContent;
   const { appType } = state.selection;
   return {
     selectedWebApp: appType,
-    type: state.wizardContent.projectTypes,
-    serverPort
+    type: state.wizardContent.projectTypes
   };
 };
 
@@ -89,8 +85,8 @@ const mapDispatchToProps = (
   selectWebApp: (selectedApp: ISelected) => {
     dispatch(selectWebAppAction(selectedApp));
   },
-  getProjectTypes: (serverPort: number) => {
-    dispatch(getProjectTypesAction(serverPort));
+  getProjectTypes: () => {
+    dispatch(getProjectTypesAction());
   }
 });
 

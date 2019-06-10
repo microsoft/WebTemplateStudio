@@ -3,13 +3,14 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Route, RouteComponentProps } from "react-router-dom";
+import * as Redux from "redux";
 
 import LeftSidebar from "./components/LeftSidebar";
 import PageDetails from "./containers/PageDetails";
 import SelectFrameworks from "./components/SelectFrameworks";
 import SelectPages from "./containers/SelectPages";
 import SelectWebApp from "./containers/SelectWebApp";
-import NewProject from "./containers/NewProject";
+import Welcome from "./containers/Welcome";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";
@@ -55,9 +56,6 @@ import { ISelected } from "./types/selected";
 import { AppState } from "./reducers";
 import { IOption } from "./types/option";
 import { setPreviewStatusAction } from "./actions/wizardContentActions/setPreviewStatus";
-import { setPortAction } from "./actions/wizardContentActions/setPort";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "./actions/ActionType";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -83,7 +81,6 @@ interface IDispatchProps {
   resetPageSelection: () => any;
   selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
-  setPort: (port: number) => void;
 }
 
 interface IStateProps {
@@ -108,8 +105,7 @@ class App extends React.Component<Props> {
     updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {},
     getVersionsData: () => {},
-    setPreviewStatus: () => {},
-    setPort: () => {}
+    setPreviewStatus: () => {}
   };
 
   public componentDidMount() {
@@ -122,7 +118,7 @@ class App extends React.Component<Props> {
           if (message.payload != null && message.payload.outputPath != null) {
             this.props.updateOutputPath(message.payload.outputPath);
           }
-          break;
+          return;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
         case EXTENSION_COMMANDS.AZURE_LOGIN:
           // email will be null or undefined if login didn't work correctly
@@ -132,10 +128,10 @@ class App extends React.Component<Props> {
               message.payload.subscriptions
             );
           }
-          break;
+          return;
         case EXTENSION_COMMANDS.AZURE_LOGOUT:
           this.props.startLogOutToAzure();
-          break;
+          return;
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
           // Expect resource groups and locations on this request
@@ -147,7 +143,7 @@ class App extends React.Component<Props> {
               resourceGroups: message.payload.resourceGroups
             });
           }
-          break;
+          return;
         case EXTENSION_COMMANDS.NAME_COSMOS:
           // Receive input validation
           // and update redux (boolean, string)
@@ -156,7 +152,7 @@ class App extends React.Component<Props> {
             message: message.payload.reason
           });
           this.props.setAzureValidationStatus(false);
-          break;
+          return;
 
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
           this.props.setAppNameAvailability({
@@ -164,21 +160,21 @@ class App extends React.Component<Props> {
             message: message.payload.reason
           });
           this.props.setAzureValidationStatus(false);
-          break;
+          return;
         case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
           this.props.setProjectPathValidation(
             message.payload.projectPathValidation
           );
-          break;
+          return;
         case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
           this.props.updateTemplateGenStatusMessage(message.payload.status);
-          break;
+          return;
         case EXTENSION_COMMANDS.GEN_STATUS:
           this.props.updateTemplateGenStatus(message.payload);
-          break;
+          return;
         case EXTENSION_COMMANDS.GET_VERSIONS:
           this.props.getVersionsData(message.payload);
-          break;
+          return;
         case EXTENSION_COMMANDS.RESET_PAGES:
           if (message.payload.resetPages) {
             this.props.frontendOptions.map((frontend: IOption) => {
@@ -202,13 +198,9 @@ class App extends React.Component<Props> {
             this.props.resetPageSelection();
             this.props.history.push(ROUTES.SELECT_PAGES);
           }
-          break;
+          return;
         case EXTENSION_COMMANDS.GET_PREVIEW_STATUS:
           this.props.setPreviewStatus(message.payload.preview);
-          break;
-        case EXTENSION_COMMANDS.GET_PORT:
-          this.props.setPort(message.payload.port);
-          break;
       }
     });
   }
@@ -252,7 +244,7 @@ class App extends React.Component<Props> {
             />
             <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
             <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
-            <Route exact={true} path={ROUTES.NEW_PROJECT} component={NewProject} />
+            <Route exact={true} path={ROUTES.WELCOME} component={Welcome} />
           </main>
           <RightSidebar />
         </div>
@@ -262,7 +254,7 @@ class App extends React.Component<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, void, RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): IDispatchProps => ({
   getVSCodeApi: () => {
     dispatch(getVSCodeApi());
   },
@@ -307,9 +299,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, void, RootAction>)
   },
   setPreviewStatus: (isPreview: boolean) => {
     dispatch(setPreviewStatusAction(isPreview));
-  },
-  setPort: (port: number) => {
-    dispatch(setPortAction(port));
   }
 });
 

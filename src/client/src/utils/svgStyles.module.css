@@ -10,6 +10,10 @@
   fill: var(--vscode-editor-foreground);
 }
 
+.icon {
+  margin-right: 10px;
+}
+
 .original {
   margin-right: 10px;
 }

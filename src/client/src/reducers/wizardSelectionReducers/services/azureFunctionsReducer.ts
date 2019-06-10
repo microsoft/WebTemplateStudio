@@ -27,14 +27,13 @@ interface IAvailability {
 }
 
 export interface ISelectedAzureFunctionsService {
-  [key: string]: IDropDownOptionType | IFunctionName[] | undefined;
-  subscription: IDropDownOptionType;
-  resourceGroup: IDropDownOptionType;
-  appName: IDropDownOptionType;
-  runtimeStack: IDropDownOptionType;
-  location: IDropDownOptionType;
-  internalName: IDropDownOptionType;
-  numFunctions: IDropDownOptionType;
+  subscription: string;
+  resourceGroup: string;
+  appName: string;
+  runtimeStack: string;
+  location: string;
+  internalName: string;
+  numFunctions: number;
   functionNames?: IFunctionName[];
 }
 
@@ -59,14 +58,6 @@ const initialState = {
   }
 };
 
-const getFunctionNames = (functionNames: IFunctionName[]): string[] => {
-  const names: string[] = [];
-  functionNames.forEach((functionName: IFunctionName) => {
-    names.push(functionName.title);
-  });
-  return names;
-};
-
 const createFunctionNames = (
   numFunctions: number,
   prevFunctionNames?: IFunctionName[]
@@ -80,29 +71,26 @@ const createFunctionNames = (
       const numFunctionsToCreate = numFunctions - prevFunctionNames.length;
       let lastNumberUsed = 1;
       for (let i = 1; i <= numFunctionsToCreate; i++) {
-        let title = `function${lastNumberUsed}`;
-        while (getFunctionNames(prevFunctionNames).includes(title)) {
-          lastNumberUsed++;
-          title = `function${lastNumberUsed}`;
-        }
-        prevFunctionNames.push({
-          title,
+        let functionName = {
+          title: `function${lastNumberUsed}`,
           isValidTitle: true,
-          error: "",
-          id: title
-        });
+          error: ""
+        };
+        while (prevFunctionNames.includes(functionName)) {
+          lastNumberUsed++;
+          functionName.title = `function${lastNumberUsed}`;
+        }
+        prevFunctionNames.push(functionName);
       }
     }
     return [...prevFunctionNames];
   }
   const functionNames: IFunctionName[] = [];
   for (let i = 1; i <= numFunctions; i++) {
-    const title = `function${i}`;
     functionNames.push({
-      title,
+      title: `function${i}`,
       isValidTitle: true,
-      error: "",
-      id: title
+      error: ""
     });
   }
   return functionNames;
@@ -146,14 +134,9 @@ const azureFunctions = (
     case AZURE_TYPEKEYS.REMOVE_AZURE_FUNCTION:
       // hardcoding 0th index because only 1 function app can currently be added
       const newFunctionState = { ...state };
-      const { functionNames } = newFunctionState.selection[0];
-      if (functionNames) {
-        functionNames.splice(action.payload, 1);
-        newFunctionState.selection[0].functionNames = functionNames;
-        newFunctionState.selection[0].numFunctions = {
-          label: functionNames.length,
-          value: functionNames.length
-        };
+      if (newFunctionState.selection[0].functionNames) {
+        newFunctionState.selection[0].functionNames.splice(action.payload, 1);
+        newFunctionState.selection[0].numFunctions--;
       }
       return newFunctionState;
     case AZURE_TYPEKEYS.SAVE_AZURE_FUNCTIONS_SETTINGS:
@@ -161,17 +144,17 @@ const azureFunctions = (
         ...initialState,
         selection: [
           {
-            subscription: action.payload.subscription,
-            resourceGroup: action.payload.resourceGroup,
-            location: action.payload.location,
-            runtimeStack: action.payload.runtimeStack,
-            internalName: action.payload.internalName,
-            numFunctions: action.payload.numFunctions,
+            subscription: action.payload.subscription.value,
+            resourceGroup: action.payload.resourceGroup.value,
+            location: action.payload.location.value,
+            runtimeStack: action.payload.runtimeStack.value,
+            internalName: action.payload.internalName.value,
+            numFunctions: action.payload.numFunctions.value,
             functionNames: createFunctionNames(
               action.payload.numFunctions.value,
               state.selection[0] ? state.selection[0].functionNames : undefined
             ),
-            appName: action.payload.appName
+            appName: action.payload.appName.value
           }
         ]
       };

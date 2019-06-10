@@ -1,7 +1,6 @@
 .dropdownTitle {
   font-weight: bold;
   margin-bottom: 3px;
-  font-size: 14px;
 }
 
 .sidebarItem {
@@ -21,7 +20,7 @@
   padding-right: 1px;
   padding-left: 1px;
   border: none;
-  font-size: var(--vscode-font-size);
+  font-size: var(--vscode-editor-font-size);
   background-color: var(--vscode-editor-background);
 }
 

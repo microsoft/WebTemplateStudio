@@ -28,13 +28,15 @@
   --vscode-editor-findMatchBackground: #a8ac94;
   --vscode-editor-findMatchHighlightBackground: rgba(234, 92, 0, 0.33);
   --vscode-editor-findRangeHighlightBackground: rgba(180, 180, 180, 0.3);
-  --vscode-editor-focusedStackFrameHighlightBackground: rgba(206,
+  --vscode-editor-focusedStackFrameHighlightBackground: rgba(
+    206,
     231,
     206,
-    0.45);
-  --vscode-font-family: -apple-system, system-ui, sans-serif;
-  --vscode-font-size: 13px;
-  --vscode-font-weight: 400;
+    0.45
+  );
+  --vscode-editor-font-family: -apple-system, system-ui, sans-serif;
+  --vscode-editor-font-size: 13px;
+  --vscode-editor-font-weight: 400;
   --vscode-editor-foreground: #000000;
   --vscode-editor-hoverHighlightBackground: rgba(173, 214, 255, 0.15);
   --vscode-editor-inactiveSelectionBackground: #e5ebf1;
@@ -80,33 +82,43 @@
   --vscode-editorOverviewRuler-border: rgba(127, 127, 127, 0.3);
   --vscode-editorOverviewRuler-bracketMatchForeground: #a0a0a0;
   --vscode-editorOverviewRuler-commonContentForeground: rgba(96, 96, 96, 0.4);
-  --vscode-editorOverviewRuler-currentContentForeground: rgba(64,
+  --vscode-editorOverviewRuler-currentContentForeground: rgba(
+    64,
     200,
     174,
-    0.5);
+    0.5
+  );
   --vscode-editorOverviewRuler-deletedForeground: rgba(0, 122, 204, 0.6);
   --vscode-editorOverviewRuler-errorForeground: rgba(255, 18, 18, 0.7);
   --vscode-editorOverviewRuler-findMatchForeground: rgba(246, 185, 77, 0.7);
-  --vscode-editorOverviewRuler-incomingContentForeground: rgba(64,
+  --vscode-editorOverviewRuler-incomingContentForeground: rgba(
+    64,
     166,
     255,
-    0.5);
+    0.5
+  );
   --vscode-editorOverviewRuler-infoForeground: rgba(18, 18, 136, 0.7);
   --vscode-editorOverviewRuler-modifiedForeground: rgba(0, 122, 204, 0.6);
   --vscode-editorOverviewRuler-rangeHighlightForeground: rgba(0, 122, 204, 0.6);
-  --vscode-editorOverviewRuler-selectionHighlightForeground: rgba(160,
+  --vscode-editorOverviewRuler-selectionHighlightForeground: rgba(
     160,
     160,
-    0.8);
+    160,
+    0.8
+  );
   --vscode-editorOverviewRuler-warningForeground: rgba(18, 136, 18, 0.7);
-  --vscode-editorOverviewRuler-wordHighlightForeground: rgba(160,
+  --vscode-editorOverviewRuler-wordHighlightForeground: rgba(
     160,
     160,
-    0.8);
-  --vscode-editorOverviewRuler-wordHighlightStrongForeground: rgba(192,
+    160,
+    0.8
+  );
+  --vscode-editorOverviewRuler-wordHighlightStrongForeground: rgba(
+    192,
     160,
     192,
-    0.8);
+    0.8
+  );
   --vscode-editorPane-background: #ffffff;
   --vscode-editorRuler-foreground: #d3d3d3;
   --vscode-editorSuggestWidget-background: #f3f3f3;

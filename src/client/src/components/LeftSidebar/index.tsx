@@ -6,7 +6,8 @@ import { withRouter } from "react-router-dom";
 import {
   InjectedIntlProps,
   injectIntl,
-  defineMessages
+  defineMessages,
+  FormattedMessage
 } from "react-intl";
 
 import LeftSidebarLink from "../LeftSidebarLink";
@@ -19,8 +20,8 @@ import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelecti
 
 const messages = defineMessages({
   welcome: {
-    id: "leftSidebar.newProject",
-    defaultMessage: "1. New Project"
+    id: "leftSidebar.welcome",
+    defaultMessage: "1. Welcome"
   },
   projectType: {
     id: "leftSidebar.projectType",
@@ -112,6 +113,12 @@ const LeftSidebar = (props: Props) => {
               );
             })}
           </div>
+          <a href="https://aka.ms/give-feedback" className={styles.feedback}>
+            <FormattedMessage
+              id="leftSidebar.giveFeedback"
+              defaultMessage="Give Feedback"
+            />
+          </a>
         </nav>
       )}
     </React.Fragment>

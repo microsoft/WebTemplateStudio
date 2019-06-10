@@ -30,7 +30,6 @@ import {
   FunctionValidationResult,
   ValidationHelper
 } from "./azure-functions/utils/validationHelper";
-import { Logger } from "../utils/logger";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -69,10 +68,8 @@ export class AzureServices extends WizardServant {
   public static async performLoginForSubscriptions(
     message: any
   ): Promise<IPayloadResponse> {
-    Logger.appendLog("EXTENSION", "info", "Attempt to log user in");
     let isLoggedIn = await AzureAuth.login();
     if (isLoggedIn) {
-      Logger.appendLog("EXTENSION", "info", "User logged in");
       return AzureServices.sendUserStatusIfLoggedIn(message);
     }
     throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);

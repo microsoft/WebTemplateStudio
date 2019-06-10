@@ -9,15 +9,11 @@ import { IGenerationPayloadType } from "../types/generationPayloadType";
 import { CoreTemplateStudioApiCommand } from "./coreTemplateStudioApiCommand";
 import { GenerateCommand } from "./generateCommand";
 import { SyncCommand } from "./syncCommand";
-import * as portfinder from "portfinder";
 
 export class ApiModule {
-  private static _process: ChildProcess | undefined;
-  private static _lastUsedPort: number | undefined;
+  private static _process: ChildProcess;
 
-  public static async StartApi(
-    context: vscode.ExtensionContext
-  ): Promise<void> {
+  public static StartApi(context: vscode.ExtensionContext): ChildProcess {
     let platform = process.platform;
 
     let executableName = CONSTANTS.API.BASE_APPLICATION_NAME;
@@ -41,21 +37,9 @@ export class ApiModule {
       fs.chmodSync(apiPath, 0o755);
     }
 
-    const port = await portfinder.getPortPromise({
-      port: CONSTANTS.START_PORT
-    });
-
-    let spawnedProcess = execFile(
-      `${apiPath}`,
-      [`--urls=http://localhost:${port}`],
-      { cwd: apiWorkingDirectory }
-    );
-    if (ApiModule._process) {
-      ApiModule.KillProcess(spawnedProcess);
-    } else {
-      ApiModule._process = spawnedProcess;
-      ApiModule._lastUsedPort = port;
-    }
+    let spawnedProcess = execFile(`${apiPath}`, { cwd: apiWorkingDirectory });
+    ApiModule._process = spawnedProcess;
+    return spawnedProcess;
   }
 
   public static async ExecuteApiCommand(
@@ -72,32 +56,13 @@ export class ApiModule {
     return await command.execute();
   }
 
-  public static GetLastUsedPort(): number {
-    if (ApiModule._lastUsedPort) {
-      return ApiModule._lastUsedPort;
-    }
-
-    throw new Error(
-      "getLastUsedPort() was called before a port was allocated to the engine"
-    );
-  }
-
   public static StopApi() {
-    if (ApiModule._process) {
-      ApiModule.KillProcess(ApiModule._process);
-    }
-
-    ApiModule._lastUsedPort = undefined;
-    ApiModule._process = undefined;
-  }
-
-  private static KillProcess(processToKill: ChildProcess) {
     if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
-      let pid = processToKill.pid;
+      let pid = ApiModule._process.pid;
       let spawn = require("child_process").spawn;
       spawn("taskkill", ["/pid", pid, "/f", "/t"]);
     } else {
-      processToKill.kill("SIGKILL");
+      ApiModule._process.kill("SIGKILL");
     }
   }
 }

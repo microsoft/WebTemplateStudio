@@ -6,7 +6,7 @@ const SELECT_FRAMEWORKS = "/SelectFrameworks";
 const SELECT_PAGES = "/SelectPages";
 const AZURE_LOGIN = "/AzureLogin";
 const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
-const NEW_PROJECT = "/";
+const WELCOME = "/";
 
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
@@ -25,12 +25,12 @@ const ROUTES = {
   SELECT_PAGES,
   AZURE_LOGIN,
   REVIEW_AND_GENERATE,
-  NEW_PROJECT
+  WELCOME
 };
 
 // Presents the routes in the order of the wizard
 const ROUTES_ARRAY = [
-  NEW_PROJECT,
+  WELCOME,
   SELECT_PROJECT_TYPE,
   SELECT_FRAMEWORKS,
   SELECT_PAGES,
@@ -49,7 +49,7 @@ const COSMOS_APIS = {
 };
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
-  ANGULAR: "Angular",
+  ANGULAR_JS: "AngularJS",
   AZURE: "wts.Feature.Azure",
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
@@ -66,12 +66,19 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   FULL_STACK_APP: "FullStackWebApp",
   NODE_JS: "NodeJS",
   REACT_JS: "ReactJS",
-  REST_API: "RestAPI",
-  VUE: "Vue",
-  VUE_BLANK_PAGE: "wts.Page.Vue.Blank",
-  VUE_CONTENT_GRID: "wts.Page.Vue.Grid",
-  VUE_MASTER_DETAIL: "wts.Page.Vue.MasterDetail",
-  VUE_LIST: "wts.Page.Vue.List"
+  REST_API: "RestAPI"
+};
+
+const PAGE_NAME_ERROR_MESSAGES = {
+  DUPLICATE_NAME: "Name has to be unique",
+  INVALID_REGEX:
+    "Name may only contain letters, numbers, spaces, dashes or underscores",
+  EMPTY_NAME: "Name cannot be empty",
+  NAME_DOES_NOT_START_WITH_LETTER: "Name may only start with letters"
+};
+
+const EMPTY_FIELD = (fieldId: string) => {
+  return `${fieldId} field cannot be empty`;
 };
 
 const EXTENSION_MODULES = {
@@ -86,17 +93,16 @@ const EXTENSION_COMMANDS = {
   AZURE_LOGIN: "login",
   AZURE_LOGOUT: "logout",
   GENERATE: "generate",
-  GET_OUTPUT_PATH: "get-output-path",
-  GET_USER_STATUS: "get-user-status",
+  GET_OUTPUT_PATH: "getOutputPath",
+  GET_USER_STATUS: "getUserStatus",
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
   PROJECT_PATH_VALIDATION: "project-path-validation",
-  SUBSCRIPTION_DATA_COSMOS: "subscription-data-for-cosmos",
-  SUBSCRIPTION_DATA_FUNCTIONS: "subscription-data-for-functions",
+  SUBSCRIPTION_DATA_COSMOS: "subscriptionDataForCosmos",
+  SUBSCRIPTION_DATA_FUNCTIONS: "subscriptionDataForFunctions",
   TRACK_PAGE_SWITCH: "track-page-switch",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
-  GET_PORT: "get-port",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
   GET_VERSIONS: "get-versions",
   CLOSE_WIZARD: "close-wizard",

@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: space-between;
   color: var(--vscode-textLink-foreground);
-  font-size: var(--vscode-font-size);
+  font-size: var(--vscode-editor-font-size);
 }
 
 .createAccountButton {
@@ -29,7 +29,7 @@
 
 .signInButton {
   font-size: 1em;
-  margin-left: 16px;
+  margin-left: 10px;
   border: none;
 }
 
@@ -39,19 +39,18 @@
 
 .cardTitle {
   font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 25px;
   display: flex;
   align-items: center;
 }
 
 .cardBody {
-  margin-bottom: 5%;
+  margin-bottom: 1em;
 }
 
 .details {
   color: var(--vscode-textLink-foreground);
-  font-size: 14px;
+  font-size: var(--vscode-editor-font-size);
   background: none;
   border: none;
   text-decoration: none;
@@ -68,5 +67,5 @@
 
 .icon {
   height: 36px;
-  margin-right: 10px;
+  margin-right: 0.5em;
 }

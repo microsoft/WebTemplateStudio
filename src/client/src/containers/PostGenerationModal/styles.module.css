@@ -22,16 +22,9 @@
   align-items: center;
 }
 
-.button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
 .spinner {
-  margin-right: 5px;
-}
-
-.spinner path {
-  stroke: #ffffff;
+  height: 1em;
+  margin-right: 10px;
 }
 
 .spinner path {
@@ -50,8 +43,8 @@
 
 .spinner {
   animation: rotate steps(60) 1s infinite;
-  height: 20px;
-  width: 20px;
+  height: 24px;
+  width: 24px;
 }
 
 .templateStatus {
@@ -103,11 +96,6 @@
 
 .link {
   color: var(--vscode-textLink-foreground);
-  font-weight: var(--vscode-font-weight);
+  font-weight: var(--vscode-editor-font-weight);
   text-decoration: none;
-  font-size: 14px;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }

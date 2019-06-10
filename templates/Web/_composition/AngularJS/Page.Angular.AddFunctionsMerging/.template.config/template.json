@@ -1,15 +1,14 @@
 ﻿{
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "Page.Angular.AddConstantsList",
+  "name": "Page.Angular.AddFunctionsMerging",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
-    "wts.compositionOrder": 3,
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == Angular & identity == wts.Page.Angular.List"
+    "wts.compositionFilter": "identity == wts.Feature.Azure.AzureFunctions"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

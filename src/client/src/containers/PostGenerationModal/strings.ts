@@ -27,7 +27,7 @@ export const strings = defineMessages({
   },
   deploymentSuccess: {
     id: "postGenerationModal.success",
-    defaultMessage: "is deployed on"
+    defaultMessage: "is deployed on [Azure](https://ms.portal.azure.com/)."
   },
   isDeploying: {
     id: "postGenerationModal.isDeploying",
@@ -39,7 +39,7 @@ export const strings = defineMessages({
   },
   openInCode: {
     id: "postGenerationModal.openInCode",
-    defaultMessage: "Open project in VSCode."
+    defaultMessage: "Open Project in VSCode"
   },
   unknownStatus: {
     id: "postGenerationModal.unknownStatus",
@@ -51,7 +51,7 @@ export const strings = defineMessages({
   },
   help: {
     id: "postGenerationModal.help",
-    defaultMessage: "Give Feedback or Report an issue"
+    defaultMessage: "Report an issue"
   },
   azureServices: {
     id: "postGenerationModal.azureServices",
@@ -63,7 +63,7 @@ export const strings = defineMessages({
   },
   generationComplete: {
     id: "postGenerationModal.generationComplete",
-    defaultMessage: "Generation complete."
+    defaultMessage: "Generation complete"
   },
   templateGeneration: {
     id: "postGenerationModal.templateGeneration",

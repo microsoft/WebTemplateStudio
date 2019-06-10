@@ -3,7 +3,6 @@ import { CONSTANTS } from "./constants";
 import { ApiModule } from "./signalr-api-module/apiModule";
 import { ISyncReturnType } from "./types/syncReturnType";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
-import { Logger } from "./utils/logger";
 
 export class LaunchExperience {
   private static _progressObject: vscode.Progress<IVSCodeProgressType>;
@@ -12,11 +11,7 @@ export class LaunchExperience {
     LaunchExperience._progressObject = progressObject;
   }
 
-  public async launchApiSyncModule(
-    context: vscode.ExtensionContext
-  ): Promise<ISyncReturnType> {
-    await ApiModule.StartApi(context);
-
+  public async launchApiSyncModule() {
     LaunchExperience._progressObject.report({
       message: CONSTANTS.INFO.STARTING_GENERATION_SERVER
     });
@@ -40,8 +35,7 @@ export class LaunchExperience {
       ApiModule.StopApi();
       throw new Error(CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS);
     }
-
-    return { ...syncObject };
+    return syncObject;
   }
 
   private timeout(ms: number) {
@@ -49,22 +43,12 @@ export class LaunchExperience {
   }
 
   private async attemptSync(): Promise<ISyncReturnType> {
-    let pathToTemplates: string;
-
-    if (process.env.NODE_ENV === "dev") {
-      pathToTemplates = CONSTANTS.API.DEVELOPMENT_PATH_TO_TEMPLATES;
-    } else {
-      pathToTemplates = CONSTANTS.API.PRODUCTION_PATH_TO_TEMPLATES;
-    }
-
-
     return await ApiModule.ExecuteApiCommand({
-      port: ApiModule.GetLastUsedPort(),
-      payload: { path: pathToTemplates },
+      port: CONSTANTS.PORT,
+      payload: { path: CONSTANTS.API.PATH_TO_TEMPLATES },
       liveMessageHandler: this.handleSyncLiveData
     })
       .then((syncResult: any) => {
-        Logger.appendLog("EXTENSION", "info", "Successfully synced templates. Version: " + syncResult.templatesVersion);
         return {
           successfullySynced: true,
           templatesVersion: syncResult.templatesVersion

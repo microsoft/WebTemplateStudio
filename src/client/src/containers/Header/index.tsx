@@ -15,7 +15,11 @@ interface IHeaderProps {
   email: string;
 }
 
-type Props = IHeaderProps;
+interface IDispatchProps {
+  startLogOutToAzure: () => any;
+}
+
+type Props = IHeaderProps & IDispatchProps;
 
 const Header = (props: Props) => {
   const { isLoggedIn, email } = props;

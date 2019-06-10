@@ -37,8 +37,7 @@ const DraggableSidebarItem = ({
   handleCloseClick,
   intl,
   customInputStyle,
-  isAzureFunction,
-  totalPageCount
+  isAzureFunction
 }: {
   page?: ISelected;
   text?: string;
@@ -55,7 +54,6 @@ const DraggableSidebarItem = ({
   intl: InjectedIntl;
   customInputStyle?: string;
   isAzureFunction?: boolean;
-  totalPageCount?: number;
 }) => {
   const handleKeyDown = (event: any) => {
     if (event.keyCode === 13 || event.keyCode === 32) {
@@ -98,9 +96,9 @@ const DraggableSidebarItem = ({
             <div className={styles.inputContainer}>
               {reorderSvgUrl &&
                 (getSvg(page!.internalName, styles.icon) || (
-                  <img className={styles.icon} src={pageSvgUrl} alt="" />
+                  <img className={styles.icon} src={pageSvgUrl} />
                 ))}
-              {handleInputChange && (page || isAzureFunction) && idx ? (
+              {handleInputChange && (page || isAzureFunction) && idx && (
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input, {
@@ -113,17 +111,8 @@ const DraggableSidebarItem = ({
                     }
                   }}
                 />
-              ) : (
-                <input
-                  className={classnames(
-                    styles.disabledInput,
-                    styles.input,
-                    customInputStyle
-                  )}
-                  value={text}
-                  disabled={true}
-                />
               )}
+              <div>{text}</div>
             </div>
           </div>
           {((page && !page.isValidTitle) ||
@@ -141,14 +130,12 @@ const DraggableSidebarItem = ({
             </div>
           )}
         </div>
-        {(totalPageCount !== undefined ? totalPageCount > 1 : true) && 
         <CloseSVG
           tabIndex={0}
           onClick={handleCloseOnClick}
           onKeyDown={handleKeyDown}
           className={styles.cancelIcon}
         />
-        }
       </div>
     </div>
   );

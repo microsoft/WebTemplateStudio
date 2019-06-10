@@ -73,7 +73,7 @@ const SelectableCard = ({
           <div className={styles.icon}>
             {getSvg(option.internalName, iconStyles) ||
               (iconPath && (
-                <img src={iconPath} className={iconStyles} alt="" />
+                <img src={iconPath} className={iconStyles} alt="icon" />
               ))}
           </div>
           <div
@@ -109,17 +109,7 @@ const SelectableCard = ({
             [styles.cardCount]: selected && clickCount
           })}
         >
-          {clickCount || (
-            <div className={styles.selectedText}>
-              <div>
-                <FormattedMessage
-                  id="selectableCard.selected"
-                  defaultMessage="Selected"
-                />
-              </div>
-              <Check className={styles.iconCheckMark} />
-            </div>
-          )}
+          {clickCount || <Check className={styles.iconCheckMark} />}
         </div>
       </div>
     </div>

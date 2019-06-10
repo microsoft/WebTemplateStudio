@@ -10,16 +10,16 @@ In the root directory of the project...
 //{[{
 ### Adding a New Page
 
-1. Create a folder in `/src/app/app-shell` with your angular modules.
+1. Create a folder in `/src/app/pages` with your angular modules.
 2. Add a child route for your page to `/src/app/*.module.ts`.
-3. Add a button to the navigation bar in `/src/app/app-shell/NavBar/navbar.component.html`.
+3. Add a button to the navigation bar in `/src/components/NavBar/navbar.component.html`.
 //}]}
 
 ### Deployment
 
 ## File Structure
 //{[{
-The front-end is based on [Angular cli "ng"](https://angular.io/cli).
+The front-end is based on [Angular cli "ng"](https://cli.angular.io/).
 //}]}
 The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/.
 
@@ -38,7 +38,7 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 ## Additional Documentation
 
 //{[{
-- Angular Docs - https://angular.io/docs
+- Angular Docs - https://docs.angularjs.org/guide
 - Angular Router - https://angular.io/guide/router
 //}]}
 - Bootstrap CSS - https://getbootstrap.com/

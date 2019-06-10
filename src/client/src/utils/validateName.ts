@@ -33,6 +33,9 @@ const messages = defineMessages({
   }
 });
 
+const INVALID_PROJECT_NAME =
+  "Name may only contain letters, numbers, dashes or underscores";
+
 export function validateName(title: string, type: string): any {
   let isValid = true;
   let error: FormattedMessage.MessageDescriptor | undefined;
