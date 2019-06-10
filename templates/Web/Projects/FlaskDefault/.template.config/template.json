@@ -1,73 +1,83 @@
 {
-    "author": "Microsoft",
-    "classifications": ["Universal"],
-    "name": "FlaskDefault",
-    "groupIdentity": "wts.Proj.FlaskDefault",
-    "identity": "wts.Proj.FlaskDefault",
-    "description": "",
-    "tags": {
-      "language": "Any",
-      "type": "project",
-      "wts.type": "project",
-      "wts.projecttype": "FullStackWebApp",
-      "wts.frontendframework": "all",
-      "wts.backendframework": "Flask",
-      "wts.platform": "Web",
-      "wts.version": "1.0.0",
-      "wts.displayOrder": "1"
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "FlaskDefault",
+  "groupIdentity": "wts.Proj.FlaskDefault",
+  "identity": "wts.Proj.FlaskDefault",
+  "description": "",
+  "tags": {
+    "language": "Any",
+    "type": "project",
+    "wts.type": "project",
+    "wts.projecttype": "FullStackWebApp",
+    "wts.frontendframework": "all",
+    "wts.backendframework": "Flask",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.displayOrder": "1"
+  },
+  "sourceName": "wts.FlaskDefault",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.userName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_UserName"
     },
-    "sourceName": "wts.FlaskDefault",
-    "preferNameDirectory": true,
-    "PrimaryOutputs": [],
-    "symbols": {
-      "wts.userName": {
-        "type": "parameter",
-        "dataType": "string",
-        "replaces": "Param_UserName"
-      },
-      "wts.wizardVersion": {
-        "type": "parameter",
-        "dataType": "string",
-        "replaces": "Param_Wizard.Version"
-      },
-      "wts.templatesVersion": {
-        "type": "parameter",
-        "dataType": "string",
-        "replaces": "Param_Templates.Version"
-      },
-      "wts.generationProjectType": {
-        "type": "parameter",
-        "replaces": "Param_ProjectType"
-      },
-      "wts.generationFramework": {
-        "type": "parameter",
-        "replaces": "Param_Framework"
-      },
-      "wts.generationPlatform": {
-        "type": "parameter",
-        "replaces": "Param_Platform"
-      },
-      "copyrightYear": {
-        "type": "generated",
-        "generator": "now",
-        "replaces": "1976",
-        "parameters": {
-          "format": "yyyy"
-        }
-      }
+    "wts.wizardVersion": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_Wizard.Version"
     },
-    "postActions": [
-      {
-        "description": "Add Flask Dev Dependencies",
-        "manualInstructions": [],
-        "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-        "args": {
-          "dict": "{'concurrently': '^4.1.0'}",
-          "key": "devDependencies",
-          "jsonPath": "package.json"
-        },
-        "continueOnError": false
+    "wts.templatesVersion": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_Templates.Version"
+    },
+    "wts.generationProjectType": {
+      "type": "parameter",
+      "replaces": "Param_ProjectType"
+    },
+    "wts.generationFramework": {
+      "type": "parameter",
+      "replaces": "Param_Framework"
+    },
+    "wts.generationPlatform": {
+      "type": "parameter",
+      "replaces": "Param_Platform"
+    },
+    "copyrightYear": {
+      "type": "generated",
+      "generator": "now",
+      "replaces": "1976",
+      "parameters": {
+        "format": "yyyy"
       }
-    ]
-  }
-  
+    }
+  },
+  "postActions": [
+    {
+      "description": "Add Flask Dev Dependencies",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'concurrently': '^4.1.0'}",
+        "key": "devDependencies",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    },
+    {
+      "description": "Add Flask Build Scripts",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'start-backend': 'python server/server.py'}",
+        "key": "scripts",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    }
+  ]
+}
