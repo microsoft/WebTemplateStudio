@@ -1,0 +1,37 @@
+﻿{
+  "author": "Microsoft",
+  "classifications": ["Universal"],
+  "name": "AddPackageJsonFullStackDefault",
+  "groupIdentity": "wts.Proj.AddPackageJsonFullStackDefault",
+  "identity": "wts.Proj.AddPackageJsonFullStackDefault",
+  "description": "",
+  "tags": {
+    "language": "Any",
+    "type": "project",
+    "wts.type": "project",
+    "wts.projecttype": "FullStackWebApp",
+    "wts.frontendframework": "all",
+    "wts.backendframework": "all",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.displayOrder": "1"
+  },
+  "sourceName": "wts.AddPackageJsonFullStackDefault",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+  },
+  "postActions": [
+    {
+      "description": "Add Base Start Scripts",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'start': 'concurrently \"yarn start-frontend || npm run start-frontend\" \"yarn start-backend || npm run start-backend\"'}",
+        "key": "scripts",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    }
+  ]
+}
