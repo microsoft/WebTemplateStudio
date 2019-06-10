@@ -1,4 +1,6 @@
 from flask import Flask
+from flask import jsonify
+from flask import make_response
 from constants import CONSTANTS
 
 app = Flask(__name__)
@@ -11,5 +13,14 @@ def catch_all(path):
     # of compiled front-end application once we figure out how deployment works 
     return 'You want path: %s' % path
 
+# Error Handler
+@app.errorhandler(404)
+def page_not_found(error):
+	return make_response(
+        jsonify(
+            {'error': 'Page not found'}
+        ),
+        404
+    )
 if __name__ == '__main__':
     app.run(port=CONSTANTS['PORT'])
