@@ -18,6 +18,7 @@ import azure from "../assets/azure.svg";
 import azurefunctions from "../assets/azurefunctions.svg";
 import cancel from "../assets/cancel.svg";
 import cosmosdb from "../assets/cosmosdb.svg";
+import warning from "../assets/warning.svg";
 
 import masterdetailscreenshot from "../assets/masterdetailscreenshot.svg";
 import listscreenshot from "../assets/listscreenshot.svg";
@@ -114,3 +115,4 @@ export default (internalName: string): string | undefined => {
 };
 
 export const getCancelSvg = (): string => withLocalPath(cancel);
+export const getWarningSvg = (): string => withLocalPath(warning);

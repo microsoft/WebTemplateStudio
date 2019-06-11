@@ -1,0 +1,25 @@
+.warningDiv {
+  border: 1px solid #fbd118;
+  box-sizing: border-box;
+  border-radius: 3px;
+  padding: 3px;
+  margin-top: 4px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.warningDiv img {
+  width: 6%;
+  height: auto;
+}
+
+.body {
+  margin-left: 6px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  /* or 222% */
+  color: #fbd118;
+}
