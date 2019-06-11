@@ -1,7 +1,7 @@
 ﻿{
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "list",
+  "name": "List",
   "groupIdentity": "wts.Page.List",
   "identity": "wts.Page.Angular.List",
   "description": "The list page allows you to add and remove text from an adaptive list.",
