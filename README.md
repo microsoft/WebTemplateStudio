@@ -12,11 +12,11 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 
 ## Build Status
 
-| Branch  |                                                                                                                 Build Status                                                                                                                  |
-| :------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| dev     |     [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=dev)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=158&branchName=dev)     |
-| staging | [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=staging)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=161&branchName=staging) |
-| master  |  [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=master)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=158&branchName=master)  |
+| Branch  |                                                                                                                Build Status                                                                                                                 |
+| :------ | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| dev     |    [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=dev)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=158&branchName=dev)    |
+| staging |   [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/webTS/webts.staging.version.create?branchName=staging)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=161&branchName=staging)    |
+| master  | [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=master)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=158&branchName=master) |
 
 # Documentation
 
