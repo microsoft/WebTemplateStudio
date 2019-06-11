@@ -150,7 +150,7 @@ export const CONSTANTS = {
     DEPENDENCY_NOT_INSTALLED: (name: string) => {
       return localize(
         "info.dependencyNotInstalled",
-        "{0} required. Click to install",
+        "{0} required. Click to install.",
         name
       );
     },
