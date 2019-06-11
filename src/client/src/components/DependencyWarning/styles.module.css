@@ -21,5 +21,6 @@
   font-weight: normal;
   font-size: 12px;
   /* or 222% */
+  /* color: "var(--vscode-editor-foreground)"; should the text stay white? (accessibility) */
   color: #fbd118;
 }
