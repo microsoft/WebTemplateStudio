@@ -2,10 +2,11 @@
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
+//^^
 //{[{
   {
-    path: 'Param_HomePageName',
-    loadChildren: () => import('./app-shell/Param_HomePageName/Param_HomePageName.module').then(mod => mod.Param_HomePageNameModule)
+    path: 'wts.ItemName',
+    loadChildren: () => import('./app-shell/wts.ItemName/wts.ItemName.module').then(mod => mod.wts.ItemNameModule)
   },
 //}]}
 ];
