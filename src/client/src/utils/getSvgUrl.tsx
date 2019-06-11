@@ -19,6 +19,7 @@ import azurefunctions from "../assets/azurefunctions.svg";
 import cancel from "../assets/cancel.svg";
 import cosmosdb from "../assets/cosmosdb.svg";
 import warning from "../assets/warning.svg";
+import greencheck from "../assets/checkgreen.svg";
 
 import masterdetailscreenshot from "../assets/masterdetailscreenshot.svg";
 import listscreenshot from "../assets/listscreenshot.svg";
@@ -116,3 +117,4 @@ export default (internalName: string): string | undefined => {
 
 export const getCancelSvg = (): string => withLocalPath(cancel);
 export const getWarningSvg = (): string => withLocalPath(warning);
+export const getGreenCheckSvg = (): string => withLocalPath(greencheck);
