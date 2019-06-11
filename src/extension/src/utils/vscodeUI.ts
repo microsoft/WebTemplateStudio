@@ -36,7 +36,7 @@ export class VSCodeUI extends WizardServant {
     var ls = child_process.spawn(dependency, ['--version']);
     ls.stdout.on('data', (data: any) => {
       if (dependency === 'python') {
-        let outdated = data.indexOf(' 3.7')? false : true;
+        let outdated = data.indexOf('3.7.3')? false : true;
         console.log('outdated? ' + outdated);  
         // return payload 
       } else {
