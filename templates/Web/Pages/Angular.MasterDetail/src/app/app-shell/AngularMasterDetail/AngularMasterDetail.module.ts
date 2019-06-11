@@ -1,11 +1,12 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+
 import { MasterDetailComponent } from './master-detail.component';
 import { MasterDetailSidebarTabComponent } from './master-detail-sidebar-tab/master-detail-sidebar-tab';
 import { WarningMessageModule } from 'src/app/shared/warning-message/warning-message.module';
 import { MasterDetailPageComponent } from './master-detail-page/master-detail-page.component';
-import { MatIconModule } from '@angular/material/icon';
+import { AngularMasterDetailRoutingModule } from './AngularMasterDetail-routing.module'
 
 @NgModule({
   declarations: [
@@ -17,9 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     WarningMessageModule,
     MatIconModule,
-    RouterModule.forChild([
-      { path: 'AngularMasterDetail', component: MasterDetailComponent},
-    ]),
+    AngularMasterDetailRoutingModule
   ]
 })
 export class AngularMasterDetailModule { }

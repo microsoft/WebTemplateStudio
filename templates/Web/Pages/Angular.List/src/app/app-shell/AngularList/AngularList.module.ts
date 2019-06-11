@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { ListComponent } from './list.component';
+import { AngularListRoutingModule } from './AngularList-routing.module';
 import { ListFormComponent } from './list-form/list-form.component';
 import { ListItemComponent } from './list-item/list-item';
 import { WarningMessageModule } from 'src/app/shared/warning-message/warning-message.module';
@@ -18,9 +19,7 @@ import { WarningMessageModule } from 'src/app/shared/warning-message/warning-mes
     CommonModule,
     FormsModule,
     WarningMessageModule,
-    RouterModule.forChild([
-      { path: 'AngularList', component: ListComponent},
-    ]),
+    AngularListRoutingModule
   ]
 })
 export class AngularListModule { }

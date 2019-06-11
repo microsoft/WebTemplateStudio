@@ -1,8 +1,9 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
 import { BlankComponent } from './blank.component';
+import { AngularBlankRoutingModule } from './AngularBlank-routing.module';
+
 
 @NgModule({
   declarations: [
@@ -10,9 +11,7 @@ import { BlankComponent } from './blank.component';
   ],
   imports: [
     CommonModule,
-    RouterModule.forRoot([
-      { path: 'AngularBlank', component: BlankComponent},
-    ]),
+    AngularBlankRoutingModule
   ]
 })
 export class AngularBlankModule { }
