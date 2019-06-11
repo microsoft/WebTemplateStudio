@@ -25,8 +25,16 @@ export class VSCodeUI extends WizardServant {
     (message: any) => Promise<IPayloadResponse>
   > {
     return new Map([
-      [ExtensionCommand.ResetPages, this.promptUsersToResetPages]
+      [ExtensionCommand.ResetPages, this.promptUsersToResetPages],
+      [ExtensionCommand.CheckDependency, this.checkDependency]
     ]);
+  }
+
+  async checkDependency(name: string) {
+    return {
+      payload: {
+      }
+    };
   }
 
   async promptUsersToResetPages(message: any) {
