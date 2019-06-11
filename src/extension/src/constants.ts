@@ -140,6 +140,20 @@ export const CONSTANTS = {
         appName
       );
     },
+    DEPENDENCY_INSTALLED: (name: string) => {
+      return localize(
+        "info.dependencyInstalled",
+        "{0} installed on computer!",
+        name
+      );
+    },
+    DEPENDENCY_NOT_INSTALLED: (name: string) => {
+      return localize(
+        "info.dependencyNotInstalled",
+        "{0} required. Click to install",
+        name
+      );
+    },
     FILE_REPLACED_MESSAGE: localize(
       "info.fileReplacedMessage",
       "Replaced file at: "
