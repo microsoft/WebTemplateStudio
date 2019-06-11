@@ -8,7 +8,10 @@ import classnames from "classnames";
  * - frameworkName: name of framework
  * - installationState: must be one of "installed", "missing", "outdated"
  */
-const DependencyInfo = (frameworkName: string, installationState: string) => {
+const DependencyInfo: any = (
+  frameworkName: string,
+  installationState: string
+) => {
   frameworkName = "Flask";
   installationState = "outdated";
 

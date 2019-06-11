@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import CardBody from "../CardBody";
 import CardTitle from "../CardTitle";
-import DependencyWarning from "../DependencyInfo";
+import DependencyInfo from "../DependencyInfo";
 import { ReactComponent as Check } from "../../assets/check.svg";
 
 import grid from "../../css/grid.module.css";
@@ -86,7 +86,7 @@ const SelectableCard = ({
             <CardTitle title={title} />
           </div>
         </div>
-        <DependencyWarning />
+        <DependencyInfo />
         <div className={grid.row}>
           <div className={styles.body}>
             <CardBody body={body} />
