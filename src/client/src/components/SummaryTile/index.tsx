@@ -143,7 +143,6 @@ const SummaryTile = ({
         className={classnames(styles.container, {
           [styles.indent]: withIndent
         })}
-        onKeyDown={onSummaryTileLeave}
       >
         <div
           role="button"

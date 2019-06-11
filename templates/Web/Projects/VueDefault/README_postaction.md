@@ -1,4 +1,4 @@
-﻿﻿## Getting Started
+﻿## Getting Started
 
 In the root directory of the project...
 
@@ -6,16 +6,13 @@ In the root directory of the project...
 2. Start development server `yarn start` or `npm start`.
 
 ## Next Steps
-
 //{[{
-
 ### Adding a New Page
 
 1. Create a file in `/src/views` with your Vue Template.
 2. Add a route for your page to `/src/router/index.js`.
 3. Add a button to the navigation bar in `/src/components/TheNavBar.vue`.
-   //}]}
-
+//}]}
 ### Deployment
 
 The generated templates can be deployed to Azure App Service using the following steps:
@@ -28,7 +25,6 @@ The generated templates can be deployed to Azure App Service using the following
    Full documentation for deployment to Azure App Service can be found here: [Deployment Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md).
 
 ## File Structure
-
 //{[{
 The front-end is based on [Vue CLI](https://cli.vuejs.org/).
 //}]}
@@ -51,12 +47,10 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 ```
 
 ## Additional Documentation
-
 //{[{
-
 - Vue - https://vuejs.org/v2/guide/
 - Vue Router - https://router.vuejs.org/
-  //}]}
+//}]}
 - Bootstrap CSS - https://getbootstrap.com/
 
   This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).

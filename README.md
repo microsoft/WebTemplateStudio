@@ -24,13 +24,13 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 - [Getting started with the codebase](/docs/getting-started-developers.md)
 - [Terminology for developers](/docs/terminology.md)
 
-## SHA256
-
+## SHA256 
+ 
 Visual Studio Code extensions are currently not signed. WebTS provides the Secure Hash Algorithm (SHA) of each version we publish. You can find the current extensions sha256 value in the following files:
-
-- Dev-nightly: [sha256-dev-nightly.md](sha256-dev-nightly.md)
-
+-	Dev-nightly: [sha256-dev-nightly.md](sha256-dev-nightly.md)
+ 
 To verify the integrity of the package, download the vsix from the Marketplace, calculate the hash of the package using the powershell command ‘Get-FileHash’ or any other tool that allows you to calculate the packages hash, and compare both.
+
 
 ## Instruction To Use
 
@@ -94,4 +94,4 @@ The extension does [log basic telemetry](docs/telemetry.md) for what is being se
 
 ## Acknowledgments
 
-Microsoft Web Template Studio was [initially created by Microsoft Garage interns](docs/acknowledgments.md). We hope many more continue with the project
+Microsoft Web Template Studio was [initially created by Microsoft Garage interns](docs/acknowledgments.md).  We hope many more continue with the project 

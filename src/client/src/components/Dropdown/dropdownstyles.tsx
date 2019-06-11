@@ -44,7 +44,6 @@ export default {
     ...base,
     // override border radius to match the box
     borderRadius: 0,
-    border: "0.5px solid var(--vscode-editor-foreground)",
     // beautify the word cut by adding a dash see https://caniuse.com/#search=hyphens for the compatibility
     hyphens: "auto",
     // kill the gap when opening up or down
