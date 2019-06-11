@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
+import { IMasterDetailText } from '../master-detail.service';
 
 @Component({
   selector: 'app-master-detail-page',
@@ -14,9 +15,4 @@ export class MasterDetailPageComponent implements OnInit {
   }
 
 }
-export interface IMasterDetailText {
-  paragraph: string;
-  title: string;
-  tabName: string;
-  id: number;
-}
+

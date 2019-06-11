@@ -17,9 +17,3 @@ export class GridBoxComponent implements OnInit {
   }
 
 }
-
-export interface IGridTextItem {
-  description: string;
-  header: string;
-  id: number;
-}
