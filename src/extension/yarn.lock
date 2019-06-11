@@ -3845,20 +3845,6 @@ streamroller@^1.0.4:
     debug "^3.1.0"
     fs-extra "^7.0.0"
     lodash "^4.17.10"
-<<<<<<< HEAD
-
-streamroller@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/streamroller/-/streamroller-1.0.4.tgz#d485c7624796d5e2eb34190c79afcbf006afb5e6"
-  integrity sha512-Wc2Gm5ygjSX8ZpW9J7Y9FwiSzTlKSvcl0FTTMd3rn7RoxDXpBW+xD9TY5sWL2n0UR61COB0LG1BQvN6nTUQbLQ==
-  dependencies:
-    async "^2.6.1"
-    date-format "^2.0.0"
-    debug "^3.1.0"
-    fs-extra "^7.0.0"
-    lodash "^4.17.10"
-=======
->>>>>>> dev
 
 string-width@^1.0.1, string-width@^1.0.2:
   version "1.0.2"
