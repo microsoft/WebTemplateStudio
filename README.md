@@ -12,11 +12,11 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 
 ## Build Status
 
-| Branch  |                                                                                                                 Build Status                                                                                                                  |
-| :------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| dev     |     [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=dev)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=158&branchName=dev)     |
-| staging | [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=staging)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=158&branchName=staging) |
-| master  |  [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=master)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=158&branchName=master)  |
+| Branch  |                                                                                                                Build Status                                                                                                                 |
+| :------ | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| dev     |    [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=dev)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=158&branchName=dev)    |
+| staging |   [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/webTS/webts.staging.version.create?branchName=staging)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=161&branchName=staging)    |
+| master  | [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=master)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=158&branchName=master) |
 
 # Documentation
 
@@ -24,13 +24,13 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 - [Getting started with the codebase](/docs/getting-started-developers.md)
 - [Terminology for developers](/docs/terminology.md)
 
-## SHA256 
- 
-Visual Studio Code extensions are currently not signed. WebTS provides the Secure Hash Algorithm (SHA) of each version we publish. You can find the current extensions sha256 value in the following files:
--	Dev-nightly: [sha256-dev-nightly.md](sha256-dev-nightly.md)
- 
-To verify the integrity of the package, download the vsix from the Marketplace, calculate the hash of the package using the powershell command ‘Get-FileHash’ or any other tool that allows you to calculate the packages hash, and compare both.
+## SHA256
 
+Visual Studio Code extensions are currently not signed. WebTS provides the Secure Hash Algorithm (SHA) of each version we publish. You can find the current extensions sha256 value in the following files:
+
+- Dev-nightly: [sha256-dev-nightly.md](sha256-dev-nightly.md)
+
+To verify the integrity of the package, download the vsix from the Marketplace, calculate the hash of the package using the powershell command ‘Get-FileHash’ or any other tool that allows you to calculate the packages hash, and compare both.
 
 ## Instruction To Use
 
@@ -94,4 +94,4 @@ The extension does [log basic telemetry](docs/telemetry.md) for what is being se
 
 ## Acknowledgments
 
-Microsoft Web Template Studio was [initially created by Microsoft Garage interns](docs/acknowledgments.md).  We hope many more continue with the project 
+Microsoft Web Template Studio was [initially created by Microsoft Garage interns](docs/acknowledgments.md). We hope many more continue with the project
