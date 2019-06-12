@@ -14,6 +14,7 @@ import react from "../assets/react.svg";
 import angular from "../assets/angular.svg";
 import vue from "../assets/vue.svg";
 import node from "../assets/nodeJS.svg";
+import flask from '../assets/flask.svg';
 import azure from "../assets/azure.svg";
 import azurefunctions from "../assets/azurefunctions.svg";
 import cancel from "../assets/cancel.svg";
@@ -29,6 +30,7 @@ const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR]: angular,
   [WIZARD_CONTENT_INTERNAL_NAMES.VUE]: vue,
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS]: node,
+  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK]: flask,
   [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: azurefunctions,
   [WIZARD_CONTENT_INTERNAL_NAMES.AZURE]: azure,
   [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: cosmosdb
