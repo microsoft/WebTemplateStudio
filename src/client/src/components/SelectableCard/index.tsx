@@ -86,7 +86,7 @@ const SelectableCard = ({
             <CardTitle title={title} />
           </div>
         </div>
-        <DependencyInfo />
+        <DependencyInfo frameworkName={"Node"} installationState={"outdated"} />
         <div className={grid.row}>
           <div className={styles.body}>
             <CardBody body={body} />

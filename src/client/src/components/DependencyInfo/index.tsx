@@ -8,12 +8,9 @@ import classnames from "classnames";
  * - frameworkName: name of framework
  * - installationState: must be one of "installed", "missing", "outdated"
  */
-const DependencyInfo: any = (
-  frameworkName: string,
-  installationState: string
-) => {
-  frameworkName = "Flask";
-  installationState = "outdated";
+const DependencyInfo: any = (props: any) => {
+  let frameworkName = props.frameworkName;
+  let installationState = props.installationState;
 
   let dependencyMessage: string = " required. Click to install.";
   let downloadLink: string = ""; // default link does nothing
