@@ -107,8 +107,8 @@ export class CoreTemplateStudio {
 
   public async getProjectTypes(): Promise<any> {
     // TODO: use this in client instead of fetching directly from API server
-    const url = new URL(CONSTANTS.API.Endpoints.ProjectType, this._url);
-    return await fetch(url.href, { method: CONSTANTS.API.Methods.GET })
+    const url = new URL(CONSTANTS.API.ENDPOINTS.PROJECT_TYPE, this._url);
+    return await fetch(url.href, { method: CONSTANTS.API.METHODS.GET })
       .then((response: Response) => {
         return response.json();
       })
@@ -119,10 +119,10 @@ export class CoreTemplateStudio {
 
   public async getFrameworks(projectType: string): Promise<any> {
     // TODO: use this in client instead of fetching directly from API server
-    const url = new URL(CONSTANTS.API.Endpoints.Framework, this._url);
-    url.searchParams.append(CONSTANTS.API.QueryParams.ProjectType, projectType);
+    const url = new URL(CONSTANTS.API.ENDPOINTS.FRAMEWORK, this._url);
+    url.searchParams.append(CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE, projectType);
 
-    return await fetch(url.href, { method: CONSTANTS.API.Methods.GET })
+    return await fetch(url.href, { method: CONSTANTS.API.METHODS.GET })
       .then((response: Response) => {
         return response.json();
       })
@@ -137,17 +137,17 @@ export class CoreTemplateStudio {
     backendFramework: string
   ): Promise<any> {
     // TODO: use this in client instead of fetching directly from API server
-    const url = new URL(CONSTANTS.API.Endpoints.Feature, this._url);
-    url.searchParams.append(CONSTANTS.API.QueryParams.ProjectType, projectType);
+    const url = new URL(CONSTANTS.API.ENDPOINTS.FEATURE, this._url);
+    url.searchParams.append(CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE, projectType);
     url.searchParams.append(
-      CONSTANTS.API.QueryParams.FrontendFramework,
+      CONSTANTS.API.QUERY_PARAMS.FRONTEND_FRAMEWORK,
       frontendFramework
     );
     url.searchParams.append(
-      CONSTANTS.API.QueryParams.BackendFramework,
+      CONSTANTS.API.QUERY_PARAMS.BACKEND_FRAMEWORK,
       backendFramework
     );
-    return await fetch(url.href, { method: CONSTANTS.API.Methods.GET })
+    return await fetch(url.href, { method: CONSTANTS.API.METHODS.GET })
       .then((response: Response) => {
         return response.json();
       })
@@ -162,18 +162,18 @@ export class CoreTemplateStudio {
     backendFramework: string
   ): Promise<any> {
     // TODO: use this in client instead of fetching directly from API server
-    const url = new URL(CONSTANTS.API.Endpoints.Page, this._url);
-    url.searchParams.append(CONSTANTS.API.QueryParams.ProjectType, projectType);
+    const url = new URL(CONSTANTS.API.ENDPOINTS.PAGE, this._url);
+    url.searchParams.append(CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE, projectType);
     url.searchParams.append(
-      CONSTANTS.API.QueryParams.FrontendFramework,
+      CONSTANTS.API.QUERY_PARAMS.FRONTEND_FRAMEWORK,
       frontendFramework
     );
     url.searchParams.append(
-      CONSTANTS.API.QueryParams.BackendFramework,
+      CONSTANTS.API.QUERY_PARAMS.BACKEND_FRAMEWORK,
       backendFramework
     );
 
-    return await fetch(url.href, { method: CONSTANTS.API.Methods.GET })
+    return await fetch(url.href, { method: CONSTANTS.API.METHODS.GET })
       .then((response: Response) => {
         return response.json();
       })

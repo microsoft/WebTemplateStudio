@@ -161,22 +161,22 @@ export const CONSTANTS = {
     SIGNALR_API_GENERATE_METHOD_NAME: "Generate",
     MAX_SYNC_REQUEST_ATTEMPTS: 51,
     SYNC_RETRY_WAIT_TIME: 250,
-    Endpoints: {
-      Feature: "/api/feature",
-      Framework: "/api/framework",
-      Page: "/api/page",
-      ProjectType: "/api/projectType"
+    ENDPOINTS: {
+      PAGE: "/api/page",
+      FEATURE: "/api/feature",
+      FRAMEWORK: "/api/framework",
+      PROJECT_TYPE: "/api/projectType"
     },
-    Methods: {
+    METHODS: {
       GET: "get",
       POST: "post"
     },
-    QueryParams: {
-      FrontendFramework: "frontendFramework",
-      BackendFramework: "backendFramework",
-      Path: "path",
-      Platform: "platform",
-      ProjectType: "projectType"
+    QUERY_PARAMS: {
+      FRONTEND_FRAMEWORK: "frontendFramework",
+      BACKEND_FRAMEWORK: "backendFramework",
+      PROJECT_TYPE: "projectType",
+      PLATFORM: "platform",
+      PATH: "path"
     }
   },
   AZURE_LOGIN_STATUS: {
