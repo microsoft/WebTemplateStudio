@@ -2,6 +2,9 @@
 // custom styling for dropdown component using the Style API provided by react-select
 
 export default {
+  input: (base: any) => ({
+    color: "var(--vscode-editor-foreground);"
+  }),
   indicatorSeparator: (base: any) => ({
     ...base,
     display: "none"
