@@ -7,7 +7,7 @@ import {
   ExtensionCommand
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
-import { ApiModule } from "./signalr-api-module/apiModule";
+import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { VSCodeUI } from "./utils/vscodeUI";
 import { AzureServices } from "./azure/azureServices";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
@@ -111,7 +111,7 @@ export class Controller {
           .launchApiSyncModule(context)
           .catch(error => {
             console.log(error);
-            ApiModule.StopApi();
+            CoreTemplateStudio.DestroyInstance();
             throw error;
           });
       }
@@ -151,7 +151,7 @@ export class Controller {
   }
 
   private static sendPortToClient() {
-    const port = ApiModule.GetLastUsedPort();
+    const port = CoreTemplateStudio.GetExistingInstance().getPort();
 
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetPort,
@@ -204,6 +204,6 @@ export class Controller {
   }
 
   dispose() {
-    ApiModule.StopApi();
+    CoreTemplateStudio.DestroyInstance();
   }
 }

@@ -160,7 +160,24 @@ export const CONSTANTS = {
     SIGNALR_API_SYNC_METHOD_NAME: "SyncTemplates",
     SIGNALR_API_GENERATE_METHOD_NAME: "Generate",
     MAX_SYNC_REQUEST_ATTEMPTS: 51,
-    SYNC_RETRY_WAIT_TIME: 250
+    SYNC_RETRY_WAIT_TIME: 250,
+    Endpoints: {
+      Feature: "/api/feature",
+      Framework: "/api/framework",
+      Page: "/api/page",
+      ProjectType: "/api/projectType"
+    },
+    Methods: {
+      GET: "get",
+      POST: "post"
+    },
+    QueryParams: {
+      FrontendFramework: "frontendFramework",
+      BackendFramework: "backendFramework",
+      Path: "path",
+      Platform: "platform",
+      ProjectType: "projectType"
+    }
   },
   AZURE_LOGIN_STATUS: {
     LOGGED_IN: "LoggedIn",
