@@ -8,20 +8,10 @@ export abstract class CoreTemplateStudioApiCommand {
     this.commandPayload = commandPayload;
   }
 
-  public async execute(): Promise<any> {
-    const connection = await this.connectToCoreApiHub();
-
+  public async execute(
+    connection: signalR.HubConnection
+  ): Promise<any> {
     return this.performCommandAction(connection);
-  }
-
-  private async connectToCoreApiHub(): Promise<signalR.HubConnection> {
-    const connection = new signalR.HubConnectionBuilder()
-      .withUrl(`http://localhost:${this.commandPayload.port}/corehub`)
-      .build();
-
-    await connection.start().catch((error: Error) => console.log(error));
-
-    return connection;
   }
 
   abstract async performCommandAction(
