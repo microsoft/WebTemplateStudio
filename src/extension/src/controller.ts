@@ -82,11 +82,10 @@ export class Controller {
   ) {
     if (this._instance) {
       this._instance.showReactPanel();
+    } else {
+      this._instance = new Controller(context, extensionStartTime);
     }
-    return (
-      this._instance ||
-      (this._instance = new Controller(context, extensionStartTime))
-    );
+    return this._instance;
   }
 
   private constructor(
