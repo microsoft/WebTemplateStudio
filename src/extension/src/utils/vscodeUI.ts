@@ -25,37 +25,9 @@ export class VSCodeUI extends WizardServant {
     (message: any) => Promise<IPayloadResponse>
   > {
     return new Map([
-      [ExtensionCommand.ResetPages, this.promptUsersToResetPages],
-      [ExtensionCommand.CheckDependency, this.checkDependency]
+      [ExtensionCommand.ResetPages, this.promptUsersToResetPages]
     ]);
   }
-
-  async checkDependency(dependency: any): Promise<IPayloadResponse> {
-    const child_process = require('child_process');  
-
-    var ls = child_process.spawn(dependency, ['--version']);
-    ls.stdout.on('data', (data: any) => {
-      if (dependency === 'python') {
-        let outdated = data.indexOf('3.7.3')? false : true;
-        console.log('outdated? ' + outdated);  
-        // return payload 
-      } else {
-        // return payload 
-      }
-    });
-
-    ls.on('error', (err: any) => {
-      // return not installed payload
-    });
-
-    // stub
-    return {
-      payload: {
-        name: dependency,
-        installed: true
-    }};
-  }
-
 
   async promptUsersToResetPages(message: any): Promise<IPayloadResponse> {
     if (message.payload.pagesLength > 0) {
