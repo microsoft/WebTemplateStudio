@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { MasterDetailComponent } from './master-detail.component';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -16,4 +15,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AngularMasterDetailRoutingModule { }
-
