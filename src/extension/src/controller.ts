@@ -18,6 +18,11 @@ import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
 
 export class Controller {
+  /**
+   * The singleton instance of Controller
+   * @type: {Controller}
+   */
+  private static _instance: Controller | undefined;
   public static reactPanelContext: ReactPanel;
   public static Telemetry: TelemetryAI;
   private vscodeUI: VSCodeUI;
@@ -66,8 +71,25 @@ export class Controller {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_MODULE);
     }
   }
+  /**
+   * Provides access to the Controller. Maintains Singleton Pattern. Function will bring up ReactPanel to View if Controller instance exists, otherwise will instantiate a new Controller.
+   * @param message The payload received from the wizard client. Message payload must include field 'module'
+   * @returns Singleton Controller type
+   */
+  public static getInstance(
+    context: vscode.ExtensionContext,
+    extensionStartTime: number
+  ) {
+    if (this._instance) {
+      this._instance.showReactPanel();
+    }
+    return (
+      this._instance ||
+      (this._instance = new Controller(context, extensionStartTime))
+    );
+  }
 
-  constructor(
+  private constructor(
     private context: vscode.ExtensionContext,
     private extensionStartTime: number
   ) {
@@ -205,5 +227,6 @@ export class Controller {
 
   dispose() {
     ApiModule.StopApi();
+    Controller._instance = undefined;
   }
 }
