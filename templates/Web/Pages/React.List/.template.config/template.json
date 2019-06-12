@@ -12,7 +12,7 @@
     "wts.platform": "Web",
     "wts.projecttype": "FullStackWebApp",
     "wts.frontendframework": "ReactJS",
-    "wts.backendframework": "NodeJS",
+    "wts.backendframework": "all",
     "wts.version": "1.0.0",
     "wts.displayOrder": "1",
     "wts.genGroup": "0",
