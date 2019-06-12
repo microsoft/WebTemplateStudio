@@ -3,13 +3,11 @@
     return (
       <React.Fragment>
         <NavBar />
-        <BrowserRouter>
-          <Switch>
-          //{[{
-            <Redirect exact path = "/" to = "/Param_HomePageName" />
-          //}]}
-          </Switch>
-        </BrowserRouter>
+        <Switch>
+        //{[{
+          <Redirect exact path = "/" to = "/Param_HomePageName" />
+        //}]}
+        </Switch>
         <Footer />
       </React.Fragment>
     );
