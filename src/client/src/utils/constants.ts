@@ -103,7 +103,7 @@ const EXTENSION_COMMANDS = {
   CLOSE_WIZARD: "close-wizard",
   RESET_PAGES: "reset-pages",
   GET_PREVIEW_STATUS: "get-preview",
-  GET_DEPENDENCY_INFO: "get-dependency-info"
+  GET_DEPENDENCY_INFO: "check-dependency"
 };
 
 export {
