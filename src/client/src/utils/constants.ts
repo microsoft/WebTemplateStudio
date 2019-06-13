@@ -101,7 +101,8 @@ const EXTENSION_COMMANDS = {
   GET_VERSIONS: "get-versions",
   CLOSE_WIZARD: "close-wizard",
   RESET_PAGES: "reset-pages",
-  GET_PREVIEW_STATUS: "get-preview"
+  GET_PREVIEW_STATUS: "get-preview",
+  GET_DEPENDENCY_INFO: "get-dependency-info"
 };
 
 export {

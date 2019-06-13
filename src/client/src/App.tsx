@@ -41,6 +41,7 @@ import {
   updateTemplateGenerationStatusAction
 } from "./actions/wizardInfoActions/updateGenStatusActions";
 import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
+import { updateDependencyInfoAction } from "./actions/wizardInfoActions/updateDependencyInfo";
 
 import appStyles from "./appStyles.module.css";
 import { startLogOutAzure } from "./actions/azureActions/logOutAzure";
@@ -80,6 +81,7 @@ interface IDispatchProps {
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
+  updateDependencyInfo: (dependencyInfo: any) => any;
   resetPageSelection: () => any;
   selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
@@ -105,6 +107,7 @@ class App extends React.Component<Props> {
     setAppNameAvailability: () => {},
     setProjectPathValidation: () => {},
     setAzureValidationStatus: () => {},
+    updateDependencyInfo: () => {},
     updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {},
     getVersionsData: () => {},
@@ -118,6 +121,10 @@ class App extends React.Component<Props> {
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
+        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
+          console.log("triggered get dependency info");
+          this.props.updateDependencyInfo(message.payload);
+          break;
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           if (message.payload != null && message.payload.outputPath != null) {
             this.props.updateOutputPath(message.payload.outputPath);
@@ -252,7 +259,11 @@ class App extends React.Component<Props> {
             />
             <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
             <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
-            <Route exact={true} path={ROUTES.NEW_PROJECT} component={NewProject} />
+            <Route
+              exact={true}
+              path={ROUTES.NEW_PROJECT}
+              component={NewProject}
+            />
           </main>
           <RightSidebar />
         </div>
@@ -262,7 +273,9 @@ class App extends React.Component<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, void, RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   getVSCodeApi: () => {
     dispatch(getVSCodeApi());
   },
@@ -295,6 +308,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, void, RootAction>)
   },
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => {
     dispatch(updateTemplateGenerationStatusAction(isGenerated));
+  },
+  updateDependencyInfo: (dependencyInfo: any) => {
+    dispatch(updateDependencyInfoAction(dependencyInfo));
   },
   getVersionsData: (versions: IVersions) => {
     dispatch(getVersionsDataAction(versions));
