@@ -6,7 +6,7 @@ import { Route, RouteComponentProps } from "react-router-dom";
 
 import LeftSidebar from "./components/LeftSidebar";
 import PageDetails from "./containers/PageDetails";
-import SelectFrameworks from "./components/SelectFrameworks";
+import SelectFrameworks from "./containers/SelectFrameworks";
 import SelectPages from "./containers/SelectPages";
 import SelectWebApp from "./containers/SelectWebApp";
 import NewProject from "./containers/NewProject";
