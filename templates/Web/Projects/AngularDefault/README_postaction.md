@@ -12,7 +12,7 @@ In the root directory of the project...
 
 1. Create a folder in `/src/app/app-shell` with your angular modules.
 2. Add a child route for your page to `/src/app/*.module.ts`.
-3. Add a button to the navigation bar in `/src/app/app-shell/NavBar/navbar.component.html`.
+3. Add a button to the navigation bar in `/src/app/app-shell/nav-bar/nav-bar.component.html`.
 //}]}
 
 ### Deployment
@@ -29,7 +29,7 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 //{[{
 ├── src - Angular front-end
 │ └── app - Angular main root module
-│    ├── components - Angular main components
+│    ├── app-shell - Angular main components
 │    └── app.module.ts - Angular root module.
 //}]}
 └── README.md
