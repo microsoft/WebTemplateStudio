@@ -7,11 +7,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "webTemplateStudioExtension.wizardLaunch",
       async () => {
-        if (controller) {
-          controller.showReactPanel();
-          return;
-        }
-        controller = new Controller(context, Date.now());
+        controller = Controller.getInstance(context, Date.now());
       }
     )
   );
