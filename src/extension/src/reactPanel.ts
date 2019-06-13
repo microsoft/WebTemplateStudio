@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { CONSTANTS } from "./constants";
-import { ApiModule } from "./signalr-api-module/apiModule";
+import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { Logger } from "./utils/logger";
 import { deactivate } from "./extension";
 
@@ -96,7 +96,7 @@ export class ReactPanel {
   }
   public dispose() {
     ReactPanel.currentPanel = undefined;
-    ApiModule.StopApi();
+    CoreTemplateStudio.DestroyInstance();
     if (Logger.outputChannel) {
       Logger.outputChannel.clear();
     }

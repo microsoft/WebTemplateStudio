@@ -28,7 +28,7 @@
   <app-warning-message
     *ngIf="WarningMessageOpen"
     [text]="WarningMessageText"
-    (WarningMessageOpenEventEmitter)="handleWarningClose($event)"
+    (WarningMessageOpen)="handleWarningClose($event)"
   >
   </app-warning-message>
 </main>

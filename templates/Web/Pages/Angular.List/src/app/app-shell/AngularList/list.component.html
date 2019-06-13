@@ -5,7 +5,7 @@
     </div>
     <div class="col-12 p-0">
       <app-list-form
-        (inputTextEventEmitter)="handleAddListItem($event)"
+        (inputText)="handleAddListItem($event)"
       ></app-list-form>
     </div>
     <app-list-item
@@ -13,14 +13,14 @@
       *ngFor="let listItem of listItems"
       [text]="listItem.text"
       [_id]="listItem._id"
-      (deleteTextEventEmitter)="handleDeleteListItem($event)"
+      (deleteText)="handleDeleteListItem($event)"
     >
     </app-list-item>
 
     <app-warning-message
       *ngIf="WarningMessageOpen"
       [text]="WarningMessageText"
-      (WarningMessageOpenEventEmitter)="handleWarningClose($event)"
+      (WarningMessageOpen)="handleWarningClose($event)"
     ></app-warning-message>
   </div>
 </main>
