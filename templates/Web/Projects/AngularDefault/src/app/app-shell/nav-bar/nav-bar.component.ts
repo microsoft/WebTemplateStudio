@@ -3,8 +3,8 @@ import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  templateUrl: './nav-bar.component.html',
+  styleUrls: ['./nav-bar.component.css']
 })
 export class HeaderComponent implements OnInit {
   skipLinkPath: string;
