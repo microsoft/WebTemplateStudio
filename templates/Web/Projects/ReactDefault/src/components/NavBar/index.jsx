@@ -1,4 +1,5 @@
 ﻿import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./navbar.module.css";
 
 //TODO Web Template Studio: Add a new link in the NavBar for your page here.
@@ -10,9 +11,9 @@ export default function NavBar() {
         <a href="#mainContent">Skip to Main Content</a>
       </div>
       <nav className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           wts.ReactDefault
-        </a>
+        </Link>
         <div className="navbar-nav">
         </div>
       </nav>

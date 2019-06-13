@@ -1,22 +1,22 @@
-﻿{
+{
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "ReactDefault",
-  "groupIdentity": "wts.Proj.ReactDefault",
-  "identity": "wts.Proj.ReactDefault",
+  "name": "FlaskDefault",
+  "groupIdentity": "wts.Proj.FlaskDefault",
+  "identity": "wts.Proj.FlaskDefault",
   "description": "",
   "tags": {
     "language": "Any",
     "type": "project",
     "wts.type": "project",
     "wts.projecttype": "FullStackWebApp",
-    "wts.frontendframework": "ReactJS",
-    "wts.backendframework": "all",
+    "wts.frontendframework": "all",
+    "wts.backendframework": "Flask",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.displayOrder": "1"
   },
-  "sourceName": "wts.ReactDefault",
+  "sourceName": "wts.FlaskDefault",
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
@@ -58,22 +58,22 @@
   },
   "postActions": [
     {
-      "description": "Add React Dependencies",
+      "description": "Add Flask Dev Dependencies",
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'bootstrap': '^4.3.1', 'classnames': '^2.2.6', 'react': '^16.8.4', 'react-dom': '^16.8.4', 'react-router-dom': '^4.3.1', 'react-scripts': '^3.0.1'}",
-        "key": "dependencies",
+        "dict": "{'concurrently': '^4.1.0'}",
+        "key": "devDependencies",
         "jsonPath": "package.json"
       },
       "continueOnError": false
     },
     {
-      "description": "Add React Build Scripts",
+      "description": "Add Flask Build Scripts",
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'start-frontend': 'react-scripts start', 'build': 'react-scripts build && mv build server', 'test': 'react-scripts test', 'eject': 'react-scripts eject'}",
+        "dict": "{'start-backend': 'python server/server.py'}",
         "key": "scripts",
         "jsonPath": "package.json"
       },
