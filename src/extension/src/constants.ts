@@ -242,7 +242,8 @@ export enum ExtensionModule {
   Telemetry = "Telemetry",
   Validator = "Validator",
   VSCodeUI = "VSCodeUI",
-  Logger = "Logger"
+  Logger = "Logger",
+  DependencyChecker = "DependencyChecker"
 }
 
 export enum TelemetryEventName {
