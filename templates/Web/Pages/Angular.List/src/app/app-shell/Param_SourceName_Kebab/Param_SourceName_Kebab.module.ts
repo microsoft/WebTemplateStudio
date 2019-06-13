@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { ListComponent } from './list.component';
-import { AngularListRoutingModule } from './AngularList-routing.module';
+import { Param_SourceName_PascalRoutingModule } from './Param_SourceName_Kebab-routing.module';
 import { ListFormComponent } from './list-form/list-form.component';
 import { ListItemComponent } from './list-item/list-item';
 import { WarningMessageModule } from 'src/app/shared/warning-message/warning-message.module';
@@ -19,7 +19,7 @@ import { WarningMessageModule } from 'src/app/shared/warning-message/warning-mes
     CommonModule,
     FormsModule,
     WarningMessageModule,
-    AngularListRoutingModule
+    Param_SourceName_PascalRoutingModule
   ]
 })
-export class AngularListModule { }
+export class Param_SourceName_PascalModule { }
