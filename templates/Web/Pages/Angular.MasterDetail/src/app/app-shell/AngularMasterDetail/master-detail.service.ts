@@ -1,14 +1,15 @@
 ﻿import { Injectable } from '@angular/core';
-import { CONSTANTS } from 'src/constants';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MasterDetailService {
 
-  private listUrl = CONSTANTS.ENDPOINT.MASTERDETAIL;
+  private listUrl = environment.endpoint.masterdetail;
 
   constructor(private http: HttpClient) {}
 

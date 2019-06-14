@@ -31,7 +31,7 @@ export default class ReactGrid extends Component {
       .catch(error =>
         this.setState({
           WarningMessageOpen: true,
-          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.GRID_GET} ${error}`
+          WarningMessageText: `Request to get grid text failed: ${error}`
         })
       );
   }
