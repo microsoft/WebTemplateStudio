@@ -1,15 +1,15 @@
 ﻿{
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "Page.Angular.AddConstantsList",
+  "name": "Page.Angular.AddEnvironmentMasterDetail",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
-    "wts.compositionOrder": 3,
+    "wts.compositionOrder": 4,
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == Angular & identity == wts.Page.Angular.List"
+    "wts.compositionFilter": "$frontendframework == Angular & identity == wts.Page.Angular.MasterDetail"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

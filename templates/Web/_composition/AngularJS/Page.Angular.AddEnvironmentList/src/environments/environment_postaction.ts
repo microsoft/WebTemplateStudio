@@ -4,6 +4,11 @@
 
 export const environment = {
   production: false,
+  endpoint: {
+    //{[{
+    list : '/api/list',
+    //}]}
+  }
 };
 
 /*
