@@ -3,15 +3,15 @@
     "classifications": [
       "Universal"
     ],
-    "name": "Page.Angular.AddConstantsFile",
+    "name": "Page.Angular.AddEnvironmentGrid",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
-    "wts.compositionOrder": "0",
+    "wts.compositionOrder": 2,
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == Angular & identity == wts.Page.Angular.Grid|wts.Page.Angular.MasterDetail|wts.Page.Angular.List"
+    "wts.compositionFilter": "$frontendframework == Angular & identity == wts.Page.Angular.Grid"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,

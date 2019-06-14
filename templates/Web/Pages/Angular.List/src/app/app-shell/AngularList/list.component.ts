@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
+
 import { ListService, IListItem } from './list.service';
-import { CONSTANTS } from '../../../constants';
 
 @Component({
   selector: 'app-list',
@@ -9,7 +9,7 @@ import { CONSTANTS } from '../../../constants';
 })
 export class ListComponent implements OnInit {
   listItems: IListItem[] = [];
-  WarningMessageText = CONSTANTS.ERROR_MESSAGE.LIST_GET;
+  WarningMessageText = 'Request to get list items failed:';
   WarningMessageOpen = false;
   constructor(private listService: ListService) { }
 
@@ -20,7 +20,7 @@ export class ListComponent implements OnInit {
       },
       error => {
         this.WarningMessageOpen = true;
-        this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`;
+        this.WarningMessageText = `Request to get list items failed: ${error}`;
       }
     );
   }
@@ -28,7 +28,7 @@ export class ListComponent implements OnInit {
   handleAddListItem(inputText: string) {
     if (!inputText) {
       this.WarningMessageOpen = true,
-      this.WarningMessageText = CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE;
+      this.WarningMessageText = 'Please enter a valid message';
       return;
     }
     this.listService.addListItem(inputText).subscribe(
@@ -37,7 +37,7 @@ export class ListComponent implements OnInit {
       },
       error => {
         this.WarningMessageOpen = true;
-        this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`;
+        this.WarningMessageText = `Request to add list item failed: ${error}`;
       }
     );
   }
@@ -50,7 +50,7 @@ export class ListComponent implements OnInit {
       },
       error => {
         this.WarningMessageOpen = true;
-        this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`;
+        this.WarningMessageText = `Request to delete list item failed: ${error}`;
       }
     );
   }
