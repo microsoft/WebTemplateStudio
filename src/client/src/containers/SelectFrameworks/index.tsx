@@ -18,6 +18,7 @@ type Props = ISelectFrameworksProps;
 class SelectFrameworks extends React.Component<Props> {
   componentDidMount() {
     const { vscode } = this.props;
+    // send messages to extension to check dependency info when this page loads
     vscode.postMessage({
       module: "DependencyChecker",
       command: "check-dependency",
@@ -32,7 +33,7 @@ class SelectFrameworks extends React.Component<Props> {
         dependency: "python"
       }
     });
-    console.log(" posted check-dependency");
+    console.log("posting message");
   }
 
   render() {

@@ -28,68 +28,32 @@ export class DependencyChecker extends WizardServant {
   }
 
   async checkDependency(message: any): Promise<IPayloadResponse> {
-    console.log(message);
-    // keeping this here for now, not sure which is the better practice, spawn vs exec ??
-    // const child_process = require('child_process');
-    // var name = message.payload.dependency;
-    // var ls = child_process.spawn(name, ['--version']);
-    // ls.stdout.on('data', (data: any) => {
-    //   if (name === 'python' && data.indexOf('3.7.3') === -1) { // python 3.7.3 is not installed
-    //     return {
-    //       payload: {
-    //         dependency: name,
-    //         info: 0
-    //       }
-    //     };
-    //   } else if (name === 'node' && data.indexOf('10.') === -1) { // node 10.x.x is not installed
-    //       return {
-    //         payload: {
-    //           dependency: name,
-    //           installed: 0
-    //         }
-    //       };
-    //   }});
-
-    // ls.on('error', (err: any) => {
-    //   return {
-    //     payload: {
-    //       dependency: name,
-    //       notInstalled: -1
-    //     }
-    //   };
-    // });
-
-    // return {
-    //   payload: {
-    //     dependency: name,
-    //     installed: 1
-    //   }
-    // };
-
     var name = message.payload.dependency;
     var state;
-    child_process.exec(
-      name + " --version",
-      (err: any, stdout: any, stderr: any) => {
-        if ((err !== null || stderr.length > 0) && stdout.length === 0) {
-          state = NOT_INSTALLED;
-        } else {
-          if (
-            (name === "python" &&
-              stdout.indexOf(SUPPORTED_PYTHON_VERSION) !== -1) ||
-            (name === "node" && !SUPPORTED_NODE_VERSION_REGEX.test(stdout))
-          ) {
-            state = OUTDATED;
-          } else {
-            state = INSTALLED;
-          }
-        }
+    var stdout;
+    try {
+      stdout = child_process
+        .execSync(name + " --version")
+        .toString()
+        .trim();
+      if (
+        (name === "python" &&
+          stdout.indexOf(SUPPORTED_PYTHON_VERSION) !== -1) ||
+        (name === "node" && SUPPORTED_NODE_VERSION_REGEX.test(stdout))
+      ) {
+        state = INSTALLED;
+      } else {
+        state = OUTDATED;
       }
-    );
+    } catch (error) {
+      console.log("error");
+      state = NOT_INSTALLED;
+    }
+
     return {
       payload: {
         dependency: name,
-        state: state
+        installationState: state
       }
     };
   }

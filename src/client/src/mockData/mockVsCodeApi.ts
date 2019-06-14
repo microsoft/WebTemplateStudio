@@ -19,10 +19,33 @@ const DEV_NO_ERROR_TYPE: string = "in development, no error type";
  */
 const mockVsCodeApi = () => ({
   postMessage: (message: any) => {
+    console.log(message);
     if (process.env.NODE_ENV === DEVELOPMENT) {
       switch (message.command) {
         case "alert":
           console.log("Command: ", message.alert);
+          break;
+        case "check-dependency":
+          window.postMessage(
+            {
+              command: "check-dependency",
+              payload: {
+                dependency: "node",
+                installationState: 0
+              }
+            },
+            "*"
+          );
+          window.postMessage(
+            {
+              command: "check-dependency",
+              payload: {
+                dependency: "python",
+                installationState: -1
+              }
+            },
+            "*"
+          );
           break;
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
           window.postMessage(
