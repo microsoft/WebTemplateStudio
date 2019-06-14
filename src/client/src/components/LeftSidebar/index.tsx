@@ -51,7 +51,6 @@ const LeftSidebar = (props: Props) => {
   const { formatMessage } = props.intl;
   const leftSidebarData: string[] = [
     formatMessage(messages.welcome),
-    // formatMessage(messages.projectType),
     formatMessage(messages.frameworks),
     formatMessage(messages.pages),
     formatMessage(messages.services),
