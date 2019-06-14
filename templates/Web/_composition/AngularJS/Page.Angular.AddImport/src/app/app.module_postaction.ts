@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HeaderComponent } from './app-shell/nav-bar/nav-bar.component';
+import { NavBarComponent } from './app-shell/nav-bar/nav-bar.component';
 import { FooterComponent } from './app-shell/footer/footer.component';
 //{[{
 import {wts.ItemNameModule} from './app-shell/wts.ItemName/wts.ItemName.module';
@@ -13,7 +13,7 @@ import {wts.ItemNameModule} from './app-shell/wts.ItemName/wts.ItemName.module';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
+    NavBarComponent,
     FooterComponent
   ],
   imports: [
