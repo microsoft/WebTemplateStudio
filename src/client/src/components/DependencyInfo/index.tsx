@@ -26,7 +26,7 @@ const DependencyInfo: any = (props: any) => {
 
   if (frameworkName === "node") {
     downloadLink = "https://nodejs.org/en/download/";
-  } else if (frameworkName === "flask") {
+  } else if (frameworkName === "python") {
     downloadLink = "https://www.python.org/downloads/";
   }
 
