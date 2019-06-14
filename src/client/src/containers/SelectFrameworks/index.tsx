@@ -7,10 +7,13 @@ import SelectBackEndFramework from "../SelectBackendFramework";
 import SelectFrontEndFramework from "../SelectFrontEndFramework";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
+import DependencyInfo from "../../components/DependencyInfo";
+
 import { AppState } from "../../reducers";
 
 interface ISelectFrameworksProps {
   vscode: any;
+  dependencies: any;
 }
 
 type Props = ISelectFrameworksProps;
@@ -34,11 +37,27 @@ class SelectFrameworks extends React.Component<Props> {
       }
     });
     console.log("posting message");
+    console.log(this.props.dependencies);
   }
 
   render() {
+    console.log(this.props.dependencies.node);
     return (
       <div className={styles.container}>
+        <DependencyInfo
+          frameworkName={"node"}
+          installationState={
+            this.props.dependencies.node &&
+            this.props.dependencies.node.installationState
+          }
+        />
+        <DependencyInfo
+          frameworkName={"python"}
+          installationState={
+            this.props.dependencies.python &&
+            this.props.dependencies.python.installationState
+          }
+        />
         <SelectFrontEndFramework />
         <SelectBackEndFramework />
       </div>
@@ -48,7 +67,8 @@ class SelectFrameworks extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState): any => {
   return {
-    vscode: getVSCodeApiSelector(state)
+    vscode: getVSCodeApiSelector(state),
+    dependencies: state.dependencyInfo.dependencies
   };
 };
 

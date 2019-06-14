@@ -21,5 +21,5 @@ export const updateDependencyInfo = (
 };
 
 export default combineReducers({
-  dependencyInfo: updateDependencyInfo
+  dependencies: updateDependencyInfo
 });

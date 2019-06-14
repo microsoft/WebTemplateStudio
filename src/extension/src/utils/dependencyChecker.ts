@@ -46,7 +46,6 @@ export class DependencyChecker extends WizardServant {
         state = OUTDATED;
       }
     } catch (error) {
-      console.log("error");
       state = NOT_INSTALLED;
     }
 

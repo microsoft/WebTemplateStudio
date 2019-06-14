@@ -1,10 +1,8 @@
-.dependencyLink {
-  box-sizing: border-box;
+.dependencyContainer {
   border-radius: 3px;
-  padding: 3px;
-  margin-top: 6px;
-  display: flex;
-  flex-direction: row;
+  padding: 3px 10px 3px 10px;
+  margin-right: 5px;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
@@ -24,8 +22,7 @@
 }
 
 .icon {
-  width: 7%;
-  height: auto;
+  height: 12px;
 }
 
 .body {
