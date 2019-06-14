@@ -2,13 +2,13 @@
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { CONSTANTS } from '../../../constants';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ListService {
-    private listUrl = CONSTANTS.ENDPOINT.LIST;
+    private listUrl = environment.endpoint.list;
 
     constructor(private http: HttpClient) {}
 
@@ -29,7 +29,7 @@ export class ListService {
     }
 
     deleteListItem(id: number): Observable<IListItem> {
-        return this.http.delete<IListItem>(`${CONSTANTS.ENDPOINT.LIST}/${id}`);
+        return this.http.delete<IListItem>(`${environment.endpoint.list}/${id}`);
     }
 }
 

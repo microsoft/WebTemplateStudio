@@ -1,8 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { CONSTANTS } from '../../../constants';
-import { GridService, IGridTextItem } from './grid.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
+
+import { GridService, IGridTextItem } from './grid.service';
 
 @Component({
   selector: 'app-grid',
@@ -11,7 +11,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 })
 export class GridComponent implements OnInit {
 
-  WarningMessageText = CONSTANTS.ERROR_MESSAGE.GRID_GET;
+  WarningMessageText = 'Request to get grid text failed:';
   WarningMessageOpen = false;
   gridTextAssets: IGridTextItem[] = [
     {
@@ -38,7 +38,7 @@ export class GridComponent implements OnInit {
       },
       error => {
         this.WarningMessageOpen = true;
-        this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.GRID_GET} ${error}`;
+        this.WarningMessageText = `Request to get grid text failed: ${error}`;
       }
     );
   }
