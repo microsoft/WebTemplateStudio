@@ -4,7 +4,6 @@ import { AppState } from "../reducers";
 import { IRoutes } from "../reducers/wizardRoutes/navigationReducer";
 
 export interface IVisitedPages {
-  showProjectTypes: boolean;
   showFrameworks: boolean;
   showPages: boolean;
   showServices: boolean;
