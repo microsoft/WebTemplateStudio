@@ -23,4 +23,9 @@ export interface IMasterDetailText {
   title: string;
   tabName: string;
   id: number;
+  status: string;
+  orderDate: Date;
+  shipTo: string;
+  orderTotal: number;
+  longDescription: number;
 }
