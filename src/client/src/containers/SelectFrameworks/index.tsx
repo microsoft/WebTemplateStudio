@@ -14,6 +14,7 @@ import { AppState } from "../../reducers";
 interface ISelectFrameworksProps {
   vscode: any;
   dependencies: any;
+  selectedBackend: any;
 }
 
 type Props = ISelectFrameworksProps;
@@ -41,23 +42,21 @@ class SelectFrameworks extends React.Component<Props> {
   }
 
   render() {
-    console.log(this.props.dependencies.node);
+    console.log(this.props.selectedBackend);
     return (
       <div className={styles.container}>
-        <DependencyInfo
-          frameworkName={"node"}
-          installationState={
-            this.props.dependencies.node &&
-            this.props.dependencies.node.installationState
-          }
-        />
-        <DependencyInfo
-          frameworkName={"python"}
-          installationState={
-            this.props.dependencies.python &&
-            this.props.dependencies.python.installationState
-          }
-        />
+        {this.props.dependencies.node && ( // always show
+          <DependencyInfo
+            frameworkName={"node"}
+            installationState={this.props.dependencies.node.installationState}
+          />
+        )}
+        {this.props.dependencies.python && ( // TODO only show when python is selected
+          <DependencyInfo
+            frameworkName={"python"}
+            installationState={this.props.dependencies.python.installationState}
+          />
+        )}
         <SelectFrontEndFramework />
         <SelectBackEndFramework />
       </div>
@@ -66,9 +65,12 @@ class SelectFrameworks extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): any => {
+  const { backendFramework } = state.selection;
+
   return {
     vscode: getVSCodeApiSelector(state),
-    dependencies: state.dependencyInfo.dependencies
+    dependencies: state.dependencyInfo.dependencies,
+    selectedBackend: backendFramework
   };
 };
 
