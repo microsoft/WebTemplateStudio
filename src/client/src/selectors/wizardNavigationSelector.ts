@@ -12,7 +12,6 @@ export interface IVisitedPages {
 
 const getIsVisitedRoutes = (state: AppState) => state.wizardRoutes.isVisited;
 const transformIsVisited = (isVisitedRoutes: IRoutes): IVisitedPages => ({
-  showProjectTypes: isVisitedRoutes[ROUTES.SELECT_PROJECT_TYPE],
   showFrameworks: isVisitedRoutes[ROUTES.SELECT_FRAMEWORKS],
   showPages: isVisitedRoutes[ROUTES.SELECT_PAGES],
   showServices: isVisitedRoutes[ROUTES.AZURE_LOGIN]
