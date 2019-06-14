@@ -4,6 +4,11 @@
 
 export const environment = {
   production: false,
+  endpoint: {
+    //{[{
+    masterdetail : '/api/masterdetail',
+    //}]}
+  }
 };
 
 /*
