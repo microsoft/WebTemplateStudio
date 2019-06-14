@@ -23,7 +23,7 @@
     "platforms": ["Web"],
     "languages": ["Any"],
     "tags": {
-      "version": "1.0.3",
+      "version": "Python: 3.7.3, Flask: 1.0.3",
       "preview": true
     }
   }

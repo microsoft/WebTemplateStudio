@@ -1,14 +1,15 @@
 ﻿import { Injectable } from '@angular/core';
-import { CONSTANTS } from 'src/constants';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GridService {
 
-  private listUrl = CONSTANTS.ENDPOINT.GRID;
+  private listUrl = environment.endpoint.grid;
 
   constructor(private http: HttpClient) {}
 
