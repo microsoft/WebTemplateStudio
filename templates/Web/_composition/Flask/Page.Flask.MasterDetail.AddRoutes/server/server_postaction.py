@@ -13,6 +13,6 @@ app = Flask(__name__)
 @app.route(CONSTANTS['ENDPOINT']['MASTERDETAIL'])
 def getMasterDetail():
     return jsonify(
-        sampleGridData
+        sampleData['textAssets']
     )
 //}]}
