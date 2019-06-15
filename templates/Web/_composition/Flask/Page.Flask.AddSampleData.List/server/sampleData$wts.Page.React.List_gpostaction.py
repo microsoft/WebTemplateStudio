@@ -20,4 +20,3 @@ sampleData['listTextAssets'] = {
     ],
 }
 //}]}
-    
