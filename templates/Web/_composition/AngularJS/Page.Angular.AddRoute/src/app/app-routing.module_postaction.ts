@@ -5,8 +5,8 @@ const routes: Routes = [
 //^^
 //{[{
   {
-    path: 'wts.ItemName',
-    loadChildren: () => import('./app-shell/wts.ItemName/wts.ItemName.module').then(mod => mod.wts.ItemNameModule)
+    path: 'Param_SourceName_Kebab',
+    loadChildren: () => import('./app-shell/Param_SourceName_Kebab/Param_SourceName_Kebab.module').then(mod => mod.Param_SourceName_PascalModule)
   },
 //}]}
 ];
