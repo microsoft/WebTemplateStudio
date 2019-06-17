@@ -1,9 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { CONSTANTS } from 'src/constants';
-import { MasterDetailService, IMasterDetailText } from './master-detail.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 
+import { MasterDetailService, IMasterDetailText } from './master-detail.service';
 
 @Component({
   selector: 'app-master-detail',
@@ -12,7 +11,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 })
 export class MasterDetailComponent implements OnInit {
 
-  WarningMessageText = CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET;
+  WarningMessageText = 'Request to get master detail text failed:';
   WarningMessageOpen = false;
   currentDisplayTabIndex = 0;
   masterDetailText: IMasterDetailText[] = [];
@@ -30,7 +29,7 @@ export class MasterDetailComponent implements OnInit {
       },
       error => {
         this.WarningMessageOpen = true;
-        this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`;
+        this.WarningMessageText = `Request to get master detail text failed: ${error}`;
       }
     );
   }
