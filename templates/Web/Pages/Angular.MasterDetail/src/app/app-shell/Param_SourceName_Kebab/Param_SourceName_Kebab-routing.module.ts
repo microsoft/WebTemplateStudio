@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ListComponent } from './list.component';
+import { MasterDetailComponent } from './master-detail.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ListComponent
+    component: MasterDetailComponent
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AngularListRoutingModule { }
+export class Param_SourceName_PascalRoutingModule { }
