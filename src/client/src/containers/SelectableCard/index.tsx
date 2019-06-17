@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 
 import { Link } from "react-router-dom";
 
-import CardBody from "../CardBody";
-import CardTitle from "../CardTitle";
-import DependencyInfo from "../DependencyInfo";
+import CardBody from "../../components/CardBody";
+import CardTitle from "../../components/CardTitle";
+import DependencyInfo from "../../components/DependencyInfo";
 import { ReactComponent as Check } from "../../assets/check.svg";
 
 import grid from "../../css/grid.module.css";
@@ -148,8 +148,6 @@ const SelectableCard = ({
 };
 
 const mapStateToProps = (state: AppState): any => {
-  const { backendFramework } = state.selection;
-
   return {
     dependencies: state.dependencyInfo.dependencies
   };
