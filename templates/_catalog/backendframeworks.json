@@ -12,5 +12,19 @@
       "version": "10.15.0",
       "preview": false
     }
+  },
+  {
+    "name": "Flask",
+    "displayName": "Flask",
+    "summary": "Flask is an open-source, lightweight Python Web Framework.",
+    "author": "Various",
+    "order": "1",
+    "licenses": "[Flask](https://github.com/pallets/flask/blob/master/LICENSE)",
+    "platforms": ["Web"],
+    "languages": ["Any"],
+    "tags": {
+      "version": "Python: 3.7.3, Flask: 1.0.3",
+      "preview": true
+    }
   }
 ]

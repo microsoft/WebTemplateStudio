@@ -4,7 +4,7 @@ import { ExtensionCommand, TelemetryEventName, CONSTANTS } from "./constants";
 import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
 import { ReactPanel } from "./reactPanel";
 import { AzureServices } from "./azure/azureServices";
-import { ApiModule } from "./signalr-api-module/apiModule";
+import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { Controller } from "./controller";
 
 export class GenerationExperience extends WizardServant {
@@ -179,8 +179,9 @@ export class GenerationExperience extends WizardServant {
   public async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
   ) {
-    return await ApiModule.ExecuteApiCommand({
-      port: ApiModule.GetLastUsedPort(),
+    let apiInstance = CoreTemplateStudio.GetExistingInstance();
+    return await apiInstance.generate({
+      port: apiInstance.getPort(),
       payload: enginePayload,
       liveMessageHandler: this.handleGenLiveMessage
     });

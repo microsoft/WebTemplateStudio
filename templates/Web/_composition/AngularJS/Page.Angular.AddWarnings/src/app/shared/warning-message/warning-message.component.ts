@@ -9,7 +9,7 @@ export class WarningMessageComponent implements OnInit {
 
   open = false;
   @Input() text = '';
-  @Output() WarningMessageOpenEventEmitter = new EventEmitter<boolean>();
+  @Output() WarningMessageOpen = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -19,6 +19,6 @@ export class WarningMessageComponent implements OnInit {
   onWarningClose() {
     this.text = '';
     this.open = false;
-    this.WarningMessageOpenEventEmitter.emit(this.open);
+    this.WarningMessageOpen.emit(this.open);
   }
 }

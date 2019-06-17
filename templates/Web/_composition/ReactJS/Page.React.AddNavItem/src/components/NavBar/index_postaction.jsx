@@ -1,8 +1,8 @@
 ﻿<div className="navbar-nav">
 //^^
 //{[{
-  <a className="nav-item nav-link active" href="wts.ItemName">
+  <Link className="nav-item nav-link active" to="wts.ItemName">
     wts.ItemName
-  </a>
+  </Link>
 //}]}      
 </div>
