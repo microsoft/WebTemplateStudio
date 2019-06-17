@@ -26,6 +26,7 @@ interface ISelectOptionProps {
   selectOptions?: (cards: ISelected[]) => void;
   options: IOption[];
   multiSelect: boolean;
+  isFrameworkSelection: boolean;
   cardTypeCount?: ICount;
   handleCountUpdate?: (cardCount: ICount) => any;
 }
@@ -223,6 +224,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
             return (
               <SelectableCard
                 key={`${cardNumber} ${title}`}
+                isFrameworkSelection={this.props.isFrameworkSelection}
                 onCardClick={(cardNumber: number) => {
                   this.onCardClick(cardNumber);
                 }}
