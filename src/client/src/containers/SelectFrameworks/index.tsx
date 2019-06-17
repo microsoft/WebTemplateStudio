@@ -42,26 +42,8 @@ class SelectFrameworks extends React.Component<Props> {
   }
 
   render() {
-    console.log(this.props.selectedBackend);
     return (
       <div className={styles.container}>
-        {this.props.dependencies.node && (
-          <DependencyInfo
-            frameworkName={"node"}
-            installationState={this.props.dependencies.node.installationState}
-          />
-        )}
-        {this.props.dependencies.python &&
-          this.props.selectedBackend &&
-          // dependency info for python will only be shown if Flask is selected
-          this.props.selectedBackend.internalName === "Flask" && (
-            <DependencyInfo
-              frameworkName={"python"}
-              installationState={
-                this.props.dependencies.python.installationState
-              }
-            />
-          )}
         <SelectFrontEndFramework />
         <SelectBackEndFramework />
       </div>

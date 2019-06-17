@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 import CardBody from "../CardBody";
 import CardTitle from "../CardTitle";
+import DependencyInfo from "../DependencyInfo";
 import { ReactComponent as Check } from "../../assets/check.svg";
 
 import grid from "../../css/grid.module.css";
@@ -28,7 +29,8 @@ const SelectableCard = ({
   option,
   onDetailsClick,
   clickCount,
-  disabled
+  disabled,
+  isFrameworkSelection
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -41,6 +43,7 @@ const SelectableCard = ({
   onDetailsClick: (detailPageInfo: IOption) => void;
   clickCount?: number;
   disabled: boolean | undefined;
+  isFrameworkSelection: boolean;
 }) => {
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -85,6 +88,16 @@ const SelectableCard = ({
             <CardTitle title={title} />
           </div>
         </div>
+        {isFrameworkSelection &&
+          selected &&
+          (option.internalName === "Flask" ? (
+            <DependencyInfo frameworkName={"Python"} installationState={true} />
+          ) : (
+            <DependencyInfo
+              frameworkName={"NodeJS"}
+              installationState={false}
+            />
+          ))}
         <div className={grid.row}>
           <div className={styles.body}>
             <CardBody body={body} />
