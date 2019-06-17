@@ -25,8 +25,8 @@ export class DependencyChecker extends WizardServant {
   async checkDependency(message: any): Promise<IPayloadResponse> {
     var userOS = os.platform();
     // console.log("This is the user OS: " + userOS);
-
-    var name = message.payload.dependency === 'python' && userOS.indexOf('win') === -1 ? 'python3' // if python and not windows and 
+    console.log("Check for win: " + userOS.indexOf('win'));
+    var name = message.payload.dependency === 'python' && userOS.indexOf('win') !== 0 ? 'python3' // if python and not windows and 
                                                                                        : message.payload.dependency; 
     var state;
 
@@ -40,17 +40,21 @@ export class DependencyChecker extends WizardServant {
               state = true;
             } 
           } catch (err) {
+            console.log(name + " in false 1");
             state = false;
           }
         } else {
           state = true;
         }
       } else if (stderr.length > 0) {
+        console.log(name + " in false 2");
         state = false;
       } 
     } catch (err) {
+      console.log(name + " in false 3");
       state = false;
     }
+    console.log("This is name: " + name + " this is state: " + state);
     return {
       payload: {
         dependency: name,
