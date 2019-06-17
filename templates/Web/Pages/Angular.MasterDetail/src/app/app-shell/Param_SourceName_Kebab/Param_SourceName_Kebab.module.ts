@@ -6,7 +6,7 @@ import { MasterDetailComponent } from './master-detail.component';
 import { MasterDetailSidebarTabComponent } from './master-detail-sidebar-tab/master-detail-sidebar-tab.component';
 import { WarningMessageModule } from 'src/app/shared/warning-message/warning-message.module';
 import { MasterDetailPageComponent } from './master-detail-page/master-detail-page.component';
-import { AngularMasterDetailRoutingModule } from './AngularMasterDetail-routing.module';
+import { Param_SourceName_PascalRoutingModule } from './Param_SourceName_Kebab-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { AngularMasterDetailRoutingModule } from './AngularMasterDetail-routing.
     CommonModule,
     WarningMessageModule,
     MatIconModule,
-    AngularMasterDetailRoutingModule
+    Param_SourceName_PascalRoutingModule
   ]
 })
-export class AngularMasterDetailModule { }
+export class Param_SourceName_PascalModule { }
