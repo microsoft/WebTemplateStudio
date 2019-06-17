@@ -19,7 +19,6 @@ const DEV_NO_ERROR_TYPE: string = "in development, no error type";
  */
 const mockVsCodeApi = () => ({
   postMessage: (message: any) => {
-    console.log(message);
     if (process.env.NODE_ENV === DEVELOPMENT) {
       switch (message.command) {
         case "alert":
