@@ -4,6 +4,8 @@ const os = require('os');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
+const PYTHON27 = 'Python 2.7';
+
 export class DependencyChecker extends WizardServant {
   clientCommandMap: Map<
     ExtensionCommand,
@@ -22,19 +24,38 @@ export class DependencyChecker extends WizardServant {
     return new Map([[ExtensionCommand.CheckDependency, this.checkDependency]]);
   }
 
+  // private async checkPython3(): Promise<boolean> {
+  //   var state;
+  //   try {
+  //     const { stdout, stderr } = await exec('py -3 --version'); // using Python Launcher
+  //     console.log("stdout: " + stdout);
+  //     console.log('stderr: ' + stderr);
+  //     if (stdout.length > 0) {
+  //       state = true;
+  //     }
+  //   } catch (err) {
+  //     console.log(name + " in false 1");
+  //     state = false;
+  //   }
+  //   return state;
+  // }
+
   async checkDependency(message: any): Promise<IPayloadResponse> {
     var userOS = os.platform();
-    // console.log("This is the user OS: " + userOS);
-    console.log("Check for win: " + userOS.indexOf('win'));
     var name = message.payload.dependency === 'python' && userOS.indexOf('win') !== 0 ? 'python3' // if python and not windows and 
                                                                                        : message.payload.dependency; 
     var state;
-
+    // var name = 'python';
     try {
       const { stdout, stderr } = await exec(name + ' --version');
-      if (stdout.length > 0) {
-        if (userOS.indexOf('win') !== -1 && stdout.indexOf('Python 2.7') === 0) { // on windows and python --version returns 2.7
+      // console.log("stdout: " + stdout);
+      // console.log('stderr: ' + stderr);
+      if (stdout.length > 0 || stderr.trim() === PYTHON27) {
+        if (userOS.indexOf('win') !== -1 && 
+           (stdout.indexOf(PYTHON27) === 0 || stderr.indexOf(PYTHON27) === 0)) { // on windows and python --version returns 2.7
+            // state = this.checkPython3();
           try {
+            console.log("HERE");
             const { stdout } = await exec('py -3 --version'); // using Python Launcher
             if (stdout.length > 0) {
               state = true;
@@ -47,12 +68,29 @@ export class DependencyChecker extends WizardServant {
           state = true;
         }
       } else if (stderr.length > 0) {
+        
         console.log(name + " in false 2");
         state = false;
       } 
     } catch (err) {
-      console.log(name + " in false 3");
-      state = false;
+      if (name === 'python') {
+        console.log("HERE");
+        // state = this.checkPython3();
+        // console.log('this is akrfjlre state: ' + state);
+        try {
+          console.log("HERE");
+          const { stdout } = await exec('py -3 --version'); // using Python Launcher
+          if (stdout.length > 0) {
+            state = true;
+          } 
+        } catch (err) {
+          console.log(name + " in false 1");
+          state = false;
+        }
+      } else {
+        console.log(name + " in false 3");
+        state = false;
+      }
     }
     console.log("This is name: " + name + " this is state: " + state);
     return {
