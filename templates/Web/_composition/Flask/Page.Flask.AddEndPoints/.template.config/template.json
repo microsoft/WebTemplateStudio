@@ -1,17 +1,16 @@
-﻿{
+{
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
-    "name": "Page.Angular.AddImport",
+    "name": "Page.Flask.AddEndPoints",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
-	"wts.platform" : "Web",
+    "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == Angular & wts.type == page",
-    "wts.sourceNameCasing": "kebab|pascal|camel"
+    "wts.compositionFilter": "$backendframework == Flask & groupIdentity == wts.Page.Grid|wts.Page.MasterDetail|wts.Page.List"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
@@ -25,14 +24,6 @@
       "wts.itemNamespace": {
         "type": "parameter",
         "replaces": "Param_ItemNamespace"
-      },
-      "wts.sourceName.casing.kebab": {
-        "type": "parameter",
-        "replaces": "Param_SourceName_Kebab"
-      },
-      "wts.sourceName.casing.pascal": {
-        "type": "parameter",
-        "replaces": "Param_SourceName_Pascal"
       }
     }
   }

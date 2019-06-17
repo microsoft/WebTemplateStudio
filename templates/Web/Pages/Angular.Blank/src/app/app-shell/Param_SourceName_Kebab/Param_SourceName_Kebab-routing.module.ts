@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { GridComponent } from './grid.component';
+import { BlankComponent } from './blank.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: GridComponent
+    component: BlankComponent
   }
 ];
 
@@ -14,5 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AngularGridRoutingModule { }
+export class Param_SourceName_PascalRoutingModule { }
 
