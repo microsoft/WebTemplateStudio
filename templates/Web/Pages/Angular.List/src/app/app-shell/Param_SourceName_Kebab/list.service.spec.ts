@@ -1,9 +1,9 @@
-﻿import { async, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { GridService } from './grid.service';
+import { ListService } from './list.service';
 
-describe('GridService', () => {
+describe('ListService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -14,7 +14,7 @@ describe('GridService', () => {
   }));
 
   it('should be created', () => {
-    const service: GridService = TestBed.get(GridService);
+    const service: ListService = TestBed.get(ListService);
     expect(service).toBeTruthy();
   });
 });
