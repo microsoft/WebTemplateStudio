@@ -122,7 +122,6 @@ class App extends React.Component<Props> {
       const message = event.data;
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
-          console.log("triggered get dependency info");
           this.props.updateDependencyInfo(message.payload);
           break;
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:

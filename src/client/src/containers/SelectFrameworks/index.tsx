@@ -37,8 +37,7 @@ class SelectFrameworks extends React.Component<Props> {
         dependency: "python"
       }
     });
-    console.log("posting message");
-    console.log(this.props.dependencies);
+    console.log("Posting check-dependency to extension");
   }
 
   render() {
