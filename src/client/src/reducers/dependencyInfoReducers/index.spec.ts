@@ -26,7 +26,7 @@ describe("dependencyInfo reducer", () => {
     });
     const expectedState = {
       node: {
-        installationState: false
+        installationState: true
       }
     };
     expect(
