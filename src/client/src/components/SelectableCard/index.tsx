@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import * as React from "react";
+import { connect } from "react-redux";
 
 import { Link } from "react-router-dom";
 
@@ -18,6 +19,8 @@ import { FormattedMessage } from "react-intl";
 import { ROUTES } from "../../utils/constants";
 import { getSvg } from "../../utils/getSvgUrl";
 
+import { AppState } from "../../reducers";
+
 const SelectableCard = ({
   iconPath,
   iconStyles,
@@ -30,7 +33,8 @@ const SelectableCard = ({
   onDetailsClick,
   clickCount,
   disabled,
-  isFrameworkSelection
+  isFrameworkSelection,
+  dependencies
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -44,6 +48,7 @@ const SelectableCard = ({
   clickCount?: number;
   disabled: boolean | undefined;
   isFrameworkSelection: boolean;
+  dependencies: any;
 }) => {
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -91,11 +96,14 @@ const SelectableCard = ({
         {isFrameworkSelection &&
           selected &&
           (option.internalName === "Flask" ? (
-            <DependencyInfo frameworkName={"Python"} installationState={true} />
+            <DependencyInfo
+              frameworkName={"Python"}
+              installationState={dependencies.python.installationState}
+            />
           ) : (
             <DependencyInfo
               frameworkName={"NodeJS"}
-              installationState={false}
+              installationState={dependencies.node.installationState}
             />
           ))}
         <div className={grid.row}>
@@ -139,4 +147,12 @@ const SelectableCard = ({
   );
 };
 
-export default SelectableCard;
+const mapStateToProps = (state: AppState): any => {
+  const { backendFramework } = state.selection;
+
+  return {
+    dependencies: state.dependencyInfo.dependencies
+  };
+};
+
+export default connect(mapStateToProps)(SelectableCard);

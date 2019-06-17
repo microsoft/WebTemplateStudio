@@ -22,7 +22,7 @@ type Props = ISelectFrameworksProps;
 class SelectFrameworks extends React.Component<Props> {
   componentDidMount() {
     const { vscode } = this.props;
-    // send messages to extension to check dependency info when this page loads
+    // send messages to extension to check dependency info when this component loads
     vscode.postMessage({
       module: "DependencyChecker",
       command: "check-dependency",
@@ -52,12 +52,8 @@ class SelectFrameworks extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): any => {
-  const { backendFramework } = state.selection;
-
   return {
-    vscode: getVSCodeApiSelector(state),
-    dependencies: state.dependencyInfo.dependencies,
-    selectedBackend: backendFramework
+    vscode: getVSCodeApiSelector(state)
   };
 };
 
