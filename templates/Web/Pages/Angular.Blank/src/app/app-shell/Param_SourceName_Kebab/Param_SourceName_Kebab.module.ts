@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 
 import { BlankComponent } from './blank.component';
-import { AngularBlankRoutingModule } from './AngularBlank-routing.module';
+import { Param_SourceName_PascalRoutingModule } from './Param_SourceName_Kebab-routing.module';
 
 
 @NgModule({
@@ -11,7 +11,7 @@ import { AngularBlankRoutingModule } from './AngularBlank-routing.module';
   ],
   imports: [
     CommonModule,
-    AngularBlankRoutingModule
+    Param_SourceName_PascalRoutingModule
   ]
 })
-export class AngularBlankModule { }
+export class Param_SourceName_PascalModule { }
