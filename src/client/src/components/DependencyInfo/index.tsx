@@ -42,6 +42,7 @@ class DependencyInfo extends React.Component<Props> {
 
     // map framework name to dependency name
     let dependencyName = frameworkName === "Flask" ? "Python" : "Node";
+
     let downloadLink: string = "";
     if (dependencyName === "Node") {
       downloadLink = "https://nodejs.org/en/download/";

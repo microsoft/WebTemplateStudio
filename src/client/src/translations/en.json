@@ -64,6 +64,7 @@
   "cosmosResourceModule.saveChanges": "Save Changes",
   "cosmosResourceModule.subscriptionLabel": "Subscription",
   "dependencyChecker.installed": " detected!",
+  "dependencyChecker.notInstalled": " not detected. Click to install.",
   "details.author": "Author:",
   "details.back": "Back",
   "details.licenses": "Licenses:",

@@ -1,5 +1,6 @@
 [
   "card.details",
+  "dependencyChecker.installed",
   "details.back",
   "details.author",
   "details.licenses",
