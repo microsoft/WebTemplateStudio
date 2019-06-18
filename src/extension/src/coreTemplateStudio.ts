@@ -1,7 +1,7 @@
 import fetch, { Response } from "node-fetch";
 import * as signalR from "@aspnet/signalr";
 import * as portfinder from "portfinder";
-import * as vscode from "vscode";
+//import * as vscode from "vscode";
 import * as path from "path";
 import * as os from "os";
 import * as fs from "fs";
@@ -29,11 +29,11 @@ export class CoreTemplateStudio {
       return CoreTemplateStudio._instance;
     }
 
-    throw new Error('Cannot GetExistingInstance as none has been created');
+    throw new Error("Cannot GetExistingInstance as none has been created");
   }
 
   public static async GetInstance(
-    context: vscode.ExtensionContext | undefined
+    context: any | undefined
   ): Promise<CoreTemplateStudio> {
     if (CoreTemplateStudio._instance) {
       return Promise.resolve(CoreTemplateStudio._instance);
@@ -46,23 +46,22 @@ export class CoreTemplateStudio {
     if (context) {
       extensionPath = context.extensionPath;
     } else {
-      extensionPath = path.join(__dirname, '..');
+      extensionPath = path.join(__dirname, "..");
     }
 
     if (platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
       executableName += ".exe";
     }
 
-    let apiPath = vscode.Uri.file(
-      path.join(extensionPath, "src", "api", platform, executableName)
-    ).fsPath;
-
-    let apiWorkingDirectory = path.join(
+    let apiPath = path.join(
       extensionPath,
       "src",
       "api",
-      platform
+      platform,
+      executableName
     );
+
+    let apiWorkingDirectory = path.join(extensionPath, "src", "api", platform);
 
     if (os.platform() !== CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
       // Not unsafe as the parameter comes from trusted source
@@ -76,11 +75,15 @@ export class CoreTemplateStudio {
 
     let spawnedProcess = execFile(
       `${apiPath}`,
-      [ `--urls=http://localhost:${port}` ],
+      [`--urls=http://localhost:${port}`],
       { cwd: apiWorkingDirectory }
     );
 
-    CoreTemplateStudio._instance = new CoreTemplateStudio(spawnedProcess, port, `http://localhost:${port}`);
+    CoreTemplateStudio._instance = new CoreTemplateStudio(
+      spawnedProcess,
+      port,
+      `http://localhost:${port}`
+    );
     return CoreTemplateStudio._instance;
   }
 
@@ -91,11 +94,7 @@ export class CoreTemplateStudio {
     }
   }
 
-  private constructor(
-    process: ChildProcess,
-    port: number,
-    url: string
-  ) {
+  private constructor(process: ChildProcess, port: number, url: string) {
     this._process = process;
     this._port = port;
     this._url = url;
@@ -120,7 +119,10 @@ export class CoreTemplateStudio {
   public async getFrameworks(projectType: string): Promise<any> {
     // TODO: use this in client instead of fetching directly from API server
     const url = new URL(CONSTANTS.API.ENDPOINTS.FRAMEWORK, this._url);
-    url.searchParams.append(CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE, projectType);
+    url.searchParams.append(
+      CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE,
+      projectType
+    );
 
     return await fetch(url.href, { method: CONSTANTS.API.METHODS.GET })
       .then((response: Response) => {
@@ -138,7 +140,10 @@ export class CoreTemplateStudio {
   ): Promise<any> {
     // TODO: use this in client instead of fetching directly from API server
     const url = new URL(CONSTANTS.API.ENDPOINTS.FEATURE, this._url);
-    url.searchParams.append(CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE, projectType);
+    url.searchParams.append(
+      CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE,
+      projectType
+    );
     url.searchParams.append(
       CONSTANTS.API.QUERY_PARAMS.FRONTEND_FRAMEWORK,
       frontendFramework
@@ -163,7 +168,10 @@ export class CoreTemplateStudio {
   ): Promise<any> {
     // TODO: use this in client instead of fetching directly from API server
     const url = new URL(CONSTANTS.API.ENDPOINTS.PAGE, this._url);
-    url.searchParams.append(CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE, projectType);
+    url.searchParams.append(
+      CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE,
+      projectType
+    );
     url.searchParams.append(
       CONSTANTS.API.QUERY_PARAMS.FRONTEND_FRAMEWORK,
       frontendFramework
@@ -212,7 +220,10 @@ export class CoreTemplateStudio {
 
   private async connectToCoreApiHub(): Promise<signalR.HubConnection> {
     // Reusing connections we can save some time on handshake overhead
-    if (this._signalRClient && this._signalRClient.state === signalR.HubConnectionState.Connected) {
+    if (
+      this._signalRClient &&
+      this._signalRClient.state === signalR.HubConnectionState.Connected
+    ) {
       return this._signalRClient;
     }
 
