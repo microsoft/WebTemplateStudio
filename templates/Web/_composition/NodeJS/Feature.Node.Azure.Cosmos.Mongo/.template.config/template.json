@@ -1,0 +1,40 @@
+{
+    "author": "Microsoft Community",
+    "classifications": ["Universal"],
+    "name": "Feature.Node.Azure.Cosmos.Mongo",
+    "tags": {
+      "language": "Any",
+      "type": "item",
+      "wts.type": "composition",
+      "wts.platform": "Web",
+      "wts.version": "1.0.0",
+      "wts.compositionFilter": "$backendframework == NodeJS & groupIdentity == wts.Page.List & $feature == wts.Feature.Azure.Cosmos.Mongo"
+    },
+    "sourceName": "wts.ItemName",
+    "preferNameDirectory": true,
+    "PrimaryOutputs": [],
+    "symbols": {
+      "wts.rootNamespace": {
+        "type": "parameter",
+        "replaces": "Param_RootNamespace"
+      },
+      "wts.itemNamespace": {
+        "type": "parameter",
+        "replaces": "Param_ItemNamespace"
+      }
+    },
+    "postActions": [
+      {
+        "description": "Add Cosmos Mongo Dependencies",
+        "manualInstructions": [],
+        "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+        "args": {
+          "dict": "{'dotenv': '^6.2.0', 'mongodb': '^3.1.13', 'mongoose': '^5.4.15'}",
+          "key": "dependencies",
+          "jsonPath": "package.json"
+        },
+        "continueOnError": false
+      }
+    ]
+  }
+  
