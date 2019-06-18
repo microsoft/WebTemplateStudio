@@ -32,6 +32,10 @@ class DependencyInfo extends React.Component<Props> {
   public render() {
     let { frameworkName, installed, intl } = this.props;
 
+    if (installed === undefined) {
+      return null;
+    }
+
     let dependencyMessage: string = installed
       ? intl.formatMessage(messages.installed)
       : intl.formatMessage(messages.notInstalled);
