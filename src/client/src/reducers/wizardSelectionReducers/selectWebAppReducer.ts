@@ -13,8 +13,8 @@ import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType
 const initialState = {
   title: "Fullstack Web Application",
   internalName: "FullStackWebApp",
-  version: "",
-  author: ""
+  version: "v1.0",
+  licenses: ""
 };
 
 const webAppReducer = (
