@@ -68,7 +68,7 @@ export class DependencyChecker extends WizardServant {
     return {
       payload: {
         dependency: name,
-        installationState: state
+        installed: state
       }
     };
   }
