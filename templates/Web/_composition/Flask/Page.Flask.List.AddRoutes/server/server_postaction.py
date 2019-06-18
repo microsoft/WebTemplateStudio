@@ -3,7 +3,6 @@ from flask import jsonify
 from flask import make_response
 //{[{
 from flask import request
-import ast
 //}]}
 from constants import CONSTANTS
 //{[{
@@ -22,11 +21,10 @@ def getList():
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'], methods = ['POST'])
 def addListItem():
-    data = request.data.decode('utf-8')
-    data = ast.literal_eval(data)
-    listItem = {'_id': sampleData['listTextAssets']['id'], 'text': data['text']}
+    data = request.get_json()
+    listItem = {'_id': sampleData['listTextAssets']['listId'], 'text': data['text']}
     sampleData['listTextAssets']['listItems'].insert(0, listItem)
-    sampleData['listTextAssets']['id'] += 1
+    sampleData['listTextAssets']['listId'] += 1
     return make_response(
         jsonify(
             listItem
@@ -35,10 +33,10 @@ def addListItem():
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<int:id>', methods=['DELETE'])
 def deleteListItem(id):
-    listItemToRemove = [listItem for listItem in sampleData['listTextAssets']['listItems'] if listItem['_id'] == id]
-    if (len(listItemToRemove) == 0):
+    listItemsToRemove = [listItem for listItem in sampleData['listTextAssets']['listItems'] if listItem['_id'] == id]
+    if (len(listItemsToRemove) == 0):
         return make_response(jsonify({'error': 'Could not find an item with the given id'}), 404)
-    if (len(listItemToRemove) > 1):
+    if (len(listItemsToRemove) > 1):
         return make_response(jsonify({'error': 'There is a problem with the server'}), 500)
     sampleData['listTextAssets']['listItems'] = [listItem for listItem in sampleData['listTextAssets']['listItems'] if listItem['_id'] != id]
     return jsonify(

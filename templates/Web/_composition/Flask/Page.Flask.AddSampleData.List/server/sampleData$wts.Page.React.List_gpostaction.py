@@ -7,7 +7,7 @@ sampleData = {}
 # TODO Web Template Studio: Delete this file once your app is using real data.
 //{[{
 sampleData['listTextAssets'] = {
-    'id': 3,
+    'listId': 3,
     'listItems': [
         {
             '_id': 1,
