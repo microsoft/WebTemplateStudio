@@ -46,7 +46,7 @@ class DependencyInfo extends React.Component<Props> {
     let downloadLink: string = "";
     if (dependencyName === "Node") {
       downloadLink = "https://nodejs.org/en/download/";
-    } else if (frameworkName === "Python") {
+    } else if (dependencyName === "Python") {
       downloadLink = "https://www.python.org/downloads/";
     }
 

@@ -40,7 +40,7 @@ const mockVsCodeApi = () => ({
               command: "check-dependency",
               payload: {
                 dependency: "python",
-                installed: true
+                installed: false
               }
             },
             "*"
