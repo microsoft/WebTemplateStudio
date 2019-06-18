@@ -58,13 +58,19 @@ export class LaunchExperience {
     }
 
     let apiInstance = CoreTemplateStudio.GetExistingInstance();
-    return await apiInstance.sync({
-      port: apiInstance.getPort(),
-      payload: { path: pathToTemplates },
-      liveMessageHandler: this.handleSyncLiveData
-    })
+    return await apiInstance
+      .sync({
+        port: apiInstance.getPort(),
+        payload: { path: pathToTemplates },
+        liveMessageHandler: this.handleSyncLiveData
+      })
       .then((syncResult: any) => {
-        Logger.appendLog("EXTENSION", "info", "Successfully synced templates. Version: " + syncResult.templatesVersion);
+        Logger.appendLog(
+          "EXTENSION",
+          "info",
+          "Successfully synced templates. Version: " +
+            syncResult.templatesVersion
+        );
         return {
           successfullySynced: true,
           templatesVersion: syncResult.templatesVersion
