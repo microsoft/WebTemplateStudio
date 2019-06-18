@@ -9,11 +9,11 @@ describe("dependencyInfo reducer", () => {
   it("should add new dependencies", () => {
     const mockAction = updateDependencyInfoAction({
       dependency: "python",
-      installationState: true
+      installed: true
     });
     const expectedState = {
       python: {
-        installationState: true
+        installed: true
       }
     };
     expect(dependencyInfo(initialState, mockAction)).toEqual(expectedState);
@@ -22,15 +22,15 @@ describe("dependencyInfo reducer", () => {
   it("should change installation state", () => {
     const mockAction = updateDependencyInfoAction({
       dependency: "node",
-      installationState: true
+      installed: true
     });
     const expectedState = {
       node: {
-        installationState: true
+        installed: true
       }
     };
-    expect(
-      dependencyInfo({ node: { installationState: false } }, mockAction)
-    ).toEqual(expectedState);
+    expect(dependencyInfo({ node: { installed: false } }, mockAction)).toEqual(
+      expectedState
+    );
   });
 });

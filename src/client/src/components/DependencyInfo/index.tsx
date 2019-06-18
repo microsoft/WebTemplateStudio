@@ -6,15 +6,15 @@ import classnames from "classnames";
 /*
  * Props:
  * - frameworkName: "node" | "flask"
- * - installationState: boolean, true if correct version installed, otherwise false
+ * - installed: boolean, true if correct version installed, otherwise false
  */
 const DependencyInfo: any = (props: any) => {
   let frameworkName = props.frameworkName;
-  let installationState = props.installationState;
+  let installed = props.installed;
 
   let dependencyMessage: string;
 
-  if (installationState) {
+  if (installed) {
     dependencyMessage = " detected!";
   } else {
     dependencyMessage = " not detected. Click to install.";
@@ -28,7 +28,7 @@ const DependencyInfo: any = (props: any) => {
     downloadLink = "https://www.python.org/downloads/";
   }
 
-  if (installationState) {
+  if (installed) {
     icon = getSvg.getGreenCheckSvg();
   } else {
     icon = getSvg.getWarningSvg();
@@ -39,17 +39,17 @@ const DependencyInfo: any = (props: any) => {
       target={"_blank"}
       href={downloadLink}
       className={classnames(styles.dependencyContainer, {
-        [styles.disabled]: installationState,
-        [styles.borderGreen]: installationState,
-        [styles.borderYellow]: !installationState
+        [styles.disabled]: installed,
+        [styles.borderGreen]: installed,
+        [styles.borderYellow]: !installed
       })}
     >
       <img className={styles.icon} src={icon} alt="" />
       {/*TODO: react-intl */}
       <div
         className={classnames(styles.body, {
-          [styles.bodyGreen]: installationState,
-          [styles.bodyYellow]: !installationState
+          [styles.bodyGreen]: installed,
+          [styles.bodyYellow]: !installed
         })}
       >
         {`${frameworkName} ${dependencyMessage}`}

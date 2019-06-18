@@ -98,12 +98,12 @@ const SelectableCard = ({
           (option.internalName === "Flask" ? (
             <DependencyInfo
               frameworkName={"Python"}
-              installationState={dependencies.python.installationState}
+              installed={dependencies.python.installed}
             />
           ) : (
             <DependencyInfo
               frameworkName={"NodeJS"}
-              installationState={dependencies.node.installationState}
+              installed={dependencies.node.installed}
             />
           ))}
         <div className={grid.row}>

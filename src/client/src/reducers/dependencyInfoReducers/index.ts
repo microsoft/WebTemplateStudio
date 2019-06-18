@@ -12,7 +12,7 @@ export const updateDependencyInfo = (
       const newState = { ...state };
       // tslint:disable-next-line: no-string-literal
       newState[action.payload.dependency] = {
-        installationState: action.payload.installationState
+        installed: action.payload.installed
       };
       return newState;
     default:

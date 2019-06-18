@@ -15,6 +15,6 @@ export const updateDependencyInfoAction = (
 /* Payload should look like
  * payload : {
     dependency: "python" | "node"
-    installationState: boolean
+    installed: boolean
   } 
 */
