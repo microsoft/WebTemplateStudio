@@ -12,7 +12,7 @@ type Props = IDependencyInfoProps;
 
 /*
  * Props:
- * - frameworkName: "NodeJS" | "flask"
+ * - frameworkName: "NodeJS" | "Flask"
  * - installed: boolean, true if correct version installed, otherwise false
  */
 class DependencyInfo extends React.Component<Props> {
@@ -27,18 +27,14 @@ class DependencyInfo extends React.Component<Props> {
     }
 
     let downloadLink: string = "";
-    let icon: any = getSvg.getGreenCheckSvg();
+    let icon: any = installed
+      ? getSvg.getGreenCheckSvg()
+      : getSvg.getWarningSvg();
 
     if (frameworkName === "NodeJS") {
       downloadLink = "https://nodejs.org/en/download/";
     } else if (frameworkName === "Flask") {
       downloadLink = "https://www.python.org/downloads/";
-    }
-
-    if (installed) {
-      icon = getSvg.getGreenCheckSvg();
-    } else {
-      icon = getSvg.getWarningSvg();
     }
 
     return (
