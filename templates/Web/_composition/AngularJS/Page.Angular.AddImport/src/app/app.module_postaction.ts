@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HeaderComponent } from './app-shell/nav-bar/nav-bar.component';
+import { NavBarComponent } from './app-shell/nav-bar/nav-bar.component';
 import { FooterComponent } from './app-shell/footer/footer.component';
 //{[{
 import {Param_SourceName_PascalModule} from './app-shell/Param_SourceName_Kebab/Param_SourceName_Kebab.module';
@@ -13,7 +13,7 @@ import {Param_SourceName_PascalModule} from './app-shell/Param_SourceName_Kebab/
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
+    NavBarComponent,
     FooterComponent
   ],
   imports: [
