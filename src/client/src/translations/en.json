@@ -63,6 +63,7 @@
   "cosmosResourceModule.resourceGroupLabel": "Resource Group",
   "cosmosResourceModule.saveChanges": "Save Changes",
   "cosmosResourceModule.subscriptionLabel": "Subscription",
+  "dependencyChecker.installed": " detected!",
   "details.author": "Author:",
   "details.back": "Back",
   "details.licenses": "Licenses:",

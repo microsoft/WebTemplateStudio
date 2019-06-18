@@ -2,13 +2,26 @@ import * as React from "react";
 import styles from "./styles.module.css";
 import * as getSvg from "../../utils/getSvgUrl";
 import classnames from "classnames";
+import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
 
 interface IDependencyInfoProps {
   frameworkName: string;
   installed: boolean;
+  intl: any;
 }
 
 type Props = IDependencyInfoProps;
+
+const messages = defineMessages({
+  installed: {
+    id: "dependencyChecker.installed",
+    defaultMessage: " detected!"
+  },
+  notInstalled: {
+    id: "dependencyChecker.notInstalled",
+    defaultMessage: " not detected. Click to install."
+  }
+});
 
 /*
  * Props:
@@ -17,23 +30,22 @@ type Props = IDependencyInfoProps;
  */
 class DependencyInfo extends React.Component<Props> {
   public render() {
-    let { frameworkName, installed } = this.props;
+    let { frameworkName, installed, intl } = this.props;
 
-    let dependencyMessage: string;
-    if (installed) {
-      dependencyMessage = " detected!";
-    } else {
-      dependencyMessage = " not detected. Click to install.";
-    }
+    let dependencyMessage: string = installed
+      ? intl.formatMessage(messages.installed)
+      : intl.formatMessage(messages.notInstalled);
 
-    let downloadLink: string = "";
     let icon: any = installed
       ? getSvg.getGreenCheckSvg()
       : getSvg.getWarningSvg();
 
-    if (frameworkName === "NodeJS") {
+    // map framework name to dependency name
+    let dependencyName = frameworkName === "Flask" ? "Python" : "Node";
+    let downloadLink: string = "";
+    if (dependencyName === "Node") {
       downloadLink = "https://nodejs.org/en/download/";
-    } else if (frameworkName === "Flask") {
+    } else if (frameworkName === "Python") {
       downloadLink = "https://www.python.org/downloads/";
     }
 
@@ -48,18 +60,17 @@ class DependencyInfo extends React.Component<Props> {
         })}
       >
         <img className={styles.icon} src={icon} alt="" />
-        {/*TODO: react-intl */}
         <div
           className={classnames(styles.body, {
             [styles.bodyGreen]: installed,
             [styles.bodyYellow]: !installed
           })}
         >
-          {`${frameworkName} ${dependencyMessage}`}
+          {`${dependencyName} ${dependencyMessage}`}
         </div>
       </a>
     );
   }
 }
 
-export default DependencyInfo;
+export default injectIntl(DependencyInfo);

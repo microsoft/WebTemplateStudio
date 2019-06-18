@@ -97,7 +97,7 @@ const SelectableCard = ({
           selected &&
           (option.internalName === "Flask" ? (
             <DependencyInfo
-              frameworkName={"Python"}
+              frameworkName={"Flask"}
               installed={dependencies.python.installed}
             />
           ) : (
