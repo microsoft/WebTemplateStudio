@@ -28,7 +28,6 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  projectTypeRows: RowType[];
   frameworkRows: RowType[];
   servicesRows: RowType[];
   vscode: any;
@@ -42,10 +41,6 @@ const messages = defineMessages({
   welcome: {
     id: "review.newProject",
     defaultMessage: "New Project"
-  },
-  projectType: {
-    id: "review.projectType",
-    defaultMessage: "Project Type"
   },
   frameworks: {
     id: "review.frameworks",
@@ -66,14 +61,7 @@ const messages = defineMessages({
 });
 
 const ReviewAndGenerate = (props: Props) => {
-  const {
-    servicesRows,
-    projectTypeRows,
-    intl,
-    frameworkRows,
-    projectName,
-    outputPath
-  } = props;
+  const { servicesRows, intl, frameworkRows, projectName, outputPath } = props;
   return (
     <div className={styles.container}>
       <Title>{intl.formatMessage(messages.reviewAndGenerate)}</Title>
@@ -88,10 +76,6 @@ const ReviewAndGenerate = (props: Props) => {
           subTitle={`${outputPath}/${projectName}`}
         />
       </div>
-      <SummarySection
-        selectionTitle={intl.formatMessage(messages.projectType)}
-        selectionRows={projectTypeRows}
-      />
       <SummarySection
         selectionTitle={intl.formatMessage(messages.frameworks)}
         selectionRows={frameworkRows}
@@ -123,7 +107,6 @@ const mapDispatchToProps = (
 });
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  projectTypeRows: WizardSelectors.getProjectTypeRowItemSelector(state),
   frameworkRows: WizardSelectors.getFrameworksRowItemSelector(state),
   servicesRows: WizardSelectors.getServicesSelector(state),
   vscode: getVSCodeApiSelector(state),

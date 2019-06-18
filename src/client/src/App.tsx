@@ -251,8 +251,11 @@ class App extends React.Component<Props> {
               component={SelectFrameworks}
             />
             <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
-            <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
-            <Route exact={true} path={ROUTES.NEW_PROJECT} component={NewProject} />
+            <Route
+              exact={true}
+              path={ROUTES.NEW_PROJECT}
+              component={NewProject}
+            />
           </main>
           <RightSidebar />
         </div>
@@ -262,7 +265,9 @@ class App extends React.Component<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, void, RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   getVSCodeApi: () => {
     dispatch(getVSCodeApi());
   },
