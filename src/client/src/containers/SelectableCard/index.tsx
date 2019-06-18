@@ -34,7 +34,8 @@ const SelectableCard = ({
   clickCount,
   disabled,
   isFrameworkSelection,
-  dependencies
+  dependencies,
+  isPreview
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -49,6 +50,7 @@ const SelectableCard = ({
   disabled: boolean | undefined;
   isFrameworkSelection: boolean;
   dependencies: any;
+  isPreview: boolean;
 }) => {
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -93,7 +95,8 @@ const SelectableCard = ({
             <CardTitle title={title} />
           </div>
         </div>
-        {isFrameworkSelection &&
+        {isPreview &&
+          isFrameworkSelection &&
           selected &&
           (option.internalName === "Flask" ? (
             <DependencyInfo
@@ -148,7 +151,9 @@ const SelectableCard = ({
 };
 
 const mapStateToProps = (state: AppState): any => {
+  const { previewStatus } = state.wizardContent;
   return {
+    isPreview: previewStatus,
     dependencies: state.dependencyInfo.dependencies
   };
 };
