@@ -24,7 +24,7 @@ export class DependencyChecker extends WizardServant {
     return new Map([[ExtensionCommand.CheckDependency, this.checkDependency]]);
   }
 
-  private async checkPython3() {
+  private async checkForPython3() {
     var state;
     try {
       const { stdout } = await exec('py -3 --version'); // using Python Launcher command
@@ -37,27 +37,30 @@ export class DependencyChecker extends WizardServant {
     return state;
   }
 
+  private outputIsPython27(stdout: any, stderr: any) {
+    return stdout.indexOf(PYTHON27) === 0 || stderr.indexOf(PYTHON27) === 0;
+  }
+
   async checkDependency(message: any): Promise<IPayloadResponse> {
     var userOS = os.platform();
-    var name = message.payload.dependency === 'python' && userOS.indexOf('win') !== 0 ? 'python3' // if python and not on windows 
-                                                                                      : message.payload.dependency; 
+    var userOnWin = userOS.indexOf('win') === 0;
+    var name = message.payload.dependency === 'python' && !userOnWin ? 'python3'
+                                                                     : message.payload.dependency; 
     var state;
     try {
       const { stdout, stderr } = await exec(name + ' --version');
       if (stdout.length > 0 || stderr.trim() === PYTHON27) {
-        if (userOS.indexOf('win') === 0 && 
-           (stdout.indexOf(PYTHON27) === 0 || stderr.indexOf(PYTHON27) === 0)) { // on windows and python --version returns 2.7
-            state = await this.checkPython3();
+        if (userOnWin && this.outputIsPython27(stdout, stderr)) {
+            state = await this.checkForPython3();
         } else {
           state = true;
         }
       } else if (stderr.length > 0) {
-        
         state = false;
       } 
     } catch (err) {
-      if (name === 'python') {
-        state = await this.checkPython3();
+      if (userOnWin) {
+        state = await this.checkForPython3();
       } else {
         state = false;
       }
