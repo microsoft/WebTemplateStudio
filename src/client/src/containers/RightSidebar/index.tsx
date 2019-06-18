@@ -136,7 +136,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const {
       showFrameworks,
       showPages,
-      showProjectTypes,
       showServices
     } = this.props.isRoutesVisited;
     const { pathname } = this.props.location;
@@ -155,17 +154,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 <div className={styles.title}>
                   {formatMessage(messages.yourProjectDetails)}
                 </div>
-                <RightSidebarDropdown
-                  options={this.props.projectTypeDropdownItems}
-                  handleDropdownChange={this.handleChange.bind(this)}
-                  optionsData={projectTypes}
-                  selectDropdownOption={this.props.selectProjectType}
-                  isVisible={showProjectTypes}
-                  title={formatMessage(messages.projectType)}
-                  value={this.convertOptionToDropdownItem(
-                    this.props.selection.appType
-                  )}
-                />
                 <RightSidebarDropdown
                   options={this.props.frontendDropdownItems}
                   handleDropdownChange={
