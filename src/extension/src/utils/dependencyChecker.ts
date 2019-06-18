@@ -24,75 +24,44 @@ export class DependencyChecker extends WizardServant {
     return new Map([[ExtensionCommand.CheckDependency, this.checkDependency]]);
   }
 
-  // private async checkPython3(): Promise<boolean> {
-  //   var state;
-  //   try {
-  //     const { stdout, stderr } = await exec('py -3 --version'); // using Python Launcher
-  //     console.log("stdout: " + stdout);
-  //     console.log('stderr: ' + stderr);
-  //     if (stdout.length > 0) {
-  //       state = true;
-  //     }
-  //   } catch (err) {
-  //     console.log(name + " in false 1");
-  //     state = false;
-  //   }
-  //   return state;
-  // }
+  private async checkPython3() {
+    var state;
+    try {
+      const { stdout } = await exec('py -3 --version'); // using Python Launcher command
+      if (stdout.length > 0) {
+        state = true;
+      }
+    } catch (err) {
+      state = false;
+    }
+    return state;
+  }
 
   async checkDependency(message: any): Promise<IPayloadResponse> {
     var userOS = os.platform();
-    var name = message.payload.dependency === 'python' && userOS.indexOf('win') !== 0 ? 'python3' // if python and not windows and 
-                                                                                       : message.payload.dependency; 
+    var name = message.payload.dependency === 'python' && userOS.indexOf('win') !== 0 ? 'python3' // if python and not on windows 
+                                                                                      : message.payload.dependency; 
     var state;
-    // var name = 'python';
     try {
       const { stdout, stderr } = await exec(name + ' --version');
-      // console.log("stdout: " + stdout);
-      // console.log('stderr: ' + stderr);
       if (stdout.length > 0 || stderr.trim() === PYTHON27) {
-        if (userOS.indexOf('win') !== -1 && 
+        if (userOS.indexOf('win') === 0 && 
            (stdout.indexOf(PYTHON27) === 0 || stderr.indexOf(PYTHON27) === 0)) { // on windows and python --version returns 2.7
-            // state = this.checkPython3();
-          try {
-            console.log("HERE");
-            const { stdout } = await exec('py -3 --version'); // using Python Launcher
-            if (stdout.length > 0) {
-              state = true;
-            } 
-          } catch (err) {
-            console.log(name + " in false 1");
-            state = false;
-          }
+            state = await this.checkPython3();
         } else {
           state = true;
         }
       } else if (stderr.length > 0) {
         
-        console.log(name + " in false 2");
         state = false;
       } 
     } catch (err) {
       if (name === 'python') {
-        console.log("HERE");
-        // state = this.checkPython3();
-        // console.log('this is akrfjlre state: ' + state);
-        try {
-          console.log("HERE");
-          const { stdout } = await exec('py -3 --version'); // using Python Launcher
-          if (stdout.length > 0) {
-            state = true;
-          } 
-        } catch (err) {
-          console.log(name + " in false 1");
-          state = false;
-        }
+        state = await this.checkPython3();
       } else {
-        console.log(name + " in false 3");
         state = false;
       }
     }
-    console.log("This is name: " + name + " this is state: " + state);
     return {
       payload: {
         dependency: name,
