@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { GridComponent } from './grid.component';
 import { Param_SourceName_PascalRoutingModule } from './Param_SourceName_Kebab-routing.module';
 import { GridBoxComponent } from './grid-box/grid-box.component';
-import { WarningMessageModule } from 'src/app/shared/warning-message/warning-message.module';
+import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 
 @NgModule({
   declarations: [

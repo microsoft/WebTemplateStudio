@@ -257,7 +257,6 @@ class App extends React.Component<Props> {
               component={SelectFrameworks}
             />
             <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
-            <Route path={ROUTES.SELECT_PROJECT_TYPE} component={SelectWebApp} />
             <Route
               exact={true}
               path={ROUTES.NEW_PROJECT}

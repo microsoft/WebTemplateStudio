@@ -1,7 +1,6 @@
 import { defineMessages } from "react-intl";
 
 const PAGE_DETAILS = "/PageDetail";
-const SELECT_PROJECT_TYPE = "/SelectWebApp";
 const SELECT_FRAMEWORKS = "/SelectFrameworks";
 const SELECT_PAGES = "/SelectPages";
 const AZURE_LOGIN = "/AzureLogin";
@@ -20,7 +19,6 @@ const INTL_MESSAGES = defineMessages({
 
 const ROUTES = {
   PAGE_DETAILS,
-  SELECT_PROJECT_TYPE,
   SELECT_FRAMEWORKS,
   SELECT_PAGES,
   AZURE_LOGIN,
@@ -31,7 +29,6 @@ const ROUTES = {
 // Presents the routes in the order of the wizard
 const ROUTES_ARRAY = [
   NEW_PROJECT,
-  SELECT_PROJECT_TYPE,
   SELECT_FRAMEWORKS,
   SELECT_PAGES,
   AZURE_LOGIN,

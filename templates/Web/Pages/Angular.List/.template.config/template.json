@@ -18,7 +18,7 @@
     "wts.genGroup": "0",
     "wts.rightClickEnabled": "true",
     "wts.licenses": "[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)",
-    "wts.sourceNameCasing": "kebab|pascal|camel"
+    "wts.casing.sourceName": "kebab|pascal|camel"
   },
   "sourceName": "AngularList",
   "preferNameDirectory": true,
