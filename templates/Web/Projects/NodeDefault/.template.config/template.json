@@ -73,7 +73,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'concurrently': '^4.1.0', 'nodemon': '^1.18.10'}",
+        "dict": "{'nodemon': '^1.18.10'}",
         "key": "devDependencies",
         "jsonPath": "package.json"
       },
