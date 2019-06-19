@@ -63,6 +63,7 @@
   "cosmosResourceModule.resourceGroupLabel": "Resource Group",
   "cosmosResourceModule.saveChanges": "Save Changes",
   "cosmosResourceModule.subscriptionLabel": "Subscription",
+  "dependencyChecker.iconAltMessage": "Icon for dependency checker",
   "dependencyChecker.installed": " detected!",
   "dependencyChecker.notInstalled": " not detected. Click to install.",
   "details.author": "Author:",
