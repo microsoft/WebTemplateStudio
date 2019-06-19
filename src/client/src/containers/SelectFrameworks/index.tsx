@@ -7,9 +7,9 @@ import SelectBackEndFramework from "../SelectBackendFramework";
 import SelectFrontEndFramework from "../SelectFrontEndFramework";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
-import DependencyInfo from "../../components/DependencyInfo";
-
 import { AppState } from "../../reducers";
+
+import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
 
 interface ISelectFrameworksProps {
   vscode: any;
@@ -24,15 +24,15 @@ class SelectFrameworks extends React.Component<Props> {
     if (isPreview) {
       // send messages to extension to check dependency info when this component loads
       vscode.postMessage({
-        module: "DependencyChecker",
-        command: "check-dependency",
+        module: EXTENSION_MODULES.DEPENDENCYCHECKER,
+        command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
         payload: {
           dependency: "node"
         }
       });
       vscode.postMessage({
-        module: "DependencyChecker",
-        command: "check-dependency",
+        module: EXTENSION_MODULES.DEPENDENCYCHECKER,
+        command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
         payload: {
           dependency: "python"
         }
