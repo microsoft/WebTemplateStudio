@@ -5,6 +5,9 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
 const PYTHON27 = 'Python 2.7';
+const NODE = 'node';
+const PYTHON = 'python';
+const PYTHON3 = 'python3';
 
 export class DependencyChecker extends WizardServant {
   clientCommandMap: Map<
@@ -25,11 +28,14 @@ export class DependencyChecker extends WizardServant {
   }
 
   private async checkForPython3() {
+    console.log("HERE python 3");
     var state;
     try {
       const { stdout } = await exec('py -3 --version'); // using Python Launcher command
       if (stdout.length > 0) {
         state = true;
+      } else {
+        state = false;
       }
     } catch (err) {
       state = false;
@@ -38,31 +44,52 @@ export class DependencyChecker extends WizardServant {
   }
 
   private outputIsPython27(stdout: any, stderr: any) {
+    console.log("HERE check python 27");
     return stdout.indexOf(PYTHON27) === 0 || stderr.indexOf(PYTHON27) === 0;
   }
 
   async checkDependency(message: any): Promise<IPayloadResponse> {
-    var userOS = os.platform();
-    var userOnWin = userOS.indexOf('win') === 0;
-    var name = message.payload.dependency === 'python' && !userOnWin ? 'python3'
-                                                                     : message.payload.dependency; 
+    console.log("HERE");
+    var name = message.payload.dependency;
     var state;
-    try {
-      const { stdout, stderr } = await exec(name + ' --version');
-      if (stdout.length > 0 || stderr.trim() === PYTHON27) {
-        if (userOnWin && this.outputIsPython27(stdout, stderr)) {
-            state = await this.checkForPython3();
-        } else {
+
+    if (name === NODE) {
+      try { 
+        const { stdout } = await exec(NODE + ' --version');
+        console.log("HERE NODE: " + stdout);
+        if (stdout.length > 0) { 
+          
           state = true;
+        } else {
+          state = false;
         }
-      } else if (stderr.length > 0) {
+      } catch (err) {
         state = false;
-      } 
-    } catch (err) {
-      if (userOnWin) {
-        state = await this.checkForPython3();
-      } else {
-        state = false;
+      }
+    }
+
+    else if (name === PYTHON) {
+      var userOS = os.platform();
+      var userOnWin = userOS.indexOf('win') === 0;
+      name = userOnWin ? PYTHON : PYTHON3; // for Unix OS, do python3 command
+      try {
+        const { stdout, stderr } = await exec(name + ' --version');
+        if (stdout.length > 0 || stderr.trim() === PYTHON27) {
+          console.log("HERE PYTHON");
+          if (userOnWin && this.outputIsPython27(stdout, stderr)) {
+              state = await this.checkForPython3();
+          } else {
+            state = true;
+          }
+        } else {
+          state = false;
+        } 
+      } catch (err) {
+        if (userOnWin) {
+          state = await this.checkForPython3();
+        } else {
+          state = false;
+        }
       }
     }
     return {
