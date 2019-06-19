@@ -26,24 +26,31 @@ def getList():
         list(results_iterable)
     )
 
- @app.route(CONSTANTS['ENDPOINT']['LIST'], methods=['POST'])
+@app.route(CONSTANTS['ENDPOINT']['LIST'], methods=['POST'])
 def addListItem():
     data = request.get_json()
     listItem = {'text': data['text']}
-    created = list_items.insert_one(listItem)
+    created = sqlDatabaseObj.getClient().CreateItem(
+        sqlDatabaseObj.getContainer()['_self'], listItem)
     return make_response(
         jsonify(
-            {'_id': str(created.inserted_id), 'text': listItem['text']}
+            {'_id': created['id'], 'text': listItem['text']}
         ), 201
     )
 
- @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<id>', methods=['DELETE'])
+@app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<id>', methods=['DELETE'])
 def deleteListItem(id):
-    queryStr = {'_id': ObjectId(id)}
-    count = 0
-    result = list_items.find(queryStr)
-    for item in iter(result):
-        count += 1
+    # use parameterized queries to avoid SQL injection attacks
+    findStr = "SELECT * FROM c where c.id = @id"
+    queryStr = {
+        'query': findStr,
+        'parameters': [
+            {'name': '@id', 'value': id}
+        ]
+    }
+    result = sqlDatabaseObj.getClient().QueryItems(
+        sqlDatabaseObj.getContainer()['_self'], queryStr)
+    count = sum(1 for _ in iter(result))
     if count == 0:
         return make_response(
             jsonify(
@@ -51,9 +58,9 @@ def deleteListItem(id):
             ),
             404
         )
-    list_items.delete_one(queryStr)
+    for item in iter(result):
+        sqlDatabaseObj.getClient().DeleteItem(item['_self'])
     return jsonify(
         {'_id': id, 'text': 'This comment was deleted'}
     )
-
  //}]}
