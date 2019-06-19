@@ -3,7 +3,7 @@
 @Component({
   selector: 'app-master-detail-sidebar-tab',
   templateUrl: './master-detail-sidebar-tab.component.html',
-  styleUrls: ['../master-detail-sidebar-tab.component.css']
+  styleUrls: ['./master-detail-sidebar-tab.component.css']
 })
 export class MasterDetailSidebarTabComponent implements OnInit {
 
