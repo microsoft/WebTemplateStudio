@@ -214,7 +214,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   };
 
   public render() {
-    const { title, options, setDetailPage } = this.props;
+    const { title, options, setDetailPage, isFrameworkSelection } = this.props;
     return (
       <div>
         <Title>{title}</Title>
@@ -224,7 +224,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
             return (
               <SelectableCard
                 key={`${cardNumber} ${title}`}
-                isFrameworkSelection={this.props.isFrameworkSelection}
+                isFrameworkSelection={isFrameworkSelection}
                 onCardClick={(cardNumber: number) => {
                   this.onCardClick(cardNumber);
                 }}
