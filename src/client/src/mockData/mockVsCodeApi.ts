@@ -24,10 +24,10 @@ const mockVsCodeApi = () => ({
         case "alert":
           console.log("Command: ", message.alert);
           break;
-        case "check-dependency":
+        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           window.postMessage(
             {
-              command: "check-dependency",
+              command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
               payload: {
                 dependency: "node",
                 installed: false
@@ -37,7 +37,7 @@ const mockVsCodeApi = () => ({
           );
           window.postMessage(
             {
-              command: "check-dependency",
+              command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
               payload: {
                 dependency: "python",
                 installed: false
