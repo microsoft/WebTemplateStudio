@@ -3,11 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
-import {
-  InjectedIntlProps,
-  injectIntl,
-  defineMessages
-} from "react-intl";
+import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
 
 import LeftSidebarLink from "../LeftSidebarLink";
 
@@ -22,25 +18,21 @@ const messages = defineMessages({
     id: "leftSidebar.newProject",
     defaultMessage: "1. New Project"
   },
-  projectType: {
-    id: "leftSidebar.projectType",
-    defaultMessage: "2. Project Type"
-  },
   frameworks: {
     id: "leftSidebar.frameworks",
-    defaultMessage: "3. Frameworks"
+    defaultMessage: "2. Frameworks"
   },
   pages: {
     id: "leftSidebar.pages",
-    defaultMessage: "4. Pages"
+    defaultMessage: "3. Pages"
   },
   services: {
     id: "leftSidebar.services",
-    defaultMessage: "5. Services (Optional)"
+    defaultMessage: "4. Services (Optional)"
   },
   summary: {
     id: "leftSidebar.summary",
-    defaultMessage: "6. Summary"
+    defaultMessage: "5. Summary"
   },
   ariaNavLabel: {
     id: "leftSideBar.ariaNavLabel",
@@ -59,7 +51,6 @@ const LeftSidebar = (props: Props) => {
   const { formatMessage } = props.intl;
   const leftSidebarData: string[] = [
     formatMessage(messages.welcome),
-    formatMessage(messages.projectType),
     formatMessage(messages.frameworks),
     formatMessage(messages.pages),
     formatMessage(messages.services),

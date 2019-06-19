@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,4 +23,9 @@ export interface IMasterDetailText {
   title: string;
   tabName: string;
   id: number;
+  status: string;
+  orderDate: Date;
+  shipTo: string;
+  orderTotal: number;
+  longDescription: number;
 }
