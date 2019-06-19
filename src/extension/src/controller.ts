@@ -224,7 +224,8 @@ export class Controller {
     }
   }
 
-  dispose() {
+  static dispose() {
     CoreTemplateStudio.DestroyInstance();
+    this._instance = undefined;
   }
 }
