@@ -86,7 +86,7 @@
   "loginCard.createAccount": "Create Account",
   "loginCard.details": "Details",
   "loginCard.signIn": "Sign In",
-  "newProject.body": "Enter a project name and output path, then click next to get started.",
+  "newProject.body": "Enter a project name and output path, then click next to get started on your full stack application.",
   "newProject.header": "Welcome to Web Template Studio",
   "outputPath.ariaOutputPath": "Input for Output Path",
   "outputPath.outputPath": "Output Path",
