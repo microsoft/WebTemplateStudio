@@ -9,9 +9,11 @@ from constants import CONSTANTS
 from sql.sqlClient import SQLObj
 //}]}
 
- app = Flask(__name__)
+app = Flask(__name__)
 
- //{[{
+//{[{
+sqlDatabaseObj = SQLObj()
+
 # List Endpoints
 @app.route(CONSTANTS['ENDPOINT']['LIST'])
 def getList():
@@ -64,4 +66,5 @@ def deleteListItem(id):
     return jsonify(
         {'_id': id, 'text': 'This comment was deleted'}
     )
- //}]}
+
+//}]}

@@ -1,5 +1,5 @@
 import azure.cosmos.cosmos_client as cosmos_client
-from sql.constants import CONSTANTS
+from constants import CONSTANTS
 from .settings import *
 
 
