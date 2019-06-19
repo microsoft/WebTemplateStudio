@@ -66,9 +66,9 @@ export class DependencyChecker extends WizardServant {
     else if (name === PYTHON) {
       let userOS: string = os.platform();
       let userOnWin: boolean = userOS.indexOf('win') === 0;
-      name = userOnWin ? PYTHON : PYTHON3; // for Unix OS, do python3 command
+      let pythonCommand = userOnWin ? PYTHON : PYTHON3; // for Unix OS, do python3 command
       try {
-        const { stdout, stderr } = await exec(name + ' --version');
+        const { stdout, stderr } = await exec(pythonCommand + ' --version');
         if (stdout.length > 0 || stderr.trim() === PYTHON27) {
           if (userOnWin && this.outputIsPython27(stdout, stderr)) {
               state = await this.checkForPython3();
