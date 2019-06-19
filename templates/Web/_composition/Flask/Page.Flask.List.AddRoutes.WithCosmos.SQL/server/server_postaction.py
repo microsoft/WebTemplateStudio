@@ -35,7 +35,8 @@ def addListItem():
     return make_response(
         jsonify(
             {'_id': created['id'], 'text': listItem['text']}
-        ), 201
+        ),
+        201
     )
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<id>', methods=['DELETE'])
