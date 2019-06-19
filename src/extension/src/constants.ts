@@ -205,6 +205,12 @@ export const CONSTANTS = {
   START_PORT: 9502,
   VSCODE_COMMAND: {
     OPEN_FOLDER: "vscode.openFolder"
+  },
+  DEPENDENCY_CHECKER: {
+    NODE: ' node',
+    PYTHON: 'python',
+    PYTHON3: 'python3',
+    PYTHON_LAUNCHER: 'py -3'
   }
 };
 
