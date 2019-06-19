@@ -13,8 +13,6 @@ import { AppState } from "../../reducers";
 
 interface ISelectFrameworksProps {
   vscode: any;
-  dependencies: any;
-  selectedBackend: any;
 }
 
 type Props = ISelectFrameworksProps;
