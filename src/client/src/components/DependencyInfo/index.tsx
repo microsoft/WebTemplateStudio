@@ -20,6 +20,10 @@ const messages = defineMessages({
   notInstalled: {
     id: "dependencyChecker.notInstalled",
     defaultMessage: " not detected. Click to install."
+  },
+  iconAltMessage: {
+    id: "dependencyChecker.iconAltMessage",
+    defaultMessage: "Icon for dependency checker"
   }
 });
 
@@ -64,7 +68,11 @@ class DependencyInfo extends React.Component<Props> {
           [styles.borderYellow]: !installed
         })}
       >
-        <img className={styles.icon} src={icon} alt="" />
+        <img
+          className={styles.icon}
+          src={icon}
+          alt={intl.formatMessage(messages.iconAltMessage)}
+        />
         <div
           className={classnames(styles.body, {
             [styles.bodyGreen]: installed,
