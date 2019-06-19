@@ -11,9 +11,6 @@ const projType = "FullStackWebApp";
 CoreTemplateStudio.GetInstance(undefined)
   .then(res => {
     instance = res;
-    return new Promise<CoreTemplateStudio>(resolve =>
-      setTimeout(resolve, 5000)
-    );
   })
   .then(() => {
     instance
@@ -24,59 +21,77 @@ CoreTemplateStudio.GetInstance(undefined)
           value;
         }
       })
-      .then(() => {
+      .then(res => res)
+      .catch((err: Error) => {
         instance
-          .getFrameworks(projType)
-          .then(frameworks => {
-            frameworks.forEach(
-              (obj: { tags: { type: string }; name: string }) => {
-                if (obj.tags.type == "frontend") {
-                  frontend.push(obj.name);
-                } else if (obj.tags.type == "backend") {
-                  backend.push(obj.name);
-                }
-              }
-            );
+          .sync({
+            port: instance.getPort(),
+            payload: { path: CONSTANTS.API.DEVELOPMENT_PATH_TO_TEMPLATES },
+            liveMessageHandler: value => {
+              value;
+            }
+          })
+          .then(() => {
             instance
-              .getPages(projType, frontend[0], backend[0])
-              .then(pages => {
-                pages.forEach((page: { name: any; templateId: any }) => {
-                  pagesObj.push({ name: page.name, identity: page.templateId });
-                });
-
-                function generateProj(backend: string, frontend: string) {
-                  return () => {
-                    console.log(`generating ${backend} ${frontend}`);
-                    return instance.generate({
-                      port: instance.getPort(),
-                      payload: {
-                        backendFramework: backend,
-                        frontendFramework: frontend,
-                        pages: pagesObj,
-                        path: "../../../../../src/extension/src/template_test",
-                        projectName: backend + "-" + frontend,
-                        projectType: projType,
-                        services: []
-                      },
-                      liveMessageHandler: value => {
-                        value;
-                      }
-                    });
-                  };
-                }
-
-                let prevPromise: Promise<any> = Promise.resolve(null);
-                for (var i = 0; i < frontend.length; i++) {
-                  for (var j = 0; j < backend.length; j++) {
-                    prevPromise = prevPromise.then(
-                      generateProj(backend[j], frontend[i])
-                    );
+              .getFrameworks(projType)
+              .then(frameworks => {
+                frameworks.forEach(
+                  (obj: { tags: { type: string }; name: string }) => {
+                    if (obj.tags.type == "frontend") {
+                      frontend.push(obj.name);
+                    } else if (obj.tags.type == "backend") {
+                      backend.push(obj.name);
+                    }
                   }
-                }
+                );
+                instance
+                  .getPages(projType, frontend[0], backend[0])
+                  .then(pages => {
+                    pages.forEach((page: { name: any; templateId: any }) => {
+                      pagesObj.push({
+                        name: page.name,
+                        identity: page.templateId
+                      });
+                    });
 
-                prevPromise.then(() => {
-                  console.log("done");
-                });
+                    function generateProj(backend: string, frontend: string) {
+                      return () => {
+                        console.log(`generating ${backend} ${frontend}`);
+                        return instance.generate({
+                          port: instance.getPort(),
+                          payload: {
+                            backendFramework: backend,
+                            frontendFramework: frontend,
+                            pages: pagesObj,
+                            path:
+                              "../../../../../src/extension/src/template_test",
+                            projectName: backend + "-" + frontend,
+                            projectType: projType,
+                            services: []
+                          },
+                          liveMessageHandler: value => {
+                            value;
+                          }
+                        });
+                      };
+                    }
+
+                    let prevPromise: Promise<any> = Promise.resolve(null);
+                    for (var i = 0; i < frontend.length; i++) {
+                      for (var j = 0; j < backend.length; j++) {
+                        prevPromise = prevPromise.then(
+                          generateProj(backend[j], frontend[i])
+                        );
+                      }
+                    }
+
+                    prevPromise.then(() => {
+                      console.log("done");
+                    });
+                  })
+                  .catch((error: Error) => {
+                    throw Error(error.toString());
+                  });
               })
               .catch((error: Error) => {
                 throw Error(error.toString());
@@ -85,9 +100,6 @@ CoreTemplateStudio.GetInstance(undefined)
           .catch((error: Error) => {
             throw Error(error.toString());
           });
-      })
-      .catch((error: Error) => {
-        throw Error(error.toString());
       });
   })
   .catch((error: Error) => {
