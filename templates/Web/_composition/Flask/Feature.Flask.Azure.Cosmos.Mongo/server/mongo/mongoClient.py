@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from settings import *
+from .settings import *
 from constants import CONSTANTS
 import sys
 

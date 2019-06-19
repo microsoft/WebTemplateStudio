@@ -5,5 +5,5 @@ CONSTANTS = {
     //{[{
     'COSMOS': {
         'COLLECTION': 'ListItems'
-    }
+    },
     //}]}
