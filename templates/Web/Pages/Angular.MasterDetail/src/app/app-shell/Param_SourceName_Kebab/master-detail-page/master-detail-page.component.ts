@@ -4,7 +4,7 @@ import { IMasterDetailText } from '../master-detail.service';
 @Component({
   selector: 'app-master-detail-page',
   templateUrl: './master-detail-page.component.html',
-  styleUrls: ['../master-detail.component.css']
+  styleUrls: ['./master-detail.component.css']
 })
 export class MasterDetailPageComponent implements OnInit {
 
