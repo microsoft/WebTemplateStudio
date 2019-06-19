@@ -2,6 +2,7 @@
   "card.details",
   "dependencyChecker.installed",
   "dependencyChecker.notInstalled",
+  "dependencyChecker.iconAltMessage",
   "details.back",
   "details.author",
   "details.licenses",
