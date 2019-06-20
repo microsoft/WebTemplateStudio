@@ -20,7 +20,6 @@ export class MasterDetailService {
 
 export interface IMasterDetailText {
   title: string;
-  tabName: string;
   id: number;
   status: string;
   orderDate: string;
