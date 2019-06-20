@@ -17,26 +17,17 @@ files.forEach((file: string) => {
     stdio: "inherit"
   });
   try {
-    let { stdout, stderr } = child_process.exec("yarn start &", {
+    child_process.execSync("yarn start &", {
       cwd: `../../src/template_test/${file}`,
-      timeout: 2000,
       stdio: "inherit"
     });
-    console.log(stdout);
-    //wait x sec
-    if (stderr) {
-      throw stderr;
-    }
-    console.log("===========> exited yay");
-    child_process.exit();
-
     //child_process.execSync("yarn build", {
     //  cwd: `../../src/template_test/${file}`,
     //  stdio: "inherit"
     //});
   } catch (err) {
     console.log("========> rip");
-    console.log("Error message: " + err.message);
+    console.log("Error message: " + err);
     throw err;
   }
 });
