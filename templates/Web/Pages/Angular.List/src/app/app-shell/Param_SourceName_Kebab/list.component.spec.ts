@@ -26,8 +26,7 @@ describe('ListComponent', () => {
         HttpClientTestingModule,
         NgbAlertModule
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

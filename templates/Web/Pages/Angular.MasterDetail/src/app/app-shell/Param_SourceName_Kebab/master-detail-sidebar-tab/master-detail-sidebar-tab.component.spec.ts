@@ -11,8 +11,7 @@ describe('ListItemComponent', () => {
       declarations: [
         MasterDetailSidebarTabComponent
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

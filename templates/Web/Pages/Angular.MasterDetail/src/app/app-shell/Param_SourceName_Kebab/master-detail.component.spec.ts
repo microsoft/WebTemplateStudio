@@ -21,8 +21,7 @@ describe('MasterDetailComponent', () => {
         WarningMessageModule,
         HttpClientTestingModule
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

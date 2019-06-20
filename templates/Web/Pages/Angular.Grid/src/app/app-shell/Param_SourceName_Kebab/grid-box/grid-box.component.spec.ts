@@ -11,8 +11,7 @@ describe('GridBoxComponent', () => {
       declarations: [
         GridBoxComponent
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

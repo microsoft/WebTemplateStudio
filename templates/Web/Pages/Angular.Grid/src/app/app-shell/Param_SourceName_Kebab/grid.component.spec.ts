@@ -19,8 +19,7 @@ describe('GridComponent', () => {
         WarningMessageModule,
         HttpClientTestingModule
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -18,8 +18,7 @@ describe('ListFormComponent', () => {
         ReactiveFormsModule,
         NgbAlertModule
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
