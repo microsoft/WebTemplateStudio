@@ -1,20 +1,19 @@
 import { WIZARD_INFO_TYPEKEYS } from "./typeKeys";
 
+// payload received from extension should look like this
+export interface IDependencyInfo {
+  dependency: "python" | "node";
+  installed: boolean;
+}
+
 export interface IUpdateDependencyInfo {
   type: WIZARD_INFO_TYPEKEYS.UPDATE_DEPENDENCY_INFO;
-  payload: any;
+  payload: IDependencyInfo;
 }
 
 export const updateDependencyInfoAction = (
-  dependencyInfo: any
+  dependencyInfo: IDependencyInfo
 ): IUpdateDependencyInfo => ({
   type: WIZARD_INFO_TYPEKEYS.UPDATE_DEPENDENCY_INFO,
   payload: dependencyInfo
 });
-
-/* Payload should look like
- * payload : {
-    dependency: "python" | "node"
-    installed: boolean
-  } 
-*/

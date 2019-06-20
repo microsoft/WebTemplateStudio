@@ -8,11 +8,12 @@ import SelectFrontEndFramework from "../SelectFrontEndFramework";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import { AppState } from "../../reducers";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
 
 interface ISelectFrameworksProps {
-  vscode: any;
+  vscode: IVSCodeObject;
   isPreview: boolean;
 }
 
@@ -50,7 +51,12 @@ class SelectFrameworks extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState): any => {
+interface IStateProps {
+  isPreview: boolean;
+  vscode: IVSCodeObject;
+}
+
+const mapStateToProps = (state: AppState): IStateProps => {
   const { previewStatus } = state.wizardContent;
   return {
     isPreview: previewStatus,
