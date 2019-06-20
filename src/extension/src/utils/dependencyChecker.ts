@@ -4,8 +4,8 @@ const os = require('os');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
-const PYTHON3_REGEX = RegExp('^Python 3\\.[5-9]\\.[0-9]');
-const NODE_REGEX = RegExp('v10\\.(1[5-9]|[2-9][0-9])\\.[0-9]');
+const PYTHON3_REGEX = RegExp('^Python 3\\.[5-9]\\.[0-9]');       // minimum Python version required is 3.5.x
+const NODE_REGEX = RegExp('v10\\.(1[5-9]|[2-9][0-9])\\.[0-9]');  // minimum Node version required is 10.15.x
 
 export class DependencyChecker extends WizardServant {
   clientCommandMap: Map<
@@ -46,7 +46,6 @@ export class DependencyChecker extends WizardServant {
     if (name === CONSTANTS.DEPENDENCY_CHECKER.NODE) {
       try { 
         const { stdout } = await exec(CONSTANTS.DEPENDENCY_CHECKER.NODE + ' --version');
-        console.log("HERE stdout: " + stdout);
         if (NODE_REGEX.test(stdout)) { 
           state = true;
         } else {
