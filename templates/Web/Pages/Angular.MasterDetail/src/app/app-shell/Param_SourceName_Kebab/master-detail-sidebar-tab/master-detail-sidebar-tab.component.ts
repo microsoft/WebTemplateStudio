@@ -3,11 +3,12 @@
 @Component({
   selector: 'app-master-detail-sidebar-tab',
   templateUrl: './master-detail-sidebar-tab.component.html',
-  styleUrls: ['../master-detail.component.css']
+  styleUrls: ['./master-detail-sidebar-tab.component.css']
 })
 export class MasterDetailSidebarTabComponent implements OnInit {
 
   @Input() tabText: string;
+  @Input() image: string;
   @Input() index: number;
   @Input() key: number;
   @Output() displayTabClick = new EventEmitter<number>();
