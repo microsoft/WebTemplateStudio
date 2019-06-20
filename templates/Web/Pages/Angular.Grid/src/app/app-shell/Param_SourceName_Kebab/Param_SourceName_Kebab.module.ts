@@ -1,6 +1,5 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 
 import { GridComponent } from './grid.component';
 import { Param_SourceName_PascalRoutingModule } from './Param_SourceName_Kebab-routing.module';
@@ -15,7 +14,6 @@ import { WarningMessageModule } from '../../shared/warning-message/warning-messa
   imports: [
     CommonModule,
     WarningMessageModule,
-    MatIconModule,
     Param_SourceName_PascalRoutingModule
   ]
 })
