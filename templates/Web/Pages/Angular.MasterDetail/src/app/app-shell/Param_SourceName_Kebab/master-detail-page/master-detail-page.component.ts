@@ -22,7 +22,7 @@ export class MasterDetailPageComponent implements OnInit {
       shortDescription: '',
       id: 0,
       tabName: ''
-    }
+    };
   }
 
 }

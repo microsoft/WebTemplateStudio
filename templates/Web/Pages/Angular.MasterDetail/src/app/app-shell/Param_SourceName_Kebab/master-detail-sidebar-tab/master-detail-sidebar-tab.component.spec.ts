@@ -1,5 +1,4 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
 
 import { MasterDetailSidebarTabComponent } from './master-detail-sidebar-tab.component';
 
@@ -11,9 +10,6 @@ describe('ListItemComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         MasterDetailSidebarTabComponent
-      ],
-      imports: [
-        MatIconModule
       ]
     })
     .compileComponents();
