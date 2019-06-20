@@ -66,7 +66,7 @@ export class DependencyChecker extends WizardServant {
       } else if (userOnWin && await this.runPythonVersionCommand(CONSTANTS.DEPENDENCY_CHECKER.PYTHON_LAUNCHER)) {
         state = true;
       } else {
-          state = false;
+        state = false;
       }
     }
     return {
