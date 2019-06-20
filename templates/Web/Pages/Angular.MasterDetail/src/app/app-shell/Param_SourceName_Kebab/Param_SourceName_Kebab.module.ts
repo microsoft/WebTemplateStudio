@@ -12,7 +12,7 @@ import { Param_SourceName_PascalRoutingModule } from './Param_SourceName_Kebab-r
   declarations: [
     MasterDetailComponent,
     MasterDetailSidebarTabComponent,
-    MasterDetailPageComponent,
+    MasterDetailPageComponent
   ],
   imports: [
     CommonModule,
