@@ -11,6 +11,18 @@ export class MasterDetailPageComponent implements OnInit {
   @Input() textSampleData: IMasterDetailText;
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.textSampleData = {
+      title: '',
+      status: '',
+      orderDate: '',
+      shipTo: '',
+      orderTotal: 0.0,
+      longDescription: '',
+      shortDescription: '',
+      id: 0,
+      tabName: ''
+    }
+  }
 
 }
