@@ -19,13 +19,13 @@ export class MasterDetailService {
 }
 
 export interface IMasterDetailText {
-  paragraph: string;
   title: string;
   tabName: string;
   id: number;
   status: string;
-  orderDate: Date;
+  orderDate: string;
   shipTo: string;
   orderTotal: number;
-  longDescription: number;
+  shortDescription: string;
+  longDescription: string;
 }
