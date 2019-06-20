@@ -5,6 +5,7 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
 const PYTHON3_REGEX = RegExp('^Python 3\\.[5-9]\\.[0-9]');
+const NODE_REGEX = RegExp('v10\\.(1[5-9]|[2-9][0-9])\\.[0-9]');
 
 export class DependencyChecker extends WizardServant {
   clientCommandMap: Map<
@@ -45,7 +46,8 @@ export class DependencyChecker extends WizardServant {
     if (name === CONSTANTS.DEPENDENCY_CHECKER.NODE) {
       try { 
         const { stdout } = await exec(CONSTANTS.DEPENDENCY_CHECKER.NODE + ' --version');
-        if (stdout.length > 0) { 
+        console.log("HERE stdout: " + stdout);
+        if (NODE_REGEX.test(stdout)) { 
           state = true;
         } else {
           state = false;
