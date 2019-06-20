@@ -40,15 +40,34 @@ let attemptSync: any = (
                 }
               }
             );
+
             instance
               .getPages(projType, frontend[0], backend[0])
               .then(pages => {
                 pages.forEach((page: { name: any; templateId: any }) => {
+                  console.log(page);
                   pagesObj.push({
                     name: page.name,
                     identity: page.templateId
                   });
                 });
+
+                function getPages(
+                  projType: string,
+                  frontend: any,
+                  backend: any
+                ) {
+                  pagesObj = [];
+                  instance.getPages(projType, frontend, backend).then(pages => {
+                    pages.forEach((page: { name: any; templateId: any }) => {
+                      pagesObj.push({
+                        name: page.name,
+                        identity: page.templateId
+                      });
+                    });
+                  });
+                  return pagesObj;
+                }
 
                 function generateProj(backend: string, frontend: string) {
                   return () => {
@@ -58,7 +77,7 @@ let attemptSync: any = (
                       payload: {
                         backendFramework: backend,
                         frontendFramework: frontend,
-                        pages: pagesObj,
+                        pages: getPages(projType, frontend, backend),
                         path: "../../../../../src/extension/src/template_test",
                         projectName: backend + "-" + frontend,
                         projectType: projType,

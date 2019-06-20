@@ -6,7 +6,7 @@ var files = test_log.split("\n");
 files.pop();
 console.log(files);
 console.log(test_log);
-//var checker;
+var checker;
 
 files.forEach((file: string) => {
   child_process.execSync("yarn install", {
@@ -17,14 +17,15 @@ files.forEach((file: string) => {
     stdio: "inherit"
   });
   try {
-    // checker = child_process.execSync("yarn start &", {
-    //   cwd: `../../src/template_test/${file}/${file}`,
-    //   stdio: "inherit",
-    //   timeout: 2000
-    // });
-
-    // checker.kill();
-
+    try {
+      checker = child_process.execSync("yarn start &", {
+        cwd: `../../src/template_test/${file}/${file}`,
+        stdio: "inherit",
+        timeout: 10000
+      });
+    } catch (err) {
+      console.log("Error message: " + err.code);
+    }
     child_process.execSync("yarn build", {
       cwd: `../../src/template_test/${file}/${file}`,
       stdio: "inherit"
