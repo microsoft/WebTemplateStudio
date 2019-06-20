@@ -1,7 +1,7 @@
 import fetch, { Response } from "node-fetch";
 import * as signalR from "@aspnet/signalr";
 import * as portfinder from "portfinder";
-//import * as vscode from "vscode";
+import * as vscode from "vscode";
 import * as path from "path";
 import * as os from "os";
 import * as fs from "fs";
@@ -33,7 +33,7 @@ export class CoreTemplateStudio {
   }
 
   public static async GetInstance(
-    context: any | undefined
+    context: vscode.ExtensionContext | undefined
   ): Promise<CoreTemplateStudio> {
     if (CoreTemplateStudio._instance) {
       return Promise.resolve(CoreTemplateStudio._instance);

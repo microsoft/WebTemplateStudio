@@ -6,28 +6,37 @@ var files = test_log.split("\n");
 files.pop();
 console.log(files);
 console.log(test_log);
-var checker;
+//var checker;
 
 files.forEach((file: string) => {
   child_process.execSync("yarn install", {
-    cwd: `../../src/template_test/${file}`
+    cwd: `../../src/template_test/${file}/${file}`
   });
   child_process.execSync("pwd", {
-    cwd: `../../src/template_test/${file}`,
+    cwd: `../../src/template_test/${file}/${file}`,
     stdio: "inherit"
   });
   try {
-    child_process.execSync("yarn start &", {
-      cwd: `../../src/template_test/${file}`,
+    // checker = child_process.execSync("yarn start &", {
+    //   cwd: `../../src/template_test/${file}/${file}`,
+    //   stdio: "inherit",
+    //   timeout: 2000
+    // });
+
+    // checker.kill();
+
+    child_process.execSync("yarn build", {
+      cwd: `../../src/template_test/${file}/${file}`,
       stdio: "inherit"
     });
-    //child_process.execSync("yarn build", {
-    //  cwd: `../../src/template_test/${file}`,
-    //  stdio: "inherit"
-    //});
   } catch (err) {
     console.log("========> rip");
     console.log("Error message: " + err);
     throw err;
   }
+});
+
+child_process.execSync("rm -r *", {
+  cwd: "../../src/template_test/",
+  stdio: "inherit"
 });
