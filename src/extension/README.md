@@ -18,7 +18,7 @@ Docs to provide useful insights.
 Web Template Studio approaches web app creation using the following four attribute sets:
 
 - **Project type**: First, what type of application are you building? We currently support only one type: _Fullstack Application_.
-- **Frameworks**: Next, which frameworks do you want to use for your frontend and backend? We currently support one framework for frontend: _[React.js](https://reactjs.org/)_ and one framework for backend: _[Node.js](https://nodejs.org/en/)_.
+- **Frameworks**: Next, which frameworks do you want to use for your frontend and backend? We currently support two frameworks for frontend: _[React.js](https://reactjs.org/)_, _[Angular](https://angular.io/)_ and one framework for backend: _[Node.js](https://nodejs.org/en/)_.
 - **App pages**: To accelerate app creation, we provide a number of app page templates that you can use to add common UI pages into your new app. The current page templates include: _blank page_, common layouts (*e.g., master detail) and pages that implement common patterns (*e.g., grid, list). Using the wizard, add as many of the pages as you need, providing a name for each one, and we'll generate them for you.
 - **Cloud Services**: Lastly, you specify which Azure cloud services you want to use, and we'll build out the framework for the services into your app including tagging 'TODO' items. Currently supported services cover storage (_Azure Cosmos DB_), and compute (_Azure Functions_).
 
@@ -30,7 +30,7 @@ Please use [GitHub issues](https://github.com/Microsoft/WebTemplateStudio/issues
 
 If you have specific feature requests or would like to vote on what others are recommending, please go to the [GitHub issues](https://github.com/Microsoft/WebTemplateStudio/issues) section as well. We would love to hear your thoughts.
 
-We are still extremely early in development and are looking for feedback for roadmap. Currently we are in the process of stabilizing our React / Node.js golden path.
+We are still extremely early in development and are looking for feedback for roadmap. Currently we are in the process of stabilizing our React & Angular with Node.js.
 
 ## Contributing
 
