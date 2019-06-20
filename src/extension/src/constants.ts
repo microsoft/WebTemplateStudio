@@ -207,7 +207,7 @@ export const CONSTANTS = {
     OPEN_FOLDER: "vscode.openFolder"
   },
   DEPENDENCY_CHECKER: {
-    NODE: ' node',
+    NODE: 'node',
     PYTHON: 'python',
     PYTHON3: 'python3',
     PYTHON_LAUNCHER: 'py -3'

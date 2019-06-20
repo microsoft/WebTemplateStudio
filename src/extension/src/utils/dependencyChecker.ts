@@ -4,10 +4,6 @@ const os = require('os');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
-// const NODE = 'node';
-// const PYTHON = 'python';
-// const PYTHON3 = 'python3';
-// const PYTHON_LAUNCHER = 'py -3';
 const PYTHON3_REGEX = RegExp('^Python 3\\.[5-9]\\.[0-9]');
 
 export class DependencyChecker extends WizardServant {
@@ -46,7 +42,6 @@ export class DependencyChecker extends WizardServant {
   async checkDependency(message: any): Promise<IPayloadResponse> {
     let name: string = message.payload.dependency;
     let state: boolean = false;
-
     if (name === CONSTANTS.DEPENDENCY_CHECKER.NODE) {
       try { 
         const { stdout } = await exec(CONSTANTS.DEPENDENCY_CHECKER.NODE + ' --version');
