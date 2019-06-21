@@ -43,7 +43,7 @@ Microsoft Web Template Studio is currently built and maintained by a new group o
 [Annie Liang](https://www.linkedin.com/in/annie-l-715643a1/),
 [Nipun Jindal](https://www.linkedin.com/in/nipun-jindal-87046510a/),
 [Jasmin Goh](https://www.linkedin.com/in/jasmingoh/),
-[JeongSoo (Jason) Doo](https://www.linkedin.com/in/jason-doo/),
+[Jason Doo](https://www.linkedin.com/in/jason-doo/),
 [Tanya Tan](https://www.linkedin.com/in/tanya-tan-programmer/)
 
 **Coaches**
@@ -56,3 +56,8 @@ Microsoft Web Template Studio is currently built and maintained by a new group o
 
 [Clint Rutkas](https://www.linkedin.com/in/clintrutkas/),
 [Stephane Morichere-Matte](https://www.linkedin.com/in/stephanemoricherematte/)
+
+**Sponsors**
+
+[Michael Harsh](https://www.linkedin.com/in/michael-harsh/),
+[Sibille Metzler](https://www.linkedin.com/in/sibille-metzler-823609/)
