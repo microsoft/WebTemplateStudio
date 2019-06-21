@@ -48,6 +48,7 @@ Microsoft Web Template Studio is currently built and maintained by a new group o
 
 **Coaches**
 
+[Den Delimarsky](https://www.linkedin.com/in/dendeli/),
 [Juan Camilo Osorio](https://www.linkedin.com/in/jcoc611/),
 [Meha Kaushik](https://www.linkedin.com/in/meha-kaushik-22931210a/),
 [Piotr Markowski](https://www.linkedin.com/in/piotr-markowski-7728b09a/)
