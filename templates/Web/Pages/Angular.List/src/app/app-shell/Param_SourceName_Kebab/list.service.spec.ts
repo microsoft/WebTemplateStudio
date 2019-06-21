@@ -9,8 +9,7 @@ describe('ListService', () => {
       imports: [
         HttpClientTestingModule
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   it('should be created', () => {

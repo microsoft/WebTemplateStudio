@@ -15,7 +15,8 @@ export class ListFormComponent implements OnInit {
 
   ngOnInit() {
     this.listForm = new FormGroup({
-      content: new FormControl('')});
+      content: new FormControl('')
+    });
   }
 
   get content() { return this.listForm.get('content'); }
