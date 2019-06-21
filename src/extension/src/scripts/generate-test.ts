@@ -41,71 +41,52 @@ let attemptSync: any = (
               }
             );
 
-            instance
-              .getPages(projType, frontend[0], backend[0])
-              .then(pages => {
+            function getPages(projType: string, frontend: any, backend: any) {
+              pagesObj = [];
+              instance.getPages(projType, frontend, backend).then(pages => {
                 pages.forEach((page: { name: any; templateId: any }) => {
-                  console.log(page);
                   pagesObj.push({
                     name: page.name,
                     identity: page.templateId
                   });
                 });
-
-                function getPages(
-                  projType: string,
-                  frontend: any,
-                  backend: any
-                ) {
-                  pagesObj = [];
-                  instance.getPages(projType, frontend, backend).then(pages => {
-                    pages.forEach((page: { name: any; templateId: any }) => {
-                      pagesObj.push({
-                        name: page.name,
-                        identity: page.templateId
-                      });
-                    });
-                  });
-                  return pagesObj;
-                }
-
-                function generateProj(backend: string, frontend: string) {
-                  return () => {
-                    console.log(`generating ${backend} ${frontend}`);
-                    return instance.generate({
-                      port: instance.getPort(),
-                      payload: {
-                        backendFramework: backend,
-                        frontendFramework: frontend,
-                        pages: getPages(projType, frontend, backend),
-                        path: "../../../../../src/extension/src/template_test",
-                        projectName: backend + "-" + frontend,
-                        projectType: projType,
-                        services: []
-                      },
-                      liveMessageHandler: value => {
-                        value;
-                      }
-                    });
-                  };
-                }
-
-                let prevPromise: Promise<any> = Promise.resolve(null);
-                for (var i = 0; i < frontend.length; i++) {
-                  for (var j = 0; j < backend.length; j++) {
-                    prevPromise = prevPromise.then(
-                      generateProj(backend[j], frontend[i])
-                    );
-                  }
-                }
-
-                prevPromise.then(() => {
-                  console.log("done");
-                });
-              })
-              .catch((error: Error) => {
-                throw Error(error.toString());
               });
+              return pagesObj;
+            }
+
+            function generateProj(backend: string, frontend: string) {
+              return () => {
+                console.log(`generating ${backend} ${frontend}`);
+                return instance.generate({
+                  port: instance.getPort(),
+                  payload: {
+                    backendFramework: backend,
+                    frontendFramework: frontend,
+                    pages: getPages(projType, frontend, backend),
+                    path: "../../../../../src/extension/src/template_test",
+                    projectName: backend + "-" + frontend,
+                    projectType: projType,
+                    services: []
+                  },
+                  liveMessageHandler: value => {
+                    value;
+                  }
+                });
+              };
+            }
+
+            let prevPromise: Promise<any> = Promise.resolve(null);
+            for (var i = 0; i < frontend.length; i++) {
+              for (var j = 0; j < backend.length; j++) {
+                prevPromise = prevPromise.then(
+                  generateProj(backend[j], frontend[i])
+                );
+              }
+            }
+
+            prevPromise.then(() => {
+              console.log("done");
+            });
           })
           .catch((error: Error) => {
             throw Error(error.toString());

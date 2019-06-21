@@ -1,31 +1,50 @@
-var child_process = require("child_process");
-var test_log = child_process
+let child_process = require("child_process");
+let test_log = child_process
   .execSync("ls", { cwd: "../../src/template_test" })
   .toString();
-var files = test_log.split("\n");
+let files = test_log.split("\n");
 files.pop();
 console.log(files);
-console.log(test_log);
-var checker: { pid: any };
+let checker: { pid: any };
 
-files.forEach((file: string) => {
+function killport(port: number) {
+  try {
+    let tempPort = child_process.execSync(`netstat -aon | findstr "${port}"`, {
+      stdio: "pipe"
+    });
+    let result = tempPort.toString();
+    let resultArr = result.split("\n");
+    resultArr.pop();
+    resultArr.forEach((item: string) => {
+      let temp = item
+        .trim()
+        .replace(/  +/g, " ")
+        .split(" ")
+        .pop();
+      child_process.execSync(`taskkill -F /PID ${temp}`, {
+        stdio: "inherit"
+      });
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+files.forEach((file: any) => {
   child_process.execSync("yarn install", {
     cwd: `../../src/template_test/${file}/${file}`
-  });
-  child_process.execSync("pwd", {
-    cwd: `../../src/template_test/${file}/${file}`,
-    stdio: "inherit"
   });
   try {
     try {
       checker = child_process.execSync("yarn start &", {
         cwd: `../../src/template_test/${file}/${file}`,
         stdio: "inherit",
-        timeout: 3000
+        timeout: 10000
       });
     } catch (err) {
       if (err.code == "ETIMEDOUT") {
-        child_process("taskkill", ["/pid", checker.pid, "/f", "/t"]);
+        killport(3000);
+        killport(3001);
+        console.log("bobobo");
         console.log("Error message: " + err.code);
       } else {
         throw err;
@@ -36,8 +55,7 @@ files.forEach((file: string) => {
       stdio: "inherit"
     });
   } catch (err) {
-    console.log("========> rip");
-    console.log("Error message: " + err);
+    console.log("Error: " + err);
     throw err;
   }
 });
