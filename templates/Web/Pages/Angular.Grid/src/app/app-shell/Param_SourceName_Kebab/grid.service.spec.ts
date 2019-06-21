@@ -9,8 +9,7 @@ describe('GridService', () => {
       imports: [
         HttpClientTestingModule
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   it('should be created', () => {

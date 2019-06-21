@@ -11,10 +11,10 @@ export class GridService {
 
   private listUrl = environment.endpoint.grid;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getGridItems(): Observable<IGridTextItem[]> {
-      return this.http.get<IGridTextItem[]>(this.listUrl);
+    return this.http.get<IGridTextItem[]>(this.listUrl);
   }
 }
 
@@ -24,4 +24,3 @@ export interface IGridTextItem {
   header: string;
   id: number;
 }
-

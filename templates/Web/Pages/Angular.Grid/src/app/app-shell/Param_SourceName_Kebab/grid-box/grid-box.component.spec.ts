@@ -1,5 +1,4 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
 
 import { GridBoxComponent } from './grid-box.component';
 
@@ -9,12 +8,10 @@ describe('GridBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GridBoxComponent ],
-      imports: [
-        MatIconModule
+      declarations: [
+        GridBoxComponent
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
