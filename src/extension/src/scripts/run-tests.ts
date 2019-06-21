@@ -6,7 +6,7 @@ var files = test_log.split("\n");
 files.pop();
 console.log(files);
 console.log(test_log);
-var checker;
+var checker: { pid: any };
 
 files.forEach((file: string) => {
   child_process.execSync("yarn install", {
@@ -21,10 +21,15 @@ files.forEach((file: string) => {
       checker = child_process.execSync("yarn start &", {
         cwd: `../../src/template_test/${file}/${file}`,
         stdio: "inherit",
-        timeout: 10000
+        timeout: 3000
       });
     } catch (err) {
-      console.log("Error message: " + err.code);
+      if (err.code == "ETIMEDOUT") {
+        child_process("taskkill", ["/pid", checker.pid, "/f", "/t"]);
+        console.log("Error message: " + err.code);
+      } else {
+        throw err;
+      }
     }
     child_process.execSync("yarn build", {
       cwd: `../../src/template_test/${file}/${file}`,
