@@ -2,13 +2,13 @@
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class NavBarComponent implements OnInit {
   skipLinkPath: string;
-  constructor(private location: Location) {}
+  constructor(private location: Location) { }
 
   ngOnInit() {
     this.skipLinkPath = `${this.location.path()}#mainContent`;
