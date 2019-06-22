@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ListFormComponent } from './list-form.component';
 
@@ -8,9 +10,15 @@ describe('ListFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListFormComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        ListFormComponent
+      ],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        NgbAlertModule
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

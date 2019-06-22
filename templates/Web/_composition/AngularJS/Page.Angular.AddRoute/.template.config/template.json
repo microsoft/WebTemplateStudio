@@ -1,16 +1,17 @@
-{
+﻿{
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
-    "name": "Page.Flask.Grid.AddMerging",
+    "name": "Page.Angular.AddRoute",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == Flask & groupIdentity == wts.Page.Grid"
+    "wts.compositionFilter": "$frontendframework == Angular & wts.type == page",
+    "wts.casing.sourceName": "kebab|pascal|camel"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
@@ -21,9 +22,21 @@
         "type": "parameter",
         "replaces": "Param_RootNamespace"
       },
+      "wts.homePageName": {
+        "type": "parameter",
+        "replaces": "Param_HomePageName"
+      },
       "wts.itemNamespace": {
         "type": "parameter",
         "replaces": "Param_ItemNamespace"
+      },
+      "wts.sourceName.casing.kebab": {
+        "type": "parameter",
+        "replaces": "Param_SourceName_Kebab"
+      },
+      "wts.sourceName.casing.pascal": {
+        "type": "parameter",
+        "replaces": "Param_SourceName_Pascal"
       }
     }
   }

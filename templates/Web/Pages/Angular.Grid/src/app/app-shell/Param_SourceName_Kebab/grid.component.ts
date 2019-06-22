@@ -2,8 +2,6 @@
 
 import { GridService, IGridTextItem } from './grid.service';
 
-import { GridService, IGridTextItem } from './grid.service';
-
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',

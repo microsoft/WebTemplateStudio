@@ -1,21 +1,19 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MasterDetailSidebarTabComponent } from './master-detail-sidebar-tab.component';
+import { ListItemComponent } from './list-item.component';
 
 describe('ListItemComponent', () => {
-  let component: MasterDetailSidebarTabComponent;
-  let fixture: ComponentFixture<MasterDetailSidebarTabComponent>;
+  let component: ListItemComponent;
+  let fixture: ComponentFixture<ListItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        MasterDetailSidebarTabComponent
-      ]
+      declarations: [ListItemComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MasterDetailSidebarTabComponent);
+    fixture = TestBed.createComponent(ListItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
