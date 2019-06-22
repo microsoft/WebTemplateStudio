@@ -1,6 +1,4 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material/icon';
 
 import { GridService, IGridTextItem } from './grid.service';
 
@@ -11,6 +9,7 @@ import { GridService, IGridTextItem } from './grid.service';
 })
 export class GridComponent implements OnInit {
 
+  GreyBox = require('../../../assets/GreyBox.svg') as string;
   WarningMessageText = 'Request to get grid text failed:';
   WarningMessageOpen = false;
   gridTextAssets: IGridTextItem[] = [
@@ -25,11 +24,7 @@ export class GridComponent implements OnInit {
       id: 1
     }
   ];
-  constructor(private gridService: GridService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
-      'grey-box',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/GreyBox.svg'));
-  }
+  constructor(private gridService: GridService) { }
 
   ngOnInit() {
     this.gridService.getGridItems().subscribe(

@@ -1,6 +1,7 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ListComponent } from './list.component';
 import { ListFormComponent } from './list-form/list-form.component';
@@ -21,10 +22,11 @@ describe('ListComponent', () => {
       imports: [
         WarningMessageModule,
         FormsModule,
-        HttpClientTestingModule
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        NgbAlertModule
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

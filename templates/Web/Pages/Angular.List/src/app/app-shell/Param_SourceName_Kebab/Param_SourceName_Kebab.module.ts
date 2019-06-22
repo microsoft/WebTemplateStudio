@@ -1,6 +1,7 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ListComponent } from './list.component';
 import { Param_SourceName_PascalRoutingModule } from './Param_SourceName_Kebab-routing.module';
@@ -17,6 +18,8 @@ import { WarningMessageModule } from '../../shared/warning-message/warning-messa
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
+    NgbAlertModule,
     WarningMessageModule,
     Param_SourceName_PascalRoutingModule
   ]

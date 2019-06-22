@@ -26,11 +26,6 @@ export class ListComponent implements OnInit {
   }
 
   handleAddListItem(inputText: string) {
-    if (!inputText) {
-      this.WarningMessageOpen = true,
-      this.WarningMessageText = 'Please enter a valid message';
-      return;
-    }
     this.listService.addListItem(inputText).subscribe(
       (response) => {
         this.listItems.splice(0, 0, response);

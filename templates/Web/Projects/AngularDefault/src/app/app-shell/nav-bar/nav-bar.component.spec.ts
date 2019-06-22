@@ -19,8 +19,7 @@ describe('NavBarComponent', () => {
       providers: [
         Location
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
