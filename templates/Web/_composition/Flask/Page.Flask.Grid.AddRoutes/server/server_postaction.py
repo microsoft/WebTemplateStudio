@@ -11,8 +11,8 @@ app = Flask(__name__)
 //{[{
 # Grid Page Endpoint
 @app.route(CONSTANTS['ENDPOINT']['GRID'])
-def getGrid():
+def get_grid():
     return jsonify(
-        sampleData['textAssets']
+        sampleData['text_assets']
     )
 //}]}

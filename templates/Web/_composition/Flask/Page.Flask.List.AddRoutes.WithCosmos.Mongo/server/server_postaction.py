@@ -18,27 +18,27 @@ app = Flask(__name__)
 //{[{
 # List Endpoints
 @app.route(CONSTANTS['ENDPOINT']['LIST'])
-def getList():
-    itemCol = list_items.find()
-    data = [serialize(item) for item in itemCol]
-    return jsonify(data)
+def get_list():
+    items = list_items.find()
+    serialized_list_items = [serialize(item) for item in items]
+    return jsonify(serialized_list_items)
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'], methods=['POST'])
-def addListItem():
+def add_list_item():
     data = request.get_json()
-    listItem = {'text': data['text']}
-    created = list_items.insert_one(listItem)
+    list_item = {'text': data['text']}
+    created_item = list_items.insert_one(list_item)
     return make_response(
         jsonify(
-            {'_id': str(created.inserted_id), 'text': listItem['text']}
+            {'_id': str(created_item.inserted_id), 'text': list_item['text']}
         ), 201
     )
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<id>', methods=['DELETE'])
-def deleteListItem(id):
-    queryStr = {'_id': ObjectId(id)}
+def delete_list_item(id):
+    query_str = {'_id': ObjectId(id)}
     count = 0
-    result = list_items.find(queryStr)
+    result = list_items.find(query_str)
     for item in iter(result):
         count += 1
     if count == 0:
@@ -48,7 +48,7 @@ def deleteListItem(id):
             ),
             404
         )
-    list_items.delete_one(queryStr)
+    list_items.delete_one(query_str)
     return jsonify(
         {'_id': id, 'text': 'This comment was deleted'}
     )

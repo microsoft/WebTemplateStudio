@@ -10,9 +10,9 @@ app = Flask(__name__)
 
 //{[{
 # MasterDetail Page Endpoint
-@app.route(CONSTANTS['ENDPOINT']['MASTERDETAIL'])
-def getMasterDetail():
+@app.route(CONSTANTS['ENDPOINT']['MASTER_DETAIL'])
+def get_msater_detail():
     return jsonify(
-        sampleData['textAssets']
+        sampleData['text_assets']
     )
 //}]}
