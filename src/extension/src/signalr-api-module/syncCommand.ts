@@ -1,5 +1,5 @@
 import { CoreTemplateStudioApiCommand } from "./coreTemplateStudioApiCommand";
-import { CONSTANTS } from "../constants_test";
+import { CONSTANTS } from "../constants";
 //import { Logger } from "../utils/logger";
 
 export class SyncCommand extends CoreTemplateStudioApiCommand {

@@ -1,5 +1,5 @@
 import { CoreTemplateStudio } from "../coreTemplateStudio";
-import { CONSTANTS } from "../constants_test";
+import { CONSTANTS } from "../CONSTANTS";
 
 let instance: CoreTemplateStudio;
 let backend: string[] = [];
@@ -41,16 +41,26 @@ let attemptSync: any = (
               }
             );
 
-            function getPages(projType: string, frontend: any, backend: any) {
-              pagesObj = [];
-              instance.getPages(projType, frontend, backend).then(pages => {
-                pages.forEach((page: { name: any; templateId: any }) => {
-                  pagesObj.push({
-                    name: page.name,
-                    identity: page.templateId
+            function getPagesObj(
+              instance: CoreTemplateStudio,
+              projType: string,
+              frontend: any,
+              backend: any
+            ) {
+              instance
+                .getPages(projType, frontend, backend)
+                .then(pages => {
+                  pagesObj = [];
+                  pages.forEach((page: { name: any; templateId: any }) => {
+                    pagesObj.push({
+                      name: page.name,
+                      identity: page.templateId
+                    });
                   });
+                })
+                .catch(err => {
+                  console.log(err);
                 });
-              });
               return pagesObj;
             }
 
@@ -62,7 +72,7 @@ let attemptSync: any = (
                   payload: {
                     backendFramework: backend,
                     frontendFramework: frontend,
-                    pages: getPages(projType, frontend, backend),
+                    pages: getPagesObj(instance, projType, frontend, backend),
                     path: "../../../../../src/extension/src/template_test",
                     projectName: backend + "-" + frontend,
                     projectType: projType,
