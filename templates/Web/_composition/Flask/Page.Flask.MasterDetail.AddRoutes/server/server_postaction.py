@@ -13,6 +13,6 @@ app = Flask(__name__)
 @app.route(CONSTANTS['ENDPOINT']['MASTER_DETAIL'])
 def get_msater_detail():
     return jsonify(
-        sampleData['text_assets']
+        sample_data['text_assets']
     )
 //}]}
