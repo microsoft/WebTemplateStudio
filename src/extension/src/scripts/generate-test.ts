@@ -41,11 +41,7 @@ let attemptSync: any = (
               }
             );
 
-            let getPagesObj = (
-              projType: string,
-              frontend: any,
-              backend: any
-            ) => {
+            let getPagesObj = (frontend: any, backend: any) => {
               return instance
                 .getPages(projType, frontend, backend)
                 .then(pages => {
@@ -58,13 +54,13 @@ let attemptSync: any = (
                   });
                   return pagesObj;
                 })
-                .catch(err => {
-                  console.log(err);
+                .catch((error: Error) => {
+                  console.log(error.toString());
                 });
             };
 
             let generateProj = (backend: string, frontend: string) => {
-              return getPagesObj(projType, frontend, backend).then(pagesObj => {
+              return getPagesObj(frontend, backend).then(pagesObj => {
                 return instance.generate({
                   port: instance.getPort(),
                   payload: {
