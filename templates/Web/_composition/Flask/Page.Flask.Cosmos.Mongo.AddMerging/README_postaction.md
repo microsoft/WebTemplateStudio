@@ -1,4 +1,4 @@
-## Next Steps
+﻿## Next Steps
 //^^
 //{[{
 
@@ -11,22 +11,20 @@ the .env file. The schema and operations for the Cosmos database are defined in 
 Additional documentation can be found here: [Cosmos Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/services/azure-cosmos.md).
 //}]}
 
-### Deployment
+## File Structure
 
-The generated templates can be deployed to Azure App Service using the following steps:
+The back-end is based on [Flask](https://github.com/pallets/flask).
+The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/.
 
+```
+.
 ├── server/ - Flask server that provides API routes and serves front-end
 //{[{
 │ ├── mongo/ - Handles all interactions with the cosmos database
 //}]}
 │ ├── constants.py - Defines the constants for the endpoints and port
 │ └── server.py - Configures Port and HTTP Server and provides API routes
-//^^
-//{[{
-├── .env - API Keys
-//}]}
 └── README.md
-
 ```
 
 ## Additional Documentation
