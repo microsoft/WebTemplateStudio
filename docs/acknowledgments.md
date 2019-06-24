@@ -1,6 +1,6 @@
 # Acknowledgments
 
-Microsoft Web Template Studio was initially built by a great group of interns from the Microsoft Garage.  This full list of individuals that helped build the project during the first quarter of 2019.
+Microsoft Web Template Studio was initially built by a great group of interns from the Microsoft Garage. This full list of individuals that helped build the project during the first quarter of 2019.
 
 **Design Intern**
 
@@ -31,3 +31,34 @@ Microsoft Web Template Studio was initially built by a great group of interns fr
 
 [Clint Rutkas](https://www.linkedin.com/in/clintrutkas/),
 [Stephane Morichere-Matte](https://www.linkedin.com/in/stephanemoricherematte/)
+
+Microsoft Web Template Studio is currently built and maintained by a new group of interns from the Microsoft Garage. This full list of individuals that helped build the project during the summer quarter of 2019.
+
+**Design Intern**
+
+[Christina Weng](https://www.linkedin.com/in/christina-weng/)
+
+**Developer Interns**
+
+[Annie Liang](https://www.linkedin.com/in/annie-l-715643a1/),
+[Nipun Jindal](https://www.linkedin.com/in/nipun-jindal-87046510a/),
+[Jasmin Goh](https://www.linkedin.com/in/jasmingoh/),
+[Jason Doo](https://www.linkedin.com/in/jason-doo/),
+[Tanya Tan](https://www.linkedin.com/in/tanya-tan-programmer/)
+
+**Coaches**
+
+[Den Delimarsky](https://www.linkedin.com/in/dendeli/),
+[Juan Camilo Osorio](https://www.linkedin.com/in/jcoc611/),
+[Meha Kaushik](https://www.linkedin.com/in/meha-kaushik-22931210a/),
+[Piotr Markowski](https://www.linkedin.com/in/piotr-markowski-7728b09a/)
+
+**Program Managers**
+
+[Clint Rutkas](https://www.linkedin.com/in/clintrutkas/),
+[Stephane Morichere-Matte](https://www.linkedin.com/in/stephanemoricherematte/)
+
+**Sponsors**
+
+[Michael Harsh](https://www.linkedin.com/in/michael-harsh/),
+[Sibille Metzler](https://www.linkedin.com/in/sibille-metzler-823609/)
