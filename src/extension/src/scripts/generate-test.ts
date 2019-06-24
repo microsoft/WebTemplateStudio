@@ -2,8 +2,8 @@ import { CoreTemplateStudio } from "../coreTemplateStudio";
 import { CONSTANTS } from "../CONSTANTS";
 
 let instance: CoreTemplateStudio;
-let backend: string[] = [];
-let frontend: string[] = [];
+let backends: string[] = [];
+let frontends: string[] = [];
 let pagesObj: any[] = [];
 const projType = "FullStackWebApp";
 let syncAttemptNum = 0;
@@ -34,9 +34,9 @@ let attemptSync: any = (
             frameworks.forEach(
               (obj: { tags: { type: string }; name: string }) => {
                 if (obj.tags.type == "frontend") {
-                  frontend.push(obj.name);
+                  frontends.push(obj.name);
                 } else if (obj.tags.type == "backend") {
-                  backend.push(obj.name);
+                  backends.push(obj.name);
                 }
               }
             );
@@ -87,8 +87,8 @@ let attemptSync: any = (
             };
 
             let prevPromise: Promise<any> = Promise.resolve(null);
-            frontend.forEach(frontendFrameWork => {
-              backend.forEach(backendFramework => {
+            frontends.forEach(frontendFrameWork => {
+              backends.forEach(backendFramework => {
                 prevPromise = prevPromise.then(() =>
                   generateProj(backendFramework, frontendFrameWork)
                 );
