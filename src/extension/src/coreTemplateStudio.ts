@@ -54,11 +54,11 @@ export class CoreTemplateStudio {
       executableName += ".exe";
     }
 
-    if (context) {
-      apiPath = vscode.Uri.file(
-        path.join(extensionPath, "src", "api", platform, executableName)
-      ).fsPath;
-    }
+    // if (context) {
+    //   apiPath = vscode.Uri.file(
+    //     path.join(extensionPath, "src", "api", platform, executableName)
+    //   ).fsPath;
+    // }
 
     apiPath = path.join(extensionPath, "src", "api", platform, executableName);
 
