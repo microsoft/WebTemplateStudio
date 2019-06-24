@@ -8,7 +8,7 @@
       formControlName="content"
       required
     />
-    <ngb-alert type='danger' *ngIf="content.invalid && content.dirty">
+    <ngb-alert type="danger" *ngIf="content.invalid && content.dirty">
       <div *ngIf="content.errors.required">
         Input must be at least 1 character long.
       </div>

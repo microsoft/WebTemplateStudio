@@ -1,5 +1,4 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { MasterDetailComponent } from './master-detail.component';
@@ -20,11 +19,9 @@ describe('MasterDetailComponent', () => {
       ],
       imports: [
         WarningMessageModule,
-        MatIconModule,
         HttpClientTestingModule
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
