@@ -1,6 +1,4 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material/icon';
 
 import { MasterDetailService, IMasterDetailText } from './master-detail.service';
 
@@ -11,16 +9,13 @@ import { MasterDetailService, IMasterDetailText } from './master-detail.service'
 })
 export class MasterDetailComponent implements OnInit {
 
+  GreyAvatar = require('../../../assets/GreyAvatar.svg') as string;
   WarningMessageText = 'Request to get master detail text failed:';
   WarningMessageOpen = false;
   currentDisplayTabIndex = 0;
   masterDetailText: IMasterDetailText[] = [];
 
-  constructor(private masterDetailService: MasterDetailService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
-        'grey-avatar',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/GreyAvatar.svg'));
-  }
+  constructor(private masterDetailService: MasterDetailService) { }
 
   ngOnInit() {
     this.masterDetailService.getMasterDetailItems().subscribe(
