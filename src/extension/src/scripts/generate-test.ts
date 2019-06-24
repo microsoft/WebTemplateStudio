@@ -86,13 +86,13 @@ let attemptSync: any = (
             };
 
             let prevPromise: Promise<any> = Promise.resolve(null);
-            for (var i = 0; i < frontend.length; i++) {
-              for (var j = 0; j < backend.length; j++) {
+            frontend.forEach(frontendFrameWork => {
+              backend.forEach(backendFramework => {
                 prevPromise = prevPromise.then(
-                  generateProj(backend[j], frontend[i])
+                  generateProj(backendFramework, frontendFrameWork)
                 );
-              }
-            }
+              });
+            });
 
             prevPromise.then(() => {
               console.log("done");
