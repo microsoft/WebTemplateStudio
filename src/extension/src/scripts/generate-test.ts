@@ -107,8 +107,7 @@ let attemptSync: any = (
         syncAttemptNum++;
         return delay(3000).then(() => attemptSync(instance, syncAttemptNum));
       });
-  }
-  if (syncAttemptNum >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
+  } else {
     CoreTemplateStudio.DestroyInstance();
     throw new Error("too many failed sync requests");
   }
