@@ -42,7 +42,6 @@ let attemptSync: any = (
             );
 
             let getPagesObj = (
-              instance: CoreTemplateStudio,
               projType: string,
               frontend: any,
               backend: any
@@ -65,25 +64,23 @@ let attemptSync: any = (
             };
 
             let generateProj = (backend: string, frontend: string) => {
-              return getPagesObj(instance, projType, frontend, backend).then(
-                pagesObj => {
-                  return instance.generate({
-                    port: instance.getPort(),
-                    payload: {
-                      backendFramework: backend,
-                      frontendFramework: frontend,
-                      pages: pagesObj,
-                      path: "../../../../../src/extension/src/template_test",
-                      projectName: backend + "-" + frontend,
-                      projectType: projType,
-                      services: []
-                    },
-                    liveMessageHandler: value => {
-                      value;
-                    }
-                  });
-                }
-              );
+              return getPagesObj(projType, frontend, backend).then(pagesObj => {
+                return instance.generate({
+                  port: instance.getPort(),
+                  payload: {
+                    backendFramework: backend,
+                    frontendFramework: frontend,
+                    pages: pagesObj,
+                    path: "../../../../../src/extension/src/template_test",
+                    projectName: backend + "-" + frontend,
+                    projectType: projType,
+                    services: []
+                  },
+                  liveMessageHandler: value => {
+                    value;
+                  }
+                });
+              });
             };
 
             let prevPromise: Promise<any> = Promise.resolve(null);
