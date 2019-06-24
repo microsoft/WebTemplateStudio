@@ -84,7 +84,7 @@ interface IDispatchProps {
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
-  updateDependencyInfo: (dependencyInfo: any) => any;
+  updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
   resetPageSelection: () => any;
   selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
