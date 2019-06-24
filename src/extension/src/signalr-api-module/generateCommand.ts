@@ -1,5 +1,5 @@
 import { CoreTemplateStudioApiCommand } from "./coreTemplateStudioApiCommand";
-import { CONSTANTS } from "../CONSTANTS";
+import { CONSTANTS } from "../constants";
 import { IGenerationPayloadType } from "../types/generationPayloadType";
 import { IEngineGenerationPayloadType } from "../types/engineGenerationPayloadType";
 
