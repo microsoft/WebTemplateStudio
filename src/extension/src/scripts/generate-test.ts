@@ -47,7 +47,7 @@ let attemptSync: any = (
               frontend: any,
               backend: any
             ) => {
-              instance
+              return instance
                 .getPages(projType, frontend, backend)
                 .then(pages => {
                   pagesObj = [];
@@ -57,38 +57,39 @@ let attemptSync: any = (
                       identity: page.templateId
                     });
                   });
+                  return pagesObj;
                 })
                 .catch(err => {
                   console.log(err);
                 });
-              return pagesObj;
             };
 
             let generateProj = (backend: string, frontend: string) => {
-              return () => {
-                console.log(`generating ${backend} ${frontend}`);
-                return instance.generate({
-                  port: instance.getPort(),
-                  payload: {
-                    backendFramework: backend,
-                    frontendFramework: frontend,
-                    pages: getPagesObj(instance, projType, frontend, backend),
-                    path: "../../../../../src/extension/src/template_test",
-                    projectName: backend + "-" + frontend,
-                    projectType: projType,
-                    services: []
-                  },
-                  liveMessageHandler: value => {
-                    value;
-                  }
-                });
-              };
+              return getPagesObj(instance, projType, frontend, backend).then(
+                pagesObj => {
+                  return instance.generate({
+                    port: instance.getPort(),
+                    payload: {
+                      backendFramework: backend,
+                      frontendFramework: frontend,
+                      pages: pagesObj,
+                      path: "../../../../../src/extension/src/template_test",
+                      projectName: backend + "-" + frontend,
+                      projectType: projType,
+                      services: []
+                    },
+                    liveMessageHandler: value => {
+                      value;
+                    }
+                  });
+                }
+              );
             };
 
             let prevPromise: Promise<any> = Promise.resolve(null);
             frontend.forEach(frontendFrameWork => {
               backend.forEach(backendFramework => {
-                prevPromise = prevPromise.then(
+                prevPromise = prevPromise.then(() =>
                   generateProj(backendFramework, frontendFrameWork)
                 );
               });
