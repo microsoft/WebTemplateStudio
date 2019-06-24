@@ -41,7 +41,10 @@ import {
   updateTemplateGenerationStatusAction
 } from "./actions/wizardInfoActions/updateGenStatusActions";
 import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
-import { updateDependencyInfoAction } from "./actions/wizardInfoActions/updateDependencyInfo";
+import {
+  updateDependencyInfoAction,
+  IDependencyInfo
+} from "./actions/wizardInfoActions/updateDependencyInfo";
 
 import appStyles from "./appStyles.module.css";
 import { startLogOutAzure } from "./actions/azureActions/logOutAzure";
@@ -307,7 +310,7 @@ const mapDispatchToProps = (
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => {
     dispatch(updateTemplateGenerationStatusAction(isGenerated));
   },
-  updateDependencyInfo: (dependencyInfo: any) => {
+  updateDependencyInfo: (dependencyInfo: IDependencyInfo) => {
     dispatch(updateDependencyInfoAction(dependencyInfo));
   },
   getVersionsData: (versions: IVersions) => {
