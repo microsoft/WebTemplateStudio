@@ -8,11 +8,11 @@ let pagesObj: any[] = [];
 const projType = "FullStackWebApp";
 let syncAttemptNum = 0;
 
-function delay(time: number) {
+const delay = (time: number) => {
   return new Promise(function(resolve) {
     setTimeout(resolve, time);
   });
-}
+};
 
 let attemptSync: any = (
   instanceObj: CoreTemplateStudio,
@@ -41,12 +41,12 @@ let attemptSync: any = (
               }
             );
 
-            function getPagesObj(
+            let getPagesObj = (
               instance: CoreTemplateStudio,
               projType: string,
               frontend: any,
               backend: any
-            ) {
+            ) => {
               instance
                 .getPages(projType, frontend, backend)
                 .then(pages => {
@@ -62,9 +62,9 @@ let attemptSync: any = (
                   console.log(err);
                 });
               return pagesObj;
-            }
+            };
 
-            function generateProj(backend: string, frontend: string) {
+            let generateProj = (backend: string, frontend: string) => {
               return () => {
                 console.log(`generating ${backend} ${frontend}`);
                 return instance.generate({
@@ -83,7 +83,7 @@ let attemptSync: any = (
                   }
                 });
               };
-            }
+            };
 
             let prevPromise: Promise<any> = Promise.resolve(null);
             for (var i = 0; i < frontend.length; i++) {
@@ -113,7 +113,6 @@ let attemptSync: any = (
   }
 };
 
-//to do - call sync again
 CoreTemplateStudio.GetInstance(undefined)
   .then(res => {
     instance = res;
@@ -124,6 +123,3 @@ CoreTemplateStudio.GetInstance(undefined)
   .catch((error: Error) => {
     throw Error(error.toString());
   });
-// 	Make sure your} Typescript script gets compiled into JavaScript by yarn build (Node cannot run Typescript directly, so it needs to be converted into JavaScript first)
-// 	Add a yarn generate in package.json ("generate": "react-scripts generate-test")?
-// 	Add a step to the dev build pipeline that calls yarn generate after building the extension. Make sure pipeline fails if your generate script outputs any errors
