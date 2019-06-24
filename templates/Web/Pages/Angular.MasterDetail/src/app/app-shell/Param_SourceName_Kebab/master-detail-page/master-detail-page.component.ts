@@ -20,9 +20,8 @@ export class MasterDetailPageComponent implements OnInit {
       orderTotal: 0.0,
       longDescription: '',
       shortDescription: '',
-      id: 0,
-      tabName: ''
-    }
+      id: 0
+    };
   }
 
 }
