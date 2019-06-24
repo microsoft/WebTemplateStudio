@@ -7,7 +7,7 @@ import * as os from "os";
 import * as fs from "fs";
 
 import { ChildProcess, execFile } from "child_process";
-import { CONSTANTS } from "./CONSTANTS";
+import { CONSTANTS } from "./constants";
 import { GenerateCommand } from "./signalr-api-module/generateCommand";
 import { SyncCommand } from "./signalr-api-module/syncCommand";
 import { ICommandPayload } from "./signalr-api-module/commandPayload";
