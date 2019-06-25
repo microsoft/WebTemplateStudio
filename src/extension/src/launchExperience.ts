@@ -76,7 +76,8 @@ export class LaunchExperience {
           templatesVersion: syncResult.templatesVersion
         };
       })
-      .catch(() => {
+      .catch((error: Error) => {
+        Logger.appendLog("EXTENSION", "error", error.message);
         return { successfullySynced: false, templatesVersion: "" };
       });
   }
