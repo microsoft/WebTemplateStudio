@@ -94,10 +94,7 @@ const SelectableCard = ({
           </div>
         </div>
         {isPreview && isFrameworkSelection && selected && (
-          <DependencyInfo
-            frameworkName={option.internalName}
-            installed={true}
-          />
+          <DependencyInfo frameworkName={option.internalName} />
         )}
         <div className={grid.row}>
           <div className={styles.body}>
