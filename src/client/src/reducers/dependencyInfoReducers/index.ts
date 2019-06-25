@@ -2,12 +2,12 @@ import { combineReducers } from "redux";
 import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
 import { IUpdateDependencyInfo } from "../../actions/wizardInfoActions/updateDependencyInfo";
 
-interface IDependency {
+interface IDependencyInstalled {
   installed: boolean;
 }
 
 interface IDependencies {
-  [key: string]: IDependency;
+  [key: string]: IDependencyInstalled;
 }
 
 export const initialState = {};

@@ -1,13 +1,16 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import styles from "./styles.module.css";
 import * as getSvg from "../../utils/getSvgUrl";
 import classnames from "classnames";
 import { injectIntl, defineMessages } from "react-intl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import { AppState } from "../../reducers";
 
 interface IDependencyInfoProps {
   frameworkName: string;
   intl: any;
+  dependenciesStore: any;
 }
 
 type Props = IDependencyInfoProps;
@@ -64,21 +67,19 @@ const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
  */
 class DependencyInfo extends React.Component<Props> {
   public render() {
-    let { frameworkName, intl } = this.props;
+    let { frameworkName, intl, dependenciesStore } = this.props;
     let dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
       frameworkName
     );
 
     if (dependency === undefined) {
-      return null;
+      return null; // don't render anything
     }
 
-    let dependencyName: string = dependency.displayName;
-    let downloadLink: string = dependency.downloadLink;
-    let privacyStatementLink: string = dependency.privacyStatementLink;
-
-    // grab this from redux store uisng dependencyName
-    let installed = true;
+    const dependencyName: string = dependency.displayName;
+    const downloadLink: string = dependency.downloadLink;
+    const privacyStatementLink: string = dependency.privacyStatementLink;
+    let installed = dependenciesStore[dependency.dependencyName].installed;
 
     let dependencyMessage: string = installed
       ? intl.formatMessage(messages.installed)
@@ -116,4 +117,10 @@ class DependencyInfo extends React.Component<Props> {
   }
 }
 
-export default injectIntl(DependencyInfo);
+const mapStateToProps = (state: AppState): any => {
+  return {
+    dependenciesStore: state.dependencyInfo.dependencies
+  };
+};
+
+export default connect(mapStateToProps)(injectIntl(DependencyInfo));
