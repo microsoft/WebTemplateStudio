@@ -1,12 +1,10 @@
-.DS_Store
-node_modules
-/build
-
 # vscode configuration
 .vscode/
 
-# Hide API Keys
-.env
+//{[{
+.DS_Store
+
+/build
 
 # production
 /server/build
@@ -28,3 +26,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+//}]}
+
+# dependencies
+/node_modules
