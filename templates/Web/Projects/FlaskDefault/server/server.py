@@ -1,17 +1,20 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask import jsonify
 from flask import make_response
 from constants import CONSTANTS
+import os
+from os.path import exists, join
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder = 'build')
 
 # Catching all routes
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    # TODO: This return statement needs to be replaced by the index.html page
-    # of compiled front-end application once we figure out how deployment works 
-    return 'You want path: %s' % path
+    if path != "" and exists(join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 # Error Handler
 @app.errorhandler(404)
