@@ -93,6 +93,7 @@ let attemptSync: any = (
 
       prevPromise.then(() => {
         console.log("project generation complete");
+        CoreTemplateStudio.DestroyInstance();
       });
     })
     .catch(() => {
