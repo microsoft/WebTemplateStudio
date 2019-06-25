@@ -77,8 +77,10 @@ const EXTENSION_MODULES = {
   GENERATE: "GenerateExperience",
   TELEMETRY: "Telemetry",
   VALIDATOR: "Validator",
-  VSCODEUI: "VSCodeUI"
+  VSCODEUI: "VSCodeUI",
+  DEPENDENCYCHECKER: "DependencyChecker"
 };
+
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
   AZURE_LOGIN: "login",
@@ -99,7 +101,8 @@ const EXTENSION_COMMANDS = {
   GET_VERSIONS: "get-versions",
   CLOSE_WIZARD: "close-wizard",
   RESET_PAGES: "reset-pages",
-  GET_PREVIEW_STATUS: "get-preview"
+  GET_PREVIEW_STATUS: "get-preview",
+  GET_DEPENDENCY_INFO: "check-dependency"
 };
 
 export {

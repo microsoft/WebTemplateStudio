@@ -1,0 +1,42 @@
+.dependencyContainer {
+  border-radius: 3px;
+  padding: 3px 10px 3px 10px;
+  margin-right: 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.disabled {
+  pointer-events: none;
+  text-decoration: none;
+}
+
+.borderGreen {
+  border: 1px solid #99ffa7;
+}
+
+.borderYellow {
+  border: 1px solid #fabf1a;
+}
+
+.icon {
+  height: 12px;
+}
+
+.body {
+  margin-left: 6px;
+  font-style: normal;
+  font-weight: light;
+  font-size: 12px;
+  /* or 222% */
+}
+
+.bodyGreen {
+  color: #99ffa7;
+}
+
+.bodyYellow {
+  color: #fabf1a;
+}
