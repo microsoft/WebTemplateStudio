@@ -6,8 +6,8 @@ from .settings import *
 class SQLObj():
     def __init__(self):
         self.client = cosmos_client.CosmosClient(
-            url_connection=connection_key,
-            auth={'masterKey': master_key}
+            url_connection = connection_key,
+            auth = {'masterKey': master_key}
         )
         self.db = self.client.CreateDatabase(
             {'id': CONSTANTS['COSMOS']['DATABASE']}
