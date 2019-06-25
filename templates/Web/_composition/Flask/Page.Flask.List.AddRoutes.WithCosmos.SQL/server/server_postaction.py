@@ -1,15 +1,17 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask import jsonify
 from flask import make_response
 //{[{
 from flask import request
 //}]}
 from constants import CONSTANTS
+import os
+from os.path import exists, join
 //{[{
 from sql.sqlClient import SQLObj
 //}]}
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder = 'build')
 
 //{[{
 sql_database_obj = SQLObj()

@@ -11,24 +11,20 @@ the .env file. The schema and operations for the Cosmos database are defined in 
 Additional documentation can be found here: [Cosmos Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/services/azure-cosmos.md).
 //}]}
 
-### Deployment
+## File Structure
 
-The generated templates can be deployed to Azure App Service using the following steps:
+The back-end is based on [Flask](https://github.com/pallets/flask).
+The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/.
 
-├── server/ - Express server that provides API routes and serves front-end
+```
+.
+├── server/ - Flask server that provides API routes and serves front-end
 //{[{
 │ ├── sql/ - Handles all interactions with the cosmos database
 //}]}
-│ ├── routes/ - Handles API calls for routes
-│ ├── app.js - Adds middleware to the express server
-│ ├── constants.js - Defines the constants for the endpoints and port
-│ └── server.js - Configures Port and HTTP Server
-//^^
-//{[{
-├── .env - API Keys
-//}]}
+│ ├── constants.py - Defines the constants for the endpoints and port
+│ └── server.py - Configures Port and HTTP Server and provides API routes
 └── README.md
-
 ```
 
 ## Additional Documentation
@@ -36,7 +32,7 @@ The generated templates can be deployed to Azure App Service using the following
 - Bootstrap CSS - https://getbootstrap.com/
 //^^
 //{[{
-- Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/create-sql-api-nodejs
+- Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/create-sql-api-python
 //}]}
 
   This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).

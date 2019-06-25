@@ -1,10 +1,12 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask import jsonify
 from flask import make_response
 //{[{
 from flask import request
 //}]}
 from constants import CONSTANTS
+import os
+from os.path import exists, join
 //{[{
 from mongo.mongoClient import *
 from bson import json_util, ObjectId
@@ -13,7 +15,7 @@ from mongo.settings import *
 from mongo.utils import serialize
 //}]}
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder = 'build')
 
 //{[{
 # List Endpoints
