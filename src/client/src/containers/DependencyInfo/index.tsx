@@ -40,7 +40,7 @@ interface IDependencies {
 
 const dependencies: IDependencies = {
   NodeJS: {
-    dependencyName: "node",
+    dependencyName: "node", // command used on the extension side
     displayName: "Node",
     downloadLink: "https://nodejs.org/en/download/",
     privacyStatementLink: "https://nodejs.org/en/about/privacy/"
