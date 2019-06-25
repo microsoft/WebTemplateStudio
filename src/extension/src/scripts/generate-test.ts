@@ -4,7 +4,6 @@ import { CONSTANTS } from "../constants";
 let instance: CoreTemplateStudio;
 let backends: string[] = [];
 let frontends: string[] = [];
-let pagesObj: any[] = [];
 const projType = "FullStackWebApp";
 let syncAttemptNum = 0;
 let prevPromise: Promise<any> = Promise.resolve(null);
@@ -23,14 +22,9 @@ let getPagesObj = (
   return instance
     .getPages(projType, frontend, backend)
     .then(pages => {
-      pagesObj = [];
-      pages.forEach((page: { name: any; templateId: any }) => {
-        pagesObj.push({
-          name: page.name,
-          identity: page.templateId
-        });
+      return pages.map((page: { name: string; templateId: string }) => {
+        return { name: page.name, identity: page.templateId };
       });
-      return pagesObj;
     })
     .catch((error: Error) => {
       console.log(error.toString());
