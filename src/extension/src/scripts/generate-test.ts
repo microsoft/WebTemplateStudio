@@ -17,8 +17,8 @@ const delay = (time: number) => {
 
 let getPagesObj = (
   instance: CoreTemplateStudio,
-  frontend: any,
-  backend: any
+  frontend: string,
+  backend: string
 ) => {
   return instance
     .getPages(projType, frontend, backend)
@@ -69,7 +69,6 @@ let attemptSync: any = (
     CoreTemplateStudio.DestroyInstance();
     throw new Error("too many failed sync requests");
   }
-
   return instanceObj
     .sync({
       port: instance.getPort(),
@@ -78,35 +77,29 @@ let attemptSync: any = (
         value;
       }
     })
-    .then(() => {
-      instance
-        .getFrameworks(projType)
-        .then(frameworks => {
-          frameworks.forEach(
-            (obj: { tags: { type: string }; name: string }) => {
-              if (obj.tags.type == "frontend") {
-                frontends.push(obj.name);
-              } else if (obj.tags.type == "backend") {
-                backends.push(obj.name);
-              }
-            }
+    .then(async () => {
+      return await instance.getFrameworks(projType);
+    })
+    .then(frameworks => {
+      frameworks.forEach((obj: { tags: { type: string }; name: string }) => {
+        if (obj.tags.type == "frontend") {
+          frontends.push(obj.name);
+        } else if (obj.tags.type == "backend") {
+          backends.push(obj.name);
+        }
+      });
+
+      frontends.forEach(frontendFrameWork => {
+        backends.forEach(backendFramework => {
+          prevPromise = prevPromise.then(() =>
+            generateProj(instance, backendFramework, frontendFrameWork)
           );
-
-          frontends.forEach(frontendFrameWork => {
-            backends.forEach(backendFramework => {
-              prevPromise = prevPromise.then(() =>
-                generateProj(instance, backendFramework, frontendFrameWork)
-              );
-            });
-          });
-
-          prevPromise.then(() => {
-            console.log("done");
-          });
-        })
-        .catch((error: Error) => {
-          throw Error(error.toString());
         });
+      });
+
+      prevPromise.then(() => {
+        console.log("done");
+      });
     })
     .catch(() => {
       syncAttemptNum++;

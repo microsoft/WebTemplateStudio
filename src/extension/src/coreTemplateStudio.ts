@@ -42,7 +42,6 @@ export class CoreTemplateStudio {
     let platform = process.platform;
     let executableName = CONSTANTS.API.BASE_APPLICATION_NAME;
     let extensionPath;
-    let apiPath;
 
     if (context) {
       extensionPath = context.extensionPath;
@@ -54,13 +53,13 @@ export class CoreTemplateStudio {
       executableName += ".exe";
     }
 
-    // if (context) {
-    //   apiPath = vscode.Uri.file(
-    //     path.join(extensionPath, "src", "api", platform, executableName)
-    //   ).fsPath;
-    // }
-
-    apiPath = path.join(extensionPath, "src", "api", platform, executableName);
+    let apiPath = path.join(
+      extensionPath,
+      "src",
+      "api",
+      platform,
+      executableName
+    );
 
     let apiWorkingDirectory = path.join(extensionPath, "src", "api", platform);
 
