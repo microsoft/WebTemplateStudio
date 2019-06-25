@@ -34,7 +34,6 @@ const SelectableCard = ({
   clickCount,
   disabled,
   isFrameworkSelection,
-  dependencies,
   isPreview
 }: {
   iconPath: string | undefined;
@@ -49,7 +48,6 @@ const SelectableCard = ({
   clickCount?: number;
   disabled: boolean | undefined;
   isFrameworkSelection: boolean;
-  dependencies: any;
   isPreview: boolean;
 }) => {
   function detailsClickWrapper(
@@ -145,8 +143,7 @@ const SelectableCard = ({
 const mapStateToProps = (state: AppState): any => {
   const { previewStatus } = state.wizardContent;
   return {
-    isPreview: previewStatus,
-    dependencies: state.dependencyInfo.dependencies
+    isPreview: previewStatus
   };
 };
 
