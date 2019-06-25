@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import CardBody from "../../components/CardBody";
 import CardTitle from "../../components/CardTitle";
-import DependencyInfo from "../../components/DependencyInfo";
+import DependencyInfo from "../DependencyInfo";
 import { ReactComponent as Check } from "../../assets/check.svg";
 
 import grid from "../../css/grid.module.css";
