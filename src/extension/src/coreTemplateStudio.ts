@@ -46,9 +46,6 @@ export class CoreTemplateStudio {
 
     if (context) {
       extensionPath = context.extensionPath;
-      apiPath = vscode.Uri.file(
-        path.join(extensionPath, "src", "api", platform, executableName)
-      ).fsPath;
     } else {
       extensionPath = path.join(__dirname, "..");
     }
