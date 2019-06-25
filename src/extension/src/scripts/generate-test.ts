@@ -98,7 +98,7 @@ let attemptSync: any = (
       });
 
       prevPromise.then(() => {
-        console.log("done");
+        console.log("project generation complete");
       });
     })
     .catch(() => {
