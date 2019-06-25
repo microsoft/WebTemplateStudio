@@ -6,14 +6,14 @@ interface IDependencyInstalled {
   installed: boolean;
 }
 
-interface IDependencies {
+export interface IDependenciesInstalled {
   [key: string]: IDependencyInstalled;
 }
 
 export const initialState = {};
 
 export const updateDependencyInfo = (
-  state: IDependencies = initialState,
+  state: IDependenciesInstalled = initialState,
   action: IUpdateDependencyInfo
 ) => {
   switch (action.type) {

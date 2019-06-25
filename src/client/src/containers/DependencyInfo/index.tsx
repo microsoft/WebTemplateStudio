@@ -6,11 +6,12 @@ import classnames from "classnames";
 import { injectIntl, defineMessages } from "react-intl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import { AppState } from "../../reducers";
+import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
 
 interface IDependencyInfoProps {
   frameworkName: string;
   intl: any;
-  dependenciesStore: any;
+  dependenciesStore: IDependenciesInstalled;
 }
 
 type Props = IDependencyInfoProps;
