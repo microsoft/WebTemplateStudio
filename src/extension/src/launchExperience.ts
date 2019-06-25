@@ -77,7 +77,7 @@ export class LaunchExperience {
         };
       })
       .catch((error: Error) => {
-        Logger.appendLog("EXTENSION", "error", error.message);
+        //Logger.appendLog("EXTENSION", "error", error.message);
         return { successfullySynced: false, templatesVersion: "" };
       });
   }
