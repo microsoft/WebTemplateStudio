@@ -6,6 +6,7 @@ import {
   IUpdateGenStatus
 } from "./updateGenStatusActions";
 import { IResetWizard } from "./resetWizardAction";
+import { IUpdateDependencyInfo } from "./updateDependencyInfo";
 
 type WizardInfoType =
   | IVersionData
@@ -13,6 +14,7 @@ type WizardInfoType =
   | ISetVisitedPage
   | IUpdateGenStatus
   | IResetWizard
-  | IUpdateGenStatusMessage;
+  | IUpdateGenStatusMessage
+  | IUpdateDependencyInfo;
 
 export default WizardInfoType;

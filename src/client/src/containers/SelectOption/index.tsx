@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SelectableCard from "../../components/SelectableCard";
+import SelectableCard from "../SelectableCard";
 import Title from "../../components/Title";
 
 import styles from "./styles.module.css";
@@ -26,6 +26,7 @@ interface ISelectOptionProps {
   selectOptions?: (cards: ISelected[]) => void;
   options: IOption[];
   multiSelect: boolean;
+  isFrameworkSelection: boolean;
   cardTypeCount?: ICount;
   handleCountUpdate?: (cardCount: ICount) => any;
 }
@@ -213,7 +214,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   };
 
   public render() {
-    const { title, options, setDetailPage } = this.props;
+    const { title, options, setDetailPage, isFrameworkSelection } = this.props;
     return (
       <div>
         <Title>{title}</Title>
@@ -223,6 +224,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
             return (
               <SelectableCard
                 key={`${cardNumber} ${title}`}
+                isFrameworkSelection={isFrameworkSelection}
                 onCardClick={(cardNumber: number) => {
                   this.onCardClick(cardNumber);
                 }}

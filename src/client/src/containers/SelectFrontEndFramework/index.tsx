@@ -118,6 +118,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
             selectCard={this.handleFrameworkChange.bind(this)}
             multiSelect={false}
             title={intl.formatMessage(messages.selectFrontendFramework)}
+            isFrameworkSelection={true}
             options={options}
             selectedCardIndices={this.convertSelectionToIndexNumber(
               selectedFrontendFramework
