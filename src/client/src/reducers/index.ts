@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
 import azureProfileData from "./azureLoginReducers";
-import modals from "./modalReducers";
-import vscodeApi from "./vscodeApiReducer";
-import wizardContent from "./wizardContentReducers";
-import selection from "./wizardSelectionReducers";
-import wizardRoutes from "./wizardRoutes";
+import dependencyInfo from "./dependencyInfoReducers";
 import generationStatus from "./generationStatus";
+import modals from "./modalReducers";
+import wizardContent from "./wizardContentReducers";
+import wizardRoutes from "./wizardRoutes";
+import vscodeApi from "./vscodeApiReducer";
+import selection from "./wizardSelectionReducers";
 import versions from "./versionsReducer";
 
 const rootReducer = combineReducers({
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   modals,
   wizardRoutes,
   generationStatus,
-  versions
+  versions,
+  dependencyInfo
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
