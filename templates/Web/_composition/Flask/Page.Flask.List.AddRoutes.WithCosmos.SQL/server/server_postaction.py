@@ -17,13 +17,13 @@ sql_database_obj = SQLObj()
 # List Endpoints
 @app.route(CONSTANTS['ENDPOINT']['LIST'])
 def get_list():
-    queryStr = {
+    query_str = {
         'query': "SELECT r.id as _id, r.text FROM root r ORDER BY r._ts DESC"}
     options = {}
     options['enableCrossPartitionQuery'] = True
     options['maxItemCount'] = 2
     results_iterable = sql_database_obj.get_client().QueryItems(
-        sql_database_obj.get_container()['_self'], queryStr, options)
+        sql_database_obj.get_container()['_self'], query_str, options)
     return jsonify(
         list(results_iterable)
     )
@@ -45,14 +45,14 @@ def add_list_item():
 def delete_list_item(id):
     # use parameterized queries to avoid SQL injection attacks
     findStr = "SELECT * FROM c where c.id = @id"
-    queryStr = {
+    query_str = {
         'query': findStr,
         'parameters': [
             {'name': '@id', 'value': id}
         ]
     }
     result = sql_database_obj.get_client().QueryItems(
-        sql_database_obj.get_container()['_self'], queryStr)
+        sql_database_obj.get_container()['_self'], query_str)
     count = sum(1 for _ in iter(result))
     if count == 0:
         return make_response(
