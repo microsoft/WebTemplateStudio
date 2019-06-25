@@ -95,20 +95,12 @@ const SelectableCard = ({
             <CardTitle title={title} />
           </div>
         </div>
-        {isPreview &&
-          isFrameworkSelection &&
-          selected &&
-          (option.internalName === "Flask" ? (
-            <DependencyInfo
-              frameworkName={"Flask"}
-              installed={dependencies.python.installed}
-            />
-          ) : (
-            <DependencyInfo
-              frameworkName={"NodeJS"}
-              installed={dependencies.node.installed}
-            />
-          ))}
+        {isPreview && isFrameworkSelection && selected && (
+          <DependencyInfo
+            frameworkName={option.internalName}
+            installed={true}
+          />
+        )}
         <div className={grid.row}>
           <div className={styles.body}>
             <CardBody body={body} />

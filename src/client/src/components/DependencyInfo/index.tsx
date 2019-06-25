@@ -2,11 +2,11 @@ import * as React from "react";
 import styles from "./styles.module.css";
 import * as getSvg from "../../utils/getSvgUrl";
 import classnames from "classnames";
-import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+import { injectIntl, defineMessages } from "react-intl";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 interface IDependencyInfoProps {
   frameworkName: string;
-  installed: boolean;
   intl: any;
 }
 
@@ -27,18 +27,58 @@ const messages = defineMessages({
   }
 });
 
+interface IDependency {
+  [key: string]: string;
+}
+
+interface IDependencies {
+  [key: string]: IDependency;
+}
+
+const dependencies: IDependencies = {
+  NodeJS: {
+    dependencyName: "node",
+    displayName: "Node",
+    downloadLink: "https://nodejs.org/en/download/",
+    privacyStatementLink: "https://nodejs.org/en/about/privacy/"
+  },
+  Python: {
+    dependencyName: "python",
+    displayName: "Python",
+    downloadLink: "https://www.python.org/downloads/",
+    privacyStatementLink: "https://www.python.org/privacy/"
+  }
+};
+
+const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.NodeJS],
+  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, dependencies.Python],
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_JS, dependencies.NodeJS],
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.NodeJS],
+  [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS, dependencies.NodeJS]
+]);
+
 /*
  * Props:
- * - frameworkName: "NodeJS" | "Flask"
- * - installed: boolean, true if correct version installed, otherwise false
+ * - frameworkName: string
  */
 class DependencyInfo extends React.Component<Props> {
   public render() {
-    let { frameworkName, installed, intl } = this.props;
+    let { frameworkName, intl } = this.props;
+    let dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
+      frameworkName
+    );
 
-    if (installed === undefined) {
+    if (dependency === undefined) {
       return null;
     }
+
+    let dependencyName: string = dependency.displayName;
+    let downloadLink: string = dependency.downloadLink;
+    let privacyStatementLink: string = dependency.privacyStatementLink;
+
+    // grab this from redux store uisng dependencyName
+    let installed = true;
 
     let dependencyMessage: string = installed
       ? intl.formatMessage(messages.installed)
@@ -47,16 +87,6 @@ class DependencyInfo extends React.Component<Props> {
     let icon: any = installed
       ? getSvg.getGreenCheckSvg()
       : getSvg.getWarningSvg();
-
-    // map framework name to dependency name
-    let dependencyName = frameworkName === "Flask" ? "Python" : "Node";
-
-    let downloadLink: string = "";
-    if (dependencyName === "Node") {
-      downloadLink = "https://nodejs.org/en/download/";
-    } else if (dependencyName === "Python") {
-      downloadLink = "https://www.python.org/downloads/";
-    }
 
     return (
       <a
