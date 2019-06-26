@@ -80,9 +80,8 @@ class DependencyInfo extends React.Component<Props> {
       return null; // don't render anything
     }
 
-    const { dependencyName, downloadLink, privacyStatementLink } = dependency;
-    const installed: boolean =
-      dependenciesStore[dependency.commandName].installed;
+    const { dependencyName, downloadLink, commandName } = dependency;
+    const installed: boolean = dependenciesStore[commandName].installed;
 
     let dependencyMessage: string = installed
       ? intl.formatMessage(messages.installed)
