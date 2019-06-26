@@ -32,7 +32,10 @@ const messages = defineMessages({
 });
 
 interface IDependency {
-  [key: string]: string;
+  commandName: string;
+  dependencyName: string;
+  downloadLink: string;
+  privacyStatementLink: string;
 }
 
 interface IDependencies {
@@ -41,14 +44,14 @@ interface IDependencies {
 
 const dependencies: IDependencies = {
   NodeJS: {
-    dependencyName: "node", // command used on the extension side
-    displayName: "Node",
+    commandName: "node", // command used on the extension side
+    dependencyName: "Node",
     downloadLink: "https://nodejs.org/en/download/",
     privacyStatementLink: "https://nodejs.org/en/about/privacy/"
   },
   Python: {
-    dependencyName: "python",
-    displayName: "Python",
+    commandName: "python",
+    dependencyName: "Python",
     downloadLink: "https://www.python.org/downloads/",
     privacyStatementLink: "https://www.python.org/privacy/"
   }
@@ -77,11 +80,9 @@ class DependencyInfo extends React.Component<Props> {
       return null; // don't render anything
     }
 
-    const dependencyName: string = dependency.displayName;
-    const downloadLink: string = dependency.downloadLink;
-    const privacyStatementLink: string = dependency.privacyStatementLink;
+    const { dependencyName, downloadLink, privacyStatementLink } = dependency;
     const installed: boolean =
-      dependenciesStore[dependency.dependencyName].installed;
+      dependenciesStore[dependency.commandName].installed;
 
     let dependencyMessage: string = installed
       ? intl.formatMessage(messages.installed)
