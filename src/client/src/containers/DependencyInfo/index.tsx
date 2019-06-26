@@ -3,15 +3,15 @@ import { connect } from "react-redux";
 import styles from "./styles.module.css";
 import * as getSvg from "../../utils/getSvgUrl";
 import classnames from "classnames";
-import { injectIntl, defineMessages } from "react-intl";
+import { injectIntl, defineMessages, InjectedIntl } from "react-intl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import { AppState } from "../../reducers";
 import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
 
 interface IDependencyInfoProps {
-  frameworkName: string;
-  intl: any;
   dependenciesStore: IDependenciesInstalled;
+  frameworkName: string;
+  intl: InjectedIntl;
 }
 
 type Props = IDependencyInfoProps;
@@ -58,10 +58,10 @@ const dependencies: IDependencies = {
 };
 
 const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.NodeJS],
-  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, dependencies.Python],
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT_JS, dependencies.NodeJS],
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.NodeJS],
   [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.NodeJS],
+  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, dependencies.Python],
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS, dependencies.NodeJS]
 ]);
 
