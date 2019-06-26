@@ -149,7 +149,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             role="complementary"
             className={classNames(styles.container, styles.rightViewCropped)}
           >
-            {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+            {
               <div>
                 <div className={styles.title}>
                   {formatMessage(messages.yourProjectDetails)}
@@ -192,7 +192,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   </div>
                 )}
               </div>
-            )}
+            }
             <div>
               <Licenses />
               <About />

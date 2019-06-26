@@ -5,7 +5,7 @@ from constants import CONSTANTS
 import os
 from os.path import exists, join
 //{[{
-from sampleData import *
+from sample_data import *
 //}]}
 
 app = Flask(__name__, static_folder = 'build')
@@ -13,8 +13,8 @@ app = Flask(__name__, static_folder = 'build')
 //{[{
 # Grid Page Endpoint
 @app.route(CONSTANTS['ENDPOINT']['GRID'])
-def getGrid():
+def get_grid():
     return jsonify(
-        sampleData['textAssets']
+        sample_data['text_assets']
     )
 //}]}
