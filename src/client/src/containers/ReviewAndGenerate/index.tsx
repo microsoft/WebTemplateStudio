@@ -1,120 +1,82 @@
 import * as React from "react";
 import { connect } from "react-redux";
-
-import SummarySection from "../SummarySection";
-import SummaryTile from "../../components/SummaryTile";
-import SortablePageList from "../SortablePageList";
+import classnames from "classnames";
 
 import * as ModalActions from "../../actions/modalActions/modalActions";
-import * as WizardSelectors from "../../selectors/wizardSelectionSelector";
 
 import styles from "./styles.module.css";
-
-import { RowType } from "../../types/rowType";
+import buttonStyles from "../../css/buttonStyles.module.css";
 
 import Title from "../../components/Title";
-
-import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
-import { withLocalPath } from "../../utils/getSvgUrl";
-import folder from "../../assets/folder.svg";
-import { AppState } from "../../reducers";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../actions/ActionType";
+import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
 
 interface IDispatchProps {
-  openCosmosDbModal: () => any;
-  openAzureFunctionsModal: () => any;
+  openViewLicensesModal: () => any;
 }
 
-interface IStateProps {
-  frameworkRows: RowType[];
-  servicesRows: RowType[];
-  vscode: any;
-  projectName: string;
-  outputPath: string;
-}
-
-type Props = IStateProps & IDispatchProps & InjectedIntlProps;
+type Props = IDispatchProps & InjectedIntlProps;
 
 const messages = defineMessages({
-  welcome: {
-    id: "review.newProject",
-    defaultMessage: "New Project"
+  viewLicenses: {
+    id: "licenses.viewLicenses",
+    defaultMessage: "View Licenses"
   },
-  frameworks: {
-    id: "review.frameworks",
-    defaultMessage: "Frameworks"
+  launchYourProject: {
+    id: "instructionHeading.launchYourProject",
+    defaultMessage: "Launch Your Project"
   },
-  pages: {
-    id: "review.pages",
-    defaultMessage: "Pages"
+  almostDone: {
+    id: "context.almostDone",
+    defaultMessage:
+      "You're almost done - review your project details on the right and make any necessary adjustments!"
   },
-  services: {
-    id: "review.services",
-    defaultMessage: "Services"
-  },
-  reviewAndGenerate: {
-    id: "review.reviewAndGenerate",
-    defaultMessage: "Your project summary."
+  giveFeedback: {
+    id: "about.reportAnIssueLabel",
+    defaultMessage: "Give Feedback"
   }
 });
 
 const ReviewAndGenerate = (props: Props) => {
-  const { servicesRows, intl, frameworkRows, projectName, outputPath } = props;
+  const { intl, openViewLicensesModal } = props;
+  const { formatMessage } = intl;
+
   return (
     <div className={styles.container}>
-      <Title>{intl.formatMessage(messages.reviewAndGenerate)}</Title>
-      <div className={styles.selectionContainer}>
-        <div className={styles.selectionTitle}>
-          {intl.formatMessage(messages.welcome)}
+      <div className={styles.reviewContextContainer}>
+        <div className={styles.selectionContainer}>
+          <Title>{formatMessage(messages.launchYourProject)}</Title>
+          {formatMessage(messages.almostDone)}
         </div>
-        <SummaryTile
-          showFolderIcon={true}
-          svgUrl={withLocalPath(folder)}
-          title={projectName}
-          subTitle={`${outputPath}/${projectName}`}
-        />
-      </div>
-      <SummarySection
-        selectionTitle={intl.formatMessage(messages.frameworks)}
-        selectionRows={frameworkRows}
-      />
-      <div className={styles.selectionContainer}>
-        <div className={styles.selectionTitle}>
-          {intl.formatMessage(messages.pages)}
+        <div className={styles.buttonContainer}>
+          <button
+            className={classnames(buttonStyles.buttonDark, styles.leftButton)}
+            onClick={openViewLicensesModal}
+          >
+            {formatMessage(messages.viewLicenses)}
+          </button>
+          <button
+            className={classnames(buttonStyles.buttonDark, styles.button)}
+          >
+            <a
+              className={styles.link}
+              href="https://github.com/Microsoft/WebTemplateStudio/issues"
+            >
+              {formatMessage(messages.giveFeedback)}
+            </a>
+          </button>
         </div>
-        <SortablePageList isSummaryPage={true} />
       </div>
-      <SummarySection
-        selectionTitle={intl.formatMessage(messages.services)}
-        selectionRows={servicesRows}
-        canDelete={true}
-      />
     </div>
   );
 };
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  openCosmosDbModal: () => {
-    dispatch(ModalActions.openCosmosDbModalAction());
-  },
-  openAzureFunctionsModal: () => {
-    dispatch(ModalActions.openAzureFunctionsModalAction());
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  openViewLicensesModal: () => {
+    dispatch(ModalActions.openViewLicensesModalAction());
   }
 });
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  frameworkRows: WizardSelectors.getFrameworksRowItemSelector(state),
-  servicesRows: WizardSelectors.getServicesSelector(state),
-  vscode: getVSCodeApiSelector(state),
-  projectName: WizardSelectors.getProjectName(state),
-  outputPath: WizardSelectors.getOutputPath(state)
-});
-
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(injectIntl(ReviewAndGenerate));

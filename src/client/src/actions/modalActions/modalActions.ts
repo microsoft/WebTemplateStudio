@@ -38,9 +38,16 @@ const openPostGenModalAction = () => {
   };
 };
 
+const openViewLicensesModalAction = () => {
+  return (dispatch: Dispatch<ModalActionType>) => {
+    dispatch(openModalAction(MODAL_TYPES.VIEW_LICENSES_MODAL));
+  };
+};
+
 export {
   closeModalAction,
   openAzureFunctionsModalAction,
   openCosmosDbModalAction,
-  openPostGenModalAction
+  openPostGenModalAction,
+  openViewLicensesModalAction
 };
