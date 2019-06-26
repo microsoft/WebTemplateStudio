@@ -8,7 +8,7 @@ from constants import CONSTANTS
 import os
 from os.path import exists, join
 //{[{
-from mongo.mongoClient import *
+from mongo.mongo_client import *
 from bson import json_util, ObjectId
 import json
 from mongo.settings import *
