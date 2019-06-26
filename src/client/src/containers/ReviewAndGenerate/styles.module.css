@@ -3,28 +3,38 @@
   width: 100%;
 }
 
-.title {
-  font-size: 1.4em;
-  font-weight: bold;
-  margin-bottom: 8px;
-  margin-top: 1em;
-}
-
-.tileContainer {
-  margin-bottom: 10px;
-}
-
 .selectionContainer {
   margin-bottom: 24px;
 }
 
-.selectionTitle {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
+.reviewContextContainer{
+  float: left;
+  padding: 70px 100px;
 }
 
-.projectDetailsContainer {
-  margin-left: 2%;
-  width: calc(100% - 40px);
+.button {
+  margin-left: 1em;
+  font-size: 1em;
+}
+
+.leftButton {
+  font-size: 1em;
+}
+
+.button:hover {
+  color: #ffffff;
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
 }
