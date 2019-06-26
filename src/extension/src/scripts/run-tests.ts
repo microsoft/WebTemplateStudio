@@ -1,5 +1,6 @@
 let child_process = require("child_process");
 const fs = require("fs");
+//const rimraf = require("rimraf");
 const testFolder = "../../src/template_test";
 let files: string[] = [];
 fs.readdirSync(testFolder).forEach((file: string) => {
@@ -45,6 +46,7 @@ let deleteFolderRecursive = function(path: string) {
         fs.unlinkSync(curPath);
       }
     });
+    //rimraf.sync("/some/directory");
     fs.rmdirSync(path);
   }
 };
@@ -65,6 +67,7 @@ files.forEach((file: string) => {
   } catch (err) {
     if (err.code == "ETIMEDOUT") {
       killport(3000);
+      killport(3001);
       killport(3002);
     } else {
       throw err;
