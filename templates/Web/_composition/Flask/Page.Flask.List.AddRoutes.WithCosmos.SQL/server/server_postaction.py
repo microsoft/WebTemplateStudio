@@ -8,7 +8,7 @@ from constants import CONSTANTS
 import os
 from os.path import exists, join
 //{[{
-from sql.sqlClient import SQLObj
+from sql.sql_client import SQLObj
 //}]}
 
 app = Flask(__name__, static_folder = 'build')
