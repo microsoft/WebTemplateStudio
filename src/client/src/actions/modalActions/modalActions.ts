@@ -38,9 +38,16 @@ const openPostGenModalAction = () => {
   };
 };
 
+const openPrivacyModalAction = () => {
+  return (dispatch: Dispatch<ModalActionType>) => {
+    dispatch(openModalAction(MODAL_TYPES.PRIVACY_MODAL));
+  };
+};
+
 export {
   closeModalAction,
   openAzureFunctionsModalAction,
   openCosmosDbModalAction,
-  openPostGenModalAction
+  openPostGenModalAction,
+  openPrivacyModalAction
 };

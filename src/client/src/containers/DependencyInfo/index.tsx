@@ -7,14 +7,22 @@ import { injectIntl, defineMessages, InjectedIntl } from "react-intl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import { AppState } from "../../reducers";
 import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
+import * as ModalActions from "../../actions/modalActions/modalActions";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 interface IDependencyInfoProps {
   dependenciesStore: IDependenciesInstalled;
   frameworkName: string;
   intl: InjectedIntl;
+  openPrivacyModal: any;
 }
 
-type Props = IDependencyInfoProps;
+interface IDispatchProps {
+  openPrivacyModal: any;
+}
+
+type Props = IDependencyInfoProps & IDispatchProps;
 
 const messages = defineMessages({
   installed: {
@@ -71,7 +79,12 @@ const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
  */
 class DependencyInfo extends React.Component<Props> {
   public render() {
-    let { frameworkName, intl, dependenciesStore } = this.props;
+    let {
+      frameworkName,
+      intl,
+      dependenciesStore,
+      openPrivacyModal
+    } = this.props;
     let dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
       frameworkName
     );
@@ -93,8 +106,7 @@ class DependencyInfo extends React.Component<Props> {
 
     return (
       <a
-        target={"_blank"}
-        href={downloadLink}
+        onClick={openPrivacyModal}
         className={classnames(styles.dependencyContainer, {
           [styles.disabled]: installed,
           [styles.borderGreen]: installed,
@@ -125,4 +137,15 @@ const mapStateToProps = (state: AppState): any => {
   };
 };
 
-export default connect(mapStateToProps)(injectIntl(DependencyInfo));
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
+  openPrivacyModal: () => {
+    dispatch(ModalActions.openPrivacyModalAction());
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(injectIntl(DependencyInfo));

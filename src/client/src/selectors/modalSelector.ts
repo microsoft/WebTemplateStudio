@@ -9,6 +9,8 @@ const isAzureFunctionsModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.AZURE_FUNCTIONS_MODAL;
 const isPostGenModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.POST_GEN_MODAL;
+const isPrivacyModalOpen = (modal: ModalType): boolean =>
+  modal === MODAL_TYPES.PRIVACY_MODAL;
 
 const isCosmosDbModalOpenSelector = createSelector(
   getOpenModal,
@@ -25,8 +27,14 @@ const isPostGenModalOpenSelector = createSelector(
   isPostGenModalOpen
 );
 
+const isPrivacyModalOpenSelector = createSelector(
+  getOpenModal,
+  isPrivacyModalOpen
+);
+
 export {
   isAzureFunctionsModalOpenSelector,
   isCosmosDbModalOpenSelector,
-  isPostGenModalOpenSelector
+  isPostGenModalOpenSelector,
+  isPrivacyModalOpenSelector
 };
