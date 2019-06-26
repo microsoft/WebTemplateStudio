@@ -23,19 +23,17 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
+import { closeModalAction } from "../../actions/modalActions/modalActions";
 
 interface IStateProps {
   isModalOpen: boolean;
-  // isPostGenModalOpen: boolean;
-  // vscode: IVSCodeObject;
-  // outputPath: string;
 }
 
-// interface IDispatchProps {
-//   resetWizard: () => any;
-// }
+interface IDispatchProps {
+  closeModal: () => any;
+}
 
-type Props = IStateProps;
+type Props = IStateProps & IDispatchProps;
 
 const PrivacyModal = () => {
   return (
@@ -60,7 +58,11 @@ const mapStateToProps = (state: AppState): any => ({
   // vscode: getVSCodeApiSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: any): any => ({});
+const mapDispatchToProps = (dispatch: any): any => ({
+  closeModal: () => {
+    dispatch(closeModalAction());
+  }
+});
 
 export default connect(
   mapStateToProps,
