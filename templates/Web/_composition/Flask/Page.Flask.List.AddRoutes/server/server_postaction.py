@@ -1,44 +1,46 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask import jsonify
 from flask import make_response
 //{[{
 from flask import request
 //}]}
 from constants import CONSTANTS
+import os
+from os.path import exists, join
 //{[{
 from sampleData import *
 //}]}
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder = 'build')
 
 //{[{
 # List Endpoints
 @app.route(CONSTANTS['ENDPOINT']['LIST'])
-def getList():
+def get_list():
     return jsonify(
-        sampleData['listTextAssets']['listItems']
+        sample_data['list_text_assets']['list_items']
     )
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'], methods = ['POST'])
-def addListItem():
+def add_list_item():
     data = request.get_json()
-    listItem = {'_id': sampleData['listTextAssets']['listId'], 'text': data['text']}
-    sampleData['listTextAssets']['listItems'].insert(0, listItem)
-    sampleData['listTextAssets']['listId'] += 1
+    list_item = {'_id': sample_data['list_text_assets']['list_id'], 'text': data['text']}
+    sample_data['list_text_assets']['list_items'].insert(0, list_item)
+    sample_data['list_text_assets']['list_id'] += 1
     return make_response(
         jsonify(
-            listItem
+            list_item
         ), 201
     )
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<int:id>', methods=['DELETE'])
-def deleteListItem(id):
-    listItemsToRemove = [listItem for listItem in sampleData['listTextAssets']['listItems'] if listItem['_id'] == id]
-    if (len(listItemsToRemove) == 0):
+def delete_list_item(id):
+    list_items_to_remove = [list_item for list_item in sample_data['list_text_assets']['list_items'] if list_item['_id'] == id]
+    if (len(list_items_to_remove) == 0):
         return make_response(jsonify({'error': 'Could not find an item with the given id'}), 404)
-    if (len(listItemsToRemove) > 1):
+    if (len(list_items_to_remove) > 1):
         return make_response(jsonify({'error': 'There is a problem with the server'}), 500)
-    sampleData['listTextAssets']['listItems'] = [listItem for listItem in sampleData['listTextAssets']['listItems'] if listItem['_id'] != id]
+    sample_data['list_text_assets']['list_items'] = [list_item for list_item in sample_data['list_text_assets']['list_items'] if list_item['_id'] != id]
     return jsonify(
         {'_id': id, 'text': 'This comment was deleted'}
     )

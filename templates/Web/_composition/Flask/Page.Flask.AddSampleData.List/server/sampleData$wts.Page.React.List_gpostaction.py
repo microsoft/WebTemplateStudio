@@ -1,21 +1,21 @@
 //{[{
-shortLoremIpsum = 'Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.';
+short_lorem_ipsum = 'Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.';
 //}]}
-sampleData = {}
+sample_data = {}
 
 # This class holds sample data used by some generated pages to show how they can be used.
 # TODO Web Template Studio: Delete this file once your app is using real data.
 //{[{
-sampleData['listTextAssets'] = {
-    'listId': 3,
-    'listItems': [
+sample_data['list_text_assets'] = {
+    'list_id': 3,
+    'list_items': [
         {
             '_id': 1,
-            'text': shortLoremIpsum
+            'text': short_lorem_ipsum
         },
         {
             '_id': 2,
-            'text': shortLoremIpsum
+            'text': short_lorem_ipsum
         }
     ],
 }

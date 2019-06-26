@@ -16,7 +16,7 @@
   {
     "name": "Angular",
     "displayName": "Angular",
-    "summary": "Angular is an open source, front-end web application framework mainly mainted by Google to develop single page applications.",
+    "summary": "Angular is an open source, front-end web application framework maintained by Google to develop single page applications.",
     "author": "Google",
     "order": "1",
     "licenses": "[Angular](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)",
@@ -24,7 +24,7 @@
     "languages": ["Any"],
     "tags": {
       "version": "7.2.0",
-      "preview": true
+      "preview": false
     }
   },
   {

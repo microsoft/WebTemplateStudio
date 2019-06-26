@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+﻿import { async, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { MasterDetailService } from './master-detail.service';
