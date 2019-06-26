@@ -12,6 +12,10 @@
   overflow: auto;
 }
 
+.rightViewCroppedSummaryPage {
+  width: 400px !important; /*change this width after top nav bar migration to change the width of the right side bar on summary page*/
+}
+
 .rightViewCropped {
   width: 400px;
   background-color: var(--vscode-editor-background);
