@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import CardBody from "../../components/CardBody";
 import CardTitle from "../../components/CardTitle";
-import DependencyInfo from "../../components/DependencyInfo";
+import DependencyInfo from "../DependencyInfo";
 import { ReactComponent as Check } from "../../assets/check.svg";
 
 import grid from "../../css/grid.module.css";
@@ -34,7 +34,6 @@ const SelectableCard = ({
   clickCount,
   disabled,
   isFrameworkSelection,
-  dependencies,
   isPreview
 }: {
   iconPath: string | undefined;
@@ -49,7 +48,6 @@ const SelectableCard = ({
   clickCount?: number;
   disabled: boolean | undefined;
   isFrameworkSelection: boolean;
-  dependencies: any;
   isPreview: boolean;
 }) => {
   function detailsClickWrapper(
@@ -95,20 +93,9 @@ const SelectableCard = ({
             <CardTitle title={title} />
           </div>
         </div>
-        {isPreview &&
-          isFrameworkSelection &&
-          selected &&
-          (option.internalName === "Flask" ? (
-            <DependencyInfo
-              frameworkName={"Flask"}
-              installed={dependencies.python.installed}
-            />
-          ) : (
-            <DependencyInfo
-              frameworkName={"NodeJS"}
-              installed={dependencies.node.installed}
-            />
-          ))}
+        {isPreview && isFrameworkSelection && selected && (
+          <DependencyInfo frameworkName={option.internalName} />
+        )}
         <div className={grid.row}>
           <div className={styles.body}>
             <CardBody body={body} />
@@ -153,8 +140,7 @@ const SelectableCard = ({
 const mapStateToProps = (state: AppState): any => {
   const { previewStatus } = state.wizardContent;
   return {
-    isPreview: previewStatus,
-    dependencies: state.dependencyInfo.dependencies
+    isPreview: previewStatus
   };
 };
 
