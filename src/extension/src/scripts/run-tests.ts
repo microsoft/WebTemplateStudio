@@ -54,8 +54,9 @@ let deleteFolderRecursive = function(path: string) {
 files.forEach((file: string) => {
   console.log("file ====================>" + file);
   console.log(`this is what is passed in: ${file}`);
+  const currDir = `../../src/template_test/${file}/${file}`;
   child_process.execSync("yarn install", {
-    cwd: `../../src/template_test/${file}/${file}`,
+    cwd: currDir,
     stdio: "inherit"
   });
   try {
