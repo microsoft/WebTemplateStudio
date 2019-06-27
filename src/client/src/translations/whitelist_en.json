@@ -1,8 +1,5 @@
 [
   "card.details",
-  "dependencyChecker.installed",
-  "dependencyChecker.notInstalled",
-  "dependencyChecker.iconAltMessage",
   "details.back",
   "details.author",
   "details.licenses",
@@ -69,6 +66,9 @@
   "cosmosResourceModule.saveChanges",
   "cosmosResourceModule.createCosmosRes",
   "cosmosResourceModule.internalName",
+  "dependencyChecker.installed",
+  "dependencyChecker.notInstalled",
+  "dependencyChecker.iconAltMessage",
   "footer.back",
   "footer.next",
   "footer.generate",
