@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import asModal from "../../components/Modal";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
+import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isPrivacyModalOpenSelector } from "../../selectors/modalSelector";
 import {
   EXTENSION_COMMANDS,
@@ -31,36 +32,46 @@ interface IDispatchProps {
 
 type Props = IStateProps & IDispatchProps;
 
-/*
- * Props:
- * - downloadLink: string
- * - privacyStatementLink: string
- */
+const PrivacyModal = (props: Props) => {
+  const cancelKeyDownHandler = (event: any) => {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      event.preventDefault();
+      event.stopPropagation();
+      props.closeModal();
+    }
+  };
 
-const PrivacyModal = () => {
   return (
     <div>
-      <div className={styles.title}>{"You are being redirected."}</div>
+      <div className={styles.headerContainer}>
+        <div className={styles.title}>{"You are being redirected"}</div>
+        <Cancel
+          tabIndex={0}
+          className={styles.cancelIcon}
+          onClick={props.closeModal}
+          onKeyDown={cancelKeyDownHandler}
+        />
+      </div>
       <div className={styles.section}>
-        <div>
-          {
-            "You are going to be taken to a third-party website which is a non-Microsoft service."
-          }
-        </div>
+        {
+          "You will be taken to a third-party website which is a non-Microsoft service."
+        }
       </div>
       <div className={styles.footerContainer}>
         <a
           target={"_blank"}
           className={styles.link}
-          href="https://nodejs.org/en/about/privacy/"
+          href={"https://nodejs.org/en/about/privacy/"}
         >
           {"Privacy Statement"}
         </a>
-        <button
+        <a
+          target={"_blank"}
+          href={"https://google.ca"}
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
         >
           {"OK"}
-        </button>
+        </a>
       </div>
     </div>
   );

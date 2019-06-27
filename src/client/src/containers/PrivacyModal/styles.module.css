@@ -3,6 +3,37 @@
   font-size: 1.2em;
 }
 
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.cancelIcon {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  padding: 1px;
+  margin-right: 2px;
+}
+
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cancelIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .section {
   margin-top: 20px;
 }
@@ -23,77 +54,6 @@
 
 .button:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.spinner {
-  margin-right: 5px;
-}
-
-.spinner path {
-  stroke: #ffffff;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.spinner {
-  animation: rotate steps(60) 1s infinite;
-  height: 20px;
-  width: 20px;
-}
-
-.templateStatus {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.openProject {
-  display: inline-block;
-  border: none;
-  margin: 0;
-  text-decoration: none;
-  background: var(--vscode-menu-background);
-  color: var(--vscode-textLink-foreground);
-  font-family: sans-serif;
-  font-size: 1rem;
-  cursor: pointer;
-  text-align: center;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-.loading {
-  font-size: 1em;
-}
-
-.loading:after {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
-  animation: ellipsis steps(4, end) 900ms infinite;
-  content: "\2026";
-  /* ascii code for the ellipsis character */
-  width: 0px;
-}
-
-@keyframes ellipsis {
-  to {
-    width: 1.25em;
-  }
-}
-
-@-webkit-keyframes ellipsis {
-  to {
-    width: 1.25em;
-  }
 }
 
 .link {
