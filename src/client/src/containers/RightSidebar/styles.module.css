@@ -12,15 +12,15 @@
   overflow: auto;
 }
 
-.rightViewCroppedSummaryPage {
-  width: 400px !important; /*change this width after top nav bar migration to change the width of the right side bar on summary page*/
-}
-
 .rightViewCropped {
   width: 400px;
   background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #7f7f7f;
   box-sizing: border-box;
+}
+
+.rightViewCroppedSummaryPage {
+  width: 400px; /*change this width after top nav bar migration to change the width of the right side bar on summary page*/
 }
 
 .rightViewCropped {
