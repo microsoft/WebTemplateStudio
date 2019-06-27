@@ -1,14 +1,10 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router";
-import ReactMarkdown from "react-markdown";
 
 import asModal from "../../components/Modal";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
-
-import * as PostGenSelectors from "../../selectors/postGenerationSelector";
 import { isPrivacyModalOpenSelector } from "../../selectors/modalSelector";
 import {
   EXTENSION_COMMANDS,
@@ -35,27 +31,43 @@ interface IDispatchProps {
 
 type Props = IStateProps & IDispatchProps;
 
+/*
+ * Props:
+ * - downloadLink: string
+ * - privacyStatementLink: string
+ */
+
 const PrivacyModal = () => {
   return (
     <div>
-      <a
-        className={styles.link}
-        href="https://github.com/Microsoft/WebTemplateStudio/issues"
-      >
-        {"hello"}
-      </a>
-      <button
-        className={classnames(buttonStyles.buttonHighlighted, styles.button)}
-      >
-        {"hello"}
-      </button>
+      <div className={styles.title}>{"You are being redirected."}</div>
+      <div className={styles.section}>
+        <div>
+          {
+            "You are going to be taken to a third-party website which is a non-Microsoft service."
+          }
+        </div>
+      </div>
+      <div className={styles.footerContainer}>
+        <a
+          target={"_blank"}
+          className={styles.link}
+          href="https://nodejs.org/en/about/privacy/"
+        >
+          {"Privacy Statement"}
+        </a>
+        <button
+          className={classnames(buttonStyles.buttonHighlighted, styles.button)}
+        >
+          {"OK"}
+        </button>
+      </div>
     </div>
   );
 };
 
 const mapStateToProps = (state: AppState): any => ({
   isModalOpen: isPrivacyModalOpenSelector(state)
-  // vscode: getVSCodeApiSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({
