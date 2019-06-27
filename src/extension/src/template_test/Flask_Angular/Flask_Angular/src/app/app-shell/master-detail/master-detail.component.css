@@ -1,0 +1,4 @@
+﻿.sidebar {
+  /* full height - footer height - navbar height */
+  min-height: calc(100vh - 160px - 57px);
+}

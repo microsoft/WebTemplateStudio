@@ -1,0 +1,24 @@
+﻿<main class="container" id="mainContent">
+  <div class="row">
+    <div class="col mt-5 p-0">
+      <h3>Angular List Template</h3>
+    </div>
+    <div class="col-12 p-0">
+      <app-list-form (inputText)="handleAddListItem($event)"></app-list-form>
+    </div>
+    <app-list-item
+      class="col-12 mb-3 border"
+      *ngFor="let listItem of listItems"
+      [text]="listItem.text"
+      [_id]="listItem._id"
+      (deleteText)="handleDeleteListItem($event)"
+    >
+    </app-list-item>
+
+    <app-warning-message
+      *ngIf="WarningMessageOpen"
+      [text]="WarningMessageText"
+      (WarningMessageOpen)="handleWarningClose($event)"
+    ></app-warning-message>
+  </div>
+</main>

@@ -1,0 +1,29 @@
+﻿<main id="mainContent">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-2 p-0 border-right sidebar">
+        <app-master-detail-sidebar-tab
+          class="list-group list-group-flush border-bottom"
+          *ngFor="let textAssets of masterDetailText; let i = index"
+          (displayTabClick)="handleDisplayTabClick($event)"
+          [tabText]="textAssets.title"
+          [image]="GreyAvatar"
+          [index]="i"
+          [key]="textAssets.id"
+        >
+        </app-master-detail-sidebar-tab>
+      </div>
+      <app-master-detail-page
+        class="col"
+        [textSampleData]="masterDetailText[currentDisplayTabIndex]"
+      >
+      </app-master-detail-page>
+    </div>
+  </div>
+  <app-warning-message
+    *ngIf="WarningMessageOpen"
+    [text]="WarningMessageText"
+    (WarningMessageOpen)="handleWarningClose($event)"
+  >
+  </app-warning-message>
+</main>

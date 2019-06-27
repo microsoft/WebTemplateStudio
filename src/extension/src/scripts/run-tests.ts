@@ -1,7 +1,7 @@
 let child_process = require("child_process");
 const fs = require("fs");
-//const rimraf = require("rimraf");
-const testFolder = "../../src/template_test";
+const path = require("path");
+const testFolder = path.join("..", "..", "src", "template_test");
 let files: string[] = [];
 fs.readdirSync(testFolder).forEach((file: string) => {
   files.push(file.toString());
@@ -46,7 +46,6 @@ let deleteFolderRecursive = function(path: string) {
         fs.unlinkSync(curPath);
       }
     });
-    //rimraf.sync("/some/directory");
     fs.rmdirSync(path);
   }
 };
@@ -54,14 +53,14 @@ let deleteFolderRecursive = function(path: string) {
 files.forEach((file: string) => {
   console.log("file ====================>" + file);
   console.log(`this is what is passed in: ${file}`);
-  const currDir = `../../src/template_test/${file}/${file}`;
+  let currDir = path.join("..", "..", "src", "template_test", file, file);
   child_process.execSync("yarn install", {
     cwd: currDir,
     stdio: "inherit"
   });
   try {
     child_process.execSync("yarn start", {
-      cwd: `../../src/template_test/${file}/${file}`,
+      cwd: currDir,
       stdio: "inherit",
       timeout: 70000
     });
