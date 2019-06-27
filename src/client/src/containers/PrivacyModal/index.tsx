@@ -7,14 +7,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isPrivacyModalOpenSelector } from "../../selectors/modalSelector";
-import {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
-  ROUTES
-} from "../../utils/constants";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
+import { ISelected } from "../../types/selected";
 import { AppState } from "../../reducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getOutputPath } from "../../selectors/wizardSelectionSelector";
@@ -22,8 +16,12 @@ import { strings as messages } from "./strings";
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 
+import { frameworkNameToDependencyMap, IDependency } from "../DependencyInfo";
+
 interface IStateProps {
   isModalOpen: boolean;
+  selectedFrontendFramework: ISelected;
+  selectedBackendFramework: ISelected;
 }
 
 interface IDispatchProps {
@@ -40,6 +38,12 @@ const PrivacyModal = (props: Props) => {
       props.closeModal();
     }
   };
+
+  const dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
+    props.selectedFrontendFramework.internalName
+  );
+
+  console.log(dependency);
 
   return (
     <div>
@@ -77,9 +81,15 @@ const PrivacyModal = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState): any => ({
-  isModalOpen: isPrivacyModalOpenSelector(state)
-});
+const mapStateToProps = (state: AppState): IStateProps => {
+  const { frontendFramework, backendFramework } = state.selection;
+
+  return {
+    isModalOpen: isPrivacyModalOpenSelector(state),
+    selectedFrontendFramework: frontendFramework,
+    selectedBackendFramework: backendFramework
+  };
+};
 
 const mapDispatchToProps = (dispatch: any): any => ({
   closeModal: () => {

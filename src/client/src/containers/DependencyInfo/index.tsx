@@ -39,7 +39,7 @@ const messages = defineMessages({
   }
 });
 
-interface IDependency {
+export interface IDependency {
   dependencyStoreKey: string;
   dependencyName: string;
   downloadLink: string;
@@ -65,7 +65,7 @@ const dependencies: IDependencies = {
   }
 };
 
-const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
+export const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT_JS, dependencies.NodeJS],
   [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.NodeJS],
   [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.NodeJS],
@@ -93,7 +93,7 @@ class DependencyInfo extends React.Component<Props> {
       return null; // don't render anything
     }
 
-    const { dependencyName, downloadLink, dependencyStoreKey } = dependency;
+    const { dependencyName, dependencyStoreKey } = dependency;
     const installed: boolean = dependenciesStore[dependencyStoreKey].installed;
 
     let dependencyMessage: string = installed
