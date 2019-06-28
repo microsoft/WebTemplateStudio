@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import Modal from "react-modal";
+import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
 
 /**
  * A Higher-Order Component that creates a modal from a normal React component
@@ -16,7 +17,19 @@ import Modal from "react-modal";
  * Custom styling guidance:
  * https://reactcommunity.org/react-modal/styles/
  */
-const getCustomStyles = (isPostGenModalOpen: boolean) => {
+const getCustomStyles = (MODAL_TYPE: string | undefined) => {
+  // default width
+  let CUSTOM_WIDTH = "40%";
+
+  // depends on modal type, customize width
+  if (
+    MODAL_TYPE &&
+    (MODAL_TYPE == MODAL_TYPES.POST_GEN_MODAL ||
+      MODAL_TYPE == MODAL_TYPES.VIEW_LICENSES_MODAL)
+  ) {
+    CUSTOM_WIDTH = "30%";
+  }
+
   return {
     overlay: {
       position: "fixed",
@@ -33,8 +46,8 @@ const getCustomStyles = (isPostGenModalOpen: boolean) => {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      borderRadius: "0px",
-      width: isPostGenModalOpen ? "30%" : "40%",
+      borderRadius: "3px",
+      width: CUSTOM_WIDTH,
       padding: "2.4%",
       background: "var(--vscode-menu-background)",
       border: "0.5px solid var(--vscode-editor-foreground)"
@@ -49,7 +62,8 @@ interface IProps {
 }
 
 const asModal = <P extends object>(
-  WrappedComponent: React.ComponentType<P>
+  WrappedComponent: React.ComponentType<P>,
+  MODAL_TYPE?: string
 ) => {
   return class extends React.Component<P & IProps> {
     static defaultProps = {
@@ -58,13 +72,12 @@ const asModal = <P extends object>(
       closeModal: () => {}
     };
     render() {
-      const { isPostGenModalOpen } = this.props;
       return (
         <Modal
           isOpen={this.props.isModalOpen}
           onRequestClose={this.props.closeModal}
           contentLabel="Modal Display"
-          style={getCustomStyles(isPostGenModalOpen)}
+          style={getCustomStyles(MODAL_TYPE)}
           ariaHideApp={false}
         >
           <WrappedComponent {...this.props as P} />

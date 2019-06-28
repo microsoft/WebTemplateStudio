@@ -25,6 +25,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
+import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
 
 interface LinksDict {
   [serviceId: string]: string;
@@ -231,5 +232,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(asModal(injectIntl(PostGenerationModal)))
+  )(asModal(injectIntl(PostGenerationModal), MODAL_TYPES.POST_GEN_MODAL))
 );

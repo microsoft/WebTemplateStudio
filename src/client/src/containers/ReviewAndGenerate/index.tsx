@@ -9,6 +9,9 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 
 import Title from "../../components/Title";
 import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
+import { ThunkDispatch } from "redux-thunk";
+import { AppState } from "../../reducers";
+import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   openViewLicensesModal: () => any;
@@ -70,7 +73,9 @@ const ReviewAndGenerate = (props: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   openViewLicensesModal: () => {
     dispatch(ModalActions.openViewLicensesModalAction());
   }

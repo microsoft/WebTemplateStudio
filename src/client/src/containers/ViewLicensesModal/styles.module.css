@@ -1,14 +1,5 @@
-.title {
-  font-weight: bold;
-  font-size: 1.2em;
-}
-
-.section {
-  margin-top: 20px;
-  font-weight: bold;
-}
-
 .footerContainer {
+  margin-left: 15px;
   margin-top: 40px;
   display: flex;
   justify-content: space-between;
@@ -17,6 +8,7 @@
 
 .button {
   font-size: 1em;
+  border-radius: 3px;
 }
 
 .button:hover {
@@ -24,16 +16,5 @@
 }
 
 .button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.link {
-  color: var(--vscode-textLink-foreground);
-  font-weight: var(--vscode-font-weight);
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.link:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }

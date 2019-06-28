@@ -12,6 +12,7 @@ import RootAction from "../../actions/ActionType";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import Licenses from "../Licenses";
 import { isViewLicensesModalOpenSelector } from "../../selectors/modalSelector";
+import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -63,4 +64,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(asModal(injectIntl(ViewLicensesModal)));
+)(asModal(injectIntl(ViewLicensesModal), MODAL_TYPES.VIEW_LICENSES_MODAL));
