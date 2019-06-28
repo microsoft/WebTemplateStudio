@@ -6,7 +6,7 @@ import { Route, RouteComponentProps } from "react-router-dom";
 
 import LeftSidebar from "./components/LeftSidebar";
 import PageDetails from "./containers/PageDetails";
-import SelectFrameworks from "./components/SelectFrameworks";
+import SelectFrameworks from "./containers/SelectFrameworks";
 import SelectPages from "./containers/SelectPages";
 import SelectWebApp from "./containers/SelectWebApp";
 import NewProject from "./containers/NewProject";
@@ -41,6 +41,10 @@ import {
   updateTemplateGenerationStatusAction
 } from "./actions/wizardInfoActions/updateGenStatusActions";
 import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
+import {
+  updateDependencyInfoAction,
+  IDependencyInfo
+} from "./actions/wizardInfoActions/updateDependencyInfo";
 
 import appStyles from "./appStyles.module.css";
 import { startLogOutAzure } from "./actions/azureActions/logOutAzure";
@@ -80,6 +84,7 @@ interface IDispatchProps {
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
+  updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
   resetPageSelection: () => any;
   selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
@@ -105,6 +110,7 @@ class App extends React.Component<Props> {
     setAppNameAvailability: () => {},
     setProjectPathValidation: () => {},
     setAzureValidationStatus: () => {},
+    updateDependencyInfo: () => {},
     updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {},
     getVersionsData: () => {},
@@ -118,6 +124,9 @@ class App extends React.Component<Props> {
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
+        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
+          this.props.updateDependencyInfo(message.payload);
+          break;
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           if (message.payload != null && message.payload.outputPath != null) {
             this.props.updateOutputPath(message.payload.outputPath);
@@ -300,6 +309,9 @@ const mapDispatchToProps = (
   },
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => {
     dispatch(updateTemplateGenerationStatusAction(isGenerated));
+  },
+  updateDependencyInfo: (dependencyInfo: IDependencyInfo) => {
+    dispatch(updateDependencyInfoAction(dependencyInfo));
   },
   getVersionsData: (versions: IVersions) => {
     dispatch(getVersionsDataAction(versions));
