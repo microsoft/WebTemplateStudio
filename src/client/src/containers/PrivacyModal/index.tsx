@@ -35,7 +35,7 @@ const messages = defineMessages({
   thirdPartyWebsite: {
     id: "privacyModal.thirdPartyWebsite",
     defaultMessage:
-      "You will be taken to a third-party website which is a non-Microsoft service."
+      "You will be taken to {thirdPartyURL} which is a non-Microsoft service."
   },
   privacyStatement: {
     id: "privacyModal.privacyStatement",
@@ -53,6 +53,8 @@ const PrivacyModal = (props: Props) => {
   if (dependency === null || dependency === undefined) {
     return null;
   }
+
+  const { downloadLink, privacyStatementLink } = dependency;
 
   const cancelKeyDownHandler = (event: any) => {
     if (event.keyCode === 13 || event.keyCode === 32) {
@@ -76,19 +78,21 @@ const PrivacyModal = (props: Props) => {
         />
       </div>
       <div className={styles.section}>
-        {intl.formatMessage(messages.thirdPartyWebsite)}
+        {intl.formatMessage(messages.thirdPartyWebsite, {
+          thirdPartyURL: downloadLink
+        })}
       </div>
       <div className={styles.footerContainer}>
         <a
           target={"_blank"}
           className={styles.link}
-          href={dependency.privacyStatementLink}
+          href={privacyStatementLink}
         >
           {intl.formatMessage(messages.privacyStatement)}
         </a>
         <a
           target={"_blank"}
-          href={dependency.downloadLink}
+          href={downloadLink}
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
         >
           {intl.formatMessage(messages.OK)}
