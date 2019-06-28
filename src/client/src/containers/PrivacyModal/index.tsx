@@ -43,8 +43,6 @@ const PrivacyModal = (props: Props) => {
     props.selectedFrontendFramework.internalName
   );
 
-  console.log(dependency);
-
   return (
     <div>
       <div className={styles.headerContainer}>
@@ -65,13 +63,13 @@ const PrivacyModal = (props: Props) => {
         <a
           target={"_blank"}
           className={styles.link}
-          href={"https://nodejs.org/en/about/privacy/"}
+          href={dependency.privacyStatementLink}
         >
           {"Privacy Statement"}
         </a>
         <a
           target={"_blank"}
-          href={"https://google.ca"}
+          href={dependency.downloadLink}
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
         >
           {"OK"}

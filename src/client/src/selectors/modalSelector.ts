@@ -2,7 +2,8 @@ import { createSelector } from "reselect";
 import { AppState } from "../reducers";
 import { ModalType, MODAL_TYPES } from "../actions/modalActions/typeKeys";
 
-const getOpenModal = (state: AppState): ModalType => state.modals.openModal;
+const getOpenModal = (state: AppState): ModalType =>
+  state.modals.openModal && state.modals.openModal.modalType;
 const isCosmosDbModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.COSMOS_DB_MODAL;
 const isAzureFunctionsModalOpen = (modal: ModalType): boolean =>

@@ -106,7 +106,7 @@ class DependencyInfo extends React.Component<Props> {
 
     return (
       <a
-        onClick={openPrivacyModal}
+        onClick={() => openPrivacyModal(frameworkName)}
         className={classnames(styles.dependencyContainer, {
           [styles.disabled]: installed,
           [styles.borderGreen]: installed,
@@ -140,8 +140,8 @@ const mapStateToProps = (state: AppState): any => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  openPrivacyModal: () => {
-    dispatch(ModalActions.openPrivacyModalAction());
+  openPrivacyModal: (frameworkName: string) => {
+    dispatch(ModalActions.openPrivacyModalAction(frameworkName));
   }
 });
 

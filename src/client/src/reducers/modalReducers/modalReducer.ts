@@ -1,9 +1,12 @@
 import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
-import { MODAL_TYPEKEYS, ModalType } from "../../actions/modalActions/typeKeys";
+import {
+  MODAL_TYPEKEYS,
+  ModalState
+} from "../../actions/modalActions/typeKeys";
 import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
 import RootAction from "../../actions/ActionType";
 
-const openModal = (state: ModalType = null, action: RootAction) => {
+const openModal = (state: ModalState = null, action: RootAction) => {
   switch (action.type) {
     case MODAL_TYPEKEYS.OPEN_MODAL:
       return action.payload;
