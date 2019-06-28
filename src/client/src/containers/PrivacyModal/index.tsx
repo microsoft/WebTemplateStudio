@@ -8,14 +8,13 @@ import styles from "./styles.module.css";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isPrivacyModalOpenSelector } from "../../selectors/modalSelector";
 
-import { ISelected } from "../../types/selected";
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 
-import { frameworkNameToDependencyMap, IDependency } from "../DependencyInfo";
+import { IDependency } from "../DependencyInfo";
 
 interface IStateProps {
   isModalOpen: boolean;
