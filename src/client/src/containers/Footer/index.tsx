@@ -242,7 +242,7 @@ class Footer extends React.Component<Props> {
               >
                 <FormattedMessage
                   id="footer.generate"
-                  defaultMessage="Generate Template"
+                  defaultMessage="Create Template"
                 />
               </button>
             </div>
