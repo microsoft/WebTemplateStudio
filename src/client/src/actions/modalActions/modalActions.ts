@@ -1,4 +1,4 @@
-import { MODAL_TYPEKEYS, MODAL_TYPES, ModalType, ModalState } from "./typeKeys";
+import { MODAL_TYPEKEYS, MODAL_TYPES, ModalState } from "./typeKeys";
 import { Dispatch } from "react";
 import ModalActionType from "./modalActionType";
 
@@ -53,12 +53,12 @@ const openPostGenModalAction = () => {
   };
 };
 
-const openPrivacyModalAction = (frameworkName: string) => {
+const openPrivacyModalAction = (data: any) => {
   return (dispatch: Dispatch<ModalActionType>) => {
     dispatch(
       openModalAction({
         modalType: MODAL_TYPES.PRIVACY_MODAL,
-        modalData: frameworkName
+        modalData: data
       })
     );
   };

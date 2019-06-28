@@ -105,8 +105,8 @@ class DependencyInfo extends React.Component<Props> {
       : getSvg.getWarningSvg();
 
     return (
-      <a
-        onClick={() => openPrivacyModal(frameworkName)}
+      <div
+        onClick={() => openPrivacyModal(dependency)}
         className={classnames(styles.dependencyContainer, {
           [styles.disabled]: installed,
           [styles.borderGreen]: installed,
@@ -126,7 +126,7 @@ class DependencyInfo extends React.Component<Props> {
         >
           {`${dependencyName} ${dependencyMessage}`}
         </div>
-      </a>
+      </div>
     );
   }
 }
@@ -140,8 +140,8 @@ const mapStateToProps = (state: AppState): any => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  openPrivacyModal: (frameworkName: string) => {
-    dispatch(ModalActions.openPrivacyModalAction(frameworkName));
+  openPrivacyModal: (dependency: IDependency) => {
+    dispatch(ModalActions.openPrivacyModalAction(dependency));
   }
 });
 

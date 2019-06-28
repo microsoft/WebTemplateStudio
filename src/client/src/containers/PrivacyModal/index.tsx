@@ -10,18 +10,14 @@ import { isPrivacyModalOpenSelector } from "../../selectors/modalSelector";
 
 import { ISelected } from "../../types/selected";
 import { AppState } from "../../reducers";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getOutputPath } from "../../selectors/wizardSelectionSelector";
-import { strings as messages } from "./strings";
-import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
+import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 
 import { frameworkNameToDependencyMap, IDependency } from "../DependencyInfo";
 
 interface IStateProps {
   isModalOpen: boolean;
-  selectedFrontendFramework: ISelected;
-  selectedBackendFramework: ISelected;
+  dependency: IDependency;
 }
 
 interface IDispatchProps {
@@ -31,6 +27,12 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps;
 
 const PrivacyModal = (props: Props) => {
+  const { dependency } = props;
+
+  if (dependency == null) {
+    return null;
+  }
+
   const cancelKeyDownHandler = (event: any) => {
     if (event.keyCode === 13 || event.keyCode === 32) {
       event.preventDefault();
@@ -38,10 +40,6 @@ const PrivacyModal = (props: Props) => {
       props.closeModal();
     }
   };
-
-  const dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
-    props.selectedFrontendFramework.internalName
-  );
 
   return (
     <div>
@@ -80,16 +78,14 @@ const PrivacyModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => {
-  const { frontendFramework, backendFramework } = state.selection;
-
+  const dependency = state.modals.openModal && state.modals.openModal.modalData;
   return {
     isModalOpen: isPrivacyModalOpenSelector(state),
-    selectedFrontendFramework: frontendFramework,
-    selectedBackendFramework: backendFramework
+    dependency: dependency
   };
 };
 
-const mapDispatchToProps = (dispatch: any): any => ({
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   closeModal: () => {
     dispatch(closeModalAction());
   }
