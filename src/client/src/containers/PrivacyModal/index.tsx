@@ -24,10 +24,30 @@ interface IDispatchProps {
   closeModal: () => any;
 }
 
-type Props = IStateProps & IDispatchProps;
+type Props = IStateProps & IDispatchProps & InjectedIntlProps;
+
+const messages = defineMessages({
+  beingRedirected: {
+    id: "privacyModal.beingRedirected",
+    defaultMessage: "You are being redirected."
+  },
+  thirdPartyWebsite: {
+    id: "privacyModal.thirdPartyWebsite",
+    defaultMessage:
+      "You will be taken to a third-party website which is a non-Microsoft service."
+  },
+  privacyStatement: {
+    id: "privacyModal.privacyStatement",
+    defaultMessage: "Privacy Statement"
+  },
+  OK: {
+    id: "privacyModal.OK",
+    defaultMessage: "OK"
+  }
+});
 
 const PrivacyModal = (props: Props) => {
-  const { dependency } = props;
+  const { dependency, intl } = props;
 
   if (dependency == null) {
     return null;
@@ -44,7 +64,9 @@ const PrivacyModal = (props: Props) => {
   return (
     <div>
       <div className={styles.headerContainer}>
-        <div className={styles.title}>{"You are being redirected"}</div>
+        <div className={styles.title}>
+          {intl.formatMessage(messages.beingRedirected)}
+        </div>
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}
@@ -53,9 +75,7 @@ const PrivacyModal = (props: Props) => {
         />
       </div>
       <div className={styles.section}>
-        {
-          "You will be taken to a third-party website which is a non-Microsoft service."
-        }
+        {intl.formatMessage(messages.thirdPartyWebsite)}
       </div>
       <div className={styles.footerContainer}>
         <a
@@ -63,14 +83,14 @@ const PrivacyModal = (props: Props) => {
           className={styles.link}
           href={dependency.privacyStatementLink}
         >
-          {"Privacy Statement"}
+          {intl.formatMessage(messages.privacyStatement)}
         </a>
         <a
           target={"_blank"}
           href={dependency.downloadLink}
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
         >
-          {"OK"}
+          {intl.formatMessage(messages.OK)}
         </a>
       </div>
     </div>
@@ -94,4 +114,4 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(asModal(PrivacyModal));
+)(asModal(injectIntl(PrivacyModal)));
