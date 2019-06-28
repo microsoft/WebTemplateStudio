@@ -65,7 +65,7 @@ const dependencies: IDependencies = {
   }
 };
 
-export const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
+const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT_JS, dependencies.NodeJS],
   [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.NodeJS],
   [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.NodeJS],
