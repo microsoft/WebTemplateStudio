@@ -77,6 +77,7 @@ class SelectBackEndFramework extends React.Component<Props> {
       <div className={styles.container}>
         {options.length > 0 && (
           <SelectOption
+            isFrameworkSelection={true}
             selectCard={selectBackendFramework}
             multiSelect={false}
             title={intl.formatMessage(messages.selectBackendFramework)}

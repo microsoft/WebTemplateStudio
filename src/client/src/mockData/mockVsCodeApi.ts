@@ -24,6 +24,28 @@ const mockVsCodeApi = () => ({
         case "alert":
           console.log("Command: ", message.alert);
           break;
+        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
+              payload: {
+                dependency: "node",
+                installed: false
+              }
+            },
+            "*"
+          );
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
+              payload: {
+                dependency: "python",
+                installed: true
+              }
+            },
+            "*"
+          );
+          break;
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
           window.postMessage(
             {
