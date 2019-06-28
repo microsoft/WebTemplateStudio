@@ -9,9 +9,11 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isPrivacyModalOpenSelector } from "../../selectors/modalSelector";
 
 import { ISelected } from "../../types/selected";
-import { AppState } from "../../reducers";
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
+import { AppState } from "../../reducers";
+import { Dispatch } from "redux";
+import RootAction from "../../actions/ActionType";
 
 import { frameworkNameToDependencyMap, IDependency } from "../DependencyInfo";
 
@@ -49,7 +51,7 @@ const messages = defineMessages({
 const PrivacyModal = (props: Props) => {
   const { dependency, intl } = props;
 
-  if (dependency == null) {
+  if (dependency === null || dependency === undefined) {
     return null;
   }
 
@@ -98,14 +100,16 @@ const PrivacyModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => {
-  const dependency = state.modals.openModal && state.modals.openModal.modalData;
+  const dependency = state.modals.openModal.modalData;
   return {
     isModalOpen: isPrivacyModalOpenSelector(state),
     dependency: dependency
   };
 };
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<RootAction>
+): IDispatchProps => ({
   closeModal: () => {
     dispatch(closeModalAction());
   }

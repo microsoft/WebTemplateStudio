@@ -17,9 +17,7 @@ export type ModalType =
   | MODAL_TYPES.POST_GEN_MODAL
   | MODAL_TYPES.PRIVACY_MODAL;
 
-interface IModalPayload {
+export interface ModalState {
   modalType: ModalType;
   modalData: any;
 }
-
-export type ModalState = null | IModalPayload;
