@@ -11,19 +11,6 @@ import * as ModalActions from "../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
 
-interface IDependencyInfoProps {
-  dependenciesStore: IDependenciesInstalled;
-  frameworkName: string;
-  intl: InjectedIntl;
-  openPrivacyModal: any;
-}
-
-interface IDispatchProps {
-  openPrivacyModal: any;
-}
-
-type Props = IDependencyInfoProps & IDispatchProps;
-
 const messages = defineMessages({
   installed: {
     id: "dependencyChecker.installed",
@@ -72,6 +59,18 @@ const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, dependencies.Python],
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS, dependencies.NodeJS]
 ]);
+
+interface IDependencyInfoProps {
+  dependenciesStore: IDependenciesInstalled;
+  frameworkName: string;
+  intl: InjectedIntl;
+}
+
+interface IDispatchProps {
+  openPrivacyModal: (dependency: IDependency | undefined) => any;
+}
+
+type Props = IDependencyInfoProps & IDispatchProps;
 
 /*
  * Props:
@@ -140,7 +139,7 @@ const mapStateToProps = (state: AppState): any => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  openPrivacyModal: (dependency: IDependency) => {
+  openPrivacyModal: (dependency: IDependency | undefined) => {
     dispatch(ModalActions.openPrivacyModalAction(dependency));
   }
 });
