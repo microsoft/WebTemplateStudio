@@ -1,0 +1,8 @@
+# vscode configuration
+.vscode/
+//{[{
+# Hide API Keys
+.env
+//}]}
+# dependencies
+/node_modules
