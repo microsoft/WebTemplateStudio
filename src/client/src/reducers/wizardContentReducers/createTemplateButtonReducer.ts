@@ -6,8 +6,11 @@ const createTemplateButton = (
 ) => {
     switch(action.type) {
         case WIZARD_INFO_TYPEKEYS.UPDATE_CREATE_TEMPLATE_BUTTON:
-            const newState = true
-            return newState
+            const newState1 = true;
+            return newState1;
+        case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
+            const newState2 = false;
+            return newState2;
         default:
             return state
     }
