@@ -27,6 +27,7 @@ import {
 } from "../../selectors/azureFunctionsServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
+import { updateCreateTemplateButtonAction } from '../../actions/wizardInfoActions/updateCreateTemplateButton';
 import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
@@ -50,6 +51,7 @@ import { IFunctionName } from "../AzureFunctionsSelection";
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
   openPostGenModal: () => any;
+  updateCreateTemplateButton: () => any;
 }
 
 interface IStateProps {
@@ -62,6 +64,7 @@ interface IStateProps {
   isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
   functionNames?: IFunctionName[];
+  enableCreateTemplateButton: any
 }
 
 type Props = RouteComponentProps &
@@ -175,6 +178,9 @@ class Footer extends React.Component<Props> {
     const { isValidNameAndProjectPath, location, isVisited, intl } = this.props;
     const { pathname } = location;
     const { showFrameworks } = isVisited;
+    if (this.isReviewAndGenerate()) {
+      this.props.updateCreateTemplateButton();
+    }
     return (
       <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
         {pathname !== ROUTES.PAGE_DETAILS && (
@@ -226,25 +232,25 @@ class Footer extends React.Component<Props> {
               >
                 <FormattedMessage id="footer.next" defaultMessage="Next" />
               </Link>
-              <button
-                disabled={
-                  pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
-                }
-                className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]:
-                    !this.isReviewAndGenerate() || !areValidNames,
-                  [buttonStyles.buttonHighlightedBorder]:
-                    this.isReviewAndGenerate() && areValidNames,
-                  [styles.disabledOverlay]:
-                    !this.isReviewAndGenerate() || !areValidNames
-                })}
-                onClick={this.logMessageToVsCode}
-              >
-                <FormattedMessage
-                  id="footer.generate"
-                  defaultMessage="Generate Template"
-                />
-              </button>
+              {this.props.enableCreateTemplateButton &&
+                <button
+                  disabled={!areValidNames}
+                  className={classnames(styles.button, {
+                    [buttonStyles.buttonDark]:
+                      !this.isReviewAndGenerate() || !areValidNames,
+                    [buttonStyles.buttonHighlightedBorder]:
+                      this.isReviewAndGenerate() && areValidNames,
+                    [styles.disabledOverlay]:
+                      !this.isReviewAndGenerate() || !areValidNames
+                  })}
+                  onClick={this.logMessageToVsCode}
+                >
+                  <FormattedMessage
+                    id="footer.generate"
+                    defaultMessage="Generate Template"
+                  />
+                </button>
+              }
             </div>
           </div>
         )}
@@ -262,7 +268,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   functionNames: getAzureFunctionsNamesSelector(state),
   functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
-  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
+  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
+  enableCreateTemplateButton: state.wizardContent.createTemplateButton
 });
 
 const mapDispatchToProps = (
@@ -273,6 +280,9 @@ const mapDispatchToProps = (
   },
   openPostGenModal: () => {
     dispatch(openPostGenModalAction());
+  },
+  updateCreateTemplateButton: () => {
+    dispatch(updateCreateTemplateButtonAction(true))
   }
 });
 
