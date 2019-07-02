@@ -1,14 +1,15 @@
-from flask import Flask, send_from_directory
-from flask import jsonify
-from flask import make_response
-//{[{
-from mongo.mongo_service import *
-//}]}
-from constants import CONSTANTS
+from flask import Flask, jsonify, make_response, send_from_directory
 import os
 from os.path import exists, join
 
-app = Flask(__name__, static_folder = 'build')
+//{[{
+from mongo.mongo_service import *
+//}]}
+
+from constants import CONSTANTS
+
+
+app = Flask(__name__, static_folder='build')
 
 //{[{
 # List Endpoints

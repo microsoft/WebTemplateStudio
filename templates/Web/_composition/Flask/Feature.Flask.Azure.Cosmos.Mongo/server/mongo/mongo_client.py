@@ -1,7 +1,9 @@
 from pymongo import MongoClient
-from .settings import *
-from constants import CONSTANTS
 import sys
+
+from constants import CONSTANTS
+
+from .settings import connection_str, cosmosDB_user, cosmosDB_password
 
 
 
