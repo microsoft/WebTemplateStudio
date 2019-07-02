@@ -3,7 +3,7 @@ import os
 from os.path import exists, join
 
 //{[{
-from mongo.mongo_service import *
+from mongo.mongo_service import get, create, destroy
 //}]}
 
 from constants import CONSTANTS

@@ -3,7 +3,7 @@ import os
 from os.path import exists, join
 
 //{[{
-from sql.sql_service import *
+from sql.sql_service import get, create, destroy
 //}]}
 
 from constants import CONSTANTS
