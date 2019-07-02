@@ -23,18 +23,14 @@ def create():
 
 def destroy(id):
     query_str = {'_id': ObjectId(id)}
-    count = 0
-    result = list_items.find(query_str)
-    for item in iter(result):
-        count += 1
-    if count == 0:
+    result = list_items.delete_one(query_str)
+    if result.deleted_count == 0:
         return make_response(
             jsonify(
                 {'error': 'Could not find an item with given id'}
             ),
             404
         )
-    list_items.delete_one(query_str)
     return jsonify(
         {'_id': id, 'text': 'This comment was deleted'}
     )
