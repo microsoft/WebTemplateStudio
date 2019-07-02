@@ -35,7 +35,7 @@ const messages = defineMessages({
   thirdPartyWebsite: {
     id: "privacyModal.thirdPartyWebsite",
     defaultMessage:
-      "You will be taken to {thirdPartyURL} which is a non-Microsoft service."
+      "You will be taken to the {thirdPartyWebsite} which is a non-Microsoft service."
   },
   privacyStatement: {
     id: "privacyModal.privacyStatement",
@@ -54,7 +54,7 @@ const PrivacyModal = (props: Props) => {
     return null;
   }
 
-  const { downloadLink, privacyStatementLink } = dependency;
+  const { downloadLink, privacyStatementLink, downloadLinkLabel } = dependency;
 
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.keyCode === 13 || event.keyCode === 32) {
@@ -79,7 +79,7 @@ const PrivacyModal = (props: Props) => {
       </div>
       <div className={styles.section}>
         {intl.formatMessage(messages.thirdPartyWebsite, {
-          thirdPartyURL: downloadLink
+          thirdPartyWebsite: downloadLinkLabel
         })}
       </div>
       <div className={styles.footerContainer}>

@@ -31,6 +31,7 @@ export interface IDependency {
   dependencyName: string;
   downloadLink: string;
   privacyStatementLink: string;
+  downloadLinkLabel: string;
 }
 
 interface IDependencies {
@@ -42,13 +43,15 @@ const dependencies: IDependencies = {
     dependencyStoreKey: "node",
     dependencyName: "Node",
     downloadLink: "https://nodejs.org/en/download/",
-    privacyStatementLink: "https://nodejs.org/en/about/privacy/"
+    privacyStatementLink: "https://nodejs.org/en/about/privacy/",
+    downloadLinkLabel: "Node download link"
   },
   Python: {
     dependencyStoreKey: "python",
     dependencyName: "Python",
     downloadLink: "https://www.python.org/downloads/",
-    privacyStatementLink: "https://www.python.org/privacy/"
+    privacyStatementLink: "https://www.python.org/privacy/",
+    downloadLinkLabel: "Python download link"
   }
 };
 
