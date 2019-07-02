@@ -1,6 +1,5 @@
 .title {
-  font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.8em;
 }
 
 .headerContainer {
@@ -46,10 +45,8 @@
 }
 
 .button {
-  font-size: 1em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size: 1.2em;
+  padding: 0.5em 3em;
 }
 
 .button:focus {

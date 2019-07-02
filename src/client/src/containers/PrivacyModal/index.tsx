@@ -93,6 +93,9 @@ const PrivacyModal = (props: Props) => {
         <a
           target={"_blank"}
           href={downloadLink}
+          onClick={() => {
+            props.closeModal();
+          }}
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
         >
           {intl.formatMessage(messages.OK)}
