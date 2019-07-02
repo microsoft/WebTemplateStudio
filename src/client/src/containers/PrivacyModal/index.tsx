@@ -56,7 +56,7 @@ const PrivacyModal = (props: Props) => {
 
   const { downloadLink, privacyStatementLink } = dependency;
 
-  const cancelKeyDownHandler = (event: any) => {
+  const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.keyCode === 13 || event.keyCode === 32) {
       event.preventDefault();
       event.stopPropagation();
