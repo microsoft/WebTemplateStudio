@@ -242,7 +242,6 @@ class App extends React.Component<Props> {
           <CosmosResourceModal />
           <AzureFunctionsModal />
           <PostGenerationModal />
-          <LeftSidebar />
 
           <main
             className={classnames(appStyles.centerView, {

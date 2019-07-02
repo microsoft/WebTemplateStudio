@@ -3,6 +3,34 @@ const fs = require("fs");
 const path = require("path");
 const testFolder = path.join("..", "..", "src", "template_test");
 let files: string[] = [];
+
+var psTree = require('ps-tree');
+
+var kill = function (pid: any, signal:any , callback:any) {
+    signal   = signal || 'SIGKILL';
+    callback = callback || function () {};
+    var killTree = true;
+    if(killTree) {
+        psTree(pid, function (err: Error, children: any) {
+            [pid].concat(
+                children.map(function (p: any) {
+                    return p.PID;
+                })
+            ).forEach(function (tpid) {
+                try { process.kill(tpid, signal) }
+                catch (ex) { }
+            });
+            callback();
+        });
+    } else {
+        try { process.kill(pid, signal) }
+        catch (ex) { }
+        callback();
+    }
+};
+
+// ... somewhere in the code of Yez!
+kill(child.pid);
 fs.readdirSync(testFolder).forEach((file: string) => {
   files.push(file.toString());
 });

@@ -118,6 +118,7 @@
     "node-fetch": "^2.3.0",
     "opn": "^5.5.0",
     "portfinder": "^1.0.20",
+    "ps-tree": "^1.2.0",
     "rimraf": "^2.6.3",
     "tslint-microsoft-contrib": "^6.1.0",
     "url-parse": "^1.4.4",
