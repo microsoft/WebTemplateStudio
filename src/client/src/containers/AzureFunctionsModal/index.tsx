@@ -364,6 +364,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         />
       </div>
       <div className={styles.bodyContainer}>
+        {/* Subscription */}
         {getDropdownSection(
           FORM_CONSTANTS.SUBSCRIPTION.label,
           functionsData.subscription,
@@ -375,6 +376,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           false,
           props.intl.formatMessage(messages.subscriptionSubLabel)
         )}
+        {/* Choose Resource Group */}
         {getDropdownSection(
           FORM_CONSTANTS.RESOURCE_GROUP.label,
           functionsData.resourceGroup,
@@ -386,6 +388,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           false,
           props.intl.formatMessage(messages.resourceGroupSubLabel)
         )}
+        {/* App Name */}
         <div
           className={classnames(
             styles.selectionInputContainer,
@@ -438,6 +441,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
             documents.azure.com
           </a>
         </div>
+        {/* Location */}
         {getDropdownSection(
           FORM_CONSTANTS.LOCATION.label,
           functionsData.location,
@@ -449,6 +453,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           true,
           props.intl.formatMessage(messages.locationSubLabel)
         )}
+        {/* Number of Functions */}
         {getDropdownSection(
           FORM_CONSTANTS.NUM_FUNCTIONS.label,
           getNumFunctionsData(),
@@ -460,6 +465,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           true,
           props.intl.formatMessage(messages.numFunctionsSubLabel)
         )}
+        {/* Runtime Stack */}
         <div
           className={classnames(
             styles.selectionInputContainer,
