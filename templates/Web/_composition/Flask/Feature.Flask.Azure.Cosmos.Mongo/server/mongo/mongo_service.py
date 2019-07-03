@@ -1,8 +1,7 @@
 from flask import jsonify, make_response, request
-from .mongo_client import *
-from bson import json_util, ObjectId
-import json
-from .settings import *
+from bson import ObjectId
+
+from .mongo_client import list_items
 from .utils import serialize
 
 

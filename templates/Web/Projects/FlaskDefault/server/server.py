@@ -1,11 +1,10 @@
-from flask import Flask, send_from_directory
-from flask import jsonify
-from flask import make_response
-from constants import CONSTANTS
+from flask import Flask, jsonify, make_response, send_from_directory
 import os
 from os.path import exists, join
 
-app = Flask(__name__, static_folder = 'build')
+from constants import CONSTANTS
+
+app = Flask(__name__, static_folder='build')
 
 # Catching all routes
 # This route is used to serve all the routes in the frontend application after deployment
