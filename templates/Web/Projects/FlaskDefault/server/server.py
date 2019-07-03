@@ -8,13 +8,12 @@ from os.path import exists, join
 app = Flask(__name__, static_folder = 'build')
 
 # Catching all routes
+# This route is used to serve all the routes in the frontend application after deployment
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    if path != "" and exists(join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+    file_to_serve = path if path and exists(join(app.static_folder, path)) else 'index.html'
+    return send_from_directory(app.static_folder, file_to_serve)
 
 # Error Handler
 @app.errorhandler(404)
