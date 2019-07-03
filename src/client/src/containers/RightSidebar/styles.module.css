@@ -13,10 +13,13 @@
 }
 
 .rightViewCropped {
-  width: 400px;
   background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #7f7f7f;
   box-sizing: border-box;
+}
+
+.rightViewCroppedAllPages {
+  width: 400px;
 }
 
 .rightViewCroppedSummaryPage {
