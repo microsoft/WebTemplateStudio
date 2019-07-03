@@ -1,0 +1,35 @@
+from flask import jsonify, make_response, request
+from bson import ObjectId
+
+from .mongo_client import list_items
+from .utils import serialize
+
+
+def get():
+    items = list_items.find()
+    serialized_list_items = [serialize(item) for item in items]
+    return jsonify(serialized_list_items)
+
+def create():
+    data = request.get_json()
+    list_item = {'text': data['text']}
+    created_item = list_items.insert_one(list_item)
+    return make_response(
+        jsonify(
+            {'_id': str(created_item.inserted_id), 'text': list_item['text']}
+        ), 201
+    )
+
+def destroy(id):
+    query_str = {'_id': ObjectId(id)}
+    result = list_items.delete_one(query_str)
+    if result.deleted_count == 0:
+        return make_response(
+            jsonify(
+                {'error': 'Could not find an item with given id'}
+            ),
+            404
+        )
+    return jsonify(
+        {'_id': id, 'text': 'This comment was deleted'}
+    )
