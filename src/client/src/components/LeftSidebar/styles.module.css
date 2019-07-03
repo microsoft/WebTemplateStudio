@@ -10,11 +10,8 @@
 }
 
 .itemBorder {
-  border-bottom: 0.5px solid #7f7f7f;
-}
-
-.itemBorderTop {
-  border-top: 0.5px solid #7f7f7f;
+  width: 20%;
+  float: left;
 }
 
 .currentPath {
@@ -46,4 +43,8 @@
 
 .feedback:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+.topNavBar {
+  display: inline-block;
+  width: 80%;
 }

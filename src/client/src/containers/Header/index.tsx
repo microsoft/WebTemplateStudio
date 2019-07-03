@@ -8,6 +8,7 @@ import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import { FormattedMessage, injectIntl } from "react-intl";
 import { AppState } from "../../reducers";
+import LeftSidebar from "../../components/LeftSidebar";
 
 interface IHeaderProps {
   vscode: IVSCodeObject;
@@ -34,6 +35,7 @@ const Header = (props: Props) => {
   return (
     <div className={styles.header}>
       <div className={styles.headerTitle}>Web Template Studio</div>
+      <LeftSidebar />
       {isLoggedIn && (
         <div className={styles.azureProfile}>
           <div className={styles.profileName}>{email}</div>

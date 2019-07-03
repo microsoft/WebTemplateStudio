@@ -68,7 +68,7 @@ const LeftSidebar = (props: Props) => {
     <React.Fragment>
       {pathname !== ROUTES.PAGE_DETAILS && (
         <nav
-          className={classnames(styles.leftView, styles.container)}
+          className={classnames(styles.topNavBar)}
           aria-label={intl.formatMessage(messages.ariaNavLabel)}
         >
           <div>

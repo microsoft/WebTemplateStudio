@@ -1,7 +1,7 @@
 .header {
   position: absolute;
   width: 100%;
-  padding: 12px 24px;
+  padding: 0px 24px;
   background-color: var(--vscode-editor-background);
   border-bottom: 0.5px solid #7f7f7f;
   display: flex;
