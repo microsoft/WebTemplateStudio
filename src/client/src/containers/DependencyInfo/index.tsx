@@ -108,6 +108,7 @@ class DependencyInfo extends React.Component<Props> {
 
     return (
       <div
+        role="button"
         onClick={() => openPrivacyModal(dependency)}
         className={classnames(styles.dependencyContainer, {
           [styles.disabled]: installed,
