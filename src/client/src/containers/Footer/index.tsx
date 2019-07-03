@@ -279,7 +279,7 @@ const mapDispatchToProps = (
     dispatch(openPostGenModalAction());
   },
   updateCreateTemplateButton: () => {
-    dispatch(updateCreateTemplateButtonAction(true))
+    dispatch(updateCreateTemplateButtonAction(true));
   }
 });
 
