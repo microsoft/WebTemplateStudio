@@ -189,19 +189,19 @@ class Footer extends React.Component<Props> {
               )}
             </div>
             <div className={styles.buttonContainer}>
-              <Link
-                tabIndex={pathname === ROUTES.NEW_PROJECT ? -1 : 0}
-                className={classnames(buttonStyles.buttonDark, styles.button, {
-                  [styles.disabledOverlay]: pathname === ROUTES.NEW_PROJECT
-                })}
-                to={
-                  pathsBack[pathname] === undefined
-                    ? ROUTES.NEW_PROJECT
-                    : pathsBack[pathname]
-                }
-              >
-                <FormattedMessage id="footer.back" defaultMessage="Back" />
-              </Link>
+              { pathname !== ROUTES.NEW_PROJECT &&
+                <Link
+                  tabIndex={0}
+                  className={classnames(buttonStyles.buttonDark, styles.button)}
+                  to={
+                    pathsBack[pathname] === undefined
+                      ? ROUTES.NEW_PROJECT
+                      : pathsBack[pathname]
+                  }
+                >
+                  <FormattedMessage id="footer.back" defaultMessage="Back" />
+                </Link>
+              }
               <Link
                 tabIndex={
                   !isValidNameAndProjectPath || this.isReviewAndGenerate()
