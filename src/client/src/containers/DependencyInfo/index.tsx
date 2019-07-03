@@ -7,14 +7,9 @@ import { injectIntl, defineMessages, InjectedIntl } from "react-intl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import { AppState } from "../../reducers";
 import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
-
-interface IDependencyInfoProps {
-  dependenciesStore: IDependenciesInstalled;
-  frameworkName: string;
-  intl: InjectedIntl;
-}
-
-type Props = IDependencyInfoProps;
+import * as ModalActions from "../../actions/modalActions/modalActions";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
 
 const messages = defineMessages({
   installed: {
@@ -31,11 +26,12 @@ const messages = defineMessages({
   }
 });
 
-interface IDependency {
+export interface IDependency {
   dependencyStoreKey: string;
   dependencyName: string;
   downloadLink: string;
   privacyStatementLink: string;
+  downloadLinkLabel: string;
 }
 
 interface IDependencies {
@@ -47,13 +43,15 @@ const dependencies: IDependencies = {
     dependencyStoreKey: "node",
     dependencyName: "Node",
     downloadLink: "https://nodejs.org/en/download/",
-    privacyStatementLink: "https://nodejs.org/en/about/privacy/"
+    privacyStatementLink: "https://nodejs.org/en/about/privacy/",
+    downloadLinkLabel: "Node download link"
   },
   Python: {
     dependencyStoreKey: "python",
     dependencyName: "Python",
     downloadLink: "https://www.python.org/downloads/",
-    privacyStatementLink: "https://www.python.org/privacy/"
+    privacyStatementLink: "https://www.python.org/privacy/",
+    downloadLinkLabel: "Python download link"
   }
 };
 
@@ -65,13 +63,30 @@ const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS, dependencies.NodeJS]
 ]);
 
+interface IDependencyInfoProps {
+  dependenciesStore: IDependenciesInstalled;
+  frameworkName: string;
+  intl: InjectedIntl;
+}
+
+interface IDispatchProps {
+  openPrivacyModal: (dependency: IDependency | undefined) => any;
+}
+
+type Props = IDependencyInfoProps & IDispatchProps;
+
 /*
  * Props:
  * - frameworkName: string
  */
 class DependencyInfo extends React.Component<Props> {
   public render() {
-    let { frameworkName, intl, dependenciesStore } = this.props;
+    let {
+      frameworkName,
+      intl,
+      dependenciesStore,
+      openPrivacyModal
+    } = this.props;
     let dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
       frameworkName
     );
@@ -80,7 +95,7 @@ class DependencyInfo extends React.Component<Props> {
       return null; // don't render anything
     }
 
-    const { dependencyName, downloadLink, dependencyStoreKey } = dependency;
+    const { dependencyName, dependencyStoreKey } = dependency;
     const installed: boolean = dependenciesStore[dependencyStoreKey].installed;
 
     let dependencyMessage: string = installed
@@ -92,9 +107,9 @@ class DependencyInfo extends React.Component<Props> {
       : getSvg.getWarningSvg();
 
     return (
-      <a
-        target={"_blank"}
-        href={downloadLink}
+      <div
+        role="button"
+        onClick={() => openPrivacyModal(dependency)}
         className={classnames(styles.dependencyContainer, {
           [styles.disabled]: installed,
           [styles.borderGreen]: installed,
@@ -114,7 +129,7 @@ class DependencyInfo extends React.Component<Props> {
         >
           {`${dependencyName} ${dependencyMessage}`}
         </div>
-      </a>
+      </div>
     );
   }
 }
@@ -125,4 +140,15 @@ const mapStateToProps = (state: AppState): any => {
   };
 };
 
-export default connect(mapStateToProps)(injectIntl(DependencyInfo));
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
+  openPrivacyModal: (dependency: IDependency | undefined) => {
+    dispatch(ModalActions.openPrivacyModalAction(dependency));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(injectIntl(DependencyInfo));
