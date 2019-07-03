@@ -236,12 +236,9 @@ class Footer extends React.Component<Props> {
                 <button
                   disabled={!areValidNames}
                   className={classnames(styles.button, {
-                    [buttonStyles.buttonDark]:
-                      !this.isReviewAndGenerate() || !areValidNames,
-                    [buttonStyles.buttonHighlightedBorder]:
-                      this.isReviewAndGenerate() && areValidNames,
-                    [styles.disabledOverlay]:
-                      !this.isReviewAndGenerate() || !areValidNames
+                    [buttonStyles.buttonDark]: !areValidNames,
+                    [buttonStyles.buttonHighlightedBorder]: areValidNames,
+                    [styles.disabledOverlay]: !areValidNames
                   })}
                   onClick={this.logMessageToVsCode}
                 >
