@@ -84,7 +84,20 @@ const mockVsCodeApi = () => ({
                 locations: [{ label: WEST_US, value: WEST_US }],
                 resourceGroups: [
                   { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK },
-                  { label: "ResourceGroupMock2", value: "ResourceGroupMock2" }
+                  { label: "ResourceGroupMock2", value: "ResourceGroupMock2" },
+                  { label: "ResourceGroupMock2", value: "ResourceGroupMock2" },
+                  { label: "ResourceGroupMock3", value: "ResourceGroupMock3" },
+                  { label: "ResourceGroupMock4", value: "ResourceGroupMock4" },
+                  { label: "ResourceGroupMock5", value: "ResourceGroupMock5" },
+                  { label: "ResourceGroupMock6", value: "ResourceGroupMock6" },
+                  { label: "ResourceGroupMock7", value: "ResourceGroupMock7" },
+                  { label: "ResourceGroupMock8", value: "ResourceGroupMock8" },
+                  { label: "ResourceGroupMock9", value: "ResourceGroupMock9" },
+                  {
+                    label: "ResourceGroupMock10",
+                    value: "ResourceGroupMock10"
+                  },
+                  { label: "ResourceGroupMock11", value: "ResourceGroupMock11" }
                 ]
               }
             },
