@@ -5,7 +5,6 @@ from os.path import exists, join
 //{[{
 from sql.sql_service import get, create, destroy
 //}]}
-
 from constants import CONSTANTS
 
 app = Flask(__name__, static_folder='build')
