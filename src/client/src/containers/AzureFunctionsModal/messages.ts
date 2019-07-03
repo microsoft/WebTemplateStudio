@@ -84,11 +84,14 @@ export const messages = defineMessages({
   },
   locationSubLabel: {
     id: "azureFunctionsModal.locationSubLabel",
-    defaultMessage:
-      "Choose an Azure region where you want your function to be hosted"
+    defaultMessage: "Choose where you want your function to be hosted"
   },
   runtimeStackSubLabel: {
     id: "azureFunctionsModal.runtimeStackSubLabel",
     defaultMessage: "Your runtime stack is NodeJS"
+  },
+  numFunctionsSubLabel: {
+    id: "azureFunctionsModal.numFunctionsSubLabel",
+    defaultMessage: "Select the number of endpoints you want for your web app"
   }
 });

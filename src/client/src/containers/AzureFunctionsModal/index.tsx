@@ -280,7 +280,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       ? buttonStyles.buttonHighlighted
       : buttonStyles.buttonDark;
 
-    return classNames(buttonClass, styles.button, styles.selectionContainer);
+    return classNames(buttonClass, styles.button);
   };
 
   const handleAddResource = () => {
@@ -363,116 +363,119 @@ const AzureFunctionsResourceModal = (props: Props) => {
           onKeyDown={cancelKeyDownHandler}
         />
       </div>
-      {getDropdownSection(
-        FORM_CONSTANTS.SUBSCRIPTION.label,
-        functionsData.subscription,
-        FORM_CONSTANTS.SUBSCRIPTION.value,
-        props.intl.formatMessage(messages.ariaSubscriptionLabel),
-        props.intl.formatMessage(messages.createNew),
-        false,
-        DEFAULT_VALUE,
-        false,
-        props.intl.formatMessage(messages.subscriptionSubLabel)
-      )}
-      {getDropdownSection(
-        FORM_CONSTANTS.RESOURCE_GROUP.label,
-        functionsData.resourceGroup,
-        FORM_CONSTANTS.RESOURCE_GROUP.value,
-        props.intl.formatMessage(messages.ariaResourceGroupLabel),
-        props.intl.formatMessage(messages.createNew),
-        azureFunctionsFormData.subscription.value === "",
-        DEFAULT_VALUE,
-        false,
-        props.intl.formatMessage(messages.resourceGroupSubLabel)
-      )}
-      <div
-        className={classnames(
-          styles.selectionInputContainer,
-          styles.selectionContainer,
-          {
-            [styles.selectionContainerDisabled]:
-              azureFunctionsFormData.subscription.value === ""
-          }
+      <div className={styles.bodyContainer}>
+        {getDropdownSection(
+          FORM_CONSTANTS.SUBSCRIPTION.label,
+          functionsData.subscription,
+          FORM_CONSTANTS.SUBSCRIPTION.value,
+          props.intl.formatMessage(messages.ariaSubscriptionLabel),
+          props.intl.formatMessage(messages.createNew),
+          false,
+          DEFAULT_VALUE,
+          false,
+          props.intl.formatMessage(messages.subscriptionSubLabel)
         )}
-      >
-        <div className={styles.selectionHeaderContainer}>
-          <div className={styles.leftHeader}>
-            {props.intl.formatMessage(messages.appName)}
-          </div>
-        </div>
-        <div className={styles.subLabel}>
-          {props.intl.formatMessage(messages.appNameSubLabel)}
-        </div>
-        <div className={styles.errorStack}>
-          <div className={styles.inputContainer}>
-            <input
-              aria-label={props.intl.formatMessage(messages.ariaAppNameLabel)}
-              className={styles.input}
-              onChange={handleInput}
-              value={azureFunctionsFormData.appName.value}
-              placeholder={FORM_CONSTANTS.APP_NAME.label}
-              disabled={azureFunctionsFormData.subscription === ""}
-              tabIndex={
-                azureFunctionsFormData.subscription.value === "" ? -1 : 0
-              }
-            />
-            {isAppNameAvailable && !isValidatingName && (
-              <GreenCheck className={styles.validationIcon} />
-            )}
-            {isValidatingName && <Spinner className={styles.spinner} />}
-          </div>
-          {!isValidatingName &&
-            !isAppNameAvailable &&
-            azureFunctionsFormData.appName.value.length > 0 && (
-              <div className={styles.errorMessage}>
-                {props.appNameAvailability.message}
-              </div>
-            )}
-        </div>
-        <a
-          tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
-          className={styles.link}
-          href={links.appName}
-        >
-          documents.azure.com
-        </a>
-      </div>
-      {getDropdownSection(
-        FORM_CONSTANTS.LOCATION.label,
-        functionsData.location,
-        FORM_CONSTANTS.LOCATION.value,
-        props.intl.formatMessage(messages.ariaLocationLabel),
-        undefined,
-        azureFunctionsFormData.subscription.value === "",
-        DEFAULT_VALUE,
-        true,
-        props.intl.formatMessage(messages.locationSubLabel)
-      )}
-      {getDropdownSection(
-        FORM_CONSTANTS.NUM_FUNCTIONS.label,
-        getNumFunctionsData(),
-        FORM_CONSTANTS.NUM_FUNCTIONS.value,
-        props.intl.formatMessage(messages.ariaNumFunctionsLabel),
-        undefined,
-        false,
-        1,
-        true
-      )}
-      <div
-        className={classnames(
-          styles.selectionInputContainer,
-          styles.selectionContainer
+        {getDropdownSection(
+          FORM_CONSTANTS.RESOURCE_GROUP.label,
+          functionsData.resourceGroup,
+          FORM_CONSTANTS.RESOURCE_GROUP.value,
+          props.intl.formatMessage(messages.ariaResourceGroupLabel),
+          props.intl.formatMessage(messages.createNew),
+          azureFunctionsFormData.subscription.value === "",
+          DEFAULT_VALUE,
+          false,
+          props.intl.formatMessage(messages.resourceGroupSubLabel)
         )}
-      >
         <div
           className={classnames(
-            styles.selectionHeaderContainer,
-            styles.leftHeader
+            styles.selectionInputContainer,
+            styles.selectionContainer,
+            {
+              [styles.selectionContainerDisabled]:
+                azureFunctionsFormData.subscription.value === ""
+            }
           )}
         >
-          {props.intl.formatMessage(messages.runtimeStackLabel)}
+          <div className={styles.selectionHeaderContainer}>
+            <div className={styles.leftHeader}>
+              {props.intl.formatMessage(messages.appName)}
+            </div>
+          </div>
+          <div className={styles.subLabel}>
+            {props.intl.formatMessage(messages.appNameSubLabel)}
+          </div>
+          <div className={styles.errorStack}>
+            <div className={styles.inputContainer}>
+              <input
+                aria-label={props.intl.formatMessage(messages.ariaAppNameLabel)}
+                className={styles.input}
+                onChange={handleInput}
+                value={azureFunctionsFormData.appName.value}
+                placeholder={FORM_CONSTANTS.APP_NAME.label}
+                disabled={azureFunctionsFormData.subscription === ""}
+                tabIndex={
+                  azureFunctionsFormData.subscription.value === "" ? -1 : 0
+                }
+              />
+              {isAppNameAvailable && !isValidatingName && (
+                <GreenCheck className={styles.validationIcon} />
+              )}
+              {isValidatingName && <Spinner className={styles.spinner} />}
+            </div>
+            {!isValidatingName &&
+              !isAppNameAvailable &&
+              azureFunctionsFormData.appName.value.length > 0 && (
+                <div className={styles.errorMessage}>
+                  {props.appNameAvailability.message}
+                </div>
+              )}
+          </div>
+          <a
+            tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
+            className={styles.link}
+            href={links.appName}
+          >
+            documents.azure.com
+          </a>
         </div>
-        <div>{props.intl.formatMessage(messages.runtimeStackSubLabel)}</div>
+        {getDropdownSection(
+          FORM_CONSTANTS.LOCATION.label,
+          functionsData.location,
+          FORM_CONSTANTS.LOCATION.value,
+          props.intl.formatMessage(messages.ariaLocationLabel),
+          undefined,
+          azureFunctionsFormData.subscription.value === "",
+          DEFAULT_VALUE,
+          true,
+          props.intl.formatMessage(messages.locationSubLabel)
+        )}
+        {getDropdownSection(
+          FORM_CONSTANTS.NUM_FUNCTIONS.label,
+          getNumFunctionsData(),
+          FORM_CONSTANTS.NUM_FUNCTIONS.value,
+          props.intl.formatMessage(messages.ariaNumFunctionsLabel),
+          undefined,
+          false,
+          1,
+          true,
+          props.intl.formatMessage(messages.numFunctionsSubLabel)
+        )}
+        <div
+          className={classnames(
+            styles.selectionInputContainer,
+            styles.selectionContainer
+          )}
+        >
+          <div
+            className={classnames(
+              styles.selectionHeaderContainer,
+              styles.leftHeader
+            )}
+          >
+            {props.intl.formatMessage(messages.runtimeStackLabel)}
+          </div>
+          <div>{props.intl.formatMessage(messages.runtimeStackSubLabel)}</div>
+        </div>
       </div>
       <button
         className={getButtonClassNames()}

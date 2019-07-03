@@ -2,7 +2,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2em;
+  margin-bottom: 1.5em;
+}
+
+.bodyContainer {
+  padding-right: 20px;
+  max-height: calc(80vh - 300px);
+  overflow-y: auto;
 }
 
 .modalTitle {
@@ -33,7 +39,7 @@
 }
 
 .button {
-  margin-top: 27px;
+  margin-top: 2em;
   font-size: 1em;
   border: none;
   height: 50%;
