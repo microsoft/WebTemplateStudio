@@ -68,5 +68,27 @@ export const messages = defineMessages({
   createFunctionApp: {
     id: "azureFunctionsModal.createFunctionApp",
     defaultMessage: "Create Function Application"
+  },
+  subscriptionSubLabel: {
+    id: "azureFunctionsModal.subscriptionSubLabel",
+    defaultMessage: "Choose a subscription to manage your billing preferences"
+  },
+  resourceGroupSubLabel: {
+    id: "azureFunctionsModal.resourceGroupSubLabel",
+    defaultMessage:
+      "A resource group is a container that holds related resources for an Azure solution"
+  },
+  appNameSubLabel: {
+    id: "azureFunctionsModal.appNameSubLabel",
+    defaultMessage: "Create a unique app name"
+  },
+  locationSubLabel: {
+    id: "azureFunctionsModal.locationSubLabel",
+    defaultMessage:
+      "Choose an Azure region where you want your function to be hosted"
+  },
+  runtimeStackSubLabel: {
+    id: "azureFunctionsModal.runtimeStackSubLabel",
+    defaultMessage: "Your runtime stack is NodeJS"
   }
 });

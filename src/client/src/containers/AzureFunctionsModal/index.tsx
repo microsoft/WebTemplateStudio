@@ -102,8 +102,8 @@ const initialState: IFunctionsState = {
     label: ""
   },
   runtimeStack: {
-    value: "",
-    label: ""
+    value: "node",
+    label: "JavaScript"
   },
   location: {
     value: "",
@@ -152,7 +152,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
     azureFunctionModalInitialState
   );
 
-  // Hardcoding a "node" value until data can be loaded dynamically
   // Updates the data we are presenting to the user when the subscription changes
   React.useEffect(() => {
     setData({
@@ -160,12 +159,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
         {
           value: "",
           label: ""
-        }
-      ],
-      runtimeStack: [
-        {
-          value: "node",
-          label: "JavaScript"
         }
       ],
       subscription: props.subscriptions,
@@ -301,7 +294,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
     rightHeader?: string,
     disabled?: boolean,
     defaultValue?: any,
-    openDropdownUpwards?: boolean
+    openDropdownUpwards?: boolean,
+    subLabel?: string
   ) => {
     return (
       <div
@@ -310,17 +304,18 @@ const AzureFunctionsResourceModal = (props: Props) => {
         })}
       >
         <div className={styles.selectionHeaderContainer}>
-          <div>{leftHeader}</div>
+          <div className={styles.leftHeader}>{leftHeader}</div>
           {links[formSectionId] && (
             <a
               tabIndex={disabled ? -1 : 0}
               className={styles.link}
               href={links[formSectionId]}
             >
-              {props.intl.formatMessage(messages.createNew)}
+              {rightHeader}
             </a>
           )}
         </div>
+        <div className={styles.subLabel}>{subLabel}</div>
         <Dropdown
           ariaLabel={ariaLabel}
           options={options}
@@ -375,7 +370,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
         props.intl.formatMessage(messages.ariaSubscriptionLabel),
         props.intl.formatMessage(messages.createNew),
         false,
-        DEFAULT_VALUE
+        DEFAULT_VALUE,
+        false,
+        props.intl.formatMessage(messages.subscriptionSubLabel)
       )}
       {getDropdownSection(
         FORM_CONSTANTS.RESOURCE_GROUP.label,
@@ -384,7 +381,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
         props.intl.formatMessage(messages.ariaResourceGroupLabel),
         props.intl.formatMessage(messages.createNew),
         azureFunctionsFormData.subscription.value === "",
-        DEFAULT_VALUE
+        DEFAULT_VALUE,
+        false,
+        props.intl.formatMessage(messages.resourceGroupSubLabel)
       )}
       <div
         className={classnames(
@@ -397,14 +396,12 @@ const AzureFunctionsResourceModal = (props: Props) => {
         )}
       >
         <div className={styles.selectionHeaderContainer}>
-          <div>{props.intl.formatMessage(messages.appName)}</div>
-          <a
-            tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
-            className={styles.link}
-            href={links.appName}
-          >
-            documents.azure.com
-          </a>
+          <div className={styles.leftHeader}>
+            {props.intl.formatMessage(messages.appName)}
+          </div>
+        </div>
+        <div className={styles.subLabel}>
+          {props.intl.formatMessage(messages.appNameSubLabel)}
         </div>
         <div className={styles.errorStack}>
           <div className={styles.inputContainer}>
@@ -424,13 +421,21 @@ const AzureFunctionsResourceModal = (props: Props) => {
             )}
             {isValidatingName && <Spinner className={styles.spinner} />}
           </div>
-          {!isValidatingName && !isAppNameAvailable &&
+          {!isValidatingName &&
+            !isAppNameAvailable &&
             azureFunctionsFormData.appName.value.length > 0 && (
               <div className={styles.errorMessage}>
                 {props.appNameAvailability.message}
               </div>
             )}
         </div>
+        <a
+          tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
+          className={styles.link}
+          href={links.appName}
+        >
+          documents.azure.com
+        </a>
       </div>
       {getDropdownSection(
         FORM_CONSTANTS.LOCATION.label,
@@ -440,38 +445,43 @@ const AzureFunctionsResourceModal = (props: Props) => {
         undefined,
         azureFunctionsFormData.subscription.value === "",
         DEFAULT_VALUE,
-        true
+        true,
+        props.intl.formatMessage(messages.locationSubLabel)
       )}
       {getDropdownSection(
-        FORM_CONSTANTS.RUNTIME_STACK.label,
-        functionsData.runtimeStack,
-        FORM_CONSTANTS.RUNTIME_STACK.value,
-        props.intl.formatMessage(messages.ariaRuntimeStackLabel),
+        FORM_CONSTANTS.NUM_FUNCTIONS.label,
+        getNumFunctionsData(),
+        FORM_CONSTANTS.NUM_FUNCTIONS.value,
+        props.intl.formatMessage(messages.ariaNumFunctionsLabel),
         undefined,
         false,
-        DEFAULT_VALUE
+        1,
+        true
       )}
-      <div className={styles.modalFooterContainer}>
-        {getDropdownSection(
-          FORM_CONSTANTS.NUM_FUNCTIONS.label,
-          getNumFunctionsData(),
-          FORM_CONSTANTS.NUM_FUNCTIONS.value,
-          props.intl.formatMessage(messages.ariaNumFunctionsLabel),
-          undefined,
-          false,
-          1,
-          true
+      <div
+        className={classnames(
+          styles.selectionInputContainer,
+          styles.selectionContainer
         )}
-        <button
-          className={getButtonClassNames()}
-          onClick={handleAddResource}
-          disabled={!formIsSendable}
+      >
+        <div
+          className={classnames(
+            styles.selectionHeaderContainer,
+            styles.leftHeader
+          )}
         >
-          {(props.selection &&
-            props.intl.formatMessage(messages.saveChanges)) ||
-            props.intl.formatMessage(messages.addResource)}
-        </button>
+          {props.intl.formatMessage(messages.runtimeStackLabel)}
+        </div>
+        <div>{props.intl.formatMessage(messages.runtimeStackSubLabel)}</div>
       </div>
+      <button
+        className={getButtonClassNames()}
+        onClick={handleAddResource}
+        disabled={!formIsSendable}
+      >
+        {(props.selection && props.intl.formatMessage(messages.saveChanges)) ||
+          props.intl.formatMessage(messages.addResource)}
+      </button>
     </React.Fragment>
   );
 };
