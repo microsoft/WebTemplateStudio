@@ -93,7 +93,7 @@ const SelectableCard = ({
             <CardTitle title={title} />
           </div>
         </div>
-        {isPreview && isFrameworkSelection && selected && (
+        {isFrameworkSelection && selected && (
           <DependencyInfo frameworkName={option.internalName} />
         )}
         <div className={grid.row}>

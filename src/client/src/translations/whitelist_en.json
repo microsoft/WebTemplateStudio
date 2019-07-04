@@ -66,6 +66,8 @@
   "cosmosResourceModule.saveChanges",
   "cosmosResourceModule.createCosmosRes",
   "cosmosResourceModule.internalName",
+  "dependencyChecker.installedMessage",
+  "dependencyChecker.notInstalledMessage",
   "dependencyChecker.iconAltMessage",
   "footer.back",
   "footer.next",
