@@ -1,4 +1,4 @@
-from flask import jsonify, make_response, request
+from flask import request
 from bson import ObjectId
 
 from .mongo_client import list_items

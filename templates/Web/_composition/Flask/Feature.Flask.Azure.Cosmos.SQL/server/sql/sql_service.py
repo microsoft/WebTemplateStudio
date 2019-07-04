@@ -1,4 +1,4 @@
-from flask import jsonify, make_response, request
+from flask import request
 
 from .sql_client import SQLObj
 
@@ -12,7 +12,7 @@ def get():
     options['maxItemCount'] = 2
     results_iterable = sql_database_obj.get_client().QueryItems(
         sql_database_obj.get_container()['_self'], query_str, options)
-    return results_iterable
+    return list(results_iterable)
 
 def create():
     data = request.get_json()
