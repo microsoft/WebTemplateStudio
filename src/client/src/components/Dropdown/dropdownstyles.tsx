@@ -59,9 +59,9 @@ export default {
   menuList: (base: any, state: any) => ({
     ...base,
     // kill the white space on first and last option
-    maxHeight: "130px",
     padding: 0,
     background: "var(--vscode-editor-background)",
-    border: "0.5px solid var(--vscode-editor-foreground)"
+    border: "0.5px solid var(--vscode-editor-foreground)",
+    maxHeight: "130px"
   })
 };
