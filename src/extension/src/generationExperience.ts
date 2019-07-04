@@ -122,58 +122,96 @@ export class GenerationExperience extends WizardServant {
       );
     }
 
-    if (payload.selectedCosmos) {
-      serviceQueue.push(
-        GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
-          TelemetryEventName.CosmosDBDeploy,
-          // tslint:disable-next-line: no-function-expression
-          async function(this: IActionContext): Promise<void> {
-            var cosmosPayload: any = payload.cosmos;
-            try {
-              var dbObject = await AzureServices.deployCosmosResource(
-                cosmosPayload,
-                enginePayload.path
-              );
-              progressObject = {
-                ...progressObject,
-                cosmos: GenerationExperience.getProgressObject(true)
-              };
-              GenerationExperience.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject
-              });
-              AzureServices.promptUserForCosmosReplacement(
-                enginePayload.path,
-                dbObject
-              ).then(
-                //log in telemetry how long it took replacement
-                cosmosReplaceResponse => {
-                  if (cosmosReplaceResponse.userReplacedEnv) {
-                    // Temporary Disable
-                    GenerationExperience.Telemetry.trackCustomEventTime(
-                      TelemetryEventName.ConnectionStringReplace,
-                      cosmosReplaceResponse.startTime,
-                      Date.now()
-                    );
-                  }
-                }
-              );
-            } catch (error) {
-              progressObject = {
-                ...progressObject,
-                cosmos: GenerationExperience.getProgressObject(false)
-              };
-              GenerationExperience.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject
-              });
+    // Resource groups should be created before other deploy methods execute
+    Promise.all(resourceGroupQueue)
+    .then(() => {
+      if (payload.selectedFunctions) {
+        serviceQueue.push(
+          GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
+            TelemetryEventName.FunctionsDeploy,
+            // tslint:disable-next-line: no-function-expression
+            async function(this: IActionContext): Promise<void> {
+              try {
+                await AzureServices.deployFunctionApp(
+                  payload.functions,
+                  enginePayload.path
+                );
+                progressObject = {
+                  ...progressObject,
+                  azureFunctions: GenerationExperience.getProgressObject(true)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+              } catch (error) {
+                progressObject = {
+                  ...progressObject,
+                  azureFunctions: GenerationExperience.getProgressObject(false)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+              }
             }
-          }
-        )
-      );
-    }
-    // kick off both services asynchronously
-    Promise.all(serviceQueue);
+          )
+        );
+      }
+  
+      if (payload.selectedCosmos) {
+        serviceQueue.push(
+          GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
+            TelemetryEventName.CosmosDBDeploy,
+            // tslint:disable-next-line: no-function-expression
+            async function(this: IActionContext): Promise<void> {
+              var cosmosPayload: any = payload.cosmos;
+              try {
+                var dbObject = await AzureServices.deployCosmosResource(
+                  cosmosPayload,
+                  enginePayload.path
+                );
+                progressObject = {
+                  ...progressObject,
+                  cosmos: GenerationExperience.getProgressObject(true)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+                AzureServices.promptUserForCosmosReplacement(
+                  enginePayload.path,
+                  dbObject
+                ).then(
+                  //log in telemetry how long it took replacement
+                  cosmosReplaceResponse => {
+                    if (cosmosReplaceResponse.userReplacedEnv) {
+                      // Temporary Disable
+                      GenerationExperience.Telemetry.trackCustomEventTime(
+                        TelemetryEventName.ConnectionStringReplace,
+                        cosmosReplaceResponse.startTime,
+                        Date.now()
+                      );
+                    }
+                  }
+                );
+              } catch (error) {
+                progressObject = {
+                  ...progressObject,
+                  cosmos: GenerationExperience.getProgressObject(false)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+              }
+            }
+          )
+        );
+      }
+      // kick off both services asynchronously
+      Promise.all(serviceQueue);
+    });
     return { payload: undefined };
   }
 
