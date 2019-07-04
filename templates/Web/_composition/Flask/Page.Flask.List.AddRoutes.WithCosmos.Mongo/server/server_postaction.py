@@ -14,14 +14,19 @@ app = Flask(__name__, static_folder='build')
 # List Endpoints
 @app.route(CONSTANTS['ENDPOINT']['LIST'])
 def get_list():
-    return get()
+    return jsonify(get())
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'], methods=['POST'])
 def add_list_item():
-    return create()
+    json_response = jsonify(create())
+    return make_response(json_response, 201)
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<id>', methods=['DELETE'])
 def delete_list_item(id):
-    return destroy(id)
-
+    try:
+        removed_item = jsonify(destroy(id))
+        return removed_item
+    except Exception as ex:
+        err_response = jsonify({'error': str(ex)})
+        return make_response(err_response, 404)
 //}]}
