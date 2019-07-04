@@ -64,7 +64,7 @@ interface IStateProps {
   isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
   functionNames?: IFunctionName[];
-  enableCreateTemplateButton: any
+  enableCreateTemplateButton: boolean;
 }
 
 type Props = RouteComponentProps &

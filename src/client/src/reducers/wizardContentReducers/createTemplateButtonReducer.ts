@@ -1,8 +1,10 @@
 import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
+import { IUpdateCreateTemplateButton } from '../../actions/wizardInfoActions/updateCreateTemplateButton'
+import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType";
 
 const createTemplateButton = (
-    state = false,
-    action: any
+    state : boolean = false,
+    action: IUpdateCreateTemplateButton | WizardInfoType
 ) => {
     switch(action.type) {
         case WIZARD_INFO_TYPEKEYS.UPDATE_CREATE_TEMPLATE_BUTTON:
