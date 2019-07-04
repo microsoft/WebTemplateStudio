@@ -148,7 +148,3 @@ asyncForEach(files, async (file: string) => {
   .catch(err => {
     throw err;
   });
-
-if (!fs.existsSync(testFolder)) {
-  fs.mkdirSync(testFolder);
-}
