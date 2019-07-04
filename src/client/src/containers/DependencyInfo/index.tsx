@@ -128,8 +128,8 @@ class DependencyInfo extends React.Component<Props> {
     return (
       <div
         role="button"
-        tabIndex={installed ? -1 : 0}
-        onKeyDown={keyDownHandler}
+        tabIndex={0}
+        onKeyDown={installed ? () => null : keyDownHandler}
         onClick={() => openPrivacyModal(dependency)}
         className={classnames(styles.dependencyContainer, {
           [styles.disabled]: installed,
