@@ -42,3 +42,8 @@
 .link:hover {
   color: var(--vscode-editor-foreground);
 }
+
+.link:focus {
+  outline: none;
+  border: 0;
+}

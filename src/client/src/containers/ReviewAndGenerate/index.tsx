@@ -62,7 +62,7 @@ const ReviewAndGenerate = (props: Props) => {
           >
             <a
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className={styles.link}
               href="https://github.com/Microsoft/WebTemplateStudio/issues"
             >
