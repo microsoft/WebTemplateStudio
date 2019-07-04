@@ -1,8 +1,7 @@
 from flask import jsonify, make_response, request
-from .mongo_client import *
-from bson import json_util, ObjectId
-import json
-from .settings import *
+from bson import ObjectId
+
+from .mongo_client import list_items
 from .utils import serialize
 
 
@@ -15,26 +14,13 @@ def create():
     data = request.get_json()
     list_item = {'text': data['text']}
     created_item = list_items.insert_one(list_item)
-    return make_response(
-        jsonify(
-            {'_id': str(created_item.inserted_id), 'text': list_item['text']}
-        ), 201
-    )
+    json_response = jsonify({'_id': str(created_item.inserted_id), 'text': list_item['text']})
+    return make_response(json_response, 201)
 
 def destroy(id):
     query_str = {'_id': ObjectId(id)}
-    count = 0
-    result = list_items.find(query_str)
-    for item in iter(result):
-        count += 1
-    if count == 0:
-        return make_response(
-            jsonify(
-                {'error': 'Could not find an item with given id'}
-            ),
-            404
-        )
-    list_items.delete_one(query_str)
-    return jsonify(
-        {'_id': id, 'text': 'This comment was deleted'}
-    )
+    result = list_items.delete_one(query_str)
+    if result.deleted_count == 0:
+        json_response = jsonify({'error': 'Could not find an item with given id'})
+        return make_response(json_response, 404)
+    return jsonify({'_id': id, 'text': 'This comment was deleted'})
