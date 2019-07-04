@@ -34,7 +34,8 @@ const SelectableCard = ({
   clickCount,
   disabled,
   isFrameworkSelection,
-  isPreview
+  isPreview,
+  addPage
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -49,6 +50,7 @@ const SelectableCard = ({
   disabled: boolean | undefined;
   isFrameworkSelection: boolean;
   isPreview: boolean;
+  addPage: (idx: number) => void;
 }) => {
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -76,6 +78,7 @@ const SelectableCard = ({
         [styles.unselectable]: disabled
       })}
     >
+      <button onClick={() => {addPage(cardNumber)}}> + </button>
       <div>
         <div className={styles.cardHeader}>
           <div className={styles.icon}>

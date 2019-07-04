@@ -213,6 +213,23 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     }
   };
 
+  addPage(cardNumber: number) {
+    const {
+      options,
+      multiSelect,
+      cardTypeCount,
+      handleCountUpdate
+    } = this.props;
+    const { unselectable, internalName } = options[cardNumber];
+    if (cardTypeCount && handleCountUpdate) {
+      cardTypeCount[internalName] = cardTypeCount[internalName]
+        ? cardTypeCount[internalName] + 1
+        : 1;
+      handleCountUpdate(cardTypeCount);
+      this.addOption(cardNumber, cardTypeCount[internalName], internalName);
+    }
+  }
+
   public render() {
     const { title, options, setDetailPage, isFrameworkSelection } = this.props;
     return (
@@ -238,6 +255,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 body={body as string}
                 disabled={unselectable}
                 clickCount={this.getCardCount(internalName)}
+                addPage={(cardNumber: number) => this.addPage(cardNumber)}
               />
             );
           })}
