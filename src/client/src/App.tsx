@@ -66,6 +66,7 @@ import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
 import { getFrameworks2 } from "./actions/wizardContentActions/getFrameworks";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
+import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -90,6 +91,7 @@ interface IDispatchProps {
   getVersionsData: (versions: IVersions) => any;
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
   getBackendFrameworksSuccess: (frameworks: IOption[]) => any;
+  getFrontendFrameworksSuccess: (frameworks: IOption[]) => any;
   resetPageSelection: () => any;
   selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
@@ -117,6 +119,7 @@ class App extends React.Component<Props> {
     setAzureValidationStatus: () => {},
     updateDependencyInfo: () => {},
     getBackendFrameworksSuccess: () => {},
+    getFrontendFrameworksSuccess: () => {},
     updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {},
     getVersionsData: () => {},
@@ -130,7 +133,15 @@ class App extends React.Component<Props> {
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
+        // get frameworks from extension message
         case EXTENSION_COMMANDS.GET_FRAMEWORKS:
+          this.props.getFrontendFrameworksSuccess(
+            getFrameworks2(
+              message.payload.frameworks,
+              "frontend",
+              message.payload.isPreview
+            )
+          );
           this.props.getBackendFrameworksSuccess(
             getFrameworks2(
               message.payload.frameworks,
@@ -333,6 +344,9 @@ const mapDispatchToProps = (
   },
   getBackendFrameworksSuccess: (frameworks: IOption[]) => {
     dispatch(getBackendFrameworksSuccess(frameworks));
+  },
+  getFrontendFrameworksSuccess: (frameworks: IOption[]) => {
+    dispatch(getFrontendFrameworksSuccess(frameworks));
   },
   getVersionsData: (versions: IVersions) => {
     dispatch(getVersionsDataAction(versions));

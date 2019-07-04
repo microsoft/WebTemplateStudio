@@ -5,7 +5,6 @@ import SelectOption from "../SelectOption";
 
 import { selectFrontendFramework as selectFrontendAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
 
-import { getFrontendFrameworksAction } from "../../actions/wizardContentActions/getFrontendFrameworks";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 import {
@@ -28,11 +27,6 @@ import {
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
-  getFrontendFrameworks: (
-    projectType: string,
-    isPreview: boolean,
-    serverPort: number
-  ) => void;
 }
 
 interface ISelectFrontEndFrameworkProps {
@@ -56,14 +50,7 @@ const messages = defineMessages({
 
 class SelectFrontEndFramework extends React.Component<Props> {
   public componentDidMount() {
-    const { getFrontendFrameworks, isPreview, serverPort } = this.props;
-    if (getFrontendFrameworks) {
-      getFrontendFrameworks(
-        WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
-        isPreview,
-        serverPort
-      );
-    }
+    const { isPreview, serverPort } = this.props;
   }
 
   public handleFrameworkChange(option: ISelected) {
@@ -151,13 +138,6 @@ const mapDispatchToProps = (
 ): IDispatchProps => ({
   selectFrontendFramework: (framework: ISelected) => {
     dispatch(selectFrontendAction(framework));
-  },
-  getFrontendFrameworks: (
-    projectType: string,
-    isPreview: boolean,
-    serverPort: number
-  ) => {
-    dispatch(getFrontendFrameworksAction(projectType, isPreview, serverPort));
   }
 });
 

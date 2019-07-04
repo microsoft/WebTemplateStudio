@@ -10,7 +10,11 @@ import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { AppState } from "../../reducers";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
-import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
+import {
+  EXTENSION_MODULES,
+  EXTENSION_COMMANDS,
+  WIZARD_CONTENT_INTERNAL_NAMES
+} from "../../utils/constants";
 
 interface ISelectFrameworksProps {
   vscode: IVSCodeObject;
@@ -34,6 +38,17 @@ class SelectFrameworks extends React.Component<Props> {
       command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
       payload: {
         dependency: "python"
+      }
+    });
+    // send extension commands to load frameworks
+    vscode.postMessage({
+      module: EXTENSION_MODULES.CoreTSModule,
+      command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
+      track: false,
+      text: "Sending get frameworks commands...",
+      payload: {
+        isPreview: isPreview,
+        projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
       }
     });
   }

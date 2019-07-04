@@ -8,7 +8,11 @@ import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActio
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 
-import { WIZARD_CONTENT_INTERNAL_NAMES, EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
+import {
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  EXTENSION_COMMANDS,
+  EXTENSION_MODULES
+} from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -43,20 +47,8 @@ const messages = defineMessages({
 class SelectBackEndFramework extends React.Component<Props> {
   public componentDidMount() {
     const { isPreview, vscode } = this.props;
-    // send extension commands to load frameworks
-    vscode.postMessage({
-      module: EXTENSION_MODULES.CoreTSModule,
-      command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
-      track: false,
-      text: "Sending backend frameworks commands...",
-      payload: {
-        projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
-        isPreview: isPreview,
-        type: "backend"
-      }
-    });
   }
-  
+
   /**
    * Finds the index of the framework currently selected in the wizard
    *
