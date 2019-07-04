@@ -7,7 +7,7 @@
   margin-bottom: 24px;
 }
 
-.reviewContextContainer{
+.reviewContextContainer {
   float: left;
   padding: 70px 100px;
 }
@@ -22,7 +22,7 @@
 }
 
 .button:hover {
-  color: #ffffff;
+  color: var(--vscode-editor-foreground);
 }
 
 .button:focus {
@@ -35,6 +35,10 @@
 }
 
 .link {
-  color: white;
+  color: var(--vscode-editor-foreground);
   text-decoration: none;
+}
+
+.link:hover {
+  color: var(--vscode-editor-foreground);
 }
