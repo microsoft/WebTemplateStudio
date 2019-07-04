@@ -83,7 +83,7 @@ const EXTENSION_MODULES = {
   VALIDATOR: "Validator",
   VSCODEUI: "VSCodeUI",
   DEPENDENCYCHECKER: "DependencyChecker",
-  CoreTSModule: "CoreTSModule"
+  CORETS: "CoreTSModule"
 };
 
 // Define extension commands here that should be received from the extension

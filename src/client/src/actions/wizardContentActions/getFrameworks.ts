@@ -2,11 +2,9 @@ import getSvgUrl from "../../utils/getSvgUrl";
 import { IMetadata } from "../../types/metadata";
 import { IOption } from "../../types/option";
 
-type FrameworkType = "frontend" | "backend";
-
 export const getFrameworks = (
   frameworksJson: any,
-  type: FrameworkType,
+  type: string,
   isPreview: boolean
 ): IOption[] => {
   return getOptionalFromMetadata(
@@ -16,7 +14,7 @@ export const getFrameworks = (
 
 function getMetadataFromJson(
   items: any[],
-  type: FrameworkType,
+  type: string,
   isPreview: boolean
 ): IMetadata[] {
   return items

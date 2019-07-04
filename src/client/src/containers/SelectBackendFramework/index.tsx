@@ -3,16 +3,9 @@ import { connect } from "react-redux";
 
 import SelectOption from "../SelectOption";
 
-// import { getBackendFrameworksAction } from "../../actions/wizardContentActions/getBackendFrameworks";
 import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-
-import {
-  WIZARD_CONTENT_INTERNAL_NAMES,
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES
-} from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -21,7 +14,6 @@ import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;

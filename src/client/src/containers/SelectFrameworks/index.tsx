@@ -42,7 +42,7 @@ class SelectFrameworks extends React.Component<Props> {
     });
     // send extension commands to load frameworks
     vscode.postMessage({
-      module: EXTENSION_MODULES.CoreTSModule,
+      module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
       track: false,
       text: "Sending get frameworks commands...",
