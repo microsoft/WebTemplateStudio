@@ -24,8 +24,8 @@ const getCustomStyles = (MODAL_TYPE: string | undefined) => {
   // depends on modal type, customize width
   if (
     MODAL_TYPE &&
-    (MODAL_TYPE == MODAL_TYPES.POST_GEN_MODAL ||
-      MODAL_TYPE == MODAL_TYPES.VIEW_LICENSES_MODAL)
+    (MODAL_TYPE === MODAL_TYPES.POST_GEN_MODAL ||
+      MODAL_TYPE === MODAL_TYPES.VIEW_LICENSES_MODAL)
   ) {
     CUSTOM_WIDTH = "30%";
   }
