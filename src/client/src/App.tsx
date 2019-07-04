@@ -22,7 +22,8 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   ROUTES,
-  DEVELOPMENT
+  DEVELOPMENT,
+  WIZARD_CONTENT_INTERNAL_NAMES
 } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
@@ -64,7 +65,7 @@ import { setPortAction } from "./actions/wizardContentActions/setPort";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
-import { getFrameworks2 } from "./actions/wizardContentActions/getFrameworks";
+import { getFrameworks } from "./actions/wizardContentActions/getFrameworks";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 
@@ -136,16 +137,16 @@ class App extends React.Component<Props> {
         // get frameworks from extension message
         case EXTENSION_COMMANDS.GET_FRAMEWORKS:
           this.props.getFrontendFrameworksSuccess(
-            getFrameworks2(
+            getFrameworks(
               message.payload.frameworks,
-              "frontend",
+              WIZARD_CONTENT_INTERNAL_NAMES.FRONTEND,
               message.payload.isPreview
             )
           );
           this.props.getBackendFrameworksSuccess(
-            getFrameworks2(
+            getFrameworks(
               message.payload.frameworks,
-              "backend",
+              WIZARD_CONTENT_INTERNAL_NAMES.BACKEND,
               message.payload.isPreview
             )
           );

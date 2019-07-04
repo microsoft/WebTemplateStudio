@@ -22,11 +22,7 @@ export class CoreTSModule extends WizardServant {
     }
 
     async getFrameworks(message: any): Promise<IPayloadResponse> {
-        // TODO: call CoreTemplateStudio
-        console.log("3. Receiving Messgae from UI");
         let result = await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType);
-        console.log("get response from CoreTS: " + JSON.stringify(result));
-        console.log("sending message to UI");
         return {
             payload: {
                 frameworks: result,
