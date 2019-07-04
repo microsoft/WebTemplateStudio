@@ -64,6 +64,8 @@ import { setPortAction } from "./actions/wizardContentActions/setPort";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
+import { getFrameworks2 } from "./actions/wizardContentActions/getFrameworks";
+import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -87,6 +89,7 @@ interface IDispatchProps {
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
+  getBackendFrameworksSuccess: (frameworks: IOption[]) => any;
   resetPageSelection: () => any;
   selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
@@ -113,6 +116,7 @@ class App extends React.Component<Props> {
     setProjectPathValidation: () => {},
     setAzureValidationStatus: () => {},
     updateDependencyInfo: () => {},
+    getBackendFrameworksSuccess: () => {},
     updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {},
     getVersionsData: () => {},
@@ -126,6 +130,15 @@ class App extends React.Component<Props> {
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
+        case EXTENSION_COMMANDS.GET_FRAMEWORKS:
+          this.props.getBackendFrameworksSuccess(
+            getFrameworks2(
+              message.payload.frameworks,
+              "backend",
+              message.payload.isPreview
+            )
+          );
+          break;
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           this.props.updateDependencyInfo(message.payload);
           break;
@@ -317,6 +330,9 @@ const mapDispatchToProps = (
   },
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => {
     dispatch(updateDependencyInfoAction(dependencyInfo));
+  },
+  getBackendFrameworksSuccess: (frameworks: IOption[]) => {
+    dispatch(getBackendFrameworksSuccess(frameworks));
   },
   getVersionsData: (versions: IVersions) => {
     dispatch(getVersionsDataAction(versions));

@@ -17,16 +17,16 @@ export const getBackendFrameworksSuccess = (
 });
 
 // thunk
-export const getBackendFrameworksAction = (
-  projectType: string,
-  isPreview: boolean,
-  serverPort: number
-) => {
-  return async (dispatch: Dispatch<WizardContentActionType>) => {
-    return dispatch(
-      getBackendFrameworksSuccess(
-        await getFrameworks(projectType, "backend", isPreview, serverPort)
-      )
-    );
-  };
-};
+// export const getBackendFrameworksAction = (
+//   projectType: string,
+//   isPreview: boolean,
+//   serverPort: number
+// ) => {
+//   return async (dispatch: Dispatch<WizardContentActionType>) => {
+//     return dispatch(
+//       getBackendFrameworksSuccess(
+//         await getFrameworks(projectType, "backend", isPreview, serverPort)
+//       )
+//     );
+//   };
+// };

@@ -80,7 +80,8 @@ const EXTENSION_MODULES = {
   TELEMETRY: "Telemetry",
   VALIDATOR: "Validator",
   VSCODEUI: "VSCodeUI",
-  DEPENDENCYCHECKER: "DependencyChecker"
+  DEPENDENCYCHECKER: "DependencyChecker",
+  CoreTSModule: "CoreTSModule"
 };
 
 // Define extension commands here that should be received from the extension
@@ -104,7 +105,8 @@ const EXTENSION_COMMANDS = {
   CLOSE_WIZARD: "close-wizard",
   RESET_PAGES: "reset-pages",
   GET_PREVIEW_STATUS: "get-preview",
-  GET_DEPENDENCY_INFO: "check-dependency"
+  GET_DEPENDENCY_INFO: "check-dependency",
+  GET_FRAMEWORKS: "get-frameworks"
 };
 
 export {

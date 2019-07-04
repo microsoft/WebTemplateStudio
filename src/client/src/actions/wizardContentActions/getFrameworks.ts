@@ -1,7 +1,7 @@
-import EngineAPIService from "../../services/EngineAPIService";
 import getSvgUrl from "../../utils/getSvgUrl";
 import { IMetadata } from "../../types/metadata";
 import { IOption } from "../../types/option";
+import EngineAPIService from "../../services/EngineAPIService";
 
 type FrameworkType = "frontend" | "backend";
 
@@ -15,7 +15,6 @@ export const getFrameworks = async (
   const api = new EngineAPIService(serverPort, undefined);
   try {
     const frameworksJson = await api.getFrameworks(projectType);
-
     if (frameworksJson.detail == null) {
       return getOptionalFromMetadata(
         getMetadataFromJson(frameworksJson, type, isPreview)
@@ -28,6 +27,16 @@ export const getFrameworks = async (
     console.log(error);
     return [];
   }
+};
+
+export const getFrameworks2 = (
+  frameworksJson: any,
+  type: FrameworkType,
+  isPreview: boolean
+): IOption[] => {
+  return getOptionalFromMetadata(
+    getMetadataFromJson(frameworksJson, type, isPreview)
+  );
 };
 
 function getMetadataFromJson(

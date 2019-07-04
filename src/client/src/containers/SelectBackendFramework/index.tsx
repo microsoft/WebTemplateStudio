@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 
 import SelectOption from "../SelectOption";
 
-import { getBackendFrameworksAction } from "../../actions/wizardContentActions/getBackendFrameworks";
+// import { getBackendFrameworksAction } from "../../actions/wizardContentActions/getBackendFrameworks";
 import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES, EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -16,14 +16,11 @@ import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
-  getBackendFrameworks: (
-    projectType: string,
-    isPreview: boolean,
-    serverPort: number
-  ) => void;
 }
 
 interface ISelectBackendProps {
@@ -31,6 +28,7 @@ interface ISelectBackendProps {
   selectedBackend: ISelected;
   serverPort: number;
   isPreview: boolean;
+  vscode: any;
 }
 
 type Props = IDispatchProps & ISelectBackendProps & InjectedIntlProps;
@@ -44,15 +42,21 @@ const messages = defineMessages({
 
 class SelectBackEndFramework extends React.Component<Props> {
   public componentDidMount() {
-    const { getBackendFrameworks, isPreview, serverPort } = this.props;
-    if (getBackendFrameworks !== undefined) {
-      getBackendFrameworks(
-        WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
-        isPreview,
-        serverPort
-      );
-    }
+    const { isPreview, vscode } = this.props;
+    // send extension commands to load frameworks
+    vscode.postMessage({
+      module: EXTENSION_MODULES.CoreTSModule,
+      command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
+      track: false,
+      text: "Sending backend frameworks commands...",
+      payload: {
+        projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+        isPreview: isPreview,
+        type: "backend"
+      }
+    });
   }
+  
   /**
    * Finds the index of the framework currently selected in the wizard
    *
@@ -100,7 +104,8 @@ const mapStateToProps = (state: AppState): ISelectBackendProps => {
     isPreview: previewStatus,
     options: backendOptions,
     selectedBackend: backendFramework,
-    serverPort
+    serverPort,
+    vscode: getVSCodeApiSelector(state)
   };
 };
 
@@ -109,13 +114,6 @@ const mapDispatchToProps = (
 ): IDispatchProps => ({
   selectBackendFramework: (backendFramework: ISelected) => {
     dispatch(selectBackendFrameworkAction(backendFramework));
-  },
-  getBackendFrameworks: (
-    projectType: string,
-    isPreview: boolean,
-    serverPort: number
-  ) => {
-    dispatch(getBackendFrameworksAction(projectType, isPreview, serverPort));
   }
 });
 
