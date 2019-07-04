@@ -16,6 +16,7 @@ import Header from "./containers/Header";
 import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
+import PrivacyModal from "./containers/PrivacyModal";
 
 import {
   EXTENSION_COMMANDS,
@@ -242,6 +243,11 @@ class App extends React.Component<Props> {
           <CosmosResourceModal />
           <AzureFunctionsModal />
           <PostGenerationModal />
+<<<<<<< HEAD
+=======
+          <PrivacyModal />
+          <LeftSidebar />
+>>>>>>> 6b8a11902eb8be63ed2b4492f4c1beb2cf707c36
 
           <main
             className={classnames(appStyles.centerView, {

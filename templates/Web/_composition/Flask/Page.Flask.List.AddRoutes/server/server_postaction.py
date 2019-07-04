@@ -1,17 +1,16 @@
-from flask import Flask, send_from_directory
-from flask import jsonify
-from flask import make_response
+from flask import Flask, jsonify, make_response, send_from_directory
 //{[{
 from flask import request
 //}]}
-from constants import CONSTANTS
 import os
 from os.path import exists, join
+
+from constants import CONSTANTS
 //{[{
-from sample_data import *
+from sample_data import sample_data
 //}]}
 
-app = Flask(__name__, static_folder = 'build')
+app = Flask(__name__, static_folder='build')
 
 //{[{
 # List Endpoints
@@ -36,7 +35,7 @@ def add_list_item():
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<int:id>', methods=['DELETE'])
 def delete_list_item(id):
     list_items_to_remove = [list_item for list_item in sample_data['list_text_assets']['list_items'] if list_item['_id'] == id]
-    if (len(list_items_to_remove) == 0):
+    if (not list_items_to_remove):
         return make_response(jsonify({'error': 'Could not find an item with the given id'}), 404)
     if (len(list_items_to_remove) > 1):
         return make_response(jsonify({'error': 'There is a problem with the server'}), 500)
