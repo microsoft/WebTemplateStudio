@@ -88,7 +88,7 @@ const pathsBack: any = {
 const messages = defineMessages({
   navAriaLabel: {
     id: "footer.navAriaLabel",
-    defaultMessage: "Navigate between pages and generate templates"
+    defaultMessage: "Navigate between pages and create project"
   }
 });
 
@@ -195,19 +195,19 @@ class Footer extends React.Component<Props> {
               )}
             </div>
             <div className={styles.buttonContainer}>
-              <Link
-                tabIndex={pathname === ROUTES.NEW_PROJECT ? -1 : 0}
-                className={classnames(buttonStyles.buttonDark, styles.button, {
-                  [styles.disabledOverlay]: pathname === ROUTES.NEW_PROJECT
-                })}
-                to={
-                  pathsBack[pathname] === undefined
-                    ? ROUTES.NEW_PROJECT
-                    : pathsBack[pathname]
-                }
-              >
-                <FormattedMessage id="footer.back" defaultMessage="Back" />
-              </Link>
+              { pathname !== ROUTES.NEW_PROJECT &&
+                <Link
+                  tabIndex={0}
+                  className={classnames(buttonStyles.buttonDark, styles.button)}
+                  to={
+                    pathsBack[pathname] === undefined
+                      ? ROUTES.NEW_PROJECT
+                      : pathsBack[pathname]
+                  }
+                >
+                  <FormattedMessage id="footer.back" defaultMessage="Back" />
+                </Link>
+              }
               <Link
                 tabIndex={
                   !isValidNameAndProjectPath || this.isReviewAndGenerate()
@@ -232,7 +232,7 @@ class Footer extends React.Component<Props> {
               >
                 <FormattedMessage id="footer.next" defaultMessage="Next" />
               </Link>
-              {this.props.enableCreateTemplateButton &&
+              { this.props.enableCreateTemplateButton &&
                 <button
                   disabled={!areValidNames}
                   className={classnames(styles.button, {
@@ -244,7 +244,7 @@ class Footer extends React.Component<Props> {
                 >
                   <FormattedMessage
                     id="footer.generate"
-                    defaultMessage="Generate Template"
+                    defaultMessage="Create Project"
                   />
                 </button>
               }
