@@ -16,23 +16,23 @@ import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelecti
 const messages = defineMessages({
   welcome: {
     id: "leftSidebar.newProject",
-    defaultMessage: "1. New Project"
+    defaultMessage: "New Project"
   },
   frameworks: {
     id: "leftSidebar.frameworks",
-    defaultMessage: "2. Frameworks"
+    defaultMessage: "Frameworks"
   },
   pages: {
     id: "leftSidebar.pages",
-    defaultMessage: "3. Pages"
+    defaultMessage: "Pages"
   },
   services: {
     id: "leftSidebar.services",
-    defaultMessage: "4. Services (Optional)"
+    defaultMessage: "Services (Optional)"
   },
   summary: {
     id: "leftSidebar.summary",
-    defaultMessage: "5. Summary"
+    defaultMessage: "Summary"
   },
   ariaNavLabel: {
     id: "leftSideBar.ariaNavLabel",
@@ -76,7 +76,7 @@ const LeftSidebar = (props: Props) => {
               return (
                 <div
                   className={classnames(styles.itemBorder, {
-                    [styles.currentPath]: idx === currentPathIndex,
+                    //[styles.currentPath]: idx === currentPathIndex,
                     [styles.visitedPath]:
                       isVisited[ROUTES_ARRAY[idx]] && isValidNameAndProjectPath,
                     [styles.nextPath]:
@@ -98,6 +98,7 @@ const LeftSidebar = (props: Props) => {
                       idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]]
                     }
                     isSelected={idx === currentPathIndex}
+                    pageNumber={idx + 1}
                   />
                 </div>
               );

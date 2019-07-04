@@ -3,9 +3,14 @@
   font-size: 1em;
 }
 
-.text {
+.textSelected {
   font-weight: bold;
+}
+
+.text {
   padding: 18px 0px;
+  display: flex;
+  margin: auto;
   color: var(--vscode-editor-foreground);
 }
 
@@ -48,4 +53,55 @@
 .spacer,
 .icon {
   padding-right: 0.5em;
+}
+
+.pageNumber {
+  width: 8px;
+  height: 20px;
+  padding: 5px 11px;
+  border-radius: 100%;
+  border: 1px solid white;
+  flex-grow: 1;
+}
+
+.pageIsSelected {
+  background-color: #0067b8;
+  color: white;
+  border: 1px solid #0067b8;
+}
+
+.pageIsVisited {
+  background-color: white;
+  color: #0067b8;
+}
+
+.pageText {
+  flex-grow: 3;
+  margin: auto;
+  padding-left: 10px;
+}
+
+@media (max-width: 650px) {
+  .pageText,
+  .pageIsSelectedSmall {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .pageText {
+    display: none;
+  }
+}
+/* @media (min-width: 700px) {
+  
+} */
+
+@media (min-width: 600px) {
+  .pageIsSelectedSmall {
+    display: block;
+    flex-grow: 3;
+    margin: auto;
+    padding-left: 10px;
+  }
 }

@@ -8,12 +8,14 @@ import { ReactComponent as Check } from "../../assets/check.svg";
 import styles from "./styles.module.css";
 
 const LeftSidebarLink = ({
+  pageNumber,
   text,
   visitedCheck,
   path,
   disabled,
   isSelected
 }: {
+  pageNumber: number;
   text: string;
   visitedCheck: boolean;
   path: string;
@@ -24,6 +26,7 @@ const LeftSidebarLink = ({
     if (disabled) {
       e.preventDefault();
     }
+    console.log(e);
   };
   return (
     <Link
@@ -32,22 +35,27 @@ const LeftSidebarLink = ({
       onClick={handleClick}
       className={styles.container}
     >
-      {visitedCheck || isSelected ? (
-        <Check
-          className={classnames(styles.icon, {
-            [styles.visitedIcon]: visitedCheck,
-            [styles.selected]: isSelected
-          })}
-        />
-      ) : (
-        <div className={styles.spacer} />
-      )}
       <div
         className={classnames(styles.text, {
           [styles.textSelected]: isSelected
         })}
       >
-        {text}
+        <div
+          className={classnames(styles.pageNumber, {
+            [styles.pageIsSelected]: isSelected,
+            [styles.pageIsVisited]: visitedCheck
+          })}
+        >
+          {pageNumber}
+        </div>
+        <div
+          className={classnames({
+            [styles.pageIsSelectedSmall]: isSelected,
+            [styles.pageText]: !isSelected
+          })}
+        >
+          {text}
+        </div>
       </div>
     </Link>
   );

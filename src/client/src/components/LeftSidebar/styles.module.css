@@ -10,8 +10,8 @@
 }
 
 .itemBorder {
-  width: 20%;
   float: left;
+  padding: 0px 5px;
 }
 
 .currentPath {
@@ -46,5 +46,10 @@
 }
 .topNavBar {
   display: inline-block;
-  width: 80%;
+}
+
+@media (min-width: 650px) {
+  .itemBorder {
+    padding: 0px 10px;
+  }
 }
