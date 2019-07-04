@@ -13,12 +13,13 @@ import RootAction from "../../actions/ActionType";
 
 const messages = defineMessages({
   installed: {
-    id: "dependencyChecker.installed",
-    defaultMessage: " detected!"
+    id: "dependencyChecker.installedMessage",
+    defaultMessage: "{dependencyName} detected!"
   },
   notInstalled: {
-    id: "dependencyChecker.notInstalled",
-    defaultMessage: " not detected. Click to install."
+    id: "dependencyChecker.notInstalledMessage",
+    defaultMessage:
+      "{dependencyName} {minimumVersion} not detected. Click to install."
   },
   iconAltMessage: {
     id: "dependencyChecker.iconAltMessage",
@@ -29,6 +30,7 @@ const messages = defineMessages({
 export interface IDependency {
   dependencyStoreKey: string;
   dependencyName: string;
+  dependencyMinimumVersion: string;
   downloadLink: string;
   privacyStatementLink: string;
   downloadLinkLabel: string;
@@ -42,6 +44,7 @@ const dependencies: IDependencies = {
   NodeJS: {
     dependencyStoreKey: "node",
     dependencyName: "Node",
+    dependencyMinimumVersion: "v10.15+",
     downloadLink: "https://nodejs.org/en/download/",
     privacyStatementLink: "https://nodejs.org/en/about/privacy/",
     downloadLinkLabel: "Node download link"
@@ -49,6 +52,7 @@ const dependencies: IDependencies = {
   Python: {
     dependencyStoreKey: "python",
     dependencyName: "Python",
+    dependencyMinimumVersion: "v3.5+",
     downloadLink: "https://www.python.org/downloads/",
     privacyStatementLink: "https://www.python.org/privacy/",
     downloadLinkLabel: "Python download link"
@@ -95,12 +99,21 @@ class DependencyInfo extends React.Component<Props> {
       return null; // don't render anything
     }
 
-    const { dependencyName, dependencyStoreKey } = dependency;
+    const {
+      dependencyName,
+      dependencyStoreKey,
+      dependencyMinimumVersion
+    } = dependency;
     const installed: boolean = dependenciesStore[dependencyStoreKey].installed;
 
     let dependencyMessage: string = installed
-      ? intl.formatMessage(messages.installed)
-      : intl.formatMessage(messages.notInstalled);
+      ? intl.formatMessage(messages.installed, {
+          dependencyName: dependencyName
+        })
+      : intl.formatMessage(messages.notInstalled, {
+          dependencyName: dependencyName,
+          minimumVersion: dependencyMinimumVersion
+        });
 
     let icon: any = installed
       ? getSvg.getGreenCheckSvg()
@@ -135,7 +148,7 @@ class DependencyInfo extends React.Component<Props> {
             [styles.bodyYellow]: !installed
           })}
         >
-          {`${dependencyName} ${dependencyMessage}`}
+          {`${dependencyMessage}`}
         </div>
       </div>
     );
