@@ -65,6 +65,7 @@ export class GenerationExperience extends WizardServant {
       templates: GenerationExperience.getProgressObject(
         apiGenResult !== undefined
       ),
+      resourceGroup: {},
       cosmos: {},
       azureFunctions: {}
     };
@@ -75,6 +76,7 @@ export class GenerationExperience extends WizardServant {
     });
 
     var serviceQueue: Promise<any>[] = [];
+    let resourceGroupQueue: Promise<any>[] = [];
 
     if (apiGenResult) {
       enginePayload.path = apiGenResult.generationOutputPath;
@@ -87,20 +89,19 @@ export class GenerationExperience extends WizardServant {
       payload: { outputPath: enginePayload.path }
     });
 
-    if (payload.selectedFunctions) {
-      serviceQueue.push(
+    if ((payload.selectedFunctions && payload.functions.resourceGroup === "")) {
+      // Reason for this queue is for deploying more than 1 resource group
+      resourceGroupQueue.push(
         GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
-          TelemetryEventName.FunctionsDeploy,
+          TelemetryEventName.ResourceGroupDeploy,
           // tslint:disable-next-line: no-function-expression
           async function(this: IActionContext): Promise<void> {
             try {
-              await AzureServices.deployFunctionApp(
-                payload.functions,
-                enginePayload.path
-              );
+              // update payload with new resource group name for deploying functions
+              payload.functions.resourceGroup = await AzureServices.deployResourceGroup(payload);
               progressObject = {
                 ...progressObject,
-                azureFunctions: GenerationExperience.getProgressObject(true)
+                resourceGroup: GenerationExperience.getProgressObject(true)
               };
               GenerationExperience.reactPanelContext.postMessageWebview({
                 command: ExtensionCommand.UpdateGenStatus,
@@ -109,7 +110,7 @@ export class GenerationExperience extends WizardServant {
             } catch (error) {
               progressObject = {
                 ...progressObject,
-                azureFunctions: GenerationExperience.getProgressObject(false)
+                resourceGroup: GenerationExperience.getProgressObject(false)
               };
               GenerationExperience.reactPanelContext.postMessageWebview({
                 command: ExtensionCommand.UpdateGenStatus,
