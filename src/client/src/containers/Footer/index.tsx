@@ -205,7 +205,7 @@ class Footer extends React.Component<Props> {
               { pathname !== ROUTES.REVIEW_AND_GENERATE &&
                 <Link
                   tabIndex={
-                    !isValidNameAndProjectPath ? -1 : 0
+                    isValidNameAndProjectPath ? 0 : -1
                   }
                   className={classnames(styles.button, buttonStyles.buttonHighlightedBorder, {
                     [buttonStyles.buttonDark]: !isValidNameAndProjectPath,
@@ -216,9 +216,7 @@ class Footer extends React.Component<Props> {
                     this.handleLinkClick(event, pathname);
                   }}
                   to={
-                    pathname === ROUTES.REVIEW_AND_GENERATE
-                      ? ROUTES.REVIEW_AND_GENERATE
-                      : pathsNext[pathname]
+                    pathsNext[pathname]
                   }
                 >
                   <FormattedMessage id="footer.next" defaultMessage="Next" />
