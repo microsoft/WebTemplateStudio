@@ -108,6 +108,7 @@ class DependencyInfo extends React.Component<Props> {
 
     return (
       <div
+        tabIndex={installed ? -1 : 0}
         role="button"
         onClick={() => openPrivacyModal(dependency)}
         className={classnames(styles.dependencyContainer, {
