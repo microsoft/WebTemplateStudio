@@ -4,5 +4,6 @@
 # Hide API Keys
 .env
 //}]}
-# production
-/server/build
+# dependencies
+/node_modules
+
