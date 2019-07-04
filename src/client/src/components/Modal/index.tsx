@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import Modal from "react-modal";
-import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
+import { MODAL_TYPES, ModalType } from "../../actions/modalActions/typeKeys";
 
 /**
  * A Higher-Order Component that creates a modal from a normal React component
@@ -17,7 +17,7 @@ import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
  * Custom styling guidance:
  * https://reactcommunity.org/react-modal/styles/
  */
-const getCustomStyles = (MODAL_TYPE: string | undefined) => {
+const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
   // default width
   let CUSTOM_WIDTH = "40%";
 
@@ -58,18 +58,16 @@ const getCustomStyles = (MODAL_TYPE: string | undefined) => {
 interface IProps {
   closeModal: () => any;
   isModalOpen: boolean;
-  isPostGenModalOpen: boolean;
 }
 
 const asModal = <P extends object>(
   WrappedComponent: React.ComponentType<P>,
-  MODAL_TYPE?: string
+  MODAL_TYPE?: ModalType
 ) => {
   return class extends React.Component<P & IProps> {
     static defaultProps = {
-      isModalOpen: false,
-      isPostGenModalOpen: false,
-      closeModal: () => {}
+      closeModal: () => {},
+      isModalOpen: false
     };
     render() {
       return (
