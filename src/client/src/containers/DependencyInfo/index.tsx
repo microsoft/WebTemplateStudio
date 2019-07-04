@@ -13,11 +13,11 @@ import RootAction from "../../actions/ActionType";
 
 const messages = defineMessages({
   installed: {
-    id: "dependencyChecker.installed",
+    id: "dependencyChecker.installedMessage",
     defaultMessage: "{dependencyName} detected!"
   },
   notInstalled: {
-    id: "dependencyChecker.notInstalled",
+    id: "dependencyChecker.notInstalledMessage",
     defaultMessage:
       "{dependencyName} {minimumVersion} not detected. Click to install."
   },
