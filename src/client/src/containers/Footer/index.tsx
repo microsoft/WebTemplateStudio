@@ -85,7 +85,7 @@ const pathsBack: any = {
 const messages = defineMessages({
   navAriaLabel: {
     id: "footer.navAriaLabel",
-    defaultMessage: "Navigate between pages and generate templates"
+    defaultMessage: "Navigate between pages and create project"
   }
 });
 
@@ -242,7 +242,7 @@ class Footer extends React.Component<Props> {
               >
                 <FormattedMessage
                   id="footer.generate"
-                  defaultMessage="Generate Template"
+                  defaultMessage="Create Project"
                 />
               </button>
             </div>
