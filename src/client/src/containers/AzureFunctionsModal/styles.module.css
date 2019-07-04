@@ -8,7 +8,7 @@
 /* scrollable part of the form */
 .bodyContainer {
   padding-right: 20px;
-  max-height: calc(80vh - 300px);
+  max-height: calc(80vh - 200px);
   overflow-y: auto;
 }
 
