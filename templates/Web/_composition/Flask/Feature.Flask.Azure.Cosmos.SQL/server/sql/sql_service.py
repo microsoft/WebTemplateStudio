@@ -23,7 +23,7 @@ def create():
     return make_response(json_response, 201)
 
 def destroy(id):
-    # use parameterized queries to avoid SQL injection attacks
+    # Use parameterized queries to avoid SQL injection attacks.
     findStr = "SELECT * FROM c where c.id = @id"
     query_str = {
         'query': findStr,
