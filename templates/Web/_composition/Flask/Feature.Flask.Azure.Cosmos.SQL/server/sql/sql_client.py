@@ -1,6 +1,8 @@
 import azure.cosmos.cosmos_client as cosmos_client
+
+from .settings import connection_key, master_key
+
 from constants import CONSTANTS
-from .settings import *
 
 
 class SQLObj():

@@ -1,4 +1,5 @@
 from flask import jsonify, make_response, request
+
 from .sql_client import SQLObj
 
 sql_database_obj = SQLObj()
