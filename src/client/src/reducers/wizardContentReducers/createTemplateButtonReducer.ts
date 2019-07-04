@@ -6,14 +6,13 @@ const createTemplateButton = (
 ) => {
     switch(action.type) {
         case WIZARD_INFO_TYPEKEYS.UPDATE_CREATE_TEMPLATE_BUTTON:
-            const newState1 = true;
-            return newState1;
+            return action.payload;
         case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
-            const newState2 = false;
-            return newState2;
+            const newState = false;
+            return newState;
         default:
-            return state
+            return state;
     }
 }
 
-export default createTemplateButton
+export default createTemplateButton;
