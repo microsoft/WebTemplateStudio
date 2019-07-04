@@ -1,20 +1,17 @@
-from flask import Flask, send_from_directory
-from flask import jsonify
-from flask import make_response
-from constants import CONSTANTS
+from flask import Flask, jsonify, make_response, send_from_directory
 import os
 from os.path import exists, join
+
+from constants import CONSTANTS
 //{[{
-from sampleData import *
+from sample_data import sample_data
 //}]}
 
-app = Flask(__name__, static_folder = 'build')
+app = Flask(__name__, static_folder='build')
 
 //{[{
 # Grid Page Endpoint
 @app.route(CONSTANTS['ENDPOINT']['GRID'])
-def getGrid():
-    return jsonify(
-        sampleData['textAssets']
-    )
+def get_grid():
+    return jsonify(sample_data['text_assets'])
 //}]}

@@ -74,7 +74,10 @@
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test",
     "generate": "node ./out/scripts/generate-test",
+<<<<<<< HEAD
     "run-tests": "node ./out/scripts/run-tests",
+=======
+>>>>>>> dev
     "createVsixPackage": "gulp package"
   },
   "devDependencies": {
