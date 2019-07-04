@@ -19,7 +19,7 @@ def get_list():
 @app.route(CONSTANTS['ENDPOINT']['LIST'], methods=['POST'])
 def add_list_item():
     json_response = jsonify(create())
-    return make_response(json_response, 201)
+    return make_response(json_response, CONSTANTS['HTTP_STATUS']['201_CREATED'])
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<id>', methods=['DELETE'])
 def delete_list_item(id):
@@ -28,5 +28,5 @@ def delete_list_item(id):
         return removed_item
     except Exception as ex:
         err_response = jsonify({'error': str(ex)})
-        return make_response(err_response, 404)
+        return make_response(err_response, CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
 //}]}
