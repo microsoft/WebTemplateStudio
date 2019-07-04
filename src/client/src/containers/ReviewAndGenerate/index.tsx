@@ -61,6 +61,8 @@ const ReviewAndGenerate = (props: Props) => {
             className={classnames(buttonStyles.buttonDark, styles.button)}
           >
             <a
+              target="_blank"
+              rel="noreferrer"
               className={styles.link}
               href="https://github.com/Microsoft/WebTemplateStudio/issues"
             >
