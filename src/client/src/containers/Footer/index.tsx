@@ -123,6 +123,7 @@ class Footer extends React.Component<Props> {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
   public handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
+    console.log("this is the event" + event.target);
     const { isValidNameAndProjectPath, setRouteVisited } = this.props;
     this.trackPageForTelemetry(pathname);
     if (!isValidNameAndProjectPath) {
@@ -133,6 +134,20 @@ class Footer extends React.Component<Props> {
       setRouteVisited(pathsNext[pathname]);
     }
   };
+
+  public handleLinkBackClick = (
+    event: React.SyntheticEvent,
+    pathname: string
+  ) => {
+    console.log("this is the event" + event.target);
+    const { isValidNameAndProjectPath, setRouteVisited } = this.props;
+    this.trackPageForTelemetry(pathname);
+
+    if (pathname !== ROUTES.NEW_PROJECT) {
+      setRouteVisited(pathname);
+    }
+  };
+
   public trackPageForTelemetry = (pathname: string) => {
     this.props.vscode.postMessage({
       module: EXTENSION_MODULES.TELEMETRY,
@@ -194,6 +209,9 @@ class Footer extends React.Component<Props> {
                 className={classnames(buttonStyles.buttonDark, styles.button, {
                   [styles.disabledOverlay]: pathname === ROUTES.NEW_PROJECT
                 })}
+                onClick={event => {
+                  this.handleLinkBackClick(event, pathname);
+                }}
                 to={
                   pathsBack[pathname] === undefined
                     ? ROUTES.NEW_PROJECT

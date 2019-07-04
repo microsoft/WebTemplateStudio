@@ -243,11 +243,7 @@ class App extends React.Component<Props> {
           <CosmosResourceModal />
           <AzureFunctionsModal />
           <PostGenerationModal />
-<<<<<<< HEAD
-=======
           <PrivacyModal />
-          <LeftSidebar />
->>>>>>> 6b8a11902eb8be63ed2b4492f4c1beb2cf707c36
 
           <main
             className={classnames(appStyles.centerView, {

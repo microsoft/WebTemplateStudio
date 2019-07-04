@@ -61,6 +61,7 @@ const LeftSidebar = (props: Props) => {
     ROUTES_ARRAY.indexOf(pathname)
   );
   React.useEffect(() => {
+    console.log(ROUTES_ARRAY.indexOf(pathname));
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
   });
   const { isVisited, intl, isValidNameAndProjectPath } = props;
@@ -73,6 +74,7 @@ const LeftSidebar = (props: Props) => {
         >
           <div>
             {leftSidebarData.map((sidebartitle, idx) => {
+              console.log("currentPathIndex " + currentPathIndex);
               return (
                 <div
                   className={classnames(styles.itemBorder, {
