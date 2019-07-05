@@ -234,25 +234,22 @@ class Footer extends React.Component<Props> {
                   <FormattedMessage id="footer.next" defaultMessage="Next" />
                 </Link>
               )}
-              <button
-                disabled={
-                  pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
-                }
-                className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]:
-                    !this.isReviewAndGenerate() || !areValidNames,
-                  [buttonStyles.buttonHighlightedBorder]:
-                    this.isReviewAndGenerate() && areValidNames,
-                  [styles.disabledOverlay]:
-                    !this.isReviewAndGenerate() || !areValidNames
-                })}
-                onClick={this.logMessageToVsCode}
-              >
-                <FormattedMessage
-                  id="footer.generate"
-                  defaultMessage="Create Project"
-                />
-              </button>
+              {enableCreateProjectButton && (
+                <button
+                  disabled={!areValidNames}
+                  className={classnames(styles.button, {
+                    [buttonStyles.buttonDark]: !areValidNames,
+                    [buttonStyles.buttonHighlightedBorder]: areValidNames,
+                    [styles.disabledOverlay]: !areValidNames
+                  })}
+                  onClick={this.logMessageToVsCode}
+                >
+                  <FormattedMessage
+                    id="footer.generate"
+                    defaultMessage="Create Project"
+                  />
+                </button>
+              )}
             </div>
           </div>
         )}
