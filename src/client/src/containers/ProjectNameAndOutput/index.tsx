@@ -125,6 +125,7 @@ const ProjectNameAndOutput = (props: Props) => {
           ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
           value={props.projectName}
           placeholder={props.intl.formatMessage(messages.projectName)}
+          maxLength={50}
         />
         {props.projectNameValidation.error && (
           <div className={styles.errorMessage}>
