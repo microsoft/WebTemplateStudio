@@ -27,6 +27,7 @@ interface ISelectOptionProps {
   options: IOption[];
   multiSelect: boolean;
   isFrameworkSelection: boolean;
+  isPagesSelection: boolean;
   cardTypeCount?: ICount;
   handleCountUpdate?: (cardCount: ICount) => any;
 }
@@ -64,6 +65,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     } else if (selectOptions) {
       if (selectedCardIndices.length === 0) {
         this.onCardClick(0);
+        this.addPage(0);
       }
       this.setState({
         selectedCardIndices
@@ -183,15 +185,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     if (unselectable) {
       return;
     }
-    if (multiSelect) {
-      if (cardTypeCount && handleCountUpdate) {
-        cardTypeCount[internalName] = cardTypeCount[internalName]
-          ? cardTypeCount[internalName] + 1
-          : 1;
-        handleCountUpdate(cardTypeCount);
-        this.addOption(cardNumber, cardTypeCount[internalName], internalName);
-      }
-    } else {
+    if (!multiSelect) {
       this.exchangeOption(cardNumber);
     }
   }
@@ -231,7 +225,13 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public render() {
-    const { title, options, setDetailPage, isFrameworkSelection } = this.props;
+    const {
+      title,
+      options,
+      setDetailPage,
+      isFrameworkSelection,
+      isPagesSelection
+    } = this.props;
     return (
       <div>
         <Title>{title}</Title>
@@ -242,6 +242,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
               <SelectableCard
                 key={`${cardNumber} ${title}`}
                 isFrameworkSelection={isFrameworkSelection}
+                isPagesSelection={isPagesSelection}
                 onCardClick={(cardNumber: number) => {
                   this.onCardClick(cardNumber);
                 }}
