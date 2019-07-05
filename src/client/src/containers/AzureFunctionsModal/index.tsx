@@ -174,15 +174,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
   const [azureFunctionsFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
 
-  console.log("Functions");
-  console.log(functionsData);
-  console.log("Azure functions form data");
-  console.log(azureFunctionsFormData);
-
   // Updates the data the user enters (azureFunctionsFormData) as the user types
   const handleChange = (updatedFunctionsForm: IFunctionsState) => {
-    console.log("handlechange");
-    console.log(updatedFunctionsForm);
     setFunctionsModalButtonStatus(
       updatedFunctionsForm,
       props.isValidatingName,
@@ -260,7 +253,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
 
   React.useEffect(() => {
     if (props.selection) {
-      console.log(props.selection);
       handleChange(props.selection.dropdownSelection);
     } else {
       props.setAppNameAvailability({
@@ -417,7 +409,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
           <div
             onChange={(event: React.FormEvent<HTMLInputElement>) => {
               let element = event.target as HTMLInputElement;
-              console.log(element.value);
               if (element.value === "Choose existing") {
                 setData({
                   ...functionsData,
