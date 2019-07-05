@@ -64,10 +64,20 @@ const openPrivacyModalAction = (data: any) => {
   };
 };
 
+const openViewLicensesModalAction = () => {
+  return (dispatch: Dispatch<ModalActionType>) => {
+    dispatch(openModalAction({
+      modalType: MODAL_TYPES.VIEW_LICENSES_MODAL,
+      modalData: null
+    }));
+  };
+};
+
 export {
   closeModalAction,
   openAzureFunctionsModalAction,
   openCosmosDbModalAction,
   openPostGenModalAction,
-  openPrivacyModalAction
+  openPrivacyModalAction,
+  openViewLicensesModalAction
 };

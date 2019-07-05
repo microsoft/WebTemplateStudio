@@ -215,46 +215,44 @@ class Footer extends React.Component<Props> {
                   <FormattedMessage id="footer.back" defaultMessage="Back" />
                 </Link>
               )}
-              <Link
-                tabIndex={
-                  !isValidNameAndProjectPath || this.isReviewAndGenerate()
-                    ? -1
-                    : 0
+              {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+                <Link
+                  tabIndex={isValidNameAndProjectPath ? 0 : -1}
+                  className={classnames(
+                    styles.button,
+                    buttonStyles.buttonHighlightedBorder,
+                    {
+                      [buttonStyles.buttonDark]: !isValidNameAndProjectPath,
+                      [styles.disabledOverlay]: !isValidNameAndProjectPath
+                    }
+                  )}
+                  onClick={event => {
+                    this.handleLinkClick(event, pathname);
+                  }}
+                  to={pathsNext[pathname]}
+                >
+                  <FormattedMessage id="footer.next" defaultMessage="Next" />
+                </Link>
+              )}
+              <button
+                disabled={
+                  pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
                 }
                 className={classnames(styles.button, {
                   [buttonStyles.buttonDark]:
-                    this.isReviewAndGenerate() || !isValidNameAndProjectPath,
-                  [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate(),
+                    !this.isReviewAndGenerate() || !areValidNames,
+                  [buttonStyles.buttonHighlightedBorder]:
+                    this.isReviewAndGenerate() && areValidNames,
                   [styles.disabledOverlay]:
-                    !isValidNameAndProjectPath || this.isReviewAndGenerate()
+                    !this.isReviewAndGenerate() || !areValidNames
                 })}
-                onClick={event => {
-                  this.handleLinkClick(event, pathname);
-                }}
-                to={
-                  pathname === ROUTES.REVIEW_AND_GENERATE
-                    ? ROUTES.REVIEW_AND_GENERATE
-                    : pathsNext[pathname]
-                }
+                onClick={this.logMessageToVsCode}
               >
-                <FormattedMessage id="footer.next" defaultMessage="Next" />
-              </Link>
-              {enableCreateProjectButton && (
-                <button
-                  disabled={!areValidNames}
-                  className={classnames(styles.button, {
-                    [buttonStyles.buttonDark]: !areValidNames,
-                    [buttonStyles.buttonHighlightedBorder]: areValidNames,
-                    [styles.disabledOverlay]: !areValidNames
-                  })}
-                  onClick={this.logMessageToVsCode}
-                >
-                  <FormattedMessage
-                    id="footer.generate"
-                    defaultMessage="Create Project"
-                  />
-                </button>
-              )}
+                <FormattedMessage
+                  id="footer.generate"
+                  defaultMessage="Create Project"
+                />
+              </button>
             </div>
           </div>
         )}
