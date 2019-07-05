@@ -70,7 +70,6 @@ const TopNavBar = (props: Props) => {
     }
   };
   React.useEffect(() => {
-    console.log(ROUTES_ARRAY.indexOf(pathname));
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
   });
   const { isVisited, intl, isValidNameAndProjectPath } = props;
@@ -83,7 +82,6 @@ const TopNavBar = (props: Props) => {
         >
           <div>
             {TopNavBarData.map((sidebartitle, idx) => {
-              console.log("currentPathIndex " + currentPathIndex);
               return (
                 <div
                   className={classnames(styles.itemBorder, {

@@ -123,7 +123,6 @@ class Footer extends React.Component<Props> {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
   public handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
-    console.log("this is the event" + event.target);
     const { isValidNameAndProjectPath, setRouteVisited } = this.props;
     this.trackPageForTelemetry(pathname);
     if (!isValidNameAndProjectPath) {
@@ -139,7 +138,6 @@ class Footer extends React.Component<Props> {
     event: React.SyntheticEvent,
     pathname: string
   ) => {
-    console.log("this is the event" + event.target);
     const { isValidNameAndProjectPath, setRouteVisited } = this.props;
     this.trackPageForTelemetry(pathname);
 
