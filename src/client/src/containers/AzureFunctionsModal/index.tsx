@@ -176,9 +176,11 @@ const AzureFunctionsResourceModal = (props: Props) => {
       updatedFunctionsForm,
       props.isValidatingName,
       props.appNameAvailability,
-      setFormIsSendable
+      setFormIsSendable,
+      chooseExistingRadioButtonSelected
     );
     updateForm(updatedFunctionsForm);
+    console.log(updatedFunctionsForm);
   };
 
   const handleDropdown = (infoLabel: string, option: IDropDownOptionType) => {
@@ -251,9 +253,31 @@ const AzureFunctionsResourceModal = (props: Props) => {
       azureFunctionsFormData,
       props.isValidatingName,
       props.appNameAvailability,
-      setFormIsSendable
+      setFormIsSendable,
+      chooseExistingRadioButtonSelected
     );
   }, [props.isValidatingName]);
+
+  const [
+    chooseExistingRadioButtonSelected,
+    setChooseExistingRadioButtonSelected
+  ] = React.useState(true);
+
+  // listens for radio button selection change
+  React.useEffect(() => {
+    let updatedForm = { ...azureFunctionsFormData };
+    if (!chooseExistingRadioButtonSelected) {
+      // update resource group field in form data to ""
+      updatedForm = {
+        ...azureFunctionsFormData,
+        resourceGroup: {
+          value: "",
+          label: ""
+        }
+      };
+    }
+    handleChange(updatedForm);
+  }, [chooseExistingRadioButtonSelected]);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement
@@ -390,22 +414,51 @@ const AzureFunctionsResourceModal = (props: Props) => {
           <div className={styles.subLabel}>
             {props.intl.formatMessage(messages.resourceGroupSubLabel)}
           </div>
-          <Dropdown
-            ariaLabel={props.intl.formatMessage(
-              messages.ariaResourceGroupLabel
-            )}
-            options={functionsData.resourceGroup}
-            handleChange={option => {
-              handleDropdown(FORM_CONSTANTS.RESOURCE_GROUP.value, option);
+          <div
+            onChange={(event: React.FormEvent<HTMLInputElement>) => {
+              let element = event.target as HTMLInputElement;
+              setChooseExistingRadioButtonSelected(
+                element.value === "Choose existing"
+              );
             }}
-            value={
-              azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
-                ? azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
-                : DEFAULT_VALUE
-            }
-            disabled={azureFunctionsFormData.subscription.value === ""}
-            openDropdownUpwards={false}
-          />
+          >
+            <input
+              type="radio"
+              value="Choose existing"
+              name="resourceGroupOption"
+              disabled={azureFunctionsFormData.subscription.value === ""}
+              defaultChecked
+            />
+            {"Choose existing"}
+            <input
+              type="radio"
+              value="Create new resource group for me"
+              disabled={azureFunctionsFormData.subscription.value === ""}
+              name="resourceGroupOption"
+            />
+            {"Create new resource group for me"}
+          </div>
+          {chooseExistingRadioButtonSelected ? (
+            <Dropdown
+              ariaLabel={props.intl.formatMessage(
+                messages.ariaResourceGroupLabel
+              )}
+              options={functionsData.resourceGroup}
+              handleChange={option => {
+                handleDropdown(FORM_CONSTANTS.RESOURCE_GROUP.value, option);
+              }}
+              value={
+                azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                  .value
+                  ? azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                  : DEFAULT_VALUE
+              }
+              disabled={azureFunctionsFormData.subscription.value === ""}
+              openDropdownUpwards={false}
+            />
+          ) : (
+            <div>{"We will automatically create a resource group for you"}</div>
+          )}
         </div>
         {/* App Name */}
         <div
