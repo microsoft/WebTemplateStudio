@@ -27,7 +27,7 @@ import {
 } from "../../selectors/azureFunctionsServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
-import { updateCreateProjectButtonAction } from '../../actions/wizardInfoActions/updateCreateProjectButton';
+import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
 import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
@@ -175,7 +175,14 @@ class Footer extends React.Component<Props> {
       }
     }
 
-    const { isValidNameAndProjectPath, location, isVisited, intl, updateCreateProjectButton, enableCreateProjectButton } = this.props;
+    const {
+      isValidNameAndProjectPath,
+      location,
+      isVisited,
+      intl,
+      updateCreateProjectButton,
+      enableCreateProjectButton
+    } = this.props;
     const { pathname } = location;
     const { showFrameworks } = isVisited;
     if (this.isReviewAndGenerate()) {
@@ -195,7 +202,7 @@ class Footer extends React.Component<Props> {
               )}
             </div>
             <div className={styles.buttonContainer}>
-              { pathname !== ROUTES.NEW_PROJECT &&
+              {pathname !== ROUTES.NEW_PROJECT && (
                 <Link
                   tabIndex={0}
                   className={classnames(buttonStyles.buttonDark, styles.button)}
@@ -207,7 +214,7 @@ class Footer extends React.Component<Props> {
                 >
                   <FormattedMessage id="footer.back" defaultMessage="Back" />
                 </Link>
-              }
+              )}
               <Link
                 tabIndex={
                   !isValidNameAndProjectPath || this.isReviewAndGenerate()
@@ -232,7 +239,7 @@ class Footer extends React.Component<Props> {
               >
                 <FormattedMessage id="footer.next" defaultMessage="Next" />
               </Link>
-              { enableCreateProjectButton &&
+              {enableCreateProjectButton && (
                 <button
                   disabled={!areValidNames}
                   className={classnames(styles.button, {
@@ -247,7 +254,7 @@ class Footer extends React.Component<Props> {
                     defaultMessage="Create Project"
                   />
                 </button>
-              }
+              )}
             </div>
           </div>
         )}

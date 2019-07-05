@@ -1,7 +1,7 @@
 import { IVersionData } from "./getVersionData";
 import { ISetDetails } from "./setDetailsPage";
 import { ISetVisitedPage } from "./setVisitedWizardPage";
-import { IUpdateCreateProjectButton } from './updateCreateProjectButton'
+import { IUpdateCreateProjectButton } from "./updateCreateProjectButton";
 import {
   IUpdateGenStatusMessage,
   IUpdateGenStatus

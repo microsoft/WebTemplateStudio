@@ -1,13 +1,15 @@
-import {WIZARD_INFO_TYPEKEYS} from './typeKeys'
+import { WIZARD_INFO_TYPEKEYS } from "./typeKeys";
 
 export interface IUpdateCreateProjectButton {
-    type: WIZARD_INFO_TYPEKEYS.UPDATE_CREATE_TEMPLATE_BUTTON;
-    payload: boolean;
-  }
-
-export const updateCreateProjectButtonAction = (payload : boolean) : IUpdateCreateProjectButton => {
-    return {
-        type: WIZARD_INFO_TYPEKEYS.UPDATE_CREATE_TEMPLATE_BUTTON,
-        payload
-    }
+  type: WIZARD_INFO_TYPEKEYS.UPDATE_CREATE_PROJECT_BUTTON;
+  payload: boolean;
 }
+
+export const updateCreateProjectButtonAction = (
+  payload: boolean
+): IUpdateCreateProjectButton => {
+  return {
+    type: WIZARD_INFO_TYPEKEYS.UPDATE_CREATE_PROJECT_BUTTON,
+    payload
+  };
+};
