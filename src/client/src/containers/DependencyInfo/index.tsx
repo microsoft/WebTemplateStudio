@@ -119,9 +119,17 @@ class DependencyInfo extends React.Component<Props> {
       ? getSvg.getGreenCheckSvg()
       : getSvg.getWarningSvg();
 
+    const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.keyCode === 13 || event.keyCode === 32) {
+        openPrivacyModal(dependency);
+      }
+    };
+
     return (
       <div
         role="button"
+        tabIndex={0}
+        onKeyDown={installed ? () => null : keyDownHandler}
         onClick={() => openPrivacyModal(dependency)}
         className={classnames(styles.dependencyContainer, {
           [styles.disabled]: installed,
