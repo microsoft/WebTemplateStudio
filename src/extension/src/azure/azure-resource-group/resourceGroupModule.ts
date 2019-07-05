@@ -28,11 +28,9 @@ export class ResourceGroupDeploy {
     public async createResourceGroup(
         resourceGroupSelection: ResourceGroupSelection
     ): Promise<string | undefined> {
-        let userSubscriptionItem: SubscriptionItem = resourceGroupSelection.subscriptionItem;
-        let resourceGroupName: string = resourceGroupSelection.resourceGroupName;
-        let location: string = resourceGroupSelection.location;
+        const {subscriptionItem, resourceGroupName, location} = resourceGroupSelection;
 
-        let azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(userSubscriptionItem);
+        let azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(subscriptionItem);
 
         let options: ResourceGroup = {
             name: resourceGroupName,
