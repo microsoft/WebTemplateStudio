@@ -63,6 +63,7 @@ interface IStateProps {
   isValidatingName: boolean;
   appNameAvailability: any;
   selection: any;
+  chooseExistingRadioButtonSelected: boolean;
 }
 
 type Props = IDispatchProps & IStateProps & InjectedIntlProps;
@@ -115,7 +116,8 @@ const initialState: IFunctionsState = {
   internalName: {
     value: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
     label: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
-  }
+  },
+  chooseExistingRadioButtonSelected: true
 };
 
 const AzureFunctionsResourceModal = (props: Props) => {
@@ -154,6 +156,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
   // Updates the data we are presenting to the user when the subscription changes
   React.useEffect(() => {
     setData({
+      ...functionsData,
       appName: [
         {
           value: "",
@@ -162,7 +165,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
       ],
       subscription: props.subscriptions,
       resourceGroup: props.subscriptionData.resourceGroups,
-      location: props.subscriptionData.locations
+      location: props.subscriptionData.locations,
+      chooseExistingRadioButtonSelected: props.chooseExistingRadioButtonSelected
     });
   }, [props.subscriptionData]);
 
@@ -170,17 +174,22 @@ const AzureFunctionsResourceModal = (props: Props) => {
   const [azureFunctionsFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
 
+  console.log("Functions");
+  console.log(functionsData);
+  console.log("Azure functions form data");
+  console.log(azureFunctionsFormData);
+
   // Updates the data the user enters (azureFunctionsFormData) as the user types
   const handleChange = (updatedFunctionsForm: IFunctionsState) => {
+    console.log("handlechange");
+    console.log(updatedFunctionsForm);
     setFunctionsModalButtonStatus(
       updatedFunctionsForm,
       props.isValidatingName,
       props.appNameAvailability,
-      setFormIsSendable,
-      chooseExistingRadioButtonSelected
+      setFormIsSendable
     );
     updateForm(updatedFunctionsForm);
-    console.log(updatedFunctionsForm);
   };
 
   const handleDropdown = (infoLabel: string, option: IDropDownOptionType) => {
@@ -239,6 +248,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
 
   React.useEffect(() => {
     if (props.selection) {
+      console.log(props.selection);
       handleChange(props.selection.dropdownSelection);
     } else {
       props.setAppNameAvailability({
@@ -253,31 +263,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
       azureFunctionsFormData,
       props.isValidatingName,
       props.appNameAvailability,
-      setFormIsSendable,
-      chooseExistingRadioButtonSelected
+      setFormIsSendable
     );
   }, [props.isValidatingName]);
-
-  const [
-    chooseExistingRadioButtonSelected,
-    setChooseExistingRadioButtonSelected
-  ] = React.useState(true);
-
-  // listens for radio button selection change
-  React.useEffect(() => {
-    let updatedForm = { ...azureFunctionsFormData };
-    if (!chooseExistingRadioButtonSelected) {
-      // update resource group field in form data to ""
-      updatedForm = {
-        ...azureFunctionsFormData,
-        resourceGroup: {
-          value: "",
-          label: ""
-        }
-      };
-    }
-    handleChange(updatedForm);
-  }, [chooseExistingRadioButtonSelected]);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement
@@ -417,9 +405,17 @@ const AzureFunctionsResourceModal = (props: Props) => {
           <div
             onChange={(event: React.FormEvent<HTMLInputElement>) => {
               let element = event.target as HTMLInputElement;
-              setChooseExistingRadioButtonSelected(
-                element.value === "Choose existing"
-              );
+              setData({
+                ...functionsData,
+                chooseExistingRadioButtonSelected:
+                  element.value === "Choose existing"
+              });
+
+              updateForm({
+                ...azureFunctionsFormData,
+                chooseExistingRadioButtonSelected:
+                  element.value === "Choose existing"
+              });
             }}
           >
             <input
@@ -427,7 +423,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
               value="Choose existing"
               name="resourceGroupOption"
               disabled={azureFunctionsFormData.subscription.value === ""}
-              defaultChecked
+              checked={functionsData.chooseExistingRadioButtonSelected}
             />
             {"Choose existing"}
             <input
@@ -435,10 +431,11 @@ const AzureFunctionsResourceModal = (props: Props) => {
               value="Create new resource group for me"
               disabled={azureFunctionsFormData.subscription.value === ""}
               name="resourceGroupOption"
+              checked={!functionsData.chooseExistingRadioButtonSelected}
             />
             {"Create new resource group for me"}
           </div>
-          {chooseExistingRadioButtonSelected ? (
+          {functionsData.chooseExistingRadioButtonSelected ? (
             <Dropdown
               ariaLabel={props.intl.formatMessage(
                 messages.ariaResourceGroupLabel
@@ -575,7 +572,9 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   appNameAvailability:
     state.selection.services.azureFunctions.appNameAvailability,
   isValidatingName: state.selection.isValidatingName,
-  selection: getFunctionsSelection(state)
+  selection: getFunctionsSelection(state),
+  chooseExistingRadioButtonSelected:
+    state.selection.services.azureFunctions.chooseExistingRadioButtonSelected
 });
 
 const mapDispatchToProps = (

@@ -2,8 +2,7 @@ export const setFunctionsModalButtonStatus = (
   selections: any,
   isValidatingName: boolean,
   appNameAvailability: any,
-  setFormIsSendable: (status: boolean) => void,
-  chooseExistingRadioButtonSelected: boolean
+  setFormIsSendable: (status: boolean) => void
 ): boolean => {
   let isSubscriptionEmpty: boolean = false;
   let isResourceGroupEmpty: boolean = false;
@@ -20,7 +19,7 @@ export const setFunctionsModalButtonStatus = (
   isLocationEmpty = selections.location.value === "";
   isRuntimeStackEmpty = selections.runtimeStack.value === "";
 
-  if (!chooseExistingRadioButtonSelected) {
+  if (!selections.chooseExistingRadioButtonSelected) {
     isResourceGroupEmpty = false;
   }
 

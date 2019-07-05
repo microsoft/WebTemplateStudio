@@ -67,5 +67,6 @@ export const azureFunctionModalInitialState: any = {
       value: 0,
       label: 0
     }
-  ]
+  ],
+  chooseExistingRadioButtonSelected: true
 };
