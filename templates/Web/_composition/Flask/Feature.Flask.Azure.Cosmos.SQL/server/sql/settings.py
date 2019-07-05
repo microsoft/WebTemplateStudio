@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
 import os
 from os.path import join, dirname, realpath
 from dotenv import load_dotenv

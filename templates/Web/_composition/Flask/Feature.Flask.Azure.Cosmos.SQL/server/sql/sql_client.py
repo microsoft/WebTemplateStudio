@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
 import azure.cosmos.cosmos_client as cosmos_client
 
 from .settings import connection_key, master_key
