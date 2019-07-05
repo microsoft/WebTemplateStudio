@@ -189,7 +189,7 @@ class Footer extends React.Component<Props> {
               )}
             </div>
             <div className={styles.buttonContainer}>
-              { pathname !== ROUTES.NEW_PROJECT &&
+              {pathname !== ROUTES.NEW_PROJECT && (
                 <Link
                   tabIndex={0}
                   className={classnames(buttonStyles.buttonDark, styles.button)}
@@ -201,31 +201,26 @@ class Footer extends React.Component<Props> {
                 >
                   <FormattedMessage id="footer.back" defaultMessage="Back" />
                 </Link>
-              }
-              <Link
-                tabIndex={
-                  !isValidNameAndProjectPath || this.isReviewAndGenerate()
-                    ? -1
-                    : 0
-                }
-                className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]:
-                    this.isReviewAndGenerate() || !isValidNameAndProjectPath,
-                  [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate(),
-                  [styles.disabledOverlay]:
-                    !isValidNameAndProjectPath || this.isReviewAndGenerate()
-                })}
-                onClick={event => {
-                  this.handleLinkClick(event, pathname);
-                }}
-                to={
-                  pathname === ROUTES.REVIEW_AND_GENERATE
-                    ? ROUTES.REVIEW_AND_GENERATE
-                    : pathsNext[pathname]
-                }
-              >
-                <FormattedMessage id="footer.next" defaultMessage="Next" />
-              </Link>
+              )}
+              {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+                <Link
+                  tabIndex={isValidNameAndProjectPath ? 0 : -1}
+                  className={classnames(
+                    styles.button,
+                    buttonStyles.buttonHighlightedBorder,
+                    {
+                      [buttonStyles.buttonDark]: !isValidNameAndProjectPath,
+                      [styles.disabledOverlay]: !isValidNameAndProjectPath
+                    }
+                  )}
+                  onClick={event => {
+                    this.handleLinkClick(event, pathname);
+                  }}
+                  to={pathsNext[pathname]}
+                >
+                  <FormattedMessage id="footer.next" defaultMessage="Next" />
+                </Link>
+              )}
               <button
                 disabled={
                   pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
