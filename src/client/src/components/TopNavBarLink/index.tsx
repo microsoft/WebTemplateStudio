@@ -6,7 +6,7 @@ import { ReactComponent as Check } from "../../assets/check.svg";
 
 import styles from "./styles.module.css";
 
-const LeftSidebarLink = ({
+const TopNavBarLink = ({
   pageNumber,
   text,
   visitedCheck,
@@ -59,4 +59,4 @@ const LeftSidebarLink = ({
   );
 };
 
-export default LeftSidebarLink;
+export default TopNavBarLink;

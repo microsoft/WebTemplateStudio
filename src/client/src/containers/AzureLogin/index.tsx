@@ -10,7 +10,7 @@ import styles from "./styles.module.css";
 
 import AzureSubscriptions from "../AzureSubscriptions";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 import { IOption } from "../../types/option";
 import { messages } from "../../mockData/azureServiceOptions";
@@ -21,6 +21,11 @@ import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 
+//new
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { string } from "prop-types";
+
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
 }
@@ -28,6 +33,7 @@ interface IDispatchProps {
 interface IAzureLoginProps {
   isLoggedIn: boolean;
   vscode: any;
+  email: string;
 }
 
 type Props = IDispatchProps &
@@ -45,11 +51,38 @@ class AzureLogin extends React.Component<Props> {
       track: true
     });
   };
+  signOutClick = () => {
+    this.props.vscode.postMessage({
+      module: EXTENSION_MODULES.AZURE,
+      command: EXTENSION_COMMANDS.AZURE_LOGOUT,
+      track: true
+    });
+  };
+  keyDownClick = (event: any) => {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      this.signOutClick();
+    }
+  };
   public render() {
-    const { isLoggedIn, intl, setDetailPage } = this.props;
+    const { isLoggedIn, intl, setDetailPage, email } = this.props;
+
     return (
       <div className={styles.container}>
         <Title>{intl.formatMessage(messages.azureLoginTitle)}</Title>
+        {isLoggedIn && (
+          <div className={styles.azureProfile}>
+            <div className={styles.profileName}>{email}</div>
+            <div
+              role="button"
+              className={styles.button}
+              tabIndex={0}
+              onClick={this.signOutClick.bind(this)}
+              onKeyDown={this.keyDownClick.bind(this)}
+            >
+              <FormattedMessage id="header.signOut" defaultMessage="Sign out" />
+            </div>
+          </div>
+        )}
         <div className={styles.loginCard}>
           {!isLoggedIn && (
             <LoginCard
@@ -73,9 +106,11 @@ class AzureLogin extends React.Component<Props> {
 const mapStateToProps = (state: AppState): IAzureLoginProps => {
   const { isLoggedIn } = state.azureProfileData;
   const { vscodeObject } = state.vscode;
+  const { email } = state.azureProfileData.profileData;
   return {
     isLoggedIn,
-    vscode: vscodeObject
+    vscode: vscodeObject,
+    email
   };
 };
 

@@ -81,7 +81,7 @@
   padding-left: 10px;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
   .pageText,
   .pageIsSelectedSmall {
     display: none;
@@ -97,7 +97,7 @@
   
 } */
 
-@media (min-width: 600px) {
+@media (min-width: 700px) {
   .pageIsSelectedSmall {
     display: block;
     flex-grow: 3;

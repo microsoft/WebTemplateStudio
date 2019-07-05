@@ -2,8 +2,8 @@
   position: absolute;
   width: 100%;
   padding: 0px 24px;
-  background-color: var(--vscode-badge-background);
-
+  background-color: var(--vscode-input-background);
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;

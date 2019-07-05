@@ -14,22 +14,8 @@
   padding: 0px 5px;
 }
 
-.currentPath {
-  background-color: #0067b8;
-  color: white;
-}
-
 .nextPath {
   opacity: 0.4;
-}
-
-.leftView {
-  width: 350px;
-  background-color: var(--vscode-editor-background);
-  height: 100vh;
-  border-right: 0.5px solid #7f7f7f;
-  box-sizing: border-box;
-  height: calc(100vh - 104px);
 }
 
 .feedback {

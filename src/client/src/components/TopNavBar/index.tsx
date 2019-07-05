@@ -5,7 +5,7 @@ import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
 
-import LeftSidebarLink from "../LeftSidebarLink";
+import TopNavBarLink from "../TopNavBarLink";
 
 import styles from "./styles.module.css";
 
@@ -15,27 +15,27 @@ import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelecti
 
 const messages = defineMessages({
   welcome: {
-    id: "leftSidebar.newProject",
+    id: "TopNavBar.newProject",
     defaultMessage: "New Project"
   },
   frameworks: {
-    id: "leftSidebar.frameworks",
+    id: "TopNavBar.frameworks",
     defaultMessage: "Frameworks"
   },
   pages: {
-    id: "leftSidebar.pages",
+    id: "TopNavBar.pages",
     defaultMessage: "Pages"
   },
   services: {
-    id: "leftSidebar.services",
-    defaultMessage: "Services (Optional)"
+    id: "TopNavBar.services",
+    defaultMessage: "Add Optional Cloud Services"
   },
   summary: {
-    id: "leftSidebar.summary",
+    id: "TopNavBar.summary",
     defaultMessage: "Summary"
   },
   ariaNavLabel: {
-    id: "leftSideBar.ariaNavLabel",
+    id: "TopNavBar.ariaNavLabel",
     defaultMessage: "Navigate between pages in the Wizard"
   }
 });
@@ -47,9 +47,9 @@ interface IStateProps {
 
 type Props = RouteComponentProps & IStateProps & InjectedIntlProps;
 
-const LeftSidebar = (props: Props) => {
+const TopNavBar = (props: Props) => {
   const { formatMessage } = props.intl;
-  const leftSidebarData: string[] = [
+  const TopNavBarData: string[] = [
     formatMessage(messages.welcome),
     formatMessage(messages.frameworks),
     formatMessage(messages.pages),
@@ -60,11 +60,14 @@ const LeftSidebar = (props: Props) => {
   const [currentPathIndex, setPathIndex] = React.useState(
     ROUTES_ARRAY.indexOf(pathname)
   );
-  const topNavTabClicked = (event: React.SyntheticEvent, pathname: string) => {
-    console.log("this is the event" + event.target);
-    console.log(pathname);
-    setPathIndex(ROUTES_ARRAY.indexOf(pathname));
-    console.log(currentPathIndex);
+  const topNavTabClicked = (
+    event: React.SyntheticEvent,
+    idx: number,
+    visited: boolean
+  ) => {
+    if (visited) {
+      setPathIndex(ROUTES_ARRAY.indexOf(ROUTES_ARRAY[idx]));
+    }
   };
   React.useEffect(() => {
     console.log(ROUTES_ARRAY.indexOf(pathname));
@@ -79,12 +82,11 @@ const LeftSidebar = (props: Props) => {
           aria-label={intl.formatMessage(messages.ariaNavLabel)}
         >
           <div>
-            {leftSidebarData.map((sidebartitle, idx) => {
+            {TopNavBarData.map((sidebartitle, idx) => {
               console.log("currentPathIndex " + currentPathIndex);
               return (
                 <div
                   className={classnames(styles.itemBorder, {
-                    //[styles.currentPath]: idx === currentPathIndex,
                     [styles.visitedPath]:
                       isVisited[ROUTES_ARRAY[idx]] && isValidNameAndProjectPath,
                     [styles.nextPath]:
@@ -94,9 +96,11 @@ const LeftSidebar = (props: Props) => {
                     [styles.itemBorderTop]: idx === 0
                   })}
                   key={sidebartitle}
-                  onClick={event => topNavTabClicked(event, pathname)}
+                  onClick={event =>
+                    topNavTabClicked(event, idx, isVisited[ROUTES_ARRAY[idx]])
+                  }
                 >
-                  <LeftSidebarLink
+                  <TopNavBarLink
                     disabled={
                       !isVisited[ROUTES_ARRAY[idx]] ||
                       !isValidNameAndProjectPath
@@ -124,5 +128,4 @@ const mapStateToProps = (state: any): IStateProps => ({
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
 });
 
-//dispatch added
-export default withRouter(connect(mapStateToProps)(injectIntl(LeftSidebar)));
+export default withRouter(connect(mapStateToProps)(injectIntl(TopNavBar)));

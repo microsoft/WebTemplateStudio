@@ -43,7 +43,7 @@ class SelectFrameworks extends React.Component<Props> {
 
   render() {
     return (
-      <div className={styles.container}>
+      <div>
         <SelectFrontEndFramework />
         <SelectBackEndFramework />
       </div>

@@ -1,0 +1,44 @@
+[2019-07-02T16:55:42.644] [INFO] default - [ EXTENSION ]  Launched
+[2019-07-02T16:55:45.896] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-02T16:55:47.183] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-02T16:55:48.459] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-02T16:55:49.745] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-02T16:55:51.022] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-02T16:55:52.317] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-02T16:55:53.607] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-02T16:55:54.882] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-02T16:55:56.160] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-02T16:55:57.427] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-02T16:56:04.542] [INFO] default - [ EXTENSION ]  Successfully synced templates. Version: 0.0.0.0
+[2019-07-03T10:52:58.798] [INFO] default - [ EXTENSION ]  Launched
+[2019-07-03T10:52:59.945] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-03T10:53:02.571] [INFO] default - [ EXTENSION ]  Successfully synced templates. Version: 0.0.0.0
+[2019-07-03T18:04:10.722] [INFO] default - [ EXTENSION ]  Launched
+[2019-07-03T18:04:12.868] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-03T18:04:14.169] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-03T18:04:15.447] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-03T18:04:23.546] [INFO] default - [ EXTENSION ]  Successfully synced templates. Version: 0.0.0.0
+[2019-07-03T18:26:53.610] [INFO] default - [ EXTENSION ]  Launched
+[2019-07-03T18:26:54.878] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-03T18:26:56.161] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-03T18:27:04.126] [INFO] default - [ EXTENSION ]  Successfully synced templates. Version: 0.0.0.0
+[2019-07-03T18:32:20.870] [INFO] default - [ EXTENSION ]  Launched
+[2019-07-03T18:32:22.029] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-03T18:32:23.308] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-03T18:32:29.490] [INFO] default - [ EXTENSION ]  Successfully synced templates. Version: 0.0.0.0
+[2019-07-03T18:52:05.512] [INFO] default - [ EXTENSION ]  Launched
+[2019-07-03T18:52:06.718] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-03T18:52:11.260] [INFO] default - [ EXTENSION ]  Successfully synced templates. Version: 0.0.0.0
+[2019-07-04T02:12:37.987] [INFO] default - [ EXTENSION ]  Launched
+[2019-07-04T02:12:40.608] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-04T02:12:41.884] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-04T02:12:43.152] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-04T02:12:50.309] [INFO] default - [ EXTENSION ]  Successfully synced templates. Version: 0.0.0.0
+[2019-07-04T02:19:11.670] [INFO] default - [ EXTENSION ]  Launched
+[2019-07-04T02:19:12.912] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-04T02:19:14.193] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-04T02:19:19.408] [INFO] default - [ EXTENSION ]  Successfully synced templates. Version: 0.0.0.0
+[2019-07-04T15:34:34.720] [INFO] default - [ EXTENSION ]  Launched
+[2019-07-04T15:34:36.862] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-04T15:34:38.130] [ERROR] default - [ EXTENSION ]  Cannot read property 'value' of undefined
+[2019-07-04T15:34:40.810] [INFO] default - [ EXTENSION ]  Successfully synced templates. Version: 0.0.0.0
