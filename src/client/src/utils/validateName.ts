@@ -1,5 +1,7 @@
 import { defineMessages, FormattedMessage } from "react-intl";
 
+const PROJECT_NAME_CHARACTER_LIMIT = 50;
+
 const messages = defineMessages({
   duplicateName: {
     id: "pageNameError.duplicateName",
@@ -13,6 +15,10 @@ const messages = defineMessages({
     id: "pageNameError.invalidRegex",
     defaultMessage:
       "Name may only contain letters, numbers, spaces, dashes or underscores"
+  },
+  nameTooLong: {
+    id: "projectNameError.nameTooLong",
+    defaultMessage: "Name should be under " + PROJECT_NAME_CHARACTER_LIMIT + " characters long"
   },
   nameStartLetter: {
     id: "pageNameError.nameStartLetter",
@@ -59,6 +65,9 @@ export function validateName(title: string, type: string): any {
       } else {
         error = messages.invalidProjectName;
       }
+    } if (title.length > PROJECT_NAME_CHARACTER_LIMIT) {
+      isValid = false;
+      error = messages.nameTooLong;
     }
   } else if (type === "function") {
     if (!/^[A-Za-z0-9][A-Za-z0-9-]*[a-zA-Z0-9]$/.test(title)) {
