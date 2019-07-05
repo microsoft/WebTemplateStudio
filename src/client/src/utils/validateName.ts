@@ -1,6 +1,5 @@
 import { defineMessages, FormattedMessage } from "react-intl";
-
-const PROJECT_NAME_CHARACTER_LIMIT = 50;
+import { PROJECT_NAME_CHARACTER_LIMIT } from "./constants";
 
 const messages = defineMessages({
   duplicateName: {
