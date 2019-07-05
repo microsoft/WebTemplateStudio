@@ -67,6 +67,7 @@
 .pageIsSelected {
   background-color: #0067b8;
   color: white;
+  z-index: 1000;
   border: 1px solid #0067b8;
 }
 
@@ -92,6 +93,9 @@
   .pageText {
     display: none;
   }
+  .pageIsSelectedSmall {
+    animation: move 0.5s;
+  }
 }
 /* @media (min-width: 700px) {
   
@@ -103,5 +107,14 @@
     flex-grow: 3;
     margin: auto;
     padding-left: 10px;
+  }
+}
+
+@keyframes move {
+  from {
+    margin-left: -100px;
+  }
+  to {
+    margin-left: 0px;
   }
 }

@@ -12,6 +12,8 @@
 .itemBorder {
   float: left;
   padding: 0px 5px;
+  overflow: hidden;
+  padding-left: 0;
 }
 
 .nextPath {
