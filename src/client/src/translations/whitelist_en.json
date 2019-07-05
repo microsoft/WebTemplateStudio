@@ -127,6 +127,7 @@
   "pageNameError.emptyName",
   "pageNameError.invalidRegex",
   "projectNameError.invalidRegex",
+  "projectNameError.nameTooLong",
   "FunctionNameError.invalidFunctionStartLetter",
   "FunctionNameError.invalidRegex"
 ]
