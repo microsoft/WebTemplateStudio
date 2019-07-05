@@ -246,6 +246,18 @@ const AzureFunctionsResourceModal = (props: Props) => {
     }
   }, [azureFunctionsFormData.appName.value]);
 
+  /*
+   * Listens on radio button change to update button status
+   */
+  React.useEffect(() => {
+    setFunctionsModalButtonStatus(
+      azureFunctionsFormData,
+      props.isValidatingName,
+      props.appNameAvailability,
+      setFormIsSendable
+    );
+  }, [azureFunctionsFormData.chooseExistingRadioButtonSelected]);
+
   React.useEffect(() => {
     if (props.selection) {
       console.log(props.selection);
@@ -405,17 +417,30 @@ const AzureFunctionsResourceModal = (props: Props) => {
           <div
             onChange={(event: React.FormEvent<HTMLInputElement>) => {
               let element = event.target as HTMLInputElement;
-              setData({
-                ...functionsData,
-                chooseExistingRadioButtonSelected:
-                  element.value === "Choose existing"
-              });
-
-              updateForm({
-                ...azureFunctionsFormData,
-                chooseExistingRadioButtonSelected:
-                  element.value === "Choose existing"
-              });
+              console.log(element.value);
+              if (element.value === "Choose existing") {
+                setData({
+                  ...functionsData,
+                  chooseExistingRadioButtonSelected: true
+                });
+                updateForm({
+                  ...azureFunctionsFormData,
+                  chooseExistingRadioButtonSelected: true
+                });
+              } else if (element.value === "Create new resource group for me") {
+                setData({
+                  ...functionsData,
+                  chooseExistingRadioButtonSelected: false
+                });
+                updateForm({
+                  ...azureFunctionsFormData,
+                  chooseExistingRadioButtonSelected: false,
+                  resourceGroup: {
+                    value: "",
+                    label: ""
+                  }
+                });
+              }
             }}
           >
             <input
