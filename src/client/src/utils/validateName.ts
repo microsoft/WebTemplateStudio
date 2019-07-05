@@ -65,7 +65,7 @@ export function validateName(title: string, type: string): any {
       } else {
         error = messages.invalidProjectName;
       }
-    } if (title.length > PROJECT_NAME_CHARACTER_LIMIT) {
+    } if (title.length >= PROJECT_NAME_CHARACTER_LIMIT) {
       isValid = false;
       error = messages.nameTooLong;
     }
