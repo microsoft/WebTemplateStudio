@@ -1,4 +1,4 @@
-const TopNavBarData: string[] = [
+const topNavBarData: string[] = [
   "Name and Output",
   "Frameworks",
   "Pages",
@@ -6,4 +6,4 @@ const TopNavBarData: string[] = [
   "Summary"
 ];
 
-export default TopNavBarData;
+export default topNavBarData;

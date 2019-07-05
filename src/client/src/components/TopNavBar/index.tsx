@@ -15,27 +15,27 @@ import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelecti
 
 const messages = defineMessages({
   welcome: {
-    id: "TopNavBar.newProject",
+    id: "topNavBar.newProject",
     defaultMessage: "New Project"
   },
   frameworks: {
-    id: "TopNavBar.frameworks",
+    id: "topNavBar.frameworks",
     defaultMessage: "Frameworks"
   },
   pages: {
-    id: "TopNavBar.pages",
+    id: "topNavBar.pages",
     defaultMessage: "Pages"
   },
   services: {
-    id: "TopNavBar.services",
+    id: "topNavBar.services",
     defaultMessage: "Add Optional Cloud Services"
   },
   summary: {
-    id: "TopNavBar.summary",
+    id: "topNavBar.summary",
     defaultMessage: "Summary"
   },
   ariaNavLabel: {
-    id: "TopNavBar.ariaNavLabel",
+    id: "topNavBar.ariaNavLabel",
     defaultMessage: "Navigate between pages in the Wizard"
   }
 });
@@ -49,7 +49,7 @@ type Props = RouteComponentProps & IStateProps & InjectedIntlProps;
 
 const TopNavBar = (props: Props) => {
   const { formatMessage } = props.intl;
-  const TopNavBarData: string[] = [
+  const topNavBarData: string[] = [
     formatMessage(messages.welcome),
     formatMessage(messages.frameworks),
     formatMessage(messages.pages),
@@ -81,7 +81,7 @@ const TopNavBar = (props: Props) => {
           aria-label={intl.formatMessage(messages.ariaNavLabel)}
         >
           <div>
-            {TopNavBarData.map((sidebartitle, idx) => {
+            {topNavBarData.map((sidebartitle, idx) => {
               return (
                 <div
                   className={classnames(styles.itemBorder, {
