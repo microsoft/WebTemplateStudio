@@ -93,5 +93,17 @@ export const messages = defineMessages({
   numFunctionsSubLabel: {
     id: "azureFunctionsModal.numFunctionsSubLabel",
     defaultMessage: "Select the number of endpoints you want for your web app"
+  },
+  chooseExisting: {
+    id: "azureFunctionsModal.chooseExisting",
+    defaultMessage: "Choose existing"
+  },
+  createNewResourceGroupForMe: {
+    id: "azureFunctionsModal.createNewResourceGroupForMe",
+    defaultMessage: "Create new resource group for me"
+  },
+  createNewResourceGroupForYou: {
+    id: "azureFunctionsModal.createNewResourceGroupForyou",
+    defaultMessage: "We will automatically create a resource group for you"
   }
 });

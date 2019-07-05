@@ -409,7 +409,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
           <div
             onChange={(event: React.FormEvent<HTMLInputElement>) => {
               let element = event.target as HTMLInputElement;
-              if (element.value === "Choose existing") {
+              if (
+                element.value ===
+                props.intl.formatMessage(messages.chooseExisting)
+              ) {
                 setData({
                   ...functionsData,
                   chooseExistingRadioButtonSelected: true
@@ -418,7 +421,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
                   ...azureFunctionsFormData,
                   chooseExistingRadioButtonSelected: true
                 });
-              } else if (element.value === "Create new resource group for me") {
+              } else if (
+                element.value ===
+                props.intl.formatMessage(messages.createNewResourceGroupForMe)
+              ) {
                 setData({
                   ...functionsData,
                   chooseExistingRadioButtonSelected: false
@@ -435,21 +441,25 @@ const AzureFunctionsResourceModal = (props: Props) => {
             }}
           >
             <input
+              className={styles.radioButton}
               type="radio"
-              value="Choose existing"
+              value={props.intl.formatMessage(messages.chooseExisting)}
               name="resourceGroupOption"
               disabled={azureFunctionsFormData.subscription.value === ""}
               checked={functionsData.chooseExistingRadioButtonSelected}
             />
-            {"Choose existing"}
+            {props.intl.formatMessage(messages.chooseExisting)}
             <input
+              className={styles.radiobutton}
               type="radio"
-              value="Create new resource group for me"
+              value={props.intl.formatMessage(
+                messages.createNewResourceGroupForMe
+              )}
               disabled={azureFunctionsFormData.subscription.value === ""}
               name="resourceGroupOption"
               checked={!functionsData.chooseExistingRadioButtonSelected}
             />
-            {"Create new resource group for me"}
+            {props.intl.formatMessage(messages.createNewResourceGroupForMe)}
           </div>
           {functionsData.chooseExistingRadioButtonSelected ? (
             <Dropdown
@@ -470,7 +480,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
               openDropdownUpwards={false}
             />
           ) : (
-            <div>{"We will automatically create a resource group for you"}</div>
+            <div>
+              {props.intl.formatMessage(messages.createNewResourceGroupForYou)}
+            </div>
           )}
         </div>
         {/* App Name */}
