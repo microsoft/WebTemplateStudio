@@ -60,6 +60,12 @@ const LeftSidebar = (props: Props) => {
   const [currentPathIndex, setPathIndex] = React.useState(
     ROUTES_ARRAY.indexOf(pathname)
   );
+  const topNavTabClicked = (event: React.SyntheticEvent, pathname: string) => {
+    console.log("this is the event" + event.target);
+    console.log(pathname);
+    setPathIndex(ROUTES_ARRAY.indexOf(pathname));
+    console.log(currentPathIndex);
+  };
   React.useEffect(() => {
     console.log(ROUTES_ARRAY.indexOf(pathname));
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
@@ -88,6 +94,7 @@ const LeftSidebar = (props: Props) => {
                     [styles.itemBorderTop]: idx === 0
                   })}
                   key={sidebartitle}
+                  onClick={event => topNavTabClicked(event, pathname)}
                 >
                   <LeftSidebarLink
                     disabled={
@@ -117,4 +124,5 @@ const mapStateToProps = (state: any): IStateProps => ({
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
 });
 
+//dispatch added
 export default withRouter(connect(mapStateToProps)(injectIntl(LeftSidebar)));

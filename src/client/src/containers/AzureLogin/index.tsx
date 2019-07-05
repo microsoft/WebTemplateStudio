@@ -30,7 +30,10 @@ interface IAzureLoginProps {
   vscode: any;
 }
 
-type Props = IDispatchProps & IAzureLoginProps & InjectedIntlProps & RouteComponentProps;
+type Props = IDispatchProps &
+  IAzureLoginProps &
+  InjectedIntlProps &
+  RouteComponentProps;
 
 class AzureLogin extends React.Component<Props> {
   handleClick = () => {
@@ -45,7 +48,7 @@ class AzureLogin extends React.Component<Props> {
   public render() {
     const { isLoggedIn, intl, setDetailPage } = this.props;
     return (
-      <div>
+      <div className={styles.container}>
         <Title>{intl.formatMessage(messages.azureLoginTitle)}</Title>
         <div className={styles.loginCard}>
           {!isLoggedIn && (

@@ -25,7 +25,6 @@ const LeftSidebarLink = ({
     if (disabled) {
       e.preventDefault();
     }
-    console.log(e);
   };
   return (
     <Link
