@@ -76,7 +76,7 @@ const TopNavBar = (props: Props) => {
   const { isVisited, intl, isValidNameAndProjectPath } = props;
   return (
     <React.Fragment>
-      {pathname !== ROUTES.PAGE_DETAILS && (
+      {
         <nav
           className={classnames(styles.topNavBar)}
           aria-label={intl.formatMessage(messages.ariaNavLabel)}
@@ -118,7 +118,7 @@ const TopNavBar = (props: Props) => {
             })}
           </div>
         </nav>
-      )}
+      }
     </React.Fragment>
   );
 };
