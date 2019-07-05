@@ -76,7 +76,6 @@ let timeout: NodeJS.Timeout | undefined;
 const links: attributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
-  resourceGroup: "https://ms.portal.azure.com/#create/Microsoft.ResourceGroup",
   appName: "https://azure.microsoft.com/en-us/services/functions/",
   api: null,
   location: null,
@@ -377,17 +376,37 @@ const AzureFunctionsResourceModal = (props: Props) => {
           props.intl.formatMessage(messages.subscriptionSubLabel)
         )}
         {/* Choose Resource Group */}
-        {getDropdownSection(
-          FORM_CONSTANTS.RESOURCE_GROUP.label,
-          functionsData.resourceGroup,
-          FORM_CONSTANTS.RESOURCE_GROUP.value,
-          props.intl.formatMessage(messages.ariaResourceGroupLabel),
-          props.intl.formatMessage(messages.createNew),
-          azureFunctionsFormData.subscription.value === "",
-          DEFAULT_VALUE,
-          false,
-          props.intl.formatMessage(messages.resourceGroupSubLabel)
-        )}
+        <div
+          className={classnames([styles.selectionContainer], {
+            [styles.selectionContainerDisabled]:
+              azureFunctionsFormData.subscription.value === ""
+          })}
+        >
+          <div className={styles.selectionHeaderContainer}>
+            <div className={styles.leftHeader}>
+              {FORM_CONSTANTS.RESOURCE_GROUP.label}
+            </div>
+          </div>
+          <div className={styles.subLabel}>
+            {props.intl.formatMessage(messages.resourceGroupSubLabel)}
+          </div>
+          <Dropdown
+            ariaLabel={props.intl.formatMessage(
+              messages.ariaResourceGroupLabel
+            )}
+            options={functionsData.resourceGroup}
+            handleChange={option => {
+              handleDropdown(FORM_CONSTANTS.RESOURCE_GROUP.value, option);
+            }}
+            value={
+              azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
+                ? azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                : DEFAULT_VALUE
+            }
+            disabled={azureFunctionsFormData.subscription.value === ""}
+            openDropdownUpwards={false}
+          />
+        </div>
         {/* App Name */}
         <div
           className={classnames(
