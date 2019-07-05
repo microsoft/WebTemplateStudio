@@ -1,10 +1,10 @@
 import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
-import { IUpdateCreateTemplateButton } from '../../actions/wizardInfoActions/updateCreateTemplateButton'
+import { IUpdateCreateProjectButton } from '../../actions/wizardInfoActions/updateCreateProjectButton'
 import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType";
 
-const createTemplateButton = (
+const createProjectButton = (
     state : boolean = false,
-    action: IUpdateCreateTemplateButton | WizardInfoType
+    action: IUpdateCreateProjectButton | WizardInfoType
 ) => {
     switch(action.type) {
         case WIZARD_INFO_TYPEKEYS.UPDATE_CREATE_TEMPLATE_BUTTON:
@@ -17,4 +17,4 @@ const createTemplateButton = (
     }
 }
 
-export default createTemplateButton;
+export default createProjectButton;

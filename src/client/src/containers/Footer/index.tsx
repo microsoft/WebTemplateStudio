@@ -27,7 +27,7 @@ import {
 } from "../../selectors/azureFunctionsServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
-import { updateCreateTemplateButtonAction } from '../../actions/wizardInfoActions/updateCreateTemplateButton';
+import { updateCreateProjectButtonAction } from '../../actions/wizardInfoActions/updateCreateProjectButton';
 import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
@@ -51,7 +51,7 @@ import { IFunctionName } from "../AzureFunctionsSelection";
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
   openPostGenModal: () => any;
-  updateCreateTemplateButton: () => any;
+  updateCreateProjectButton: () => any;
 }
 
 interface IStateProps {
@@ -64,7 +64,7 @@ interface IStateProps {
   isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
   functionNames?: IFunctionName[];
-  enableCreateTemplateButton: boolean;
+  enableCreateProjectButton: boolean;
 }
 
 type Props = RouteComponentProps &
@@ -175,11 +175,11 @@ class Footer extends React.Component<Props> {
       }
     }
 
-    const { isValidNameAndProjectPath, location, isVisited, intl } = this.props;
+    const { isValidNameAndProjectPath, location, isVisited, intl, updateCreateProjectButton, enableCreateProjectButton } = this.props;
     const { pathname } = location;
     const { showFrameworks } = isVisited;
     if (this.isReviewAndGenerate()) {
-      this.props.updateCreateTemplateButton();
+      updateCreateProjectButton();
     }
     return (
       <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
@@ -232,7 +232,7 @@ class Footer extends React.Component<Props> {
               >
                 <FormattedMessage id="footer.next" defaultMessage="Next" />
               </Link>
-              { this.props.enableCreateTemplateButton &&
+              { enableCreateProjectButton &&
                 <button
                   disabled={!areValidNames}
                   className={classnames(styles.button, {
@@ -266,7 +266,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
-  enableCreateTemplateButton: state.wizardContent.createTemplateButton
+  enableCreateProjectButton: state.wizardContent.createProjectButton
 });
 
 const mapDispatchToProps = (
@@ -278,8 +278,8 @@ const mapDispatchToProps = (
   openPostGenModal: () => {
     dispatch(openPostGenModalAction());
   },
-  updateCreateTemplateButton: () => {
-    dispatch(updateCreateTemplateButtonAction(true));
+  updateCreateProjectButton: () => {
+    dispatch(updateCreateProjectButtonAction(true));
   }
 });
 

@@ -6,7 +6,7 @@ import projectTypes from "./projectTypeReducer";
 import detailsPage from "./detailsPageReducer";
 import previewStatus from "./previewReducer";
 import serverPort from "./portReducer";
-import createTemplateButton from "./createTemplateButtonReducer"
+import createProjectButton from "./createProjectButtonReducer"
 
 const wizardContentReducer = combineReducers({
   backendOptions,
@@ -16,7 +16,7 @@ const wizardContentReducer = combineReducers({
   detailsPage,
   serverPort,
   previewStatus,
-  createTemplateButton
+  createProjectButton
 });
 
 export default wizardContentReducer;

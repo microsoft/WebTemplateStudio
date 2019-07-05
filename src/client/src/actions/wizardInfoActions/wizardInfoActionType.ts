@@ -1,7 +1,7 @@
 import { IVersionData } from "./getVersionData";
 import { ISetDetails } from "./setDetailsPage";
 import { ISetVisitedPage } from "./setVisitedWizardPage";
-import { IUpdateCreateTemplateButton } from './updateCreateTemplateButton'
+import { IUpdateCreateProjectButton } from './updateCreateProjectButton'
 import {
   IUpdateGenStatusMessage,
   IUpdateGenStatus
@@ -17,6 +17,6 @@ type WizardInfoType =
   | IResetWizard
   | IUpdateGenStatusMessage
   | IUpdateDependencyInfo
-  | IUpdateCreateTemplateButton;
+  | IUpdateCreateProjectButton;
 
 export default WizardInfoType;

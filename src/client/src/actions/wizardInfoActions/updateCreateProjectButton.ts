@@ -1,11 +1,11 @@
 import {WIZARD_INFO_TYPEKEYS} from './typeKeys'
 
-export interface IUpdateCreateTemplateButton {
+export interface IUpdateCreateProjectButton {
     type: WIZARD_INFO_TYPEKEYS.UPDATE_CREATE_TEMPLATE_BUTTON;
     payload: boolean;
   }
 
-export const updateCreateTemplateButtonAction = (payload : boolean) : IUpdateCreateTemplateButton => {
+export const updateCreateProjectButtonAction = (payload : boolean) : IUpdateCreateProjectButton => {
     return {
         type: WIZARD_INFO_TYPEKEYS.UPDATE_CREATE_TEMPLATE_BUTTON,
         payload
