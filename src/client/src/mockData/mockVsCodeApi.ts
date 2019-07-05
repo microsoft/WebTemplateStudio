@@ -6,16 +6,10 @@ import {
 
 const WEST_US: string = "WEST US";
 const RESOURCE_GROUP_MOCK: string = "resourceGroupMock";
-const RESOURCE_GROUP_MOCK_2: string = "resourceGroupMock2";
-const RESOURCE_GROUP_MOCK_3: string = "resourceGroupMock3";
-const RESOURCE_GROUP_MOCK_4: string = "resourceGroupMock4";
-const RESOURCE_GROUP_MOCK_5: string = "resourceGroupMock5";
-const RESOURCE_GROUP_MOCK_6: string = "resourceGroupMock6";
-const RESOURCE_GROUP_MOCK_7: string = "resourceGroupMock7";
-const RESOURCE_GROUP_MOCK_8: string = "resourceGroupMock8";
-const RESOURCE_GROUP_MOCK_9: string = "resourceGroupMock9";
-const RESOURCE_GROUP_MOCK_10: string = "resourceGroupMock10";
-const RESOURCE_GROUP_MOCK_11: string = "resourceGroupMock11";
+const mockResourceGroups = Array.from({ length: 12 }).fill({
+  label: RESOURCE_GROUP_MOCK,
+  value: RESOURCE_GROUP_MOCK
+});
 
 const DEV_NO_ERROR_MSG: string = "in development, no error message";
 const DEV_NO_ERROR_TYPE: string = "in development, no error type";
@@ -92,49 +86,7 @@ const mockVsCodeApi = () => ({
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
               payload: {
                 locations: [{ label: WEST_US, value: WEST_US }],
-                resourceGroups: [
-                  { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK },
-                  {
-                    label: RESOURCE_GROUP_MOCK_2,
-                    value: RESOURCE_GROUP_MOCK_2
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_3,
-                    value: RESOURCE_GROUP_MOCK_3
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_4,
-                    value: RESOURCE_GROUP_MOCK_4
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_5,
-                    value: RESOURCE_GROUP_MOCK_5
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_6,
-                    value: RESOURCE_GROUP_MOCK_6
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_7,
-                    value: RESOURCE_GROUP_MOCK_7
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_8,
-                    value: RESOURCE_GROUP_MOCK_8
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_9,
-                    value: RESOURCE_GROUP_MOCK_9
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_10,
-                    value: RESOURCE_GROUP_MOCK_10
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_11,
-                    value: RESOURCE_GROUP_MOCK_11
-                  }
-                ]
+                resourceGroups: mockResourceGroups
               }
             },
             "*"
@@ -148,49 +100,7 @@ const mockVsCodeApi = () => ({
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
               payload: {
                 locations: [{ label: WEST_US, value: WEST_US }],
-                resourceGroups: [
-                  { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK },
-                  {
-                    label: RESOURCE_GROUP_MOCK_2,
-                    value: RESOURCE_GROUP_MOCK_2
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_3,
-                    value: RESOURCE_GROUP_MOCK_3
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_4,
-                    value: RESOURCE_GROUP_MOCK_4
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_5,
-                    value: RESOURCE_GROUP_MOCK_5
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_6,
-                    value: RESOURCE_GROUP_MOCK_6
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_7,
-                    value: RESOURCE_GROUP_MOCK_7
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_8,
-                    value: RESOURCE_GROUP_MOCK_8
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_9,
-                    value: RESOURCE_GROUP_MOCK_9
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_10,
-                    value: RESOURCE_GROUP_MOCK_10
-                  },
-                  {
-                    label: RESOURCE_GROUP_MOCK_11,
-                    value: RESOURCE_GROUP_MOCK_11
-                  }
-                ]
+                resourceGroups: mockResourceGroups
               }
             },
             "*"
