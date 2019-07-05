@@ -21,11 +21,6 @@ import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 
-//new
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { string } from "prop-types";
-
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
 }
