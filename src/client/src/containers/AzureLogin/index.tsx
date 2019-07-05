@@ -53,7 +53,7 @@ class AzureLogin extends React.Component<Props> {
       track: true
     });
   };
-  keyDownClick = (event: any) => {
+  keyDownClick = (event: React.KeyboardEvent) => {
     if (event.keyCode === 13 || event.keyCode === 32) {
       this.signOutClick();
     }
