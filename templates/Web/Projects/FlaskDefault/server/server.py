@@ -7,7 +7,7 @@ from constants import CONSTANTS
 app = Flask(__name__, static_folder='build')
 
 # Catching all routes
-# This route is used to serve all the routes in the frontend application after deployment
+# This route is used to serve all the routes in the frontend application after deployment.
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
