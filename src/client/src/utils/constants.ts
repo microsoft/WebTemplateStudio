@@ -7,6 +7,8 @@ const AZURE_LOGIN = "/AzureLogin";
 const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
 const NEW_PROJECT = "/";
 
+const PROJECT_NAME_CHARACTER_LIMIT = 50;
+
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
 
@@ -115,5 +117,6 @@ export {
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
   COSMOS_APIS,
-  DEVELOPMENT
+  DEVELOPMENT,
+  PROJECT_NAME_CHARACTER_LIMIT
 };
