@@ -89,7 +89,7 @@ export class GenerationExperience extends WizardServant {
       payload: { outputPath: enginePayload.path }
     });
 
-    if ((payload.selectedFunctions && payload.functions.resourceGroup === "")) {
+    if (payload.selectedFunctions && payload.functions.resourceGroup === "") {
       // Reason for this queue is for deploying more than 1 resource group
       resourceGroupQueue.push(
         GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
@@ -98,7 +98,9 @@ export class GenerationExperience extends WizardServant {
           async function(this: IActionContext): Promise<void> {
             try {
               // update payload with new resource group name for deploying functions
-              payload.functions.resourceGroup = await AzureServices.deployResourceGroup(payload);
+              payload.functions.resourceGroup = await AzureServices.deployResourceGroup(
+                payload
+              );
               progressObject = {
                 ...progressObject,
                 resourceGroup: GenerationExperience.getProgressObject(true)
@@ -123,8 +125,7 @@ export class GenerationExperience extends WizardServant {
     }
 
     // Resource groups should be created before other deploy methods execute
-    Promise.all(resourceGroupQueue)
-    .then(() => {
+    Promise.all(resourceGroupQueue).then(() => {
       if (payload.selectedFunctions) {
         serviceQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
@@ -158,7 +159,7 @@ export class GenerationExperience extends WizardServant {
           )
         );
       }
-  
+
       if (payload.selectedCosmos) {
         serviceQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
