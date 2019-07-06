@@ -25,6 +25,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
+import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
 
 interface LinksDict {
   [serviceId: string]: string;
@@ -42,7 +43,6 @@ interface IStateProps {
   isServicesDeployed: boolean;
   templateGenStatus: string;
   isModalOpen: boolean;
-  isPostGenModalOpen: boolean;
   serviceStatus: PostGenSelectors.IAzureServiceStatus;
   isServicesSelected: boolean;
   vscode: IVSCodeObject;
@@ -208,7 +208,6 @@ const PostGenerationModal = ({
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
-  isPostGenModalOpen: isPostGenModalOpenSelector(state),
   isServicesDeployed: PostGenSelectors.isServicesDeployedOrFinishedSelector(
     state
   ),
@@ -231,5 +230,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(asModal(injectIntl(PostGenerationModal)))
+  )(asModal(injectIntl(PostGenerationModal), MODAL_TYPES.POST_GEN_MODAL))
 );

@@ -1,0 +1,20 @@
+.footerContainer {
+  margin-left: 15px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: right;
+}
+
+.button {
+  font-size: 1em;
+  border-radius: 3px;
+}
+
+.button:hover {
+  color: #ffffff;
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}

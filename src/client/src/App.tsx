@@ -17,6 +17,7 @@ import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 import PrivacyModal from "./containers/PrivacyModal";
+import ViewLicensesModal from "./containers/ViewLicensesModal";
 
 import {
   EXTENSION_COMMANDS,
@@ -244,6 +245,7 @@ class App extends React.Component<Props> {
           <AzureFunctionsModal />
           <PostGenerationModal />
           <PrivacyModal />
+          <ViewLicensesModal />
           <LeftSidebar />
 
           <main
