@@ -14,31 +14,28 @@ import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
 
 interface ISelectFrameworksProps {
   vscode: IVSCodeObject;
-  isPreview: boolean;
 }
 
 type Props = ISelectFrameworksProps;
 
 class SelectFrameworks extends React.Component<Props> {
   componentDidMount() {
-    const { vscode, isPreview } = this.props;
-    if (isPreview) {
-      // send messages to extension to check dependency info when this component loads
-      vscode.postMessage({
-        module: EXTENSION_MODULES.DEPENDENCYCHECKER,
-        command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
-        payload: {
-          dependency: "node"
-        }
-      });
-      vscode.postMessage({
-        module: EXTENSION_MODULES.DEPENDENCYCHECKER,
-        command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
-        payload: {
-          dependency: "python"
-        }
-      });
-    }
+    const { vscode } = this.props;
+    // send messages to extension to check dependency info when this component loads
+    vscode.postMessage({
+      module: EXTENSION_MODULES.DEPENDENCYCHECKER,
+      command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
+      payload: {
+        dependency: "node"
+      }
+    });
+    vscode.postMessage({
+      module: EXTENSION_MODULES.DEPENDENCYCHECKER,
+      command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
+      payload: {
+        dependency: "python"
+      }
+    });
   }
 
   render() {
@@ -52,14 +49,11 @@ class SelectFrameworks extends React.Component<Props> {
 }
 
 interface IStateProps {
-  isPreview: boolean;
   vscode: IVSCodeObject;
 }
 
 const mapStateToProps = (state: AppState): IStateProps => {
-  const { previewStatus } = state.wizardContent;
   return {
-    isPreview: previewStatus,
     vscode: getVSCodeApiSelector(state)
   };
 };
