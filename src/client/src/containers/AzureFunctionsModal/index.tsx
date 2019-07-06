@@ -392,6 +392,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           props.intl.formatMessage(messages.subscriptionSubLabel)
         )}
         {/* Choose Resource Group */}
+<<<<<<< HEAD
         <div
           className={classnames([styles.selectionContainer], {
             [styles.selectionContainerDisabled]:
@@ -485,6 +486,19 @@ const AzureFunctionsResourceModal = (props: Props) => {
             </div>
           )}
         </div>
+=======
+        {getDropdownSection(
+          FORM_CONSTANTS.RESOURCE_GROUP.label,
+          functionsData.resourceGroup,
+          FORM_CONSTANTS.RESOURCE_GROUP.value,
+          props.intl.formatMessage(messages.ariaResourceGroupLabel),
+          props.intl.formatMessage(messages.createNew),
+          azureFunctionsFormData.subscription.value === "",
+          DEFAULT_VALUE,
+          false,
+          props.intl.formatMessage(messages.resourceGroupSubLabel)
+        )}
+>>>>>>> dev
         {/* App Name */}
         <div
           className={classnames(

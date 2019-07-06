@@ -85,7 +85,7 @@ const pathsBack: any = {
 const messages = defineMessages({
   navAriaLabel: {
     id: "footer.navAriaLabel",
-    defaultMessage: "Navigate between pages and generate templates"
+    defaultMessage: "Navigate between pages and create project"
   }
 });
 
@@ -189,43 +189,38 @@ class Footer extends React.Component<Props> {
               )}
             </div>
             <div className={styles.buttonContainer}>
-              <Link
-                tabIndex={pathname === ROUTES.NEW_PROJECT ? -1 : 0}
-                className={classnames(buttonStyles.buttonDark, styles.button, {
-                  [styles.disabledOverlay]: pathname === ROUTES.NEW_PROJECT
-                })}
-                to={
-                  pathsBack[pathname] === undefined
-                    ? ROUTES.NEW_PROJECT
-                    : pathsBack[pathname]
-                }
-              >
-                <FormattedMessage id="footer.back" defaultMessage="Back" />
-              </Link>
-              <Link
-                tabIndex={
-                  !isValidNameAndProjectPath || this.isReviewAndGenerate()
-                    ? -1
-                    : 0
-                }
-                className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]:
-                    this.isReviewAndGenerate() || !isValidNameAndProjectPath,
-                  [buttonStyles.buttonHighlightedBorder]: !this.isReviewAndGenerate(),
-                  [styles.disabledOverlay]:
-                    !isValidNameAndProjectPath || this.isReviewAndGenerate()
-                })}
-                onClick={event => {
-                  this.handleLinkClick(event, pathname);
-                }}
-                to={
-                  pathname === ROUTES.REVIEW_AND_GENERATE
-                    ? ROUTES.REVIEW_AND_GENERATE
-                    : pathsNext[pathname]
-                }
-              >
-                <FormattedMessage id="footer.next" defaultMessage="Next" />
-              </Link>
+              {pathname !== ROUTES.NEW_PROJECT && (
+                <Link
+                  tabIndex={0}
+                  className={classnames(buttonStyles.buttonDark, styles.button)}
+                  to={
+                    pathsBack[pathname] === undefined
+                      ? ROUTES.NEW_PROJECT
+                      : pathsBack[pathname]
+                  }
+                >
+                  <FormattedMessage id="footer.back" defaultMessage="Back" />
+                </Link>
+              )}
+              {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+                <Link
+                  tabIndex={isValidNameAndProjectPath ? 0 : -1}
+                  className={classnames(
+                    styles.button,
+                    buttonStyles.buttonHighlightedBorder,
+                    {
+                      [buttonStyles.buttonDark]: !isValidNameAndProjectPath,
+                      [styles.disabledOverlay]: !isValidNameAndProjectPath
+                    }
+                  )}
+                  onClick={event => {
+                    this.handleLinkClick(event, pathname);
+                  }}
+                  to={pathsNext[pathname]}
+                >
+                  <FormattedMessage id="footer.next" defaultMessage="Next" />
+                </Link>
+              )}
               <button
                 disabled={
                   pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
@@ -242,7 +237,7 @@ class Footer extends React.Component<Props> {
               >
                 <FormattedMessage
                   id="footer.generate"
-                  defaultMessage="Generate Template"
+                  defaultMessage="Create Project"
                 />
               </button>
             </div>

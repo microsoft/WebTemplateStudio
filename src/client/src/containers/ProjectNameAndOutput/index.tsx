@@ -16,7 +16,7 @@ import {
 } from "../../selectors/wizardSelectionSelector";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES, PROJECT_NAME_CHARACTER_LIMIT } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -125,6 +125,7 @@ const ProjectNameAndOutput = (props: Props) => {
           ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
           value={props.projectName}
           placeholder={props.intl.formatMessage(messages.projectName)}
+          maxLength={PROJECT_NAME_CHARACTER_LIMIT}
         />
         {props.projectNameValidation.error && (
           <div className={styles.errorMessage}>

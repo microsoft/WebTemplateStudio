@@ -71,8 +71,8 @@
   "cosmosResourceModule.saveChanges",
   "cosmosResourceModule.createCosmosRes",
   "cosmosResourceModule.internalName",
-  "dependencyChecker.installed",
-  "dependencyChecker.notInstalled",
+  "dependencyChecker.installedMessage",
+  "dependencyChecker.notInstalledMessage",
   "dependencyChecker.iconAltMessage",
   "footer.back",
   "footer.next",
@@ -132,6 +132,7 @@
   "pageNameError.emptyName",
   "pageNameError.invalidRegex",
   "projectNameError.invalidRegex",
+  "projectNameError.nameTooLong",
   "FunctionNameError.invalidFunctionStartLetter",
   "FunctionNameError.invalidRegex"
 ]
