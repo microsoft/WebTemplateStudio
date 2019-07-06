@@ -173,11 +173,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
   const [azureFunctionsFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
 
-  console.log("presented functions data");
-  console.log(functionsData);
-  console.log("form data");
-  console.log(azureFunctionsFormData);
-
   // Updates the data the user enters (azureFunctionsFormData) as the user types
   const handleChange = (updatedFunctionsForm: IFunctionsState) => {
     setFunctionsModalButtonStatus(
