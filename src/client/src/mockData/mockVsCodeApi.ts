@@ -5,6 +5,11 @@ import {
 } from "../utils/constants";
 
 const WEST_US: string = "WEST US";
+const mockLocations = Array.from({ length: 12 }).fill({
+  label: WEST_US,
+  value: WEST_US
+});
+
 const RESOURCE_GROUP_MOCK: string = "resourceGroupMock";
 const mockResourceGroups = Array.from({ length: 12 }).fill({
   label: RESOURCE_GROUP_MOCK,
@@ -85,7 +90,7 @@ const mockVsCodeApi = () => ({
               module: EXTENSION_MODULES.AZURE,
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
               payload: {
-                locations: [{ label: WEST_US, value: WEST_US }],
+                locations: mockLocations,
                 resourceGroups: mockResourceGroups
               }
             },
@@ -99,7 +104,7 @@ const mockVsCodeApi = () => ({
               module: EXTENSION_MODULES.AZURE,
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
               payload: {
-                locations: [{ label: WEST_US, value: WEST_US }],
+                locations: mockLocations,
                 resourceGroups: mockResourceGroups
               }
             },

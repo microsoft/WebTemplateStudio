@@ -165,14 +165,18 @@ const AzureFunctionsResourceModal = (props: Props) => {
       ],
       subscription: props.subscriptions,
       resourceGroup: props.subscriptionData.resourceGroups,
-      location: props.subscriptionData.locations,
-      chooseExistingRadioButtonSelected: props.chooseExistingRadioButtonSelected
+      location: props.subscriptionData.locations
     });
   }, [props.subscriptionData]);
 
   // The data the user has entered into the modal
   const [azureFunctionsFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
+
+  console.log("presented functions data");
+  console.log(functionsData);
+  console.log("form data");
+  console.log(azureFunctionsFormData);
 
   // Updates the data the user enters (azureFunctionsFormData) as the user types
   const handleChange = (updatedFunctionsForm: IFunctionsState) => {
@@ -251,9 +255,13 @@ const AzureFunctionsResourceModal = (props: Props) => {
     );
   }, [azureFunctionsFormData.chooseExistingRadioButtonSelected]);
 
+  // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {
-      handleChange(props.selection.dropdownSelection);
+      const newFunctionState = props.selection.dropdownSelection;
+      newFunctionState.chooseExistingRadioButtonSelected =
+        props.chooseExistingRadioButtonSelected;
+      handleChange(newFunctionState);
     } else {
       props.setAppNameAvailability({
         isAvailable: false,
@@ -371,10 +379,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
   ) => {
     let element = event.target as HTMLInputElement;
     if (element.value === props.intl.formatMessage(messages.chooseExisting)) {
-      setData({
-        ...functionsData,
-        chooseExistingRadioButtonSelected: true
-      });
       updateForm({
         ...azureFunctionsFormData,
         chooseExistingRadioButtonSelected: true
@@ -383,10 +387,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
       element.value ===
       props.intl.formatMessage(messages.createNewResourceGroupForMe)
     ) {
-      setData({
-        ...functionsData,
-        chooseExistingRadioButtonSelected: false
-      });
       updateForm({
         ...azureFunctionsFormData,
         chooseExistingRadioButtonSelected: false,
@@ -446,7 +446,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
               type="radio"
               value={props.intl.formatMessage(messages.chooseExisting)}
               disabled={azureFunctionsFormData.subscription.value === ""}
-              checked={functionsData.chooseExistingRadioButtonSelected}
+              checked={azureFunctionsFormData.chooseExistingRadioButtonSelected}
             />
             {props.intl.formatMessage(messages.chooseExisting)}
             <input
@@ -456,12 +456,14 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 messages.createNewResourceGroupForMe
               )}
               disabled={azureFunctionsFormData.subscription.value === ""}
-              checked={!functionsData.chooseExistingRadioButtonSelected}
+              checked={
+                !azureFunctionsFormData.chooseExistingRadioButtonSelected
+              }
             />
             {props.intl.formatMessage(messages.createNewResourceGroupForMe)}
           </div>
           <div className={styles.resourceGroupToggleContainer}>
-            {functionsData.chooseExistingRadioButtonSelected ? (
+            {azureFunctionsFormData.chooseExistingRadioButtonSelected ? (
               <Dropdown
                 ariaLabel={props.intl.formatMessage(
                   messages.ariaResourceGroupLabel
