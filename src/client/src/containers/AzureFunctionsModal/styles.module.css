@@ -184,3 +184,7 @@ input::placeholder {
   display: block;
   position: relative;
 }
+
+.resourceGroupToggleContainer {
+  margin-top: 0.5em;
+}

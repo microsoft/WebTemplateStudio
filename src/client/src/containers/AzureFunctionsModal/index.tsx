@@ -439,12 +439,12 @@ const AzureFunctionsResourceModal = (props: Props) => {
           <div className={styles.subLabel}>
             {props.intl.formatMessage(messages.resourceGroupSubLabel)}
           </div>
+          {/* Radio Buttons for Choose Resource Group */}
           <div onChange={radioButtonOnChangeHandler}>
             <input
               className={styles.radioButton}
               type="radio"
               value={props.intl.formatMessage(messages.chooseExisting)}
-              name="resourceGroupOption"
               disabled={azureFunctionsFormData.subscription.value === ""}
               checked={functionsData.chooseExistingRadioButtonSelected}
             />
@@ -456,34 +456,35 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 messages.createNewResourceGroupForMe
               )}
               disabled={azureFunctionsFormData.subscription.value === ""}
-              name="resourceGroupOption"
               checked={!functionsData.chooseExistingRadioButtonSelected}
             />
             {props.intl.formatMessage(messages.createNewResourceGroupForMe)}
           </div>
-          {functionsData.chooseExistingRadioButtonSelected ? (
-            <Dropdown
-              ariaLabel={props.intl.formatMessage(
-                messages.ariaResourceGroupLabel
-              )}
-              options={functionsData.resourceGroup}
-              handleChange={option => {
-                handleDropdown(FORM_CONSTANTS.RESOURCE_GROUP.value, option);
-              }}
-              value={
-                azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
-                  .value
-                  ? azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
-                  : DEFAULT_VALUE
-              }
-              disabled={azureFunctionsFormData.subscription.value === ""}
-              openDropdownUpwards={false}
-            />
-          ) : (
-            <div>
-              {props.intl.formatMessage(messages.createNewResourceGroupForYou)}
-            </div>
-          )}
+          <div className={styles.resourceGroupToggleContainer}>
+            {functionsData.chooseExistingRadioButtonSelected ? (
+              <Dropdown
+                ariaLabel={props.intl.formatMessage(
+                  messages.ariaResourceGroupLabel
+                )}
+                options={functionsData.resourceGroup}
+                handleChange={option => {
+                  handleDropdown(FORM_CONSTANTS.RESOURCE_GROUP.value, option);
+                }}
+                value={
+                  azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                    .value
+                    ? azureFunctionsFormData[
+                        FORM_CONSTANTS.RESOURCE_GROUP.value
+                      ]
+                    : DEFAULT_VALUE
+                }
+                disabled={azureFunctionsFormData.subscription.value === ""}
+                openDropdownUpwards={false}
+              />
+            ) : (
+              props.intl.formatMessage(messages.createNewResourceGroupForYou)
+            )}
+          </div>
         </div>
         {/* App Name */}
         <div
