@@ -83,7 +83,7 @@ export class ResourceGroupDeploy {
     private unixToSuffix(unixTimestamp: any): string {
         let fullDate = new Date(unixTimestamp);
         let year  = fullDate.getFullYear().toString();
-        // getMonth() returns month as a zaro-based value
+        // getMonth() returns month as a zero-based value
         let month = (fullDate.getMonth() + 1).toString();
         let date  = fullDate.getDate().toString();
         let hour  = fullDate.getHours().toString();
