@@ -373,7 +373,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       props.closeModal();
     }
   };
-  // when user clicks a radio button, update state for form data and functions data
+  // when user clicks a radio button, update form data
   const radioButtonOnChangeHandler = (
     event: React.FormEvent<HTMLInputElement>
   ) => {
