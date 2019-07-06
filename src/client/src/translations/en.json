@@ -136,7 +136,6 @@
   "projectName.projectName": "Project Name",
   "projectName.projectNameTitle": "Project Name:",
   "projectNameError.invalidRegex": "Name may only contain letters, numbers, dashes or underscores",
-  "projectNameError.nameTooLong": "Name should be under {projectNameCharacterLimit} characters long",
   "rightSidebar.backendFramework": "Back-end Framework",
   "rightSidebar.frontendFramework": "Front-end Framework",
   "rightSidebar.projectType": "Project Type",

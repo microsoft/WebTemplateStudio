@@ -365,6 +365,39 @@ const AzureFunctionsResourceModal = (props: Props) => {
       props.closeModal();
     }
   };
+  // when user clicks a radio button, update state for form data and functions data
+  const radioButtonOnChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    let element = event.target as HTMLInputElement;
+    if (element.value === props.intl.formatMessage(messages.chooseExisting)) {
+      setData({
+        ...functionsData,
+        chooseExistingRadioButtonSelected: true
+      });
+      updateForm({
+        ...azureFunctionsFormData,
+        chooseExistingRadioButtonSelected: true
+      });
+    } else if (
+      element.value ===
+      props.intl.formatMessage(messages.createNewResourceGroupForMe)
+    ) {
+      setData({
+        ...functionsData,
+        chooseExistingRadioButtonSelected: false
+      });
+      updateForm({
+        ...azureFunctionsFormData,
+        chooseExistingRadioButtonSelected: false,
+        resourceGroup: {
+          value: "",
+          label: ""
+        }
+      });
+    }
+  };
+
   return (
     <React.Fragment>
       <div className={styles.headerContainer}>
@@ -392,7 +425,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
           props.intl.formatMessage(messages.subscriptionSubLabel)
         )}
         {/* Choose Resource Group */}
-<<<<<<< HEAD
         <div
           className={classnames([styles.selectionContainer], {
             [styles.selectionContainerDisabled]:
@@ -407,40 +439,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           <div className={styles.subLabel}>
             {props.intl.formatMessage(messages.resourceGroupSubLabel)}
           </div>
-          <div
-            onChange={(event: React.FormEvent<HTMLInputElement>) => {
-              let element = event.target as HTMLInputElement;
-              if (
-                element.value ===
-                props.intl.formatMessage(messages.chooseExisting)
-              ) {
-                setData({
-                  ...functionsData,
-                  chooseExistingRadioButtonSelected: true
-                });
-                updateForm({
-                  ...azureFunctionsFormData,
-                  chooseExistingRadioButtonSelected: true
-                });
-              } else if (
-                element.value ===
-                props.intl.formatMessage(messages.createNewResourceGroupForMe)
-              ) {
-                setData({
-                  ...functionsData,
-                  chooseExistingRadioButtonSelected: false
-                });
-                updateForm({
-                  ...azureFunctionsFormData,
-                  chooseExistingRadioButtonSelected: false,
-                  resourceGroup: {
-                    value: "",
-                    label: ""
-                  }
-                });
-              }
-            }}
-          >
+          <div onChange={radioButtonOnChangeHandler}>
             <input
               className={styles.radioButton}
               type="radio"
@@ -486,19 +485,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
             </div>
           )}
         </div>
-=======
-        {getDropdownSection(
-          FORM_CONSTANTS.RESOURCE_GROUP.label,
-          functionsData.resourceGroup,
-          FORM_CONSTANTS.RESOURCE_GROUP.value,
-          props.intl.formatMessage(messages.ariaResourceGroupLabel),
-          props.intl.formatMessage(messages.createNew),
-          azureFunctionsFormData.subscription.value === "",
-          DEFAULT_VALUE,
-          false,
-          props.intl.formatMessage(messages.resourceGroupSubLabel)
-        )}
->>>>>>> dev
         {/* App Name */}
         <div
           className={classnames(
@@ -549,7 +535,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
             className={styles.link}
             href={links.appName}
           >
-            documents.azure.com
+            {"documents.azure.com"}
           </a>
         </div>
         {/* Location */}
