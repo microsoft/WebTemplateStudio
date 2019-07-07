@@ -144,6 +144,7 @@
   --vscode-gitDecoration-modifiedResourceForeground: #e2c08d;
   --vscode-gitDecoration-submoduleResourceForeground: #8db9e2;
   --vscode-gitDecoration-untrackedResourceForeground: #73c991;
+  --vscode-header-border: #3c3c3c;
   --vscode-input-background: #3c3c3c;
   --vscode-input-foreground: #cccccc;
   --vscode-input-placeholderForeground: #a6a6a6;

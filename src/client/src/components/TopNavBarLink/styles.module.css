@@ -34,10 +34,6 @@
   padding-left: 1em;
 }
 
-.textSelected {
-  color: #ffffff;
-}
-
 .icon path {
   fill: var(--vscode-editor-background);
 }
@@ -66,9 +62,9 @@
 
 .pageIsSelected {
   background-color: #0067b8;
-  color: var(--vscode-button-foreground);
   z-index: 1000;
   border: 1px solid #0067b8;
+  color: var(--vscode-button-foreground);
 }
 
 .pageIsVisited {
