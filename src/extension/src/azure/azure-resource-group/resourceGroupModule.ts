@@ -47,7 +47,7 @@ export class ResourceGroupDeploy {
         location: location
       };
 
-      let result = await this.azureResourceClient.resourceGroups.createOrUpdate(
+      const result = await this.azureResourceClient.resourceGroups.createOrUpdate(
         resourceGroupName,
         options
       );
@@ -62,7 +62,7 @@ export class ResourceGroupDeploy {
     userSubscriptionItem: SubscriptionItem
   ): Promise<string> {
     this.setAzureResourceClient(userSubscriptionItem);
-    
+
     let generatedName = this.generateResourceGroupName(name);
     let isValid = await this.validateResourceGroupName(generatedName);
 
@@ -86,27 +86,27 @@ export class ResourceGroupDeploy {
         CONSTANTS.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED
       );
     }
-    let exist = await this.azureResourceClient.resourceGroups.checkExistence(
+    const exist = await this.azureResourceClient.resourceGroups.checkExistence(
       name
     );
     return !exist;
   }
 
   private generateResourceGroupName(userProjectName: string): string {
-    let unixTimestamp = Date.now();
-    let suffix = this.unixToSuffix(unixTimestamp);
+    const unixTimestamp = Date.now();
+    const suffix = this.unixToSuffix(unixTimestamp);
     return userProjectName + "_" + suffix;
   }
 
   private unixToSuffix(unixTimestamp: any): string {
-    let fullDate = new Date(unixTimestamp);
-    let year = fullDate.getFullYear().toString();
+    const fullDate = new Date(unixTimestamp);
+    const year = fullDate.getFullYear().toString();
     // getMonth() returns month as a zero-based value
-    let month = (fullDate.getMonth() + 1).toString();
-    let date = fullDate.getDate().toString();
-    let hour = fullDate.getHours().toString();
-    let min = fullDate.getMinutes().toString();
-    let sec = fullDate.getSeconds().toString();
+    const month = (fullDate.getMonth() + 1).toString();
+    const date = fullDate.getDate().toString();
+    const hour = fullDate.getHours().toString();
+    const min = fullDate.getMinutes().toString();
+    const sec = fullDate.getSeconds().toString();
     return year.concat(month, date, hour, min, sec);
   }
 }

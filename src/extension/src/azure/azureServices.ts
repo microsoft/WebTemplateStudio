@@ -288,19 +288,19 @@ export class AzureServices extends WizardServant {
   }
 
   public static async deployResourceGroup(payload: any): Promise<any> {
-    let projectName = payload.engine.projectName;
-    let functionSubscription = payload.functions.subscription;
+    const projectName = payload.engine.projectName;
+    const functionSubscription = payload.functions.subscription;
 
     await AzureServices.updateFunctionSubscriptionItemCache(
       functionSubscription
     );
 
-    let generatedName = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
+    const generatedName = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
       projectName,
       this.usersFunctionSubscriptionItemCache
     );
 
-    let resourceGroupSelection: ResourceGroupSelection = {
+    const resourceGroupSelection: ResourceGroupSelection = {
       subscriptionItem: AzureServices.usersFunctionSubscriptionItemCache,
       resourceGroupName: generatedName,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
