@@ -63,6 +63,7 @@ import { setPreviewStatusAction } from "./actions/wizardContentActions/setPrevie
 import { setPortAction } from "./actions/wizardContentActions/setPort";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
+import TopNavBar from "./components/TopNavBar";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -239,6 +240,8 @@ class App extends React.Component<Props> {
     return (
       <React.Fragment>
         <Header />
+        <TopNavBar />
+
         <div className={appStyles.container}>
           <CosmosResourceModal />
           <AzureFunctionsModal />

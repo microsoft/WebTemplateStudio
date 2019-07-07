@@ -60,19 +60,19 @@
   height: 20px;
   padding: 5px 11px;
   border-radius: 100%;
-  border: 1px solid white;
+  border: 1px solid var(--vscode-button-foreground);
   flex-grow: 1;
 }
 
 .pageIsSelected {
   background-color: #0067b8;
-  color: white;
+  color: var(--vscode-button-foreground);
   z-index: 1000;
   border: 1px solid #0067b8;
 }
 
 .pageIsVisited {
-  background-color: white;
+  background-color: var(--vscode-button-foreground);
   color: #0067b8;
 }
 
@@ -112,7 +112,7 @@
 
 @keyframes move {
   from {
-    margin-left: -100px;
+    margin-left: -30px;
   }
   to {
     margin-left: 0px;

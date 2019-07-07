@@ -202,12 +202,12 @@ class Footer extends React.Component<Props> {
               )}
             </div>
             <div className={styles.buttonContainer}>
-              { pathname !== ROUTES.NEW_PROJECT &&
+              {pathname !== ROUTES.NEW_PROJECT && (
                 <Link
                   tabIndex={0}
                   className={classnames(buttonStyles.buttonDark, styles.button)}
                   onClick={event => {
-                  this.handleLinkBackClick(event, pathname);
+                    this.handleLinkBackClick(event, pathname);
                   }}
                   to={
                     pathsBack[pathname] === undefined
@@ -217,7 +217,7 @@ class Footer extends React.Component<Props> {
                 >
                   <FormattedMessage id="footer.back" defaultMessage="Back" />
                 </Link>
-              }
+              )}
               <Link
                 tabIndex={
                   !isValidNameAndProjectPath || this.isReviewAndGenerate()

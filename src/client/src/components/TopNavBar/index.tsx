@@ -69,6 +69,7 @@ const TopNavBar = (props: Props) => {
       setPathIndex(ROUTES_ARRAY.indexOf(ROUTES_ARRAY[idx]));
     }
   };
+
   React.useEffect(() => {
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
   });

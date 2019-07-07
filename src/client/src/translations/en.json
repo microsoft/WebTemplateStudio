@@ -1,12 +1,6 @@
 {
   "FunctionNameError.invalidFunctionStartLetter": "Name may only start with letters or numbers",
   "FunctionNameError.invalidRegex": "Name may only contain letters, numbers or dashes",
-  "TopNavBar.ariaNavLabel": "Navigate between pages in the Wizard",
-  "TopNavBar.frameworks": "Frameworks",
-  "TopNavBar.newProject": "New Project",
-  "TopNavBar.pages": "Pages",
-  "TopNavBar.services": "Add Optional Cloud Services",
-  "TopNavBar.summary": "Summary",
   "about.about": "About",
   "about.reportAnIssue": "Give Feedback or Report an issue",
   "about.reportAnIssueLabel": "Give Feedback",
@@ -144,5 +138,11 @@
   "sortablePageList.show": "Show",
   "summarySection.duplicateName": "Function name has to be unique",
   "summaryTile.changeItemName": "Change Item Name",
+  "topNavBar.ariaNavLabel": "Navigate between pages in the Wizard",
+  "topNavBar.frameworks": "Frameworks",
+  "topNavBar.newProject": "New Project",
+  "topNavBar.pages": "Pages",
+  "topNavBar.services": "Add Optional Cloud Services",
+  "topNavBar.summary": "Summary",
   "viewLicensesModal.closeModalLabel": "Close"
 }

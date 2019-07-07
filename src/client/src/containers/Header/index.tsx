@@ -20,7 +20,6 @@ const Header = (props: Props) => {
   return (
     <div className={styles.header}>
       <div className={styles.headerTitle}>Web Template Studio</div>
-      <TopNavBar />
     </div>
   );
 };

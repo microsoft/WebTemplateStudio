@@ -8,6 +8,7 @@
   justify-content: space-between;
   box-sizing: border-box;
   align-items: center;
+  height: 70px;
 }
 
 .headerTitle {

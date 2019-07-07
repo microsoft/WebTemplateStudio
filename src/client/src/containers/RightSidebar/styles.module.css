@@ -28,8 +28,6 @@
 
 .rightViewCropped {
   height: calc(100vh - 104px);
-  margin-top: 51px;
-  margin-bottom: 53px;
   padding: 4vh 2vh;
 }
 

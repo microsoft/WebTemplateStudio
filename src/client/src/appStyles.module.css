@@ -1,6 +1,7 @@
 .container {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 .centerView {
@@ -11,8 +12,6 @@
   box-sizing: border-box;
   background-color: var(--vscode-editor-background);
   height: calc(100vh - 104px);
-  margin-top: 51px;
-  margin-bottom: 53px;
   justify-content: flex-start;
 }
 
