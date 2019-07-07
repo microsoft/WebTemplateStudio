@@ -343,105 +343,107 @@ const CosmosResourceModal = (props: Props) => {
           onKeyDown={cancelKeyDownHandler}
         />
       </div>
-      {/* Subscription */}
-      {getDropdownSection(
-        FORM_CONSTANTS.SUBSCRIPTION.label,
-        cosmosData.subscription,
-        FORM_CONSTANTS.SUBSCRIPTION.value,
-        props.intl.formatMessage(messages.ariaSubscriptionLabel),
-        props.intl.formatMessage(messages.createNew),
-        false,
-        DEFAULT_VALUE,
-        false,
-        props.intl.formatMessage(messages.subscriptionSubLabel)
-      )}
-      {/* Choose Resource Group */}
-      {getDropdownSection(
-        FORM_CONSTANTS.RESOURCE_GROUP.label,
-        cosmosData.resourceGroup,
-        FORM_CONSTANTS.RESOURCE_GROUP.value,
-        props.intl.formatMessage(messages.ariaResourceGroupLabel),
-        props.intl.formatMessage(messages.createNew),
-        cosmosFormData.subscription.value === "",
-        DEFAULT_VALUE,
-        false,
-        props.intl.formatMessage(messages.resourceGroupSubLabel)
-      )}
-      {/* Account Name */}
-      <div
-        className={classnames(styles.selectionInputContainer, {
-          [styles.selectionContainer]:
-            isAccountNameAvailable ||
-            cosmosFormData.accountName.value.length === 0,
-          [styles.selectionContainerDisabled]:
-            cosmosFormData.subscription.value === ""
-        })}
-      >
-        <div className={styles.selectionHeaderContainer}>
-          <div className={styles.leftHeader}>
-            {props.intl.formatMessage(messages.accountName)}
-          </div>
-        </div>
-        <div className={styles.subLabel}>
-          {props.intl.formatMessage(messages.accountNameSubLabel)}
-        </div>
-        <div className={styles.errorStack}>
-          <div className={styles.inputContainer}>
-            <input
-              aria-label={props.intl.formatMessage(
-                messages.ariaAccountNameLabel
-              )}
-              className={styles.input}
-              onChange={handleInput}
-              value={cosmosFormData.accountName.value}
-              placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
-              disabled={cosmosFormData.subscription.value === ""}
-            />
-            {isAccountNameAvailable && !isValidatingName && (
-              <GreenCheck className={styles.validationIcon} />
-            )}
-            {isValidatingName && <Spinner className={styles.spinner} />}
-          </div>
-          {!isValidatingName &&
-            !isAccountNameAvailable &&
-            cosmosFormData.accountName.value.length > 0 && (
-              <div className={styles.errorMessage}>
-                {props.accountNameAvailability.message}
-              </div>
-            )}
-        </div>
-        <a
-          tabIndex={cosmosFormData.subscription.value === "" ? -1 : 0}
-          className={styles.link}
-          href={links.accountName}
+      <div className={styles.bodyContainer}>
+        {/* Subscription */}
+        {getDropdownSection(
+          FORM_CONSTANTS.SUBSCRIPTION.label,
+          cosmosData.subscription,
+          FORM_CONSTANTS.SUBSCRIPTION.value,
+          props.intl.formatMessage(messages.ariaSubscriptionLabel),
+          props.intl.formatMessage(messages.createNew),
+          false,
+          DEFAULT_VALUE,
+          false,
+          props.intl.formatMessage(messages.subscriptionSubLabel)
+        )}
+        {/* Choose Resource Group */}
+        {getDropdownSection(
+          FORM_CONSTANTS.RESOURCE_GROUP.label,
+          cosmosData.resourceGroup,
+          FORM_CONSTANTS.RESOURCE_GROUP.value,
+          props.intl.formatMessage(messages.ariaResourceGroupLabel),
+          props.intl.formatMessage(messages.createNew),
+          cosmosFormData.subscription.value === "",
+          DEFAULT_VALUE,
+          false,
+          props.intl.formatMessage(messages.resourceGroupSubLabel)
+        )}
+        {/* Account Name */}
+        <div
+          className={classnames(styles.selectionInputContainer, {
+            [styles.selectionContainer]:
+              isAccountNameAvailable ||
+              cosmosFormData.accountName.value.length === 0,
+            [styles.selectionContainerDisabled]:
+              cosmosFormData.subscription.value === ""
+          })}
         >
-          {"documents.azure.com"}
-        </a>
+          <div className={styles.selectionHeaderContainer}>
+            <div className={styles.leftHeader}>
+              {props.intl.formatMessage(messages.accountName)}
+            </div>
+          </div>
+          <div className={styles.subLabel}>
+            {props.intl.formatMessage(messages.accountNameSubLabel)}
+          </div>
+          <div className={styles.errorStack}>
+            <div className={styles.inputContainer}>
+              <input
+                aria-label={props.intl.formatMessage(
+                  messages.ariaAccountNameLabel
+                )}
+                className={styles.input}
+                onChange={handleInput}
+                value={cosmosFormData.accountName.value}
+                placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
+                disabled={cosmosFormData.subscription.value === ""}
+              />
+              {isAccountNameAvailable && !isValidatingName && (
+                <GreenCheck className={styles.validationIcon} />
+              )}
+              {isValidatingName && <Spinner className={styles.spinner} />}
+            </div>
+            {!isValidatingName &&
+              !isAccountNameAvailable &&
+              cosmosFormData.accountName.value.length > 0 && (
+                <div className={styles.errorMessage}>
+                  {props.accountNameAvailability.message}
+                </div>
+              )}
+          </div>
+          <a
+            tabIndex={cosmosFormData.subscription.value === "" ? -1 : 0}
+            className={styles.link}
+            href={links.accountName}
+          >
+            {"documents.azure.com"}
+          </a>
+        </div>
+        {/* Location */}
+        {getDropdownSection(
+          FORM_CONSTANTS.LOCATION.label,
+          cosmosData.location,
+          FORM_CONSTANTS.LOCATION.value,
+          props.intl.formatMessage(messages.ariaLocationLabel),
+          undefined,
+          cosmosFormData.subscription.value === "",
+          DEFAULT_VALUE,
+          true,
+          props.intl.formatMessage(messages.locationSubLabel)
+        )}
+        {/* API */}
+        {getDropdownSection(
+          FORM_CONSTANTS.API.label,
+          cosmosData.api,
+          FORM_CONSTANTS.API.value,
+          props.intl.formatMessage(messages.ariaApiLabel),
+          undefined,
+          false,
+          DEFAULT_VALUE,
+          true,
+          props.intl.formatMessage(messages.apiSubLabel)
+        )}
       </div>
-      {/* Location */}
-      {getDropdownSection(
-        FORM_CONSTANTS.LOCATION.label,
-        cosmosData.location,
-        FORM_CONSTANTS.LOCATION.value,
-        props.intl.formatMessage(messages.ariaLocationLabel),
-        undefined,
-        cosmosFormData.subscription.value === "",
-        DEFAULT_VALUE,
-        true,
-        props.intl.formatMessage(messages.locationSubLabel)
-      )}
-      {/* API */}
-      {getDropdownSection(
-        FORM_CONSTANTS.API.label,
-        cosmosData.api,
-        FORM_CONSTANTS.API.value,
-        props.intl.formatMessage(messages.ariaApiLabel),
-        undefined,
-        false,
-        DEFAULT_VALUE,
-        true,
-        props.intl.formatMessage(messages.apiSubLabel)
-      )}
       <div className={styles.buttonContainer}>
         <button
           className={getButtonClassNames()}

@@ -2,7 +2,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2em;
+  margin-bottom: 1.5em;
+}
+
+/* scrollable part of the form */
+.bodyContainer {
+  padding-right: 20px;
+  max-height: calc(80vh - 200px);
+  overflow-y: auto;
 }
 
 .modalTitle {
@@ -33,8 +40,8 @@
 }
 
 .buttonContainer {
+  margin-top: 4px;
   display: flex;
-  float: right;
 }
 
 .button {
