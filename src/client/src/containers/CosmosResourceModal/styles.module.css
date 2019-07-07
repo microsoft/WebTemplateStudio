@@ -10,6 +10,10 @@
   font-weight: bold;
 }
 
+.leftHeader {
+  font-weight: bold;
+}
+
 .selectionContainer {
   margin-bottom: 2em;
 }
@@ -114,6 +118,7 @@ input::placeholder {
 .link {
   text-decoration: none;
   color: var(--vscode-textLink-foreground);
+  float: right;
 }
 
 .link:focus {
@@ -168,4 +173,8 @@ input::placeholder {
 .errorStack {
   display: block;
   position: relative;
+}
+
+.subLabel {
+  margin-bottom: 4px;
 }

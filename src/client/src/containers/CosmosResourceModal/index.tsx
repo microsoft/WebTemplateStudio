@@ -281,7 +281,8 @@ const CosmosResourceModal = (props: Props) => {
     rightHeader?: string,
     disabled?: boolean,
     defaultValue?: any,
-    openDropdownUpwards?: true
+    openDropdownUpwards?: boolean,
+    subLabel?: string
   ) => {
     return (
       <div
@@ -290,17 +291,18 @@ const CosmosResourceModal = (props: Props) => {
         })}
       >
         <div className={styles.selectionHeaderContainer}>
-          <div>{leftHeader}</div>
+          <div className={styles.leftHeader}>{leftHeader}</div>
           {links[formSectionId] && (
             <a
               tabIndex={disabled! ? -1 : 0}
               className={styles.link}
               href={links[formSectionId]}
             >
-              {props.intl.formatMessage(messages.createNew)}
+              {rightHeader}
             </a>
           )}
         </div>
+        <div className={styles.subLabel}>{subLabel}</div>
         <Dropdown
           ariaLabel={ariaLabel}
           options={options}
@@ -329,6 +331,7 @@ const CosmosResourceModal = (props: Props) => {
   };
   return (
     <div>
+      {/* Create CosmosDB Account Header */}
       <div className={styles.headerContainer}>
         <div className={styles.modalTitle}>
           {props.intl.formatMessage(messages.createCosmosRes)}
@@ -340,6 +343,7 @@ const CosmosResourceModal = (props: Props) => {
           onKeyDown={cancelKeyDownHandler}
         />
       </div>
+      {/* Subscription */}
       {getDropdownSection(
         FORM_CONSTANTS.SUBSCRIPTION.label,
         cosmosData.subscription,
@@ -347,8 +351,11 @@ const CosmosResourceModal = (props: Props) => {
         props.intl.formatMessage(messages.ariaSubscriptionLabel),
         props.intl.formatMessage(messages.createNew),
         false,
-        DEFAULT_VALUE
+        DEFAULT_VALUE,
+        false,
+        props.intl.formatMessage(messages.subscriptionSubLabel)
       )}
+      {/* Choose Resource Group */}
       {getDropdownSection(
         FORM_CONSTANTS.RESOURCE_GROUP.label,
         cosmosData.resourceGroup,
@@ -356,8 +363,11 @@ const CosmosResourceModal = (props: Props) => {
         props.intl.formatMessage(messages.ariaResourceGroupLabel),
         props.intl.formatMessage(messages.createNew),
         cosmosFormData.subscription.value === "",
-        DEFAULT_VALUE
+        DEFAULT_VALUE,
+        false,
+        props.intl.formatMessage(messages.resourceGroupSubLabel)
       )}
+      {/* Account Name */}
       <div
         className={classnames(styles.selectionInputContainer, {
           [styles.selectionContainer]:
@@ -368,14 +378,12 @@ const CosmosResourceModal = (props: Props) => {
         })}
       >
         <div className={styles.selectionHeaderContainer}>
-          <div>{props.intl.formatMessage(messages.accountName)}</div>
-          <a
-            tabIndex={cosmosFormData.subscription.value === "" ? -1 : 0}
-            className={styles.link}
-            href={links.accountName}
-          >
-            documents.azure.com
-          </a>
+          <div className={styles.leftHeader}>
+            {props.intl.formatMessage(messages.accountName)}
+          </div>
+        </div>
+        <div className={styles.subLabel}>
+          {props.intl.formatMessage(messages.accountNameSubLabel)}
         </div>
         <div className={styles.errorStack}>
           <div className={styles.inputContainer}>
@@ -394,23 +402,23 @@ const CosmosResourceModal = (props: Props) => {
             )}
             {isValidatingName && <Spinner className={styles.spinner} />}
           </div>
-          {!isValidatingName && !isAccountNameAvailable &&
+          {!isValidatingName &&
+            !isAccountNameAvailable &&
             cosmosFormData.accountName.value.length > 0 && (
               <div className={styles.errorMessage}>
                 {props.accountNameAvailability.message}
               </div>
             )}
         </div>
+        <a
+          tabIndex={cosmosFormData.subscription.value === "" ? -1 : 0}
+          className={styles.link}
+          href={links.accountName}
+        >
+          {"documents.azure.com"}
+        </a>
       </div>
-      {getDropdownSection(
-        FORM_CONSTANTS.API.label,
-        cosmosData.api,
-        FORM_CONSTANTS.API.value,
-        props.intl.formatMessage(messages.ariaApiLabel),
-        undefined,
-        false,
-        DEFAULT_VALUE
-      )}
+      {/* Location */}
       {getDropdownSection(
         FORM_CONSTANTS.LOCATION.label,
         cosmosData.location,
@@ -419,7 +427,20 @@ const CosmosResourceModal = (props: Props) => {
         undefined,
         cosmosFormData.subscription.value === "",
         DEFAULT_VALUE,
-        true
+        true,
+        props.intl.formatMessage(messages.locationSubLabel)
+      )}
+      {/* API */}
+      {getDropdownSection(
+        FORM_CONSTANTS.API.label,
+        cosmosData.api,
+        FORM_CONSTANTS.API.value,
+        props.intl.formatMessage(messages.ariaApiLabel),
+        undefined,
+        false,
+        DEFAULT_VALUE,
+        true,
+        props.intl.formatMessage(messages.apiSubLabel)
       )}
       <div className={styles.buttonContainer}>
         <button
