@@ -2,7 +2,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2em;
+  margin-bottom: 1.5em;
+}
+
+/* scrollable part of the form */
+.bodyContainer {
+  padding-right: 20px;
+  max-height: calc(80vh - 200px);
+  overflow-y: auto;
 }
 
 .modalTitle {
@@ -12,6 +19,10 @@
 
 .selectionContainer {
   margin-top: 2em;
+}
+
+.leftHeader {
+  font-weight: bold;
 }
 
 .selectionContainerDisabled {
@@ -28,13 +39,8 @@
   margin-bottom: 26px;
 }
 
-.modalFooterContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
 .button {
-  margin-top: 27px;
+  margin-top: 2em;
   font-size: 1em;
   border: none;
   height: 50%;
@@ -114,8 +120,13 @@ input::placeholder {
   color: var(--vscode-input-placeholderForeground);
 }
 
+.subLabel {
+  margin-bottom: 4px;
+}
+
 .createNew,
 .link {
+  float: right;
   text-decoration: none;
   color: var(--vscode-textLink-foreground);
 }

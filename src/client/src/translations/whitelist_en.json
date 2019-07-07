@@ -39,6 +39,11 @@
   "azureFunctionsModal.saveChanges",
   "azureFunctionsModal.addResource",
   "azureFunctionsModal.createFunctionApp",
+  "azureFunctionsModal.subscriptionSubLabel",
+  "azureFunctionsModal.resourceGroupSubLabel",
+  "azureFunctionsModal.appNameSubLabel",
+  "azureFunctionsModal.runtimeStackSubLabel",
+  "azureFunctionsModal.numFunctionsSubLabel",
   "azureFunctionsSelection.edit",
   "azureFunctionsSelection.duplicateName",
   "header.signOut",
@@ -137,6 +142,7 @@
   "pageNameError.emptyName",
   "pageNameError.invalidRegex",
   "projectNameError.invalidRegex",
+  "projectNameError.nameTooLong",
   "FunctionNameError.invalidFunctionStartLetter",
   "FunctionNameError.invalidRegex"
 ]
