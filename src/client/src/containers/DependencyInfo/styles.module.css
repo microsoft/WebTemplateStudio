@@ -8,6 +8,10 @@
   text-decoration: none;
 }
 
+.dependencyContainer:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .disabled {
   pointer-events: none;
   text-decoration: none;

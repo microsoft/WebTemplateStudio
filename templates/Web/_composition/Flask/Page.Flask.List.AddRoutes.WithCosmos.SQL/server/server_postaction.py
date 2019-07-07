@@ -1,72 +1,31 @@
-from flask import Flask, send_from_directory
-from flask import jsonify
-from flask import make_response
-//{[{
-from flask import request
-//}]}
-from constants import CONSTANTS
+from flask import Flask, jsonify, make_response, send_from_directory
 import os
 from os.path import exists, join
+
 //{[{
-from sql.sqlClient import SQLObj
+from sql.sql_service import get, create, delete
 //}]}
+from constants import CONSTANTS
 
-app = Flask(__name__, static_folder = 'build')
+app = Flask(__name__, static_folder='build')
 
 //{[{
-sqlDatabaseObj = SQLObj()
-
 # List Endpoints
 @app.route(CONSTANTS['ENDPOINT']['LIST'])
-def getList():
-    queryStr = {
-        'query': "SELECT r.id as _id, r.text FROM root r ORDER BY r._ts DESC"}
-    options = {}
-    options['enableCrossPartitionQuery'] = True
-    options['maxItemCount'] = 2
-    results_iterable = sqlDatabaseObj.getClient().QueryItems(
-        sqlDatabaseObj.getContainer()['_self'], queryStr, options)
-    return jsonify(
-        list(results_iterable)
-    )
+def get_list():
+    return jsonify(get())
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'], methods=['POST'])
-def addListItem():
-    data = request.get_json()
-    listItem = {'text': data['text']}
-    created = sqlDatabaseObj.getClient().CreateItem(
-        sqlDatabaseObj.getContainer()['_self'], listItem)
-    return make_response(
-        jsonify(
-            {'_id': created['id'], 'text': listItem['text']}
-        ),
-        201
-    )
+def add_list_item():
+    json_response = jsonify(create())
+    return make_response(json_response, CONSTANTS['HTTP_STATUS']['201_CREATED'])
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<id>', methods=['DELETE'])
-def deleteListItem(id):
-    # use parameterized queries to avoid SQL injection attacks
-    findStr = "SELECT * FROM c where c.id = @id"
-    queryStr = {
-        'query': findStr,
-        'parameters': [
-            {'name': '@id', 'value': id}
-        ]
-    }
-    result = sqlDatabaseObj.getClient().QueryItems(
-        sqlDatabaseObj.getContainer()['_self'], queryStr)
-    count = sum(1 for _ in iter(result))
-    if count == 0:
-        return make_response(
-            jsonify(
-                {'error': 'Could not find an item with given id'}
-            ),
-            404
-        )
-    for item in iter(result):
-        sqlDatabaseObj.getClient().DeleteItem(item['_self'])
-    return jsonify(
-        {'_id': id, 'text': 'This comment was deleted'}
-    )
-
+def delete_list_item(id):
+    try:
+        removed_item = jsonify(delete(id))
+        return removed_item
+    except Exception as ex:
+        err_response = jsonify({'error': str(ex)})
+        return make_response(err_response, CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
 //}]}

@@ -14,7 +14,6 @@
   font-size: var(--vscode-font-size);
   color: var(--vscode-textLink-foreground);
   font-weight: var(--vscode-font-weight);
-  margin-left: 10px;
 }
 
 .link:focus {

@@ -1,0 +1,11 @@
+# vscode configuration
+.vscode/
+
+//{[{
+# production
+/server/build
+//}]}
+
+# dependencies
+/node_modules
+
