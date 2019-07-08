@@ -8,9 +8,10 @@ describe('GridBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GridBoxComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        GridBoxComponent
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -136,7 +136,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const {
       showFrameworks,
       showPages,
-      showProjectTypes,
       showServices
     } = this.props.isRoutesVisited;
     const { pathname } = this.props.location;
@@ -148,24 +147,18 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         {pathname !== ROUTES.PAGE_DETAILS && (
           <div
             role="complementary"
-            className={classNames(styles.container, styles.rightViewCropped)}
+            className={classNames(styles.container, styles.rightViewCropped, {
+              [styles.rightViewCroppedAllPages]:
+                pathname !== ROUTES.REVIEW_AND_GENERATE,
+              [styles.rightViewCroppedSummaryPage]:
+                pathname === ROUTES.REVIEW_AND_GENERATE
+            })}
           >
-            {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+            {
               <div>
                 <div className={styles.title}>
                   {formatMessage(messages.yourProjectDetails)}
                 </div>
-                <RightSidebarDropdown
-                  options={this.props.projectTypeDropdownItems}
-                  handleDropdownChange={this.handleChange.bind(this)}
-                  optionsData={projectTypes}
-                  selectDropdownOption={this.props.selectProjectType}
-                  isVisible={showProjectTypes}
-                  title={formatMessage(messages.projectType)}
-                  value={this.convertOptionToDropdownItem(
-                    this.props.selection.appType
-                  )}
-                />
                 <RightSidebarDropdown
                   options={this.props.frontendDropdownItems}
                   handleDropdownChange={
@@ -204,7 +197,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   </div>
                 )}
               </div>
-            )}
+            }
             <div>
               <Licenses />
               <About />

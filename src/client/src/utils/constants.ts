@@ -1,12 +1,13 @@
 import { defineMessages } from "react-intl";
 
 const PAGE_DETAILS = "/PageDetail";
-const SELECT_PROJECT_TYPE = "/SelectWebApp";
 const SELECT_FRAMEWORKS = "/SelectFrameworks";
 const SELECT_PAGES = "/SelectPages";
 const AZURE_LOGIN = "/AzureLogin";
 const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
 const NEW_PROJECT = "/";
+
+const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
@@ -20,7 +21,6 @@ const INTL_MESSAGES = defineMessages({
 
 const ROUTES = {
   PAGE_DETAILS,
-  SELECT_PROJECT_TYPE,
   SELECT_FRAMEWORKS,
   SELECT_PAGES,
   AZURE_LOGIN,
@@ -31,7 +31,6 @@ const ROUTES = {
 // Presents the routes in the order of the wizard
 const ROUTES_ARRAY = [
   NEW_PROJECT,
-  SELECT_PROJECT_TYPE,
   SELECT_FRAMEWORKS,
   SELECT_PAGES,
   AZURE_LOGIN,
@@ -80,8 +79,10 @@ const EXTENSION_MODULES = {
   GENERATE: "GenerateExperience",
   TELEMETRY: "Telemetry",
   VALIDATOR: "Validator",
-  VSCODEUI: "VSCodeUI"
+  VSCODEUI: "VSCodeUI",
+  DEPENDENCYCHECKER: "DependencyChecker"
 };
+
 // Define extension commands here that should be received from the extension
 const EXTENSION_COMMANDS = {
   AZURE_LOGIN: "login",
@@ -102,7 +103,8 @@ const EXTENSION_COMMANDS = {
   GET_VERSIONS: "get-versions",
   CLOSE_WIZARD: "close-wizard",
   RESET_PAGES: "reset-pages",
-  GET_PREVIEW_STATUS: "get-preview"
+  GET_PREVIEW_STATUS: "get-preview",
+  GET_DEPENDENCY_INFO: "check-dependency"
 };
 
 export {
@@ -115,5 +117,6 @@ export {
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
   COSMOS_APIS,
-  DEVELOPMENT
+  DEVELOPMENT,
+  PROJECT_NAME_CHARACTER_LIMIT
 };

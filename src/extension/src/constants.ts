@@ -205,6 +205,12 @@ export const CONSTANTS = {
   START_PORT: 9502,
   VSCODE_COMMAND: {
     OPEN_FOLDER: "vscode.openFolder"
+  },
+  DEPENDENCY_CHECKER: {
+    NODE: 'node',
+    PYTHON: 'python',
+    PYTHON3: 'python3',
+    PYTHON_LAUNCHER: 'py -3'
   }
 };
 
@@ -233,7 +239,8 @@ export enum ExtensionCommand {
   CloseWizard = "close-wizard",
   GetPort = "get-port",
   ResetPages = "reset-pages",
-  GetPreviewStatus = "get-preview"
+  GetPreviewStatus = "get-preview",
+  CheckDependency = "check-dependency"
 }
 export enum ExtensionModule {
   Azure = "Azure",
@@ -241,7 +248,8 @@ export enum ExtensionModule {
   Telemetry = "Telemetry",
   Validator = "Validator",
   VSCodeUI = "VSCodeUI",
-  Logger = "Logger"
+  Logger = "Logger",
+  DependencyChecker = "DependencyChecker"
 }
 
 export enum TelemetryEventName {

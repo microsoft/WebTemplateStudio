@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
 //{[{
-  { path: '',   redirectTo: '/Param_HomePageName', pathMatch: 'full' },
+  { path: '',   redirectTo: '/Param_HomePageName_Kebab', pathMatch: 'full' },
 //}]}
 ];
 

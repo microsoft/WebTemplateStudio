@@ -1,16 +1,22 @@
-﻿<form (submit)="onAddListItem()" class="input-group my-3">
+﻿<form [formGroup]="listForm" (ngSubmit)="onSubmit()" class="input-group my-3">
+  <div class="col-11">
     <input
-      type="text"
-      name="textField"
-      [(ngModel)]="textField"
+      id="content"
       class="form-control"
       placeholder="Add text here..."
       aria-label="Add text here..."
+      formControlName="content"
+      required
     />
-    <button
-      type="submit"
-      class="btn btn-primary ml-2"
-    >
+    <ngb-alert type="danger" *ngIf="content.invalid && content.dirty">
+      <div *ngIf="content.errors.required">
+        Input must be at least 1 character long.
+      </div>
+    </ngb-alert>
+  </div>
+  <span class="input-group-btn col-1">
+    <button type="submit" class="btn btn-primary" [disabled]="listForm.invalid">
       Submit
     </button>
+  </span>
 </form>

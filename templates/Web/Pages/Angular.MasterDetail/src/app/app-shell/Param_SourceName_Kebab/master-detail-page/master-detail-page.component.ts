@@ -4,7 +4,7 @@ import { IMasterDetailText } from '../master-detail.service';
 @Component({
   selector: 'app-master-detail-page',
   templateUrl: './master-detail-page.component.html',
-  styleUrls: ['../master-detail.component.css']
+  styleUrls: ['./master-detail-page.component.css']
 })
 export class MasterDetailPageComponent implements OnInit {
 
@@ -12,7 +12,16 @@ export class MasterDetailPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.textSampleData = {
+      title: '',
+      status: '',
+      orderDate: '',
+      shipTo: '',
+      orderTotal: 0.0,
+      longDescription: '',
+      shortDescription: '',
+      id: 0
+    };
   }
 
 }
-

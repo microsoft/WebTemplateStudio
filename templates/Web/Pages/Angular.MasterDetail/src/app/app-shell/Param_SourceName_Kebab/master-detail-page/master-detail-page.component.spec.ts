@@ -8,9 +8,10 @@ describe('MasterDetailPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MasterDetailPageComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        MasterDetailPageComponent
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -16,6 +16,7 @@ import { WizardServant } from "./wizardServant";
 import { GenerationExperience } from "./generationExperience";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
+import { DependencyChecker } from "./utils/dependencyChecker";
 
 export class Controller {
   /**
@@ -30,6 +31,7 @@ export class Controller {
   private AzureService: AzureServices;
   private GenExperience: GenerationExperience;
   private Validator: Validator;
+  private DependencyChecker: DependencyChecker;
 
   /**
    *  Defines the WizardServant modules to which wizard client commands are routed
@@ -42,7 +44,8 @@ export class Controller {
       [ExtensionModule.Azure, this.AzureService],
       [ExtensionModule.Validator, this.Validator],
       [ExtensionModule.Generate, this.GenExperience],
-      [ExtensionModule.Logger, Controller.Logger]
+      [ExtensionModule.Logger, Controller.Logger],
+      [ExtensionModule.DependencyChecker, this.DependencyChecker]
     ]);
   }
 
@@ -100,6 +103,7 @@ export class Controller {
     this.Validator = new Validator();
     this.AzureService = new AzureServices();
     this.GenExperience = new GenerationExperience(Controller.Telemetry);
+    this.DependencyChecker = new DependencyChecker();
     Logger.initializeOutputChannel(
       Controller.Telemetry.getExtensionName(this.context)
     );
@@ -224,7 +228,8 @@ export class Controller {
     }
   }
 
-  dispose() {
+  static dispose() {
     CoreTemplateStudio.DestroyInstance();
+    this._instance = undefined;
   }
 }

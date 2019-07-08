@@ -1,6 +1,5 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 
 import { MasterDetailComponent } from './master-detail.component';
 import { MasterDetailSidebarTabComponent } from './master-detail-sidebar-tab/master-detail-sidebar-tab.component';
@@ -12,12 +11,11 @@ import { Param_SourceName_PascalRoutingModule } from './Param_SourceName_Kebab-r
   declarations: [
     MasterDetailComponent,
     MasterDetailSidebarTabComponent,
-    MasterDetailPageComponent,
+    MasterDetailPageComponent
   ],
   imports: [
     CommonModule,
     WarningMessageModule,
-    MatIconModule,
     Param_SourceName_PascalRoutingModule
   ]
 })

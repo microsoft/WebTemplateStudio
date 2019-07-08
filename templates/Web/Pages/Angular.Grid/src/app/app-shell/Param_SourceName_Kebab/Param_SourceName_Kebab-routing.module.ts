@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { GridComponent } from './grid.component';
@@ -15,4 +15,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class Param_SourceName_PascalRoutingModule { }
-

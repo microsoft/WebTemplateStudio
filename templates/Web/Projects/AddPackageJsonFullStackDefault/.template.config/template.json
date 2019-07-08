@@ -32,6 +32,17 @@
         "jsonPath": "package.json"
       },
       "continueOnError": false
+    },
+    {
+      "description": "Add Base Dev Dependencies",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'concurrently': '^4.1.0'}",
+        "key": "devDependencies",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
     }
   ]
 }

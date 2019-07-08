@@ -6,6 +6,10 @@ import {
 
 const WEST_US: string = "WEST US";
 const RESOURCE_GROUP_MOCK: string = "resourceGroupMock";
+const mockResourceGroups = Array.from({ length: 12 }).fill({
+  label: RESOURCE_GROUP_MOCK,
+  value: RESOURCE_GROUP_MOCK
+});
 
 const DEV_NO_ERROR_MSG: string = "in development, no error message";
 const DEV_NO_ERROR_TYPE: string = "in development, no error type";
@@ -23,6 +27,28 @@ const mockVsCodeApi = () => ({
       switch (message.command) {
         case "alert":
           console.log("Command: ", message.alert);
+          break;
+        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
+              payload: {
+                dependency: "node",
+                installed: false
+              }
+            },
+            "*"
+          );
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
+              payload: {
+                dependency: "python",
+                installed: false
+              }
+            },
+            "*"
+          );
           break;
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
           window.postMessage(
@@ -60,10 +86,7 @@ const mockVsCodeApi = () => ({
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
               payload: {
                 locations: [{ label: WEST_US, value: WEST_US }],
-                resourceGroups: [
-                  { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK },
-                  { label: "ResourceGroupMock2", value: "ResourceGroupMock2" }
-                ]
+                resourceGroups: mockResourceGroups
               }
             },
             "*"
@@ -77,9 +100,7 @@ const mockVsCodeApi = () => ({
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
               payload: {
                 locations: [{ label: WEST_US, value: WEST_US }],
-                resourceGroups: [
-                  { label: RESOURCE_GROUP_MOCK, value: RESOURCE_GROUP_MOCK }
-                ]
+                resourceGroups: mockResourceGroups
               }
             },
             "*"
