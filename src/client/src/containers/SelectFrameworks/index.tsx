@@ -18,13 +18,14 @@ import {
 
 interface ISelectFrameworksProps {
   vscode: IVSCodeObject;
+  isPreview: boolean;
 }
 
 type Props = ISelectFrameworksProps;
 
 class SelectFrameworks extends React.Component<Props> {
   componentDidMount() {
-    const { vscode } = this.props;
+    const { vscode, isPreview } = this.props;
     // send messages to extension to check dependency info when this component loads
     vscode.postMessage({
       module: EXTENSION_MODULES.DEPENDENCYCHECKER,
