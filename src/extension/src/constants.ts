@@ -17,6 +17,10 @@ export const CONSTANTS = {
       "error.resourceGroupNotFound",
       "No resource group found with this name"
     ),
+    RESOURCE_GROUP_TRIES_EXCEEDED: localize(
+      "error.resourceGroupTriesExceedeed",
+      "Number of tries exceeded for creating resource group"
+    ),
     SUBSCRIPTION_NOT_FOUND: localize(
       "error.subscriptionNotFound",
       "No subscription found with this name."
@@ -43,6 +47,10 @@ export const CONSTANTS = {
     SUBSCRIPTION_NOT_DEFINED: localize(
       "error.subscriptionNotDefined",
       "Subscription Item cannot have undefined values."
+    ),
+    AZURE_RESOURCE_CLIENT_NOT_DEFINED: localize(
+      "error.azureResourceClientNotDefined",
+      "Azure resource management client cannot be undefined"
     ),
     WEBSITE_CLIENT_NOT_DEFINED: localize(
       "error.websiteClientNotDefined",
@@ -211,6 +219,9 @@ export const CONSTANTS = {
     PYTHON: 'python',
     PYTHON3: 'python3',
     PYTHON_LAUNCHER: 'py -3'
+  },
+  AZURE_LOCATION: {
+    CENTRAL_US: "Central US"
   }
 };
 
@@ -260,6 +271,7 @@ export enum TelemetryEventName {
   EngineGeneration = "Engine-Generation-Time",
   CosmosDBDeploy = "Azure-Cosmos-Deployment",
   FunctionsDeploy = "Azure-Functions-Deployment",
+  ResourceGroupDeploy = "Azure-Resource-Group-Deployment",
   PageChange = "Wizard-Page-Change",
   SyncEngine = "Sync-Engine",
   ConnectionStringReplace = "Connection-String-Replaced",
