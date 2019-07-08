@@ -287,26 +287,32 @@ export class AzureServices extends WizardServant {
     }
   }
 
-  public static async deployResourceGroup(payload: any): Promise<any> {
+  public static async generateDistinctResourceGroupSelection(payload: any): Promise<ResourceGroupSelection[]> {
+    let result = [];
     const projectName = payload.engine.projectName;
-    const functionSubscription = payload.functions.subscription;
+    if (payload.selectedFunctions) {
+      const functionSubscription = payload.functions.subscription;
+      await AzureServices.updateFunctionSubscriptionItemCache(
+        functionSubscription
+      );
+      const generatedName = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
+        projectName,
+        this.usersFunctionSubscriptionItemCache
+      );
+      const functionResourceGroupSelection: ResourceGroupSelection = {
+        subscriptionItem: AzureServices.usersFunctionSubscriptionItemCache,
+        resourceGroupName: generatedName,
+        location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
+      };
+      result.push(functionResourceGroupSelection);
+    }
+      
+    return result;
+  }
 
-    await AzureServices.updateFunctionSubscriptionItemCache(
-      functionSubscription
-    );
-
-    const generatedName = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
-      projectName,
-      this.usersFunctionSubscriptionItemCache
-    );
-
-    const resourceGroupSelection: ResourceGroupSelection = {
-      subscriptionItem: AzureServices.usersFunctionSubscriptionItemCache,
-      resourceGroupName: generatedName,
-      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
-    };
+  public static async deployResourceGroup(selections: any): Promise<any> {
     return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
-      resourceGroupSelection
+      selections
     );
   }
 

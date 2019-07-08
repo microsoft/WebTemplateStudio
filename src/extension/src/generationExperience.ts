@@ -88,40 +88,48 @@ export class GenerationExperience extends WizardServant {
       command: ExtensionCommand.GetOutputPath,
       payload: { outputPath: enginePayload.path }
     });
-
-    if (payload.selectedFunctions && payload.functions.resourceGroup === "") {
-      // Reason for this queue is for deploying more than 1 resource group
-      resourceGroupQueue.push(
-        GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
-          TelemetryEventName.ResourceGroupDeploy,
-          // tslint:disable-next-line: no-function-expression
-          async function(this: IActionContext): Promise<void> {
-            try {
-              // update payload with new resource group name for deploying functions
-              payload.functions.resourceGroup = await AzureServices.deployResourceGroup(
-                payload
-              );
-              progressObject = {
-                ...progressObject,
-                resourceGroup: GenerationExperience.getProgressObject(true)
-              };
-              GenerationExperience.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject
-              });
-            } catch (error) {
-              progressObject = {
-                ...progressObject,
-                resourceGroup: GenerationExperience.getProgressObject(false)
-              };
-              GenerationExperience.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject
-              });
-            }
-          }
-        )
+    payload.functions.resourceGroup = "";
+    if (
+      (payload.selectedFunctions && payload.functions.resourceGroup === "")
+    ) {
+      const distinctResourceGroupSelections = await AzureServices.generateDistinctResourceGroupSelection(
+        payload
       );
+      // TODO: loop through all distinct resource group selection and push each to the queue
+      // Reason for this queue is for deploying more than 1 resource group
+      distinctResourceGroupSelections.forEach(resourceGroupSelection => {
+        resourceGroupQueue.push(
+          GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
+            TelemetryEventName.ResourceGroupDeploy,
+            // tslint:disable-next-line: no-function-expression
+            async function(this: IActionContext): Promise<void> {
+              try {
+                // update payload with new resource group name for deploying functions
+                payload.functions.resourceGroup = await AzureServices.deployResourceGroup(
+                  resourceGroupSelection
+                );
+                progressObject = {
+                  ...progressObject,
+                  resourceGroup: GenerationExperience.getProgressObject(true)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+              } catch (error) {
+                progressObject = {
+                  ...progressObject,
+                  resourceGroup: GenerationExperience.getProgressObject(false)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+              }
+            }
+          )
+        );
+      });
     }
 
     // Resource groups should be created before other deploy methods execute
