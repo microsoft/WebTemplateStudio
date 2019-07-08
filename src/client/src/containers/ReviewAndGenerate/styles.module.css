@@ -1,6 +1,7 @@
 .container {
   margin-right: 20%;
   width: 100%;
+  padding-top: 35px;
 }
 
 .selectionContainer {
@@ -29,6 +30,10 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+.projectDetailsContainer {
+  margin-left: 2%;
+  width: calc(100% - 40px);
+}
 .buttonContainer {
   display: flex;
   align-items: center;

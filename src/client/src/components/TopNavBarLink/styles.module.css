@@ -1,0 +1,116 @@
+.textSelected,
+.text {
+  font-size: 1em;
+}
+
+.textSelected {
+  font-weight: 600;
+}
+
+.text {
+  display: flex;
+  margin: auto;
+  color: var(--vscode-editor-foreground);
+}
+
+.selected path {
+  fill: #ffffff !important;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  height: 52px;
+  cursor: default;
+}
+
+.container:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.icon {
+  height: 1em;
+  width: 1em;
+  padding-left: 1em;
+}
+
+.icon path {
+  fill: var(--vscode-editor-background);
+}
+
+.visitedIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.spacer {
+  padding-left: 2em;
+}
+
+.spacer,
+.icon {
+  padding-right: 0.5em;
+}
+
+.pageNumber {
+  width: 8px;
+  height: 20px;
+  padding: 5px 11px;
+  border-radius: 100%;
+  border: 1px solid var(--vscode-peekViewResult-lineForeground);
+  flex-grow: 1;
+}
+
+.pageIsSelected {
+  background-color: #0067b8;
+  z-index: 1000;
+  border: 1px solid #0067b8;
+  color: var(--vscode-button-foreground);
+  cursor: pointer;
+}
+
+.pageIsVisited {
+  background-color: var(--vscode-editor-foreground);
+  color: var(--vscode-editor-background);
+  cursor: pointer;
+}
+
+.pageText {
+  flex-grow: 3;
+  margin: auto;
+  padding-left: 10px;
+}
+
+@media (max-width: 700px) {
+  .pageText,
+  .pageIsSelectedSmall {
+    display: none;
+  }
+}
+
+@media (max-width: 1120px) {
+  .pageText {
+    display: none;
+  }
+  .pageIsSelectedSmall {
+    animation: move 0.5s;
+  }
+}
+
+@media (min-width: 700px) {
+  .pageIsSelectedSmall {
+    display: block;
+    flex-grow: 3;
+    margin: auto;
+    padding-left: 10px;
+  }
+}
+
+@keyframes move {
+  from {
+    margin-left: -30px;
+  }
+  to {
+    margin-left: 0px;
+  }
+}
