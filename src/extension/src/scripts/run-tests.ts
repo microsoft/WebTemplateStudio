@@ -65,6 +65,13 @@ asyncForEach(files, async (file: string) => {
     cwd: currDir,
     stdio: "inherit"
   });
+  if (file.indexOf("Flask") > -1) {
+    console.log("Installing Python dependencies");
+    child_process.execSync("yarn install-requirements", {
+      cwd: currDir,
+      stdio: "inherit"
+    });
+  }
   let serverProcess;
   let testProcess;
   try {
@@ -76,7 +83,7 @@ asyncForEach(files, async (file: string) => {
       },
       (error: any, stdout: any, stderr: any) => {
         if (error) {
-          console.error(`Error from running yarn start: ${error}`); //TODO: mark failure
+          console.error(`Error from running yarn start: ${error}`);
           return;
         }
         if (stderr) {
