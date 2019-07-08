@@ -64,7 +64,7 @@ import { setPortAction } from "./actions/wizardContentActions/setPort";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
-import { parseFrameworksPayload } from "./actions/wizardContentActions/parseFrameworksPayload";
+import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 
@@ -240,9 +240,6 @@ class App extends React.Component<Props> {
           break;
         case EXTENSION_COMMANDS.GET_PREVIEW_STATUS:
           this.props.setPreviewStatus(message.payload.preview);
-          break;
-        case EXTENSION_COMMANDS.GET_PORT:
-          this.props.setPort(message.payload.port);
           break;
       }
     });
