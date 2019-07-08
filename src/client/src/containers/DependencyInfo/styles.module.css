@@ -42,11 +42,11 @@
 }
 
 .borderGreen {
-  border: 1.5px solid var(--vscode-gitDecoration-untrackedResourceForeground);
+  border: 1px solid var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
 .borderYellow {
-  border: 1.5px solid var(--vscode-editorMarkerNavigationWarning-background);
+  border: 1px solid var(--vscode-editorMarkerNavigationWarning-background);
 }
 
 .bodyGreen {
