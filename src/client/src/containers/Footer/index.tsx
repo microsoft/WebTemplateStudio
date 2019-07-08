@@ -47,6 +47,9 @@ import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
 import { IFunctionName } from "../AzureFunctionsSelection";
 
+import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
+import nextArrow from "../../assets/nextarrow.svg";
+
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
   openPostGenModal: () => any;
@@ -236,6 +239,7 @@ class Footer extends React.Component<Props> {
                   to={pathsNext[pathname]}
                 >
                   <FormattedMessage id="footer.next" defaultMessage="Next" />
+                  {nextArrow && <NextArrow className={styles.nextIcon} />}
                 </Link>
               )}
               <button

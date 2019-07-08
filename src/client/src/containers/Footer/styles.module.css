@@ -35,6 +35,12 @@
   align-items: center;
 }
 
+.nextIcon {
+  margin-left: 10px;
+  height: 16px;
+  color: #ffffff;
+}
+
 .disabledOverlay {
   opacity: 0.5;
   outline: 0px;
