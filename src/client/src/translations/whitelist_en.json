@@ -81,6 +81,7 @@
   "footer.navAriaLabel",
   "licenses.licenses",
   "newProject.header",
+  "newProject.body",
   "postGenerationModal.deploymentHalted",
   "postGenerationModal.restartWizard",
   "postGenerationModal.deploymentFailure",
