@@ -6,6 +6,7 @@ import { ReactPanel } from "./reactPanel";
 import { AzureServices } from "./azure/azureServices";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { Controller } from "./controller";
+import { ResourceGroupSelection } from "./azure/azure-resource-group/resourceGroupModule";
 
 export class GenerationExperience extends WizardServant {
   private static reactPanelContext: ReactPanel;
@@ -89,14 +90,15 @@ export class GenerationExperience extends WizardServant {
       payload: { outputPath: enginePayload.path }
     });
     payload.functions.resourceGroup = "";
+    // REMEMBER TO REMOVE BEFORE COMMIT =========================================================
+    // ==========================================================================================
     if (
-      (payload.selectedFunctions && payload.functions.resourceGroup === "")
+      this.functionsSelectedNewResourceGroup(payload) ||
+      this.cosmosDBSelectedNewResourceGroup(payload)
     ) {
-      const distinctResourceGroupSelections = await AzureServices.generateDistinctResourceGroupSelection(
+      const distinctResourceGroupSelections: ResourceGroupSelection[] = await AzureServices.generateDistinceResourceGroupSelections(
         payload
       );
-      // TODO: loop through all distinct resource group selection and push each to the queue
-      // Reason for this queue is for deploying more than 1 resource group
       distinctResourceGroupSelections.forEach(resourceGroupSelection => {
         resourceGroupQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
@@ -104,10 +106,7 @@ export class GenerationExperience extends WizardServant {
             // tslint:disable-next-line: no-function-expression
             async function(this: IActionContext): Promise<void> {
               try {
-                // update payload with new resource group name for deploying functions
-                payload.functions.resourceGroup = await AzureServices.deployResourceGroup(
-                  resourceGroupSelection
-                );
+                await AzureServices.deployResourceGroup(resourceGroupSelection);
                 progressObject = {
                   ...progressObject,
                   resourceGroup: GenerationExperience.getProgressObject(true)
@@ -130,6 +129,16 @@ export class GenerationExperience extends WizardServant {
           )
         );
       });
+      // Update payload if service was chosen to be deployed to a new resource group
+      // Note: all resource groups created will have the same name
+      if (this.functionsSelectedNewResourceGroup(payload)) {
+        payload.functions.resourceGroup =
+          distinctResourceGroupSelections[0].resourceGroupName;
+      }
+      if (this.cosmosDBSelectedNewResourceGroup(payload)) {
+        payload.cosmos.resourceGroup =
+          distinctResourceGroupSelections[0].resourceGroupName;
+      }
     }
 
     // Resource groups should be created before other deploy methods execute
@@ -233,6 +242,14 @@ export class GenerationExperience extends WizardServant {
       payload: enginePayload,
       liveMessageHandler: this.handleGenLiveMessage
     });
+  }
+
+  private functionsSelectedNewResourceGroup(payload: any): boolean {
+    return payload.selectedFunctions && payload.functions.resourceGroup === "";
+  }
+
+  private cosmosDBSelectedNewResourceGroup(payload: any): boolean {
+    return payload.selectedCosmos && payload.cosmos.resource === "";
   }
 
   private handleGenLiveMessage(message: string) {
