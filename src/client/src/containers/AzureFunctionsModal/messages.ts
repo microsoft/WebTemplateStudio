@@ -95,15 +95,15 @@ export const messages = defineMessages({
     defaultMessage: "Select the number of endpoints you want for your web app"
   },
   chooseExisting: {
-    id: "azureFunctionsModal.chooseExisting",
+    id: "azureFunctionsModal.chooseExistingResourceGroup",
     defaultMessage: "Choose existing"
   },
   createNewResourceGroupForMe: {
-    id: "azureFunctionsModal.createNewResourceGroupForMe",
+    id: "azureFunctionsModal.createNewResourceGroupDisplayMessage",
     defaultMessage: "Create new resource group for me"
   },
   createNewResourceGroupForYou: {
-    id: "azureFunctionsModal.createNewResourceGroupForyou",
+    id: "azureFunctionsModal.createNewResourceGroupSelectedDisplayMessage",
     defaultMessage: "We will automatically create a resource group for you"
   }
 });
