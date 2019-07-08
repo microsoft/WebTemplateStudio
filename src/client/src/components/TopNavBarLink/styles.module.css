@@ -22,6 +22,7 @@
   align-items: center;
   text-decoration: none;
   height: 52px;
+  cursor: default;
 }
 
 .container:focus {
@@ -65,11 +66,13 @@
   z-index: 1000;
   border: 1px solid #0067b8;
   color: var(--vscode-button-foreground);
+  cursor: pointer;
 }
 
 .pageIsVisited {
   background-color: var(--vscode-editor-foreground);
   color: var(--vscode-editor-background);
+  cursor: pointer;
 }
 
 .pageText {
