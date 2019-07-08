@@ -1,4 +1,4 @@
-let child_process = require("child_process");
+const child_process = require("child_process");
 const path = require("path");
 const fs = require("fs");
 
@@ -90,7 +90,6 @@ asyncForEach(files, async (file: string) => {
           throw stderr;
         }
         console.log(`Stdout from yarn start: ${stdout}`);
-        console.log(`Stderr from yarn start: ${stderr}`);
       }
     );
     serverProcess.stdout.on("data", function(data: any) {
@@ -124,7 +123,6 @@ asyncForEach(files, async (file: string) => {
           throw stderr;
         }
         console.log(`Stdout from yarn test: ${stdout}`);
-        console.log(`Stderr from yarn test: ${stderr}`);
       }
     );
     testProcess.stdout.on("data", function(data: any) {
