@@ -31,6 +31,10 @@ import {
   ValidationHelper
 } from "./azure-functions/utils/validationHelper";
 import { Logger } from "../utils/logger";
+import {
+  ResourceGroupDeploy,
+  ResourceGroupSelection
+} from "./azure-resource-group/resourceGroupModule";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -60,6 +64,7 @@ export class AzureServices extends WizardServant {
 
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
+  private static AzureResourceGroupProvider = new ResourceGroupDeploy();
 
   private static subscriptionItemList: SubscriptionItem[] = [];
 
@@ -280,6 +285,29 @@ export class AzureServices extends WizardServant {
         throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
       }
     }
+  }
+
+  public static async deployResourceGroup(payload: any): Promise<any> {
+    const projectName = payload.engine.projectName;
+    const functionSubscription = payload.functions.subscription;
+
+    await AzureServices.updateFunctionSubscriptionItemCache(
+      functionSubscription
+    );
+
+    const generatedName = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
+      projectName,
+      this.usersFunctionSubscriptionItemCache
+    );
+
+    const resourceGroupSelection: ResourceGroupSelection = {
+      subscriptionItem: AzureServices.usersFunctionSubscriptionItemCache,
+      resourceGroupName: generatedName,
+      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
+    };
+    return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
+      resourceGroupSelection
+    );
   }
 
   public static async deployFunctionApp(
