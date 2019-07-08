@@ -48,7 +48,7 @@ I need a full-stack web app that stores data in a Cosmos database.
 
 Web Template Studio approaches full-stack web app creation using the following three attribute sets:
 
-- **Frameworks**: First, which frameworks do you want to use for your frontend and backend? We currently support two frameworks for frontend: _[React.js](https://reactjs.org/)_, _[Angular](https://angular.io/)_ and one framework for backend: _[Node.js](https://nodejs.org/en/)_.
+- **Frameworks**: First, which frameworks do you want to use for your frontend and backend? We currently support two frameworks for frontend: _[React.js](https://reactjs.org/)_, _[Angular](https://angular.io/)_ and two frameworks for backend: _[Node.js](https://nodejs.org/en/)_, _[Flask](http://flask.pocoo.org/)_. We also provide a dependency checker to make sure you have the required version of Node and/or Python installed.
 - **App pages**: Next, to accelerate app creation, we provide a number of app page templates that you can use to add common UI pages into your new app. The current page templates include: _blank page_, common layouts (*e.g., master detail) and pages that implement common patterns (*e.g., grid, list). Using the wizard, add as many of the pages as you need, providing a name for each one, and we'll generate them for you.
 - **Cloud Services**: Lastly, you specify which Azure cloud services you want to use, and we'll build out the framework for the services into your app including tagging 'TODO' items. Currently supported services cover storage (_Azure Cosmos DB_), and compute (_Azure Functions_).
 
@@ -90,6 +90,7 @@ The extension does [log basic telemetry](docs/telemetry.md) for what is being se
 - [Vue](https://vuejs.org/)
 - [Vue CLI](https://cli.vuejs.org/)
 - [Node.js](https://nodejs.org/en/)
+- [Flask](http://flask.pocoo.org/)
 
 ## Acknowledgments
 
