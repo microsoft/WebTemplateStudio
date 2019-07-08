@@ -21,7 +21,6 @@ interface IDispatchProps {
 interface ISelectBackendProps {
   options: IOption[];
   selectedBackend: ISelected;
-  serverPort: number;
   isPreview: boolean;
 }
 
@@ -75,14 +74,13 @@ class SelectBackEndFramework extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): ISelectBackendProps => {
-  const { backendOptions, previewStatus, serverPort } = state.wizardContent;
+  const { backendOptions, previewStatus } = state.wizardContent;
   const { backendFramework } = state.selection;
 
   return {
     isPreview: previewStatus,
     options: backendOptions,
-    selectedBackend: backendFramework,
-    serverPort
+    selectedBackend: backendFramework
   };
 };
 

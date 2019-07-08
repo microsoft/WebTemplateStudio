@@ -7,11 +7,7 @@ import { selectFrontendFramework as selectFrontendAction } from "../../actions/w
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-import {
-  WIZARD_CONTENT_INTERNAL_NAMES,
-  EXTENSION_MODULES,
-  EXTENSION_COMMANDS
-} from "../../utils/constants";
+import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
@@ -33,7 +29,6 @@ interface ISelectFrontEndFrameworkProps {
   options: IOption[];
   selectedFrontendFramework: ISelected;
   vscode: IVSCodeObject;
-  serverPort: number;
   isPreview: boolean;
   isRoutesVisited: IVisitedPages;
   selectedPages: ISelected[];
@@ -114,7 +109,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
-  const { frontendOptions, previewStatus, serverPort } = state.wizardContent;
+  const { frontendOptions, previewStatus } = state.wizardContent;
   const { frontendFramework } = state.selection;
   const { pages } = state.selection;
 
@@ -122,7 +117,6 @@ const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
     isPreview: previewStatus,
     isRoutesVisited: getIsVisitedRoutesSelector(state),
     options: frontendOptions,
-    serverPort,
     selectedFrontendFramework: frontendFramework,
     selectedPages: pages,
     vscode: getVSCodeApiSelector(state)

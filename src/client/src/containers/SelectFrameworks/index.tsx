@@ -45,8 +45,6 @@ class SelectFrameworks extends React.Component<Props> {
     vscode.postMessage({
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
-      track: false,
-      text: "Sending get frameworks commands...",
       payload: {
         isPreview: isPreview,
         projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
@@ -66,10 +64,13 @@ class SelectFrameworks extends React.Component<Props> {
 
 interface IStateProps {
   vscode: IVSCodeObject;
+  isPreview: boolean;
 }
 
 const mapStateToProps = (state: AppState): IStateProps => {
+  const { previewStatus } = state.wizardContent;
   return {
+    isPreview: previewStatus,
     vscode: getVSCodeApiSelector(state)
   };
 };
