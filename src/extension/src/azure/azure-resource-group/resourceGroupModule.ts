@@ -34,7 +34,7 @@ export class ResourceGroupDeploy {
 
   public async createResourceGroup(
     resourceGroupSelection: ResourceGroupSelection
-  ): Promise<string | undefined> {
+  ): Promise<void> {
     this.setAzureResourceClient(resourceGroupSelection.subscriptionItem);
     try {
       if (this.azureResourceClient === undefined) {
@@ -48,11 +48,10 @@ export class ResourceGroupDeploy {
         location: location
       };
 
-      const result = await this.azureResourceClient.resourceGroups.createOrUpdate(
+      await this.azureResourceClient.resourceGroups.createOrUpdate(
         resourceGroupName,
         options
       );
-      return result.name;
     } catch (error) {
       throw new DeploymentError(error.message);
     }
@@ -64,7 +63,7 @@ export class ResourceGroupDeploy {
   ): Promise<string> {
     let generatedName = this.generateResourceGroupName(name);
     let isValid: boolean = true;
-    // this allows all resource groups generated (in different subscriptions) to have the same name
+    // this allows the generated name to be validated against multiple subscriptions
     userSubscriptionItems.forEach(async userSubscriptionItem => {
       isValid =
         isValid &&
