@@ -11,7 +11,6 @@ export class CoreTSModule extends WizardServant {
     constructor() {
         super();
         this.clientCommandMap = this.defineCommandMap();
-        console.log("creating CoreTSmodule");
     }
 
     private defineCommandMap(): Map<

@@ -13,7 +13,6 @@ import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
@@ -24,7 +23,6 @@ interface ISelectBackendProps {
   selectedBackend: ISelected;
   serverPort: number;
   isPreview: boolean;
-  vscode: any;
 }
 
 type Props = IDispatchProps & ISelectBackendProps & InjectedIntlProps;
@@ -37,10 +35,6 @@ const messages = defineMessages({
 });
 
 class SelectBackEndFramework extends React.Component<Props> {
-  public componentDidMount() {
-    const { isPreview, vscode } = this.props;
-  }
-
   /**
    * Finds the index of the framework currently selected in the wizard
    *
@@ -88,8 +82,7 @@ const mapStateToProps = (state: AppState): ISelectBackendProps => {
     isPreview: previewStatus,
     options: backendOptions,
     selectedBackend: backendFramework,
-    serverPort,
-    vscode: getVSCodeApiSelector(state)
+    serverPort
   };
 };
 

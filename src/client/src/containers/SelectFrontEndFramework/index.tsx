@@ -49,10 +49,6 @@ const messages = defineMessages({
 });
 
 class SelectFrontEndFramework extends React.Component<Props> {
-  public componentDidMount() {
-    const { isPreview, serverPort } = this.props;
-  }
-
   public handleFrameworkChange(option: ISelected) {
     const {
       vscode,

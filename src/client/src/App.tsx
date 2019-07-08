@@ -139,14 +139,14 @@ class App extends React.Component<Props> {
           this.props.getFrontendFrameworksSuccess(
             getFrameworks(
               message.payload.frameworks,
-              WIZARD_CONTENT_INTERNAL_NAMES.FRONTEND,
+              "frontend",
               message.payload.isPreview
             )
           );
           this.props.getBackendFrameworksSuccess(
             getFrameworks(
               message.payload.frameworks,
-              WIZARD_CONTENT_INTERNAL_NAMES.BACKEND,
+              "backend",
               message.payload.isPreview
             )
           );
