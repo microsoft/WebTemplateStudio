@@ -118,34 +118,39 @@ const SelectableCard = ({
             defaultMessage="Details"
           />
         </Link>
-        <div
-          className={classNames({
-            [styles.hidden]: !selected,
-            [styles.selectedCheckMark]: selected && !clickCount,
-            [styles.cardCount]: selected && clickCount
-          })}
-        >
-          {clickCount || (
-            <div className={styles.selectedText}>
-              <div>
-                <FormattedMessage
-                  id="selectableCard.selected"
-                  defaultMessage="Selected"
-                />
+        <div className={styles.pageButtons}>
+          <div
+            className={classNames({
+              [styles.hidden]: !selected,
+              [styles.selectedCheckMark]: selected && !clickCount,
+              [styles.showCount]: selected && clickCount
+            })}
+          >
+            {clickCount || (
+              <div className={styles.selectedText}>
+                <div>
+                  <FormattedMessage
+                    id="selectableCard.selected"
+                    defaultMessage="Selected"
+                  />
+                </div>
+                <Check className={styles.iconCheckMark} />
               </div>
-              <Check className={styles.iconCheckMark} />
+            )}
+          </div>
+          {isPagesSelection && (
+            <div className={classNames(styles.cardCount)}>
+              <button
+                className={styles.countButton}
+                onClick={() => {
+                  addPage(cardNumber);
+                }}
+              >
+                +
+              </button>
             </div>
           )}
         </div>
-        {isPagesSelection && (
-          <button
-            onClick={() => {
-              addPage(cardNumber);
-            }}
-          >
-            +
-          </button>
-        )}
       </div>
     </div>
   );
