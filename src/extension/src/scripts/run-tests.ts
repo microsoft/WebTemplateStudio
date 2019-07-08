@@ -1,29 +1,11 @@
 const child_process = require("child_process");
 const path = require("path");
 const fs = require("fs");
+const del = require("del");
 
 const testFolder = path.join(__dirname, "..", "..", "src", "template_test");
 console.log(testFolder);
 let files: string[] = [];
-
-//Recursively delete all generated projects in template_test
-let deleteFolderRecursive = function(pathname: string) {
-  let files = [];
-  if (fs.existsSync(pathname)) {
-    files = fs.readdirSync(pathname);
-    files.forEach(function(file: string, index: number) {
-      var curPath = path.join(pathname, file);
-      if (fs.lstatSync(curPath).isDirectory()) {
-        deleteFolderRecursive(curPath);
-      } else {
-        // delete file
-        fs.unlinkSync(curPath);
-      }
-    });
-    fs.rmdirSync(pathname);
-    console.log(`deleted ${pathname}`);
-  }
-};
 
 fs.readdirSync(testFolder).forEach((file: string) => {
   files.push(file.toString());
@@ -144,8 +126,8 @@ asyncForEach(files, async (file: string) => {
 })
   .then(() => {
     console.log("Deleting generated projects");
-    deleteFolderRecursive(testFolder);
-
+    del.sync(testFolder);
+    console.log("Finished deleting projects");
     if (!fs.existsSync(testFolder)) {
       fs.mkdirSync(testFolder);
     }
