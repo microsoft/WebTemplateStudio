@@ -38,6 +38,7 @@
   z-index: 1100;
   float: right;
   padding-right: 20px;
+  font-size: 1.1em;
 }
 
 @media (min-width: 650px) {
