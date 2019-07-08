@@ -16,7 +16,7 @@ def create():
     created_item = list_items.insert_one(list_item)
     return {'_id': str(created_item.inserted_id), 'text': list_item['text']}
 
-def destroy(id):
+def delete(id):
     query_str = {'_id': ObjectId(id)}
     result = list_items.delete_one(query_str)
     if result.deleted_count == 0:

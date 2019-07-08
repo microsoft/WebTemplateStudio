@@ -216,7 +216,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   public render() {
     const { title, options, setDetailPage, isFrameworkSelection } = this.props;
     return (
-      <div>
+      <div className={styles.containerPadding}>
         <Title>{title}</Title>
         <div className={styles.container}>
           {options.map((option, cardNumber) => {

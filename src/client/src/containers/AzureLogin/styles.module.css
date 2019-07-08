@@ -1,4 +1,28 @@
+.container {
+  padding-top: 35px;
+}
 .loginCard {
   width: 100%;
   margin-bottom: 10px;
+}
+
+.azureProfile {
+  display: flex;
+}
+
+.profileName {
+  margin-right: 2em;
+}
+
+.button {
+  color: var(--vscode-textLink-foreground);
+  padding: 1px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
