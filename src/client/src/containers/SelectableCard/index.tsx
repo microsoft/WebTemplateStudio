@@ -137,16 +137,14 @@ const SelectableCard = ({
             )}
           </div>
           {isPagesSelection && (
-            <div className={classNames(styles.cardCount)}>
-              <button
-                className={styles.countButton}
-                onClick={() => {
-                  addPage(cardNumber);
-                }}
-              >
-                +
-              </button>
-            </div>
+            <button
+              className={classNames(styles.cardCount, styles.countButton)}
+              onClick={() => {
+                addPage(cardNumber);
+              }}
+            >
+              +
+            </button>
           )}
         </div>
       </div>
