@@ -35,6 +35,7 @@ export class ResourceGroupDeploy {
   public async createResourceGroup(
     resourceGroupSelection: ResourceGroupSelection
   ): Promise<string | undefined> {
+    this.setAzureResourceClient(resourceGroupSelection.subscriptionItem);
     try {
       if (this.azureResourceClient === undefined) {
         throw new AuthorizationError(
@@ -59,17 +60,31 @@ export class ResourceGroupDeploy {
 
   public async generateValidResourceGroupName(
     name: string,
-    userSubscriptionItem: SubscriptionItem
+    userSubscriptionItems: SubscriptionItem[]
   ): Promise<string> {
-    this.setAzureResourceClient(userSubscriptionItem);
-
     let generatedName = this.generateResourceGroupName(name);
-    let isValid = await this.validateResourceGroupName(generatedName);
+    let isValid: boolean = true;
+    // this allows all resource groups generated (in different subscriptions) to have the same name
+    userSubscriptionItems.forEach(async userSubscriptionItem => {
+      isValid =
+        isValid &&
+        (await this.validateResourceGroupName(
+          generatedName,
+          userSubscriptionItem
+        ));
+    });
 
     let tries = 0;
     while (tries < VALIDATION_LIMIT && !isValid) {
       generatedName = this.generateResourceGroupName(name);
-      isValid = await this.validateResourceGroupName(generatedName);
+      userSubscriptionItems.forEach(async userSubscriptionItem => {
+        isValid =
+          isValid &&
+          (await this.validateResourceGroupName(
+            generatedName,
+            userSubscriptionItem
+          ));
+      });
       tries++;
     }
     if (tries >= VALIDATION_LIMIT) {
@@ -80,7 +95,11 @@ export class ResourceGroupDeploy {
     return generatedName;
   }
 
-  private async validateResourceGroupName(name: string): Promise<boolean> {
+  private async validateResourceGroupName(
+    name: string,
+    userSubscriptionItem: SubscriptionItem
+  ): Promise<boolean> {
+    this.setAzureResourceClient(userSubscriptionItem);
     if (this.azureResourceClient === undefined) {
       throw new AuthorizationError(
         CONSTANTS.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED

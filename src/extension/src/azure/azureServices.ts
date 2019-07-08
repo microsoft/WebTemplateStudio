@@ -287,30 +287,53 @@ export class AzureServices extends WizardServant {
     }
   }
 
-  public static async generateDistinctResourceGroupSelection(payload: any): Promise<ResourceGroupSelection[]> {
-    let result = [];
+  public static async generateDistinctResourceGroupSelection(
+    payload: any
+  ): Promise<ResourceGroupSelection[]> {
     const projectName = payload.engine.projectName;
-    if (payload.selectedFunctions) {
+
+    let result = [];
+    let tempResourceGroupSelection: ResourceGroupSelection;
+
+    if (payload.selectedFunctions && payload.selectedCosmos) {
+    } else if (payload.selectedFunctions) {
       const functionSubscription = payload.functions.subscription;
       await AzureServices.updateFunctionSubscriptionItemCache(
         functionSubscription
       );
       const generatedName = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
         projectName,
-        this.usersFunctionSubscriptionItemCache
+        [this.usersFunctionSubscriptionItemCache]
       );
-      const functionResourceGroupSelection: ResourceGroupSelection = {
+      tempResourceGroupSelection = {
         subscriptionItem: AzureServices.usersFunctionSubscriptionItemCache,
         resourceGroupName: generatedName,
         location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
       };
-      result.push(functionResourceGroupSelection);
+      result.push(tempResourceGroupSelection);
+    } else if (payload.selectedCosmos) {
+      const cosmosSubsctiption = payload.cosmos.subscription;
+      await AzureServices.updateCosmosDBSubscriptionItemCache(
+        cosmosSubsctiption
+      );
+      const generatedName = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
+        projectName,
+        [this.usersCosmosDBSubscriptionItemCache]
+      );
+      tempResourceGroupSelection = {
+        subscriptionItem: AzureServices.usersCosmosDBSubscriptionItemCache,
+        resourceGroupName: generatedName,
+        location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
+      };
+      result.push(tempResourceGroupSelection);
     }
-      
+
     return result;
   }
 
-  public static async deployResourceGroup(selections: any): Promise<any> {
+  public static async deployResourceGroup(
+    selections: ResourceGroupSelection
+  ): Promise<any> {
     return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
       selections
     );
