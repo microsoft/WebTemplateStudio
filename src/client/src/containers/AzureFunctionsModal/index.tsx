@@ -435,7 +435,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
             {props.intl.formatMessage(messages.resourceGroupSubLabel)}
           </div>
           {/* Radio Buttons for Choose Resource Group */}
-          <div onChange={radioButtonOnChangeHandler}>
+          <div
+            className={styles.radioButtonContainer}
+            onChange={radioButtonOnChangeHandler}
+          >
             <input
               className={styles.radioButton}
               type="radio"
@@ -443,7 +446,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
               disabled={azureFunctionsFormData.subscription.value === ""}
               checked={azureFunctionsFormData.chooseExistingRadioButtonSelected}
             />
-            {props.intl.formatMessage(messages.chooseExisting)}
+            <div className={styles.radioButtonLabel}>
+              {props.intl.formatMessage(messages.chooseExisting)}
+            </div>
             <input
               className={styles.radiobutton}
               type="radio"
@@ -455,7 +460,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 !azureFunctionsFormData.chooseExistingRadioButtonSelected
               }
             />
-            {props.intl.formatMessage(messages.createNewResourceGroupForMe)}
+            <div className={styles.radioButtonLabel}>
+              {props.intl.formatMessage(messages.createNewResourceGroupForMe)}
+            </div>
           </div>
           <div className={styles.resourceGroupToggleContainer}>
             {azureFunctionsFormData.chooseExistingRadioButtonSelected ? (
