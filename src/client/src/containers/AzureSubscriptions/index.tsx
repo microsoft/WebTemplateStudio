@@ -145,7 +145,9 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => ({
   cosmosDbSelection: state.selection.services.cosmosDB.selection
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState,void,RootAction>): IDispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
   startLogOutToAzure: () => {
     dispatch(AzureActions.startLogOutAzure());
   },

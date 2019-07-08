@@ -61,6 +61,7 @@ export default {
     // kill the white space on first and last option
     padding: 0,
     background: "var(--vscode-editor-background)",
-    border: "0.5px solid var(--vscode-editor-foreground)"
+    border: "0.5px solid var(--vscode-editor-foreground)",
+    maxHeight: "130px"
   })
 };

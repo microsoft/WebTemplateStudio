@@ -7,6 +7,8 @@ const AZURE_LOGIN = "/AzureLogin";
 const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
 const NEW_PROJECT = "/";
 
+const PROJECT_NAME_CHARACTER_LIMIT = 50;
+
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
 
@@ -45,6 +47,11 @@ const COSMOS_APIS = {
   SQL: "SQL"
 };
 
+enum FRAMEWORK_TYPE {
+  FRONTEND = "frontend",
+  BACKEND = "backend",
+}
+
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   ANGULAR: "Angular",
   AZURE: "wts.Feature.Azure",
@@ -78,7 +85,8 @@ const EXTENSION_MODULES = {
   TELEMETRY: "Telemetry",
   VALIDATOR: "Validator",
   VSCODEUI: "VSCodeUI",
-  DEPENDENCYCHECKER: "DependencyChecker"
+  DEPENDENCYCHECKER: "DependencyChecker",
+  CORETS: "CoreTSModule"
 };
 
 // Define extension commands here that should be received from the extension
@@ -96,13 +104,13 @@ const EXTENSION_COMMANDS = {
   TRACK_PAGE_SWITCH: "track-page-switch",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
-  GET_PORT: "get-port",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
   GET_VERSIONS: "get-versions",
   CLOSE_WIZARD: "close-wizard",
   RESET_PAGES: "reset-pages",
   GET_PREVIEW_STATUS: "get-preview",
-  GET_DEPENDENCY_INFO: "check-dependency"
+  GET_DEPENDENCY_INFO: "check-dependency",
+  GET_FRAMEWORKS: "get-frameworks"
 };
 
 export {
@@ -115,5 +123,7 @@ export {
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
   COSMOS_APIS,
-  DEVELOPMENT
+  DEVELOPMENT,
+  PROJECT_NAME_CHARACTER_LIMIT,
+  FRAMEWORK_TYPE
 };

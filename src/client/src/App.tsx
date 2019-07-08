@@ -4,11 +4,9 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Route, RouteComponentProps } from "react-router-dom";
 
-import LeftSidebar from "./components/LeftSidebar";
 import PageDetails from "./containers/PageDetails";
 import SelectFrameworks from "./containers/SelectFrameworks";
 import SelectPages from "./containers/SelectPages";
-import SelectWebApp from "./containers/SelectWebApp";
 import NewProject from "./containers/NewProject";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
@@ -16,12 +14,15 @@ import Header from "./containers/Header";
 import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
+import PrivacyModal from "./containers/PrivacyModal";
+import ViewLicensesModal from "./containers/ViewLicensesModal";
 
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   ROUTES,
-  DEVELOPMENT
+  DEVELOPMENT,
+  FRAMEWORK_TYPE
 } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
@@ -62,6 +63,10 @@ import { setPreviewStatusAction } from "./actions/wizardContentActions/setPrevie
 import { setPortAction } from "./actions/wizardContentActions/setPort";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
+import TopNavBar from "./components/TopNavBar";
+import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
+import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
+import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -85,6 +90,8 @@ interface IDispatchProps {
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
+  getBackendFrameworksSuccess: (frameworks: IOption[]) => any;
+  getFrontendFrameworksSuccess: (frameworks: IOption[]) => any;
   resetPageSelection: () => any;
   selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
@@ -111,6 +118,8 @@ class App extends React.Component<Props> {
     setProjectPathValidation: () => {},
     setAzureValidationStatus: () => {},
     updateDependencyInfo: () => {},
+    getBackendFrameworksSuccess: () => {},
+    getFrontendFrameworksSuccess: () => {},
     updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {},
     getVersionsData: () => {},
@@ -124,6 +133,23 @@ class App extends React.Component<Props> {
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
+        // get frameworks from extension message
+        case EXTENSION_COMMANDS.GET_FRAMEWORKS:
+          this.props.getFrontendFrameworksSuccess(
+            parseFrameworksPayload(
+              message.payload.frameworks,
+              FRAMEWORK_TYPE.FRONTEND,
+              message.payload.isPreview
+            )
+          );
+          this.props.getBackendFrameworksSuccess(
+            parseFrameworksPayload(
+              message.payload.frameworks,
+              FRAMEWORK_TYPE.BACKEND,
+              message.payload.isPreview
+            )
+          );
+          break;
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           this.props.updateDependencyInfo(message.payload);
           break;
@@ -215,9 +241,6 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.GET_PREVIEW_STATUS:
           this.props.setPreviewStatus(message.payload.preview);
           break;
-        case EXTENSION_COMMANDS.GET_PORT:
-          this.props.setPort(message.payload.port);
-          break;
       }
     });
   }
@@ -238,11 +261,14 @@ class App extends React.Component<Props> {
     return (
       <React.Fragment>
         <Header />
+        <TopNavBar />
+
         <div className={appStyles.container}>
           <CosmosResourceModal />
           <AzureFunctionsModal />
           <PostGenerationModal />
-          <LeftSidebar />
+          <PrivacyModal />
+          <ViewLicensesModal />
 
           <main
             className={classnames(appStyles.centerView, {
@@ -312,6 +338,12 @@ const mapDispatchToProps = (
   },
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => {
     dispatch(updateDependencyInfoAction(dependencyInfo));
+  },
+  getBackendFrameworksSuccess: (frameworks: IOption[]) => {
+    dispatch(getBackendFrameworksSuccess(frameworks));
+  },
+  getFrontendFrameworksSuccess: (frameworks: IOption[]) => {
+    dispatch(getFrontendFrameworksSuccess(frameworks));
   },
   getVersionsData: (versions: IVersions) => {
     dispatch(getVersionsDataAction(versions));
