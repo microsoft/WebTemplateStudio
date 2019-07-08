@@ -47,6 +47,11 @@ const COSMOS_APIS = {
   SQL: "SQL"
 };
 
+enum FRAMEWORK_TYPE {
+  FRONTEND = "frontend",
+  BACKEND = "backend",
+}
+
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   ANGULAR: "Angular",
   AZURE: "wts.Feature.Azure",
@@ -120,5 +125,6 @@ export {
   INTL_MESSAGES,
   COSMOS_APIS,
   DEVELOPMENT,
-  PROJECT_NAME_CHARACTER_LIMIT
+  PROJECT_NAME_CHARACTER_LIMIT,
+  FRAMEWORK_TYPE
 };

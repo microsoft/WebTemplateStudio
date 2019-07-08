@@ -7,7 +7,6 @@ import { Route, RouteComponentProps } from "react-router-dom";
 import PageDetails from "./containers/PageDetails";
 import SelectFrameworks from "./containers/SelectFrameworks";
 import SelectPages from "./containers/SelectPages";
-import SelectWebApp from "./containers/SelectWebApp";
 import NewProject from "./containers/NewProject";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
@@ -23,7 +22,7 @@ import {
   EXTENSION_MODULES,
   ROUTES,
   DEVELOPMENT,
-  WIZARD_CONTENT_INTERNAL_NAMES
+  FRAMEWORK_TYPE
 } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
@@ -139,14 +138,14 @@ class App extends React.Component<Props> {
           this.props.getFrontendFrameworksSuccess(
             parseFrameworksPayload(
               message.payload.frameworks,
-              "frontend",
+              FRAMEWORK_TYPE.FRONTEND,
               message.payload.isPreview
             )
           );
           this.props.getBackendFrameworksSuccess(
             parseFrameworksPayload(
               message.payload.frameworks,
-              "backend",
+              FRAMEWORK_TYPE.BACKEND,
               message.payload.isPreview
             )
           );
