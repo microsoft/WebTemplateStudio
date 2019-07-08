@@ -68,8 +68,8 @@
 }
 
 .pageIsVisited {
-  background-color: var(--vscode-button-foreground);
-  color: #0067b8;
+  background-color: var(--vscode-editor-foreground);
+  color: var(--vscode-editor-background);
 }
 
 .pageText {
