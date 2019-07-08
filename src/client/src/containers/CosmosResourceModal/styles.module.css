@@ -39,12 +39,8 @@
   margin-bottom: 26px;
 }
 
-.buttonContainer {
-  margin-top: 4px;
-  display: flex;
-}
-
 .button {
+  margin-top: 2em;
   font-size: 1em;
 }
 
