@@ -3,6 +3,10 @@
   flex-wrap: wrap;
 }
 
+.containerPadding {
+  padding-top: 35px;
+}
+
 .icon {
   height: 36px;
 }

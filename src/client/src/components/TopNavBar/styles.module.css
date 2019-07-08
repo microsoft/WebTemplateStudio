@@ -7,32 +7,18 @@
   margin-bottom: 53px;
   padding-top: 10%;
   overflow: auto;
+  height: 52px;
 }
 
 .itemBorder {
-  border-bottom: 0.5px solid #7f7f7f;
-}
-
-.itemBorderTop {
-  border-top: 0.5px solid #7f7f7f;
-}
-
-.currentPath {
-  background-color: #0067b8;
-  color: white;
+  float: left;
+  padding: 0px 5px;
+  overflow: hidden;
+  padding-left: 0;
 }
 
 .nextPath {
   opacity: 0.4;
-}
-
-.leftView {
-  width: 350px;
-  background-color: var(--vscode-editor-background);
-  height: 100vh;
-  border-right: 0.5px solid #7f7f7f;
-  box-sizing: border-box;
-  height: calc(100vh - 104px);
 }
 
 .feedback {
@@ -46,4 +32,16 @@
 
 .feedback:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+.topNavBar {
+  position: relative;
+  z-index: 1100;
+  float: right;
+  padding-right: 20px;
+}
+
+@media (min-width: 650px) {
+  .itemBorder {
+    padding: 0px 10px 0px 0px;
+  }
 }
