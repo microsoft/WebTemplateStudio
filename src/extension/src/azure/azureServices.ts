@@ -291,61 +291,35 @@ export class AzureServices extends WizardServant {
     payload: any
   ): Promise<ResourceGroupSelection[]> {
     const projectName = payload.engine.projectName;
+    let result: ResourceGroupSelection[] = [];
+    let allSubscriptions: SubscriptionItem[] = [];
 
-    let generatedName: string;
-    let result = [];
-    let tempResourceGroupSelection: ResourceGroupSelection;
-
-    if (payload.selectedFunctions && payload.selectedCosmos) {
+    if (payload.selectedFunctions) {
       await AzureServices.updateFunctionSubscriptionItemCache(
         payload.functions.subscription
       );
-      await AzureServices.updateCosmosDBSubscriptionItemCache(
-        payload.cosmos.subscription
-      );
-      const allSubscriptions: SubscriptionItem[] = [
-        this.usersFunctionSubscriptionItemCache,
-        this.usersCosmosDBSubscriptionItemCache
-      ];
-      const allDistinctSubscriptions: SubscriptionItem[] = [... new Set(allSubscriptions)];
-      generatedName = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
-        projectName,
-        allDistinctSubscriptions
-      );
-      allDistinctSubscriptions.forEach(subscription => {
-        tempResourceGroupSelection = AzureServices.generateResourceGroupSelection(
-          generatedName,
-          subscription
-        );
-        result.push(tempResourceGroupSelection);
-      });
-    } else if (payload.selectedFunctions) {
-      await AzureServices.updateFunctionSubscriptionItemCache(
-        payload.functions.subscription
-      );
-      generatedName = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
-        projectName,
-        [this.usersFunctionSubscriptionItemCache]
-      );
-      tempResourceGroupSelection = AzureServices.generateResourceGroupSelection(
-        generatedName,
-        AzureServices.usersFunctionSubscriptionItemCache
-      );
-      result.push(tempResourceGroupSelection);
-    } else if (payload.selectedCosmos) {
-      await AzureServices.updateCosmosDBSubscriptionItemCache(
-        payload.cosmos.subscription
-      );
-      generatedName = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
-        projectName,
-        [this.usersCosmosDBSubscriptionItemCache]
-      );
-      tempResourceGroupSelection = AzureServices.generateResourceGroupSelection(
-        generatedName,
-        AzureServices.usersCosmosDBSubscriptionItemCache
-      );
-      result.push(tempResourceGroupSelection);
+      allSubscriptions.push(AzureServices.usersFunctionSubscriptionItemCache);
     }
+    if (payload.selectedCosmos) {
+      await AzureServices.updateCosmosDBSubscriptionItemCache(
+        payload.cosmos.subscription
+      );
+      allSubscriptions.push(AzureServices.usersCosmosDBSubscriptionItemCache);
+    }
+    const allDistinctSubscriptions: SubscriptionItem[] = [... new Set(allSubscriptions)];
+    const generatedName: string = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
+          projectName,
+          allDistinctSubscriptions
+        );
+    let tempResourceGroupSelection: ResourceGroupSelection;
+    allDistinctSubscriptions.forEach(subscription => {
+      tempResourceGroupSelection = AzureServices.generateResourceGroupSelection(
+        generatedName,
+        subscription
+      );
+      result.push(tempResourceGroupSelection);
+    });
+
     return result;
   }
 

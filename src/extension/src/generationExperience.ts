@@ -89,9 +89,7 @@ export class GenerationExperience extends WizardServant {
       command: ExtensionCommand.GetOutputPath,
       payload: { outputPath: enginePayload.path }
     });
-    payload.functions.resourceGroup = "";
-    // REMEMBER TO REMOVE BEFORE COMMIT =========================================================
-    // ==========================================================================================
+    
     if (
       this.functionsSelectedNewResourceGroup(payload) ||
       this.cosmosDBSelectedNewResourceGroup(payload)
