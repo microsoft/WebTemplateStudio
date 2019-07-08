@@ -1,4 +1,4 @@
-from flask import jsonify, make_response, request
+from flask import request
 
 from .sql_client import SQLObj
 
@@ -12,18 +12,17 @@ def get():
     options['maxItemCount'] = 2
     results_iterable = sql_database_obj.get_client().QueryItems(
         sql_database_obj.get_container()['_self'], query_str, options)
-    return jsonify(list(results_iterable))
+    return list(results_iterable)
 
 def create():
     data = request.get_json()
     list_item = {'text': data['text']}
     created = sql_database_obj.get_client().CreateItem(
         sql_database_obj.get_container()['_self'], list_item)
-    json_response = jsonify({'_id': created['id'], 'text': list_item['text']})
-    return make_response(json_response, 201)
+    return {'_id': created['id'], 'text': list_item['text']}
 
-def destroy(id):
-    # use parameterized queries to avoid SQL injection attacks
+def delete(id):
+    # Use parameterized queries to avoid SQL injection attacks.
     findStr = "SELECT * FROM c where c.id = @id"
     query_str = {
         'query': findStr,
@@ -35,10 +34,7 @@ def destroy(id):
         sql_database_obj.get_container()['_self'], query_str)
     count = sum(1 for _ in iter(result))
     if count == 0:
-        json_response = jsonify({'error': 'Could not find an item with given id'})
-        return make_response(json_response, 404)
-    for item in iter(result):
-        sql_database_obj.get_client().DeleteItem(item['_self'])
-    return jsonify(
-        {'_id': id, 'text': 'This comment was deleted'}
-    )
+        raise Exception('Could not find an item with given id')
+    item = next(iter(result))
+    sql_database_obj.get_client().DeleteItem(item['_self'])
+    return {'_id': id, 'text': 'This comment was deleted'}
