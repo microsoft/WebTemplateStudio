@@ -4,7 +4,7 @@ import { IOption } from "../../types/option";
 
 type FrameworkType = "frontend" | "backend";
 
-export const getFrameworks = (
+export const parseFrameworksPayload = (
   frameworksJson: any,
   type: FrameworkType,
   isPreview: boolean

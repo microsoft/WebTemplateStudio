@@ -65,7 +65,7 @@ import { setPortAction } from "./actions/wizardContentActions/setPort";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
-import { getFrameworks } from "./actions/wizardContentActions/getFrameworks";
+import { parseFrameworksPayload } from "./actions/wizardContentActions/parseFrameworksPayload";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 
@@ -137,14 +137,14 @@ class App extends React.Component<Props> {
         // get frameworks from extension message
         case EXTENSION_COMMANDS.GET_FRAMEWORKS:
           this.props.getFrontendFrameworksSuccess(
-            getFrameworks(
+            parseFrameworksPayload(
               message.payload.frameworks,
               "frontend",
               message.payload.isPreview
             )
           );
           this.props.getBackendFrameworksSuccess(
-            getFrameworks(
+            parseFrameworksPayload(
               message.payload.frameworks,
               "backend",
               message.payload.isPreview
