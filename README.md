@@ -90,6 +90,7 @@ The extension does [log basic telemetry](docs/telemetry.md) for what is being se
 - [Vue](https://vuejs.org/)
 - [Vue CLI](https://cli.vuejs.org/)
 - [Node.js](https://nodejs.org/en/)
+- [Flask](http://flask.pocoo.org/)
 
 ## Acknowledgments
 
