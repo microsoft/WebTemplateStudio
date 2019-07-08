@@ -4,7 +4,7 @@ import { IOption } from "../../types/option";
 import { FRAMEWORK_TYPE } from "../../utils/constants";
 
 export const parseFrameworksPayload = (
-  frameworksJson: any,
+  frameworksJson: any[],
   type: FRAMEWORK_TYPE,
   isPreview: boolean
 ): IOption[] => {
