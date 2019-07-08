@@ -17,30 +17,42 @@
   text-decoration: none;
 }
 
-.borderGreen {
-  border: 1px solid #99ffa7;
-}
-
-.borderYellow {
-  border: 1px solid #fabf1a;
-}
-
-.icon {
-  height: 12px;
-}
-
 .body {
   margin-left: 6px;
   font-style: normal;
-  font-weight: light;
+  font-weight: 600;
   font-size: 12px;
   /* or 222% */
 }
 
+.iconCheck {
+  height: 12px;
+}
+
+.iconWarning {
+  height: 16px;
+}
+
+.iconCheck path {
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
+}
+
+.iconWarning path {
+  fill: var(--vscode-editorMarkerNavigationWarning-background);
+}
+
+.borderGreen {
+  border: 1.5px solid var(--vscode-gitDecoration-untrackedResourceForeground);
+}
+
+.borderYellow {
+  border: 1.5px solid var(--vscode-editorMarkerNavigationWarning-background);
+}
+
 .bodyGreen {
-  color: #99ffa7;
+  color: var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
 .bodyYellow {
-  color: #fabf1a;
+  color: var(--vscode-editorMarkerNavigationWarning-background);
 }
