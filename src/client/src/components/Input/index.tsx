@@ -9,6 +9,7 @@ interface IProps {
   value?: string;
   customStyle?: string;
   placeholder?: string;
+  maxLength?: number;
 }
 
 const Input = ({
@@ -16,7 +17,8 @@ const Input = ({
   ariaLabel,
   value,
   customStyle,
-  placeholder
+  placeholder,
+  maxLength
 }: IProps) => {
   return (
     <input
@@ -25,6 +27,7 @@ const Input = ({
       placeholder={placeholder}
       className={classnames(styles.input, customStyle)}
       value={value}
+      maxLength={maxLength}
     />
   );
 };

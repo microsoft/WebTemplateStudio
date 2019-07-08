@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Route, RouteComponentProps } from "react-router-dom";
 
-import LeftSidebar from "./components/LeftSidebar";
 import PageDetails from "./containers/PageDetails";
 import SelectFrameworks from "./containers/SelectFrameworks";
 import SelectPages from "./containers/SelectPages";
@@ -17,6 +16,7 @@ import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 import PrivacyModal from "./containers/PrivacyModal";
+import ViewLicensesModal from "./containers/ViewLicensesModal";
 
 import {
   EXTENSION_COMMANDS,
@@ -63,6 +63,7 @@ import { setPreviewStatusAction } from "./actions/wizardContentActions/setPrevie
 import { setPortAction } from "./actions/wizardContentActions/setPort";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
+import TopNavBar from "./components/TopNavBar";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -239,12 +240,14 @@ class App extends React.Component<Props> {
     return (
       <React.Fragment>
         <Header />
+        <TopNavBar />
+
         <div className={appStyles.container}>
           <CosmosResourceModal />
           <AzureFunctionsModal />
           <PostGenerationModal />
           <PrivacyModal />
-          <LeftSidebar />
+          <ViewLicensesModal />
 
           <main
             className={classnames(appStyles.centerView, {

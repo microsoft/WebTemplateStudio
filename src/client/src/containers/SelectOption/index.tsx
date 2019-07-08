@@ -233,7 +233,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       isPagesSelection
     } = this.props;
     return (
-      <div>
+      <div className={styles.containerPadding}>
         <Title>{title}</Title>
         <div className={styles.container}>
           {options.map((option, cardNumber) => {

@@ -7,7 +7,7 @@ from constants import CONSTANTS
 app = Flask(__name__, static_folder='build')
 
 # Catching all routes
-# This route is used to serve all the routes in the frontend application after deployment
+# This route is used to serve all the routes in the frontend application after deployment.
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
@@ -18,7 +18,7 @@ def catch_all(path):
 @app.errorhandler(404)
 def page_not_found(error):
     json_response = jsonify({'error': 'Page not found'})
-    return make_response(json_response, 404)
+    return make_response(json_response, CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
 
 if __name__ == '__main__':
     app.run(port=CONSTANTS['PORT'])

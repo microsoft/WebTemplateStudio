@@ -35,7 +35,6 @@ const SelectableCard = ({
   disabled,
   isFrameworkSelection,
   isPagesSelection,
-  isPreview,
   addPage
 }: {
   iconPath: string | undefined;
@@ -51,7 +50,6 @@ const SelectableCard = ({
   disabled: boolean | undefined;
   isFrameworkSelection: boolean;
   isPagesSelection: boolean;
-  isPreview: boolean;
   addPage: (idx: number) => void;
 }) => {
   console.log(clickCount);
@@ -98,7 +96,7 @@ const SelectableCard = ({
             <CardTitle title={title} />
           </div>
         </div>
-        {isPreview && isFrameworkSelection && selected && (
+        {isFrameworkSelection && selected && (
           <DependencyInfo frameworkName={option.internalName} />
         )}
         <div className={grid.row}>
@@ -156,11 +154,4 @@ const SelectableCard = ({
   );
 };
 
-const mapStateToProps = (state: AppState): any => {
-  const { previewStatus } = state.wizardContent;
-  return {
-    isPreview: previewStatus
-  };
-};
-
-export default connect(mapStateToProps)(SelectableCard);
+export default SelectableCard;

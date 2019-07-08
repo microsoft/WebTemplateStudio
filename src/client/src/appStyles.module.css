@@ -1,22 +1,27 @@
 .container {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 .centerView {
   display: flex;
-  padding: 0px 0.75em 0px 0.75em;
+  padding: 1vh 4vh;
   overflow: auto;
   width: 100%;
   box-sizing: border-box;
   background-color: var(--vscode-editor-background);
   height: calc(100vh - 104px);
-  margin-top: 51px;
-  margin-bottom: 53px;
   justify-content: flex-start;
 }
 
 .centerViewMaxHeight {
   height: calc(100vh - 51px);
   margin-bottom: 0px;
+}
+
+@media (max-width: 830px) {
+  .centerView {
+    padding: 1vh 2vh;
+  }
 }

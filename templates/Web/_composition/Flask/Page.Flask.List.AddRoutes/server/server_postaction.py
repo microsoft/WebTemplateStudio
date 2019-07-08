@@ -25,17 +25,17 @@ def add_list_item():
     sample_data['list_text_assets']['list_items'].insert(0, list_item)
     sample_data['list_text_assets']['list_id'] += 1
     json_response = jsonify(list_item)
-    return make_response(json_response, 201)
+    return make_response(json_response, CONSTANTS['HTTP_STATUS']['201_CREATED'])
 
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<int:id>', methods=['DELETE'])
 def delete_list_item(id):
     list_items_to_remove = [list_item for list_item in sample_data['list_text_assets']['list_items'] if list_item['_id'] == id]
-    if (not list_items_to_remove):
+    if not list_items_to_remove:
         json_response = jsonify({'error': 'Could not find an item with the given id'})
-        return make_response(json_response, 404)
-    if (len(list_items_to_remove) > 1):
-        json_response = jsonify({'error': 'There is a problem with the server'})
-        return make_response(json_response, 500)
+        return make_response(json_response, CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
+    if len(list_items_to_remove) > 1:
+        json_response = jsonify({'error': 'More than one list items found with the same id'})
+        return make_response(json_response, CONSTANTS['HTTP_STATUS']['500_INTERNAL_SERVER_ERROR'])
     sample_data['list_text_assets']['list_items'] = [list_item for list_item in sample_data['list_text_assets']['list_items'] if list_item['_id'] != id]
     return jsonify({'_id': id, 'text': 'This comment was deleted'})
 //}]}
