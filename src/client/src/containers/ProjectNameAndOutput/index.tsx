@@ -16,7 +16,11 @@ import {
 } from "../../selectors/wizardSelectionSelector";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { EXTENSION_COMMANDS, EXTENSION_MODULES, PROJECT_NAME_CHARACTER_LIMIT } from "../../utils/constants";
+import {
+  EXTENSION_COMMANDS,
+  EXTENSION_MODULES,
+  PROJECT_NAME_CHARACTER_LIMIT
+} from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -50,10 +54,6 @@ type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 const messages = defineMessages({
   projectNameTitle: {
     id: "projectName.projectNameTitle",
-    defaultMessage: "Project Name:"
-  },
-  projectName: {
-    id: "projectName.projectName",
     defaultMessage: "Project Name"
   },
   ariaProjectNameLabel: {
@@ -62,11 +62,7 @@ const messages = defineMessages({
   },
   outputPathTitle: {
     id: "projectName.outputPathTitle",
-    defaultMessage: "Output Path:"
-  },
-  outputPath: {
-    id: "projectName.outputPath",
-    defaultMessage: "Output Path"
+    defaultMessage: "Save To"
   }
 });
 
@@ -124,7 +120,6 @@ const ProjectNameAndOutput = (props: Props) => {
           handleChange={handleProjectNameChange}
           ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
           value={props.projectName}
-          placeholder={props.intl.formatMessage(messages.projectName)}
           maxLength={PROJECT_NAME_CHARACTER_LIMIT}
         />
         {props.projectNameValidation.error && (
@@ -143,7 +138,6 @@ const ProjectNameAndOutput = (props: Props) => {
             handleChange={handleOutputPathChange}
             handleSaveClick={handleSaveClick}
             value={props.outputPath}
-            placeholder={props.intl.formatMessage(messages.outputPath)}
             validation={props.projectPathValidation}
             isEmpty={
               props.projectPathValidation && props.outputPath.length === 0

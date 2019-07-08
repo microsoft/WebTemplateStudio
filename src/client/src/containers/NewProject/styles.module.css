@@ -1,11 +1,10 @@
 .container {
   align-self: center;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-left: 20%;
-  margin-right: 20%;
+  margin: 0 auto;
+  margin-bottom: 10%;
+  padding: 0% 15%;
 }
 
 .container > div {
@@ -17,24 +16,22 @@
 }
 
 .header {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin: 10px;
+  font-size: 2.5em;
+  font-weight: 600;
+  padding-bottom: 4%;
+  font-weight: lighter;
 }
 
 .body {
-  font-size: 14px;
-  text-align: center;
-  line-height: 20px;
-  margin: 10px;
-  margin-bottom: 2em;
-  line-height: 1.75em;
+  font-size: 1.4em;
+  line-height: 1.9em;
+  margin-bottom: 1em;
+  padding-bottom: 4%;
+  width: 85%;
 }
 
 .projectDetailsContainer {
   display: flex;
-  align-items: center;
   flex-direction: column;
   justify-content: flex-end;
   box-sizing: border-box;
