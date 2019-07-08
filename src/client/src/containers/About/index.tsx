@@ -46,17 +46,6 @@ const About = ({ versions, intl }: Props) => {
           Web Template Studio
         </a>
       </p>
-      <p>
-        <a
-          className={styles.link}
-          href="https://github.com/Microsoft/WebTemplateStudio/issues"
-        >
-          <FormattedMessage
-            id="about.reportAnIssue"
-            defaultMessage="Give Feedback or Report an issue"
-          />
-        </a>
-      </p>
       <div>
         {intl.formatMessage(messages.templatesVersion) + ` ${templatesVersion}`}
       </div>

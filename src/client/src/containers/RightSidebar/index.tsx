@@ -209,7 +209,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               </div>
             }
             <div className={styles.container}>
-              <Licenses />
               <div className={styles.buttonContainer}>
                 <button
                   className={classnames(
