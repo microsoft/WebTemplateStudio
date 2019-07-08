@@ -101,11 +101,6 @@
   "projectName.ariaProjectName",
   "projectName.outputPathTitle",
   "projectName.outputPath",
-  "review.newProject",
-  "review.frameworks",
-  "review.pages",
-  "review.services",
-  "review.reviewAndGenerate",
   "licenses.viewLicenses",
   "instructionHeading.launchYourProject",
   "context.almostDone",
@@ -142,7 +137,6 @@
   "pageNameError.emptyName",
   "pageNameError.invalidRegex",
   "projectNameError.invalidRegex",
-  "projectNameError.nameTooLong",
   "FunctionNameError.invalidFunctionStartLetter",
   "FunctionNameError.invalidRegex"
 ]
