@@ -51,7 +51,7 @@ import { IFunctionName } from "../AzureFunctionsSelection";
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
   openPostGenModal: () => any;
-  updateCreateProjectButton: () => any;
+  updateCreateProjectButton: (enable: boolean) => any;
 }
 
 interface IStateProps {
@@ -186,7 +186,7 @@ class Footer extends React.Component<Props> {
     const { pathname } = location;
     const { showFrameworks } = isVisited;
     if (this.isReviewAndGenerate()) {
-      updateCreateProjectButton();
+      updateCreateProjectButton(true);
     }
     return (
       <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
@@ -280,8 +280,8 @@ const mapDispatchToProps = (
   openPostGenModal: () => {
     dispatch(openPostGenModalAction());
   },
-  updateCreateProjectButton: () => {
-    dispatch(updateCreateProjectButtonAction(true));
+  updateCreateProjectButton: (enable: boolean) => {
+    dispatch(updateCreateProjectButtonAction(enable));
   }
 });
 
