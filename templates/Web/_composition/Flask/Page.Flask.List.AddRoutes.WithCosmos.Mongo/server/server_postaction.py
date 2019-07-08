@@ -3,7 +3,7 @@ import os
 from os.path import exists, join
 
 //{[{
-from mongo.mongo_service import get, create, destroy
+from mongo.mongo_service import get, create, delete
 //}]}
 from constants import CONSTANTS
 
@@ -24,7 +24,7 @@ def add_list_item():
 @app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<id>', methods=['DELETE'])
 def delete_list_item(id):
     try:
-        removed_item = jsonify(destroy(id))
+        removed_item = jsonify(delete(id))
         return removed_item
     except Exception as ex:
         err_response = jsonify({'error': str(ex)})

@@ -21,7 +21,7 @@ def create():
         sql_database_obj.get_container()['_self'], list_item)
     return {'_id': created['id'], 'text': list_item['text']}
 
-def destroy(id):
+def delete(id):
     # Use parameterized queries to avoid SQL injection attacks.
     findStr = "SELECT * FROM c where c.id = @id"
     query_str = {
