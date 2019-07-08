@@ -8,17 +8,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 50px;
+  min-height: 65px;
   box-sizing: border-box;
 }
 
 .button {
-  margin-left: 1em;
-  font-size: 1em;
+  margin-right: 1em;
+  font-size: 1.4em;
+  text-align: center;
 }
 
 .button:hover {
   color: #ffffff;
+}
+
+.buttonNext {
+  min-width: 80px;
 }
 
 .button:focus {

@@ -223,6 +223,7 @@ class Footer extends React.Component<Props> {
                   tabIndex={isValidNameAndProjectPath ? 0 : -1}
                   className={classnames(
                     styles.button,
+                    styles.buttonNext,
                     buttonStyles.buttonHighlightedBorder,
                     {
                       [buttonStyles.buttonDark]: !isValidNameAndProjectPath,
