@@ -1,7 +1,7 @@
-import getSvgUrl from "../../utils/getSvgUrl";
-import { IMetadata } from "../../types/metadata";
-import { IOption } from "../../types/option";
-import { FRAMEWORK_TYPE } from "../../utils/constants";
+import getSvgUrl from "./getSvgUrl";
+import { IMetadata } from "../types/metadata";
+import { IOption } from "../types/option";
+import { FRAMEWORK_TYPE } from "./constants";
 
 export const parseFrameworksPayload = (
   frameworksJson: any[],
