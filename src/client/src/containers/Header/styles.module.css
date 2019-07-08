@@ -1,17 +1,18 @@
 .header {
   position: absolute;
   width: 100%;
-  padding: 12px 24px;
-  background-color: var(--vscode-editor-background);
-  border-bottom: 0.5px solid #7f7f7f;
+  padding: 0px 24px;
+  background-color: var(--vscode-input-background);
+  border-bottom: 0.5px solid var(--vscode-header-border);
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
   align-items: center;
+  height: 52px;
 }
 
 .headerTitle {
-  font-weight: bold;
   font-size: 18px;
 }
 

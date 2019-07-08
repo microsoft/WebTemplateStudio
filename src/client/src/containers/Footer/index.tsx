@@ -133,6 +133,19 @@ class Footer extends React.Component<Props> {
       setRouteVisited(pathsNext[pathname]);
     }
   };
+
+  public handleLinkBackClick = (
+    event: React.SyntheticEvent,
+    pathname: string
+  ) => {
+    const { isValidNameAndProjectPath, setRouteVisited } = this.props;
+    this.trackPageForTelemetry(pathname);
+
+    if (pathname !== ROUTES.NEW_PROJECT) {
+      setRouteVisited(pathname);
+    }
+  };
+
   public trackPageForTelemetry = (pathname: string) => {
     this.props.vscode.postMessage({
       module: EXTENSION_MODULES.TELEMETRY,
@@ -193,6 +206,9 @@ class Footer extends React.Component<Props> {
                 <Link
                   tabIndex={0}
                   className={classnames(buttonStyles.buttonDark, styles.button)}
+                  onClick={event => {
+                    this.handleLinkBackClick(event, pathname);
+                  }}
                   to={
                     pathsBack[pathname] === undefined
                       ? ROUTES.NEW_PROJECT

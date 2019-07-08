@@ -5,7 +5,7 @@ import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
 
-import LeftSidebarLink from "../LeftSidebarLink";
+import TopNavBarLink from "../TopNavBarLink";
 
 import styles from "./styles.module.css";
 
@@ -15,27 +15,27 @@ import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelecti
 
 const messages = defineMessages({
   welcome: {
-    id: "leftSidebar.newProject",
-    defaultMessage: "1. New Project"
+    id: "topNavBar.newProject",
+    defaultMessage: "New Project"
   },
   frameworks: {
-    id: "leftSidebar.frameworks",
-    defaultMessage: "2. Frameworks"
+    id: "topNavBar.frameworks",
+    defaultMessage: "Frameworks"
   },
   pages: {
-    id: "leftSidebar.pages",
-    defaultMessage: "3. Pages"
+    id: "topNavBar.pages",
+    defaultMessage: "Pages"
   },
   services: {
-    id: "leftSidebar.services",
-    defaultMessage: "4. Services (Optional)"
+    id: "topNavBar.services",
+    defaultMessage: "Add Optional Cloud Services"
   },
   summary: {
-    id: "leftSidebar.summary",
-    defaultMessage: "5. Summary"
+    id: "topNavBar.summary",
+    defaultMessage: "Summary"
   },
   ariaNavLabel: {
-    id: "leftSideBar.ariaNavLabel",
+    id: "topNavBar.ariaNavLabel",
     defaultMessage: "Navigate between pages in the Wizard"
   }
 });
@@ -47,9 +47,9 @@ interface IStateProps {
 
 type Props = RouteComponentProps & IStateProps & InjectedIntlProps;
 
-const LeftSidebar = (props: Props) => {
+const TopNavBar = (props: Props) => {
   const { formatMessage } = props.intl;
-  const leftSidebarData: string[] = [
+  const topNavBarData: string[] = [
     formatMessage(messages.welcome),
     formatMessage(messages.frameworks),
     formatMessage(messages.pages),
@@ -60,23 +60,32 @@ const LeftSidebar = (props: Props) => {
   const [currentPathIndex, setPathIndex] = React.useState(
     ROUTES_ARRAY.indexOf(pathname)
   );
+  const topNavTabClicked = (
+    event: React.SyntheticEvent,
+    idx: number,
+    visited: boolean
+  ) => {
+    if (visited) {
+      setPathIndex(ROUTES_ARRAY.indexOf(ROUTES_ARRAY[idx]));
+    }
+  };
+
   React.useEffect(() => {
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
   });
   const { isVisited, intl, isValidNameAndProjectPath } = props;
   return (
     <React.Fragment>
-      {pathname !== ROUTES.PAGE_DETAILS && (
+      {
         <nav
-          className={classnames(styles.leftView, styles.container)}
+          className={classnames(styles.topNavBar)}
           aria-label={intl.formatMessage(messages.ariaNavLabel)}
         >
           <div>
-            {leftSidebarData.map((sidebartitle, idx) => {
+            {topNavBarData.map((sidebartitle, idx) => {
               return (
                 <div
                   className={classnames(styles.itemBorder, {
-                    [styles.currentPath]: idx === currentPathIndex,
                     [styles.visitedPath]:
                       isVisited[ROUTES_ARRAY[idx]] && isValidNameAndProjectPath,
                     [styles.nextPath]:
@@ -86,8 +95,11 @@ const LeftSidebar = (props: Props) => {
                     [styles.itemBorderTop]: idx === 0
                   })}
                   key={sidebartitle}
+                  onClick={event =>
+                    topNavTabClicked(event, idx, isVisited[ROUTES_ARRAY[idx]])
+                  }
                 >
-                  <LeftSidebarLink
+                  <TopNavBarLink
                     disabled={
                       !isVisited[ROUTES_ARRAY[idx]] ||
                       !isValidNameAndProjectPath
@@ -98,13 +110,14 @@ const LeftSidebar = (props: Props) => {
                       idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]]
                     }
                     isSelected={idx === currentPathIndex}
+                    pageNumber={idx + 1}
                   />
                 </div>
               );
             })}
           </div>
         </nav>
-      )}
+      }
     </React.Fragment>
   );
 };
@@ -114,4 +127,4 @@ const mapStateToProps = (state: any): IStateProps => ({
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
 });
 
-export default withRouter(connect(mapStateToProps)(injectIntl(LeftSidebar)));
+export default withRouter(connect(mapStateToProps)(injectIntl(TopNavBar)));
