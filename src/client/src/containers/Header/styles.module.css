@@ -9,11 +9,11 @@
   justify-content: space-between;
   box-sizing: border-box;
   align-items: center;
-  height: 52px;
+  height: 65px;
 }
 
 .headerTitle {
-  font-size: 18px;
+  font-size: 1.7em;
 }
 
 .azureProfile {
