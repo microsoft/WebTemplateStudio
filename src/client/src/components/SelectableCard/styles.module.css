@@ -52,7 +52,7 @@
 }
 
 .iconCheckMark path {
-  fill: var(--vscode-editor-foreground);
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
 .hidden {
