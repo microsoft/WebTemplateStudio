@@ -117,7 +117,6 @@ export class CoreTemplateStudio {
   }
 
   public async getFrameworks(projectType: string): Promise<any> {
-    // TODO: use this in client instead of fetching directly from API server
     const url = new URL(CONSTANTS.API.ENDPOINTS.FRAMEWORK, this._url);
     url.searchParams.append(
       CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE,
