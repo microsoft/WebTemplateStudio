@@ -121,6 +121,7 @@ const ProjectNameAndOutput = (props: Props) => {
           ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
           value={props.projectName}
           maxLength={PROJECT_NAME_CHARACTER_LIMIT}
+          autoFocus={true}
         />
         {props.projectNameValidation.error && (
           <div className={styles.errorMessage}>
