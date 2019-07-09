@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import styles from "./styles.module.css";
-import * as getSvg from "../../utils/getSvgUrl";
 import classnames from "classnames";
 import { injectIntl, defineMessages, InjectedIntl } from "react-intl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
@@ -10,6 +9,8 @@ import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import { ReactComponent as Warning } from "../../assets/warning.svg";
+import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
 
 const messages = defineMessages({
   installed: {
@@ -115,10 +116,6 @@ class DependencyInfo extends React.Component<Props> {
           minimumVersion: dependencyMinimumVersion
         });
 
-    let icon: any = installed
-      ? getSvg.getGreenCheckSvg()
-      : getSvg.getWarningSvg();
-
     const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (event.keyCode === 13 || event.keyCode === 32) {
         openPrivacyModal(dependency);
@@ -137,11 +134,16 @@ class DependencyInfo extends React.Component<Props> {
           [styles.borderYellow]: !installed
         })}
       >
-        <img
-          className={styles.icon}
-          src={icon}
-          alt={intl.formatMessage(messages.iconAltMessage)}
-        />
+        <div
+          role="img"
+          aria-label={intl.formatMessage(messages.iconAltMessage)}
+        >
+          {installed ? (
+            <Checkmark className={styles.iconCheck} />
+          ) : (
+            <Warning className={styles.iconWarning} />
+          )}
+        </div>
         <div
           className={classnames(styles.body, {
             [styles.bodyGreen]: installed,

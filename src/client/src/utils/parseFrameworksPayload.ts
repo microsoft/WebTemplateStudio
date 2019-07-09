@@ -1,38 +1,21 @@
-import EngineAPIService from "../../services/EngineAPIService";
-import getSvgUrl from "../../utils/getSvgUrl";
-import { IMetadata } from "../../types/metadata";
-import { IOption } from "../../types/option";
+import getSvgUrl from "./getSvgUrl";
+import { IMetadata } from "../types/metadata";
+import { IOption } from "../types/option";
+import { FRAMEWORK_TYPE } from "./constants";
 
-type FrameworkType = "frontend" | "backend";
-
-// thunk
-export const getFrameworks = async (
-  projectType: string,
-  type: FrameworkType,
-  isPreview: boolean,
-  serverPort: number
-): Promise<IOption[]> => {
-  const api = new EngineAPIService(serverPort, undefined);
-  try {
-    const frameworksJson = await api.getFrameworks(projectType);
-
-    if (frameworksJson.detail == null) {
-      return getOptionalFromMetadata(
-        getMetadataFromJson(frameworksJson, type, isPreview)
-      );
-    } else {
-      console.log("FAILED");
-      return [];
-    }
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
+export const parseFrameworksPayload = (
+  frameworksJson: any[],
+  type: FRAMEWORK_TYPE,
+  isPreview: boolean
+): IOption[] => {
+  return getOptionalFromMetadata(
+    getMetadataFromJson(frameworksJson, type, isPreview)
+  );
 };
 
 function getMetadataFromJson(
   items: any[],
-  type: FrameworkType,
+  type: FRAMEWORK_TYPE,
   isPreview: boolean
 ): IMetadata[] {
   return items

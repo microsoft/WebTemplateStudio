@@ -3,12 +3,9 @@ import { connect } from "react-redux";
 
 import SelectOption from "../SelectOption";
 
-import { getBackendFrameworksAction } from "../../actions/wizardContentActions/getBackendFrameworks";
 import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -19,17 +16,11 @@ import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
-  getBackendFrameworks: (
-    projectType: string,
-    isPreview: boolean,
-    serverPort: number
-  ) => void;
 }
 
 interface ISelectBackendProps {
   options: IOption[];
   selectedBackend: ISelected;
-  serverPort: number;
   isPreview: boolean;
 }
 
@@ -43,16 +34,6 @@ const messages = defineMessages({
 });
 
 class SelectBackEndFramework extends React.Component<Props> {
-  public componentDidMount() {
-    const { getBackendFrameworks, isPreview, serverPort } = this.props;
-    if (getBackendFrameworks !== undefined) {
-      getBackendFrameworks(
-        WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
-        isPreview,
-        serverPort
-      );
-    }
-  }
   /**
    * Finds the index of the framework currently selected in the wizard
    *
@@ -93,14 +74,13 @@ class SelectBackEndFramework extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): ISelectBackendProps => {
-  const { backendOptions, previewStatus, serverPort } = state.wizardContent;
+  const { backendOptions, previewStatus } = state.wizardContent;
   const { backendFramework } = state.selection;
 
   return {
     isPreview: previewStatus,
     options: backendOptions,
-    selectedBackend: backendFramework,
-    serverPort
+    selectedBackend: backendFramework
   };
 };
 
@@ -109,13 +89,6 @@ const mapDispatchToProps = (
 ): IDispatchProps => ({
   selectBackendFramework: (backendFramework: ISelected) => {
     dispatch(selectBackendFrameworkAction(backendFramework));
-  },
-  getBackendFrameworks: (
-    projectType: string,
-    isPreview: boolean,
-    serverPort: number
-  ) => {
-    dispatch(getBackendFrameworksAction(projectType, isPreview, serverPort));
   }
 });
 
