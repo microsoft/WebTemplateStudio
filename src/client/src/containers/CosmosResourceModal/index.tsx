@@ -97,7 +97,8 @@ const initialState: CosmosDb = {
   internalName: {
     value: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     label: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
-  }
+  },
+  chooseExistingRadioButtonSelected: true
 };
 
 const CosmosResourceModal = (props: Props) => {
@@ -329,6 +330,32 @@ const CosmosResourceModal = (props: Props) => {
       props.closeModal();
     }
   };
+
+  // when user clicks a radio button, update form data
+  const radioButtonOnChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    let element = event.target as HTMLInputElement;
+    if (element.value === props.intl.formatMessage(messages.chooseExisting)) {
+      updateForm({
+        ...cosmosFormData,
+        chooseExistingRadioButtonSelected: true
+      });
+    } else if (
+      element.value ===
+      props.intl.formatMessage(messages.createNewResourceGroupDisplayMessage)
+    ) {
+      updateForm({
+        ...cosmosFormData,
+        chooseExistingRadioButtonSelected: false,
+        resourceGroup: {
+          value: "",
+          label: ""
+        }
+      });
+    }
+  };
+
   return (
     <div>
       {/* Create CosmosDB Account Header */}
@@ -357,17 +384,6 @@ const CosmosResourceModal = (props: Props) => {
           props.intl.formatMessage(messages.subscriptionSubLabel)
         )}
         {/* Choose Resource Group */}
-        {/* {getDropdownSection(
-          FORM_CONSTANTS.RESOURCE_GROUP.label,
-          cosmosData.resourceGroup,
-          FORM_CONSTANTS.RESOURCE_GROUP.value,
-          props.intl.formatMessage(messages.ariaResourceGroupLabel),
-          props.intl.formatMessage(messages.createNew),
-          cosmosFormData.subscription.value === "",
-          DEFAULT_VALUE,
-          false,
-          props.intl.formatMessage(messages.resourceGroupSubLabel)
-        )} */}
         {
           <div
             className={classnames([styles.selectionContainer], {
@@ -391,6 +407,36 @@ const CosmosResourceModal = (props: Props) => {
             </div>
             <div className={styles.subLabel}>
               {props.intl.formatMessage(messages.resourceGroupSubLabel)}
+            </div>
+            {/* Radio Buttons for Choose Resource Group */}
+            <div
+              className={styles.radioButtonContainer}
+              onChange={radioButtonOnChangeHandler}
+            >
+              <input
+                className={styles.radioButton}
+                type="radio"
+                value={props.intl.formatMessage(messages.chooseExisting)}
+                disabled={cosmosFormData.subscription.value === ""}
+                checked={cosmosFormData.chooseExistingRadioButtonSelected}
+              />
+              <div className={styles.radioButtonLabel}>
+                {props.intl.formatMessage(messages.chooseExisting)}
+              </div>
+              <input
+                className={styles.radiobutton}
+                type="radio"
+                value={props.intl.formatMessage(
+                  messages.createNewResourceGroupDisplayMessage
+                )}
+                disabled={cosmosFormData.subscription.value === ""}
+                checked={!cosmosFormData.chooseExistingRadioButtonSelected}
+              />
+              <div className={styles.radioButtonLabel}>
+                {props.intl.formatMessage(
+                  messages.createNewResourceGroupDisplayMessage
+                )}
+              </div>
             </div>
             <Dropdown
               ariaLabel={props.intl.formatMessage(
