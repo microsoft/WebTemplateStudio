@@ -46,6 +46,7 @@ export interface IAzureFunctionsSelection {
   appNameAvailability: IAvailability;
   selection: ISelectedAzureFunctionsService[];
   wizardContent: IServiceContent;
+  chooseExistingRadioButtonSelected: boolean;
 }
 
 const initialState = {
@@ -56,7 +57,8 @@ const initialState = {
   selection: [],
   wizardContent: {
     serviceType: messages.azureFunctionsOriginalTitle
-  }
+  },
+  chooseExistingRadioButtonSelected: true
 };
 
 const getFunctionNames = (functionNames: IFunctionName[]): string[] => {
@@ -173,7 +175,9 @@ const azureFunctions = (
             ),
             appName: action.payload.appName
           }
-        ]
+        ],
+        chooseExistingRadioButtonSelected:
+          action.payload.chooseExistingRadioButtonSelected
       };
       return newSelectionState;
 
