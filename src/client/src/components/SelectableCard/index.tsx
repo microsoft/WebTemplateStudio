@@ -1,25 +1,20 @@
 import classNames from "classnames";
 import * as React from "react";
-import { connect } from "react-redux";
 
 import { Link } from "react-router-dom";
 
-import CardBody from "../../components/CardBody";
-import CardTitle from "../../components/CardTitle";
-import DependencyInfo from "../DependencyInfo";
+import CardBody from "../CardBody";
+import CardTitle from "../CardTitle";
+import DependencyInfo from "../../containers/DependencyInfo";
 import { ReactComponent as Check } from "../../assets/check.svg";
 
 import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
-// import Check from "../../assets/check.svg";
-
 import { IOption } from "../../types/option";
 import { FormattedMessage } from "react-intl";
 import { ROUTES } from "../../utils/constants";
 import { getSvg } from "../../utils/getSvgUrl";
-
-import { AppState } from "../../reducers";
 
 const SelectableCard = ({
   iconPath,
