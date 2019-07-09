@@ -5,14 +5,9 @@ import SelectOption from "../SelectOption";
 
 import { selectFrontendFramework as selectFrontendAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
 
-import { getFrontendFrameworksAction } from "../../actions/wizardContentActions/getFrontendFrameworks";
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-import {
-  WIZARD_CONTENT_INTERNAL_NAMES,
-  EXTENSION_MODULES,
-  EXTENSION_COMMANDS
-} from "../../utils/constants";
+import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
@@ -28,18 +23,12 @@ import {
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
-  getFrontendFrameworks: (
-    projectType: string,
-    isPreview: boolean,
-    serverPort: number
-  ) => void;
 }
 
 interface ISelectFrontEndFrameworkProps {
   options: IOption[];
   selectedFrontendFramework: ISelected;
   vscode: IVSCodeObject;
-  serverPort: number;
   isPreview: boolean;
   isRoutesVisited: IVisitedPages;
   selectedPages: ISelected[];
@@ -55,17 +44,6 @@ const messages = defineMessages({
 });
 
 class SelectFrontEndFramework extends React.Component<Props> {
-  public componentDidMount() {
-    const { getFrontendFrameworks, isPreview, serverPort } = this.props;
-    if (getFrontendFrameworks) {
-      getFrontendFrameworks(
-        WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
-        isPreview,
-        serverPort
-      );
-    }
-  }
-
   public handleFrameworkChange(option: ISelected) {
     const {
       vscode,
@@ -131,7 +109,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
-  const { frontendOptions, previewStatus, serverPort } = state.wizardContent;
+  const { frontendOptions, previewStatus } = state.wizardContent;
   const { frontendFramework } = state.selection;
   const { pages } = state.selection;
 
@@ -139,7 +117,6 @@ const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
     isPreview: previewStatus,
     isRoutesVisited: getIsVisitedRoutesSelector(state),
     options: frontendOptions,
-    serverPort,
     selectedFrontendFramework: frontendFramework,
     selectedPages: pages,
     vscode: getVSCodeApiSelector(state)
@@ -151,13 +128,6 @@ const mapDispatchToProps = (
 ): IDispatchProps => ({
   selectFrontendFramework: (framework: ISelected) => {
     dispatch(selectFrontendAction(framework));
-  },
-  getFrontendFrameworks: (
-    projectType: string,
-    isPreview: boolean,
-    serverPort: number
-  ) => {
-    dispatch(getFrontendFrameworksAction(projectType, isPreview, serverPort));
   }
 });
 
