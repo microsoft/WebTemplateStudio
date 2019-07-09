@@ -84,10 +84,11 @@
 }
 
 .showCount {
-  font-size: 1em;
-  margin-left: 5px;
-  margin-right: 5px;
+  font-size: 1.1em;
+  margin-left: 7px;
+  margin-right: 7px;
   margin-top: 3px;
+  font-weight: 500;
 }
 
 .icon {
@@ -135,7 +136,7 @@
 
 .cardCount {
   text-align: center;
-  border: 1px solid var(--vscode-editor-foreground);
+  border: 1.8px solid var(--vscode-editor-foreground);
   height: 30px;
   width: 30px;
   border-radius: 50%;

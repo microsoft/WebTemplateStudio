@@ -16,6 +16,9 @@ import { FormattedMessage } from "react-intl";
 import { ROUTES } from "../../utils/constants";
 import { getSvg } from "../../utils/getSvgUrl";
 
+import { ReactComponent as Plus } from "../../assets/plus.svg";
+import plus from "../../assets/plus.svg";
+
 const SelectableCard = ({
   iconPath,
   iconStyles,
@@ -137,7 +140,7 @@ const SelectableCard = ({
                 addPage(cardNumber);
               }}
             >
-              +
+              {plus && <Plus />}
             </button>
           )}
         </div>
