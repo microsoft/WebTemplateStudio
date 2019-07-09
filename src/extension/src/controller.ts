@@ -17,7 +17,7 @@ import { GenerationExperience } from "./generationExperience";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
 import { DependencyChecker } from "./utils/dependencyChecker";
-import { CoreTSModule } from "./CoreTSModule";
+import { CoreTSModule } from "./coreTSModule";
 
 export class Controller {
   /**
