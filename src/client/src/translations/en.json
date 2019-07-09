@@ -153,7 +153,7 @@
   "summarySection.duplicateName": "Function name has to be unique",
   "summaryTile.changeItemName": "Change Item Name",
   "topNavBar.ariaNavLabel": "Navigate between pages in the Wizard",
-  "topNavBar.frameworks": "Frameworks",
+  "topNavBar.frameworks": "Add Frameworks",
   "topNavBar.newProject": "New Project",
   "topNavBar.pages": "Pages",
   "topNavBar.services": "Add Optional Cloud Services",
