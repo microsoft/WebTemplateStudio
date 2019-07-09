@@ -294,13 +294,13 @@ export class AzureServices extends WizardServant {
     let result: ResourceGroupSelection[] = [];
     let allSubscriptions: SubscriptionItem[] = [];
 
-    if (payload.selectedFunctions) {
+    if (AzureServices.functionsSelectedNewResourceGroup(payload)) {
       await AzureServices.updateFunctionSubscriptionItemCache(
         payload.functions.subscription
       );
       allSubscriptions.push(AzureServices.usersFunctionSubscriptionItemCache);
     }
-    if (payload.selectedCosmos) {
+    if (AzureServices.cosmosDBSelectedNewResourceGroup(payload)) {
       await AzureServices.updateCosmosDBSubscriptionItemCache(
         payload.cosmos.subscription
       );
@@ -321,6 +321,14 @@ export class AzureServices extends WizardServant {
     });
 
     return result;
+  }
+
+  public static functionsSelectedNewResourceGroup(payload: any): boolean {
+    return payload.selectedFunctions && payload.functions.resourceGroup === "";
+  }
+
+  public static cosmosDBSelectedNewResourceGroup(payload: any): boolean {
+    return payload.selectedCosmos && payload.cosmos.resource === "";
   }
 
   private static generateResourceGroupSelection(

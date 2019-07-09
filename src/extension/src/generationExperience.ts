@@ -91,8 +91,8 @@ export class GenerationExperience extends WizardServant {
     });
     
     if (
-      this.functionsSelectedNewResourceGroup(payload) ||
-      this.cosmosDBSelectedNewResourceGroup(payload)
+      AzureServices.functionsSelectedNewResourceGroup(payload) ||
+      AzureServices.cosmosDBSelectedNewResourceGroup(payload)
     ) {
       const distinctResourceGroupSelections: ResourceGroupSelection[] = await AzureServices.generateDistinctResourceGroupSelections(
         payload
@@ -129,11 +129,11 @@ export class GenerationExperience extends WizardServant {
       });
       // Update payload if service was chosen to be deployed to a new resource group
       // Note: all resource groups created will have the same name
-      if (this.functionsSelectedNewResourceGroup(payload)) {
+      if (AzureServices.functionsSelectedNewResourceGroup(payload)) {
         payload.functions.resourceGroup =
           distinctResourceGroupSelections[0].resourceGroupName;
       }
-      if (this.cosmosDBSelectedNewResourceGroup(payload)) {
+      if (AzureServices.cosmosDBSelectedNewResourceGroup(payload)) {
         payload.cosmos.resourceGroup =
           distinctResourceGroupSelections[0].resourceGroupName;
       }
@@ -240,14 +240,6 @@ export class GenerationExperience extends WizardServant {
       payload: enginePayload,
       liveMessageHandler: this.handleGenLiveMessage
     });
-  }
-
-  private functionsSelectedNewResourceGroup(payload: any): boolean {
-    return payload.selectedFunctions && payload.functions.resourceGroup === "";
-  }
-
-  private cosmosDBSelectedNewResourceGroup(payload: any): boolean {
-    return payload.selectedCosmos && payload.cosmos.resource === "";
   }
 
   private handleGenLiveMessage(message: string) {
