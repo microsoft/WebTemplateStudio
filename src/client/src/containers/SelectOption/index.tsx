@@ -208,13 +208,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   };
 
   addPage(cardNumber: number) {
-    const {
-      options,
-      multiSelect,
-      cardTypeCount,
-      handleCountUpdate
-    } = this.props;
-    const { unselectable, internalName } = options[cardNumber];
+    const { options, cardTypeCount, handleCountUpdate } = this.props;
+    const { internalName } = options[cardNumber];
     if (cardTypeCount && handleCountUpdate) {
       cardTypeCount[internalName] = cardTypeCount[internalName]
         ? cardTypeCount[internalName] + 1
