@@ -61,29 +61,20 @@ export class ResourceGroupDeploy {
     name: string,
     userSubscriptionItems: SubscriptionItem[]
   ): Promise<string> {
-    let generatedName = this.generateResourceGroupName(name);
-    let isValid: boolean = true;
+    let generatedName: string = this.generateResourceGroupName(name);
     // this allows the generated name to be validated against multiple subscriptions
-    userSubscriptionItems.forEach(async userSubscriptionItem => {
-      isValid =
-        isValid &&
-        (await this.validateResourceGroupName(
-          generatedName,
-          userSubscriptionItem
-        ));
-    });
+    let isValid: boolean = await this.validateResourceGroupNameWithMultipleSubscriptions(
+      generatedName,
+      userSubscriptionItems
+    );
 
     let tries = 0;
     while (tries < VALIDATION_LIMIT && !isValid) {
       generatedName = this.generateResourceGroupName(name);
-      userSubscriptionItems.forEach(async userSubscriptionItem => {
-        isValid =
-          isValid &&
-          (await this.validateResourceGroupName(
-            generatedName,
-            userSubscriptionItem
-          ));
-      });
+      isValid = await this.validateResourceGroupNameWithMultipleSubscriptions(
+        generatedName,
+        userSubscriptionItems
+      );
       tries++;
     }
     if (tries >= VALIDATION_LIMIT) {
@@ -94,7 +85,23 @@ export class ResourceGroupDeploy {
     return generatedName;
   }
 
-  private async validateResourceGroupName(
+  private async validateResourceGroupNameWithMultipleSubscriptions(
+    name: string,
+    userSubscriptionItems: SubscriptionItem[]
+  ): Promise<boolean> {
+    let isValid: boolean = true;
+    userSubscriptionItems.forEach(async userSubscriptionItem => {
+      isValid =
+        isValid &&
+        (await this.validateResourceGroupNameWithSubscription(
+          name,
+          userSubscriptionItem
+        ));
+    });
+    return isValid;
+  }
+
+  private async validateResourceGroupNameWithSubscription(
     name: string,
     userSubscriptionItem: SubscriptionItem
   ): Promise<boolean> {
