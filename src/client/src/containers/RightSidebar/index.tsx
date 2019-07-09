@@ -9,7 +9,6 @@ import classnames from "classnames";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
 import ServicesSidebarItem from "../../components/ServicesSidebarItem";
-import Licenses from "../Licenses";
 import About from "../About";
 import SortablePageList from "../SortablePageList";
 
