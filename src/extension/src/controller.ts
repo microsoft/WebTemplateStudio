@@ -17,6 +17,7 @@ import { GenerationExperience } from "./generationExperience";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
 import { DependencyChecker } from "./utils/dependencyChecker";
+import { CoreTSModule } from "./coreTSModule";
 
 export class Controller {
   /**
@@ -32,6 +33,7 @@ export class Controller {
   private GenExperience: GenerationExperience;
   private Validator: Validator;
   private DependencyChecker: DependencyChecker;
+  private CoreTSModule: CoreTSModule;
 
   /**
    *  Defines the WizardServant modules to which wizard client commands are routed
@@ -45,7 +47,8 @@ export class Controller {
       [ExtensionModule.Validator, this.Validator],
       [ExtensionModule.Generate, this.GenExperience],
       [ExtensionModule.Logger, Controller.Logger],
-      [ExtensionModule.DependencyChecker, this.DependencyChecker]
+      [ExtensionModule.DependencyChecker, this.DependencyChecker],
+      [ExtensionModule.CoreTSModule, this.CoreTSModule]
     ]);
   }
 
@@ -104,6 +107,7 @@ export class Controller {
     this.AzureService = new AzureServices();
     this.GenExperience = new GenerationExperience(Controller.Telemetry);
     this.DependencyChecker = new DependencyChecker();
+    this.CoreTSModule = new CoreTSModule();
     Logger.initializeOutputChannel(
       Controller.Telemetry.getExtensionName(this.context)
     );
@@ -131,7 +135,7 @@ export class Controller {
   ): Promise<void> {
     const syncObject = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
-      async function(this: IActionContext) {
+      async function (this: IActionContext) {
         return await launchExperience
           .launchApiSyncModule(context)
           .catch(error => {
