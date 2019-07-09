@@ -17,6 +17,10 @@ export const CONSTANTS = {
       "error.resourceGroupNotFound",
       "No resource group found with this name"
     ),
+    RESOURCE_GROUP_TRIES_EXCEEDED: localize(
+      "error.resourceGroupTriesExceedeed",
+      "Number of tries exceeded for creating resource group"
+    ),
     SUBSCRIPTION_NOT_FOUND: localize(
       "error.subscriptionNotFound",
       "No subscription found with this name."
@@ -43,6 +47,10 @@ export const CONSTANTS = {
     SUBSCRIPTION_NOT_DEFINED: localize(
       "error.subscriptionNotDefined",
       "Subscription Item cannot have undefined values."
+    ),
+    AZURE_RESOURCE_CLIENT_NOT_DEFINED: localize(
+      "error.azureResourceClientNotDefined",
+      "Azure resource management client cannot be undefined"
     ),
     WEBSITE_CLIENT_NOT_DEFINED: localize(
       "error.websiteClientNotDefined",
@@ -190,14 +198,14 @@ export const CONSTANTS = {
   },
   GENERATE_ENDPOINT: "/api/generate",
   ENGINE_DIRECTORY: "./src/api/darwin/CoreTemplateStudio.Api",
-  CONNECTION_STRING_MONGO: function(
+  CONNECTION_STRING_MONGO: function (
     username: string,
     password: string,
     origin: string
   ) {
     return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMOSDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
   },
-  CONNECTION_STRING_SQL: function(origin: string, primaryKey: string) {
+  CONNECTION_STRING_SQL: function (origin: string, primaryKey: string) {
     return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
@@ -211,6 +219,9 @@ export const CONSTANTS = {
     PYTHON: 'python',
     PYTHON3: 'python3',
     PYTHON_LAUNCHER: 'py -3'
+  },
+  AZURE_LOCATION: {
+    CENTRAL_US: "Central US"
   }
 };
 
@@ -230,6 +241,7 @@ export enum ExtensionCommand {
   GetFunctionsRuntimes = "get-functions-runtimes",
   GetCosmosAPIs = "get-cosmos-apis",
   GetUserStatus = "get-user-status",
+  GetFrameworks = "get-frameworks",
   TrackPageSwitch = "track-page-switch",
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
@@ -249,7 +261,8 @@ export enum ExtensionModule {
   Validator = "Validator",
   VSCodeUI = "VSCodeUI",
   Logger = "Logger",
-  DependencyChecker = "DependencyChecker"
+  DependencyChecker = "DependencyChecker",
+  CoreTSModule = "CoreTSModule"
 }
 
 export enum TelemetryEventName {
@@ -260,6 +273,7 @@ export enum TelemetryEventName {
   EngineGeneration = "Engine-Generation-Time",
   CosmosDBDeploy = "Azure-Cosmos-Deployment",
   FunctionsDeploy = "Azure-Functions-Deployment",
+  ResourceGroupDeploy = "Azure-Resource-Group-Deployment",
   PageChange = "Wizard-Page-Change",
   SyncEngine = "Sync-Engine",
   ConnectionStringReplace = "Connection-String-Replaced",
