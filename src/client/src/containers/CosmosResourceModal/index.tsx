@@ -357,7 +357,7 @@ const CosmosResourceModal = (props: Props) => {
           props.intl.formatMessage(messages.subscriptionSubLabel)
         )}
         {/* Choose Resource Group */}
-        {getDropdownSection(
+        {/* {getDropdownSection(
           FORM_CONSTANTS.RESOURCE_GROUP.label,
           cosmosData.resourceGroup,
           FORM_CONSTANTS.RESOURCE_GROUP.value,
@@ -367,16 +367,62 @@ const CosmosResourceModal = (props: Props) => {
           DEFAULT_VALUE,
           false,
           props.intl.formatMessage(messages.resourceGroupSubLabel)
-        )}
+        )} */}
+        {
+          <div
+            className={classnames([styles.selectionContainer], {
+              [styles.selectionContainerDisabled]:
+                cosmosFormData.subscription.value === ""
+            })}
+          >
+            <div className={styles.selectionHeaderContainer}>
+              <div className={styles.leftHeader}>
+                {FORM_CONSTANTS.RESOURCE_GROUP.label}
+              </div>
+              {links[FORM_CONSTANTS.RESOURCE_GROUP.value] && (
+                <a
+                  tabIndex={cosmosFormData.subscription.value === "" ? -1 : 0}
+                  className={styles.link}
+                  href={links[FORM_CONSTANTS.RESOURCE_GROUP.value]}
+                >
+                  {props.intl.formatMessage(messages.createNew)}
+                </a>
+              )}
+            </div>
+            <div className={styles.subLabel}>
+              {props.intl.formatMessage(messages.resourceGroupSubLabel)}
+            </div>
+            <Dropdown
+              ariaLabel={props.intl.formatMessage(
+                messages.ariaResourceGroupLabel
+              )}
+              options={cosmosData.resourceGroup}
+              handleChange={option => {
+                handleDropdown(
+                  FORM_CONSTANTS.RESOURCE_GROUP.value,
+                  option.value
+                );
+              }}
+              value={
+                cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
+                  ? cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                  : DEFAULT_VALUE
+              }
+              disabled={cosmosFormData.subscription.value === ""}
+              openDropdownUpwards={false}
+            />
+          </div>
+        }
         {/* Account Name */}
         <div
-          className={classnames(styles.selectionInputContainer, {
-            [styles.selectionContainer]:
-              isAccountNameAvailable ||
-              cosmosFormData.accountName.value.length === 0,
-            [styles.selectionContainerDisabled]:
-              cosmosFormData.subscription.value === ""
-          })}
+          className={classnames(
+            styles.selectionInputContainer,
+            styles.selectionContainer,
+            {
+              [styles.selectionContainerDisabled]:
+                cosmosFormData.subscription.value === ""
+            }
+          )}
         >
           <div className={styles.selectionHeaderContainer}>
             <div className={styles.leftHeader}>
