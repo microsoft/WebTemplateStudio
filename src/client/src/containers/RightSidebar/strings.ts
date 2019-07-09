@@ -20,6 +20,14 @@ const messages = defineMessages({
   services: {
     id: "rightSidebar.services",
     defaultMessage: "Services"
+  },
+  viewLicenses: {
+    id: "licenses.viewLicenses",
+    defaultMessage: "View Licenses"
+  },
+  giveFeedback: {
+    id: "about.reportAnIssueLabel",
+    defaultMessage: "Give Feedback"
   }
 });
 
