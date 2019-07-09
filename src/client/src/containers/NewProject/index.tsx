@@ -54,7 +54,7 @@ const NewProject = ({
       <div className={styles.body}>
         <FormattedMessage
           id="newProject.body"
-          defaultMessage="Enter a project name and output path, then click next to get started on your full stack application."
+          defaultMessage="Give your full-stack project a name, choose where to create it, then click 'Next' to get started."
         />
       </div>
       <div className={styles.projectDetailsContainer}>
