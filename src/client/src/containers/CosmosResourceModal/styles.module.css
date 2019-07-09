@@ -78,7 +78,7 @@
 }
 
 .validationIcon path {
-  fill: var(--vscode-editorMarkerNavigationWarning-background);
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
 .inputContainer {
