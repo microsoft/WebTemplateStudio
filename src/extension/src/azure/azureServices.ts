@@ -305,13 +305,17 @@ export class AzureServices extends WizardServant {
       );
       allSubscriptions.push(AzureServices.usersCosmosDBSubscriptionItemCache);
     }
-    const allDistinctSubscriptions: SubscriptionItem[] = [... new Set(allSubscriptions)];
+    const allDistinctSubscriptions: SubscriptionItem[] = [
+      ...new Set(allSubscriptions)
+    ];
     const generatedName: string = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
-          projectName,
-          allDistinctSubscriptions
-        );
+      projectName,
+      allDistinctSubscriptions
+    );
 
-    return allDistinctSubscriptions.map(subscription =>  AzureServices.generateResourceGroupSelection(generatedName, subscription));
+    return allDistinctSubscriptions.map(subscription =>
+      AzureServices.generateResourceGroupSelection(generatedName, subscription)
+    );
   }
 
   public static functionsSelectedNewResourceGroup(payload: any): boolean {
