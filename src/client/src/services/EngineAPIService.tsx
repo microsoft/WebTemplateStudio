@@ -23,19 +23,6 @@ export default class EngineAPIService {
       });
   }
 
-  public async getFrameworks(projectType: string): Promise<any> {
-    const url = new URL(constants.API.Endpoints.Framework, this.API);
-    url.searchParams.append(constants.API.QueryParams.ProjectType, projectType);
-
-    return await fetch(url.href, { method: constants.API.Methods.GET })
-      .then((response: Response) => {
-        return response.json();
-      })
-      .catch((error: Error) => {
-        throw Error(error.toString());
-      });
-  }
-
   public async getFeatures(
     projectType: string,
     frontendFramework: string,
