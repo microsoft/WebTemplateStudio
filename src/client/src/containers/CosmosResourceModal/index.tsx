@@ -438,25 +438,33 @@ const CosmosResourceModal = (props: Props) => {
                 )}
               </div>
             </div>
-            <Dropdown
-              ariaLabel={props.intl.formatMessage(
-                messages.ariaResourceGroupLabel
+            <div className={styles.resourceGroupToggleContainer}>
+              {cosmosFormData.chooseExistingRadioButtonSelected ? (
+                <Dropdown
+                  ariaLabel={props.intl.formatMessage(
+                    messages.ariaResourceGroupLabel
+                  )}
+                  options={cosmosData.resourceGroup}
+                  handleChange={option => {
+                    handleDropdown(
+                      FORM_CONSTANTS.RESOURCE_GROUP.value,
+                      option.value
+                    );
+                  }}
+                  value={
+                    cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
+                      ? cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                      : DEFAULT_VALUE
+                  }
+                  disabled={cosmosFormData.subscription.value === ""}
+                  openDropdownUpwards={false}
+                />
+              ) : (
+                props.intl.formatMessage(
+                  messages.createNewResourceGroupSelectedDisplayMessage
+                )
               )}
-              options={cosmosData.resourceGroup}
-              handleChange={option => {
-                handleDropdown(
-                  FORM_CONSTANTS.RESOURCE_GROUP.value,
-                  option.value
-                );
-              }}
-              value={
-                cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
-                  ? cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
-                  : DEFAULT_VALUE
-              }
-              disabled={cosmosFormData.subscription.value === ""}
-              openDropdownUpwards={false}
-            />
+            </div>
           </div>
         }
         {/* Account Name */}
