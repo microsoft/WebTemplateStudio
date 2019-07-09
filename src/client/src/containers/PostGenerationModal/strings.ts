@@ -39,7 +39,7 @@ export const strings = defineMessages({
   },
   openInCode: {
     id: "postGenerationModal.openInCode",
-    defaultMessage: "Open project in VSCode."
+    defaultMessage: "Open Project"
   },
   unknownStatus: {
     id: "postGenerationModal.unknownStatus",
@@ -51,19 +51,35 @@ export const strings = defineMessages({
   },
   help: {
     id: "postGenerationModal.help",
-    defaultMessage: "Give Feedback or Report an issue"
+    defaultMessage: "Report an issue"
+  },
+  createAnotherProject: {
+    id: "postGenerationModal.createAnotherProject",
+    defaultMessage: "Create New Project"
+  },
+  creatingYourProject: {
+    id: "postGenerationModal.creatingYourProject",
+    defaultMessage: "Creating Your Project"
   },
   azureServices: {
     id: "postGenerationModal.azureServices",
     defaultMessage: "Azure Services"
   },
-  generationStatus: {
-    id: "postGenerationModal.generationStatus",
-    defaultMessage: "Generation Status"
-  },
   generationComplete: {
     id: "postGenerationModal.generationComplete",
-    defaultMessage: "Generation complete."
+    defaultMessage: "Project successfully created."
+  },
+  openReadMe: {
+    id: "postGenerationModal.openReadMe",
+    defaultMessage: "Open "
+  },
+  readMe: {
+    id: "postGenerationModal.readme",
+    defaultMessage: "README.md"
+  },
+  toStart: {
+    id: "postGenerationModal.toStart",
+    defaultMessage: " to start"
   },
   templateGeneration: {
     id: "postGenerationModal.templateGeneration",
