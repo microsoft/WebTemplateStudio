@@ -27,6 +27,7 @@ import {
 } from "../../selectors/azureFunctionsServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
+import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
 import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
@@ -47,9 +48,13 @@ import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
 import { IFunctionName } from "../AzureFunctionsSelection";
 
+import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
+import nextArrow from "../../assets/nextarrow.svg";
+
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
   openPostGenModal: () => any;
+  updateCreateProjectButton: (enable: boolean) => any;
 }
 
 interface IStateProps {
@@ -62,6 +67,7 @@ interface IStateProps {
   isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
   functionNames?: IFunctionName[];
+  enableCreateProjectButton: boolean;
 }
 
 type Props = RouteComponentProps &
@@ -185,9 +191,19 @@ class Footer extends React.Component<Props> {
       }
     }
 
-    const { isValidNameAndProjectPath, location, isVisited, intl } = this.props;
+    const {
+      isValidNameAndProjectPath,
+      location,
+      isVisited,
+      intl,
+      updateCreateProjectButton,
+      enableCreateProjectButton
+    } = this.props;
     const { pathname } = location;
     const { showFrameworks } = isVisited;
+    if (this.isReviewAndGenerate()) {
+      updateCreateProjectButton(true);
+    }
     return (
       <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
         {pathname !== ROUTES.PAGE_DETAILS && (
@@ -223,6 +239,7 @@ class Footer extends React.Component<Props> {
                   tabIndex={isValidNameAndProjectPath ? 0 : -1}
                   className={classnames(
                     styles.button,
+                    styles.buttonNext,
                     buttonStyles.buttonHighlightedBorder,
                     {
                       [buttonStyles.buttonDark]: !isValidNameAndProjectPath,
@@ -235,27 +252,25 @@ class Footer extends React.Component<Props> {
                   to={pathsNext[pathname]}
                 >
                   <FormattedMessage id="footer.next" defaultMessage="Next" />
+                  {nextArrow && <NextArrow className={styles.nextIcon} />}
                 </Link>
               )}
-              <button
-                disabled={
-                  pathname !== ROUTES.REVIEW_AND_GENERATE || !areValidNames
-                }
-                className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]:
-                    !this.isReviewAndGenerate() || !areValidNames,
-                  [buttonStyles.buttonHighlightedBorder]:
-                    this.isReviewAndGenerate() && areValidNames,
-                  [styles.disabledOverlay]:
-                    !this.isReviewAndGenerate() || !areValidNames
-                })}
-                onClick={this.logMessageToVsCode}
-              >
-                <FormattedMessage
-                  id="footer.generate"
-                  defaultMessage="Create Project"
-                />
-              </button>
+              {enableCreateProjectButton && (
+                <button
+                  disabled={!areValidNames}
+                  className={classnames(styles.button, {
+                    [buttonStyles.buttonDark]: !areValidNames,
+                    [buttonStyles.buttonHighlightedBorder]: areValidNames,
+                    [styles.disabledOverlay]: !areValidNames
+                  })}
+                  onClick={this.logMessageToVsCode}
+                >
+                  <FormattedMessage
+                    id="footer.generate"
+                    defaultMessage="Create Project"
+                  />
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -273,7 +288,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   functionNames: getAzureFunctionsNamesSelector(state),
   functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
-  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
+  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
+  enableCreateProjectButton: state.wizardContent.createProjectButton
 });
 
 const mapDispatchToProps = (
@@ -284,6 +300,9 @@ const mapDispatchToProps = (
   },
   openPostGenModal: () => {
     dispatch(openPostGenModalAction());
+  },
+  updateCreateProjectButton: (enable: boolean) => {
+    dispatch(updateCreateProjectButtonAction(enable));
   }
 });
 

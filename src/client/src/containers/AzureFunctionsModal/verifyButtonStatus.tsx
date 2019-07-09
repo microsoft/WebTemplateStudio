@@ -13,7 +13,9 @@ export const setFunctionsModalButtonStatus = (
   let isAnyEmpty: boolean = false;
 
   isSubscriptionEmpty = selections.subscription.value === "";
-  isResourceGroupEmpty = selections.resourceGroup.value === "";
+  isResourceGroupEmpty =
+    selections.chooseExistingRadioButtonSelected &&
+    selections.resourceGroup.value === "";
   isAppNameEmpty = selections.appName.value === "";
   isNumFunctionsZero = selections.numFunctions.value === 0;
   isLocationEmpty = selections.location.value === "";
