@@ -63,6 +63,7 @@ interface IStateProps {
   isValidatingName: boolean;
   appNameAvailability: any;
   selection: any;
+  chooseExistingRadioButtonSelected: boolean;
 }
 
 type Props = IDispatchProps & IStateProps & InjectedIntlProps;
@@ -76,7 +77,6 @@ let timeout: NodeJS.Timeout | undefined;
 const links: attributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
-  resourceGroup: "https://ms.portal.azure.com/#create/Microsoft.ResourceGroup",
   appName: "https://azure.microsoft.com/en-us/services/functions/",
   api: null,
   location: null,
@@ -116,7 +116,8 @@ const initialState: IFunctionsState = {
   internalName: {
     value: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
     label: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
-  }
+  },
+  chooseExistingRadioButtonSelected: true
 };
 
 const AzureFunctionsResourceModal = (props: Props) => {
@@ -155,6 +156,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
   // Updates the data we are presenting to the user when the subscription changes
   React.useEffect(() => {
     setData({
+      ...functionsData,
       appName: [
         {
           value: "",
@@ -236,9 +238,25 @@ const AzureFunctionsResourceModal = (props: Props) => {
     }
   }, [azureFunctionsFormData.appName.value]);
 
+  /*
+   * Listens on radio button change to update button status
+   */
+  React.useEffect(() => {
+    setFunctionsModalButtonStatus(
+      azureFunctionsFormData,
+      props.isValidatingName,
+      props.appNameAvailability,
+      setFormIsSendable
+    );
+  }, [azureFunctionsFormData.chooseExistingRadioButtonSelected]);
+
+  // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {
-      handleChange(props.selection.dropdownSelection);
+      const newFunctionState = props.selection.dropdownSelection;
+      newFunctionState.chooseExistingRadioButtonSelected =
+        props.chooseExistingRadioButtonSelected;
+      handleChange(newFunctionState);
     } else {
       props.setAppNameAvailability({
         isAvailable: false,
@@ -350,6 +368,31 @@ const AzureFunctionsResourceModal = (props: Props) => {
       props.closeModal();
     }
   };
+  // when user clicks a radio button, update form data
+  const radioButtonOnChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    let element = event.target as HTMLInputElement;
+    if (element.value === props.intl.formatMessage(messages.chooseExisting)) {
+      updateForm({
+        ...azureFunctionsFormData,
+        chooseExistingRadioButtonSelected: true
+      });
+    } else if (
+      element.value ===
+      props.intl.formatMessage(messages.createNewResourceGroupForMe)
+    ) {
+      updateForm({
+        ...azureFunctionsFormData,
+        chooseExistingRadioButtonSelected: false,
+        resourceGroup: {
+          value: "",
+          label: ""
+        }
+      });
+    }
+  };
+
   return (
     <React.Fragment>
       <div className={styles.headerContainer}>
@@ -377,17 +420,76 @@ const AzureFunctionsResourceModal = (props: Props) => {
           props.intl.formatMessage(messages.subscriptionSubLabel)
         )}
         {/* Choose Resource Group */}
-        {getDropdownSection(
-          FORM_CONSTANTS.RESOURCE_GROUP.label,
-          functionsData.resourceGroup,
-          FORM_CONSTANTS.RESOURCE_GROUP.value,
-          props.intl.formatMessage(messages.ariaResourceGroupLabel),
-          props.intl.formatMessage(messages.createNew),
-          azureFunctionsFormData.subscription.value === "",
-          DEFAULT_VALUE,
-          false,
-          props.intl.formatMessage(messages.resourceGroupSubLabel)
-        )}
+        <div
+          className={classnames([styles.selectionContainer], {
+            [styles.selectionContainerDisabled]:
+              azureFunctionsFormData.subscription.value === ""
+          })}
+        >
+          <div className={styles.selectionHeaderContainer}>
+            <div className={styles.leftHeader}>
+              {FORM_CONSTANTS.RESOURCE_GROUP.label}
+            </div>
+          </div>
+          <div className={styles.subLabel}>
+            {props.intl.formatMessage(messages.resourceGroupSubLabel)}
+          </div>
+          {/* Radio Buttons for Choose Resource Group */}
+          <div
+            className={styles.radioButtonContainer}
+            onChange={radioButtonOnChangeHandler}
+          >
+            <input
+              className={styles.radioButton}
+              type="radio"
+              value={props.intl.formatMessage(messages.chooseExisting)}
+              disabled={azureFunctionsFormData.subscription.value === ""}
+              checked={azureFunctionsFormData.chooseExistingRadioButtonSelected}
+            />
+            <div className={styles.radioButtonLabel}>
+              {props.intl.formatMessage(messages.chooseExisting)}
+            </div>
+            <input
+              className={styles.radiobutton}
+              type="radio"
+              value={props.intl.formatMessage(
+                messages.createNewResourceGroupForMe
+              )}
+              disabled={azureFunctionsFormData.subscription.value === ""}
+              checked={
+                !azureFunctionsFormData.chooseExistingRadioButtonSelected
+              }
+            />
+            <div className={styles.radioButtonLabel}>
+              {props.intl.formatMessage(messages.createNewResourceGroupForMe)}
+            </div>
+          </div>
+          <div className={styles.resourceGroupToggleContainer}>
+            {azureFunctionsFormData.chooseExistingRadioButtonSelected ? (
+              <Dropdown
+                ariaLabel={props.intl.formatMessage(
+                  messages.ariaResourceGroupLabel
+                )}
+                options={functionsData.resourceGroup}
+                handleChange={option => {
+                  handleDropdown(FORM_CONSTANTS.RESOURCE_GROUP.value, option);
+                }}
+                value={
+                  azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                    .value
+                    ? azureFunctionsFormData[
+                        FORM_CONSTANTS.RESOURCE_GROUP.value
+                      ]
+                    : DEFAULT_VALUE
+                }
+                disabled={azureFunctionsFormData.subscription.value === ""}
+                openDropdownUpwards={false}
+              />
+            ) : (
+              props.intl.formatMessage(messages.createNewResourceGroupForYou)
+            )}
+          </div>
+        </div>
         {/* App Name */}
         <div
           className={classnames(
@@ -438,7 +540,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
             className={styles.link}
             href={links.appName}
           >
-            documents.azure.com
+            {"documents.azure.com"}
           </a>
         </div>
         {/* Location */}
@@ -503,7 +605,9 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   appNameAvailability:
     state.selection.services.azureFunctions.appNameAvailability,
   isValidatingName: state.selection.isValidatingName,
-  selection: getFunctionsSelection(state)
+  selection: getFunctionsSelection(state),
+  chooseExistingRadioButtonSelected:
+    state.selection.services.azureFunctions.chooseExistingRadioButtonSelected
 });
 
 const mapDispatchToProps = (
