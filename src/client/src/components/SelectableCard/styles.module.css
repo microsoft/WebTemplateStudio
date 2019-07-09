@@ -91,6 +91,10 @@
   font-weight: 500;
 }
 
+.subtractSVG {
+  margin-top: 3px;
+}
+
 .icon {
   height: 36px;
 }

@@ -144,6 +144,27 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     });
   }
 
+  public removeOption(
+    cardNumber: number,
+    cardCount: number,
+    internalName: string
+  ) {
+    const { selectedCardIndices, currentCardData, selectOptions } = this.props;
+    if (selectOptions && currentCardData && currentCardData.length > 1) {
+      const size = currentCardData.length;
+      for (let i = size - 1; i >= 0; i--) {
+        if (currentCardData[i].internalName === internalName) {
+          currentCardData.splice(i, 1);
+          break;
+        }
+      }
+      selectOptions(currentCardData);
+      this.setState({
+        selectedCardIndices
+      });
+    }
+  }
+
   /**
    * Ensures only one option can be selected at a time.
    * Updates the component state and the redux store with selection.
@@ -207,7 +228,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     }
   };
 
-  addPage(cardNumber: number) {
+  public addPage(cardNumber: number) {
     const { options, cardTypeCount, handleCountUpdate } = this.props;
     const { internalName } = options[cardNumber];
     if (cardTypeCount && handleCountUpdate) {
@@ -216,6 +237,24 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
         : 1;
       handleCountUpdate(cardTypeCount);
       this.addOption(cardNumber, cardTypeCount[internalName], internalName);
+    }
+  }
+
+  public removePage(cardNumber: number) {
+    const {
+      options,
+      currentCardData,
+      cardTypeCount,
+      handleCountUpdate
+    } = this.props;
+    const { internalName } = options[cardNumber];
+    if (
+      cardTypeCount &&
+      handleCountUpdate &&
+      currentCardData &&
+      currentCardData.length > 1
+    ) {
+      this.removeOption(cardNumber, cardTypeCount[internalName], internalName);
     }
   }
 
@@ -252,6 +291,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 disabled={unselectable}
                 clickCount={this.getCardCount(internalName)}
                 addPage={(cardNumber: number) => this.addPage(cardNumber)}
+                removePage={(cardNumber: number) => this.removePage(cardNumber)}
               />
             );
           })}
