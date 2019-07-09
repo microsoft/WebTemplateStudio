@@ -58,7 +58,12 @@ const Licenses = ({
       {isVisited.showPages &&
         pageLicenses.map((license: ILicenseObject) => (
           <p key={license.url}>
-            <a key={license.text} className={styles.link} href={license.url}>
+            <a
+              target="_blank"
+              key={license.text}
+              className={styles.link}
+              href={license.url}
+            >
               {license.text}
             </a>
           </p>
