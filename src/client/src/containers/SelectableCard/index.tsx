@@ -52,7 +52,6 @@ const SelectableCard = ({
   isPagesSelection: boolean;
   addPage: (idx: number) => void;
 }) => {
-  console.log(clickCount);
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) {
