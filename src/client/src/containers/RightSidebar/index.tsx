@@ -153,7 +153,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const { frontendOptions, backendOptions, projectTypes } = contentOptions;
     return (
       <React.Fragment>
-        {pathname !== ROUTES.PAGE_DETAILS && (
+        {pathname !== ROUTES.PAGE_DETAILS && pathname !== ROUTES.NEW_PROJECT && (
           <div
             role="complementary"
             className={classNames(styles.container, styles.rightViewCropped, {
