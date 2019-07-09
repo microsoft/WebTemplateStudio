@@ -10,6 +10,7 @@ interface IProps {
   customStyle?: string;
   placeholder?: string;
   maxLength?: number;
+  autoFocus?: boolean;
 }
 
 const Input = ({
@@ -18,7 +19,8 @@ const Input = ({
   value,
   customStyle,
   placeholder,
-  maxLength
+  maxLength,
+  autoFocus
 }: IProps) => {
   return (
     <input
@@ -28,6 +30,7 @@ const Input = ({
       className={classnames(styles.input, customStyle)}
       value={value}
       maxLength={maxLength}
+      autoFocus={autoFocus}
     />
   );
 };
