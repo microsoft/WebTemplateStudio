@@ -64,5 +64,26 @@ export const messages = defineMessages({
   internalName: {
     id: "cosmosResourceModule.internalName",
     defaultMessage: "Internal Name"
+  },
+  subscriptionSubLabel: {
+    id: "cosmosResourceModule.subscriptionSubLabel",
+    defaultMessage: "Choose a subscription to manage your billing preferences"
+  },
+  resourceGroupSubLabel: {
+    id: "cosmosResourceModule.resourceGroupSubLabel",
+    defaultMessage:
+      "A resource group is a container that holds related resources for an Azure solution"
+  },
+  accountNameSubLabel: {
+    id: "cosmosResourceModule.accountNameSubLabel",
+    defaultMessage: "Create a unique account name"
+  },
+  locationSubLabel: {
+    id: "cosmosResourceModule.locationSubLabel",
+    defaultMessage: "Choose where you want your function to be hosted"
+  },
+  apiSubLabel: {
+    id: "cosmosResourceModule.apiSubLabel",
+    defaultMessage: "Choose the API to use"
   }
 });
