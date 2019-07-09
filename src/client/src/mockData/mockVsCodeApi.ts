@@ -39,7 +39,7 @@ const mockVsCodeApi = () => ({
               command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
               payload: {
                 dependency: "node",
-                installed: false
+                installed: true
               }
             },
             "*"
