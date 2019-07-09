@@ -287,7 +287,7 @@ export class AzureServices extends WizardServant {
     }
   }
 
-  public static async generateDistinceResourceGroupSelections(
+  public static async generateDistinctResourceGroupSelections(
     payload: any
   ): Promise<ResourceGroupSelection[]> {
     const projectName = payload.engine.projectName;

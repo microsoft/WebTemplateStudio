@@ -94,7 +94,7 @@ export class GenerationExperience extends WizardServant {
       this.functionsSelectedNewResourceGroup(payload) ||
       this.cosmosDBSelectedNewResourceGroup(payload)
     ) {
-      const distinctResourceGroupSelections: ResourceGroupSelection[] = await AzureServices.generateDistinceResourceGroupSelections(
+      const distinctResourceGroupSelections: ResourceGroupSelection[] = await AzureServices.generateDistinctResourceGroupSelections(
         payload
       );
       distinctResourceGroupSelections.forEach(resourceGroupSelection => {
