@@ -19,12 +19,12 @@ const messages = defineMessages({
     id: "topNavBar.ariaNavLabel"
   },
   frameworks: {
-    defaultMessage: "Frameworks",
-    id: "topNavBar.frameworks"
+    id: "topNavBar.frameworks",
+    defaultMessage: "Add Frameworks"
   },
   pages: {
-    defaultMessage: "Pages",
-    id: "topNavBar.pages"
+    id: "topNavBar.pages",
+    defaultMessage: "Add Pages"
   },
   services: {
     defaultMessage: "Add Optional Cloud Services",
