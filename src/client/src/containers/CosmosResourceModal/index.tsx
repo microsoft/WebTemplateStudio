@@ -61,6 +61,7 @@ interface IStateProps {
   isValidatingName: boolean;
   accountNameAvailability: any;
   selection: any;
+  chooseExistingRadioButtonSelected: boolean;
 }
 
 let timeout: NodeJS.Timeout | undefined;
@@ -241,9 +242,25 @@ const CosmosResourceModal = (props: Props) => {
     }
   }, [cosmosFormData.accountName]);
 
+  /*
+   * Listens on radio button change to update button status
+   */
+  React.useEffect(() => {
+    setCosmosModalButtonStatus(
+      cosmosFormData,
+      props.isValidatingName,
+      props.accountNameAvailability,
+      setFormIsSendable
+    );
+  }, [cosmosFormData.chooseExistingRadioButtonSelected]);
+
+  // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {
-      handleChange(props.selection.dropdownSelection);
+      const newCosmosDBState = props.selection.dropdownSelection;
+      newCosmosDBState.chooseExistingRadioButtonSelected =
+        props.chooseExistingRadioButtonSelected;
+      handleChange(newCosmosDBState);
     } else {
       props.setCosmosResourceAccountNameAvailability({
         isAvailable: false,
@@ -567,7 +584,9 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selection: getCosmosSelectionInDropdownForm(state),
   subscriptionData: state.azureProfileData.subscriptionData,
   subscriptions: state.azureProfileData.profileData.subscriptions,
-  vscode: state.vscode.vscodeObject
+  vscode: state.vscode.vscodeObject,
+  chooseExistingRadioButtonSelected:
+    state.selection.services.cosmosDB.chooseExistingRadioButtonSelected
 });
 
 const mapDispatchToProps = (
