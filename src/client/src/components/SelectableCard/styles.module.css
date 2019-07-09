@@ -35,6 +35,15 @@
   justify-content: center;
 }
 
+.countButton {
+  background: none;
+  color: inherit;
+  border: none;
+  font: 1.2em;
+  cursor: pointer;
+  outline: inherit;
+}
+
 .iconCheckMark {
   margin-left: 8px;
   height: 18px;
@@ -67,6 +76,19 @@
   justify-content: space-between;
   align-items: center;
   min-height: 30px;
+}
+
+.pageButtons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.showCount {
+  font-size: 1.1em;
+  margin-left: 7px;
+  margin-right: 7px;
+  margin-top: 3px;
+  font-weight: 500;
 }
 
 .icon {
@@ -114,11 +136,11 @@
 
 .cardCount {
   text-align: center;
-  border: 1px solid var(--vscode-editor-foreground);
-  height: 22px;
-  width: 22px;
-  padding: 3px;
+  border: 1.8px solid var(--vscode-editor-foreground);
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
+  font-size: 16px;
 }
 
 .selectedText {
