@@ -291,7 +291,6 @@ export class AzureServices extends WizardServant {
     payload: any
   ): Promise<ResourceGroupSelection[]> {
     const projectName = payload.engine.projectName;
-    let result: ResourceGroupSelection[] = [];
     let allSubscriptions: SubscriptionItem[] = [];
 
     if (AzureServices.functionsSelectedNewResourceGroup(payload)) {
@@ -311,16 +310,8 @@ export class AzureServices extends WizardServant {
           projectName,
           allDistinctSubscriptions
         );
-    let tempResourceGroupSelection: ResourceGroupSelection;
-    allDistinctSubscriptions.forEach(subscription => {
-      tempResourceGroupSelection = AzureServices.generateResourceGroupSelection(
-        generatedName,
-        subscription
-      );
-      result.push(tempResourceGroupSelection);
-    });
 
-    return result;
+    return allDistinctSubscriptions.map(subscription =>  AzureServices.generateResourceGroupSelection(generatedName, subscription));
   }
 
   public static functionsSelectedNewResourceGroup(payload: any): boolean {
