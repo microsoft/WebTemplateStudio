@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { getProjectTypesAction } from "../../actions/wizardContentActions/getProjectTypes";
 import { IOption } from "../../types/option";
 import SelectOption from "../SelectOption";
 
@@ -15,13 +14,11 @@ import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectWebApp: (selectedApp: ISelected) => void;
-  getProjectTypes: (serverPort: number) => any;
 }
 
 interface IStoreProps {
   selectedWebApp: ISelected;
   type: IOption[];
-  serverPort: number;
 }
 
 interface IIntlProps {
@@ -38,13 +35,6 @@ const messages = defineMessages({
 });
 
 class SelectWebApp extends React.Component<Props> {
-  public componentDidMount() {
-    const { getProjectTypes, serverPort } = this.props;
-    if (getProjectTypes) {
-      getProjectTypes(serverPort);
-    }
-  }
-
   public convertSelectionToIndexNumber(framework: ISelected): number[] {
     for (let i = 0; i < this.props.type.length; i++) {
       if (this.props.type[i].internalName === framework.internalName) {
@@ -74,12 +64,10 @@ class SelectWebApp extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): IStoreProps => {
-  const { serverPort } = state.wizardContent;
   const { appType } = state.selection;
   return {
     selectedWebApp: appType,
-    type: state.wizardContent.projectTypes,
-    serverPort
+    type: state.wizardContent.projectTypes
   };
 };
 
@@ -88,9 +76,6 @@ const mapDispatchToProps = (
 ): IDispatchProps => ({
   selectWebApp: (selectedApp: ISelected) => {
     dispatch(selectWebAppAction(selectedApp));
-  },
-  getProjectTypes: (serverPort: number) => {
-    dispatch(getProjectTypesAction(serverPort));
   }
 });
 
