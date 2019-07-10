@@ -37,16 +37,11 @@ export class CoreTSModule extends WizardServant {
   }
 
   async getPages(message: any): Promise<IPayloadResponse> {
-    console.log(message.payload.projectType);
-    console.log(message.payload.frontendFramework);
-    console.log(message.payload.backendFramework);
     const result = await CoreTemplateStudio.GetExistingInstance().getPages(
       message.payload.projectType,
       message.payload.frontendFramework,
       message.payload.backendFramework
     );
-    console.log("in extension");
-    console.log(result);
     return {
       payload: {
         pages: result

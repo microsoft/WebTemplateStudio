@@ -137,7 +137,6 @@ class App extends React.Component<Props> {
       switch (message.command) {
         // get frameworks from extension message
         case EXTENSION_COMMANDS.GET_FRAMEWORKS:
-          console.log(JSON.stringify(message.payload));
           this.props.getFrontendFrameworksSuccess(
             parseFrameworksPayload(
               message.payload.frameworks,
@@ -155,7 +154,6 @@ class App extends React.Component<Props> {
           break;
         case EXTENSION_COMMANDS.GET_PAGES:
           this.props.getPages(message.payload.pages);
-          console.log(message.payload.pages);
           break;
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           this.props.updateDependencyInfo(message.payload);

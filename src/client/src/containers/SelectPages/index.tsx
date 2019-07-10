@@ -10,7 +10,6 @@ import {
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-import { getPagesOptionsAction } from "../../actions/wizardContentActions/getPagesOptions";
 import { getPageCount } from "../../selectors/wizardSelectionSelector";
 import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 
@@ -37,7 +36,6 @@ interface ISelectPagesProps {
   selectedBackend: ISelected;
   selectedFrontend: ISelected;
   selectedPages: ISelected[];
-  serverPort: number;
   selectedProjectType: ISelected;
   pageCount: IPageCount;
 }
@@ -57,12 +55,7 @@ const messages = defineMessages({
 
 class SelectPages extends React.Component<Props> {
   public componentDidMount() {
-    const {
-      selectedBackend,
-      selectedFrontend,
-      selectedProjectType,
-      serverPort
-    } = this.props;
+    const { selectedBackend, selectedFrontend } = this.props;
 
     const { vscode } = this.props;
     vscode.postMessage({
@@ -77,21 +70,20 @@ class SelectPages extends React.Component<Props> {
   }
 
   public componentDidUpdate(newProps: ISelectPagesProps) {
-    // if (newProps.options.length === 0) {
-    //   const {
-    //     getPages,
-    //     selectedBackend,
-    //     selectedFrontend,
-    //     selectedProjectType,
-    //     serverPort
-    //   } = this.props;
-    //   getPages(
-    //     selectedProjectType.internalName,
-    //     selectedFrontend.internalName,
-    //     selectedBackend.internalName,
-    //     serverPort
-    //   );
-    // }
+    if (newProps.options.length === 0) {
+      const { selectedBackend, selectedFrontend } = this.props;
+
+      const { vscode } = this.props;
+      vscode.postMessage({
+        module: EXTENSION_MODULES.CORETS,
+        command: EXTENSION_COMMANDS.GET_PAGES,
+        payload: {
+          projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+          frontendFramework: selectedFrontend.internalName,
+          backendFramework: selectedBackend.internalName
+        }
+      });
+    }
   }
 
   /**
@@ -143,7 +135,7 @@ class SelectPages extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState): ISelectPagesProps => {
   const vscode = getVSCodeApiSelector(state);
-  const { pageOptions, serverPort } = state.wizardContent;
+  const { pageOptions } = state.wizardContent;
   const { pages } = state.selection;
   const { appType } = state.selection;
   const { frontendFramework } = state.selection;
@@ -155,7 +147,6 @@ const mapStateToProps = (state: AppState): ISelectPagesProps => {
     selectedBackend: backendFramework,
     selectedFrontend: frontendFramework,
     selectedPages: pages,
-    serverPort,
     selectedProjectType: appType,
     pageCount: getPageCount(state)
   };
