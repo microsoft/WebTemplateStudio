@@ -3,7 +3,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import CardBody from "../CardBody";
-
+import { ReactComponent as AzureIntro } from "../../assets/introtoazure.svg";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
@@ -37,9 +37,8 @@ const LoginCard = ({
           {cardTitle}
         </div>
         <div className={styles.cardBody}>
+          <AzureIntro className={styles.computerSVG} />
           <CardBody body={cardBody} />
-        </div>
-        <div className={styles.selectionContainer}>
           <Link
             className={styles.details}
             onClick={() => handleDetailsClick(option)}
@@ -47,6 +46,17 @@ const LoginCard = ({
           >
             <FormattedMessage id="loginCard.details" defaultMessage="Details" />
           </Link>
+        </div>
+        <div className={styles.selectionContainer}>
+          <button
+            onClick={handleClick}
+            className={classnames(
+              styles.signInButton,
+              buttonStyles.buttonHighlighted
+            )}
+          >
+            <FormattedMessage id="loginCard.signIn" defaultMessage="Sign In" />
+          </button>
           <div className={styles.buttonContainer}>
             <a
               className={styles.createAccountButton}
@@ -57,18 +67,6 @@ const LoginCard = ({
                 defaultMessage="Create Account"
               />
             </a>
-            <button
-              onClick={handleClick}
-              className={classnames(
-                styles.signInButton,
-                buttonStyles.buttonHighlighted
-              )}
-            >
-              <FormattedMessage
-                id="loginCard.signIn"
-                defaultMessage="Sign In"
-              />
-            </button>
           </div>
         </div>
       </div>
