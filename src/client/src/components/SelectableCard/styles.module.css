@@ -149,6 +149,10 @@
   font-size: 16px;
 }
 
+.cardCount path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .cardCount:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
