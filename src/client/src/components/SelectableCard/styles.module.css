@@ -147,6 +147,10 @@
   font-size: 16px;
 }
 
+.cardCount:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .selectedText {
   display: flex;
   font-size: 14px;

@@ -120,6 +120,7 @@ const SelectableCard = ({
         <div className={styles.pageButtons}>
           {isPagesSelection && (
             <button
+              tabIndex={0}
               className={classNames(styles.cardCount, styles.countButton)}
               onClick={() => {
                 removePage(cardNumber);
@@ -149,6 +150,7 @@ const SelectableCard = ({
           </div>
           {isPagesSelection && (
             <button
+              tabIndex={0}
               className={classNames(styles.cardCount, styles.countButton)}
               onClick={() => {
                 addPage(cardNumber);
