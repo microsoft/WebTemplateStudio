@@ -34,7 +34,8 @@ export class ResourceGroupDeploy {
 
   public async createResourceGroup(
     resourceGroupSelection: ResourceGroupSelection
-  ): Promise<string | undefined> {
+  ): Promise<void> {
+    this.setAzureResourceClient(resourceGroupSelection.subscriptionItem);
     try {
       if (this.azureResourceClient === undefined) {
         throw new AuthorizationError(
@@ -47,11 +48,10 @@ export class ResourceGroupDeploy {
         location: location
       };
 
-      const result = await this.azureResourceClient.resourceGroups.createOrUpdate(
+      await this.azureResourceClient.resourceGroups.createOrUpdate(
         resourceGroupName,
         options
       );
-      return result.name;
     } catch (error) {
       throw new DeploymentError(error.message);
     }
@@ -59,17 +59,22 @@ export class ResourceGroupDeploy {
 
   public async generateValidResourceGroupName(
     name: string,
-    userSubscriptionItem: SubscriptionItem
+    userSubscriptionItems: SubscriptionItem[]
   ): Promise<string> {
-    this.setAzureResourceClient(userSubscriptionItem);
-
-    let generatedName = this.generateResourceGroupName(name);
-    let isValid = await this.validateResourceGroupName(generatedName);
+    let generatedName: string = this.generateResourceGroupName(name);
+    // this allows the generated name to be validated against multiple subscriptions
+    let isValid: boolean = await this.validateResourceGroupNameWithMultipleSubscriptions(
+      generatedName,
+      userSubscriptionItems
+    );
 
     let tries = 0;
     while (tries < VALIDATION_LIMIT && !isValid) {
       generatedName = this.generateResourceGroupName(name);
-      isValid = await this.validateResourceGroupName(generatedName);
+      isValid = await this.validateResourceGroupNameWithMultipleSubscriptions(
+        generatedName,
+        userSubscriptionItems
+      );
       tries++;
     }
     if (tries >= VALIDATION_LIMIT) {
@@ -80,7 +85,27 @@ export class ResourceGroupDeploy {
     return generatedName;
   }
 
-  private async validateResourceGroupName(name: string): Promise<boolean> {
+  private async validateResourceGroupNameWithMultipleSubscriptions(
+    name: string,
+    userSubscriptionItems: SubscriptionItem[]
+  ): Promise<boolean> {
+    let isValid: boolean = true;
+    userSubscriptionItems.forEach(async userSubscriptionItem => {
+      isValid =
+        isValid &&
+        (await this.validateResourceGroupNameWithSubscription(
+          name,
+          userSubscriptionItem
+        ));
+    });
+    return isValid;
+  }
+
+  private async validateResourceGroupNameWithSubscription(
+    name: string,
+    userSubscriptionItem: SubscriptionItem
+  ): Promise<boolean> {
+    this.setAzureResourceClient(userSubscriptionItem);
     if (this.azureResourceClient === undefined) {
       throw new AuthorizationError(
         CONSTANTS.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED
