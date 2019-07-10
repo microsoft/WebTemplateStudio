@@ -28,12 +28,6 @@ import {
 
 interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
-  getPages: (
-    projectType: string,
-    frontendFramework: string,
-    backendFramework: string,
-    serverPort: number
-  ) => void;
   updatePageCount: (pageCount: IPageCount) => any;
 }
 
@@ -64,7 +58,6 @@ const messages = defineMessages({
 class SelectPages extends React.Component<Props> {
   public componentDidMount() {
     const {
-      getPages,
       selectedBackend,
       selectedFrontend,
       selectedProjectType,
@@ -77,29 +70,28 @@ class SelectPages extends React.Component<Props> {
       command: EXTENSION_COMMANDS.GET_PAGES,
       payload: {
         projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
-        frontendFramework: selectedFrontend,
-        backendFramework: selectedBackend
+        frontendFramework: selectedFrontend.internalName,
+        backendFramework: selectedBackend.internalName
       }
     });
   }
 
   public componentDidUpdate(newProps: ISelectPagesProps) {
-    if (newProps.options.length === 0) {
-      const {
-        getPages,
-        selectedBackend,
-        selectedFrontend,
-        selectedProjectType,
-        serverPort
-      } = this.props;
-
-      getPages(
-        selectedProjectType.internalName,
-        selectedFrontend.internalName,
-        selectedBackend.internalName,
-        serverPort
-      );
-    }
+    // if (newProps.options.length === 0) {
+    //   const {
+    //     getPages,
+    //     selectedBackend,
+    //     selectedFrontend,
+    //     selectedProjectType,
+    //     serverPort
+    //   } = this.props;
+    //   getPages(
+    //     selectedProjectType.internalName,
+    //     selectedFrontend.internalName,
+    //     selectedBackend.internalName,
+    //     serverPort
+    //   );
+    // }
   }
 
   /**
@@ -172,21 +164,6 @@ const mapStateToProps = (state: AppState): ISelectPagesProps => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  getPages: (
-    projectType: string,
-    frontendFramework: string,
-    backendFramework: string,
-    serverPort: number
-  ) => {
-    dispatch(
-      getPagesOptionsAction(
-        projectType,
-        frontendFramework,
-        backendFramework,
-        serverPort
-      )
-    );
-  },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
   },
