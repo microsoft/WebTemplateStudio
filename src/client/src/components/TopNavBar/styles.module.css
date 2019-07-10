@@ -38,11 +38,10 @@
   z-index: 1100;
   float: right;
   padding-right: 20px;
-  font-size: 1.1em;
 }
 
 @media (min-width: 650px) {
   .itemBorder {
-    padding: 0px 25px 0px 0px;
+    padding: 0px 10px 0px 0px;
   }
 }
