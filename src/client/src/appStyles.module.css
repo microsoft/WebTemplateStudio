@@ -13,6 +13,7 @@
   background-color: var(--vscode-editor-background);
   height: calc(100vh - 124px);
   justify-content: flex-start;
+  position: relative;
 }
 
 .centerViewMaxHeight {

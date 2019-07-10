@@ -4,6 +4,11 @@ import getSvgUrl from "../utils/getSvgUrl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../utils/constants";
 
 export const messages = defineMessages({
+  azureSkipButton: {
+    id: "azureSkip.buttonTitle",
+    defaultMessage:
+      "This step is optional, click here to skip and create your project."
+  },
   azureTitle: {
     id: "azureLogin.azureTitle",
     defaultMessage: "Microsoft Azure"

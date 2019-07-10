@@ -2,7 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { Route, RouteComponentProps } from "react-router-dom";
+import { Route, RouteComponentProps, Link } from "react-router-dom";
 
 import PageDetails from "./containers/PageDetails";
 import SelectFrameworks from "./containers/SelectFrameworks";
@@ -275,6 +275,11 @@ class App extends React.Component<Props> {
               [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS
             })}
           >
+            {pathname === ROUTES.AZURE_LOGIN && (
+              <Link tabIndex={0} to={ROUTES.REVIEW_AND_GENERATE}>
+                Hello
+              </Link>
+            )}
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
             <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
             <Route
