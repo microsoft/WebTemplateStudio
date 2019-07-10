@@ -17,7 +17,10 @@ const messages = defineMessages({
   },
   nameTooLong: {
     id: "projectNameError.nameTooLong",
-    defaultMessage: "Name should be under " + PROJECT_NAME_CHARACTER_LIMIT + " characters long"
+    defaultMessage:
+      "Name should be under " +
+      PROJECT_NAME_CHARACTER_LIMIT +
+      " characters long"
   },
   nameStartLetter: {
     id: "pageNameError.nameStartLetter",
@@ -57,14 +60,15 @@ export function validateName(title: string, type: string): any {
       }
     }
   } else if (type === "project") {
-    if (!/^[A-Za-z][A-Za-z0-9_\-]*$/i.test(title)) {
+    if (!/^[A-Za-z][A-Za-z0-9_-]*$/i.test(title)) {
       isValid = false;
       if (/^[_\-0-9]*$/i.test(title[0])) {
         error = messages.nameStartLetter;
       } else {
         error = messages.invalidProjectName;
       }
-    } if (title.length >= PROJECT_NAME_CHARACTER_LIMIT) {
+    }
+    if (title.length >= PROJECT_NAME_CHARACTER_LIMIT) {
       isValid = false;
       error = messages.nameTooLong;
     }
