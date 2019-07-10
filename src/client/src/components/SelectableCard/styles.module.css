@@ -84,6 +84,8 @@
 }
 
 .showCount {
+  min-width: 20px;
+  text-align: center;
   font-size: 1.1em;
   margin-left: 7px;
   margin-right: 7px;
