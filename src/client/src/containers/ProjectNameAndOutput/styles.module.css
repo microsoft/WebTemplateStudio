@@ -1,6 +1,7 @@
 .inputTitle {
-  font-size: 1em;
-  font-weight: bold;
+  line-height: 2em;
+  font-size: 1.2em;
+  font-weight: 600;
   margin-bottom: 3px;
 }
 
@@ -28,6 +29,7 @@
   text-decoration: none;
   outline: none;
   margin-bottom: 30px;
+  font-size: 1.2em;
 }
 
 .errorMessage {
