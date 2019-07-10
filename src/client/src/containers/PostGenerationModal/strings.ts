@@ -71,7 +71,7 @@ export const strings = defineMessages({
   },
   openReadMe: {
     id: "postGenerationModal.openReadMe",
-    defaultMessage: "Open "
+    defaultMessage: "After 'Open Project' see "
   },
   readMe: {
     id: "postGenerationModal.readme",
