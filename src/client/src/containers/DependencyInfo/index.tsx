@@ -117,7 +117,7 @@ class DependencyInfo extends React.Component<Props> {
         });
 
     const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (event.keyCode === 13 || event.keyCode === 32) {
+      if (event.key === "Enter" || event.key === " ") {
         openPrivacyModal(dependency);
       }
     };

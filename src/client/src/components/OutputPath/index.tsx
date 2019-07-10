@@ -38,8 +38,8 @@ const OutputPath = ({
   intl,
   placeholder
 }: IProps & InjectedIntlProps) => {
-  const handleKeyDown = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
       handleSaveClick();
     }
   };

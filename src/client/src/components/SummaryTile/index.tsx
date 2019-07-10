@@ -109,25 +109,25 @@ const SummaryTile = ({
       handleCloseClick(idx - 1);
     }
   };
-  const onCloseKeyDown = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const onCloseKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
       onCloseClick();
-    } else if (event.keyCode === 9) {
+    } else if (event.key === "Tab") {
       setEditable(false);
     }
   };
-  const onEditKeyDown = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const onEditKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
       handleClick();
     }
   };
-  const onSummaryTileLeave = (event: any) => {
-    if (event.shiftKey && event.keyCode === 9) {
+  const onSummaryTileLeave = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.shiftKey && event.key === "Tab") {
       setEditable(false);
     }
   };
-  const handleKeyDown = (event: any) => {
-    if (event.keyCode === 13) {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
       handleFocusOut();
     }
   };

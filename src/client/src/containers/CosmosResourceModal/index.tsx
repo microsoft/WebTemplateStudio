@@ -322,8 +322,8 @@ const CosmosResourceModal = (props: Props) => {
   };
   const { isAccountNameAvailable } = props.accountNameAvailability;
   const { isValidatingName } = props;
-  const cancelKeyDownHandler = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       event.stopPropagation();
       props.closeModal();

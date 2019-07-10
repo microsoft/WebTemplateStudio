@@ -105,8 +105,8 @@ const AzureFunctionsSelection = ({
       });
     }
   };
-  const onEditKeyDownHandler = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const onEditKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
       openAzureFunctionsModal();
     }
   };

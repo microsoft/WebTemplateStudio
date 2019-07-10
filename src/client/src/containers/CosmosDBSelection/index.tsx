@@ -37,8 +37,8 @@ const CosmosDBSelection = ({
   intl
 }: Props) => {
   const { serviceType } = cosmosSelection.wizardContent;
-  const onEditKeyDownHandler = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const onEditKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
       openCosmosDbModal();
     }
   };
