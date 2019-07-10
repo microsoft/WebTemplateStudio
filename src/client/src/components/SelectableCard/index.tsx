@@ -16,6 +16,9 @@ import { FormattedMessage } from "react-intl";
 import { ROUTES } from "../../utils/constants";
 import { getSvg } from "../../utils/getSvgUrl";
 
+import { ReactComponent as Plus } from "../../assets/plus.svg";
+import plus from "../../assets/plus.svg";
+
 const SelectableCard = ({
   iconPath,
   iconStyles,
@@ -28,7 +31,9 @@ const SelectableCard = ({
   onDetailsClick,
   clickCount,
   disabled,
-  isFrameworkSelection
+  isFrameworkSelection,
+  isPagesSelection,
+  addPage
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -42,6 +47,8 @@ const SelectableCard = ({
   clickCount?: number;
   disabled: boolean | undefined;
   isFrameworkSelection: boolean;
+  isPagesSelection: boolean;
+  addPage: (idx: number) => void;
 }) => {
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -106,23 +113,35 @@ const SelectableCard = ({
             defaultMessage="Details"
           />
         </Link>
-        <div
-          className={classNames({
-            [styles.hidden]: !selected,
-            [styles.selectedCheckMark]: selected && !clickCount,
-            [styles.cardCount]: selected && clickCount
-          })}
-        >
-          {clickCount || (
-            <div className={styles.selectedText}>
-              <div>
-                <FormattedMessage
-                  id="selectableCard.selected"
-                  defaultMessage="Selected"
-                />
+        <div className={styles.pageButtons}>
+          <div
+            className={classNames({
+              [styles.hidden]: !selected,
+              [styles.selectedCheckMark]: selected && !clickCount,
+              [styles.showCount]: selected && clickCount
+            })}
+          >
+            {clickCount || (
+              <div className={styles.selectedText}>
+                <div>
+                  <FormattedMessage
+                    id="selectableCard.selected"
+                    defaultMessage="Selected"
+                  />
+                </div>
+                <Check className={styles.iconCheckMark} />
               </div>
-              <Check className={styles.iconCheckMark} />
-            </div>
+            )}
+          </div>
+          {isPagesSelection && (
+            <button
+              className={classNames(styles.cardCount, styles.countButton)}
+              onClick={() => {
+                addPage(cardNumber);
+              }}
+            >
+              {plus && <Plus />}
+            </button>
           )}
         </div>
       </div>

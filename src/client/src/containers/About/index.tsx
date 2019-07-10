@@ -4,12 +4,7 @@ import { connect } from "react-redux";
 import styles from "./styles.module.css";
 import { getVersionsSelector } from "../../selectors/vscodeApiSelector";
 import { IVersions } from "../../types/version";
-import {
-  defineMessages,
-  InjectedIntlProps,
-  injectIntl,
-  FormattedMessage
-} from "react-intl";
+import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../reducers";
 
 interface IStateProps {
@@ -35,9 +30,10 @@ const messages = defineMessages({
 
 const About = ({ versions, intl }: Props) => {
   const { templatesVersion, wizardVersion } = versions;
+  const { formatMessage } = intl;
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{intl.formatMessage(messages.about)}</div>
+      <div className={styles.title}>{formatMessage(messages.about)}</div>
       <p className={styles.repo}>
         <a
           className={styles.link}
@@ -46,23 +42,10 @@ const About = ({ versions, intl }: Props) => {
           Web Template Studio
         </a>
       </p>
-      <p>
-        <a
-          className={styles.link}
-          href="https://github.com/Microsoft/WebTemplateStudio/issues"
-        >
-          <FormattedMessage
-            id="about.reportAnIssue"
-            defaultMessage="Give Feedback or Report an issue"
-          />
-        </a>
-      </p>
       <div>
-        {intl.formatMessage(messages.templatesVersion) + ` ${templatesVersion}`}
+        {formatMessage(messages.templatesVersion) + ` ${templatesVersion}`}
       </div>
-      <div>
-        {intl.formatMessage(messages.wizardVersion) + ` ${wizardVersion}`}
-      </div>
+      <div>{formatMessage(messages.wizardVersion) + ` ${wizardVersion}`}</div>
     </div>
   );
 };

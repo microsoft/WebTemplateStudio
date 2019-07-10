@@ -4,10 +4,11 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import { ThunkDispatch } from "redux-thunk";
+import classnames from "classnames";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
 import ServicesSidebarItem from "../../components/ServicesSidebarItem";
-import Licenses from "../Licenses";
 import About from "../About";
 import SortablePageList from "../SortablePageList";
 
@@ -15,6 +16,7 @@ import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActio
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
 import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectWebApp";
 import { selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
+import * as ModalActions from "../../actions/modalActions/modalActions";
 
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
 import {
@@ -23,6 +25,7 @@ import {
 } from "../../selectors/wizardNavigationSelector";
 
 import styles from "./styles.module.css";
+import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
@@ -46,6 +49,7 @@ interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
   selectProjectType: (projectType: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
+  openViewLicensesModal: () => any;
 }
 
 interface IRightSidebarProps {
@@ -139,12 +143,17 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       showServices
     } = this.props.isRoutesVisited;
     const { pathname } = this.props.location;
-    const { intl, contentOptions, isValidNameAndProjectPath } = this.props;
+    const {
+      intl,
+      contentOptions,
+      isValidNameAndProjectPath,
+      openViewLicensesModal
+    } = this.props;
     const { formatMessage } = intl;
     const { frontendOptions, backendOptions, projectTypes } = contentOptions;
     return (
       <React.Fragment>
-        {pathname !== ROUTES.PAGE_DETAILS && (
+        {pathname !== ROUTES.PAGE_DETAILS && pathname !== ROUTES.NEW_PROJECT && (
           <div
             role="complementary"
             className={classNames(styles.container, styles.rightViewCropped, {
@@ -198,8 +207,31 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 )}
               </div>
             }
-            <div>
-              <Licenses />
+            <div className={styles.container}>
+              <div className={styles.buttonContainer}>
+                <button
+                  className={classnames(
+                    buttonStyles.buttonDark,
+                    styles.button,
+                    styles.leftButton
+                  )}
+                  onClick={openViewLicensesModal}
+                >
+                  {formatMessage(messages.viewLicenses)}
+                </button>
+                <button
+                  className={classnames(buttonStyles.buttonDark, styles.button)}
+                >
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.link}
+                    href="https://github.com/Microsoft/WebTemplateStudio/issues"
+                  >
+                    {formatMessage(messages.giveFeedback)}
+                  </a>
+                </button>
+              </div>
               <About />
             </div>
           </div>
@@ -247,7 +279,7 @@ const mapStateToProps = (state: AppState): IRightSidebarProps => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<RootAction>
+  dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   selectBackendFramework: (framework: ISelected) => {
     dispatch(selectBackendFrameworkAction(framework));
@@ -260,6 +292,9 @@ const mapDispatchToProps = (
   },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
+  },
+  openViewLicensesModal: () => {
+    dispatch(ModalActions.openViewLicensesModalAction());
   }
 });
 
