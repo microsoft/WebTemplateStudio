@@ -211,6 +211,7 @@ const mockVsCodeApi = () => ({
             },
             "*"
           );
+          break;
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           window.postMessage(
             {
