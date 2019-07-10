@@ -12,6 +12,17 @@ export default class EngineAPIService {
     }
   }
 
+  public async getProjectTypes(): Promise<any> {
+    const url = new URL(constants.API.Endpoints.ProjectType, this.API);
+    return await fetch(url.href, { method: constants.API.Methods.GET })
+      .then((response: Response) => {
+        return response.json();
+      })
+      .catch((error: Error) => {
+        throw Error(error.toString());
+      });
+  }
+
   public async getFeatures(
     projectType: string,
     frontendFramework: string,

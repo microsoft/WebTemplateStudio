@@ -6,6 +6,29 @@ import getSvgUrl from "../../utils/getSvgUrl";
 import WizardContentActionType from "./wizardContentActionType";
 import { Dispatch } from "react";
 
+// thunk
+export const getProjectTypesAction = (serverPort: number) => {
+  return async (dispatch: Dispatch<WizardContentActionType>) => {
+    const api = new EngineAPIService(serverPort, undefined);
+
+    try {
+      const projectTypesJson = await api.getProjectTypes();
+
+      if (projectTypesJson.detail == null) {
+        dispatch(
+          getProjectTypesSuccess(
+            getOptionalFromMetadata(getMetadataFromJson(projectTypesJson))
+          )
+        );
+      } else {
+        console.log("FAILED");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 function getMetadataFromJson(items: any[]): IMetadata[] {
   return items.map<IMetadata>(val => ({
     name: val.name,
