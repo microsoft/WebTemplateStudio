@@ -104,6 +104,7 @@ export const messages = defineMessages({
   },
   createNewResourceGroupForYou: {
     id: "azureFunctionsModal.createNewResourceGroupSelectedDisplayMessage",
-    defaultMessage: "We will automatically create a resource group for you"
+    defaultMessage:
+      "We will automatically create a resource group for you in Central US"
   }
 });

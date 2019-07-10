@@ -2,7 +2,6 @@
   "FunctionNameError.invalidFunctionStartLetter": "Name may only start with letters or numbers",
   "FunctionNameError.invalidRegex": "Name may only contain letters, numbers or dashes",
   "about.about": "About",
-  "about.reportAnIssue": "Give Feedback or Report an issue",
   "about.reportAnIssueLabel": "Give Feedback",
   "about.templatesVersion": "Templates version:",
   "about.wizardVersion": "Wizard version:",
