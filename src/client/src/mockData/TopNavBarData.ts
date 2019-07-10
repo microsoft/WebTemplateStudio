@@ -1,6 +1,6 @@
 const topNavBarData: string[] = [
   "Name and Output",
-  "Add Frameworks",
+  "Frameworks",
   "Pages",
   "Add Optional Cloud Services",
   "Summary"
