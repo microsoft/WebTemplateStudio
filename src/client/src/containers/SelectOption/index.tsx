@@ -134,14 +134,37 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     selectedCardIndices.push(cardNumber);
     if (selectOptions && currentCardData) {
-      currentCardData.push(
+      const currentCards = currentCardData.splice(0);
+      currentCards.push(
         this.mapIndexToCardInfo(cardCount, internalName, cardNumber)
       );
-      selectOptions(currentCardData);
+      selectOptions(currentCards);
     }
     this.setState({
       selectedCardIndices
     });
+  }
+
+  public removeOption(
+    cardNumber: number,
+    cardCount: number,
+    internalName: string
+  ) {
+    const { selectedCardIndices, currentCardData, selectOptions } = this.props;
+    if (selectOptions && currentCardData && currentCardData.length > 1) {
+      const size = currentCardData.length;
+      const currentCards = currentCardData.splice(0);
+      for (let i = size - 1; i >= 0; i--) {
+        if (currentCards[i].internalName === internalName) {
+          currentCards.splice(i, 1);
+          break;
+        }
+      }
+      selectOptions(currentCards);
+      this.setState({
+        selectedCardIndices
+      });
+    }
   }
 
   /**
@@ -207,7 +230,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     }
   };
 
-  addPage(cardNumber: number) {
+  public addPage(cardNumber: number) {
     const { options, cardTypeCount, handleCountUpdate } = this.props;
     const { internalName } = options[cardNumber];
     if (cardTypeCount && handleCountUpdate) {
@@ -216,6 +239,24 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
         : 1;
       handleCountUpdate(cardTypeCount);
       this.addOption(cardNumber, cardTypeCount[internalName], internalName);
+    }
+  }
+
+  public removePage(cardNumber: number) {
+    const {
+      options,
+      currentCardData,
+      cardTypeCount,
+      handleCountUpdate
+    } = this.props;
+    const { internalName } = options[cardNumber];
+    if (
+      cardTypeCount &&
+      handleCountUpdate &&
+      currentCardData &&
+      currentCardData.length > 1
+    ) {
+      this.removeOption(cardNumber, cardTypeCount[internalName], internalName);
     }
   }
 
@@ -252,6 +293,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 disabled={unselectable}
                 clickCount={this.getCardCount(internalName)}
                 addPage={(cardNumber: number) => this.addPage(cardNumber)}
+                removePage={(cardNumber: number) => this.removePage(cardNumber)}
               />
             );
           })}
