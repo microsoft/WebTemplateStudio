@@ -49,6 +49,13 @@
         "category": "%webTemplateStudioExtension.commands.wts%"
       }
     ],
+    "keybindings": [
+      {
+        "command": "webTemplateStudioExtension.wizardLaunch",
+        "key": "ctrl+shift+a",
+        "mac": "shift+cmd+a"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "%webTemplateStudioExtension.commands.wts%",
