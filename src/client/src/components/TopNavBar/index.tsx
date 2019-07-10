@@ -20,11 +20,11 @@ const messages = defineMessages({
   },
   frameworks: {
     id: "topNavBar.frameworks",
-    defaultMessage: "Add Frameworks"
+    defaultMessage: "Frameworks"
   },
   pages: {
     id: "topNavBar.pages",
-    defaultMessage: "Add Pages"
+    defaultMessage: "Pages"
   },
   services: {
     id: "topNavBar.services",
