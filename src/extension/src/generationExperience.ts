@@ -6,6 +6,7 @@ import { ReactPanel } from "./reactPanel";
 import { AzureServices } from "./azure/azureServices";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { Controller } from "./controller";
+import { ResourceGroupSelection } from "./azure/azure-resource-group/resourceGroupModule";
 
 export class GenerationExperience extends WizardServant {
   private static reactPanelContext: ReactPanel;
@@ -88,40 +89,54 @@ export class GenerationExperience extends WizardServant {
       command: ExtensionCommand.GetOutputPath,
       payload: { outputPath: enginePayload.path }
     });
-
-    if (payload.selectedFunctions && payload.functions.resourceGroup === "") {
-      // Reason for this queue is for deploying more than 1 resource group
-      resourceGroupQueue.push(
-        GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
-          TelemetryEventName.ResourceGroupDeploy,
-          // tslint:disable-next-line: no-function-expression
-          async function(this: IActionContext): Promise<void> {
-            try {
-              // update payload with new resource group name for deploying functions
-              payload.functions.resourceGroup = await AzureServices.deployResourceGroup(
-                payload
-              );
-              progressObject = {
-                ...progressObject,
-                resourceGroup: GenerationExperience.getProgressObject(true)
-              };
-              GenerationExperience.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject
-              });
-            } catch (error) {
-              progressObject = {
-                ...progressObject,
-                resourceGroup: GenerationExperience.getProgressObject(false)
-              };
-              GenerationExperience.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject
-              });
-            }
-          }
-        )
+    
+    if (
+      AzureServices.functionsSelectedNewResourceGroup(payload) ||
+      AzureServices.cosmosDBSelectedNewResourceGroup(payload)
+    ) {
+      const distinctResourceGroupSelections: ResourceGroupSelection[] = await AzureServices.generateDistinctResourceGroupSelections(
+        payload
       );
+      distinctResourceGroupSelections.forEach(resourceGroupSelection => {
+        resourceGroupQueue.push(
+          GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
+            TelemetryEventName.ResourceGroupDeploy,
+            // tslint:disable-next-line: no-function-expression
+            async function(this: IActionContext): Promise<void> {
+              try {
+                await AzureServices.deployResourceGroup(resourceGroupSelection);
+                progressObject = {
+                  ...progressObject,
+                  resourceGroup: GenerationExperience.getProgressObject(true)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+              } catch (error) {
+                progressObject = {
+                  ...progressObject,
+                  resourceGroup: GenerationExperience.getProgressObject(false)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+              }
+            }
+          )
+        );
+      });
+      // Update payload if service was chosen to be deployed to a new resource group
+      // Note: all resource groups created will have the same name
+      if (AzureServices.functionsSelectedNewResourceGroup(payload)) {
+        payload.functions.resourceGroup =
+          distinctResourceGroupSelections[0].resourceGroupName;
+      }
+      if (AzureServices.cosmosDBSelectedNewResourceGroup(payload)) {
+        payload.cosmos.resourceGroup =
+          distinctResourceGroupSelections[0].resourceGroupName;
+      }
     }
 
     // Resource groups should be created before other deploy methods execute
