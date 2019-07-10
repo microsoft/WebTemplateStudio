@@ -380,7 +380,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       });
     } else if (
       element.value ===
-      props.intl.formatMessage(messages.createNewResourceGroupForMe)
+      props.intl.formatMessage(messages.createNewResourceGroupDisplayMessage)
     ) {
       updateForm({
         ...azureFunctionsFormData,
@@ -453,7 +453,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
               className={styles.radiobutton}
               type="radio"
               value={props.intl.formatMessage(
-                messages.createNewResourceGroupForMe
+                messages.createNewResourceGroupDisplayMessage
               )}
               disabled={azureFunctionsFormData.subscription.value === ""}
               checked={
@@ -461,7 +461,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
               }
             />
             <div className={styles.radioButtonLabel}>
-              {props.intl.formatMessage(messages.createNewResourceGroupForMe)}
+              {props.intl.formatMessage(
+                messages.createNewResourceGroupDisplayMessage
+              )}
             </div>
           </div>
           <div className={styles.resourceGroupToggleContainer}>
@@ -486,7 +488,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 openDropdownUpwards={false}
               />
             ) : (
-              props.intl.formatMessage(messages.createNewResourceGroupForYou)
+              props.intl.formatMessage(
+                messages.createNewResourceGroupSelectedDisplayMessage
+              )
             )}
           </div>
         </div>

@@ -98,11 +98,11 @@ export const messages = defineMessages({
     id: "azureFunctionsModal.chooseExistingResourceGroup",
     defaultMessage: "Choose existing"
   },
-  createNewResourceGroupForMe: {
+  createNewResourceGroupDisplayMessage: {
     id: "azureFunctionsModal.createNewResourceGroupDisplayMessage",
     defaultMessage: "Create new resource group for me"
   },
-  createNewResourceGroupForYou: {
+  createNewResourceGroupSelectedDisplayMessage: {
     id: "azureFunctionsModal.createNewResourceGroupSelectedDisplayMessage",
     defaultMessage:
       "We will automatically create a resource group for you in Central US"

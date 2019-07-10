@@ -85,5 +85,17 @@ export const messages = defineMessages({
   apiSubLabel: {
     id: "cosmosResourceModule.apiSubLabel",
     defaultMessage: "Choose the API to use"
+  },
+  chooseExisting: {
+    id: "azureFunctionsModal.chooseExistingResourceGroup",
+    defaultMessage: "Choose existing"
+  },
+  createNewResourceGroupDisplayMessage: {
+    id: "azureFunctionsModal.createNewResourceGroupDisplayMessage",
+    defaultMessage: "Create new resource group for me"
+  },
+  createNewResourceGroupSelectedDisplayMessage: {
+    id: "azureFunctionsModal.createNewResourceGroupSelectedDisplayMessage",
+    defaultMessage: "We will automatically create a resource group for you"
   }
 });
