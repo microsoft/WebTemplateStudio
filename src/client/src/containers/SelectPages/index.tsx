@@ -131,6 +131,7 @@ class SelectPages extends React.Component<Props> {
             currentCardData={selectedPages}
             cardTypeCount={pageCount}
             handleCountUpdate={updatePageCount}
+            isPagesSelection={true}
           />
         )}
       </div>
