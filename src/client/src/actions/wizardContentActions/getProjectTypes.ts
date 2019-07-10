@@ -1,10 +1,6 @@
-import EngineAPIService from "../../services/EngineAPIService";
 import { IMetadata } from "../../types/metadata";
 import { IOption } from "../../types/option";
-import { getProjectTypesSuccess } from "./getProjectTypesSuccess";
 import getSvgUrl from "../../utils/getSvgUrl";
-import WizardContentActionType from "./wizardContentActionType";
-import { Dispatch } from "react";
 
 function getMetadataFromJson(items: any[]): IMetadata[] {
   return items.map<IMetadata>(val => ({
