@@ -61,6 +61,7 @@ interface IStateProps {
   isValidatingName: boolean;
   accountNameAvailability: any;
   selection: any;
+  chooseExistingRadioButtonSelected: boolean;
 }
 
 let timeout: NodeJS.Timeout | undefined;
@@ -97,7 +98,8 @@ const initialState: CosmosDb = {
   internalName: {
     value: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     label: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
-  }
+  },
+  chooseExistingRadioButtonSelected: true
 };
 
 const CosmosResourceModal = (props: Props) => {
@@ -240,9 +242,25 @@ const CosmosResourceModal = (props: Props) => {
     }
   }, [cosmosFormData.accountName]);
 
+  /*
+   * Listens on radio button change to update button status
+   */
+  React.useEffect(() => {
+    setCosmosModalButtonStatus(
+      cosmosFormData,
+      props.isValidatingName,
+      props.accountNameAvailability,
+      setFormIsSendable
+    );
+  }, [cosmosFormData.chooseExistingRadioButtonSelected]);
+
+  // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {
-      handleChange(props.selection.dropdownSelection);
+      const newCosmosDBState = props.selection.dropdownSelection;
+      newCosmosDBState.chooseExistingRadioButtonSelected =
+        props.chooseExistingRadioButtonSelected;
+      handleChange(newCosmosDBState);
     } else {
       props.setCosmosResourceAccountNameAvailability({
         isAvailable: false,
@@ -329,6 +347,32 @@ const CosmosResourceModal = (props: Props) => {
       props.closeModal();
     }
   };
+
+  // when user clicks a radio button, update form data
+  const radioButtonOnChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    let element = event.target as HTMLInputElement;
+    if (element.value === props.intl.formatMessage(messages.chooseExisting)) {
+      updateForm({
+        ...cosmosFormData,
+        chooseExistingRadioButtonSelected: true
+      });
+    } else if (
+      element.value ===
+      props.intl.formatMessage(messages.createNewResourceGroupDisplayMessage)
+    ) {
+      updateForm({
+        ...cosmosFormData,
+        chooseExistingRadioButtonSelected: false,
+        resourceGroup: {
+          value: "",
+          label: ""
+        }
+      });
+    }
+  };
+
   return (
     <div>
       {/* Create CosmosDB Account Header */}
@@ -357,26 +401,99 @@ const CosmosResourceModal = (props: Props) => {
           props.intl.formatMessage(messages.subscriptionSubLabel)
         )}
         {/* Choose Resource Group */}
-        {getDropdownSection(
-          FORM_CONSTANTS.RESOURCE_GROUP.label,
-          cosmosData.resourceGroup,
-          FORM_CONSTANTS.RESOURCE_GROUP.value,
-          props.intl.formatMessage(messages.ariaResourceGroupLabel),
-          props.intl.formatMessage(messages.createNew),
-          cosmosFormData.subscription.value === "",
-          DEFAULT_VALUE,
-          false,
-          props.intl.formatMessage(messages.resourceGroupSubLabel)
-        )}
+        {
+          <div
+            className={classnames([styles.selectionContainer], {
+              [styles.selectionContainerDisabled]:
+                cosmosFormData.subscription.value === ""
+            })}
+          >
+            <div className={styles.selectionHeaderContainer}>
+              <div className={styles.leftHeader}>
+                {FORM_CONSTANTS.RESOURCE_GROUP.label}
+              </div>
+              {links[FORM_CONSTANTS.RESOURCE_GROUP.value] && (
+                <a
+                  tabIndex={cosmosFormData.subscription.value === "" ? -1 : 0}
+                  className={styles.link}
+                  href={links[FORM_CONSTANTS.RESOURCE_GROUP.value]}
+                >
+                  {props.intl.formatMessage(messages.createNew)}
+                </a>
+              )}
+            </div>
+            <div className={styles.subLabel}>
+              {props.intl.formatMessage(messages.resourceGroupSubLabel)}
+            </div>
+            {/* Radio Buttons for Choose Resource Group */}
+            <div
+              className={styles.radioButtonContainer}
+              onChange={radioButtonOnChangeHandler}
+            >
+              <input
+                className={styles.radioButton}
+                type="radio"
+                value={props.intl.formatMessage(messages.chooseExisting)}
+                disabled={cosmosFormData.subscription.value === ""}
+                checked={cosmosFormData.chooseExistingRadioButtonSelected}
+              />
+              <div className={styles.radioButtonLabel}>
+                {props.intl.formatMessage(messages.chooseExisting)}
+              </div>
+              <input
+                className={styles.radiobutton}
+                type="radio"
+                value={props.intl.formatMessage(
+                  messages.createNewResourceGroupDisplayMessage
+                )}
+                disabled={cosmosFormData.subscription.value === ""}
+                checked={!cosmosFormData.chooseExistingRadioButtonSelected}
+              />
+              <div className={styles.radioButtonLabel}>
+                {props.intl.formatMessage(
+                  messages.createNewResourceGroupDisplayMessage
+                )}
+              </div>
+            </div>
+            <div className={styles.resourceGroupToggleContainer}>
+              {cosmosFormData.chooseExistingRadioButtonSelected ? (
+                <Dropdown
+                  ariaLabel={props.intl.formatMessage(
+                    messages.ariaResourceGroupLabel
+                  )}
+                  options={cosmosData.resourceGroup}
+                  handleChange={option => {
+                    handleDropdown(
+                      FORM_CONSTANTS.RESOURCE_GROUP.value,
+                      option.value
+                    );
+                  }}
+                  value={
+                    cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
+                      ? cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                      : DEFAULT_VALUE
+                  }
+                  disabled={cosmosFormData.subscription.value === ""}
+                  openDropdownUpwards={false}
+                />
+              ) : (
+                props.intl.formatMessage(
+                  messages.createNewResourceGroupSelectedDisplayMessage
+                )
+              )}
+            </div>
+          </div>
+        }
         {/* Account Name */}
         <div
-          className={classnames(styles.selectionInputContainer, {
-            [styles.selectionContainer]:
-              isAccountNameAvailable ||
-              cosmosFormData.accountName.value.length === 0,
-            [styles.selectionContainerDisabled]:
-              cosmosFormData.subscription.value === ""
-          })}
+          className={classnames(
+            styles.selectionInputContainer,
+            styles.selectionContainer,
+            {
+              [styles.selectionContainerDisabled]:
+                cosmosFormData.subscription.value === ""
+            }
+          )}
         >
           <div className={styles.selectionHeaderContainer}>
             <div className={styles.leftHeader}>
@@ -467,7 +584,9 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selection: getCosmosSelectionInDropdownForm(state),
   subscriptionData: state.azureProfileData.subscriptionData,
   subscriptions: state.azureProfileData.profileData.subscriptions,
-  vscode: state.vscode.vscodeObject
+  vscode: state.vscode.vscodeObject,
+  chooseExistingRadioButtonSelected:
+    state.selection.services.cosmosDB.chooseExistingRadioButtonSelected
 });
 
 const mapDispatchToProps = (
