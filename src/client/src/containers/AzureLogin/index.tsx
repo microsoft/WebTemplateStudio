@@ -13,7 +13,7 @@ import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 import { IOption } from "../../types/option";
-import { messages } from "../../mockData/azureServiceOptions";
+import { azureMessages } from "../../mockData/azureServiceOptions";
 
 import { microsoftAzureDetails } from "../../mockData/azureServiceOptions";
 import { withLocalPath } from "../../utils/getSvgUrl";
@@ -63,7 +63,6 @@ class AzureLogin extends React.Component<Props> {
 
     return (
       <div className={styles.container}>
-        <Title>{intl.formatMessage(messages.azureLoginTitle)}</Title>
         {isLoggedIn && (
           <div className={styles.azureProfile}>
             <div className={styles.profileName}>{email}</div>
@@ -78,6 +77,7 @@ class AzureLogin extends React.Component<Props> {
             </div>
           </div>
         )}
+        <Title>{intl.formatMessage(azureMessages.azureLoginTitle)}</Title>
         <div className={styles.loginCard}>
           {!isLoggedIn && (
             <LoginCard
@@ -85,8 +85,8 @@ class AzureLogin extends React.Component<Props> {
               handleClick={() => {
                 this.handleClick();
               }}
-              cardTitle={intl.formatMessage(messages.azureTitle)}
-              cardBody={intl.formatMessage(messages.azureCardBody)}
+              cardTitle={intl.formatMessage(azureMessages.azureTitle)}
+              cardBody={intl.formatMessage(azureMessages.azureCardBody)}
               handleDetailsClick={setDetailPage}
               option={microsoftAzureDetails}
             />

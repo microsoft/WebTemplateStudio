@@ -16,13 +16,32 @@
   position: relative;
 }
 
+.centerViewAzurePage {
+  padding: 0;
+}
+
 .centerViewMaxHeight {
   height: calc(100vh - 51px);
   margin-bottom: 0px;
 }
 
+.optionalFlag {
+  position: absolute;
+  width: 100%;
+  background-color: #0067b8;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-weight: lighter;
+  font-size: 1.4em;
+  padding: 10px 0px;
+}
+
 @media (max-width: 830px) {
   .centerView {
     padding: 1vh 2vh;
+  }
+  .centerViewAzurePage {
+    padding: 0;
   }
 }

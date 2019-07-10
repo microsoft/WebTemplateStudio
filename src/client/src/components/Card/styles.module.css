@@ -11,6 +11,7 @@
   justify-content: space-between;
   align-items: center;
   color: var(--vscode-textLink-foreground);
+  padding-top: 30px;
 }
 
 .buttonContainer {

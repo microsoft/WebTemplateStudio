@@ -76,6 +76,14 @@ const messages = defineMessages({
   cosmosResource: {
     id: "azureSubscriptions.cosmosResource",
     defaultMessage: "Cosmos Resource"
+  },
+  hostingTitle: {
+    id: "hostingServices.title",
+    defaultMessage: "Publish your project to the web"
+  },
+  storageTitle: {
+    id: "storageServices.title",
+    defaultMessage: "Create and connect to a database in the cloud"
   }
 });
 
@@ -110,29 +118,69 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     }
     return () => {};
   }
+
+  public getServicesOrganizer(
+    type: string,
+    isLoggedIn: boolean,
+    setDetailPage: any,
+    title: any
+  ) {
+    const { formatMessage } = this.props.intl;
+    return (
+      <div
+        className={classnames(styles.servicesContainer, {
+          [styles.overlay]: !isLoggedIn
+        })}
+      >
+        {azureServiceOptions.map(option => {
+          if (option.type === type) {
+            return (
+              <div className={styles.servicesCategory}>
+                <div className={styles.categoryTitle}>{option.type}</div>
+                <div className={styles.categoryDescriptor}>
+                  {formatMessage(title)}
+                </div>
+
+                <div
+                  key={JSON.stringify(option.title)}
+                  className={classnames(styles.subscriptionCardContainer)}
+                >
+                  <Card
+                    option={option}
+                    buttonText={this.addOrEditResourceText(option.internalName)}
+                    handleButtonClick={this.getServicesModalOpener(
+                      option.internalName
+                    )}
+                    disabled={!isLoggedIn}
+                    handleDetailsClick={setDetailPage}
+                    useNormalButtons={this.isSelectionCreated(
+                      option.internalName
+                    )}
+                  />
+                </div>
+              </div>
+            );
+          }
+        })}
+      </div>
+    );
+  }
   public render() {
     const { isLoggedIn, setDetailPage } = this.props;
     return (
       <div className={styles.container}>
-        {azureServiceOptions.map(option => (
-          <div
-            key={JSON.stringify(option.title)}
-            className={classnames(styles.subscriptionCardContainer, {
-              [styles.overlay]: !isLoggedIn
-            })}
-          >
-            <Card
-              option={option}
-              buttonText={this.addOrEditResourceText(option.internalName)}
-              handleButtonClick={this.getServicesModalOpener(
-                option.internalName
-              )}
-              disabled={!isLoggedIn}
-              handleDetailsClick={setDetailPage}
-              useNormalButtons={this.isSelectionCreated(option.internalName)}
-            />
-          </div>
-        ))}
+        {this.getServicesOrganizer(
+          "Cloud Hosting",
+          isLoggedIn,
+          setDetailPage,
+          messages.hostingTitle
+        )}
+        {this.getServicesOrganizer(
+          "Cloud Database",
+          isLoggedIn,
+          setDetailPage,
+          messages.storageTitle
+        )}
       </div>
     );
   }

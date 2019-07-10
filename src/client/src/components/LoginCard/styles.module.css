@@ -2,7 +2,6 @@
   padding: 16px;
   background-color: var(--vscode-sideBar-background);
   border: 1px solid var(--vscode-editorGroup-border);
-  margin-right: 15px;
 }
 
 .selectionContainer {
@@ -28,7 +27,7 @@
 }
 
 .signInButton {
-  font-size: 1em;
+  font-size: 1.3em;
   margin-left: 16px;
   border: none;
 }
@@ -37,6 +36,11 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+.loginInfo {
+  font-size: 1.5em;
+  text-align: center;
+  padding: 40px 0px;
+}
 .cardTitle {
   font-weight: bold;
   font-size: 16px;

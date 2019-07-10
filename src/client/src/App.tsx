@@ -16,6 +16,7 @@ import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 import PrivacyModal from "./containers/PrivacyModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
+import { azureMessages } from "./mockData/azureServiceOptions";
 
 import {
   EXTENSION_COMMANDS,
@@ -67,6 +68,7 @@ import TopNavBar from "./components/TopNavBar";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
+import messages from "./containers/RightSidebar/strings";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -272,12 +274,17 @@ class App extends React.Component<Props> {
 
           <main
             className={classnames(appStyles.centerView, {
-              [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS
+              [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS,
+              [appStyles.centerViewAzurePage]: pathname === ROUTES.AZURE_LOGIN
             })}
           >
             {pathname === ROUTES.AZURE_LOGIN && (
-              <Link tabIndex={0} to={ROUTES.REVIEW_AND_GENERATE}>
-                Hello
+              <Link
+                tabIndex={0}
+                to={ROUTES.REVIEW_AND_GENERATE}
+                className={appStyles.optionalFlag}
+              >
+                {azureMessages.azureSkipButton.defaultMessage}
               </Link>
             )}
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />

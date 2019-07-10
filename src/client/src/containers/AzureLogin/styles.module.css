@@ -1,5 +1,5 @@
 .container {
-  padding-top: 35px;
+  padding: 65px 10%;
 }
 .loginCard {
   width: 100%;
@@ -8,6 +8,8 @@
 
 .azureProfile {
   display: flex;
+  position: absolute;
+  right: 10px;
 }
 
 .profileName {

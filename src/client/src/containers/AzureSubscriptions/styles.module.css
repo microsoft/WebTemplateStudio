@@ -3,6 +3,24 @@
   margin-bottom: 3%;
 }
 
+.servicesCategory {
+  margin-bottom: 10%;
+}
+.categoryTitle {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.categoryDescriptor {
+  font-size: 2em;
+  padding: 5px 0px 20px 0px;
+  font-weight: 600;
+}
+
+.servicesContainer {
+  display: block;
+  width: 100%;
+}
 .subscriptionCardContainer {
   flex-basis: 43%;
   flex-grow: 9999;
@@ -11,6 +29,7 @@
 .subscriptionCardContainer {
   margin-right: 10px;
   margin-bottom: 10px;
+  max-width: 198px;
   padding: 15px;
   background-color: var(--vscode-sideBar-background);
   border: 1px solid var(--vscode-editorGroup-border);
@@ -18,6 +37,7 @@
 
 .overlay {
   opacity: 0.4;
+  position: relative;
 }
 
 .container {

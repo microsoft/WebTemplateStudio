@@ -38,7 +38,7 @@
   "azureFunctionsSelection.duplicateName": "Function name has to be unique",
   "azureFunctionsSelection.edit": "Edit",
   "azureLogin.azureCardBody": "Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. Sign in or create an account to get access to CosmosDB and Azure Functions from this extension",
-  "azureLogin.azureLoginTitle": "Add Azure Cloud Services to Your Project",
+  "azureLogin.azureLoginTitle": "Add Azure Cloud Services to Your Project.",
   "azureLogin.azureTitle": "Microsoft Azure",
   "azureLogin.longDescription": "Azure is a cloud computing service created by Microsoft for building, testing, deploying, and managing applications and services through Microsoft-managed data centers spread throughout the world. It offers more than a hundred services including scalable databases, container deployments, infrastructure management, serverless compute etc. These services combined with Microsoft's developer tools like Visual Studio and Visual Studio Code offer you great end-to-end tools to make you success. More information about Microsoft Azure can be found at [azure.microsoft.com](azure.microsoft.com).",
   "azureSubscriptions.addResource": "Add Resource",
