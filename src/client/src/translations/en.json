@@ -23,7 +23,7 @@
   "azureFunctionsModal.createFunctionApp": "Create Function Application",
   "azureFunctionsModal.createNew": "Create New",
   "azureFunctionsModal.createNewResourceGroupDisplayMessage": "Create new resource group for me",
-  "azureFunctionsModal.createNewResourceGroupSelectedDisplayMessage": "We will automatically create a resource group for you",
+  "azureFunctionsModal.createNewResourceGroupSelectedDisplayMessage": "We will automatically create a resource group for you in Central US",
   "azureFunctionsModal.locationLabel": "Location",
   "azureFunctionsModal.locationSubLabel": "Choose an Azure region where you want your function to be hosted",
   "azureFunctionsModal.numFunctionsLabel": "Number of functions",

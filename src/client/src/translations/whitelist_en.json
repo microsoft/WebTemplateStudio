@@ -47,6 +47,7 @@
   "azureFunctionsModal.numFunctionsSubLabel",
   "azureFunctionsModal.chooseExistingResourceGroup",
   "azureFunctionsModal.createNewResourceGroupDisplayMessage",
+  "azureFunctionsModal.createNewResourceGroupSelectedDisplayMessage",
   "azureFunctionsSelection.edit",
   "azureFunctionsSelection.duplicateName",
   "header.signOut",
