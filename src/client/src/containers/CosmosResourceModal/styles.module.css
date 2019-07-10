@@ -181,3 +181,17 @@ input::placeholder {
 .subLabel {
   margin-bottom: 4px;
 }
+
+.radioButtonContainer {
+  display: flex;
+  padding: 5px;
+}
+
+.radioButtonLabel {
+  margin-right: 35px;
+}
+
+.radioButton {
+  margin-left: 0px;
+  margin-right: 5px;
+}
