@@ -121,9 +121,7 @@ const SelectableCard = ({
           {isPagesSelection && (
             <button
               className={classNames(styles.cardCount, styles.countButton)}
-              onClick={() => {
-                removePage(cardNumber);
-              }}
+              onClick={() => removePage(cardNumber)}
             >
               {subtract && <Subtract className={styles.subtractSVG} />}
             </button>
@@ -150,9 +148,7 @@ const SelectableCard = ({
           {isPagesSelection && (
             <button
               className={classNames(styles.cardCount, styles.countButton)}
-              onClick={() => {
-                addPage(cardNumber);
-              }}
+              onClick={() => addPage(cardNumber)}
             >
               {plus && <Plus />}
             </button>
