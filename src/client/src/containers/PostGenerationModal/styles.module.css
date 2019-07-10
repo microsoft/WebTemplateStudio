@@ -1,25 +1,47 @@
+.azureTitle {
+  font-family: Segoe UI;
+  font-size: 21px;
+  font-weight: lighter;
+  line-height: 19px;
+  color: #ffffff;
+}
 .title {
-  font-weight: bold;
-  font-size: 1.2em;
+  font-size: 21px;
+  font-family: "Segoe UI";
+  font-weight: lighter;
+  line-height: 25px;
+  color: #ffffff;
 }
 
 .section {
+  margin-top: 40px;
+}
+
+.sectionLine {
   margin-top: 20px;
-  font-weight: bold;
+}
+
+.sectionLineButton {
+  margin-top: 20px;
+  margin-left: -5px;
+}
+
+.readMeText {
+  color: var(--vscode-editorMarkerNavigationWarning-background);
 }
 
 .footerContainer {
   margin-top: 40px;
-  display: flex;
-  justify-content: space-between;
+  float: right;
   align-items: center;
 }
 
 .button {
-  font-size: 1em;
+  font-size: 1.2em;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 33px;
 }
 
 .button:focus {
@@ -55,7 +77,7 @@
   justify-content: flex-start;
 }
 
-.openProject {
+.buttonToLink {
   display: inline-block;
   border: none;
   margin: 0;
