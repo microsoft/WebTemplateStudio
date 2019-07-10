@@ -323,7 +323,7 @@ export class AzureServices extends WizardServant {
   }
 
   public static cosmosDBSelectedNewResourceGroup(payload: any): boolean {
-    return payload.selectedCosmos && payload.cosmos.resource === "";
+    return payload.selectedCosmos && payload.cosmos.resourceGroup === "";
   }
 
   private static generateResourceGroupSelection(
