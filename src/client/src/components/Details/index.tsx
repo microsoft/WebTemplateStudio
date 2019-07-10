@@ -51,7 +51,7 @@ const Details = ({
     </React.Fragment>
   );
   const keyDownHandler = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+    if (event.key === "Enter" || event.key === " ") {
       handleBackClick();
     }
   };

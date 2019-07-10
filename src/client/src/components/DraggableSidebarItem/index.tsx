@@ -58,7 +58,7 @@ const DraggableSidebarItem = ({
   totalPageCount?: number;
 }) => {
   const handleKeyDown = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+    if (event.key === "Enter" || event.key === " ") {
       handleCloseOnClick();
     }
   };

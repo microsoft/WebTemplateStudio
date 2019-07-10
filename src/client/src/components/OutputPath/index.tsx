@@ -39,7 +39,7 @@ const OutputPath = ({
   placeholder
 }: IProps & InjectedIntlProps) => {
   const handleKeyDown = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+    if (event.key === "Enter" || event.key === " ") {
       handleSaveClick();
     }
   };

@@ -110,24 +110,24 @@ const SummaryTile = ({
     }
   };
   const onCloseKeyDown = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+    if (event.key === "Enter" || event.key === " ") {
       onCloseClick();
-    } else if (event.keyCode === 9) {
+    } else if (event.key === "Tab") {
       setEditable(false);
     }
   };
   const onEditKeyDown = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+    if (event.key === "Enter" || event.key === " ") {
       handleClick();
     }
   };
   const onSummaryTileLeave = (event: any) => {
-    if (event.shiftKey && event.keyCode === 9) {
+    if (event.shiftKey && event.key === "Tab") {
       setEditable(false);
     }
   };
   const handleKeyDown = (event: any) => {
-    if (event.keyCode === 13) {
+    if (event.key === "Enter") {
       handleFocusOut();
     }
   };
