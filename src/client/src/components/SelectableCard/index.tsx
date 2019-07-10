@@ -17,7 +17,9 @@ import { ROUTES } from "../../utils/constants";
 import { getSvg } from "../../utils/getSvgUrl";
 
 import { ReactComponent as Plus } from "../../assets/plus.svg";
+import { ReactComponent as Subtract } from "../../assets/subtract.svg";
 import plus from "../../assets/plus.svg";
+import subtract from "../../assets/subtract.svg";
 
 const SelectableCard = ({
   iconPath,
@@ -33,7 +35,8 @@ const SelectableCard = ({
   disabled,
   isFrameworkSelection,
   isPagesSelection,
-  addPage
+  addPage,
+  removePage
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -49,6 +52,7 @@ const SelectableCard = ({
   isFrameworkSelection: boolean;
   isPagesSelection: boolean;
   addPage: (idx: number) => void;
+  removePage: (idx: number) => void;
 }) => {
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -114,14 +118,22 @@ const SelectableCard = ({
           />
         </Link>
         <div className={styles.pageButtons}>
+          {isPagesSelection && (
+            <button
+              className={classNames(styles.cardCount, styles.countButton)}
+              onClick={() => removePage(cardNumber)}
+            >
+              {subtract && <Subtract className={styles.subtractSVG} />}
+            </button>
+          )}
           <div
             className={classNames({
-              [styles.hidden]: !selected,
+              [styles.hidden]: !selected && !isPagesSelection,
               [styles.selectedCheckMark]: selected && !clickCount,
-              [styles.showCount]: selected && clickCount
+              [styles.showCount]: isPagesSelection
             })}
           >
-            {clickCount || (
+            {(isPagesSelection && <div>{clickCount}</div>) || (
               <div className={styles.selectedText}>
                 <div>
                   <FormattedMessage
@@ -136,9 +148,7 @@ const SelectableCard = ({
           {isPagesSelection && (
             <button
               className={classNames(styles.cardCount, styles.countButton)}
-              onClick={() => {
-                addPage(cardNumber);
-              }}
+              onClick={() => addPage(cardNumber)}
             >
               {plus && <Plus />}
             </button>
