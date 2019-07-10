@@ -18,6 +18,13 @@ import { defineMessages, InjectedIntl, injectIntl } from "react-intl";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import {
+  EXTENSION_MODULES,
+  EXTENSION_COMMANDS,
+  WIZARD_CONTENT_INTERNAL_NAMES
+} from "../../utils/constants";
 
 interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
@@ -31,6 +38,7 @@ interface IDispatchProps {
 }
 
 interface ISelectPagesProps {
+  vscode: IVSCodeObject;
   options: IOption[];
   selectedBackend: ISelected;
   selectedFrontend: ISelected;
@@ -63,14 +71,16 @@ class SelectPages extends React.Component<Props> {
       serverPort
     } = this.props;
 
-    if (getPages !== undefined) {
-      getPages(
-        selectedProjectType.internalName,
-        selectedFrontend.internalName,
-        selectedBackend.internalName,
-        serverPort
-      );
-    }
+    const { vscode } = this.props;
+    vscode.postMessage({
+      module: EXTENSION_MODULES.CORETS,
+      command: EXTENSION_COMMANDS.GET_PAGES,
+      payload: {
+        projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+        frontendFramework: selectedFrontend,
+        backendFramework: selectedBackend
+      }
+    });
   }
 
   public componentDidUpdate(newProps: ISelectPagesProps) {
@@ -140,6 +150,7 @@ class SelectPages extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): ISelectPagesProps => {
+  const vscode = getVSCodeApiSelector(state);
   const { pageOptions, serverPort } = state.wizardContent;
   const { pages } = state.selection;
   const { appType } = state.selection;
@@ -147,6 +158,7 @@ const mapStateToProps = (state: AppState): ISelectPagesProps => {
   const { backendFramework } = state.selection;
 
   return {
+    vscode: vscode,
     options: pageOptions,
     selectedBackend: backendFramework,
     selectedFrontend: frontendFramework,

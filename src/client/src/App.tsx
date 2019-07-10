@@ -150,6 +150,9 @@ class App extends React.Component<Props> {
             )
           );
           break;
+        case EXTENSION_COMMANDS.GET_PAGES:
+          this.props.getPages(payload);
+          break;
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           this.props.updateDependencyInfo(message.payload);
           break;
