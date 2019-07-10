@@ -12,7 +12,9 @@ export const setCosmosModalButtonStatus = (
   let isAnyEmpty: boolean = false;
 
   isSubscriptionEmpty = selections.subscription.value === "";
-  isResourceGroupEmpty = selections.resourceGroup.value === "";
+  isResourceGroupEmpty =
+    selections.chooseExistingRadioButtonSelected &&
+    selections.resourceGroup.value === "";
   isAccountNameEmpty = selections.accountName.value === "";
   isApiEmpty = selections.api.value === "";
   isLocationEmpty = selections.location.value === "";
@@ -25,9 +27,9 @@ export const setCosmosModalButtonStatus = (
     isApiEmpty;
 
   const { isAccountNameAvailable } = accountNameAvailability;
-  
-  const isDisabled =  isAnyEmpty || isValidatingName || !isAccountNameAvailable;
-  
+
+  const isDisabled = isAnyEmpty || isValidatingName || !isAccountNameAvailable;
+
   setFormIsSendable(!isDisabled);
 
   return isDisabled;
