@@ -57,7 +57,7 @@ const SelectableCard = ({
     onDetailsClick(option);
   }
 
-  const keyDownHandler = (event: any) => {
+  const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter" || event.key === " ") {
       onCardClick(cardNumber);
     }

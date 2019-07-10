@@ -50,7 +50,7 @@ const Details = ({
       <br />
     </React.Fragment>
   );
-  const keyDownHandler = (event: any) => {
+  const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter" || event.key === " ") {
       handleBackClick();
     }
