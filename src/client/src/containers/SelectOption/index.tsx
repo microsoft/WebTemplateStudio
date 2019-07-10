@@ -134,10 +134,11 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     selectedCardIndices.push(cardNumber);
     if (selectOptions && currentCardData) {
-      currentCardData.push(
+      const currentCards = currentCardData.splice(0);
+      currentCards.push(
         this.mapIndexToCardInfo(cardCount, internalName, cardNumber)
       );
-      selectOptions(currentCardData);
+      selectOptions(currentCards);
     }
     this.setState({
       selectedCardIndices
@@ -152,13 +153,14 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     if (selectOptions && currentCardData && currentCardData.length > 1) {
       const size = currentCardData.length;
+      const currentCards = currentCardData.splice(0);
       for (let i = size - 1; i >= 0; i--) {
-        if (currentCardData[i].internalName === internalName) {
-          currentCardData.splice(i, 1);
+        if (currentCards[i].internalName === internalName) {
+          currentCards.splice(i, 1);
           break;
         }
       }
-      selectOptions(currentCardData);
+      selectOptions(currentCards);
       this.setState({
         selectedCardIndices
       });
