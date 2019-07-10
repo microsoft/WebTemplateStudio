@@ -144,7 +144,7 @@ class Footer extends React.Component<Props> {
     event: React.SyntheticEvent,
     pathname: string
   ) => {
-    const { isValidNameAndProjectPath, setRouteVisited } = this.props;
+    const { setRouteVisited } = this.props;
     this.trackPageForTelemetry(pathname);
 
     if (pathname !== ROUTES.NEW_PROJECT) {
