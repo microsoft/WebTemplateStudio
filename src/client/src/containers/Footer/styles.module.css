@@ -41,6 +41,10 @@
   color: #ffffff;
 }
 
+.nextIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .disabledOverlay {
   opacity: 0.5;
   outline: 0px;
