@@ -89,8 +89,8 @@ const mapDispatchToProps = (
   selectWebApp: (selectedApp: ISelected) => {
     dispatch(selectWebAppAction(selectedApp));
   },
-  getProjectTypes: (serverPort: number) => {
-    dispatch(getProjectTypesAction(serverPort));
+  getProjectTypes: () => {
+    dispatch(getProjectTypesAction());
   }
 });
 
