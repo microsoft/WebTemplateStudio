@@ -59,7 +59,7 @@ const DraggableSidebarItem = ({
   totalPageCount?: number;
 }) => {
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.key === KEY_EVENTS.Enter || event.key === KEY_EVENTS.Space) {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleCloseOnClick();
     }
   };

@@ -58,7 +58,7 @@ class AzureLogin extends React.Component<Props> {
     });
   };
   keyDownClick = (event: React.KeyboardEvent) => {
-    if (event.key === KEY_EVENTS.Enter || event.key === KEY_EVENTS.Space) {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       this.signOutClick();
     }
   };

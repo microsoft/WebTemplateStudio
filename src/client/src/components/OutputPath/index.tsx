@@ -39,7 +39,7 @@ const OutputPath = ({
   placeholder
 }: IProps & InjectedIntlProps) => {
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.key === KEY_EVENTS.Enter || event.key === KEY_EVENTS.Space) {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleSaveClick();
     }
   };

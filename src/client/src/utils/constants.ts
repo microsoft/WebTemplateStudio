@@ -53,9 +53,9 @@ enum FRAMEWORK_TYPE {
 }
 
 enum KEY_EVENTS {
-  Enter = "Enter",
-  Space = " ",
-  Tab = "Tab"
+  ENTER = "Enter",
+  SPACE = " ",
+  TAB = "Tab"
 }
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
