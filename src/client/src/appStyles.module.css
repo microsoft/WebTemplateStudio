@@ -29,7 +29,7 @@
   position: absolute;
   width: 100%;
   background-color: #0067b8;
-  color: white;
+  color: var(--vscode-extensionButton-prominentForeground);
   text-align: center;
   text-decoration: none;
   font-weight: lighter;
@@ -38,7 +38,7 @@
 }
 
 .optionalFlag:hover {
-  color: white;
+  color: var(--vscode-extensionButton-prominentForeground);
 }
 
 @media (max-width: 830px) {
