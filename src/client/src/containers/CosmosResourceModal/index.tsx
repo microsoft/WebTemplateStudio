@@ -25,7 +25,8 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  COSMOS_APIS
+  COSMOS_APIS,
+  KEY_EVENTS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
@@ -347,8 +348,8 @@ const CosmosResourceModal = (props: Props) => {
   };
   const { isAccountNameAvailable } = props.accountNameAvailability;
   const { isValidatingName } = props;
-  const cancelKeyDownHandler = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
       props.closeModal();
