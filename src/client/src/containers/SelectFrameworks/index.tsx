@@ -1,8 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import styles from "./styles.module.css";
-
 import SelectBackEndFramework from "../SelectBackendFramework";
 import SelectFrontEndFramework from "../SelectFrontEndFramework";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
