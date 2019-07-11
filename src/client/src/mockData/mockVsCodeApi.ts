@@ -228,8 +228,7 @@ const mockVsCodeApi = () => ({
                       "This is the most basic page. A blank canvas to mold into whatever you wish. The blank page leaves pretty much everything up to you.",
                     author: "Microsoft",
                     version: "1.0.0",
-                    icon:
-                      "C:Users\t-nijindAppDataLocalCoreTSTemplatesLocalEnv\0.0.0.0WebPagesReact.Blank.template.configicon.xaml",
+                    icon: "",
                     displayOrder: 0,
                     isHidden: false,
                     isGroupExclusiveSelection: false,
@@ -258,8 +257,7 @@ const mockVsCodeApi = () => ({
                       "A page displaying simple image and text components which are organized into a grid. Grid pages are a system for creating order among elements in a website.",
                     author: "Microsoft",
                     version: "1.0.0",
-                    icon:
-                      "C:Users\t-nijindAppDataLocalCoreTSTemplatesLocalEnv\0.0.0.0WebPagesReact.Grid.template.configicon.xaml",
+                    icon: "",
                     displayOrder: 1,
                     isHidden: false,
                     isGroupExclusiveSelection: false,
@@ -288,8 +286,7 @@ const mockVsCodeApi = () => ({
                       "The list page allows you to add custom text in the form of an adaptive list. This pattern is frequently used for blog pages and messaging apps. If a database is selected from the Azure Cloud Services the list page will automatically connect to the deployed Azure database.",
                     author: "Microsoft",
                     version: "1.0.0",
-                    icon:
-                      "C:Users\t-nijindAppDataLocalCoreTSTemplatesLocalEnv\0.0.0.0WebPagesReact.List.template.configicon.xaml",
+                    icon: "",
                     displayOrder: 1,
                     isHidden: false,
                     isGroupExclusiveSelection: false,
@@ -318,8 +315,7 @@ const mockVsCodeApi = () => ({
                       "The master-detail page has a master pane and a details pane for content. When an item in the master list is selected, the details pane is updated. This pattern is frequently used for email and address books.",
                     author: "Microsoft",
                     version: "1.0.0",
-                    icon:
-                      "C:Users\t-nijindAppDataLocalCoreTSTemplatesLocalEnv\0.0.0.0WebPagesReact.MasterDetail.template.configicon.xaml",
+                    icon: "",
                     displayOrder: 1,
                     isHidden: false,
                     isGroupExclusiveSelection: false,
