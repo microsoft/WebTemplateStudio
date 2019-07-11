@@ -14,7 +14,7 @@
 
 .selected,
 .button {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .selected {
@@ -84,11 +84,17 @@
 }
 
 .showCount {
-  font-size: 1.1em;
+  min-width: 20px;
+  text-align: center;
+  font-size: 16px;
   margin-left: 7px;
   margin-right: 7px;
   margin-top: 3px;
   font-weight: 500;
+}
+
+.subtractSVG {
+  margin-top: 3px;
 }
 
 .icon {
@@ -141,6 +147,14 @@
   width: 30px;
   border-radius: 50%;
   font-size: 16px;
+}
+
+.cardCount path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cardCount:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .selectedText {

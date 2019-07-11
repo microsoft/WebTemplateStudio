@@ -20,6 +20,7 @@
     "max-func-body-length": false,
     "curly": true,
     "class-name": true,
+    "export-name": false,
     "triple-equals": false,
     "object-literal-sort-keys": true,
     "react-hooks-nesting": "error",
