@@ -63,6 +63,7 @@ const Licenses = ({
               key={license.text}
               className={styles.link}
               href={license.url}
+              rel="noopener noreferrer"
             >
               {license.text}
             </a>

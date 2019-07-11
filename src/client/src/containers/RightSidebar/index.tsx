@@ -36,7 +36,6 @@ import messages from "./strings";
 import { ISelected } from "../../types/selected";
 import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
-import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 import { WizardContentType } from "../../reducers/wizardContentReducers";
 import { IOption } from "../../types/option";
@@ -150,10 +149,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       openViewLicensesModal
     } = this.props;
     const { formatMessage } = intl;
-    const { frontendOptions, backendOptions, projectTypes } = contentOptions;
+    const { frontendOptions, backendOptions } = contentOptions;
     return (
       <React.Fragment>
-        {pathname !== ROUTES.PAGE_DETAILS && (
+        {pathname !== ROUTES.PAGE_DETAILS && pathname !== ROUTES.NEW_PROJECT && (
           <div
             role="complementary"
             className={classNames(styles.container, styles.rightViewCropped, {

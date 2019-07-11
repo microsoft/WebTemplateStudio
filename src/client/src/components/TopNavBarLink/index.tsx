@@ -24,9 +24,10 @@ const TopNavBarLink = ({
       e.preventDefault();
     }
   };
+  const linkTabIndex = disabled ? -1 : 0;
   return (
     <Link
-      tabIndex={disabled ? -1 : 0}
+      tabIndex={linkTabIndex}
       to={path}
       onClick={handleClick}
       className={styles.container}

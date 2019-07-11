@@ -9,34 +9,34 @@ import TopNavBarLink from "../TopNavBarLink";
 
 import styles from "./styles.module.css";
 
-import { ROUTES, ROUTES_ARRAY } from "../../utils/constants";
+import { ROUTES_ARRAY } from "../../utils/constants";
 import { IRoutes } from "../../reducers/wizardRoutes/navigationReducer";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
 
 const messages = defineMessages({
-  welcome: {
-    id: "topNavBar.newProject",
-    defaultMessage: "New Project"
+  ariaNavLabel: {
+    defaultMessage: "Navigate between pages in the Wizard",
+    id: "topNavBar.ariaNavLabel"
   },
   frameworks: {
     id: "topNavBar.frameworks",
-    defaultMessage: "Frameworks"
+    defaultMessage: "Add Frameworks"
   },
   pages: {
     id: "topNavBar.pages",
-    defaultMessage: "Pages"
+    defaultMessage: "Add Pages"
   },
   services: {
-    id: "topNavBar.services",
-    defaultMessage: "Add Optional Cloud Services"
+    defaultMessage: "Add Optional Cloud Services",
+    id: "topNavBar.services"
   },
   summary: {
-    id: "topNavBar.summary",
-    defaultMessage: "Summary"
+    defaultMessage: "Summary",
+    id: "topNavBar.summary"
   },
-  ariaNavLabel: {
-    id: "topNavBar.ariaNavLabel",
-    defaultMessage: "Navigate between pages in the Wizard"
+  welcome: {
+    defaultMessage: "New Project",
+    id: "topNavBar.newProject"
   }
 });
 
@@ -61,11 +61,11 @@ const TopNavBar = (props: Props) => {
     ROUTES_ARRAY.indexOf(pathname)
   );
   const topNavTabClicked = (
-    event: React.SyntheticEvent,
     idx: number,
-    visited: boolean
+    visited: boolean,
+    disabled: boolean
   ) => {
-    if (visited) {
+    if (visited && !disabled) {
       setPathIndex(ROUTES_ARRAY.indexOf(ROUTES_ARRAY[idx]));
     }
   };
@@ -83,32 +83,38 @@ const TopNavBar = (props: Props) => {
         >
           <div>
             {topNavBarData.map((sidebartitle, idx) => {
+              const alreadyVisitedRouteAndCanVisit =
+                isVisited[ROUTES_ARRAY[idx]] && isValidNameAndProjectPath;
+              const isOtherVisitedRoute =
+                idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]];
+
+              const navTabClickedHandler = (
+                event: React.MouseEvent<HTMLDivElement, MouseEvent>
+              ) => {
+                event.preventDefault();
+                topNavTabClicked(
+                  idx,
+                  isVisited[ROUTES_ARRAY[idx]],
+                  !alreadyVisitedRouteAndCanVisit
+                );
+              };
               return (
                 <div
+                  role="Button"
                   className={classnames(styles.itemBorder, {
-                    [styles.visitedPath]:
-                      isVisited[ROUTES_ARRAY[idx]] && isValidNameAndProjectPath,
+                    [styles.visitedPath]: alreadyVisitedRouteAndCanVisit,
                     [styles.nextPath]:
-                      idx > currentPathIndex &&
-                      (!isVisited[ROUTES_ARRAY[idx]] ||
-                        !isValidNameAndProjectPath),
+                      idx > currentPathIndex && !alreadyVisitedRouteAndCanVisit,
                     [styles.itemBorderTop]: idx === 0
                   })}
                   key={sidebartitle}
-                  onClick={event =>
-                    topNavTabClicked(event, idx, isVisited[ROUTES_ARRAY[idx]])
-                  }
+                  onClick={navTabClickedHandler}
                 >
                   <TopNavBarLink
-                    disabled={
-                      !isVisited[ROUTES_ARRAY[idx]] ||
-                      !isValidNameAndProjectPath
-                    }
+                    disabled={!alreadyVisitedRouteAndCanVisit}
                     path={ROUTES_ARRAY[idx]}
                     text={sidebartitle}
-                    visitedCheck={
-                      idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]]
-                    }
+                    visitedCheck={isOtherVisitedRoute}
                     isSelected={idx === currentPathIndex}
                     pageNumber={idx + 1}
                   />
@@ -123,8 +129,8 @@ const TopNavBar = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => ({
-  isVisited: state.wizardRoutes.isVisited,
-  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
+  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
+  isVisited: state.wizardRoutes.isVisited
 });
 
 export default withRouter(connect(mapStateToProps)(injectIntl(TopNavBar)));
