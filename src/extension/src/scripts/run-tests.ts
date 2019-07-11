@@ -1,7 +1,6 @@
 const child_process = require("child_process");
 const path = require("path");
 const fs = require("fs");
-const del = require("del");
 
 const testFolder = path.join(__dirname, "..", "..", "src", "template_test");
 console.log(testFolder);
@@ -126,11 +125,7 @@ asyncForEach(files, async (file: string) => {
 })
   .then(() => {
     console.log("Deleting generated projects");
-    del.sync(testFolder);
     console.log("Finished deleting projects");
-    if (!fs.existsSync(testFolder)) {
-      fs.mkdirSync(testFolder);
-    }
   })
   .catch(err => {
     throw err;

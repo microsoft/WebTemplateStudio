@@ -1,5 +1,7 @@
 import { CoreTemplateStudio } from "../coreTemplateStudio";
 import { CONSTANTS } from "../constants";
+import * as path from "path";
+import * as fs from "fs";
 
 let instance: CoreTemplateStudio;
 let backends: string[] = [];
@@ -7,6 +9,8 @@ let frontends: string[] = [];
 const projType = "FullStackWebApp";
 let syncAttemptNum = 0;
 let prevPromise: Promise<any> = Promise.resolve(null);
+
+fs.mkdirSync(path.join(__dirname, "..", "..", "src", "template_test"));
 
 const delay = (time: number) => {
   return new Promise(function(resolve) {
