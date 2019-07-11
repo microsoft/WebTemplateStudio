@@ -33,7 +33,6 @@ const TopNavBarLink = ({
       className={styles.container}
     >
       <div
-        aria-label="heyyy"
         className={classnames(styles.text, {
           [styles.textSelected]: isSelected
         })}
