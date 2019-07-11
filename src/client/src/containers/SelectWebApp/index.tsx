@@ -9,19 +9,20 @@ import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectW
 import { ISelected } from "../../types/selected";
 
 import { defineMessages, InjectedIntl, injectIntl } from "react-intl";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   selectWebApp: (selectedApp: ISelected) => void;
-  getProjectTypes: (serverPort: number) => any;
 }
 
 interface IStoreProps {
   selectedWebApp: ISelected;
   type: IOption[];
-  serverPort: number;
+  vscode: IVSCodeObject;
 }
 
 interface IIntlProps {
@@ -39,10 +40,8 @@ const messages = defineMessages({
 
 class SelectWebApp extends React.Component<Props> {
   public componentDidMount() {
-    const { getProjectTypes, serverPort } = this.props;
-    if (getProjectTypes) {
-      getProjectTypes(serverPort);
-    }
+    const { selectedWebApp, vscode } = this.props;
+    // TODO: post message to extension side here
   }
 
   public convertSelectionToIndexNumber(framework: ISelected): number[] {
@@ -74,12 +73,13 @@ class SelectWebApp extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): IStoreProps => {
+  const vscode = getVSCodeApiSelector(state);
   const { serverPort } = state.wizardContent;
   const { appType } = state.selection;
   return {
     selectedWebApp: appType,
     type: state.wizardContent.projectTypes,
-    serverPort
+    vscode: vscode
   };
 };
 
@@ -88,9 +88,6 @@ const mapDispatchToProps = (
 ): IDispatchProps => ({
   selectWebApp: (selectedApp: ISelected) => {
     dispatch(selectWebAppAction(selectedApp));
-  },
-  getProjectTypes: () => {
-    dispatch(getProjectTypesAction());
   }
 });
 
