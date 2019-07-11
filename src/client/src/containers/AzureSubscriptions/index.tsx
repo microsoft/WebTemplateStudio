@@ -120,7 +120,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   }
 
   public getServicesOrganizer(
-    type: string,
+    type: string | undefined,
     isLoggedIn: boolean,
     setDetailPage: any,
     title: any
@@ -132,55 +132,60 @@ class AzureSubscriptions extends React.Component<Props, IState> {
           [styles.overlay]: !isLoggedIn
         })}
       >
-        {azureServiceOptions.map(option => {
-          if (option.type === type) {
-            return (
-              <div className={styles.servicesCategory}>
-                <div className={styles.categoryTitle}>{option.type}</div>
-                <div className={styles.categoryDescriptor}>
-                  {formatMessage(title)}
-                </div>
-
-                <div
-                  key={JSON.stringify(option.title)}
-                  className={classnames(styles.subscriptionCardContainer)}
-                >
-                  <Card
-                    option={option}
-                    buttonText={this.addOrEditResourceText(option.internalName)}
-                    handleButtonClick={this.getServicesModalOpener(
-                      option.internalName
-                    )}
-                    disabled={!isLoggedIn}
-                    handleDetailsClick={setDetailPage}
-                    useNormalButtons={this.isSelectionCreated(
-                      option.internalName
-                    )}
-                  />
-                </div>
-              </div>
-            );
-          }
-        })}
+        <div className={styles.servicesCategory}>
+          <div className={styles.categoryTitle}>{type}</div>
+          <div className={styles.categoryDescriptor}>
+            {formatMessage(title)}
+          </div>
+          <div className={styles.servicesCategoryContainer}>
+            {azureServiceOptions.map(option => {
+              if (option.type === type) {
+                return (
+                  <div
+                    key={JSON.stringify(option.title)}
+                    className={classnames(styles.subscriptionCardContainer)}
+                  >
+                    <Card
+                      option={option}
+                      buttonText={this.addOrEditResourceText(
+                        option.internalName
+                      )}
+                      handleButtonClick={this.getServicesModalOpener(
+                        option.internalName
+                      )}
+                      disabled={!isLoggedIn}
+                      handleDetailsClick={setDetailPage}
+                      useNormalButtons={this.isSelectionCreated(
+                        option.internalName
+                      )}
+                    />
+                  </div>
+                );
+              }
+            })}
+          </div>
+        </div>
       </div>
     );
   }
   public render() {
     const { isLoggedIn, setDetailPage } = this.props;
+    const serviceTypes: any[] = [];
+    azureServiceOptions.map(option => {
+      if (serviceTypes.indexOf(option.type) === -1) {
+        serviceTypes.push(option.type);
+      }
+    });
     return (
       <div className={styles.container}>
-        {this.getServicesOrganizer(
-          "Cloud Hosting",
-          isLoggedIn,
-          setDetailPage,
-          messages.hostingTitle
-        )}
-        {this.getServicesOrganizer(
-          "Cloud Database",
-          isLoggedIn,
-          setDetailPage,
-          messages.storageTitle
-        )}
+        {serviceTypes.map(option => {
+          return this.getServicesOrganizer(
+            option,
+            isLoggedIn,
+            setDetailPage,
+            messages.hostingTitle
+          );
+        })}
       </div>
     );
   }

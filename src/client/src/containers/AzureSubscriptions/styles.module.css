@@ -21,13 +21,20 @@
   display: block;
   width: 100%;
 }
-.subscriptionCardContainer {
-  flex-basis: 43%;
-  flex-grow: 9999;
+
+.servicesCategoryContainer {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .subscriptionCardContainer {
-  margin-right: 10px;
+  flex-basis: 43%;
+  flex-grow: 9999;
+  margin-right: 12px;
+  margin-bottom: 12px;
+}
+
+.subscriptionCardContainer {
   margin-bottom: 10px;
   max-width: 198px;
   padding: 15px;

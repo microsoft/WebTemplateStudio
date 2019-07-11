@@ -37,6 +37,10 @@
   padding: 10px 0px;
 }
 
+.optionalFlag:hover {
+  color: white;
+}
+
 @media (max-width: 830px) {
   .centerView {
     padding: 1vh 2vh;
