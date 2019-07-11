@@ -1,8 +1,12 @@
 import classnames from "classnames";
 import * as React from "react";
+import { defineMessages } from "react-intl";
+import { injectIntl, FormattedMessage } from "react-intl";
+
 import { Link } from "react-router-dom";
 
 import styles from "./styles.module.css";
+import { ARIA_LABELS_NAVIGATION } from "../../utils/constants";
 
 const TopNavBarLink = ({
   pageNumber,
@@ -36,6 +40,12 @@ const TopNavBarLink = ({
         className={classnames(styles.text, {
           [styles.textSelected]: isSelected
         })}
+        aria-label={injectedIntl.formatMessage(
+          ARIA_LABELS_NAVIGATION.ARIA_LABELS_MESSAGES,
+          {
+            pagesText: injectIntl.formatMessage(text)
+          }
+        )}
       >
         <div
           className={classnames(styles.pageNumber, {

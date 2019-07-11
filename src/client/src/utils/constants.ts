@@ -19,6 +19,13 @@ const INTL_MESSAGES = defineMessages({
   }
 });
 
+const ARIA_LABELS_NAVIGATION = defineMessages({
+  ARIA_LABELS_MESSAGES: {
+    id: "ariaLabels.pageNavigation",
+    defaultMessage: "Go to {pagesText} page"
+  }
+});
+
 const ROUTES = {
   PAGE_DETAILS,
   SELECT_FRAMEWORKS,
@@ -49,7 +56,7 @@ const COSMOS_APIS = {
 
 enum FRAMEWORK_TYPE {
   FRONTEND = "frontend",
-  BACKEND = "backend",
+  BACKEND = "backend"
 }
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
@@ -122,6 +129,7 @@ export {
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
+  ARIA_LABELS_NAVIGATION,
   COSMOS_APIS,
   DEVELOPMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
