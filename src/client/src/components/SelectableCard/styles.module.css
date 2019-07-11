@@ -18,13 +18,11 @@
 }
 
 .selected {
-  padding: 12.5px;
   border: none;
   outline: 3px solid var(--vscode-editor-foreground);
 }
 
 .selected:focus {
-  padding: 12.5px;
   border: none;
   outline: 3px solid var(--vscode-contrastActiveBorder);
 }
@@ -60,8 +58,9 @@
 }
 
 .boundingBox {
-  max-width: 198px;
-  min-height: 239px;
+  width: 220px;
+  height: 220px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
