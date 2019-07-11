@@ -119,7 +119,7 @@ export const azureMessages = defineMessages({
   }
 });
 
-const servicesEnum = {
+export const servicesEnum = {
   HOSTING: "Cloud Hosting",
   DATABASE: "Cloud Database"
 };

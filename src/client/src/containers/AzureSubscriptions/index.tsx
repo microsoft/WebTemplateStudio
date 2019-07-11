@@ -12,6 +12,7 @@ import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 import azureServiceOptions from "../../mockData/azureServiceOptions";
+import { servicesEnum } from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
 import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 
@@ -177,11 +178,17 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return (
       <div className={styles.container}>
         {uniqueServiceTypes.map(serviceType => {
+          let categoryTitle;
+          if (serviceType === servicesEnum.HOSTING) {
+            categoryTitle = messages.hostingTitle;
+          } else if (serviceType == servicesEnum.DATABASE) {
+            categoryTitle = messages.storageTitle;
+          }
           return this.getServicesOrganizer(
             serviceType,
             isLoggedIn,
             setDetailPage,
-            messages.hostingTitle
+            categoryTitle
           );
         })}
       </div>
