@@ -9,10 +9,9 @@ export interface IProjectTypesActionType {
   payload: IOption[];
 }
 
-export const getProjectTypesAction = () => {
-  // TODO:
+export const getProjectTypesAction = (projectTypeOption: IOption[]) => {
   return getProjectTypesSuccess(
-    getOptionalFromMetadata(getMetadataFromJson([]))
+    getOptionalFromMetadata(getMetadataFromJson(projectTypeOption))
   );
 };
 
