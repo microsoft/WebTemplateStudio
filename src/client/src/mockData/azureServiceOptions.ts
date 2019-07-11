@@ -49,6 +49,64 @@ export const messages = defineMessages({
     id: "cosmosDb.cardBody",
     defaultMessage:
       "Cosmos DB allows you to build and scale your application with a globally distributed, multi-model database service."
+  },
+  azureModalChooseExisting: {
+    id: "azureModal.chooseExisting",
+    defaultMessage: "Choose existing"
+  },
+  azureModalCreateNewResourceGroupDisplayMessage: {
+    id: "azureModal.createNewResourceGroupDisplayMessage",
+    defaultMessage: "Create new resource group for me"
+  },
+  azureModalCreateNewResourceGroupSelectedDisplayMessage: {
+    id: "azureModal.createNewResourceGroupSelectedDisplayMessage",
+    defaultMessage:
+      "We will automatically create a resource group for you in Central US"
+  },
+  azureModalSubscriptionLabel: {
+    id: "azureModal.subscriptionLabel",
+    defaultMessage: "Subscription"
+  },
+  azureModalAriaSubscriptionLabel: {
+    id: "azureModal.ariaSubscriptionLabel",
+    defaultMessage: "Subscription Drop Down"
+  },
+  azureModalResourceGroupLabel: {
+    id: "azureModal.resourceGroupLabel",
+    defaultMessage: "Resource Group"
+  },
+  azureModalAriaResourceGroupLabel: {
+    id: "azureModal.ariaResourceGroupLabel",
+    defaultMessage: "Resource Group Drop Down"
+  },
+  azureModalLocationLabel: {
+    id: "azureModal.locationLabel",
+    defaultMessage: "Location"
+  },
+  azureModalAriaLocationLabel: {
+    id: "azureModal.ariaLocationLabel",
+    defaultMessage: "Location Drop Down"
+  },
+  azureModalCreateNew: {
+    id: "azureModal.createNew",
+    defaultMessage: "Create New"
+  },
+  azureModalAddResource: {
+    id: "azureModal.addResource",
+    defaultMessage: "Add Resource"
+  },
+  azureModalSaveChanges: {
+    id: "azureModal.saveChanges",
+    defaultMessage: "Save Changes"
+  },
+  azureModalSubscriptionSubLabel: {
+    id: "azureModal.subscriptionSubLabel",
+    defaultMessage: "Choose a subscription to manage your billing preferences"
+  },
+  azureModalResourceGroupSubLabel: {
+    id: "azureModal.resourceGroupSubLabel",
+    defaultMessage:
+      "A resource group is a container that holds related resources for an Azure solution"
   }
 });
 
