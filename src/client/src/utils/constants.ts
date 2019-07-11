@@ -49,7 +49,7 @@ const COSMOS_APIS = {
 
 enum FRAMEWORK_TYPE {
   FRONTEND = "frontend",
-  BACKEND = "backend",
+  BACKEND = "backend"
 }
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
@@ -110,7 +110,8 @@ const EXTENSION_COMMANDS = {
   RESET_PAGES: "reset-pages",
   GET_PREVIEW_STATUS: "get-preview",
   GET_DEPENDENCY_INFO: "check-dependency",
-  GET_FRAMEWORKS: "get-frameworks"
+  GET_FRAMEWORKS: "get-frameworks",
+  GET_PAGES: "get-pages"
 };
 
 export {
