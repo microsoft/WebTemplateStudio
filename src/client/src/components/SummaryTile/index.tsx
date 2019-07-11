@@ -14,6 +14,7 @@ import { ReactComponent as FolderSVG } from "../../assets/folder.svg";
 
 import styles from "./styles.module.css";
 import getSvgUrl, { getSvg } from "../../utils/getSvgUrl";
+import { KEY_EVENTS } from "../../utils/constants";
 
 const messages = defineMessages({
   changeItemName: {
@@ -109,25 +110,25 @@ const SummaryTile = ({
       handleCloseClick(idx - 1);
     }
   };
-  const onCloseKeyDown = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const onCloseKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       onCloseClick();
-    } else if (event.keyCode === 9) {
+    } else if (event.key === KEY_EVENTS.TAB) {
       setEditable(false);
     }
   };
-  const onEditKeyDown = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const onEditKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleClick();
     }
   };
-  const onSummaryTileLeave = (event: any) => {
-    if (event.shiftKey && event.keyCode === 9) {
+  const onSummaryTileLeave = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.shiftKey && event.key === KEY_EVENTS.TAB) {
       setEditable(false);
     }
   };
-  const handleKeyDown = (event: any) => {
-    if (event.keyCode === 13) {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === KEY_EVENTS.ENTER) {
       handleFocusOut();
     }
   };
