@@ -24,7 +24,7 @@ export class CoreTSModule extends WizardServant {
   }
 
   async getFrameworks(message: any): Promise<IPayloadResponse> {
-    let result = await CoreTemplateStudio.GetExistingInstance().getFrameworks(
+    const result = await CoreTemplateStudio.GetExistingInstance().getFrameworks(
       message.payload.projectType
     );
     return {
