@@ -10,7 +10,6 @@ import {
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-import { getPagesOptionsAction } from "../../actions/wizardContentActions/getPagesOptions";
 import { getPageCount } from "../../selectors/wizardSelectionSelector";
 import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 
@@ -18,24 +17,25 @@ import { defineMessages, InjectedIntl, injectIntl } from "react-intl";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import {
+  EXTENSION_MODULES,
+  EXTENSION_COMMANDS,
+  WIZARD_CONTENT_INTERNAL_NAMES
+} from "../../utils/constants";
 
 interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
-  getPages: (
-    projectType: string,
-    frontendFramework: string,
-    backendFramework: string,
-    serverPort: number
-  ) => void;
   updatePageCount: (pageCount: IPageCount) => any;
 }
 
 interface ISelectPagesProps {
+  vscode: IVSCodeObject;
   options: IOption[];
   selectedBackend: ISelected;
   selectedFrontend: ISelected;
   selectedPages: ISelected[];
-  serverPort: number;
   selectedProjectType: ISelected;
   pageCount: IPageCount;
 }
@@ -55,40 +55,31 @@ const messages = defineMessages({
 
 class SelectPages extends React.Component<Props> {
   public componentDidMount() {
-    const {
-      getPages,
-      selectedBackend,
-      selectedFrontend,
-      selectedProjectType,
-      serverPort
-    } = this.props;
+    const { selectedBackend, selectedFrontend, vscode } = this.props;
 
-    if (getPages !== undefined) {
-      getPages(
-        selectedProjectType.internalName,
-        selectedFrontend.internalName,
-        selectedBackend.internalName,
-        serverPort
-      );
-    }
+    vscode.postMessage({
+      module: EXTENSION_MODULES.CORETS,
+      command: EXTENSION_COMMANDS.GET_PAGES,
+      payload: {
+        projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+        frontendFramework: selectedFrontend.internalName,
+        backendFramework: selectedBackend.internalName
+      }
+    });
   }
 
   public componentDidUpdate(newProps: ISelectPagesProps) {
     if (newProps.options.length === 0) {
-      const {
-        getPages,
-        selectedBackend,
-        selectedFrontend,
-        selectedProjectType,
-        serverPort
-      } = this.props;
-
-      getPages(
-        selectedProjectType.internalName,
-        selectedFrontend.internalName,
-        selectedBackend.internalName,
-        serverPort
-      );
+      const { selectedBackend, selectedFrontend, vscode } = this.props;
+      vscode.postMessage({
+        module: EXTENSION_MODULES.CORETS,
+        command: EXTENSION_COMMANDS.GET_PAGES,
+        payload: {
+          projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+          frontendFramework: selectedFrontend.internalName,
+          backendFramework: selectedBackend.internalName
+        }
+      });
     }
   }
 
@@ -140,18 +131,19 @@ class SelectPages extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState): ISelectPagesProps => {
-  const { pageOptions, serverPort } = state.wizardContent;
+  const vscode = getVSCodeApiSelector(state);
+  const { pageOptions } = state.wizardContent;
   const { pages } = state.selection;
   const { appType } = state.selection;
   const { frontendFramework } = state.selection;
   const { backendFramework } = state.selection;
 
   return {
+    vscode: vscode,
     options: pageOptions,
     selectedBackend: backendFramework,
     selectedFrontend: frontendFramework,
     selectedPages: pages,
-    serverPort,
     selectedProjectType: appType,
     pageCount: getPageCount(state)
   };
@@ -160,21 +152,6 @@ const mapStateToProps = (state: AppState): ISelectPagesProps => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  getPages: (
-    projectType: string,
-    frontendFramework: string,
-    backendFramework: string,
-    serverPort: number
-  ) => {
-    dispatch(
-      getPagesOptionsAction(
-        projectType,
-        frontendFramework,
-        backendFramework,
-        serverPort
-      )
-    );
-  },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
   },
