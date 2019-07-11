@@ -61,10 +61,15 @@ export const azureMessages = defineMessages({
   }
 });
 
+const servicesEnum = {
+  HOSTING: "Cloud Hosting",
+  DATABASE: "Cloud Database"
+};
+
 const azureServiceOptions: IOption[] = [
   {
     author: "Microsoft",
-    type: "Cloud Hosting",
+    type: servicesEnum.HOSTING,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS),
     title: azureMessages.azureFunctionsTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
@@ -73,7 +78,7 @@ const azureServiceOptions: IOption[] = [
   },
   {
     author: "Microsoft",
-    type: "Cloud Database",
+    type: servicesEnum.DATABASE,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
     title: azureMessages.cosmosTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
