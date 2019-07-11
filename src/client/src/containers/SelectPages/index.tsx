@@ -55,9 +55,8 @@ const messages = defineMessages({
 
 class SelectPages extends React.Component<Props> {
   public componentDidMount() {
-    const { selectedBackend, selectedFrontend } = this.props;
+    const { selectedBackend, selectedFrontend, vscode } = this.props;
 
-    const { vscode } = this.props;
     vscode.postMessage({
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_PAGES,
@@ -71,9 +70,7 @@ class SelectPages extends React.Component<Props> {
 
   public componentDidUpdate(newProps: ISelectPagesProps) {
     if (newProps.options.length === 0) {
-      const { selectedBackend, selectedFrontend } = this.props;
-
-      const { vscode } = this.props;
+      const { selectedBackend, selectedFrontend, vscode } = this.props;
       vscode.postMessage({
         module: EXTENSION_MODULES.CORETS,
         command: EXTENSION_COMMANDS.GET_PAGES,
