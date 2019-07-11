@@ -21,7 +21,7 @@
     "@types/reselect": "^2.2.0",
     "classnames": "^2.2.6",
     "global": "^4.3.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "node-fetch": "^2.3.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
