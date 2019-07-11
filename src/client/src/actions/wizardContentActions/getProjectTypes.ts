@@ -1,4 +1,3 @@
-import EngineAPIService from "../../services/EngineAPIService";
 import { IMetadata } from "../../types/metadata";
 import { IOption } from "../../types/option";
 import { getProjectTypesSuccess } from "./getProjectTypesSuccess";
@@ -9,20 +8,20 @@ import { Dispatch } from "react";
 // thunk
 export const getProjectTypesAction = (serverPort: number) => {
   return async (dispatch: Dispatch<WizardContentActionType>) => {
-    const api = new EngineAPIService(serverPort, undefined);
+    //const api = new EngineAPIService(serverPort, undefined);
 
     try {
-      const projectTypesJson = await api.getProjectTypes();
+      //const projectTypesJson = await api.getProjectTypes();
 
-      if (projectTypesJson.detail == null) {
-        dispatch(
-          getProjectTypesSuccess(
-            getOptionalFromMetadata(getMetadataFromJson(projectTypesJson))
-          )
-        );
-      } else {
-        console.log("FAILED");
-      }
+      // if (projectTypesJson.detail == null) {
+      //   dispatch(
+      //     getProjectTypesSuccess(
+      //       getOptionalFromMetadata(getMetadataFromJson(projectTypesJson))
+      //     )
+      //   );
+      // } else {
+      //   console.log("FAILED");
+      // }
     } catch (error) {
       console.log(error);
     }
