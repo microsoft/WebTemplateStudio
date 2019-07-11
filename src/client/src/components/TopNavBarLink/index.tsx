@@ -44,7 +44,12 @@ const TopNavBarLink = ({
         })}
         aria-label={intl.formatMessage(
           ARIA_LABELS_NAVIGATION.ARIA_LABELS_MESSAGES,
-          { pagesText: text }
+          {
+            pagesText: intl.formatMessage({
+              id: "ariaLabelForLink",
+              defaultMessage: text
+            })
+          }
         )}
       >
         <div
