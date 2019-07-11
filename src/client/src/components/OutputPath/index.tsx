@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { ReactComponent as SaveSVG } from "../../assets/folder.svg";
 import Input from "../Input";
-import { INTL_MESSAGES } from "../../utils/constants";
+import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
@@ -38,8 +38,8 @@ const OutputPath = ({
   intl,
   placeholder
 }: IProps & InjectedIntlProps) => {
-  const handleKeyDown = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleSaveClick();
     }
   };
