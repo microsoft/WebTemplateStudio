@@ -13,7 +13,7 @@ import styles from "./styles.module.css";
 
 import { IOption } from "../../types/option";
 import { FormattedMessage } from "react-intl";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES, KEY_EVENTS } from "../../utils/constants";
 import { getSvg } from "../../utils/getSvgUrl";
 
 import { ReactComponent as Plus } from "../../assets/plus.svg";
@@ -61,8 +61,8 @@ const SelectableCard = ({
     onDetailsClick(option);
   }
 
-  const keyDownHandler = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       onCardClick(cardNumber);
     }
   };

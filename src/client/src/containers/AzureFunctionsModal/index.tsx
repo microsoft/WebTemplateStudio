@@ -27,7 +27,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  WIZARD_CONTENT_INTERNAL_NAMES
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  KEY_EVENTS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
@@ -369,7 +370,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
   const { isAppNameAvailable } = props.appNameAvailability;
   const { isValidatingName } = props;
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
       props.closeModal();
