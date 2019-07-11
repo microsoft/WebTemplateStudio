@@ -8,6 +8,7 @@ import { getSvg } from "../../utils/getSvgUrl";
 
 import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
+import { KEY_EVENTS } from "../../utils/constants";
 
 import { injectIntl, InjectedIntl, defineMessages } from "react-intl";
 import { IFunctionName } from "../../containers/AzureFunctionsSelection";
@@ -58,7 +59,7 @@ const DraggableSidebarItem = ({
   totalPageCount?: number;
 }) => {
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === KEY_EVENTS.Enter || event.key === KEY_EVENTS.Space) {
       handleCloseOnClick();
     }
   };

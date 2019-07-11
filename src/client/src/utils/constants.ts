@@ -49,7 +49,13 @@ const COSMOS_APIS = {
 
 enum FRAMEWORK_TYPE {
   FRONTEND = "frontend",
-  BACKEND = "backend",
+  BACKEND = "backend"
+}
+
+enum KEY_EVENTS {
+  Enter = "Enter",
+  Space = " ",
+  Tab = "Tab"
 }
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
@@ -125,5 +131,6 @@ export {
   COSMOS_APIS,
   DEVELOPMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
-  FRAMEWORK_TYPE
+  FRAMEWORK_TYPE,
+  KEY_EVENTS
 };

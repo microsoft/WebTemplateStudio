@@ -14,6 +14,7 @@ import { ReactComponent as FolderSVG } from "../../assets/folder.svg";
 
 import styles from "./styles.module.css";
 import getSvgUrl, { getSvg } from "../../utils/getSvgUrl";
+import { KEY_EVENTS } from "../../utils/constants";
 
 const messages = defineMessages({
   changeItemName: {
@@ -110,24 +111,24 @@ const SummaryTile = ({
     }
   };
   const onCloseKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === KEY_EVENTS.Enter || event.key === KEY_EVENTS.Space) {
       onCloseClick();
-    } else if (event.key === "Tab") {
+    } else if (event.key === KEY_EVENTS.Tab) {
       setEditable(false);
     }
   };
   const onEditKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === KEY_EVENTS.Enter || event.key === KEY_EVENTS.Space) {
       handleClick();
     }
   };
   const onSummaryTileLeave = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.shiftKey && event.key === "Tab") {
+    if (event.shiftKey && event.key === KEY_EVENTS.Tab) {
       setEditable(false);
     }
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === KEY_EVENTS.Enter) {
       handleFocusOut();
     }
   };

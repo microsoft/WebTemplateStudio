@@ -12,6 +12,7 @@ import { ICosmosDB } from "../../reducers/wizardSelectionReducers/services/cosmo
 import { openCosmosDbModalAction } from "../../actions/modalActions/modalActions";
 
 import styles from "./styles.module.css";
+import { KEY_EVENTS } from "../../utils/constants";
 
 import { injectIntl, FormattedMessage, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
@@ -38,7 +39,7 @@ const CosmosDBSelection = ({
 }: Props) => {
   const { serviceType } = cosmosSelection.wizardContent;
   const onEditKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === KEY_EVENTS.Enter || event.key === KEY_EVENTS.Space) {
       openCosmosDbModal();
     }
   };

@@ -8,6 +8,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isPrivacyModalOpenSelector } from "../../selectors/modalSelector";
+import { KEY_EVENTS } from "../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
@@ -56,7 +57,7 @@ const PrivacyModal = (props: Props) => {
   const { downloadLink, privacyStatementLink, downloadLinkLabel } = dependency;
 
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === KEY_EVENTS.Enter || event.key === KEY_EVENTS.Space) {
       event.preventDefault();
       event.stopPropagation();
       props.closeModal();

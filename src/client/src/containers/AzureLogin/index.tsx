@@ -9,7 +9,11 @@ import azure from "../../assets/azure.svg";
 import styles from "./styles.module.css";
 
 import AzureSubscriptions from "../AzureSubscriptions";
-import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
+import {
+  EXTENSION_COMMANDS,
+  EXTENSION_MODULES,
+  KEY_EVENTS
+} from "../../utils/constants";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 import { IOption } from "../../types/option";
@@ -54,7 +58,7 @@ class AzureLogin extends React.Component<Props> {
     });
   };
   keyDownClick = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === KEY_EVENTS.Enter || event.key === KEY_EVENTS.Space) {
       this.signOutClick();
     }
   };
