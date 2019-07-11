@@ -129,7 +129,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
               )}
               disabled={!isLoggedIn}
               handleDetailsClick={setDetailPage}
-              useNormalButtons={this.isSelectionCreated(option.internalName)}
+              useNormalButtons={true}
             />
           </div>
         ))}
