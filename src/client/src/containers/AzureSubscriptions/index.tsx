@@ -179,10 +179,13 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       <div className={styles.container}>
         {uniqueServiceTypes.map(serviceType => {
           let categoryTitle;
-          if (serviceType === servicesEnum.HOSTING) {
-            categoryTitle = messages.hostingTitle;
-          } else if (serviceType == servicesEnum.DATABASE) {
-            categoryTitle = messages.storageTitle;
+          switch (serviceType) {
+            case servicesEnum.HOSTING:
+              categoryTitle = messages.hostingTitle;
+              break;
+            case servicesEnum.DATABASE:
+              categoryTitle = messages.storageTitle;
+              break;
           }
           return this.getServicesOrganizer(
             serviceType,
