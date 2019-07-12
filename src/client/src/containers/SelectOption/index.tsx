@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 
 import SelectableCard from "../../components/SelectableCard";
+import Notification from "../../components/Notification";
 import Title from "../../components/Title";
 import { MAX_PAGES_ALLOWED } from "../../utils/constants";
 
@@ -15,8 +16,31 @@ import { ISelected } from "../../types/selected";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 
+import { ReactComponent as Warning } from "../../assets/warning.svg";
+import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
+import { InjectedIntl, defineMessages, injectIntl } from "react-intl";
+
+const messages = defineMessages({
+  limitedPages: {
+    id: "pages.limitedPagesMessage",
+    defaultMessage: "You can select up to 20 pages"
+  },
+  overlimitPages: {
+    id: "pages.overlimitPagesMessage",
+    defaultMessage: "You cannot add more than 20 pages to the project"
+  },
+  iconAltMessage: {
+    id: "pages.maxPagesText",
+    defaultMessage: "Icon for Max Pages Description"
+  }
+});
+
 interface ICount {
   [key: string]: number;
+}
+
+interface IProps {
+  intl: InjectedIntl;
 }
 
 interface ISelectOptionProps {
@@ -38,13 +62,14 @@ interface ISelectOptionProps {
 interface ISelectOptionState {
   selectedCardIndices: number[];
   maxPageReached: boolean;
+  description: string;
 }
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => void;
 }
 
-type Props = IDispatchProps & ISelectOptionProps;
+type Props = IDispatchProps & ISelectOptionProps & IProps;
 
 class SelectOption extends React.Component<Props, ISelectOptionState> {
   constructor(props: Props) {
@@ -52,7 +77,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const { selectedCardIndices } = props;
     this.state = {
       selectedCardIndices,
-      maxPageReached: false
+      maxPageReached: false,
+      description: props.intl.formatMessage(messages.limitedPages)
     };
     this.addPage = this.addPage.bind(this);
     this.removePage = this.removePage.bind(this);
@@ -228,12 +254,14 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       options,
       cardTypeCount,
       handleCountUpdate,
-      currentCardData
+      currentCardData,
+      intl
     } = this.props;
     const { internalName } = options[cardNumber];
     if (currentCardData && currentCardData.length >= MAX_PAGES_ALLOWED) {
       this.setState({
-        maxPageReached: true
+        maxPageReached: true,
+        description: intl.formatMessage(messages.overlimitPages)
       });
       return;
     }
@@ -251,11 +279,13 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       options,
       currentCardData,
       cardTypeCount,
-      handleCountUpdate
+      handleCountUpdate,
+      intl
     } = this.props;
     const { internalName } = options[cardNumber];
     this.setState({
-      maxPageReached: false
+      maxPageReached: false,
+      description: intl.formatMessage(messages.limitedPages)
     });
     if (
       cardTypeCount &&
@@ -275,18 +305,57 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       options,
       setDetailPage,
       isFrameworkSelection,
-      isPagesSelection
+      isPagesSelection,
+      intl
     } = this.props;
     return (
       <div className={styles.containerPadding}>
         <Title>{title}</Title>
-        <div
+        {/* <div
           className={classnames({
             [styles.maxPageReached]: this.state.maxPageReached
           })}
         >
           {description}
-        </div>
+        </div> */}
+        {/* {isPagesSelection && (
+          <div
+            className={classnames(styles.description, {
+              [styles.borderGreen]: !this.state.maxPageReached,
+              [styles.borderYellow]: this.state.maxPageReached
+            })}
+          >
+            <div role="img">
+              {!this.state.maxPageReached ? (
+                <Checkmark className={styles.iconCheck} />
+              ) : (
+                <Warning className={styles.iconWarning} />
+              )}
+            </div>
+            <div
+              className={classnames(styles.text, {
+                [styles.bodyGreen]: !this.state.maxPageReached,
+                [styles.bodyYellow]: this.state.maxPageReached
+              })}
+            >
+              {description}
+            </div>
+          </div>
+        )} */}
+        {isPagesSelection && (
+          <div
+            className={classnames(styles.description, {
+              [styles.borderGreen]: !this.state.maxPageReached,
+              [styles.borderYellow]: this.state.maxPageReached
+            })}
+          >
+            <Notification
+              showWarning={this.state.maxPageReached}
+              text={this.state.description}
+              altMessage={intl.formatMessage(messages.iconAltMessage)}
+            />
+          </div>
+        )}
         <div className={styles.container}>
           {options.map((option, cardNumber) => {
             const { svgUrl, title, body, unselectable, internalName } = option;
@@ -330,4 +399,4 @@ const mapDispatchToProps = (
 export default connect(
   null,
   mapDispatchToProps
-)(SelectOption);
+)(injectIntl(SelectOption));
