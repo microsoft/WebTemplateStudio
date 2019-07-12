@@ -283,15 +283,6 @@ class App extends React.Component<Props> {
               [appStyles.centerViewAzurePage]: pathname === ROUTES.AZURE_LOGIN
             })}
           >
-            {/* {pathname === ROUTES.AZURE_LOGIN && (
-              <Link
-                tabIndex={0}
-                to={ROUTES.REVIEW_AND_GENERATE}
-                className={appStyles.optionalFlag}
-              >
-                {azureMessages.azureSkipButton.defaultMessage}
-              </Link>
-            )} */}
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
             <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
             <Route
