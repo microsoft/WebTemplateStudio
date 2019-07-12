@@ -52,6 +52,12 @@ enum FRAMEWORK_TYPE {
   BACKEND = "backend"
 }
 
+enum KEY_EVENTS {
+  ENTER = "Enter",
+  SPACE = " ",
+  TAB = "Tab"
+}
+
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   ANGULAR: "Angular",
   AZURE: "wts.Feature.Azure",
@@ -126,5 +132,6 @@ export {
   COSMOS_APIS,
   DEVELOPMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
-  FRAMEWORK_TYPE
+  FRAMEWORK_TYPE,
+  KEY_EVENTS
 };
