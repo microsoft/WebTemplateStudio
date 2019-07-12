@@ -11,37 +11,10 @@ export interface IPageOptionsActionType {
   payload: IOption[];
 }
 
-const getPagesOptionsAction = (
-  projectType: string,
-  frontendFramework: string,
-  backendFramework: string,
-  serverPort: number
-) => {
-  return async (dispatch: Dispatch<WizardContentActionType>) => {
-    const api = new EngineAPIService(serverPort, undefined);
-
-    try {
-      const pagesJson = await api.getPages(
-        projectType,
-        frontendFramework,
-        backendFramework
-      );
-
-      if (pagesJson.detail == null) {
-        dispatch(
-          getPagesOptionsSuccess(
-            getOptionalFromApiTemplateInfo(
-              getApiTemplateInfoFromJson(pagesJson)
-            )
-          )
-        );
-      } else {
-        console.log("FAILED");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const getPagesOptionsAction = (pagesOptions: IOption[]) => {
+  return getPagesOptionsSuccess(
+    getOptionalFromApiTemplateInfo(getApiTemplateInfoFromJson(pagesOptions))
+  );
 };
 
 const getPagesOptionsSuccess = (

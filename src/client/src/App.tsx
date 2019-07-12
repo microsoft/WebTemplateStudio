@@ -67,6 +67,7 @@ import TopNavBar from "./components/TopNavBar";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
+import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -92,6 +93,7 @@ interface IDispatchProps {
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
   getBackendFrameworksSuccess: (frameworks: IOption[]) => any;
   getFrontendFrameworksSuccess: (frameworks: IOption[]) => any;
+  getPages: (pages: IOption[]) => any;
   resetPageSelection: () => any;
   selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
@@ -149,6 +151,9 @@ class App extends React.Component<Props> {
               message.payload.isPreview
             )
           );
+          break;
+        case EXTENSION_COMMANDS.GET_PAGES:
+          this.props.getPages(message.payload.pages);
           break;
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           this.props.updateDependencyInfo(message.payload);
@@ -344,6 +349,9 @@ const mapDispatchToProps = (
   },
   getFrontendFrameworksSuccess: (frameworks: IOption[]) => {
     dispatch(getFrontendFrameworksSuccess(frameworks));
+  },
+  getPages: (pages: IOption[]) => {
+    dispatch(getPagesOptionsAction(pages));
   },
   getVersionsData: (versions: IVersions) => {
     dispatch(getVersionsDataAction(versions));

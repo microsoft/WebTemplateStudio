@@ -12,6 +12,7 @@ import asModal from "../../components/Modal";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import { azureModalInitialState as cosmosInitialState } from "../../mockData/cosmosDbModalData";
+import { messages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
@@ -24,7 +25,8 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  COSMOS_APIS
+  COSMOS_APIS,
+  KEY_EVENTS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
@@ -105,11 +107,15 @@ const initialState: CosmosDb = {
 const CosmosResourceModal = (props: Props) => {
   const FORM_CONSTANTS = {
     SUBSCRIPTION: {
-      label: props.intl.formatMessage(messages.subscriptionLabel),
+      label: props.intl.formatMessage(
+        azureModalMessages.azureModalSubscriptionLabel
+      ),
       value: "subscription"
     },
     RESOURCE_GROUP: {
-      label: props.intl.formatMessage(messages.resourceGroupLabel),
+      label: props.intl.formatMessage(
+        azureModalMessages.azureModalResourceGroupLabel
+      ),
       value: "resourceGroup"
     },
     API: {
@@ -117,7 +123,9 @@ const CosmosResourceModal = (props: Props) => {
       value: "api"
     },
     LOCATION: {
-      label: props.intl.formatMessage(messages.locationLabel),
+      label: props.intl.formatMessage(
+        azureModalMessages.azureModalLocationLabel
+      ),
       value: "location"
     },
     ACCOUNT_NAME: {
@@ -340,8 +348,8 @@ const CosmosResourceModal = (props: Props) => {
   };
   const { isAccountNameAvailable } = props.accountNameAvailability;
   const { isValidatingName } = props;
-  const cancelKeyDownHandler = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
       props.closeModal();
@@ -353,14 +361,19 @@ const CosmosResourceModal = (props: Props) => {
     event: React.FormEvent<HTMLInputElement>
   ) => {
     let element = event.target as HTMLInputElement;
-    if (element.value === props.intl.formatMessage(messages.chooseExisting)) {
+    if (
+      element.value ===
+      props.intl.formatMessage(azureModalMessages.azureModalChooseExisting)
+    ) {
       updateForm({
         ...cosmosFormData,
         chooseExistingRadioButtonSelected: true
       });
     } else if (
       element.value ===
-      props.intl.formatMessage(messages.createNewResourceGroupDisplayMessage)
+      props.intl.formatMessage(
+        azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
+      )
     ) {
       updateForm({
         ...cosmosFormData,
@@ -393,12 +406,16 @@ const CosmosResourceModal = (props: Props) => {
           FORM_CONSTANTS.SUBSCRIPTION.label,
           cosmosData.subscription,
           FORM_CONSTANTS.SUBSCRIPTION.value,
-          props.intl.formatMessage(messages.ariaSubscriptionLabel),
-          props.intl.formatMessage(messages.createNew),
+          props.intl.formatMessage(
+            azureModalMessages.azureModalAriaSubscriptionLabel
+          ),
+          props.intl.formatMessage(azureModalMessages.azureModalCreateNew),
           false,
           DEFAULT_VALUE,
           false,
-          props.intl.formatMessage(messages.subscriptionSubLabel)
+          props.intl.formatMessage(
+            azureModalMessages.azureModalSubscriptionSubLabel
+          )
         )}
         {/* Choose Resource Group */}
         {
@@ -418,12 +435,16 @@ const CosmosResourceModal = (props: Props) => {
                   className={styles.link}
                   href={links[FORM_CONSTANTS.RESOURCE_GROUP.value]}
                 >
-                  {props.intl.formatMessage(messages.createNew)}
+                  {props.intl.formatMessage(
+                    azureModalMessages.azureModalCreateNew
+                  )}
                 </a>
               )}
             </div>
             <div className={styles.subLabel}>
-              {props.intl.formatMessage(messages.resourceGroupSubLabel)}
+              {props.intl.formatMessage(
+                azureModalMessages.azureModalResourceGroupSubLabel
+              )}
             </div>
             {/* Radio Buttons for Choose Resource Group */}
             <div
@@ -433,25 +454,29 @@ const CosmosResourceModal = (props: Props) => {
               <input
                 className={styles.radioButton}
                 type="radio"
-                value={props.intl.formatMessage(messages.chooseExisting)}
+                value={props.intl.formatMessage(
+                  azureModalMessages.azureModalChooseExisting
+                )}
                 disabled={cosmosFormData.subscription.value === ""}
                 checked={cosmosFormData.chooseExistingRadioButtonSelected}
               />
               <div className={styles.radioButtonLabel}>
-                {props.intl.formatMessage(messages.chooseExisting)}
+                {props.intl.formatMessage(
+                  azureModalMessages.azureModalChooseExisting
+                )}
               </div>
               <input
                 className={styles.radiobutton}
                 type="radio"
                 value={props.intl.formatMessage(
-                  messages.createNewResourceGroupDisplayMessage
+                  azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
                 )}
                 disabled={cosmosFormData.subscription.value === ""}
                 checked={!cosmosFormData.chooseExistingRadioButtonSelected}
               />
               <div className={styles.radioButtonLabel}>
                 {props.intl.formatMessage(
-                  messages.createNewResourceGroupDisplayMessage
+                  azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
                 )}
               </div>
             </div>
@@ -459,7 +484,7 @@ const CosmosResourceModal = (props: Props) => {
               {cosmosFormData.chooseExistingRadioButtonSelected ? (
                 <Dropdown
                   ariaLabel={props.intl.formatMessage(
-                    messages.ariaResourceGroupLabel
+                    azureModalMessages.azureModalAriaResourceGroupLabel
                   )}
                   options={cosmosData.resourceGroup}
                   handleChange={option => {
@@ -478,7 +503,7 @@ const CosmosResourceModal = (props: Props) => {
                 />
               ) : (
                 props.intl.formatMessage(
-                  messages.createNewResourceGroupSelectedDisplayMessage
+                  azureModalMessages.azureModalCreateNewResourceGroupSelectedDisplayMessage
                 )
               )}
             </div>
@@ -541,7 +566,9 @@ const CosmosResourceModal = (props: Props) => {
           FORM_CONSTANTS.LOCATION.label,
           cosmosData.location,
           FORM_CONSTANTS.LOCATION.value,
-          props.intl.formatMessage(messages.ariaLocationLabel),
+          props.intl.formatMessage(
+            azureModalMessages.azureModalAriaLocationLabel
+          ),
           undefined,
           cosmosFormData.subscription.value === "",
           DEFAULT_VALUE,
@@ -568,8 +595,10 @@ const CosmosResourceModal = (props: Props) => {
           onClick={handleAddResource}
         >
           {(props.selection &&
-            props.intl.formatMessage(messages.saveChanges)) ||
-            props.intl.formatMessage(messages.addResource)}
+            props.intl.formatMessage(
+              azureModalMessages.azureModalSaveChanges
+            )) ||
+            props.intl.formatMessage(azureModalMessages.azureModalAddResource)}
         </button>
       </div>
     </div>

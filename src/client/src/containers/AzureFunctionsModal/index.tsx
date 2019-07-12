@@ -12,6 +12,7 @@ import asModal from "../../components/Modal";
 import { saveAzureFunctionsSettingsAction } from "../../actions/azureActions/azureFunctionActions";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { azureFunctionModalInitialState } from "../../mockData/cosmosDbModalData";
+import { messages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
@@ -26,7 +27,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  WIZARD_CONTENT_INTERNAL_NAMES
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  KEY_EVENTS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
@@ -123,15 +125,21 @@ const initialState: IFunctionsState = {
 const AzureFunctionsResourceModal = (props: Props) => {
   const FORM_CONSTANTS = {
     SUBSCRIPTION: {
-      label: props.intl.formatMessage(messages.subscriptionLabel),
+      label: props.intl.formatMessage(
+        azureModalMessages.azureModalSubscriptionLabel
+      ),
       value: "subscription"
     },
     RESOURCE_GROUP: {
-      label: props.intl.formatMessage(messages.resourceGroupLabel),
+      label: props.intl.formatMessage(
+        azureModalMessages.azureModalResourceGroupLabel
+      ),
       value: "resourceGroup"
     },
     LOCATION: {
-      label: props.intl.formatMessage(messages.locationLabel),
+      label: props.intl.formatMessage(
+        azureModalMessages.azureModalLocationLabel
+      ),
       value: "location"
     },
     RUNTIME_STACK: {
@@ -362,7 +370,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
   const { isAppNameAvailable } = props.appNameAvailability;
   const { isValidatingName } = props;
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
       props.closeModal();
@@ -373,14 +381,19 @@ const AzureFunctionsResourceModal = (props: Props) => {
     event: React.FormEvent<HTMLInputElement>
   ) => {
     let element = event.target as HTMLInputElement;
-    if (element.value === props.intl.formatMessage(messages.chooseExisting)) {
+    if (
+      element.value ===
+      props.intl.formatMessage(azureModalMessages.azureModalChooseExisting)
+    ) {
       updateForm({
         ...azureFunctionsFormData,
         chooseExistingRadioButtonSelected: true
       });
     } else if (
       element.value ===
-      props.intl.formatMessage(messages.createNewResourceGroupDisplayMessage)
+      props.intl.formatMessage(
+        azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
+      )
     ) {
       updateForm({
         ...azureFunctionsFormData,
@@ -412,12 +425,16 @@ const AzureFunctionsResourceModal = (props: Props) => {
           FORM_CONSTANTS.SUBSCRIPTION.label,
           functionsData.subscription,
           FORM_CONSTANTS.SUBSCRIPTION.value,
-          props.intl.formatMessage(messages.ariaSubscriptionLabel),
-          props.intl.formatMessage(messages.createNew),
+          props.intl.formatMessage(
+            azureModalMessages.azureModalAriaSubscriptionLabel
+          ),
+          props.intl.formatMessage(azureModalMessages.azureModalCreateNew),
           false,
           DEFAULT_VALUE,
           false,
-          props.intl.formatMessage(messages.subscriptionSubLabel)
+          props.intl.formatMessage(
+            azureModalMessages.azureModalSubscriptionSubLabel
+          )
         )}
         {/* Choose Resource Group */}
         <div
@@ -432,7 +449,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
             </div>
           </div>
           <div className={styles.subLabel}>
-            {props.intl.formatMessage(messages.resourceGroupSubLabel)}
+            {props.intl.formatMessage(
+              azureModalMessages.azureModalResourceGroupSubLabel
+            )}
           </div>
           {/* Radio Buttons for Choose Resource Group */}
           <div
@@ -442,18 +461,22 @@ const AzureFunctionsResourceModal = (props: Props) => {
             <input
               className={styles.radioButton}
               type="radio"
-              value={props.intl.formatMessage(messages.chooseExisting)}
+              value={props.intl.formatMessage(
+                azureModalMessages.azureModalChooseExisting
+              )}
               disabled={azureFunctionsFormData.subscription.value === ""}
               checked={azureFunctionsFormData.chooseExistingRadioButtonSelected}
             />
             <div className={styles.radioButtonLabel}>
-              {props.intl.formatMessage(messages.chooseExisting)}
+              {props.intl.formatMessage(
+                azureModalMessages.azureModalChooseExisting
+              )}
             </div>
             <input
               className={styles.radiobutton}
               type="radio"
               value={props.intl.formatMessage(
-                messages.createNewResourceGroupDisplayMessage
+                azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
               )}
               disabled={azureFunctionsFormData.subscription.value === ""}
               checked={
@@ -462,7 +485,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
             />
             <div className={styles.radioButtonLabel}>
               {props.intl.formatMessage(
-                messages.createNewResourceGroupDisplayMessage
+                azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
               )}
             </div>
           </div>
@@ -470,7 +493,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
             {azureFunctionsFormData.chooseExistingRadioButtonSelected ? (
               <Dropdown
                 ariaLabel={props.intl.formatMessage(
-                  messages.ariaResourceGroupLabel
+                  azureModalMessages.azureModalAriaResourceGroupLabel
                 )}
                 options={functionsData.resourceGroup}
                 handleChange={option => {
@@ -489,7 +512,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
               />
             ) : (
               props.intl.formatMessage(
-                messages.createNewResourceGroupSelectedDisplayMessage
+                azureModalMessages.azureModalCreateNewResourceGroupSelectedDisplayMessage
               )
             )}
           </div>
@@ -552,7 +575,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
           FORM_CONSTANTS.LOCATION.label,
           functionsData.location,
           FORM_CONSTANTS.LOCATION.value,
-          props.intl.formatMessage(messages.ariaLocationLabel),
+          props.intl.formatMessage(
+            azureModalMessages.azureModalAriaLocationLabel
+          ),
           undefined,
           azureFunctionsFormData.subscription.value === "",
           DEFAULT_VALUE,
@@ -594,8 +619,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
         onClick={handleAddResource}
         disabled={!formIsSendable}
       >
-        {(props.selection && props.intl.formatMessage(messages.saveChanges)) ||
-          props.intl.formatMessage(messages.addResource)}
+        {(props.selection &&
+          props.intl.formatMessage(azureModalMessages.azureModalSaveChanges)) ||
+          props.intl.formatMessage(azureModalMessages.azureModalAddResource)}
       </button>
     </React.Fragment>
   );
