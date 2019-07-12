@@ -27,7 +27,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  WIZARD_CONTENT_INTERNAL_NAMES
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  KEY_EVENTS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
@@ -78,7 +79,6 @@ let timeout: NodeJS.Timeout | undefined;
 const links: attributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
-  appName: "https://azure.microsoft.com/en-us/services/functions/",
   api: null,
   location: null,
   numFunctions: null,
@@ -369,7 +369,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
   const { isAppNameAvailable } = props.appNameAvailability;
   const { isValidatingName } = props;
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
       props.closeModal();
@@ -561,13 +561,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 </div>
               )}
           </div>
-          <a
-            tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
-            className={styles.link}
-            href={links.appName}
-          >
-            {"documents.azure.com"}
-          </a>
         </div>
         {/* Location */}
         {getDropdownSection(

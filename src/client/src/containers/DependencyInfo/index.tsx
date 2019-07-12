@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import styles from "./styles.module.css";
 import classnames from "classnames";
 import { injectIntl, defineMessages, InjectedIntl } from "react-intl";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import {
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  KEY_EVENTS
+} from "../../utils/constants";
 import { AppState } from "../../reducers";
 import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
 import * as ModalActions from "../../actions/modalActions/modalActions";
@@ -117,7 +120,7 @@ class DependencyInfo extends React.Component<Props> {
         });
 
     const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (event.keyCode === 13 || event.keyCode === 32) {
+      if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
         openPrivacyModal(dependency);
       }
     };

@@ -25,7 +25,8 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  COSMOS_APIS
+  COSMOS_APIS,
+  KEY_EVENTS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
@@ -75,8 +76,6 @@ interface attributeLinks {
 const links: attributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
-  resourceGroup: "https://ms.portal.azure.com/#create/Microsoft.ResourceGroup",
-  accountName: "https://docs.microsoft.com/en-us/azure/cosmos-db/",
   api: null,
   location: null
 };
@@ -347,8 +346,8 @@ const CosmosResourceModal = (props: Props) => {
   };
   const { isAccountNameAvailable } = props.accountNameAvailability;
   const { isValidatingName } = props;
-  const cancelKeyDownHandler = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
       props.closeModal();
@@ -552,13 +551,6 @@ const CosmosResourceModal = (props: Props) => {
                 </div>
               )}
           </div>
-          <a
-            tabIndex={cosmosFormData.subscription.value === "" ? -1 : 0}
-            className={styles.link}
-            href={links.accountName}
-          >
-            {"documents.azure.com"}
-          </a>
         </div>
         {/* Location */}
         {getDropdownSection(
