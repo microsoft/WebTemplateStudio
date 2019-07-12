@@ -18,49 +18,10 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
-.text {
-  margin-left: 6px;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-}
-
 .containerPadding {
   padding-top: 35px;
 }
 
 .icon {
   height: 36px;
-}
-
-.iconCheck {
-  height: 14px;
-}
-
-.iconWarning {
-  height: 14px;
-}
-
-.iconCheck path {
-  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
-}
-
-.iconWarning path {
-  fill: var(--vscode-editorMarkerNavigationWarning-background);
-}
-
-.borderGreen {
-  border: 1px solid var(--vscode-gitDecoration-untrackedResourceForeground);
-}
-
-.borderYellow {
-  border: 1px solid var(--vscode-editorMarkerNavigationWarning-background);
-}
-
-.bodyGreen {
-  color: var(--vscode-gitDecoration-untrackedResourceForeground);
-}
-
-.bodyYellow {
-  color: var(--vscode-editorMarkerNavigationWarning-background);
 }
