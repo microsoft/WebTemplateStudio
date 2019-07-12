@@ -144,7 +144,9 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                 return (
                   <div
                     key={JSON.stringify(option.title)}
-                    className={classnames(styles.subscriptionCardContainer)}
+                    className={classnames(styles.subscriptionCardContainer, {
+                      [styles.overlay]: !isLoggedIn
+                    })}
                   >
                     <Card
                       option={option}
@@ -156,9 +158,6 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                       )}
                       disabled={!isLoggedIn}
                       handleDetailsClick={setDetailPage}
-                      useNormalButtons={this.isSelectionCreated(
-                        option.internalName
-                      )}
                     />
                   </div>
                 );

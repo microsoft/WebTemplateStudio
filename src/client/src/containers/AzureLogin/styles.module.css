@@ -9,6 +9,7 @@
 
 .optionalFlag {
   position: absolute;
+  z-index: 1000;
   width: 100%;
   background-color: #0067b8;
   color: var(--vscode-extensionButton-prominentForeground);
