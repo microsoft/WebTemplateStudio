@@ -76,8 +76,6 @@ interface attributeLinks {
 const links: attributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
-  resourceGroup: "https://ms.portal.azure.com/#create/Microsoft.ResourceGroup",
-  accountName: "https://docs.microsoft.com/en-us/azure/cosmos-db/",
   api: null,
   location: null
 };
@@ -553,13 +551,6 @@ const CosmosResourceModal = (props: Props) => {
                 </div>
               )}
           </div>
-          <a
-            tabIndex={cosmosFormData.subscription.value === "" ? -1 : 0}
-            className={styles.link}
-            href={links.accountName}
-          >
-            {"documents.azure.com"}
-          </a>
         </div>
         {/* Location */}
         {getDropdownSection(

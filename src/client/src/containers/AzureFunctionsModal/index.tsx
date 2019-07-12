@@ -79,7 +79,6 @@ let timeout: NodeJS.Timeout | undefined;
 const links: attributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
-  appName: "https://azure.microsoft.com/en-us/services/functions/",
   api: null,
   location: null,
   numFunctions: null,
@@ -562,13 +561,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 </div>
               )}
           </div>
-          <a
-            tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
-            className={styles.link}
-            href={links.appName}
-          >
-            {"documents.azure.com"}
-          </a>
         </div>
         {/* Location */}
         {getDropdownSection(
