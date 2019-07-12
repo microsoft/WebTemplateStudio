@@ -301,7 +301,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     console.log(this.state.maxPageReached);
     const {
       title,
-      description,
       options,
       setDetailPage,
       isFrameworkSelection,
@@ -311,37 +310,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     return (
       <div className={styles.containerPadding}>
         <Title>{title}</Title>
-        {/* <div
-          className={classnames({
-            [styles.maxPageReached]: this.state.maxPageReached
-          })}
-        >
-          {description}
-        </div> */}
-        {/* {isPagesSelection && (
-          <div
-            className={classnames(styles.description, {
-              [styles.borderGreen]: !this.state.maxPageReached,
-              [styles.borderYellow]: this.state.maxPageReached
-            })}
-          >
-            <div role="img">
-              {!this.state.maxPageReached ? (
-                <Checkmark className={styles.iconCheck} />
-              ) : (
-                <Warning className={styles.iconWarning} />
-              )}
-            </div>
-            <div
-              className={classnames(styles.text, {
-                [styles.bodyGreen]: !this.state.maxPageReached,
-                [styles.bodyYellow]: this.state.maxPageReached
-              })}
-            >
-              {description}
-            </div>
-          </div>
-        )} */}
         {isPagesSelection && (
           <div
             className={classnames(styles.description, {

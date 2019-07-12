@@ -18,10 +18,10 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
-.containerPadding {
-  padding-top: 35px;
+.borderGreen {
+  border: 1px solid var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
-.icon {
-  height: 36px;
+.borderYellow {
+  border: 1px solid var(--vscode-editorMarkerNavigationWarning-background);
 }
