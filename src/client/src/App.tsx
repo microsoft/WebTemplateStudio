@@ -2,7 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { Route, RouteComponentProps } from "react-router-dom";
+import { Route, RouteComponentProps, Link } from "react-router-dom";
 
 import PageDetails from "./containers/PageDetails";
 import SelectFrameworks from "./containers/SelectFrameworks";
@@ -16,6 +16,7 @@ import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 import PrivacyModal from "./containers/PrivacyModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
+import { azureMessages } from "./mockData/azureServiceOptions";
 
 import {
   EXTENSION_COMMANDS,
@@ -67,6 +68,7 @@ import TopNavBar from "./components/TopNavBar";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
+import messages from "./containers/RightSidebar/strings";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
@@ -277,7 +279,8 @@ class App extends React.Component<Props> {
 
           <main
             className={classnames(appStyles.centerView, {
-              [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS
+              [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS,
+              [appStyles.centerViewAzurePage]: pathname === ROUTES.AZURE_LOGIN
             })}
           >
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
