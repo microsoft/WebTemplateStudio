@@ -15,6 +15,8 @@ import {
 } from "../../selectors/wizardNavigationSelector";
 import { AppState } from "../../reducers";
 
+import spaceKeyHandler from "../../utils/spaceFollowLink";
+
 interface IStateProps {
   frameworkLicenses: string[];
   pageLicenses: ILicenseObject[];
@@ -38,7 +40,7 @@ const Licenses = ({
 }: Props) => {
   const LinkRenderer = (props: any) => {
     return (
-      <a href={props.href} className={styles.link}>
+      <a href={props.href} className={styles.link} onKeyDown={spaceKeyHandler}>
         {props.children}
       </a>
     );
