@@ -172,12 +172,10 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   public render() {
     const { isLoggedIn, setDetailPage } = this.props;
     const serviceTypes = azureServiceOptions.map(option => option.type);
-    const uniqueServiceTypes = serviceTypes.filter(
-      (type, index, types) => types.indexOf(type) === index
-    );
+    const uniqueServiceTypes = [...new Set(serviceTypes)];
     return (
       <div className={styles.container}>
-        {uniqueServiceTypes.map(serviceType => {
+        {uniqueServiceTypes.map((serviceType: any) => {
           let categoryTitle;
           switch (serviceType) {
             case servicesEnum.HOSTING:
