@@ -92,7 +92,7 @@ const Details = ({
             role="button"
             tabIndex={0}
             onClick={handleBackClick}
-            onKeyDown={keyDownHandler}
+            onKeyUp={keyDownHandler}
             className={styles.innerBackContainer}
           >
             {backArrow && <BackArrow className={styles.backIcon} />}
