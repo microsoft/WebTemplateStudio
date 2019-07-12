@@ -25,10 +25,6 @@
   margin-bottom: 0px;
 }
 
-.optionalFlag:hover {
-  color: var(--vscode-extensionButton-prominentForeground);
-}
-
 @media (max-width: 830px) {
   .centerView {
     padding: 1vh 2vh;

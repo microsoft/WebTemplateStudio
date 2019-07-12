@@ -21,6 +21,10 @@
   padding: 10px 0px;
 }
 
+.optionalFlag:hover {
+  color: var(--vscode-extensionButton-prominentForeground);
+}
+
 .loginCard {
   width: 100%;
   margin-bottom: 10px;
