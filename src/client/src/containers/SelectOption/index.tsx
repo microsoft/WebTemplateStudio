@@ -1,8 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import classnames from "classnames";
 
 import SelectableCard from "../../components/SelectableCard";
 import Title from "../../components/Title";
+import { MAX_PAGES_ALLOWED } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -19,6 +21,7 @@ interface ICount {
 
 interface ISelectOptionProps {
   title: string;
+  description: string;
   internalName?: string;
   selectCard?: (card: ISelected) => void;
   selectedCardIndices: number[];
@@ -34,6 +37,7 @@ interface ISelectOptionProps {
 
 interface ISelectOptionState {
   selectedCardIndices: number[];
+  maxPageReached: boolean;
 }
 
 interface IDispatchProps {
@@ -47,15 +51,14 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     super(props);
     const { selectedCardIndices } = props;
     this.state = {
-      selectedCardIndices
+      selectedCardIndices,
+      maxPageReached: false
     };
+    this.addPage = this.addPage.bind(this);
+    this.removePage = this.removePage.bind(this);
   }
   public componentDidMount() {
-    const {
-      selectCard,
-      selectOptions,
-      selectedCardIndices
-    } = this.props;
+    const { selectCard, selectOptions, selectedCardIndices } = this.props;
     if (selectCard) {
       this.exchangeOption(selectedCardIndices[0]);
       this.setState({
@@ -144,11 +147,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     });
   }
 
-  public removeOption(
-    cardNumber: number,
-    cardCount: number,
-    internalName: string
-  ) {
+  public removeOption(internalName: string) {
     const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     if (selectOptions && currentCardData && currentCardData.length > 1) {
       const size = currentCardData.length;
@@ -197,10 +196,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public onCardClick(cardNumber: number) {
-    const {
-      options,
-      multiSelect
-    } = this.props;
+    const { options, multiSelect } = this.props;
     const { unselectable } = options[cardNumber];
     if (unselectable) {
       return;
@@ -228,8 +224,19 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   };
 
   public addPage(cardNumber: number) {
-    const { options, cardTypeCount, handleCountUpdate } = this.props;
+    const {
+      options,
+      cardTypeCount,
+      handleCountUpdate,
+      currentCardData
+    } = this.props;
     const { internalName } = options[cardNumber];
+    if (currentCardData && currentCardData.length >= MAX_PAGES_ALLOWED) {
+      this.setState({
+        maxPageReached: true
+      });
+      return;
+    }
     if (cardTypeCount && handleCountUpdate) {
       cardTypeCount[internalName] = cardTypeCount[internalName]
         ? cardTypeCount[internalName] + 1
@@ -247,19 +254,24 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       handleCountUpdate
     } = this.props;
     const { internalName } = options[cardNumber];
+    this.setState({
+      maxPageReached: false
+    });
     if (
       cardTypeCount &&
       handleCountUpdate &&
       currentCardData &&
       currentCardData.length > 1
     ) {
-      this.removeOption(cardNumber, cardTypeCount[internalName], internalName);
+      this.removeOption(internalName);
     }
   }
 
   public render() {
+    console.log(this.state.maxPageReached);
     const {
       title,
+      description,
       options,
       setDetailPage,
       isFrameworkSelection,
@@ -268,6 +280,13 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     return (
       <div className={styles.containerPadding}>
         <Title>{title}</Title>
+        <div
+          className={classnames({
+            [styles.maxPageReached]: this.state.maxPageReached
+          })}
+        >
+          {description}
+        </div>
         <div className={styles.container}>
           {options.map((option, cardNumber) => {
             const { svgUrl, title, body, unselectable, internalName } = option;

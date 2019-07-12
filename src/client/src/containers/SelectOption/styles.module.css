@@ -10,3 +10,7 @@
 .icon {
   height: 36px;
 }
+
+.maxPageReached {
+  color: red;
+}

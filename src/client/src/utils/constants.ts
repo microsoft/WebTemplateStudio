@@ -9,6 +9,8 @@ const NEW_PROJECT = "/";
 
 const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
+const MAX_PAGES_ALLOWED = 20;
+
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
 
@@ -132,6 +134,7 @@ export {
   COSMOS_APIS,
   DEVELOPMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
+  MAX_PAGES_ALLOWED,
   FRAMEWORK_TYPE,
   KEY_EVENTS
 };
