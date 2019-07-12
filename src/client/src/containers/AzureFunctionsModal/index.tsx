@@ -12,7 +12,7 @@ import asModal from "../../components/Modal";
 import { saveAzureFunctionsSettingsAction } from "../../actions/azureActions/azureFunctionActions";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { azureFunctionModalInitialState } from "../../mockData/cosmosDbModalData";
-import { messages as azureModalMessages } from "../../mockData/azureServiceOptions";
+import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
