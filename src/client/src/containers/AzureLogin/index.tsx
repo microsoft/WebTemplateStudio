@@ -1,5 +1,5 @@
 import * as React from "react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
+import { withRouter, RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import LoginCard from "../../components/LoginCard";
@@ -12,7 +12,8 @@ import AzureSubscriptions from "../AzureSubscriptions";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  KEY_EVENTS
+  KEY_EVENTS,
+  ROUTES
 } from "../../utils/constants";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
@@ -66,37 +67,51 @@ class AzureLogin extends React.Component<Props> {
     const { isLoggedIn, intl, setDetailPage, email } = this.props;
 
     return (
-      <div className={styles.container}>
-        {isLoggedIn && (
-          <div className={styles.azureProfile}>
-            <div className={styles.profileName}>{email}</div>
-            <div
-              role="button"
-              className={styles.button}
-              tabIndex={0}
-              onClick={this.signOutClick.bind(this)}
-              onKeyDown={this.keyDownClick.bind(this)}
-            >
-              <FormattedMessage id="header.signOut" defaultMessage="Sign out" />
-            </div>
-          </div>
+      <div className={styles.centerViewAzure}>
+        {!isLoggedIn && (
+          <Link
+            tabIndex={0}
+            to={ROUTES.REVIEW_AND_GENERATE}
+            className={styles.optionalFlag}
+          >
+            {azureMessages.azureSkipButton.defaultMessage}
+          </Link>
         )}
-        <Title>{intl.formatMessage(azureMessages.azureLoginTitle)}</Title>
-        <div className={styles.loginCard}>
-          {!isLoggedIn && (
-            <LoginCard
-              svgUrl={withLocalPath(azure)}
-              handleClick={() => {
-                this.handleClick();
-              }}
-              cardTitle={intl.formatMessage(azureMessages.azureTitle)}
-              cardBody={intl.formatMessage(azureMessages.azureCardBody)}
-              handleDetailsClick={setDetailPage}
-              option={microsoftAzureDetails}
-            />
+        <div className={styles.container}>
+          {isLoggedIn && (
+            <div className={styles.azureProfile}>
+              <div className={styles.profileName}>{email}</div>
+              <div
+                role="button"
+                className={styles.button}
+                tabIndex={0}
+                onClick={this.signOutClick.bind(this)}
+                onKeyDown={this.keyDownClick.bind(this)}
+              >
+                <FormattedMessage
+                  id="header.signOut"
+                  defaultMessage="Sign out"
+                />
+              </div>
+            </div>
           )}
+          <Title>{intl.formatMessage(azureMessages.azureLoginTitle)}</Title>
+          <div className={styles.loginCard}>
+            {!isLoggedIn && (
+              <LoginCard
+                svgUrl={withLocalPath(azure)}
+                handleClick={() => {
+                  this.handleClick();
+                }}
+                cardTitle={intl.formatMessage(azureMessages.azureTitle)}
+                cardBody={intl.formatMessage(azureMessages.azureCardBody)}
+                handleDetailsClick={setDetailPage}
+                option={microsoftAzureDetails}
+              />
+            )}
+          </div>
+          <AzureSubscriptions />
         </div>
-        <AzureSubscriptions />
       </div>
     );
   }

@@ -1,6 +1,24 @@
+.centerViewAzure {
+  padding: 0;
+}
+
 .container {
+  position: relative;
   padding: 65px 10%;
 }
+
+.optionalFlag {
+  position: absolute;
+  width: 100%;
+  background-color: #0067b8;
+  color: var(--vscode-extensionButton-prominentForeground);
+  text-align: center;
+  text-decoration: none;
+  font-weight: lighter;
+  font-size: 1.4em;
+  padding: 10px 0px;
+}
+
 .loginCard {
   width: 100%;
   margin-bottom: 10px;
@@ -9,7 +27,8 @@
 .azureProfile {
   display: flex;
   position: absolute;
-  right: 10px;
+  right: 20px;
+  top: 20px;
 }
 
 .profileName {
