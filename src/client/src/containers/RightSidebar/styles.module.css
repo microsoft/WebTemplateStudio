@@ -12,6 +12,42 @@
   overflow: auto;
 }
 
+.button {
+  margin-left: 1em;
+  font-size: 1em;
+}
+
+.leftButton {
+  font-size: 1em;
+}
+
+.button:hover {
+  color: var(--vscode-editor-foreground);
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  color: var(--vscode-editor-foreground);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--vscode-editor-foreground);
+}
+
+.link:focus {
+  outline: none;
+  border: 0;
+}
+
 .rightViewCropped {
   background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #7f7f7f;

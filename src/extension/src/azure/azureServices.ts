@@ -287,26 +287,61 @@ export class AzureServices extends WizardServant {
     }
   }
 
-  public static async deployResourceGroup(payload: any): Promise<any> {
+  public static async generateDistinctResourceGroupSelections(
+    payload: any
+  ): Promise<ResourceGroupSelection[]> {
     const projectName = payload.engine.projectName;
-    const functionSubscription = payload.functions.subscription;
+    let allSubscriptions: SubscriptionItem[] = [];
 
-    await AzureServices.updateFunctionSubscriptionItemCache(
-      functionSubscription
-    );
-
-    const generatedName = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
+    if (AzureServices.functionsSelectedNewResourceGroup(payload)) {
+      await AzureServices.updateFunctionSubscriptionItemCache(
+        payload.functions.subscription
+      );
+      allSubscriptions.push(AzureServices.usersFunctionSubscriptionItemCache);
+    }
+    if (AzureServices.cosmosDBSelectedNewResourceGroup(payload)) {
+      await AzureServices.updateCosmosDBSubscriptionItemCache(
+        payload.cosmos.subscription
+      );
+      allSubscriptions.push(AzureServices.usersCosmosDBSubscriptionItemCache);
+    }
+    const allDistinctSubscriptions: SubscriptionItem[] = [
+      ...new Set(allSubscriptions)
+    ];
+    const generatedName: string = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
       projectName,
-      this.usersFunctionSubscriptionItemCache
+      allDistinctSubscriptions
     );
 
-    const resourceGroupSelection: ResourceGroupSelection = {
-      subscriptionItem: AzureServices.usersFunctionSubscriptionItemCache,
+    return allDistinctSubscriptions.map(subscription =>
+      AzureServices.generateResourceGroupSelection(generatedName, subscription)
+    );
+  }
+
+  public static functionsSelectedNewResourceGroup(payload: any): boolean {
+    return payload.selectedFunctions && payload.functions.resourceGroup === "";
+  }
+
+  public static cosmosDBSelectedNewResourceGroup(payload: any): boolean {
+    return payload.selectedCosmos && payload.cosmos.resourceGroup === "";
+  }
+
+  private static generateResourceGroupSelection(
+    generatedName: string,
+    subscriptionItem: SubscriptionItem
+  ): ResourceGroupSelection {
+    return {
+      subscriptionItem: subscriptionItem,
       resourceGroupName: generatedName,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
     };
+  }
+
+  public static async deployResourceGroup(
+    selections: ResourceGroupSelection
+  ): Promise<any> {
     return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
-      resourceGroupSelection
+      selections
     );
   }
 

@@ -12,6 +12,7 @@ import asModal from "../../components/Modal";
 import { saveAzureFunctionsSettingsAction } from "../../actions/azureActions/azureFunctionActions";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { azureFunctionModalInitialState } from "../../mockData/cosmosDbModalData";
+import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
@@ -26,7 +27,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  WIZARD_CONTENT_INTERNAL_NAMES
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  KEY_EVENTS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
@@ -63,6 +65,7 @@ interface IStateProps {
   isValidatingName: boolean;
   appNameAvailability: any;
   selection: any;
+  chooseExistingRadioButtonSelected: boolean;
 }
 
 type Props = IDispatchProps & IStateProps & InjectedIntlProps;
@@ -76,8 +79,6 @@ let timeout: NodeJS.Timeout | undefined;
 const links: attributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
-  resourceGroup: "https://ms.portal.azure.com/#create/Microsoft.ResourceGroup",
-  appName: "https://azure.microsoft.com/en-us/services/functions/",
   api: null,
   location: null,
   numFunctions: null,
@@ -116,21 +117,28 @@ const initialState: IFunctionsState = {
   internalName: {
     value: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
     label: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
-  }
+  },
+  chooseExistingRadioButtonSelected: true
 };
 
 const AzureFunctionsResourceModal = (props: Props) => {
   const FORM_CONSTANTS = {
     SUBSCRIPTION: {
-      label: props.intl.formatMessage(messages.subscriptionLabel),
+      label: props.intl.formatMessage(
+        azureModalMessages.azureModalSubscriptionLabel
+      ),
       value: "subscription"
     },
     RESOURCE_GROUP: {
-      label: props.intl.formatMessage(messages.resourceGroupLabel),
+      label: props.intl.formatMessage(
+        azureModalMessages.azureModalResourceGroupLabel
+      ),
       value: "resourceGroup"
     },
     LOCATION: {
-      label: props.intl.formatMessage(messages.locationLabel),
+      label: props.intl.formatMessage(
+        azureModalMessages.azureModalLocationLabel
+      ),
       value: "location"
     },
     RUNTIME_STACK: {
@@ -155,6 +163,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
   // Updates the data we are presenting to the user when the subscription changes
   React.useEffect(() => {
     setData({
+      ...functionsData,
       appName: [
         {
           value: "",
@@ -236,9 +245,25 @@ const AzureFunctionsResourceModal = (props: Props) => {
     }
   }, [azureFunctionsFormData.appName.value]);
 
+  /*
+   * Listens on radio button change to update button status
+   */
+  React.useEffect(() => {
+    setFunctionsModalButtonStatus(
+      azureFunctionsFormData,
+      props.isValidatingName,
+      props.appNameAvailability,
+      setFormIsSendable
+    );
+  }, [azureFunctionsFormData.chooseExistingRadioButtonSelected]);
+
+  // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {
-      handleChange(props.selection.dropdownSelection);
+      const newFunctionState = props.selection.dropdownSelection;
+      newFunctionState.chooseExistingRadioButtonSelected =
+        props.chooseExistingRadioButtonSelected;
+      handleChange(newFunctionState);
     } else {
       props.setAppNameAvailability({
         isAvailable: false,
@@ -344,12 +369,42 @@ const AzureFunctionsResourceModal = (props: Props) => {
   const { isAppNameAvailable } = props.appNameAvailability;
   const { isValidatingName } = props;
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
       props.closeModal();
     }
   };
+  // when user clicks a radio button, update form data
+  const radioButtonOnChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    let element = event.target as HTMLInputElement;
+    if (
+      element.value ===
+      props.intl.formatMessage(azureModalMessages.azureModalChooseExisting)
+    ) {
+      updateForm({
+        ...azureFunctionsFormData,
+        chooseExistingRadioButtonSelected: true
+      });
+    } else if (
+      element.value ===
+      props.intl.formatMessage(
+        azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
+      )
+    ) {
+      updateForm({
+        ...azureFunctionsFormData,
+        chooseExistingRadioButtonSelected: false,
+        resourceGroup: {
+          value: "",
+          label: ""
+        }
+      });
+    }
+  };
+
   return (
     <React.Fragment>
       <div className={styles.headerContainer}>
@@ -369,25 +424,98 @@ const AzureFunctionsResourceModal = (props: Props) => {
           FORM_CONSTANTS.SUBSCRIPTION.label,
           functionsData.subscription,
           FORM_CONSTANTS.SUBSCRIPTION.value,
-          props.intl.formatMessage(messages.ariaSubscriptionLabel),
-          props.intl.formatMessage(messages.createNew),
+          props.intl.formatMessage(
+            azureModalMessages.azureModalAriaSubscriptionLabel
+          ),
+          props.intl.formatMessage(azureModalMessages.azureModalCreateNew),
           false,
           DEFAULT_VALUE,
           false,
-          props.intl.formatMessage(messages.subscriptionSubLabel)
+          props.intl.formatMessage(
+            azureModalMessages.azureModalSubscriptionSubLabel
+          )
         )}
         {/* Choose Resource Group */}
-        {getDropdownSection(
-          FORM_CONSTANTS.RESOURCE_GROUP.label,
-          functionsData.resourceGroup,
-          FORM_CONSTANTS.RESOURCE_GROUP.value,
-          props.intl.formatMessage(messages.ariaResourceGroupLabel),
-          props.intl.formatMessage(messages.createNew),
-          azureFunctionsFormData.subscription.value === "",
-          DEFAULT_VALUE,
-          false,
-          props.intl.formatMessage(messages.resourceGroupSubLabel)
-        )}
+        <div
+          className={classnames([styles.selectionContainer], {
+            [styles.selectionContainerDisabled]:
+              azureFunctionsFormData.subscription.value === ""
+          })}
+        >
+          <div className={styles.selectionHeaderContainer}>
+            <div className={styles.leftHeader}>
+              {FORM_CONSTANTS.RESOURCE_GROUP.label}
+            </div>
+          </div>
+          <div className={styles.subLabel}>
+            {props.intl.formatMessage(
+              azureModalMessages.azureModalResourceGroupSubLabel
+            )}
+          </div>
+          {/* Radio Buttons for Choose Resource Group */}
+          <div
+            className={styles.radioButtonContainer}
+            onChange={radioButtonOnChangeHandler}
+          >
+            <input
+              className={styles.radioButton}
+              type="radio"
+              value={props.intl.formatMessage(
+                azureModalMessages.azureModalChooseExisting
+              )}
+              disabled={azureFunctionsFormData.subscription.value === ""}
+              checked={azureFunctionsFormData.chooseExistingRadioButtonSelected}
+            />
+            <div className={styles.radioButtonLabel}>
+              {props.intl.formatMessage(
+                azureModalMessages.azureModalChooseExisting
+              )}
+            </div>
+            <input
+              className={styles.radiobutton}
+              type="radio"
+              value={props.intl.formatMessage(
+                azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
+              )}
+              disabled={azureFunctionsFormData.subscription.value === ""}
+              checked={
+                !azureFunctionsFormData.chooseExistingRadioButtonSelected
+              }
+            />
+            <div className={styles.radioButtonLabel}>
+              {props.intl.formatMessage(
+                azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
+              )}
+            </div>
+          </div>
+          <div className={styles.resourceGroupToggleContainer}>
+            {azureFunctionsFormData.chooseExistingRadioButtonSelected ? (
+              <Dropdown
+                ariaLabel={props.intl.formatMessage(
+                  azureModalMessages.azureModalAriaResourceGroupLabel
+                )}
+                options={functionsData.resourceGroup}
+                handleChange={option => {
+                  handleDropdown(FORM_CONSTANTS.RESOURCE_GROUP.value, option);
+                }}
+                value={
+                  azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                    .value
+                    ? azureFunctionsFormData[
+                        FORM_CONSTANTS.RESOURCE_GROUP.value
+                      ]
+                    : DEFAULT_VALUE
+                }
+                disabled={azureFunctionsFormData.subscription.value === ""}
+                openDropdownUpwards={false}
+              />
+            ) : (
+              props.intl.formatMessage(
+                azureModalMessages.azureModalCreateNewResourceGroupSelectedDisplayMessage
+              )
+            )}
+          </div>
+        </div>
         {/* App Name */}
         <div
           className={classnames(
@@ -433,20 +561,15 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 </div>
               )}
           </div>
-          <a
-            tabIndex={azureFunctionsFormData.subscription.value === "" ? -1 : 0}
-            className={styles.link}
-            href={links.appName}
-          >
-            documents.azure.com
-          </a>
         </div>
         {/* Location */}
         {getDropdownSection(
           FORM_CONSTANTS.LOCATION.label,
           functionsData.location,
           FORM_CONSTANTS.LOCATION.value,
-          props.intl.formatMessage(messages.ariaLocationLabel),
+          props.intl.formatMessage(
+            azureModalMessages.azureModalAriaLocationLabel
+          ),
           undefined,
           azureFunctionsFormData.subscription.value === "",
           DEFAULT_VALUE,
@@ -488,8 +611,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
         onClick={handleAddResource}
         disabled={!formIsSendable}
       >
-        {(props.selection && props.intl.formatMessage(messages.saveChanges)) ||
-          props.intl.formatMessage(messages.addResource)}
+        {(props.selection &&
+          props.intl.formatMessage(azureModalMessages.azureModalSaveChanges)) ||
+          props.intl.formatMessage(azureModalMessages.azureModalAddResource)}
       </button>
     </React.Fragment>
   );
@@ -503,7 +627,9 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   appNameAvailability:
     state.selection.services.azureFunctions.appNameAvailability,
   isValidatingName: state.selection.isValidatingName,
-  selection: getFunctionsSelection(state)
+  selection: getFunctionsSelection(state),
+  chooseExistingRadioButtonSelected:
+    state.selection.services.azureFunctions.chooseExistingRadioButtonSelected
 });
 
 const mapDispatchToProps = (

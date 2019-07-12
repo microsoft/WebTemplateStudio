@@ -5,7 +5,7 @@ import { IServiceStatus } from "../reducers/generationStatus/genStatus";
 import { isCosmosResourceCreatedSelector } from "./cosmosServiceSelector";
 import { isAzureFunctionsSelectedSelector } from "./azureFunctionsServiceSelector";
 import { AppState } from "../reducers";
-import { messages } from "../mockData/azureServiceOptions";
+import { azureMessages } from "../mockData/azureServiceOptions";
 
 const getGenerationStatusSelector = (state: AppState) =>
   state.generationStatus.genStatus;
@@ -81,13 +81,13 @@ const servicesToDeploy = (
 ): IAzureServiceStatus => {
   return {
     cosmosdb: {
-      title: messages.cosmosTitle,
+      title: azureMessages.cosmosTitle,
       isSelected: isCosmosSelected,
       isDeployed: isCosmosSuccess,
       isFailed: isCosmosFailure
     },
     azureFunctions: {
-      title: messages.azureFunctionsTitle,
+      title: azureMessages.azureFunctionsTitle,
       isSelected: isFunctionsSelected,
       isDeployed: isAzureFunctionsSuccess,
       isFailed: isAzureFunctionsFailure
@@ -127,14 +127,17 @@ const isServicesSelectedSelector = createSelector(
   isServicesSelected
 );
 
-const isServicesDeployedOrFinished = (services: IAzureServiceStatus): boolean => {
+const isServicesDeployedOrFinished = (
+  services: IAzureServiceStatus
+): boolean => {
   const { cosmosdb, azureFunctions } = services;
   let isFinished = true;
   if (cosmosdb.isSelected) {
     isFinished = isFinished && (cosmosdb.isDeployed || cosmosdb.isFailed);
   }
   if (azureFunctions.isSelected) {
-    isFinished = isFinished && (azureFunctions.isDeployed || azureFunctions.isFailed);
+    isFinished =
+      isFinished && (azureFunctions.isDeployed || azureFunctions.isFailed);
   }
   return isFinished;
 };

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SelectableCard from "../SelectableCard";
+import SelectableCard from "../../components/SelectableCard";
 import Title from "../../components/Title";
 
 import styles from "./styles.module.css";
@@ -27,6 +27,7 @@ interface ISelectOptionProps {
   options: IOption[];
   multiSelect: boolean;
   isFrameworkSelection: boolean;
+  isPagesSelection: boolean;
   cardTypeCount?: ICount;
   handleCountUpdate?: (cardCount: ICount) => any;
 }
@@ -53,7 +54,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const {
       selectCard,
       selectOptions,
-      options,
       selectedCardIndices
     } = this.props;
     if (selectCard) {
@@ -64,6 +64,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     } else if (selectOptions) {
       if (selectedCardIndices.length === 0) {
         this.onCardClick(0);
+        this.addPage(0);
       }
       this.setState({
         selectedCardIndices
@@ -132,14 +133,37 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     selectedCardIndices.push(cardNumber);
     if (selectOptions && currentCardData) {
-      currentCardData.push(
+      const currentCards = currentCardData.splice(0);
+      currentCards.push(
         this.mapIndexToCardInfo(cardCount, internalName, cardNumber)
       );
-      selectOptions(currentCardData);
+      selectOptions(currentCards);
     }
     this.setState({
       selectedCardIndices
     });
+  }
+
+  public removeOption(
+    cardNumber: number,
+    cardCount: number,
+    internalName: string
+  ) {
+    const { selectedCardIndices, currentCardData, selectOptions } = this.props;
+    if (selectOptions && currentCardData && currentCardData.length > 1) {
+      const size = currentCardData.length;
+      const currentCards = currentCardData.splice(0);
+      for (let i = size - 1; i >= 0; i--) {
+        if (currentCards[i].internalName === internalName) {
+          currentCards.splice(i, 1);
+          break;
+        }
+      }
+      selectOptions(currentCards);
+      this.setState({
+        selectedCardIndices
+      });
+    }
   }
 
   /**
@@ -175,23 +199,13 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   public onCardClick(cardNumber: number) {
     const {
       options,
-      multiSelect,
-      cardTypeCount,
-      handleCountUpdate
+      multiSelect
     } = this.props;
-    const { unselectable, internalName } = options[cardNumber];
+    const { unselectable } = options[cardNumber];
     if (unselectable) {
       return;
     }
-    if (multiSelect) {
-      if (cardTypeCount && handleCountUpdate) {
-        cardTypeCount[internalName] = cardTypeCount[internalName]
-          ? cardTypeCount[internalName] + 1
-          : 1;
-        handleCountUpdate(cardTypeCount);
-        this.addOption(cardNumber, cardTypeCount[internalName], internalName);
-      }
-    } else {
+    if (!multiSelect) {
       this.exchangeOption(cardNumber);
     }
   }
@@ -213,10 +227,46 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     }
   };
 
+  public addPage(cardNumber: number) {
+    const { options, cardTypeCount, handleCountUpdate } = this.props;
+    const { internalName } = options[cardNumber];
+    if (cardTypeCount && handleCountUpdate) {
+      cardTypeCount[internalName] = cardTypeCount[internalName]
+        ? cardTypeCount[internalName] + 1
+        : 1;
+      handleCountUpdate(cardTypeCount);
+      this.addOption(cardNumber, cardTypeCount[internalName], internalName);
+    }
+  }
+
+  public removePage(cardNumber: number) {
+    const {
+      options,
+      currentCardData,
+      cardTypeCount,
+      handleCountUpdate
+    } = this.props;
+    const { internalName } = options[cardNumber];
+    if (
+      cardTypeCount &&
+      handleCountUpdate &&
+      currentCardData &&
+      currentCardData.length > 1
+    ) {
+      this.removeOption(cardNumber, cardTypeCount[internalName], internalName);
+    }
+  }
+
   public render() {
-    const { title, options, setDetailPage, isFrameworkSelection } = this.props;
+    const {
+      title,
+      options,
+      setDetailPage,
+      isFrameworkSelection,
+      isPagesSelection
+    } = this.props;
     return (
-      <div className={styles.containerPadding}>
+      <div>
         <Title>{title}</Title>
         <div className={styles.container}>
           {options.map((option, cardNumber) => {
@@ -225,6 +275,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
               <SelectableCard
                 key={`${cardNumber} ${title}`}
                 isFrameworkSelection={isFrameworkSelection}
+                isPagesSelection={isPagesSelection}
                 onCardClick={(cardNumber: number) => {
                   this.onCardClick(cardNumber);
                 }}
@@ -238,6 +289,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 body={body as string}
                 disabled={unselectable}
                 clickCount={this.getCardCount(internalName)}
+                addPage={(cardNumber: number) => this.addPage(cardNumber)}
+                removePage={(cardNumber: number) => this.removePage(cardNumber)}
               />
             );
           })}

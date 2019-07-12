@@ -14,7 +14,7 @@
 
 .selected,
 .button {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .selected {
@@ -35,6 +35,15 @@
   justify-content: center;
 }
 
+.countButton {
+  background: none;
+  color: inherit;
+  border: none;
+  font: 1.2em;
+  cursor: pointer;
+  outline: inherit;
+}
+
 .iconCheckMark {
   margin-left: 8px;
   height: 18px;
@@ -43,7 +52,7 @@
 }
 
 .iconCheckMark path {
-  fill: var(--vscode-editor-foreground);
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
 .hidden {
@@ -67,6 +76,25 @@
   justify-content: space-between;
   align-items: center;
   min-height: 30px;
+}
+
+.pageButtons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.showCount {
+  min-width: 20px;
+  text-align: center;
+  font-size: 16px;
+  margin-left: 7px;
+  margin-right: 7px;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.subtractSVG {
+  margin-top: 3px;
 }
 
 .icon {
@@ -114,11 +142,19 @@
 
 .cardCount {
   text-align: center;
-  border: 1px solid var(--vscode-editor-foreground);
-  height: 22px;
-  width: 22px;
-  padding: 3px;
+  border: 1.8px solid var(--vscode-editor-foreground);
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
+  font-size: 16px;
+}
+
+.cardCount path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cardCount:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .selectedText {

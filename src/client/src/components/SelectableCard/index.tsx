@@ -1,25 +1,25 @@
 import classNames from "classnames";
 import * as React from "react";
-import { connect } from "react-redux";
 
 import { Link } from "react-router-dom";
 
-import CardBody from "../../components/CardBody";
-import CardTitle from "../../components/CardTitle";
-import DependencyInfo from "../DependencyInfo";
+import CardBody from "../CardBody";
+import CardTitle from "../CardTitle";
+import DependencyInfo from "../../containers/DependencyInfo";
 import { ReactComponent as Check } from "../../assets/check.svg";
 
 import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
-// import Check from "../../assets/check.svg";
-
 import { IOption } from "../../types/option";
 import { FormattedMessage } from "react-intl";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES, KEY_EVENTS } from "../../utils/constants";
 import { getSvg } from "../../utils/getSvgUrl";
 
-import { AppState } from "../../reducers";
+import { ReactComponent as Plus } from "../../assets/plus.svg";
+import { ReactComponent as Subtract } from "../../assets/subtract.svg";
+import plus from "../../assets/plus.svg";
+import subtract from "../../assets/subtract.svg";
 
 const SelectableCard = ({
   iconPath,
@@ -33,7 +33,10 @@ const SelectableCard = ({
   onDetailsClick,
   clickCount,
   disabled,
-  isFrameworkSelection
+  isFrameworkSelection,
+  isPagesSelection,
+  addPage,
+  removePage
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -47,6 +50,9 @@ const SelectableCard = ({
   clickCount?: number;
   disabled: boolean | undefined;
   isFrameworkSelection: boolean;
+  isPagesSelection: boolean;
+  addPage: (idx: number) => void;
+  removePage: (idx: number) => void;
 }) => {
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -55,8 +61,8 @@ const SelectableCard = ({
     onDetailsClick(option);
   }
 
-  const keyDownHandler = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       onCardClick(cardNumber);
     }
   };
@@ -111,23 +117,41 @@ const SelectableCard = ({
             defaultMessage="Details"
           />
         </Link>
-        <div
-          className={classNames({
-            [styles.hidden]: !selected,
-            [styles.selectedCheckMark]: selected && !clickCount,
-            [styles.cardCount]: selected && clickCount
-          })}
-        >
-          {clickCount || (
-            <div className={styles.selectedText}>
-              <div>
-                <FormattedMessage
-                  id="selectableCard.selected"
-                  defaultMessage="Selected"
-                />
+        <div className={styles.pageButtons}>
+          {isPagesSelection && (
+            <button
+              className={classNames(styles.cardCount, styles.countButton)}
+              onClick={() => removePage(cardNumber)}
+            >
+              {subtract && <Subtract className={styles.subtractSVG} />}
+            </button>
+          )}
+          <div
+            className={classNames({
+              [styles.hidden]: !selected && !isPagesSelection,
+              [styles.selectedCheckMark]: selected && !clickCount,
+              [styles.showCount]: isPagesSelection
+            })}
+          >
+            {(isPagesSelection && <div>{clickCount}</div>) || (
+              <div className={styles.selectedText}>
+                <div>
+                  <FormattedMessage
+                    id="selectableCard.selected"
+                    defaultMessage="Selected"
+                  />
+                </div>
+                <Check className={styles.iconCheckMark} />
               </div>
-              <Check className={styles.iconCheckMark} />
-            </div>
+            )}
+          </div>
+          {isPagesSelection && (
+            <button
+              className={classNames(styles.cardCount, styles.countButton)}
+              onClick={() => addPage(cardNumber)}
+            >
+              {plus && <Plus />}
+            </button>
           )}
         </div>
       </div>

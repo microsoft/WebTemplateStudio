@@ -9,6 +9,7 @@ import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalA
 import * as getSvg from "../../utils/getSvgUrl";
 
 import styles from "./styles.module.css";
+import { KEY_EVENTS } from "../../utils/constants";
 
 import * as AzureFunctionActions from "../../actions/azureActions/azureFunctionActions";
 import {
@@ -105,8 +106,8 @@ const AzureFunctionsSelection = ({
       });
     }
   };
-  const onEditKeyDownHandler = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const onEditKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       openAzureFunctionsModal();
     }
   };

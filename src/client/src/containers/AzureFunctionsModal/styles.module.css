@@ -10,6 +10,7 @@
   padding-right: 20px;
   max-height: calc(80vh - 200px);
   overflow-y: auto;
+  margin-bottom: 5px;
 }
 
 .modalTitle {
@@ -18,7 +19,7 @@
 }
 
 .selectionContainer {
-  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 .leftHeader {
@@ -88,7 +89,7 @@
 }
 
 .validationIcon path {
-  fill: var(--vscode-editorMarkerNavigationWarning-background);
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
 .inputContainer {
@@ -183,4 +184,22 @@ input::placeholder {
 .errorStack {
   display: block;
   position: relative;
+}
+
+.resourceGroupToggleContainer {
+  margin-top: 0.5em;
+}
+
+.radioButtonContainer {
+  display: flex;
+  padding: 5px;
+}
+
+.radioButtonLabel {
+  margin-right: 35px;
+}
+
+.radioButton {
+  margin-left: 0px;
+  margin-right: 5px;
 }

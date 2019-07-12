@@ -1,4 +1,5 @@
-.header {
+.header,
+.headerTitleSmall {
   position: absolute;
   width: 100%;
   padding: 0px 24px;
@@ -9,11 +10,16 @@
   justify-content: space-between;
   box-sizing: border-box;
   align-items: center;
-  height: 52px;
+  height: 70px;
 }
 
 .headerTitle {
-  font-size: 18px;
+  display: none;
+}
+
+.headerTitle,
+.headerTitleSmall {
+  font-size: 1.7em;
 }
 
 .azureProfile {
@@ -36,4 +42,13 @@
 
 .button:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+@media (min-width: 760px) {
+  .headerTitle {
+    display: flex;
+  }
+  .headerTitleSmall {
+    display: none;
+  }
 }
