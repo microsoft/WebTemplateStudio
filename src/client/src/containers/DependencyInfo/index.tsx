@@ -12,8 +12,6 @@ import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { ReactComponent as Warning } from "../../assets/warning.svg";
-import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
 import Notification from "../../components/Notification";
 
 const messages = defineMessages({
