@@ -54,7 +54,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const {
       selectCard,
       selectOptions,
-      options,
       selectedCardIndices
     } = this.props;
     if (selectCard) {
@@ -200,11 +199,9 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   public onCardClick(cardNumber: number) {
     const {
       options,
-      multiSelect,
-      cardTypeCount,
-      handleCountUpdate
+      multiSelect
     } = this.props;
-    const { unselectable, internalName } = options[cardNumber];
+    const { unselectable } = options[cardNumber];
     if (unselectable) {
       return;
     }
@@ -269,7 +266,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       isPagesSelection
     } = this.props;
     return (
-      <div className={styles.containerPadding}>
+      <div>
         <Title>{title}</Title>
         <div className={styles.container}>
           {options.map((option, cardNumber) => {
