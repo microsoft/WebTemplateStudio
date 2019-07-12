@@ -9,7 +9,6 @@
   "azureFunctions.cardBody": "Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure.",
   "azureFunctions.longDescription": "Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure.",
   "azureFunctions.originalTitle": "Azure Functions",
-  "azureFunctionsModal.appName": "App Name",
   "azureFunctionsModal.appNameLabel": "App Name",
   "azureFunctionsModal.appNameSubLabel": "Create a unique app name",
   "azureFunctionsModal.ariaAppNameLabel": "App Name Input",
