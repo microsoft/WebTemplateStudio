@@ -129,7 +129,6 @@ class AzureSubscriptions extends React.Component<Props, IState> {
               )}
               disabled={!isLoggedIn}
               handleDetailsClick={setDetailPage}
-              useNormalButtons={false}
             />
           </div>
         ))}
