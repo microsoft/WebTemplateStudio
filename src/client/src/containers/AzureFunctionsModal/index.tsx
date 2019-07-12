@@ -529,7 +529,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         >
           <div className={styles.selectionHeaderContainer}>
             <div className={styles.leftHeader}>
-              {props.intl.formatMessage(messages.appName)}
+              {props.intl.formatMessage(messages.appNameLabel)}
             </div>
           </div>
           <div className={styles.subLabel}>

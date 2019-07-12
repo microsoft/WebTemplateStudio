@@ -35,10 +35,10 @@ export const messages = defineMessages({
   },
   locationSubLabel: {
     id: "cosmosResourceModule.locationSubLabel",
-    defaultMessage: "Choose where you want your function to be hosted"
+    defaultMessage: "Choose where you want your database to be hosted"
   },
   apiSubLabel: {
     id: "cosmosResourceModule.apiSubLabel",
-    defaultMessage: "Choose the API to use"
+    defaultMessage: "Choose your preferred API to use"
   }
 });
