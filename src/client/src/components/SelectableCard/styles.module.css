@@ -58,8 +58,9 @@
 }
 
 .boundingBox {
-  width: 220px;
+  width: 240px;
   height: 220px;
+  margin: 0px 30px 30px 0px;
   padding: 15px;
   display: flex;
   flex-direction: column;
