@@ -142,7 +142,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
           </div>
           <div className={styles.servicesCategoryContainer}>
             {azureServiceOptions.map(option => {
-              // show card if wizard is in preview or card is not in preview mode
+              // show cards with preview flag only if wizard is also in preview
               let shouldShowCard = isPreview || !option.isPreview;
               if (shouldShowCard && option.type === type) {
                 return (
