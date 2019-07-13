@@ -3,8 +3,7 @@
   margin-bottom: 12px;
   cursor: pointer;
   padding: 12px;
-  background-color: var(--vscode-sideBar-background);
-  border: 0.5px solid var(--vscode-editor-foreground);
+  background-color: var(--vscode-editor-lineHighlightBorder);
 }
 
 .container:focus {
@@ -58,10 +57,10 @@
 }
 
 .boundingBox {
-  width: 240px;
-  height: 220px;
+  width: 230px;
+  height: 200px;
   margin: 0px 30px 30px 0px;
-  padding: 15px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -127,7 +126,7 @@
 
 .link {
   color: var(--vscode-textLink-foreground);
-  font-size: 14px;
+  font-size: 15px;
   text-decoration: none;
 }
 

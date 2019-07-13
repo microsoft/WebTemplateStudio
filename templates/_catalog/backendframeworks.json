@@ -16,7 +16,7 @@
   {
     "name": "Flask",
     "displayName": "Flask",
-    "summary": "Flask is an open-source, lightweight Python Web Framework.",
+    "summary": "Python framework",
     "author": "Various",
     "order": "1",
     "licenses": "[Flask](https://github.com/pallets/flask/blob/master/LICENSE)",

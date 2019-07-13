@@ -135,12 +135,6 @@ const SelectableCard = ({
           >
             {(isPagesSelection && <div>{clickCount}</div>) || (
               <div className={styles.selectedText}>
-                <div>
-                  <FormattedMessage
-                    id="selectableCard.selected"
-                    defaultMessage="Selected"
-                  />
-                </div>
                 <Check className={styles.iconCheckMark} />
               </div>
             )}
