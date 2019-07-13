@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import ProjectNameAndOutput from "../ProjectNameAndOutput";
+import QuickStart from "../quickStart";
 import { FormattedMessage } from "react-intl";
 
 import { updateProjectNameAction } from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
@@ -45,6 +46,7 @@ const NewProject = ({
 }: Props) => {
   return (
     <div className={styles.container}>
+      <QuickStart />
       <h1 className={styles.header}>
         <FormattedMessage
           id="newProject.header"

@@ -45,6 +45,7 @@ const messages = defineMessages({
 
 class SelectFrontEndFramework extends React.Component<Props> {
   public handleFrameworkChange(option: ISelected) {
+    console.log(option);
     const {
       vscode,
       selectedFrontendFramework,
