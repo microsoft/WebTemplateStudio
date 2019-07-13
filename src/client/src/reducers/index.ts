@@ -31,16 +31,20 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
   if (action.type === WIZARD_INFO_TYPEKEYS.RESET_WIZARD) {
     const { previewStatus } = state!.wizardContent;
 
+    /* Elements that are undefined tell the reducer to replace the element
+     * with the initial state that is specified in the element's reducer.
+     * See: https://redux.js.org/recipes/structuring-reducers/initializing-state
+     */
     passedState = {
       azureProfileData: state!.azureProfileData,
       dependencyInfo: undefined,
       generationStatus: undefined,
       modals: undefined,
       selection: undefined,
-      wizardContent: { previewStatus },
-      wizardRoutes: undefined,
       versions: state!.versions,
-      vscode: state!.vscode
+      vscode: state!.vscode,
+      wizardContent: { previewStatus },
+      wizardRoutes: undefined
     };
   } else {
     passedState = state;
