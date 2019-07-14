@@ -14,16 +14,16 @@ import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelecti
 
 import { AppState } from "../../reducers";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-
 import { ISelected } from "../../types/selected";
 
 import {
-  EXTENSION_MODULES,
-  EXTENSION_COMMANDS,
-  WIZARD_CONTENT_INTERNAL_NAMES,
-  ROUTES,
-  ROUTES_ARRAY
-} from "../../utils/constants";
+  FRONT_END_SELECTION,
+  BACK_END_SELECTION,
+  PAGES_SELECTION
+} from "./defaultSelection";
+
+import { getAllFrameworks, getAllPages } from "./loadWizardContent";
+import { ROUTES, ROUTES_ARRAY } from "../../utils/constants";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -39,41 +39,6 @@ interface IDispatchProps {
 }
 
 type Props = IStateProps & IDispatchProps & RouteComponentProps;
-
-const FRONT_END_SELECTION: ISelected = {
-  author: "Facebook",
-  internalName: "ReactJS",
-  licenses:
-    "[ReactJS](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
-  title: "React",
-  version: "v16.8.4"
-};
-
-const BACK_END_SELECTION: ISelected = {
-  author: "Various",
-  internalName: "NodeJS",
-  licenses:
-    "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE)  \n[ExpressJS](https://github.com/expressjs/express/blob/master/LICENSE)  \n[ExpressJS Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
-  title: "Node.js/Express",
-  version: "v10.15.0"
-};
-
-const PAGES_SELECTION: ISelected[] = [
-  {
-    title: "Blank",
-    internalName: "wts.Page.React.Blank",
-    id: "Blank",
-    defaultName: "Blank",
-    isValidTitle: true,
-    licenses: [
-      {
-        text: "Bootstrap",
-        url: "https://github.com/twbs/bootstrap/blob/master/LICENSE"
-      }
-    ],
-    author: "Microsoft"
-  }
-];
 
 class QuickStart extends Component<Props> {
   constructor(props: Props) {
@@ -91,26 +56,9 @@ class QuickStart extends Component<Props> {
       history,
       setRouteVisited
     } = this.props;
-    // Get All Frameworks
-    vscode.postMessage({
-      module: EXTENSION_MODULES.CORETS,
-      command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
-      payload: {
-        isPreview: isPreview,
-        projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
-      }
-    });
 
-    // Get All Pages
-    vscode.postMessage({
-      module: EXTENSION_MODULES.CORETS,
-      command: EXTENSION_COMMANDS.GET_PAGES,
-      payload: {
-        projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
-        frontendFramework: FRONT_END_SELECTION.internalName,
-        backendFramework: BACK_END_SELECTION.internalName
-      }
-    });
+    getAllFrameworks(vscode, isPreview);
+    getAllPages(vscode);
     selectFrontendFramework(FRONT_END_SELECTION);
     selectBackendFramework(BACK_END_SELECTION);
     selectPages(PAGES_SELECTION);
@@ -122,16 +70,10 @@ class QuickStart extends Component<Props> {
     const { isValidNameAndProjectPath } = this.props;
     return (
       <button onClick={this.handleClick} disabled={!isValidNameAndProjectPath}>
-        {" "}
-        Quick Start{" "}
+        Quick Start
       </button>
     );
   }
-}
-
-interface IStateProps {
-  vscode: IVSCodeObject;
-  isPreview: boolean;
 }
 
 const mapStateToProps = (state: AppState): IStateProps => {
