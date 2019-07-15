@@ -1,5 +1,6 @@
 .quickStart {
-  background-color: #3c3c3c;
+  background-color: var(--vscode-input-background);
+  border: 1px solid #ffffff;
   color: inherit;
   border: none;
   font: 1.2em;
