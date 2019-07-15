@@ -1,7 +1,7 @@
-import { FunctionSelections } from "../functionProvider";
+// import { FunctionSelections } from "../functionProvider";
 import { CONSTANTS } from "../../../constants";
 
-export interface FunctionValidationResult {
+export interface AppNameValidationResult {
   isValid: boolean;
   message: string;
 }
@@ -10,27 +10,27 @@ export namespace ValidationHelper {
   const MAX_NAME_LEN = 60;
   const MIN_NAME_LEN = 3;
 
-  export function validate(
-    selections: FunctionSelections
-  ): FunctionValidationResult {
-    let appNameResult: FunctionValidationResult = validateFunctionAppName(
-      selections.functionAppName
-    );
-    if (!appNameResult.isValid) {
-      return appNameResult;
-    }
-    let functionNameResult: FunctionValidationResult = validateFunctionNames(
-      selections.functionNames
-    );
-    if (!functionNameResult.isValid) {
-      return functionNameResult;
-    }
-    return { isValid: true, message: "" };
-  }
+  // export function validate(
+  //   selections: FunctionSelections
+  // ): AppNameValidationResult {
+  //   let appNameResult: AppNameValidationResult = validateFunctionAppName(
+  //     selections.functionAppName
+  //   );
+  //   if (!appNameResult.isValid) {
+  //     return appNameResult;
+  //   }
+  //   let functionNameResult: AppNameValidationResult = validateFunctionNames(
+  //     selections.functionNames
+  //   );
+  //   if (!functionNameResult.isValid) {
+  //     return functionNameResult;
+  //   }
+  //   return { isValid: true, message: "" };
+  // }
 
   export function validateFunctionNames(
     names: string[]
-  ): FunctionValidationResult {
+  ): AppNameValidationResult {
     for (var name of names) {
       if (name.length > MAX_NAME_LEN || name.length < MIN_NAME_LEN) {
         return {
@@ -38,7 +38,7 @@ export namespace ValidationHelper {
           message: CONSTANTS.ERRORS.NAME_MIN_MAX(MIN_NAME_LEN, MAX_NAME_LEN)
         };
       }
-      let regexResult: FunctionValidationResult = checkFunctionNameRegex(name);
+      let regexResult: AppNameValidationResult = checkFunctionNameRegex(name);
       if (!regexResult.isValid) {
         return regexResult;
       }
@@ -60,7 +60,7 @@ export namespace ValidationHelper {
 
   export function validateFunctionAppName(
     name: string
-  ): FunctionValidationResult {
+  ): AppNameValidationResult {
     if (name.length > MAX_NAME_LEN || name.length < MIN_NAME_LEN) {
       return {
         isValid: false,
@@ -71,7 +71,7 @@ export namespace ValidationHelper {
     return checkFunctionNameRegex(name);
   }
 
-  function checkFunctionNameRegex(name: string): FunctionValidationResult {
+  function checkFunctionNameRegex(name: string): AppNameValidationResult {
     let regexp = /^[a-zA-Z0-9]+[a-zA-Z0-9-]*[a-zA-Z0-9]+$/;
     if (!regexp.test(name)) {
       return {

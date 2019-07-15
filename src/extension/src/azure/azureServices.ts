@@ -27,7 +27,7 @@ import {
 } from "../errors";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import {
-  FunctionValidationResult,
+  AppNameValidationResult,
   ValidationHelper
 } from "./azure-functions/utils/validationHelper";
 import { Logger } from "../utils/logger";
@@ -413,7 +413,7 @@ export class AzureServices extends WizardServant {
       functionNames: selections.functionNames
     };
 
-    let functionNamesValidation: FunctionValidationResult = ValidationHelper.validateFunctionNames(
+    let functionNamesValidation: AppNameValidationResult = ValidationHelper.validateFunctionNames(
       userFunctionsSelections.functionNames
     );
     if (!functionNamesValidation.isValid) {
