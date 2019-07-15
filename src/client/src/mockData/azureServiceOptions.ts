@@ -65,12 +65,12 @@ export const azureMessages = defineMessages({
   },
   azureModalCreateNewResourceGroupDisplayMessage: {
     id: "azureModal.createNewResourceGroupDisplayMessage",
-    defaultMessage: "Create new resource group for me"
+    defaultMessage: "Create a new resource group"
   },
   azureModalCreateNewResourceGroupSelectedDisplayMessage: {
     id: "azureModal.createNewResourceGroupSelectedDisplayMessage",
     defaultMessage:
-      "We will automatically create a resource group for you in Central US"
+      "We will automatically create a resource group for you in Central US to manage all related resources to this project!"
   },
   azureModalSubscriptionLabel: {
     id: "azureModal.subscriptionLabel",
