@@ -12,6 +12,7 @@ import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 
 import azureServiceOptions from "../../mockData/azureServiceOptions";
+import { servicesEnum } from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
 import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 
@@ -32,6 +33,7 @@ interface IAzureLoginProps {
   isCosmosDbModalOpen: boolean;
   azureFunctionsSelection: any;
   cosmosDbSelection: any;
+  isPreview: boolean;
 }
 
 interface IState {
@@ -76,6 +78,14 @@ const messages = defineMessages({
   cosmosResource: {
     id: "azureSubscriptions.cosmosResource",
     defaultMessage: "Cosmos Resource"
+  },
+  hostingTitle: {
+    id: "hostingServices.title",
+    defaultMessage: "Publish your project to the web"
+  },
+  storageTitle: {
+    id: "storageServices.title",
+    defaultMessage: "Create and connect to a database in the cloud"
   }
 });
 
@@ -110,40 +120,97 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     }
     return () => {};
   }
+
+  public getServicesOrganizer(
+    type: string | undefined,
+    isLoggedIn: boolean,
+    setDetailPage: any,
+    title: any,
+    isPreview: boolean
+  ) {
+    const { formatMessage } = this.props.intl;
+    return (
+      <div
+        className={classnames(styles.servicesContainer, {
+          [styles.overlay]: !isLoggedIn
+        })}
+      >
+        <div className={styles.servicesCategory}>
+          <div className={styles.categoryTitle}>{type}</div>
+          <div className={styles.categoryDescriptor}>
+            {formatMessage(title)}
+          </div>
+          <div className={styles.servicesCategoryContainer}>
+            {azureServiceOptions.map(option => {
+              // show cards with preview flag only if wizard is also in preview
+              const shouldShowCard = isPreview || !option.isPreview;
+              if (shouldShowCard && option.type === type) {
+                return (
+                  <div
+                    key={JSON.stringify(option.title)}
+                    className={classnames(styles.subscriptionCardContainer, {
+                      [styles.overlay]: !isLoggedIn
+                    })}
+                  >
+                    <Card
+                      option={option}
+                      buttonText={this.addOrEditResourceText(
+                        option.internalName
+                      )}
+                      handleButtonClick={this.getServicesModalOpener(
+                        option.internalName
+                      )}
+                      disabled={!isLoggedIn}
+                      handleDetailsClick={setDetailPage}
+                    />
+                  </div>
+                );
+              }
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
   public render() {
-    const { isLoggedIn, setDetailPage } = this.props;
+    const { isLoggedIn, setDetailPage, isPreview } = this.props;
+    const serviceTypes = azureServiceOptions.map(option => option.type);
+    const uniqueServiceTypes = [...new Set(serviceTypes)];
     return (
       <div className={styles.container}>
-        {azureServiceOptions.map(option => (
-          <div
-            key={JSON.stringify(option.title)}
-            className={classnames(styles.subscriptionCardContainer, {
-              [styles.overlay]: !isLoggedIn
-            })}
-          >
-            <Card
-              option={option}
-              buttonText={this.addOrEditResourceText(option.internalName)}
-              handleButtonClick={this.getServicesModalOpener(
-                option.internalName
-              )}
-              disabled={!isLoggedIn}
-              handleDetailsClick={setDetailPage}
-              useNormalButtons={this.isSelectionCreated(option.internalName)}
-            />
-          </div>
-        ))}
+        {uniqueServiceTypes.map((serviceType: any) => {
+          let categoryTitle;
+          switch (serviceType) {
+            case servicesEnum.HOSTING:
+              categoryTitle = messages.hostingTitle;
+              break;
+            case servicesEnum.DATABASE:
+              categoryTitle = messages.storageTitle;
+              break;
+          }
+          return this.getServicesOrganizer(
+            serviceType,
+            isLoggedIn,
+            setDetailPage,
+            categoryTitle,
+            isPreview
+          );
+        })}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: AppState): IAzureLoginProps => ({
-  isLoggedIn: state.azureProfileData.isLoggedIn,
-  isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
-  azureFunctionsSelection: state.selection.services.azureFunctions.selection,
-  cosmosDbSelection: state.selection.services.cosmosDB.selection
-});
+const mapStateToProps = (state: AppState): IAzureLoginProps => {
+  const { previewStatus } = state.wizardContent;
+  return {
+    isLoggedIn: state.azureProfileData.isLoggedIn,
+    isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
+    azureFunctionsSelection: state.selection.services.azureFunctions.selection,
+    cosmosDbSelection: state.selection.services.cosmosDB.selection,
+    isPreview: previewStatus
+  };
+};
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>

@@ -207,6 +207,134 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
+        case EXTENSION_COMMANDS.GET_PAGES:
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_PAGES,
+              payload: {
+                pages: [
+                  {
+                    templateId: "wts.Page.React.Blank",
+                    name: "Blank",
+                    defaultName: "Blank",
+                    description:
+                      "A blank page for you to build your web application from scratch.",
+                    richDescription:
+                      "This is the most basic page. A blank canvas to mold into whatever you wish. The blank page leaves pretty much everything up to you.",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 0,
+                    isHidden: false,
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: true,
+                    itemNameEditable: true,
+                    licenses: [
+                      {
+                        text: "Bootstrap",
+                        url:
+                          "https://github.com/twbs/bootstrap/blob/master/LICENSE"
+                      }
+                    ],
+                    dependencies: [],
+                    templateType: "Page",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  },
+                  {
+                    templateId: "wts.Page.React.Grid",
+                    name: "Grid",
+                    defaultName: "Grid",
+                    description:
+                      "A page displaying simple image and text components which are organized into a grid.",
+                    richDescription:
+                      "A page displaying simple image and text components which are organized into a grid. Grid pages are a system for creating order among elements in a website.",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: true,
+                    itemNameEditable: true,
+                    licenses: [
+                      {
+                        text: "Bootstrap",
+                        url:
+                          "https://github.com/twbs/bootstrap/blob/master/LICENSE"
+                      }
+                    ],
+                    dependencies: [],
+                    templateType: "Page",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  },
+                  {
+                    emplateId: "wts.Page.React.List",
+                    name: "List",
+                    defaultName: "List",
+                    description:
+                      "The list page allows you to add and remove text from an adaptive list.",
+                    richDescription:
+                      "The list page allows you to add custom text in the form of an adaptive list. This pattern is frequently used for blog pages and messaging apps. If a database is selected from the Azure Cloud Services the list page will automatically connect to the deployed Azure database.",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: true,
+                    itemNameEditable: true,
+                    licenses: [
+                      {
+                        text: "Bootstrap",
+                        url:
+                          "https://github.com/twbs/bootstrap/blob/master/LICENSE"
+                      }
+                    ],
+                    dependencies: [],
+                    templateType: "Page",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  },
+                  {
+                    templateId: "wts.Page.React.MasterDetail",
+                    name: "Master Detail",
+                    defaultName: "Master Detail",
+                    description:
+                      "The master-detail page has a master pane and a details pane for content.",
+                    richDescription:
+                      "The master-detail page has a master pane and a details pane for content. When an item in the master list is selected, the details pane is updated. This pattern is frequently used for email and address books.",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: true,
+                    itemNameEditable: true,
+                    licenses: [
+                      {
+                        text: "Bootstrap",
+                        url:
+                          "https://github.com/twbs/bootstrap/blob/master/LICENSE"
+                      }
+                    ],
+                    dependencies: [],
+                    templateType: "Page",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  }
+                ]
+              }
+            },
+            "*"
+          );
+          break;
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           window.postMessage(
             {

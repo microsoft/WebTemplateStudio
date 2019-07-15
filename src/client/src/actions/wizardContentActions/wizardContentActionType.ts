@@ -1,7 +1,7 @@
 import { IBackendFrameworksSuccessActionType } from "./getBackendFrameworks";
 import { IFrontendFrameworksActionType } from "./getFrontendFrameworks";
 import { IPageOptionsActionType } from "./getPagesOptions";
-import { IProjectTypesActionType } from "./getProjectTypesSuccess";
+import { IProjectTypesActionType } from "./getProjectTypes";
 import { IPreviewStatusActionType } from "./setPreviewStatus";
 import { ISetPortActionType } from "./setPort";
 

@@ -1,47 +1,17 @@
-import EngineAPIService from "../../services/EngineAPIService";
 import { IApiTemplateInfo } from "../../types/apiTemplateInfo";
 import { IOption } from "../../types/option";
 import getSvgUrl from "../../utils/getSvgUrl";
 import { WIZARD_CONTENT_TYPEKEYS } from "./typeKeys";
-import WizardContentActionType from "./wizardContentActionType";
-import { Dispatch } from "react";
 
 export interface IPageOptionsActionType {
   type: WIZARD_CONTENT_TYPEKEYS.GET_PAGES_OPTIONS_SUCCESS;
   payload: IOption[];
 }
 
-const getPagesOptionsAction = (
-  projectType: string,
-  frontendFramework: string,
-  backendFramework: string,
-  serverPort: number
-) => {
-  return async (dispatch: Dispatch<WizardContentActionType>) => {
-    const api = new EngineAPIService(serverPort, undefined);
-
-    try {
-      const pagesJson = await api.getPages(
-        projectType,
-        frontendFramework,
-        backendFramework
-      );
-
-      if (pagesJson.detail == null) {
-        dispatch(
-          getPagesOptionsSuccess(
-            getOptionalFromApiTemplateInfo(
-              getApiTemplateInfoFromJson(pagesJson)
-            )
-          )
-        );
-      } else {
-        console.log("FAILED");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const getPagesOptionsAction = (pagesOptions: IOption[]) => {
+  return getPagesOptionsSuccess(
+    getOptionalFromApiTemplateInfo(getApiTemplateInfoFromJson(pagesOptions))
+  );
 };
 
 const getPagesOptionsSuccess = (
