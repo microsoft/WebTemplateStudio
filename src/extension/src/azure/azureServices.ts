@@ -35,6 +35,7 @@ import {
   ResourceGroupDeploy,
   ResourceGroupSelection
 } from "./azure-resource-group/resourceGroupModule";
+import { AppServiceProvider } from "./azure-app-service/appServiceProvider";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -279,7 +280,7 @@ export class AzureServices extends WizardServant {
    * Caching is used for performance; when displaying live check on keystroke to wizard   
    */
 
-   private static async updateAppServiceSubscriptionItemCache(subscriptionlabel: string) {
+   private static async updateAppServiceSubscriptionItemCache(subscriptionLabel: string) {
     if (
       AzureServices.userAppServiceSubsctiptionItemCache === undefined ||
       subscriptionLabel !==

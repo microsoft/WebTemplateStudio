@@ -1,14 +1,13 @@
 import { SubscriptionItem } from "../azure-auth/azureAuth";
-import WebSiteManagementClient from "azure-arm-website";
+import { WebSiteManagementClient } from "azure-arm-website";
 import { ServiceClientCredentials } from "ms-rest";
-import { SubscriptionClient } from "azure-arm-resource";
 import { SubscriptionError } from "../../errors";
 import { CONSTANTS } from "../../constants";
 
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
 
-    /*
+  /*
    * Sets a web client from a users selected subscription item's credentials
    */
   private setWebClient(userSubscriptionItem: SubscriptionItem): void {
@@ -40,12 +39,31 @@ export class AppServiceProvider {
     );
   }
 
-public async checkWebAppName(name: string, subscriptionItem: SubscriptionItem): Promise<boolean> {
-  try {
-    this.setWebClient(subscriptionItem);
-  } catch (error) {
-    throw error.message;
+  public async checkWebAppName(
+    name: string,
+    subscriptionItem: SubscriptionItem
+  ): Promise<string | undefined> {
+    try {
+      this.setWebClient(subscriptionItem);
+    } catch (error) {
+      return error.message;
+    }
+    if (this.webClient === undefined) {
+      return CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED;
+    }
+    return await this.webClient
+      .checkNameAvailability(name + ".azurewebsites.net", "Site", {
+        isFqdn: true
+      })
+      .then(res => {
+        if (res.nameAvailable) {
+          return undefined;
+        } else {
+          return CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(name);
+        }
+      })
+      .catch(error => {
+        return error.message;
+      });
   }
-}
-
 }
