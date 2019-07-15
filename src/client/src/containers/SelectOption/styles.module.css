@@ -25,3 +25,7 @@
 .borderYellow {
   border: 1px solid var(--vscode-editorMarkerNavigationWarning-background);
 }
+
+.icon {
+  height: 36px;
+}

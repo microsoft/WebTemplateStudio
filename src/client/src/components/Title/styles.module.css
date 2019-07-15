@@ -1,7 +1,8 @@
 .title {
-  font-size: 18px;
+  font-size: 1.7em;
+  font-weight: normal;
   margin-top: 1em;
   margin-right: 1%;
   margin-bottom: 12px;
-  font-weight: 500;
+  padding-bottom: 20px;
 }

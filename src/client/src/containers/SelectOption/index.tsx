@@ -307,7 +307,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       intl
     } = this.props;
     return (
-      <div className={styles.containerPadding}>
+      <div>
         <Title>{title}</Title>
         {isPagesSelection && (
           <div
