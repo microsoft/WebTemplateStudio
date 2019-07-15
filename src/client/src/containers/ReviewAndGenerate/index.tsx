@@ -12,6 +12,7 @@ import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
+import spaceKeyHandler from "../../utils/spaceKeyHandler";
 
 interface IDispatchProps {
   openViewLicensesModal: () => any;
@@ -65,6 +66,7 @@ const ReviewAndGenerate = (props: Props) => {
               rel="noopener noreferrer"
               className={styles.link}
               href="https://github.com/Microsoft/WebTemplateStudio/issues"
+              onKeyUp={spaceKeyHandler}
             >
               {formatMessage(messages.giveFeedback)}
             </a>

@@ -42,6 +42,7 @@ import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import RootAction from "../../actions/ActionType";
 import { messages } from "./messages";
 import classNames from "classnames";
+import spaceKeyHandler from "../../utils/spaceKeyHandler";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -335,6 +336,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
               tabIndex={disabled ? -1 : 0}
               className={styles.link}
               href={links[formSectionId]}
+              onKeyUp={spaceKeyHandler}
+
             >
               {rightHeader}
             </a>

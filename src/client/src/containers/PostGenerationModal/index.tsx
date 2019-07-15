@@ -26,6 +26,7 @@ import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
+import spaceKeyHandler from "../../utils/spaceKeyHandler";
 
 interface LinksDict {
   [serviceId: string]: string;
@@ -73,7 +74,7 @@ const PostGenerationModal = ({
 }: Props) => {
   const { formatMessage } = intl;
   const LinkRenderer = (props: any) => (
-    <a href={props.href} className={styles.link}>
+    <a href={props.href} className={styles.link} onKeyUp={spaceKeyHandler}>
       {props.children}
     </a>
   );
@@ -221,6 +222,7 @@ const PostGenerationModal = ({
         <a
           className={styles.link}
           href="https://github.com/Microsoft/WebTemplateStudio/issues"
+          onKeyUp={spaceKeyHandler}
         >
           {formatMessage(messages.help)}
         </a>

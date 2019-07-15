@@ -42,6 +42,7 @@ import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
+import spaceKeyHandler from "../../utils/spaceKeyHandler";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -224,6 +225,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
+                    onKeyDown={spaceKeyHandler}
                     className={styles.link}
                     href="https://github.com/Microsoft/WebTemplateStudio/issues"
                   >

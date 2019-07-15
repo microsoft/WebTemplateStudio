@@ -19,6 +19,7 @@ import {
   InjectedIntl,
   FormattedMessage
 } from "react-intl";
+import spaceKeyHandler from "../../utils/spaceKeyHandler";
 
 interface IProps {
   detailInfo: IOption;
@@ -41,7 +42,7 @@ const Details = ({
   intl
 }: IProps) => {
   const LinkRenderer = (props: any) => (
-    <a href={props.href} className={styles.link}>
+    <a href={props.href} className={styles.link} onKeyUp={spaceKeyHandler}>
       {props.children}
     </a>
   );
@@ -156,6 +157,7 @@ const Details = ({
                                 <a
                                   className={styles.link}
                                   href={licenseObject.url}
+                                  onKeyUp={spaceKeyHandler}
                                 >
                                   {licenseObject.text}
                                 </a>

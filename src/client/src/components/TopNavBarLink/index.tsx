@@ -3,6 +3,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import styles from "./styles.module.css";
+import spaceKeyHandler from "../../utils/spaceKeyHandler";
 
 const TopNavBarLink = ({
   pageNumber,
@@ -31,6 +32,7 @@ const TopNavBarLink = ({
       to={path}
       onClick={handleClick}
       className={styles.container}
+      onKeyUp={spaceKeyHandler}
     >
       <div
         className={classnames(styles.text, {

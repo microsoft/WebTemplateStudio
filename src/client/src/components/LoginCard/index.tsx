@@ -11,6 +11,7 @@ import { FormattedMessage } from "react-intl";
 import { IOption } from "../../types/option";
 import { ROUTES } from "../../utils/constants";
 import { azureMessages } from "../../mockData/azureServiceOptions";
+import spaceKeyHandler from "../../utils/spaceKeyHandler";
 
 interface IProps {
   cardTitle: string;
@@ -42,6 +43,7 @@ const LoginCard = ({
           <Link
             className={styles.details}
             onClick={() => handleDetailsClick(option)}
+            onKeyUp={spaceKeyHandler}
             to={ROUTES.PAGE_DETAILS}
           >
             <FormattedMessage id="loginCard.details" defaultMessage="Details" />
@@ -61,6 +63,7 @@ const LoginCard = ({
             <a
               className={styles.createAccountButton}
               href="https://azure.microsoft.com/free/"
+              onKeyUp={spaceKeyHandler}
             >
               <FormattedMessage
                 id="loginCard.createAccount"
