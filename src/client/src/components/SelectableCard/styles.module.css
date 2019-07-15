@@ -162,7 +162,7 @@
   font-size: 14px;
 }
 
-.disabledOverlay {
+button:disabled {
   opacity: 0.5;
   outline: 0px;
 }
