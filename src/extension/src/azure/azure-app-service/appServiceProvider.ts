@@ -2,7 +2,7 @@ import { SubscriptionItem } from "../azure-auth/azureAuth";
 import { WebSiteManagementClient } from "azure-arm-website";
 import { ServiceClientCredentials } from "ms-rest";
 import { SubscriptionError } from "../../errors";
-import { CONSTANTS, AppServiceType } from "../../constants";
+import { CONSTANTS, AppType } from "../../constants";
 
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
@@ -59,7 +59,7 @@ export class AppServiceProvider {
         if (res.nameAvailable) {
           return undefined;
         } else {
-          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(name, AppServiceType.Web);
+          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(name, AppType.Web);
         }
       })
       .catch(error => {

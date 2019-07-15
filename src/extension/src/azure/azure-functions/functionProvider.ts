@@ -18,7 +18,7 @@ import {
 import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import { CONSTANTS, AppServiceType } from "../../constants";
+import { CONSTANTS, AppType } from "../../constants";
 import { AppNameValidationResult } from "./utils/validationHelper";
 
 /*
@@ -312,7 +312,7 @@ export class FunctionProvider {
       return error.message;
     }
 
-    let validationStatus: AppNameValidationResult = ValidationHelper.validateFunctionAppName(
+    let validationStatus: AppNameValidationResult = ValidationHelper.validateAppName(
       appName
     );
     if (!validationStatus.isValid) {
@@ -331,7 +331,7 @@ export class FunctionProvider {
         if (res.nameAvailable) {
           return undefined;
         } else {
-          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(appName, AppServiceType.Function);
+          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(appName, AppType.Function);
         }
       })
       .catch(error => {

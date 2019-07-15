@@ -25,7 +25,7 @@ export const CONSTANTS = {
       "error.subscriptionNotFound",
       "No subscription found with this name."
     ),
-    APP_NAME_NOT_AVAILABLE: (appName: string, type: AppServiceType) => {
+    APP_NAME_NOT_AVAILABLE: (appName: string, type: AppType) => {
       return localize(
         "error.functionAppNameNotAvailable",
         "{1} app name {0} is not available",
@@ -72,10 +72,10 @@ export const CONSTANTS = {
       "error.functionsNoDuplicate",
       "No duplicates allowed for function names"
     ),
-    FUNCTIONS_INVALID_NAME: (name: string) => {
+    APP_INVALID_NAME: (name: string, type: AppType) => {
       return localize(
         "error.functionInvalidName",
-        "Invalid function name {0}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters",
+        "Invalid {1} app name {0}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters",
         name
       );
     },
@@ -224,6 +224,10 @@ export const CONSTANTS = {
     CENTRAL_US: "Central US"
   },
   APP_SERVICE_DOMAIN: ".azurewebsites.net",
+  APP_NAME: {
+    MAX_LENGTH: 60,
+    MIN_LENGTH: 3
+  }
   
 };
 
@@ -329,7 +333,7 @@ export enum AzureResourceType {
   Functions = "functions"
 }
 
-export enum AppServiceType {
+export enum AppType {
   Web = "Web",
   Function = "Function"
 }
