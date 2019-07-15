@@ -3,6 +3,7 @@ import { WebSiteManagementClient } from "azure-arm-website";
 import { ServiceClientCredentials } from "ms-rest";
 import { SubscriptionError } from "../../errors";
 import { CONSTANTS, AppType } from "../../constants";
+import { AppNameValidationResult, ValidationHelper } from "../validationHelper";
 
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
@@ -47,6 +48,13 @@ export class AppServiceProvider {
       this.setWebClient(subscriptionItem);
     } catch (error) {
       return error.message;
+    }
+
+    let validationStatus: AppNameValidationResult = ValidationHelper.validateAppName(
+      name
+    );
+    if (!validationStatus.isValid) {
+      return validationStatus.message;
     }
     if (this.webClient === undefined) {
       return CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED;

@@ -72,10 +72,10 @@ export const CONSTANTS = {
       "error.functionsNoDuplicate",
       "No duplicates allowed for function names"
     ),
-    APP_INVALID_NAME: (name: string, type: AppType) => {
+    APP_INVALID_NAME: (name: string) => {
       return localize(
         "error.functionInvalidName",
-        "Invalid {1} app name {0}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters",
+        "Invalid name {0}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters",
         name
       );
     },
@@ -141,10 +141,10 @@ export const CONSTANTS = {
         accountName
       );
     },
-    FUNCTION_APP_DEPLOYED: (appName: string) => {
+    APP_DEPLOYED: (appName: string, type: AppType) => {
       return localize(
         "info.functionAppDeployed",
-        "Function App {0} has been deployed and is ready to use!",
+        "{1} App {0} has been deployed and is ready to use!",
         appName
       );
     },
@@ -228,7 +228,6 @@ export const CONSTANTS = {
     MAX_LENGTH: 60,
     MIN_LENGTH: 3
   }
-  
 };
 
 export enum ExtensionCommand {

@@ -19,7 +19,7 @@ import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import { CONSTANTS, AppType } from "../../constants";
-import { AppNameValidationResult } from "./utils/validationHelper";
+import { AppNameValidationResult } from "../validationHelper";
 
 /*
  * Runtime for the deployment, can be either 'dotnet' or 'node'.

@@ -29,7 +29,7 @@ import { WizardServant, IPayloadResponse } from "../wizardServant";
 import {
   AppNameValidationResult,
   ValidationHelper
-} from "./azure-functions/utils/validationHelper";
+} from "./validationHelper";
 import { Logger } from "../utils/logger";
 import {
   ResourceGroupDeploy,
@@ -277,10 +277,12 @@ export class AzureServices extends WizardServant {
   }
 
   /*
-   * Caching is used for performance; when displaying live check on keystroke to wizard   
+   * Caching is used for performance; when displaying live check on keystroke to wizard
    */
 
-   private static async updateAppServiceSubscriptionItemCache(subscriptionLabel: string) {
+  private static async updateAppServiceSubscriptionItemCache(
+    subscriptionLabel: string
+  ) {
     if (
       AzureServices.userAppServiceSubsctiptionItemCache === undefined ||
       subscriptionLabel !==
@@ -295,7 +297,7 @@ export class AzureServices extends WizardServant {
         throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
       }
     }
-   }
+  }
 
   private static async updateCosmosDBSubscriptionItemCache(
     subscriptionLabel: string

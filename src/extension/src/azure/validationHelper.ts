@@ -1,4 +1,4 @@
-import { CONSTANTS, AppType } from "../../../constants";
+import { CONSTANTS } from "../constants";
 
 export interface AppNameValidationResult {
   isValid: boolean;
@@ -6,20 +6,23 @@ export interface AppNameValidationResult {
 }
 
 export namespace ValidationHelper {
-  // const MAX_NAME_LEN = 60;
-  // const MIN_NAME_LEN = 3;
-
   export function validateFunctionNames(
     names: string[]
   ): AppNameValidationResult {
     for (var name of names) {
-      if (name.length > CONSTANTS.APP_NAME.MAX_LENGTH || name.length < CONSTANTS.APP_NAME.MIN_LENGTH) {
+      if (
+        name.length > CONSTANTS.APP_NAME.MAX_LENGTH ||
+        name.length < CONSTANTS.APP_NAME.MIN_LENGTH
+      ) {
         return {
           isValid: false,
-          message: CONSTANTS.ERRORS.NAME_MIN_MAX(CONSTANTS.APP_NAME.MIN_LENGTH, CONSTANTS.APP_NAME.MAX_LENGTH)
+          message: CONSTANTS.ERRORS.NAME_MIN_MAX(
+            CONSTANTS.APP_NAME.MIN_LENGTH,
+            CONSTANTS.APP_NAME.MAX_LENGTH
+          )
         };
       }
-      let regexResult: AppNameValidationResult = checkAppNameRegex(name);
+      let regexResult: AppNameValidationResult = checkNameRegex(name);
       if (!regexResult.isValid) {
         return regexResult;
       }
@@ -40,25 +43,28 @@ export namespace ValidationHelper {
   }
 
   // For validating Function App and Web App names
-  export function validateAppName(
-    name: string
-  ): AppNameValidationResult {
-    if (name.length > CONSTANTS.APP_NAME.MAX_LENGTH || name.length < CONSTANTS.APP_NAME.MIN_LENGTH) {
+  export function validateAppName(name: string): AppNameValidationResult {
+    if (
+      name.length > CONSTANTS.APP_NAME.MAX_LENGTH ||
+      name.length < CONSTANTS.APP_NAME.MIN_LENGTH
+    ) {
       return {
         isValid: false,
-        message: CONSTANTS.ERRORS.NAME_MIN_MAX(CONSTANTS.APP_NAME.MIN_LENGTH, CONSTANTS.APP_NAME.MAX_LENGTH)
+        message: CONSTANTS.ERRORS.NAME_MIN_MAX(
+          CONSTANTS.APP_NAME.MIN_LENGTH,
+          CONSTANTS.APP_NAME.MAX_LENGTH
+        )
       };
     }
-
-    return checkAppNameRegex(name);
+    return checkNameRegex(name);
   }
 
-  function checkAppNameRegex(name: string): AppNameValidationResult {
+  function checkNameRegex(name: string): AppNameValidationResult {
     let regexp = /^[a-zA-Z0-9]+[a-zA-Z0-9-]*[a-zA-Z0-9]+$/;
     if (!regexp.test(name)) {
       return {
         isValid: false,
-        message: CONSTANTS.ERRORS.APP_INVALID_NAME(name, AppType.Function)
+        message: CONSTANTS.ERRORS.APP_INVALID_NAME(name)
       };
     }
     return { isValid: true, message: "" };
