@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { RouteComponentProps, withRouter } from "react-router";
+import { FormattedMessage } from "react-intl";
 
 import RootAction from "../../actions/ActionType";
 import { selectFrontendFramework as selectFrontendAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
@@ -76,8 +77,11 @@ class QuickStart extends Component<Props> {
     return (
       <div>
         <p className={styles.description}>
-          If you are a returning user accelerate your web app process with quick
-          start.
+          <FormattedMessage
+            id="quickStart.description"
+            defaultMessage="If you are a returning user accelerate your web app process with quick
+            start."
+          />
         </p>
         <button
           className={styles.quickStart}
@@ -85,7 +89,10 @@ class QuickStart extends Component<Props> {
           disabled={!isValidNameAndProjectPath}
         >
           {quickStartWand && <QuickStartWand className={styles.wand} />}
-          Quick Start Web Project
+          <FormattedMessage
+            id="quickStart.button"
+            defaultMessage="Quick Start Web Project"
+          />
         </button>
       </div>
     );

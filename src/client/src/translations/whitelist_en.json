@@ -66,6 +66,8 @@
   "licenses.licenses",
   "newProject.header",
   "newProject.body",
+  "quickStart.description",
+  "quickStart.button",
   "postGenerationModal.deploymentHalted",
   "postGenerationModal.restartWizard",
   "postGenerationModal.deploymentFailure",
