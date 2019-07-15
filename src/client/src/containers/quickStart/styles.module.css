@@ -1,10 +1,9 @@
 .quickStart {
   background-color: var(--vscode-input-background);
-  border: 1px solid var(--vscode-button-border);
+  border: 0.5px solid var(--vscode-editor-foreground);
   color: inherit;
   font: 1.2em;
   cursor: pointer;
-  outline: inherit;
   font-size: 20px;
   margin-top: 20px;
   padding: 10px 20px;
@@ -12,7 +11,7 @@
 }
 
 .quickStart:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
+  border: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .description {
@@ -22,7 +21,7 @@
 
 button:disabled {
   opacity: 0.5;
-  outline: 0px;
+  border: 0px;
   cursor: default;
 }
 
