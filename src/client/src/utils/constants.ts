@@ -49,11 +49,18 @@ const COSMOS_APIS = {
 
 enum FRAMEWORK_TYPE {
   FRONTEND = "frontend",
-  BACKEND = "backend",
+  BACKEND = "backend"
+}
+
+enum KEY_EVENTS {
+  ENTER = "Enter",
+  SPACE = " ",
+  TAB = "Tab"
 }
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   ANGULAR: "Angular",
+  APP_SERVICE: "AppService",
   AZURE: "wts.Feature.Azure",
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
@@ -110,7 +117,8 @@ const EXTENSION_COMMANDS = {
   RESET_PAGES: "reset-pages",
   GET_PREVIEW_STATUS: "get-preview",
   GET_DEPENDENCY_INFO: "check-dependency",
-  GET_FRAMEWORKS: "get-frameworks"
+  GET_FRAMEWORKS: "get-frameworks",
+  GET_PAGES: "get-pages"
 };
 
 export {
@@ -125,5 +133,6 @@ export {
   COSMOS_APIS,
   DEVELOPMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
-  FRAMEWORK_TYPE
+  FRAMEWORK_TYPE,
+  KEY_EVENTS
 };

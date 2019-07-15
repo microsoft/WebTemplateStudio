@@ -8,6 +8,7 @@ import { getSvg } from "../../utils/getSvgUrl";
 import styles from "./styles.module.css";
 import grid from "../../css/grid.module.css";
 import backArrow from "../../assets/backarrow.svg";
+import { KEY_EVENTS } from "../../utils/constants";
 
 import { IOption } from "../../types/option";
 import { ILicenseObject, License } from "../../types/license";
@@ -50,8 +51,8 @@ const Details = ({
       <br />
     </React.Fragment>
   );
-  const keyDownHandler = (event: any) => {
-    if (event.keyCode === 13 || event.keyCode === 32) {
+  const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleBackClick();
     }
   };

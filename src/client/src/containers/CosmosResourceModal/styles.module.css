@@ -10,6 +10,7 @@
   padding-right: 20px;
   max-height: calc(80vh - 200px);
   overflow-y: auto;
+  margin-bottom: 5px;
 }
 
 .modalTitle {
@@ -22,7 +23,7 @@
 }
 
 .selectionContainer {
-  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 .selectionContainerDisabled {
