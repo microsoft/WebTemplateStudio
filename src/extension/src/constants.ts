@@ -25,11 +25,11 @@ export const CONSTANTS = {
       "error.subscriptionNotFound",
       "No subscription found with this name."
     ),
-    FUNCTION_APP_NAME_NOT_AVAILABLE: (functionName: string) => {
+    APP_NAME_NOT_AVAILABLE: (appName: string, type: AppServiceType) => {
       return localize(
         "error.functionAppNameNotAvailable",
-        "Function app name {0} is not available",
-        functionName
+        "{1} app name {0} is not available",
+        appName
       );
     },
     LOGOUT_FAILED: localize(
@@ -222,7 +222,9 @@ export const CONSTANTS = {
   },
   AZURE_LOCATION: {
     CENTRAL_US: "Central US"
-  }
+  },
+  APP_SERVICE_DOMAIN: ".azurewebsites.net",
+  
 };
 
 export enum ExtensionCommand {
@@ -322,6 +324,12 @@ export namespace DialogMessages {
 }
 
 export enum AzureResourceType {
+  WebApp = "web-app",
   Cosmos = "cosmos",
   Functions = "functions"
+}
+
+export enum AppServiceType {
+  Web = "Web",
+  Function = "Function"
 }

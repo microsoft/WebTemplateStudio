@@ -2,7 +2,7 @@ import { SubscriptionItem } from "../azure-auth/azureAuth";
 import { WebSiteManagementClient } from "azure-arm-website";
 import { ServiceClientCredentials } from "ms-rest";
 import { SubscriptionError } from "../../errors";
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS, AppServiceType } from "../../constants";
 
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
@@ -52,14 +52,14 @@ export class AppServiceProvider {
       return CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED;
     }
     return await this.webClient
-      .checkNameAvailability(name + ".azurewebsites.net", "Site", {
+      .checkNameAvailability(name + CONSTANTS.APP_SERVICE_DOMAIN, "Site", {
         isFqdn: true
       })
       .then(res => {
         if (res.nameAvailable) {
           return undefined;
         } else {
-          return CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(name);
+          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(name, AppServiceType.Web);
         }
       })
       .catch(error => {

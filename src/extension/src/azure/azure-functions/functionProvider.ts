@@ -18,7 +18,7 @@ import {
 import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS, AppServiceType } from "../../constants";
 import { FunctionValidationResult } from "./utils/validationHelper";
 
 /*
@@ -35,8 +35,6 @@ export interface RuntimeObject {
   value: Runtime;
   label: string;
 }
-
-const FUNCTION_APP_DOMAIN = ".azurewebsites.net";
 
 const MAX_STORAGE_NAME = 24;
 
@@ -326,14 +324,14 @@ export class FunctionProvider {
     }
 
     return await this.webClient
-      .checkNameAvailability(appName + FUNCTION_APP_DOMAIN, "Site", {
+      .checkNameAvailability(appName + CONSTANTS.APP_SERVICE_DOMAIN, "Site", {
         isFqdn: true
       })
       .then(res => {
         if (res.nameAvailable) {
           return undefined;
         } else {
-          return CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(appName);
+          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(appName, AppServiceType.Function);
         }
       })
       .catch(error => {
