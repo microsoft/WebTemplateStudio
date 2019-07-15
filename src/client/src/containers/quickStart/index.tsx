@@ -84,6 +84,7 @@ class QuickStart extends Component<Props> {
           />
         </p>
         <button
+          tabIndex={0}
           className={styles.quickStart}
           onClick={this.handleClick}
           disabled={!isValidNameAndProjectPath}
