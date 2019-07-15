@@ -64,12 +64,14 @@ export class AzureServices extends WizardServant {
 
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
+  private static AzureAppServiceProvider = new AppServiceProvider();
   private static AzureResourceGroupProvider = new ResourceGroupDeploy();
 
   private static subscriptionItemList: SubscriptionItem[] = [];
 
-  private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
+  private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
+  private static userAppServiceSubsctiptionItemCache: SubscriptionItem;
 
   public static async performLoginForSubscriptions(
     message: any
@@ -193,6 +195,33 @@ export class AzureServices extends WizardServant {
     };
   }
 
+  public static async sendAppServiceNameValidationStatusToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
+    await AzureServices.updateAppServiceSubscriptionItemCache(
+      message.subscription
+    );
+
+    return await AzureServices.AzureAppServiceProvider.checkWebAppName(
+      message.appName,
+      AzureServices.userAppServiceSubsctiptionItemCache
+    )
+      .then((invalidReason: string | undefined) => {
+        return {
+          payload: {
+            isAvailable:
+              !invalidReason ||
+              invalidReason === undefined ||
+              invalidReason === "",
+            reason: invalidReason
+          }
+        };
+      })
+      .catch((error: Error) => {
+        throw error; //to log in telemetry
+      });
+  }
+
   public static async sendCosmosNameValidationStatusToClient(
     message: any
   ): Promise<IPayloadResponse> {
@@ -247,8 +276,26 @@ export class AzureServices extends WizardServant {
   }
 
   /*
-   * Caching is used for performance; when displaying live check on keystroke to wizard
+   * Caching is used for performance; when displaying live check on keystroke to wizard   
    */
+
+   private static async updateAppServiceSubscriptionItemCache(subscriptionlabel: string) {
+    if (
+      AzureServices.userAppServiceSubsctiptionItemCache === undefined ||
+      subscriptionLabel !==
+        AzureServices.userAppServiceSubsctiptionItemCache.label
+    ) {
+      let subscriptionItem = AzureServices.subscriptionItemList.find(
+        subscriptionItem => subscriptionItem.label === subscriptionLabel
+      );
+      if (subscriptionItem) {
+        AzureServices.userAppServiceSubsctiptionItemCache = subscriptionItem;
+      } else {
+        throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
+      }
+    }
+   }
+
   private static async updateCosmosDBSubscriptionItemCache(
     subscriptionLabel: string
   ): Promise<void> {
