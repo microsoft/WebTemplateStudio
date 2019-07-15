@@ -13,6 +13,11 @@
   background-color: var(--vscode-editor-background);
   height: calc(100vh - 124px);
   justify-content: flex-start;
+  position: relative;
+}
+
+.centerViewAzurePage {
+  padding: 0;
 }
 
 .centerViewMaxHeight {
@@ -23,5 +28,8 @@
 @media (max-width: 830px) {
   .centerView {
     padding: 1vh 2vh;
+  }
+  .centerViewAzurePage {
+    padding: 0;
   }
 }
