@@ -193,7 +193,7 @@ const mockVsCodeApi = () => ({
                     platforms: ["Web"],
                     languages: ["Any"],
                     tags: {
-                      version: "Python: 3.7.3, Flask: 1.0.3",
+                      version: "1.0.3",
                       preview: false,
                       enabled: true,
                       type: "backend"

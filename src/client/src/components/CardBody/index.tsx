@@ -15,10 +15,7 @@ const CardBody = ({ body, version, formattedBody, intl }: Props) => {
   return (
     <div className={styles.body}>
       {body || (formattedBody && intl.formatMessage(formattedBody))}
-      {version &&
-        version.split(",").map(versionItem => {
-          return <div>{versionItem}</div>;
-        })}
+      {version && <div>v{version}</div>}
     </div>
   );
 };
