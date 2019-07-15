@@ -143,7 +143,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
           <div className={styles.servicesCategoryContainer}>
             {azureServiceOptions.map(option => {
               // show cards with preview flag only if wizard is also in preview
-              let shouldShowCard = isPreview || !option.isPreview;
+              const shouldShowCard = isPreview || !option.isPreview;
               if (shouldShowCard && option.type === type) {
                 return (
                   <div
@@ -160,7 +160,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                       handleButtonClick={this.getServicesModalOpener(
                         option.internalName
                       )}
-                      disabled={!isLoggedIn || option.isPreview}
+                      disabled={!isLoggedIn}
                       handleDetailsClick={setDetailPage}
                     />
                   </div>
