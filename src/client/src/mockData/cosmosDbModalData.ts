@@ -31,6 +31,27 @@ export const azureModalInitialState: any = {
   ]
 };
 
+export const appServiceModalInitialState: any = {
+  subscription: [
+    {
+      value: "",
+      label: ""
+    }
+  ],
+  resourceGroup: [
+    {
+      value: "",
+      label: ""
+    }
+  ],
+  siteName: [
+    {
+      value: "",
+      label: ""
+    }
+  ]
+};
+
 export const azureFunctionModalInitialState: any = {
   subscription: [
     {

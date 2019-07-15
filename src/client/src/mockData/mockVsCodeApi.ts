@@ -418,6 +418,20 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
+        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE:
+          // produces locations and resource groups in development
+          window.postMessage(
+            {
+              module: EXTENSION_MODULES.AZURE,
+              command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
+              payload: {
+                locations: mockLocations,
+                resourceGroups: mockResourceGroups
+              }
+            },
+            "*"
+          );
+          break;
         case EXTENSION_COMMANDS.GENERATE:
           // @ts-ignore mocks a generation status message
           window.postMessage(
