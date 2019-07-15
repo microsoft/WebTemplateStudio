@@ -16,6 +16,7 @@ import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 import PrivacyModal from "./containers/PrivacyModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
+import AppServiceModal from "./containers/AppServiceModal";
 import { azureMessages } from "./mockData/azureServiceOptions";
 
 import {
@@ -276,6 +277,7 @@ class App extends React.Component<Props> {
           <PostGenerationModal />
           <PrivacyModal />
           <ViewLicensesModal />
+          <AppServiceModal />
 
           <main
             className={classnames(appStyles.centerView, {

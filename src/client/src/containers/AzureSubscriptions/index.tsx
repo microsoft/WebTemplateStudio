@@ -26,6 +26,7 @@ interface IDispatchProps {
   openCosmosDbModal: () => any;
   setDetailPage: (detailPageInfo: IOption) => void;
   openAzureFunctionsModal: () => any;
+  openAppServiceModal: () => any;
 }
 
 interface IAzureLoginProps {
@@ -113,8 +114,11 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     const modalOpeners = {
       [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: this.props.openCosmosDbModal,
       [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: this.props
-        .openAzureFunctionsModal
+        .openAzureFunctionsModal,
+      [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: this.props
+        .openAppServiceModal
     };
+    console.log(modalOpeners[internalName]);
     if (modalOpeners.hasOwnProperty(internalName)) {
       return modalOpeners[internalName];
     }
@@ -227,6 +231,9 @@ const mapDispatchToProps = (
   },
   openAzureFunctionsModal: () => {
     dispatch(ModalActions.openAzureFunctionsModalAction());
+  },
+  openAppServiceModal: () => {
+    dispatch(ModalActions.openAppServiceModalAction());
   }
 });
 
