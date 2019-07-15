@@ -12,7 +12,8 @@
 }
 
 .description {
-  font-size: 16px;
+  font-size: 1.4em;
+  line-height: 1.9em;
 }
 
 button:disabled {
