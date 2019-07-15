@@ -4,7 +4,7 @@
   "name": "List",
   "groupIdentity": "wts.Page.List",
   "identity": "wts.Page.Angular.List",
-  "description": "The list pageboobooobooooooo from an adaptive list.",
+  "description": "Add and remove text from an adaptive list.",
   "tags": {
     "language": "Any",
     "type": "item",
