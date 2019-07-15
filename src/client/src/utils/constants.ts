@@ -60,6 +60,7 @@ enum KEY_EVENTS {
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   ANGULAR: "Angular",
+  APP_SERVICE: "AppService",
   AZURE: "wts.Feature.Azure",
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
