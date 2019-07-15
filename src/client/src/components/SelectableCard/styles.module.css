@@ -161,3 +161,8 @@
   display: flex;
   font-size: 14px;
 }
+
+.disabledOverlay {
+  opacity: 0.5;
+  outline: 0px;
+}

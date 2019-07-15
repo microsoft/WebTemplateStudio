@@ -120,8 +120,11 @@ const SelectableCard = ({
         <div className={styles.pageButtons}>
           {isPagesSelection && (
             <button
-              className={classNames(styles.cardCount, styles.countButton)}
+              className={classNames(styles.cardCount, styles.countButton, {
+                [styles.disabledOverlay]: !clickCount
+              })}
               onClick={() => removePage(cardNumber)}
+              disabled={!clickCount}
             >
               {subtract && <Subtract className={styles.subtractSVG} />}
             </button>
