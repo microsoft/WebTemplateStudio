@@ -22,7 +22,6 @@ describe("Card", () => {
       disabled: true,
       handleButtonClick: () => {},
       handleDetailsClick: () => {},
-      useNormalButtons: true,
       intl: global.intl
     };
     wrapper = shallow(<Card {...props} />);
