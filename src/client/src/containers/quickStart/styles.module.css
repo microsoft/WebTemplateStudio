@@ -26,3 +26,7 @@ button:disabled {
   height: 25px;
   margin-right: 10px;
 }
+
+.wand path {
+  fill: var(--vscode-editor-foreground);
+}
