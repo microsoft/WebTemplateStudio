@@ -6,10 +6,12 @@
 }
 
 .iconCheck {
-  height: 12px;
+  margin-top: 3px;
+  height: 14px;
 }
 
 .iconWarning {
+  margin-top: 3px;
   height: 16px;
 }
 
