@@ -16,6 +16,9 @@ import { AppState } from "../../reducers";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { ISelected } from "../../types/selected";
 
+import { ReactComponent as QuickStartWand } from "../../assets/quickStartWand.svg";
+import quickStartWand from "../../assets/quickStartWand.svg";
+
 import {
   FRONT_END_SELECTION,
   BACK_END_SELECTION,
@@ -24,6 +27,8 @@ import {
 
 import { getAllFrameworks, getAllPages } from "./loadWizardContent";
 import { ROUTES, ROUTES_ARRAY } from "../../utils/constants";
+
+import styles from "./styles.module.css";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -69,9 +74,20 @@ class QuickStart extends Component<Props> {
   render() {
     const { isValidNameAndProjectPath } = this.props;
     return (
-      <button onClick={this.handleClick} disabled={!isValidNameAndProjectPath}>
-        Quick Start
-      </button>
+      <div>
+        <p className={styles.description}>
+          If you are a returning user accelerate your web app process with quick
+          start.
+        </p>
+        <button
+          className={styles.quickStart}
+          onClick={this.handleClick}
+          disabled={!isValidNameAndProjectPath}
+        >
+          {quickStartWand && <QuickStartWand className={styles.wand} />}
+          Quick Start Web Project
+        </button>
+      </div>
     );
   }
 }

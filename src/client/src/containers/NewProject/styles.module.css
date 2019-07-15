@@ -41,3 +41,7 @@
 .getStarted {
   align-self: flex-end;
 }
+
+.quickStartContainer {
+  margin-top: 100px;
+}

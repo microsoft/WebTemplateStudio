@@ -46,7 +46,6 @@ const NewProject = ({
 }: Props) => {
   return (
     <div className={styles.container}>
-      <QuickStart />
       <h1 className={styles.header}>
         <FormattedMessage
           id="newProject.header"
@@ -61,6 +60,9 @@ const NewProject = ({
       </div>
       <div className={styles.projectDetailsContainer}>
         <ProjectNameAndOutput />
+      </div>
+      <div className={styles.quickStartContainer}>
+        <QuickStart />
       </div>
     </div>
   );

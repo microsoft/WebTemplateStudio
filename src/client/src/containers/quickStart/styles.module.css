@@ -1,0 +1,27 @@
+.quickStart {
+  background-color: #3c3c3c;
+  color: inherit;
+  border: none;
+  font: 1.2em;
+  cursor: pointer;
+  outline: inherit;
+  font-size: 20px;
+  margin-top: 20px;
+  padding: 10px 20px;
+  vertical-align: middle;
+}
+
+.description {
+  font-size: 16px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  outline: 0px;
+  cursor: default;
+}
+
+.wand {
+  height: 25px;
+  margin-right: 10px;
+}
