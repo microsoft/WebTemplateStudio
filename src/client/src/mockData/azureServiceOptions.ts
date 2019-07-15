@@ -3,7 +3,12 @@ import { defineMessages } from "react-intl";
 import getSvgUrl from "../utils/getSvgUrl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../utils/constants";
 
-export const messages = defineMessages({
+export const azureMessages = defineMessages({
+  azureSkipButton: {
+    id: "azureSkip.buttonTitle",
+    defaultMessage:
+      "This step is optional, click here to skip and create your project."
+  },
   azureTitle: {
     id: "azureLogin.azureTitle",
     defaultMessage: "Microsoft Azure"
@@ -20,7 +25,11 @@ export const messages = defineMessages({
   },
   azureLoginTitle: {
     id: "azureLogin.azureLoginTitle",
-    defaultMessage: "Add Azure Cloud Services to Your Project"
+    defaultMessage: "Add Azure Cloud Services to Your Project."
+  },
+  azureLoginInfo: {
+    id: "azureLogin.azureLoginInfo",
+    defaultMessage: "Sign in to add these services to your web app project"
   },
   azureFunctionsTitle: {
     id: "azureFunctions.Title",
@@ -56,12 +65,12 @@ export const messages = defineMessages({
   },
   azureModalCreateNewResourceGroupDisplayMessage: {
     id: "azureModal.createNewResourceGroupDisplayMessage",
-    defaultMessage: "Create new resource group for me"
+    defaultMessage: "Create a new resource group"
   },
   azureModalCreateNewResourceGroupSelectedDisplayMessage: {
     id: "azureModal.createNewResourceGroupSelectedDisplayMessage",
     defaultMessage:
-      "We will automatically create a resource group for you in Central US"
+      "We will automatically create a resource group for you in Central US to manage all related resources to this project!"
   },
   azureModalSubscriptionLabel: {
     id: "azureModal.subscriptionLabel",
@@ -110,32 +119,39 @@ export const messages = defineMessages({
   }
 });
 
+export const servicesEnum = {
+  HOSTING: "Cloud Hosting",
+  DATABASE: "Cloud Database"
+};
+
 const azureServiceOptions: IOption[] = [
   {
     author: "Microsoft",
+    type: servicesEnum.HOSTING,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS),
-    title: messages.azureFunctionsTitle,
+    title: azureMessages.azureFunctionsTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
-    longDescription: messages.azureFunctionsLongDescription,
-    body: messages.azureFunctionsCardBody
+    longDescription: azureMessages.azureFunctionsLongDescription,
+    body: azureMessages.azureFunctionsCardBody
   },
   {
     author: "Microsoft",
+    type: servicesEnum.DATABASE,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
-    title: messages.cosmosTitle,
+    title: azureMessages.cosmosTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
-    longDescription: messages.cosmosLongDescription,
-    body: messages.cosmosCardBody
+    longDescription: azureMessages.cosmosLongDescription,
+    body: azureMessages.cosmosCardBody
   }
 ];
 
 export const microsoftAzureDetails: IOption = {
   author: "Microsoft",
   svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE),
-  title: messages.azureTitle,
+  title: azureMessages.azureTitle,
   internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE,
-  longDescription: messages.azureLongDescription,
-  body: messages.azureCardBody
+  longDescription: azureMessages.azureLongDescription,
+  body: azureMessages.azureCardBody
 };
 
 export default azureServiceOptions;

@@ -1,58 +1,49 @@
-import EngineAPIService from "../../services/EngineAPIService";
+import { Dispatch } from "react";
 import { IMetadata } from "../../types/metadata";
 import { IOption } from "../../types/option";
-import { getProjectTypesSuccess } from "./getProjectTypesSuccess";
 import getSvgUrl from "../../utils/getSvgUrl";
-import WizardContentActionType from "./wizardContentActionType";
-import { Dispatch } from "react";
+import { WIZARD_CONTENT_TYPEKEYS } from "./typeKeys";
 
-// thunk
-export const getProjectTypesAction = (serverPort: number) => {
-  return async (dispatch: Dispatch<WizardContentActionType>) => {
-    const api = new EngineAPIService(serverPort, undefined);
+export interface IProjectTypesActionType {
+  type: WIZARD_CONTENT_TYPEKEYS.GET_PROJECT_TYPES_SUCCESS;
+  payload: IOption[];
+}
 
-    try {
-      const projectTypesJson = await api.getProjectTypes();
-
-      if (projectTypesJson.detail == null) {
-        dispatch(
-          getProjectTypesSuccess(
-            getOptionalFromMetadata(getMetadataFromJson(projectTypesJson))
-          )
-        );
-      } else {
-        console.log("FAILED");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+export const getProjectTypesAction = (projectTypeOption: IOption[]) => {
+  return getProjectTypesSuccess(
+    getOptionalFromMetadata(getMetadataFromJson(projectTypeOption))
+  );
 };
+
+const getProjectTypesSuccess = (items: IOption[]): IProjectTypesActionType => ({
+  type: WIZARD_CONTENT_TYPEKEYS.GET_PROJECT_TYPES_SUCCESS,
+  payload: items
+});
 
 function getMetadataFromJson(items: any[]): IMetadata[] {
   return items.map<IMetadata>(val => ({
-    name: val.name,
+    author: val.author,
     displayName: val.displayName,
-    summary: val.summary,
-    longDescription: val.description,
-    position: val.order,
     licenses: val.licenses,
-    svgUrl: val.icon,
-    tags: val.tags,
+    longDescription: val.description,
+    name: val.name,
+    position: val.order,
     selected: false,
-    author: val.author
+    summary: val.summary,
+    svgUrl: val.icon,
+    tags: val.tags
   }));
 }
 
 function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
   return items.map<IOption>(val => ({
-    title: val.displayName,
-    internalName: val.name,
     body: val.summary,
+    internalName: val.name,
+    licenses: val.licenses,
     longDescription: val.longDescription,
     position: val.position,
-    svgUrl: getSvgUrl(val.name),
     selected: val.selected,
-    licenses: val.licenses
+    svgUrl: getSvgUrl(val.name),
+    title: val.displayName
   }));
 }

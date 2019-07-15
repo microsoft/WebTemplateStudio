@@ -25,10 +25,6 @@ export const messages = defineMessages({
     id: "azureFunctionsModal.ariaAppNameLabel",
     defaultMessage: "App Name Input"
   },
-  appName: {
-    id: "azureFunctionsModal.appName",
-    defaultMessage: "App Name"
-  },
   createFunctionApp: {
     id: "azureFunctionsModal.createFunctionApp",
     defaultMessage: "Create Function Application"

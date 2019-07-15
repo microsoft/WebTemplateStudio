@@ -44,7 +44,7 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
-@media (min-width: 500px) {
+@media (min-width: 760px) {
   .headerTitle {
     display: flex;
   }
