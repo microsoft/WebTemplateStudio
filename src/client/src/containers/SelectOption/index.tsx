@@ -298,7 +298,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public render() {
-    console.log(this.state.maxPageReached);
     const {
       title,
       options,

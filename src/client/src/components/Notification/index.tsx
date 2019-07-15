@@ -11,7 +11,6 @@ interface IProps {
   showWarning: Boolean;
   text: string;
   altMessage: string;
-  //intl: InjectedIntl;
 }
 
 const Notification = ({ showWarning, text, altMessage }: IProps) => {
