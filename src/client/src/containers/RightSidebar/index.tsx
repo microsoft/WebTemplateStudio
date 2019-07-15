@@ -225,7 +225,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
-                    onKeyDown={spaceKeyHandler}
+                    onKeyUp={spaceKeyHandler}
                     className={styles.link}
                     href="https://github.com/Microsoft/WebTemplateStudio/issues"
                   >
