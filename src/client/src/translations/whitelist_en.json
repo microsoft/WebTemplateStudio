@@ -65,6 +65,7 @@
   "footer.generate",
   "footer.navAriaLabel",
   "licenses.licenses",
+  "licenses.redirectLinkLabel",
   "newProject.header",
   "newProject.body",
   "postGenerationModal.deploymentHalted",

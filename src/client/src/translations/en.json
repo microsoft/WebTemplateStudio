@@ -90,6 +90,7 @@
   "instructionHeading.launchYourProject": "Launch Your Project",
   "licenses.licenses": "Licenses",
   "licenses.viewLicenses": "View Licenses",
+  "licenses.redirectLinkLabel": "{licenseName} license link",
   "loginCard.createAccount": "Create Account",
   "loginCard.details": "Details",
   "loginCard.signIn": "Sign In",

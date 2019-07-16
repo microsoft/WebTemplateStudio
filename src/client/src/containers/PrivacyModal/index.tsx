@@ -16,9 +16,15 @@ import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 
+export interface IPrivacyModalData {
+  redirectLink: string;
+  redirectLinkLabel: string;
+  privacyStatementLink: string;
+}
+
 interface IStateProps {
   isModalOpen: boolean;
-  dependency: IDependency;
+  privacyData: IPrivacyModalData;
 }
 
 interface IDispatchProps {
@@ -35,7 +41,7 @@ const messages = defineMessages({
   thirdPartyWebsite: {
     id: "privacyModal.thirdPartyWebsite",
     defaultMessage:
-      "You will be taken to the {thirdPartyWebsite} which is a non-Microsoft service."
+      "You will be taken to {thirdPartyWebsite} which is a non-Microsoft service."
   },
   privacyStatement: {
     id: "privacyModal.privacyStatement",
@@ -48,13 +54,13 @@ const messages = defineMessages({
 });
 
 const PrivacyModal = (props: Props) => {
-  const { dependency, intl } = props;
+  const { privacyData, intl } = props;
 
-  if (dependency === null || dependency === undefined) {
+  if (privacyData === null || privacyData === undefined) {
     return null;
   }
 
-  const { downloadLink, privacyStatementLink, downloadLinkLabel } = dependency;
+  const { redirectLink, privacyStatementLink, redirectLinkLabel } = privacyData;
 
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
@@ -79,20 +85,22 @@ const PrivacyModal = (props: Props) => {
       </div>
       <div className={styles.section}>
         {intl.formatMessage(messages.thirdPartyWebsite, {
-          thirdPartyWebsite: downloadLinkLabel
+          thirdPartyWebsite: redirectLinkLabel
         })}
       </div>
       <div className={styles.footerContainer}>
+        {privacyStatementLink && (
+          <a
+            target={"_blank"}
+            className={styles.link}
+            href={privacyStatementLink}
+          >
+            {intl.formatMessage(messages.privacyStatement)}
+          </a>
+        )}
         <a
           target={"_blank"}
-          className={styles.link}
-          href={privacyStatementLink}
-        >
-          {intl.formatMessage(messages.privacyStatement)}
-        </a>
-        <a
-          target={"_blank"}
-          href={downloadLink}
+          href={redirectLink}
           onClick={() => {
             props.closeModal();
           }}
@@ -106,10 +114,10 @@ const PrivacyModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => {
-  const dependency = state.modals.openModal.modalData;
+  const privacyData = state.modals.openModal.modalData;
   return {
     isModalOpen: isPrivacyModalOpenSelector(state),
-    dependency: dependency
+    privacyData
   };
 };
 

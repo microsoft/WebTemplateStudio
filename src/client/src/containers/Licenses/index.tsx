@@ -14,6 +14,10 @@ import {
   IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
 import { AppState } from "../../reducers";
+import * as ModalActions from "../../actions/modalActions/modalActions";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
+import { IPrivacyModalData } from "../PrivacyModal";
 
 interface IStateProps {
   frameworkLicenses: string[];
@@ -21,12 +25,20 @@ interface IStateProps {
   isVisited: IVisitedPages;
 }
 
-type Props = IStateProps & InjectedIntlProps;
+interface IDispatchProps {
+  openPrivacyModal: (license: IPrivacyModalData | undefined) => any;
+}
+
+type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const messages = defineMessages({
   licenses: {
     id: "licenses.licenses",
     defaultMessage: "Licenses"
+  },
+  redirectLinkLabel: {
+    id: "licenses.redirectLinkLabel",
+    defaultMessage: "{licenseName} license link"
   }
 });
 
@@ -34,13 +46,26 @@ const Licenses = ({
   frameworkLicenses,
   pageLicenses,
   isVisited,
-  intl
+  intl,
+  openPrivacyModal
 }: Props) => {
   const LinkRenderer = (props: any) => {
+    console.log(props);
     return (
-      <a href={props.href} className={styles.link}>
+      <button
+        className={styles.licenseButton}
+        onClick={() =>
+          openPrivacyModal({
+            redirectLink: String(props.href),
+            redirectLinkLabel: intl.formatMessage(messages.redirectLinkLabel, {
+              licenseName: props.children[0].props.value
+            }),
+            privacyStatementLink: ""
+          })
+        }
+      >
         {props.children}
-      </a>
+      </button>
     );
   };
   return (
@@ -58,15 +83,24 @@ const Licenses = ({
       {isVisited.showPages &&
         pageLicenses.map((license: ILicenseObject) => (
           <p key={license.url}>
-            <a
-              target="_blank"
+            <button
+              className={styles.licenseButton}
+              onClick={() =>
+                openPrivacyModal({
+                  redirectLink: String(license.url),
+                  redirectLinkLabel: intl.formatMessage(
+                    messages.redirectLinkLabel,
+                    {
+                      licenseName: license.text
+                    }
+                  ),
+                  privacyStatementLink: ""
+                })
+              }
               key={license.text}
-              className={styles.link}
-              href={license.url}
-              rel="noopener noreferrer"
             >
               {license.text}
-            </a>
+            </button>
           </p>
         ))}
     </div>
@@ -79,4 +113,15 @@ const mapStateToProps = (state: AppState) => ({
   pageLicenses: getPageLicencesSelector(state)
 });
 
-export default connect(mapStateToProps)(injectIntl(Licenses));
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
+  openPrivacyModal: license => {
+    dispatch(ModalActions.openPrivacyModalAction(license));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(injectIntl(Licenses));
