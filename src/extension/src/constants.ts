@@ -25,11 +25,11 @@ export const CONSTANTS = {
       "error.subscriptionNotFound",
       "No subscription found with this name."
     ),
-    APP_NAME_NOT_AVAILABLE: (appName: string, type: AppType) => {
+    APP_NAME_NOT_AVAILABLE: (appName: string, type: string) => {
       return localize(
         "error.functionAppNameNotAvailable",
         "{1} app name {0} is not available",
-        appName
+        appName, type
       );
     },
     LOGOUT_FAILED: localize(
@@ -141,7 +141,7 @@ export const CONSTANTS = {
         accountName
       );
     },
-    APP_DEPLOYED: (appName: string, type: AppType) => {
+    APP_DEPLOYED: (appName: string, type: string) => {
       return localize(
         "info.functionAppDeployed",
         "{1} App {0} has been deployed and is ready to use!",
