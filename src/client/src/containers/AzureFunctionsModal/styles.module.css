@@ -22,7 +22,8 @@
 }
 
 .leftHeader {
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 1.2em;
 }
 
 .selectionContainerDisabled {
@@ -41,7 +42,7 @@
 
 .button {
   margin-top: 2em;
-  font-size: 1em;
+  font-size: 1.1em;
   border: none;
   height: 50%;
   align-self: flex-end;
@@ -123,7 +124,7 @@ input::placeholder {
 }
 
 .subLabel {
-  margin-bottom: 4px;
+  margin-bottom: 1em;
 }
 
 .createNew,
@@ -193,7 +194,7 @@ input::placeholder {
 
 .radioButtonContainer {
   display: flex;
-  padding: 5px;
+  padding-bottom: 1em;
 }
 
 .radioButtonLabel {

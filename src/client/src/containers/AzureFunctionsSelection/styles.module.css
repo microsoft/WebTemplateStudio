@@ -1,7 +1,6 @@
 .headerContainer {
   display: flex;
   justify-content: space-between;
-  padding-left: 26px;
   font-size: 1.1em;
   font-weight: 500;
   margin-bottom: 0.8em;

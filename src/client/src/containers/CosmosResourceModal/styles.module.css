@@ -14,12 +14,12 @@
 }
 
 .modalTitle {
-  font-size: 1.3em;
-  font-weight: bold;
+  font-size: 1.8em;
 }
 
 .leftHeader {
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 1.2em;
 }
 
 .selectionContainer {
@@ -42,7 +42,7 @@
 
 .button {
   margin-top: 2em;
-  font-size: 1em;
+  font-size: 1.1em;
 }
 
 .button:focus {
@@ -182,12 +182,12 @@ input::placeholder {
 }
 
 .subLabel {
-  margin-bottom: 4px;
+  margin-bottom: 1em;
 }
 
 .radioButtonContainer {
   display: flex;
-  padding: 5px;
+  padding-bottom: 1em;
 }
 
 .radioButtonLabel {
