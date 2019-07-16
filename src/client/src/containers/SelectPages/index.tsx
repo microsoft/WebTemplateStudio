@@ -49,7 +49,7 @@ type Props = IDispatchProps & ISelectPagesProps & IIntlProps;
 const messages = defineMessages({
   pagesTitleQuestion: {
     id: "selectPages.pagesTitleQuestion",
-    defaultMessage: "Select pages for your application."
+    defaultMessage: "Select pages for your application"
   }
 });
 
@@ -118,6 +118,7 @@ class SelectPages extends React.Component<Props> {
               selectedPages
             )}
             title={intl.formatMessage(messages.pagesTitleQuestion)}
+            description="Max 20 pages can be selected"
             options={options}
             currentCardData={selectedPages}
             cardTypeCount={pageCount}

@@ -12,9 +12,8 @@ import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { ReactComponent as Warning } from "../../assets/warning.svg";
-import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
 import { IPrivacyModalData } from "../PrivacyModal";
+import Notification from "../../components/Notification";
 
 const messages = defineMessages({
   installed: {
@@ -146,24 +145,11 @@ class DependencyInfo extends React.Component<Props> {
           [styles.borderYellow]: !installed
         })}
       >
-        <div
-          role="img"
-          aria-label={intl.formatMessage(messages.iconAltMessage)}
-        >
-          {installed ? (
-            <Checkmark className={styles.iconCheck} />
-          ) : (
-            <Warning className={styles.iconWarning} />
-          )}
-        </div>
-        <div
-          className={classnames(styles.body, {
-            [styles.bodyGreen]: installed,
-            [styles.bodyYellow]: !installed
-          })}
-        >
-          {`${dependencyMessage}`}
-        </div>
+        <Notification
+          showWarning={!installed}
+          text={dependencyMessage}
+          altMessage={intl.formatMessage(messages.iconAltMessage)}
+        />
       </div>
     );
   }
