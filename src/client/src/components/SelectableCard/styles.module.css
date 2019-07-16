@@ -165,4 +165,5 @@
 button:disabled {
   opacity: 0.5;
   outline: 0px;
+  cursor: default;
 }
