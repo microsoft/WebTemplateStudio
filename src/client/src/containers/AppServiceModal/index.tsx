@@ -72,7 +72,7 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 interface attributeLinks {
-  [key: string]: any;
+  [key: string]: string;
 }
 
 let timeout: NodeJS.Timeout | undefined;
@@ -119,25 +119,39 @@ const initialState: IAppServiceState = {
 };
 
 const AppServiceModal = (props: Props) => {
+  const {
+    intl,
+    vscode,
+    subscriptions,
+    subscriptionData,
+    isValidatingName,
+    siteNameAvailability,
+    selection,
+    chooseExistingRadioButtonSelected,
+    setSiteNameAvailability,
+    setValidationStatus,
+    saveAppServiceSettings,
+    closeModal,
+    selectedBackend
+  } = props;
+
   const FORM_CONSTANTS = {
     SUBSCRIPTION: {
-      label: props.intl.formatMessage(
-        azureModalMessages.azureModalSubscriptionLabel
-      ),
+      label: intl.formatMessage(azureModalMessages.azureModalSubscriptionLabel),
       value: "subscription"
     },
     RESOURCE_GROUP: {
-      label: props.intl.formatMessage(
+      label: intl.formatMessage(
         azureModalMessages.azureModalResourceGroupLabel
       ),
       value: "resourceGroup"
     },
     SITE_NAME: {
-      label: props.intl.formatMessage(messages.siteNameLabel),
+      label: intl.formatMessage(messages.siteNameLabel),
       value: "siteName"
     },
     RUNTIME_STACK: {
-      label: props.intl.formatMessage(azureModalMessages.runtimeStackLabel),
+      label: intl.formatMessage(azureModalMessages.runtimeStackLabel),
       value: "runtimeStack"
     }
   };
@@ -155,10 +169,10 @@ const AppServiceModal = (props: Props) => {
           label: ""
         }
       ],
-      subscription: props.subscriptions,
-      resourceGroup: props.subscriptionData.resourceGroups
+      subscription: subscriptions,
+      resourceGroup: subscriptionData.resourceGroups
     });
-  }, [props.subscriptionData]);
+  }, [subscriptionData]);
 
   // The data the user has entered into the modal
   const [appServiceFormData, updateForm] = React.useState(initialState);
@@ -168,8 +182,8 @@ const AppServiceModal = (props: Props) => {
   const handleChange = (updatedAppServiceForm: IAppServiceState) => {
     setAppServiceModalButtonStatus(
       updatedAppServiceForm,
-      props.isValidatingName,
-      props.siteNameAvailability,
+      isValidatingName,
+      siteNameAvailability,
       setFormIsSendable
     );
     updateForm(updatedAppServiceForm);
@@ -191,7 +205,7 @@ const AppServiceModal = (props: Props) => {
         ...appServiceData,
         resourceGroup: []
       });
-      props.vscode.postMessage({
+      vscode.postMessage({
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
         track: true,
@@ -218,7 +232,7 @@ const AppServiceModal = (props: Props) => {
       }
       timeout = setTimeout(() => {
         timeout = undefined;
-        props.vscode.postMessage({
+        vscode.postMessage({
           module: EXTENSION_MODULES.AZURE,
           command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
           track: false,
@@ -235,21 +249,20 @@ const AppServiceModal = (props: Props) => {
   React.useEffect(() => {
     setAppServiceModalButtonStatus(
       appServiceFormData,
-      props.isValidatingName,
-      props.siteNameAvailability,
+      isValidatingName,
+      siteNameAvailability,
       setFormIsSendable
     );
   }, [appServiceFormData.chooseExistingRadioButtonSelected]);
 
   // Update form data with data from store if it exists
   React.useEffect(() => {
-    if (props.selection) {
-      const newFunctionState = props.selection.dropdownSelection;
-      newFunctionState.chooseExistingRadioButtonSelected =
-        props.chooseExistingRadioButtonSelected;
+    if (selection) {
+      const newFunctionState = selection.dropdownSelection;
+      newFunctionState.chooseExistingRadioButtonSelected = chooseExistingRadioButtonSelected;
       handleChange(newFunctionState);
     } else {
-      props.setSiteNameAvailability({
+      setSiteNameAvailability({
         isAvailable: false,
         message: ""
       });
@@ -259,11 +272,11 @@ const AppServiceModal = (props: Props) => {
   React.useEffect(() => {
     setAppServiceModalButtonStatus(
       appServiceFormData,
-      props.isValidatingName,
-      props.siteNameAvailability,
+      isValidatingName,
+      siteNameAvailability,
       setFormIsSendable
     );
-  }, [props.isValidatingName]);
+  }, [isValidatingName]);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement
@@ -272,7 +285,7 @@ const AppServiceModal = (props: Props) => {
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
     // Changes in account name will trigger an update in validation status
-    props.setValidationStatus(true);
+    setValidationStatus(true);
     handleChange({
       ...appServiceFormData,
       siteName: {
@@ -291,7 +304,7 @@ const AppServiceModal = (props: Props) => {
   };
 
   const handleAddResource = () => {
-    props.saveAppServiceSettings(appServiceFormData);
+    saveAppServiceSettings(appServiceFormData);
   };
 
   const getDropdownSection = (
@@ -342,13 +355,12 @@ const AppServiceModal = (props: Props) => {
     );
   };
 
-  const { isSiteNameAvailable } = props.siteNameAvailability;
-  const { isValidatingName } = props;
+  const { isSiteNameAvailable } = siteNameAvailability;
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
-      props.closeModal();
+      closeModal();
     }
   };
 
@@ -359,7 +371,7 @@ const AppServiceModal = (props: Props) => {
     const element = event.target as HTMLInputElement;
     if (
       element.value ===
-      props.intl.formatMessage(azureModalMessages.azureModalChooseExisting)
+      intl.formatMessage(azureModalMessages.azureModalChooseExisting)
     ) {
       updateForm({
         ...appServiceFormData,
@@ -367,7 +379,7 @@ const AppServiceModal = (props: Props) => {
       });
     } else if (
       element.value ===
-      props.intl.formatMessage(
+      intl.formatMessage(
         azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
       )
     ) {
@@ -386,12 +398,12 @@ const AppServiceModal = (props: Props) => {
     <React.Fragment>
       <div className={styles.headerContainer}>
         <div className={styles.modalTitle}>
-          {props.intl.formatMessage(azureModalMessages.appServiceModalTitle)}
+          {intl.formatMessage(azureModalMessages.appServiceModalTitle)}
         </div>
         <Cancel
           tabIndex={0}
           className={styles.icon}
-          onClick={props.closeModal}
+          onClick={closeModal}
           onKeyDown={cancelKeyDownHandler}
         />
       </div>
@@ -401,16 +413,14 @@ const AppServiceModal = (props: Props) => {
           FORM_CONSTANTS.SUBSCRIPTION.label,
           appServiceData.subscription,
           FORM_CONSTANTS.SUBSCRIPTION.value,
-          props.intl.formatMessage(
+          intl.formatMessage(
             azureModalMessages.azureModalAriaSubscriptionLabel
           ),
-          props.intl.formatMessage(azureModalMessages.azureModalCreateNew),
+          intl.formatMessage(azureModalMessages.azureModalCreateNew),
           false,
           DEFAULT_VALUE,
           false,
-          props.intl.formatMessage(
-            azureModalMessages.azureModalSubscriptionSubLabel
-          )
+          intl.formatMessage(azureModalMessages.azureModalSubscriptionSubLabel)
         )}
         {/* Choose Resource Group */}
         <div
@@ -425,7 +435,7 @@ const AppServiceModal = (props: Props) => {
             </div>
           </div>
           <div className={styles.subLabel}>
-            {props.intl.formatMessage(
+            {intl.formatMessage(
               azureModalMessages.azureModalResourceGroupSubLabel
             )}
           </div>
@@ -437,28 +447,26 @@ const AppServiceModal = (props: Props) => {
             <input
               className={styles.radioButton}
               type="radio"
-              value={props.intl.formatMessage(
+              value={intl.formatMessage(
                 azureModalMessages.azureModalChooseExisting
               )}
               disabled={appServiceFormData.subscription.value === ""}
               checked={appServiceFormData.chooseExistingRadioButtonSelected}
             />
             <div className={styles.radioButtonLabel}>
-              {props.intl.formatMessage(
-                azureModalMessages.azureModalChooseExisting
-              )}
+              {intl.formatMessage(azureModalMessages.azureModalChooseExisting)}
             </div>
             <input
               className={styles.radiobutton}
               type="radio"
-              value={props.intl.formatMessage(
+              value={intl.formatMessage(
                 azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
               )}
               disabled={appServiceFormData.subscription.value === ""}
               checked={!appServiceFormData.chooseExistingRadioButtonSelected}
             />
             <div className={styles.radioButtonLabel}>
-              {props.intl.formatMessage(
+              {intl.formatMessage(
                 azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
               )}
             </div>
@@ -466,7 +474,7 @@ const AppServiceModal = (props: Props) => {
           <div className={styles.resourceGroupToggleContainer}>
             {appServiceFormData.chooseExistingRadioButtonSelected ? (
               <Dropdown
-                ariaLabel={props.intl.formatMessage(
+                ariaLabel={intl.formatMessage(
                   azureModalMessages.azureModalAriaResourceGroupLabel
                 )}
                 options={appServiceData.resourceGroup}
@@ -482,7 +490,7 @@ const AppServiceModal = (props: Props) => {
                 openDropdownUpwards={false}
               />
             ) : (
-              props.intl.formatMessage(
+              intl.formatMessage(
                 azureModalMessages.azureModalCreateNewResourceGroupSelectedDisplayMessage
               )
             )}
@@ -501,18 +509,16 @@ const AppServiceModal = (props: Props) => {
         >
           <div className={styles.selectionHeaderContainer}>
             <div className={styles.leftHeader}>
-              {props.intl.formatMessage(messages.siteNameLabel)}
+              {intl.formatMessage(messages.siteNameLabel)}
             </div>
           </div>
           <div className={styles.subLabel}>
-            {props.intl.formatMessage(messages.siteNameSubLabel)}
+            {intl.formatMessage(messages.siteNameSubLabel)}
           </div>
           <div className={styles.errorStack}>
             <div className={styles.inputContainer}>
               <input
-                aria-label={props.intl.formatMessage(
-                  messages.ariaSiteNameLabel
-                )}
+                aria-label={intl.formatMessage(messages.ariaSiteNameLabel)}
                 className={styles.input}
                 onChange={handleInput}
                 value={appServiceFormData.siteName.value}
@@ -529,7 +535,7 @@ const AppServiceModal = (props: Props) => {
               !isSiteNameAvailable &&
               appServiceFormData.siteName.value.length > 0 && (
                 <div className={styles.errorMessage}>
-                  {props.siteNameAvailability.message}
+                  {siteNameAvailability.message}
                 </div>
               )}
           </div>
@@ -547,12 +553,12 @@ const AppServiceModal = (props: Props) => {
               styles.leftHeader
             )}
           >
-            {props.intl.formatMessage(azureModalMessages.runtimeStackLabel)}
+            {intl.formatMessage(azureModalMessages.runtimeStackLabel)}
           </div>
           <div>
-            {props.intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
+            {intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
               runtimeStack: backendFrameworkNameToAppServiceRuntimeStack.get(
-                props.selectedBackend.internalName
+                selectedBackend.internalName
               )
             })}
           </div>
@@ -564,9 +570,9 @@ const AppServiceModal = (props: Props) => {
         onClick={handleAddResource}
         disabled={!formIsSendable}
       >
-        {(props.selection &&
-          props.intl.formatMessage(azureModalMessages.azureModalSaveChanges)) ||
-          props.intl.formatMessage(azureModalMessages.azureModalAddResource)}
+        {(selection &&
+          intl.formatMessage(azureModalMessages.azureModalSaveChanges)) ||
+          intl.formatMessage(azureModalMessages.azureModalAddResource)}
       </button>
     </React.Fragment>
   );
