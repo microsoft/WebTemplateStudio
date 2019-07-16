@@ -331,7 +331,10 @@ export class FunctionProvider {
         if (res.nameAvailable) {
           return undefined;
         } else {
-          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(appName, AppType.Function);
+          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(
+            appName,
+            AppType.Function
+          );
         }
       })
       .catch(error => {

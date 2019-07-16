@@ -29,7 +29,8 @@ export const CONSTANTS = {
       return localize(
         "error.functionAppNameNotAvailable",
         "{1} app name {0} is not available",
-        appName, type
+        appName,
+        type
       );
     },
     LOGOUT_FAILED: localize(
