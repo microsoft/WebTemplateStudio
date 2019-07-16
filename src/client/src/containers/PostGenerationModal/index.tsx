@@ -15,7 +15,8 @@ import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  ROUTES
+  ROUTES,
+  WEB_TEMPLATE_STUDIO
 } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -221,7 +222,7 @@ const PostGenerationModal = ({
       <div className={styles.sectionLine}>
         <a
           className={styles.link}
-          href="https://github.com/Microsoft/WebTemplateStudio/issues"
+          href={WEB_TEMPLATE_STUDIO.ISSUES}
           onKeyUp={keyUpHandler}
         >
           {formatMessage(messages.help)}
