@@ -3,7 +3,7 @@ import { WebSiteManagementClient } from "azure-arm-website";
 import { ServiceClientCredentials } from "ms-rest";
 import { SubscriptionError } from "../../errors";
 import { CONSTANTS, AppType } from "../../constants";
-import { AppNameValidationResult, ValidationHelper } from "../validationHelper";
+import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
 
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
@@ -41,7 +41,7 @@ export class AppServiceProvider {
   }
 
   public async checkWebAppName(
-    name: string,
+    appName: string,
     subscriptionItem: SubscriptionItem
   ): Promise<string | undefined> {
     try {
@@ -50,24 +50,25 @@ export class AppServiceProvider {
       return error.message;
     }
 
-    let validationStatus: AppNameValidationResult = ValidationHelper.validateAppName(
-      name
+    let validationStatus: AppNameValidationResult = NameValidator.validateAppName(
+      appName
     );
     if (!validationStatus.isValid) {
+      // returns error message
       return validationStatus.message;
     }
     if (this.webClient === undefined) {
       return CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED;
     }
     return await this.webClient
-      .checkNameAvailability(name + CONSTANTS.APP_SERVICE_DOMAIN, "Site", {
+      .checkNameAvailability(appName + CONSTANTS.APP_SERVICE_DOMAIN, "Site", {
         isFqdn: true
       })
       .then(res => {
         if (res.nameAvailable) {
           return undefined;
         } else {
-          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(name, AppType.Web);
+          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(appName, AppType.Web);
         }
       })
       .catch(error => {

@@ -1,4 +1,4 @@
-import { ValidationHelper, FileHelper } from "./utils";
+import { FileHelper } from "./utils";
 import { ServiceClientCredentials } from "ms-rest";
 import { WebSiteManagementClient } from "azure-arm-website";
 import {
@@ -19,7 +19,7 @@ import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import { CONSTANTS, AppType } from "../../constants";
-import { AppNameValidationResult } from "../validationHelper";
+import { NameValidator, AppNameValidationResult } from "../utils/nameValidator";
 
 /*
  * Runtime for the deployment, can be either 'dotnet' or 'node'.
@@ -312,7 +312,7 @@ export class FunctionProvider {
       return error.message;
     }
 
-    let validationStatus: AppNameValidationResult = ValidationHelper.validateAppName(
+    let validationStatus: AppNameValidationResult = NameValidator.validateAppName(
       appName
     );
     if (!validationStatus.isValid) {

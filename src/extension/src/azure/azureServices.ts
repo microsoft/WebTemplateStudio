@@ -28,8 +28,8 @@ import {
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import {
   AppNameValidationResult,
-  ValidationHelper
-} from "./validationHelper";
+  NameValidator
+} from "./utils/nameValidator";
 import { Logger } from "../utils/logger";
 import {
   ResourceGroupDeploy,
@@ -60,6 +60,10 @@ export class AzureServices extends WizardServant {
     [
       ExtensionCommand.NameCosmos,
       AzureServices.sendCosmosNameValidationStatusToClient
+    ],
+    [
+      ExtensionCommand.NameAppService,
+      AzureServices.sendAppServiceNameValidationStatusToClient
     ]
   ]);
 
@@ -202,7 +206,6 @@ export class AzureServices extends WizardServant {
     await AzureServices.updateAppServiceSubscriptionItemCache(
       message.subscription
     );
-
     return await AzureServices.AzureAppServiceProvider.checkWebAppName(
       message.appName,
       AzureServices.userAppServiceSubsctiptionItemCache
@@ -415,7 +418,7 @@ export class AzureServices extends WizardServant {
       functionNames: selections.functionNames
     };
 
-    let functionNamesValidation: AppNameValidationResult = ValidationHelper.validateFunctionNames(
+    let functionNamesValidation: AppNameValidationResult = NameValidator.validateFunctionNames(
       userFunctionsSelections.functionNames
     );
     if (!functionNamesValidation.isValid) {

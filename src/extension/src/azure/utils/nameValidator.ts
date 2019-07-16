@@ -1,11 +1,12 @@
-import { CONSTANTS } from "../constants";
+import { CONSTANTS } from "../../constants";
 
 export interface AppNameValidationResult {
   isValid: boolean;
+  // message refers to error message, if isValid is true, there is no message
   message: string;
 }
 
-export namespace ValidationHelper {
+export namespace NameValidator {
   export function validateFunctionNames(
     names: string[]
   ): AppNameValidationResult {

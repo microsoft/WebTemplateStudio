@@ -239,6 +239,7 @@ export enum ExtensionCommand {
   SubscriptionDataForFunctions = "subscription-data-for-functions",
   NameFunctions = "name-functions",
   NameCosmos = "name-cosmos",
+  NameAppService = "name-app-service",
   DeployFunctions = "deploy-functions",
   DeployCosmos = "deploy-cosmos",
   Generate = "generate",
