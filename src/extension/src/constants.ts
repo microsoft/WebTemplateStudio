@@ -235,8 +235,9 @@ export enum ExtensionCommand {
   Login = "login",
   Logout = "logout",
   Subscriptions = "subscriptions",
-  SubscriptionDataForCosmos = "subscription-data-for-cosmos",
   SubscriptionDataForFunctions = "subscription-data-for-functions",
+  SubscriptionDataForCosmos = "subscription-data-for-cosmos",
+  SubscriptionDataForAppService = "subscription-data-for-app-service",
   NameFunctions = "name-functions",
   NameCosmos = "name-cosmos",
   NameAppService = "name-app-service",
@@ -328,7 +329,7 @@ export namespace DialogMessages {
 }
 
 export enum AzureResourceType {
-  WebApp = "web-app",
+  AppService = "app-service",
   Cosmos = "cosmos",
   Functions = "functions"
 }

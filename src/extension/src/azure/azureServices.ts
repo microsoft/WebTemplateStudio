@@ -26,10 +26,7 @@ import {
   ValidationError
 } from "../errors";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import {
-  AppNameValidationResult,
-  NameValidator
-} from "./utils/nameValidator";
+import { AppNameValidationResult, NameValidator } from "./utils/nameValidator";
 import { Logger } from "../utils/logger";
 import {
   ResourceGroupDeploy,
@@ -52,6 +49,10 @@ export class AzureServices extends WizardServant {
     [
       ExtensionCommand.SubscriptionDataForFunctions,
       AzureServices.sendFunctionsSubscriptionDataToClient
+    ],
+    [
+      ExtensionCommand.SubscriptionDataForAppService,
+      AzureServices.sendAppServiceSubscriptionDataToClient
     ],
     [
       ExtensionCommand.NameFunctions,
@@ -118,6 +119,16 @@ export class AzureServices extends WizardServant {
     let payloadResponse: IPayloadResponse = { payload: success };
     return payloadResponse;
   }
+  public static async sendAppServiceSubscriptionDataToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
+    return {
+      payload: await AzureServices.getSubscriptionData(
+        message.subscription,
+        AzureResourceType.AppService
+      )
+    };
+  }
 
   public static async sendCosmosSubscriptionDataToClient(
     message: any
@@ -178,9 +189,8 @@ export class AzureServices extends WizardServant {
         locationItems = await AzureAuth.getLocationsForCosmos(subscriptionItem);
         break;
       case AzureResourceType.Functions:
-        locationItems = await AzureAuth.getLocationsForFunctions(
-          subscriptionItem
-        );
+      case AzureResourceType.AppService:
+        locationItems = await AzureAuth.getLocationsForApp(subscriptionItem);
         break;
     }
 
