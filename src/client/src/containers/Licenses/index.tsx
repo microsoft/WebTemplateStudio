@@ -50,7 +50,6 @@ const Licenses = ({
   openPrivacyModal
 }: Props) => {
   const LinkRenderer = (props: any) => {
-    console.log(props);
     return (
       <button
         className={styles.licenseButton}
