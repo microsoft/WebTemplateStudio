@@ -10,7 +10,7 @@ interface ISelectedDropdowns {
   internalName?: IDropDownOptionType;
 }
 
-interface ISelectionInformation {
+export interface ISelectionInformation {
   dropdownSelection: ISelectedDropdowns;
   previousFormData: ISelectedAppService;
 }
@@ -21,8 +21,8 @@ interface ISelectionInformation {
  *
  * @param services An object of all the services available in Project Acorn
  */
-const getAppServiceSelectionInDropdownForm = (services: any): any => {
-  const { selection } = services.selection.services.appService;
+const getAppServiceSelectionInDropdownForm = (appState: any): any => {
+  const selection = appState.selection.services.appService.selection;
   if (!_.isEmpty(selection)) {
     const selectionInformation: ISelectionInformation = {
       dropdownSelection: {},
@@ -39,7 +39,7 @@ const getAppServiceSelectionInDropdownForm = (services: any): any => {
     }
     return selectionInformation;
   } else {
-    return null;
+    return undefined;
   }
 };
 

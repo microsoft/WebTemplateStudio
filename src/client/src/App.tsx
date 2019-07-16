@@ -337,13 +337,15 @@ const mapDispatchToProps = (
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
   },
-  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => {
+  setCosmosResourceAccountNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => {
     dispatch(setAccountAvailability(isAvailableObject));
   },
-  setAppNameAvailability: (isAvailableObject: any) => {
+  setAppNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => {
     dispatch(setAppNameAvailabilityAction(isAvailableObject));
   },
-  setSiteNameAvailability: (isAvailableObject: any) => {
+  setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => {
     dispatch(setSiteNameAvailabilityAction(isAvailableObject));
   },
   setProjectPathValidation: (validation: any) => {

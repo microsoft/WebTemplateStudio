@@ -1,8 +1,9 @@
 import { AZURE_TYPEKEYS } from "./typeKeys";
+import { IAppServiceState } from "../../containers/AppServiceModal";
 
 export interface ISaveAppServiceSettings {
   type: AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS;
-  payload: any;
+  payload: IAppServiceState;
 }
 
 export interface IRemoveAppServiceSettings {
@@ -10,7 +11,7 @@ export interface IRemoveAppServiceSettings {
 }
 
 const saveAppServiceSettingsAction = (
-  appServiceSettings: any
+  appServiceSettings: IAppServiceState
 ): ISaveAppServiceSettings => ({
   type: AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS,
   payload: appServiceSettings

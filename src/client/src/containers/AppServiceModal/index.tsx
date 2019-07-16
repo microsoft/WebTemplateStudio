@@ -41,6 +41,10 @@ import { AppState } from "../../reducers";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import RootAction from "../../actions/ActionType";
 import { ISelected } from "../../types/selected";
+import { ISelectionInformation } from "../../selectors/appServiceSelector";
+import { IAvailability } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { ISubscriptionData } from "../../reducers/azureLoginReducers/subscriptionDataReducer";
 import classNames from "classnames";
 
 const DEFAULT_VALUE = {
@@ -50,11 +54,11 @@ const DEFAULT_VALUE = {
 
 interface IStateProps {
   isModalOpen: boolean;
-  vscode: any;
-  subscriptionData: any;
+  vscode: IVSCodeObject;
+  subscriptionData: ISubscriptionData;
   subscriptions: [];
   isValidatingName: boolean;
-  siteNameAvailability: any;
+  siteNameAvailability: IAvailability;
   selection: any;
   chooseExistingRadioButtonSelected: boolean;
   selectedBackend: ISelected;
@@ -62,7 +66,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   closeModal: () => any;
-  saveAppServiceSettings: (appServiceSettings: any) => any;
+  saveAppServiceSettings: (appServiceSettings: IAppServiceState) => any;
   setValidationStatus: (status: boolean) => any;
   setSiteNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
@@ -94,7 +98,7 @@ const backendFrameworkNameToAppServiceRuntimeStack: Map<
 ]);
 
 // state of user's selections (selected form data)
-interface IAppServiceState {
+export interface IAppServiceState {
   [key: string]: any;
 }
 
@@ -598,7 +602,7 @@ const mapDispatchToProps = (
   closeModal: () => {
     dispatch(closeModalAction());
   },
-  saveAppServiceSettings: (appServiceSettings: any) => {
+  saveAppServiceSettings: (appServiceSettings: IAppServiceState) => {
     dispatch(saveAppServiceSettingsAction(appServiceSettings));
   },
   setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>

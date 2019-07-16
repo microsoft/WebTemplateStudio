@@ -12,7 +12,7 @@ import WizardInfoType from "../../../actions/wizardInfoActions/wizardInfoActionT
           isSiteNameAvailable: boolean,
           message: string
         },
-        selection: ISelectedAppService,
+        selection: ISelectedAppService | null,
         wizardContent: {
           serviceType: string,
         },
@@ -21,7 +21,7 @@ import WizardInfoType from "../../../actions/wizardInfoActions/wizardInfoActionT
 }
 */
 
-interface IAvailability {
+export interface IAvailability {
   isSiteNameAvailable: boolean;
   message: string;
 }

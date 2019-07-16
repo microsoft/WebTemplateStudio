@@ -1,3 +1,5 @@
+import { IAppServiceState } from "../containers/AppServiceModal";
+
 export const azureModalInitialState: any = {
   subscription: [
     {
@@ -31,7 +33,7 @@ export const azureModalInitialState: any = {
   ]
 };
 
-export const appServiceModalInitialState: any = {
+export const appServiceModalInitialState: IAppServiceState = {
   subscription: [
     {
       value: "",

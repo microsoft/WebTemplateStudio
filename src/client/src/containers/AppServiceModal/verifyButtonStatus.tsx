@@ -1,7 +1,10 @@
+import { IAppServiceState } from "./index";
+import { IAvailability } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+
 export const setAppServiceModalButtonStatus = (
-  selections: any,
+  selections: IAppServiceState,
   isValidatingName: boolean,
-  siteNameAvailability: any,
+  siteNameAvailability: IAvailability,
   setFormIsSendable: (status: boolean) => void
 ): boolean => {
   let isSubscriptionEmpty: boolean = false;
