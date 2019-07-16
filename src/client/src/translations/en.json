@@ -104,6 +104,7 @@
   "pages.limitedPagesMessage": "You can select up to 20 pages",
   "pages.maxPagesText": "Icon for Max Pages Description",
   "pages.overlimitPagesMessage": "You cannot add more than 20 pages to the project",
+  "pages.noPageGeneration": "You cannot add more than 20 pages to the project",
   "postGenerationModal.azureServices": "Azure Services",
   "postGenerationModal.closeWizard": "Close Wizard",
   "postGenerationModal.createAnotherProject": "Create New Project",
