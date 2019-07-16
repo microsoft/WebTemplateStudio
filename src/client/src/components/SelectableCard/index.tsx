@@ -20,6 +20,7 @@ import { ReactComponent as Plus } from "../../assets/plus.svg";
 import { ReactComponent as Subtract } from "../../assets/subtract.svg";
 import plus from "../../assets/plus.svg";
 import subtract from "../../assets/subtract.svg";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 const SelectableCard = ({
   iconPath,
@@ -111,6 +112,7 @@ const SelectableCard = ({
           onClick={detailsClickWrapper}
           className={classNames(styles.link)}
           to={ROUTES.PAGE_DETAILS}
+          onKeyUp={keyUpHandler}
         >
           <FormattedMessage
             id="selectableCard.details"
