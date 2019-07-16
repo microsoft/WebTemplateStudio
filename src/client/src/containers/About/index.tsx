@@ -7,6 +7,7 @@ import { IVersions } from "../../types/version";
 import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../reducers";
 import keyUpHandler from "../../utils/keyUpHandler";
+import { WEB_TEMPLATE_STUDIO_REPO } from "../../utils/constants";
 
 interface IStateProps {
   versions: IVersions;
@@ -38,7 +39,7 @@ const About = ({ versions, intl }: Props) => {
       <p className={styles.repo}>
         <a
           className={styles.link}
-          href="https://github.com/Microsoft/WebTemplateStudio"
+          href={WEB_TEMPLATE_STUDIO_REPO}
           onKeyUp={keyUpHandler}
         >
           Web Template Studio
