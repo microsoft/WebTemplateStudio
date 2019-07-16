@@ -15,7 +15,7 @@ import {
 } from "../../selectors/wizardNavigationSelector";
 import { AppState } from "../../reducers";
 
-import spaceKeyHandler from "../../utils/spaceKeyHandler";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 interface IStateProps {
   frameworkLicenses: string[];
@@ -40,7 +40,7 @@ const Licenses = ({
 }: Props) => {
   const LinkRenderer = (props: any) => {
     return (
-      <a href={props.href} className={styles.link} onKeyUp={spaceKeyHandler}>
+      <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
         {props.children}
       </a>
     );

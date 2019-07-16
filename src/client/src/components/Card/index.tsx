@@ -10,7 +10,7 @@ import styles from "./styles.module.css";
 import { IOption } from "../../types/option";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/constants";
-import spaceKeyHandler from "../../utils/spaceKeyHandler";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 interface IProps {
   buttonText: string;
@@ -52,7 +52,7 @@ export const Card = ({
             className={styles.details}
             to={ROUTES.PAGE_DETAILS}
             tabIndex={disabled! ? -1 : 0}
-            onKeyUp={spaceKeyHandler}
+            onKeyUp={keyUpHandler}
           >
             <FormattedMessage id="card.details" defaultMessage="Details" />
           </Link>

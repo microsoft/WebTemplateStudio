@@ -50,7 +50,7 @@ import { IFunctionName } from "../AzureFunctionsSelection";
 
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
-import spaceKeyHandler from "../../utils/spaceKeyHandler";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -226,7 +226,7 @@ class Footer extends React.Component<Props> {
                   onClick={event => {
                     this.handleLinkBackClick(event, pathname);
                   }}
-                  onKeyUp={spaceKeyHandler}
+                  onKeyUp={keyUpHandler}
                   to={
                     pathsBack[pathname] === undefined
                       ? ROUTES.NEW_PROJECT
@@ -251,7 +251,7 @@ class Footer extends React.Component<Props> {
                   onClick={event => {
                     this.handleLinkClick(event, pathname);
                   }}
-                  onKeyUp={spaceKeyHandler}
+                  onKeyUp={keyUpHandler}
                   to={pathsNext[pathname]}
                 >
                   <FormattedMessage id="footer.next" defaultMessage="Next" />

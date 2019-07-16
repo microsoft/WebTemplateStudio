@@ -6,7 +6,7 @@ import { injectIntl, FormattedMessage, InjectedIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import styles from "./styles.module.css";
-import spaceKeyHandler from "../../utils/spaceKeyHandler";
+import keyUpHandler from "../../utils/keyUpHandler";
 import { ARIA_LABELS_NAVIGATION } from "../../utils/constants";
 
 const TopNavBarLink = ({
@@ -38,7 +38,7 @@ const TopNavBarLink = ({
       to={path}
       onClick={handleClick}
       className={styles.container}
-      onKeyUp={spaceKeyHandler}
+      onKeyUp={keyUpHandler}
     >
       <div
         className={classnames(styles.text, {

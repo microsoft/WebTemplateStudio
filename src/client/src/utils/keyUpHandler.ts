@@ -1,13 +1,9 @@
 import * as React from "react";
 import {KEY_EVENTS} from "./constants"
 
-// document.documentElement.addEventListener('keydown', (e) => {
-//   if (e.key === KEY_EVENTS.SPACE) e.preventDefault();
-// })
+const keyUpHandler = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
 
-const spaceKeyHandler = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
-
-  let anchor = e.target as HTMLAnchorElement;
+  const anchor = e.target as HTMLAnchorElement;
 
   //if pressing space on an anchor, prevent page scroll.
   anchor.onkeydown = (e) => { 
@@ -19,4 +15,4 @@ const spaceKeyHandler = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
   }
 }
 
-export default spaceKeyHandler;
+export default keyUpHandler;

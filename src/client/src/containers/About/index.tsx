@@ -6,7 +6,7 @@ import { getVersionsSelector } from "../../selectors/vscodeApiSelector";
 import { IVersions } from "../../types/version";
 import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../reducers";
-import spaceKeyHandler from "../../utils/spaceKeyHandler";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 interface IStateProps {
   versions: IVersions;
@@ -39,7 +39,7 @@ const About = ({ versions, intl }: Props) => {
         <a
           className={styles.link}
           href="https://github.com/Microsoft/WebTemplateStudio"
-          onKeyUp={spaceKeyHandler}
+          onKeyUp={keyUpHandler}
         >
           Web Template Studio
         </a>
