@@ -116,6 +116,20 @@ export const azureMessages = defineMessages({
     id: "azureModal.resourceGroupSubLabel",
     defaultMessage:
       "A resource group is a container that holds related resources for an Azure solution"
+  },
+  appServiceTitle: {
+    id: "appService.title",
+    defaultMessage: "App Service"
+  },
+  appServiceLongDescription: {
+    id: "appService.longDescription",
+    defaultMessage:
+      "Quickly build, deploy, and scale web apps with confidence. Meet rigorous, enterprise-grade performance, security, and compliance requirements by using the fully managed platform for your operational and monitoring tasks."
+  },
+  appServiceCardBody: {
+    id: "appService.cardBody",
+    defaultMessage:
+      "Quickly build, deploy, and scale your web apps with confidence."
   }
 });
 
@@ -125,6 +139,16 @@ export const servicesEnum = {
 };
 
 const azureServiceOptions: IOption[] = [
+  {
+    author: "Microsoft",
+    isPreview: true,
+    type: servicesEnum.HOSTING,
+    svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE),
+    title: azureMessages.appServiceTitle,
+    internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
+    longDescription: azureMessages.appServiceLongDescription,
+    body: azureMessages.appServiceCardBody
+  },
   {
     author: "Microsoft",
     type: servicesEnum.HOSTING,

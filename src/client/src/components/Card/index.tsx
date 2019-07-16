@@ -17,7 +17,6 @@ interface IProps {
   disabled?: boolean;
   handleButtonClick: () => void;
   handleDetailsClick: (detailPageInfo: IOption) => void;
-  useNormalButtons?: boolean;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -28,7 +27,6 @@ export const Card = ({
   disabled,
   handleButtonClick,
   handleDetailsClick,
-  useNormalButtons,
   intl
 }: Props) => {
   const formattedBody = option.body as FormattedMessage.MessageDescriptor;
@@ -60,8 +58,8 @@ export const Card = ({
             disabled={disabled!}
             onClick={handleButtonClick}
             className={classnames(styles.signInButton, {
-              [buttonStyles.buttonHighlighted]: !useNormalButtons,
-              [buttonStyles.buttonDark]: useNormalButtons,
+              [buttonStyles.buttonDark]: disabled,
+              [buttonStyles.buttonHighlighted]: !disabled,
               [buttonStyles.buttonCursorDefault]: disabled,
               [buttonStyles.buttonCursorPointer]: !disabled
             })}

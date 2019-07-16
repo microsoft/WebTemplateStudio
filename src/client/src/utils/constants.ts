@@ -9,6 +9,8 @@ const NEW_PROJECT = "/";
 
 const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
+const MAX_PAGES_ALLOWED = 20;
+
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
 
@@ -16,6 +18,13 @@ const INTL_MESSAGES = defineMessages({
   EMPTY_FIELD: {
     id: "constants.emptyField",
     defaultMessage: "{fieldId} field cannot be empty"
+  }
+});
+
+const ARIA_LABELS_NAVIGATION = defineMessages({
+  ARIA_LABELS_MESSAGES: {
+    id: "ariaLabels.pageNavigation",
+    defaultMessage: "Go to {pagesText} page"
   }
 });
 
@@ -60,6 +69,7 @@ enum KEY_EVENTS {
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   ANGULAR: "Angular",
+  APP_SERVICE: "AppService",
   AZURE: "wts.Feature.Azure",
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
@@ -129,9 +139,11 @@ export {
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
+  ARIA_LABELS_NAVIGATION,
   COSMOS_APIS,
   DEVELOPMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
+  MAX_PAGES_ALLOWED,
   FRAMEWORK_TYPE,
   KEY_EVENTS
 };
