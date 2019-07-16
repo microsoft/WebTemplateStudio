@@ -39,6 +39,7 @@ const About = ({ versions, intl }: Props) => {
       <p className={styles.repo}>
         <a
           className={styles.link}
+          target="_blank"
           href={WEB_TEMPLATE_STUDIO_REPO}
           onKeyUp={keyUpHandler}
         >
