@@ -25,7 +25,7 @@ export const azureMessages = defineMessages({
   },
   azureLoginTitle: {
     id: "azureLogin.azureLoginTitle",
-    defaultMessage: "Add Azure Cloud Services to Your Project."
+    defaultMessage: "Add Azure Cloud Services to Your Project"
   },
   azureLoginInfo: {
     id: "azureLogin.azureLoginInfo",
