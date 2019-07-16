@@ -1,8 +1,12 @@
 import classnames from "classnames";
 import * as React from "react";
+import { defineMessages } from "react-intl";
+import { injectIntl, FormattedMessage, InjectedIntl } from "react-intl";
+
 import { Link } from "react-router-dom";
 
 import styles from "./styles.module.css";
+import { ARIA_LABELS_NAVIGATION } from "../../utils/constants";
 
 const TopNavBarLink = ({
   pageNumber,
@@ -10,7 +14,8 @@ const TopNavBarLink = ({
   visitedCheck,
   path,
   disabled,
-  isSelected
+  isSelected,
+  intl
 }: {
   pageNumber: number;
   text: string;
@@ -18,6 +23,7 @@ const TopNavBarLink = ({
   path: string;
   disabled: boolean;
   isSelected: boolean;
+  intl: InjectedIntl;
 }) => {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     if (disabled) {
@@ -36,6 +42,15 @@ const TopNavBarLink = ({
         className={classnames(styles.text, {
           [styles.textSelected]: isSelected
         })}
+        aria-label={intl.formatMessage(
+          ARIA_LABELS_NAVIGATION.ARIA_LABELS_MESSAGES,
+          {
+            pagesText: intl.formatMessage({
+              id: "ariaLabelForLink",
+              defaultMessage: text
+            })
+          }
+        )}
       >
         <div
           className={classnames(styles.pageNumber, {
@@ -58,4 +73,4 @@ const TopNavBarLink = ({
   );
 };
 
-export default TopNavBarLink;
+export default injectIntl(TopNavBarLink);
