@@ -67,6 +67,11 @@ const SelectableCard = ({
     }
   };
 
+  const detailsConfig = {
+    learnMore: { id: "selectableCard.details", default: "Learn more" },
+    preview: { id: "selectableCard.preview", default: "Preview" }
+  };
+
   return (
     <div
       role="button"
@@ -113,8 +118,16 @@ const SelectableCard = ({
           to={ROUTES.PAGE_DETAILS}
         >
           <FormattedMessage
-            id="selectableCard.details"
-            defaultMessage="Details"
+            id={
+              isPagesSelection
+                ? detailsConfig.preview.id
+                : detailsConfig.learnMore.id
+            }
+            defaultMessage={
+              isPagesSelection
+                ? detailsConfig.preview.default
+                : detailsConfig.learnMore.default
+            }
           />
         </Link>
         <div className={styles.pageButtons}>

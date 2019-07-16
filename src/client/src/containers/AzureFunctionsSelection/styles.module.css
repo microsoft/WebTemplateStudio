@@ -2,7 +2,9 @@
   display: flex;
   justify-content: space-between;
   padding-left: 26px;
-  padding-right: 22px;
+  font-size: 1.1em;
+  font-weight: 500;
+  margin-bottom: 0.8em;
 }
 
 .edit {
@@ -12,6 +14,10 @@
   padding-right: 1px;
   padding-left: 1px;
   color: var(--vscode-textLink-foreground);
+}
+
+.editIcon path {
+  fill: var(--vscode-editor-foreground);
 }
 
 .edit:focus {

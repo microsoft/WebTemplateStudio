@@ -22,4 +22,5 @@
   color: var(--vscode-editor-foreground);
   background-color: var(--vscode-sideBar-background);
   text-overflow: ellipsis;
+  font-size: 1.2em;
 }

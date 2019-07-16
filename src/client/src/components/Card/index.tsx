@@ -52,7 +52,7 @@ export const Card = ({
             to={ROUTES.PAGE_DETAILS}
             tabIndex={disabled! ? -1 : 0}
           >
-            <FormattedMessage id="card.details" defaultMessage="Details" />
+            <FormattedMessage id="card.details" defaultMessage="Learn more" />
           </Link>
           <button
             disabled={disabled!}

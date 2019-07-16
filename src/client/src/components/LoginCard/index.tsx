@@ -44,7 +44,10 @@ const LoginCard = ({
             onClick={() => handleDetailsClick(option)}
             to={ROUTES.PAGE_DETAILS}
           >
-            <FormattedMessage id="loginCard.details" defaultMessage="Details" />
+            <FormattedMessage
+              id="loginCard.details"
+              defaultMessage="Learn more"
+            />
           </Link>
         </div>
         <div className={styles.selectionContainer}>

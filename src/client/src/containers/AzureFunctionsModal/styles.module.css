@@ -14,8 +14,7 @@
 }
 
 .modalTitle {
-  font-size: 1.3em;
-  font-weight: bold;
+  font-size: 1.8em;
 }
 
 .selectionContainer {
@@ -96,21 +95,23 @@
   display: flex;
   align-items: center;
   width: 100%;
+  font-size: 1.2em;
   outline: none;
   padding: 9px;
   box-sizing: border-box;
-  background-color: var(--vscode-input-background);
+  background-color: var(--vscode-editor-background);
   border: 0.5px solid var(--vscode-editor-foreground);
 }
 
 .input {
   text-decoration: none;
   border: none;
-  background-color: var(--vscode-input-background);
+  background-color: var(--vscode-editor-background);
   color: var(--vscode-editor-foreground);
   font-size: 1em;
   width: 100%;
   margin-right: 10px;
+  padding: 2px 8px;
 }
 
 input:focus {

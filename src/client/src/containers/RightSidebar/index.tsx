@@ -163,7 +163,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             })}
           >
             {
-              <div>
+              <div className={styles.summaryContainer}>
                 <div className={styles.title}>
                   {formatMessage(messages.yourProjectDetails)}
                 </div>
@@ -217,18 +217,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   onClick={openViewLicensesModal}
                 >
                   {formatMessage(messages.viewLicenses)}
-                </button>
-                <button
-                  className={classnames(buttonStyles.buttonDark, styles.button)}
-                >
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.link}
-                    href="https://github.com/Microsoft/WebTemplateStudio/issues"
-                  >
-                    {formatMessage(messages.giveFeedback)}
-                  </a>
                 </button>
               </div>
               <About />

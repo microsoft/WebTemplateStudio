@@ -11,6 +11,9 @@ import { selectPagesAction } from "../../actions/wizardSelectionActions/selectPa
 
 import { ISelected } from "../../types/selected";
 
+import { ReactComponent as ShowIcon } from "../../assets/i-show.svg";
+import { ReactComponent as HideIcon } from "../../assets/i-hide.svg";
+
 import { validateName } from "../../utils/validateName";
 
 import styles from "./styles.module.css";
@@ -123,7 +126,11 @@ const SortablePageList = (props: Props) => {
               setMinimized(isMinimized ? false : true);
             }}
           >
-            {hideOrShowText}
+            {isMinimized ? (
+              <ShowIcon className={styles.viewIcon} />
+            ) : (
+              <HideIcon className={styles.viewIcon} />
+            )}
           </button>
         </div>
       )}
