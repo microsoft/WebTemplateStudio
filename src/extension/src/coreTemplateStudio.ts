@@ -1,16 +1,16 @@
-import fetch, { Response } from "node-fetch";
-import * as signalR from "@aspnet/signalr";
-import * as portfinder from "portfinder";
 import * as vscode from "vscode";
 import * as path from "path";
 import * as os from "os";
 import * as fs from "fs";
 
-import { ChildProcess, execFile } from "child_process";
+import { ChildProcess, spawn } from "child_process";
 import { CONSTANTS } from "./constants";
-import { GenerateCommand } from "./signalr-api-module/generateCommand";
-import { SyncCommand } from "./signalr-api-module/syncCommand";
-import { ICommandPayload } from "./signalr-api-module/commandPayload";
+import { ICommandPayload } from "./types/commandPayload";
+import { IGenerationPayloadType } from "./types/generationPayloadType";
+import { EventEmitter } from "events";
+import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
+
+class CliEventEmitter extends EventEmitter { }
 
 /**
  * An interface for CoreTS. It should be transparent to the communication
@@ -19,10 +19,8 @@ import { ICommandPayload } from "./signalr-api-module/commandPayload";
 export class CoreTemplateStudio {
   private static _instance: CoreTemplateStudio | undefined;
 
-  private _signalRClient: signalR.HubConnection | undefined;
-  private _process: ChildProcess;
-  private _port: number;
-  private _url: string;
+  private _processCli: ChildProcess;
+  private cliEvents: CliEventEmitter;
 
   public static GetExistingInstance(): CoreTemplateStudio {
     if (CoreTemplateStudio._instance) {
@@ -40,7 +38,7 @@ export class CoreTemplateStudio {
     }
 
     let platform = process.platform;
-    let executableName = CONSTANTS.API.BASE_APPLICATION_NAME;
+    let cliExecutableName = CONSTANTS.CLI.BASE_CLI_TOOL_NAME;
     let extensionPath;
 
     if (context) {
@@ -49,40 +47,32 @@ export class CoreTemplateStudio {
       extensionPath = path.join(__dirname, "..");
     }
 
-    if (platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
-      executableName += ".exe";
+    if (platform === CONSTANTS.CLI.WINDOWS_PLATFORM_VERSION) {
+      cliExecutableName += ".exe";
     }
 
-    let apiPath = path.join(
+    let cliPath = path.join(
       extensionPath,
       "src",
-      "api",
+      "corets-cli",
       platform,
-      executableName
+      cliExecutableName
     );
 
-    let apiWorkingDirectory = path.join(extensionPath, "src", "api", platform);
+    let cliWorkingDirectory = path.join(extensionPath, "src", "corets-cli", platform);
 
-    if (os.platform() !== CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
+    if (os.platform() !== CONSTANTS.CLI.WINDOWS_PLATFORM_VERSION) {
       // Not unsafe as the parameter comes from trusted source
       // tslint:disable-next-line:non-literal-fs-path
-      fs.chmodSync(apiPath, 0o755);
+      fs.chmodSync(cliPath, 0o755);
     }
 
-    const port = await portfinder.getPortPromise({
-      port: CONSTANTS.START_PORT
+    const spawnedProcessCli = spawn(cliPath, [], {
+      cwd: cliWorkingDirectory
     });
 
-    let spawnedProcess = execFile(
-      `${apiPath}`,
-      [`--urls=http://localhost:${port}`],
-      { cwd: apiWorkingDirectory }
-    );
-
     CoreTemplateStudio._instance = new CoreTemplateStudio(
-      spawnedProcess,
-      port,
-      `http://localhost:${port}`
+      spawnedProcessCli
     );
     return CoreTemplateStudio._instance;
   }
@@ -94,70 +84,57 @@ export class CoreTemplateStudio {
     }
   }
 
-  private constructor(process: ChildProcess, port: number, url: string) {
-    this._process = process;
-    this._port = port;
-    this._url = url;
+  private constructor(processCli: ChildProcess) {
+    this._processCli = processCli;
+    this.cliEvents = new CliEventEmitter();
+    this.readStream(this._processCli);
   }
 
-  public getPort(): number {
-    return this._port;
+  // This function is a listener, in the constructor, it gets attached
+  // then it will always get triggered when a command is write to the cli and there is responses from cli, until the process gets killed
+  public async readStream(process: ChildProcess) {
+    let data = "";
+    process.stdout.on("data", (chunk) => {
+      data += chunk;
+      var responses = data.toString().split("\n");
+      for (let i = 0; i < responses.length - 1; i++) {
+        var result = JSON.parse(responses[i]);
+        this.cliEvents.emit(result['messageType'], result['content']);
+      }
+      data = responses[responses.length - 1];
+    });
+
+    process.stderr.on("data", (data) => {
+      this.cliEvents.emit("error", data.toString());
+    });
   }
 
-  public async getProjectTypes(): Promise<any> {
-    // TODO: use this in client instead of fetching directly from API server
-    const url = new URL(CONSTANTS.API.ENDPOINTS.PROJECT_TYPE, this._url);
-    return await fetch(url.href, { method: CONSTANTS.API.METHODS.GET })
-      .then((response: Response) => {
-        return response.json();
-      })
-      .catch((error: Error) => {
-        throw Error(error.toString());
+  private async awaitCliEvent(eventName: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.cliEvents.once(eventName, (data) => {
+        this.cliEvents.removeAllListeners();
+        resolve(data);
       });
+      this.cliEvents.once("error", (data) => {
+        this.cliEvents.removeAllListeners();
+        reject(data);
+      });
+    });
+  }
+
+  public async sync(payload: ICommandPayload): Promise<any> {
+    let syncCommand = `${CONSTANTS.CLI.SYNC_COMMAND_PREFIX} -p ${payload.payload.path}\n`;
+    this._processCli.stdin.write(syncCommand);
+    this.cliEvents.on(CONSTANTS.CLI.SYNC_PROGRESS_STATE, (data) => {
+      payload.liveMessageHandler(data['status'], data['progress']);
+    });
+    return await this.awaitCliEvent(CONSTANTS.CLI.SYNC_COMPLETE_STATE);
   }
 
   public async getFrameworks(projectType: string): Promise<any> {
-    const url = new URL(CONSTANTS.API.ENDPOINTS.FRAMEWORK, this._url);
-    url.searchParams.append(
-      CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE,
-      projectType
-    );
-
-    return await fetch(url.href, { method: CONSTANTS.API.METHODS.GET })
-      .then((response: Response) => {
-        return response.json();
-      })
-      .catch((error: Error) => {
-        throw Error(error.toString());
-      });
-  }
-
-  public async getFeatures(
-    projectType: string,
-    frontendFramework: string,
-    backendFramework: string
-  ): Promise<any> {
-    // TODO: use this in client instead of fetching directly from API server
-    const url = new URL(CONSTANTS.API.ENDPOINTS.FEATURE, this._url);
-    url.searchParams.append(
-      CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE,
-      projectType
-    );
-    url.searchParams.append(
-      CONSTANTS.API.QUERY_PARAMS.FRONTEND_FRAMEWORK,
-      frontendFramework
-    );
-    url.searchParams.append(
-      CONSTANTS.API.QUERY_PARAMS.BACKEND_FRAMEWORK,
-      backendFramework
-    );
-    return await fetch(url.href, { method: CONSTANTS.API.METHODS.GET })
-      .then((response: Response) => {
-        return response.json();
-      })
-      .catch((error: Error) => {
-        throw Error(error.toString());
-      });
+    const getFrameworksCommand = `${CONSTANTS.CLI.GET_FRAMEWORKS_COMMAND_PREFIX} -p ${projectType}\n`;
+    this._processCli.stdin.write(getFrameworksCommand);
+    return await this.awaitCliEvent(CONSTANTS.CLI.GET_FRAMEWORKS_COMPLETE_STATE);
   }
 
   public async getPages(
@@ -165,73 +142,85 @@ export class CoreTemplateStudio {
     frontendFramework: string,
     backendFramework: string
   ): Promise<any> {
-    // TODO: use this in client instead of fetching directly from API server
-    const url = new URL(CONSTANTS.API.ENDPOINTS.PAGE, this._url);
-    url.searchParams.append(
-      CONSTANTS.API.QUERY_PARAMS.PROJECT_TYPE,
-      projectType
-    );
-    url.searchParams.append(
-      CONSTANTS.API.QUERY_PARAMS.FRONTEND_FRAMEWORK,
-      frontendFramework
-    );
-    url.searchParams.append(
-      CONSTANTS.API.QUERY_PARAMS.BACKEND_FRAMEWORK,
-      backendFramework
-    );
-
-    return await fetch(url.href, { method: CONSTANTS.API.METHODS.GET })
-      .then((response: Response) => {
-        return response.json();
-      })
-      .catch((error: Error) => {
-        throw Error(error.toString());
-      });
+    const getPagesCommand = `${CONSTANTS.CLI.GET_PAGES_COMMAND_PREFIX} -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
+    this._processCli.stdin.write(getPagesCommand);
+    return await this.awaitCliEvent(CONSTANTS.CLI.GET_PAGES_COMPLETE_STATE);
   }
 
-  public async sync(payload: ICommandPayload): Promise<any> {
-    let connection = await this.connectToCoreApiHub();
-    let command = new SyncCommand(payload);
-    return await command.execute(connection);
+  public async getFeatures(
+    projectType: string,
+    frontendFramework: string,
+    backendFramework: string
+  ): Promise<any> {
+    // to use this in client
+    const getFeaturesCommand = `${CONSTANTS.CLI.GET_FEATURES_COMMAND_PREFIX} -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
+    this._processCli.stdin.write(getFeaturesCommand);
+    return await this.awaitCliEvent(CONSTANTS.CLI.GET_FEATURES_COMPLETE_STATE);
+  }
+
+  public async getProjectTypes(): Promise<any> {
+    // to use this in client
+    const getProjectTypesCommand = `${CONSTANTS.CLI.GET_PROJECT_TYPES_COMMAND_PREFIX}\n`;
+    this._processCli.stdin.write(getProjectTypesCommand);
+    return await this.awaitCliEvent(CONSTANTS.CLI.GET_PROJECT_TYPES_COMPLETE_STATE);
   }
 
   public async generate(payload: ICommandPayload): Promise<any> {
-    let connection = await this.connectToCoreApiHub();
-    let command = new GenerateCommand(payload);
-    return await command.execute(connection);
+    var generatePayload = JSON.stringify(this.makeEngineGenerationPayload(<IGenerationPayloadType>(payload.payload)));
+    const generateCommand = `${CONSTANTS.CLI.GENERATE_COMMAND_PREFIX} -d ${generatePayload}\n`;
+    this._processCli.stdin.write(generateCommand);
+    this.cliEvents.on(CONSTANTS.CLI.GENERATE_PROGRESS_STATE, (data) => {
+      payload.liveMessageHandler(data['status'], data['progress']);
+    });
+    return await this.awaitCliEvent(CONSTANTS.CLI.GENERATE_COMPLETE_STATE);
+  }
+
+  private makeEngineGenerationPayload(
+    payload: IGenerationPayloadType
+  ): IEngineGenerationPayloadType {
+    let {
+      projectName,
+      path,
+      projectType,
+      frontendFramework,
+      backendFramework,
+      pages,
+      services
+    } = payload;
+
+    return {
+      projectName: projectName,
+      genPath: path,
+      projectType: projectType,
+      frontendFramework: frontendFramework,
+      backendFramework: backendFramework,
+      language: "Any",
+      platform: "Web",
+      homeName: "Test",
+      pages: pages.map((page: any) => ({
+        name: page.name,
+        templateid: page.identity
+      })),
+      features: services.map((service: any) => ({
+        name: service.name,
+        templateid: service.identity
+      }))
+    };
   }
 
   public stop() {
-    if (this._process) {
-      this.killProcess(this._process);
+    if (this._processCli) {
+      this.killProcess(this._processCli);
     }
   }
 
   private killProcess(processToKill: ChildProcess) {
-    if (process.platform === CONSTANTS.API.WINDOWS_PLATFORM_VERSION) {
+    if (process.platform === CONSTANTS.CLI.WINDOWS_PLATFORM_VERSION) {
       let pid = processToKill.pid;
       let spawn = require("child_process").spawn;
       spawn("taskkill", ["/pid", pid, "/f", "/t"]);
     } else {
       processToKill.kill("SIGKILL");
     }
-  }
-
-  private async connectToCoreApiHub(): Promise<signalR.HubConnection> {
-    // Reusing connections we can save some time on handshake overhead
-    if (
-      this._signalRClient &&
-      this._signalRClient.state === signalR.HubConnectionState.Connected
-    ) {
-      return this._signalRClient;
-    }
-
-    const connection = new signalR.HubConnectionBuilder()
-      .withUrl(`${this._url}/corehub`)
-      .build();
-
-    await connection.start().catch((error: Error) => console.log(error));
-    this._signalRClient = connection;
-    return connection;
   }
 }

@@ -102,7 +102,7 @@ export class GenerationExperience extends WizardServant {
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.ResourceGroupDeploy,
             // tslint:disable-next-line: no-function-expression
-            async function(this: IActionContext): Promise<void> {
+            async function (this: IActionContext): Promise<void> {
               try {
                 await AzureServices.deployResourceGroup(resourceGroupSelection);
                 progressObject = {
@@ -146,7 +146,7 @@ export class GenerationExperience extends WizardServant {
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.FunctionsDeploy,
             // tslint:disable-next-line: no-function-expression
-            async function(this: IActionContext): Promise<void> {
+            async function (this: IActionContext): Promise<void> {
               try {
                 await AzureServices.deployFunctionApp(
                   payload.functions,
@@ -180,7 +180,7 @@ export class GenerationExperience extends WizardServant {
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.CosmosDBDeploy,
             // tslint:disable-next-line: no-function-expression
-            async function(this: IActionContext): Promise<void> {
+            async function (this: IActionContext): Promise<void> {
               var cosmosPayload: any = payload.cosmos;
               try {
                 var dbObject = await AzureServices.deployCosmosResource(
@@ -236,7 +236,6 @@ export class GenerationExperience extends WizardServant {
   ) {
     let apiInstance = CoreTemplateStudio.GetExistingInstance();
     return await apiInstance.generate({
-      port: apiInstance.getPort(),
       payload: enginePayload,
       liveMessageHandler: this.handleGenLiveMessage
     });
