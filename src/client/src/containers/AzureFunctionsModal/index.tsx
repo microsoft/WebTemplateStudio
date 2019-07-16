@@ -142,7 +142,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       value: "location"
     },
     RUNTIME_STACK: {
-      label: props.intl.formatMessage(messages.runtimeStackLabel),
+      label: props.intl.formatMessage(azureModalMessages.runtimeStackLabel),
       value: "runtimeStack"
     },
     NUM_FUNCTIONS: {
@@ -601,9 +601,13 @@ const AzureFunctionsResourceModal = (props: Props) => {
               styles.leftHeader
             )}
           >
-            {props.intl.formatMessage(messages.runtimeStackLabel)}
+            {props.intl.formatMessage(azureModalMessages.runtimeStackLabel)}
           </div>
-          <div>{props.intl.formatMessage(messages.runtimeStackSubLabel)}</div>
+          <div>
+            {props.intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
+              runtimeStack: WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS
+            })}
+          </div>
         </div>
       </div>
       <button

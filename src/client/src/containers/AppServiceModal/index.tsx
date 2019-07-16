@@ -2,7 +2,6 @@
  * This component uses React Hooks in lieu of Class Components.
  * https://reactjs.org/docs/hooks-intro.html
  */
-import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -41,6 +40,7 @@ import {
 import { AppState } from "../../reducers";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import RootAction from "../../actions/ActionType";
+import { ISelected } from "../../types/selected";
 import classNames from "classnames";
 
 const DEFAULT_VALUE = {
@@ -57,6 +57,7 @@ interface IStateProps {
   siteNameAvailability: any;
   selection: any;
   chooseExistingRadioButtonSelected: boolean;
+  selectedBackend: ISelected;
 }
 
 interface IDispatchProps {
@@ -80,6 +81,17 @@ const links: attributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade"
 };
+
+const backendFrameworkNameToAppServiceRuntimeStack: Map<
+  string,
+  string
+> = new Map([
+  [
+    WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS,
+    WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS
+  ],
+  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, WIZARD_CONTENT_INTERNAL_NAMES.PYTHON]
+]);
 
 // state of user's selections (selected form data)
 interface IAppServiceState {
@@ -125,7 +137,7 @@ const AppServiceModal = (props: Props) => {
       value: "siteName"
     },
     RUNTIME_STACK: {
-      label: props.intl.formatMessage(messages.runtimeStackLabel),
+      label: props.intl.formatMessage(azureModalMessages.runtimeStackLabel),
       value: "runtimeStack"
     }
   };
@@ -152,7 +164,7 @@ const AppServiceModal = (props: Props) => {
   const [appServiceFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
 
-  // TODO Updates the data the user enters as the user types
+  // Updates the data the user enters as the user types
   const handleChange = (updatedAppServiceForm: IAppServiceState) => {
     setAppServiceModalButtonStatus(
       updatedAppServiceForm,
@@ -208,7 +220,7 @@ const AppServiceModal = (props: Props) => {
         timeout = undefined;
         props.vscode.postMessage({
           module: EXTENSION_MODULES.AZURE,
-          command: EXTENSION_COMMANDS.NAME_APP_SERVICE, // TODO
+          command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
           track: false,
           appName: appServiceFormData.siteName.value,
           subscription: appServiceFormData.subscription.value
@@ -242,7 +254,7 @@ const AppServiceModal = (props: Props) => {
         message: ""
       });
     }
-  }, [props.selection]);
+  }, []);
 
   React.useEffect(() => {
     setAppServiceModalButtonStatus(
@@ -260,7 +272,6 @@ const AppServiceModal = (props: Props) => {
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const element = e.currentTarget as HTMLInputElement;
     // Changes in account name will trigger an update in validation status
-    // TODO Set validation status here to avoid premature error messages
     props.setValidationStatus(true);
     handleChange({
       ...appServiceFormData,
@@ -296,7 +307,7 @@ const AppServiceModal = (props: Props) => {
   ) => {
     return (
       <div
-        className={classnames([styles.selectionContainer], {
+        className={classNames([styles.selectionContainer], {
           [styles.selectionContainerDisabled]: disabled
         })}
       >
@@ -345,7 +356,7 @@ const AppServiceModal = (props: Props) => {
   const radioButtonOnChangeHandler = (
     event: React.FormEvent<HTMLInputElement>
   ) => {
-    let element = event.target as HTMLInputElement;
+    const element = event.target as HTMLInputElement;
     if (
       element.value ===
       props.intl.formatMessage(azureModalMessages.azureModalChooseExisting)
@@ -374,7 +385,9 @@ const AppServiceModal = (props: Props) => {
   return (
     <React.Fragment>
       <div className={styles.headerContainer}>
-        <div className={styles.modalTitle}>{"Create App Service TODO"}</div>
+        <div className={styles.modalTitle}>
+          {props.intl.formatMessage(azureModalMessages.appServiceModalTitle)}
+        </div>
         <Cancel
           tabIndex={0}
           className={styles.icon}
@@ -401,7 +414,7 @@ const AppServiceModal = (props: Props) => {
         )}
         {/* Choose Resource Group */}
         <div
-          className={classnames([styles.selectionContainer], {
+          className={classNames([styles.selectionContainer], {
             [styles.selectionContainerDisabled]:
               appServiceFormData.subscription.value === ""
           })}
@@ -477,7 +490,7 @@ const AppServiceModal = (props: Props) => {
         </div>
         {/* Site Name */}
         <div
-          className={classnames(
+          className={classNames(
             styles.selectionInputContainer,
             styles.selectionContainer,
             {
@@ -523,22 +536,29 @@ const AppServiceModal = (props: Props) => {
         </div>
         {/* Runtime Stack */}
         <div
-          className={classnames(
+          className={classNames(
             styles.selectionInputContainer,
             styles.selectionContainer
           )}
         >
           <div
-            className={classnames(
+            className={classNames(
               styles.selectionHeaderContainer,
               styles.leftHeader
             )}
           >
-            {"eeeee"}
+            {props.intl.formatMessage(azureModalMessages.runtimeStackLabel)}
           </div>
-          <div>{"ffffffffffffff"}</div>
+          <div>
+            {props.intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
+              runtimeStack: backendFrameworkNameToAppServiceRuntimeStack.get(
+                props.selectedBackend.internalName
+              )
+            })}
+          </div>
         </div>
       </div>
+      {/* Add Resource Button */}
       <button
         className={getButtonClassNames()}
         onClick={handleAddResource}
@@ -562,7 +582,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isValidatingName: state.selection.isValidatingName,
   selection: getAppServiceSelectionInDropdownForm(state),
   chooseExistingRadioButtonSelected:
-    state.selection.services.appService.chooseExistingRadioButtonSelected
+    state.selection.services.appService.chooseExistingRadioButtonSelected,
+  selectedBackend: state.selection.backendFramework
 });
 
 const mapDispatchToProps = (

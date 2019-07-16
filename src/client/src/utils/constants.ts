@@ -77,6 +77,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   FULL_STACK_APP: "FullStackWebApp",
   NODE_JS: "NodeJS",
   FLASK: "Flask",
+  PYTHON: "Python",
   REACT_JS: "ReactJS",
   REST_API: "RestAPI",
   VUE: "Vue",
