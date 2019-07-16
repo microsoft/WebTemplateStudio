@@ -1,8 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import classnames from "classnames";
 
 import SelectableCard from "../../components/SelectableCard";
+import Notification from "../../components/Notification";
 import Title from "../../components/Title";
+import { MAX_PAGES_ALLOWED } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -13,12 +16,34 @@ import { ISelected } from "../../types/selected";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 
+import { InjectedIntl, defineMessages, injectIntl } from "react-intl";
+
+const messages = defineMessages({
+  limitedPages: {
+    id: "pages.limitedPagesMessage",
+    defaultMessage: "You can select up to 20 pages"
+  },
+  overlimitPages: {
+    id: "pages.overlimitPagesMessage",
+    defaultMessage: "You cannot add more than 20 pages to the project"
+  },
+  iconAltMessage: {
+    id: "pages.maxPagesText",
+    defaultMessage: "Icon for Max Pages Description"
+  }
+});
+
 interface ICount {
   [key: string]: number;
 }
 
+interface IProps {
+  intl: InjectedIntl;
+}
+
 interface ISelectOptionProps {
   title: string;
+  description: string;
   internalName?: string;
   selectCard?: (card: ISelected) => void;
   selectedCardIndices: number[];
@@ -34,28 +59,28 @@ interface ISelectOptionProps {
 
 interface ISelectOptionState {
   selectedCardIndices: number[];
+  maxPageReached: boolean;
+  description: string;
 }
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => void;
 }
 
-type Props = IDispatchProps & ISelectOptionProps;
+type Props = IDispatchProps & ISelectOptionProps & IProps;
 
 class SelectOption extends React.Component<Props, ISelectOptionState> {
   constructor(props: Props) {
     super(props);
     const { selectedCardIndices } = props;
     this.state = {
-      selectedCardIndices
+      selectedCardIndices,
+      maxPageReached: false,
+      description: props.intl.formatMessage(messages.limitedPages)
     };
   }
   public componentDidMount() {
-    const {
-      selectCard,
-      selectOptions,
-      selectedCardIndices
-    } = this.props;
+    const { selectCard, selectOptions, selectedCardIndices } = this.props;
     if (selectCard) {
       this.exchangeOption(selectedCardIndices[0]);
       this.setState({
@@ -144,11 +169,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     });
   }
 
-  public removeOption(
-    cardNumber: number,
-    cardCount: number,
-    internalName: string
-  ) {
+  public removeOption(internalName: string) {
     const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     if (selectOptions && currentCardData && currentCardData.length > 1) {
       const size = currentCardData.length;
@@ -197,10 +218,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public onCardClick(cardNumber: number) {
-    const {
-      options,
-      multiSelect
-    } = this.props;
+    const { options, multiSelect } = this.props;
     const { unselectable } = options[cardNumber];
     if (unselectable) {
       return;
@@ -227,9 +245,22 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     }
   };
 
-  public addPage(cardNumber: number) {
-    const { options, cardTypeCount, handleCountUpdate } = this.props;
+  public addPage = (cardNumber: number) => {
+    const {
+      options,
+      cardTypeCount,
+      handleCountUpdate,
+      currentCardData,
+      intl
+    } = this.props;
     const { internalName } = options[cardNumber];
+    if (currentCardData && currentCardData.length >= MAX_PAGES_ALLOWED) {
+      this.setState({
+        maxPageReached: true,
+        description: intl.formatMessage(messages.overlimitPages)
+      });
+      return;
+    }
     if (cardTypeCount && handleCountUpdate) {
       cardTypeCount[internalName] = cardTypeCount[internalName]
         ? cardTypeCount[internalName] + 1
@@ -237,25 +268,30 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       handleCountUpdate(cardTypeCount);
       this.addOption(cardNumber, cardTypeCount[internalName], internalName);
     }
-  }
+  };
 
-  public removePage(cardNumber: number) {
+  public removePage = (cardNumber: number) => {
     const {
       options,
       currentCardData,
       cardTypeCount,
-      handleCountUpdate
+      handleCountUpdate,
+      intl
     } = this.props;
     const { internalName } = options[cardNumber];
+    this.setState({
+      maxPageReached: false,
+      description: intl.formatMessage(messages.limitedPages)
+    });
     if (
       cardTypeCount &&
       handleCountUpdate &&
       currentCardData &&
       currentCardData.length > 1
     ) {
-      this.removeOption(cardNumber, cardTypeCount[internalName], internalName);
+      this.removeOption(internalName);
     }
-  }
+  };
 
   public render() {
     const {
@@ -263,11 +299,27 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       options,
       setDetailPage,
       isFrameworkSelection,
-      isPagesSelection
+      isPagesSelection,
+      intl
     } = this.props;
+    const { maxPageReached, description } = this.state;
     return (
       <div>
         <Title>{title}</Title>
+        {isPagesSelection && (
+          <div
+            className={classnames(styles.description, {
+              [styles.borderGreen]: !maxPageReached,
+              [styles.borderYellow]: maxPageReached
+            })}
+          >
+            <Notification
+              showWarning={maxPageReached}
+              text={description}
+              altMessage={intl.formatMessage(messages.iconAltMessage)}
+            />
+          </div>
+        )}
         <div className={styles.container}>
           {options.map((option, cardNumber) => {
             const {
@@ -319,4 +371,4 @@ const mapDispatchToProps = (
 export default connect(
   null,
   mapDispatchToProps
-)(SelectOption);
+)(injectIntl(SelectOption));
