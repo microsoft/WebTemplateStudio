@@ -16,8 +16,6 @@ import { ISelected } from "../../types/selected";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 
-import { ReactComponent as Warning } from "../../assets/warning.svg";
-import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
 import { InjectedIntl, defineMessages, injectIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -80,8 +78,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       maxPageReached: false,
       description: props.intl.formatMessage(messages.limitedPages)
     };
-    this.addPage = this.addPage.bind(this);
-    this.removePage = this.removePage.bind(this);
   }
   public componentDidMount() {
     const { selectCard, selectOptions, selectedCardIndices } = this.props;
@@ -249,7 +245,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     }
   };
 
-  public addPage(cardNumber: number) {
+  public addPage = (cardNumber: number) => {
     const {
       options,
       cardTypeCount,
@@ -272,9 +268,9 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       handleCountUpdate(cardTypeCount);
       this.addOption(cardNumber, cardTypeCount[internalName], internalName);
     }
-  }
+  };
 
-  public removePage(cardNumber: number) {
+  public removePage = (cardNumber: number) => {
     const {
       options,
       currentCardData,
@@ -295,7 +291,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     ) {
       this.removeOption(internalName);
     }
-  }
+  };
 
   public render() {
     const {
@@ -306,19 +302,20 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       isPagesSelection,
       intl
     } = this.props;
+    const { maxPageReached, description } = this.state;
     return (
       <div>
         <Title>{title}</Title>
         {isPagesSelection && (
           <div
             className={classnames(styles.description, {
-              [styles.borderGreen]: !this.state.maxPageReached,
-              [styles.borderYellow]: this.state.maxPageReached
+              [styles.borderGreen]: !maxPageReached,
+              [styles.borderYellow]: maxPageReached
             })}
           >
             <Notification
-              showWarning={this.state.maxPageReached}
-              text={this.state.description}
+              showWarning={maxPageReached}
+              text={description}
               altMessage={intl.formatMessage(messages.iconAltMessage)}
             />
           </div>
