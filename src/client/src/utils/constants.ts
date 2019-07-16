@@ -11,7 +11,7 @@ const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
 const MAX_PAGES_ALLOWED = 20;
 
-const WEB_TEMPLATE_STUDIO = {
+const WEB_TEMPLATE_STUDIO_LINKS = {
   REPO: "https://github.com/Microsoft/WebTemplateStudio",
   ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues"
 };
@@ -149,7 +149,7 @@ export {
   DEVELOPMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
   MAX_PAGES_ALLOWED,
-  WEB_TEMPLATE_STUDIO,
+  WEB_TEMPLATE_STUDIO_LINKS,
   FRAMEWORK_TYPE,
   KEY_EVENTS
 };

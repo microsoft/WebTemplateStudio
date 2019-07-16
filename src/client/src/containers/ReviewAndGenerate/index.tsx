@@ -13,7 +13,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
-import { WEB_TEMPLATE_STUDIO } from "../../utils/constants";
+import { WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants";
 
 interface IDispatchProps {
   openViewLicensesModal: () => any;
@@ -66,7 +66,7 @@ const ReviewAndGenerate = (props: Props) => {
               target="_blank"
               rel="noopener noreferrer"
               className={styles.link}
-              href={WEB_TEMPLATE_STUDIO.ISSUES}
+              href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
               onKeyUp={keyUpHandler}
             >
               {formatMessage(messages.giveFeedback)}

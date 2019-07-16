@@ -30,7 +30,7 @@ import {
   ROUTES,
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  WEB_TEMPLATE_STUDIO
+  WEB_TEMPLATE_STUDIO_LINKS
 } from "../../utils/constants";
 import messages from "./strings";
 
@@ -228,7 +228,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                     rel="noopener noreferrer"
                     onKeyUp={keyUpHandler}
                     className={styles.link}
-                    href={WEB_TEMPLATE_STUDIO.ISSUES}
+                    href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
                   >
                     {formatMessage(messages.giveFeedback)}
                   </a>

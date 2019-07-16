@@ -16,7 +16,7 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   ROUTES,
-  WEB_TEMPLATE_STUDIO
+  WEB_TEMPLATE_STUDIO_LINKS
 } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -222,7 +222,7 @@ const PostGenerationModal = ({
       <div className={styles.sectionLine}>
         <a
           className={styles.link}
-          href={WEB_TEMPLATE_STUDIO.ISSUES}
+          href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
           onKeyUp={keyUpHandler}
         >
           {formatMessage(messages.help)}
