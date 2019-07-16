@@ -390,6 +390,20 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
+        case EXTENSION_COMMANDS.NAME_APP_SERVICE:
+          window.postMessage(
+            {
+              module: EXTENSION_MODULES.AZURE,
+              command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
+              payload: {
+                isAvailable: message.appName.length > 0
+              },
+              message: DEV_NO_ERROR_MSG,
+              errorType: DEV_NO_ERROR_TYPE
+            },
+            "*"
+          );
+          break;
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
           // produces locations and resource groups in development
           window.postMessage(

@@ -10,14 +10,14 @@ import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions/modalActions";
-// TODO saveAppServiceSettingsAction from azureActoins
+import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
 import { appServiceModalInitialState } from "../../mockData/cosmosDbModalData";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { messages } from "./messages";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
-// import { getFunctionsSelection } from "../../selectors/azureFunctionsServiceSelector";
+import { getAppServiceSelectionInDropdownForm } from "../../selectors/appServiceSelector";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
@@ -35,7 +35,7 @@ import styles from "./styles.module.css";
 import { Dispatch } from "redux";
 import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
 import {
-  setAppNameAvailabilityAction,
+  setSiteNameAvailabilityAction,
   IAvailabilityFromExtension
 } from "../../actions/azureActions/setAccountAvailability";
 import { AppState } from "../../reducers";
@@ -55,17 +55,17 @@ interface IStateProps {
   subscriptions: [];
   isValidatingName: boolean;
   siteNameAvailability: any;
-  // selection: any;
-  // chooseExistingRadioButtonSelected: boolean;
+  selection: any;
+  chooseExistingRadioButtonSelected: boolean;
 }
 
 interface IDispatchProps {
   closeModal: () => any;
-  // saveAzureFunctionsOptions: (azureFunctionsOptions: any) => any;
+  saveAppServiceSettings: (appServiceSettings: any) => any;
   setValidationStatus: (status: boolean) => any;
-  // setAppNameAvailability: (
-  //   isAvailableObject: IAvailabilityFromExtension
-  // ) => any;
+  setSiteNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => any;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
@@ -154,10 +154,9 @@ const AppServiceModal = (props: Props) => {
 
   // TODO Updates the data the user enters as the user types
   const handleChange = (updatedAppServiceForm: IAppServiceState) => {
-    console.log(updatedAppServiceForm);
     setAppServiceModalButtonStatus(
       updatedAppServiceForm,
-      props.isValidatingName, // how does this work?
+      props.isValidatingName,
       props.siteNameAvailability,
       setFormIsSendable
     );
@@ -209,7 +208,7 @@ const AppServiceModal = (props: Props) => {
         timeout = undefined;
         props.vscode.postMessage({
           module: EXTENSION_MODULES.AZURE,
-          command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
+          command: EXTENSION_COMMANDS.NAME_APP_SERVICE, // TODO
           track: false,
           appName: appServiceFormData.siteName.value,
           subscription: appServiceFormData.subscription.value
@@ -231,19 +230,19 @@ const AppServiceModal = (props: Props) => {
   }, [appServiceFormData.chooseExistingRadioButtonSelected]);
 
   // Update form data with data from store if it exists
-  // React.useEffect(() => {
-  //   if (props.selection) {
-  //     const newFunctionState = props.selection.dropdownSelection;
-  //     newFunctionState.chooseExistingRadioButtonSelected =
-  //       props.chooseExistingRadioButtonSelected;
-  //     handleChange(newFunctionState);
-  //   } else {
-  //     props.setAppNameAvailability({
-  //       isAvailable: false,
-  //       message: ""
-  //     });
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    if (props.selection) {
+      const newFunctionState = props.selection.dropdownSelection;
+      newFunctionState.chooseExistingRadioButtonSelected =
+        props.chooseExistingRadioButtonSelected;
+      handleChange(newFunctionState);
+    } else {
+      props.setSiteNameAvailability({
+        isAvailable: false,
+        message: ""
+      });
+    }
+  }, [props.selection]);
 
   React.useEffect(() => {
     setAppServiceModalButtonStatus(
@@ -280,9 +279,9 @@ const AppServiceModal = (props: Props) => {
     return classNames(buttonClass, styles.button);
   };
 
-  // const handleAddResource = () => {
-  //   props.saveAzureFunctionsOptions(azureFunctionsFormData);
-  // };
+  const handleAddResource = () => {
+    props.saveAppServiceSettings(appServiceFormData);
+  };
 
   const getDropdownSection = (
     leftHeader: string,
@@ -375,7 +374,7 @@ const AppServiceModal = (props: Props) => {
   return (
     <React.Fragment>
       <div className={styles.headerContainer}>
-        <div className={styles.modalTitle}>{"create "}</div>
+        <div className={styles.modalTitle}>{"Create App Service TODO"}</div>
         <Cancel
           tabIndex={0}
           className={styles.icon}
@@ -542,14 +541,12 @@ const AppServiceModal = (props: Props) => {
       </div>
       <button
         className={getButtonClassNames()}
-        onClick={() => {} /* handleAddResource */}
+        onClick={handleAddResource}
         disabled={!formIsSendable}
       >
-        {
-          "hey" /* {(props.selection &&
+        {(props.selection &&
           props.intl.formatMessage(azureModalMessages.azureModalSaveChanges)) ||
-          props.intl.formatMessage(azureModalMessages.azureModalAddResource)} */
-        }
+          props.intl.formatMessage(azureModalMessages.azureModalAddResource)}
       </button>
     </React.Fragment>
   );
@@ -561,11 +558,11 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   subscriptionData: state.azureProfileData.subscriptionData,
   subscriptions: state.azureProfileData.profileData.subscriptions,
   siteNameAvailability:
-    state.selection.services.azureFunctions.appNameAvailability, // TODO
-  isValidatingName: state.selection.isValidatingName
-  // selection: getFunctionsSelection(state),
-  // chooseExistingRadioButtonSelected:
-  //   state.selection.services.azureFunctions.chooseExistingRadioButtonSelected
+    state.selection.services.appService.siteNameAvailability,
+  isValidatingName: state.selection.isValidatingName,
+  selection: getAppServiceSelectionInDropdownForm(state),
+  chooseExistingRadioButtonSelected:
+    state.selection.services.appService.chooseExistingRadioButtonSelected
 });
 
 const mapDispatchToProps = (
@@ -574,11 +571,11 @@ const mapDispatchToProps = (
   closeModal: () => {
     dispatch(closeModalAction());
   },
-  // saveAzureFunctionsOptions: (azureFunctionsOptions: any) => {
-  //   dispatch(saveAzureFunctionsSettingsAction(azureFunctionsOptions));
-  // },
-  // setAppNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
-  //   dispatch(setAppNameAvailabilityAction(isAvailableObject)),
+  saveAppServiceSettings: (appServiceSettings: any) => {
+    dispatch(saveAppServiceSettingsAction(appServiceSettings));
+  },
+  setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
+    dispatch(setSiteNameAvailabilityAction(isAvailableObject)),
   setValidationStatus: (status: boolean) =>
     dispatch(setAzureValidationStatusAction(status))
 });

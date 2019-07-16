@@ -34,6 +34,7 @@ interface IAzureLoginProps {
   isCosmosDbModalOpen: boolean;
   azureFunctionsSelection: any;
   cosmosDbSelection: any;
+  appServiceSelection: any;
   isPreview: boolean;
 }
 
@@ -96,6 +97,8 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       return !_.isEmpty(this.props.azureFunctionsSelection);
     } else if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB) {
       return !_.isEmpty(this.props.cosmosDbSelection);
+    } else if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE) {
+      return !_.isEmpty(this.props.appServiceSelection);
     }
     return false;
   };
@@ -118,7 +121,6 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: this.props
         .openAppServiceModal
     };
-    console.log(modalOpeners[internalName]);
     if (modalOpeners.hasOwnProperty(internalName)) {
       return modalOpeners[internalName];
     }
@@ -212,6 +214,7 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => {
     isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
     azureFunctionsSelection: state.selection.services.azureFunctions.selection,
     cosmosDbSelection: state.selection.services.cosmosDB.selection,
+    appServiceSelection: state.selection.services.appService.selection,
     isPreview: previewStatus
   };
 };

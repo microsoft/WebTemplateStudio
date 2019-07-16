@@ -32,6 +32,7 @@ import { updateOutputPathAction } from "./actions/wizardSelectionActions/updateP
 import {
   setAccountAvailability,
   setAppNameAvailabilityAction,
+  setSiteNameAvailabilityAction,
   IAvailabilityFromExtension
 } from "./actions/azureActions/setAccountAvailability";
 import AzureLogin from "./containers/AzureLogin";
@@ -84,6 +85,9 @@ interface IDispatchProps {
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
   setAppNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => any;
+  setSiteNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
   setProjectPathValidation: (validation: any) => void;
@@ -207,7 +211,11 @@ class App extends React.Component<Props> {
           this.props.setAzureValidationStatus(false);
           break;
         case EXTENSION_COMMANDS.NAME_APP_SERVICE:
-          console.log("here");
+          this.props.setSiteNameAvailability({
+            isAvailable: message.payload.isAvailable,
+            message: message.payload.reason
+          });
+          this.props.setAzureValidationStatus(false);
           break;
         case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
           this.props.setProjectPathValidation(
@@ -334,6 +342,9 @@ const mapDispatchToProps = (
   },
   setAppNameAvailability: (isAvailableObject: any) => {
     dispatch(setAppNameAvailabilityAction(isAvailableObject));
+  },
+  setSiteNameAvailability: (isAvailableObject: any) => {
+    dispatch(setSiteNameAvailabilityAction(isAvailableObject));
   },
   setProjectPathValidation: (validation: any) => {
     dispatch(setProjectPathValidation(validation));

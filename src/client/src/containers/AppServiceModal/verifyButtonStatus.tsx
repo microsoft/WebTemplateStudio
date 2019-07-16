@@ -17,7 +17,7 @@ export const setAppServiceModalButtonStatus = (
 
   isAnyEmpty = isSubscriptionEmpty || isResourceGroupEmpty || isSiteNameEmpty;
 
-  const { isSiteNameAvailable } = siteNameAvailability; // TODO
+  const { isSiteNameAvailable } = siteNameAvailability;
 
   const isDisabled = isAnyEmpty || isValidatingName || !isSiteNameAvailable;
 

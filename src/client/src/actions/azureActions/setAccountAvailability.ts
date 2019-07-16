@@ -15,6 +15,11 @@ export interface ISetAzureFunctionsAppNameAvailability {
   payload: IAvailabilityFromExtension;
 }
 
+export interface ISetAppServiceSiteNameAvailability {
+  type: AZURE_TYPEKEYS.SET_SITE_NAME_AVAILABILITY;
+  payload: IAvailabilityFromExtension;
+}
+
 export const setAccountAvailability = (
   isAccountAvailableObject: IAvailabilityFromExtension
 ): ISetCosmosAccountNameAvailability => ({
@@ -27,4 +32,11 @@ export const setAppNameAvailabilityAction = (
 ): ISetAzureFunctionsAppNameAvailability => ({
   type: AZURE_TYPEKEYS.SET_APP_NAME_AVAILABILITY,
   payload: isAppNameAvailableObject
+});
+
+export const setSiteNameAvailabilityAction = (
+  isSiteNameAvailableObject: IAvailabilityFromExtension
+): ISetAppServiceSiteNameAvailability => ({
+  type: AZURE_TYPEKEYS.SET_SITE_NAME_AVAILABILITY,
+  payload: isSiteNameAvailableObject
 });
