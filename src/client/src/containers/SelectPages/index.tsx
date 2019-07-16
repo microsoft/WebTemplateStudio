@@ -118,6 +118,7 @@ class SelectPages extends React.Component<Props> {
               selectedPages
             )}
             title={intl.formatMessage(messages.pagesTitleQuestion)}
+            description="Max 20 pages can be selected"
             options={options}
             currentCardData={selectedPages}
             cardTypeCount={pageCount}
