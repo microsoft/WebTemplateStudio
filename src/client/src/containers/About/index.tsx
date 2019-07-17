@@ -41,8 +41,6 @@ const About = ({ versions, intl }: Props) => {
     <div className={styles.container}>
       <p className={styles.repo}>
         <a
-          target="_blank"
-          rel="noopener noreferrer"
           className={styles.link}
           target="_blank"
           href={WEB_TEMPLATE_STUDIO_LINKS.REPO}
