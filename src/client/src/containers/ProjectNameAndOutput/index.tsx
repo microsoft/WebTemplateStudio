@@ -60,6 +60,13 @@ const messages = defineMessages({
     id: "projectName.ariaProjectName",
     defaultMessage: "Project Name Input"
   },
+  nameTooLong: {
+    id: "projectNameError.nameTooLong",
+    defaultMessage:
+      "Project name can only be " +
+      PROJECT_NAME_CHARACTER_LIMIT +
+      " characters long"
+  },
   outputPathTitle: {
     id: "projectName.outputPathTitle",
     defaultMessage: "Save To"
@@ -67,6 +74,8 @@ const messages = defineMessages({
 });
 
 const ProjectNameAndOutput = (props: Props) => {
+  const [projectNameMaxLength, setprojectNameMaxLength] = React.useState(false);
+
   React.useEffect(() => {
     if (props.vscode) {
       if (props.projectPathValidation) {
@@ -97,6 +106,18 @@ const ProjectNameAndOutput = (props: Props) => {
     const element = e.currentTarget as HTMLInputElement;
     props.updateProjectName(element.value);
   };
+  const validateKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const element = e.target as HTMLInputElement;
+      const inputKeyCheck = /^[A-Za-z0-9_\- ]$/
+
+      if(element.value.length === 50 && inputKeyCheck.test(e.key)){
+        setprojectNameMaxLength(true);
+        e.stopPropagation();
+      }else{
+        setprojectNameMaxLength(false);
+      }
+    }
+  
   const handleOutputPathChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
@@ -118,6 +139,7 @@ const ProjectNameAndOutput = (props: Props) => {
         </div>
         <Input
           handleChange={handleProjectNameChange}
+          handleKeyDown={validateKey}
           ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
           value={props.projectName}
           maxLength={PROJECT_NAME_CHARACTER_LIMIT}
@@ -127,6 +149,12 @@ const ProjectNameAndOutput = (props: Props) => {
           <div className={styles.errorMessage}>
             {props.intl.formatMessage(props.projectNameValidation
               .error as FormattedMessage.MessageDescriptor)}
+          </div>
+        )}
+        {projectNameMaxLength && (
+          <div className={styles.errorMessage}>
+            {props.intl.formatMessage(messages
+              .nameTooLong as FormattedMessage.MessageDescriptor)}
           </div>
         )}
       </div>
