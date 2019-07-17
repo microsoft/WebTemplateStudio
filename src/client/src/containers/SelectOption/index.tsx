@@ -322,7 +322,14 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
         )}
         <div className={styles.container}>
           {options.map((option, cardNumber) => {
-            const { svgUrl, title, body, unselectable, internalName } = option;
+            const {
+              svgUrl,
+              title,
+              body,
+              unselectable,
+              internalName,
+              version
+            } = option;
             return (
               <SelectableCard
                 key={`${cardNumber} ${title}`}
@@ -339,6 +346,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 iconStyles={styles.icon}
                 title={title as string}
                 body={body as string}
+                version={version}
                 disabled={unselectable}
                 clickCount={this.getCardCount(internalName)}
                 addPage={(cardNumber: number) => this.addPage(cardNumber)}
