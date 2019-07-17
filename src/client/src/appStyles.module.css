@@ -5,8 +5,9 @@
 }
 
 .centerView {
+  margin-top: -10px;
   display: flex;
-  padding: 1vh 4vh;
+  padding: 6vh;
   overflow: auto;
   width: 100%;
   box-sizing: border-box;
@@ -25,7 +26,7 @@
   margin-bottom: 0px;
 }
 
-@media (max-width: 830px) {
+@media (max-width: 825px) {
   .centerView {
     padding: 1vh 2vh;
   }

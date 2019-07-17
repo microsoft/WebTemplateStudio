@@ -4,7 +4,7 @@
   "name": "List",
   "groupIdentity": "wts.Page.List",
   "identity": "wts.Page.React.List",
-  "description": "The list page allows you to add and remove text from an adaptive list.",
+  "description": "Add and remove text from an adaptive list.",
   "tags": {
     "language": "Any",
     "type": "item",

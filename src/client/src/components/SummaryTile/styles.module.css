@@ -84,8 +84,8 @@
 }
 
 .tileInput {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 1.8em;
+  font-weight: lighter;
   background-color: var(--vscode-sideBar-background);
   border: none;
   max-width: 100%;

@@ -42,6 +42,7 @@ import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
