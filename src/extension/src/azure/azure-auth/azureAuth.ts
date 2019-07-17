@@ -210,7 +210,8 @@ export abstract class AzureAuth {
     return this.locationItemIntersect(cosmosLocations, this.locationsCache!);
   }
 
-  public static async getLocationsForFunctions(
+  // To get locations for Function App and Web App
+  public static async getLocationsForApp(
     subscriptionItem: SubscriptionItem
   ): Promise<LocationItem[]> {
     if (subscriptionItem === null || subscriptionItem === undefined) {
@@ -223,7 +224,6 @@ export abstract class AzureAuth {
       subscriptionItem.subscription.subscriptionId!
     );
     let functionsLocations: LocationItem[] = [];
-
     let webProvider = await azureResourceClient.providers.get(
       MICROSOFT_WEB_PROVIDER
     );
