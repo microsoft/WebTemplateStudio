@@ -117,6 +117,10 @@ export const azureMessages = defineMessages({
     defaultMessage:
       "A resource group is a container that holds related resources for an Azure solution"
   },
+  appServiceModalTitle: {
+    id: "appService.modalTitle",
+    defaultMessage: "Create App Service"
+  },
   appServiceTitle: {
     id: "appService.title",
     defaultMessage: "App Service"
@@ -130,6 +134,14 @@ export const azureMessages = defineMessages({
     id: "appService.cardBody",
     defaultMessage:
       "Quickly build, deploy, and scale your web apps with confidence."
+  },
+  runtimeStackLabel: {
+    id: "azureFunctionsModal.runtimeStackLabel",
+    defaultMessage: "Runtime Stack"
+  },
+  runtimeStackSubLabel: {
+    id: "azureFunctionsModal.runtimeStackSubLabel",
+    defaultMessage: "Your runtime stack is {runtimeStack}"
   }
 });
 

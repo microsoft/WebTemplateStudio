@@ -25,11 +25,12 @@ export const CONSTANTS = {
       "error.subscriptionNotFound",
       "No subscription found with this name."
     ),
-    FUNCTION_APP_NAME_NOT_AVAILABLE: (functionName: string) => {
+    APP_NAME_NOT_AVAILABLE: (appName: string, type: string) => {
       return localize(
         "error.functionAppNameNotAvailable",
-        "Function app name {0} is not available",
-        functionName
+        "{1} app name {0} is not available",
+        appName,
+        type
       );
     },
     LOGOUT_FAILED: localize(
@@ -72,10 +73,10 @@ export const CONSTANTS = {
       "error.functionsNoDuplicate",
       "No duplicates allowed for function names"
     ),
-    FUNCTIONS_INVALID_NAME: (name: string) => {
+    APP_INVALID_NAME: (name: string) => {
       return localize(
         "error.functionInvalidName",
-        "Invalid function name {0}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters",
+        "Invalid name {0}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters",
         name
       );
     },
@@ -141,10 +142,10 @@ export const CONSTANTS = {
         accountName
       );
     },
-    FUNCTION_APP_DEPLOYED: (appName: string) => {
+    APP_DEPLOYED: (appName: string, type: string) => {
       return localize(
         "info.functionAppDeployed",
-        "Function App {0} has been deployed and is ready to use!",
+        "{1} App {0} has been deployed and is ready to use!",
         appName
       );
     },
@@ -222,6 +223,11 @@ export const CONSTANTS = {
   },
   AZURE_LOCATION: {
     CENTRAL_US: "Central US"
+  },
+  APP_SERVICE_DOMAIN: ".azurewebsites.net",
+  APP_NAME: {
+    MAX_LENGTH: 60,
+    MIN_LENGTH: 3
   }
 };
 
@@ -230,10 +236,12 @@ export enum ExtensionCommand {
   Login = "login",
   Logout = "logout",
   Subscriptions = "subscriptions",
-  SubscriptionDataForCosmos = "subscription-data-for-cosmos",
   SubscriptionDataForFunctions = "subscription-data-for-functions",
+  SubscriptionDataForCosmos = "subscription-data-for-cosmos",
+  SubscriptionDataForAppService = "subscription-data-for-app-service",
   NameFunctions = "name-functions",
   NameCosmos = "name-cosmos",
+  NameAppService = "name-app-service",
   DeployFunctions = "deploy-functions",
   DeployCosmos = "deploy-cosmos",
   Generate = "generate",
@@ -322,6 +330,12 @@ export namespace DialogMessages {
 }
 
 export enum AzureResourceType {
+  AppService = "app-service",
   Cosmos = "cosmos",
   Functions = "functions"
+}
+
+export enum AppType {
+  Web = "Web",
+  Function = "Function"
 }
