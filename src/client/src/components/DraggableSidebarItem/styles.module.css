@@ -119,6 +119,10 @@
   border: none;
 }
 
+.servicesInput {
+  padding-left: 0;
+}
+
 .disabledInput {
   padding-left: 0px;
 }

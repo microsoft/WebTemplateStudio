@@ -83,11 +83,14 @@ const DraggableSidebarItem = ({
         </div>
       )}
       <div className={styles.draggablePage}>
-        <div className={styles.iconContainer}>
-          {!(withIndent || withLargeIndent) && (
-            <Reorder className={styles.reorderIcon} />
-          )}
-        </div>
+        {reorderSvgUrl && (
+          <div className={styles.iconContainer}>
+            {!(withIndent || withLargeIndent) && (
+              <Reorder className={styles.reorderIcon} />
+            )}
+          </div>
+        )}
+
         <div className={styles.errorStack}>
           <div
             className={classnames(customInputStyle, {
@@ -105,7 +108,8 @@ const DraggableSidebarItem = ({
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input, {
-                    [styles.azureFunctionNameInput]: isAzureFunction
+                    [styles.azureFunctionNameInput]: isAzureFunction,
+                    [styles.servicesInput]: !reorderSvgUrl
                   })}
                   value={page ? page.title : azureFunctionName!.title}
                   onChange={e => {

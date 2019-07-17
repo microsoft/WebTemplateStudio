@@ -8,6 +8,7 @@ import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalA
 
 import * as getSvg from "../../utils/getSvgUrl";
 import { ReactComponent as EditIcon } from "../../assets/edit.svg";
+import { ReactComponent as AzureFunctionsIcon } from "../assets/azurefunctions.svg";
 
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants";
