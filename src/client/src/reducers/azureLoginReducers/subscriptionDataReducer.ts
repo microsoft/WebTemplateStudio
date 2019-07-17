@@ -10,7 +10,7 @@ import AzureActionType from "../../actions/azureActions/azureActionType";
 }
 */
 
-interface ISubscriptionData {
+export interface ISubscriptionData {
   locations: any[];
   resourceGroups: any[];
 }

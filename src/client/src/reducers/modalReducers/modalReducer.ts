@@ -16,6 +16,7 @@ const openModal = (state: ModalState = initialState, action: RootAction) => {
       return action.payload;
     case AZURE_TYPEKEYS.SAVE_AZURE_FUNCTIONS_SETTINGS:
     case AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
+    case AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS:
     case MODAL_TYPEKEYS.CLOSE_MODALS:
       return initialState;
     default:
