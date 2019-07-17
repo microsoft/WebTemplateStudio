@@ -16,7 +16,7 @@ import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 import PrivacyModal from "./containers/PrivacyModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
-import { azureMessages } from "./mockData/azureServiceOptions";
+import AppServiceModal from "./containers/AppServiceModal";
 
 import {
   EXTENSION_COMMANDS,
@@ -32,6 +32,7 @@ import { updateOutputPathAction } from "./actions/wizardSelectionActions/updateP
 import {
   setAccountAvailability,
   setAppNameAvailabilityAction,
+  setSiteNameAvailabilityAction,
   IAvailabilityFromExtension
 } from "./actions/azureActions/setAccountAvailability";
 import AzureLogin from "./containers/AzureLogin";
@@ -68,7 +69,6 @@ import TopNavBar from "./components/TopNavBar";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
-import messages from "./containers/RightSidebar/strings";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
@@ -85,6 +85,9 @@ interface IDispatchProps {
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
   setAppNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => any;
+  setSiteNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
   setProjectPathValidation: (validation: any) => void;
@@ -183,6 +186,7 @@ class App extends React.Component<Props> {
           break;
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
+        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE:
           // Expect resource groups and locations on this request
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
@@ -202,9 +206,15 @@ class App extends React.Component<Props> {
           });
           this.props.setAzureValidationStatus(false);
           break;
-
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
           this.props.setAppNameAvailability({
+            isAvailable: message.payload.isAvailable,
+            message: message.payload.reason
+          });
+          this.props.setAzureValidationStatus(false);
+          break;
+        case EXTENSION_COMMANDS.NAME_APP_SERVICE:
+          this.props.setSiteNameAvailability({
             isAvailable: message.payload.isAvailable,
             message: message.payload.reason
           });
@@ -279,6 +289,7 @@ class App extends React.Component<Props> {
           <PostGenerationModal />
           <PrivacyModal />
           <ViewLicensesModal />
+          <AppServiceModal />
 
           <main
             className={classnames(appStyles.centerView, {
@@ -329,11 +340,16 @@ const mapDispatchToProps = (
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
   },
-  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => {
+  setCosmosResourceAccountNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => {
     dispatch(setAccountAvailability(isAvailableObject));
   },
-  setAppNameAvailability: (isAvailableObject: any) => {
+  setAppNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => {
     dispatch(setAppNameAvailabilityAction(isAvailableObject));
+  },
+  setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => {
+    dispatch(setSiteNameAvailabilityAction(isAvailableObject));
   },
   setProjectPathValidation: (validation: any) => {
     dispatch(setProjectPathValidation(validation));
