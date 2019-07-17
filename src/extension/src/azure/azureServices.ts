@@ -26,15 +26,13 @@ import {
   ValidationError
 } from "../errors";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import {
-  FunctionValidationResult,
-  ValidationHelper
-} from "./azure-functions/utils/validationHelper";
+import { AppNameValidationResult, NameValidator } from "./utils/nameValidator";
 import { Logger } from "../utils/logger";
 import {
   ResourceGroupDeploy,
   ResourceGroupSelection
 } from "./azure-resource-group/resourceGroupModule";
+import { AppServiceProvider } from "./azure-app-service/appServiceProvider";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -53,23 +51,33 @@ export class AzureServices extends WizardServant {
       AzureServices.sendFunctionsSubscriptionDataToClient
     ],
     [
+      ExtensionCommand.SubscriptionDataForAppService,
+      AzureServices.sendAppServiceSubscriptionDataToClient
+    ],
+    [
       ExtensionCommand.NameFunctions,
       AzureServices.sendFunctionNameValidationStatusToClient
     ],
     [
       ExtensionCommand.NameCosmos,
       AzureServices.sendCosmosNameValidationStatusToClient
+    ],
+    [
+      ExtensionCommand.NameAppService,
+      AzureServices.sendAppServiceNameValidationStatusToClient
     ]
   ]);
 
   private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
+  private static AzureAppServiceProvider = new AppServiceProvider();
   private static AzureResourceGroupProvider = new ResourceGroupDeploy();
 
   private static subscriptionItemList: SubscriptionItem[] = [];
 
-  private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
+  private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
+  private static userAppServiceSubsctiptionItemCache: SubscriptionItem;
 
   public static async performLoginForSubscriptions(
     message: any
@@ -110,6 +118,16 @@ export class AzureServices extends WizardServant {
     let success = await AzureAuth.logout();
     let payloadResponse: IPayloadResponse = { payload: success };
     return payloadResponse;
+  }
+  public static async sendAppServiceSubscriptionDataToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
+    return {
+      payload: await AzureServices.getSubscriptionData(
+        message.subscription,
+        AzureResourceType.AppService
+      )
+    };
   }
 
   public static async sendCosmosSubscriptionDataToClient(
@@ -171,9 +189,8 @@ export class AzureServices extends WizardServant {
         locationItems = await AzureAuth.getLocationsForCosmos(subscriptionItem);
         break;
       case AzureResourceType.Functions:
-        locationItems = await AzureAuth.getLocationsForFunctions(
-          subscriptionItem
-        );
+      case AzureResourceType.AppService:
+        locationItems = await AzureAuth.getLocationsForApp(subscriptionItem);
         break;
     }
 
@@ -191,6 +208,32 @@ export class AzureServices extends WizardServant {
       resourceGroups: await resourceGroupItems,
       locations: locations
     };
+  }
+
+  public static async sendAppServiceNameValidationStatusToClient(
+    message: any
+  ): Promise<IPayloadResponse> {
+    await AzureServices.updateAppServiceSubscriptionItemCache(
+      message.subscription
+    );
+    return await AzureServices.AzureAppServiceProvider.checkWebAppName(
+      message.appName,
+      AzureServices.userAppServiceSubsctiptionItemCache
+    )
+      .then((invalidReason: string | undefined) => {
+        return {
+          payload: {
+            isAvailable:
+              !invalidReason ||
+              invalidReason === undefined ||
+              invalidReason === "",
+            reason: invalidReason
+          }
+        };
+      })
+      .catch((error: Error) => {
+        throw error; //to log in telemetry
+      });
   }
 
   public static async sendCosmosNameValidationStatusToClient(
@@ -249,6 +292,26 @@ export class AzureServices extends WizardServant {
   /*
    * Caching is used for performance; when displaying live check on keystroke to wizard
    */
+
+  private static async updateAppServiceSubscriptionItemCache(
+    subscriptionLabel: string
+  ) {
+    if (
+      AzureServices.userAppServiceSubsctiptionItemCache === undefined ||
+      subscriptionLabel !==
+        AzureServices.userAppServiceSubsctiptionItemCache.label
+    ) {
+      let subscriptionItem = AzureServices.subscriptionItemList.find(
+        subscriptionItem => subscriptionItem.label === subscriptionLabel
+      );
+      if (subscriptionItem) {
+        AzureServices.userAppServiceSubsctiptionItemCache = subscriptionItem;
+      } else {
+        throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
+      }
+    }
+  }
+
   private static async updateCosmosDBSubscriptionItemCache(
     subscriptionLabel: string
   ): Promise<void> {
@@ -365,7 +428,7 @@ export class AzureServices extends WizardServant {
       functionNames: selections.functionNames
     };
 
-    let functionNamesValidation: FunctionValidationResult = ValidationHelper.validateFunctionNames(
+    let functionNamesValidation: AppNameValidationResult = NameValidator.validateFunctionNames(
       userFunctionsSelections.functionNames
     );
     if (!functionNamesValidation.isValid) {

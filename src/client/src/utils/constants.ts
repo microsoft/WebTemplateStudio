@@ -11,6 +11,11 @@ const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
 const MAX_PAGES_ALLOWED = 20;
 
+const WEB_TEMPLATE_STUDIO_LINKS = {
+  REPO: "https://github.com/Microsoft/WebTemplateStudio",
+  ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues"
+};
+
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
 
@@ -86,6 +91,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   FULL_STACK_APP: "FullStackWebApp",
   NODE_JS: "NodeJS",
   FLASK: "Flask",
+  PYTHON: "Python",
   REACT_JS: "ReactJS",
   REST_API: "RestAPI",
   VUE: "Vue",
@@ -114,9 +120,11 @@ const EXTENSION_COMMANDS = {
   GET_USER_STATUS: "get-user-status",
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
+  NAME_APP_SERVICE: "name-app-service",
   PROJECT_PATH_VALIDATION: "project-path-validation",
   SUBSCRIPTION_DATA_COSMOS: "subscription-data-for-cosmos",
   SUBSCRIPTION_DATA_FUNCTIONS: "subscription-data-for-functions",
+  SUBSCRIPTION_DATA_APP_SERVICE: "subscription-data-for-app-service",
   TRACK_PAGE_SWITCH: "track-page-switch",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
@@ -144,6 +152,7 @@ export {
   DEVELOPMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
   MAX_PAGES_ALLOWED,
+  WEB_TEMPLATE_STUDIO_LINKS,
   FRAMEWORK_TYPE,
   KEY_EVENTS
 };
