@@ -50,6 +50,7 @@ const About = ({ versions, intl }: Props) => {
         </a>
         <a
           className={styles.link}
+          target="_blank"
           href="https://github.com/Microsoft/WebTemplateStudio/issues"
         >
           {formatMessage(messages.reportIssue)}
