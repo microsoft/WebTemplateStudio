@@ -5,7 +5,6 @@
 }
 
 .centerView {
-  margin-top: -10px;
   display: flex;
   padding: 6vh;
   overflow: auto;

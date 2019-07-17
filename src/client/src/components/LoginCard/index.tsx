@@ -67,7 +67,7 @@ const LoginCard = ({
             >
               <FormattedMessage
                 id="loginCard.createAccount"
-                defaultMessage="Create Account"
+                defaultMessage="Create Free Account"
               />
             </a>
           </div>
