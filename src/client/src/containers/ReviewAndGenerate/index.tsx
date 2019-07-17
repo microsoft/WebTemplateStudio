@@ -12,6 +12,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
+import { WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants";
 
 interface IDispatchProps {
   openViewLicensesModal: () => any;
