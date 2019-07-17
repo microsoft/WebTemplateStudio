@@ -170,7 +170,7 @@ export class CoreTemplateStudio {
     const generateCommand = `${CONSTANTS.CLI.GENERATE_COMMAND_PREFIX} -d ${generatePayload}\n`;
     this._processCli.stdin.write(generateCommand);
     this.cliEvents.on(CONSTANTS.CLI.GENERATE_PROGRESS_STATE, (data) => {
-      payload.liveMessageHandler(data['status'], data['progress']);
+      payload.liveMessageHandler(data);
     });
     return await this.awaitCliEvent(CONSTANTS.CLI.GENERATE_COMPLETE_STATE);
   }
