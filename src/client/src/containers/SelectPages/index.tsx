@@ -49,7 +49,7 @@ type Props = IDispatchProps & ISelectPagesProps & IIntlProps;
 const messages = defineMessages({
   pagesTitleQuestion: {
     id: "selectPages.pagesTitleQuestion",
-    defaultMessage: "Select pages for your application."
+    defaultMessage: "Select pages for your application"
   }
 });
 

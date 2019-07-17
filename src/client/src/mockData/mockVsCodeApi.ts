@@ -43,8 +43,7 @@ const mockVsCodeApi = () => ({
                     name: "ReactJS",
                     displayName: "React",
                     icon: "",
-                    summary:
-                      "React is a JavaScript library created by Facebook to help developers build UI components.",
+                    summary: "JavaScript framework",
                     description:
                       "React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n",
                     author: "Facebook",
@@ -76,8 +75,7 @@ const mockVsCodeApi = () => ({
                   {
                     name: "Angular",
                     displayName: "Angular",
-                    summary:
-                      "Angular is an open source, front-end web application framework maintained by Google to develop single page applications.",
+                    summary: "JavaScript framework",
                     description:
                       "Angular is a platform that makes it easy to build applications with the web. Angular combines declarative templates, dependency injection, end to end tooling, and integrated best practices to solve development challenges. Angular empowers developers to build applications that live on the web, mobile, or the desktop.\r\n\r\nMore information about Angular can be found [here](https://angular.io).\r\n",
                     author: "Google",
@@ -109,8 +107,7 @@ const mockVsCodeApi = () => ({
                   {
                     name: "Vue",
                     displayName: "Vue.js",
-                    summary:
-                      "Vue.js is an open source, incrementally adoptable, front-end framework created by Evan You for building interactive web interfaces.",
+                    summary: "JavaScript framework",
                     description:
                       "Vue is a lightweight, progressive JavaScript framework for building user interfaces. Vue is heavily focused on the view layer, and is designed to be simple and flexible.\r\n\r\nMore information about Vue can be found [here](https://vuejs.org/).\r\n",
                     author: "Evan You",
@@ -141,8 +138,7 @@ const mockVsCodeApi = () => ({
                     name: "NodeJS",
                     displayName: "Node.js/Express",
                     icon: "",
-                    summary:
-                      "Node.js is an open-source, cross-platform JavaScript run-time environment that executes JavaScript outside of a browser.",
+                    summary: "JavaScript framework",
                     description:
                       "Node.js is an open source server environment based on JavaScript that helps you build fast and scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. Node.js runs across various platforms like Windows, Linux, Unix, and Mac OS X.\r\n\r\nMore information about Node.js can be found [here](https://nodejs.org).\r\n",
                     author: "Various",
@@ -179,8 +175,7 @@ const mockVsCodeApi = () => ({
                   {
                     name: "Flask",
                     displayName: "Flask",
-                    summary:
-                      "Flask is an open-source, lightweight Python Web Framework.",
+                    summary: "Python framework",
                     description:
                       "Flask is a python microframework with a small core for building web applications. It is based on [Werkzeug](https://www.palletsprojects.com/p/werkzeug/) and [Jinja](https://www.palletsprojects.com/p/jinja/). It is licensed under [BSD](https://github.com/pallets/flask/blob/master/LICENSE) license.\r\nIt is developed and supported by Pallets organization.\r\n\r\nMore information on Flask can be found [here](http://flask.pocoo.org/)\r\n",
                     author: "Various",
@@ -198,7 +193,7 @@ const mockVsCodeApi = () => ({
                     platforms: ["Web"],
                     languages: ["Any"],
                     tags: {
-                      version: "Python: 3.7.3, Flask: 1.0.3",
+                      version: "1.0.3",
                       preview: false,
                       enabled: true,
                       type: "backend"

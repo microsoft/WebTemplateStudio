@@ -5,15 +5,17 @@ import styles from "./styles.module.css";
 
 interface IProps {
   body?: string;
+  version?: string;
   formattedBody?: FormattedMessage.MessageDescriptor;
 }
 
 type Props = InjectedIntlProps & IProps;
 
-const CardBody = ({ body, formattedBody, intl }: Props) => {
+const CardBody = ({ body, version, formattedBody, intl }: Props) => {
   return (
     <div className={styles.body}>
-      {body || (formattedBody && intl.formatMessage(formattedBody))}
+      {version && <div>v{version}</div>}
+      {body || (formattedBody && intl.formatMessage(formattedBody))}{" "}
     </div>
   );
 };
