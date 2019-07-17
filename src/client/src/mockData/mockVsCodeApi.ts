@@ -247,7 +247,7 @@ const mockVsCodeApi = () => ({
                     name: "Grid",
                     defaultName: "Grid",
                     description:
-                      "A page displaying simple image and text components which are organized into a grid.",
+                      "Simple image and text components which are organized into a grid.",
                     richDescription:
                       "A page displaying simple image and text components which are organized into a grid. Grid pages are a system for creating order among elements in a website.",
                     author: "Microsoft",
@@ -275,8 +275,7 @@ const mockVsCodeApi = () => ({
                     emplateId: "wts.Page.React.List",
                     name: "List",
                     defaultName: "List",
-                    description:
-                      "The list page allows you to add and remove text from an adaptive list.",
+                    description: "Add and remove text from an adaptive list.",
                     richDescription:
                       "The list page allows you to add custom text in the form of an adaptive list. This pattern is frequently used for blog pages and messaging apps. If a database is selected from the Azure Cloud Services the list page will automatically connect to the deployed Azure database.",
                     author: "Microsoft",
@@ -305,7 +304,7 @@ const mockVsCodeApi = () => ({
                     name: "Master Detail",
                     defaultName: "Master Detail",
                     description:
-                      "The master-detail page has a master pane and a details pane for content.",
+                      "A master pane and a details pane for content.",
                     richDescription:
                       "The master-detail page has a master pane and a details pane for content. When an item in the master list is selected, the details pane is updated. This pattern is frequently used for email and address books.",
                     author: "Microsoft",
