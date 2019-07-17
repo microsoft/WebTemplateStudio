@@ -29,7 +29,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES
+  EXTENSION_MODULES,
+  WEB_TEMPLATE_STUDIO_LINKS
 } from "../../utils/constants";
 import messages from "./strings";
 
