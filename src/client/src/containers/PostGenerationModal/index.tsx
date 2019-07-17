@@ -15,7 +15,8 @@ import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  ROUTES
+  ROUTES,
+  WEB_TEMPLATE_STUDIO_LINKS
 } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -26,6 +27,7 @@ import { getOutputPath } from "../../selectors/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 interface LinksDict {
   [serviceId: string]: string;
@@ -73,7 +75,7 @@ const PostGenerationModal = ({
 }: Props) => {
   const { formatMessage } = intl;
   const LinkRenderer = (props: any) => (
-    <a href={props.href} className={styles.link}>
+    <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
       {props.children}
     </a>
   );
@@ -220,7 +222,8 @@ const PostGenerationModal = ({
       <div className={styles.sectionLine}>
         <a
           className={styles.link}
-          href="https://github.com/Microsoft/WebTemplateStudio/issues"
+          href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
+          onKeyUp={keyUpHandler}
         >
           {formatMessage(messages.help)}
         </a>
