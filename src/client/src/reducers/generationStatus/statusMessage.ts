@@ -16,8 +16,6 @@ const statusMessage = (
   switch (action.type) {
     case WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS_MESSAGE:
       return action.payload;
-    case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
-      return initialState;
     default:
       return state;
   }

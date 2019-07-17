@@ -12,6 +12,7 @@ import reducers from "./reducers";
 import { IntlProvider } from "react-intl";
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+
 const store = createStoreWithMiddleware(
   reducers,
   (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
