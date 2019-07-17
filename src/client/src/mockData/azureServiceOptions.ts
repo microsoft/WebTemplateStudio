@@ -38,12 +38,12 @@ export const azureMessages = defineMessages({
   azureFunctionsLongDescription: {
     id: "azureFunctions.longDescription",
     defaultMessage:
-      "Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure. Think of it as deploying functions that executes on pre-defined triggers instead of having to write and manage a full-fledged server yourself. One of the most commonly used triggers is an HTTPTrigger which is a function that runs whenever it receives an HTTP request. This is essentially the same as an API endpoint. Web Template Studio allows you to deploy a function app with multiple 'hello world' HTTPTrigger functions (maximum of 10) so you can get to writing your business logic as soon as possible."
+      "Deploy serverless web applications using an event-driven platform."
   },
   azureFunctionsCardBody: {
     id: "azureFunctions.cardBody",
     defaultMessage:
-      "Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure."
+      "Deploy serverless web applications using an event-driven platform."
   },
   cosmosTitle: {
     id: "cosmosDb.title",
@@ -57,7 +57,7 @@ export const azureMessages = defineMessages({
   cosmosCardBody: {
     id: "cosmosDb.cardBody",
     defaultMessage:
-      "Cosmos DB allows you to build and scale your application with a globally distributed, multi-model database service."
+      "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API."
   },
   azureModalChooseExisting: {
     id: "azureModal.chooseExisting",
