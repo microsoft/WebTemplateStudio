@@ -63,9 +63,7 @@ const messages = defineMessages({
   nameTooLong: {
     id: "projectNameError.nameTooLong",
     defaultMessage:
-      "Project name can only be " +
-      PROJECT_NAME_CHARACTER_LIMIT +
-      " characters long"
+      `Project name can only be {maxLength} characters long`
   },
   outputPathTitle: {
     id: "projectName.outputPathTitle",
@@ -157,7 +155,9 @@ const ProjectNameAndOutput = (props: Props) => {
         {projectNameMaxLength && (
           <div className={styles.errorMessage}>
             {props.intl.formatMessage(messages
-              .nameTooLong as FormattedMessage.MessageDescriptor)}
+              .nameTooLong as FormattedMessage.MessageDescriptor, 
+                {maxLength: PROJECT_NAME_CHARACTER_LIMIT}
+              )}
           </div>
         )}
       </div>
