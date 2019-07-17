@@ -89,7 +89,7 @@ export class GenerationExperience extends WizardServant {
       command: ExtensionCommand.GetOutputPath,
       payload: { outputPath: enginePayload.path }
     });
-    
+
     if (
       AzureServices.functionsSelectedNewResourceGroup(payload) ||
       AzureServices.cosmosDBSelectedNewResourceGroup(payload)

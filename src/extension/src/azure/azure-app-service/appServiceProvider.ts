@@ -23,7 +23,7 @@ export class AppServiceProvider {
   private createWebClient(
     userSubscriptionItem: SubscriptionItem
   ): WebSiteManagementClient {
-    let credentials: ServiceClientCredentials =
+    const credentials: ServiceClientCredentials =
       userSubscriptionItem.session.credentials;
 
     if (
@@ -50,7 +50,7 @@ export class AppServiceProvider {
       return error.message;
     }
 
-    let validationStatus: AppNameValidationResult = NameValidator.validateAppName(
+    const validationStatus: AppNameValidationResult = NameValidator.validateAppName(
       appName
     );
     if (!validationStatus.isValid) {
