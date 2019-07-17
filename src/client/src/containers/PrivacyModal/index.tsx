@@ -92,6 +92,7 @@ const PrivacyModal = (props: Props) => {
         {privacyStatementLink && (
           <a
             target={"_blank"}
+            rel="noreferrer noopener"
             className={styles.link}
             href={privacyStatementLink}
           >
@@ -100,6 +101,7 @@ const PrivacyModal = (props: Props) => {
         )}
         <a
           target={"_blank"}
+          rel="noreferrer noopener"
           href={redirectLink}
           onClick={() => {
             props.closeModal();
