@@ -52,7 +52,7 @@ export abstract class AzureAuth {
     }
   }
 
-  public static async promptUsersToSignOut() {
+  public static async promptUsersToLogout() {
     return await vscode.window
       .showInformationMessage(
         DialogMessages.logoutPrompt,
@@ -85,8 +85,7 @@ export abstract class AzureAuth {
     }
   }
   public static async logout(): Promise<boolean> {
-    const userConfirmation = await AzureAuth.promptUsersToSignOut();
-    console.log(userConfirmation.payload.signOut);
+    const userConfirmation = await AzureAuth.promptUsersToLogout();
     if (userConfirmation.payload.signOut) {
       this.initialize();
       if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
