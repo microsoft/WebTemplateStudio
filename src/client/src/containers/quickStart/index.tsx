@@ -49,10 +49,9 @@ type Props = IStateProps & IDispatchProps & RouteComponentProps;
 class QuickStart extends Component<Props> {
   constructor(props: Props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick = () => {
     const {
       vscode,
       isPreview,
@@ -70,7 +69,7 @@ class QuickStart extends Component<Props> {
     selectPages(PAGES_SELECTION);
     ROUTES_ARRAY.forEach(route => setRouteVisited(route));
     history.push(ROUTES.REVIEW_AND_GENERATE);
-  }
+  };
 
   render() {
     const { isValidNameAndProjectPath } = this.props;
@@ -79,8 +78,7 @@ class QuickStart extends Component<Props> {
         <p className={styles.description}>
           <FormattedMessage
             id="quickStart.description"
-            defaultMessage="If you are a returning user accelerate your web app process with quick
-            start."
+            defaultMessage="To get started quickly with your preferred frameworks and just a blank page, use quick start."
           />
         </p>
         <button
