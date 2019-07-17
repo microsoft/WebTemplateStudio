@@ -10,11 +10,8 @@
   "appService.modalTitle": "Create App Service",
   "appService.originalTitle": "App Service",
   "appService.title": "App Service",
-<<<<<<< HEAD
-=======
   "appServiceModal.siteNameLabel": "Site Name Dropdown",
   "appServiceModal.siteNameSubLabel": "Create a unique site name",
->>>>>>> dev
   "ariaLabels.pageNavigation": "Go to {pagesText} page",
   "azureFunctions.Title": "Azure Functions",
   "azureFunctions.cardBody": "Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure.",
