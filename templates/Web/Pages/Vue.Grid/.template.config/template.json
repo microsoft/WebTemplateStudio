@@ -4,7 +4,7 @@
   "name": "Grid",
   "groupIdentity": "wts.Page.Grid",
   "identity": "wts.Page.Vue.Grid",
-  "description": "A page displaying simple image and text components which are organized into a grid.",
+  "description": "Simple image and text components which are organized into a grid.",
   "tags": {
     "language": "Any",
     "type": "item",
