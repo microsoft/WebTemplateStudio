@@ -43,6 +43,7 @@ const About = ({ versions, intl }: Props) => {
         <a
           className={styles.link}
           target="_blank"
+          rel="noreferrer noopener"
           href={WEB_TEMPLATE_STUDIO_LINKS.REPO}
           onKeyUp={keyUpHandler}
         >
@@ -51,6 +52,7 @@ const About = ({ versions, intl }: Props) => {
         <a
           className={styles.link}
           target="_blank"
+          rel="noreferrer noopener"
           href="https://github.com/Microsoft/WebTemplateStudio/issues"
         >
           {formatMessage(messages.reportIssue)}
