@@ -95,6 +95,7 @@
   "selectFrontendFramework.selectFrontendFramework",
   "pages.limitedPagesMessage",
   "pages.overlimitPagesMessage",
+  "pages.noPageGeneration",
   "pages.maxPagesText",
   "selectPages.pagesTitleQuestion",
   "sortablePageList.hide",
