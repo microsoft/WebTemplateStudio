@@ -59,7 +59,7 @@ interface IStateProps {
   subscriptions: [];
   isValidatingName: boolean;
   siteNameAvailability: IAvailability;
-  selection: any;
+  selection: ISelectionInformation | undefined;
   chooseExistingRadioButtonSelected: boolean;
   selectedBackend: ISelected;
 }

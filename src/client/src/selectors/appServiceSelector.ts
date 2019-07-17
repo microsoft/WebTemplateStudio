@@ -8,11 +8,12 @@ interface ISelectedDropdowns {
   resourceGroup?: IDropDownOptionType;
   siteName?: IDropDownOptionType;
   internalName?: IDropDownOptionType;
+  chooseExistingRadioButtonSelected?: boolean;
 }
 
 export interface ISelectionInformation {
   dropdownSelection: ISelectedDropdowns;
-  previousFormData: ISelectedAppService;
+  previousFormData: ISelectedAppService | null;
 }
 
 /**
@@ -21,22 +22,34 @@ export interface ISelectionInformation {
  *
  * @param services An object of all the services available in Project Acorn
  */
-const getAppServiceSelectionInDropdownForm = (appState: any): any => {
-  const selection = appState.selection.services.appService.selection;
-  if (!_.isEmpty(selection)) {
+const getAppServiceSelectionInDropdownForm = (
+  appState: AppState
+): ISelectionInformation | undefined => {
+  const selection: ISelectedAppService | null =
+    appState.selection.services.appService.selection;
+  if (selection && !_.isEmpty(selection)) {
     const selectionInformation: ISelectionInformation = {
       dropdownSelection: {},
       previousFormData: selection
     };
-    for (const selectionKey in selection) {
-      if (selectionKey) {
-        // @ts-ignore to allow dynamic key selection
-        selectionInformation.dropdownSelection[selectionKey] = {
-          value: selection[selectionKey],
-          label: selection[selectionKey]
-        };
-      }
-    }
+
+    selectionInformation.dropdownSelection.internalName = {
+      value: selection.internalName,
+      label: selection.internalName
+    };
+    selectionInformation.dropdownSelection.siteName = {
+      value: selection.siteName,
+      label: selection.siteName
+    };
+    selectionInformation.dropdownSelection.resourceGroup = {
+      value: selection.resourceGroup,
+      label: selection.resourceGroup
+    };
+    selectionInformation.dropdownSelection.subscription = {
+      value: selection.subscription,
+      label: selection.subscription
+    };
+
     return selectionInformation;
   } else {
     return undefined;
