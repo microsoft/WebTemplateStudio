@@ -17,6 +17,10 @@ export const messages = defineMessages({
   cosmosOriginalTitle: {
     id: "cosmosDb.originalTitle",
     defaultMessage: "CosmosDB"
+  },
+  appServiceOriginalTitle: {
+    id: "appService.originalTitle",
+    defaultMessage: "App Service"
   }
 });
 

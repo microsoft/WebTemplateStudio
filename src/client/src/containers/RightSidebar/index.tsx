@@ -29,7 +29,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES
+  EXTENSION_MODULES,
+  WEB_TEMPLATE_STUDIO_LINKS
 } from "../../utils/constants";
 import messages from "./strings";
 
@@ -227,7 +228,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                     rel="noopener noreferrer"
                     onKeyUp={keyUpHandler}
                     className={styles.link}
-                    href="https://github.com/Microsoft/WebTemplateStudio/issues"
+                    href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
                   >
                     {formatMessage(messages.giveFeedback)}
                   </a>

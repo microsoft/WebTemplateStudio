@@ -14,6 +14,8 @@ const isPrivacyModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.PRIVACY_MODAL;
 const isViewLicensesModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.VIEW_LICENSES_MODAL;
+const isAppServiceModalOpen = (modal: ModalType): boolean =>
+  modal === MODAL_TYPES.APP_SERVICE_MODAL;
 
 const isCosmosDbModalOpenSelector = createSelector(
   getOpenModal,
@@ -34,9 +36,15 @@ const isPrivacyModalOpenSelector = createSelector(
   getOpenModal,
   isPrivacyModalOpen
 );
+
 const isViewLicensesModalOpenSelector = createSelector(
   getOpenModal,
   isViewLicensesModalOpen
+);
+
+const isAppServiceModalOpenSelector = createSelector(
+  getOpenModal,
+  isAppServiceModalOpen
 );
 
 export {
@@ -44,5 +52,6 @@ export {
   isCosmosDbModalOpenSelector,
   isPostGenModalOpenSelector,
   isPrivacyModalOpenSelector,
-  isViewLicensesModalOpenSelector
+  isViewLicensesModalOpenSelector,
+  isAppServiceModalOpenSelector
 };
