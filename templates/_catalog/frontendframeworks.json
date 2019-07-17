@@ -2,7 +2,7 @@
   {
     "name": "ReactJS",
     "displayName": "React",
-    "summary": "React is a JavaScript library created by Facebook to help developers build UI components.",
+    "summary": "JavaScript framework",
     "author": "Facebook",
     "order": "1",
     "licenses": "[ReactJS](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
@@ -16,7 +16,7 @@
   {
     "name": "Angular",
     "displayName": "Angular",
-    "summary": "Angular is an open source, front-end web application framework maintained by Google to develop single page applications.",
+    "summary": "JavaScript framework",
     "author": "Google",
     "order": "1",
     "licenses": "[Angular](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)",
@@ -30,7 +30,7 @@
   {
     "name": "Vue",
     "displayName": "Vue.js",
-    "summary": "Vue.js is an open source, incrementally adoptable, front-end framework created by Evan You for building interactive web interfaces.",
+    "summary": "JavaScript framework",
     "author": "Evan You",
     "order": "1",
     "licenses": "[Vue](https://github.com/vuejs/vue/blob/dev/LICENSE)  \n[Vue CLI](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)",
