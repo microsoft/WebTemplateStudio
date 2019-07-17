@@ -67,44 +67,45 @@ const messages = defineMessages({
 });
 
 const ProjectNameAndOutput = (props: Props) => {
+  const {
+    vscode,
+    outputPath,
+    projectPathValidation,
+    projectNameValidation,
+    projectName,
+    updateProjectName,
+    updateOutputPath
+  } = props;
   React.useEffect(() => {
-    if (props.vscode) {
-      if (props.projectPathValidation) {
-        props.vscode.postMessage({
+    if (vscode) {
+      if (
+        projectPathValidation ||
+        (outputPath !== "" && !projectPathValidation)
+      ) {
+        vscode.postMessage({
           module: EXTENSION_MODULES.VALIDATOR,
           command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
           track: false,
-          projectPath: props.outputPath,
-          projectName: props.projectName
+          projectPath: outputPath,
+          projectName: projectName
         });
       }
     }
-  }, [props.outputPath, props.projectName]);
-  React.useEffect(() => {
-    if (props.vscode) {
-      props.vscode.postMessage({
-        module: EXTENSION_MODULES.VALIDATOR,
-        command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-        track: false,
-        projectPath: props.outputPath,
-        projectName: props.projectName
-      });
-    }
-  }, [props.outputPath]);
+  }, [outputPath, projectName]);
   const handleProjectNameChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
     const element = e.currentTarget as HTMLInputElement;
-    props.updateProjectName(element.value);
+    updateProjectName(element.value);
   };
   const handleOutputPathChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
     const element = e.currentTarget as HTMLInputElement;
-    props.updateOutputPath(element.value);
+    updateOutputPath(element.value);
   };
   const handleSaveClick = () => {
-    props.vscode.postMessage({
+    vscode.postMessage({
       module: EXTENSION_MODULES.VALIDATOR,
       command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
       track: false
@@ -119,14 +120,15 @@ const ProjectNameAndOutput = (props: Props) => {
         <Input
           handleChange={handleProjectNameChange}
           ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
-          value={props.projectName}
+          value={projectName}
           maxLength={PROJECT_NAME_CHARACTER_LIMIT}
           autoFocus={true}
         />
-        {props.projectNameValidation.error && (
+        {projectNameValidation.error && (
           <div className={styles.errorMessage}>
-            {props.intl.formatMessage(props.projectNameValidation
-              .error as FormattedMessage.MessageDescriptor)}
+            {props.intl.formatMessage(
+              projectNameValidation.error as FormattedMessage.MessageDescriptor
+            )}
           </div>
         )}
       </div>
@@ -138,11 +140,9 @@ const ProjectNameAndOutput = (props: Props) => {
           <OutputPath
             handleChange={handleOutputPathChange}
             handleSaveClick={handleSaveClick}
-            value={props.outputPath}
-            validation={props.projectPathValidation}
-            isEmpty={
-              props.projectPathValidation && props.outputPath.length === 0
-            }
+            value={outputPath}
+            validation={projectPathValidation}
+            isEmpty={projectPathValidation && outputPath.length === 0}
           />
         </div>
       </div>
