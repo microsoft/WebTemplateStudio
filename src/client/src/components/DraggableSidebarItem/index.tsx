@@ -2,6 +2,9 @@ import classnames from "classnames";
 import * as React from "react";
 
 import { ReactComponent as Reorder } from "../../assets/reorder.svg";
+import { ReactComponent as AzureFunctionsIcon } from "../../assets/azurefunctions.svg";
+import { ReactComponent as CosmosDBIcon } from "../../assets/cosmosdb.svg";
+
 import { ReactComponent as CloseSVG } from "../../assets/cancel.svg";
 
 import { getSvg } from "../../utils/getSvgUrl";
@@ -12,6 +15,7 @@ import { KEY_EVENTS } from "../../utils/constants";
 
 import { injectIntl, InjectedIntl, defineMessages } from "react-intl";
 import { IFunctionName } from "../../containers/AzureFunctionsSelection";
+import azureFunctions from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
 const messages = defineMessages({
   changeItemName: {
@@ -27,6 +31,8 @@ const messages = defineMessages({
 const DraggableSidebarItem = ({
   page,
   text,
+  azureFunctionsSvg,
+  cosmosDBSvg,
   pageSvgUrl,
   reorderSvgUrl,
   itemTitle,
@@ -43,6 +49,8 @@ const DraggableSidebarItem = ({
 }: {
   page?: ISelected;
   text?: string;
+  azureFunctionsSvg?: boolean;
+  cosmosDBSvg?: boolean;
   reorderSvgUrl?: string;
   pageSvgUrl?: string;
   closeSvgUrl: string;
@@ -87,6 +95,8 @@ const DraggableSidebarItem = ({
           {!(withIndent || withLargeIndent) && (
             <Reorder className={styles.reorderIcon} />
           )}
+          {azureFunctionsSvg && <AzureFunctionsIcon />}
+          {cosmosDBSvg && <CosmosDBIcon />}
         </div>
         <div className={styles.errorStack}>
           <div

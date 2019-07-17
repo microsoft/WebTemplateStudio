@@ -17,9 +17,9 @@
 .textContainer,
 .pagesTextContainer {
   min-height: 38px;
-  background-color: var(--vscode-input-background);
   border: 0.5px solid var(--vscode-menu-foreground);
   color: var(--vscode-input-foreground);
+  font-size: 1.2em;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -45,6 +45,10 @@
 
 .pagesTextContainer {
   margin-left: 10px;
+}
+
+.pagesTextContainerServices {
+  margin-left: 0;
 }
 
 .errorTextContainer {
@@ -114,9 +118,13 @@
   outline: none;
   font-size: 1em;
   box-sizing: border-box;
-  background-color: var(--vscode-input-background);
+  background-color: var(--vscode-editor-background);
   color: var(--vscode-editor-foreground);
   border: none;
+}
+
+.servicesInput {
+  padding-left: 0;
 }
 
 .disabledInput {
