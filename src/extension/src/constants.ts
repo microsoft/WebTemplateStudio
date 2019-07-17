@@ -319,6 +319,10 @@ export namespace DialogMessages {
     "dialog.resetPagesPrompt",
     "Switching Frameworks will reset pages in your queue. Are you sure you want to proceed?"
   );
+  export const logoutPrompt: string = localize(
+    "dialog.logoutPrompt",
+    "Are you sure you want to Sign Out of your Azure Account?"
+  );
 }
 
 export enum AzureResourceType {
