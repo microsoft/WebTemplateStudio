@@ -37,7 +37,7 @@
 
 .container {
   display: flex;
-  justify-content: space-between;
+  border: 0.5px solid var(--vscode-editor-foreground);
 }
 
 .container:focus {
@@ -61,13 +61,12 @@
   width: 100%;
   font-size: 1em;
   background-color: var(--vscode-input-background);
-  border: 0.5px solid var(--vscode-editor-foreground);
+  /* border: 0.5px solid var(--vscode-editor-foreground); */
 }
 
 .browseButton {
   float: right;
   width: 15%;
-  margin-left: 0.5em;
   height: 42px;
   min-width: 80px;
   font-size: 1em;

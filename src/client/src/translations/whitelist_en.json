@@ -11,6 +11,7 @@
   "loginCard.createAccount",
   "outputPath.outputPath",
   "outputPath.ariaOutputPath",
+  "outputPath.browseButtonLabel",
   "selectableCard.details",
   "summaryTile.changeItemName",
   "topNavBar.ariaNavLabel",
