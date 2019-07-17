@@ -8,7 +8,7 @@ import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalA
 
 import * as getSvg from "../../utils/getSvgUrl";
 import { ReactComponent as EditIcon } from "../../assets/edit.svg";
-import { ReactComponent as AzureFunctionsIcon } from "../assets/azurefunctions.svg";
+import getSvgUrl, { withLocalPath } from "../../utils/getSvgUrl";
 
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants";
@@ -136,6 +136,7 @@ const AzureFunctionsSelection = ({
                 key={functionApp.appName.value + idx}
                 text={functionApp.appName.value}
                 closeSvgUrl={getSvg.getCancelSvg()}
+                azureFunctionsSvg={true}
                 withIndent={true}
                 idx={idx + 1}
                 handleCloseClick={removeAzureFunctionApp}

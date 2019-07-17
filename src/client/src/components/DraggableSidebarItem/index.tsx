@@ -2,6 +2,9 @@ import classnames from "classnames";
 import * as React from "react";
 
 import { ReactComponent as Reorder } from "../../assets/reorder.svg";
+import { ReactComponent as AzureFunctionsIcon } from "../../assets/azurefunctions.svg";
+import { ReactComponent as CosmosDBIcon } from "../../assets/cosmosdb.svg";
+
 import { ReactComponent as CloseSVG } from "../../assets/cancel.svg";
 
 import { getSvg } from "../../utils/getSvgUrl";
@@ -12,6 +15,7 @@ import { KEY_EVENTS } from "../../utils/constants";
 
 import { injectIntl, InjectedIntl, defineMessages } from "react-intl";
 import { IFunctionName } from "../../containers/AzureFunctionsSelection";
+import azureFunctions from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
 const messages = defineMessages({
   changeItemName: {
@@ -27,6 +31,8 @@ const messages = defineMessages({
 const DraggableSidebarItem = ({
   page,
   text,
+  azureFunctionsSvg,
+  cosmosDBSvg,
   pageSvgUrl,
   reorderSvgUrl,
   itemTitle,
@@ -43,6 +49,8 @@ const DraggableSidebarItem = ({
 }: {
   page?: ISelected;
   text?: string;
+  azureFunctionsSvg?: boolean;
+  cosmosDBSvg?: boolean;
   reorderSvgUrl?: string;
   pageSvgUrl?: string;
   closeSvgUrl: string;
@@ -83,14 +91,13 @@ const DraggableSidebarItem = ({
         </div>
       )}
       <div className={styles.draggablePage}>
-        {reorderSvgUrl && (
-          <div className={styles.iconContainer}>
-            {!(withIndent || withLargeIndent) && (
-              <Reorder className={styles.reorderIcon} />
-            )}
-          </div>
-        )}
-
+        <div className={styles.iconContainer}>
+          {!(withIndent || withLargeIndent) && (
+            <Reorder className={styles.reorderIcon} />
+          )}
+          {azureFunctionsSvg && <AzureFunctionsIcon />}
+          {cosmosDBSvg && <CosmosDBIcon />}
+        </div>
         <div className={styles.errorStack}>
           <div
             className={classnames(customInputStyle, {
@@ -108,8 +115,7 @@ const DraggableSidebarItem = ({
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input, {
-                    [styles.azureFunctionNameInput]: isAzureFunction,
-                    [styles.servicesInput]: !reorderSvgUrl
+                    [styles.azureFunctionNameInput]: isAzureFunction
                   })}
                   value={page ? page.title : azureFunctionName!.title}
                   onChange={e => {
