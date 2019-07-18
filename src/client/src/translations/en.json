@@ -100,6 +100,7 @@
   "newProject.body": "Give your full-stack project a name, choose where to create it, then click 'Next' to get started.",
   "newProject.header": "Create Your Web App in Seconds",
   "outputPath.ariaOutputPath": "Input for Output Path",
+  "outputPath.browseButtonLabel": "Browse",
   "outputPath.outputPath": "Output Path",
   "pageNameError.duplicateName": "Name has to be unique",
   "pageNameError.emptyName": "Name cannot be empty",
