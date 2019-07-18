@@ -11,6 +11,8 @@ interface IProps {
   placeholder?: string;
   maxLength?: number;
   autoFocus?: boolean;
+  readOnly?: boolean;
+  disabled?: boolean;
 }
 
 const Input = ({
@@ -20,7 +22,9 @@ const Input = ({
   customStyle,
   placeholder,
   maxLength,
-  autoFocus
+  autoFocus,
+  readOnly,
+  disabled
 }: IProps) => {
   return (
     <input
@@ -31,6 +35,8 @@ const Input = ({
       value={value}
       maxLength={maxLength}
       autoFocus={autoFocus}
+      readOnly={readOnly}
+      disabled={disabled}
     />
   );
 };
