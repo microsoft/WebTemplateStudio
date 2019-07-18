@@ -329,7 +329,7 @@ export namespace DialogMessages {
   );
   export const logoutPrompt: string = localize(
     "dialog.logoutPrompt",
-    "Are you sure you want to Sign Out of your Azure Account?"
+    "Are you sure you want to sign out of your Azure account?"
   );
 }
 
