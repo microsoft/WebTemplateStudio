@@ -12,6 +12,7 @@ import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import { IPrivacyModalData } from "../PrivacyModal";
 import Notification from "../../components/Notification";
 
 const messages = defineMessages({
@@ -77,7 +78,7 @@ interface IDependencyInfoProps {
 }
 
 interface IDispatchProps {
-  openPrivacyModal: (dependency: IDependency | undefined) => any;
+  openPrivacyModal: (dependency: IPrivacyModalData | undefined) => any;
 }
 
 type Props = IDependencyInfoProps & IDispatchProps;
@@ -118,9 +119,17 @@ class DependencyInfo extends React.Component<Props> {
           minimumVersion: dependencyMinimumVersion
         });
 
+    const privacyModalData = dependency
+      ? {
+          redirectLink: dependency.downloadLink,
+          redirectLinkLabel: dependency.downloadLinkLabel,
+          privacyStatementLink: dependency.privacyStatementLink
+        }
+      : undefined;
+
     const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-        openPrivacyModal(dependency);
+        openPrivacyModal(privacyModalData);
       }
     };
 
@@ -129,7 +138,7 @@ class DependencyInfo extends React.Component<Props> {
         role="button"
         tabIndex={0}
         onKeyDown={installed ? () => null : keyDownHandler}
-        onClick={() => openPrivacyModal(dependency)}
+        onClick={() => openPrivacyModal(privacyModalData)}
         className={classnames(styles.dependencyContainer, {
           [styles.disabled]: installed,
           [styles.borderGreen]: installed,
@@ -155,7 +164,7 @@ const mapStateToProps = (state: AppState): any => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  openPrivacyModal: (dependency: IDependency | undefined) => {
+  openPrivacyModal: (dependency: IPrivacyModalData | undefined) => {
     dispatch(ModalActions.openPrivacyModalAction(dependency));
   }
 });
