@@ -70,7 +70,6 @@ import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
-import { getHomeSplashSvg, getSummarySplashSvg } from "./utils/getSvgUrl";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
