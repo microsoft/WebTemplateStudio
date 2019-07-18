@@ -8,6 +8,7 @@ import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
 import { removeCosmosSelectionAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import { ICosmosDB } from "../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
+import { ReactComponent as EditIcon } from "../../assets/edit.svg";
 
 import { openCosmosDbModalAction } from "../../actions/modalActions/modalActions";
 
@@ -56,16 +57,14 @@ const CosmosDBSelection = ({
               onClick={openCosmosDbModal}
               onKeyDown={onEditKeyDownHandler}
             >
-              <FormattedMessage
-                id="cosmosDBSelection.edit"
-                defaultMessage="Edit"
-              />
+              <EditIcon className={styles.editIcon} />
             </div>
           </div>
           {cosmosSelection.selection.map((resource: any, idx: number) => {
             const { accountName } = resource;
             return (
               <DraggableSidebarItem
+                cosmosDB={true}
                 customInputStyle={styles.input}
                 key={accountName}
                 text={accountName}
