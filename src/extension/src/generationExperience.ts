@@ -80,7 +80,7 @@ export class GenerationExperience extends WizardServant {
     let resourceGroupQueue: Promise<any>[] = [];
 
     if (apiGenResult) {
-      enginePayload.path = apiGenResult.generationOutputPath;
+      enginePayload.path = apiGenResult.generationPath;
     } else {
       return { payload: undefined };
     }
