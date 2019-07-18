@@ -1,24 +1,22 @@
 .title {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 1.6em;
   text-align: left;
   margin: 15px;
   margin-bottom: 30px;
 }
 
 .container {
-  padding-top: 16.5px;
-  padding-bottom: 71px;
-  overflow: auto;
+  padding-bottom: 4vh;
+  padding-top: 1vh;
 }
-
 .button {
   margin-left: 1em;
   font-size: 1em;
 }
 
 .leftButton {
-  font-size: 1em;
+  font-size: 1.1em;
+  background-color: #0067b8;
 }
 
 .button:hover {
@@ -52,25 +50,33 @@
   background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #7f7f7f;
   box-sizing: border-box;
+  position: relative;
+  height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
 }
 
 .rightViewCroppedAllPages {
-  width: 400px;
+  width: 500px;
 }
 
 .rightViewCroppedSummaryPage {
-  width: 400px; /*change this width after top nav bar migration to change the width of the right side bar on summary page*/
+  width: 700px; /*change this width after top nav bar migration to change the width of the right side bar on summary page*/
 }
 
 .rightViewCropped {
-  height: calc(100vh - 104px);
   padding: 4vh 2vh;
 }
 
+.summaryContainer {
+  flex: 1;
+}
+
 .dropdownTitle {
-  font-weight: bold;
-  margin-bottom: 3px;
-  font-size: 14px;
+  margin-bottom: 0.7em;
+  font-size: 1.2em;
+  font-weight: 500;
 }
 
 .sidebarItem {
