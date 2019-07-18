@@ -13,6 +13,7 @@ import { ISelected } from "../../types/selected";
 
 import { ReactComponent as ShowIcon } from "../../assets/i-show.svg";
 import { ReactComponent as HideIcon } from "../../assets/i-hide.svg";
+import { ReactComponent as ResetIcon } from "../../assets/i-reset.svg";
 
 import { validateName } from "../../utils/validateName";
 
@@ -30,6 +31,7 @@ interface ISortablePageListProps {
 interface IStateProps {
   isSummaryPage?: boolean;
   selectionTitle?: string;
+  handleResetPages: () => void;
 }
 
 interface ISortableDispatchProps {
@@ -105,9 +107,7 @@ const SortablePageList = (props: Props) => {
     pagesWithOmittedIdx.splice(idx, 1);
     selectPages(pagesWithOmittedIdx);
   };
-  const hideOrShowText = isMinimized
-    ? props.intl!.formatMessage(messages.show)
-    : props.intl!.formatMessage(messages.hide);
+
   const DRAG_PIXEL_THRESHOLD = 1;
   return (
     <div>
@@ -120,18 +120,26 @@ const SortablePageList = (props: Props) => {
               pages.length >= 0 ? pages.length : ""
             })`}
           </div>
-          <button
-            className={styles.hideOrShow}
-            onClick={() => {
-              setMinimized(isMinimized ? false : true);
-            }}
-          >
-            {isMinimized ? (
-              <ShowIcon className={styles.viewIcon} />
-            ) : (
-              <HideIcon className={styles.viewIcon} />
-            )}
-          </button>
+          <div className={styles.pagesButtonContainer}>
+            <button
+              className={styles.resetButton}
+              onClick={props.handleResetPages}
+            >
+              <ResetIcon />
+            </button>
+            <button
+              className={styles.hideOrShow}
+              onClick={() => {
+                setMinimized(isMinimized ? false : true);
+              }}
+            >
+              {isMinimized ? (
+                <ShowIcon className={styles.viewIcon} />
+              ) : (
+                <HideIcon className={styles.viewIcon} />
+              )}
+            </button>
+          </div>
         </div>
       )}
       {!isMinimized && (

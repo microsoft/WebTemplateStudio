@@ -44,6 +44,7 @@ import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
 import keyUpHandler from "../../utils/keyUpHandler";
+import frontendFramework from "../../reducers/wizardSelectionReducers/selectFrontendFrameworkReducer";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -100,6 +101,21 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       }
     });
   }
+  public resetAllPages() {
+    const { pages, frontendFramework } = this.props.selection;
+    const { vscode } = this.props;
+    vscode.postMessage({
+      module: EXTENSION_MODULES.VSCODEUI,
+      command: EXTENSION_COMMANDS.RESET_PAGES,
+      track: false,
+      text: "Sending reset pages request...",
+      payload: {
+        internalName: frontendFramework.internalName,
+        pagesLength: pages.length
+      }
+    });
+  }
+
   public handleFrameworkChange(option: IDropDownOptionType) {
     const { frontendFramework, pages } = this.props.selection;
     const { vscode } = this.props;
@@ -196,7 +212,11 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   optionsData={backendOptions}
                 />
                 <div className={styles.sortablePages}>
-                  {showPages && <SortablePageList />}
+                  {showPages && (
+                    <SortablePageList
+                      handleResetPages={this.resetAllPages.bind(this)}
+                    />
+                  )}
                 </div>
                 {showServices && (
                   <div className={styles.sidebarItem}>
