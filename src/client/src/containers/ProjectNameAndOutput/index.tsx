@@ -72,7 +72,7 @@ const messages = defineMessages({
 });
 
 const ProjectNameAndOutput = (props: Props) => {
-  const [projectNameMaxLength, setprojectNameMaxLength] = React.useState(false);
+  const [projectNameMaxLength, setProjectNameMaxLength] = React.useState(false);
 
   const {
     vscode,
@@ -111,10 +111,10 @@ const ProjectNameAndOutput = (props: Props) => {
     const inputKeyCheck = /^[A-Za-z0-9_\- ]$/
 
     if (element.value.length === 50 && inputKeyCheck.test(e.key)) {
-      setprojectNameMaxLength(true);
+      setProjectNameMaxLength(true);
       e.stopPropagation();
     } else {
-      setprojectNameMaxLength(false);
+      setProjectNameMaxLength(false);
     }
   }
 
