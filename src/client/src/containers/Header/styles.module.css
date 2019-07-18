@@ -2,7 +2,6 @@
 .headerTitleSmall {
   position: absolute;
   width: 100%;
-  padding: 0px 24px;
   background-color: var(--vscode-input-background);
   border-bottom: 0.5px solid var(--vscode-header-border);
   z-index: 1000;
@@ -20,6 +19,7 @@
 .headerTitle,
 .headerTitleSmall {
   font-size: 1.7em;
+  padding-left: 24px;
 }
 
 .azureProfile {

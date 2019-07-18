@@ -1,11 +1,11 @@
 import * as React from "react";
-
-import { ReactComponent as SaveSVG } from "../../assets/folder.svg";
 import Input from "../Input";
 import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants";
 
 import styles from "./styles.module.css";
+import buttonStyles from "../../css/buttonStyles.module.css";
 import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
+import classNames from "classnames";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
 
@@ -17,6 +17,10 @@ const messages = defineMessages({
   ariaOutputPathLabel: {
     id: "outputPath.ariaOutputPath",
     defaultMessage: "Input for Output Path"
+  },
+  browseButtonLabel: {
+    id: "outputPath.browseButtonLabel",
+    defaultMessage: "Browse"
   }
 });
 
@@ -28,7 +32,6 @@ interface IProps {
   isEmpty: boolean;
   placeholder?: string;
 }
-
 const OutputPath = ({
   handleChange,
   handleSaveClick,
@@ -38,7 +41,7 @@ const OutputPath = ({
   intl,
   placeholder
 }: IProps & InjectedIntlProps) => {
-  const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleSaveClick();
     }
@@ -46,32 +49,39 @@ const OutputPath = ({
 
   return (
     <React.Fragment>
-      <div className={styles.errorStack}>
-        <div className={styles.outputPath}>
-          <Input
-            handleChange={handleChange}
-            ariaLabel={intl.formatMessage(messages.ariaOutputPathLabel)}
-            value={value}
-            customStyle={styles.pathInput}
-            placeholder={placeholder}
-          />
-          <SaveSVG
-            tabIndex={0}
-            className={styles.saveIcon}
-            onClick={handleSaveClick}
-            onKeyDown={handleKeyDown}
-          />
-        </div>
-        {(isEmpty && (
-          <div className={styles.errorMessage}>
-            {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
-              fieldId: intl.formatMessage(messages.outputPath)
-            })}
+      <div className={styles.container} tabIndex={0} onKeyDown={handleKeyDown}>
+        <div className={styles.errorStack}>
+          <div className={styles.outputPath} onClick={handleSaveClick}>
+            <Input
+              handleChange={handleChange}
+              ariaLabel={intl.formatMessage(messages.ariaOutputPathLabel)}
+              value={value}
+              customStyle={styles.pathInput}
+              placeholder={placeholder}
+              disabled={true}
+            />
           </div>
-        )) ||
-          (validation && !validation.isValid && (
-            <div className={styles.errorMessage}>{validation.error}</div>
-          ))}
+          {(isEmpty && (
+            <div className={styles.errorMessage}>
+              {intl.formatMessage(INTL_MESSAGES.EMPTY_FIELD, {
+                fieldId: intl.formatMessage(messages.outputPath)
+              })}
+            </div>
+          )) ||
+            (validation && !validation.isValid && (
+              <div className={styles.errorMessage}>{validation.error}</div>
+            ))}
+        </div>
+        <button
+          className={classNames(
+            buttonStyles.buttonHighlighted,
+            styles.browseButton
+          )}
+          onClick={handleSaveClick}
+          tabIndex={-1}
+        >
+          {intl.formatMessage(messages.browseButtonLabel)}
+        </button>
       </div>
     </React.Fragment>
   );
