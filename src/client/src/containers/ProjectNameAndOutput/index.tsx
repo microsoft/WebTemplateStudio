@@ -60,6 +60,11 @@ const messages = defineMessages({
     id: "projectName.ariaProjectName",
     defaultMessage: "Project Name Input"
   },
+  nameTooLong: {
+    id: "projectNameError.nameTooLong",
+    defaultMessage:
+      `Project name can only be {maxLength} characters long`
+  },
   outputPathTitle: {
     id: "projectName.outputPathTitle",
     defaultMessage: "Save To"
@@ -67,6 +72,8 @@ const messages = defineMessages({
 });
 
 const ProjectNameAndOutput = (props: Props) => {
+  const [projectNameMaxLength, setProjectNameMaxLength] = React.useState(false);
+
   const {
     vscode,
     outputPath,
@@ -76,6 +83,7 @@ const ProjectNameAndOutput = (props: Props) => {
     updateProjectName,
     updateOutputPath
   } = props;
+
   React.useEffect(() => {
     if (vscode) {
       if (
@@ -98,6 +106,18 @@ const ProjectNameAndOutput = (props: Props) => {
     const element = e.currentTarget as HTMLInputElement;
     updateProjectName(element.value);
   };
+  const validateKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const element = e.target as HTMLInputElement;
+    const inputKeyCheck = /^[A-Za-z0-9_\- ]$/
+
+    if (element.value.length === 50 && inputKeyCheck.test(e.key)) {
+      setProjectNameMaxLength(true);
+      e.stopPropagation();
+    } else {
+      setProjectNameMaxLength(false);
+    }
+  }
+
   const handleOutputPathChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
@@ -119,6 +139,7 @@ const ProjectNameAndOutput = (props: Props) => {
         </div>
         <Input
           handleChange={handleProjectNameChange}
+          handleKeyDown={validateKey}
           ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
           value={projectName}
           maxLength={PROJECT_NAME_CHARACTER_LIMIT}
@@ -128,6 +149,14 @@ const ProjectNameAndOutput = (props: Props) => {
           <div className={styles.errorMessage}>
             {props.intl.formatMessage(
               projectNameValidation.error as FormattedMessage.MessageDescriptor
+            )}
+          </div>
+        )}
+        {projectNameMaxLength && (
+          <div className={styles.errorMessage}>
+            {props.intl.formatMessage(messages
+              .nameTooLong as FormattedMessage.MessageDescriptor,
+              { maxLength: PROJECT_NAME_CHARACTER_LIMIT }
             )}
           </div>
         )}
