@@ -13,6 +13,7 @@
   "outputPath.ariaOutputPath",
   "outputPath.browseButtonLabel",
   "selectableCard.details",
+  "selectableCard.selected",
   "summaryTile.changeItemName",
   "topNavBar.ariaNavLabel",
   "topNavBar.frameworks",
@@ -95,6 +96,7 @@
   "pages.overlimitPagesMessage",
   "pages.maxPagesText",
   "selectPages.pagesTitleQuestion",
+  "selectPages.webAppTitleQuestion"
   "sortablePageList.hide",
   "sortablePageList.show",
   "sortablePageList.pages",
@@ -130,7 +132,6 @@
   "azureFunctions.originalTitle",
   "cosmosDb.originalTitle",
   "constants.emptyField",
-  "ariaLabels.pageNavigation",
   "pageNameError.duplicateName",
   "pageNameError.emptyName",
   "pageNameError.invalidRegex",
