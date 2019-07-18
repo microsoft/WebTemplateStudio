@@ -14,7 +14,6 @@
 
 .button {
   margin-right: 1em;
-  font-size: 1.4em;
   text-align: center;
 }
 
@@ -48,4 +47,10 @@
 .disabledOverlay {
   opacity: 0.5;
   outline: 0px;
+}
+
+@media (min-width: 730px) {
+  .button {
+    font-size: 1.4em;
+  }
 }
