@@ -70,6 +70,7 @@ import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
+import { getHomeSplashSvg, getSummarySplashSvg } from "./utils/getSvgUrl";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -291,7 +292,9 @@ class App extends React.Component<Props> {
           <main
             className={classnames(appStyles.centerView, {
               [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS,
-              [appStyles.centerViewAzurePage]: pathname === ROUTES.AZURE_LOGIN
+              [appStyles.centerViewAzurePage]: pathname === ROUTES.AZURE_LOGIN,
+              [appStyles.homeSplash]: pathname === ROUTES.NEW_PROJECT,
+              [appStyles.summarySplash]: pathname === ROUTES.REVIEW_AND_GENERATE
             })}
           >
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />

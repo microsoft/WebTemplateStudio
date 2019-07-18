@@ -17,6 +17,16 @@
   position: relative;
 }
 
+.homeSplash {
+  background: url(/static/media/homeSplash.ab13a631.svg) bottom right no-repeat
+    var(--vscode-editor-background);
+}
+
+.summarySplash {
+  background: url(/static/media/summarySplash.afb7d28f.svg) bottom left
+    no-repeat var(--vscode-editor-background);
+}
+
 .centerViewAzurePage {
   padding: 0;
 }
