@@ -86,19 +86,18 @@ export abstract class AzureAuth {
   }
   public static async logout(): Promise<boolean> {
     const userConfirmation = await AzureAuth.promptUsersToLogout();
-    if (userConfirmation.payload.signOut) {
-      this.initialize();
-      if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
-        await vscode.commands.executeCommand("azure-account.logout");
-        // Make sure it did not return from timeout
-        if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
-          throw new AuthorizationError(CONSTANTS.ERRORS.LOGOUT_FAILED);
-        }
-      }
-      return true;
-    } else {
+    if (!userConfirmation.payload.signOut) {
       return false;
     }
+    this.initialize();
+    if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
+      await vscode.commands.executeCommand("azure-account.logout");
+      // Make sure it did not return from timeout
+      if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
+        throw new AuthorizationError(CONSTANTS.ERRORS.LOGOUT_FAILED);
+      }
+    }
+    return true;
   }
   public static getEmail(): string {
     this.initialize();
