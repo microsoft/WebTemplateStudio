@@ -47,10 +47,6 @@
   margin-left: 10px;
 }
 
-.pagesTextContainerServices {
-  margin-left: 0;
-}
-
 .errorTextContainer {
   margin-left: 10px;
 }
@@ -121,10 +117,6 @@
   background-color: var(--vscode-editor-background);
   color: var(--vscode-editor-foreground);
   border: none;
-}
-
-.servicesInput {
-  padding-left: 0;
 }
 
 .disabledInput {

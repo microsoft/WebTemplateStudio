@@ -15,7 +15,6 @@ import { KEY_EVENTS } from "../../utils/constants";
 
 import { injectIntl, InjectedIntl, defineMessages } from "react-intl";
 import { IFunctionName } from "../../containers/AzureFunctionsSelection";
-import azureFunctions from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
 const messages = defineMessages({
   changeItemName: {
@@ -31,8 +30,8 @@ const messages = defineMessages({
 const DraggableSidebarItem = ({
   page,
   text,
-  azureFunctionsSvg,
-  cosmosDBSvg,
+  azureFunctions,
+  cosmosDB,
   pageSvgUrl,
   reorderSvgUrl,
   itemTitle,
@@ -49,8 +48,8 @@ const DraggableSidebarItem = ({
 }: {
   page?: ISelected;
   text?: string;
-  azureFunctionsSvg?: boolean;
-  cosmosDBSvg?: boolean;
+  azureFunctions?: boolean;
+  cosmosDB?: boolean;
   reorderSvgUrl?: string;
   pageSvgUrl?: string;
   closeSvgUrl: string;
@@ -95,8 +94,8 @@ const DraggableSidebarItem = ({
           {!(withIndent || withLargeIndent) && (
             <Reorder className={styles.reorderIcon} />
           )}
-          {azureFunctionsSvg && <AzureFunctionsIcon />}
-          {cosmosDBSvg && <CosmosDBIcon />}
+          {azureFunctions && <AzureFunctionsIcon />}
+          {cosmosDB && <CosmosDBIcon />}
         </div>
         <div className={styles.errorStack}>
           <div

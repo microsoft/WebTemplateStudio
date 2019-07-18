@@ -64,7 +64,7 @@ const CosmosDBSelection = ({
             const { accountName } = resource;
             return (
               <DraggableSidebarItem
-                cosmosDBSvg={true}
+                cosmosDB={true}
                 customInputStyle={styles.input}
                 key={accountName}
                 text={accountName}
