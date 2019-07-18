@@ -179,7 +179,10 @@ class App extends React.Component<Props> {
           }
           break;
         case EXTENSION_COMMANDS.AZURE_LOGOUT:
-          this.props.startLogOutToAzure();
+          // Update UI only if user sign out is confirmed by the extension
+          if (message.payload) {
+            this.props.startLogOutToAzure();
+          }
           break;
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
