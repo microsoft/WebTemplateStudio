@@ -42,6 +42,7 @@ import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import RootAction from "../../actions/ActionType";
 import { messages } from "./messages";
 import classNames from "classnames";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -142,7 +143,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       value: "location"
     },
     RUNTIME_STACK: {
-      label: props.intl.formatMessage(messages.runtimeStackLabel),
+      label: props.intl.formatMessage(azureModalMessages.runtimeStackLabel),
       value: "runtimeStack"
     },
     NUM_FUNCTIONS: {
@@ -335,6 +336,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
               tabIndex={disabled ? -1 : 0}
               className={styles.link}
               href={links[formSectionId]}
+              onKeyUp={keyUpHandler}
+
             >
               {rightHeader}
             </a>
@@ -601,9 +604,13 @@ const AzureFunctionsResourceModal = (props: Props) => {
               styles.leftHeader
             )}
           >
-            {props.intl.formatMessage(messages.runtimeStackLabel)}
+            {props.intl.formatMessage(azureModalMessages.runtimeStackLabel)}
           </div>
-          <div>{props.intl.formatMessage(messages.runtimeStackSubLabel)}</div>
+          <div>
+            {props.intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
+              runtimeStack: WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS
+            })}
+          </div>
         </div>
       </div>
       <button

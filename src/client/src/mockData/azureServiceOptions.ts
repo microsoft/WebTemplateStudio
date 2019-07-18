@@ -25,7 +25,7 @@ export const azureMessages = defineMessages({
   },
   azureLoginTitle: {
     id: "azureLogin.azureLoginTitle",
-    defaultMessage: "Add Azure Cloud Services to Your Project."
+    defaultMessage: "Add Azure Cloud Services to Your Project"
   },
   azureLoginInfo: {
     id: "azureLogin.azureLoginInfo",
@@ -116,6 +116,32 @@ export const azureMessages = defineMessages({
     id: "azureModal.resourceGroupSubLabel",
     defaultMessage:
       "A resource group is a container that holds related resources for an Azure solution"
+  },
+  appServiceModalTitle: {
+    id: "appService.modalTitle",
+    defaultMessage: "Create App Service"
+  },
+  appServiceTitle: {
+    id: "appService.title",
+    defaultMessage: "App Service"
+  },
+  appServiceLongDescription: {
+    id: "appService.longDescription",
+    defaultMessage:
+      "Quickly build, deploy, and scale web apps with confidence. Meet rigorous, enterprise-grade performance, security, and compliance requirements by using the fully managed platform for your operational and monitoring tasks."
+  },
+  appServiceCardBody: {
+    id: "appService.cardBody",
+    defaultMessage:
+      "Quickly build, deploy, and scale your web apps with confidence."
+  },
+  runtimeStackLabel: {
+    id: "azureFunctionsModal.runtimeStackLabel",
+    defaultMessage: "Runtime Stack"
+  },
+  runtimeStackSubLabel: {
+    id: "azureFunctionsModal.runtimeStackSubLabel",
+    defaultMessage: "Your runtime stack is {runtimeStack}"
   }
 });
 
@@ -125,6 +151,16 @@ export const servicesEnum = {
 };
 
 const azureServiceOptions: IOption[] = [
+  {
+    author: "Microsoft",
+    isPreview: true,
+    type: servicesEnum.HOSTING,
+    svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE),
+    title: azureMessages.appServiceTitle,
+    internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
+    longDescription: azureMessages.appServiceLongDescription,
+    body: azureMessages.appServiceCardBody
+  },
   {
     author: "Microsoft",
     type: servicesEnum.HOSTING,

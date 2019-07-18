@@ -26,6 +26,7 @@ interface IDispatchProps {
   openCosmosDbModal: () => any;
   setDetailPage: (detailPageInfo: IOption) => void;
   openAzureFunctionsModal: () => any;
+  openAppServiceModal: () => any;
 }
 
 interface IAzureLoginProps {
@@ -33,6 +34,8 @@ interface IAzureLoginProps {
   isCosmosDbModalOpen: boolean;
   azureFunctionsSelection: any;
   cosmosDbSelection: any;
+  appServiceSelection: any;
+  isPreview: boolean;
 }
 
 interface IState {
@@ -94,6 +97,8 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       return !_.isEmpty(this.props.azureFunctionsSelection);
     } else if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB) {
       return !_.isEmpty(this.props.cosmosDbSelection);
+    } else if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE) {
+      return !_.isEmpty(this.props.appServiceSelection);
     }
     return false;
   };
@@ -112,7 +117,9 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     const modalOpeners = {
       [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: this.props.openCosmosDbModal,
       [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: this.props
-        .openAzureFunctionsModal
+        .openAzureFunctionsModal,
+      [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: this.props
+        .openAppServiceModal
     };
     if (modalOpeners.hasOwnProperty(internalName)) {
       return modalOpeners[internalName];
@@ -124,7 +131,8 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     type: string | undefined,
     isLoggedIn: boolean,
     setDetailPage: any,
-    title: any
+    title: any,
+    isPreview: boolean
   ) {
     const { formatMessage } = this.props.intl;
     return (
@@ -140,7 +148,9 @@ class AzureSubscriptions extends React.Component<Props, IState> {
           </div>
           <div className={styles.servicesCategoryContainer}>
             {azureServiceOptions.map(option => {
-              if (option.type === type) {
+              // show cards with preview flag only if wizard is also in preview
+              const shouldShowCard = isPreview || !option.isPreview;
+              if (shouldShowCard && option.type === type) {
                 return (
                   <div
                     key={JSON.stringify(option.title)}
@@ -169,7 +179,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     );
   }
   public render() {
-    const { isLoggedIn, setDetailPage } = this.props;
+    const { isLoggedIn, setDetailPage, isPreview } = this.props;
     const serviceTypes = azureServiceOptions.map(option => option.type);
     const uniqueServiceTypes = [...new Set(serviceTypes)];
     return (
@@ -188,7 +198,8 @@ class AzureSubscriptions extends React.Component<Props, IState> {
             serviceType,
             isLoggedIn,
             setDetailPage,
-            categoryTitle
+            categoryTitle,
+            isPreview
           );
         })}
       </div>
@@ -196,12 +207,17 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   }
 }
 
-const mapStateToProps = (state: AppState): IAzureLoginProps => ({
-  isLoggedIn: state.azureProfileData.isLoggedIn,
-  isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
-  azureFunctionsSelection: state.selection.services.azureFunctions.selection,
-  cosmosDbSelection: state.selection.services.cosmosDB.selection
-});
+const mapStateToProps = (state: AppState): IAzureLoginProps => {
+  const { previewStatus } = state.wizardContent;
+  return {
+    isLoggedIn: state.azureProfileData.isLoggedIn,
+    isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
+    azureFunctionsSelection: state.selection.services.azureFunctions.selection,
+    cosmosDbSelection: state.selection.services.cosmosDB.selection,
+    appServiceSelection: state.selection.services.appService.selection,
+    isPreview: previewStatus
+  };
+};
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
@@ -218,6 +234,9 @@ const mapDispatchToProps = (
   },
   openAzureFunctionsModal: () => {
     dispatch(ModalActions.openAzureFunctionsModalAction());
+  },
+  openAppServiceModal: () => {
+    dispatch(ModalActions.openAppServiceModalAction());
   }
 });
 

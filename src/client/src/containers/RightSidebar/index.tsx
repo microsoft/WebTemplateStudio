@@ -29,7 +29,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES
+  EXTENSION_MODULES,
+  WEB_TEMPLATE_STUDIO_LINKS
 } from "../../utils/constants";
 import messages from "./strings";
 
@@ -42,6 +43,7 @@ import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -224,8 +226,9 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
+                    onKeyUp={keyUpHandler}
                     className={styles.link}
-                    href="https://github.com/Microsoft/WebTemplateStudio/issues"
+                    href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
                   >
                     {formatMessage(messages.giveFeedback)}
                   </a>

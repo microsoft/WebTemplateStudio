@@ -20,12 +20,14 @@ import { ReactComponent as Plus } from "../../assets/plus.svg";
 import { ReactComponent as Subtract } from "../../assets/subtract.svg";
 import plus from "../../assets/plus.svg";
 import subtract from "../../assets/subtract.svg";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 const SelectableCard = ({
   iconPath,
   iconStyles,
   title,
   body,
+  version,
   selected,
   cardNumber,
   onCardClick,
@@ -42,6 +44,7 @@ const SelectableCard = ({
   iconStyles: string;
   title: string;
   body: string;
+  version?: string;
   selected: boolean;
   option: IOption;
   cardNumber: number;
@@ -102,7 +105,11 @@ const SelectableCard = ({
         )}
         <div className={grid.row}>
           <div className={styles.body}>
-            <CardBody body={body} />
+            {version ? (
+              <CardBody body={body} version={version} />
+            ) : (
+              <CardBody body={body} />
+            )}
           </div>
         </div>
       </div>
@@ -111,6 +118,7 @@ const SelectableCard = ({
           onClick={detailsClickWrapper}
           className={classNames(styles.link)}
           to={ROUTES.PAGE_DETAILS}
+          onKeyUp={keyUpHandler}
         >
           <FormattedMessage
             id="selectableCard.details"
@@ -122,6 +130,7 @@ const SelectableCard = ({
             <button
               className={classNames(styles.cardCount, styles.countButton)}
               onClick={() => removePage(cardNumber)}
+              disabled={!clickCount}
             >
               {subtract && <Subtract className={styles.subtractSVG} />}
             </button>
@@ -135,12 +144,6 @@ const SelectableCard = ({
           >
             {(isPagesSelection && <div>{clickCount}</div>) || (
               <div className={styles.selectedText}>
-                <div>
-                  <FormattedMessage
-                    id="selectableCard.selected"
-                    defaultMessage="Selected"
-                  />
-                </div>
                 <Check className={styles.iconCheckMark} />
               </div>
             )}

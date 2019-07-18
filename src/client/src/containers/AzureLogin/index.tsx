@@ -25,6 +25,7 @@ import { withLocalPath } from "../../utils/getSvgUrl";
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
@@ -73,6 +74,7 @@ class AzureLogin extends React.Component<Props> {
             tabIndex={0}
             to={ROUTES.REVIEW_AND_GENERATE}
             className={styles.optionalFlag}
+            onKeyUp={keyUpHandler}
           >
             {azureMessages.azureSkipButton.defaultMessage}
           </Link>

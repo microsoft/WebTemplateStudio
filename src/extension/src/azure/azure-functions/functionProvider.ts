@@ -1,4 +1,4 @@
-import { ValidationHelper, FileHelper } from "./utils";
+import { FileHelper } from "./utils";
 import { ServiceClientCredentials } from "ms-rest";
 import { WebSiteManagementClient } from "azure-arm-website";
 import {
@@ -18,8 +18,8 @@ import {
 import { ResourceManager } from "../azure-arm/resourceManager";
 import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import { CONSTANTS } from "../../constants";
-import { FunctionValidationResult } from "./utils/validationHelper";
+import { CONSTANTS, AppType } from "../../constants";
+import { NameValidator, AppNameValidationResult } from "../utils/nameValidator";
 
 /*
  * Runtime for the deployment, can be either 'dotnet' or 'node'.
@@ -35,8 +35,6 @@ export interface RuntimeObject {
   value: Runtime;
   label: string;
 }
-
-const FUNCTION_APP_DOMAIN = ".azurewebsites.net";
 
 const MAX_STORAGE_NAME = 24;
 
@@ -314,7 +312,7 @@ export class FunctionProvider {
       return error.message;
     }
 
-    let validationStatus: FunctionValidationResult = ValidationHelper.validateFunctionAppName(
+    let validationStatus: AppNameValidationResult = NameValidator.validateAppName(
       appName
     );
     if (!validationStatus.isValid) {
@@ -326,14 +324,17 @@ export class FunctionProvider {
     }
 
     return await this.webClient
-      .checkNameAvailability(appName + FUNCTION_APP_DOMAIN, "Site", {
+      .checkNameAvailability(appName + CONSTANTS.APP_SERVICE_DOMAIN, "Site", {
         isFqdn: true
       })
       .then(res => {
         if (res.nameAvailable) {
           return undefined;
         } else {
-          return CONSTANTS.ERRORS.FUNCTION_APP_NAME_NOT_AVAILABLE(appName);
+          return CONSTANTS.ERRORS.APP_NAME_NOT_AVAILABLE(
+            appName,
+            AppType.Function
+          );
         }
       })
       .catch(error => {
