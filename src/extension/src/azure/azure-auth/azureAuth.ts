@@ -63,9 +63,7 @@ export abstract class AzureAuth {
           signOut: false
         };
         if (selection === DialogResponses.yes) {
-          userConfirmation = {
-            signOut: true
-          };
+          userConfirmation.signOut = false;
         }
         return { payload: userConfirmation };
       });
