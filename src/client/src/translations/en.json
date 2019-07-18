@@ -95,6 +95,8 @@
   "licenses.licenses": "Licenses",
   "licenses.viewLicenses": "View Licenses",
   "loginCard.createAccount": "Create Free Account",
+  "licenses.redirectLinkLabel": "{licenseName} license link",
+  "loginCard.createAccount": "Create Account",
   "loginCard.details": "Details",
   "loginCard.signIn": "Sign In",
   "newProject.body": "Give your full-stack project a name, choose where to create it, then click 'Next' to get started.",
