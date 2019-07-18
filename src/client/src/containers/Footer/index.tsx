@@ -12,6 +12,9 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES
 } from "../../utils/constants";
+
+import { PayloadMessages } from "../../../../../src/extension/src/constants";
+
 import { validateName } from "../../utils/validateName";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -113,7 +116,7 @@ class Footer extends React.Component<Props> {
       module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
       track: false,
-      text: "Sending generation info...",
+      text: PayloadMessages.sentGenerationInfoText,
       payload: {
         engine,
         selectedCosmos,

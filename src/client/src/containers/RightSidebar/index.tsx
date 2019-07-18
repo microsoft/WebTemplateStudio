@@ -29,9 +29,9 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
-  WEB_TEMPLATE_STUDIO_LINKS
+  EXTENSION_MODULES
 } from "../../utils/constants";
+import { PayloadMessages } from "../../../../../src/extension/src/constants";
 import messages from "./strings";
 
 import { ISelected } from "../../types/selected";
@@ -108,7 +108,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       module: EXTENSION_MODULES.VSCODEUI,
       command: EXTENSION_COMMANDS.RESET_PAGES,
       track: false,
-      text: "Sending reset pages request...",
+      text: PayloadMessages.resetPagesText,
       payload: {
         internalName: frontendFramework.internalName,
         pagesLength: pages.length
@@ -124,7 +124,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         module: EXTENSION_MODULES.VSCODEUI,
         command: EXTENSION_COMMANDS.RESET_PAGES,
         track: false,
-        text: "Sending framework change request...",
+        text: PayloadMessages.switchFrameworksText,
         payload: {
           internalName: option.value,
           pagesLength: pages.length

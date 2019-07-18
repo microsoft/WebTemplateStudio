@@ -329,6 +329,23 @@ export namespace DialogMessages {
   );
 }
 
+export namespace PayloadMessages {
+  export const resetPagesText: string = localize(
+    "payloadMessages.resetPages",
+    "Sending reset pages request..."
+  );
+
+  export const switchFrameworksText: string = localize(
+    "payloadMessages.switchFrameworks",
+    "Sending framework change request..."
+  );
+
+  export const sentGenerationInfoText: string = localize(
+    "payloadMessages.sendGenerationInfo",
+    "Sending generation info..."
+  );
+}
+
 export enum AzureResourceType {
   AppService = "app-service",
   Cosmos = "cosmos",

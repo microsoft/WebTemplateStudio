@@ -3,7 +3,8 @@ import { WizardServant, IPayloadResponse } from "../wizardServant";
 import {
   ExtensionCommand,
   DialogMessages,
-  DialogResponses
+  DialogResponses,
+  PayloadMessages
 } from "../constants";
 
 export class VSCodeUI extends WizardServant {
@@ -30,7 +31,10 @@ export class VSCodeUI extends WizardServant {
   }
 
   async promptUsersToResetPages(message: any) {
-    if (message.payload.pagesLength > 0) {
+    if (
+      message.payload.pagesLength > 0 &&
+      message.text == PayloadMessages.switchFrameworksText
+    ) {
       return await vscode.window
         .showInformationMessage(
           DialogMessages.resetPagesPrompt,

@@ -8,6 +8,7 @@ import { selectFrontendFramework as selectFrontendAction } from "../../actions/w
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
+import { PayloadMessages } from "../../../../../src/extension/src/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
@@ -63,7 +64,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
         module: EXTENSION_MODULES.VSCODEUI,
         command: EXTENSION_COMMANDS.RESET_PAGES,
         track: false,
-        text: "Sending framework change request...",
+        text: PayloadMessages.switchFrameworksText,
         payload: {
           internalName: option.internalName,
           pagesLength: selectedPages.length
