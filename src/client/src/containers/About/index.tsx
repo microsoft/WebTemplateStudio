@@ -39,7 +39,7 @@ const messages = defineMessages({
   },
   visitRepo: {
     id: "about.visitRepo",
-    defaultMessage: "Visit our Github"
+    defaultMessage: "Visit our GitHub"
   },
   feedbackRedirectLinkLabel: {
     id: "feedback.redirectLinkLabel",

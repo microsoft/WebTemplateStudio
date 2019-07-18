@@ -1,10 +1,10 @@
 {
   "FunctionNameError.invalidFunctionStartLetter": "Name may only start with letters or numbers",
   "FunctionNameError.invalidRegex": "Name may only contain letters, numbers or dashes",
-  "about.reportAnIssue": "Report an issue",
+  "about.reportAnIssue": "Report an Issue",
   "about.reportAnIssueLabel": "Give Feedback",
   "about.templatesVersion": "Templates version:",
-  "about.visitRepo": "Visit our Github",
+  "about.visitRepo": "Visit our GitHub",
   "about.wizardVersion": "Wizard version:",
   "appService.cardBody": "Quickly build, deploy, and scale your web apps with confidence.",
   "appService.longDescription": "Quickly build, deploy, and scale web apps with confidence. Meet rigorous, enterprise-grade performance, security, and compliance requirements by using the fully managed platform for your operational and monitoring tasks.",
