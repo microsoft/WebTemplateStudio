@@ -14,7 +14,7 @@ import Header from "./containers/Header";
 import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
-import PrivacyModal from "./containers/PrivacyModal";
+import RedirectModal from "./containers/RedirectModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
 import AppServiceModal from "./containers/AppServiceModal";
 
@@ -287,7 +287,7 @@ class App extends React.Component<Props> {
           <CosmosResourceModal />
           <AzureFunctionsModal />
           <PostGenerationModal />
-          <PrivacyModal />
+          <RedirectModal />
           <ViewLicensesModal />
           <AppServiceModal />
 
