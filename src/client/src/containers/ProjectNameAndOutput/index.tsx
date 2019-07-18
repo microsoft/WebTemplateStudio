@@ -73,7 +73,7 @@ const messages = defineMessages({
 
 const ProjectNameAndOutput = (props: Props) => {
   const [projectNameMaxLength, setprojectNameMaxLength] = React.useState(false);
-  
+
   const {
     vscode,
     outputPath,
@@ -107,17 +107,17 @@ const ProjectNameAndOutput = (props: Props) => {
     updateProjectName(element.value);
   };
   const validateKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      const element = e.target as HTMLInputElement;
-      const inputKeyCheck = /^[A-Za-z0-9_\- ]$/
+    const element = e.target as HTMLInputElement;
+    const inputKeyCheck = /^[A-Za-z0-9_\- ]$/
 
-      if(element.value.length === 50 && inputKeyCheck.test(e.key)){
-        setprojectNameMaxLength(true);
-        e.stopPropagation();
-      }else{
-        setprojectNameMaxLength(false);
-      }
+    if (element.value.length === 50 && inputKeyCheck.test(e.key)) {
+      setprojectNameMaxLength(true);
+      e.stopPropagation();
+    } else {
+      setprojectNameMaxLength(false);
     }
-  
+  }
+
   const handleOutputPathChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
@@ -155,9 +155,9 @@ const ProjectNameAndOutput = (props: Props) => {
         {projectNameMaxLength && (
           <div className={styles.errorMessage}>
             {props.intl.formatMessage(messages
-              .nameTooLong as FormattedMessage.MessageDescriptor, 
-                {maxLength: PROJECT_NAME_CHARACTER_LIMIT}
-              )}
+              .nameTooLong as FormattedMessage.MessageDescriptor,
+              { maxLength: PROJECT_NAME_CHARACTER_LIMIT }
+            )}
           </div>
         )}
       </div>

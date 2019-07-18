@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 
 interface IProps {
   handleChange: (e: React.SyntheticEvent<HTMLInputElement>) => any;
-  handleKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => any;
+  handleKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   ariaLabel: string;
   value?: string;
   customStyle?: string;
