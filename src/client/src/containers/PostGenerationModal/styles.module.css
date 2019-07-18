@@ -3,14 +3,14 @@
   font-size: 21px;
   font-weight: lighter;
   line-height: 19px;
-  color: #ffffff;
+  color: var(--vscode-editor-foreground);
 }
 .title {
   font-size: 21px;
   font-family: "Segoe UI";
   font-weight: lighter;
   line-height: 25px;
-  color: #ffffff;
+  color: var(--vscode-editor-foreground);
 }
 
 .section {
