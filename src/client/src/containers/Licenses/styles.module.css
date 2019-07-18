@@ -4,7 +4,7 @@
   font-weight: 300;
   margin-bottom: 6px;
   font-size: 24px;
-  color: #ffffff;
+  color: var(--vscode-editor-foreground);
 }
 
 .container {
