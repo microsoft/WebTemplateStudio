@@ -51,24 +51,39 @@ const About = ({ versions, intl, openRedirectModal }: Props) => {
   const { templatesVersion, wizardVersion } = versions;
   const { formatMessage } = intl;
 
-  const openRedirectNotice = () => {
-    openRedirectModal({
-      redirectLink: WEB_TEMPLATE_STUDIO_LINKS.REPO,
-      redirectLinkLabel: intl.formatMessage(messages.feedbackRedirectLinkLabel),
-      privacyStatementLink: "",
-      isThirdPartyLink: false
-    });
-  };
-
   return (
     <div className={styles.container}>
       <div>
-        <button className={styles.buttonToLink} onClick={openRedirectNotice}>
+        <button
+          className={styles.buttonToLink}
+          onClick={() =>
+            openRedirectModal({
+              redirectLink: WEB_TEMPLATE_STUDIO_LINKS.REPO,
+              redirectLinkLabel: intl.formatMessage(
+                messages.feedbackRedirectLinkLabel
+              ),
+              privacyStatementLink: "",
+              isThirdPartyLink: false
+            })
+          }
+        >
           {formatMessage(messages.visitRepo)}
         </button>
       </div>
       <div>
-        <button className={styles.buttonToLink} onClick={openRedirectNotice}>
+        <button
+          className={styles.buttonToLink}
+          onClick={() =>
+            openRedirectModal({
+              redirectLink: WEB_TEMPLATE_STUDIO_LINKS.ISSUES,
+              redirectLinkLabel: intl.formatMessage(
+                messages.feedbackRedirectLinkLabel
+              ),
+              privacyStatementLink: "",
+              isThirdPartyLink: false
+            })
+          }
+        >
           {formatMessage(messages.reportIssue)}
         </button>
       </div>
