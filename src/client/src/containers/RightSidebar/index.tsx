@@ -29,9 +29,9 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES
+  EXTENSION_MODULES,
+  PAYLOAD_MESSAGES_TEXT
 } from "../../utils/constants";
-import { PayloadMessages } from "../../../../../src/extension/src/constants";
 import messages from "./strings";
 
 import { ISelected } from "../../types/selected";
@@ -103,12 +103,12 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   }
   public resetAllPages() {
     const { pages, frontendFramework } = this.props.selection;
-    const { vscode } = this.props;
+    const { vscode, intl } = this.props;
     vscode.postMessage({
       module: EXTENSION_MODULES.VSCODEUI,
       command: EXTENSION_COMMANDS.RESET_PAGES,
       track: false,
-      text: PayloadMessages.resetPagesText,
+      text: intl.formatMessage(PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT),
       payload: {
         internalName: frontendFramework.internalName,
         pagesLength: pages.length
@@ -118,13 +118,13 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
 
   public handleFrameworkChange(option: IDropDownOptionType) {
     const { frontendFramework, pages } = this.props.selection;
-    const { vscode } = this.props;
+    const { vscode, intl } = this.props;
     if (frontendFramework.internalName !== option.value) {
       vscode.postMessage({
         module: EXTENSION_MODULES.VSCODEUI,
         command: EXTENSION_COMMANDS.RESET_PAGES,
         track: false,
-        text: PayloadMessages.switchFrameworksText,
+        text: intl.formatMessage(PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT),
         payload: {
           internalName: option.value,
           pagesLength: pages.length

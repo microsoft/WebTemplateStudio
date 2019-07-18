@@ -7,8 +7,11 @@ import { selectFrontendFramework as selectFrontendAction } from "../../actions/w
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
-import { PayloadMessages } from "../../../../../src/extension/src/constants";
+import {
+  EXTENSION_MODULES,
+  EXTENSION_COMMANDS,
+  PAYLOAD_MESSAGES_TEXT
+} from "../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
@@ -50,7 +53,8 @@ class SelectFrontEndFramework extends React.Component<Props> {
       vscode,
       selectedFrontendFramework,
       selectFrontendFramework,
-      selectedPages
+      selectedPages,
+      intl
     } = this.props;
 
     const { showPages } = this.props.isRoutesVisited;
@@ -64,7 +68,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
         module: EXTENSION_MODULES.VSCODEUI,
         command: EXTENSION_COMMANDS.RESET_PAGES,
         track: false,
-        text: PayloadMessages.switchFrameworksText,
+        text: intl.formatMessage(PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT),
         payload: {
           internalName: option.internalName,
           pagesLength: selectedPages.length

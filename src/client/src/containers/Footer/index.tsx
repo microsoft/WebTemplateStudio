@@ -10,10 +10,9 @@ import styles from "./styles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES
+  EXTENSION_MODULES,
+  PAYLOAD_MESSAGES_TEXT
 } from "../../utils/constants";
-
-import { PayloadMessages } from "../../../../../src/extension/src/constants";
 
 import { validateName } from "../../utils/validateName";
 
@@ -108,7 +107,8 @@ class Footer extends React.Component<Props> {
       selectedFunctions,
       functions,
       vscode,
-      openPostGenModal
+      openPostGenModal,
+      intl
     } = this.props;
     e.preventDefault();
     // @ts-ignore
@@ -116,7 +116,7 @@ class Footer extends React.Component<Props> {
       module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
       track: false,
-      text: PayloadMessages.sentGenerationInfoText,
+      text: intl.formatMessage(PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT),
       payload: {
         engine,
         selectedCosmos,
