@@ -53,7 +53,7 @@ const About = ({ versions, intl }: Props) => {
           className={styles.link}
           target="_blank"
           rel="noreferrer noopener"
-          href="https://github.com/Microsoft/WebTemplateStudio/issues"
+          href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
         >
           {formatMessage(messages.reportIssue)}
         </a>
