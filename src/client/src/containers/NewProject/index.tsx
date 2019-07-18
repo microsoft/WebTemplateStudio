@@ -48,7 +48,7 @@ const NewProject = ({
       <h1 className={styles.header}>
         <FormattedMessage
           id="newProject.header"
-          defaultMessage="Welcome to Web Template Studio"
+          defaultMessage="Create Your Web App in Seconds"
         />
       </h1>
       <div className={styles.body}>
