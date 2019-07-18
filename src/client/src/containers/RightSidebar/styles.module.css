@@ -62,7 +62,7 @@
 }
 
 .rightViewCroppedSummaryPage {
-  width: 500px; /*change this width after top nav bar migration to change the width of the right side bar on summary page*/
+  width: 700px; /*change this width after top nav bar migration to change the width of the right side bar on summary page*/
 }
 
 .rightViewCropped {
