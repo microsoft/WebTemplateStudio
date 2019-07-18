@@ -24,9 +24,13 @@ const messages = defineMessages({
     id: "about.wizardVersion",
     defaultMessage: "Wizard version:"
   },
-  about: {
-    id: "about.about",
-    defaultMessage: "About"
+  reportIssue: {
+    id: "about.reportAnIssue",
+    defaultMessage: "Report an issue"
+  },
+  visitRepo: {
+    id: "about.visitRepo",
+    defaultMessage: "Visit our Github"
   }
 });
 
@@ -35,21 +39,31 @@ const About = ({ versions, intl }: Props) => {
   const { formatMessage } = intl;
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{formatMessage(messages.about)}</div>
       <p className={styles.repo}>
         <a
           className={styles.link}
           target="_blank"
+          rel="noreferrer noopener"
           href={WEB_TEMPLATE_STUDIO_LINKS.REPO}
           onKeyUp={keyUpHandler}
         >
-          Web Template Studio
+          {formatMessage(messages.visitRepo)}
+        </a>
+        <a
+          className={styles.link}
+          target="_blank"
+          rel="noreferrer noopener"
+          href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
+        >
+          {formatMessage(messages.reportIssue)}
         </a>
       </p>
-      <div>
+      <div className={styles.wizardInfo}>
         {formatMessage(messages.templatesVersion) + ` ${templatesVersion}`}
       </div>
-      <div>{formatMessage(messages.wizardVersion) + ` ${wizardVersion}`}</div>
+      <div className={styles.wizardInfo}>
+        {formatMessage(messages.wizardVersion) + ` ${wizardVersion}`}
+      </div>
     </div>
   );
 };

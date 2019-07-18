@@ -2,6 +2,9 @@ import classnames from "classnames";
 import * as React from "react";
 
 import { ReactComponent as Reorder } from "../../assets/reorder.svg";
+import { ReactComponent as AzureFunctionsIcon } from "../../assets/azurefunctions.svg";
+import { ReactComponent as CosmosDBIcon } from "../../assets/cosmosdb.svg";
+
 import { ReactComponent as CloseSVG } from "../../assets/cancel.svg";
 
 import { getSvg } from "../../utils/getSvgUrl";
@@ -27,6 +30,8 @@ const messages = defineMessages({
 const DraggableSidebarItem = ({
   page,
   text,
+  azureFunctions,
+  cosmosDB,
   pageSvgUrl,
   reorderSvgUrl,
   itemTitle,
@@ -43,6 +48,8 @@ const DraggableSidebarItem = ({
 }: {
   page?: ISelected;
   text?: string;
+  azureFunctions?: boolean;
+  cosmosDB?: boolean;
   reorderSvgUrl?: string;
   pageSvgUrl?: string;
   closeSvgUrl: string;
@@ -87,6 +94,8 @@ const DraggableSidebarItem = ({
           {!(withIndent || withLargeIndent) && (
             <Reorder className={styles.reorderIcon} />
           )}
+          {azureFunctions && <AzureFunctionsIcon />}
+          {cosmosDB && <CosmosDBIcon />}
         </div>
         <div className={styles.errorStack}>
           <div

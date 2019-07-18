@@ -11,6 +11,7 @@
 .link {
   text-decoration: none;
   color: var(--vscode-textLink-foreground);
+  display: block;
 }
 
 .link:focus {
@@ -23,5 +24,9 @@
 
 .repo {
   font-size: 14px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+}
+
+.wizardInfo {
+  font-size: 0.9em;
 }

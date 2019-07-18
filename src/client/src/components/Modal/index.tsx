@@ -19,7 +19,7 @@ import { MODAL_TYPES, ModalType } from "../../actions/modalActions/typeKeys";
  */
 const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
   // default width
-  let CUSTOM_WIDTH = "40%";
+  let CUSTOM_WIDTH = "50%";
 
   // depends on modal type, customize width
   if (
@@ -27,7 +27,7 @@ const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
     (MODAL_TYPE === MODAL_TYPES.POST_GEN_MODAL ||
       MODAL_TYPE === MODAL_TYPES.VIEW_LICENSES_MODAL)
   ) {
-    CUSTOM_WIDTH = "30%";
+    CUSTOM_WIDTH = "40%";
   }
 
   return {
@@ -49,9 +49,11 @@ const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
       transform: "translate(-50%, -50%)",
       borderRadius: "3px",
       width: CUSTOM_WIDTH,
-      padding: "2.4%",
+      padding: "4vh",
       background: "var(--vscode-menu-background)",
-      border: "0.5px solid var(--vscode-editor-foreground)"
+      border: "0.5px solid var(--vscode-editor-foreground)",
+      maxWidth: "700px",
+      minWidth: "300px"
     }
   };
 };
