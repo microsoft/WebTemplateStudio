@@ -37,11 +37,14 @@
 .nextIcon {
   margin-left: 10px;
   height: 16px;
-  color: #ffffff;
 }
 
 .nextIcon path {
   fill: var(--vscode-editor-foreground);
+}
+
+.nextIconNotDisabled path {
+  fill: #ffffff;
 }
 
 .disabledOverlay {
