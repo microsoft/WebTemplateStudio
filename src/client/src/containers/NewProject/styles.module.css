@@ -5,6 +5,7 @@
   margin: 0 auto;
   margin-bottom: 5%;
   padding: 0px 80px;
+  z-index: 1;
 }
 
 .container > div {
