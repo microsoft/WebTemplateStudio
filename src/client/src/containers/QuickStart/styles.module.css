@@ -22,7 +22,6 @@
 
 button:disabled {
   opacity: 0.5;
-  border: 0px;
   cursor: default;
 }
 
