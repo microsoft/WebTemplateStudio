@@ -8,25 +8,22 @@
   margin: 15px;
 }
 
-.link {
-  text-decoration: none;
-  color: var(--vscode-textLink-foreground);
-  display: block;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.name {
-  margin-bottom: 1.5em;
-}
-
-.repo {
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
 .wizardInfo {
   font-size: 0.9em;
+}
+
+.buttonToLink {
+  text-decoration: none;
+  font-size: var(--vscode-font-size);
+  color: var(--vscode-textLink-foreground);
+  font-weight: var(--vscode-font-weight);
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: inherit;
+  margin-left: -5px;
+}
+
+.buttonToLink:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
