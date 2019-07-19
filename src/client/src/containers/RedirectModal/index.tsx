@@ -99,7 +99,7 @@ const RedirectModal = (props: Props) => {
   }
 
   let footerLink;
-  if (isThirdPartyLink && privacyStatementLink) {
+  if (privacyStatementLink) {
     footerLink = (
       <a
         target={"_blank"}
@@ -110,7 +110,7 @@ const RedirectModal = (props: Props) => {
         {intl.formatMessage(messages.privacyStatement)}
       </a>
     );
-  } else if (!isThirdPartyLink) {
+  } else {
     footerLink = (
       <button
         className={styles.buttonToLink}
