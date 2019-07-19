@@ -33,20 +33,11 @@ const ARIA_LABELS_NAVIGATION = defineMessages({
   }
 });
 
-const PAYLOAD_MESSAGES_TEXT = defineMessages({
-  RESET_PAGES_TEXT: {
-    id: "payloadMessages.resetPages",
-    defaultMessage: "Sending reset pages request..."
-  },
-  SWITCH_FRAMEWORKS_TEXT: {
-    id: "payloadMessages.switchFrameworks",
-    defaultMessage: "Sending framework change request..."
-  },
-  SENT_GENERATION_INFO_TEXT: {
-    id: "payloadMessages.sendGenerationInfo",
-    defaultMessage: "Sending generation info..."
-  }
-});
+const PAYLOAD_MESSAGES_TEXT = {
+  RESET_PAGES_TEXT: "Sending reset pages request...",
+  SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
+  SENT_GENERATION_INFO_TEXT: "Sending generation info..."
+};
 
 const ROUTES = {
   PAGE_DETAILS,

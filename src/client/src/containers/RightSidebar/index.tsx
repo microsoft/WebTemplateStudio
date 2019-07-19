@@ -101,12 +101,12 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   }
   public resetAllPages() {
     const { pages, frontendFramework } = this.props.selection;
-    const { vscode, intl } = this.props;
+    const { vscode } = this.props;
     vscode.postMessage({
       module: EXTENSION_MODULES.VSCODEUI,
       command: EXTENSION_COMMANDS.RESET_PAGES,
       track: false,
-      text: intl.formatMessage(PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT),
+      text: PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT,
       payload: {
         internalName: frontendFramework.internalName,
         pagesLength: pages.length
@@ -116,13 +116,13 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
 
   public handleFrameworkChange(option: IDropDownOptionType) {
     const { frontendFramework, pages } = this.props.selection;
-    const { vscode, intl } = this.props;
+    const { vscode } = this.props;
     if (frontendFramework.internalName !== option.value) {
       vscode.postMessage({
         module: EXTENSION_MODULES.VSCODEUI,
         command: EXTENSION_COMMANDS.RESET_PAGES,
         track: false,
-        text: intl.formatMessage(PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT),
+        text: PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT,
         payload: {
           internalName: option.value,
           pagesLength: pages.length

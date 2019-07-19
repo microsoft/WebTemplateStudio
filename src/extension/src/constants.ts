@@ -333,22 +333,11 @@ export namespace DialogMessages {
   );
 }
 
-export namespace PayloadMessages {
-  export const resetPagesText: string = localize(
-    "payloadMessages.resetPages",
-    "Sending reset pages request..."
-  );
-
-  export const switchFrameworksText: string = localize(
-    "payloadMessages.switchFrameworks",
-    "Sending framework change request..."
-  );
-
-  export const sentGenerationInfoText: string = localize(
-    "payloadMessages.sendGenerationInfo",
-    "Sending generation info..."
-  );
-}
+export const PAYLOAD_MESSAGES_TEXT = {
+  RESET_PAGES_TEXT: "Sending reset pages request...",
+  SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
+  SENT_GENERATION_INFO_TEXT: "Sending generation info..."
+};
 
 export enum AzureResourceType {
   AppService = "app-service",

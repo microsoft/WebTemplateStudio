@@ -53,8 +53,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
       vscode,
       selectedFrontendFramework,
       selectFrontendFramework,
-      selectedPages,
-      intl
+      selectedPages
     } = this.props;
 
     const { showPages } = this.props.isRoutesVisited;
@@ -68,7 +67,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
         module: EXTENSION_MODULES.VSCODEUI,
         command: EXTENSION_COMMANDS.RESET_PAGES,
         track: false,
-        text: intl.formatMessage(PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT),
+        text: PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT,
         payload: {
           internalName: option.internalName,
           pagesLength: selectedPages.length

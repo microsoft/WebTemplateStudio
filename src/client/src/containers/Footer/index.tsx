@@ -107,8 +107,7 @@ class Footer extends React.Component<Props> {
       selectedFunctions,
       functions,
       vscode,
-      openPostGenModal,
-      intl
+      openPostGenModal
     } = this.props;
     e.preventDefault();
     // @ts-ignore
@@ -116,7 +115,7 @@ class Footer extends React.Component<Props> {
       module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
       track: false,
-      text: intl.formatMessage(PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT),
+      text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
       payload: {
         engine,
         selectedCosmos,
