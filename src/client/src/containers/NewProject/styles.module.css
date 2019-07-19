@@ -2,9 +2,9 @@
   align-self: center;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  margin-bottom: 5%;
-  padding: 0px 80px;
+  margin-bottom: 3%;
+  padding-left: 5%;
+  z-index: 1;
 }
 
 .container > div {
@@ -43,5 +43,5 @@
 }
 
 .quickStartContainer {
-  margin-top: 5em;
+  margin-top: 1em;
 }
