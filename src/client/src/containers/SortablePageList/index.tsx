@@ -125,7 +125,7 @@ const SortablePageList = (props: Props) => {
               className={styles.resetButton}
               onClick={props.handleResetPages}
             >
-              <ResetIcon />
+              <ResetIcon className={styles.viewIcon} />
             </button>
             <button
               className={styles.hideOrShow}
