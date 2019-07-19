@@ -43,8 +43,6 @@ import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
-import keyUpHandler from "../../utils/keyUpHandler";
-import frontendFramework from "../../reducers/wizardSelectionReducers/selectFrontendFrameworkReducer";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -132,6 +130,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       });
     }
   }
+
   /**
    * Changes the title of the page type that was chosen
    * Saves changes into the redux
@@ -168,6 +167,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     } = this.props;
     const { formatMessage } = intl;
     const { frontendOptions, backendOptions } = contentOptions;
+
     return (
       <React.Fragment>
         {pathname !== ROUTES.PAGE_DETAILS && pathname !== ROUTES.NEW_PROJECT && (
@@ -229,18 +229,20 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               </div>
             }
             <div className={styles.container}>
-              <div className={styles.buttonContainer}>
-                <button
-                  className={classnames(
-                    buttonStyles.buttonDark,
-                    styles.button,
-                    styles.leftButton
-                  )}
-                  onClick={openViewLicensesModal}
-                >
-                  {formatMessage(messages.viewLicenses)}
-                </button>
-              </div>
+              {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+                <div className={styles.buttonContainer}>
+                  <button
+                    className={classnames(
+                      buttonStyles.buttonDark,
+                      styles.button,
+                      styles.leftButton
+                    )}
+                    onClick={openViewLicensesModal}
+                  >
+                    {formatMessage(messages.viewLicenses)}
+                  </button>
+                </div>
+              )}
               <About />
             </div>
           </div>

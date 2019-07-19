@@ -12,7 +12,7 @@ import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { IPrivacyModalData } from "../PrivacyModal";
+import { IRedirectModalData } from "../RedirectModal";
 import Notification from "../../components/Notification";
 
 const messages = defineMessages({
@@ -78,7 +78,7 @@ interface IDependencyInfoProps {
 }
 
 interface IDispatchProps {
-  openPrivacyModal: (dependency: IPrivacyModalData | undefined) => any;
+  openRedirectModal: (dependency: IRedirectModalData | undefined) => any;
 }
 
 type Props = IDependencyInfoProps & IDispatchProps;
@@ -93,7 +93,7 @@ class DependencyInfo extends React.Component<Props> {
       frameworkName,
       intl,
       dependenciesStore,
-      openPrivacyModal
+      openRedirectModal
     } = this.props;
     let dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
       frameworkName
@@ -128,13 +128,14 @@ class DependencyInfo extends React.Component<Props> {
       ? {
           redirectLink: dependency.downloadLink,
           redirectLinkLabel: dependency.downloadLinkLabel,
-          privacyStatementLink: dependency.privacyStatementLink
+          privacyStatementLink: dependency.privacyStatementLink,
+          isThirdPartyLink: true
         }
       : undefined;
 
     const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-        openPrivacyModal(privacyModalData);
+        openRedirectModal(privacyModalData);
       }
     };
 
@@ -143,7 +144,7 @@ class DependencyInfo extends React.Component<Props> {
         role="button"
         tabIndex={0}
         onKeyDown={installed ? () => null : keyDownHandler}
-        onClick={() => openPrivacyModal(privacyModalData)}
+        onClick={() => openRedirectModal(privacyModalData)}
         className={classnames(styles.dependencyContainer, {
           [styles.disabled]: installed,
           [styles.borderGreen]: installed,
@@ -169,8 +170,8 @@ const mapStateToProps = (state: AppState): any => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  openPrivacyModal: (dependency: IPrivacyModalData | undefined) => {
-    dispatch(ModalActions.openPrivacyModalAction(dependency));
+  openRedirectModal: (dependency: IRedirectModalData | undefined) => {
+    dispatch(ModalActions.openRedirectModalAction(dependency));
   }
 });
 
