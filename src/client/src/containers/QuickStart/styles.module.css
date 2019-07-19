@@ -1,6 +1,6 @@
 .quickStart {
-  background-color: var(--vscode-input-background);
-  border: 0.5px solid var(--vscode-editor-foreground);
+  background-color: var(--vscode-editorWidget-border);
+  border: none;
   color: inherit;
   font: 1.2em;
   cursor: pointer;
@@ -8,6 +8,7 @@
   margin-top: 20px;
   padding: 10px 20px;
   vertical-align: middle;
+  display: inline-flex;
 }
 
 .quickStart:focus {
@@ -28,6 +29,7 @@ button:disabled {
 .wand {
   height: 25px;
   margin-right: 10px;
+  margin-top: 3px;
 }
 
 .wand path {

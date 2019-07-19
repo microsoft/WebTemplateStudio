@@ -87,11 +87,15 @@ class QuickStart extends Component<Props> {
           onClick={this.handleClick}
           disabled={!isValidNameAndProjectPath}
         >
-          {quickStartWand && <QuickStartWand className={styles.wand} />}
-          <FormattedMessage
-            id="quickStart.button"
-            defaultMessage="Quick Start Web Project"
-          />
+          <div>
+            {quickStartWand && <QuickStartWand className={styles.wand} />}
+          </div>
+          <div>
+            <FormattedMessage
+              id="quickStart.button"
+              defaultMessage="Quick Start Web Project"
+            />
+          </div>
         </button>
       </div>
     );
