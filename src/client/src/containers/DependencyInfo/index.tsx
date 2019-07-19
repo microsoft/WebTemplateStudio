@@ -108,6 +108,11 @@ class DependencyInfo extends React.Component<Props> {
       dependencyStoreKey,
       dependencyMinimumVersion
     } = dependency;
+
+    if (dependenciesStore[dependencyStoreKey] === undefined) {
+      return null;
+    }
+
     const installed: boolean = dependenciesStore[dependencyStoreKey].installed;
 
     let dependencyMessage: string = installed
