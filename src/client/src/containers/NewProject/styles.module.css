@@ -2,9 +2,8 @@
   align-self: center;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  margin-bottom: 5%;
-  padding: 0px 80px;
+  margin-bottom: 1%;
+  padding-left: 5%;
 }
 
 .container > div {
