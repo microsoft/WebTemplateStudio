@@ -1,6 +1,7 @@
 .container {
   margin-right: 20%;
   width: 100%;
+  z-index: 1;
 }
 
 h1 {
