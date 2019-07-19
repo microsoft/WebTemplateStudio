@@ -90,10 +90,12 @@ class QuickStart extends Component<Props> {
           <div>
             {quickStartWand && <QuickStartWand className={styles.wand} />}
           </div>
-          <FormattedMessage
-            id="quickStart.button"
-            defaultMessage="Quick Start Web Project"
-          />
+          <div>
+            <FormattedMessage
+              id="quickStart.button"
+              defaultMessage="Quick Start Web Project"
+            />
+          </div>
         </button>
       </div>
     );
