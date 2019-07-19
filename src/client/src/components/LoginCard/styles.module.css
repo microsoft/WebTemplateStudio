@@ -1,8 +1,6 @@
 .loginContainer {
   padding: 4%;
   background-color: var(--vscode-sideBar-background);
-  border: 1px solid var(--vscode-editorGroup-border);
-  max-width: 850px;
 }
 
 .selectionContainer {
@@ -11,11 +9,12 @@
   justify-content: space-between;
   color: var(--vscode-textLink-foreground);
   font-size: var(--vscode-font-size);
-  width: 200px;
+  max-width: 250px;
 }
 
 .createAccountButton {
   text-decoration: none;
+  font-size: 1.2em;
   color: var(--vscode-textLink-foreground);
 }
 
@@ -30,12 +29,11 @@
 
 .computerSVG {
   padding: 15px 0px;
-  width: 300px;
   margin: 0 auto;
   display: block;
 }
 .signInButton {
-  font-size: 1.3em;
+  font-size: 1.2em;
   border: none;
 }
 
@@ -49,8 +47,8 @@
   padding: 40px 0px;
 }
 .cardTitle {
-  font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: 600;
   margin-bottom: 16px;
   display: flex;
   align-items: center;
@@ -62,7 +60,7 @@
 
 .details {
   color: var(--vscode-textLink-foreground);
-  font-size: 14px;
+  font-size: 1.2em;
   background: none;
   border: none;
   text-decoration: none;
@@ -80,6 +78,13 @@
 .icon {
   height: 36px;
   margin-right: 10px;
+}
+
+@media (min-width: 800px) {
+  .computerSVG {
+    width: 300px;
+    margin-left: 4em;
+  }
 }
 
 @media (min-width: 1000px) {

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { withRouter, RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import classnames from "classnames";
 
 import LoginCard from "../../components/LoginCard";
 import Title from "../../components/Title";
@@ -79,7 +80,11 @@ class AzureLogin extends React.Component<Props> {
             {azureMessages.azureSkipButton.defaultMessage}
           </Link>
         )}
-        <div className={styles.container}>
+        <div
+          className={classnames(styles.container, {
+            [styles.signedIn]: isLoggedIn
+          })}
+        >
           {isLoggedIn && (
             <div className={styles.azureProfile}>
               <div className={styles.profileName}>{email}</div>

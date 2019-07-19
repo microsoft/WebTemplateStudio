@@ -71,7 +71,7 @@ const messages = defineMessages({
   azureCosmosBody: {
     id: "azureSubscriptions.azureCosmosBody",
     defaultMessage:
-      "Cosmos DB allows you to build and scale your application with a globally distributed, multi-model database service."
+      "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API."
   },
   azureFunctions: {
     id: "azureSubscriptions.azureFunctions",
