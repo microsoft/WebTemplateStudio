@@ -7,7 +7,6 @@ import * as ModalActions from "../../actions/modalActions/modalActions";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 
-import Title from "../../components/Title";
 import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
@@ -32,10 +31,6 @@ const messages = defineMessages({
     id: "context.almostDone",
     defaultMessage:
       "You're almost done - review your project details on the right and make any necessary adjustments!"
-  },
-  giveFeedback: {
-    id: "about.reportAnIssueLabel",
-    defaultMessage: "Give Feedback"
   }
 });
 
@@ -47,27 +42,15 @@ const ReviewAndGenerate = (props: Props) => {
     <div className={styles.container}>
       <div className={styles.reviewContextContainer}>
         <div className={styles.selectionContainer}>
-          <Title>{formatMessage(messages.launchYourProject)}</Title>
-          {formatMessage(messages.almostDone)}
+          <h1>{formatMessage(messages.launchYourProject)}</h1>
+          <p>{formatMessage(messages.almostDone)}</p>
         </div>
         <div className={styles.buttonContainer}>
           <button
-            className={classnames(buttonStyles.buttonDark, styles.leftButton)}
+            className={classnames(buttonStyles.buttonDark, styles.button)}
             onClick={openViewLicensesModal}
           >
             {formatMessage(messages.viewLicenses)}
-          </button>
-          <button
-            className={classnames(buttonStyles.buttonDark, styles.button)}
-          >
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.link}
-              href="https://github.com/Microsoft/WebTemplateStudio/issues"
-            >
-              {formatMessage(messages.giveFeedback)}
-            </a>
           </button>
         </div>
       </div>

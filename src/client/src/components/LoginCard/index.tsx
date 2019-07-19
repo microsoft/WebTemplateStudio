@@ -11,6 +11,7 @@ import { FormattedMessage } from "react-intl";
 import { IOption } from "../../types/option";
 import { ROUTES } from "../../utils/constants";
 import { azureMessages } from "../../mockData/azureServiceOptions";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 interface IProps {
   cardTitle: string;
@@ -42,9 +43,13 @@ const LoginCard = ({
           <Link
             className={styles.details}
             onClick={() => handleDetailsClick(option)}
+            onKeyUp={keyUpHandler}
             to={ROUTES.PAGE_DETAILS}
           >
-            <FormattedMessage id="loginCard.details" defaultMessage="Details" />
+            <FormattedMessage
+              id="loginCard.details"
+              defaultMessage="Learn more"
+            />
           </Link>
         </div>
         <div className={styles.selectionContainer}>
@@ -61,10 +66,11 @@ const LoginCard = ({
             <a
               className={styles.createAccountButton}
               href="https://azure.microsoft.com/free/"
+              onKeyUp={keyUpHandler}
             >
               <FormattedMessage
                 id="loginCard.createAccount"
-                defaultMessage="Create Account"
+                defaultMessage="Create Free Account"
               />
             </a>
           </div>

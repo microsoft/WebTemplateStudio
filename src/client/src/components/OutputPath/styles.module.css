@@ -1,21 +1,3 @@
-.saveIcon {
-  height: 25px;
-  cursor: pointer;
-  padding-bottom: 1px;
-}
-
-.saveIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
-.saveIcon:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.saveIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
 .pathInput {
   outline: none;
   text-decoration: none;
@@ -25,6 +7,7 @@
   border: none;
   margin-right: 0.25em;
   padding-left: 0px;
+  cursor: pointer;
 }
 
 .input:focus {
@@ -52,8 +35,18 @@
   z-index: 1;
 }
 
+.container {
+  display: flex;
+  border: 0.5px solid var(--vscode-editor-foreground);
+}
+
+.container:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
 .errorStack {
-  width: 100%;
+  float: left;
+  width: 85%;
   display: block;
   position: relative;
 }
@@ -68,5 +61,13 @@
   width: 100%;
   font-size: 1em;
   background-color: var(--vscode-input-background);
-  border: 0.5px solid var(--vscode-editor-foreground);
+}
+
+.browseButton {
+  float: right;
+  width: 15%;
+  height: 42px;
+  min-width: 80px;
+  font-size: 1em;
+  outline: none !important;
 }

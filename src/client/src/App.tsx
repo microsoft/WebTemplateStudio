@@ -14,9 +14,12 @@ import Header from "./containers/Header";
 import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
-import PrivacyModal from "./containers/PrivacyModal";
+import RedirectModal from "./containers/RedirectModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
-import { azureMessages } from "./mockData/azureServiceOptions";
+import AppServiceModal from "./containers/AppServiceModal";
+
+import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
+import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 
 import {
   EXTENSION_COMMANDS,
@@ -32,6 +35,7 @@ import { updateOutputPathAction } from "./actions/wizardSelectionActions/updateP
 import {
   setAccountAvailability,
   setAppNameAvailabilityAction,
+  setSiteNameAvailabilityAction,
   IAvailabilityFromExtension
 } from "./actions/azureActions/setAccountAvailability";
 import AzureLogin from "./containers/AzureLogin";
@@ -68,7 +72,6 @@ import TopNavBar from "./components/TopNavBar";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
-import messages from "./containers/RightSidebar/strings";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
@@ -85,6 +88,9 @@ interface IDispatchProps {
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
   setAppNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => any;
+  setSiteNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
   setProjectPathValidation: (validation: any) => void;
@@ -176,10 +182,14 @@ class App extends React.Component<Props> {
           }
           break;
         case EXTENSION_COMMANDS.AZURE_LOGOUT:
-          this.props.startLogOutToAzure();
+          // Update UI only if user sign out is confirmed by the extension
+          if (message.payload) {
+            this.props.startLogOutToAzure();
+          }
           break;
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
+        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE:
           // Expect resource groups and locations on this request
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
@@ -199,9 +209,15 @@ class App extends React.Component<Props> {
           });
           this.props.setAzureValidationStatus(false);
           break;
-
         case EXTENSION_COMMANDS.NAME_FUNCTIONS:
           this.props.setAppNameAvailability({
+            isAvailable: message.payload.isAvailable,
+            message: message.payload.reason
+          });
+          this.props.setAzureValidationStatus(false);
+          break;
+        case EXTENSION_COMMANDS.NAME_APP_SERVICE:
+          this.props.setSiteNameAvailability({
             isAvailable: message.payload.isAvailable,
             message: message.payload.reason
           });
@@ -274,8 +290,9 @@ class App extends React.Component<Props> {
           <CosmosResourceModal />
           <AzureFunctionsModal />
           <PostGenerationModal />
-          <PrivacyModal />
+          <RedirectModal />
           <ViewLicensesModal />
+          <AppServiceModal />
 
           <main
             className={classnames(appStyles.centerView, {
@@ -283,6 +300,20 @@ class App extends React.Component<Props> {
               [appStyles.centerViewAzurePage]: pathname === ROUTES.AZURE_LOGIN
             })}
           >
+            {pathname === ROUTES.NEW_PROJECT ? (
+              <HomeSplashSVG
+                className={classnames(appStyles.splash, appStyles.homeSplash)}
+              />
+            ) : null}
+
+            {pathname === ROUTES.REVIEW_AND_GENERATE ? (
+              <SummarySplashSVG
+                className={classnames(
+                  appStyles.splash,
+                  appStyles.summarySplash
+                )}
+              />
+            ) : null}
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
             <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
             <Route
@@ -326,11 +357,16 @@ const mapDispatchToProps = (
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
   },
-  setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => {
+  setCosmosResourceAccountNameAvailability: (
+    isAvailableObject: IAvailabilityFromExtension
+  ) => {
     dispatch(setAccountAvailability(isAvailableObject));
   },
-  setAppNameAvailability: (isAvailableObject: any) => {
+  setAppNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => {
     dispatch(setAppNameAvailabilityAction(isAvailableObject));
+  },
+  setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => {
+    dispatch(setSiteNameAvailabilityAction(isAvailableObject));
   },
   setProjectPathValidation: (validation: any) => {
     dispatch(setProjectPathValidation(validation));

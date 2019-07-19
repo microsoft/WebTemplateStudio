@@ -25,7 +25,7 @@ export const azureMessages = defineMessages({
   },
   azureLoginTitle: {
     id: "azureLogin.azureLoginTitle",
-    defaultMessage: "Add Azure Cloud Services to Your Project."
+    defaultMessage: "Add Azure Cloud Services to Your Project"
   },
   azureLoginInfo: {
     id: "azureLogin.azureLoginInfo",
@@ -38,12 +38,12 @@ export const azureMessages = defineMessages({
   azureFunctionsLongDescription: {
     id: "azureFunctions.longDescription",
     defaultMessage:
-      "Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure. Think of it as deploying functions that executes on pre-defined triggers instead of having to write and manage a full-fledged server yourself. One of the most commonly used triggers is an HTTPTrigger which is a function that runs whenever it receives an HTTP request. This is essentially the same as an API endpoint. Web Template Studio allows you to deploy a function app with multiple 'hello world' HTTPTrigger functions (maximum of 10) so you can get to writing your business logic as soon as possible."
+      "Deploy serverless web applications using an event-driven platform."
   },
   azureFunctionsCardBody: {
     id: "azureFunctions.cardBody",
     defaultMessage:
-      "Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure."
+      "Deploy serverless web applications using an event-driven platform."
   },
   cosmosTitle: {
     id: "cosmosDb.title",
@@ -57,7 +57,7 @@ export const azureMessages = defineMessages({
   cosmosCardBody: {
     id: "cosmosDb.cardBody",
     defaultMessage:
-      "Cosmos DB allows you to build and scale your application with a globally distributed, multi-model database service."
+      "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API."
   },
   azureModalChooseExisting: {
     id: "azureModal.chooseExisting",
@@ -116,6 +116,32 @@ export const azureMessages = defineMessages({
     id: "azureModal.resourceGroupSubLabel",
     defaultMessage:
       "A resource group is a container that holds related resources for an Azure solution"
+  },
+  appServiceModalTitle: {
+    id: "appService.modalTitle",
+    defaultMessage: "Create App Service"
+  },
+  appServiceTitle: {
+    id: "appService.title",
+    defaultMessage: "App Service"
+  },
+  appServiceLongDescription: {
+    id: "appService.longDescription",
+    defaultMessage:
+      "Quickly build, deploy, and scale web apps with confidence. Meet rigorous, enterprise-grade performance, security, and compliance requirements by using the fully managed platform for your operational and monitoring tasks."
+  },
+  appServiceCardBody: {
+    id: "appService.cardBody",
+    defaultMessage:
+      "Quickly build, deploy, and scale your web apps with confidence."
+  },
+  runtimeStackLabel: {
+    id: "azureFunctionsModal.runtimeStackLabel",
+    defaultMessage: "Runtime Stack"
+  },
+  runtimeStackSubLabel: {
+    id: "azureFunctionsModal.runtimeStackSubLabel",
+    defaultMessage: "Your runtime stack is {runtimeStack}"
   }
 });
 
@@ -125,6 +151,16 @@ export const servicesEnum = {
 };
 
 const azureServiceOptions: IOption[] = [
+  {
+    author: "Microsoft",
+    isPreview: true,
+    type: servicesEnum.HOSTING,
+    svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE),
+    title: azureMessages.appServiceTitle,
+    internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
+    longDescription: azureMessages.appServiceLongDescription,
+    body: azureMessages.appServiceCardBody
+  },
   {
     author: "Microsoft",
     type: servicesEnum.HOSTING,

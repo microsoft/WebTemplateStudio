@@ -11,7 +11,7 @@ import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
-import { azureModalInitialState as cosmosInitialState } from "../../mockData/cosmosDbModalData";
+import { azureModalInitialState as cosmosInitialState } from "../../mockData/azureModalInitialStateData";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
@@ -42,6 +42,7 @@ import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
 import { messages } from "./messages";
 import classNames from "classnames";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -321,6 +322,7 @@ const CosmosResourceModal = (props: Props) => {
               tabIndex={disabled! ? -1 : 0}
               className={styles.link}
               href={links[formSectionId]}
+              onKeyUp={keyUpHandler}
             >
               {rightHeader}
             </a>

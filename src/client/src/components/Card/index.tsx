@@ -10,6 +10,7 @@ import styles from "./styles.module.css";
 import { IOption } from "../../types/option";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/constants";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 interface IProps {
   buttonText: string;
@@ -17,7 +18,6 @@ interface IProps {
   disabled?: boolean;
   handleButtonClick: () => void;
   handleDetailsClick: (detailPageInfo: IOption) => void;
-  useNormalButtons?: boolean;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -28,7 +28,6 @@ export const Card = ({
   disabled,
   handleButtonClick,
   handleDetailsClick,
-  useNormalButtons,
   intl
 }: Props) => {
   const formattedBody = option.body as FormattedMessage.MessageDescriptor;
@@ -53,15 +52,16 @@ export const Card = ({
             className={styles.details}
             to={ROUTES.PAGE_DETAILS}
             tabIndex={disabled! ? -1 : 0}
+            onKeyUp={keyUpHandler}
           >
-            <FormattedMessage id="card.details" defaultMessage="Details" />
+            <FormattedMessage id="card.details" defaultMessage="Learn more" />
           </Link>
           <button
             disabled={disabled!}
             onClick={handleButtonClick}
             className={classnames(styles.signInButton, {
-              [buttonStyles.buttonHighlighted]: !useNormalButtons,
-              [buttonStyles.buttonDark]: useNormalButtons,
+              [buttonStyles.buttonDark]: disabled,
+              [buttonStyles.buttonHighlighted]: !disabled,
               [buttonStyles.buttonCursorDefault]: disabled,
               [buttonStyles.buttonCursorPointer]: !disabled
             })}

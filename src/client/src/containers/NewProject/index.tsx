@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import ProjectNameAndOutput from "../ProjectNameAndOutput";
+import QuickStart from "../QuickStart";
 import { FormattedMessage } from "react-intl";
 
 import { updateProjectNameAction } from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
@@ -48,7 +49,7 @@ const NewProject = ({
       <h1 className={styles.header}>
         <FormattedMessage
           id="newProject.header"
-          defaultMessage="Welcome to Web Template Studio"
+          defaultMessage="Create Your Web App in Seconds"
         />
       </h1>
       <div className={styles.body}>
@@ -59,6 +60,9 @@ const NewProject = ({
       </div>
       <div className={styles.projectDetailsContainer}>
         <ProjectNameAndOutput />
+      </div>
+      <div className={styles.quickStartContainer}>
+        <QuickStart />
       </div>
     </div>
   );

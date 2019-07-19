@@ -114,6 +114,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       });
     }
   }
+
   /**
    * Changes the title of the page type that was chosen
    * Saves changes into the redux
@@ -150,6 +151,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     } = this.props;
     const { formatMessage } = intl;
     const { frontendOptions, backendOptions } = contentOptions;
+
     return (
       <React.Fragment>
         {pathname !== ROUTES.PAGE_DETAILS && pathname !== ROUTES.NEW_PROJECT && (
@@ -163,7 +165,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             })}
           >
             {
-              <div>
+              <div className={styles.summaryContainer}>
                 <div className={styles.title}>
                   {formatMessage(messages.yourProjectDetails)}
                 </div>
@@ -207,30 +209,20 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               </div>
             }
             <div className={styles.container}>
-              <div className={styles.buttonContainer}>
-                <button
-                  className={classnames(
-                    buttonStyles.buttonDark,
-                    styles.button,
-                    styles.leftButton
-                  )}
-                  onClick={openViewLicensesModal}
-                >
-                  {formatMessage(messages.viewLicenses)}
-                </button>
-                <button
-                  className={classnames(buttonStyles.buttonDark, styles.button)}
-                >
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.link}
-                    href="https://github.com/Microsoft/WebTemplateStudio/issues"
+              {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+                <div className={styles.buttonContainer}>
+                  <button
+                    className={classnames(
+                      buttonStyles.buttonDark,
+                      styles.button,
+                      styles.leftButton
+                    )}
+                    onClick={openViewLicensesModal}
                   >
-                    {formatMessage(messages.giveFeedback)}
-                  </a>
-                </button>
-              </div>
+                    {formatMessage(messages.viewLicenses)}
+                  </button>
+                </div>
+              )}
               <About />
             </div>
           </div>

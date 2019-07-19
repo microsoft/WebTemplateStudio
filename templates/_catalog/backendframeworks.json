@@ -2,7 +2,7 @@
   {
     "name": "NodeJS",
     "displayName": "Node.js/Express",
-    "summary": "Node.js is an open-source, cross-platform JavaScript run-time environment that executes JavaScript outside of a browser.",
+    "summary": "JavaScript framework",
     "author": "Various",
     "order": "1",
     "licenses": "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE)  \n[ExpressJS](https://github.com/expressjs/express/blob/master/LICENSE)  \n[ExpressJS Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
@@ -16,14 +16,14 @@
   {
     "name": "Flask",
     "displayName": "Flask",
-    "summary": "Flask is an open-source, lightweight Python Web Framework.",
+    "summary": "Python framework",
     "author": "Various",
     "order": "1",
     "licenses": "[Flask](https://github.com/pallets/flask/blob/master/LICENSE)",
     "platforms": ["Web"],
     "languages": ["Any"],
     "tags": {
-      "version": "Python: 3.7.3, Flask: 1.0.3",
+      "version": "1.0.3",
       "preview": false
     }
   }

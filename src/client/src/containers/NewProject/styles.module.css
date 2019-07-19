@@ -2,9 +2,9 @@
   align-self: center;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  margin-bottom: 10%;
-  padding: 0px 80px;
+  margin-bottom: 3%;
+  padding-left: 5%;
+  z-index: 1;
 }
 
 .container > div {
@@ -40,4 +40,8 @@
 
 .getStarted {
   align-self: flex-end;
+}
+
+.quickStartContainer {
+  margin-top: 1em;
 }

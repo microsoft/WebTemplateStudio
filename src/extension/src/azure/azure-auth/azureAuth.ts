@@ -1,12 +1,12 @@
 import { AzureAccount, AzureSession } from "./azure-account.api"; // Other extensions need to copy this .d.ts to their repository.
-import { extensions, commands } from "vscode";
+import * as vscode from "vscode";
 import {
   SubscriptionModels,
   SubscriptionClient as SC,
   ResourceManagementClient as RMC
 } from "azure-arm-resource";
 import { AuthorizationError, ResourceGroupError } from "../../errors";
-import { CONSTANTS } from "../../constants";
+import { CONSTANTS, DialogMessages, DialogResponses } from "../../constants";
 
 const MICROSOFT_DOCUMENT_DB_PROVIDER: string = "Microsoft.DocumentDb";
 const MICROSOFT_WEB_PROVIDER: string = "Microsoft.Web";
@@ -46,16 +46,33 @@ export abstract class AzureAuth {
      * Will get called whenever a function that uses AzureAccount object is called
      */
     if (this.api === undefined) {
-      this.api = extensions.getExtension<AzureAccount>(
+      this.api = vscode.extensions.getExtension<AzureAccount>(
         "ms-vscode.azure-account"
       )!.exports;
     }
   }
 
+  public static async promptUsersToLogout() {
+    return await vscode.window
+      .showInformationMessage(
+        DialogMessages.logoutPrompt,
+        ...[DialogResponses.yes, DialogResponses.no]
+      )
+      .then((selection: vscode.MessageItem | undefined) => {
+        let userConfirmation = {
+          signOut: false
+        };
+        if (selection === DialogResponses.yes) {
+          userConfirmation.signOut = true;
+        }
+        return { payload: userConfirmation };
+      });
+  }
+
   public static async login(): Promise<boolean> {
     this.initialize();
     if (this.api.status !== CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
-      await commands.executeCommand("azure-account.login");
+      await vscode.commands.executeCommand("azure-account.login");
       // Make sure it did not return from timeout
       if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGING_IN) {
         throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
@@ -66,9 +83,13 @@ export abstract class AzureAuth {
     }
   }
   public static async logout(): Promise<boolean> {
+    const userConfirmation = await AzureAuth.promptUsersToLogout();
+    if (!userConfirmation.payload.signOut) {
+      return false;
+    }
     this.initialize();
     if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
-      await commands.executeCommand("azure-account.logout");
+      await vscode.commands.executeCommand("azure-account.logout");
       // Make sure it did not return from timeout
       if (this.api.status === CONSTANTS.AZURE_LOGIN_STATUS.LOGGED_IN) {
         throw new AuthorizationError(CONSTANTS.ERRORS.LOGOUT_FAILED);
@@ -87,7 +108,7 @@ export abstract class AzureAuth {
 
   public static async getSubscriptions(): Promise<SubscriptionItem[]> {
     this.initialize();
-    this.api = extensions.getExtension<AzureAccount>(
+    this.api = vscode.extensions.getExtension<AzureAccount>(
       "ms-vscode.azure-account"
     )!.exports;
     const subscriptionItems = this.loadSubscriptionItems();
@@ -210,7 +231,8 @@ export abstract class AzureAuth {
     return this.locationItemIntersect(cosmosLocations, this.locationsCache!);
   }
 
-  public static async getLocationsForFunctions(
+  // To get locations for Function App and Web App
+  public static async getLocationsForApp(
     subscriptionItem: SubscriptionItem
   ): Promise<LocationItem[]> {
     if (subscriptionItem === null || subscriptionItem === undefined) {
@@ -223,7 +245,6 @@ export abstract class AzureAuth {
       subscriptionItem.subscription.subscriptionId!
     );
     let functionsLocations: LocationItem[] = [];
-
     let webProvider = await azureResourceClient.providers.get(
       MICROSOFT_WEB_PROVIDER
     );
