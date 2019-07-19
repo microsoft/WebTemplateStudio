@@ -8,6 +8,7 @@
   margin-top: 20px;
   padding: 10px 20px;
   vertical-align: middle;
+  display: inline-flex;
 }
 
 .quickStart:focus {
@@ -28,6 +29,7 @@ button:disabled {
 .wand {
   height: 25px;
   margin-right: 10px;
+  margin-top: 3px;
 }
 
 .wand path {
