@@ -3,11 +3,10 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import asModal from "../../components/Modal";
-import { IDependency } from "../DependencyInfo";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isPrivacyModalOpenSelector } from "../../selectors/modalSelector";
+import { isRedirectModalOpenSelector } from "../../selectors/modalSelector";
 import { KEY_EVENTS } from "../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
@@ -16,15 +15,16 @@ import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 
-export interface IPrivacyModalData {
+export interface IRedirectModalData {
   redirectLink: string;
   redirectLinkLabel: string;
   privacyStatementLink: string;
+  isThirdPartyLink: boolean;
 }
 
 interface IStateProps {
   isModalOpen: boolean;
-  privacyData: IPrivacyModalData;
+  privacyData: IRedirectModalData;
 }
 
 interface IDispatchProps {
@@ -35,32 +35,49 @@ type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const messages = defineMessages({
   beingRedirected: {
-    id: "privacyModal.beingRedirected",
+    id: "redirectModal.beingRedirected",
     defaultMessage: "You are being redirected."
   },
   thirdPartyWebsite: {
-    id: "privacyModal.thirdPartyWebsite",
+    id: "redirectModal.thirdPartyWebsite",
     defaultMessage:
       "You will be taken to {thirdPartyWebsite} which is a non-Microsoft service."
   },
+  noneThirdPartyWebsite: {
+    id: "redirectModal.noneThirdPartyWebsite",
+    defaultMessage: "The link will take you to {noneThirdPartyWebsite}."
+  },
+  toContinue: {
+    id: "redirectModal.toContinue",
+    defaultMessage: "To continue, press ok."
+  },
+  remainInWizard: {
+    id: "redirectModal.remainInWizard",
+    defaultMessage: "Click here to remain in wizard"
+  },
   privacyStatement: {
-    id: "privacyModal.privacyStatement",
+    id: "redirectModal.privacyStatement",
     defaultMessage: "Privacy Statement"
   },
   OK: {
-    id: "privacyModal.OK",
+    id: "redirectModal.OK",
     defaultMessage: "OK"
   }
 });
 
-const PrivacyModal = (props: Props) => {
+const RedirectModal = (props: Props) => {
   const { privacyData, intl } = props;
 
   if (privacyData === null || privacyData === undefined) {
     return null;
   }
 
-  const { redirectLink, privacyStatementLink, redirectLinkLabel } = privacyData;
+  const {
+    redirectLink,
+    privacyStatementLink,
+    redirectLinkLabel,
+    isThirdPartyLink
+  } = privacyData;
 
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
@@ -69,6 +86,42 @@ const PrivacyModal = (props: Props) => {
       props.closeModal();
     }
   };
+
+  let content;
+  if (isThirdPartyLink) {
+    content = intl.formatMessage(messages.thirdPartyWebsite, {
+      thirdPartyWebsite: redirectLinkLabel
+    });
+  } else {
+    content = intl.formatMessage(messages.noneThirdPartyWebsite, {
+      noneThirdPartyWebsite: redirectLinkLabel
+    });
+  }
+
+  let footerLink;
+  if (privacyStatementLink) {
+    footerLink = (
+      <a
+        target={"_blank"}
+        rel="noreferrer noopener"
+        className={styles.link}
+        href={privacyStatementLink}
+      >
+        {intl.formatMessage(messages.privacyStatement)}
+      </a>
+    );
+  } else {
+    footerLink = (
+      <button
+        className={styles.buttonToLink}
+        onClick={() => {
+          props.closeModal();
+        }}
+      >
+        {intl.formatMessage(messages.remainInWizard)}
+      </button>
+    );
+  }
 
   return (
     <div>
@@ -84,21 +137,11 @@ const PrivacyModal = (props: Props) => {
         />
       </div>
       <div className={styles.section}>
-        {intl.formatMessage(messages.thirdPartyWebsite, {
-          thirdPartyWebsite: redirectLinkLabel
-        })}
+        {content}
+        <div>{intl.formatMessage(messages.toContinue)}</div>
       </div>
       <div className={styles.footerContainer}>
-        {privacyStatementLink && (
-          <a
-            target={"_blank"}
-            rel="noreferrer noopener"
-            className={styles.link}
-            href={privacyStatementLink}
-          >
-            {intl.formatMessage(messages.privacyStatement)}
-          </a>
-        )}
+        {footerLink}
         <a
           target={"_blank"}
           rel="noreferrer noopener"
@@ -118,7 +161,7 @@ const PrivacyModal = (props: Props) => {
 const mapStateToProps = (state: AppState): IStateProps => {
   const privacyData = state.modals.openModal.modalData;
   return {
-    isModalOpen: isPrivacyModalOpenSelector(state),
+    isModalOpen: isRedirectModalOpenSelector(state),
     privacyData
   };
 };
@@ -134,4 +177,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(asModal(injectIntl(PrivacyModal)));
+)(asModal(injectIntl(RedirectModal)));
