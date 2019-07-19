@@ -102,6 +102,8 @@
   "loginCard.signIn": "Sign In",
   "newProject.body": "Give your full-stack project a name, choose where to create it, then click 'Next' to get started.",
   "newProject.header": "Create Your Web App in Seconds",
+  "quickStart.description": "To get started quickly with your preferred frameworks and just a blank page, use quick start.",
+  "quickStart.button": "Quick Start Web Project",
   "outputPath.ariaOutputPath": "Input for Output Path",
   "outputPath.browseButtonLabel": "Browse",
   "outputPath.outputPath": "Output Path",

@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   padding: 0px 80px;
 }
 
@@ -40,4 +40,8 @@
 
 .getStarted {
   align-self: flex-end;
+}
+
+.quickStartContainer {
+  margin-top: 5em;
 }

@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import ProjectNameAndOutput from "../ProjectNameAndOutput";
+import QuickStart from "../QuickStart";
 import { FormattedMessage } from "react-intl";
 
 import { updateProjectNameAction } from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
@@ -59,6 +60,9 @@ const NewProject = ({
       </div>
       <div className={styles.projectDetailsContainer}>
         <ProjectNameAndOutput />
+      </div>
+      <div className={styles.quickStartContainer}>
+        <QuickStart />
       </div>
     </div>
   );
