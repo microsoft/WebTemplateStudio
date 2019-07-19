@@ -17,11 +17,11 @@
 .description {
   font-size: 1.4em;
   line-height: 1.9em;
+  width: 85%;
 }
 
 button:disabled {
   opacity: 0.5;
-  border: 0px;
   cursor: default;
 }
 

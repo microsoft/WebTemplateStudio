@@ -18,6 +18,9 @@ import RedirectModal from "./containers/RedirectModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
 import AppServiceModal from "./containers/AppServiceModal";
 
+import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
+import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
+
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
@@ -297,6 +300,20 @@ class App extends React.Component<Props> {
               [appStyles.centerViewAzurePage]: pathname === ROUTES.AZURE_LOGIN
             })}
           >
+            {pathname === ROUTES.NEW_PROJECT ? (
+              <HomeSplashSVG
+                className={classnames(appStyles.splash, appStyles.homeSplash)}
+              />
+            ) : null}
+
+            {pathname === ROUTES.REVIEW_AND_GENERATE ? (
+              <SummarySplashSVG
+                className={classnames(
+                  appStyles.splash,
+                  appStyles.summarySplash
+                )}
+              />
+            ) : null}
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
             <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
             <Route
