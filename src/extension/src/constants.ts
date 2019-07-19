@@ -21,6 +21,10 @@ export const CONSTANTS = {
       "error.resourceGroupTriesExceedeed",
       "Number of tries exceeded for creating resource group"
     ),
+    ASP_NOT_FOUND: localize(
+      "error.aspNotFound",
+      "Unable to find a free/basic tier App Service Plan to deploy web app into"
+    ),
     SUBSCRIPTION_NOT_FOUND: localize(
       "error.subscriptionNotFound",
       "No subscription found with this name."
@@ -228,7 +232,24 @@ export const CONSTANTS = {
   APP_NAME: {
     MAX_LENGTH: 60,
     MIN_LENGTH: 3
-  }
+  },
+  SKU_DESCRIPTION: {
+    FREE: {
+      capacity: 1,
+      family: "F",
+      name: "F1",
+      size: "F1",
+      tier: "Free"
+    },
+    BASIC: {
+      capacity: 1,
+      family: "B",
+      name: "B1",
+      size: "B1",
+      tier: "Basic"
+    }
+  },
+  WEBTS_ASP_NAME: "webts-linux-centralus"
 };
 
 export enum ExtensionCommand {
@@ -338,4 +359,9 @@ export enum AzureResourceType {
 export enum AppType {
   Web = "Web",
   Function = "Function"
+}
+
+export enum OS {
+  Linux = "linux",
+  Windows = "windows"
 }

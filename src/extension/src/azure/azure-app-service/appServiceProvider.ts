@@ -1,18 +1,18 @@
 import { SubscriptionItem } from "../azure-auth/azureAuth";
 import { WebSiteManagementClient } from "azure-arm-website";
-import { ServiceClientCredentials, ApiKeyCredentials } from "ms-rest";
 import {
   SubscriptionError,
   AuthorizationError,
   DeploymentError
 } from "../../errors";
-import { CONSTANTS, AppType } from "../../constants";
+import { CONSTANTS, OS, AppType } from "../../constants";
 import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
 import {
   AppServicePlanCollection,
   AppServicePlan,
   SkuDescription
 } from "azure-arm-website/lib/models";
+import { ServiceClientCredentials } from "ms-rest";
 
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
@@ -85,28 +85,25 @@ export class AppServiceProvider {
       });
   }
 
-  // returns a free tier App Service Plan (ASP), if not found, create a new one and return it
-  public async getFreeAppServicePlan(
+  // returns a free tier App Service Plan (ASP) if exist, else, create a new basic tier ASP and return it
+  // we are unable to create an free tier ASP right now, that's why we are creating the basic one
+  public async getAppServicePlan(
     userSubscription: SubscriptionItem,
-    resourceGroup: string // figure this out from the upper layer!
+    resourceGroup: string
   ): Promise<string | undefined> {
     this.setWebClient(userSubscription);
-    const freeASP:
-      | AppServicePlan
-      | undefined = await this.findFreeAppServicePlan();
-    if (freeASP === undefined) {
+    let asp: AppServicePlan | undefined = await this.findFreeAppServicePlan();
+    if (asp === undefined) {
       try {
-        const newFreeASP = await this.createFreeAppServicePlan(
+        asp = await this.createBasicAppServicePlan(
           userSubscription.subscriptionId,
           resourceGroup
         );
-        return newFreeASP.name;
       } catch (err) {
-        throw new DeploymentError(err.message);
+        throw new DeploymentError(CONSTANTS.ERRORS.ASP_NOT_FOUND);
       }
-    } else {
-      return freeASP.name;
     }
+    return asp.name;
   }
 
   private async findFreeAppServicePlan(): Promise<AppServicePlan | undefined> {
@@ -115,41 +112,31 @@ export class AppServiceProvider {
     }
     const allASP: AppServicePlanCollection = await this.webClient.appServicePlans.list();
     return allASP.find(asp => {
-      if (asp.kind === "linux" && asp.sku !== undefined) {
-        return asp.sku.tier === "Free";
+      if (asp.kind === OS.Linux && asp.sku !== undefined) {
+        return (
+          // return a free ASP, or one that's previously created by WebTS
+          asp.sku.tier === CONSTANTS.SKU_DESCRIPTION.FREE.tier ||
+          asp.name === CONSTANTS.WEBTS_ASP_NAME
+        );
       }
     });
   }
 
-  private async createFreeAppServicePlan(
+  private async createBasicAppServicePlan(
     subscriptionId: string,
     resourceGroup: string
   ): Promise<AppServicePlan> {
     if (this.webClient === undefined) {
       throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
     }
-    const sku: SkuDescription = {
-      capacity: 1,
-      family: "F",
-      name: "F1",
-      size: "F1",
-      tier: "Free"
-    };
-    // const sku: SkuDescription = {
-    //   capacity: 1,
-    //   family: "B",
-    //   name: "B1",
-    //   size: "B1",
-    //   tier: "Basic"
-    // };
     const appServicePlanSelection: AppServicePlan = {
-      kind: "linux",
-      sku: sku,
+      kind: OS.Linux,
+      sku: CONSTANTS.SKU_DESCRIPTION.BASIC,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
     };
     return await this.webClient.appServicePlans.createOrUpdate(
       resourceGroup,
-      "webts_linux_centralus",
+      CONSTANTS.WEBTS_ASP_NAME,
       appServicePlanSelection
     );
   }
