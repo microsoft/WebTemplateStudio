@@ -17,20 +17,6 @@
   position: relative;
 }
 
-.homeSplash {
-  /* background: url(/static/media/homeSplash.ab13a631.svg) bottom right no-repeat
-    var(--vscode-editor-background); */
-  background: url(./assets/homeSplash.svg) bottom right no-repeat
-    var(--vscode-editor-background);
-}
-
-.summarySplash {
-  /* background: url(/static/media/summarySplash.afb7d28f.svg) bottom left
-    no-repeat var(--vscode-editor-background); */
-  background: url(./assets/summarySplash.svg) bottom left no-repeat
-    var(--vscode-editor-background);
-}
-
 .centerViewAzurePage {
   padding: 0;
 }
@@ -47,4 +33,18 @@
   .centerViewAzurePage {
     padding: 0;
   }
+}
+
+.splash {
+  z-index: 0;
+  bottom: 65px;
+  position: fixed;
+}
+
+.homeSplash {
+  right: 0;
+}
+
+.summarySplash {
+  left: 0;
 }
