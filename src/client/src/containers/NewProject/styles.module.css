@@ -4,6 +4,7 @@
   flex-direction: column;
   margin-bottom: 3%;
   padding-left: 5%;
+  z-index: 1;
 }
 
 .container > div {
