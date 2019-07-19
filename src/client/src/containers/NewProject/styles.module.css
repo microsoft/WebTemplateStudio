@@ -2,7 +2,7 @@
   align-self: center;
   display: flex;
   flex-direction: column;
-  margin-bottom: 1%;
+  margin-bottom: 3%;
   padding-left: 5%;
 }
 
@@ -42,5 +42,5 @@
 }
 
 .quickStartContainer {
-  margin-top: 5em;
+  margin-top: 1em;
 }
