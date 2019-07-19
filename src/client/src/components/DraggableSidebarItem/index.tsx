@@ -20,6 +20,10 @@ const messages = defineMessages({
   changeItemName: {
     id: "draggableSidebarItem.changeItemName",
     defaultMessage: "Change Item Name"
+  },
+  pageNameMaxLength: {
+    id: "draggableSidebarItem.pageNameMaxLength",
+    defaultMessage: "Page name must be under {maxLength} characters long. "
   }
 });
 
@@ -36,6 +40,7 @@ const DraggableSidebarItem = ({
   reorderSvgUrl,
   itemTitle,
   handleInputChange,
+  maxInputLength,
   idx,
   azureFunctionName,
   withIndent,
@@ -55,6 +60,7 @@ const DraggableSidebarItem = ({
   closeSvgUrl: string;
   itemTitle?: string;
   handleInputChange?: (e: any, idx: number) => void;
+  maxInputLength?: number;
   idx?: number;
   azureFunctionName?: IFunctionName;
   withIndent?: boolean;
@@ -65,6 +71,7 @@ const DraggableSidebarItem = ({
   isAzureFunction?: boolean;
   totalPageCount?: number;
 }) => {
+  const [pageNameMaxLength, setPageNameMaxLength] = React.useState(false);
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleCloseOnClick();
@@ -73,6 +80,17 @@ const DraggableSidebarItem = ({
   const handleCloseOnClick = () => {
     idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
   };
+
+  const handleKeyDownInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const inputKeyCheck = /^[A-Za-z0-9_\- ]$/
+    let event = e.target as HTMLInputElement;
+    if (event.value.length === maxInputLength && inputKeyCheck.test(e.key)) {
+      setPageNameMaxLength(true);
+      e.stopPropagation();
+    } else {
+      setPageNameMaxLength(false);
+    }
+  }
   return (
     <div>
       {itemTitle && (
@@ -85,8 +103,8 @@ const DraggableSidebarItem = ({
               </div>
             </React.Fragment>
           ) : (
-            itemTitle
-          )}
+              itemTitle
+            )}
         </div>
       )}
       <div className={styles.draggablePage}>
@@ -116,40 +134,55 @@ const DraggableSidebarItem = ({
                   className={classnames(styles.input, {
                     [styles.azureFunctionNameInput]: isAzureFunction
                   })}
+                  maxLength={maxInputLength === undefined ? undefined : maxInputLength}
                   value={page ? page.title : azureFunctionName!.title}
                   onChange={e => {
                     if (handleInputChange && idx) {
                       handleInputChange(e.target.value, idx - 1);
                     }
                   }}
+                  onKeyDown={handleKeyDownInput}
                 />
               ) : (
-                <input
-                  className={classnames(
-                    styles.disabledInput,
-                    styles.input,
-                    customInputStyle
-                  )}
-                  value={text}
-                  disabled={true}
-                />
-              )}
+                  <input
+                    className={classnames(
+                      styles.disabledInput,
+                      styles.input,
+                      customInputStyle
+                    )}
+                    value={text}
+                    disabled={true}
+                  />
+                )}
             </div>
           </div>
+          {pageNameMaxLength && (<div
+            className={classnames({
+              [styles.errorTextContainer]:
+                withIndent || reorderSvgUrl || true,
+              [styles.textContainer]: !withIndent,
+              [styles.largeIndentContainer]: withLargeIndent
+            })}
+          >
+            {intl.formatMessage(messages
+              .pageNameMaxLength,
+              { maxLength: maxInputLength }
+            )}
+          </div>)}
           {((page && !page.isValidTitle) ||
             (azureFunctionName && !azureFunctionName.isValidTitle)) && (
-            <div
-              className={classnames({
-                [styles.errorTextContainer]:
-                  withIndent || reorderSvgUrl || true,
-                [styles.textContainer]: !withIndent,
-                [styles.largeIndentContainer]: withLargeIndent
-              })}
-            >
-              {(page && page.error) ||
-                (azureFunctionName && azureFunctionName.error)}
-            </div>
-          )}
+              <div
+                className={classnames({
+                  [styles.errorTextContainer]:
+                    withIndent || reorderSvgUrl || true,
+                  [styles.textContainer]: !withIndent,
+                  [styles.largeIndentContainer]: withLargeIndent
+                })}
+              >
+                {(page && page.error) ||
+                  (azureFunctionName && azureFunctionName.error)}
+              </div>
+            )}
         </div>
         {(totalPageCount !== undefined ? totalPageCount > 1 : true) && (
           <CloseSVG
