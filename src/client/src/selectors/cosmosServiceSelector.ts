@@ -41,7 +41,7 @@ const getCosmosDbSelectionSelector = createSelector(
  * Currently, only one Cosmos Resource can be added, hence
  * the hardcoded value of 0 index.
  *
- * @param services An object of all the services available in Project Acorn
+ * @param services An object of all the services available in Web Template Studio
  */
 const getCosmosSelectionInDropdownForm = (services: any): any => {
   const { selection } = services.selection.services.cosmosDB;
