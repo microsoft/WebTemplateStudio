@@ -525,7 +525,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
             styles.selectionContainer,
             {
               [styles.selectionContainerDisabled]:
-                azureFunctionsFormData.subscription.value === ""
+                azureFunctionsFormData.chooseExistingRadioButtonSelected &&
+                !azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                  .value
             }
           )}
         >
@@ -545,9 +547,17 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 onChange={handleInput}
                 value={azureFunctionsFormData.appName.value}
                 placeholder={FORM_CONSTANTS.APP_NAME.label}
-                disabled={azureFunctionsFormData.subscription === ""}
+                disabled={
+                  azureFunctionsFormData.chooseExistingRadioButtonSelected &&
+                  !azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                    .value
+                }
                 tabIndex={
-                  azureFunctionsFormData.subscription.value === "" ? -1 : 0
+                  azureFunctionsFormData.chooseExistingRadioButtonSelected &&
+                  !azureFunctionsFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
+                    .value
+                    ? -1
+                    : 0
                 }
               />
               {isAppNameAvailable && !isValidatingName && (
@@ -573,7 +583,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
             azureModalMessages.azureModalAriaLocationLabel
           ),
           undefined,
-          azureFunctionsFormData.subscription.value === "",
+          !azureFunctionsFormData.appName.value,
           DEFAULT_VALUE,
           true,
           props.intl.formatMessage(messages.locationSubLabel)

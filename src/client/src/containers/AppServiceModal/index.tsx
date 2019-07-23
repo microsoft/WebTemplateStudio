@@ -507,7 +507,8 @@ const AppServiceModal = (props: Props) => {
             styles.selectionContainer,
             {
               [styles.selectionContainerDisabled]:
-                appServiceFormData.subscription.value === ""
+                appServiceFormData.chooseExistingRadioButtonSelected &&
+                !appServiceFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
             }
           )}
         >
@@ -527,8 +528,16 @@ const AppServiceModal = (props: Props) => {
                 onChange={handleInput}
                 value={appServiceFormData.siteName.value}
                 placeholder={FORM_CONSTANTS.SITE_NAME.label}
-                disabled={appServiceFormData.subscription === ""}
-                tabIndex={appServiceFormData.subscription.value === "" ? -1 : 0}
+                disabled={
+                  appServiceFormData.chooseExistingRadioButtonSelected &&
+                  !appServiceFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
+                }
+                tabIndex={
+                  appServiceFormData.chooseExistingRadioButtonSelected &&
+                  !appServiceFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
+                    ? -1
+                    : 0
+                }
               />
               {isSiteNameAvailable && !isValidatingName && (
                 <GreenCheck className={styles.validationIcon} />

@@ -516,7 +516,8 @@ const CosmosResourceModal = (props: Props) => {
             styles.selectionContainer,
             {
               [styles.selectionContainerDisabled]:
-                cosmosFormData.subscription.value === ""
+                cosmosFormData.chooseExistingRadioButtonSelected &&
+                !cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
             }
           )}
         >
@@ -538,7 +539,10 @@ const CosmosResourceModal = (props: Props) => {
                 onChange={handleInput}
                 value={cosmosFormData.accountName.value}
                 placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
-                disabled={cosmosFormData.subscription.value === ""}
+                disabled={
+                  cosmosFormData.chooseExistingRadioButtonSelected &&
+                  !cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
+                }
               />
               {isAccountNameAvailable && !isValidatingName && (
                 <GreenCheck className={styles.validationIcon} />
@@ -563,7 +567,7 @@ const CosmosResourceModal = (props: Props) => {
             azureModalMessages.azureModalAriaLocationLabel
           ),
           undefined,
-          cosmosFormData.subscription.value === "",
+          !cosmosFormData.accountName.value,
           DEFAULT_VALUE,
           true,
           props.intl.formatMessage(messages.locationSubLabel)
