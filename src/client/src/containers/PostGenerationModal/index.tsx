@@ -162,8 +162,6 @@ const PostGenerationModal = ({
       }
     });
   };
-  const templateGenerationInProgress =
-    !isTemplateGenerated && !isTemplatesFailed;
   return (
     <div>
       <div className={styles.title}>
@@ -232,12 +230,8 @@ const PostGenerationModal = ({
       </div>
       <div className={styles.footerContainer}>
         <button
-          className={classnames(styles.button, {
-            [buttonStyles.buttonDark]: templateGenerationInProgress,
-            [buttonStyles.buttonHighlighted]: !templateGenerationInProgress
-          })}
+          className={classnames(buttonStyles.buttonHighlighted, styles.button)}
           onClick={handleOpenProjectOrRestartWizard}
-          disabled={templateGenerationInProgress}
         >
           {openProjectOrRestartWizardMessage()}
         </button>
