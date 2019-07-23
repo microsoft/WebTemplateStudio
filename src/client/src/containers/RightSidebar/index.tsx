@@ -196,7 +196,11 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   optionsData={backendOptions}
                 />
                 <div className={styles.sortablePages}>
-                  {showPages && <SortablePageList />}
+                  {showPages && (
+                    <SortablePageList
+                      isSummaryPage={pathname === ROUTES.REVIEW_AND_GENERATE}
+                    />
+                  )}
                 </div>
                 {showServices && (
                   <div className={styles.sidebarItem}>
