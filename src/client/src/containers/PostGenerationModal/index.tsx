@@ -230,7 +230,12 @@ const PostGenerationModal = ({
       </div>
       <div className={styles.footerContainer}>
         <button
-          className={classnames(buttonStyles.buttonHighlighted, styles.button)}
+          className={classnames(
+            styles.button,
+            isTemplatesFailed || isTemplateGenerated
+              ? buttonStyles.buttonHighlighted
+              : classnames(styles.buttonInactive, buttonStyles.buttonDark)
+          )}
           onClick={handleOpenProjectOrRestartWizard}
         >
           {openProjectOrRestartWizardMessage()}

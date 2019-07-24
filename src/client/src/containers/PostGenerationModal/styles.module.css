@@ -44,6 +44,10 @@
   padding: 10px 33px;
 }
 
+.buttonInactive {
+  cursor: default !important;
+}
+
 .button:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
