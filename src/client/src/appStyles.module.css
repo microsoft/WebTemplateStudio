@@ -14,10 +14,12 @@
   height: calc(100vh - 124px);
   justify-content: flex-start;
   position: relative;
+  padding-right: 500px;
 }
 
 .centerViewAzurePage {
   padding: 0;
+  padding-right: 500px;
 }
 
 .centerViewMaxHeight {

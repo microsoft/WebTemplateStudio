@@ -18,6 +18,35 @@
   font-size: 1.1em;
 }
 
+.hamburgerContainer {
+  position: fixed;
+  right: 0;
+  width: 40px;
+  height: 100%;
+  padding-top: 57px;
+  padding-left: 19px;
+  background-color: var(--vscode-editor-lineHighlightBorder);
+  z-index: 1025;
+}
+
+.hamburgerButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 26px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.hamburgerLine {
+  width: 20px;
+  height: 1px;
+  background: var(--vscode-editor-foreground);
+}
+
 .button:hover {
   color: var(--vscode-editor-foreground);
 }
@@ -49,11 +78,19 @@
   background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #7f7f7f;
   box-sizing: border-box;
-  position: relative;
+  position: fixed;
+  right: 0;
   height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   overflow: scroll;
+  transform: translateX(+100%);
+  transition: transform 0.3s ease-out;
+  z-index: 1050;
+}
+
+.rightViewCropped.open {
+  transform: translateX(0);
 }
 
 .rightViewCroppedAllPages {
@@ -103,12 +140,22 @@
 }
 
 .icon {
-  height: 20px;
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin-left: 15px;
 }
 
-.iconContainer {
-  display: flex;
-  align-items: center;
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.icon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
 }
 
 .selection {
