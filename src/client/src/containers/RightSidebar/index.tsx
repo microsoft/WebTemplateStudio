@@ -286,6 +286,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const { frontendOptions, backendOptions } = contentOptions;
     const { isSidebarOpen } = this.state;
 
+    if (pathname === ROUTES.PAGE_DETAILS || pathname === ROUTES.NEW_PROJECT) {
+      return null;
+    }
+
     return (
       <React.Fragment>
         <div className={styles.hamburgerContainer}>
