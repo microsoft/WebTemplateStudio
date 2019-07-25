@@ -360,7 +360,8 @@ class App extends React.Component<Props> {
               component={NewProject}
             />
           </main>
-          <RightSidebar />
+          {pathname !== ROUTES.PAGE_DETAILS &&
+            pathname !== ROUTES.NEW_PROJECT && <RightSidebar />}
         </div>
         <Footer />
       </React.Fragment>
