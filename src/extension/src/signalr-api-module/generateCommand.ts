@@ -18,7 +18,7 @@ export class GenerateCommand extends CoreTemplateStudioApiCommand {
     connection.on(CONSTANTS.API.GEN_LIVE_MESSAGE_TRIGGER_NAME, genMessage => {
       generatedItemsCount++;
       const percentage = (generatedItemsCount / itemsToGenerateCount) * 100;
-      const messageWithProgress = `(${percentage.toFixed(0)} %) ${genMessage}`;
+      const messageWithProgress = `(${percentage.toFixed(0)}%) ${genMessage}`;
       this.commandPayload.liveMessageHandler(messageWithProgress);
     });
 
