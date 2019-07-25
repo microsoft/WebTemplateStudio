@@ -75,7 +75,7 @@ type Props = IRightSidebarProps &
   InjectedIntlProps;
 
 const hasAzureServices = (services: any) => {
-  for (var key in services) {
+  for (const key in services) {
     if (!_.isEmpty(services[key].selection)) return true;
   }
   return false;
