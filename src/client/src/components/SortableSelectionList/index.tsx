@@ -35,7 +35,7 @@ const SortableSidebarItem = SortableElement(
         handleInputChange={handleInputChange}
         handleCloseClick={handleCloseClick}
         idx={idx + 1}
-        totalPageCount={totalPageCount}
+        totalCount={totalPageCount}
       />
     );
     // use idx+1 to prevent falsiness of 0th value
