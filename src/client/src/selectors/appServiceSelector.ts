@@ -20,7 +20,7 @@ export interface ISelectionInformation {
  * Returns the App Service selection made by the user
  * Returns undefined if a selection was not made.
  *
- * @param services An object of all the services available in Project Acorn
+ * @param services An object of all the services available in Web Template Studio
  */
 const getAppServiceSelectionInDropdownForm = (
   appState: AppState

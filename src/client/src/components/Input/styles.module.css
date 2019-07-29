@@ -4,8 +4,8 @@
   width: 100%;
   font-size: 1em;
   height: 38px;
-  background-color: var(--vscode-input-background);
-  border: 0.5px solid var(--vscode-editor-foreground);
+  background-color: var(--vscode-editorWidget-border);
+  border: none;
   color: var(--vscode-editor-foreground);
 }
 
