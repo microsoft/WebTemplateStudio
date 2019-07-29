@@ -130,7 +130,7 @@ const SortablePageList = (props: Props) => {
             <button
               className={styles.hideOrShow}
               onClick={() => {
-                setMinimized(isMinimized ? false : true);
+                setMinimized(!isMinimized);
               }}
             >
               {isMinimized ? (
