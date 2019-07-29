@@ -92,7 +92,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   NODE_JS: "NodeJS",
   FLASK: "Flask",
   PYTHON: "Python",
-  REACT_JS: "ReactJS",
+  REACT: "React",
   REST_API: "RestAPI",
   VUE: "Vue",
   VUE_BLANK_PAGE: "wts.Page.Vue.Blank",

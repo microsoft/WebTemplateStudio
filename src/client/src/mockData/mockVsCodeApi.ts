@@ -40,7 +40,7 @@ const mockVsCodeApi = () => ({
               payload: {
                 frameworks: [
                   {
-                    name: "ReactJS",
+                    name: "React",
                     displayName: "React",
                     icon: "",
                     summary: "JavaScript framework",
@@ -50,10 +50,10 @@ const mockVsCodeApi = () => ({
                     order: 1,
                     metadataType: "Framework",
                     licenses:
-                      "[ReactJS](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
+                      "[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
                     licenseTerms: [
                       {
-                        text: "ReactJS",
+                        text: "React",
                         url:
                           "https://github.com/facebook/react/blob/master/LICENSE"
                       },
