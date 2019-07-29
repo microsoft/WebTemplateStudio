@@ -123,7 +123,7 @@ export class CoreTemplateStudio {
   }
 
   public async sync(payload: ICommandPayload): Promise<any> {
-    let syncCommand = `${CONSTANTS.CLI.SYNC_COMMAND_PREFIX} -p ${payload.payload.path}\n`;
+    const syncCommand = `${CONSTANTS.CLI.SYNC_COMMAND_PREFIX} -p ${payload.payload.path}\n`;
     this._processCli.stdin.write(syncCommand);
     this.cliEvents.on(CONSTANTS.CLI.SYNC_PROGRESS_STATE, (data) => {
       payload.liveMessageHandler(data['status'], data['progress']);
@@ -186,7 +186,7 @@ export class CoreTemplateStudio {
   private makeEngineGenerationPayload(
     payload: IGenerationPayloadType
   ): IEngineGenerationPayloadType {
-    let {
+    const {
       projectName,
       path,
       projectType,
