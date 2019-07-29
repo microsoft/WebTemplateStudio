@@ -81,11 +81,11 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     selectWebApp: () => {},
     selectPages: () => {}
   };
-  public handleChange(
+  public handleChange = (
     e: IDropDownOptionType,
     selectOption: (item: ISelected) => void,
     optionsData: IOption[]
-  ) {
+  ) => {
     optionsData.map(option => {
       if (option.internalName === e.value) {
         const { title, internalName, version, author, licenses } = option;
@@ -98,8 +98,8 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         });
       }
     });
-  }
-  public resetAllPages() {
+  };
+  public resetAllPages = () => {
     const { pages, frontendFramework } = this.props.selection;
     const { vscode } = this.props;
     vscode.postMessage({
@@ -112,9 +112,9 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         pagesLength: pages.length
       }
     });
-  }
+  };
 
-  public handleFrameworkChange(option: IDropDownOptionType) {
+  public handleFrameworkChange = (option: IDropDownOptionType) => {
     const { frontendFramework, pages } = this.props.selection;
     const { vscode } = this.props;
     if (frontendFramework.internalName !== option.value) {
@@ -129,7 +129,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         }
       });
     }
-  }
+  };
 
   /**
    * Changes the title of the page type that was chosen
@@ -188,8 +188,8 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 <RightSidebarDropdown
                   options={this.props.frontendDropdownItems}
                   handleDropdownChange={
-                    (showPages && this.handleFrameworkChange.bind(this)) ||
-                    this.handleChange.bind(this)
+                    (showPages && this.handleFrameworkChange) ||
+                    this.handleChange
                   }
                   selectDropdownOption={this.props.selectFrontendFramework}
                   isVisible={showFrameworks}
@@ -202,7 +202,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 />
                 <RightSidebarDropdown
                   options={this.props.backendDropdownItems}
-                  handleDropdownChange={this.handleChange.bind(this)}
+                  handleDropdownChange={this.handleChange}
                   selectDropdownOption={this.props.selectBackendFramework}
                   isVisible={showFrameworks}
                   title={formatMessage(messages.backendFramework)}
@@ -213,9 +213,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 />
                 <div className={styles.sortablePages}>
                   {showPages && (
-                    <SortablePageList
-                      handleResetPages={this.resetAllPages.bind(this)}
-                    />
+                    <SortablePageList handleResetPages={this.resetAllPages} />
                   )}
                 </div>
                 {showServices && (

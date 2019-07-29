@@ -33,7 +33,7 @@ export class VSCodeUI extends WizardServant {
   async promptUsersToResetPages(message: any) {
     if (
       message.payload.pagesLength > 0 &&
-      message.text == PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT
+      message.text === PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT
     ) {
       return await vscode.window
         .showInformationMessage(
