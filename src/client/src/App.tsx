@@ -258,7 +258,6 @@ class App extends React.Component<Props> {
               }
             });
             this.props.resetPageSelection();
-            this.props.history.push(ROUTES.SELECT_PAGES);
           }
           break;
         case EXTENSION_COMMANDS.GET_PREVIEW_STATUS:
