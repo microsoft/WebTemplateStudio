@@ -21,7 +21,7 @@ import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 
-const MAX_PAGE_NAME_LENGTH = 50;
+import { PAGE_NAME_CHARACTER_LIMIT } from "../../utils/constants"
 
 interface ISortablePageListProps {
   selectedPages: any[];
@@ -86,10 +86,8 @@ const SortablePageList = (props: Props) => {
         break;
       }
     }
-    if (pages[idx].title.length < MAX_PAGE_NAME_LENGTH) {
-      setPages(pages);
-      props.selectPages(pages);
-    }
+    setPages(pages);
+    props.selectPages(pages);
   };
   const onSortEnd = ({
     oldIndex,
@@ -118,7 +116,7 @@ const SortablePageList = (props: Props) => {
           <div className={styles.dropdownTitle}>
             {`${props.intl!.formatMessage(messages.pages)} (${
               pages.length >= 0 ? pages.length : ""
-            })`}
+              })`}
           </div>
           <button
             className={styles.hideOrShow}
@@ -129,8 +127,8 @@ const SortablePageList = (props: Props) => {
             {isMinimized ? (
               <ShowIcon className={styles.viewIcon} />
             ) : (
-              <HideIcon className={styles.viewIcon} />
-            )}
+                <HideIcon className={styles.viewIcon} />
+              )}
           </button>
         </div>
       )}
@@ -138,6 +136,7 @@ const SortablePageList = (props: Props) => {
         <SortableList
           pages={selectedPages}
           isSummaryPage={isSummaryPage}
+          maxInputLength={PAGE_NAME_CHARACTER_LIMIT}
           onSortEnd={onSortEnd}
           distance={DRAG_PIXEL_THRESHOLD}
           handleInputChange={handleInputChange}
