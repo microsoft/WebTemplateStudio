@@ -13,7 +13,7 @@ const BACK_END_SELECTION: ISelected = {
   author: "Various",
   internalName: "NodeJS",
   licenses:
-    "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE)  \n[ExpressJS](https://github.com/expressjs/express/blob/master/LICENSE)  \n[ExpressJS Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
+    "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[ExpressJS Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
   title: "Node.js/Express",
   version: "v10.15.0"
 };
