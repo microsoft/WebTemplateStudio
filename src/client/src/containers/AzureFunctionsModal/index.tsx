@@ -545,7 +545,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 onChange={handleInput}
                 value={azureFunctionsFormData.appName.value}
                 placeholder={FORM_CONSTANTS.APP_NAME.label}
-                disabled={azureFunctionsFormData.subscription === ""}
+                disabled={azureFunctionsFormData.subscription.value === ""}
                 tabIndex={
                   azureFunctionsFormData.subscription.value === "" ? -1 : 0
                 }
