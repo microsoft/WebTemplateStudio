@@ -15,6 +15,8 @@ import {
 import { validateName } from "../../utils/validateName";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+
 import { rootSelector } from "../../selectors/generationSelector";
 import {
   getCosmosDbSelectionSelector,
@@ -25,6 +27,10 @@ import {
   isAzureFunctionsSelectedSelector,
   getAzureFunctionsNamesSelector
 } from "../../selectors/azureFunctionsServiceSelector";
+import {
+  isAppServiceSelectedSelector,
+  getAppServiceSelectionSelector
+} from "../../selectors/appServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
@@ -65,6 +71,8 @@ interface IStateProps {
   cosmos: any;
   selectedFunctions: boolean;
   functions: any;
+  selectedAppService: boolean;
+  appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
   functionNames?: IFunctionName[];
@@ -104,6 +112,8 @@ class Footer extends React.Component<Props> {
       cosmos,
       selectedFunctions,
       functions,
+      selectedAppService,
+      appService,
       vscode,
       openPostGenModal
     } = this.props;
@@ -119,7 +129,9 @@ class Footer extends React.Component<Props> {
         selectedCosmos,
         cosmos,
         selectedFunctions,
-        functions
+        functions,
+        selectedAppService,
+        appService
       }
     });
     const { pathname } = this.props.location;
@@ -295,6 +307,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   cosmos: getCosmosDbSelectionSelector(state),
   selectedFunctions: isAzureFunctionsSelectedSelector(state),
   functionNames: getAzureFunctionsNamesSelector(state),
+  selectedAppService: isAppServiceSelectedSelector(state),
+  appService: getAppServiceSelectionSelector(state),
   functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
