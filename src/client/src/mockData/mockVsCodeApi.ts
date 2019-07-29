@@ -272,7 +272,7 @@ const mockVsCodeApi = () => ({
                     requiredVisualStudioWorkloads: []
                   },
                   {
-                    emplateId: "wts.Page.React.List",
+                    templateId: "wts.Page.React.List",
                     name: "List",
                     defaultName: "List",
                     description: "Add and remove text from an adaptive list.",
