@@ -83,7 +83,7 @@ const DraggableSidebarItem = ({
 
   const handleKeyDownInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const inputKeyCheck = /^[A-Za-z0-9_\- ]$/
-    let event = e.target as HTMLInputElement;
+    const event = e.target as HTMLInputElement;
     if (event.value.length === maxInputLength && inputKeyCheck.test(e.key)) {
       setPageNameMaxLength(true);
       e.stopPropagation();
@@ -134,7 +134,7 @@ const DraggableSidebarItem = ({
                   className={classnames(styles.input, {
                     [styles.azureFunctionNameInput]: isAzureFunction
                   })}
-                  maxLength={maxInputLength === undefined ? undefined : maxInputLength}
+                  maxLength={maxInputLength}
                   value={page ? page.title : azureFunctionName!.title}
                   onChange={e => {
                     if (handleInputChange && idx) {
