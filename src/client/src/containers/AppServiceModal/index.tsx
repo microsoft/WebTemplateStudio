@@ -527,7 +527,7 @@ const AppServiceModal = (props: Props) => {
                 onChange={handleInput}
                 value={appServiceFormData.siteName.value}
                 placeholder={FORM_CONSTANTS.SITE_NAME.label}
-                disabled={appServiceFormData.subscription === ""}
+                disabled={appServiceFormData.subscription.value === ""}
                 tabIndex={appServiceFormData.subscription.value === "" ? -1 : 0}
               />
               {isSiteNameAvailable && !isValidatingName && (
