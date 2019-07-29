@@ -166,11 +166,19 @@ export class CoreTemplateStudio {
   }
 
   public async generate(payload: ICommandPayload): Promise<any> {
-    var generatePayload = JSON.stringify(this.makeEngineGenerationPayload(<IGenerationPayloadType>(payload.payload)));
+    const typedPayload = <IGenerationPayloadType>payload.payload;
+    const generatePayload = JSON.stringify(this.makeEngineGenerationPayload(typedPayload));
     const generateCommand = `${CONSTANTS.CLI.GENERATE_COMMAND_PREFIX} -d ${generatePayload}\n`;
+    const projectItemsToGenerateCount = 4; // Derived from CoreTS logic
+    const itemsToGenerateCount = projectItemsToGenerateCount + typedPayload.pages.length + typedPayload.services.length;
+    let generatedItemsCount = 0;
+
     this._processCli.stdin.write(generateCommand);
     this.cliEvents.on(CONSTANTS.CLI.GENERATE_PROGRESS_STATE, (data) => {
-      payload.liveMessageHandler(data);
+      generatedItemsCount++;
+      const percentage = (generatedItemsCount / itemsToGenerateCount) * 100;
+      const messageWithProgress = `(${percentage.toFixed(0)}%) ${data}`;
+      payload.liveMessageHandler(messageWithProgress);
     });
     return await this.awaitCliEvent(CONSTANTS.CLI.GENERATE_COMPLETE_STATE);
   }
