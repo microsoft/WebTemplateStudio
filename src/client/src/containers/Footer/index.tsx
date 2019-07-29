@@ -255,7 +255,13 @@ class Footer extends React.Component<Props> {
                   to={pathsNext[pathname]}
                 >
                   <FormattedMessage id="footer.next" defaultMessage="Next" />
-                  {nextArrow && <NextArrow className={styles.nextIcon} />}
+                  {nextArrow && (
+                    <NextArrow
+                      className={classnames(styles.nextIcon, {
+                        [styles.nextIconNotDisabled]: isValidNameAndProjectPath
+                      })}
+                    />
+                  )}
                 </Link>
               )}
               {enableCreateProjectButton && (

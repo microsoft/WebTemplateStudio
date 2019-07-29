@@ -11,8 +11,6 @@ import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
-import keyUpHandler from "../../utils/keyUpHandler";
-import { WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants";
 
 interface IDispatchProps {
   openViewLicensesModal: () => any;
@@ -49,7 +47,7 @@ const ReviewAndGenerate = (props: Props) => {
         </div>
         <div className={styles.buttonContainer}>
           <button
-            className={classnames(buttonStyles.buttonHighlighted)}
+            className={classnames(buttonStyles.buttonDark, styles.button)}
             onClick={openViewLicensesModal}
           >
             {formatMessage(messages.viewLicenses)}
