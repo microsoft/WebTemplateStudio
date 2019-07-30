@@ -215,20 +215,9 @@ export class Controller {
   }
 
   private static loadUserSettings() {
-    // let outputPathDefault = vscode.workspace
-    //   .getConfiguration()
-    //   .get<string>("wts.defaultOutputPath");
     const preview = vscode.workspace
       .getConfiguration()
       .get<boolean>("wts.enablePreviewMode");
-    // if (outputPathDefault) {
-    //   Controller.reactPanelContext.postMessageWebview({
-    //     command: ExtensionCommand.GetOutputPath,
-    //     payload: {
-    //       outputPath: outputPathDefault
-    //     }
-    //   });
-    // }
     if (preview !== undefined) {
       Controller.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.GetPreviewStatus,

@@ -53,11 +53,6 @@
       "type": "object",
       "title": "%webTemplateStudioExtension.commands.wts%",
       "properties": {
-        "wts.defaultOutputPath": {
-          "type": "string",
-          "default": "",
-          "description": "Load a default output path on wizard launch."
-        },
         "wts.enablePreviewMode": {
           "type": "boolean",
           "default": false,
