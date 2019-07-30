@@ -1,5 +1,7 @@
 import * as vscode from "vscode";
 const os = require("os");
+const util = require("util");
+const exec = util.promisify(require("child_process").exec);
 
 import { Validator } from "./utils/validator";
 import {
@@ -193,12 +195,12 @@ export class Controller {
     });
   }
 
-  private static getDefaultOutputPath() {
+  private static async getDefaultOutputPath() {
     let outputPath: string;
-    outputPath = os.platform().indexOf("win") === 0 ? "C:\\Users" : "";
-    // let outputPathDefault: string = "C:\\Users";
-    // let outputPathDefault: string = "\\Users";
-    // let outputPathDefault: string = "/home";
+    const userOS = os.platform();
+    const command: string = this.isUnix(userOS) ? "~" : "%USERPROFILE%";
+    const { stdout } = await exec(command);
+    outputPath = this.isUnix(userOS) ? stdout.split(":").trim() : stdout;
 
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetOutputPath,
@@ -206,6 +208,10 @@ export class Controller {
         outputPath: outputPath
       }
     });
+  }
+
+  private static isUnix(userOS: string): boolean {
+    return userOS === "linux" || userOS === "darwin";
   }
 
   private static loadUserSettings() {
