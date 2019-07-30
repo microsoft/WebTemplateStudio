@@ -4,6 +4,7 @@ import * as React from "react";
 import { ReactComponent as Reorder } from "../../assets/reorder.svg";
 import { ReactComponent as AzureFunctionsIcon } from "../../assets/azurefunctions.svg";
 import { ReactComponent as CosmosDBIcon } from "../../assets/cosmosdb.svg";
+import { ReactComponent as AppServiceIcon } from "../../assets/appservice.svg";
 
 import { ReactComponent as CloseSVG } from "../../assets/cancel.svg";
 
@@ -36,6 +37,7 @@ const DraggableSidebarItem = ({
   text,
   azureFunctions,
   cosmosDB,
+  appService,
   pageSvgUrl,
   reorderSvgUrl,
   itemTitle,
@@ -49,12 +51,13 @@ const DraggableSidebarItem = ({
   intl,
   customInputStyle,
   isAzureFunction,
-  totalPageCount
+  totalCount
 }: {
   page?: ISelected;
   text?: string;
   azureFunctions?: boolean;
   cosmosDB?: boolean;
+  appService?: boolean;
   reorderSvgUrl?: string;
   pageSvgUrl?: string;
   closeSvgUrl: string;
@@ -69,7 +72,7 @@ const DraggableSidebarItem = ({
   intl: InjectedIntl;
   customInputStyle?: string;
   isAzureFunction?: boolean;
-  totalPageCount?: number;
+  totalCount?: number;
 }) => {
   const [pageNameMaxLength, setPageNameMaxLength] = React.useState(false);
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -114,6 +117,7 @@ const DraggableSidebarItem = ({
           )}
           {azureFunctions && <AzureFunctionsIcon />}
           {cosmosDB && <CosmosDBIcon />}
+          {appService && <AppServiceIcon />}
         </div>
         <div className={styles.errorStack}>
           <div
@@ -184,7 +188,7 @@ const DraggableSidebarItem = ({
               </div>
             )}
         </div>
-        {(totalPageCount !== undefined ? totalPageCount > 1 : true) && (
+        {(totalCount !== undefined ? totalCount > 1 : true) && (
           <CloseSVG
             tabIndex={0}
             onClick={handleCloseOnClick}
