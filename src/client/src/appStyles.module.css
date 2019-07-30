@@ -35,9 +35,17 @@
 }
 
 .splash {
+  position: fixed;
+  max-width: 90%;
+  height: auto;
   z-index: 0;
   bottom: 65px;
-  position: fixed;
+}
+
+@media (max-width: 1120px) {
+  .splash {
+    display: none;
+  }
 }
 
 .homeSplash {
