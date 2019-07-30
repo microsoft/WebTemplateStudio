@@ -61,7 +61,8 @@ const ROUTES_ARRAY = [
 
 const SERVICE_KEYS = {
   COSMOS_DB: "cosmosDB",
-  AZURE_FUNCTIONS: "azureFunctions"
+  AZURE_FUNCTIONS: "azureFunctions",
+  APP_SERVICE: "appService"
 };
 
 const COSMOS_APIS = {
@@ -100,7 +101,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   NODE_JS: "NodeJS",
   FLASK: "Flask",
   PYTHON: "Python",
-  REACT_JS: "ReactJS",
+  REACT: "React",
   REST_API: "RestAPI",
   VUE: "Vue",
   VUE_BLANK_PAGE: "wts.Page.Vue.Blank",
