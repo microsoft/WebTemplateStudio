@@ -24,10 +24,6 @@ export const CONSTANTS = {
         resourceType
       );
     },
-    ASP_NOT_FOUND: localize(
-      "error.aspNotFound",
-      "Unable to find the free tier App Service Plan"
-    ),
     SUBSCRIPTION_NOT_FOUND: localize(
       "error.subscriptionNotFound",
       "No subscription found with this name."
@@ -362,9 +358,4 @@ export enum AzureResourceType {
 export enum AppType {
   Web = "Web",
   Function = "Function"
-}
-
-export enum OS {
-  Linux = "linux",
-  Windows = "windows"
 }
