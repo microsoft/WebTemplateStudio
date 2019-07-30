@@ -92,16 +92,6 @@ export class AppServiceProvider {
       });
   }
 
-  private async checkASPExistence(name: string): Promise<boolean> {
-    if (this.webClient === undefined) {
-      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
-    }
-    const allASP: AppServicePlanCollection = await this.webClient.appServicePlans.list();
-    return allASP.some(asp => {
-      return asp.name === name;
-    });
-  }
-
   // Creates a Basic Tier App Service Plan (ASP)
   public async createAppServicePlan(
     aspSelection: AppServicePlanSelection
@@ -115,12 +105,8 @@ export class AppServiceProvider {
       sku: CONSTANTS.SKU_DESCRIPTION.BASIC,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
     };
-
     try {
-      const validName = await this.generateValidASPName(
-        aspSelection.subscriptionItem,
-        name
-      );
+      const validName = await this.generateValidASPName(name);
       await this.webClient.appServicePlans.createOrUpdate(
         aspSelection.resourceGroup,
         validName,
@@ -132,26 +118,19 @@ export class AppServiceProvider {
     }
   }
 
-  private async generateValidASPName(
-    userSubscription: SubscriptionItem,
-    name: string
-  ): Promise<string> {
+  private async generateValidASPName(name: string): Promise<string> {
     let generatedName: string = NameGenerator.generateName(
       name,
       AzureResourceType.AppService
     );
-    let isValid: boolean = await this.validateASPName(
-      generatedName,
-      userSubscription
-    );
-
+    let isValid: boolean = await this.validateASPName(generatedName);
     let tries = 0;
     while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
       generatedName = NameGenerator.generateName(
         name,
         AzureResourceType.AppService
       );
-      isValid = await this.validateASPName(name, userSubscription);
+      isValid = await this.validateASPName(name);
       tries++;
     }
     if (tries >= CONSTANTS.VALIDATION_LIMIT) {
@@ -162,14 +141,21 @@ export class AppServiceProvider {
     return generatedName;
   }
 
-  private async validateASPName(
-    name: string,
-    userSubscription: SubscriptionItem
-  ): Promise<boolean> {
+  private async validateASPName(name: string): Promise<boolean> {
     if (this.webClient === undefined) {
       throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
     }
     const exist = await this.checkASPExistence(name);
     return !exist;
+  }
+
+  private async checkASPExistence(name: string): Promise<boolean> {
+    if (this.webClient === undefined) {
+      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
+    }
+    const allASP: AppServicePlanCollection = await this.webClient.appServicePlans.list();
+    return allASP.some(asp => {
+      return asp.name === name;
+    });
   }
 }

@@ -125,8 +125,6 @@ export class AzureServices extends WizardServant {
   public static async sendAppServiceSubscriptionDataToClient(
     message: any
   ): Promise<IPayloadResponse> {
-    let y = await AzureServices.createAppServicePlan(message.subscription);
-
     return {
       payload: await AzureServices.getSubscriptionData(
         message.subscription,
