@@ -16,7 +16,11 @@ interface IDispatchProps {
   openViewLicensesModal: () => any;
 }
 
-type Props = IDispatchProps & InjectedIntlProps;
+interface IStateProps {
+  quickStartEnabled: boolean;
+}
+
+type Props = IDispatchProps & IStateProps & InjectedIntlProps;
 
 const messages = defineMessages({
   viewLicenses: {
@@ -31,11 +35,15 @@ const messages = defineMessages({
     id: "context.almostDone",
     defaultMessage:
       "You're almost done - review your project details on the right and make any necessary adjustments!"
+  },
+  quickStart: {
+    id: "context.quickStart",
+    defaultMessage: `Woo-hoo! You skipped to the end where we'll get you started quickly. Just click ""Create Project".`
   }
 });
 
 const ReviewAndGenerate = (props: Props) => {
-  const { intl, openViewLicensesModal } = props;
+  const { intl, openViewLicensesModal, quickStartEnabled } = props;
   const { formatMessage } = intl;
 
   return (
@@ -43,7 +51,11 @@ const ReviewAndGenerate = (props: Props) => {
       <div className={styles.reviewContextContainer}>
         <div className={styles.selectionContainer}>
           <h1>{formatMessage(messages.launchYourProject)}</h1>
-          <p>{formatMessage(messages.almostDone)}</p>
+          {quickStartEnabled ? (
+            <p>{formatMessage(messages.quickStart)}</p>
+          ) : (
+            <p>{formatMessage(messages.almostDone)}</p>
+          )}
         </div>
         <div className={styles.buttonContainer}>
           <button
@@ -58,6 +70,10 @@ const ReviewAndGenerate = (props: Props) => {
   );
 };
 
+const mapStateToProps = (state: AppState): IStateProps => ({
+  quickStartEnabled: state.wizardContent.enableQuickStart
+});
+
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
@@ -67,6 +83,6 @@ const mapDispatchToProps = (
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(injectIntl(ReviewAndGenerate));
