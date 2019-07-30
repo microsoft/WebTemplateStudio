@@ -5,7 +5,7 @@
     "summary": "JavaScript framework",
     "author": "Various",
     "order": "1",
-    "licenses": "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[ExpressJS Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
+    "licenses": "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
     "platforms": ["Web"],
     "languages": ["Any"],
     "tags": {
