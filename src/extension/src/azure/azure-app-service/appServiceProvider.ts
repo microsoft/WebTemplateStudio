@@ -127,7 +127,7 @@ export class AppServiceProvider {
         name,
         AzureResourceType.AppService
       );
-      isValid = await this.validateASPName(name);
+      isValid = await this.validateASPName(generatedName);
       tries++;
     }
     if (tries >= CONSTANTS.VALIDATION_LIMIT) {
