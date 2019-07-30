@@ -116,3 +116,12 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.backToAzureBox {
+  display: block;
+  font-size: 1.2em;
+}
+
+.backToAzureBox:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
