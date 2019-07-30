@@ -51,7 +51,7 @@ const DraggableSidebarItem = ({
   intl,
   customInputStyle,
   isAzureFunction,
-  totalPageCount
+  totalCount
 }: {
   page?: ISelected;
   text?: string;
@@ -72,7 +72,7 @@ const DraggableSidebarItem = ({
   intl: InjectedIntl;
   customInputStyle?: string;
   isAzureFunction?: boolean;
-  totalPageCount?: number;
+  totalCount?: number;
 }) => {
   const [pageNameMaxLength, setPageNameMaxLength] = React.useState(false);
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -188,7 +188,7 @@ const DraggableSidebarItem = ({
               </div>
             )}
         </div>
-        {(totalPageCount !== undefined ? totalPageCount > 1 : true) && (
+        {(totalCount !== undefined ? totalCount > 1 : true) && (
           <CloseSVG
             tabIndex={0}
             onClick={handleCloseOnClick}
