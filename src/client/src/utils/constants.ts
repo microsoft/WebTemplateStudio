@@ -61,7 +61,8 @@ const ROUTES_ARRAY = [
 
 const SERVICE_KEYS = {
   COSMOS_DB: "cosmosDB",
-  AZURE_FUNCTIONS: "azureFunctions"
+  AZURE_FUNCTIONS: "azureFunctions",
+  APP_SERVICE: "appService"
 };
 
 const COSMOS_APIS = {
