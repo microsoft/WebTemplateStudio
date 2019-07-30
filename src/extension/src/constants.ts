@@ -359,3 +359,8 @@ export enum AppType {
   Web = "Web",
   Function = "Function"
 }
+
+export enum OS {
+  Linux = "linux",
+  Windows = "windows"
+}
