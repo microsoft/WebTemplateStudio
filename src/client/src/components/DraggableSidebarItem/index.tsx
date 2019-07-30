@@ -4,6 +4,7 @@ import * as React from "react";
 import { ReactComponent as Reorder } from "../../assets/reorder.svg";
 import { ReactComponent as AzureFunctionsIcon } from "../../assets/azurefunctions.svg";
 import { ReactComponent as CosmosDBIcon } from "../../assets/cosmosdb.svg";
+import { ReactComponent as AppServiceIcon } from "../../assets/appservice.svg";
 
 import { ReactComponent as CloseSVG } from "../../assets/cancel.svg";
 
@@ -32,6 +33,7 @@ const DraggableSidebarItem = ({
   text,
   azureFunctions,
   cosmosDB,
+  appService,
   pageSvgUrl,
   reorderSvgUrl,
   itemTitle,
@@ -50,6 +52,7 @@ const DraggableSidebarItem = ({
   text?: string;
   azureFunctions?: boolean;
   cosmosDB?: boolean;
+  appService?: boolean;
   reorderSvgUrl?: string;
   pageSvgUrl?: string;
   closeSvgUrl: string;
@@ -96,6 +99,7 @@ const DraggableSidebarItem = ({
           )}
           {azureFunctions && <AzureFunctionsIcon />}
           {cosmosDB && <CosmosDBIcon />}
+          {appService && <AppServiceIcon />}
         </div>
         <div className={styles.errorStack}>
           <div

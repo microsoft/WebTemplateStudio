@@ -2,6 +2,7 @@ import * as React from "react";
 
 import AzureFunctionsSelection from "../../containers/AzureFunctionsSelection";
 import CosmosDBSelection from "../../containers/CosmosDBSelection";
+import AppServiceSelection from "../../containers/AppServiceSelection";
 
 import { SERVICE_KEYS } from "../../utils/constants";
 
@@ -25,6 +26,10 @@ const ServicesSidebarItem = ({ services }: Props) => {
         return <AzureFunctionsSelection functionApps={services[serviceName]} />;
       case SERVICE_KEYS.COSMOS_DB:
         return <CosmosDBSelection cosmosSelection={services[serviceName]} />;
+      case SERVICE_KEYS.APP_SERVICE:
+        return (
+          <AppServiceSelection appServiceSelection={services[serviceName]} />
+        );
     }
   };
   return (
