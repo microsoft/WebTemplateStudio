@@ -1,9 +1,7 @@
 ﻿{
-    "author": "Microsoft Community",
-    "classifications": [
-      "Universal"
-    ],
-    "name": "Page.React.AddConstantsGrid",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.React.AddConstantsGrid",
   "tags": {
     "language": "Any",
     "type": "item",
@@ -11,20 +9,19 @@
     "wts.platform": "Web",
     "wts.compositionOrder": 2,
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == ReactJS & identity == wts.Page.React.Grid"
+    "wts.compositionFilter": "$frontendframework == React & identity == wts.Page.React.Grid"
   },
-    "sourceName": "wts.ItemName",
-    "preferNameDirectory": true,
-    "PrimaryOutputs": [
-    ],
-    "symbols": {
-      "wts.rootNamespace": {
-        "type": "parameter",
-        "replaces": "Param_RootNamespace"
-      },
-      "wts.itemNamespace": {
-        "type": "parameter",
-        "replaces": "Param_ItemNamespace"
-      }
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.itemNamespace": {
+      "type": "parameter",
+      "replaces": "Param_ItemNamespace"
     }
   }
+}
