@@ -153,6 +153,11 @@ const AzureFunctionsSelection = ({
                       handleInputChange={handleInputChange}
                       idx={idx + 1}
                       handleCloseClick={removeAzureFunction}
+                      totalCount={
+                        functionApp.functionNames
+                          ? functionApp.functionNames.length
+                          : 0
+                      }
                     />
                   )
                 )}
