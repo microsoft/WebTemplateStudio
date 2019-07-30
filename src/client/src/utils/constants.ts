@@ -35,6 +35,12 @@ const ARIA_LABELS_NAVIGATION = defineMessages({
   }
 });
 
+const PAYLOAD_MESSAGES_TEXT = {
+  RESET_PAGES_TEXT: "Sending reset pages request...",
+  SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
+  SENT_GENERATION_INFO_TEXT: "Sending generation info..."
+};
+
 const ROUTES = {
   PAGE_DETAILS,
   SELECT_FRAMEWORKS,
@@ -95,7 +101,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   NODE_JS: "NodeJS",
   FLASK: "Flask",
   PYTHON: "Python",
-  REACT_JS: "ReactJS",
+  REACT: "React",
   REST_API: "RestAPI",
   VUE: "Vue",
   VUE_BLANK_PAGE: "wts.Page.Vue.Blank",
@@ -158,5 +164,6 @@ export {
   MAX_PAGES_ALLOWED,
   WEB_TEMPLATE_STUDIO_LINKS,
   FRAMEWORK_TYPE,
-  KEY_EVENTS
+  KEY_EVENTS,
+  PAYLOAD_MESSAGES_TEXT
 };
