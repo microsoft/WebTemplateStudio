@@ -1,4 +1,6 @@
 import * as vscode from "vscode";
+const os = require("os");
+
 import { Validator } from "./utils/validator";
 import {
   CONSTANTS,
@@ -135,7 +137,7 @@ export class Controller {
   ): Promise<void> {
     const syncObject = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
-      async function (this: IActionContext) {
+      async function(this: IActionContext) {
         return await launchExperience
           .launchApiSyncModule(context)
           .catch(error => {
@@ -155,6 +157,7 @@ export class Controller {
 
       Controller.loadUserSettings();
       Controller.sendPortToClient();
+      Controller.getDefaultOutputPath();
 
       Controller.getVersionAndSendToClient(
         context,
@@ -190,21 +193,36 @@ export class Controller {
     });
   }
 
+  private static getDefaultOutputPath() {
+    let outputPath: string;
+    outputPath = os.platform().indexOf("win") === 0 ? "C:\\Users" : "";
+    // let outputPathDefault: string = "C:\\Users";
+    // let outputPathDefault: string = "\\Users";
+    // let outputPathDefault: string = "/home";
+
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetOutputPath,
+      payload: {
+        outputPath: outputPath
+      }
+    });
+  }
+
   private static loadUserSettings() {
-    let outputPathDefault = vscode.workspace
-      .getConfiguration()
-      .get<string>("wts.defaultOutputPath");
+    // let outputPathDefault = vscode.workspace
+    //   .getConfiguration()
+    //   .get<string>("wts.defaultOutputPath");
     const preview = vscode.workspace
       .getConfiguration()
       .get<boolean>("wts.enablePreviewMode");
-    if (outputPathDefault) {
-      Controller.reactPanelContext.postMessageWebview({
-        command: ExtensionCommand.GetOutputPath,
-        payload: {
-          outputPath: outputPathDefault
-        }
-      });
-    }
+    // if (outputPathDefault) {
+    //   Controller.reactPanelContext.postMessageWebview({
+    //     command: ExtensionCommand.GetOutputPath,
+    //     payload: {
+    //       outputPath: outputPathDefault
+    //     }
+    //   });
+    // }
     if (preview !== undefined) {
       Controller.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.GetPreviewStatus,
