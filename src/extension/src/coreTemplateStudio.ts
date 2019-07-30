@@ -37,7 +37,7 @@ export class CoreTemplateStudio {
       return Promise.resolve(CoreTemplateStudio._instance);
     }
 
-    let platform = process.platform;
+    const platform = process.platform;
     let cliExecutableName = CONSTANTS.CLI.BASE_CLI_TOOL_NAME;
     let extensionPath;
 
@@ -96,9 +96,9 @@ export class CoreTemplateStudio {
     let data = "";
     process.stdout.on("data", (chunk) => {
       data += chunk;
-      var responses = data.toString().split("\n");
+      const responses = data.toString().split("\n");
       for (let i = 0; i < responses.length - 1; i++) {
-        var result = JSON.parse(responses[i]);
+        const result = JSON.parse(responses[i]);
         this.cliEvents.emit(result['messageType'], result['content']);
       }
       data = responses[responses.length - 1];
@@ -128,13 +128,13 @@ export class CoreTemplateStudio {
     this.cliEvents.on(CONSTANTS.CLI.SYNC_PROGRESS_STATE, (data) => {
       payload.liveMessageHandler(data['status'], data['progress']);
     });
-    return await this.awaitCliEvent(CONSTANTS.CLI.SYNC_COMPLETE_STATE);
+    return this.awaitCliEvent(CONSTANTS.CLI.SYNC_COMPLETE_STATE);
   }
 
   public async getFrameworks(projectType: string): Promise<any> {
     const getFrameworksCommand = `${CONSTANTS.CLI.GET_FRAMEWORKS_COMMAND_PREFIX} -p ${projectType}\n`;
     this._processCli.stdin.write(getFrameworksCommand);
-    return await this.awaitCliEvent(CONSTANTS.CLI.GET_FRAMEWORKS_COMPLETE_STATE);
+    return this.awaitCliEvent(CONSTANTS.CLI.GET_FRAMEWORKS_COMPLETE_STATE);
   }
 
   public async getPages(
@@ -144,7 +144,7 @@ export class CoreTemplateStudio {
   ): Promise<any> {
     const getPagesCommand = `${CONSTANTS.CLI.GET_PAGES_COMMAND_PREFIX} -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
     this._processCli.stdin.write(getPagesCommand);
-    return await this.awaitCliEvent(CONSTANTS.CLI.GET_PAGES_COMPLETE_STATE);
+    return this.awaitCliEvent(CONSTANTS.CLI.GET_PAGES_COMPLETE_STATE);
   }
 
   public async getFeatures(
@@ -155,14 +155,14 @@ export class CoreTemplateStudio {
     // to use this in client
     const getFeaturesCommand = `${CONSTANTS.CLI.GET_FEATURES_COMMAND_PREFIX} -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
     this._processCli.stdin.write(getFeaturesCommand);
-    return await this.awaitCliEvent(CONSTANTS.CLI.GET_FEATURES_COMPLETE_STATE);
+    return this.awaitCliEvent(CONSTANTS.CLI.GET_FEATURES_COMPLETE_STATE);
   }
 
   public async getProjectTypes(): Promise<any> {
     // to use this in client
     const getProjectTypesCommand = `${CONSTANTS.CLI.GET_PROJECT_TYPES_COMMAND_PREFIX}\n`;
     this._processCli.stdin.write(getProjectTypesCommand);
-    return await this.awaitCliEvent(CONSTANTS.CLI.GET_PROJECT_TYPES_COMPLETE_STATE);
+    return this.awaitCliEvent(CONSTANTS.CLI.GET_PROJECT_TYPES_COMPLETE_STATE);
   }
 
   public async generate(payload: ICommandPayload): Promise<any> {
