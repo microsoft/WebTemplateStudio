@@ -5,7 +5,6 @@
 }
 
 .centerView {
-  margin-top: -10px;
   display: flex;
   padding: 6vh;
   overflow: auto;
@@ -33,4 +32,26 @@
   .centerViewAzurePage {
     padding: 0;
   }
+}
+
+.splash {
+  position: fixed;
+  max-width: 90%;
+  height: auto;
+  z-index: 0;
+  bottom: 65px;
+}
+
+@media (max-width: 1120px) {
+  .splash {
+    display: none;
+  }
+}
+
+.homeSplash {
+  right: 0;
+}
+
+.summarySplash {
+  left: 0;
 }

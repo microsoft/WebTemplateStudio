@@ -14,9 +14,12 @@ import Header from "./containers/Header";
 import ReviewAndGenerate from "./containers/ReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
-import PrivacyModal from "./containers/PrivacyModal";
+import RedirectModal from "./containers/RedirectModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
 import AppServiceModal from "./containers/AppServiceModal";
+
+import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
+import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 
 import {
   EXTENSION_COMMANDS,
@@ -179,7 +182,10 @@ class App extends React.Component<Props> {
           }
           break;
         case EXTENSION_COMMANDS.AZURE_LOGOUT:
-          this.props.startLogOutToAzure();
+          // Update UI only if user sign out is confirmed by the extension
+          if (message.payload) {
+            this.props.startLogOutToAzure();
+          }
           break;
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
@@ -284,7 +290,7 @@ class App extends React.Component<Props> {
           <CosmosResourceModal />
           <AzureFunctionsModal />
           <PostGenerationModal />
-          <PrivacyModal />
+          <RedirectModal />
           <ViewLicensesModal />
           <AppServiceModal />
 
@@ -294,6 +300,20 @@ class App extends React.Component<Props> {
               [appStyles.centerViewAzurePage]: pathname === ROUTES.AZURE_LOGIN
             })}
           >
+            {pathname === ROUTES.NEW_PROJECT ? (
+              <HomeSplashSVG
+                className={classnames(appStyles.splash, appStyles.homeSplash)}
+              />
+            ) : null}
+
+            {pathname === ROUTES.REVIEW_AND_GENERATE ? (
+              <SummarySplashSVG
+                className={classnames(
+                  appStyles.splash,
+                  appStyles.summarySplash
+                )}
+              />
+            ) : null}
             <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
             <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
             <Route

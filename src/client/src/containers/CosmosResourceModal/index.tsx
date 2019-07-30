@@ -11,7 +11,7 @@ import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
-import { azureModalInitialState as cosmosInitialState } from "../../mockData/cosmosDbModalData";
+import { azureModalInitialState as cosmosInitialState } from "../../mockData/azureModalInitialStateData";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";

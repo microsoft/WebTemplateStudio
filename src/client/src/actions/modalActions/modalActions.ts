@@ -53,7 +53,7 @@ const openPostGenModalAction = () => {
   };
 };
 
-const openPrivacyModalAction = (data: any) => {
+const openRedirectModalAction = (data: any) => {
   return (dispatch: Dispatch<ModalActionType>) => {
     dispatch(
       openModalAction({
@@ -91,7 +91,7 @@ export {
   openAzureFunctionsModalAction,
   openCosmosDbModalAction,
   openPostGenModalAction,
-  openPrivacyModalAction,
+  openRedirectModalAction,
   openViewLicensesModalAction,
   openAppServiceModalAction
 };

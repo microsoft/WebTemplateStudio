@@ -1,7 +1,7 @@
 .dropdownTitle {
-  font-weight: bold;
-  margin-bottom: 3px;
-  font-size: 14px;
+  font-size: 1.2em;
+  margin-bottom: 0.7em;
+  font-weight: 500;
 }
 
 .sidebarItem {
@@ -14,10 +14,14 @@
   justify-content: space-between;
 }
 
-.hideOrShow {
+.pagesButtonContainer {
+  display: flex;
+}
+
+.hideOrShow,
+.resetButton {
   cursor: pointer;
   color: var(--vscode-textLink-foreground);
-  margin-right: 22.5px;
   padding-right: 1px;
   padding-left: 1px;
   border: none;
@@ -25,6 +29,14 @@
   background-color: var(--vscode-editor-background);
 }
 
+.resetButton {
+  margin-right: 1em;
+}
+
 .hideOrShow:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.viewIcon path {
+  fill: var(--vscode-editor-foreground);
 }

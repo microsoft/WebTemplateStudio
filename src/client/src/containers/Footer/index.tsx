@@ -10,8 +10,10 @@ import styles from "./styles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES
+  EXTENSION_MODULES,
+  PAYLOAD_MESSAGES_TEXT
 } from "../../utils/constants";
+
 import { validateName } from "../../utils/validateName";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -113,7 +115,7 @@ class Footer extends React.Component<Props> {
       module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
       track: false,
-      text: "Sending generation info...",
+      text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
       payload: {
         engine,
         selectedCosmos,
@@ -255,7 +257,13 @@ class Footer extends React.Component<Props> {
                   to={pathsNext[pathname]}
                 >
                   <FormattedMessage id="footer.next" defaultMessage="Next" />
-                  {nextArrow && <NextArrow className={styles.nextIcon} />}
+                  {nextArrow && (
+                    <NextArrow
+                      className={classnames(styles.nextIcon, {
+                        [styles.nextIconNotDisabled]: isValidNameAndProjectPath
+                      })}
+                    />
+                  )}
                 </Link>
               )}
               {enableCreateProjectButton && (
