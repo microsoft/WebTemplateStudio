@@ -92,25 +92,6 @@ export class AppServiceProvider {
       });
   }
 
-  // returns a free tier App Service Plan (ASP) if exist, else, create a new basic tier ASP and return it
-  // we are unable to create an free tier ASP right now, that's why we are creating the basic one
-  // public async getAppServicePlan(
-  //   userSubscription: SubscriptionItem,
-  //   resourceGroup: string
-  // ): Promise<string | undefined> {
-  //   this.setWebClient(userSubscription);
-  //   let asp: AppServicePlan | undefined = await this.findFreeAppServicePlan();
-  //   if (asp === undefined) {
-  //     try {
-  //       asp = await this.createAppServicePlan(resourceGroup);
-  //     } catch (err) {
-  //       // asp cannot be created
-  //       throw new DeploymentError(CONSTANTS.ERRORS.ASP_NOT_FOUND);
-  //     }
-  //   }
-  //   return asp.name;
-  // }
-
   private async checkASPExistence(name: string): Promise<boolean> {
     if (this.webClient === undefined) {
       throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);

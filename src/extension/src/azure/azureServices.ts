@@ -357,7 +357,6 @@ export class AzureServices extends WizardServant {
 
   // Will only be called if selections.resourceGroup is not an empty string
   public static async createAppServicePlan(payload: any): Promise<string> {
-    // selection right now is subscription
     AzureServices.updateAppServiceSubscriptionItemCache(payload);
     const aspSelections: AppServicePlanSelection = {
       subscriptionItem: AzureServices.userAppServiceSubsctiptionItemCache,

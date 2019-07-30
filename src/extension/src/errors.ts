@@ -50,6 +50,6 @@ export class ResourceGroupError extends Error {
 export class AppServiceError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "ResourceGroupError";
+    this.name = "AppServiceError";
   }
 }
