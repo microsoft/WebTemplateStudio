@@ -4,13 +4,15 @@ import { connect } from "react-redux";
 import SelectOption from "../SelectOption";
 
 import { selectFrontendFramework as selectFrontendAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
+import { selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 import {
   EXTENSION_MODULES,
   EXTENSION_COMMANDS,
-  PAYLOAD_MESSAGES_TEXT
+  PAYLOAD_MESSAGES_TEXT,
+  WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
@@ -24,14 +26,17 @@ import {
   getIsVisitedRoutesSelector,
   IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
+import { optionCSS } from "react-select/lib/components/Option";
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
+  selectPages: (pages: ISelected[]) => void;
 }
 
 interface ISelectFrontEndFrameworkProps {
   options: IOption[];
   selectedFrontendFramework: ISelected;
+  selectedBackendFramework: ISelected;
   vscode: IVSCodeObject;
   isPreview: boolean;
   isRoutesVisited: IVisitedPages;
@@ -52,8 +57,10 @@ class SelectFrontEndFramework extends React.Component<Props> {
     const {
       vscode,
       selectedFrontendFramework,
+      selectedBackendFramework,
       selectFrontendFramework,
-      selectedPages
+      selectedPages,
+      selectPages
     } = this.props;
 
     const { showPages } = this.props.isRoutesVisited;
@@ -63,19 +70,32 @@ class SelectFrontEndFramework extends React.Component<Props> {
       selectedFrontendFramework.internalName &&
       selectedFrontendFramework.internalName !== option.internalName
     ) {
+      console.log(JSON.stringify(selectedPages));
+      console.log(option.internalName);
+      console.log(selectedFrontendFramework.internalName);
       vscode.postMessage({
-        module: EXTENSION_MODULES.VSCODEUI,
-        command: EXTENSION_COMMANDS.RESET_PAGES,
-        track: false,
-        text: PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT,
+        module: EXTENSION_MODULES.CORETS,
+        command: EXTENSION_COMMANDS.GET_PAGES,
         payload: {
-          internalName: option.internalName,
-          pagesLength: selectedPages.length
+          projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+          frontendFramework: option.internalName,
+          backendFramework: selectedBackendFramework.internalName
         }
       });
-    } else {
-      selectFrontendFramework(option);
+      const newPages: ISelected[] = selectedPages.map(page => {
+        return {
+          title: page.title,
+          internalName: `wts.Page.${option.internalName}.${page.defaultName}`,
+          id: page.id,
+          defaultName: page.defaultName,
+          isValidTitle: page.isValidTitle,
+          licenses: page.licenses,
+          author: page.author
+        };
+      });
+      selectPages(newPages);
     }
+    selectFrontendFramework(option);
   }
   /**
    * Finds the index of the framework currently selected in the wizard
@@ -114,7 +134,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
   const { frontendOptions, previewStatus } = state.wizardContent;
-  const { frontendFramework } = state.selection;
+  const { frontendFramework, backendFramework } = state.selection;
   const { pages } = state.selection;
 
   return {
@@ -122,6 +142,7 @@ const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
     isRoutesVisited: getIsVisitedRoutesSelector(state),
     options: frontendOptions,
     selectedFrontendFramework: frontendFramework,
+    selectedBackendFramework: backendFramework,
     selectedPages: pages,
     vscode: getVSCodeApiSelector(state)
   };
@@ -132,6 +153,9 @@ const mapDispatchToProps = (
 ): IDispatchProps => ({
   selectFrontendFramework: (framework: ISelected) => {
     dispatch(selectFrontendAction(framework));
+  },
+  selectPages: (pages: ISelected[]) => {
+    dispatch(selectPagesAction(pages));
   }
 });
 

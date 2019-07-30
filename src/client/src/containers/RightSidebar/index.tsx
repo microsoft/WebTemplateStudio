@@ -30,7 +30,8 @@ import {
   ROUTES,
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  PAYLOAD_MESSAGES_TEXT
+  PAYLOAD_MESSAGES_TEXT,
+  WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../utils/constants";
 import messages from "./strings";
 
@@ -55,6 +56,7 @@ interface IDispatchProps {
 interface IRightSidebarProps {
   selection: SelectionState;
   projectTypeDropdownItems: IDropDownOptionType[];
+  frontEndOptions: IOption[];
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
   services: any;
@@ -115,17 +117,46 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   };
 
   public handleFrameworkChange = (option: IDropDownOptionType) => {
-    const { frontendFramework, pages } = this.props.selection;
-    const { vscode } = this.props;
+    const { frontendFramework, backendFramework, pages } = this.props.selection;
+    const {
+      vscode,
+      selectPages,
+      frontEndOptions,
+      selectFrontendFramework
+    } = this.props;
+    console.log(JSON.stringify(option));
     if (frontendFramework.internalName !== option.value) {
       vscode.postMessage({
-        module: EXTENSION_MODULES.VSCODEUI,
-        command: EXTENSION_COMMANDS.RESET_PAGES,
-        track: false,
-        text: PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT,
+        module: EXTENSION_MODULES.CORETS,
+        command: EXTENSION_COMMANDS.GET_PAGES,
         payload: {
-          internalName: option.value,
-          pagesLength: pages.length
+          projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+          frontendFramework: option.value,
+          backendFramework: backendFramework.internalName
+        }
+      });
+      const newPages: ISelected[] = pages.map(page => {
+        return {
+          title: page.title,
+          internalName: `wts.Page.${option.value}.${page.defaultName}`,
+          id: page.id,
+          defaultName: page.defaultName,
+          isValidTitle: page.isValidTitle,
+          licenses: page.licenses,
+          author: page.author
+        };
+      });
+      selectPages(newPages);
+      frontEndOptions.map(frontEnd => {
+        if (frontEnd.internalName === option.value) {
+          const { title, internalName, version, author, licenses } = frontEnd;
+          selectFrontendFramework({
+            title: title as string,
+            internalName,
+            version,
+            author,
+            licenses
+          });
         }
       });
     }
@@ -274,6 +305,7 @@ const mapStateToProps = (state: AppState): IRightSidebarProps => ({
   projectTypeDropdownItems: convertOptionsToDropdownItems(
     state.wizardContent.projectTypes
   ),
+  frontEndOptions: state.wizardContent.frontendOptions,
   frontendDropdownItems: convertOptionsToDropdownItems(
     state.wizardContent.frontendOptions
   ),
