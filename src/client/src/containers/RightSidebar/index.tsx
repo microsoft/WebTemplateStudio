@@ -29,7 +29,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES
+  EXTENSION_MODULES,
+  PAYLOAD_MESSAGES_TEXT
 } from "../../utils/constants";
 import messages from "./strings";
 
@@ -80,11 +81,11 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     selectWebApp: () => {},
     selectPages: () => {}
   };
-  public handleChange(
+  public handleChange = (
     e: IDropDownOptionType,
     selectOption: (item: ISelected) => void,
     optionsData: IOption[]
-  ) {
+  ) => {
     optionsData.map(option => {
       if (option.internalName === e.value) {
         const { title, internalName, version, author, licenses } = option;
@@ -97,8 +98,23 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         });
       }
     });
-  }
-  public handleFrameworkChange(option: IDropDownOptionType) {
+  };
+  public resetAllPages = () => {
+    const { pages, frontendFramework } = this.props.selection;
+    const { vscode } = this.props;
+    vscode.postMessage({
+      module: EXTENSION_MODULES.VSCODEUI,
+      command: EXTENSION_COMMANDS.RESET_PAGES,
+      track: false,
+      text: PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT,
+      payload: {
+        internalName: frontendFramework.internalName,
+        pagesLength: pages.length
+      }
+    });
+  };
+
+  public handleFrameworkChange = (option: IDropDownOptionType) => {
     const { frontendFramework, pages } = this.props.selection;
     const { vscode } = this.props;
     if (frontendFramework.internalName !== option.value) {
@@ -106,14 +122,14 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         module: EXTENSION_MODULES.VSCODEUI,
         command: EXTENSION_COMMANDS.RESET_PAGES,
         track: false,
-        text: "Sending framework change request...",
+        text: PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT,
         payload: {
           internalName: option.value,
           pagesLength: pages.length
         }
       });
     }
-  }
+  };
 
   /**
    * Changes the title of the page type that was chosen
@@ -172,8 +188,8 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 <RightSidebarDropdown
                   options={this.props.frontendDropdownItems}
                   handleDropdownChange={
-                    (showPages && this.handleFrameworkChange.bind(this)) ||
-                    this.handleChange.bind(this)
+                    (showPages && this.handleFrameworkChange) ||
+                    this.handleChange
                   }
                   selectDropdownOption={this.props.selectFrontendFramework}
                   isVisible={showFrameworks}
@@ -186,7 +202,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 />
                 <RightSidebarDropdown
                   options={this.props.backendDropdownItems}
-                  handleDropdownChange={this.handleChange.bind(this)}
+                  handleDropdownChange={this.handleChange}
                   selectDropdownOption={this.props.selectBackendFramework}
                   isVisible={showFrameworks}
                   title={formatMessage(messages.backendFramework)}
@@ -196,7 +212,9 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   optionsData={backendOptions}
                 />
                 <div className={styles.sortablePages}>
-                  {showPages && <SortablePageList />}
+                  {showPages && (
+                    <SortablePageList handleResetPages={this.resetAllPages} />
+                  )}
                 </div>
                 {showServices && (
                   <div className={styles.sidebarItem}>
