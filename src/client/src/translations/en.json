@@ -27,7 +27,7 @@
   "azureFunctionsModal.numFunctionsLabel": "Number of functions",
   "azureFunctionsModal.numFunctionsSubLabel": "Select the number of endpoints you want for your web app",
   "azureFunctionsModal.runtimeStackLabel": "Runtime Stack",
-  "azureFunctionsModal.runtimeStackSubLabel": "Your runtime stack is NodeJS",
+  "azureFunctionsModal.runtimeStackSubLabel": "Your runtime stack is Node",
   "azureFunctionsSelection.duplicateName": "Function name has to be unique",
   "azureLogin.azureCardBody": "Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. Sign in or create an account to get access to CosmosDB and Azure Functions from this extension",
   "azureLogin.azureLoginInfo": "Sign in to add these services to your web app project",
