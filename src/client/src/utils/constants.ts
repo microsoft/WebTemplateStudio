@@ -9,6 +9,8 @@ const NEW_PROJECT = "/";
 
 const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
+const PAGE_NAME_CHARACTER_LIMIT = 50;
+
 const MAX_PAGES_ALLOWED = 20;
 
 const WEB_TEMPLATE_STUDIO_LINKS = {
@@ -32,6 +34,12 @@ const ARIA_LABELS_NAVIGATION = defineMessages({
     defaultMessage: "Go to {pagesText} page"
   }
 });
+
+const PAYLOAD_MESSAGES_TEXT = {
+  RESET_PAGES_TEXT: "Sending reset pages request...",
+  SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
+  SENT_GENERATION_INFO_TEXT: "Sending generation info..."
+};
 
 const ROUTES = {
   PAGE_DETAILS,
@@ -151,8 +159,10 @@ export {
   COSMOS_APIS,
   DEVELOPMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
+  PAGE_NAME_CHARACTER_LIMIT,
   MAX_PAGES_ALLOWED,
   WEB_TEMPLATE_STUDIO_LINKS,
   FRAMEWORK_TYPE,
-  KEY_EVENTS
+  KEY_EVENTS,
+  PAYLOAD_MESSAGES_TEXT
 };
