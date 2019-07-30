@@ -115,8 +115,7 @@ export class CoreTemplateStudio {
       this.cliEvents.once(eventName, (data) => {
         this.cliEvents.removeAllListeners();
         resolve(data);
-      });
-      this.cliEvents.once("error", (data) => {
+      }).once("error", (data) => {
         this.cliEvents.removeAllListeners();
         reject(data);
       });
