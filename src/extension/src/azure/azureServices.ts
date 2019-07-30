@@ -32,7 +32,10 @@ import {
   ResourceGroupDeploy,
   ResourceGroupSelection
 } from "./azure-resource-group/resourceGroupModule";
-import { AppServiceProvider } from "./azure-app-service/appServiceProvider";
+import {
+  AppServiceProvider,
+  AppServicePlanSelection
+} from "./azure-app-service/appServiceProvider";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -122,6 +125,8 @@ export class AzureServices extends WizardServant {
   public static async sendAppServiceSubscriptionDataToClient(
     message: any
   ): Promise<IPayloadResponse> {
+    let y = await AzureServices.createAppServicePlan(message.subscription);
+
     return {
       payload: await AzureServices.getSubscriptionData(
         message.subscription,
@@ -348,6 +353,20 @@ export class AzureServices extends WizardServant {
         throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
       }
     }
+  }
+
+  // Will only be called if selections.resourceGroup is not an empty string
+  public static async createAppServicePlan(payload: any): Promise<string> {
+    // selection right now is subscription
+    AzureServices.updateAppServiceSubscriptionItemCache(payload);
+    const aspSelections: AppServicePlanSelection = {
+      subscriptionItem: AzureServices.userAppServiceSubsctiptionItemCache,
+      resourceGroup: payload.appService.resourceGroup,
+      name: payload.engine.projectName
+    };
+    return await AzureServices.AzureAppServiceProvider.createAppServicePlan(
+      aspSelections
+    );
   }
 
   public static async generateDistinctResourceGroupSelections(

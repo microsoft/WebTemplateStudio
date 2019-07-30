@@ -17,13 +17,16 @@ export const CONSTANTS = {
       "error.resourceGroupNotFound",
       "No resource group found with this name"
     ),
-    RESOURCE_GROUP_TRIES_EXCEEDED: localize(
-      "error.resourceGroupTriesExceedeed",
-      "Number of tries exceeded for creating resource group"
-    ),
+    TRIES_EXCEEDED: (resourceType: string) => {
+      return localize(
+        "error.triesExceedeed",
+        "Number of tries exceeded for creating {0}",
+        resourceType
+      );
+    },
     ASP_NOT_FOUND: localize(
       "error.aspNotFound",
-      "Unable to find a free/basic tier App Service Plan to deploy web app into"
+      "Unable to find the free tier App Service Plan"
     ),
     SUBSCRIPTION_NOT_FOUND: localize(
       "error.subscriptionNotFound",
@@ -249,7 +252,7 @@ export const CONSTANTS = {
       tier: "Basic"
     }
   },
-  WEBTS_ASP_NAME: "webts-linux-centralus"
+  VALIDATION_LIMIT: 3
 };
 
 export enum ExtensionCommand {
