@@ -77,8 +77,14 @@ class QuickStart extends Component<Props> {
       <div>
         <p className={styles.description}>
           <FormattedMessage
+            id="quickStart.optional"
+            defaultMessage="OPTIONAL"
+          />
+        </p>
+        <p className={styles.description}>
+          <FormattedMessage
             id="quickStart.description"
-            defaultMessage="To get started quickly with your preferred frameworks and just a blank page, use quick start."
+            defaultMessage='Get started quickly with any frameworks and a blank page by selecting "Quick Start" or click "Next" to go through the entire wizard.'
           />
         </p>
         <button
@@ -93,7 +99,7 @@ class QuickStart extends Component<Props> {
           <div>
             <FormattedMessage
               id="quickStart.button"
-              defaultMessage="Quick Start Web Project"
+              defaultMessage="Quick Start"
             />
           </div>
         </button>
