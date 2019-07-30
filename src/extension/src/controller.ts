@@ -1,7 +1,6 @@
 import * as vscode from "vscode";
 const os = require("os");
-const util = require("util");
-const exec = util.promisify(require("child_process").exec);
+const child_process = require("child_process");
 
 import { Validator } from "./utils/validator";
 import {
@@ -195,12 +194,13 @@ export class Controller {
     });
   }
 
-  private static async getDefaultOutputPath() {
-    let outputPath: string;
+  private static getDefaultOutputPath() {
     const userOS = os.platform();
     const command: string = this.isUnix(userOS) ? "~" : "%USERPROFILE%";
-    const { stdout } = await exec(command);
-    outputPath = this.isUnix(userOS) ? stdout.split(":").trim() : stdout;
+    const outputPath = child_process
+      .execSync("echo " + command)
+      .toString()
+      .trim();
 
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetOutputPath,
