@@ -1,29 +1,26 @@
 ﻿{
-    "author": "Microsoft Community",
-    "classifications": [
-      "Universal"
-    ],
-    "name": "Page.React.AddImport",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.React.AddImport",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
-	"wts.platform" : "Web",
+    "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == ReactJS & wts.type == page"
+    "wts.compositionFilter": "$frontendframework == React & wts.type == page"
   },
-    "sourceName": "wts.ItemName",
-    "preferNameDirectory": true,
-    "PrimaryOutputs": [
-    ],
-    "symbols": {
-      "wts.rootNamespace": {
-        "type": "parameter",
-        "replaces": "Param_RootNamespace"
-      },
-      "wts.itemNamespace": {
-        "type": "parameter",
-        "replaces": "Param_ItemNamespace"
-      }
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.itemNamespace": {
+      "type": "parameter",
+      "replaces": "Param_ItemNamespace"
     }
   }
+}

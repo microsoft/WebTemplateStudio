@@ -29,7 +29,7 @@ import gridscreenshot from "../assets/gridscreenshot.svg";
 import blankscreenshot from "../assets/blankscreenshot.svg";
 
 const SVG_MAPPINGS = {
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_JS]: react,
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT]: react,
   [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR]: angular,
   [WIZARD_CONTENT_INTERNAL_NAMES.VUE]: vue,
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS]: node,
