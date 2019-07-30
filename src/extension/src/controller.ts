@@ -137,7 +137,7 @@ export class Controller {
   ): Promise<void> {
     const syncObject = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
-      async function(this: IActionContext) {
+      async function (this: IActionContext) {
         return await launchExperience
           .launchApiSyncModule(context)
           .catch(error => {
@@ -195,10 +195,8 @@ export class Controller {
 
   private static getDefaultOutputPath() {
     let outputPath: string;
-    outputPath = os.platform().indexOf("win") === 0 ? "C:\\Users" : "";
-    // let outputPathDefault: string = "C:\\Users";
-    // let outputPathDefault: string = "\\Users";
-    // let outputPathDefault: string = "/home";
+    let userOS = os.platform();
+    outputPath = userOS === "linux" ? "/home" : userOS === "darwin" ? "/Users" : "C:\\Users";
 
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetOutputPath,
