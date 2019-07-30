@@ -1,7 +1,7 @@
 ﻿[
   {
     "name": "Node",
-    "displayName": "Node.js/Express",
+    "displayName": "Node/Express",
     "summary": "JavaScript framework",
     "author": "Various",
     "order": "1",
