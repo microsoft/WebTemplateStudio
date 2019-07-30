@@ -145,7 +145,7 @@ const mockVsCodeApi = () => ({
                     order: 1,
                     metadataType: "Framework",
                     licenses:
-                      "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[ExpressJS Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
+                      "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
                     licenseTerms: [
                       {
                         text: "NodeJS",
