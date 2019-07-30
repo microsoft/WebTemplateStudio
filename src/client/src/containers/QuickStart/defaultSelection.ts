@@ -2,9 +2,9 @@ import { ISelected } from "../../types/selected";
 
 const FRONT_END_SELECTION: ISelected = {
   author: "Facebook",
-  internalName: "ReactJS",
+  internalName: "React",
   licenses:
-    "[ReactJS](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
+    "[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
   title: "React",
   version: "v16.8.4"
 };
