@@ -119,10 +119,7 @@ export class AppServiceProvider {
   }
 
   private async generateValidASPName(name: string): Promise<string> {
-    let generatedName: string = NameGenerator.generateName(
-      name,
-      AzureResourceType.AppService
-    );
+    let generatedName: string = NameGenerator.generateName(name, "asp");
     let isValid: boolean = await this.validateASPName(generatedName);
     let tries = 0;
     while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {

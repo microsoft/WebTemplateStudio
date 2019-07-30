@@ -1,9 +1,7 @@
-import { AzureResourceType } from "../../constants";
-
 export namespace NameGenerator {
   export function generateName(
     userProjectName: string,
-    resourceType?: AzureResourceType
+    resourceType?: string
   ): string {
     const timestamp = unixToSuffix(Date.now());
     const suffix =
