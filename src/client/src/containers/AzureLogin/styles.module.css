@@ -5,7 +5,11 @@
 
 .container {
   position: relative;
-  padding: 65px 10%;
+  padding: 10vh 6vh;
+}
+
+.signedIn {
+  padding: 6vh;
 }
 
 .optionalFlag {
@@ -17,8 +21,8 @@
   text-align: center;
   text-decoration: none;
   font-weight: lighter;
-  font-size: 1.4em;
-  padding: 10px 0px;
+  font-size: 1.6em;
+  padding: 0.8em 0px;
 }
 
 .optionalFlag:hover {

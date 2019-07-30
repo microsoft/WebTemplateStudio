@@ -10,7 +10,7 @@ import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
-import { appServiceModalInitialState } from "../../mockData/cosmosDbModalData";
+import { appServiceModalInitialState } from "../../mockData/azureModalInitialStateData";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { messages } from "./messages";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
@@ -527,7 +527,7 @@ const AppServiceModal = (props: Props) => {
                 onChange={handleInput}
                 value={appServiceFormData.siteName.value}
                 placeholder={FORM_CONSTANTS.SITE_NAME.label}
-                disabled={appServiceFormData.subscription === ""}
+                disabled={appServiceFormData.subscription.value === ""}
                 tabIndex={appServiceFormData.subscription.value === "" ? -1 : 0}
               />
               {isSiteNameAvailable && !isValidatingName && (

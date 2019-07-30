@@ -14,7 +14,6 @@
 
 .button {
   margin-right: 1em;
-  font-size: 1.4em;
   text-align: center;
 }
 
@@ -38,14 +37,23 @@
 .nextIcon {
   margin-left: 10px;
   height: 16px;
-  color: #ffffff;
 }
 
 .nextIcon path {
   fill: var(--vscode-editor-foreground);
 }
 
+.nextIconNotDisabled path {
+  fill: #ffffff;
+}
+
 .disabledOverlay {
   opacity: 0.5;
   outline: 0px;
+}
+
+@media (min-width: 730px) {
+  .button {
+    font-size: 1.4em;
+  }
 }

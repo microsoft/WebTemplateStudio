@@ -99,6 +99,7 @@
   border: none;
   max-width: 100%;
   color: var(--vscode-editor-foreground);
+  font-size: 1.2em;
   text-overflow: ellipsis;
   width: 100%;
 }

@@ -347,7 +347,17 @@ export namespace DialogMessages {
     "dialog.resetPagesPrompt",
     "Switching Frameworks will reset pages in your queue. Are you sure you want to proceed?"
   );
+  export const logoutPrompt: string = localize(
+    "dialog.logoutPrompt",
+    "Are you sure you want to sign out of your Azure account?"
+  );
 }
+
+export const PAYLOAD_MESSAGES_TEXT = {
+  RESET_PAGES_TEXT: "Sending reset pages request...",
+  SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
+  SENT_GENERATION_INFO_TEXT: "Sending generation info..."
+};
 
 export enum AzureResourceType {
   AppService = "app-service",

@@ -28,6 +28,10 @@ const messages = defineMessages({
   giveFeedback: {
     id: "about.reportAnIssueLabel",
     defaultMessage: "Give Feedback"
+  },
+  feedbackRedirectLinkLabel: {
+    id: "feedback.redirectLinkLabel",
+    defaultMessage: "GitHub.com"
   }
 });
 

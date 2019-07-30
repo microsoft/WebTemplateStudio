@@ -17,7 +17,7 @@ import { AppState } from "../../reducers";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { IPrivacyModalData } from "../PrivacyModal";
+import { IRedirectModalData } from "../RedirectModal";
 
 interface IStateProps {
   frameworkLicenses: string[];
@@ -26,7 +26,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  openPrivacyModal: (license: IPrivacyModalData | undefined) => any;
+  openRedirectModal: (license: IRedirectModalData | undefined) => any;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
@@ -47,19 +47,20 @@ const Licenses = ({
   pageLicenses,
   isVisited,
   intl,
-  openPrivacyModal
+  openRedirectModal
 }: Props) => {
   const LinkRenderer = (props: any) => {
     return (
       <button
         className={styles.licenseButton}
         onClick={() =>
-          openPrivacyModal({
+          openRedirectModal({
             redirectLink: String(props.href),
             redirectLinkLabel: intl.formatMessage(messages.redirectLinkLabel, {
               licenseName: props.children[0].props.value
             }),
-            privacyStatementLink: ""
+            privacyStatementLink: "",
+            isThirdPartyLink: true
           })
         }
       >
@@ -85,7 +86,7 @@ const Licenses = ({
             <button
               className={styles.licenseButton}
               onClick={() =>
-                openPrivacyModal({
+                openRedirectModal({
                   redirectLink: String(license.url),
                   redirectLinkLabel: intl.formatMessage(
                     messages.redirectLinkLabel,
@@ -93,7 +94,8 @@ const Licenses = ({
                       licenseName: license.text
                     }
                   ),
-                  privacyStatementLink: ""
+                  privacyStatementLink: "",
+                  isThirdPartyLink: true
                 })
               }
               key={license.text}
@@ -115,8 +117,8 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  openPrivacyModal: license => {
-    dispatch(ModalActions.openPrivacyModalAction(license));
+  openRedirectModal: license => {
+    dispatch(ModalActions.openRedirectModalAction(license));
   }
 });
 
