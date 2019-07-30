@@ -333,6 +333,12 @@ export namespace DialogMessages {
   );
 }
 
+export const PAYLOAD_MESSAGES_TEXT = {
+  RESET_PAGES_TEXT: "Sending reset pages request...",
+  SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
+  SENT_GENERATION_INFO_TEXT: "Sending generation info..."
+};
+
 export enum AzureResourceType {
   AppService = "app-service",
   Cosmos = "cosmos",
