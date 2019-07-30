@@ -106,7 +106,7 @@ export class AppServiceProvider {
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
     };
     try {
-      const validName = await this.generateValidASPName(name);
+      const validName = await this.generateValidASPName(aspSelection.name);
       await this.webClient.appServicePlans.createOrUpdate(
         aspSelection.resourceGroup,
         validName,

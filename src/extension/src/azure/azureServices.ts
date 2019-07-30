@@ -122,6 +122,7 @@ export class AzureServices extends WizardServant {
     let payloadResponse: IPayloadResponse = { payload: success };
     return payloadResponse;
   }
+
   public static async sendAppServiceSubscriptionDataToClient(
     message: any
   ): Promise<IPayloadResponse> {
@@ -356,13 +357,13 @@ export class AzureServices extends WizardServant {
   // Will only be called if selections.resourceGroup is not an empty string
   public static async createAppServicePlan(payload: any): Promise<string> {
     AzureServices.updateAppServiceSubscriptionItemCache(payload);
-    const aspSelections: AppServicePlanSelection = {
+    const aspSelection: AppServicePlanSelection = {
       subscriptionItem: AzureServices.userAppServiceSubsctiptionItemCache,
       resourceGroup: payload.appService.resourceGroup,
       name: payload.engine.projectName
     };
     return await AzureServices.AzureAppServiceProvider.createAppServicePlan(
-      aspSelections
+      aspSelection
     );
   }
 
