@@ -107,6 +107,7 @@ export class CoreTemplateStudio {
     process.stderr.on("data", (data) => {
       this.cliEvents.emit("error", data.toString());
     });
+    process.on("exit", (code) => this.cliEvents.emit("error", `process exited with code ${code}`));
   }
 
   private async awaitCliEvent(eventName: string): Promise<any> {
