@@ -2,3 +2,8 @@ yarn --cwd ./src/client install
 yarn --cwd ./src/client build
 yarn --cwd ./src/extension install
 yarn --cwd ./src/extension build
+
+
+dotnet publish src/CoreTemplateStudio/code/src/CoreTemplateStudio/CoreTemplateStudio.Cli/CoreTemplateStudio.Cli.csproj -c debug -r win-x64 --self-contained true -o ../../../../../extension/src/corets-cli/win32/
+dotnet publish src/CoreTemplateStudio/code/src/CoreTemplateStudio/CoreTemplateStudio.Cli/CoreTemplateStudio.Cli.csproj -c debug -r linux-x64 --self-contained true -o ../../../../../extension/src/corets-cli/linux/
+dotnet publish src/CoreTemplateStudio/code/src/CoreTemplateStudio/CoreTemplateStudio.Cli/CoreTemplateStudio.Cli.csproj -c debug -r osx-x64 --self-contained true -o ../../../../../extension/src/corets-cli/darwin/

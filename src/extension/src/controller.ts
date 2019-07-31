@@ -154,7 +154,6 @@ export class Controller {
       GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
       Controller.loadUserSettings();
-      Controller.sendPortToClient();
 
       Controller.getVersionAndSendToClient(
         context,
@@ -175,17 +174,6 @@ export class Controller {
       payload: {
         templatesVersion,
         wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
-      }
-    });
-  }
-
-  private static sendPortToClient() {
-    const port = CoreTemplateStudio.GetExistingInstance().getPort();
-
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetPort,
-      payload: {
-        port
       }
     });
   }

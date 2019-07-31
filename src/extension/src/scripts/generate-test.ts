@@ -9,7 +9,7 @@ let syncAttemptNum = 0;
 let prevPromise: Promise<any> = Promise.resolve(null);
 
 const delay = (time: number) => {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     setTimeout(resolve, time);
   });
 };
@@ -38,7 +38,6 @@ let generateProj = (
 ) => {
   return getPagesObj(instance, frontend, backend).then(pagesObj => {
     return instance.generate({
-      port: instance.getPort(),
       payload: {
         backendFramework: backend,
         frontendFramework: frontend,
@@ -65,7 +64,6 @@ let attemptSync: any = (
   }
   return instanceObj
     .sync({
-      port: instance.getPort(),
       payload: { path: CONSTANTS.API.DEVELOPMENT_PATH_TO_TEMPLATES },
       liveMessageHandler: value => {
         value;

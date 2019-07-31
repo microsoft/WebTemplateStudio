@@ -15,6 +15,7 @@ import { ISelected } from "../../types/selected";
 
 import { ReactComponent as ShowIcon } from "../../assets/i-show.svg";
 import { ReactComponent as HideIcon } from "../../assets/i-hide.svg";
+import { ReactComponent as ResetIcon } from "../../assets/i-reset.svg";
 import { ReactComponent as Plus } from "../../assets/plus.svg";
 
 import { validateName } from "../../utils/validateName";
@@ -23,7 +24,7 @@ import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 
-const MAX_PAGE_NAME_LENGTH = 50;
+import { PAGE_NAME_CHARACTER_LIMIT } from "../../utils/constants"
 
 interface ISortablePageListProps {
   selectedPages: any[];
@@ -32,6 +33,7 @@ interface ISortablePageListProps {
 interface IStateProps {
   isSummaryPage?: boolean;
   selectionTitle?: string;
+  handleResetPages: () => void;
 }
 
 interface ISortableDispatchProps {
@@ -96,10 +98,8 @@ const SortablePageList = (props: Props) => {
         break;
       }
     }
-    if (pages[idx].title.length < MAX_PAGE_NAME_LENGTH) {
-      setPages(pages);
-      props.selectPages(pages);
-    }
+    setPages(pages);
+    props.selectPages(pages);
   };
 
   const onSortEnd = ({
@@ -136,11 +136,17 @@ const SortablePageList = (props: Props) => {
             >
               <Plus className={styles.plusIcon} />
             </button>
-          )}
+                  )}
+                  <button
+                      className={styles.resetButton}
+                      onClick={props.handleResetPages}
+                  >
+                      <ResetIcon className={styles.viewIcon} />
+                  </button>
           <button
             className={styles.hideOrShow}
             onClick={() => {
-              setMinimized(isMinimized ? false : true);
+                setMinimized(!isMinimized);
             }}
           >
             {isMinimized ? (
@@ -154,6 +160,7 @@ const SortablePageList = (props: Props) => {
       {!isMinimized && (
         <SortableList
           pages={selectedPages}
+          maxInputLength={PAGE_NAME_CHARACTER_LIMIT}
           onSortEnd={onSortEnd}
           distance={DRAG_PIXEL_THRESHOLD}
           handleInputChange={handleInputChange}

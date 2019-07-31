@@ -9,6 +9,8 @@ const NEW_PROJECT = "/";
 
 const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
+const PAGE_NAME_CHARACTER_LIMIT = 50;
+
 const MAX_PAGES_ALLOWED = 20;
 
 const WEB_TEMPLATE_STUDIO_LINKS = {
@@ -33,6 +35,12 @@ const ARIA_LABELS_NAVIGATION = defineMessages({
   }
 });
 
+const PAYLOAD_MESSAGES_TEXT = {
+  RESET_PAGES_TEXT: "Sending reset pages request...",
+  SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
+  SENT_GENERATION_INFO_TEXT: "Sending generation info..."
+};
+
 const ROUTES = {
   PAGE_DETAILS,
   SELECT_FRAMEWORKS,
@@ -53,7 +61,8 @@ const ROUTES_ARRAY = [
 
 const SERVICE_KEYS = {
   COSMOS_DB: "cosmosDB",
-  AZURE_FUNCTIONS: "azureFunctions"
+  AZURE_FUNCTIONS: "azureFunctions",
+  APP_SERVICE: "appService"
 };
 
 const COSMOS_APIS = {
@@ -89,10 +98,10 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   COSMOS_DB_MONGO: "wts.Feature.Azure.Cosmos.Mongo",
   COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
   FULL_STACK_APP: "FullStackWebApp",
-  NODE_JS: "NodeJS",
+  NODE: "Node",
   FLASK: "Flask",
   PYTHON: "Python",
-  REACT_JS: "ReactJS",
+  REACT: "React",
   REST_API: "RestAPI",
   VUE: "Vue",
   VUE_BLANK_PAGE: "wts.Page.Vue.Blank",
@@ -151,8 +160,10 @@ export {
   COSMOS_APIS,
   DEVELOPMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
+  PAGE_NAME_CHARACTER_LIMIT,
   MAX_PAGES_ALLOWED,
   WEB_TEMPLATE_STUDIO_LINKS,
   FRAMEWORK_TYPE,
-  KEY_EVENTS
+  KEY_EVENTS,
+  PAYLOAD_MESSAGES_TEXT
 };

@@ -16,11 +16,13 @@ const SortableSidebarItem = SortableElement(
     idx,
     handleInputChange,
     handleCloseClick,
-    totalPageCount
+    totalPageCount,
+    maxInputLength
   }: {
     page: any;
     idx: number;
     handleInputChange: any;
+    maxInputLength?: number;
     handleCloseClick?: (idx: number) => void;
     totalPageCount: number;
   }) => {
@@ -32,8 +34,9 @@ const SortableSidebarItem = SortableElement(
         reorderSvgUrl={withLocalPath(reorder)}
         handleInputChange={handleInputChange}
         handleCloseClick={handleCloseClick}
+        maxInputLength={maxInputLength}
         idx={idx + 1}
-        totalPageCount={totalPageCount}
+        totalCount={totalPageCount}
       />
     );
     // use idx+1 to prevent falsiness of 0th value
@@ -47,10 +50,12 @@ const SortableList = SortableContainer(
   ({
     pages,
     handleInputChange,
-    handleCloseClick
+    handleCloseClick,
+    maxInputLength
   }: {
     pages: ISelected[];
     handleInputChange: any;
+    maxInputLength?: number;
     handleCloseClick?: (idx: number) => void;
   }) => {
     const totalPageCount = pages.length;
@@ -63,7 +68,8 @@ const SortableList = SortableContainer(
               index={idx}
               idx={idx}
               page={page}
-              handleInputChange={handleInputChange}
+                  handleInputChange={handleInputChange}
+                  maxInputLength={maxInputLength}
               handleCloseClick={handleCloseClick}
               totalPageCount={totalPageCount}
             />

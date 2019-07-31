@@ -2,10 +2,11 @@ import classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
+import _ from "lodash";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
 import ServicesSidebarItem from "../../components/ServicesSidebarItem";
@@ -29,7 +30,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES
+  EXTENSION_MODULES,
+  PAYLOAD_MESSAGES_TEXT
 } from "../../utils/constants";
 import messages from "./strings";
 
@@ -73,6 +75,13 @@ type Props = IRightSidebarProps &
   IDispatchProps &
   InjectedIntlProps;
 
+const hasAzureServices = (services: any) => {
+  for (const key in services) {
+    if (!_.isEmpty(services[key].selection)) return true;
+  }
+  return false;
+};
+
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {
     selectBackendFramework: () => {},
@@ -80,11 +89,11 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     selectWebApp: () => {},
     selectPages: () => {}
   };
-  public handleChange(
+  public handleChange = (
     e: IDropDownOptionType,
     selectOption: (item: ISelected) => void,
     optionsData: IOption[]
-  ) {
+  ) => {
     optionsData.map(option => {
       if (option.internalName === e.value) {
         const { title, internalName, version, author, licenses } = option;
@@ -97,8 +106,23 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         });
       }
     });
-  }
-  public handleFrameworkChange(option: IDropDownOptionType) {
+  };
+  public resetAllPages = () => {
+    const { pages, frontendFramework } = this.props.selection;
+    const { vscode } = this.props;
+    vscode.postMessage({
+      module: EXTENSION_MODULES.VSCODEUI,
+      command: EXTENSION_COMMANDS.RESET_PAGES,
+      track: false,
+      text: PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT,
+      payload: {
+        internalName: frontendFramework.internalName,
+        pagesLength: pages.length
+      }
+    });
+  };
+
+  public handleFrameworkChange = (option: IDropDownOptionType) => {
     const { frontendFramework, pages } = this.props.selection;
     const { vscode } = this.props;
     if (frontendFramework.internalName !== option.value) {
@@ -106,14 +130,14 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         module: EXTENSION_MODULES.VSCODEUI,
         command: EXTENSION_COMMANDS.RESET_PAGES,
         track: false,
-        text: "Sending framework change request...",
+        text: PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT,
         payload: {
           internalName: option.value,
           pagesLength: pages.length
         }
       });
     }
-  }
+  };
 
   /**
    * Changes the title of the page type that was chosen
@@ -172,8 +196,8 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 <RightSidebarDropdown
                   options={this.props.frontendDropdownItems}
                   handleDropdownChange={
-                    (showPages && this.handleFrameworkChange.bind(this)) ||
-                    this.handleChange.bind(this)
+                    (showPages && this.handleFrameworkChange) ||
+                    this.handleChange
                   }
                   selectDropdownOption={this.props.selectFrontendFramework}
                   isVisible={showFrameworks}
@@ -186,7 +210,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 />
                 <RightSidebarDropdown
                   options={this.props.backendDropdownItems}
-                  handleDropdownChange={this.handleChange.bind(this)}
+                  handleDropdownChange={this.handleChange}
                   selectDropdownOption={this.props.selectBackendFramework}
                   isVisible={showFrameworks}
                   title={formatMessage(messages.backendFramework)}
@@ -197,9 +221,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 />
                 <div className={styles.sortablePages}>
                   {showPages && (
-                    <SortablePageList
-                      isSummaryPage={pathname === ROUTES.REVIEW_AND_GENERATE}
-                    />
+                                    <SortablePageList handleResetPages={this.resetAllPages} isSummaryPage={pathname === ROUTES.REVIEW_AND_GENERATE}/>
                   )}
                 </div>
                 {showServices && (
@@ -207,6 +229,19 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                     <div className={styles.dropdownTitle}>
                       {formatMessage(messages.services)}
                     </div>
+                    {pathname === ROUTES.REVIEW_AND_GENERATE &&
+                      !hasAzureServices(this.props.services) && (
+                        <Link
+                          className={classnames(
+                            buttonStyles.buttonDark,
+                            styles.backToAzureBox
+                          )}
+                          to={ROUTES.AZURE_LOGIN}
+                          tabIndex={0}
+                        >
+                          {formatMessage(messages.backToAzurePage)}
+                        </Link>
+                      )}
                     <ServicesSidebarItem services={this.props.services} />
                   </div>
                 )}

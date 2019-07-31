@@ -607,7 +607,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           </div>
           <div>
             {props.intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
-              runtimeStack: WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS
+              runtimeStack: WIZARD_CONTENT_INTERNAL_NAMES.NODE
             })}
           </div>
         </div>
