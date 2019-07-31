@@ -139,23 +139,24 @@ class DependencyInfo extends React.Component<Props> {
     };
 
     return (
-      <div
-        role="button"
-        tabIndex={0}
-        onKeyDown={installed ? () => null : keyDownHandler}
-        onClick={() => openRedirectModal(privacyModalData)}
-        className={classnames(styles.dependencyContainer, {
-          [styles.disabled]: installed,
-          [styles.borderGreen]: installed,
-          [styles.borderYellow]: !installed
-        })}
-      >
-        <Notification
-          showWarning={!installed}
-          text={dependencyMessage}
-          altMessage={intl.formatMessage(messages.iconAltMessage)}
-        />
-      </div>
+      !installed && (
+        <div
+          role="button"
+          tabIndex={0}
+          onKeyDown={installed ? () => null : keyDownHandler}
+          onClick={() => openRedirectModal(privacyModalData)}
+          className={classnames(
+            styles.dependencyContainer,
+            styles.borderYellow
+          )}
+        >
+          <Notification
+            showWarning={!installed}
+            text={dependencyMessage}
+            altMessage={intl.formatMessage(messages.iconAltMessage)}
+          />
+        </div>
+      )
     );
   }
 }
