@@ -1,29 +1,26 @@
 ﻿{
-    "author": "Microsoft Community",
-    "classifications": [
-      "Universal"
-    ],
-    "name": "Page.Node.Grid.AddRoutes",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.Node.Grid.AddRoutes",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == NodeJS & groupIdentity == wts.Page.Grid"
+    "wts.compositionFilter": "$backendframework == Node & groupIdentity == wts.Page.Grid"
   },
-    "sourceName": "wts.ItemName",
-    "preferNameDirectory": true,
-    "PrimaryOutputs": [
-    ],
-    "symbols": {
-      "wts.rootNamespace": {
-        "type": "parameter",
-        "replaces": "Param_RootNamespace"
-      },
-      "wts.itemNamespace": {
-        "type": "parameter",
-        "replaces": "Param_ItemNamespace"
-      }
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.itemNamespace": {
+      "type": "parameter",
+      "replaces": "Param_ItemNamespace"
     }
   }
+}

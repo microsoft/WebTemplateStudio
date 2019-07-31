@@ -8,7 +8,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == NodeJS & identity == wts.Feature.Azure.Cosmos.Mongo & wts.type == feature"
+    "wts.compositionFilter": "$backendframework == Node & identity == wts.Feature.Azure.Cosmos.Mongo & wts.type == feature"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
