@@ -353,3 +353,8 @@ Thumbs.db
 
 # Temporarily ignoring engine generated link
 src/extension/src/api/darwin/CoreTemplateStudio/
+
+# Build files from CoreTS CLi 
+src/extension/src/corets-cli/darwin/
+src/extension/src/corets-cli/linux/
+src/extension/src/corets-cli/win32/
