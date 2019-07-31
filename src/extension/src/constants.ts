@@ -159,8 +159,25 @@ export const CONSTANTS = {
     ),
     SYNC_STATUS: localize("info.syncStatus", "Sync Status: ")
   },
-  API: {
+  CLI: {
+    BASE_CLI_TOOL_NAME: "Microsoft.Templates.Cli",
+    SYNC_COMPLETE_STATE: "syncResult",
+    SYNC_PROGRESS_STATE: "syncProgress",
+    GET_FEATURES_COMPLETE_STATE: "getFeaturesResult",
+    GET_FRAMEWORKS_COMPLETE_STATE: "getFrameworksResult",
+    GET_PAGES_COMPLETE_STATE: "getPagesResult",
+    GET_PROJECT_TYPES_COMPLETE_STATE: "getProjectTypesResult",
+    GENERATE_COMPLETE_STATE: "generateResult",
+    GENERATE_PROGRESS_STATE: "generateProgress",
     WINDOWS_PLATFORM_VERSION: "win32",
+    SYNC_COMMAND_PREFIX: "sync",
+    GET_FRAMEWORKS_COMMAND_PREFIX: "getframeworks",
+    GET_PAGES_COMMAND_PREFIX: "getpages",
+    GET_FEATURES_COMMAND_PREFIX: "getfeatures",
+    GET_PROJECT_TYPES_COMMAND_PREFIX: "getprojecttypes",
+    GENERATE_COMMAND_PREFIX: "generate"
+  },
+  API: {
     BASE_APPLICATION_NAME: "CoreTemplateStudio.Api",
     PRODUCTION_PATH_TO_TEMPLATES: "..",
     DEVELOPMENT_PATH_TO_TEMPLATES: "../../../../..",
@@ -199,14 +216,14 @@ export const CONSTANTS = {
   },
   GENERATE_ENDPOINT: "/api/generate",
   ENGINE_DIRECTORY: "./src/api/darwin/CoreTemplateStudio.Api",
-  CONNECTION_STRING_MONGO: function(
+  CONNECTION_STRING_MONGO: function (
     username: string,
     password: string,
     origin: string
   ) {
     return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMOSDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
   },
-  CONNECTION_STRING_SQL: function(origin: string, primaryKey: string) {
+  CONNECTION_STRING_SQL: function (origin: string, primaryKey: string) {
     return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
