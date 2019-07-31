@@ -17,11 +17,11 @@
 .addPagesButton,
 .resetButton,
 .hideOrShow {
-    cursor: pointer;
-    color: var(--vscode-textLink-foreground);
-    border: none;
-    font-size: var(--vscode-font-size);
-    background-color: var(--vscode-editor-background);
+  cursor: pointer;
+  color: var(--vscode-textLink-foreground);
+  border: none;
+  font-size: var(--vscode-font-size);
+  background-color: var(--vscode-editor-background);
 }
 
 .resetButton {
@@ -30,8 +30,8 @@
 
 .hideOrShow:focus,
 .addPagesButton:focus,
-.resetButton:focus{
-    outline: 1px solid var(--vscode-contrastActiveBorder);
+.resetButton:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .viewIcon path {

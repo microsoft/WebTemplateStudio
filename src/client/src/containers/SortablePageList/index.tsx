@@ -24,7 +24,7 @@ import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 
-import { PAGE_NAME_CHARACTER_LIMIT } from "../../utils/constants"
+import { PAGE_NAME_CHARACTER_LIMIT } from "../../utils/constants";
 
 interface ISortablePageListProps {
   selectedPages: any[];
@@ -136,17 +136,17 @@ const SortablePageList = (props: Props) => {
             >
               <Plus className={styles.plusIcon} />
             </button>
-                  )}
-                  <button
-                      className={styles.resetButton}
-                      onClick={props.handleResetPages}
-                  >
-                      <ResetIcon className={styles.viewIcon} />
-                  </button>
+          )}
+          <button
+            className={styles.resetButton}
+            onClick={props.handleResetPages}
+          >
+            <ResetIcon className={styles.viewIcon} />
+          </button>
           <button
             className={styles.hideOrShow}
             onClick={() => {
-                setMinimized(!isMinimized);
+              setMinimized(!isMinimized);
             }}
           >
             {isMinimized ? (

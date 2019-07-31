@@ -68,8 +68,8 @@ const SortableList = SortableContainer(
               index={idx}
               idx={idx}
               page={page}
-                  handleInputChange={handleInputChange}
-                  maxInputLength={maxInputLength}
+              handleInputChange={handleInputChange}
+              maxInputLength={maxInputLength}
               handleCloseClick={handleCloseClick}
               totalPageCount={totalPageCount}
             />
