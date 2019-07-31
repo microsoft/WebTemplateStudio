@@ -60,7 +60,6 @@ export class LaunchExperience {
     let apiInstance = CoreTemplateStudio.GetExistingInstance();
     return await apiInstance
       .sync({
-        port: apiInstance.getPort(),
         payload: { path: pathToTemplates },
         liveMessageHandler: this.handleSyncLiveData
       })
@@ -69,7 +68,7 @@ export class LaunchExperience {
           "EXTENSION",
           "info",
           "Successfully synced templates. Version: " +
-            syncResult.templatesVersion
+          syncResult.templatesVersion
         );
         return {
           successfullySynced: true,
