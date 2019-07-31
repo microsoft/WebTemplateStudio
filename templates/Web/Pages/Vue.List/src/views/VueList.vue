@@ -37,7 +37,7 @@ export default {
     WarningMessage
   },
 
-  data: function() {
+  data() {
     return {
       list: [],
       textField: "",
@@ -46,12 +46,12 @@ export default {
     };
   },
 
-  created: function() {
+  created() {
     this.fetchTextAssets();
   },
 
   methods: {
-    fetchTextAssets: function() {
+    fetchTextAssets() {
       fetch(CONSTANTS.ENDPOINT.LIST)
         .then(response => {
           if (!response.ok) {
@@ -67,7 +67,7 @@ export default {
           } ${error}`;
         });
     },
-    handleAddListItem: function() {
+    handleAddListItem() {
       // Warning Pop Up if the user submits an empty message
       if (!this.textField) {
         this.WarningMessageOpen = true;

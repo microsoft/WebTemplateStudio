@@ -39,7 +39,7 @@ export default {
     WarningMessage
   },
 
-  data: function() {
+  data() {
     return {
       masterDetailText: [
         {
@@ -55,12 +55,12 @@ export default {
     };
   },
 
-  created: function() {
+  created() {
     this.fetchTextAssets();
   },
 
   methods: {
-    fetchTextAssets: function() {
+    fetchTextAssets() {
       fetch(CONSTANTS.ENDPOINT.MASTERDETAIL)
         .then(response => {
           if (!response.ok) {
@@ -78,11 +78,11 @@ export default {
           } ${error}`;
         });
     },
-    handleWarningClose: function() {
+    handleWarningClose() {
       this.WarningMessageOpen = false;
       this.WarningMessageText = "";
     },
-    handleDisplayTabClick: function(id) {
+    handleDisplayTabClick(id) {
       this.currentDisplayTabIndex = id;
     }
   }

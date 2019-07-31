@@ -46,7 +46,7 @@ export default {
     WarningMessage
   },
 
-  data: function() {
+  data() {
     return {
       gridTextAssets: [
         {
@@ -60,12 +60,12 @@ export default {
     };
   },
 
-  created: function() {
+  created() {
     this.fetchTextAssets();
   },
 
   methods: {
-    fetchTextAssets: function() {
+    fetchTextAssets() {
       fetch(CONSTANTS.ENDPOINT.GRID)
         .then(response => {
           if (!response.ok) {
@@ -83,7 +83,7 @@ export default {
           } ${error}`;
         });
     },
-    handleWarningClose: function() {
+    handleWarningClose() {
       this.WarningMessageOpen = false;
       this.WarningMessageText = "";
     }
