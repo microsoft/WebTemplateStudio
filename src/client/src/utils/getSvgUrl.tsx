@@ -13,7 +13,7 @@ import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants";
 import react from "../assets/react.svg";
 import angular from "../assets/angular.svg";
 import vue from "../assets/vue.svg";
-import node from "../assets/nodeJS.svg";
+import node from "../assets/node.svg";
 import flask from "../assets/flask.svg";
 import azure from "../assets/azure.svg";
 import appservice from "../assets/appservice.svg";
