@@ -6,20 +6,20 @@
           <div class="list-group list-group-flush border-bottom">
             <MasterDetailSideBarTab
               v-for="(textAssets, index) in masterDetailText"
-              v-on:onDisplayTabClick="handleDisplayTabClick"
-              v-bind:tabText="textAssets.title"
-              v-bind:index="index"
-              v-bind:key="textAssets.id"
+              @onDisplayTabClick="handleDisplayTabClick"
+              :tabText="textAssets.title"
+              :index="index"
+              :key="textAssets.id"
             />
           </div>
         </div>
-        <MasterDetailPage v-bind:textSampleData="masterDetailText[currentDisplayTabIndex]"/>
+        <MasterDetailPage :textSampleData="masterDetailText[currentDisplayTabIndex]" />
       </div>
     </main>
     <WarningMessage
       v-if="WarningMessageOpen"
-      v-on:onWarningClose="handleWarningClose"
-      v-bind:text="WarningMessageText"
+      @onWarningClose="handleWarningClose"
+      :text="WarningMessageText"
     />
   </div>
 </template>
@@ -73,9 +73,7 @@ export default {
         })
         .catch(error => {
           this.WarningMessageOpen = true;
-          this.WarningMessageText = `${
-            CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET
-          } ${error}`;
+          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`;
         });
     },
     handleWarningClose: function() {

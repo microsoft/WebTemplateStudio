@@ -5,18 +5,18 @@
         <h3>Bootstrap VueList Template</h3>
       </div>
       <div class="col-12 p-0">
-        <ListForm v-on:onAddListItem="handleAddListItem" v-model="textField"/>
+        <ListForm @onAddListItem="handleAddListItem" v-model="textField" />
       </div>
       <ListItem
         v-for="listItem in list"
-        v-bind:key="listItem._id"
-        v-bind:listItem="listItem"
-        v-on:onDeleteListItem="handleDeleteListItem"
+        :key="listItem._id"
+        :listItem="listItem"
+        @onDeleteListItem="handleDeleteListItem"
       />
       <WarningMessage
         v-if="WarningMessageOpen"
-        v-on:onWarningClose="handleWarningClose"
-        v-bind:text="WarningMessageText"
+        @onWarningClose="handleWarningClose"
+        :text="WarningMessageText"
       />
     </div>
   </main>
@@ -62,9 +62,7 @@ export default {
         .then(result => (this.list = result))
         .catch(error => {
           this.WarningMessageOpen = true;
-          this.WarningMessageText = `${
-            CONSTANTS.ERROR_MESSAGE.LIST_GET
-          } ${error}`;
+          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`;
         });
     },
     handleAddListItem: function() {
@@ -94,9 +92,7 @@ export default {
         })
         .catch(error => {
           this.WarningMessageOpen = true;
-          this.WarningMessageText = `${
-            CONSTANTS.ERROR_MESSAGE.LIST_ADD
-          } ${error}`;
+          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`;
         });
     },
     handleDeleteListItem(listItem) {
@@ -112,9 +108,7 @@ export default {
         })
         .catch(error => {
           this.WarningMessageOpen = true;
-          this.WarningMessageText = `${
-            CONSTANTS.ERROR_MESSAGE.LIST_DELETE
-          } ${error}`;
+          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`;
         });
     },
     handleWarningClose() {
