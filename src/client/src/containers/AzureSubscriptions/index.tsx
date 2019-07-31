@@ -21,6 +21,9 @@ import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
 
+import { isAzureFunctionsSelectedSelector } from "../../selectors/azureFunctionsServiceSelector";
+import { isAppServiceSelectedSelector } from "../../selectors/appServiceSelector";
+
 interface IDispatchProps {
   startLogOutToAzure: () => any;
   openCosmosDbModal: () => any;
@@ -36,6 +39,8 @@ interface IAzureLoginProps {
   cosmosDbSelection: any;
   appServiceSelection: any;
   isPreview: boolean;
+  isAzureFunctionsSelected: boolean;
+  isAppServiceSelected: boolean;
 }
 
 interface IState {
@@ -102,6 +107,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     }
     return false;
   };
+
   public addOrEditResourceText = (internalName: string): string => {
     const { formatMessage } = this.props.intl;
     if (this.isSelectionCreated(internalName)) {
@@ -109,6 +115,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     }
     return formatMessage(messages.addResource);
   };
+
   /**
    * Returns a function that opens a modal for a specific internalName
    * @param internalName internal name of service within Core Engine
@@ -127,6 +134,21 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return () => {};
   }
 
+  /**
+   * Returns internal name of Azure cloud hosting service that has been created
+   * If no service has been created yet, returns null
+   */
+  public getCreatedHostingService(): string | null {
+    const { isAzureFunctionsSelected, isAppServiceSelected } = this.props;
+    if (isAzureFunctionsSelected) {
+      return WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS;
+    } else if (isAppServiceSelected) {
+      return WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE;
+    } else {
+      return null;
+    }
+  }
+
   public getServicesOrganizer(
     type: string | undefined,
     isLoggedIn: boolean,
@@ -135,6 +157,8 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     isPreview: boolean
   ) {
     const { formatMessage } = this.props.intl;
+    const createdHostingServiceInternalName = this.getCreatedHostingService();
+
     return (
       <div
         className={classnames(styles.servicesContainer, {
@@ -151,6 +175,21 @@ class AzureSubscriptions extends React.Component<Props, IState> {
               // show cards with preview flag only if wizard is also in preview
               const shouldShowCard = isPreview || !option.isPreview;
               if (shouldShowCard && option.type === type) {
+                let isCardDisabled: boolean = !isLoggedIn;
+
+                switch (option.type) {
+                  case servicesEnum.HOSTING:
+                    // if a hosting service is already created, any other hosting services card should be disabled
+                    if (createdHostingServiceInternalName) {
+                      isCardDisabled =
+                        option.internalName !==
+                        createdHostingServiceInternalName;
+                    }
+                    break;
+                  default:
+                    break;
+                }
+
                 return (
                   <div
                     key={JSON.stringify(option.title)}
@@ -166,7 +205,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                       handleButtonClick={this.getServicesModalOpener(
                         option.internalName
                       )}
-                      disabled={!isLoggedIn}
+                      disabled={isCardDisabled}
                       handleDetailsClick={setDetailPage}
                     />
                   </div>
@@ -178,6 +217,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       </div>
     );
   }
+
   public render() {
     const { isLoggedIn, setDetailPage, isPreview } = this.props;
     const serviceTypes = azureServiceOptions.map(option => option.type);
@@ -215,7 +255,9 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => {
     azureFunctionsSelection: state.selection.services.azureFunctions.selection,
     cosmosDbSelection: state.selection.services.cosmosDB.selection,
     appServiceSelection: state.selection.services.appService.selection,
-    isPreview: previewStatus
+    isPreview: previewStatus,
+    isAzureFunctionsSelected: isAzureFunctionsSelectedSelector(state),
+    isAppServiceSelected: isAppServiceSelectedSelector(state)
   };
 };
 
