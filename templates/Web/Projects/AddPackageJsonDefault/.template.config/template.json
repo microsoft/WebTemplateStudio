@@ -11,7 +11,7 @@
     "wts.type": "project",
     "wts.projecttype": "all",
     "wts.frontendframework": "React|Angular|Vue",
-    "wts.backendframework": "NodeJS|Flask",
+    "wts.backendframework": "Node|Flask",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.displayOrder": "1"

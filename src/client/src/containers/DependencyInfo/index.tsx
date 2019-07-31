@@ -45,7 +45,7 @@ interface IDependencies {
 }
 
 const dependencies: IDependencies = {
-  NodeJS: {
+  Node: {
     dependencyStoreKey: "node",
     dependencyName: "Node",
     dependencyMinimumVersion: "v10.15+",
@@ -64,11 +64,11 @@ const dependencies: IDependencies = {
 };
 
 const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT, dependencies.NodeJS],
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.NodeJS],
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.NodeJS],
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT, dependencies.Node],
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.Node],
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.Node],
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, dependencies.Python],
-  [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS, dependencies.NodeJS]
+  [WIZARD_CONTENT_INTERNAL_NAMES.NODE, dependencies.Node]
 ]);
 
 interface IDependencyInfoProps {

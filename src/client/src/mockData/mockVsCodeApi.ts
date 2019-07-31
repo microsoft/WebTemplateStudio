@@ -135,7 +135,7 @@ const mockVsCodeApi = () => ({
                     }
                   },
                   {
-                    name: "NodeJS",
+                    name: "Node",
                     displayName: "Node.js/Express",
                     icon: "",
                     summary: "JavaScript framework",
@@ -145,10 +145,10 @@ const mockVsCodeApi = () => ({
                     order: 1,
                     metadataType: "Framework",
                     licenses:
-                      "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
+                      "[Node](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
                     licenseTerms: [
                       {
-                        text: "NodeJS",
+                        text: "Node",
                         url:
                           "https://github.com/nodejs/node/blob/master/LICENSE"
                       },
