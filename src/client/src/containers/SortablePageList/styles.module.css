@@ -17,6 +17,7 @@
 .addPagesButton,
 .resetButton,
 .hideOrShow {
+  margin-left: 1px;
   cursor: pointer;
   color: var(--vscode-textLink-foreground);
   border: none;
@@ -44,5 +45,4 @@
 
 .iconsContainer {
   display: flex;
-  justify-content: flex-end;
 }
