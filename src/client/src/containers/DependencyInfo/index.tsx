@@ -112,7 +112,6 @@ class DependencyInfo extends React.Component<Props> {
     if (dependenciesStore[dependencyStoreKey] === undefined) {
       return null;
     }
-
     const installed: boolean = dependenciesStore[dependencyStoreKey].installed;
 
     let dependencyMessage: string = installed
