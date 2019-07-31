@@ -16,10 +16,6 @@ import { IRedirectModalData } from "../RedirectModal";
 import Notification from "../../components/Notification";
 
 const messages = defineMessages({
-  installed: {
-    id: "dependencyChecker.installedMessage",
-    defaultMessage: "{dependencyName} detected!"
-  },
   notInstalled: {
     id: "dependencyChecker.notInstalledMessage",
     defaultMessage:
@@ -115,9 +111,7 @@ class DependencyInfo extends React.Component<Props> {
     const installed: boolean = dependenciesStore[dependencyStoreKey].installed;
 
     let dependencyMessage: string = installed
-      ? intl.formatMessage(messages.installed, {
-          dependencyName: dependencyName
-        })
+      ? ""
       : intl.formatMessage(messages.notInstalled, {
           dependencyName: dependencyName,
           minimumVersion: dependencyMinimumVersion

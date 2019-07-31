@@ -50,7 +50,6 @@
   "cosmosResourceModule.createCosmosRes",
   "cosmosResourceModule.internalName",
   "cosmosResourceModule.accountNameSubLabel",
-  "dependencyChecker.installedMessage",
   "dependencyChecker.notInstalledMessage",
   "dependencyChecker.iconAltMessage",
   "footer.back",
