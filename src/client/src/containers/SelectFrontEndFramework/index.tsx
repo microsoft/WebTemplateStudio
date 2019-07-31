@@ -70,9 +70,6 @@ class SelectFrontEndFramework extends React.Component<Props> {
       selectedFrontendFramework.internalName &&
       selectedFrontendFramework.internalName !== option.internalName
     ) {
-      console.log(JSON.stringify(selectedPages));
-      console.log(option.internalName);
-      console.log(selectedFrontendFramework.internalName);
       vscode.postMessage({
         module: EXTENSION_MODULES.CORETS,
         command: EXTENSION_COMMANDS.GET_PAGES,

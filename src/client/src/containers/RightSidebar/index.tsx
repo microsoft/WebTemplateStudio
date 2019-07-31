@@ -132,7 +132,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       frontEndOptions,
       selectFrontendFramework
     } = this.props;
-    console.log(JSON.stringify(option));
     if (frontendFramework.internalName !== option.value) {
       vscode.postMessage({
         module: EXTENSION_MODULES.CORETS,
