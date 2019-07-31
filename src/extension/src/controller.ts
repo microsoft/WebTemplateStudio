@@ -181,19 +181,14 @@ export class Controller {
   }
 
   private static loadUserSettings() {
+    const userOutputPath = vscode.workspace
+      .getConfiguration()
+      .get<string>("wts.changeSaveToLocation");
     const preview = vscode.workspace
       .getConfiguration()
       .get<boolean>("wts.enablePreviewMode");
 
-    let outputPath: string = os.homedir();
-    const userOutputPath = vscode.workspace
-      .getConfiguration()
-      .get<string>("wts.changeSaveToLocation");
-
-    if (userOutputPath) {
-      outputPath = userOutputPath;
-    }
-
+    const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetOutputPath,
       payload: {
