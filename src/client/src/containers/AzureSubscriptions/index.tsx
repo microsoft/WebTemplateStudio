@@ -157,6 +157,8 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     isPreview: boolean
   ) {
     const { formatMessage } = this.props.intl;
+    const createdHostingServiceInternalName = this.getCreatedHostingService();
+
     return (
       <div
         className={classnames(styles.servicesContainer, {
@@ -178,10 +180,10 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                 switch (option.type) {
                   case servicesEnum.HOSTING:
                     // if a hosting service is already created, any other hosting services card should be disabled
-                    const hostingServiceInternalName = this.getCreatedHostingService();
-                    if (hostingServiceInternalName) {
+                    if (createdHostingServiceInternalName) {
                       isCardDisabled =
-                        option.internalName !== hostingServiceInternalName;
+                        option.internalName !==
+                        createdHostingServiceInternalName;
                     }
                     break;
                   default:
