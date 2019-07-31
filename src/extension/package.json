@@ -53,6 +53,11 @@
       "type": "object",
       "title": "%webTemplateStudioExtension.commands.wts%",
       "properties": {
+        "wts.changeSaveToLocation": {
+          "type": "string",
+          "default": "",
+          "description": "Change your save to location for your project."
+        },
         "wts.enablePreviewMode": {
           "type": "boolean",
           "default": false,

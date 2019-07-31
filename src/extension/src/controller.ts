@@ -1,6 +1,5 @@
 import * as vscode from "vscode";
 const os = require("os");
-const child_process = require("child_process");
 
 import { Validator } from "./utils/validator";
 import {
@@ -157,8 +156,6 @@ export class Controller {
       GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
       Controller.loadUserSettings();
-      Controller.sendPortToClient();
-      Controller.getDefaultOutputPath();
 
       Controller.getVersionAndSendToClient(
         context,
@@ -183,24 +180,19 @@ export class Controller {
     });
   }
 
-  private static sendPortToClient() {
-    const port = CoreTemplateStudio.GetExistingInstance().getPort();
+  private static loadUserSettings() {
+    const preview = vscode.workspace
+      .getConfiguration()
+      .get<boolean>("wts.enablePreviewMode");
 
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetPort,
-      payload: {
-        port
-      }
-    });
-  }
+    let outputPath: string = os.homedir();
+    const userOutputPath = vscode.workspace
+      .getConfiguration()
+      .get<string>("wts.changeSaveToLocation");
 
-  private static getDefaultOutputPath() {
-    const userOS = os.platform();
-    const command: string = this.isUnix(userOS) ? "~" : "%USERPROFILE%";
-    const outputPath = child_process
-      .execSync("echo " + command)
-      .toString()
-      .trim();
+    if (userOutputPath) {
+      outputPath = userOutputPath;
+    }
 
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetOutputPath,
@@ -208,16 +200,7 @@ export class Controller {
         outputPath: outputPath
       }
     });
-  }
 
-  private static isUnix(userOS: string): boolean {
-    return userOS === "linux" || userOS === "darwin";
-  }
-
-  private static loadUserSettings() {
-    const preview = vscode.workspace
-      .getConfiguration()
-      .get<boolean>("wts.enablePreviewMode");
     if (preview !== undefined) {
       Controller.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.GetPreviewStatus,
