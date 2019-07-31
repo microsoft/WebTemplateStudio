@@ -1,8 +1,6 @@
 ﻿{
-    "author": "Microsoft Community",
-    "classifications": [
-      "Universal"
-    ],
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
   "name": "Page.Node.AddSampleData.ForAllExceptList",
   "tags": {
     "language": "Any",
@@ -10,20 +8,19 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == NodeJS & groupIdentity == wts.Page.Grid|wts.Page.MasterDetail"
+    "wts.compositionFilter": "$backendframework == Node & groupIdentity == wts.Page.Grid|wts.Page.MasterDetail"
   },
-    "sourceName": "wts.ItemName",
-    "preferNameDirectory": true,
-    "PrimaryOutputs": [
-    ],
-    "symbols": {
-      "wts.rootNamespace": {
-        "type": "parameter",
-        "replaces": "Param_RootNamespace"
-      },
-      "wts.itemNamespace": {
-        "type": "parameter",
-        "replaces": "Param_ItemNamespace"
-      }
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.itemNamespace": {
+      "type": "parameter",
+      "replaces": "Param_ItemNamespace"
     }
   }
+}

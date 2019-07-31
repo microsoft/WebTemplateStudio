@@ -11,7 +11,7 @@
     "wts.type": "project",
     "wts.projecttype": "FullStackWebApp",
     "wts.frontendframework": "all",
-    "wts.backendframework": "NodeJS",
+    "wts.backendframework": "Node",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.displayOrder": "1"
