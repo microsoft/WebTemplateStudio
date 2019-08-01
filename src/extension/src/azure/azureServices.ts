@@ -358,7 +358,7 @@ export class AzureServices extends WizardServant {
   public static async createAppServicePlan(payload: any): Promise<string> {
     AzureServices.updateAppServiceSubscriptionItemCache(payload);
     const aspSelection: AppServicePlanSelection = {
-      subscriptionItem: AzureServices.userAppServiceSubsctiptionItemCache,
+      subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
       resourceGroup: payload.appService.resourceGroup,
       name: payload.engine.projectName
     };
