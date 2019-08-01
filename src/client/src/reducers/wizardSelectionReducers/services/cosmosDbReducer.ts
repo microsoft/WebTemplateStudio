@@ -52,7 +52,7 @@ const initialState = {
   wizardContent: {
     serviceType: messages.cosmosOriginalTitle
   },
-  chooseExistingRadioButtonSelected: true
+  chooseExistingRadioButtonSelected: false
 };
 
 const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
