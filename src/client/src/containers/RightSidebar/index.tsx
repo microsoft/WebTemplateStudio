@@ -155,7 +155,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           backendFramework: backendFramework.internalName
         }
       });
-      let newFrontEndFramework = undefined;
+      let newFrontEndFramework;
       frontEndOptions.forEach(frontEnd => {
         if (frontEnd.internalName === option.value) {
           const { title, internalName, version, author, licenses } = frontEnd;
