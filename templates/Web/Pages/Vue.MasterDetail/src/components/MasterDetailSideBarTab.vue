@@ -1,6 +1,6 @@
 ﻿<template>
   <button
-    v-on:click="$emit('onDisplayTabClick', index)"
+    @click="$emit('onDisplayTabClick', index)"
     type="button"
     class="list-group-item list-group-item-action styles.sidebarText"
   >
