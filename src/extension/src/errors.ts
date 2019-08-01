@@ -46,3 +46,10 @@ export class ResourceGroupError extends Error {
     this.name = "ResourceGroupError";
   }
 }
+
+export class AppServiceError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "AppServiceError";
+  }
+}
