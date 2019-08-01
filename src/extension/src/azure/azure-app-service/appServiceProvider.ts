@@ -8,7 +8,13 @@ import {
   DeploymentError,
   AppServiceError
 } from "../../errors";
-import { CONSTANTS, OS, AppType, AzureResourceType } from "../../constants";
+import {
+  CONSTANTS,
+  OS,
+  AppType,
+  AzureResourceType,
+  BackendFrameworkLinuxVersion
+} from "../../constants";
 import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import {
@@ -20,7 +26,6 @@ import ResourceManagementClient, {
   ResourceManagementModels
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
 import { ResourceManager } from "../azure-arm/resourceManager";
-
 
 export interface AppServicePlanSelection {
   subscriptionItem: SubscriptionItem;
@@ -207,6 +212,8 @@ export class AppServiceProvider {
       path.join(appPath, "arm-templates", "??"),
       parameters
     );
+  }
+
   // Creates a Basic Tier App Service Plan (ASP)
   public async createAppServicePlan(
     aspSelection: AppServicePlanSelection

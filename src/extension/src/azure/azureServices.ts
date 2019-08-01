@@ -18,7 +18,8 @@ import {
   AzureResourceType,
   DialogMessages,
   DialogResponses,
-  ExtensionCommand
+  ExtensionCommand,
+  BackendFrameworkLinuxVersion
 } from "../constants";
 import {
   SubscriptionError,
@@ -429,22 +430,39 @@ export class AzureServices extends WizardServant {
   public static async deployWebApp(
     selections: any,
     appPath: string,
+    backendFramework: string,
     aspName: string
   ): Promise<void> {
     await AzureServices.updateAppServiceSubscriptionItemCache(
       selections.subscription
     );
-    // put the hardcoded stuff here
-    // logic here to determine linux fx version
     const userAppServiceSelection: AppServiceSelections = {
       siteName: selections.siteName,
       subscriptionItem: AzureServices.userAppServiceSubsctiptionItemCache,
       resourceGroupItem: selections.resourceGroup,
       appServicePlanName: aspName,
-      sku: "",
-      linuxFxVersion: "",
+      sku: CONSTANTS.SKU_DESCRIPTION.BASIC.name,
+      linuxFxVersion: BackendFrameworkLinuxVersion[backendFramework],
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
     };
+
+    await AzureServices.AzureAppServiceProvider.checkWebAppName(
+      userAppServiceSelection.siteName,
+      userAppServiceSelection.subscriptionItem
+    )
+      .then(invalidReason => {
+        if (invalidReason !== undefined && invalidReason === "") {
+          throw new ValidationError(invalidReason);
+        }
+      })
+      .catch((error: Error) => {
+        throw error; //to log in telemetry
+      });
+
+    return await AzureServices.AzureAppServiceProvider.createWebApp(
+      userAppServiceSelection,
+      appPath
+    );
   }
 
   public static async deployFunctionApp(
