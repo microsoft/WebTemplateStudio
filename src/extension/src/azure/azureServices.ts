@@ -32,7 +32,10 @@ import {
   ResourceGroupDeploy,
   ResourceGroupSelection
 } from "./azure-resource-group/resourceGroupModule";
-import { AppServiceProvider } from "./azure-app-service/appServiceProvider";
+import {
+  AppServiceProvider,
+  AppServiceSelections
+} from "./azure-app-service/appServiceProvider";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -406,6 +409,27 @@ export class AzureServices extends WizardServant {
     return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
       selections
     );
+  }
+
+  public static async deployWebApp(
+    selections: any,
+    appPath: string,
+    aspName: string
+  ): Promise<void> {
+    await AzureServices.updateAppServiceSubscriptionItemCache(
+      selections.subscription
+    );
+    // put the hardcoded stuff here
+    // logic here to determine linux fx version
+    const userAppServiceSelection: AppServiceSelections = {
+      siteName: selections.siteName,
+      subscriptionItem: AzureServices.userAppServiceSubsctiptionItemCache,
+      resourceGroupItem: selections.resourceGroup,
+      appServicePlanName: aspName,
+      sku: "",
+      linuxFxVersion: "",
+      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
+    };
   }
 
   public static async deployFunctionApp(
