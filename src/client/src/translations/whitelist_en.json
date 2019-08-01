@@ -43,6 +43,7 @@
   "azureSubscriptions.cosmosResource",
   "hostingServices.title",
   "storageServices.title",
+  "hostingServices.oneServiceWarning",
   "cosmosResourceModule.apiLabel",
   "cosmosResourceModule.ariaApiLabel",
   "cosmosResourceModule.accountNameLabel",
