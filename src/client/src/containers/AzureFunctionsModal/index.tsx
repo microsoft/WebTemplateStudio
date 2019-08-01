@@ -119,7 +119,7 @@ const initialState: IFunctionsState = {
     value: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
     label: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
   },
-  chooseExistingRadioButtonSelected: true
+  chooseExistingRadioButtonSelected: false
 };
 
 const AzureFunctionsResourceModal = (props: Props) => {
@@ -463,20 +463,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
               className={styles.radioButton}
               type="radio"
               value={props.intl.formatMessage(
-                azureModalMessages.azureModalChooseExisting
-              )}
-              disabled={azureFunctionsFormData.subscription.value === ""}
-              checked={azureFunctionsFormData.chooseExistingRadioButtonSelected}
-            />
-            <div className={styles.radioButtonLabel}>
-              {props.intl.formatMessage(
-                azureModalMessages.azureModalChooseExisting
-              )}
-            </div>
-            <input
-              className={styles.radiobutton}
-              type="radio"
-              value={props.intl.formatMessage(
                 azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
               )}
               disabled={azureFunctionsFormData.subscription.value === ""}
@@ -487,6 +473,20 @@ const AzureFunctionsResourceModal = (props: Props) => {
             <div className={styles.radioButtonLabel}>
               {props.intl.formatMessage(
                 azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
+              )}
+            </div>
+            <input
+              className={styles.radioButton}
+              type="radio"
+              value={props.intl.formatMessage(
+                azureModalMessages.azureModalChooseExisting
+              )}
+              disabled={azureFunctionsFormData.subscription.value === ""}
+              checked={azureFunctionsFormData.chooseExistingRadioButtonSelected}
+            />
+            <div className={styles.radioButtonLabel}>
+              {props.intl.formatMessage(
+                azureModalMessages.azureModalChooseExisting
               )}
             </div>
           </div>
