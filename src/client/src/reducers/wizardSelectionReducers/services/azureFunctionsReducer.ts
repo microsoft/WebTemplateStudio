@@ -56,7 +56,7 @@ const initialState = {
   wizardContent: {
     serviceType: messages.azureFunctionsOriginalTitle
   },
-  chooseExistingRadioButtonSelected: true
+  chooseExistingRadioButtonSelected: false
 };
 
 const getFunctionNames = (functionNames: IFunctionName[]): string[] => {
