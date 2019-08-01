@@ -1,4 +1,4 @@
-.container {
+.selectPagesContainer {
   max-height: calc(80vh - 200px);
   overflow: hidden;
 }
