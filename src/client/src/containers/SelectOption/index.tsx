@@ -378,6 +378,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 clickCount={this.getCardCount(internalName)}
                 addPage={(cardNumber: number) => this.addPage(cardNumber)}
                 removePage={(cardNumber: number) => this.removePage(cardNumber)}
+                showLink={!isAddPagesModalOpen}
               />
             );
           })}
