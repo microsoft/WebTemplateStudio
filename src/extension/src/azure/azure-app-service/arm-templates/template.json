@@ -35,6 +35,9 @@
     "webAppName": {
       "type": "string"
     },
+    "subscriptionId": {
+      "type": "string"
+    },
     "appServicePlanName": {
       "type": "string"
     },

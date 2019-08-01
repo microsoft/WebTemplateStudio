@@ -1,9 +1,22 @@
+import * as appRoot from "app-root-path";
 import { SubscriptionItem } from "../azure-auth/azureAuth";
 import { WebSiteManagementClient } from "azure-arm-website";
 import { ServiceClientCredentials } from "ms-rest";
 import { SubscriptionError } from "../../errors";
 import { CONSTANTS, AppType } from "../../constants";
+import { join } from "path";
+import { join } from "path";
+import { join } from "path";
 import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
+
+export interface AppServiceSelections {
+  siteName: string;
+  subscriptionItem: SubscriptionItem;
+  appServicePlanName: string;
+  sku: string;
+  linuxFxVersion: string;
+  location: string;
+}
 
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
@@ -74,5 +87,64 @@ export class AppServiceProvider {
       .catch(error => {
         return error.message;
       });
+  }
+
+  private getAppServiceARMTemplate(): any {
+    const templatePath = path.join(
+      appRoot.toString(),
+      "src",
+      "azure",
+      "azure-app-service",
+      "arm-templates",
+      "template.json"
+    );
+    return JSON.parse(fs.readFileSync(templatePath, "utf8"));
+  }
+
+  private getAppServiceARMParameter(selections: AppServiceSelections): any {
+    const parameterPath = path.join(
+      appRoot.toString(),
+      "src",
+      "azure",
+      "azure-app-service",
+      "arm-templates",
+      "parameters.json"
+    );
+
+    let parameters = JSON.parse(fs.readFileSync(parameterPath, "utf8"));
+
+    parameters.parameters = {
+      webAppName: {
+        value: selections.siteName
+      },
+      appServicePlanName: {
+        value: selections.appServicePlanName
+      },
+      sku: {
+        value: selections.sku
+      },
+      linuxFxVersion: {
+        value: selections.linuxFxVersion
+      },
+      location: {
+        value: selections.location
+      }
+    };
+  }
+
+  private writeARMTemplatesToApp(
+    appPath: string,
+    template: any,
+    parameters: any
+  ) {
+    ARMFileHelper.createDirIfNonExistent(path.join(appPath, "arm-templates"));
+    ARMFileHelper.writeObjectToJsonFile(
+      path.join(appPath, "arm-templates", "??"),
+      template
+    );
+    ARMFileHelper.writeObjectToJsonFile(
+      path.join(appPath, "arm-templates", "??"),
+      parameters
+    );
   }
 }
