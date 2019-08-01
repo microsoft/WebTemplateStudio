@@ -452,7 +452,7 @@ const CosmosResourceModal = (props: Props) => {
               onChange={radioButtonOnChangeHandler}
             >
               <input
-                className={styles.radiobutton}
+                className={styles.radioButton}
                 type="radio"
                 value={props.intl.formatMessage(
                   azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage

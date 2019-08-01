@@ -446,7 +446,7 @@ const AppServiceModal = (props: Props) => {
             onChange={radioButtonOnChangeHandler}
           >
             <input
-              className={styles.radiobutton}
+              className={styles.radioButton}
               type="radio"
               value={intl.formatMessage(
                 azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
