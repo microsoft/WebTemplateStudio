@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-const os = require("os");
+import * as os from "os";
 
 import { Validator } from "./utils/validator";
 import {
