@@ -176,7 +176,7 @@ export class Controller {
       .getConfiguration()
       .get<string>("wts.changeSaveToLocation");
     const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
-    let defaultAppName = "myApp";
+    const defaultAppName = "myApp";
     let newAppName = "myApp";
     let count = 1;
 
