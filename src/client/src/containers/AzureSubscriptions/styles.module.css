@@ -13,7 +13,6 @@
 
 .categoryDescriptor {
   font-size: 2em;
-  padding: 5px 0px 20px 0px;
 }
 
 .servicesContainer {
@@ -24,6 +23,7 @@
 .servicesCategoryContainer {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .subscriptionCardContainer {
@@ -39,6 +39,12 @@
   height: 250px;
   padding: 2.5em;
   background-color: var(--vscode-editor-lineHighlightBorder);
+}
+
+.subtitle {
+  font-size: 1.2em;
+  font-weight: normal;
+  padding-top: 5px;
 }
 
 .container {
