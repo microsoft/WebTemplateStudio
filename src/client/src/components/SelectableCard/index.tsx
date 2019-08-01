@@ -121,14 +121,13 @@ const SelectableCard = ({
         </div>
       </div>
       <div className={styles.cardFooter}>
-        <Link
-          onClick={detailsClickWrapper}
-          className={styles.link}
-          to={ROUTES.PAGE_DETAILS}
-          onKeyUp={keyUpHandler}
-          tabIndex={showLink ? 0 : -1}
-        >
-          {showLink && (
+        {showLink && (
+          <Link
+            onClick={detailsClickWrapper}
+            className={styles.link}
+            to={ROUTES.PAGE_DETAILS}
+            onKeyUp={keyUpHandler}
+          >
             <FormattedMessage
               id={
                 isPagesSelection
@@ -141,9 +140,8 @@ const SelectableCard = ({
                   : detailsConfig.learnMore.default
               }
             />
-          )}
-        </Link>
-
+          </Link>
+        )}
         <div className={styles.pageButtons}>
           {isPagesSelection && (
             <button

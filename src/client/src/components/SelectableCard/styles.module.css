@@ -71,15 +71,13 @@
 }
 
 .cardFooter {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   min-height: 30px;
 }
 
 .pageButtons {
   display: flex;
   justify-content: flex-end;
+  float: right;
 }
 
 .showCount {
