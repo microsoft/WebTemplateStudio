@@ -16,7 +16,12 @@ import { servicesEnum } from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
 import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 
-import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+import {
+  InjectedIntlProps,
+  injectIntl,
+  defineMessages,
+  FormattedMessage
+} from "react-intl";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
@@ -93,6 +98,10 @@ const messages = defineMessages({
   storageTitle: {
     id: "storageServices.title",
     defaultMessage: "Create and connect to a database in the cloud"
+  },
+  hostingOneServiceWarning: {
+    id: "hostingServices.oneServiceWarning",
+    defaultMessage: "You can only add one hosting service at a time"
   }
 });
 
@@ -154,7 +163,8 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     isLoggedIn: boolean,
     setDetailPage: any,
     title: any,
-    isPreview: boolean
+    isPreview: boolean,
+    subtitle?: FormattedMessage.MessageDescriptor
   ) {
     const { formatMessage } = this.props.intl;
     const createdHostingServiceInternalName = this.getCreatedHostingService();
@@ -170,6 +180,9 @@ class AzureSubscriptions extends React.Component<Props, IState> {
           <div className={styles.categoryDescriptor}>
             {formatMessage(title)}
           </div>
+          {subtitle && (
+            <div className={styles.subtitle}>{formatMessage(subtitle)}</div>
+          )}
           <div className={styles.servicesCategoryContainer}>
             {azureServiceOptions.map(option => {
               // show cards with preview flag only if wizard is also in preview
@@ -226,9 +239,11 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       <div className={styles.container}>
         {uniqueServiceTypes.map((serviceType: any) => {
           let categoryTitle;
+          let subtitle;
           switch (serviceType) {
             case servicesEnum.HOSTING:
               categoryTitle = messages.hostingTitle;
+              subtitle = messages.hostingOneServiceWarning;
               break;
             case servicesEnum.DATABASE:
               categoryTitle = messages.storageTitle;
@@ -239,7 +254,8 @@ class AzureSubscriptions extends React.Component<Props, IState> {
             isLoggedIn,
             setDetailPage,
             categoryTitle,
-            isPreview
+            isPreview,
+            subtitle
           );
         })}
       </div>
