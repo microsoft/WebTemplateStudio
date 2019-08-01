@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-[Git](https://git-scm.com/downloads), [Yarn](https://yarnpkg.com/en/docs/install), [Node.js](https://nodejs.org/en/download/), [Gulp](https://gulpjs.com/) and [VSCode](https://code.visualstudio.com/) must be installed prior to running the installation or build scripts.
+[Git](https://git-scm.com/downloads), [Yarn](https://yarnpkg.com/en/docs/install), [Node.js](https://nodejs.org/en/download/), [Gulp](https://gulpjs.com/), [.NET](https://dotnet.microsoft.com/download/dotnet-core/2.2) and [VSCode](https://code.visualstudio.com/) must be installed prior to running the installation or build scripts.
 
 Run the command
 
