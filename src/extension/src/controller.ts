@@ -9,7 +9,7 @@ import {
   ExtensionModule,
   TelemetryEventName,
   ExtensionCommand,
-  APP_NAME_VALIDATION_LIMIT
+  PROJECT_NAME_VALIDATION_LIMIT
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
@@ -182,12 +182,12 @@ export class Controller {
 
     while (
       fs.existsSync(path.join(outputPath, newAppName)) &&
-      count <= APP_NAME_VALIDATION_LIMIT
+      count <= PROJECT_NAME_VALIDATION_LIMIT
     ) {
       newAppName = `${defaultAppName}${count}`;
       count++;
     }
-    if (count > APP_NAME_VALIDATION_LIMIT) return;
+    if (count > PROJECT_NAME_VALIDATION_LIMIT) return;
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetProjectName,
       payload: {

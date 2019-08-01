@@ -268,7 +268,7 @@ export const CONSTANTS = {
   VALIDATION_LIMIT: 3
 };
 
-export const APP_NAME_VALIDATION_LIMIT = 20;
+export const PROJECT_NAME_VALIDATION_LIMIT = 20;
 
 export enum ExtensionCommand {
   Log = "log",
