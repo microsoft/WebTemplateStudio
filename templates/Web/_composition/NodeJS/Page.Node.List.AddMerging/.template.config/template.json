@@ -1,29 +1,26 @@
 ﻿{
-    "author": "Microsoft Community",
-    "classifications": [
-      "Universal"
-    ],
-    "name": "Page.Node.List.AddMerging",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.Node.List.AddMerging",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == NodeJS & groupIdentity == wts.Page.List"
+    "wts.compositionFilter": "$backendframework == Node & groupIdentity == wts.Page.List"
   },
-    "sourceName": "wts.ItemName",
-    "preferNameDirectory": true,
-    "PrimaryOutputs": [
-    ],
-    "symbols": {
-      "wts.rootNamespace": {
-        "type": "parameter",
-        "replaces": "Param_RootNamespace"
-      },
-      "wts.itemNamespace": {
-        "type": "parameter",
-        "replaces": "Param_ItemNamespace"
-      }
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.itemNamespace": {
+      "type": "parameter",
+      "replaces": "Param_ItemNamespace"
     }
   }
+}

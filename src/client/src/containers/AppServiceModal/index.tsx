@@ -90,10 +90,7 @@ const backendFrameworkNameToAppServiceRuntimeStack: Map<
   string,
   string
 > = new Map([
-  [
-    WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS,
-    WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS
-  ],
+  [WIZARD_CONTENT_INTERNAL_NAMES.NODE, WIZARD_CONTENT_INTERNAL_NAMES.NODE],
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, WIZARD_CONTENT_INTERNAL_NAMES.PYTHON]
 ]);
 
@@ -119,7 +116,7 @@ const initialState: IAppServiceState = {
     value: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     label: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
   },
-  chooseExistingRadioButtonSelected: true
+  chooseExistingRadioButtonSelected: false
 };
 
 const AppServiceModal = (props: Props) => {
@@ -452,18 +449,6 @@ const AppServiceModal = (props: Props) => {
               className={styles.radioButton}
               type="radio"
               value={intl.formatMessage(
-                azureModalMessages.azureModalChooseExisting
-              )}
-              disabled={appServiceFormData.subscription.value === ""}
-              checked={appServiceFormData.chooseExistingRadioButtonSelected}
-            />
-            <div className={styles.radioButtonLabel}>
-              {intl.formatMessage(azureModalMessages.azureModalChooseExisting)}
-            </div>
-            <input
-              className={styles.radiobutton}
-              type="radio"
-              value={intl.formatMessage(
                 azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
               )}
               disabled={appServiceFormData.subscription.value === ""}
@@ -473,6 +458,18 @@ const AppServiceModal = (props: Props) => {
               {intl.formatMessage(
                 azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
               )}
+            </div>
+            <input
+              className={styles.radioButton}
+              type="radio"
+              value={intl.formatMessage(
+                azureModalMessages.azureModalChooseExisting
+              )}
+              disabled={appServiceFormData.subscription.value === ""}
+              checked={appServiceFormData.chooseExistingRadioButtonSelected}
+            />
+            <div className={styles.radioButtonLabel}>
+              {intl.formatMessage(azureModalMessages.azureModalChooseExisting)}
             </div>
           </div>
           <div className={styles.resourceGroupToggleContainer}>

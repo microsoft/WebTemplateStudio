@@ -16,10 +16,6 @@ import { IRedirectModalData } from "../RedirectModal";
 import Notification from "../../components/Notification";
 
 const messages = defineMessages({
-  installed: {
-    id: "dependencyChecker.installedMessage",
-    defaultMessage: "{dependencyName} detected!"
-  },
   notInstalled: {
     id: "dependencyChecker.notInstalledMessage",
     defaultMessage:
@@ -45,7 +41,7 @@ interface IDependencies {
 }
 
 const dependencies: IDependencies = {
-  NodeJS: {
+  Node: {
     dependencyStoreKey: "node",
     dependencyName: "Node",
     dependencyMinimumVersion: "v10.15+",
@@ -64,11 +60,11 @@ const dependencies: IDependencies = {
 };
 
 const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT, dependencies.NodeJS],
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.NodeJS],
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.NodeJS],
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT, dependencies.Node],
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.Node],
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.Node],
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, dependencies.Python],
-  [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS, dependencies.NodeJS]
+  [WIZARD_CONTENT_INTERNAL_NAMES.NODE, dependencies.Node]
 ]);
 
 interface IDependencyInfoProps {
@@ -115,9 +111,7 @@ class DependencyInfo extends React.Component<Props> {
     const installed: boolean = dependenciesStore[dependencyStoreKey].installed;
 
     let dependencyMessage: string = installed
-      ? intl.formatMessage(messages.installed, {
-          dependencyName: dependencyName
-        })
+      ? ""
       : intl.formatMessage(messages.notInstalled, {
           dependencyName: dependencyName,
           minimumVersion: dependencyMinimumVersion
@@ -139,23 +133,24 @@ class DependencyInfo extends React.Component<Props> {
     };
 
     return (
-      <div
-        role="button"
-        tabIndex={0}
-        onKeyDown={installed ? () => null : keyDownHandler}
-        onClick={() => openRedirectModal(privacyModalData)}
-        className={classnames(styles.dependencyContainer, {
-          [styles.disabled]: installed,
-          [styles.borderGreen]: installed,
-          [styles.borderYellow]: !installed
-        })}
-      >
-        <Notification
-          showWarning={!installed}
-          text={dependencyMessage}
-          altMessage={intl.formatMessage(messages.iconAltMessage)}
-        />
-      </div>
+      !installed && (
+        <div
+          role="button"
+          tabIndex={0}
+          onKeyDown={keyDownHandler}
+          onClick={() => openRedirectModal(privacyModalData)}
+          className={classnames(
+            styles.dependencyContainer,
+            styles.borderYellow
+          )}
+        >
+          <Notification
+            showWarning={true}
+            text={dependencyMessage}
+            altMessage={intl.formatMessage(messages.iconAltMessage)}
+          />
+        </div>
+      )
     );
   }
 }
