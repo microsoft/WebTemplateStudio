@@ -12,15 +12,6 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
-.disabled {
-  pointer-events: none;
-  text-decoration: none;
-}
-
-.borderGreen {
-  border: 1px solid var(--vscode-gitDecoration-untrackedResourceForeground);
-}
-
 .borderYellow {
   border: 1px solid var(--vscode-editorMarkerNavigationWarning-background);
 }
