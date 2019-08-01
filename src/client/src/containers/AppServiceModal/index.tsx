@@ -28,7 +28,8 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  KEY_EVENTS
+  KEY_EVENTS,
+  WEB_TEMPLATE_STUDIO_LINKS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
@@ -562,6 +563,30 @@ const AppServiceModal = (props: Props) => {
                 selectedBackend.internalName
               )
             })}
+          </div>
+        </div>
+        {/* App Service Plan */}
+        <div
+          className={classNames(
+            styles.selectionInputContainer,
+            styles.selectionContainer
+          )}
+        >
+          <div className={styles.selectionHeaderContainer}>
+            <div className={styles.leftHeader}>
+              {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
+            </div>
+            <a
+              className={styles.link}
+              target={"_blank"}
+              rel="noreferrer noopener"
+              href={WEB_TEMPLATE_STUDIO_LINKS.APP_SERVICE_PLAN}
+            >
+              {intl.formatMessage(azureModalMessages.appServiceLearnMore)}
+            </a>
+          </div>
+          <div>
+            {intl.formatMessage(azureModalMessages.appServicePlanSubLabel)}
           </div>
         </div>
       </div>
