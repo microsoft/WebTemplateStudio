@@ -77,7 +77,7 @@ export class AzureServices extends WizardServant {
 
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
-  private static usersAppServiceSubsctiptionItemCache: SubscriptionItem;
+  private static usersAppServiceSubscriptionItemCache: SubscriptionItem;
 
   public static async performLoginForSubscriptions(
     message: any
@@ -218,7 +218,7 @@ export class AzureServices extends WizardServant {
     );
     return await AzureServices.AzureAppServiceProvider.checkWebAppName(
       message.appName,
-      AzureServices.usersAppServiceSubsctiptionItemCache
+      AzureServices.usersAppServiceSubscriptionItemCache
     )
       .then((invalidReason: string | undefined) => {
         return {
@@ -297,15 +297,15 @@ export class AzureServices extends WizardServant {
     subscriptionLabel: string
   ) {
     if (
-      AzureServices.usersAppServiceSubsctiptionItemCache === undefined ||
+      AzureServices.usersAppServiceSubscriptionItemCache === undefined ||
       subscriptionLabel !==
-        AzureServices.usersAppServiceSubsctiptionItemCache.label
+        AzureServices.usersAppServiceSubscriptionItemCache.label
     ) {
       let subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
       );
       if (subscriptionItem) {
-        AzureServices.usersAppServiceSubsctiptionItemCache = subscriptionItem;
+        AzureServices.usersAppServiceSubscriptionItemCache = subscriptionItem;
       } else {
         throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
       }
@@ -372,7 +372,7 @@ export class AzureServices extends WizardServant {
       await AzureServices.updateAppServiceSubscriptionItemCache(
         payload.appService.subscription
       );
-      allSubscriptions.push(AzureServices.usersAppServiceSubsctiptionItemCache);
+      allSubscriptions.push(AzureServices.usersAppServiceSubscriptionItemCache);
     }
     const allDistinctSubscriptions: SubscriptionItem[] = [
       ...new Set(allSubscriptions)
