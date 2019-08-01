@@ -25,10 +25,6 @@
   background-color: var(--vscode-editor-background);
 }
 
-.resetButton {
-  margin-right: 1em;
-}
-
 .hideOrShow:focus,
 .addPagesButton:focus,
 .resetButton:focus {
