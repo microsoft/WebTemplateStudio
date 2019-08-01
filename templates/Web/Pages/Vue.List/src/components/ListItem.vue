@@ -10,7 +10,7 @@
           class="close py-2"
           data-dismiss="alert"
           aria-label="Close"
-          v-on:click="$emit('onDeleteListItem', listItem)"
+          @click="$emit('onDeleteListItem', listItem)"
         >
           <div aria-hidden="true">&times;</div>
         </button>
