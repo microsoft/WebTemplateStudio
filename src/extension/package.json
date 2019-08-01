@@ -56,7 +56,7 @@
         "wts.changeSaveToLocation": {
           "type": "string",
           "default": "",
-          "description": "Change your save to location for your project."
+          "description": "Set default project location for your project."
         },
         "wts.enablePreviewMode": {
           "type": "boolean",
