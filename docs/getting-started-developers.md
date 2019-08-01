@@ -16,10 +16,12 @@ _Note: If using Windows, use Git Bash_.
 
 ## Quick Start
 
-To get started, the first step is to clone this repository. To install dependencies, compile the client, and compile the
+To get started, the first step is to clone this repository. To copy dependent code from submodule, install dependencies, compile the client, and compile the
 extension, run:
 
 ```
+git submodule init
+git submodule update
 ./build
 ```
 
