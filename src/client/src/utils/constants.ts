@@ -15,7 +15,8 @@ const MAX_PAGES_ALLOWED = 20;
 
 const WEB_TEMPLATE_STUDIO_LINKS = {
   REPO: "https://github.com/Microsoft/WebTemplateStudio",
-  ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues"
+  ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues",
+  APP_SERVICE_PLAN: "https://azure.microsoft.com/en-us/pricing/details/app-service/plans/";
 };
 
 const PRODUCTION = "production";

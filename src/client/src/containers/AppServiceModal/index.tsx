@@ -28,7 +28,8 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  KEY_EVENTS
+  KEY_EVENTS,
+  WEB_TEMPLATE_STUDIO_LINKS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
@@ -576,12 +577,10 @@ const AppServiceModal = (props: Props) => {
               {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
             </div>
             <a
-              className={styles.link} // TODO ask christina about placement of this
+              className={styles.link}
               target={"_blank"}
               rel="noreferrer noopener"
-              href={
-                "https://azure.microsoft.com/en-us/pricing/details/app-service/plans/" // move to constants
-              }
+              href={WEB_TEMPLATE_STUDIO_LINKS.APP_SERVICE_PLAN}
             >
               {intl.formatMessage(azureModalMessages.appServiceLearnMore)}
             </a>
