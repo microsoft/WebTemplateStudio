@@ -17,10 +17,13 @@ export const CONSTANTS = {
       "error.resourceGroupNotFound",
       "No resource group found with this name"
     ),
-    RESOURCE_GROUP_TRIES_EXCEEDED: localize(
-      "error.resourceGroupTriesExceedeed",
-      "Number of tries exceeded for creating resource group"
-    ),
+    TRIES_EXCEEDED: (resourceType: string) => {
+      return localize(
+        "error.triesExceedeed",
+        "Number of tries exceeded for creating {0}",
+        resourceType
+      );
+    },
     SUBSCRIPTION_NOT_FOUND: localize(
       "error.subscriptionNotFound",
       "No subscription found with this name."
@@ -245,7 +248,24 @@ export const CONSTANTS = {
   APP_NAME: {
     MAX_LENGTH: 60,
     MIN_LENGTH: 3
-  }
+  },
+  SKU_DESCRIPTION: {
+    FREE: {
+      capacity: 1,
+      family: "F",
+      name: "F1",
+      size: "F1",
+      tier: "Free"
+    },
+    BASIC: {
+      capacity: 1,
+      family: "B",
+      name: "B1",
+      size: "B1",
+      tier: "Basic"
+    }
+  },
+  VALIDATION_LIMIT: 3
 };
 
 export enum ExtensionCommand {
@@ -365,4 +385,9 @@ export enum AzureResourceType {
 export enum AppType {
   Web = "Web",
   Function = "Function"
+}
+
+export enum OS {
+  Linux = "linux",
+  Windows = "windows"
 }

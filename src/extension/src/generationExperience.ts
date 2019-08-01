@@ -146,6 +146,7 @@ export class GenerationExperience extends WizardServant {
 
     // Resource groups should be created before other deploy methods execute
     Promise.all(resourceGroupQueue).then(() => {
+      // Create ASP (this PR) and create web app (future PR) will be called here
       if (payload.selectedFunctions) {
         serviceQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(

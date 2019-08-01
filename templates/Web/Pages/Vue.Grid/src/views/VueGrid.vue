@@ -18,25 +18,25 @@
         <div class="row justify-content-around text-center pb-5">
           <GridComponent
             v-for="textAsset in gridTextAssets"
-            v-bind:key="textAsset.id"
-            v-bind:header="textAsset.title"
-            v-bind:description="textAsset.shortDescription"
+            :key="textAsset.id"
+            :header="textAsset.title"
+            :description="textAsset.shortDescription"
           />
         </div>
       </div>
     </main>
     <WarningMessage
       v-if="WarningMessageOpen"
-      v-on:onWarningClose="handleWarningClose"
-      v-bind:text="WarningMessageText"
+      @onWarningClose="handleWarningClose"
+      :text="WarningMessageText"
     />
   </div>
 </template>
 
 <script>
-import CONSTANTS from "../constants";
-import GridComponent from "../components/GridComponent";
-import WarningMessage from "../components/WarningMessage";
+import CONSTANTS from "@/constants";
+import GridComponent from "@/components/GridComponent";
+import WarningMessage from "@/components/WarningMessage";
 
 export default {
   name: "VueGrid",
@@ -46,7 +46,7 @@ export default {
     WarningMessage
   },
 
-  data: function() {
+  data() {
     return {
       gridTextAssets: [
         {
@@ -60,12 +60,12 @@ export default {
     };
   },
 
-  created: function() {
+  created() {
     this.fetchTextAssets();
   },
 
   methods: {
-    fetchTextAssets: function() {
+    fetchTextAssets() {
       fetch(CONSTANTS.ENDPOINT.GRID)
         .then(response => {
           if (!response.ok) {
@@ -78,12 +78,10 @@ export default {
         })
         .catch(error => {
           this.WarningMessageOpen = true;
-          this.WarningMessageText = `${
-            CONSTANTS.ERROR_MESSAGE.GRID_GET
-          } ${error}`;
+          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.GRID_GET} ${error}`;
         });
     },
-    handleWarningClose: function() {
+    handleWarningClose() {
       this.WarningMessageOpen = false;
       this.WarningMessageText = "";
     }
