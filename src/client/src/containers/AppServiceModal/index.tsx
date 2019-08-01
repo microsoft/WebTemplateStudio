@@ -564,6 +564,32 @@ const AppServiceModal = (props: Props) => {
             })}
           </div>
         </div>
+        {/* App Service Plan */}
+        <div
+          className={classNames(
+            styles.selectionInputContainer,
+            styles.selectionContainer
+          )}
+        >
+          <div className={styles.selectionHeaderContainer}>
+            <div className={styles.leftHeader}>
+              {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
+            </div>
+            <a
+              className={styles.link} // TODO ask christina about placement of this
+              target={"_blank"}
+              rel="noreferrer noopener"
+              href={
+                "https://azure.microsoft.com/en-us/pricing/details/app-service/plans/" // move to constants
+              }
+            >
+              {intl.formatMessage(azureModalMessages.appServiceLearnMore)}
+            </a>
+          </div>
+          <div>
+            {intl.formatMessage(azureModalMessages.appServicePlanSubLabel)}
+          </div>
+        </div>
       </div>
       {/* Add Resource Button */}
       <button
