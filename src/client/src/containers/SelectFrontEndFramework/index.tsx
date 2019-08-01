@@ -4,7 +4,10 @@ import { connect } from "react-redux";
 import SelectOption from "../SelectOption";
 
 import { selectFrontendFramework as selectFrontendAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
-import { selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
+import {
+  selectPagesAction,
+  updatePageCountAction
+} from "../../actions/wizardSelectionActions/selectPages";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
@@ -20,7 +23,9 @@ import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 import { ThunkDispatch } from "redux-thunk";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { getPageCount } from "../../selectors/wizardSelectionSelector";
 
 import {
   getIsVisitedRoutesSelector,
@@ -31,6 +36,7 @@ import { optionCSS } from "react-select/lib/components/Option";
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
+  updatePageCount: (pageCount: IPageCount) => any;
 }
 
 interface ISelectFrontEndFrameworkProps {
@@ -41,6 +47,7 @@ interface ISelectFrontEndFrameworkProps {
   isPreview: boolean;
   isRoutesVisited: IVisitedPages;
   selectedPages: ISelected[];
+  pageCount: IPageCount;
 }
 
 type Props = IDispatchProps & ISelectFrontEndFrameworkProps & InjectedIntlProps;
@@ -60,7 +67,9 @@ class SelectFrontEndFramework extends React.Component<Props> {
       selectedBackendFramework,
       selectFrontendFramework,
       selectedPages,
-      selectPages
+      selectPages,
+      pageCount,
+      updatePageCount
     } = this.props;
 
     const { showPages } = this.props.isRoutesVisited;
@@ -79,10 +88,26 @@ class SelectFrontEndFramework extends React.Component<Props> {
           backendFramework: selectedBackendFramework.internalName
         }
       });
+      const cardCountType: IPageCount = {};
+      for (const pageType in pageCount) {
+        console.log(selectedFrontendFramework.internalName);
+        console.log(option.defaultName);
+        const newKey = pageType.replace(
+          selectedFrontendFramework.internalName || "",
+          option.internalName || ""
+        );
+        console.log(newKey);
+        cardCountType[newKey] = pageCount[pageType];
+      }
+      console.log(JSON.stringify(cardCountType));
+      updatePageCount(cardCountType);
       const newPages: ISelected[] = selectedPages.map(page => {
         return {
           title: page.title,
-          internalName: `wts.Page.${option.internalName}.${page.defaultName}`,
+          internalName: page.internalName.replace(
+            selectedFrontendFramework.internalName,
+            option.internalName
+          ),
           id: page.id,
           defaultName: page.defaultName,
           isValidTitle: page.isValidTitle,
@@ -141,6 +166,7 @@ const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
     selectedFrontendFramework: frontendFramework,
     selectedBackendFramework: backendFramework,
     selectedPages: pages,
+    pageCount: getPageCount(state),
     vscode: getVSCodeApiSelector(state)
   };
 };
@@ -153,6 +179,9 @@ const mapDispatchToProps = (
   },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
+  },
+  updatePageCount: (pageCount: IPageCount) => {
+    dispatch(updatePageCountAction(pageCount));
   }
 });
 
