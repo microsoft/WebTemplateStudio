@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import CONSTANTS from "../constants";
-import ListForm from "../components/ListForm";
-import ListItem from "../components/ListItem";
-import WarningMessage from "../components/WarningMessage";
+import CONSTANTS from "@/constants";
+import ListForm from "@/components/ListForm";
+import ListItem from "@/components/ListItem";
+import WarningMessage from "@/components/WarningMessage";
 
 export default {
   name: "VueList",

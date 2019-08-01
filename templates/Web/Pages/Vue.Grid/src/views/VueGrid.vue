@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import CONSTANTS from "../constants";
-import GridComponent from "../components/GridComponent";
-import WarningMessage from "../components/WarningMessage";
+import CONSTANTS from "@/constants";
+import GridComponent from "@/components/GridComponent";
+import WarningMessage from "@/components/WarningMessage";
 
 export default {
   name: "VueGrid",

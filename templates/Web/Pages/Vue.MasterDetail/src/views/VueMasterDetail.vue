@@ -13,7 +13,7 @@
             />
           </div>
         </div>
-        <MasterDetailPage v-bind:textSampleData="masterDetailText[currentDisplayTabIndex]"/>
+        <MasterDetailPage v-bind:textSampleData="masterDetailText[currentDisplayTabIndex]" />
       </div>
     </main>
     <WarningMessage
@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import CONSTANTS from "../constants";
-import MasterDetailPage from "../components/MasterDetailPage";
-import MasterDetailSideBarTab from "../components/MasterDetailSideBarTab";
-import WarningMessage from "../components/WarningMessage";
+import CONSTANTS from "@/constants";
+import MasterDetailPage from "@/components/MasterDetailPage";
+import MasterDetailSideBarTab from "@/components/MasterDetailSideBarTab";
+import WarningMessage from "@/components/WarningMessage";
 
 export default {
   name: "VueMasterDetail",
@@ -73,9 +73,7 @@ export default {
         })
         .catch(error => {
           this.WarningMessageOpen = true;
-          this.WarningMessageText = `${
-            CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET
-          } ${error}`;
+          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`;
         });
     },
     handleWarningClose() {
