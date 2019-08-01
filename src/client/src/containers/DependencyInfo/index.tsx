@@ -137,7 +137,7 @@ class DependencyInfo extends React.Component<Props> {
         <div
           role="button"
           tabIndex={0}
-          onKeyDown={installed ? () => null : keyDownHandler}
+          onKeyDown={keyDownHandler}
           onClick={() => openRedirectModal(privacyModalData)}
           className={classnames(
             styles.dependencyContainer,
@@ -145,7 +145,7 @@ class DependencyInfo extends React.Component<Props> {
           )}
         >
           <Notification
-            showWarning={!installed}
+            showWarning={true}
             text={dependencyMessage}
             altMessage={intl.formatMessage(messages.iconAltMessage)}
           />
