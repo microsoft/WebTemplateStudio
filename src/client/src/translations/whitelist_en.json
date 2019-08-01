@@ -79,8 +79,6 @@
   "postGenerationModal.templateGeneration",
   "projectName.ariaProjectName",
   "projectNameError.nameTooLong",
-  "quickStart.description",
-  "quickStart.button",
   "redirectModal.beingRedirected",
   "redirectModal.toContinue",
   "redirectModal.remainInWizard",
