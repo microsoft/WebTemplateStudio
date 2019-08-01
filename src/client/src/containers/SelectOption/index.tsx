@@ -15,6 +15,9 @@ import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
+import { AppState } from "../../reducers";
+
+import { isAddPagesModalOpenSelector } from "../../selectors/modalSelector";
 
 import { InjectedIntl, defineMessages, injectIntl } from "react-intl";
 
@@ -71,7 +74,11 @@ interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => void;
 }
 
-type Props = IDispatchProps & ISelectOptionProps & IProps;
+interface IStateProps {
+  isAddPagesModalOpen: boolean;
+}
+
+type Props = IDispatchProps & ISelectOptionProps & IStateProps & IProps;
 
 class SelectOption extends React.Component<Props, ISelectOptionState> {
   constructor(props: Props) {
@@ -315,6 +322,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       setDetailPage,
       isFrameworkSelection,
       isPagesSelection,
+      isAddPagesModalOpen,
       intl
     } = this.props;
     const { pageOutOfBounds, description } = this.state;
@@ -335,7 +343,11 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
             />
           </div>
         )}
-        <div className={styles.container}>
+        <div
+          className={classnames(styles.container, {
+            [styles.modalContainer]: isAddPagesModalOpen
+          })}
+        >
           {options.map((option, cardNumber) => {
             const {
               svgUrl,
@@ -375,6 +387,10 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 }
 
+const mapStateToProps = (state: AppState): IStateProps => ({
+  isAddPagesModalOpen: isAddPagesModalOpenSelector(state)
+});
+
 const mapDispatchToProps = (
   dispatch: Dispatch<RootAction>
 ): IDispatchProps => ({
@@ -384,6 +400,6 @@ const mapDispatchToProps = (
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(injectIntl(SelectOption));

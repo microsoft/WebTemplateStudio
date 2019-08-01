@@ -1,4 +1,10 @@
+.container {
+  max-height: calc(80vh - 200px);
+  overflow: hidden;
+}
+
 .headerContainer {
+  padding-left: 5px;
   position: absolute;
   right: 54px;
   top: 54px;
