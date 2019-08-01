@@ -1,9 +1,25 @@
 import { SubscriptionItem } from "../azure-auth/azureAuth";
 import { WebSiteManagementClient } from "azure-arm-website";
-import { ServiceClientCredentials } from "ms-rest";
-import { SubscriptionError } from "../../errors";
-import { CONSTANTS, AppType } from "../../constants";
+import {
+  SubscriptionError,
+  AuthorizationError,
+  DeploymentError,
+  AppServiceError
+} from "../../errors";
+import { CONSTANTS, OS, AppType, AzureResourceType } from "../../constants";
 import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
+import {
+  AppServicePlanCollection,
+  AppServicePlan
+} from "azure-arm-website/lib/models";
+import { ServiceClientCredentials } from "ms-rest";
+import { NameGenerator } from "../utils/nameGenerator";
+
+export interface AppServicePlanSelection {
+  subscriptionItem: SubscriptionItem;
+  resourceGroup: string;
+  name: string;
+}
 
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
@@ -74,5 +90,69 @@ export class AppServiceProvider {
       .catch(error => {
         return error.message;
       });
+  }
+
+  // Creates a Basic Tier App Service Plan (ASP)
+  public async createAppServicePlan(
+    aspSelection: AppServicePlanSelection
+  ): Promise<string> {
+    this.setWebClient(aspSelection.subscriptionItem);
+    if (this.webClient === undefined) {
+      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
+    }
+    const appServicePlanSelection: AppServicePlan = {
+      kind: OS.Linux,
+      sku: CONSTANTS.SKU_DESCRIPTION.BASIC,
+      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
+    };
+    try {
+      const validName = await this.generateValidASPName(aspSelection.name);
+      await this.webClient.appServicePlans.createOrUpdate(
+        aspSelection.resourceGroup,
+        validName,
+        appServicePlanSelection
+      );
+      return validName;
+    } catch (error) {
+      throw new DeploymentError(error.message);
+    }
+  }
+
+  private async generateValidASPName(name: string): Promise<string> {
+    let generatedName: string = NameGenerator.generateName(name, "asp");
+    let isValid: boolean = await this.validateASPName(generatedName);
+    let tries = 0;
+    while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
+      generatedName = NameGenerator.generateName(
+        name,
+        AzureResourceType.AppService
+      );
+      isValid = await this.validateASPName(generatedName);
+      tries++;
+    }
+    if (tries >= CONSTANTS.VALIDATION_LIMIT) {
+      throw new AppServiceError(
+        CONSTANTS.ERRORS.TRIES_EXCEEDED("app service plan")
+      );
+    }
+    return generatedName;
+  }
+
+  private async validateASPName(name: string): Promise<boolean> {
+    if (this.webClient === undefined) {
+      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
+    }
+    const exist = await this.checkASPExistence(name);
+    return !exist;
+  }
+
+  private async checkASPExistence(name: string): Promise<boolean> {
+    if (this.webClient === undefined) {
+      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
+    }
+    const allASP: AppServicePlanCollection = await this.webClient.appServicePlans.list();
+    return allASP.some(asp => {
+      return asp.name === name;
+    });
   }
 }

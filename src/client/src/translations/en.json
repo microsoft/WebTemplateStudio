@@ -75,7 +75,6 @@
   "cosmosResourceModule.internalName": "Internal Name",
   "cosmosResourceModule.locationSubLabel": "Choose where you want your function to be hosted",
   "dependencyChecker.iconAltMessage": "Icon for dependency checker",
-  "dependencyChecker.installedMessage": "{dependencyName} detected!",
   "dependencyChecker.notInstalledMessage": "{dependencyName} {minimumVersion} not detected. Click to install.",
   "details.author": "Author:",
   "details.back": "Back",
