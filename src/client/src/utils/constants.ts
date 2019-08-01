@@ -126,6 +126,7 @@ const EXTENSION_COMMANDS = {
   AZURE_LOGOUT: "logout",
   GENERATE: "generate",
   GET_OUTPUT_PATH: "get-output-path",
+  GET_PROJECT_NAME: "get-project-name",
   GET_USER_STATUS: "get-user-status",
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
