@@ -100,7 +100,7 @@ const initialState: CosmosDb = {
     value: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     label: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
   },
-  chooseExistingRadioButtonSelected: true
+  chooseExistingRadioButtonSelected: false
 };
 
 const CosmosResourceModal = (props: Props) => {
@@ -455,20 +455,6 @@ const CosmosResourceModal = (props: Props) => {
                 className={styles.radioButton}
                 type="radio"
                 value={props.intl.formatMessage(
-                  azureModalMessages.azureModalChooseExisting
-                )}
-                disabled={cosmosFormData.subscription.value === ""}
-                checked={cosmosFormData.chooseExistingRadioButtonSelected}
-              />
-              <div className={styles.radioButtonLabel}>
-                {props.intl.formatMessage(
-                  azureModalMessages.azureModalChooseExisting
-                )}
-              </div>
-              <input
-                className={styles.radiobutton}
-                type="radio"
-                value={props.intl.formatMessage(
                   azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
                 )}
                 disabled={cosmosFormData.subscription.value === ""}
@@ -477,6 +463,20 @@ const CosmosResourceModal = (props: Props) => {
               <div className={styles.radioButtonLabel}>
                 {props.intl.formatMessage(
                   azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
+                )}
+              </div>
+              <input
+                className={styles.radioButton}
+                type="radio"
+                value={props.intl.formatMessage(
+                  azureModalMessages.azureModalChooseExisting
+                )}
+                disabled={cosmosFormData.subscription.value === ""}
+                checked={cosmosFormData.chooseExistingRadioButtonSelected}
+              />
+              <div className={styles.radioButtonLabel}>
+                {props.intl.formatMessage(
+                  azureModalMessages.azureModalChooseExisting
                 )}
               </div>
             </div>

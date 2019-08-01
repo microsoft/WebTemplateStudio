@@ -53,10 +53,10 @@
       "type": "object",
       "title": "%webTemplateStudioExtension.commands.wts%",
       "properties": {
-        "wts.defaultOutputPath": {
+        "wts.changeSaveToLocation": {
           "type": "string",
           "default": "",
-          "description": "Load a default output path on wizard launch."
+          "description": "Set default project location for your project."
         },
         "wts.enablePreviewMode": {
           "type": "boolean",
