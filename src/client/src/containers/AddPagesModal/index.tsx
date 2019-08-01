@@ -44,9 +44,7 @@ const AddPagesModal = ({ closeModal }: Props) => {
           onKeyDown={cancelKeyDownHandler}
         />
       </div>
-      <div className={styles.selectPagesContainer}>
-        <SelectPages />
-      </div>
+      <SelectPages />
     </div>
   );
 };

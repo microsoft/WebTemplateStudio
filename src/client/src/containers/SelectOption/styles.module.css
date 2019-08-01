@@ -5,7 +5,7 @@
 }
 
 .modalContainer {
-  max-height: 400px;
+  max-height: calc(80vh - 200px);
   overflow: auto;
 }
 
