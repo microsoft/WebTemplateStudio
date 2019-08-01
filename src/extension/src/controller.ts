@@ -1,4 +1,6 @@
 import * as vscode from "vscode";
+import * as os from "os";
+
 import { Validator } from "./utils/validator";
 import {
   CONSTANTS,
@@ -135,7 +137,7 @@ export class Controller {
   ): Promise<void> {
     const syncObject = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
-      async function (this: IActionContext) {
+      async function(this: IActionContext) {
         return await launchExperience
           .launchApiSyncModule(context)
           .catch(error => {
@@ -179,20 +181,21 @@ export class Controller {
   }
 
   private static loadUserSettings() {
-    let outputPathDefault = vscode.workspace
+    const userOutputPath = vscode.workspace
       .getConfiguration()
-      .get<string>("wts.defaultOutputPath");
+      .get<string>("wts.changeSaveToLocation");
     const preview = vscode.workspace
       .getConfiguration()
       .get<boolean>("wts.enablePreviewMode");
-    if (outputPathDefault) {
-      Controller.reactPanelContext.postMessageWebview({
-        command: ExtensionCommand.GetOutputPath,
-        payload: {
-          outputPath: outputPathDefault
-        }
-      });
-    }
+
+    const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetOutputPath,
+      payload: {
+        outputPath: outputPath
+      }
+    });
+
     if (preview !== undefined) {
       Controller.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.GetPreviewStatus,
