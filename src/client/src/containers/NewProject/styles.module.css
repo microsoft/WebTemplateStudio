@@ -2,6 +2,7 @@
   align-self: center;
   display: flex;
   flex-direction: column;
+  max-width: 70%;
   margin-bottom: 3%;
   padding-left: 5%;
   z-index: 1;

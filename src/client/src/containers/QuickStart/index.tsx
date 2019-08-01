@@ -12,6 +12,7 @@ import {
   updatePageCountAction
 } from "../../actions/wizardSelectionActions/selectPages";
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
+import { enableQuickStartAction } from "../../actions/wizardInfoActions/enableQuickStartAction";
 
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
@@ -49,6 +50,7 @@ interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
   updatePageCount: (pageCount: IPageCount) => any;
   setRouteVisited: (route: string) => void;
+  enableQuickStart: () => void;
 }
 
 type Props = IStateProps & IDispatchProps & RouteComponentProps;
@@ -67,9 +69,11 @@ class QuickStart extends Component<Props> {
       selectPages,
       history,
       setRouteVisited,
-      updatePageCount
+      updatePageCount,
+      enableQuickStart
     } = this.props;
 
+    enableQuickStart();
     getAllFrameworks(vscode, isPreview);
     getAllPages(vscode);
     selectFrontendFramework(FRONT_END_SELECTION);
@@ -86,8 +90,14 @@ class QuickStart extends Component<Props> {
       <div>
         <p className={styles.description}>
           <FormattedMessage
+            id="quickStart.optional"
+            defaultMessage="OPTIONAL"
+          />
+        </p>
+        <p className={styles.description}>
+          <FormattedMessage
             id="quickStart.description"
-            defaultMessage="To get started quickly with your preferred frameworks and just a blank page, use quick start."
+            defaultMessage='Get started quickly with any frameworks and a blank page by selecting "Quick Start" or click "Next" to go through the entire wizard.'
           />
         </p>
         <button
@@ -102,7 +112,7 @@ class QuickStart extends Component<Props> {
           <div>
             <FormattedMessage
               id="quickStart.button"
-              defaultMessage="Quick Start Web Project"
+              defaultMessage="Quick Start"
             />
           </div>
         </button>
@@ -137,6 +147,9 @@ const mapDispatchToProps = (
   },
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
+  },
+  enableQuickStart: () => {
+    dispatch(enableQuickStartAction());
   }
 });
 
