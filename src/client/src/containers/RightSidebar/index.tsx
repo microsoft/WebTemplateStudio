@@ -155,7 +155,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           backendFramework: backendFramework.internalName
         }
       });
-      console.log(option.value);
       let newFrontEndFramework = undefined;
       frontEndOptions.forEach(frontEnd => {
         if (frontEnd.internalName === option.value) {
@@ -169,7 +168,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           };
         }
       });
-      console.log(JSON.stringify(newFrontEndFramework));
       const cardCountType: IPageCount = {};
       for (const pageType in pageCount) {
         const newKey = pageType.replace(
@@ -194,10 +192,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         };
       });
       selectPages(newPages);
-      console.log("old");
-      console.log(JSON.stringify(pages));
-      console.log("new");
-      console.log(JSON.stringify(newPages));
       newFrontEndFramework && selectFrontendFramework(newFrontEndFramework);
     }
   };

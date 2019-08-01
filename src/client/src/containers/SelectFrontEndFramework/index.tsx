@@ -90,16 +90,13 @@ class SelectFrontEndFramework extends React.Component<Props> {
       });
       const cardCountType: IPageCount = {};
       for (const pageType in pageCount) {
-        console.log(selectedFrontendFramework.internalName);
-        console.log(option.defaultName);
         const newKey = pageType.replace(
           selectedFrontendFramework.internalName || "",
           option.internalName || ""
         );
-        console.log(newKey);
         cardCountType[newKey] = pageCount[pageType];
       }
-      console.log(JSON.stringify(cardCountType));
+
       updatePageCount(cardCountType);
       const newPages: ISelected[] = selectedPages.map(page => {
         return {
