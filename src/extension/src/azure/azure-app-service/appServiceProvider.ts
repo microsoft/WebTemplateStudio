@@ -1,25 +1,74 @@
 import * as appRoot from "app-root-path";
-import { SubscriptionItem } from "../azure-auth/azureAuth";
+import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
 import { WebSiteManagementClient } from "azure-arm-website";
 import { ServiceClientCredentials } from "ms-rest";
-import { SubscriptionError } from "../../errors";
+import {
+  SubscriptionError,
+  AuthorizationError,
+  DeploymentError
+} from "../../errors";
 import { CONSTANTS, AppType } from "../../constants";
-import { join } from "path";
-import { join } from "path";
-import { join } from "path";
 import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
+import { ARMFileHelper } from "../azure-arm/armFileHelper";
+import ResourceManagementClient, {
+  ResourceManagementModels
+} from "azure-arm-resource/lib/resource/resourceManagementClient";
+import { ResourceManager } from "../azure-arm/resourceManager";
 
 export interface AppServiceSelections {
   siteName: string;
   subscriptionItem: SubscriptionItem;
+  resourceGroupItem: ResourceGroupItem;
   appServicePlanName: string;
   sku: string;
   linuxFxVersion: string;
   location: string;
 }
 
+const APP_SERVICE_DEPLOYMENT_SUFFIX = "-app-service";
+
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
+
+  public async createWebApp(
+    selections: AppServiceSelections,
+    appPath: string
+  ): Promise<void> {
+    try {
+      this.setWebClient(selections.subscriptionItem);
+    } catch (error) {
+      throw new AuthorizationError(error.message);
+    }
+
+    const template = this.getAppServiceARMTemplate();
+    const parameters = this.getAppServiceARMParameter(selections);
+
+    const deploymentParams = parameters.parameters;
+
+    try {
+      let options: ResourceManagementModels.Deployment = {
+        properties: {
+          mode: "Incromental",
+          parameters: deploymentParams,
+          template: template
+        }
+      };
+
+      const azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
+        selections.subscriptionItem
+      );
+
+      this.writeARMTemplatesToApp(appPath, template, parameters);
+
+      await azureResourceClient.deployments.createOrUpdate(
+        selections.resourceGroupItem.name,
+        selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX,
+        options
+      );
+    } catch (error) {
+      throw new DeploymentError(error.message);
+    }
+  }
 
   /*
    * Sets a web client from a users selected subscription item's credentials
