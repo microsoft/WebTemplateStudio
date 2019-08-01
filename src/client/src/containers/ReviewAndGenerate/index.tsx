@@ -38,7 +38,7 @@ const messages = defineMessages({
   },
   quickStart: {
     id: "context.quickStart",
-    defaultMessage: `Woo-hoo! You skipped to the end where we'll get you started quickly. Just click ""Create Project".`
+    defaultMessage: `Woo-hoo! You skipped to the end where we'll get you started quickly. Just click "Create Project".`
   }
 });
 

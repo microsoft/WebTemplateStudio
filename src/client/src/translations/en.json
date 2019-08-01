@@ -60,7 +60,7 @@
   "card.details": "Learn more",
   "constants.emptyField": "{fieldId} field cannot be empty",
   "context.almostDone": "You're almost done - review your project details on the right and make any necessary adjustments!",
-  "context.quickStart": "Woo-hoo! You skipped to the end where we'll get you started quickly. Just click \"\"Create Project\".",
+  "context.quickStart": "Woo-hoo! You skipped to the end where we'll get you started quickly. Just click \"Create Project\".",
   "cosmosDb.cardBody": "Cosmos DB allows you to build and scale your application with a globally distributed, multi-model database service.",
   "cosmosDb.longDescription": "Azure Cosmos DB is Microsoft’s proprietary globally-distributed, multi-model database service for managing data on a global scale. It offers a variety of APIs for your database including Azure Table, Core (SQL), MongoDB and Gremlin (GraphQL). Web Template Studio offers you the functionality to deploy a Cosmos DB instance from the wizard itself and select an initial location to deploy your database with the ability to scale it to multiple locations at a future time. As an added feature, deploying with the MongoDB API enables you to quickly connect the project Web Template Studio generates to your database instance.",
   "cosmosDb.originalTitle": "CosmosDB",
