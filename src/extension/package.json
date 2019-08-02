@@ -93,7 +93,8 @@
     "vscode-nls-dev": "3.2.7"
   },
   "extensionDependencies": [
-    "ms-vscode.azure-account"
+    "ms-vscode.azure-account",
+    "ms-azuretools.vscode-azureappservice"
   ],
   "dependencies": {
     "@aspnet/signalr": "^1.1.2",
