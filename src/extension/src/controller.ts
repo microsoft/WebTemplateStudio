@@ -177,7 +177,7 @@ export class Controller {
       .get<string>("wts.changeSaveToLocation");
     const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
     const defaultAppName = "myApp";
-    let newAppName = "myApp";
+    let newAppName = defaultAppName;
     let count = 1;
 
     while (
@@ -187,7 +187,9 @@ export class Controller {
       newAppName = `${defaultAppName}${count}`;
       count++;
     }
-    if (count > PROJECT_NAME_VALIDATION_LIMIT) return;
+    if (count > PROJECT_NAME_VALIDATION_LIMIT) {
+      return;
+    }
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetProjectName,
       payload: {
