@@ -92,7 +92,8 @@ export class GenerationExperience extends WizardServant {
 
     if (
       AzureServices.functionsSelectedNewResourceGroup(payload) ||
-      AzureServices.cosmosDBSelectedNewResourceGroup(payload)
+      AzureServices.cosmosDBSelectedNewResourceGroup(payload) ||
+      AzureServices.appServiceSelectedNewResourceGroup(payload)
     ) {
       const distinctResourceGroupSelections: ResourceGroupSelection[] = await AzureServices.generateDistinctResourceGroupSelections(
         payload
@@ -102,7 +103,7 @@ export class GenerationExperience extends WizardServant {
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.ResourceGroupDeploy,
             // tslint:disable-next-line: no-function-expression
-            async function (this: IActionContext): Promise<void> {
+            async function(this: IActionContext): Promise<void> {
               try {
                 await AzureServices.deployResourceGroup(resourceGroupSelection);
                 progressObject = {
@@ -137,6 +138,10 @@ export class GenerationExperience extends WizardServant {
         payload.cosmos.resourceGroup =
           distinctResourceGroupSelections[0].resourceGroupName;
       }
+      if (AzureServices.appServiceSelectedNewResourceGroup(payload)) {
+        payload.appService.resourceGroup =
+          distinctResourceGroupSelections[0].resourceGroupName;
+      }
     }
 
     // Resource groups should be created before other deploy methods execute
@@ -147,7 +152,7 @@ export class GenerationExperience extends WizardServant {
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.FunctionsDeploy,
             // tslint:disable-next-line: no-function-expression
-            async function (this: IActionContext): Promise<void> {
+            async function(this: IActionContext): Promise<void> {
               try {
                 await AzureServices.deployFunctionApp(
                   payload.functions,
@@ -181,7 +186,7 @@ export class GenerationExperience extends WizardServant {
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.CosmosDBDeploy,
             // tslint:disable-next-line: no-function-expression
-            async function (this: IActionContext): Promise<void> {
+            async function(this: IActionContext): Promise<void> {
               var cosmosPayload: any = payload.cosmos;
               try {
                 var dbObject = await AzureServices.deployCosmosResource(
