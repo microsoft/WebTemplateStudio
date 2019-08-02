@@ -20,6 +20,7 @@ import { MODAL_TYPES, ModalType } from "../../actions/modalActions/typeKeys";
 const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
   // default width
   let CUSTOM_WIDTH = "50%";
+  let backgroundColor = "var(--vscode-menu-background)";
 
   // depends on modal type, customize width
   if (
@@ -28,6 +29,10 @@ const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
       MODAL_TYPE === MODAL_TYPES.VIEW_LICENSES_MODAL)
   ) {
     CUSTOM_WIDTH = "40%";
+  }
+
+  if (MODAL_TYPE && MODAL_TYPE === MODAL_TYPES.ADD_PAGES_MODAL) {
+    backgroundColor = "var(--vscode-editor-background)";
   }
 
   return {
@@ -50,7 +55,7 @@ const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
       borderRadius: "3px",
       width: CUSTOM_WIDTH,
       padding: "4vh",
-      background: "var(--vscode-menu-background)",
+      background: backgroundColor,
       border: "0.5px solid var(--vscode-editor-foreground)",
       maxWidth: "700px",
       minWidth: "300px"

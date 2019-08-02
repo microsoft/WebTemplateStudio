@@ -278,7 +278,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 />
                 <div className={styles.sortablePages}>
                   {showPages && (
-                    <SortablePageList handleResetPages={this.resetAllPages} />
+                    <SortablePageList
+                      handleResetPages={this.resetAllPages}
+                      isSummaryPage={pathname === ROUTES.REVIEW_AND_GENERATE}
+                    />
                   )}
                 </div>
                 {showServices && (
