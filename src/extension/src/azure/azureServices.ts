@@ -82,7 +82,7 @@ export class AzureServices extends WizardServant {
 
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
-  private static userAppServiceSubsctiptionItemCache: SubscriptionItem;
+  private static usersAppServiceSubscriptionItemCache: SubscriptionItem;
 
   public static async performLoginForSubscriptions(
     message: any
@@ -224,7 +224,7 @@ export class AzureServices extends WizardServant {
     );
     return await AzureServices.AzureAppServiceProvider.checkWebAppName(
       message.appName,
-      AzureServices.userAppServiceSubsctiptionItemCache
+      AzureServices.usersAppServiceSubscriptionItemCache
     )
       .then((invalidReason: string | undefined) => {
         return {
@@ -303,15 +303,15 @@ export class AzureServices extends WizardServant {
     subscriptionLabel: string
   ) {
     if (
-      AzureServices.userAppServiceSubsctiptionItemCache === undefined ||
+      AzureServices.usersAppServiceSubscriptionItemCache === undefined ||
       subscriptionLabel !==
-        AzureServices.userAppServiceSubsctiptionItemCache.label
+        AzureServices.usersAppServiceSubscriptionItemCache.label
     ) {
       let subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
       );
       if (subscriptionItem) {
-        AzureServices.userAppServiceSubsctiptionItemCache = subscriptionItem;
+        AzureServices.usersAppServiceSubscriptionItemCache = subscriptionItem;
       } else {
         throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
       }
@@ -360,7 +360,7 @@ export class AzureServices extends WizardServant {
   public static async createAppServicePlan(payload: any): Promise<string> {
     AzureServices.updateAppServiceSubscriptionItemCache(payload);
     const aspSelection: AppServicePlanSelection = {
-      subscriptionItem: AzureServices.userAppServiceSubsctiptionItemCache,
+      subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
       resourceGroup: payload.appService.resourceGroup,
       name: payload.engine.projectName
     };
@@ -387,6 +387,13 @@ export class AzureServices extends WizardServant {
       );
       allSubscriptions.push(AzureServices.usersCosmosDBSubscriptionItemCache);
     }
+    if (AzureServices.appServiceSelectedNewResourceGroup(payload)) {
+      await AzureServices.updateAppServiceSubscriptionItemCache(
+        payload.appService.subscription
+      );
+
+      allSubscriptions.push(AzureServices.usersAppServiceSubscriptionItemCache);
+    }
     const allDistinctSubscriptions: SubscriptionItem[] = [
       ...new Set(allSubscriptions)
     ];
@@ -406,6 +413,12 @@ export class AzureServices extends WizardServant {
 
   public static cosmosDBSelectedNewResourceGroup(payload: any): boolean {
     return payload.selectedCosmos && payload.cosmos.resourceGroup === "";
+  }
+
+  public static appServiceSelectedNewResourceGroup(payload: any): boolean {
+    return (
+      payload.selectedAppService && payload.appService.resourceGroup === ""
+    );
   }
 
   private static generateResourceGroupSelection(
@@ -438,7 +451,7 @@ export class AzureServices extends WizardServant {
     );
     const userAppServiceSelection: AppServiceSelections = {
       siteName: selections.siteName,
-      subscriptionItem: AzureServices.userAppServiceSubsctiptionItemCache,
+      subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
       resourceGroupItem: selections.resourceGroup,
       appServicePlanName: aspName,
       sku: CONSTANTS.SKU_DESCRIPTION.BASIC.name,

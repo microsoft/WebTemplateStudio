@@ -8,13 +8,7 @@ import {
   DeploymentError,
   AppServiceError
 } from "../../errors";
-import {
-  CONSTANTS,
-  OS,
-  AppType,
-  AzureResourceType,
-  BackendFrameworkLinuxVersion
-} from "../../constants";
+import { CONSTANTS, OS, AppType, AzureResourceType } from "../../constants";
 import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import {
