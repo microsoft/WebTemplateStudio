@@ -62,6 +62,10 @@
           "type": "boolean",
           "default": false,
           "description": "Enable upcoming features; Warning: may cause stability issues."
+        },
+        "wts.legalResources": {
+          "type": "null",
+          "markdownDescription": "[Privacy Link](https://privacy.microsoft.com/en-US/privacystatement) | [Terms of Use](https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx)"
         }
       }
     }
