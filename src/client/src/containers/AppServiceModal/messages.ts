@@ -12,5 +12,5 @@ export const messages = defineMessages({
   siteNameSubLabel: {
     id: "appServiceModal.siteNameSubLabel",
     defaultMessage: "Create a unique site name"
-  } //delete
+  }
 });
