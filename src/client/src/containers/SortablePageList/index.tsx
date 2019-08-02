@@ -2,27 +2,29 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
+import { ThunkDispatch } from "redux-thunk";
 
 import { defineMessages, injectIntl, InjectedIntl } from "react-intl";
 
 import SortableList from "../../components/SortableSelectionList";
 
 import { selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
+import * as ModalActions from "../../actions/modalActions/modalActions";
 
 import { ISelected } from "../../types/selected";
 
 import { ReactComponent as ShowIcon } from "../../assets/i-show.svg";
 import { ReactComponent as HideIcon } from "../../assets/i-hide.svg";
 import { ReactComponent as ResetIcon } from "../../assets/i-reset.svg";
+import { ReactComponent as Plus } from "../../assets/plus.svg";
 
 import { validateName } from "../../utils/validateName";
 
 import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
-import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 
-import { PAGE_NAME_CHARACTER_LIMIT } from "../../utils/constants"
+import { PAGE_NAME_CHARACTER_LIMIT } from "../../utils/constants";
 
 interface ISortablePageListProps {
   selectedPages: any[];
@@ -36,6 +38,7 @@ interface IStateProps {
 
 interface ISortableDispatchProps {
   selectPages: (pages: ISelected[]) => any;
+  openAddPagesModal: () => any;
 }
 
 interface IIntlProps {
@@ -67,12 +70,19 @@ const messages = defineMessages({
 });
 
 const SortablePageList = (props: Props) => {
-  const { selectedPages, selectPages, isSummaryPage } = props;
+  const {
+    selectedPages,
+    selectPages,
+    isSummaryPage,
+    openAddPagesModal
+  } = props;
   const [pages, setPages] = React.useState(selectedPages);
   const [isMinimized, setMinimized] = React.useState(false);
+
   React.useEffect(() => {
     setPages(selectedPages);
   }, [selectedPages]);
+
   const handleInputChange = (newTitle: string, idx: number) => {
     pages[idx].title = newTitle;
     pages[idx].error = "";
@@ -91,6 +101,7 @@ const SortablePageList = (props: Props) => {
     setPages(pages);
     props.selectPages(pages);
   };
+
   const onSortEnd = ({
     oldIndex,
     newIndex
@@ -100,6 +111,7 @@ const SortablePageList = (props: Props) => {
   }) => {
     selectPages(arrayMove(pages, oldIndex, newIndex));
   };
+
   const handleCloseClick = (idx: number) => {
     const pagesWithOmittedIdx: ISelected[] = [...pages];
     pagesWithOmittedIdx.splice(idx, 1);
@@ -107,43 +119,47 @@ const SortablePageList = (props: Props) => {
   };
 
   const DRAG_PIXEL_THRESHOLD = 1;
+
   return (
     <div>
-      {!isSummaryPage && (
-        <div
-          className={classnames(styles.pageListContainer, styles.sidebarItem)}
-        >
-          <div className={styles.dropdownTitle}>
-            {`${props.intl!.formatMessage(messages.pages)} (${
-              pages.length >= 0 ? pages.length : ""
-              })`}
-          </div>
-          <div className={styles.pagesButtonContainer}>
-            <button
-              className={styles.resetButton}
-              onClick={props.handleResetPages}
-            >
-              <ResetIcon className={styles.viewIcon} />
-            </button>
-            <button
-              className={styles.hideOrShow}
-              onClick={() => {
-                setMinimized(!isMinimized);
-              }}
-            >
-              {isMinimized ? (
-                <ShowIcon className={styles.viewIcon} />
-              ) : (
-                <HideIcon className={styles.viewIcon} />
-              )}
-            </button>
-          </div>
+      <div className={classnames(styles.pageListContainer, styles.sidebarItem)}>
+        <div className={styles.dropdownTitle}>
+          {`${props.intl!.formatMessage(messages.pages)} (${
+            pages.length >= 0 ? pages.length : ""
+          })`}
         </div>
-      )}
+        <div className={styles.iconsContainer}>
+          {isSummaryPage && (
+            <button
+              className={styles.addPagesButton}
+              onClick={openAddPagesModal}
+            >
+              <Plus className={styles.plusIcon} />
+            </button>
+          )}
+          <button
+            className={styles.resetButton}
+            onClick={props.handleResetPages}
+          >
+            <ResetIcon className={styles.viewIcon} />
+          </button>
+          <button
+            className={styles.hideOrShow}
+            onClick={() => {
+              setMinimized(!isMinimized);
+            }}
+          >
+            {isMinimized ? (
+              <ShowIcon className={styles.viewIcon} />
+            ) : (
+              <HideIcon className={styles.viewIcon} />
+            )}
+          </button>
+        </div>
+      </div>
       {!isMinimized && (
         <SortableList
           pages={selectedPages}
-          isSummaryPage={isSummaryPage}
           maxInputLength={PAGE_NAME_CHARACTER_LIMIT}
           onSortEnd={onSortEnd}
           distance={DRAG_PIXEL_THRESHOLD}
@@ -161,10 +177,13 @@ const mapStateToProps = (state: AppState): ISortablePageListProps => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<RootAction>
+  dispatch: ThunkDispatch<AppState, void, RootAction>
 ): ISortableDispatchProps => ({
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
+  },
+  openAddPagesModal: () => {
+    dispatch(ModalActions.openAddPagesModalAction());
   }
 });
 
