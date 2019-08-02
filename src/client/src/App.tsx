@@ -17,6 +17,7 @@ import PostGenerationModal from "./containers/PostGenerationModal";
 import RedirectModal from "./containers/RedirectModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
 import AppServiceModal from "./containers/AppServiceModal";
+import AddPagesModal from "./containers/AddPagesModal";
 
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
@@ -302,6 +303,7 @@ class App extends React.Component<Props> {
           <RedirectModal />
           <ViewLicensesModal />
           <AppServiceModal />
+          <AddPagesModal />
 
           <main
             className={classnames(appStyles.centerView, {
