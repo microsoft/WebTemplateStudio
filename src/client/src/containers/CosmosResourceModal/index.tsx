@@ -222,23 +222,6 @@ const CosmosResourceModal = (props: Props) => {
     handleChange(updatedForm);
   };
 
-  /* Update name field with a valid name generated from extension */
-  React.useEffect(() => {
-    updateForm({
-      ...cosmosFormData,
-      accountName: {
-        value: props.subscriptionData.validName,
-        label: props.subscriptionData.validName
-      }
-    });
-    setCosmosModalButtonStatus(
-      cosmosFormData,
-      isValidatingName,
-      props.accountNameAvailability,
-      setFormIsSendable
-    );
-  }, [props.subscriptionData.validName]);
-
   React.useEffect(() => {
     setCosmosModalButtonStatus(
       cosmosFormData,
@@ -295,6 +278,35 @@ const CosmosResourceModal = (props: Props) => {
       });
     }
   }, []);
+
+  /**
+   * Update name field with a valid name generated from
+   * extension when a subscription is selected or changed
+   */
+  const [validEffect, setValidNameEffect] = React.useState(0);
+  React.useEffect(() => {
+    if (!props.selection || validEffect >= 2) {
+      // TODO
+      updateForm({
+        ...cosmosFormData,
+        accountName: {
+          value: props.subscriptionData.validName,
+          label: props.subscriptionData.validName
+        }
+      });
+      // programatically updating <input>'s value field doesn't dispatch an event to handleInput
+      // so we manually simulate handleInput here
+      props.setValidationStatus(true);
+      handleChange({
+        ...cosmosFormData,
+        accountName: {
+          value: props.subscriptionData.validName,
+          label: props.subscriptionData.validName
+        }
+      });
+    }
+    setValidNameEffect(validEffect + 1);
+  }, [props.subscriptionData.validName, cosmosFormData.subscription.value]);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement

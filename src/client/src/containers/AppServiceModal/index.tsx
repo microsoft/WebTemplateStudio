@@ -228,22 +228,6 @@ const AppServiceModal = (props: Props) => {
     handleChange(updatedForm);
   };
 
-  /* Update name field with a valid name generated from extension */
-  React.useEffect(() => {
-    updateForm({
-      ...appServiceFormData,
-      siteName: {
-        value: subscriptionData.validName,
-        label: subscriptionData.validName
-      }
-    });
-
-    const isResourceGroupEmpty =
-      appServiceFormData.chooseExistingRadioButtonSelected &&
-      appServiceFormData.resourceGroup.value === "";
-    setFormIsSendable(!isResourceGroupEmpty);
-  }, [subscriptionData.validName]);
-
   /**
    * Listens on account name change and validates the input in VSCode
    */
@@ -299,6 +283,35 @@ const AppServiceModal = (props: Props) => {
       setFormIsSendable
     );
   }, [isValidatingName]);
+
+  /**
+   * Update name field with a valid name generated from
+   * extension when a subscription is selected or changed
+   */
+  const [validEffect, setValidNameEffect] = React.useState(0);
+  React.useEffect(() => {
+    // TODO this boolean is not clear
+    if (!selection || validEffect >= 2) {
+      updateForm({
+        ...appServiceFormData,
+        siteName: {
+          value: subscriptionData.validName,
+          label: subscriptionData.validName
+        }
+      });
+      // programatically updating <input>'s value field doesn't dispatch an event to handleInput
+      // so we manually simulate handleInput here
+      setValidationStatus(true);
+      handleChange({
+        ...appServiceFormData,
+        siteName: {
+          value: subscriptionData.validName,
+          label: subscriptionData.validName
+        }
+      });
+    }
+    setValidNameEffect(validEffect + 1);
+  }, [subscriptionData.validName, appServiceFormData.subscription.value]);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement

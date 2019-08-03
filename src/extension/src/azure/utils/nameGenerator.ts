@@ -8,7 +8,7 @@ export namespace NameGenerator {
     userSubscriptionItem: SubscriptionItem,
     azureType: AzureResourceType
   ): Promise<string> {
-    let result = projectName;
+    let result = NameGenerator.generateName(projectName);
     let tries = 0;
     let isValid: boolean = await AzureServices.validateNameForAzureType(
       projectName,

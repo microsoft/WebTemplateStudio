@@ -228,23 +228,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
     handleChange(updatedForm);
   };
 
-  /* Update name field with a valid name generated from extension */
-  React.useEffect(() => {
-    updateForm({
-      ...azureFunctionsFormData,
-      appName: {
-        value: props.subscriptionData.validName,
-        label: props.subscriptionData.validName
-      }
-    });
-    setFunctionsModalButtonStatus(
-      azureFunctionsFormData,
-      isValidatingName,
-      props.appNameAvailability,
-      setFormIsSendable
-    );
-  }, [props.subscriptionData.validName]);
-
   /**
    * Listens on account name change and validates the input in VSCode
    */
@@ -301,6 +284,38 @@ const AzureFunctionsResourceModal = (props: Props) => {
       setFormIsSendable
     );
   }, [props.isValidatingName]);
+
+  /**
+   * Update name field with a valid name generated from
+   * extension when a subscription is selected or changed
+   */
+  const [validEffect, setValidNameEffect] = React.useState(0);
+  React.useEffect(() => {
+    if (!props.selection || validEffect >= 2) {
+      // TODO
+      updateForm({
+        ...azureFunctionsFormData,
+        appName: {
+          value: props.subscriptionData.validName,
+          label: props.subscriptionData.validName
+        }
+      });
+      // programatically updating <input>'s value field doesn't dispatch an event to handleInput
+      // so we manually simulate handleInput here
+      props.setValidationStatus(true);
+      handleChange({
+        ...azureFunctionsFormData,
+        appName: {
+          value: props.subscriptionData.validName,
+          label: props.subscriptionData.validName
+        }
+      });
+    }
+    setValidNameEffect(validEffect + 1);
+  }, [
+    props.subscriptionData.validName,
+    azureFunctionsFormData.subscription.value
+  ]);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement
