@@ -18,6 +18,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getFunctionsSelection } from "../../selectors/azureFunctionsServiceSelector";
 import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
@@ -67,6 +68,7 @@ interface IStateProps {
   appNameAvailability: any;
   selection: any;
   chooseExistingRadioButtonSelected: boolean;
+  projectName: string;
 }
 
 type Props = IDispatchProps & IStateProps & InjectedIntlProps;
@@ -212,7 +214,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
         track: true,
-        subscription: option.value
+        subscription: option.value,
+        projectName: props.projectName
       });
       updatedForm = {
         ...updatedForm,
@@ -224,6 +227,23 @@ const AzureFunctionsResourceModal = (props: Props) => {
     }
     handleChange(updatedForm);
   };
+
+  /* Update name field with a valid name generated from extension */
+  React.useEffect(() => {
+    updateForm({
+      ...azureFunctionsFormData,
+      appName: {
+        value: props.subscriptionData.validName,
+        label: props.subscriptionData.validName
+      }
+    });
+    setFunctionsModalButtonStatus(
+      azureFunctionsFormData,
+      isValidatingName,
+      props.appNameAvailability,
+      setFormIsSendable
+    );
+  }, [props.subscriptionData.validName]);
 
   /**
    * Listens on account name change and validates the input in VSCode
@@ -543,7 +563,11 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 aria-label={props.intl.formatMessage(messages.ariaAppNameLabel)}
                 className={styles.input}
                 onChange={handleInput}
-                value={azureFunctionsFormData.appName.value}
+                value={
+                  azureFunctionsFormData.subscription.value === ""
+                    ? ""
+                    : azureFunctionsFormData.appName.value
+                }
                 placeholder={FORM_CONSTANTS.APP_NAME.label}
                 disabled={azureFunctionsFormData.subscription.value === ""}
                 tabIndex={
@@ -557,7 +581,8 @@ const AzureFunctionsResourceModal = (props: Props) => {
             </div>
             {!isValidatingName &&
               !isAppNameAvailable &&
-              azureFunctionsFormData.appName.value.length > 0 && (
+              azureFunctionsFormData.appName.value.length > 0 &&
+              props.appNameAvailability.message && (
                 <div className={styles.errorMessage}>
                   {props.appNameAvailability.message}
                 </div>
@@ -635,7 +660,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isValidatingName: state.selection.isValidatingName,
   selection: getFunctionsSelection(state),
   chooseExistingRadioButtonSelected:
-    state.selection.services.azureFunctions.chooseExistingRadioButtonSelected
+    state.selection.services.azureFunctions.chooseExistingRadioButtonSelected,
+  projectName: getProjectName(state)
 });
 
 const mapDispatchToProps = (

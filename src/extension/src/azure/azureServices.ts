@@ -36,6 +36,7 @@ import {
   AppServiceProvider,
   AppServicePlanSelection
 } from "./azure-app-service/appServiceProvider";
+import { NameGenerator } from "./utils/nameGenerator";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -122,14 +123,14 @@ export class AzureServices extends WizardServant {
     let payloadResponse: IPayloadResponse = { payload: success };
     return payloadResponse;
   }
-
   public static async sendAppServiceSubscriptionDataToClient(
     message: any
   ): Promise<IPayloadResponse> {
     return {
       payload: await AzureServices.getSubscriptionData(
         message.subscription,
-        AzureResourceType.AppService
+        AzureResourceType.AppService,
+        message.projectName
       )
     };
   }
@@ -140,7 +141,8 @@ export class AzureServices extends WizardServant {
     return {
       payload: await AzureServices.getSubscriptionData(
         message.subscription,
-        AzureResourceType.Cosmos
+        AzureResourceType.Cosmos,
+        message.projectName
       )
     };
   }
@@ -151,7 +153,8 @@ export class AzureServices extends WizardServant {
     return {
       payload: await AzureServices.getSubscriptionData(
         message.subscription,
-        AzureResourceType.Functions
+        AzureResourceType.Functions,
+        message.projectName
       )
     };
   }
@@ -163,7 +166,8 @@ export class AzureServices extends WizardServant {
    * */
   private static async getSubscriptionData(
     subscriptionLabel: string,
-    AzureType: AzureResourceType
+    AzureType: AzureResourceType,
+    projectName: string
   ) {
     let subscriptionItem = AzureServices.subscriptionItemList.find(
       subscriptionItem => subscriptionItem.label === subscriptionLabel
@@ -186,7 +190,12 @@ export class AzureServices extends WizardServant {
       return formatResourceGroupList;
     });
 
-    var locationItems: LocationItem[] = [];
+    let locationItems: LocationItem[] = [];
+    let validName: string = await NameGenerator.generateValidAzureTypeName(
+      projectName,
+      subscriptionItem,
+      AzureType
+    );
 
     switch (AzureType) {
       case AzureResourceType.Cosmos:
@@ -210,8 +219,37 @@ export class AzureServices extends WizardServant {
 
     return {
       resourceGroups: await resourceGroupItems,
-      locations: locations
+      locations: locations,
+      validName: validName
     };
+  }
+
+  public static async validateNameForAzureType(
+    projectName: string,
+    userSubscriptionItem: SubscriptionItem,
+    azureType: AzureResourceType
+  ): Promise<boolean> {
+    let validationResult;
+    switch (azureType) {
+      case AzureResourceType.AppService:
+        validationResult = await AzureServices.AzureAppServiceProvider.checkWebAppName(
+          projectName,
+          userSubscriptionItem
+        );
+        break;
+      case AzureResourceType.Cosmos:
+        validationResult = await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(
+          projectName,
+          userSubscriptionItem
+        );
+        break;
+      case AzureResourceType.Cosmos:
+        validationResult = await AzureServices.AzureFunctionProvider.checkFunctionAppName(
+          projectName,
+          userSubscriptionItem
+        );
+    }
+    return validationResult ? false : true;
   }
 
   public static async sendAppServiceNameValidationStatusToClient(

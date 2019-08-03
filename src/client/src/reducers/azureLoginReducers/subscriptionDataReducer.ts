@@ -5,7 +5,8 @@ import AzureActionType from "../../actions/azureActions/azureActionType";
 {
     SubscriptionData: {
         locations: [],
-        resourceGroups: []
+        resourceGroups: [],
+        validName: ""
     }
 }
 */
@@ -13,11 +14,13 @@ import AzureActionType from "../../actions/azureActions/azureActionType";
 export interface ISubscriptionData {
   locations: any[];
   resourceGroups: any[];
+  validName: string;
 }
 
 const initialState = {
   locations: [],
-  resourceGroups: []
+  resourceGroups: [],
+  validName: ""
 };
 
 const subscriptionData = (

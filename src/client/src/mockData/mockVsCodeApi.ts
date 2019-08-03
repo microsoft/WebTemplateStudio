@@ -19,6 +19,10 @@ const mockResourceGroups = Array.from({ length: 12 }).fill({
 const DEV_NO_ERROR_MSG: string = "in development, no error message";
 const DEV_NO_ERROR_TYPE: string = "in development, no error type";
 
+const mockAppServiceName: string = "mockappservicename";
+const mockFunctionsName: string = "mockfunctionsname";
+const mockCosmosDBName: string = "mockcosmosdbname";
+
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
  * in development environment.
@@ -406,7 +410,8 @@ const mockVsCodeApi = () => ({
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
               payload: {
                 locations: mockLocations,
-                resourceGroups: mockResourceGroups
+                resourceGroups: mockResourceGroups,
+                validName: mockCosmosDBName
               }
             },
             "*"
@@ -420,7 +425,8 @@ const mockVsCodeApi = () => ({
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
               payload: {
                 locations: mockLocations,
-                resourceGroups: mockResourceGroups
+                resourceGroups: mockResourceGroups,
+                validName: mockFunctionsName
               }
             },
             "*"
@@ -434,7 +440,8 @@ const mockVsCodeApi = () => ({
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
               payload: {
                 locations: mockLocations,
-                resourceGroups: mockResourceGroups
+                resourceGroups: mockResourceGroups,
+                validName: mockAppServiceName
               }
             },
             "*"

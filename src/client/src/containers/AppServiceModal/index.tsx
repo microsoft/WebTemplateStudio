@@ -18,6 +18,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getAppServiceSelectionInDropdownForm } from "../../selectors/appServiceSelector";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
@@ -63,6 +64,7 @@ interface IStateProps {
   selection: ISelectionInformation | undefined;
   chooseExistingRadioButtonSelected: boolean;
   selectedBackend: ISelected;
+  projectName: string;
 }
 
 interface IDispatchProps {
@@ -134,7 +136,8 @@ const AppServiceModal = (props: Props) => {
     setValidationStatus,
     saveAppServiceSettings,
     closeModal,
-    selectedBackend
+    selectedBackend,
+    projectName
   } = props;
 
   const FORM_CONSTANTS = {
@@ -211,7 +214,8 @@ const AppServiceModal = (props: Props) => {
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
         track: true,
-        subscription: option.value
+        subscription: option.value,
+        projectName
       });
       updatedForm = {
         ...updatedForm,
@@ -223,6 +227,22 @@ const AppServiceModal = (props: Props) => {
     }
     handleChange(updatedForm);
   };
+
+  /* Update name field with a valid name generated from extension */
+  React.useEffect(() => {
+    updateForm({
+      ...appServiceFormData,
+      siteName: {
+        value: subscriptionData.validName,
+        label: subscriptionData.validName
+      }
+    });
+
+    const isResourceGroupEmpty =
+      appServiceFormData.chooseExistingRadioButtonSelected &&
+      appServiceFormData.resourceGroup.value === "";
+    setFormIsSendable(!isResourceGroupEmpty);
+  }, [subscriptionData.validName]);
 
   /**
    * Listens on account name change and validates the input in VSCode
@@ -523,7 +543,11 @@ const AppServiceModal = (props: Props) => {
                 aria-label={intl.formatMessage(messages.ariaSiteNameLabel)}
                 className={styles.input}
                 onChange={handleInput}
-                value={appServiceFormData.siteName.value}
+                value={
+                  appServiceFormData.subscription.value === ""
+                    ? ""
+                    : appServiceFormData.siteName.value
+                }
                 placeholder={FORM_CONSTANTS.SITE_NAME.label}
                 disabled={appServiceFormData.subscription.value === ""}
                 tabIndex={appServiceFormData.subscription.value === "" ? -1 : 0}
@@ -535,7 +559,8 @@ const AppServiceModal = (props: Props) => {
             </div>
             {!isValidatingName &&
               !isSiteNameAvailable &&
-              appServiceFormData.siteName.value.length > 0 && (
+              appServiceFormData.siteName.value.length > 0 &&
+              siteNameAvailability.message && (
                 <div className={styles.errorMessage}>
                   {siteNameAvailability.message}
                 </div>
@@ -615,7 +640,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selection: getAppServiceSelectionInDropdownForm(state),
   chooseExistingRadioButtonSelected:
     state.selection.services.appService.chooseExistingRadioButtonSelected,
-  selectedBackend: state.selection.backendFramework
+  selectedBackend: state.selection.backendFramework,
+  projectName: getProjectName(state)
 });
 
 const mapDispatchToProps = (

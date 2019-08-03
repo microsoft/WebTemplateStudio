@@ -1,4 +1,33 @@
+import { SubscriptionItem } from "../azure-auth/azureAuth";
+import { AzureResourceType, CONSTANTS } from "../../constants";
+import { AzureServices } from "../azureServices";
+
 export namespace NameGenerator {
+  export async function generateValidAzureTypeName(
+    projectName: string,
+    userSubscriptionItem: SubscriptionItem,
+    azureType: AzureResourceType
+  ): Promise<string> {
+    let result = projectName;
+    let tries = 0;
+    let isValid: boolean = await AzureServices.validateNameForAzureType(
+      projectName,
+      userSubscriptionItem,
+      azureType
+    );
+
+    while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
+      result = NameGenerator.generateName(projectName);
+      isValid = await AzureServices.validateNameForAzureType(
+        projectName,
+        userSubscriptionItem,
+        azureType
+      );
+      tries++;
+    }
+    return result;
+  }
+
   export function generateName(
     userProjectName: string,
     resourceType?: string

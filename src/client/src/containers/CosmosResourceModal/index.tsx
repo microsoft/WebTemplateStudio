@@ -17,6 +17,7 @@ import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector";
 
 import { setCosmosModalButtonStatus } from "./verifyButtonStatus";
 
@@ -65,6 +66,7 @@ interface IStateProps {
   accountNameAvailability: any;
   selection: any;
   chooseExistingRadioButtonSelected: boolean;
+  projectName: string;
 }
 
 let timeout: NodeJS.Timeout | undefined;
@@ -206,7 +208,8 @@ const CosmosResourceModal = (props: Props) => {
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
         track: true,
-        subscription: value
+        subscription: value,
+        projectName: props.projectName
       });
       updatedForm = {
         ...updatedForm,
@@ -218,6 +221,23 @@ const CosmosResourceModal = (props: Props) => {
     }
     handleChange(updatedForm);
   };
+
+  /* Update name field with a valid name generated from extension */
+  React.useEffect(() => {
+    updateForm({
+      ...cosmosFormData,
+      accountName: {
+        value: props.subscriptionData.validName,
+        label: props.subscriptionData.validName
+      }
+    });
+    setCosmosModalButtonStatus(
+      cosmosFormData,
+      isValidatingName,
+      props.accountNameAvailability,
+      setFormIsSendable
+    );
+  }, [props.subscriptionData.validName]);
 
   React.useEffect(() => {
     setCosmosModalButtonStatus(
@@ -536,7 +556,11 @@ const CosmosResourceModal = (props: Props) => {
                 )}
                 className={styles.input}
                 onChange={handleInput}
-                value={cosmosFormData.accountName.value}
+                value={
+                  cosmosFormData.subscription.value === ""
+                    ? ""
+                    : cosmosFormData.accountName.value
+                }
                 placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
                 disabled={cosmosFormData.subscription.value === ""}
               />
@@ -547,7 +571,8 @@ const CosmosResourceModal = (props: Props) => {
             </div>
             {!isValidatingName &&
               !isAccountNameAvailable &&
-              cosmosFormData.accountName.value.length > 0 && (
+              cosmosFormData.accountName.value.length > 0 &&
+              props.accountNameAvailability.message && (
                 <div className={styles.errorMessage}>
                   {props.accountNameAvailability.message}
                 </div>
@@ -608,7 +633,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   subscriptions: state.azureProfileData.profileData.subscriptions,
   vscode: state.vscode.vscodeObject,
   chooseExistingRadioButtonSelected:
-    state.selection.services.cosmosDB.chooseExistingRadioButtonSelected
+    state.selection.services.cosmosDB.chooseExistingRadioButtonSelected,
+  projectName: getProjectName(state)
 });
 
 const mapDispatchToProps = (
