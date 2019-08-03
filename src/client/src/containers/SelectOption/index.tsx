@@ -36,7 +36,7 @@ const messages = defineMessages({
   },
   iconAltMessage: {
     id: "pages.maxPagesText",
-    defaultMessage: "Icon for Max Pages Description"
+    defaultMessage: "Notification"
   }
 });
 
