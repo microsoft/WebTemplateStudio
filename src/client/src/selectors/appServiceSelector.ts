@@ -2,6 +2,7 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { ISelectedAppService } from "../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { AppState } from "../reducers";
+import { ServiceState } from "../reducers/wizardSelectionReducers/services";
 
 interface ISelectedDropdowns {
   subscription?: IDropDownOptionType;
@@ -16,11 +17,40 @@ export interface ISelectionInformation {
   previousFormData: ISelectedAppService | null;
 }
 
+const getServicesSelector = (state: AppState): ServiceState =>
+  state.selection.services;
+
+const isAppServiceSelected = (services: ServiceState): boolean => {
+  return !_.isEmpty(services.appService.selection);
+};
+
+const isAppServiceSelectedSelector = createSelector(
+  getServicesSelector,
+  isAppServiceSelected
+);
+
+const getAppServiceOptions = (
+  services: ServiceState,
+  isAppServiceSelected: boolean
+): ISelectedAppService | null => {
+  if (isAppServiceSelected) {
+    return services.appService.selection;
+  } else {
+    return null;
+  }
+};
+
+const getAppServiceSelectionSelector = createSelector(
+  getServicesSelector,
+  isAppServiceSelectedSelector,
+  getAppServiceOptions
+);
+
 /**
  * Returns the App Service selection made by the user
  * Returns undefined if a selection was not made.
  *
- * @param services An object of all the services available in Project Acorn
+ * @param services An object of all the services available in Web Template Studio
  */
 const getAppServiceSelectionInDropdownForm = (
   appState: AppState
@@ -56,4 +86,8 @@ const getAppServiceSelectionInDropdownForm = (
   }
 };
 
-export { getAppServiceSelectionInDropdownForm };
+export {
+  getAppServiceSelectionInDropdownForm,
+  isAppServiceSelectedSelector,
+  getAppServiceSelectionSelector
+};

@@ -10,11 +10,15 @@ import styles from "./styles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES
+  EXTENSION_MODULES,
+  PAYLOAD_MESSAGES_TEXT
 } from "../../utils/constants";
+
 import { validateName } from "../../utils/validateName";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+
 import { rootSelector } from "../../selectors/generationSelector";
 import {
   getCosmosDbSelectionSelector,
@@ -25,6 +29,10 @@ import {
   isAzureFunctionsSelectedSelector,
   getAzureFunctionsNamesSelector
 } from "../../selectors/azureFunctionsServiceSelector";
+import {
+  isAppServiceSelectedSelector,
+  getAppServiceSelectionSelector
+} from "../../selectors/appServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
@@ -65,6 +73,8 @@ interface IStateProps {
   cosmos: any;
   selectedFunctions: boolean;
   functions: any;
+  selectedAppService: boolean;
+  appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
   functionNames?: IFunctionName[];
@@ -104,6 +114,8 @@ class Footer extends React.Component<Props> {
       cosmos,
       selectedFunctions,
       functions,
+      selectedAppService,
+      appService,
       vscode,
       openPostGenModal
     } = this.props;
@@ -113,13 +125,15 @@ class Footer extends React.Component<Props> {
       module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
       track: false,
-      text: "Sending generation info...",
+      text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
       payload: {
         engine,
         selectedCosmos,
         cosmos,
         selectedFunctions,
-        functions
+        functions,
+        selectedAppService,
+        appService
       }
     });
     const { pathname } = this.props.location;
@@ -255,7 +269,13 @@ class Footer extends React.Component<Props> {
                   to={pathsNext[pathname]}
                 >
                   <FormattedMessage id="footer.next" defaultMessage="Next" />
-                  {nextArrow && <NextArrow className={styles.nextIcon} />}
+                  {nextArrow && (
+                    <NextArrow
+                      className={classnames(styles.nextIcon, {
+                        [styles.nextIconNotDisabled]: isValidNameAndProjectPath
+                      })}
+                    />
+                  )}
                 </Link>
               )}
               {enableCreateProjectButton && (
@@ -289,6 +309,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   cosmos: getCosmosDbSelectionSelector(state),
   selectedFunctions: isAzureFunctionsSelectedSelector(state),
   functionNames: getAzureFunctionsNamesSelector(state),
+  selectedAppService: isAppServiceSelectedSelector(state),
+  appService: getAppServiceSelectionSelector(state),
   functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),

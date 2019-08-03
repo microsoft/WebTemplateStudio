@@ -4,34 +4,50 @@ import { connect } from "react-redux";
 import SelectOption from "../SelectOption";
 
 import { selectFrontendFramework as selectFrontendAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
+import {
+  selectPagesAction,
+  updatePageCountAction
+} from "../../actions/wizardSelectionActions/selectPages";
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
+import {
+  EXTENSION_MODULES,
+  EXTENSION_COMMANDS,
+  PAYLOAD_MESSAGES_TEXT,
+  WIZARD_CONTENT_INTERNAL_NAMES
+} from "../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 import { ThunkDispatch } from "redux-thunk";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { getPageCount } from "../../selectors/wizardSelectionSelector";
 
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
+import { optionCSS } from "react-select/lib/components/Option";
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
+  selectPages: (pages: ISelected[]) => void;
+  updatePageCount: (pageCount: IPageCount) => any;
 }
 
 interface ISelectFrontEndFrameworkProps {
   options: IOption[];
   selectedFrontendFramework: ISelected;
+  selectedBackendFramework: ISelected;
   vscode: IVSCodeObject;
   isPreview: boolean;
   isRoutesVisited: IVisitedPages;
   selectedPages: ISelected[];
+  pageCount: IPageCount;
 }
 
 type Props = IDispatchProps & ISelectFrontEndFrameworkProps & InjectedIntlProps;
@@ -48,8 +64,12 @@ class SelectFrontEndFramework extends React.Component<Props> {
     const {
       vscode,
       selectedFrontendFramework,
+      selectedBackendFramework,
       selectFrontendFramework,
-      selectedPages
+      selectedPages,
+      selectPages,
+      pageCount,
+      updatePageCount
     } = this.props;
 
     const { showPages } = this.props.isRoutesVisited;
@@ -60,18 +80,41 @@ class SelectFrontEndFramework extends React.Component<Props> {
       selectedFrontendFramework.internalName !== option.internalName
     ) {
       vscode.postMessage({
-        module: EXTENSION_MODULES.VSCODEUI,
-        command: EXTENSION_COMMANDS.RESET_PAGES,
-        track: false,
-        text: "Sending framework change request...",
+        module: EXTENSION_MODULES.CORETS,
+        command: EXTENSION_COMMANDS.GET_PAGES,
         payload: {
-          internalName: option.internalName,
-          pagesLength: selectedPages.length
+          projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+          frontendFramework: option.internalName,
+          backendFramework: selectedBackendFramework.internalName
         }
       });
-    } else {
-      selectFrontendFramework(option);
+      const cardCountType: IPageCount = {};
+      for (const pageType in pageCount) {
+        const newKey = pageType.replace(
+          selectedFrontendFramework.internalName || "",
+          option.internalName || ""
+        );
+        cardCountType[newKey] = pageCount[pageType];
+      }
+
+      updatePageCount(cardCountType);
+      const newPages: ISelected[] = selectedPages.map(page => {
+        return {
+          title: page.title,
+          internalName: page.internalName.replace(
+            selectedFrontendFramework.internalName,
+            option.internalName
+          ),
+          id: page.id,
+          defaultName: page.defaultName,
+          isValidTitle: page.isValidTitle,
+          licenses: page.licenses,
+          author: page.author
+        };
+      });
+      selectPages(newPages);
     }
+    selectFrontendFramework(option);
   }
   /**
    * Finds the index of the framework currently selected in the wizard
@@ -110,7 +153,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
   const { frontendOptions, previewStatus } = state.wizardContent;
-  const { frontendFramework } = state.selection;
+  const { frontendFramework, backendFramework } = state.selection;
   const { pages } = state.selection;
 
   return {
@@ -118,7 +161,9 @@ const mapStateToProps = (state: AppState): ISelectFrontEndFrameworkProps => {
     isRoutesVisited: getIsVisitedRoutesSelector(state),
     options: frontendOptions,
     selectedFrontendFramework: frontendFramework,
+    selectedBackendFramework: backendFramework,
     selectedPages: pages,
+    pageCount: getPageCount(state),
     vscode: getVSCodeApiSelector(state)
   };
 };
@@ -128,6 +173,12 @@ const mapDispatchToProps = (
 ): IDispatchProps => ({
   selectFrontendFramework: (framework: ISelected) => {
     dispatch(selectFrontendAction(framework));
+  },
+  selectPages: (pages: ISelected[]) => {
+    dispatch(selectPagesAction(pages));
+  },
+  updatePageCount: (pageCount: IPageCount) => {
+    dispatch(updatePageCountAction(pageCount));
   }
 });
 

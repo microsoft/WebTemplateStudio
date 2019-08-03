@@ -17,10 +17,13 @@ export const CONSTANTS = {
       "error.resourceGroupNotFound",
       "No resource group found with this name"
     ),
-    RESOURCE_GROUP_TRIES_EXCEEDED: localize(
-      "error.resourceGroupTriesExceedeed",
-      "Number of tries exceeded for creating resource group"
-    ),
+    TRIES_EXCEEDED: (resourceType: string) => {
+      return localize(
+        "error.triesExceedeed",
+        "Number of tries exceeded for creating {0}",
+        resourceType
+      );
+    },
     SUBSCRIPTION_NOT_FOUND: localize(
       "error.subscriptionNotFound",
       "No subscription found with this name."
@@ -159,8 +162,25 @@ export const CONSTANTS = {
     ),
     SYNC_STATUS: localize("info.syncStatus", "Sync Status: ")
   },
-  API: {
+  CLI: {
+    BASE_CLI_TOOL_NAME: "Microsoft.Templates.Cli",
+    SYNC_COMPLETE_STATE: "syncResult",
+    SYNC_PROGRESS_STATE: "syncProgress",
+    GET_FEATURES_COMPLETE_STATE: "getFeaturesResult",
+    GET_FRAMEWORKS_COMPLETE_STATE: "getFrameworksResult",
+    GET_PAGES_COMPLETE_STATE: "getPagesResult",
+    GET_PROJECT_TYPES_COMPLETE_STATE: "getProjectTypesResult",
+    GENERATE_COMPLETE_STATE: "generateResult",
+    GENERATE_PROGRESS_STATE: "generateProgress",
     WINDOWS_PLATFORM_VERSION: "win32",
+    SYNC_COMMAND_PREFIX: "sync",
+    GET_FRAMEWORKS_COMMAND_PREFIX: "getframeworks",
+    GET_PAGES_COMMAND_PREFIX: "getpages",
+    GET_FEATURES_COMMAND_PREFIX: "getfeatures",
+    GET_PROJECT_TYPES_COMMAND_PREFIX: "getprojecttypes",
+    GENERATE_COMMAND_PREFIX: "generate"
+  },
+  API: {
     BASE_APPLICATION_NAME: "CoreTemplateStudio.Api",
     PRODUCTION_PATH_TO_TEMPLATES: "..",
     DEVELOPMENT_PATH_TO_TEMPLATES: "../../../../..",
@@ -228,8 +248,27 @@ export const CONSTANTS = {
   APP_NAME: {
     MAX_LENGTH: 60,
     MIN_LENGTH: 3
-  }
+  },
+  SKU_DESCRIPTION: {
+    FREE: {
+      capacity: 1,
+      family: "F",
+      name: "F1",
+      size: "F1",
+      tier: "Free"
+    },
+    BASIC: {
+      capacity: 1,
+      family: "B",
+      name: "B1",
+      size: "B1",
+      tier: "Basic"
+    }
+  },
+  VALIDATION_LIMIT: 3
 };
+
+export const PROJECT_NAME_VALIDATION_LIMIT = 50;
 
 export enum ExtensionCommand {
   Log = "log",
@@ -246,6 +285,7 @@ export enum ExtensionCommand {
   DeployCosmos = "deploy-cosmos",
   Generate = "generate",
   GetOutputPath = "get-output-path",
+  GetProjectName = "get-project-name",
   GetFunctionsRuntimes = "get-functions-runtimes",
   GetCosmosAPIs = "get-cosmos-apis",
   GetUserStatus = "get-user-status",
@@ -333,6 +373,12 @@ export namespace DialogMessages {
   );
 }
 
+export const PAYLOAD_MESSAGES_TEXT = {
+  RESET_PAGES_TEXT: "Sending reset pages request...",
+  SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
+  SENT_GENERATION_INFO_TEXT: "Sending generation info..."
+};
+
 export enum AzureResourceType {
   AppService = "app-service",
   Cosmos = "cosmos",
@@ -342,4 +388,9 @@ export enum AzureResourceType {
 export enum AppType {
   Web = "Web",
   Function = "Function"
+}
+
+export enum OS {
+  Linux = "linux",
+  Windows = "windows"
 }

@@ -80,7 +80,7 @@ export class GenerationExperience extends WizardServant {
     let resourceGroupQueue: Promise<any>[] = [];
 
     if (apiGenResult) {
-      enginePayload.path = apiGenResult.generationOutputPath;
+      enginePayload.path = apiGenResult.generationPath;
     } else {
       return { payload: undefined };
     }
@@ -92,7 +92,8 @@ export class GenerationExperience extends WizardServant {
 
     if (
       AzureServices.functionsSelectedNewResourceGroup(payload) ||
-      AzureServices.cosmosDBSelectedNewResourceGroup(payload)
+      AzureServices.cosmosDBSelectedNewResourceGroup(payload) ||
+      AzureServices.appServiceSelectedNewResourceGroup(payload)
     ) {
       const distinctResourceGroupSelections: ResourceGroupSelection[] = await AzureServices.generateDistinctResourceGroupSelections(
         payload
@@ -137,10 +138,15 @@ export class GenerationExperience extends WizardServant {
         payload.cosmos.resourceGroup =
           distinctResourceGroupSelections[0].resourceGroupName;
       }
+      if (AzureServices.appServiceSelectedNewResourceGroup(payload)) {
+        payload.appService.resourceGroup =
+          distinctResourceGroupSelections[0].resourceGroupName;
+      }
     }
 
     // Resource groups should be created before other deploy methods execute
     Promise.all(resourceGroupQueue).then(() => {
+      // Create ASP (this PR) and create web app (future PR) will be called here
       if (payload.selectedFunctions) {
         serviceQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
@@ -236,7 +242,6 @@ export class GenerationExperience extends WizardServant {
   ) {
     let apiInstance = CoreTemplateStudio.GetExistingInstance();
     return await apiInstance.generate({
-      port: apiInstance.getPort(),
       payload: enginePayload,
       liveMessageHandler: this.handleGenLiveMessage
     });

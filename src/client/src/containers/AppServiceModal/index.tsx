@@ -28,7 +28,8 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  KEY_EVENTS
+  KEY_EVENTS,
+  WEB_TEMPLATE_STUDIO_LINKS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
@@ -90,10 +91,7 @@ const backendFrameworkNameToAppServiceRuntimeStack: Map<
   string,
   string
 > = new Map([
-  [
-    WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS,
-    WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS
-  ],
+  [WIZARD_CONTENT_INTERNAL_NAMES.NODE, WIZARD_CONTENT_INTERNAL_NAMES.NODE],
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, WIZARD_CONTENT_INTERNAL_NAMES.PYTHON]
 ]);
 
@@ -119,7 +117,7 @@ const initialState: IAppServiceState = {
     value: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     label: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
   },
-  chooseExistingRadioButtonSelected: true
+  chooseExistingRadioButtonSelected: false
 };
 
 const AppServiceModal = (props: Props) => {
@@ -452,18 +450,6 @@ const AppServiceModal = (props: Props) => {
               className={styles.radioButton}
               type="radio"
               value={intl.formatMessage(
-                azureModalMessages.azureModalChooseExisting
-              )}
-              disabled={appServiceFormData.subscription.value === ""}
-              checked={appServiceFormData.chooseExistingRadioButtonSelected}
-            />
-            <div className={styles.radioButtonLabel}>
-              {intl.formatMessage(azureModalMessages.azureModalChooseExisting)}
-            </div>
-            <input
-              className={styles.radiobutton}
-              type="radio"
-              value={intl.formatMessage(
                 azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
               )}
               disabled={appServiceFormData.subscription.value === ""}
@@ -473,6 +459,18 @@ const AppServiceModal = (props: Props) => {
               {intl.formatMessage(
                 azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
               )}
+            </div>
+            <input
+              className={styles.radioButton}
+              type="radio"
+              value={intl.formatMessage(
+                azureModalMessages.azureModalChooseExisting
+              )}
+              disabled={appServiceFormData.subscription.value === ""}
+              checked={appServiceFormData.chooseExistingRadioButtonSelected}
+            />
+            <div className={styles.radioButtonLabel}>
+              {intl.formatMessage(azureModalMessages.azureModalChooseExisting)}
             </div>
           </div>
           <div className={styles.resourceGroupToggleContainer}>
@@ -527,7 +525,7 @@ const AppServiceModal = (props: Props) => {
                 onChange={handleInput}
                 value={appServiceFormData.siteName.value}
                 placeholder={FORM_CONSTANTS.SITE_NAME.label}
-                disabled={appServiceFormData.subscription === ""}
+                disabled={appServiceFormData.subscription.value === ""}
                 tabIndex={appServiceFormData.subscription.value === "" ? -1 : 0}
               />
               {isSiteNameAvailable && !isValidatingName && (
@@ -565,6 +563,30 @@ const AppServiceModal = (props: Props) => {
                 selectedBackend.internalName
               )
             })}
+          </div>
+        </div>
+        {/* App Service Plan */}
+        <div
+          className={classNames(
+            styles.selectionInputContainer,
+            styles.selectionContainer
+          )}
+        >
+          <div className={styles.selectionHeaderContainer}>
+            <div className={styles.leftHeader}>
+              {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
+            </div>
+            <a
+              className={styles.link}
+              target={"_blank"}
+              rel="noreferrer noopener"
+              href={WEB_TEMPLATE_STUDIO_LINKS.APP_SERVICE_PLAN}
+            >
+              {intl.formatMessage(azureModalMessages.appServiceLearnMore)}
+            </a>
+          </div>
+          <div>
+            {intl.formatMessage(azureModalMessages.appServicePlanSubLabel)}
           </div>
         </div>
       </div>

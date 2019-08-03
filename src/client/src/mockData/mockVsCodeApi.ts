@@ -40,7 +40,7 @@ const mockVsCodeApi = () => ({
               payload: {
                 frameworks: [
                   {
-                    name: "ReactJS",
+                    name: "React",
                     displayName: "React",
                     icon: "",
                     summary: "JavaScript framework",
@@ -50,10 +50,10 @@ const mockVsCodeApi = () => ({
                     order: 1,
                     metadataType: "Framework",
                     licenses:
-                      "[ReactJS](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
+                      "[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
                     licenseTerms: [
                       {
-                        text: "ReactJS",
+                        text: "React",
                         url:
                           "https://github.com/facebook/react/blob/master/LICENSE"
                       },
@@ -135,7 +135,7 @@ const mockVsCodeApi = () => ({
                     }
                   },
                   {
-                    name: "NodeJS",
+                    name: "Node",
                     displayName: "Node.js/Express",
                     icon: "",
                     summary: "JavaScript framework",
@@ -145,20 +145,20 @@ const mockVsCodeApi = () => ({
                     order: 1,
                     metadataType: "Framework",
                     licenses:
-                      "[NodeJS](https://github.com/nodejs/node/blob/master/LICENSE)  \n[ExpressJS](https://github.com/expressjs/express/blob/master/LICENSE)  \n[ExpressJS Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
+                      "[Node](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
                     licenseTerms: [
                       {
-                        text: "NodeJS",
+                        text: "Node",
                         url:
                           "https://github.com/nodejs/node/blob/master/LICENSE"
                       },
                       {
-                        text: "ExpressJS",
+                        text: "Express",
                         url:
                           "https://github.com/expressjs/express/blob/master/LICENSE"
                       },
                       {
-                        text: "ExpressJS Generator",
+                        text: "Express Generator",
                         url:
                           "https://github.com/expressjs/generator/blob/master/LICENSE"
                       }
@@ -272,7 +272,7 @@ const mockVsCodeApi = () => ({
                     requiredVisualStudioWorkloads: []
                   },
                   {
-                    emplateId: "wts.Page.React.List",
+                    templateId: "wts.Page.React.List",
                     name: "List",
                     defaultName: "List",
                     description: "Add and remove text from an adaptive list.",

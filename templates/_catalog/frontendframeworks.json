@@ -1,11 +1,11 @@
 ﻿[
   {
-    "name": "ReactJS",
+    "name": "React",
     "displayName": "React",
     "summary": "JavaScript framework",
     "author": "Facebook",
     "order": "1",
-    "licenses": "[ReactJS](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
+    "licenses": "[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
     "platforms": ["Web"],
     "languages": ["Any"],
     "tags": {
@@ -23,7 +23,7 @@
     "platforms": ["Web"],
     "languages": ["Any"],
     "tags": {
-      "version": "7.2.0",
+      "version": "8.0.2",
       "preview": false
     }
   },

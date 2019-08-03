@@ -14,20 +14,31 @@
   justify-content: space-between;
 }
 
+.addPagesButton,
+.resetButton,
 .hideOrShow {
+  margin-left: 1px;
   cursor: pointer;
   color: var(--vscode-textLink-foreground);
-  padding-right: 1px;
-  padding-left: 1px;
   border: none;
   font-size: var(--vscode-font-size);
   background-color: var(--vscode-editor-background);
 }
 
-.hideOrShow:focus {
+.hideOrShow:focus,
+.addPagesButton:focus,
+.resetButton:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .viewIcon path {
   fill: var(--vscode-editor-foreground);
+}
+
+.plusIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.iconsContainer {
+  display: flex;
 }

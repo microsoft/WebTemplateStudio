@@ -10,6 +10,7 @@
   align-items: center;
   min-height: 65px;
   box-sizing: border-box;
+  z-index: 1100;
 }
 
 .button {
@@ -37,11 +38,14 @@
 .nextIcon {
   margin-left: 10px;
   height: 16px;
-  color: #ffffff;
 }
 
 .nextIcon path {
   fill: var(--vscode-editor-foreground);
+}
+
+.nextIconNotDisabled path {
+  fill: #ffffff;
 }
 
 .disabledOverlay {
