@@ -220,10 +220,7 @@ export class AzureServices extends WizardServant {
     return {
       resourceGroups: await resourceGroupItems,
       locations: locations,
-      validName: validName.toLowerCase().replace(/_/g, "-")
-      // TODO validname can only have alphanumeric character and dashes
-      // and must start / end with alphanumeric characters
-      // refactor namegenerator to return a name that matches this
+      validName: validName
     };
   }
 

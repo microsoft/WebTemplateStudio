@@ -8,7 +8,10 @@ export namespace NameGenerator {
     userSubscriptionItem: SubscriptionItem,
     azureType: AzureResourceType
   ): Promise<string> {
-    let result = NameGenerator.generateName(projectName);
+    // valid name can only have alphanumeric characters and dashes
+    // this regex replaces all non-alphanumeric characters and underscores with dashes
+    projectName = projectName.replace(/[W_]+/g, "-");
+    let result = NameGenerator.generateName(projectName, undefined, true);
     let tries = 0;
     let isValid: boolean = await AzureServices.validateNameForAzureType(
       projectName,
@@ -17,7 +20,7 @@ export namespace NameGenerator {
     );
 
     while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
-      result = NameGenerator.generateName(projectName);
+      result = NameGenerator.generateName(projectName, undefined, true);
       isValid = await AzureServices.validateNameForAzureType(
         projectName,
         userSubscriptionItem,
@@ -25,14 +28,19 @@ export namespace NameGenerator {
       );
       tries++;
     }
+
     return result;
   }
 
   export function generateName(
     userProjectName: string,
-    resourceType?: string
+    resourceType?: string,
+    azureTypeName?: boolean
   ): string {
     const timestamp = unixToSuffix(Date.now());
+    if (azureTypeName) {
+      return userProjectName + "-" + timestamp;
+    }
     const suffix =
       resourceType === undefined ? timestamp : resourceType + "_" + timestamp;
     return userProjectName + "_" + suffix;
