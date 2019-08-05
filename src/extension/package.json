@@ -62,6 +62,10 @@
           "type": "boolean",
           "default": false,
           "description": "Enable upcoming features; Warning: may cause stability issues."
+        },
+        "wts.legalResources": {
+          "type": "null",
+          "markdownDescription": "[Privacy Link](https://privacy.microsoft.com/en-US/privacystatement) | [Terms of Use](https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx)"
         }
       }
     }
@@ -93,7 +97,8 @@
     "vscode-nls-dev": "3.2.7"
   },
   "extensionDependencies": [
-    "ms-vscode.azure-account"
+    "ms-vscode.azure-account",
+    "ms-azuretools.vscode-azureappservice"
   ],
   "dependencies": {
     "@aspnet/signalr": "^1.1.2",

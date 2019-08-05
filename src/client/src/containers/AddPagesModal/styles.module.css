@@ -1,0 +1,30 @@
+.headerContainer {
+  padding-left: 5px;
+  position: absolute;
+  right: 54px;
+  top: 54px;
+}
+
+.icon {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  padding: 1px;
+  margin-right: 2px;
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.icon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
