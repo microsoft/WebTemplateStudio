@@ -105,9 +105,9 @@ export class CoreTemplateStudio {
     });
 
     process.stderr.on("data", (data) => {
-      this.cliEvents.emit("error", data.toString());
+      this.cliEvents.emit("eventError", data.toString());
     });
-    process.on("exit", (code) => this.cliEvents.emit("error", `process exited with code ${code}`));
+    process.on("exit", (code) => this.cliEvents.emit("eventError", `process exited with code ${code}`));
   }
 
   private async awaitCliEvent(eventName: string): Promise<any> {
@@ -115,7 +115,7 @@ export class CoreTemplateStudio {
       this.cliEvents.once(eventName, (data) => {
         this.cliEvents.removeAllListeners();
         resolve(data);
-      }).once("error", (data) => {
+      }).once("eventError", (data) => {
         this.cliEvents.removeAllListeners();
         reject(data);
       });
