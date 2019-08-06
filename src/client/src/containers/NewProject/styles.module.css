@@ -46,3 +46,9 @@
 .quickStartContainer {
   margin-top: 1em;
 }
+
+@media (max-width: 1120px) {
+  .container {
+    max-width: 100%;
+  }
+}
