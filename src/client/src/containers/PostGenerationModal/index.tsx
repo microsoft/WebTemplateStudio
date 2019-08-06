@@ -39,7 +39,7 @@ const links: LinksDict = {
   "Cosmos DB":
     "[Azure](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts)",
   "App Service":
-    "[Azure](https://portal.azure.com/#blade/WebsitesExtension/FunctionsIFrameBladeMain)" // TODO
+    "[Azure](https://ms.portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites)"
 };
 
 interface IStateProps {
