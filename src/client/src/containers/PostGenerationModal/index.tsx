@@ -91,11 +91,6 @@ const PostGenerationModal = ({
   const generationInProgress =
     templateGenerationInProgress || appServiceInProgress;
 
-  console.log("a");
-  console.log(templateGenerationInProgress);
-  console.log(appServiceInProgress);
-  console.log(generationInProgress);
-
   const LinkRenderer = (props: any) => (
     <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
       {props.children}
