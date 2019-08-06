@@ -233,7 +233,7 @@ export class AppServiceProvider {
     }
   }
 
-  private async generateValidASPName(name: string): Promise<string> {
+  public async generateValidASPName(name: string): Promise<string> {
     let generatedName: string = name + "-asp";
     let isValid: boolean = await this.validateASPName(generatedName);
     let tries = 0;

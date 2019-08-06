@@ -35,8 +35,7 @@ import {
 } from "./azure-resource-group/resourceGroupModule";
 import {
   AppServiceProvider,
-  AppServiceSelections,
-  AppServicePlanSelection
+  AppServiceSelections
 } from "./azure-app-service/appServiceProvider";
 
 export class AzureServices extends WizardServant {
@@ -426,22 +425,32 @@ export class AzureServices extends WizardServant {
     );
   }
 
-  private static async createAppServicePlan(payload: any): Promise<string> {
-    const aspSelection: AppServicePlanSelection = {
-      subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
-      resourceGroup: payload.appService.resourceGroup,
-      name: payload.engine.projectName
-    };
-    return await AzureServices.AzureAppServiceProvider.createAppServicePlan(
-      aspSelection
-    );
-  }
+  // private static async createAppServicePlan(payload: any): Promise<string> {
+  //   const aspSelection: AppServicePlanSelection = {
+  //     subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
+  //     resourceGroup: payload.appService.resourceGroup,
+  //     name: payload.engine.projectName
+  //   };
+  //   return await AzureServices.AzureAppServiceProvider.createAppServicePlan(
+  //     aspSelection
+  //   );
+  // }
 
   public static async deployWebApp(payload: any): Promise<void> {
     await AzureServices.updateAppServiceSubscriptionItemCache(
       payload.appService.subscription
     );
-    const aspName: string = await AzureServices.createAppServicePlan(payload);
+    const aspName = await AzureServices.AzureAppServiceProvider.generateValidASPName(
+      payload.engine.projectName
+    );
+    // const aspSelection: AppServicePlanSelection = {
+    //   subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
+    //   resourceGroup: payload.appService.resourceGroup,
+    //   name: payload.engine.projectName
+    // };
+    // const aspName = await AzureServices.AzureAppServiceProvider.createAppServicePlan(
+    //   aspSelection
+    // );
     const userAppServiceSelection: AppServiceSelections = {
       siteName: payload.appService.siteName,
       subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
@@ -469,7 +478,7 @@ export class AzureServices extends WizardServant {
         throw error; //to log in telemetry
       });
 
-    return await AzureServices.AzureAppServiceProvider.createWebApp(
+    await AzureServices.AzureAppServiceProvider.createWebApp(
       userAppServiceSelection,
       payload.engine.path
     );
