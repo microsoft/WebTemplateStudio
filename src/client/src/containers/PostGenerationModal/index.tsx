@@ -12,6 +12,7 @@ import styles from "./styles.module.css";
 
 import * as PostGenSelectors from "../../selectors/postGenerationSelector";
 import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
+import { isAppServiceSelectedSelector } from "../../selectors/appServiceSelector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
@@ -36,7 +37,9 @@ const links: LinksDict = {
   "Azure Functions":
     "[Azure](https://portal.azure.com/#blade/WebsitesExtension/FunctionsIFrameBladeMain)",
   "Cosmos DB":
-    "[Azure](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts)"
+    "[Azure](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts)",
+  "App Service":
+    "[Azure](https://portal.azure.com/#blade/WebsitesExtension/FunctionsIFrameBladeMain)" // TODO
 };
 
 interface IStateProps {
@@ -47,6 +50,9 @@ interface IStateProps {
   isModalOpen: boolean;
   serviceStatus: PostGenSelectors.IAzureServiceStatus;
   isServicesSelected: boolean;
+  isAppServiceSelected: boolean;
+  isAppServiceCreated: boolean;
+  isAppServiceFailed: boolean;
   vscode: IVSCodeObject;
   outputPath: string;
 }
@@ -70,10 +76,26 @@ const PostGenerationModal = ({
   intl,
   isTemplatesFailed,
   isServicesSelected,
+  isAppServiceSelected,
+  isAppServiceCreated,
+  isAppServiceFailed,
   resetWizard,
   history
 }: Props) => {
   const { formatMessage } = intl;
+  const templateGenerationInProgress =
+    !isTemplateGenerated && !isTemplatesFailed;
+  const appServiceInProgress = isAppServiceSelected
+    ? !isAppServiceCreated && !isAppServiceFailed
+    : false;
+  const generationInProgress =
+    templateGenerationInProgress || appServiceInProgress;
+
+  console.log("a");
+  console.log(templateGenerationInProgress);
+  console.log(appServiceInProgress);
+  console.log(generationInProgress);
+
   const LinkRenderer = (props: any) => (
     <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
       {props.children}
@@ -90,8 +112,12 @@ const PostGenerationModal = ({
     if (isTemplatesFailed) {
       resetWizard();
       history.push(ROUTES.NEW_PROJECT);
+      return;
     }
-    if (!isTemplatesFailed && isTemplateGenerated) {
+    if (
+      isTemplateGenerated &&
+      (isAppServiceSelected ? isAppServiceCreated || isAppServiceFailed : true)
+    ) {
       vscode.postMessage({
         module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
@@ -106,7 +132,10 @@ const PostGenerationModal = ({
     if (isTemplatesFailed) {
       return formatMessage(messages.restartWizard);
     }
-    if (!isTemplatesFailed && isTemplateGenerated) {
+    if (
+      isTemplateGenerated &&
+      (isAppServiceSelected ? isAppServiceCreated || isAppServiceFailed : true)
+    ) {
       return formatMessage(messages.openInCode);
     }
     return (
@@ -162,8 +191,7 @@ const PostGenerationModal = ({
       }
     });
   };
-  const templateGenerationInProgress =
-    !isTemplateGenerated && !isTemplatesFailed;
+
   return (
     <div>
       <div className={styles.title}>
@@ -233,11 +261,11 @@ const PostGenerationModal = ({
       <div className={styles.footerContainer}>
         <button
           className={classnames(styles.button, {
-            [buttonStyles.buttonDark]: templateGenerationInProgress,
-            [buttonStyles.buttonHighlighted]: !templateGenerationInProgress
+            [buttonStyles.buttonDark]: generationInProgress,
+            [buttonStyles.buttonHighlighted]: !generationInProgress
           })}
           onClick={handleOpenProjectOrRestartWizard}
-          disabled={templateGenerationInProgress}
+          disabled={generationInProgress}
         >
           {openProjectOrRestartWizardMessage()}
         </button>
@@ -257,6 +285,13 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   outputPath: getOutputPath(state),
   serviceStatus: PostGenSelectors.servicesToDeploySelector(state),
   templateGenStatus: PostGenSelectors.getSyncStatusSelector(state),
+  isAppServiceSelected: isAppServiceSelectedSelector(state),
+  isAppServiceCreated: PostGenSelectors.isAppServiceCreatedSuccessSelector(
+    state
+  ),
+  isAppServiceFailed: PostGenSelectors.isAppServiceCreatedFailureSelector(
+    state
+  ),
   vscode: getVSCodeApiSelector(state)
 });
 

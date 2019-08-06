@@ -68,7 +68,8 @@ export class GenerationExperience extends WizardServant {
       ),
       resourceGroup: {},
       cosmos: {},
-      azureFunctions: {}
+      azureFunctions: {},
+      appService: {}
     };
 
     GenerationExperience.reactPanelContext.postMessageWebview({
