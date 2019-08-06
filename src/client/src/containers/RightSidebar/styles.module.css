@@ -78,7 +78,8 @@
   background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #7f7f7f;
   box-sizing: border-box;
-  position: fixed;
+  /* position: fixed; */
+  position: relative;
   right: 0;
   height: calc(100vh - 70px);
   display: flex;
@@ -191,4 +192,9 @@
 .value {
   font-weight: normal;
   margin-left: 7px;
+
+@media (max-width: 560px) {
+  .rightViewCroppedAllPages {
+    width: 100%;
+  }
 }
