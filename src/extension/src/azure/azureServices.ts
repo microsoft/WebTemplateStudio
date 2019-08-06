@@ -356,19 +356,6 @@ export class AzureServices extends WizardServant {
     }
   }
 
-  // Will only be called if selections.resourceGroup is not an empty string
-  public static async createAppServicePlan(payload: any): Promise<string> {
-    AzureServices.updateAppServiceSubscriptionItemCache(payload);
-    const aspSelection: AppServicePlanSelection = {
-      subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
-      resourceGroup: payload.appService.resourceGroup,
-      name: payload.engine.projectName
-    };
-    return await AzureServices.AzureAppServiceProvider.createAppServicePlan(
-      aspSelection
-    );
-  }
-
   public static async generateDistinctResourceGroupSelections(
     payload: any
   ): Promise<ResourceGroupSelection[]> {
@@ -439,25 +426,33 @@ export class AzureServices extends WizardServant {
     );
   }
 
-  public static async deployWebApp(
-    selections: any,
-    appPath: string,
-    backendFramework: string,
-    aspName: string
-  ): Promise<void> {
-    await AzureServices.updateAppServiceSubscriptionItemCache(
-      selections.subscription
+  private static async createAppServicePlan(payload: any): Promise<string> {
+    const aspSelection: AppServicePlanSelection = {
+      subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
+      resourceGroup: payload.appService.resourceGroup,
+      name: payload.engine.projectName
+    };
+    return await AzureServices.AzureAppServiceProvider.createAppServicePlan(
+      aspSelection
     );
+  }
+
+  public static async deployWebApp(payload: any): Promise<void> {
+    await AzureServices.updateAppServiceSubscriptionItemCache(
+      payload.appService.subscription
+    );
+    const aspName: string = await AzureServices.createAppServicePlan(payload);
     const userAppServiceSelection: AppServiceSelections = {
-      siteName: selections.siteName,
+      siteName: payload.appService.siteName,
       subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
       resourceGroupItem: await AzureAuth.getResourceGroupItem(
-        selections.resourceGroup,
+        payload.appService.resourceGroup,
         AzureServices.usersAppServiceSubscriptionItemCache
       ),
       appServicePlanName: aspName,
       sku: CONSTANTS.SKU_DESCRIPTION.BASIC.name,
-      linuxFxVersion: BackendFrameworkLinuxVersion[backendFramework],
+      linuxFxVersion:
+        BackendFrameworkLinuxVersion[payload.engine.backendFramework],
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
     };
 
@@ -476,7 +471,7 @@ export class AzureServices extends WizardServant {
 
     return await AzureServices.AzureAppServiceProvider.createWebApp(
       userAppServiceSelection,
-      appPath
+      payload.engine.path
     );
   }
 

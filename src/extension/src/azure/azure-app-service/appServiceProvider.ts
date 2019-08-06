@@ -30,6 +30,7 @@ export interface AppServicePlanSelection {
   resourceGroup: string;
   name: string;
 }
+
 export interface AppServiceSelections {
   siteName: string;
   subscriptionItem: SubscriptionItem;
@@ -49,17 +50,9 @@ export class AppServiceProvider {
     selections: AppServiceSelections,
     appPath: string
   ): Promise<void> {
-    try {
-      this.setWebClient(selections.subscriptionItem);
-    } catch (error) {
-      throw new AuthorizationError(error.message);
-    }
-
     const template = this.getAppServiceARMTemplate();
     const parameters = this.getAppServiceARMParameter(selections);
-
     const deploymentParams = parameters.parameters;
-
     try {
       let options: ResourceManagementModels.Deployment = {
         properties: {
@@ -68,13 +61,10 @@ export class AppServiceProvider {
           template: template
         }
       };
-
       const azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
         selections.subscriptionItem
       );
-
       this.writeARMTemplatesToApp(appPath, template, parameters);
-
       await azureResourceClient.deployments.createOrUpdate(
         selections.resourceGroupItem.name,
         selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX,
@@ -244,7 +234,7 @@ export class AppServiceProvider {
   }
 
   private async generateValidASPName(name: string): Promise<string> {
-    let generatedName: string = NameGenerator.generateName(name, "asp");
+    let generatedName: string = name + "-asp";
     let isValid: boolean = await this.validateASPName(generatedName);
     let tries = 0;
     while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
