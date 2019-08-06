@@ -5,7 +5,9 @@ const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
 const PYTHON3_REGEX = RegExp("^Python 3\\.[5-9]\\.[0-9]"); // minimum Python version required is 3.5.x
-const NODE_REGEX = RegExp("v10\\.(1[5-9]|[2-9][0-9])\\.[0-9]"); // minimum Node version required is 10.15.x
+const NODE_REGEX = RegExp(
+  "v1((0\\.(1[5-9]|[2-9][0-9]))|([1-9]\\.[0-9]{1,2}))\\.[0-9]"
+); // minimum Node version required is 10.15.x
 
 export class DependencyChecker extends WizardServant {
   clientCommandMap: Map<
