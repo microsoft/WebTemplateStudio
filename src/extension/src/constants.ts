@@ -268,6 +268,8 @@ export const CONSTANTS = {
   VALIDATION_LIMIT: 3
 };
 
+export const PROJECT_NAME_VALIDATION_LIMIT = 50;
+
 export enum ExtensionCommand {
   Log = "log",
   Login = "login",
@@ -283,6 +285,7 @@ export enum ExtensionCommand {
   DeployCosmos = "deploy-cosmos",
   Generate = "generate",
   GetOutputPath = "get-output-path",
+  GetProjectName = "get-project-name",
   GetFunctionsRuntimes = "get-functions-runtimes",
   GetCosmosAPIs = "get-cosmos-apis",
   GetUserStatus = "get-user-status",
