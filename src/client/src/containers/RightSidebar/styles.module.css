@@ -78,20 +78,18 @@
   background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #7f7f7f;
   box-sizing: border-box;
-  /* position: fixed; */
   position: relative;
   right: 0;
   height: calc(100vh - 70px);
-  display: flex;
+  display: none;
   flex-direction: column;
   overflow: scroll;
-  transform: translateX(+100%);
-  transition: transform 0.3s ease-out;
+  width: 0;
   z-index: 1050;
 }
 
 .rightViewCropped.open {
-  transform: translateX(0);
+  display: flex;
 }
 
 .rightViewCroppedAllPages {
@@ -194,7 +192,14 @@
   margin-left: 7px;
 
 @media (max-width: 560px) {
-  .rightViewCroppedAllPages {
+  .rightViewCropped.open {
+    position: fixed;
     width: 100%;
+  }
+}
+
+@media (min-width: 560px) {
+  .rightViewCroppedAllPages.open {
+    width: 500px;
   }
 }
