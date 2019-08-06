@@ -18,7 +18,8 @@ import {
   AzureResourceType,
   DialogMessages,
   DialogResponses,
-  ExtensionCommand
+  ExtensionCommand,
+  BackendFrameworkLinuxVersion
 } from "../constants";
 import {
   SubscriptionError,
@@ -34,7 +35,7 @@ import {
 } from "./azure-resource-group/resourceGroupModule";
 import {
   AppServiceProvider,
-  AppServicePlanSelection
+  AppServiceSelections
 } from "./azure-app-service/appServiceProvider";
 
 export class AzureServices extends WizardServant {
@@ -80,7 +81,7 @@ export class AzureServices extends WizardServant {
 
   private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
-  private static userAppServiceSubsctiptionItemCache: SubscriptionItem;
+  private static usersAppServiceSubscriptionItemCache: SubscriptionItem;
 
   public static async performLoginForSubscriptions(
     message: any
@@ -222,7 +223,7 @@ export class AzureServices extends WizardServant {
     );
     return await AzureServices.AzureAppServiceProvider.checkWebAppName(
       message.appName,
-      AzureServices.userAppServiceSubsctiptionItemCache
+      AzureServices.usersAppServiceSubscriptionItemCache
     )
       .then((invalidReason: string | undefined) => {
         return {
@@ -301,15 +302,15 @@ export class AzureServices extends WizardServant {
     subscriptionLabel: string
   ) {
     if (
-      AzureServices.userAppServiceSubsctiptionItemCache === undefined ||
+      AzureServices.usersAppServiceSubscriptionItemCache === undefined ||
       subscriptionLabel !==
-        AzureServices.userAppServiceSubsctiptionItemCache.label
+        AzureServices.usersAppServiceSubscriptionItemCache.label
     ) {
       let subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
       );
       if (subscriptionItem) {
-        AzureServices.userAppServiceSubsctiptionItemCache = subscriptionItem;
+        AzureServices.usersAppServiceSubscriptionItemCache = subscriptionItem;
       } else {
         throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
       }
@@ -354,19 +355,6 @@ export class AzureServices extends WizardServant {
     }
   }
 
-  // Will only be called if selections.resourceGroup is not an empty string
-  public static async createAppServicePlan(payload: any): Promise<string> {
-    AzureServices.updateAppServiceSubscriptionItemCache(payload);
-    const aspSelection: AppServicePlanSelection = {
-      subscriptionItem: AzureServices.userAppServiceSubsctiptionItemCache,
-      resourceGroup: payload.appService.resourceGroup,
-      name: payload.engine.projectName
-    };
-    return await AzureServices.AzureAppServiceProvider.createAppServicePlan(
-      aspSelection
-    );
-  }
-
   public static async generateDistinctResourceGroupSelections(
     payload: any
   ): Promise<ResourceGroupSelection[]> {
@@ -384,6 +372,12 @@ export class AzureServices extends WizardServant {
         payload.cosmos.subscription
       );
       allSubscriptions.push(AzureServices.usersCosmosDBSubscriptionItemCache);
+    }
+    if (AzureServices.appServiceSelectedNewResourceGroup(payload)) {
+      await AzureServices.updateAppServiceSubscriptionItemCache(
+        payload.appService.subscription
+      );
+      allSubscriptions.push(AzureServices.usersAppServiceSubscriptionItemCache);
     }
     const allDistinctSubscriptions: SubscriptionItem[] = [
       ...new Set(allSubscriptions)
@@ -406,6 +400,12 @@ export class AzureServices extends WizardServant {
     return payload.selectedCosmos && payload.cosmos.resourceGroup === "";
   }
 
+  public static appServiceSelectedNewResourceGroup(payload: any): boolean {
+    return (
+      payload.selectedAppService && payload.appService.resourceGroup === ""
+    );
+  }
+
   private static generateResourceGroupSelection(
     generatedName: string,
     subscriptionItem: SubscriptionItem
@@ -422,6 +422,46 @@ export class AzureServices extends WizardServant {
   ): Promise<any> {
     return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
       selections
+    );
+  }
+
+  public static async deployWebApp(payload: any): Promise<void> {
+    await AzureServices.updateAppServiceSubscriptionItemCache(
+      payload.appService.subscription
+    );
+    const aspName = await AzureServices.AzureAppServiceProvider.generateValidASPName(
+      payload.engine.projectName
+    );
+    const userAppServiceSelection: AppServiceSelections = {
+      siteName: payload.appService.siteName,
+      subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
+      resourceGroupItem: await AzureAuth.getResourceGroupItem(
+        payload.appService.resourceGroup,
+        AzureServices.usersAppServiceSubscriptionItemCache
+      ),
+      appServicePlanName: aspName,
+      sku: CONSTANTS.SKU_DESCRIPTION.BASIC.name,
+      linuxFxVersion:
+        BackendFrameworkLinuxVersion[payload.engine.backendFramework],
+      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
+    };
+
+    await AzureServices.AzureAppServiceProvider.checkWebAppName(
+      userAppServiceSelection.siteName,
+      userAppServiceSelection.subscriptionItem
+    )
+      .then(invalidReason => {
+        if (invalidReason !== undefined && invalidReason === "") {
+          throw new ValidationError(invalidReason);
+        }
+      })
+      .catch((error: Error) => {
+        throw error; //to log in telemetry
+      });
+
+    await AzureServices.AzureAppServiceProvider.createWebApp(
+      userAppServiceSelection,
+      payload.engine.path
     );
   }
 

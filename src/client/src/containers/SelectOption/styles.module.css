@@ -1,6 +1,12 @@
 .container {
   display: flex;
   flex-wrap: wrap;
+  padding: 5px;
+}
+
+.modalContainer {
+  max-height: calc(80vh - 200px);
+  overflow: auto;
 }
 
 .description {

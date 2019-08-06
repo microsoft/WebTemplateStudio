@@ -15,7 +15,9 @@ const MAX_PAGES_ALLOWED = 20;
 
 const WEB_TEMPLATE_STUDIO_LINKS = {
   REPO: "https://github.com/Microsoft/WebTemplateStudio",
-  ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues"
+  ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues",
+  APP_SERVICE_PLAN:
+    "https://azure.microsoft.com/en-us/pricing/details/app-service/plans/"
 };
 
 const PRODUCTION = "production";
@@ -126,6 +128,7 @@ const EXTENSION_COMMANDS = {
   AZURE_LOGOUT: "logout",
   GENERATE: "generate",
   GET_OUTPUT_PATH: "get-output-path",
+  GET_PROJECT_NAME: "get-project-name",
   GET_USER_STATUS: "get-user-status",
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",

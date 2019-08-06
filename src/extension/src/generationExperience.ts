@@ -93,7 +93,8 @@ export class GenerationExperience extends WizardServant {
 
     if (
       AzureServices.functionsSelectedNewResourceGroup(payload) ||
-      AzureServices.cosmosDBSelectedNewResourceGroup(payload)
+      AzureServices.cosmosDBSelectedNewResourceGroup(payload) ||
+      AzureServices.appServiceSelectedNewResourceGroup(payload)
     ) {
       const distinctResourceGroupSelections: ResourceGroupSelection[] = await AzureServices.generateDistinctResourceGroupSelections(
         payload
@@ -103,7 +104,7 @@ export class GenerationExperience extends WizardServant {
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.ResourceGroupDeploy,
             // tslint:disable-next-line: no-function-expression
-            async function (this: IActionContext): Promise<void> {
+            async function(this: IActionContext): Promise<void> {
               try {
                 await AzureServices.deployResourceGroup(resourceGroupSelection);
                 progressObject = {
@@ -138,17 +139,51 @@ export class GenerationExperience extends WizardServant {
         payload.cosmos.resourceGroup =
           distinctResourceGroupSelections[0].resourceGroupName;
       }
+      if (AzureServices.appServiceSelectedNewResourceGroup(payload)) {
+        payload.appService.resourceGroup =
+          distinctResourceGroupSelections[0].resourceGroupName;
+      }
     }
 
     // Resource groups should be created before other deploy methods execute
     Promise.all(resourceGroupQueue).then(() => {
-      // Create ASP (this PR) and create web app (future PR) will be called here
+      if (payload.selectedAppService) {
+        serviceQueue.push(
+          GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
+            TelemetryEventName.AppServiceDeploy,
+            // tslint:disable-next-line: no-function-expression
+            async function(this: IActionContext): Promise<void> {
+              try {
+                await AzureServices.deployWebApp(payload);
+                progressObject = {
+                  ...progressObject,
+                  appService: GenerationExperience.getProgressObject(true)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+              } catch (error) {
+                progressObject = {
+                  ...progressObject,
+                  appService: GenerationExperience.getProgressObject(false)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+              }
+            }
+          )
+        );
+      }
+
       if (payload.selectedFunctions) {
         serviceQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.FunctionsDeploy,
             // tslint:disable-next-line: no-function-expression
-            async function (this: IActionContext): Promise<void> {
+            async function(this: IActionContext): Promise<void> {
               try {
                 await AzureServices.deployFunctionApp(
                   payload.functions,
@@ -182,7 +217,7 @@ export class GenerationExperience extends WizardServant {
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.CosmosDBDeploy,
             // tslint:disable-next-line: no-function-expression
-            async function (this: IActionContext): Promise<void> {
+            async function(this: IActionContext): Promise<void> {
               var cosmosPayload: any = payload.cosmos;
               try {
                 var dbObject = await AzureServices.deployCosmosResource(

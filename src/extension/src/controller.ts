@@ -1,12 +1,15 @@
 import * as vscode from "vscode";
 import * as os from "os";
+import * as fs from "fs";
+import * as path from "path";
 
 import { Validator } from "./utils/validator";
 import {
   CONSTANTS,
   ExtensionModule,
   TelemetryEventName,
-  ExtensionCommand
+  ExtensionCommand,
+  PROJECT_NAME_VALIDATION_LIMIT
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
@@ -156,6 +159,7 @@ export class Controller {
       GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
       Controller.loadUserSettings();
+      Controller.getProjectName();
 
       Controller.getVersionAndSendToClient(
         context,
@@ -165,6 +169,33 @@ export class Controller {
         TelemetryEventName.ExtensionLaunch
       );
     }
+  }
+
+  private static getProjectName() {
+    const userOutputPath = vscode.workspace
+      .getConfiguration()
+      .get<string>("wts.changeSaveToLocation");
+    const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
+    const defaultAppName = "myApp";
+    let newAppName = defaultAppName;
+    let count = 1;
+
+    while (
+      fs.existsSync(path.join(outputPath, newAppName)) &&
+      count <= PROJECT_NAME_VALIDATION_LIMIT
+    ) {
+      newAppName = `${defaultAppName}${count}`;
+      count++;
+    }
+    if (count > PROJECT_NAME_VALIDATION_LIMIT) {
+      return;
+    }
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetProjectName,
+      payload: {
+        projectName: newAppName
+      }
+    });
   }
 
   private static getVersionAndSendToClient(

@@ -234,7 +234,7 @@ export class CosmosDBDeploy {
         userSubscriptionItem
       );
 
-      ARMFileHelper.creatDirIfNonExistent(path.join(genPath, "arm-templates"));
+      ARMFileHelper.createDirIfNonExistent(path.join(genPath, "arm-templates"));
       ARMFileHelper.writeObjectToJsonFile(
         path.join(genPath, "arm-templates", "cosmos-template.json"),
         template
