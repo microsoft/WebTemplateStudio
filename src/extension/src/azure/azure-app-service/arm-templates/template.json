@@ -16,7 +16,7 @@
     },
     {
       "apiVersion": "2016-08-01",
-      "name": "[parameter('webAppName')]",
+      "name": "[parameters('name')]",
       "type": "Microsoft.Web/sites",
       "kind": "app",
       "location": "[parameters('location')]",
@@ -32,7 +32,7 @@
     }
   ],
   "parameters": {
-    "webAppName": {
+    "name": {
       "type": "string"
     },
     "subscriptionId": {

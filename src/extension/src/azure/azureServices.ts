@@ -452,7 +452,10 @@ export class AzureServices extends WizardServant {
     const userAppServiceSelection: AppServiceSelections = {
       siteName: selections.siteName,
       subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
-      resourceGroupItem: selections.resourceGroup,
+      resourceGroupItem: await AzureAuth.getResourceGroupItem(
+        selections.resourceGroup,
+        AzureServices.usersAppServiceSubscriptionItemCache
+      ),
       appServicePlanName: aspName,
       sku: CONSTANTS.SKU_DESCRIPTION.BASIC.name,
       linuxFxVersion: BackendFrameworkLinuxVersion[backendFramework],

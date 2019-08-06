@@ -1,25 +1,29 @@
 import * as appRoot from "app-root-path";
-import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
+import * as fs from "fs";
+import * as path from "path";
 import { WebSiteManagementClient } from "azure-arm-website";
 import { ServiceClientCredentials } from "ms-rest";
+import {
+  AppServicePlanCollection,
+  AppServicePlan
+} from "azure-arm-website/lib/models";
+import ResourceManagementClient, {
+  ResourceManagementModels
+} from "azure-arm-resource/lib/resource/resourceManagementClient";
+
+import { CONSTANTS, OS, AppType, AzureResourceType } from "../../constants";
 import {
   SubscriptionError,
   AuthorizationError,
   DeploymentError,
   AppServiceError
 } from "../../errors";
-import { CONSTANTS, OS, AppType, AzureResourceType } from "../../constants";
-import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
-import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import {
-  AppServicePlanCollection,
-  AppServicePlan
-} from "azure-arm-website/lib/models";
+
+import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
 import { NameGenerator } from "../utils/nameGenerator";
-import ResourceManagementClient, {
-  ResourceManagementModels
-} from "azure-arm-resource/lib/resource/resourceManagementClient";
+import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
 import { ResourceManager } from "../azure-arm/resourceManager";
+import { ARMFileHelper } from "../azure-arm/armFileHelper";
 
 export interface AppServicePlanSelection {
   subscriptionItem: SubscriptionItem;
@@ -59,7 +63,7 @@ export class AppServiceProvider {
     try {
       let options: ResourceManagementModels.Deployment = {
         properties: {
-          mode: "Incromental",
+          mode: "Incremental",
           parameters: deploymentParams,
           template: template
         }
@@ -174,7 +178,7 @@ export class AppServiceProvider {
     let parameters = JSON.parse(fs.readFileSync(parameterPath, "utf8"));
 
     parameters.parameters = {
-      webAppName: {
+      name: {
         value: selections.siteName
       },
       appServicePlanName: {
@@ -186,10 +190,15 @@ export class AppServiceProvider {
       linuxFxVersion: {
         value: selections.linuxFxVersion
       },
+      subscriptionId: {
+        value: selections.subscriptionItem.subscriptionId
+      },
       location: {
         value: selections.location
       }
     };
+
+    return parameters;
   }
 
   private writeARMTemplatesToApp(
@@ -199,11 +208,11 @@ export class AppServiceProvider {
   ) {
     ARMFileHelper.createDirIfNonExistent(path.join(appPath, "arm-templates"));
     ARMFileHelper.writeObjectToJsonFile(
-      path.join(appPath, "arm-templates", "??"),
+      path.join(appPath, "arm-templates", "web-app-template.json"),
       template
     );
     ARMFileHelper.writeObjectToJsonFile(
-      path.join(appPath, "arm-templates", "??"),
+      path.join(appPath, "arm-templates", "web-app-parameters.json"),
       parameters
     );
   }
