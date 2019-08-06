@@ -1,19 +1,29 @@
-import { SubscriptionItem } from "../azure-auth/azureAuth";
+import * as appRoot from "app-root-path";
+import * as fs from "fs";
+import * as path from "path";
+import { ServiceClientCredentials } from "ms-rest";
 import { WebSiteManagementClient } from "azure-arm-website";
+import {
+  AppServicePlanCollection,
+  AppServicePlan
+} from "azure-arm-website/lib/models";
+import ResourceManagementClient, {
+  ResourceManagementModels
+} from "azure-arm-resource/lib/resource/resourceManagementClient";
+
+import { CONSTANTS, OS, AppType, AzureResourceType } from "../../constants";
 import {
   SubscriptionError,
   AuthorizationError,
   DeploymentError,
   AppServiceError
 } from "../../errors";
-import { CONSTANTS, OS, AppType, AzureResourceType } from "../../constants";
-import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
-import {
-  AppServicePlanCollection,
-  AppServicePlan
-} from "azure-arm-website/lib/models";
-import { ServiceClientCredentials } from "ms-rest";
+
+import { SubscriptionItem, ResourceGroupItem } from "../azure-auth/azureAuth";
 import { NameGenerator } from "../utils/nameGenerator";
+import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
+import { ResourceManager } from "../azure-arm/resourceManager";
+import { ARMFileHelper } from "../azure-arm/armFileHelper";
 
 export interface AppServicePlanSelection {
   subscriptionItem: SubscriptionItem;
@@ -21,8 +31,49 @@ export interface AppServicePlanSelection {
   name: string;
 }
 
+export interface AppServiceSelections {
+  siteName: string;
+  subscriptionItem: SubscriptionItem;
+  resourceGroupItem: ResourceGroupItem;
+  appServicePlanName: string;
+  sku: string;
+  linuxFxVersion: string;
+  location: string;
+}
+
+const APP_SERVICE_DEPLOYMENT_SUFFIX = "-app-service";
+
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
+
+  public async createWebApp(
+    selections: AppServiceSelections,
+    appPath: string
+  ): Promise<void> {
+    const template = this.getAppServiceARMTemplate();
+    const parameters = this.getAppServiceARMParameter(selections);
+    const deploymentParams = parameters.parameters;
+    try {
+      const options: ResourceManagementModels.Deployment = {
+        properties: {
+          mode: "Incremental",
+          parameters: deploymentParams,
+          template: template
+        }
+      };
+      const azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
+        selections.subscriptionItem
+      );
+      this.writeARMTemplatesToApp(appPath, template, parameters);
+      await azureResourceClient.deployments.createOrUpdate(
+        selections.resourceGroupItem.name,
+        selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX,
+        options
+      );
+    } catch (error) {
+      throw new DeploymentError(error.message);
+    }
+  }
 
   /*
    * Sets a web client from a users selected subscription item's credentials
@@ -92,6 +143,70 @@ export class AppServiceProvider {
       });
   }
 
+  private getAppServiceARMTemplate(): any {
+    const templatePath = path.join(
+      appRoot.toString(),
+      "src",
+      "azure",
+      "azure-app-service",
+      "arm-templates",
+      "template.json"
+    );
+    return JSON.parse(fs.readFileSync(templatePath, "utf8"));
+  }
+
+  private getAppServiceARMParameter(selections: AppServiceSelections): any {
+    const parameterPath = path.join(
+      appRoot.toString(),
+      "src",
+      "azure",
+      "azure-app-service",
+      "arm-templates",
+      "parameters.json"
+    );
+
+    let parameters = JSON.parse(fs.readFileSync(parameterPath, "utf8"));
+
+    parameters.parameters = {
+      name: {
+        value: selections.siteName
+      },
+      appServicePlanName: {
+        value: selections.appServicePlanName
+      },
+      sku: {
+        value: selections.sku
+      },
+      linuxFxVersion: {
+        value: selections.linuxFxVersion
+      },
+      subscriptionId: {
+        value: selections.subscriptionItem.subscriptionId
+      },
+      location: {
+        value: selections.location
+      }
+    };
+
+    return parameters;
+  }
+
+  private writeARMTemplatesToApp(
+    appPath: string,
+    template: any,
+    parameters: any
+  ) {
+    ARMFileHelper.createDirIfNonExistent(path.join(appPath, "arm-templates"));
+    ARMFileHelper.writeObjectToJsonFile(
+      path.join(appPath, "arm-templates", "web-app-template.json"),
+      template
+    );
+    ARMFileHelper.writeObjectToJsonFile(
+      path.join(appPath, "arm-templates", "web-app-parameters.json"),
+      parameters
+    );
+  }
+
   // Creates a Basic Tier App Service Plan (ASP)
   public async createAppServicePlan(
     aspSelection: AppServicePlanSelection
@@ -118,8 +233,8 @@ export class AppServiceProvider {
     }
   }
 
-  private async generateValidASPName(name: string): Promise<string> {
-    let generatedName: string = NameGenerator.generateName(name, "asp");
+  public async generateValidASPName(name: string): Promise<string> {
+    let generatedName: string = name + "-asp";
     let isValid: boolean = await this.validateASPName(generatedName);
     let tries = 0;
     while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {

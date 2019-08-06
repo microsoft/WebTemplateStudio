@@ -18,7 +18,8 @@ import {
   AzureResourceType,
   DialogMessages,
   DialogResponses,
-  ExtensionCommand
+  ExtensionCommand,
+  BackendFrameworkLinuxVersion
 } from "../constants";
 import {
   SubscriptionError,
@@ -34,7 +35,7 @@ import {
 } from "./azure-resource-group/resourceGroupModule";
 import {
   AppServiceProvider,
-  AppServicePlanSelection
+  AppServiceSelections
 } from "./azure-app-service/appServiceProvider";
 import { NameGenerator } from "./utils/nameGenerator";
 
@@ -393,19 +394,6 @@ export class AzureServices extends WizardServant {
     }
   }
 
-  // Will only be called if selections.resourceGroup is not an empty string
-  public static async createAppServicePlan(payload: any): Promise<string> {
-    AzureServices.updateAppServiceSubscriptionItemCache(payload);
-    const aspSelection: AppServicePlanSelection = {
-      subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
-      resourceGroup: payload.appService.resourceGroup,
-      name: payload.engine.projectName
-    };
-    return await AzureServices.AzureAppServiceProvider.createAppServicePlan(
-      aspSelection
-    );
-  }
-
   public static async generateDistinctResourceGroupSelections(
     payload: any
   ): Promise<ResourceGroupSelection[]> {
@@ -473,6 +461,46 @@ export class AzureServices extends WizardServant {
   ): Promise<any> {
     return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
       selections
+    );
+  }
+
+  public static async deployWebApp(payload: any): Promise<void> {
+    await AzureServices.updateAppServiceSubscriptionItemCache(
+      payload.appService.subscription
+    );
+    const aspName = await AzureServices.AzureAppServiceProvider.generateValidASPName(
+      payload.engine.projectName
+    );
+    const userAppServiceSelection: AppServiceSelections = {
+      siteName: payload.appService.siteName,
+      subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
+      resourceGroupItem: await AzureAuth.getResourceGroupItem(
+        payload.appService.resourceGroup,
+        AzureServices.usersAppServiceSubscriptionItemCache
+      ),
+      appServicePlanName: aspName,
+      sku: CONSTANTS.SKU_DESCRIPTION.BASIC.name,
+      linuxFxVersion:
+        BackendFrameworkLinuxVersion[payload.engine.backendFramework],
+      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
+    };
+
+    await AzureServices.AzureAppServiceProvider.checkWebAppName(
+      userAppServiceSelection.siteName,
+      userAppServiceSelection.subscriptionItem
+    )
+      .then(invalidReason => {
+        if (invalidReason !== undefined && invalidReason === "") {
+          throw new ValidationError(invalidReason);
+        }
+      })
+      .catch((error: Error) => {
+        throw error; //to log in telemetry
+      });
+
+    await AzureServices.AzureAppServiceProvider.createWebApp(
+      userAppServiceSelection,
+      payload.engine.path
     );
   }
 

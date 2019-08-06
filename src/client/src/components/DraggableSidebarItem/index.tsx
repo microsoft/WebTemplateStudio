@@ -25,6 +25,10 @@ const messages = defineMessages({
   pageNameMaxLength: {
     id: "draggableSidebarItem.pageNameMaxLength",
     defaultMessage: "Page name must be under {maxLength} characters long. "
+  },
+  deleteItem: {
+    id: "draggableSidebarItem.deleteItem",
+    defaultMessage: "Delete item"
   }
 });
 
@@ -85,7 +89,7 @@ const DraggableSidebarItem = ({
   };
 
   const handleKeyDownInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const inputKeyCheck = /^[A-Za-z0-9_\- ]$/
+    const inputKeyCheck = /^[A-Za-z0-9_\- ]$/;
     const event = e.target as HTMLInputElement;
     if (event.value.length === maxInputLength && inputKeyCheck.test(e.key)) {
       setPageNameMaxLength(true);
@@ -93,7 +97,7 @@ const DraggableSidebarItem = ({
     } else {
       setPageNameMaxLength(false);
     }
-  }
+  };
   return (
     <div>
       {itemTitle && (
@@ -106,8 +110,8 @@ const DraggableSidebarItem = ({
               </div>
             </React.Fragment>
           ) : (
-              itemTitle
-            )}
+            itemTitle
+          )}
         </div>
       )}
       <div className={styles.draggablePage}>
@@ -148,45 +152,46 @@ const DraggableSidebarItem = ({
                   onKeyDown={handleKeyDownInput}
                 />
               ) : (
-                  <input
-                    className={classnames(
-                      styles.disabledInput,
-                      styles.input,
-                      customInputStyle
-                    )}
-                    value={text}
-                    disabled={true}
-                  />
-                )}
+                <input
+                  className={classnames(
+                    styles.disabledInput,
+                    styles.input,
+                    customInputStyle
+                  )}
+                  value={text}
+                  disabled={true}
+                />
+              )}
             </div>
           </div>
-          {pageNameMaxLength && (<div
-            className={classnames({
-              [styles.errorTextContainer]:
-                withIndent || reorderSvgUrl || true,
-              [styles.textContainer]: !withIndent,
-              [styles.largeIndentContainer]: withLargeIndent
-            })}
-          >
-            {intl.formatMessage(messages
-              .pageNameMaxLength,
-              { maxLength: maxInputLength }
-            )}
-          </div>)}
+          {pageNameMaxLength && (
+            <div
+              className={classnames({
+                [styles.errorTextContainer]:
+                  withIndent || reorderSvgUrl || true,
+                [styles.textContainer]: !withIndent,
+                [styles.largeIndentContainer]: withLargeIndent
+              })}
+            >
+              {intl.formatMessage(messages.pageNameMaxLength, {
+                maxLength: maxInputLength
+              })}
+            </div>
+          )}
           {((page && !page.isValidTitle) ||
             (azureFunctionName && !azureFunctionName.isValidTitle)) && (
-              <div
-                className={classnames({
-                  [styles.errorTextContainer]:
-                    withIndent || reorderSvgUrl || true,
-                  [styles.textContainer]: !withIndent,
-                  [styles.largeIndentContainer]: withLargeIndent
-                })}
-              >
-                {(page && page.error) ||
-                  (azureFunctionName && azureFunctionName.error)}
-              </div>
-            )}
+            <div
+              className={classnames({
+                [styles.errorTextContainer]:
+                  withIndent || reorderSvgUrl || true,
+                [styles.textContainer]: !withIndent,
+                [styles.largeIndentContainer]: withLargeIndent
+              })}
+            >
+              {(page && page.error) ||
+                (azureFunctionName && azureFunctionName.error)}
+            </div>
+          )}
         </div>
         {(totalCount !== undefined ? totalCount > 1 : true) && (
           <CloseSVG
@@ -194,6 +199,7 @@ const DraggableSidebarItem = ({
             onClick={handleCloseOnClick}
             onKeyDown={handleKeyDown}
             className={styles.cancelIcon}
+            aria-label={intl.formatMessage(messages.deleteItem)}
           />
         )}
       </div>
