@@ -1,7 +1,8 @@
 import * as appRoot from "app-root-path";
 import * as fs from "fs";
 import * as path from "path";
-import { WebSiteManagementClient } from "azure-arm-website";
+// import { WebSiteManagementClient } from "azure-arm-website";
+import { WebSiteManagementClient } from "@azure/arm-appservice";
 import { ServiceClientCredentials } from "ms-rest";
 import {
   AppServicePlanCollection,
