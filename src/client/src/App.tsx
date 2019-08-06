@@ -27,7 +27,8 @@ import {
   EXTENSION_MODULES,
   ROUTES,
   DEVELOPMENT,
-  FRAMEWORK_TYPE
+  FRAMEWORK_TYPE,
+  BOOTSTRAP_LICENSE
 } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
@@ -278,7 +279,7 @@ class App extends React.Component<Props> {
                 licenses: [
                   {
                     text: "Bootstrap",
-                    url: "https://github.com/twbs/bootstrap/blob/master/LICENSE"
+                    url: BOOTSTRAP_LICENSE
                   }
                 ],
                 author: "Microsoft"

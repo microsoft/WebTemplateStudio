@@ -30,6 +30,9 @@ const INTL_MESSAGES = defineMessages({
   }
 });
 
+const BOOTSTRAP_LICENSE =
+  "https://github.com/twbs/bootstrap/blob/master/LICENSE";
+
 const ARIA_LABELS_NAVIGATION = defineMessages({
   ARIA_LABELS_MESSAGES: {
     id: "ariaLabels.pageNavigation",
