@@ -50,9 +50,6 @@ interface IStateProps {
   isModalOpen: boolean;
   serviceStatus: PostGenSelectors.IAzureServiceStatus;
   isServicesSelected: boolean;
-  isAppServiceSelected: boolean;
-  isAppServiceCreated: boolean;
-  isAppServiceFailed: boolean;
   vscode: IVSCodeObject;
   outputPath: string;
 }
@@ -76,20 +73,12 @@ const PostGenerationModal = ({
   intl,
   isTemplatesFailed,
   isServicesSelected,
-  isAppServiceSelected,
-  isAppServiceCreated,
-  isAppServiceFailed,
   resetWizard,
   history
 }: Props) => {
   const { formatMessage } = intl;
   const templateGenerationInProgress =
     !isTemplateGenerated && !isTemplatesFailed;
-  const appServiceInProgress = isAppServiceSelected
-    ? !isAppServiceCreated && !isAppServiceFailed
-    : false;
-  const generationInProgress =
-    templateGenerationInProgress || appServiceInProgress;
 
   const LinkRenderer = (props: any) => (
     <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
@@ -109,10 +98,7 @@ const PostGenerationModal = ({
       history.push(ROUTES.NEW_PROJECT);
       return;
     }
-    if (
-      isTemplateGenerated &&
-      (isAppServiceSelected ? isAppServiceCreated || isAppServiceFailed : true)
-    ) {
+    if (isTemplateGenerated) {
       vscode.postMessage({
         module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
@@ -127,10 +113,7 @@ const PostGenerationModal = ({
     if (isTemplatesFailed) {
       return formatMessage(messages.restartWizard);
     }
-    if (
-      isTemplateGenerated &&
-      (isAppServiceSelected ? isAppServiceCreated || isAppServiceFailed : true)
-    ) {
+    if (isTemplateGenerated) {
       return formatMessage(messages.openInCode);
     }
     return (
@@ -256,11 +239,11 @@ const PostGenerationModal = ({
       <div className={styles.footerContainer}>
         <button
           className={classnames(styles.button, {
-            [buttonStyles.buttonDark]: generationInProgress,
-            [buttonStyles.buttonHighlighted]: !generationInProgress
+            [buttonStyles.buttonDark]: templateGenerationInProgress,
+            [buttonStyles.buttonHighlighted]: !templateGenerationInProgress
           })}
           onClick={handleOpenProjectOrRestartWizard}
-          disabled={generationInProgress}
+          disabled={templateGenerationInProgress}
         >
           {openProjectOrRestartWizardMessage()}
         </button>
@@ -280,13 +263,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   outputPath: getOutputPath(state),
   serviceStatus: PostGenSelectors.servicesToDeploySelector(state),
   templateGenStatus: PostGenSelectors.getSyncStatusSelector(state),
-  isAppServiceSelected: isAppServiceSelectedSelector(state),
-  isAppServiceCreated: PostGenSelectors.isAppServiceCreatedSuccessSelector(
-    state
-  ),
-  isAppServiceFailed: PostGenSelectors.isAppServiceCreatedFailureSelector(
-    state
-  ),
   vscode: getVSCodeApiSelector(state)
 });
 
