@@ -250,7 +250,7 @@ export class AzureServices extends WizardServant {
         );
         break;
     }
-    return validationResult ? false : true;
+    return validationResult === undefined;
   }
 
   public static async sendAppServiceNameValidationStatusToClient(
