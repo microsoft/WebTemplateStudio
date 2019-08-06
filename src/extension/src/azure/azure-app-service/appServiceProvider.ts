@@ -54,7 +54,7 @@ export class AppServiceProvider {
     const parameters = this.getAppServiceARMParameter(selections);
     const deploymentParams = parameters.parameters;
     try {
-      let options: ResourceManagementModels.Deployment = {
+      const options: ResourceManagementModels.Deployment = {
         properties: {
           mode: "Incremental",
           parameters: deploymentParams,
