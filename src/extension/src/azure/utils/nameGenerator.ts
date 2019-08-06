@@ -13,11 +13,11 @@ export namespace NameGenerator {
     projectName = projectName.replace(/[W_]+/g, "-");
 
     if (azureType === AzureResourceType.Cosmos) {
-      // CosmosDB Account name can only have lowercase characters
+      // Cosmos DB Account name can only have lowercase characters
       projectName = projectName.toLowerCase();
     }
 
-    let result = NameGenerator.generateName(projectName, undefined, true);
+    let result = NameGenerator.generateName(projectName, undefined);
     let isValid: boolean = await AzureServices.validateNameForAzureType(
       projectName,
       userSubscriptionItem,
@@ -26,7 +26,7 @@ export namespace NameGenerator {
 
     let tries = 0;
     while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
-      result = NameGenerator.generateName(projectName, undefined, true);
+      result = NameGenerator.generateName(projectName, undefined);
       isValid = await AzureServices.validateNameForAzureType(
         projectName,
         userSubscriptionItem,
@@ -40,13 +40,12 @@ export namespace NameGenerator {
 
   export function generateName(
     userProjectName: string,
-    resourceType?: string,
-    azureTypeName?: boolean
+    resourceType?: string
   ): string {
     const timestamp = unixToSuffix(Date.now());
     const suffix =
-      resourceType === undefined ? timestamp : resourceType + "_" + timestamp;
-    return userProjectName + (azureTypeName ? "-" : "_") + suffix;
+      resourceType === undefined ? timestamp : resourceType + "-" + timestamp;
+    return userProjectName + "-" + suffix;
   }
 
   function unixToSuffix(unixTimestamp: any): string {
