@@ -12,7 +12,6 @@ import styles from "./styles.module.css";
 
 import * as PostGenSelectors from "../../selectors/postGenerationSelector";
 import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
-import { isAppServiceSelectedSelector } from "../../selectors/appServiceSelector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
