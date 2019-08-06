@@ -13,11 +13,11 @@ fs.readdirSync(testFolder).forEach((file: string) => {
 
 function kill(pid: any) {
   try {
-    child_process.execSync("taskkill /PID " + pid + " /T /F", function(
+    child_process.execSync("taskkill /PID " + pid + " /T /F", (
       error: any,
       stdout: any,
       stderr: any
-    ) {
+    ) => {
       console.log("Stdout from kill: " + stdout);
       console.log("Stderr from kill:" + stderr);
       if (error !== null) {
@@ -74,7 +74,7 @@ asyncForEach(files, async (file: string) => {
         console.log(`Stdout from yarn start: ${stdout}`);
       }
     );
-    serverProcess.stdout.on("data", function(data: any) {
+    serverProcess.stdout.on("data", (data: any) => {
       console.log(data);
       if (data.toString().indexOf("Traceback") > -1) {
         throw new Error("Error found in project");
@@ -107,7 +107,7 @@ asyncForEach(files, async (file: string) => {
         console.log(`Stdout from yarn test: ${stdout}`);
       }
     );
-    testProcess.stdout.on("data", function(data: any) {
+    testProcess.stdout.on("data", (data: any) => {
       console.log(data);
       if (data.toString().indexOf("FAILED") > -1) {
         throw new Error("Error: Test failed");
