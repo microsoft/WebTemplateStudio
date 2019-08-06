@@ -289,10 +289,13 @@ const AzureFunctionsResourceModal = (props: Props) => {
    * Update name field with a valid name generated from
    * extension when a subscription is selected or changed
    */
-  const [validEffect, setValidNameEffect] = React.useState(0);
+  const [validNameEffectCount, setValidNameEffectCount] = React.useState(0);
   React.useEffect(() => {
-    if (!props.selection || validEffect >= 2) {
-      // TODO
+    // if a selection exists (i.e. user has saved form data),
+    // this effect should only be run after the initial render and the subscription value is loaded (after the effect has been triggered twice)
+    // otherwise, updateForm may override existing values depending on when hook finishes updating the states
+    const shouldRunEffect = !props.selection || validNameEffectCount >= 2;
+    if (shouldRunEffect) {
       updateForm({
         ...azureFunctionsFormData,
         appName: {
@@ -311,7 +314,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         }
       });
     }
-    setValidNameEffect(validEffect + 1);
+    setValidNameEffectCount(validNameEffectCount + 1);
   }, [
     props.subscriptionData.validName,
     azureFunctionsFormData.subscription.value

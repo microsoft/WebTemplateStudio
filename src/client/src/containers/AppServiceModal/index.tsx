@@ -288,10 +288,13 @@ const AppServiceModal = (props: Props) => {
    * Update name field with a valid name generated from
    * extension when a subscription is selected or changed
    */
-  const [validEffect, setValidNameEffect] = React.useState(0);
+  const [validNameEffectCount, setValidNameEffectCount] = React.useState(0);
   React.useEffect(() => {
-    // TODO this boolean is not clear
-    if (!selection || validEffect >= 2) {
+    // if a selection exists (i.e. user has saved form data),
+    // this effect should only be run after the initial render and the subscription value is loaded (after the effect has been triggered twice)
+    // otherwise, updateForm may override existing values depending on when hook finishes updating the states
+    const shouldRunEffect = !selection || validNameEffectCount >= 2;
+    if (shouldRunEffect) {
       updateForm({
         ...appServiceFormData,
         siteName: {
@@ -310,7 +313,7 @@ const AppServiceModal = (props: Props) => {
         }
       });
     }
-    setValidNameEffect(validEffect + 1);
+    setValidNameEffectCount(validNameEffectCount + 1);
   }, [subscriptionData.validName, appServiceFormData.subscription.value]);
 
   /**
