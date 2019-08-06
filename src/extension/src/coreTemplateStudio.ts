@@ -119,10 +119,10 @@ export class CoreTemplateStudio {
 
   private async awaitCliEvent(
     eventName: string,
-    syncCommand: string
+    command: string
   ): Promise<any> {
-    this._processCli.stdin.write(syncCommand);
     this.promiseChain = this.promiseChain.then(() => {
+      this._processCli.stdin.write(command);
       return new Promise((resolve, reject) => {
         this.cliEvents
           .once(eventName, data => {
