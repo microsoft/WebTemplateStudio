@@ -16,6 +16,16 @@ const mockResourceGroups = Array.from({ length: 12 }).fill({
   value: RESOURCE_GROUP_MOCK
 });
 
+const SUBSCRIPTION_MOCK: string = "GIV.Hackathon";
+const mockSubscriptions = Array.from(Array(10).keys()).map(
+  (element: number) => {
+    return {
+      label: SUBSCRIPTION_MOCK + element,
+      value: SUBSCRIPTION_MOCK + element
+    };
+  }
+);
+
 const DEV_NO_ERROR_MSG: string = "in development, no error message";
 const DEV_NO_ERROR_TYPE: string = "in development, no error type";
 
@@ -523,9 +533,7 @@ const mockVsCodeApi = () => ({
               command: "login",
               payload: {
                 email: "devEnvironment2@email.com",
-                subscriptions: [
-                  { value: "GIV.Hackathon", label: "GIV.Hackathon" }
-                ]
+                subscriptions: mockSubscriptions
               }
             },
             "*"

@@ -243,11 +243,12 @@ export class AzureServices extends WizardServant {
           userSubscriptionItem
         );
         break;
-      case AzureResourceType.Cosmos:
+      case AzureResourceType.Functions:
         validationResult = await AzureServices.AzureFunctionProvider.checkFunctionAppName(
           projectName,
           userSubscriptionItem
         );
+        break;
     }
     return validationResult ? false : true;
   }
