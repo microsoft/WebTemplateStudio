@@ -15,9 +15,6 @@ import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
-import { AppState } from "../../reducers";
-
-import { isAddPagesModalOpenSelector } from "../../selectors/modalSelector";
 
 import { InjectedIntl, defineMessages, injectIntl } from "react-intl";
 
@@ -36,7 +33,7 @@ const messages = defineMessages({
   },
   iconAltMessage: {
     id: "pages.maxPagesText",
-    defaultMessage: "Notification"
+    defaultMessage: "Icon for Max Pages Description"
   }
 });
 
@@ -74,11 +71,7 @@ interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => void;
 }
 
-interface IStateProps {
-  isAddPagesModalOpen: boolean;
-}
-
-type Props = IDispatchProps & ISelectOptionProps & IStateProps & IProps;
+type Props = IDispatchProps & ISelectOptionProps & IProps;
 
 class SelectOption extends React.Component<Props, ISelectOptionState> {
   constructor(props: Props) {
@@ -322,7 +315,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       setDetailPage,
       isFrameworkSelection,
       isPagesSelection,
-      isAddPagesModalOpen,
       intl
     } = this.props;
     const { pageOutOfBounds, description } = this.state;
@@ -343,11 +335,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
             />
           </div>
         )}
-        <div
-          className={classnames(styles.container, {
-            [styles.modalContainer]: isAddPagesModalOpen
-          })}
-        >
+        <div className={styles.container}>
           {options.map((option, cardNumber) => {
             const {
               svgUrl,
@@ -378,7 +366,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 clickCount={this.getCardCount(internalName)}
                 addPage={(cardNumber: number) => this.addPage(cardNumber)}
                 removePage={(cardNumber: number) => this.removePage(cardNumber)}
-                showLink={!isAddPagesModalOpen}
               />
             );
           })}
@@ -387,10 +374,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     );
   }
 }
-
-const mapStateToProps = (state: AppState): IStateProps => ({
-  isAddPagesModalOpen: isAddPagesModalOpenSelector(state)
-});
 
 const mapDispatchToProps = (
   dispatch: Dispatch<RootAction>
@@ -401,6 +384,6 @@ const mapDispatchToProps = (
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(injectIntl(SelectOption));

@@ -23,7 +23,7 @@ const messages = defineMessages({
   },
   iconAltMessage: {
     id: "dependencyChecker.iconAltMessage",
-    defaultMessage: "Notification"
+    defaultMessage: "Icon for dependency checker"
   }
 });
 

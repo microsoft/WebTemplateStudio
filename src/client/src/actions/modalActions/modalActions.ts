@@ -86,17 +86,6 @@ const openAppServiceModalAction = () => {
   };
 };
 
-const openAddPagesModalAction = () => {
-  return (dispatch: Dispatch<ModalActionType>) => {
-    dispatch(
-      openModalAction({
-        modalType: MODAL_TYPES.ADD_PAGES_MODAL,
-        modalData: null
-      })
-    );
-  };
-};
-
 export {
   closeModalAction,
   openAzureFunctionsModalAction,
@@ -104,6 +93,5 @@ export {
   openPostGenModalAction,
   openRedirectModalAction,
   openViewLicensesModalAction,
-  openAppServiceModalAction,
-  openAddPagesModalAction
+  openAppServiceModalAction
 };

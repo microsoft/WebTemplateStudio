@@ -391,6 +391,7 @@ export class AzureServices extends WizardServant {
       await AzureServices.updateAppServiceSubscriptionItemCache(
         payload.appService.subscription
       );
+
       allSubscriptions.push(AzureServices.usersAppServiceSubscriptionItemCache);
     }
     const allDistinctSubscriptions: SubscriptionItem[] = [

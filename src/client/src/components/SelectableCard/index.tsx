@@ -38,8 +38,7 @@ const SelectableCard = ({
   isFrameworkSelection,
   isPagesSelection,
   addPage,
-  removePage,
-  showLink
+  removePage
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -57,7 +56,6 @@ const SelectableCard = ({
   isPagesSelection: boolean;
   addPage: (idx: number) => void;
   removePage: (idx: number) => void;
-  showLink: boolean;
 }) => {
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -121,27 +119,25 @@ const SelectableCard = ({
         </div>
       </div>
       <div className={styles.cardFooter}>
-        {showLink && (
-          <Link
-            onClick={detailsClickWrapper}
-            className={styles.link}
-            to={ROUTES.PAGE_DETAILS}
-            onKeyUp={keyUpHandler}
-          >
-            <FormattedMessage
-              id={
-                isPagesSelection
-                  ? detailsConfig.preview.id
-                  : detailsConfig.learnMore.id
-              }
-              defaultMessage={
-                isPagesSelection
-                  ? detailsConfig.preview.default
-                  : detailsConfig.learnMore.default
-              }
-            />
-          </Link>
-        )}
+        <Link
+          onClick={detailsClickWrapper}
+          className={classNames(styles.link)}
+          to={ROUTES.PAGE_DETAILS}
+          onKeyUp={keyUpHandler}
+        >
+          <FormattedMessage
+            id={
+              isPagesSelection
+                ? detailsConfig.preview.id
+                : detailsConfig.learnMore.id
+            }
+            defaultMessage={
+              isPagesSelection
+                ? detailsConfig.preview.default
+                : detailsConfig.learnMore.default
+            }
+          />
+        </Link>
         <div className={styles.pageButtons}>
           {isPagesSelection && (
             <button

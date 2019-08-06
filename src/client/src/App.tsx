@@ -17,7 +17,6 @@ import PostGenerationModal from "./containers/PostGenerationModal";
 import RedirectModal from "./containers/RedirectModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
 import AppServiceModal from "./containers/AppServiceModal";
-import AddPagesModal from "./containers/AddPagesModal";
 
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
@@ -32,10 +31,7 @@ import {
 
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
 import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
-import {
-  updateOutputPathAction,
-  updateProjectNameAction
-} from "./actions/wizardSelectionActions/updateProjectNameAndPath";
+import { updateOutputPathAction } from "./actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   setAccountAvailability,
   setAppNameAvailabilityAction,
@@ -84,7 +80,6 @@ if (process.env.NODE_ENV === DEVELOPMENT) {
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
-  updateProjectName: (projectName: string) => any;
   getVSCodeApi: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
   startLogOutToAzure: () => any;
@@ -174,11 +169,6 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           if (message.payload != null && message.payload.outputPath != null) {
             this.props.updateOutputPath(message.payload.outputPath);
-          }
-          break;
-        case EXTENSION_COMMANDS.GET_PROJECT_NAME:
-          if (message.payload != null && message.payload.projectName != null) {
-            this.props.updateProjectName(message.payload.projectName);
           }
           break;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
@@ -303,7 +293,6 @@ class App extends React.Component<Props> {
           <RedirectModal />
           <ViewLicensesModal />
           <AppServiceModal />
-          <AddPagesModal />
 
           <main
             className={classnames(appStyles.centerView, {
@@ -367,9 +356,6 @@ const mapDispatchToProps = (
   },
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
-  },
-  updateProjectName: (projectName: string) => {
-    dispatch(updateProjectNameAction(projectName));
   },
   setCosmosResourceAccountNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
