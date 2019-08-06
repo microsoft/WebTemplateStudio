@@ -150,7 +150,7 @@ export class GenerationExperience extends WizardServant {
       if (payload.selectedAppService) {
         serviceQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
-            TelemetryEventName.FunctionsDeploy,
+            TelemetryEventName.AppServiceDeploy,
             // tslint:disable-next-line: no-function-expression
             async function(this: IActionContext): Promise<void> {
               try {
