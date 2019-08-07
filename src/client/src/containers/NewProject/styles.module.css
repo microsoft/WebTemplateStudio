@@ -47,7 +47,13 @@
   margin-top: 1em;
 }
 
-@media (max-width: 1120px) {
+@media (min-width: 850px) and (max-width: 1120px) {
+  .container {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 850px) {
   .container {
     max-width: 100%;
   }
