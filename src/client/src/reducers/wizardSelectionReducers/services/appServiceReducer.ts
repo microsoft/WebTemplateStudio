@@ -53,7 +53,7 @@ const initialState: IAppServiceSelection = {
   wizardContent: {
     serviceType: messages.appServiceOriginalTitle
   },
-  chooseExistingRadioButtonSelected: true
+  chooseExistingRadioButtonSelected: false
 };
 
 const appService = (

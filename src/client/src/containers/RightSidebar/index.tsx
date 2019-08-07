@@ -16,7 +16,10 @@ import SortablePageList from "../SortablePageList";
 import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
 import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectWebApp";
-import { selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
+import {
+  selectPagesAction,
+  updatePageCountAction
+} from "../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 
 import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
@@ -31,7 +34,8 @@ import {
   ROUTES,
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  PAYLOAD_MESSAGES_TEXT
+  PAYLOAD_MESSAGES_TEXT,
+  WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../utils/constants";
 import messages from "./strings";
 
@@ -40,22 +44,27 @@ import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
 import RootAction from "../../actions/ActionType";
 import { WizardContentType } from "../../reducers/wizardContentReducers";
+import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
+import { getPageCount } from "../../selectors/wizardSelectionSelector";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
   selectFrontendFramework: (framework: ISelected) => void;
   selectProjectType: (projectType: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
+  updatePageCount: (pageCount: IPageCount) => any;
   openViewLicensesModal: () => any;
 }
 
 interface IRightSidebarProps {
   selection: SelectionState;
   projectTypeDropdownItems: IDropDownOptionType[];
+  frontEndOptions: IOption[];
+  pageCount: IPageCount;
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
   services: any;
@@ -123,19 +132,67 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   };
 
   public handleFrameworkChange = (option: IDropDownOptionType) => {
-    const { frontendFramework, pages } = this.props.selection;
-    const { vscode } = this.props;
+    const {
+      frontendFramework,
+      backendFramework,
+      pages,
+      pageCount
+    } = this.props.selection;
+    const {
+      vscode,
+      selectPages,
+      frontEndOptions,
+      selectFrontendFramework,
+      updatePageCount
+    } = this.props;
     if (frontendFramework.internalName !== option.value) {
       vscode.postMessage({
-        module: EXTENSION_MODULES.VSCODEUI,
-        command: EXTENSION_COMMANDS.RESET_PAGES,
-        track: false,
-        text: PAYLOAD_MESSAGES_TEXT.SWITCH_FRAMEWORKS_TEXT,
+        module: EXTENSION_MODULES.CORETS,
+        command: EXTENSION_COMMANDS.GET_PAGES,
         payload: {
-          internalName: option.value,
-          pagesLength: pages.length
+          projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+          frontendFramework: option.value,
+          backendFramework: backendFramework.internalName
         }
       });
+      let newFrontEndFramework;
+      frontEndOptions.forEach(frontEnd => {
+        if (frontEnd.internalName === option.value) {
+          const { title, internalName, version, author, licenses } = frontEnd;
+          newFrontEndFramework = {
+            title: title as string,
+            internalName,
+            version,
+            author,
+            licenses
+          };
+        }
+      });
+      const cardCountType: IPageCount = {};
+      for (const pageType in pageCount) {
+        const newKey = pageType.replace(
+          frontendFramework.internalName,
+          option.value
+        );
+        cardCountType[newKey] = pageCount[pageType];
+      }
+      updatePageCount(cardCountType);
+      const newPages: ISelected[] = pages.map(page => {
+        return {
+          title: page.title,
+          internalName: page.internalName.replace(
+            frontendFramework.internalName,
+            option.value
+          ),
+          id: page.id,
+          defaultName: page.defaultName,
+          isValidTitle: page.isValidTitle,
+          licenses: page.licenses,
+          author: page.author
+        };
+      });
+      selectPages(newPages);
+      newFrontEndFramework && selectFrontendFramework(newFrontEndFramework);
     }
   };
 
@@ -221,7 +278,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 />
                 <div className={styles.sortablePages}>
                   {showPages && (
-                    <SortablePageList handleResetPages={this.resetAllPages} />
+                    <SortablePageList
+                      handleResetPages={this.resetAllPages}
+                      isSummaryPage={pathname === ROUTES.REVIEW_AND_GENERATE}
+                    />
                   )}
                 </div>
                 {showServices && (
@@ -295,6 +355,8 @@ const mapStateToProps = (state: AppState): IRightSidebarProps => ({
   projectTypeDropdownItems: convertOptionsToDropdownItems(
     state.wizardContent.projectTypes
   ),
+  frontEndOptions: state.wizardContent.frontendOptions,
+  pageCount: getPageCount(state),
   frontendDropdownItems: convertOptionsToDropdownItems(
     state.wizardContent.frontendOptions
   ),
@@ -322,6 +384,9 @@ const mapDispatchToProps = (
   },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
+  },
+  updatePageCount: (pageCount: IPageCount) => {
+    dispatch(updatePageCountAction(pageCount));
   },
   openViewLicensesModal: () => {
     dispatch(ModalActions.openViewLicensesModalAction());

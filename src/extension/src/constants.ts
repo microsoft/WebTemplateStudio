@@ -17,10 +17,13 @@ export const CONSTANTS = {
       "error.resourceGroupNotFound",
       "No resource group found with this name"
     ),
-    RESOURCE_GROUP_TRIES_EXCEEDED: localize(
-      "error.resourceGroupTriesExceedeed",
-      "Number of tries exceeded for creating resource group"
-    ),
+    TRIES_EXCEEDED: (resourceType: string) => {
+      return localize(
+        "error.triesExceedeed",
+        "Number of tries exceeded for creating {0}",
+        resourceType
+      );
+    },
     SUBSCRIPTION_NOT_FOUND: localize(
       "error.subscriptionNotFound",
       "No subscription found with this name."
@@ -216,14 +219,14 @@ export const CONSTANTS = {
   },
   GENERATE_ENDPOINT: "/api/generate",
   ENGINE_DIRECTORY: "./src/api/darwin/CoreTemplateStudio.Api",
-  CONNECTION_STRING_MONGO: function (
+  CONNECTION_STRING_MONGO: function(
     username: string,
     password: string,
     origin: string
   ) {
     return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMOSDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
   },
-  CONNECTION_STRING_SQL: function (origin: string, primaryKey: string) {
+  CONNECTION_STRING_SQL: function(origin: string, primaryKey: string) {
     return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
@@ -245,8 +248,27 @@ export const CONSTANTS = {
   APP_NAME: {
     MAX_LENGTH: 60,
     MIN_LENGTH: 3
-  }
+  },
+  SKU_DESCRIPTION: {
+    FREE: {
+      capacity: 1,
+      family: "F",
+      name: "F1",
+      size: "F1",
+      tier: "Free"
+    },
+    BASIC: {
+      capacity: 1,
+      family: "B",
+      name: "B1",
+      size: "B1",
+      tier: "Basic"
+    }
+  },
+  VALIDATION_LIMIT: 3
 };
+
+export const PROJECT_NAME_VALIDATION_LIMIT = 50;
 
 export enum ExtensionCommand {
   Log = "log",
@@ -263,6 +285,7 @@ export enum ExtensionCommand {
   DeployCosmos = "deploy-cosmos",
   Generate = "generate",
   GetOutputPath = "get-output-path",
+  GetProjectName = "get-project-name",
   GetFunctionsRuntimes = "get-functions-runtimes",
   GetCosmosAPIs = "get-cosmos-apis",
   GetUserStatus = "get-user-status",
@@ -297,6 +320,7 @@ export enum TelemetryEventName {
   Subscriptions = "Acquire-Subscription-Names",
   SubscriptionData = "Acquire-Subscription-Data",
   EngineGeneration = "Engine-Generation-Time",
+  AppServiceDeploy = "Azure-App-Service-Deployment",
   CosmosDBDeploy = "Azure-Cosmos-Deployment",
   FunctionsDeploy = "Azure-Functions-Deployment",
   ResourceGroupDeploy = "Azure-Resource-Group-Deployment",
@@ -366,3 +390,13 @@ export enum AppType {
   Web = "Web",
   Function = "Function"
 }
+
+export enum OS {
+  Linux = "linux",
+  Windows = "windows"
+}
+
+export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
+  Node: "node|lts",
+  Flask: "python|3.7"
+};

@@ -4,7 +4,7 @@
     type="button"
     class="list-group-item list-group-item-action styles.sidebarText"
   >
-    <img src="../assets/GreyAvatar.svg" alt="Default Grey Avatar" class="mr-3" />
+    <img src="@/assets/GreyAvatar.svg" alt="Default Grey Avatar" class="mr-3" />
     {{tabText}}
   </button>
 </template>

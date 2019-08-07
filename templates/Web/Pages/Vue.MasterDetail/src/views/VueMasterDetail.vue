@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import CONSTANTS from "../constants";
-import MasterDetailPage from "../components/MasterDetailPage";
-import MasterDetailSideBarTab from "../components/MasterDetailSideBarTab";
-import WarningMessage from "../components/WarningMessage";
+import CONSTANTS from "@/constants";
+import MasterDetailPage from "@/components/MasterDetailPage";
+import MasterDetailSideBarTab from "@/components/MasterDetailSideBarTab";
+import WarningMessage from "@/components/WarningMessage";
 
 export default {
   name: "VueMasterDetail",

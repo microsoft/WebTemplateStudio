@@ -248,7 +248,7 @@ export class FunctionProvider {
     template: any,
     parameters: any
   ) {
-    ARMFileHelper.creatDirIfNonExistent(path.join(appPath, "arm-templates"));
+    ARMFileHelper.createDirIfNonExistent(path.join(appPath, "arm-templates"));
     ARMFileHelper.writeObjectToJsonFile(
       path.join(appPath, "arm-templates", "functions-template.json"),
       template

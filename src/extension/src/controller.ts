@@ -1,10 +1,15 @@
 import * as vscode from "vscode";
+import * as os from "os";
+import * as fs from "fs";
+import * as path from "path";
+
 import { Validator } from "./utils/validator";
 import {
   CONSTANTS,
   ExtensionModule,
   TelemetryEventName,
-  ExtensionCommand
+  ExtensionCommand,
+  PROJECT_NAME_VALIDATION_LIMIT
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
@@ -135,7 +140,7 @@ export class Controller {
   ): Promise<void> {
     const syncObject = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
-      async function (this: IActionContext) {
+      async function(this: IActionContext) {
         return await launchExperience
           .launchApiSyncModule(context)
           .catch(error => {
@@ -154,6 +159,7 @@ export class Controller {
       GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
       Controller.loadUserSettings();
+      Controller.getProjectName();
 
       Controller.getVersionAndSendToClient(
         context,
@@ -163,6 +169,33 @@ export class Controller {
         TelemetryEventName.ExtensionLaunch
       );
     }
+  }
+
+  private static getProjectName() {
+    const userOutputPath = vscode.workspace
+      .getConfiguration()
+      .get<string>("wts.changeSaveToLocation");
+    const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
+    const defaultAppName = "myApp";
+    let newAppName = defaultAppName;
+    let count = 1;
+
+    while (
+      fs.existsSync(path.join(outputPath, newAppName)) &&
+      count <= PROJECT_NAME_VALIDATION_LIMIT
+    ) {
+      newAppName = `${defaultAppName}${count}`;
+      count++;
+    }
+    if (count > PROJECT_NAME_VALIDATION_LIMIT) {
+      return;
+    }
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetProjectName,
+      payload: {
+        projectName: newAppName
+      }
+    });
   }
 
   private static getVersionAndSendToClient(
@@ -179,20 +212,21 @@ export class Controller {
   }
 
   private static loadUserSettings() {
-    let outputPathDefault = vscode.workspace
+    const userOutputPath = vscode.workspace
       .getConfiguration()
-      .get<string>("wts.defaultOutputPath");
+      .get<string>("wts.changeSaveToLocation");
     const preview = vscode.workspace
       .getConfiguration()
       .get<boolean>("wts.enablePreviewMode");
-    if (outputPathDefault) {
-      Controller.reactPanelContext.postMessageWebview({
-        command: ExtensionCommand.GetOutputPath,
-        payload: {
-          outputPath: outputPathDefault
-        }
-      });
-    }
+
+    const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetOutputPath,
+      payload: {
+        outputPath: outputPath
+      }
+    });
+
     if (preview !== undefined) {
       Controller.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.GetPreviewStatus,
