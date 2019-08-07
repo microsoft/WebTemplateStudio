@@ -164,8 +164,8 @@ export class GenerationExperience extends WizardServant {
                   command: ExtensionCommand.UpdateGenStatus,
                   payload: progressObject
                 });
-                Settings.enableScmDoBuildDuringDeploy(payload.engine.path);
-                Settings.setDeployDefault(id, payload.engine.path);
+                Settings.enableScmDoBuildDuringDeploy(enginePayload.path);
+                Settings.setDeployDefault(id, enginePayload.path);
               } catch (error) {
                 progressObject = {
                   ...progressObject,
