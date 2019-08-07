@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { IServiceStatus } from "../reducers/generationStatus/genStatus";
 import { isCosmosResourceCreatedSelector } from "./cosmosServiceSelector";
 import { isAzureFunctionsSelectedSelector } from "./azureFunctionsServiceSelector";
+import { isAppServiceSelectedSelector } from "./appServiceSelector";
 import { AppState } from "../reducers";
 import { azureMessages } from "../mockData/azureServiceOptions";
 
@@ -27,6 +28,20 @@ const isAzureFunctionsDeployedSuccess = (
 const isAzureFunctionsDeployedFailure = (
   progressObject: IServiceStatus
 ): boolean => progressObject.azureFunctions.failure;
+const isAppServiceCreatedSuccess = (progressObject: IServiceStatus): boolean =>
+  progressObject.appService && progressObject.appService.success;
+const isAppServiceCreatedFailure = (progressObject: IServiceStatus): boolean =>
+  progressObject.appService && progressObject.appService.failure;
+
+const isAppServiceCreatedSuccessSelector = createSelector(
+  getGenerationStatusSelector,
+  isAppServiceCreatedSuccess
+);
+
+const isAppServiceCreatedFailureSelector = createSelector(
+  getGenerationStatusSelector,
+  isAppServiceCreatedFailure
+);
 
 const isCosmosDeployedSuccessSelector = createSelector(
   getGenerationStatusSelector,
@@ -77,7 +92,10 @@ const servicesToDeploy = (
   isCosmosFailure: boolean,
   isFunctionsSelected: boolean,
   isAzureFunctionsSuccess: boolean,
-  isAzureFunctionsFailure: boolean
+  isAzureFunctionsFailure: boolean,
+  isAppServiceSelected: boolean,
+  isAppServiceSuccess: boolean,
+  isAppServiceFailure: boolean
 ): IAzureServiceStatus => {
   return {
     cosmosdb: {
@@ -91,13 +109,20 @@ const servicesToDeploy = (
       isSelected: isFunctionsSelected,
       isDeployed: isAzureFunctionsSuccess,
       isFailed: isAzureFunctionsFailure
+    },
+    appService: {
+      title: azureMessages.appServiceTitle,
+      isSelected: isAppServiceSelected,
+      isDeployed: isAppServiceSuccess,
+      isFailed: isAppServiceFailure
     }
   };
 };
 
 const isServicesFailure = (
   isCosmosFailure: boolean,
-  isFunctionsFailure: boolean
+  isFunctionsFailure: boolean,
+  isAppServiceFailure: boolean
 ): boolean => isCosmosFailure && isFunctionsFailure;
 
 const servicesToDeploySelector = createSelector(
@@ -107,30 +132,36 @@ const servicesToDeploySelector = createSelector(
   isAzureFunctionsSelectedSelector,
   isAzureFunctionsDeployedSuccessSelector,
   isAzureFunctionsDeployedFailureSelector,
+  isAppServiceSelectedSelector,
+  isAppServiceCreatedSuccessSelector,
+  isAppServiceCreatedFailureSelector,
   servicesToDeploy
 );
 
 const isServicesFailureSelector = createSelector(
   isCosmosDeployedFailureSelector,
   isAzureFunctionsDeployedFailureSelector,
+  isAppServiceCreatedFailureSelector,
   isServicesFailure
 );
 
 const isServicesSelected = (
   isCosmosCreated: boolean,
-  isFunctionsSelected: boolean
-): boolean => isCosmosCreated || isFunctionsSelected;
+  isFunctionsSelected: boolean,
+  isAppServiceSelected: boolean
+): boolean => isCosmosCreated || isFunctionsSelected || isAppServiceSelected;
 
 const isServicesSelectedSelector = createSelector(
   isCosmosResourceCreatedSelector,
   isAzureFunctionsSelectedSelector,
+  isAppServiceSelectedSelector,
   isServicesSelected
 );
 
 const isServicesDeployedOrFinished = (
   services: IAzureServiceStatus
 ): boolean => {
-  const { cosmosdb, azureFunctions } = services;
+  const { cosmosdb, azureFunctions, appService } = services;
   let isFinished = true;
   if (cosmosdb.isSelected) {
     isFinished = isFinished && (cosmosdb.isDeployed || cosmosdb.isFailed);
@@ -138,6 +169,9 @@ const isServicesDeployedOrFinished = (
   if (azureFunctions.isSelected) {
     isFinished =
       isFinished && (azureFunctions.isDeployed || azureFunctions.isFailed);
+  }
+  if (appService.isSelected) {
+    isFinished = isFinished && (appService.isDeployed || appService.isFailed);
   }
   return isFinished;
 };
@@ -153,6 +187,8 @@ export {
   isServicesDeployedOrFinishedSelector,
   isServicesFailureSelector,
   isTemplatesFailedSelector,
+  isAppServiceCreatedSuccessSelector,
+  isAppServiceCreatedFailureSelector,
   isServicesSelectedSelector,
   servicesToDeploySelector
 };
