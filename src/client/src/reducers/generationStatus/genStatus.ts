@@ -22,6 +22,10 @@ const initialState = {
   azureFunctions: {
     success: false,
     failure: false
+  },
+  appService: {
+    success: false,
+    failure: false
   }
 };
 
