@@ -27,7 +27,7 @@ export const CONSTANTS = {
     VALIDATION_TRIES_EXCEEDED: (resourceType: string) => {
       return localize(
         "error.validationTriesExceeded",
-        "Number of tries exceeded for validationg {0} name",
+        "Number of tries exceeded for validating {0} name",
         resourceType
       );
     },
