@@ -86,6 +86,7 @@
   "details.none": "None",
   "details.version": "Version:",
   "draggableSidebarItem.changeItemName": "Change Item Name",
+  "draggableSidebarItem.deleteItem": "Delete item",
   "draggableSidebarItem.pageNameMaxLength": "Page name must be under {maxLength} characters long. ",
   "feedback.redirectLinkLabel": "GitHub.com",
   "footer.back": "Back",
