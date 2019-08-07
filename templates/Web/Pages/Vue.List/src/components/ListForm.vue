@@ -16,7 +16,10 @@
 export default {
   name: "ListForm",
   props: {
-    value: String
+    value: {
+      type: String,
+      required: true
+    }
   }
 };
 </script>
