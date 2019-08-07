@@ -10,8 +10,14 @@
 export default {
   name: "GridComponent",
   props: {
-    header: String,
-    description: String
+    header: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: true
+    }
   }
 };
 </script>
