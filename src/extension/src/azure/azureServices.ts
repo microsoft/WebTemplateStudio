@@ -425,7 +425,7 @@ export class AzureServices extends WizardServant {
     );
   }
 
-  public static async deployWebApp(payload: any): Promise<void> {
+  public static async deployWebApp(payload: any): Promise<string | undefined> {
     await AzureServices.updateAppServiceSubscriptionItemCache(
       payload.appService.subscription
     );
@@ -459,10 +459,19 @@ export class AzureServices extends WizardServant {
         throw error; //to log in telemetry
       });
 
-    await AzureServices.AzureAppServiceProvider.createWebApp(
+    const result = await AzureServices.AzureAppServiceProvider.createWebApp(
       userAppServiceSelection,
       payload.engine.path
     );
+    if (
+      !(await AzureServices.AzureAppServiceProvider.createWebApp(
+        userAppServiceSelection,
+        payload.engine.path
+      ))
+    ) {
+      throw new Error("undefined App Service id");
+    }
+    return result;
   }
 
   public static async deployFunctionApp(
