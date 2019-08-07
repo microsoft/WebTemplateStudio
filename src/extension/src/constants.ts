@@ -265,7 +265,12 @@ export const CONSTANTS = {
       tier: "Basic"
     }
   },
-  VALIDATION_LIMIT: 3
+  VALIDATION_LIMIT: 3,
+  APP_SERVICE_DEPLOYMENT: {
+    DEPLOYMENT_FILE_NAME: ".deployment",
+    DEPLOYMENT_FILE: `[config]
+    SCM_DO_BUILD_DURING_DEPLOYMENT=true`
+  }
 };
 
 export const PROJECT_NAME_VALIDATION_LIMIT = 50;
