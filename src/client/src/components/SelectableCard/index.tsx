@@ -2,6 +2,7 @@ import classNames from "classnames";
 import * as React from "react";
 
 import { Link } from "react-router-dom";
+import { injectIntl, InjectedIntl, defineMessages } from "react-intl";
 
 import CardBody from "../CardBody";
 import CardTitle from "../CardTitle";
@@ -39,7 +40,8 @@ const SelectableCard = ({
   isPagesSelection,
   addPage,
   removePage,
-  showLink
+  showLink,
+  intl
 }: {
   iconPath: string | undefined;
   iconStyles: string;
@@ -58,6 +60,7 @@ const SelectableCard = ({
   addPage: (idx: number) => void;
   removePage: (idx: number) => void;
   showLink: boolean;
+  intl: InjectedIntl;
 }) => {
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -72,10 +75,20 @@ const SelectableCard = ({
     }
   };
 
-  const detailsConfig = {
-    learnMore: { id: "selectableCard.details", default: "Learn more" },
-    preview: { id: "selectableCard.preview", default: "Preview" }
-  };
+  const messages = defineMessages({
+    learnMore: {
+      id: "selectableCard.details",
+      defaultMessage: "Learn more"
+    },
+    preview: {
+      id: "selectableCard.preview",
+      defaultMessage: "Preview"
+    },
+    pageCount: {
+      id: "selectableCard.pageCount",
+      defaultMessage: "{number} {page}"
+    }
+  });
 
   return (
     <div
@@ -128,18 +141,9 @@ const SelectableCard = ({
             to={ROUTES.PAGE_DETAILS}
             onKeyUp={keyUpHandler}
           >
-            <FormattedMessage
-              id={
-                isPagesSelection
-                  ? detailsConfig.preview.id
-                  : detailsConfig.learnMore.id
-              }
-              defaultMessage={
-                isPagesSelection
-                  ? detailsConfig.preview.default
-                  : detailsConfig.learnMore.default
-              }
-            />
+            {isPagesSelection
+              ? intl.formatMessage(messages.preview)
+              : intl.formatMessage(messages.learnMore)}
           </Link>
         )}
         <div className={styles.pageButtons}>
@@ -159,7 +163,16 @@ const SelectableCard = ({
               [styles.showCount]: isPagesSelection
             })}
           >
-            {(isPagesSelection && <div>{clickCount}</div>) || (
+            {(isPagesSelection && (
+              <section
+                aria-label={intl.formatMessage(messages.pageCount, {
+                  number: clickCount,
+                  page: clickCount == 1 ? "page" : "pages"
+                })}
+              >
+                {clickCount}
+              </section>
+            )) || (
               <div className={styles.selectedText}>
                 <Check className={styles.iconCheckMark} />
               </div>
@@ -179,4 +192,4 @@ const SelectableCard = ({
   );
 };
 
-export default SelectableCard;
+export default injectIntl(SelectableCard);

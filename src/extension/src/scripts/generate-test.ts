@@ -9,7 +9,7 @@ let syncAttemptNum = 0;
 let prevPromise: Promise<any> = Promise.resolve(null);
 
 const delay = (time: number) => {
-  return new Promise(function (resolve) {
+  return new Promise((resolve) => {
     setTimeout(resolve, time);
   });
 };
