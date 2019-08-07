@@ -19,7 +19,7 @@ export const CONSTANTS = {
     ),
     TRIES_EXCEEDED: (resourceType: string) => {
       return localize(
-        "error.triesExceedeed",
+        "error.triesExceeded",
         "Number of tries exceeded for creating {0}",
         resourceType
       );

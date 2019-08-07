@@ -425,7 +425,7 @@ export class AzureServices extends WizardServant {
     );
   }
 
-  public static async deployWebApp(payload: any): Promise<string | undefined> {
+  public static async deployWebApp(payload: any): Promise<string> {
     await AzureServices.updateAppServiceSubscriptionItemCache(
       payload.appService.subscription
     );
@@ -463,12 +463,7 @@ export class AzureServices extends WizardServant {
       userAppServiceSelection,
       payload.engine.path
     );
-    if (
-      !(await AzureServices.AzureAppServiceProvider.createWebApp(
-        userAppServiceSelection,
-        payload.engine.path
-      ))
-    ) {
+    if (!result) {
       throw new Error("undefined App Service id");
     }
     return result;

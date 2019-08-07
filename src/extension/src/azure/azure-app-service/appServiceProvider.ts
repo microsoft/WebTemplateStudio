@@ -24,7 +24,6 @@ import { NameGenerator } from "../utils/nameGenerator";
 import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
 import { ResourceManager } from "../azure-arm/resourceManager";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
-import { DeploymentExtended } from "azure-arm-resource/lib/resource/models";
 
 export interface AppServicePlanSelection {
   subscriptionItem: SubscriptionItem;
@@ -51,7 +50,7 @@ export class AppServiceProvider {
   public async createWebApp(
     selections: AppServiceSelections,
     appPath: string
-  ): Promise<string|undefined> {
+  ): Promise<string | undefined> {
     const template = this.getAppServiceARMTemplate();
     const parameters = this.getAppServiceARMParameter(selections);
     const deploymentParams = parameters.parameters;
@@ -72,7 +71,10 @@ export class AppServiceProvider {
         selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX,
         options
       );
-      return result.id;      
+      return result.id;
+    } catch (error) {
+      throw new DeploymentError(error.message);
+    }
   }
 
   /*
