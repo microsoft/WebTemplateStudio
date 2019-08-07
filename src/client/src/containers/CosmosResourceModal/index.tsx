@@ -283,12 +283,11 @@ const CosmosResourceModal = (props: Props) => {
    * Update name field with a valid name generated from
    * extension when a subscription is selected or changed
    */
-  const [validNameEffectCount, setValidNameEffectCount] = React.useState(0);
   React.useEffect(() => {
     // if a selection exists (i.e. user has saved form data),
-    // this effect should only be run after the initial render and the subscription value is loaded (after the effect has been triggered twice)
-    // otherwise, updateForm may override existing values depending on when hook finishes updating the states
-    const shouldRunEffect = !props.selection || validNameEffectCount >= 2;
+    // this effect should only be run after selection has been loaded (i.e. subscription value is not empty)
+    const shouldRunEffect =
+      !props.selection || cosmosFormData.subscription.value !== "";
     if (shouldRunEffect) {
       updateForm({
         ...cosmosFormData,
@@ -308,8 +307,7 @@ const CosmosResourceModal = (props: Props) => {
         }
       });
     }
-    setValidNameEffectCount(validNameEffectCount + 1);
-  }, [props.subscriptionData.validName, cosmosFormData.subscription.value]);
+  }, [props.subscriptionData.validName]);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement
@@ -579,10 +577,14 @@ const CosmosResourceModal = (props: Props) => {
                 placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
                 disabled={cosmosFormData.subscription.value === ""}
               />
-              {isAccountNameAvailable && !isValidatingName && (
-                <GreenCheck className={styles.validationIcon} />
+              {cosmosFormData.subscription.value &&
+                isAccountNameAvailable &&
+                !isValidatingName && (
+                  <GreenCheck className={styles.validationIcon} />
+                )}
+              {cosmosFormData.subscription.value && isValidatingName && (
+                <Spinner className={styles.spinner} />
               )}
-              {isValidatingName && <Spinner className={styles.spinner} />}
             </div>
             {!isValidatingName &&
               !isAccountNameAvailable &&
