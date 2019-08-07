@@ -210,6 +210,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         ...functionsData,
         resourceGroup: []
       });
+      props.setValidationStatus(true);
       props.vscode.postMessage({
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,

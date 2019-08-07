@@ -210,6 +210,7 @@ const AppServiceModal = (props: Props) => {
         ...appServiceData,
         resourceGroup: []
       });
+      setValidationStatus(true);
       vscode.postMessage({
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
