@@ -289,6 +289,8 @@ const AppServiceModal = (props: Props) => {
    * extension when a subscription is selected or changed
    */
   React.useEffect(() => {
+    if (subscriptionData.validName === "") return;
+
     // if a selection exists (i.e. user has saved form data),
     // this effect should only be run after selection has been loaded (i.e. subscription value is not empty)
     const shouldRunEffect =
