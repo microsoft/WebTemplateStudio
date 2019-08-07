@@ -320,6 +320,7 @@ export enum TelemetryEventName {
   Subscriptions = "Acquire-Subscription-Names",
   SubscriptionData = "Acquire-Subscription-Data",
   EngineGeneration = "Engine-Generation-Time",
+  AppServiceDeploy = "Azure-App-Service-Deployment",
   CosmosDBDeploy = "Azure-Cosmos-Deployment",
   FunctionsDeploy = "Azure-Functions-Deployment",
   ResourceGroupDeploy = "Azure-Resource-Group-Deployment",
@@ -365,7 +366,7 @@ export namespace DialogMessages {
   );
   export const resetPagesPrompt: string = localize(
     "dialog.resetPagesPrompt",
-    "Switching Frameworks will reset pages in your queue. Are you sure you want to proceed?"
+    "Are you sure you want to reset all the selected pages?"
   );
   export const logoutPrompt: string = localize(
     "dialog.logoutPrompt",
@@ -394,3 +395,8 @@ export enum OS {
   Linux = "linux",
   Windows = "windows"
 }
+
+export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
+  Node: "node|lts",
+  Flask: "python|3.7"
+};

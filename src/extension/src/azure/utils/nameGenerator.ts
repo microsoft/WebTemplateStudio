@@ -5,8 +5,8 @@ export namespace NameGenerator {
   ): string {
     const timestamp = unixToSuffix(Date.now());
     const suffix =
-      resourceType === undefined ? timestamp : resourceType + "_" + timestamp;
-    return userProjectName + "_" + suffix;
+      resourceType === undefined ? timestamp : resourceType + "-" + timestamp;
+    return userProjectName + "-" + suffix;
   }
 
   function unixToSuffix(unixTimestamp: any): string {

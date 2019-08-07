@@ -29,7 +29,6 @@
 
 .computerSVG {
   padding: 15px 0px;
-  margin: 0 auto;
   display: block;
 }
 .signInButton {
@@ -80,10 +79,9 @@
   margin-right: 10px;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 850px) {
   .computerSVG {
     width: 300px;
-    margin-left: 4em;
   }
 }
 
