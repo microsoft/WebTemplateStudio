@@ -320,6 +320,7 @@ export enum TelemetryEventName {
   Subscriptions = "Acquire-Subscription-Names",
   SubscriptionData = "Acquire-Subscription-Data",
   EngineGeneration = "Engine-Generation-Time",
+  AppServiceDeploy = "Azure-App-Service-Deployment",
   CosmosDBDeploy = "Azure-Cosmos-Deployment",
   FunctionsDeploy = "Azure-Functions-Deployment",
   ResourceGroupDeploy = "Azure-Resource-Group-Deployment",
@@ -394,3 +395,8 @@ export enum OS {
   Linux = "linux",
   Windows = "windows"
 }
+
+export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
+  Node: "node|lts",
+  Flask: "python|3.7"
+};
