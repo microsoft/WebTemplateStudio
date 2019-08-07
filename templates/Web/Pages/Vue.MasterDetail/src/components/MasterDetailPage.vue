@@ -40,14 +40,14 @@ export default {
       type: Object,
       required: true,
       validator: function(value) {
-        return !(
-          value.id === undefined ||
-          value.longDescription === undefined ||
-          value.orderDate === undefined ||
-          value.orderTotal === undefined ||
-          value.shipTo === undefined ||
-          value.status === undefined ||
-          value.title === undefined
+        return (
+          value.id !== undefined &&
+          value.longDescription !== undefined &&
+          value.orderDate !== undefined &&
+          value.orderTotal !== undefined &&
+          value.shipTo !== undefined &&
+          value.status !== undefined &&
+          value.title !== undefined
         );
       }
     }
