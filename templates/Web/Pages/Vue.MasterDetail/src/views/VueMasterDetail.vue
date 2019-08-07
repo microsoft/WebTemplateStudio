@@ -43,10 +43,13 @@ export default {
     return {
       masterDetailText: [
         {
-          paragraph: "",
-          title: "",
-          tabName: "",
-          id: 0
+          id: 0,
+          longDescription: "",
+          orderDate: "",
+          orderTotal: 0,
+          shipTo: "",
+          status: "",
+          title: ""
         }
       ],
       currentDisplayTabIndex: 0,

@@ -23,7 +23,13 @@
 export default {
   name: "ListItem",
   props: {
-    listItem: Object
+    listItem: {
+      type: Object,
+      required: true,
+      validator: function(value) {
+        return !(value.text === undefined || value._id === undefined);
+      }
+    }
   }
 };
 </script>
