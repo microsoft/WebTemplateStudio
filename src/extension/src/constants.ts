@@ -373,7 +373,7 @@ export namespace DialogMessages {
   );
   export const resetPagesPrompt: string = localize(
     "dialog.resetPagesPrompt",
-    "Switching Frameworks will reset pages in your queue. Are you sure you want to proceed?"
+    "Are you sure you want to reset all the selected pages?"
   );
   export const logoutPrompt: string = localize(
     "dialog.logoutPrompt",

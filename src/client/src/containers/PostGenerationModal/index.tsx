@@ -36,7 +36,9 @@ const links: LinksDict = {
   "Azure Functions":
     "[Azure](https://portal.azure.com/#blade/WebsitesExtension/FunctionsIFrameBladeMain)",
   "Cosmos DB":
-    "[Azure](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts)"
+    "[Azure](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts)",
+  "App Service":
+    "[Azure](https://ms.portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites)"
 };
 
 interface IStateProps {
@@ -74,6 +76,9 @@ const PostGenerationModal = ({
   history
 }: Props) => {
   const { formatMessage } = intl;
+  const templateGenerationInProgress =
+    !isTemplateGenerated && !isTemplatesFailed;
+
   const LinkRenderer = (props: any) => (
     <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
       {props.children}
@@ -90,8 +95,9 @@ const PostGenerationModal = ({
     if (isTemplatesFailed) {
       resetWizard();
       history.push(ROUTES.NEW_PROJECT);
+      return;
     }
-    if (!isTemplatesFailed && isTemplateGenerated) {
+    if (isTemplateGenerated) {
       vscode.postMessage({
         module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
@@ -106,7 +112,7 @@ const PostGenerationModal = ({
     if (isTemplatesFailed) {
       return formatMessage(messages.restartWizard);
     }
-    if (!isTemplatesFailed && isTemplateGenerated) {
+    if (isTemplateGenerated) {
       return formatMessage(messages.openInCode);
     }
     return (
@@ -162,8 +168,7 @@ const PostGenerationModal = ({
       }
     });
   };
-  const templateGenerationInProgress =
-    !isTemplateGenerated && !isTemplatesFailed;
+
   return (
     <div>
       <div className={styles.title}>

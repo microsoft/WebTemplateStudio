@@ -474,14 +474,18 @@ const mockVsCodeApi = () => ({
               command: EXTENSION_COMMANDS.GEN_STATUS,
               payload: {
                 templates: {
-                  success: false,
-                  failure: true
-                },
-                cosmos: {
                   success: true,
                   failure: false
                 },
+                cosmos: {
+                  success: false,
+                  failure: true
+                },
                 azureFunctions: {
+                  success: true,
+                  failure: false
+                },
+                appService: {
                   success: true,
                   failure: false
                 }
