@@ -142,7 +142,6 @@ export class CoreTemplateStudio {
     const syncCommand = `${CONSTANTS.CLI.SYNC_COMMAND_PREFIX} -p ${
       payload.payload.path
     }\n`;
-    // this._processCli.stdin.write(syncCommand);
     this.cliEvents.on(CONSTANTS.CLI.SYNC_PROGRESS_STATE, data => {
       payload.liveMessageHandler(data["status"], data["progress"]);
     });
@@ -153,7 +152,6 @@ export class CoreTemplateStudio {
     const getFrameworksCommand = `${
       CONSTANTS.CLI.GET_FRAMEWORKS_COMMAND_PREFIX
     } -p ${projectType}\n`;
-    // this._processCli.stdin.write(getFrameworksCommand);
     return this.awaitCliEvent(
       CONSTANTS.CLI.GET_FRAMEWORKS_COMPLETE_STATE,
       getFrameworksCommand
@@ -168,7 +166,6 @@ export class CoreTemplateStudio {
     const getPagesCommand = `${
       CONSTANTS.CLI.GET_PAGES_COMMAND_PREFIX
     } -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
-    // this._processCli.stdin.write(getPagesCommand);
     return this.awaitCliEvent(
       CONSTANTS.CLI.GET_PAGES_COMPLETE_STATE,
       getPagesCommand
@@ -184,7 +181,6 @@ export class CoreTemplateStudio {
     const getFeaturesCommand = `${
       CONSTANTS.CLI.GET_FEATURES_COMMAND_PREFIX
     } -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
-    // this._processCli.stdin.write(getFeaturesCommand);
     return this.awaitCliEvent(
       CONSTANTS.CLI.GET_FEATURES_COMPLETE_STATE,
       getFeaturesCommand
@@ -196,7 +192,6 @@ export class CoreTemplateStudio {
     const getProjectTypesCommand = `${
       CONSTANTS.CLI.GET_PROJECT_TYPES_COMMAND_PREFIX
     }\n`;
-    // this._processCli.stdin.write(getProjectTypesCommand);
     return this.awaitCliEvent(
       CONSTANTS.CLI.GET_PROJECT_TYPES_COMPLETE_STATE,
       getProjectTypesCommand
@@ -218,7 +213,6 @@ export class CoreTemplateStudio {
       typedPayload.services.length;
     let generatedItemsCount = 0;
 
-    // this._processCli.stdin.write(generateCommand);
     this.cliEvents.on(CONSTANTS.CLI.GENERATE_PROGRESS_STATE, data => {
       generatedItemsCount++;
       const percentage = (generatedItemsCount / itemsToGenerateCount) * 100;
