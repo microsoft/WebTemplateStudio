@@ -50,8 +50,8 @@ export default {
     return {
       gridTextAssets: [
         {
-          description: "",
-          header: "",
+          shortDescription: "",
+          title: "",
           id: 0
         }
       ],
