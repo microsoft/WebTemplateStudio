@@ -68,7 +68,8 @@ export class GenerationExperience extends WizardServant {
       ),
       resourceGroup: {},
       cosmos: {},
-      azureFunctions: {}
+      azureFunctions: {},
+      appService: {}
     };
 
     GenerationExperience.reactPanelContext.postMessageWebview({
@@ -146,7 +147,37 @@ export class GenerationExperience extends WizardServant {
 
     // Resource groups should be created before other deploy methods execute
     Promise.all(resourceGroupQueue).then(() => {
-      // Create ASP (this PR) and create web app (future PR) will be called here
+      if (payload.selectedAppService) {
+        serviceQueue.push(
+          GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
+            TelemetryEventName.AppServiceDeploy,
+            // tslint:disable-next-line: no-function-expression
+            async function(this: IActionContext): Promise<void> {
+              try {
+                await AzureServices.deployWebApp(payload);
+                progressObject = {
+                  ...progressObject,
+                  appService: GenerationExperience.getProgressObject(true)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+              } catch (error) {
+                progressObject = {
+                  ...progressObject,
+                  appService: GenerationExperience.getProgressObject(false)
+                };
+                GenerationExperience.reactPanelContext.postMessageWebview({
+                  command: ExtensionCommand.UpdateGenStatus,
+                  payload: progressObject
+                });
+              }
+            }
+          )
+        );
+      }
+
       if (payload.selectedFunctions) {
         serviceQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
