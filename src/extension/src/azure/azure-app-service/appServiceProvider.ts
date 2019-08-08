@@ -249,7 +249,7 @@ export class AppServiceProvider {
     }
     if (tries >= CONSTANTS.VALIDATION_LIMIT) {
       throw new AppServiceError(
-        CONSTANTS.ERRORS.TRIES_EXCEEDED("app service plan")
+        CONSTANTS.ERRORS.CREATION_TRIES_EXCEEDED("app service plan")
       );
     }
     return generatedName;

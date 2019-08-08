@@ -5,7 +5,7 @@
 
 .container {
   position: relative;
-  padding: 10vh 6vh;
+  padding: 6vh;
 }
 
 .signedIn {
@@ -13,7 +13,8 @@
 }
 
 .optionalFlag {
-  position: absolute;
+  display: flex;
+  justify-content: center;
   z-index: 1000;
   width: 100%;
   background-color: #0067b8;

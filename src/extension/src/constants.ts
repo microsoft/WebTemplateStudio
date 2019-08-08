@@ -17,10 +17,17 @@ export const CONSTANTS = {
       "error.resourceGroupNotFound",
       "No resource group found with this name"
     ),
-    TRIES_EXCEEDED: (resourceType: string) => {
+    CREATION_TRIES_EXCEEDED: (resourceType: string) => {
       return localize(
         "error.triesExceeded",
         "Number of tries exceeded for creating {0}",
+        resourceType
+      );
+    },
+    VALIDATION_TRIES_EXCEEDED: (resourceType: string) => {
+      return localize(
+        "error.validationTriesExceeded",
+        "Number of tries exceeded for validating {0} name",
         resourceType
       );
     },
