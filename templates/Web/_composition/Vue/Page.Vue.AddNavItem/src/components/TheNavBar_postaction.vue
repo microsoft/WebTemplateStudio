@@ -1,6 +1,6 @@
 ﻿<div class="navbar-nav">
 //^^
 //{[{
-  <router-link class="nav-item nav-link active" to="/wts.ItemName">wts.ItemName</router-link>
+  <b-nav-item class="nav-item nav-link active" to="/wts.ItemName">wts.ItemName</b-nav-item>
 //}]}
 </div>
