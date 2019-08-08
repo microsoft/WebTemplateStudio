@@ -18,6 +18,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getAppServiceSelectionInDropdownForm } from "../../selectors/appServiceSelector";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
@@ -63,6 +64,7 @@ interface IStateProps {
   selection: ISelectionInformation | undefined;
   chooseExistingRadioButtonSelected: boolean;
   selectedBackend: ISelected;
+  projectName: string;
 }
 
 interface IDispatchProps {
@@ -134,7 +136,8 @@ const AppServiceModal = (props: Props) => {
     setValidationStatus,
     saveAppServiceSettings,
     closeModal,
-    selectedBackend
+    selectedBackend,
+    projectName
   } = props;
 
   const FORM_CONSTANTS = {
@@ -207,11 +210,13 @@ const AppServiceModal = (props: Props) => {
         ...appServiceData,
         resourceGroup: []
       });
+      setValidationStatus(true);
       vscode.postMessage({
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
         track: true,
-        subscription: option.value
+        subscription: option.value,
+        projectName
       });
       updatedForm = {
         ...updatedForm,
@@ -279,6 +284,38 @@ const AppServiceModal = (props: Props) => {
       setFormIsSendable
     );
   }, [isValidatingName]);
+
+  /**
+   * Update name field with a valid name generated from
+   * extension when a subscription is selected or changed
+   */
+  React.useEffect(() => {
+    if (subscriptionData.validName === "") return;
+
+    // if a selection exists (i.e. user has saved form data),
+    // this effect should only be run after selection has been loaded (i.e. subscription value is not empty)
+    const shouldRunEffect =
+      !selection || appServiceFormData.subscription.value !== "";
+    if (shouldRunEffect) {
+      updateForm({
+        ...appServiceFormData,
+        siteName: {
+          value: subscriptionData.validName,
+          label: subscriptionData.validName
+        }
+      });
+      // programatically updating <input>'s value field doesn't dispatch an event to handleInput
+      // so we manually simulate handleInput here
+      setValidationStatus(true);
+      handleChange({
+        ...appServiceFormData,
+        siteName: {
+          value: subscriptionData.validName,
+          label: subscriptionData.validName
+        }
+      });
+    }
+  }, [subscriptionData.validName]);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement
@@ -523,19 +560,28 @@ const AppServiceModal = (props: Props) => {
                 aria-label={intl.formatMessage(messages.ariaSiteNameLabel)}
                 className={styles.input}
                 onChange={handleInput}
-                value={appServiceFormData.siteName.value}
+                value={
+                  appServiceFormData.subscription.value === ""
+                    ? ""
+                    : appServiceFormData.siteName.value
+                }
                 placeholder={FORM_CONSTANTS.SITE_NAME.label}
                 disabled={appServiceFormData.subscription.value === ""}
                 tabIndex={appServiceFormData.subscription.value === "" ? -1 : 0}
               />
-              {isSiteNameAvailable && !isValidatingName && (
-                <GreenCheck className={styles.validationIcon} />
+              {appServiceFormData.subscription.value &&
+                isSiteNameAvailable &&
+                !isValidatingName && (
+                  <GreenCheck className={styles.validationIcon} />
+                )}
+              {appServiceFormData.subscription.value && isValidatingName && (
+                <Spinner className={styles.spinner} />
               )}
-              {isValidatingName && <Spinner className={styles.spinner} />}
             </div>
             {!isValidatingName &&
               !isSiteNameAvailable &&
-              appServiceFormData.siteName.value.length > 0 && (
+              appServiceFormData.siteName.value.length > 0 &&
+              siteNameAvailability.message && (
                 <div className={styles.errorMessage}>
                   {siteNameAvailability.message}
                 </div>
@@ -615,7 +661,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selection: getAppServiceSelectionInDropdownForm(state),
   chooseExistingRadioButtonSelected:
     state.selection.services.appService.chooseExistingRadioButtonSelected,
-  selectedBackend: state.selection.backendFramework
+  selectedBackend: state.selection.backendFramework,
+  projectName: getProjectName(state)
 });
 
 const mapDispatchToProps = (

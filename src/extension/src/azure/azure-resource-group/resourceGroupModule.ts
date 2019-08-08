@@ -78,7 +78,7 @@ export class ResourceGroupDeploy {
     }
     if (tries >= CONSTANTS.VALIDATION_LIMIT) {
       throw new ResourceGroupError(
-        CONSTANTS.ERRORS.TRIES_EXCEEDED("resource group")
+        CONSTANTS.ERRORS.CREATION_TRIES_EXCEEDED("resource group")
       );
     }
     return generatedName;
