@@ -36,7 +36,15 @@ const BOOTSTRAP_LICENSE =
 const ARIA_LABELS_NAVIGATION = defineMessages({
   ARIA_LABELS_MESSAGES: {
     id: "ariaLabels.pageNavigation",
-    defaultMessage: "Go to {pagesText} page"
+    defaultMessage: "{pagesText} page"
+  },
+  ARIA_LABELS_CURRENT_PAGE: {
+    id: "ariaLabels.currentPage",
+    defaultMessage: "Currently on {pagesText} page"
+  },
+  ARIA_LABELS_DISABLED_PAGE: {
+    id: "ariaLabels.disabledPage",
+    defaultMessage: "{pagesText} page disabled"
   }
 });
 
