@@ -282,8 +282,7 @@ export const CONSTANTS = {
     SETTINGS_FILE_NAME: "settings.json",
     SETTINGS_FILE: (id: string) => {
       return `{
-    "appService.defaultWebAppToDeploy": "${id}", 
-    "appService.deploySubpath": ""
+    "appService.defaultWebAppToDeploy": "${id}"
 }`;
     },
     DEPLOYMENT_FILE_NAME: ".deployment",
