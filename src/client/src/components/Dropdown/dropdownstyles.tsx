@@ -20,7 +20,6 @@ export default {
   control: (base: any, state: any): any => ({
     ...base,
     color: "white",
-    opacity: state.isDisabled ? 0.5 : 1,
     border: state.isFocused
       ? "1px solid var(--vscode-contrastActiveBorder)"
       : "none",

@@ -62,6 +62,7 @@
 }
 
 .largeIndentContainer {
+  background: var(--vscode-editorWidget-border);
   margin-left: 25%;
 }
 
