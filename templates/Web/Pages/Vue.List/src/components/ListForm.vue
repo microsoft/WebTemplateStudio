@@ -9,11 +9,7 @@
         type="text"
         @input="$emit('input', $event.target.value)"
       />
-      <b-alert
-        variant="danger"
-        :show="!this.isValid"
-        dismissible
-      >Input must be at least 1 character long.</b-alert>
+      <b-alert :show="!this.isValid" variant="danger" dismissible>{{this.emptyError}}</b-alert>
     </div>
     <span class="nput-group-btn col-1">
       <button :disabled="!this.isSubmitable" class="btn btn-primary" type="submit">Submit</button>
@@ -22,6 +18,7 @@
 </template>
 
 <script>
+import CONSTANTS from "@/constants";
 export default {
   name: "ListForm",
 
@@ -35,7 +32,8 @@ export default {
   data() {
     return {
       isValid: true,
-      isSubmitable: false
+      isSubmitable: false,
+      emptyError: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
     };
   },
 
