@@ -3,11 +3,11 @@
     <div class="col-11">
       <input
         :value="value"
-        @input="$emit('input', $event.target.value)"
-        type="text"
+        aria-label="Add text here..."
         class="form-control"
         placeholder="Add text here..."
-        aria-label="Add text here..."
+        type="text"
+        @input="$emit('input', $event.target.value)"
       />
       <b-alert
         variant="danger"
@@ -16,7 +16,7 @@
       >Input must be at least 1 character long.</b-alert>
     </div>
     <span class="nput-group-btn col-1">
-      <button type="submit" class="btn btn-primary" :disabled="!this.isSubmitable">Submit</button>
+      <button :disabled="!this.isSubmitable" class="btn btn-primary" type="submit">Submit</button>
     </span>
   </form>
 </template>
