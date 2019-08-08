@@ -32,10 +32,6 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const messages = defineMessages({
-  licenses: {
-    id: "licenses.licenses",
-    defaultMessage: "Licenses"
-  },
   redirectLinkLabel: {
     id: "licenses.redirectLinkLabel",
     defaultMessage: "{licenseName} license link"
@@ -70,9 +66,6 @@ const Licenses = ({
   };
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        {intl.formatMessage(messages.licenses)}
-      </div>
       {frameworkLicenses.map((license: string, idx: number) => (
         <ReactMarkdown
           key={`${license} + ${idx}`}
