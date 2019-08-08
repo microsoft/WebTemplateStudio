@@ -60,7 +60,7 @@ export class CoreTemplateStudio {
       cliExecutableName
     );
 
-    let cliWorkingDirectory = path.join(
+    const cliWorkingDirectory = path.join(
       extensionPath,
       "src",
       "corets-cli",
