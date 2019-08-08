@@ -3,7 +3,7 @@
 
 export default {
   input: (base: any) => ({
-    color: "var(--vscode-editor-foreground);"
+    color: "var(--vscode-editor-foreground)"
   }),
   indicatorSeparator: (base: any) => ({
     ...base,
@@ -11,7 +11,7 @@ export default {
   }),
   singleValue: (base: any, state: any) => ({
     ...base,
-    color: "var(--vscode-editor-foreground);"
+    color: "var(--vscode-editor-foreground)"
   }),
   placeholder: (base: any) => ({
     ...base,
@@ -25,7 +25,7 @@ export default {
       : "none",
     borderRadius: 0,
     boxShadow: "none",
-    background: "var(--vscode-editorWidget-border);",
+    background: "var(--vscode-editorWidget-border)",
     "&:hover": {
       outline: "0.5px solid rgba(0,0,0,0.5)"
     },
@@ -61,7 +61,7 @@ export default {
     ...base,
     // kill the white space on first and last option
     padding: 0,
-    background: "var(--vscode-editorWidget-border);",
+    background: "var(--vscode-editorWidget-border)",
     border: "none",
     maxHeight: "130px"
   })
