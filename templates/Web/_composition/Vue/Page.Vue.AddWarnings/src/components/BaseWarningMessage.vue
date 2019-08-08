@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "WarningMessage",
+  name: "BaseWarningMessage",
   props: {
     text: {
       type: String,

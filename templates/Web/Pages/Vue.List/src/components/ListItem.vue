@@ -6,10 +6,10 @@
       </div>
       <div class="col-1">
         <button
-          type="button"
+          aria-label="Close"
           class="close py-2"
           data-dismiss="alert"
-          aria-label="Close"
+          type="button"
           @click="$emit('onDeleteListItem', listItem)"
         >
           <div aria-hidden="true">&times;</div>
