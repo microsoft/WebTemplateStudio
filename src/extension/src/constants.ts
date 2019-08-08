@@ -274,7 +274,10 @@ export const CONSTANTS = {
     DOT_VSCODE_FOLDER: ".vscode",
     SETTINGS_FILE_NAME: "settings.json",
     SETTINGS_FILE: (id: string) => {
-      return `{"appService.defaultWebAppToDeploy": "${id}"}`;
+      return `{
+    "appService.defaultWebAppToDeploy": "${id}", 
+    "appService.deploySubpath": ""
+}`;
     },
     DEPLOYMENT_FILE_NAME: ".deployment",
     DEPLOYMENT_FILE: `[config] 
@@ -411,6 +414,6 @@ export enum OS {
 }
 
 export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
-  Node: "node|lts",
+  Node: "node|10.14",
   Flask: "python|3.7"
 };
