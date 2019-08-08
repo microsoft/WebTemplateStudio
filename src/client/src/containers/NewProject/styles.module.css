@@ -27,9 +27,6 @@
 }
 
 .projectDetailsContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   box-sizing: border-box;
   width: 80%;
 }
