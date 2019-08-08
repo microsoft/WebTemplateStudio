@@ -68,7 +68,7 @@ const Details = ({
     );
     const redirectLinkLabel =
       props.children[0].props.value === genericRedirect
-        ? "outside link"
+        ? props.href
         : `${props.children[0].props.value} license link`;
     return (
       <button
