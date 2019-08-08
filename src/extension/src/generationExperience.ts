@@ -155,7 +155,7 @@ export class GenerationExperience extends WizardServant {
             // tslint:disable-next-line: no-function-expression
             async function(this: IActionContext): Promise<void> {
               try {
-                const id = await AzureServices.deployWebApp(payload);
+                const id: string = await AzureServices.deployWebApp(payload);
                 progressObject = {
                   ...progressObject,
                   appService: GenerationExperience.getProgressObject(true)

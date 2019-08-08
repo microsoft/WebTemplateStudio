@@ -4,34 +4,29 @@
  *--------------------------------------------------------------------------------------------*/
 import * as fse from "fs-extra";
 import * as path from "path";
-import { Uri, workspace, WorkspaceConfiguration } from "vscode";
 import { CONSTANTS } from "../../constants";
 
 export namespace Settings {
-  export async function setDeployDefault(id: string, path: string) {
-    await updateWorkspaceSetting("defaultWebAppToDeploy", id, path);
+  export async function setDeployDefault(id: string, fsPath: string) {
+    const dotVSCodeFolder = path.join(
+      fsPath,
+      CONSTANTS.APP_SERVICE_DEPLOYMENT.DOT_VSCODE_FOLDER
+    );
+    await fse.mkdir(dotVSCodeFolder);
+    const settingPath = path.join(
+      dotVSCodeFolder,
+      CONSTANTS.APP_SERVICE_DEPLOYMENT.SETTINGS_FILE_NAME
+    );
+    await fse.writeFile(
+      settingPath,
+      CONSTANTS.APP_SERVICE_DEPLOYMENT.SETTINGS_FILE(id)
+    );
   }
 
-  export async function enableScmDoBuildDuringDeploy(
-    fsPath: string,
-    runtime?: string
-  ) {
+  export async function enableScmDoBuildDuringDeploy(fsPath: string) {
     await fse.writeFile(
       path.join(fsPath, CONSTANTS.APP_SERVICE_DEPLOYMENT.DEPLOYMENT_FILE_NAME),
       CONSTANTS.APP_SERVICE_DEPLOYMENT.DEPLOYMENT_FILE
     );
-  }
-
-  async function updateWorkspaceSetting<T = string>(
-    section: string,
-    value: T,
-    fsPath: string,
-    prefix: string = "appService"
-  ): Promise<void> {
-    const projectConfiguration: WorkspaceConfiguration = workspace.getConfiguration(
-      prefix,
-      Uri.file(fsPath)
-    );
-    await projectConfiguration.update(section, value);
   }
 }

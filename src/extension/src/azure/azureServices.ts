@@ -464,9 +464,16 @@ export class AzureServices extends WizardServant {
       payload.engine.path
     );
     if (!result) {
-      throw new Error("undefined App Service id");
+      throw new Error(CONSTANTS.ERRORS.APP_SERVICE_UNDEFINED_ID);
     }
-    return result;
+    return AzureServices.convertId(result);
+  }
+
+  private static convertId(rawId: string): string {
+    // workaround to change id to the pattern required by the Azure App Service extension
+    const MS_RESOURCE_DEPLOYMENT = "Microsoft.Resource/deployment";
+    const MS_WEB_SITE = "Microsoft.Web/site";
+    return rawId.replace(MS_RESOURCE_DEPLOYMENT, MS_WEB_SITE);
   }
 
   public static async deployFunctionApp(
