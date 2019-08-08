@@ -15,7 +15,7 @@ export default {
   }),
   placeholder: (base: any) => ({
     ...base,
-    color: "var(--vscode-menu-foreground);"
+    color: "var(--vscode-menu-foreground)"
   }),
   control: (base: any, state: any): any => ({
     ...base,
