@@ -470,10 +470,12 @@ export class AzureServices extends WizardServant {
   }
 
   private static convertId(rawId: string): string {
-    // workaround to change id to the pattern required by the Azure App Service extension
+    // workaround to convert deployment id to app service id
     const MS_RESOURCE_DEPLOYMENT = "Microsoft.Resources/deployments";
     const MS_WEB_SITE = "Microsoft.Web/sites";
-    return rawId.replace(MS_RESOURCE_DEPLOYMENT, MS_WEB_SITE);
+    return rawId
+      .replace(MS_RESOURCE_DEPLOYMENT, MS_WEB_SITE)
+      .replace("-" + AzureResourceType.AppService, "");
   }
 
   public static async deployFunctionApp(
