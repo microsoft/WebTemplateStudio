@@ -274,6 +274,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
   }, []);
 
   React.useEffect(() => {
+    if (!azureFunctionsFormData.appName.value) {
+      return;
+    }
     setFunctionsModalButtonStatus(
       azureFunctionsFormData,
       props.isValidatingName,

@@ -220,6 +220,9 @@ const CosmosResourceModal = (props: Props) => {
   };
 
   React.useEffect(() => {
+    if (!cosmosFormData.accountName.value) {
+      return;
+    }
     setCosmosModalButtonStatus(
       cosmosFormData,
       props.isValidatingName,
