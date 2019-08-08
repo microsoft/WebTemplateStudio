@@ -1,5 +1,10 @@
 .title {
-  font-size: 1.8em;
+  font-family: Segoe UI;
+  font-style: normal;
+  font-weight: 300;
+  margin-bottom: 6px;
+  font-size: 24px;
+  color: var(--vscode-editor-foreground);
 }
 
 .headerContainer {
@@ -40,8 +45,15 @@
 .footerContainer {
   margin-top: 40px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+}
+
+.spaceBetween {
+  justify-content: space-between;
+}
+
+.flexEnd {
+  justify-content: flex-end;
 }
 
 .button {
