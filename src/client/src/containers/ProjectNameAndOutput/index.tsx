@@ -62,8 +62,7 @@ const messages = defineMessages({
   },
   nameTooLong: {
     id: "projectNameError.nameTooLong",
-    defaultMessage:
-      `Project name can only be {maxLength} characters long`
+    defaultMessage: `Project name can only be {maxLength} characters long`
   },
   outputPathTitle: {
     id: "projectName.outputPathTitle",
@@ -83,6 +82,21 @@ const ProjectNameAndOutput = (props: Props) => {
     updateProjectName,
     updateOutputPath
   } = props;
+
+  React.useEffect(() => {
+    if (projectName === "") {
+      vscode.postMessage({
+        module: EXTENSION_MODULES.DEFAULTS,
+        command: EXTENSION_COMMANDS.GET_PROJECT_NAME
+      });
+    }
+    if (outputPath === "") {
+      vscode.postMessage({
+        module: EXTENSION_MODULES.DEFAULTS,
+        command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
+      });
+    }
+  }, [vscode]);
 
   React.useEffect(() => {
     if (vscode) {
@@ -108,7 +122,7 @@ const ProjectNameAndOutput = (props: Props) => {
   };
   const validateKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const element = e.target as HTMLInputElement;
-    const inputKeyCheck = /^[A-Za-z0-9_\- ]$/
+    const inputKeyCheck = /^[A-Za-z0-9_\- ]$/;
 
     if (element.value.length === 50 && inputKeyCheck.test(e.key)) {
       setProjectNameMaxLength(true);
@@ -116,7 +130,7 @@ const ProjectNameAndOutput = (props: Props) => {
     } else {
       setProjectNameMaxLength(false);
     }
-  }
+  };
 
   const handleOutputPathChange = (
     e: React.SyntheticEvent<HTMLInputElement>
@@ -154,8 +168,8 @@ const ProjectNameAndOutput = (props: Props) => {
         )}
         {projectNameMaxLength && (
           <div className={styles.errorMessage}>
-            {props.intl.formatMessage(messages
-              .nameTooLong as FormattedMessage.MessageDescriptor,
+            {props.intl.formatMessage(
+              messages.nameTooLong as FormattedMessage.MessageDescriptor,
               { maxLength: PROJECT_NAME_CHARACTER_LIMIT }
             )}
           </div>
