@@ -216,7 +216,8 @@ class App extends React.Component<Props> {
           if (message.payload != null) {
             this.props.saveSubscriptionData({
               locations: message.payload.locations,
-              resourceGroups: message.payload.resourceGroups
+              resourceGroups: message.payload.resourceGroups,
+              validName: message.payload.validName
             });
           }
           break;
