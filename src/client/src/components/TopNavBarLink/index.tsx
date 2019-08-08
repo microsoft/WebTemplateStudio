@@ -63,7 +63,7 @@ const TopNavBarLink = ({
             )
       }
     >
-      <section
+      <div
         className={classnames(styles.text, {
           [styles.textSelected]: isSelected
         })}
@@ -84,7 +84,7 @@ const TopNavBarLink = ({
         >
           {text}
         </div>
-      </section>
+      </div>
     </Link>
   );
 };
