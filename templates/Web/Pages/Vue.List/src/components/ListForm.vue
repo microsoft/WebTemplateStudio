@@ -2,11 +2,11 @@
   <form class="input-group my-3" @submit.prevent="$emit('onAddListItem')">
     <input
       :value="value"
-      @input="$emit('input', $event.target.value)"
-      type="text"
+      aria-label="Add text here..."
       class="form-control"
       placeholder="Add text here..."
-      aria-label="Add text here..."
+      type="text"
+      @input="$emit('input', $event.target.value)"
     />
     <button type="submit" class="btn btn-primary ml-2">Submit</button>
   </form>

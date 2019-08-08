@@ -5,7 +5,7 @@
         <h3>Bootstrap VueList Template</h3>
       </div>
       <div class="col-12 p-0">
-        <ListForm @onAddListItem="handleAddListItem" v-model="textField" />
+        <ListForm v-model="textField" @onAddListItem="handleAddListItem" />
       </div>
       <ListItem
         v-for="listItem in list"
@@ -13,10 +13,10 @@
         :listItem="listItem"
         @onDeleteListItem="handleDeleteListItem"
       />
-      <WarningMessage
+      <BaseWarningMessage
         v-if="WarningMessageOpen"
-        @onWarningClose="handleWarningClose"
         :text="WarningMessageText"
+        @onWarningClose="handleWarningClose"
       />
     </div>
   </main>
@@ -26,7 +26,7 @@
 import CONSTANTS from "@/constants";
 import ListForm from "@/components/ListForm";
 import ListItem from "@/components/ListItem";
-import WarningMessage from "@/components/WarningMessage";
+import BaseWarningMessage from "@/components/BaseWarningMessage";
 
 export default {
   name: "VueList",
@@ -34,7 +34,7 @@ export default {
   components: {
     ListForm,
     ListItem,
-    WarningMessage
+    BaseWarningMessage
   },
 
   data() {
