@@ -15,6 +15,46 @@
   color: #ffffff;
 }
 
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
 .button:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.cancelIcon {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  padding: 1px;
+  margin-right: 2px;
+}
+
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cancelIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.title {
+  font-family: Segoe UI;
+  font-style: normal;
+  font-weight: 300;
+  margin-bottom: 6px;
+  font-size: 24px;
+  color: var(--vscode-editor-foreground);
 }
