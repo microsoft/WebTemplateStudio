@@ -17,7 +17,7 @@
 .textContainer,
 .pagesTextContainer {
   min-height: 38px;
-  border: 0.5px solid var(--vscode-menu-foreground);
+  border: none;
   color: var(--vscode-input-foreground);
   font-size: 1.2em;
   display: flex;
@@ -44,6 +44,7 @@
 }
 
 .pagesTextContainer {
+  background: var(--vscode-editorWidget-border);
   margin-left: 10px;
 }
 
@@ -114,7 +115,7 @@
   outline: none;
   font-size: 1em;
   box-sizing: border-box;
-  background-color: var(--vscode-editor-background);
+  background: var(--vscode-editorWidget-border);
   color: var(--vscode-editor-foreground);
   border: none;
 }
