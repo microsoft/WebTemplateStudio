@@ -271,10 +271,15 @@ const CosmosResourceModal = (props: Props) => {
   // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {
+      props.setCosmosResourceAccountNameAvailability({
+        isAvailable: true,
+        message: ""
+      });
       const newCosmosDBState = props.selection.dropdownSelection;
       newCosmosDBState.chooseExistingRadioButtonSelected =
         props.chooseExistingRadioButtonSelected;
-      handleChange(newCosmosDBState);
+      setFormIsSendable(true);
+      updateForm(newCosmosDBState);
     } else {
       props.setCosmosResourceAccountNameAvailability({
         isAvailable: false,

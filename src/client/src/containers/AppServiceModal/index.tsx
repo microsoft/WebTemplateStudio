@@ -265,9 +265,14 @@ const AppServiceModal = (props: Props) => {
   // Update form data with data from store if it exists
   React.useEffect(() => {
     if (selection) {
+      setSiteNameAvailability({
+        isAvailable: true,
+        message: ""
+      });
       const newAppServiceState = selection.dropdownSelection;
       newAppServiceState.chooseExistingRadioButtonSelected = chooseExistingRadioButtonSelected;
-      handleChange(newAppServiceState);
+      setFormIsSendable(true);
+      updateForm(newAppServiceState);
     } else {
       setSiteNameAvailability({
         isAvailable: false,

@@ -265,10 +265,15 @@ const AzureFunctionsResourceModal = (props: Props) => {
   // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {
+      props.setAppNameAvailability({
+        isAvailable: true,
+        message: ""
+      });
       const newFunctionState = props.selection.dropdownSelection;
       newFunctionState.chooseExistingRadioButtonSelected =
         props.chooseExistingRadioButtonSelected;
-      handleChange(newFunctionState);
+      setFormIsSendable(true);
+      updateForm(newFunctionState);
     } else {
       props.setAppNameAvailability({
         isAvailable: false,
