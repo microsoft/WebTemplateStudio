@@ -1,14 +1,4 @@
-.title {
-  font-family: Segoe UI;
-  font-style: normal;
-  font-weight: 300;
-  margin-bottom: 6px;
-  font-size: 24px;
-  color: var(--vscode-editor-foreground);
-}
-
 .container {
-  margin: 15px;
   margin-bottom: 30px;
 }
 
