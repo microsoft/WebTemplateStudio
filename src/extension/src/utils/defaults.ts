@@ -40,7 +40,7 @@ export class Defaults extends WizardServant {
       count++;
     }
     if (count > PROJECT_NAME_VALIDATION_LIMIT) {
-      return Promise.resolve({ payload: "" });
+      newAppName = "";
     }
     return {
       payload: {
