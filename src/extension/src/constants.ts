@@ -334,7 +334,8 @@ export enum ExtensionModule {
   VSCodeUI = "VSCodeUI",
   Logger = "Logger",
   DependencyChecker = "DependencyChecker",
-  CoreTSModule = "CoreTSModule"
+  CoreTSModule = "CoreTSModule",
+  Defaults = "Defaults"
 }
 
 export enum TelemetryEventName {
