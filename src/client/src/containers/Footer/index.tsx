@@ -236,7 +236,11 @@ class Footer extends React.Component<Props> {
               {pathname !== ROUTES.NEW_PROJECT && (
                 <Link
                   tabIndex={0}
-                  className={classnames(buttonStyles.buttonDark, styles.button)}
+                  className={classnames(
+                    buttonStyles.buttonDark,
+                    styles.button,
+                    styles.buttonBack
+                  )}
                   onClick={event => {
                     this.handleLinkBackClick(event, pathname);
                   }}
