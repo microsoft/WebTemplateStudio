@@ -11,7 +11,7 @@
       />
       <b-alert :show="!this.isValid" variant="danger" dismissible>{{this.emptyError}}</b-alert>
     </div>
-    <span class="nput-group-btn col-1">
+    <span class="input-group-btn col-1">
       <button :disabled="!this.isSubmitable" class="btn btn-primary" type="submit">Submit</button>
     </span>
   </form>
