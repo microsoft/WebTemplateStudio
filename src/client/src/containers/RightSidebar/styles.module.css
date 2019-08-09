@@ -2,11 +2,11 @@
   font-size: 1.6em;
   text-align: left;
   margin: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .container {
-  padding-bottom: 4vh;
+  padding-bottom: 6vh;
   padding-top: 1vh;
 }
 .button {
@@ -65,7 +65,7 @@
 }
 
 .rightViewCropped {
-  padding: 4vh 2vh;
+  padding: 6vh 2vh;
 }
 
 .summaryContainer {
@@ -124,4 +124,24 @@
 
 .backToAzureBox:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.statics {
+  margin-bottom: 30px;
+}
+
+.projectStatic {
+  font-size: 1.2em;
+  font-weight: 500;
+  text-align: left;
+  margin-left: 15px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 20px;
+}
+
+.value {
+  font-weight: normal;
+  margin-left: 7px;
 }

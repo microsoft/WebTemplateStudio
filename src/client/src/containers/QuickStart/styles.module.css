@@ -9,6 +9,7 @@
   padding: 10px 20px;
   vertical-align: middle;
   display: inline-flex;
+  margin-bottom: 5vh;
 }
 
 .quickStart:focus {
