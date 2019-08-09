@@ -120,7 +120,7 @@ const mockVsCodeApi = () => ({
                   },
                   {
                     name: "Vue",
-                    displayName: "Vue.js",
+                    displayName: "Vue",
                     summary: "JavaScript framework",
                     description:
                       "Vue is a lightweight, progressive JavaScript framework for building user interfaces. Vue is heavily focused on the view layer, and is designed to be simple and flexible.\r\n\r\nMore information about Vue can be found [here](https://vuejs.org/).\r\n",

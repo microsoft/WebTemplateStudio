@@ -29,7 +29,7 @@
   },
   {
     "name": "Vue",
-    "displayName": "Vue.js",
+    "displayName": "Vue",
     "summary": "JavaScript framework",
     "author": "Evan You",
     "order": "1",
