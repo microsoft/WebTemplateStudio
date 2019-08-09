@@ -35,6 +35,7 @@ button {
   margin-left: 2%;
   width: calc(100% - 40px);
 }
+
 .buttonContainer {
   display: flex;
   align-items: center;

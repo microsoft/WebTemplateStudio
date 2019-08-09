@@ -34,13 +34,15 @@
   margin-top: 40px;
   float: right;
   align-items: center;
+  display: flex;
 }
 
 .button {
+  align-items: center;
   font-size: 1.2em;
+  margin-left: 1em;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 10px 33px;
 }
 
@@ -48,8 +50,32 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+.iconCheck {
+  margin-top: 3px;
+  margin-left: 1em;
+  height: 14px;
+}
+
+.iconError {
+  margin-top: 3px;
+  margin-left: 1em;
+  height: 14px;
+  width: 14px;
+}
+
+.iconError path{
+fill: var(--vscode-errorForeground);
+}
+
+.iconCheck path {
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
+}
+
 .spinner {
-  margin-right: 5px;
+  animation: rotate steps(60) 1s infinite;
+  height: 14px;
+  width: 14px;
+  margin-top: 3px;
 }
 
 .spinner path {
@@ -66,30 +92,27 @@
   }
 }
 
-.spinner {
-  animation: rotate steps(60) 1s infinite;
-  height: 20px;
-  width: 20px;
+/* styles for generation status checkmark section*/
+.checkmarkSection{
+  background-color: var(--vscode-editorWidget-border);
 }
 
-.templateStatus {
+.containerWithMargin{
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
+}
+
+.checkmarkStatusRow{
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 
-.buttonToLink {
-  display: inline-block;
-  border: none;
-  margin: 0;
-  text-decoration: none;
-  background: var(--vscode-menu-background);
-  color: var(--vscode-textLink-foreground);
-  font-family: sans-serif;
-  font-size: 1rem;
-  cursor: pointer;
-  text-align: center;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+.checkmarkStatusRow > div{
+  padding: 0.6em 1.5em;
+}
+
+.inLine{
+  display: flex;
 }
 
 .loading {

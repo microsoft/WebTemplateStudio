@@ -3,6 +3,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import ReactMarkdown from "react-markdown";
+import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
+import { ReactComponent as ErrorRed } from "../../assets/errorred.svg";
 
 import asModal from "../../components/Modal";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
@@ -34,11 +36,11 @@ interface LinksDict {
 }
 const links: LinksDict = {
   "Azure Functions":
-    "[Azure](https://portal.azure.com/#blade/WebsitesExtension/FunctionsIFrameBladeMain)",
+    "[View](https://portal.azure.com/#blade/WebsitesExtension/FunctionsIFrameBladeMain)",
   "Cosmos DB":
-    "[Azure](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts)",
+    "[View](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts)",
   "App Service":
-    "[Azure](https://ms.portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites)"
+    "[View](https://ms.portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites)"
 };
 
 interface IStateProps {
@@ -76,8 +78,8 @@ const PostGenerationModal = ({
   history
 }: Props) => {
   const { formatMessage } = intl;
-  const templateGenerationInProgress =
-    !isTemplateGenerated && !isTemplatesFailed;
+  const templateGenerated = isTemplateGenerated && !isTemplatesFailed;
+  const templateGenerationInProgress = !isTemplateGenerated && !isTemplatesFailed;
 
   const LinkRenderer = (props: any) => (
     <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
@@ -112,15 +114,7 @@ const PostGenerationModal = ({
     if (isTemplatesFailed) {
       return formatMessage(messages.restartWizard);
     }
-    if (isTemplateGenerated) {
-      return formatMessage(messages.openInCode);
-    }
-    return (
-      <React.Fragment>
-        <Spinner className={styles.spinner} />
-        {formatMessage(messages.working)}
-      </React.Fragment>
-    );
+    return formatMessage(messages.openInCode);
   };
 
   const handleCreateAnotherProject = () => {
@@ -128,41 +122,131 @@ const PostGenerationModal = ({
     history.push(ROUTES.NEW_PROJECT);
   };
 
-  const renderServiceStatus = () => {
-    if (isTemplatesFailed) {
-      return formatMessage(messages.deploymentHalted);
+  const postGenMessage = () => {
+    if (isServicesSelected) {
+      return (
+        <div>
+          <p className={styles.sectionLine}>
+            {formatMessage(messages.generationCompleteWithAzure)}
+          </p>
+          <p className={styles.sectionLine}>
+            {formatMessage(messages.seeReadMePrefixWithAzure)}
+            <span className={styles.readMeText}>
+              {formatMessage(messages.readMe)}
+            </span>
+            {formatMessage(messages.seeReadMeSuffix)}
+          </p>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <p className={styles.sectionLine}>
+            {formatMessage(messages.seeReadMePrefix)}
+            <span className={styles.readMeText}>
+              {formatMessage(messages.readMe)}
+            </span>
+            {formatMessage(messages.seeReadMeSuffix)}
+          </p>
+        </div>
+      );
+    }
+  }
+
+  const renderTemplatesError = () =>{
+    return(
+      <div className={styles.sectionLine}>
+      {formatMessage(messages.failedToGenerate)}
+    </div>
+    );
+  }
+
+  const renderTemplatesCheckmark = () =>{
+    return(
+      <div className={styles.checkmarkStatusRow}>
+      <React.Fragment>
+        <div>{formatMessage(messages.projectCreation)}</div>
+        {(templateGenerationInProgress &&  (<div><Spinner className={styles.spinner} /></div>)) || (templateGenerated && (<div role="img" aria-label="project creation done">
+          <Checkmark className={styles.iconCheck} /></div>))}
+          {isTemplatesFailed && (<div><ErrorRed className={styles.iconError} /></div>)}
+      </React.Fragment>
+    </div>
+    );
+  }
+
+  const renderServiceError = () => {
+    if(isTemplatesFailed){
+      return(
+      <div className={styles.sectionLine}>
+        {isServicesSelected && formatMessage(messages.deploymentHalted)}
+      </div>
+      );
     }
     return Object.keys(serviceStatus).map((service: string, idx: number) => {
-      const serviceTitle = formatMessage(serviceStatus[service].title);
+    const serviceTitle = formatMessage(serviceStatus[service].title);
+      if (serviceStatus[service].isSelected && serviceStatus[service].isFailed) {
+        return (
+          <div className={styles.sectionLine}
+            key={`${messages.error.defaultMessage}${idx}`}
+          >{`${formatMessage(messages.error)} ${serviceTitle} ${formatMessage(
+            messages.deploymentFailure
+          )}`}</div>
+        );
+      }
+    });
+  };
+
+  const renderServiceCheckmark = () => {
+    if(isTemplatesFailed){
+      return Object.keys(serviceStatus).map((service: string, idx: number) => {
+        const serviceTitle = formatMessage(serviceStatus[service].title);
+          if (serviceStatus[service].isSelected) {
+              return (
+                <div className={styles.checkmarkStatusRow} key={`${messages.isDeploying.defaultMessage}${idx}`}>
+                <React.Fragment>
+                  <div>{serviceTitle}</div>
+                  <div><ErrorRed className={styles.iconError} /></div>
+                </React.Fragment>
+              </div>
+              );
+            }
+        });
+    }
+    return Object.keys(serviceStatus).map((service: string, idx: number) => {
+    const serviceTitle = formatMessage(serviceStatus[service].title);
       if (serviceStatus[service].isSelected) {
         if (serviceStatus[service].isFailed) {
           return (
-            <div
-              key={`${messages.error.defaultMessage}${idx}`}
-            >{`${formatMessage(messages.error)} ${serviceTitle} ${formatMessage(
-              messages.deploymentFailure
-            )}`}</div>
+            <div className={styles.checkmarkStatusRow} key={`${messages.isDeploying.defaultMessage}${idx}`}>
+            <React.Fragment>
+              <div>{serviceTitle}</div>
+              <div><ErrorRed className={styles.iconError} /></div>
+            </React.Fragment>
+          </div>
           );
         }
         if (serviceStatus[service].isDeployed) {
           return (
-            <ReactMarkdown
-              source={`${serviceTitle} ${formatMessage(
-                messages.deploymentSuccess
-              )} ${links[serviceTitle]}`}
-              key={`${messages.deploymentSuccess.defaultMessage}${idx}`}
-              renderers={{ link: LinkRenderer }}
-            />
+            <div className={styles.checkmarkStatusRow}>
+              <div>{serviceTitle}</div>
+              <div className={styles.inLine}>
+                <ReactMarkdown
+                  source={`${links[serviceTitle]}`}
+                  key={`${messages.deploymentSuccess.defaultMessage}${idx}`}
+                  renderers={{ link: LinkRenderer }} />
+                <div role="img" aria-label="Azure Service Deploy done">
+                  <Checkmark className={styles.iconCheck} />
+                </div>
+              </div>
+            </div >
           );
         }
         return (
-          <div
-            className={styles.loading}
-            key={`${messages.isDeploying.defaultMessage}${idx}`}
-          >
-            {`${formatMessage(messages.isDeploying)} ${formatMessage(
-              serviceStatus[service].title
-            )}`}
+          <div className={styles.checkmarkStatusRow} key={`${messages.isDeploying.defaultMessage}${idx}`}>
+            <React.Fragment>
+              <div>{serviceTitle}</div>
+              <div><Spinner className={styles.spinner} /></div>
+            </React.Fragment>
           </div>
         );
       }
@@ -174,68 +258,37 @@ const PostGenerationModal = ({
       <div className={styles.title}>
         {formatMessage(messages.creatingYourProject)}
       </div>
-      <div className={styles.templateStatus}>
-        <div className={styles.sectionLine}>
-          {isTemplatesFailed && formatMessage(messages.failedToGenerate)}
-        </div>
-        {!isTemplateGenerated && !isTemplatesFailed && (
-          <div className={styles.sectionLine}>{templateGenStatus}</div>
-        )}
-        {isTemplateGenerated && !isTemplatesFailed && (
-          <div>
-            <p className={styles.sectionLine}>
-              {formatMessage(messages.generationComplete)}
-            </p>
-            <p className={styles.sectionLine}>
-              {formatMessage(messages.openReadMe)}
-              <span className={styles.readMeText}>
-                {formatMessage(messages.readMe)}
-              </span>
-              {formatMessage(messages.toStart)}
-            </p>
-          </div>
-        )}
-      </div>
-      {isServicesSelected && (
-        <div className={styles.section}>
-          <div className={styles.azureTitle}>
-            {formatMessage(messages.azureServices)}
-          </div>
-          <div className={styles.sectionLine}>{renderServiceStatus()}</div>
-        </div>
-      )}
+
       <div className={styles.section}>
-        <div className={styles.sectionLineButton}>
-          {isTemplateGenerated && !isTemplatesFailed && isServicesDeployed && (
-            <button
-              className={styles.buttonToLink}
-              onClick={handleCreateAnotherProject}
-            >
-              {formatMessage(messages.createAnotherProject)}
-            </button>
-          )}
+        {templateGenerationInProgress && (<div className={styles.sectionLine}>{templateGenStatus}</div>)}
+        {templateGenerated && postGenMessage()}
+        {isTemplatesFailed && renderTemplatesError()}
+        {isServicesSelected && renderServiceError()}
+      </div>
+
+      <div className={classnames(styles.section, styles.checkmarkSection)}>
+        <div className={styles.containerWithMargin}>
+          {renderTemplatesCheckmark()}
+          {isServicesSelected && renderServiceCheckmark()}
         </div>
       </div>
-      <div className={styles.sectionLineButton}>
-        {isTemplateGenerated && !isTemplatesFailed && isServicesDeployed && (
-          <button
-            className={classnames(styles.buttonToLink)}
-            onClick={handleCloseWizard}
-          >
-            {formatMessage(messages.closeWizard)}
-          </button>
-        )}
-      </div>
-      <div className={styles.sectionLine}>
-        <a
-          className={styles.link}
-          href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
-          onKeyUp={keyUpHandler}
-        >
-          {formatMessage(messages.help)}
-        </a>
-      </div>
+
       <div className={styles.footerContainer}>
+        {isTemplatesFailed &&
+          (<a className={styles.link}
+            href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
+            onKeyUp={keyUpHandler}>
+            {formatMessage(messages.help)}
+          </a>)
+        }
+
+        {templateGenerated && isServicesDeployed && (
+          <button className={classnames(styles.button, buttonStyles.buttonDark)}
+            onClick={handleCreateAnotherProject}>
+            {formatMessage(messages.createAnotherProject)}
+          </button>)
+        }
+
         <button
           className={classnames(styles.button, {
             [buttonStyles.buttonDark]: templateGenerationInProgress,
