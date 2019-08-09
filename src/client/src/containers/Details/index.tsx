@@ -1,6 +1,12 @@
 import classnames from "classnames";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
+import { connect } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
+
+import { AppState } from "../../reducers";
+import RootAction from "../../actions/ActionType";
+import { openRedirectModalAction } from "../../actions/modalActions/modalActions";
 
 import { ReactComponent as BackArrow } from "../../assets/backarrow.svg";
 import { getSvg } from "../../utils/getSvgUrl";
@@ -12,6 +18,7 @@ import { KEY_EVENTS } from "../../utils/constants";
 
 import { IOption } from "../../types/option";
 import { ILicenseObject, License } from "../../types/license";
+import { IRedirectModalData } from "../RedirectModal";
 
 import {
   injectIntl,
@@ -19,7 +26,10 @@ import {
   InjectedIntl,
   FormattedMessage
 } from "react-intl";
-import keyUpHandler from "../../utils/keyUpHandler";
+
+interface IDispatchProps {
+  openRedirectModal: (license: IRedirectModalData | undefined) => any;
+}
 
 interface IProps {
   detailInfo: IOption;
@@ -28,10 +38,20 @@ interface IProps {
   intl: InjectedIntl;
 }
 
+type Props = IProps & IDispatchProps;
+
 const messages = defineMessages({
   none: {
     id: "details.none",
     defaultMessage: "None"
+  },
+  redirectLabel: {
+    id: "licenses.redirectLinkLabel",
+    defaultMessage: "{redirectLabel}"
+  },
+  genericRedirect: {
+    id: "redirectLabel.generic",
+    defaultMessage: "here"
   }
 });
 
@@ -39,13 +59,35 @@ const Details = ({
   detailInfo,
   formatteDetailInfo,
   handleBackClick,
-  intl
-}: IProps) => {
-  const LinkRenderer = (props: any) => (
-    <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
-      {props.children}
-    </a>
-  );
+  intl,
+  openRedirectModal
+}: Props) => {
+  const LinkRenderer = (props: any) => {
+    const genericRedirect: string = intl.formatMessage(
+      messages.genericRedirect
+    );
+    const redirectLinkLabel =
+      props.children[0].props.value === genericRedirect
+        ? props.href
+        : `${props.children[0].props.value} license link`;
+    return (
+      <button
+        className={styles.licenseButton}
+        onClick={() =>
+          openRedirectModal({
+            redirectLink: String(props.href),
+            redirectLinkLabel: intl.formatMessage(messages.redirectLabel, {
+              redirectLabel: redirectLinkLabel
+            }),
+            privacyStatementLink: "",
+            isThirdPartyLink: true
+          })
+        }
+      >
+        {props.children}
+      </button>
+    );
+  };
   const ParagraphRenderer = (props: any) => (
     <React.Fragment>
       <p className={styles.longDescription}>{props.children}</p>
@@ -85,6 +127,7 @@ const Details = ({
       return info;
     }
   };
+
   return (
     <React.Fragment>
       <div className={styles.container}>
@@ -154,13 +197,27 @@ const Details = ({
                             const licenseObject = license as ILicenseObject;
                             return (
                               <p key={license + idx.toString()}>
-                                <a
-                                  className={styles.link}
-                                  href={licenseObject.url}
-                                  onKeyUp={keyUpHandler}
+                                <button
+                                  className={styles.licenseButton}
+                                  onClick={() =>
+                                    openRedirectModal({
+                                      redirectLink: String(licenseObject.url),
+                                      redirectLinkLabel: intl.formatMessage(
+                                        messages.redirectLabel,
+                                        {
+                                          redirectLabel: `${
+                                            licenseObject.text
+                                          } license link`
+                                        }
+                                      ),
+                                      privacyStatementLink: "",
+                                      isThirdPartyLink: true
+                                    })
+                                  }
+                                  key={licenseObject.text}
                                 >
                                   {licenseObject.text}
-                                </a>
+                                </button>
                               </p>
                             );
                           }
@@ -195,4 +252,15 @@ const Details = ({
   );
 };
 
-export default injectIntl(Details);
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
+  openRedirectModal: license => {
+    dispatch(openRedirectModalAction(license));
+  }
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(injectIntl(Details));
