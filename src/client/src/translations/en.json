@@ -154,6 +154,8 @@
   "rightSidebar.backToAzurePage": "You haven’t added any hosting or database services. Click here to add services.",
   "rightSidebar.backendFramework": "Back-end Framework",
   "rightSidebar.frontendFramework": "Front-end Framework",
+  "rightSidebar.location": "Location",
+  "rightSidebar.projectName": "Name",
   "rightSidebar.projectType": "Project Type",
   "rightSidebar.services": "Services",
   "rightSidebar.yourProjectDetails": "Your Project Details",
