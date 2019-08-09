@@ -31,6 +31,22 @@ const TopNavBarLink = ({
       e.preventDefault();
     }
   };
+
+  const getAriaLabel = (
+    arialabeltext: FormattedMessage.MessageDescriptor,
+    isSelected = false
+  ): string => {
+    if (isSelected) {
+      arialabeltext = ARIA_LABELS_NAVIGATION.ARIA_LABELS_CURRENT_PAGE;
+    }
+    return intl.formatMessage(arialabeltext, {
+      pagesText: intl.formatMessage({
+        id: "ariaLabelForLink",
+        defaultMessage: text
+      })
+    });
+  };
+
   const linkTabIndex = disabled ? -1 : 0;
   return (
     <Link
@@ -41,26 +57,11 @@ const TopNavBarLink = ({
       onKeyUp={keyUpHandler}
       aria-label={
         visitedCheck || isSelected
-          ? intl.formatMessage(
+          ? getAriaLabel(
+              ARIA_LABELS_NAVIGATION.ARIA_LABELS_MESSAGES,
               isSelected
-                ? ARIA_LABELS_NAVIGATION.ARIA_LABELS_CURRENT_PAGE
-                : ARIA_LABELS_NAVIGATION.ARIA_LABELS_MESSAGES,
-              {
-                pagesText: intl.formatMessage({
-                  id: "ariaLabelForLink",
-                  defaultMessage: text
-                })
-              }
             )
-          : intl.formatMessage(
-              ARIA_LABELS_NAVIGATION.ARIA_LABELS_DISABLED_PAGE,
-              {
-                pagesText: intl.formatMessage({
-                  id: "ariaLabelForLink",
-                  defaultMessage: text
-                })
-              }
-            )
+          : getAriaLabel(ARIA_LABELS_NAVIGATION.ARIA_LABELS_DISABLED_PAGE)
       }
     >
       <div
