@@ -1,15 +1,11 @@
 import * as vscode from "vscode";
-import * as os from "os";
-import * as fs from "fs";
-import * as path from "path";
 
 import { Validator } from "./utils/validator";
 import {
   CONSTANTS,
   ExtensionModule,
   TelemetryEventName,
-  ExtensionCommand,
-  PROJECT_NAME_VALIDATION_LIMIT
+  ExtensionCommand
 } from "./constants";
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
@@ -23,6 +19,7 @@ import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
 import { DependencyChecker } from "./utils/dependencyChecker";
 import { CoreTSModule } from "./coreTSModule";
+import { Defaults } from "./utils/defaults";
 
 export class Controller {
   /**
@@ -39,6 +36,7 @@ export class Controller {
   private Validator: Validator;
   private DependencyChecker: DependencyChecker;
   private CoreTSModule: CoreTSModule;
+  private Defaults: Defaults;
 
   /**
    *  Defines the WizardServant modules to which wizard client commands are routed
@@ -53,7 +51,8 @@ export class Controller {
       [ExtensionModule.Generate, this.GenExperience],
       [ExtensionModule.Logger, Controller.Logger],
       [ExtensionModule.DependencyChecker, this.DependencyChecker],
-      [ExtensionModule.CoreTSModule, this.CoreTSModule]
+      [ExtensionModule.CoreTSModule, this.CoreTSModule],
+      [ExtensionModule.Defaults, this.Defaults]
     ]);
   }
 
@@ -113,6 +112,7 @@ export class Controller {
     this.GenExperience = new GenerationExperience(Controller.Telemetry);
     this.DependencyChecker = new DependencyChecker();
     this.CoreTSModule = new CoreTSModule();
+    this.Defaults = new Defaults();
     Logger.initializeOutputChannel(
       Controller.Telemetry.getExtensionName(this.context)
     );
@@ -159,7 +159,6 @@ export class Controller {
       GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
       Controller.loadUserSettings();
-      Controller.getProjectName();
 
       Controller.getVersionAndSendToClient(
         context,
@@ -169,33 +168,6 @@ export class Controller {
         TelemetryEventName.ExtensionLaunch
       );
     }
-  }
-
-  private static getProjectName() {
-    const userOutputPath = vscode.workspace
-      .getConfiguration()
-      .get<string>("wts.changeSaveToLocation");
-    const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
-    const defaultAppName = "myApp";
-    let newAppName = defaultAppName;
-    let count = 1;
-
-    while (
-      fs.existsSync(path.join(outputPath, newAppName)) &&
-      count <= PROJECT_NAME_VALIDATION_LIMIT
-    ) {
-      newAppName = `${defaultAppName}${count}`;
-      count++;
-    }
-    if (count > PROJECT_NAME_VALIDATION_LIMIT) {
-      return;
-    }
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetProjectName,
-      payload: {
-        projectName: newAppName
-      }
-    });
   }
 
   private static getVersionAndSendToClient(
@@ -212,20 +184,9 @@ export class Controller {
   }
 
   private static loadUserSettings() {
-    const userOutputPath = vscode.workspace
-      .getConfiguration()
-      .get<string>("wts.changeSaveToLocation");
     const preview = vscode.workspace
       .getConfiguration()
       .get<boolean>("wts.enablePreviewMode");
-
-    const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetOutputPath,
-      payload: {
-        outputPath: outputPath
-      }
-    });
 
     if (preview !== undefined) {
       Controller.reactPanelContext.postMessageWebview({
