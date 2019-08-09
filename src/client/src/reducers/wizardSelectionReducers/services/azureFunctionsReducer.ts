@@ -157,7 +157,7 @@ const azureFunctions = (
       return newFunctionState;
     case AZURE_TYPEKEYS.SAVE_AZURE_FUNCTIONS_SETTINGS:
       const newSelectionState = {
-        ...initialState,
+        ...state,
         selection: [
           {
             subscription: action.payload.subscription,
@@ -177,7 +177,6 @@ const azureFunctions = (
           action.payload.chooseExistingRadioButtonSelected
       };
       return newSelectionState;
-
     default:
       return state;
   }
