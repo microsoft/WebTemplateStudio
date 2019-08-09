@@ -420,7 +420,11 @@ export enum OS {
   Windows = "windows"
 }
 
-export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
-  Node: "node|10.14",
-  Flask: "python|3.7"
+export const BackendFrameworkInfo: { [s: string]: { [t: string]: string } } = {
+  Node: { version: "node|10.14", appCommandLine: "need to figure this out" },
+  Flask: {
+    version: "python|3.7",
+    appCommandLine:
+      "gunicorn --bind=0.0.0.0 --timeout 600 --chdir server server:app"
+  }
 };

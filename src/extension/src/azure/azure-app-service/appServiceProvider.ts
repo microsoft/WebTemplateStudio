@@ -38,11 +38,11 @@ export interface AppServiceSelections {
   appServicePlanName: string;
   sku: string;
   linuxFxVersion: string;
+  appCommandLine: string;
   location: string;
 }
 
 const APP_SERVICE_DEPLOYMENT_SUFFIX = "-app-service";
-
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
 
@@ -181,6 +181,9 @@ export class AppServiceProvider {
       },
       linuxFxVersion: {
         value: selections.linuxFxVersion
+      },
+      appCommandLine: {
+        value: selections.appCommandLine
       },
       subscriptionId: {
         value: selections.subscriptionItem.subscriptionId

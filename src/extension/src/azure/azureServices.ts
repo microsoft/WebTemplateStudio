@@ -19,7 +19,7 @@ import {
   DialogMessages,
   DialogResponses,
   ExtensionCommand,
-  BackendFrameworkLinuxVersion
+  BackendFrameworkInfo
 } from "../constants";
 import {
   SubscriptionError,
@@ -38,6 +38,7 @@ import {
   AppServiceSelections
 } from "./azure-app-service/appServiceProvider";
 import { NameGenerator } from "./utils/nameGenerator";
+import { version } from "moment";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -481,7 +482,9 @@ export class AzureServices extends WizardServant {
       appServicePlanName: aspName,
       sku: CONSTANTS.SKU_DESCRIPTION.BASIC.name,
       linuxFxVersion:
-        BackendFrameworkLinuxVersion[payload.engine.backendFramework],
+        BackendFrameworkInfo[payload.engine.backendFramework]["version"],
+      appCommandLine:
+        BackendFrameworkInfo[payload.engine.backendFramework]["appCommandLine"],
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
     };
 
