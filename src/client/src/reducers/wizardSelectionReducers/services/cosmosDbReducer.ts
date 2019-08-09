@@ -57,9 +57,18 @@ const initialState = {
 
 const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
   switch (action.type) {
+    case AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE:
+      const cosmosSelections = [...state.selection];
+      cosmosSelections.splice(action.payload, 1);
+      return {
+        ...state,
+        selection: cosmosSelections
+      };
+    case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
+      return initialState;
     case AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
       const newSelectionState = {
-        ...initialState,
+        ...state,
         selection: [
           {
             subscription: action.payload.subscription.value,
@@ -83,15 +92,6 @@ const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
         }
       };
       return newAvailabilityState;
-    case AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE:
-      const cosmosSelections = [...state.selection];
-      cosmosSelections.splice(action.payload, 1);
-      return {
-        ...state,
-        selection: cosmosSelections
-      };
-    case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
-      return initialState;
     default:
       return state;
   }
