@@ -268,7 +268,11 @@ export class GenerationExperience extends WizardServant {
       // kick off both services asynchronously
       Promise.all(serviceQueue).then(() => {
         if (payload.selectedAppService && connectionString) {
-          AzureServices.updateAppSettings(payload.appService, connectionString);
+          AzureServices.updateAppSettings(
+            payload.appService.resourceGroup,
+            payload.appService.siteName,
+            connectionString
+          );
         }
       });
     });

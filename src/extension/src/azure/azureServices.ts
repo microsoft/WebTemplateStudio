@@ -39,6 +39,7 @@ import {
 } from "./azure-app-service/appServiceProvider";
 import { NameGenerator } from "./utils/nameGenerator";
 import { StringDictionary } from "azure-arm-website/lib/models";
+import { ConnectionString } from "./utils/connectionString";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -615,18 +616,33 @@ export class AzureServices extends WizardServant {
       });
   }
   public static async updateAppSettings(
-    appServiceSelections: AppServiceSelections,
+    resourceGroupName: string,
+    webAppName: string,
     connectionString: string
   ) {
-    const rgName: string = appServiceSelections.resourceGroupItem.name;
-    const webAppName: string = appServiceSelections.siteName;
-    const settings: StringDictionary = {
-      properties: { COSMOS_DB_CONNECTION_STRING: connectionString }
-    };
+    const parsed: string = ConnectionString.parseConnectionString(
+      connectionString
+    );
+    const settings: StringDictionary = AzureServices.convertToSettings(parsed);
     AzureServices.AzureAppServiceProvider.updateAppSettings(
-      rgName,
+      resourceGroupName,
       webAppName,
       settings
     );
+  }
+
+  private static convertToSettings(
+    parsedConnectionString: string
+  ): { [s: string]: string } {
+    // format of parsedConnectionString: "<key1>=<value1>\n<key2>=<value2>\n<key3>=<value3>\n"
+    const fields = parsedConnectionString.split("\n");
+    const result: { [s: string]: string } = {};
+    for (let i: number = 0; i < fields.length - 1; i++) {
+      let field = fields[i].split("=");
+      let key = field[0];
+      let value = field[1];
+      result[key] = value;
+    }
+    return result;
   }
 }

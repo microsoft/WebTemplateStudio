@@ -273,7 +273,7 @@ export class AppServiceProvider {
   }
 
   public async updateAppSettings(
-    rgName: string,
+    resourceGroupName: string,
     webAppName: string,
     settings: StringDictionary
   ): Promise<void> {
@@ -281,7 +281,7 @@ export class AppServiceProvider {
       throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
     }
     this.webClient.webApps.updateApplicationSettings(
-      rgName,
+      resourceGroupName,
       webAppName,
       settings
     );
