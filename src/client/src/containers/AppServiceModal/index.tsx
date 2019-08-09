@@ -635,15 +635,15 @@ const AppServiceModal = (props: Props) => {
             {intl.formatMessage(azureModalMessages.appServicePlanSubLabel)}
           </div>
         </div>
+        {/* Save Button */}
+        <button
+          className={getButtonClassNames()}
+          onClick={handleAddResource}
+          disabled={!formIsSendable}
+        >
+          {intl.formatMessage(azureModalMessages.azureModalSave)}
+        </button>
       </div>
-      {/* Add Resource Button */}
-      <button
-        className={getButtonClassNames()}
-        onClick={handleAddResource}
-        disabled={!formIsSendable}
-      >
-        {intl.formatMessage(azureModalMessages.azureModalSave)}
-      </button>
     </React.Fragment>
   );
 };

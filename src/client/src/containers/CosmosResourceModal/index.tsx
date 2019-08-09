@@ -625,8 +625,7 @@ const CosmosResourceModal = (props: Props) => {
           true,
           props.intl.formatMessage(messages.apiSubLabel)
         )}
-      </div>
-      <div className={styles.buttonContainer}>
+        {/* Save Button */}
         <button
           className={getButtonClassNames()}
           disabled={!formIsSendable}
