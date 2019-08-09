@@ -103,6 +103,7 @@ const RedirectModal = (props: Props) => {
         rel="noreferrer noopener"
         className={styles.link}
         href={privacyStatementLink}
+        onKeyUp={keyUpHandler}
       >
         {intl.formatMessage(messages.privacyStatement)}
       </a>
