@@ -661,9 +661,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
         onClick={handleAddResource}
         disabled={!formIsSendable}
       >
-        {(props.selection &&
-          props.intl.formatMessage(azureModalMessages.azureModalSaveChanges)) ||
-          props.intl.formatMessage(azureModalMessages.azureModalAddResource)}
+        {props.intl.formatMessage(azureModalMessages.azureModalSave)}
       </button>
     </React.Fragment>
   );

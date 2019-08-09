@@ -632,11 +632,7 @@ const CosmosResourceModal = (props: Props) => {
           disabled={!formIsSendable}
           onClick={handleAddResource}
         >
-          {(props.selection &&
-            props.intl.formatMessage(
-              azureModalMessages.azureModalSaveChanges
-            )) ||
-            props.intl.formatMessage(azureModalMessages.azureModalAddResource)}
+          {props.intl.formatMessage(azureModalMessages.azureModalSave)}
         </button>
       </div>
     </div>
