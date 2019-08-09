@@ -623,7 +623,9 @@ export class AzureServices extends WizardServant {
     const parsed: string = ConnectionString.parseConnectionString(
       connectionString
     );
-    const settings: StringDictionary = AzureServices.convertToSettings(parsed);
+    const settings: StringDictionary = {
+      properties: AzureServices.convertToSettings(parsed)
+    };
     AzureServices.AzureAppServiceProvider.updateAppSettings(
       resourceGroupName,
       webAppName,
