@@ -280,11 +280,12 @@ class Footer extends React.Component<Props> {
               )}
               {enableCreateProjectButton && (
                 <button
-                  disabled={!areValidNames}
+                  disabled={!areValidNames || !isValidNameAndProjectPath}
                   className={classnames(styles.button, {
                     [buttonStyles.buttonDark]: !areValidNames,
                     [buttonStyles.buttonHighlightedBorder]: areValidNames,
-                    [styles.disabledOverlay]: !areValidNames
+                    [styles.disabledOverlay]:
+                      !areValidNames || !isValidNameAndProjectPath
                   })}
                   onClick={this.logMessageToVsCode}
                 >
