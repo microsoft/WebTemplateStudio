@@ -260,7 +260,7 @@ class Footer extends React.Component<Props> {
                   className={classnames(
                     styles.button,
                     styles.buttonNext,
-                    buttonStyles.buttonHighlightedBorder,
+                    buttonStyles.buttonHighlighted,
                     {
                       [buttonStyles.buttonDark]: !isValidNameAndProjectPath,
                       [styles.disabledOverlay]: !isValidNameAndProjectPath
@@ -287,7 +287,7 @@ class Footer extends React.Component<Props> {
                   disabled={!areValidNames || !isValidNameAndProjectPath}
                   className={classnames(styles.button, {
                     [buttonStyles.buttonDark]: !areValidNames,
-                    [buttonStyles.buttonHighlightedBorder]: areValidNames,
+                    [buttonStyles.buttonHighlighted]: areValidNames,
                     [styles.disabledOverlay]:
                       !areValidNames || !isValidNameAndProjectPath
                   })}
