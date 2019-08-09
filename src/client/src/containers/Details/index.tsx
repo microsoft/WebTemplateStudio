@@ -6,7 +6,7 @@ import { ThunkDispatch } from "redux-thunk";
 
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
-import * as ModalActions from "../../actions/modalActions/modalActions";
+import { openRedirectModalAction } from "../../actions/modalActions/modalActions";
 
 import { ReactComponent as BackArrow } from "../../assets/backarrow.svg";
 import { getSvg } from "../../utils/getSvgUrl";
@@ -256,7 +256,7 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   openRedirectModal: license => {
-    dispatch(ModalActions.openRedirectModalAction(license));
+    dispatch(openRedirectModalAction(license));
   }
 });
 
