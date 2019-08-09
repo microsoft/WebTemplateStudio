@@ -5,7 +5,8 @@ import { ServiceClientCredentials } from "ms-rest";
 import { WebSiteManagementClient } from "azure-arm-website";
 import {
   AppServicePlanCollection,
-  AppServicePlan
+  AppServicePlan,
+  StringDictionary
 } from "azure-arm-website/lib/models";
 import ResourceManagementClient, {
   ResourceManagementModels
@@ -269,5 +270,20 @@ export class AppServiceProvider {
     return allASP.some(asp => {
       return asp.name === name;
     });
+  }
+
+  public async updateAppSettings(
+    rgName: string,
+    webAppName: string,
+    settings: StringDictionary
+  ): Promise<void> {
+    if (this.webClient === undefined) {
+      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
+    }
+    this.webClient.webApps.updateApplicationSettings(
+      rgName,
+      webAppName,
+      settings
+    );
   }
 }

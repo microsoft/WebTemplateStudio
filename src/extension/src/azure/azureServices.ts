@@ -38,6 +38,7 @@ import {
   AppServiceSelections
 } from "./azure-app-service/appServiceProvider";
 import { NameGenerator } from "./utils/nameGenerator";
+import { StringDictionary } from "azure-arm-website/lib/models";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -612,5 +613,20 @@ export class AzureServices extends WizardServant {
           startTime: start
         };
       });
+  }
+  public static async updateAppSettings(
+    appServiceSelections: AppServiceSelections,
+    connectionString: string
+  ) {
+    const rgName: string = appServiceSelections.resourceGroupItem.name;
+    const webAppName: string = appServiceSelections.siteName;
+    const settings: StringDictionary = {
+      properties: { COSMOS_DB_CONNECTION_STRING: connectionString }
+    };
+    AzureServices.AzureAppServiceProvider.updateAppSettings(
+      rgName,
+      webAppName,
+      settings
+    );
   }
 }

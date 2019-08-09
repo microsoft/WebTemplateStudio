@@ -71,6 +71,7 @@ export class GenerationExperience extends WizardServant {
       azureFunctions: {},
       appService: {}
     };
+    let connectionString: string;
 
     GenerationExperience.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.UpdateGenStatus,
@@ -232,6 +233,7 @@ export class GenerationExperience extends WizardServant {
                   command: ExtensionCommand.UpdateGenStatus,
                   payload: progressObject
                 });
+                connectionString = dbObject.connectionString;
                 AzureServices.promptUserForCosmosReplacement(
                   enginePayload.path,
                   dbObject
@@ -262,8 +264,13 @@ export class GenerationExperience extends WizardServant {
           )
         );
       }
+
       // kick off both services asynchronously
-      Promise.all(serviceQueue);
+      Promise.all(serviceQueue).then(() => {
+        if (payload.selectedAppService && connectionString) {
+          AzureServices.updateAppSettings(payload.appService, connectionString);
+        }
+      });
     });
     return { payload: undefined };
   }
