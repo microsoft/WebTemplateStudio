@@ -39,6 +39,7 @@ const TopNavBarLink = ({
       onClick={handleClick}
       className={styles.container}
       onKeyUp={keyUpHandler}
+      id={"page" + pageNumber}
     >
       <div
         className={classnames(styles.text, {
