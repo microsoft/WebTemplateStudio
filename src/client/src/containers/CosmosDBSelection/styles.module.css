@@ -25,7 +25,7 @@
 
 .input {
   color: var(--vscode-editor-foreground);
-  background-color: var(--vscode-sideBar-background);
+  background: var(--vscode-editorWidget-border);
   text-overflow: ellipsis;
   font-size: 1.2em;
 }
