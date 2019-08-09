@@ -101,13 +101,10 @@ const Details = ({
   };
   const renderFormattedData = (
     info: string | FormattedMessage.MessageDescriptor | undefined,
-    isMarkdown: boolean,
-    isFrameworkDescription?: boolean
+    isMarkdown: boolean
   ) => {
     if (formatteDetailInfo) {
       if (isMarkdown) {
-        if (isFrameworkDescription) {
-        }
         return (
           <ReactMarkdown
             source={intl.formatMessage(
