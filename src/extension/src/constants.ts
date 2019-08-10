@@ -281,9 +281,10 @@ export const CONSTANTS = {
     SERVER_FOLDER: "server",
     DOT_VSCODE_FOLDER: ".vscode",
     SETTINGS_FILE_NAME: "settings.json",
-    SETTINGS_FILE: (id: string) => {
+    SETTINGS_FILE: (id: string, subpath: string) => {
       return `{
-    "appService.defaultWebAppToDeploy": "${id}"
+    "appService.defaultWebAppToDeploy": "${id}",
+    "appService.deploySubpath":""${subpath}
 }`;
     },
     DEPLOYMENT_FILE_NAME: ".deployment",
