@@ -21,7 +21,11 @@ export namespace Settings {
 
   export async function enableScmDoBuildDuringDeploy(fsPath: string) {
     await fse.writeFile(
-      path.join(fsPath, CONSTANTS.APP_SERVICE_DEPLOYMENT.DEPLOYMENT_FILE_NAME),
+      path.join(
+        fsPath,
+        CONSTANTS.APP_SERVICE_DEPLOYMENT.SERVER_FOLDER,
+        CONSTANTS.APP_SERVICE_DEPLOYMENT.DEPLOYMENT_FILE_NAME
+      ),
       CONSTANTS.APP_SERVICE_DEPLOYMENT.DEPLOYMENT_FILE
     );
   }

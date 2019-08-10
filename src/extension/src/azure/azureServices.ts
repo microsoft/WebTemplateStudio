@@ -38,7 +38,6 @@ import {
   AppServiceSelections
 } from "./azure-app-service/appServiceProvider";
 import { NameGenerator } from "./utils/nameGenerator";
-import { version } from "moment";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
