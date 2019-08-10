@@ -663,16 +663,15 @@ const AzureFunctionsResourceModal = (props: Props) => {
             })}
           </div>
         </div>
+        {/* Save Button */}
+        <button
+          className={getButtonClassNames()}
+          onClick={handleAddResource}
+          disabled={!formIsSendable}
+        >
+          {props.intl.formatMessage(azureModalMessages.azureModalSave)}
+        </button>
       </div>
-      <button
-        className={getButtonClassNames()}
-        onClick={handleAddResource}
-        disabled={!formIsSendable}
-      >
-        {(props.selection &&
-          props.intl.formatMessage(azureModalMessages.azureModalSaveChanges)) ||
-          props.intl.formatMessage(azureModalMessages.azureModalAddResource)}
-      </button>
     </React.Fragment>
   );
 };
