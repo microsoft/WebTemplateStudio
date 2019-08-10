@@ -4,10 +4,6 @@ import { CONSTANTS } from "../../constants";
 
 export namespace Settings {
   export async function setDeployDefault(id: string, fsPath: string) {
-    const subpath: string = path.join(
-      fsPath,
-      CONSTANTS.APP_SERVICE_DEPLOYMENT.SERVER_FOLDER
-    );
     const dotVSCodeFolder = path.join(
       fsPath,
       CONSTANTS.APP_SERVICE_DEPLOYMENT.DOT_VSCODE_FOLDER
@@ -19,7 +15,10 @@ export namespace Settings {
     );
     await fse.writeFile(
       settingPath,
-      CONSTANTS.APP_SERVICE_DEPLOYMENT.SETTINGS_FILE(id, subpath)
+      CONSTANTS.APP_SERVICE_DEPLOYMENT.SETTINGS_FILE(
+        id,
+        CONSTANTS.APP_SERVICE_DEPLOYMENT.SERVER_FOLDER
+      )
     );
   }
 
