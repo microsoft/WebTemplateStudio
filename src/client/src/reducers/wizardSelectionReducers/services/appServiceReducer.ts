@@ -76,7 +76,7 @@ const appService = (
       return initialState;
     case AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS:
       const newSelectionState = {
-        ...initialState,
+        ...state,
         selection: {
           subscription: action.payload.subscription.value,
           resourceGroup: action.payload.resourceGroup.value,

@@ -224,6 +224,9 @@ const CosmosResourceModal = (props: Props) => {
   };
 
   React.useEffect(() => {
+    if (!cosmosFormData.accountName.value) {
+      return;
+    }
     setCosmosModalButtonStatus(
       cosmosFormData,
       props.isValidatingName,
@@ -268,10 +271,15 @@ const CosmosResourceModal = (props: Props) => {
   // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {
+      props.setCosmosResourceAccountNameAvailability({
+        isAvailable: true,
+        message: ""
+      });
       const newCosmosDBState = props.selection.dropdownSelection;
       newCosmosDBState.chooseExistingRadioButtonSelected =
         props.chooseExistingRadioButtonSelected;
-      handleChange(newCosmosDBState);
+      setFormIsSendable(true);
+      updateForm(newCosmosDBState);
     } else {
       props.setCosmosResourceAccountNameAvailability({
         isAvailable: false,
@@ -625,18 +633,13 @@ const CosmosResourceModal = (props: Props) => {
           true,
           props.intl.formatMessage(messages.apiSubLabel)
         )}
-      </div>
-      <div className={styles.buttonContainer}>
+        {/* Save Button */}
         <button
           className={getButtonClassNames()}
           disabled={!formIsSendable}
           onClick={handleAddResource}
         >
-          {(props.selection &&
-            props.intl.formatMessage(
-              azureModalMessages.azureModalSaveChanges
-            )) ||
-            props.intl.formatMessage(azureModalMessages.azureModalAddResource)}
+          {props.intl.formatMessage(azureModalMessages.azureModalSave)}
         </button>
       </div>
     </div>

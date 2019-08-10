@@ -5,6 +5,14 @@ const messages = defineMessages({
     id: "rightSidebar.yourProjectDetails",
     defaultMessage: "Your Project Details"
   },
+  projectName: {
+    id: "rightSidebar.projectName",
+    defaultMessage: "Name"
+  },
+  location: {
+    id: "rightSidebar.location",
+    defaultMessage: "Location"
+  },
   projectType: {
     id: "rightSidebar.projectType",
     defaultMessage: "Project Type"

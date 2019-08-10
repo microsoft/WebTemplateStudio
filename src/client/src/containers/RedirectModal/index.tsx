@@ -14,6 +14,7 @@ import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 export interface IRedirectModalData {
   redirectLink: string;
@@ -102,6 +103,7 @@ const RedirectModal = (props: Props) => {
         rel="noreferrer noopener"
         className={styles.link}
         href={privacyStatementLink}
+        onKeyUp={keyUpHandler}
       >
         {intl.formatMessage(messages.privacyStatement)}
       </a>
@@ -140,6 +142,7 @@ const RedirectModal = (props: Props) => {
             props.closeModal();
           }}
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
+          onKeyUp={keyUpHandler}
         >
           {intl.formatMessage(messages.OK)}
         </a>

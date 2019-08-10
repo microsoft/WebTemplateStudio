@@ -265,9 +265,14 @@ const AppServiceModal = (props: Props) => {
   // Update form data with data from store if it exists
   React.useEffect(() => {
     if (selection) {
-      const newFunctionState = selection.dropdownSelection;
-      newFunctionState.chooseExistingRadioButtonSelected = chooseExistingRadioButtonSelected;
-      handleChange(newFunctionState);
+      setSiteNameAvailability({
+        isAvailable: true,
+        message: ""
+      });
+      const newAppServiceState = selection.dropdownSelection;
+      newAppServiceState.chooseExistingRadioButtonSelected = chooseExistingRadioButtonSelected;
+      setFormIsSendable(true);
+      updateForm(newAppServiceState);
     } else {
       setSiteNameAvailability({
         isAvailable: false,
@@ -277,6 +282,9 @@ const AppServiceModal = (props: Props) => {
   }, []);
 
   React.useEffect(() => {
+    if (!appServiceFormData.siteName.value) {
+      return;
+    }
     setAppServiceModalButtonStatus(
       appServiceFormData,
       isValidatingName,
@@ -635,17 +643,15 @@ const AppServiceModal = (props: Props) => {
             {intl.formatMessage(azureModalMessages.appServicePlanSubLabel)}
           </div>
         </div>
+        {/* Save Button */}
+        <button
+          className={getButtonClassNames()}
+          onClick={handleAddResource}
+          disabled={!formIsSendable}
+        >
+          {intl.formatMessage(azureModalMessages.azureModalSave)}
+        </button>
       </div>
-      {/* Add Resource Button */}
-      <button
-        className={getButtonClassNames()}
-        onClick={handleAddResource}
-        disabled={!formIsSendable}
-      >
-        {(selection &&
-          intl.formatMessage(azureModalMessages.azureModalSaveChanges)) ||
-          intl.formatMessage(azureModalMessages.azureModalAddResource)}
-      </button>
     </React.Fragment>
   );
 };
