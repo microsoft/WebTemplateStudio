@@ -260,6 +260,10 @@ export const CONSTANTS = {
     MAX_LENGTH: 60,
     MIN_LENGTH: 3
   },
+  COSMOS_DB_NAME: {
+    MAX_LENGTH: 31,
+    MIN_LENGTH: 3
+  },
   SKU_DESCRIPTION: {
     FREE: {
       capacity: 1,

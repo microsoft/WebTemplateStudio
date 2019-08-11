@@ -332,8 +332,8 @@ export class CosmosDBDeploy {
     }
     name = name ? name.trim() : "";
 
-    const min = 3;
-    const max = 31;
+    const min = CONSTANTS.COSMOS_DB_NAME.MIN_LENGTH;
+    const max = CONSTANTS.COSMOS_DB_NAME.MAX_LENGTH;
 
     if (name.length < min || name.length > max) {
       return CONSTANTS.ERRORS.NAME_MIN_MAX(min, max);

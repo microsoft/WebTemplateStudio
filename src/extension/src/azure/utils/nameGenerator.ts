@@ -17,7 +17,7 @@ export namespace NameGenerator {
       projectName = projectName.toLowerCase();
     }
 
-    let result = NameGenerator.generateName(projectName, undefined);
+    let result = NameGenerator.generateName(projectName, azureType);
     let isValid: boolean = await AzureServices.validateNameForAzureType(
       projectName,
       userSubscriptionItem,
@@ -26,7 +26,7 @@ export namespace NameGenerator {
 
     let tries = 0;
     while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
-      result = NameGenerator.generateName(projectName, undefined);
+      result = NameGenerator.generateName(projectName, azureType);
       isValid = await AzureServices.validateNameForAzureType(
         projectName,
         userSubscriptionItem,
@@ -40,12 +40,22 @@ export namespace NameGenerator {
 
   export function generateName(
     userProjectName: string,
-    resourceType?: string
+    azureType?: AzureResourceType
   ): string {
+    let result;
     const timestamp = unixToSuffix(Date.now());
-    const suffix =
-      resourceType === undefined ? timestamp : resourceType + "-" + timestamp;
-    return userProjectName + "-" + suffix;
+    result = userProjectName + "-" + timestamp;
+    if (
+      azureType === AzureResourceType.Functions ||
+      azureType === AzureResourceType.AppService
+    ) {
+      return result.substr(0, CONSTANTS.APP_NAME.MAX_LENGTH);
+    }
+    if (azureType === AzureResourceType.Cosmos) {
+      return result.substr(0, CONSTANTS.COSMOS_DB_NAME.MAX_LENGTH);
+    } else {
+      return result;
+    }
   }
 
   function unixToSuffix(unixTimestamp: any): string {
