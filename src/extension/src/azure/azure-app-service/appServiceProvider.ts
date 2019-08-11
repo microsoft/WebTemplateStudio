@@ -38,7 +38,6 @@ export interface AppServiceSelections {
   appServicePlanName: string;
   sku: string;
   linuxFxVersion: string;
-  appCommandLine: string;
   location: string;
 }
 
@@ -181,9 +180,6 @@ export class AppServiceProvider {
       },
       linuxFxVersion: {
         value: selections.linuxFxVersion
-      },
-      appCommandLine: {
-        value: selections.appCommandLine
       },
       subscriptionId: {
         value: selections.subscriptionItem.subscriptionId

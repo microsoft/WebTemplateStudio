@@ -23,8 +23,7 @@
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
         "siteConfig": {
-          "linuxFxVersion": "[parameters('linuxFxVersion')]",
-          "appCommandLine": "[parameters('appCommandLine')]"
+          "linuxFxVersion": "[parameters('linuxFxVersion')]"
         }
       },
       "dependsOn": [
@@ -49,9 +48,6 @@
       "type": "string"
     },
     "location": {
-      "type": "string"
-    },
-    "appCommandLine": {
       "type": "string"
     }
   },

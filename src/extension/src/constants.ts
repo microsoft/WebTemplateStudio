@@ -284,7 +284,7 @@ export const CONSTANTS = {
     SETTINGS_FILE: (id: string, subpath: string) => {
       return `{
     "appService.defaultWebAppToDeploy": "${id}",
-    "appService.deploySubpath":""${subpath}
+    "appService.deploySubpath":"${subpath}"
 }`;
     },
     DEPLOYMENT_FILE_NAME: ".deployment",
@@ -422,11 +422,7 @@ export enum OS {
   Windows = "windows"
 }
 
-export const BackendFrameworkInfo: { [s: string]: { [t: string]: string } } = {
-  Node: { version: "node|10.14", appCommandLine: "need to figure this out" },
-  Flask: {
-    version: "python|3.7",
-    appCommandLine:
-      "gunicorn --bind=0.0.0.0 --timeout 600 --chdir server server:app"
-  }
+export const BackendFrameworkVersionInfo: { [s: string]: string } = {
+  Node: "node|10.14",
+  Flask: "python|3.7"
 };
