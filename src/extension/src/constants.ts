@@ -422,7 +422,7 @@ export enum OS {
   Windows = "windows"
 }
 
-export const BackendFrameworkVersionInfo: { [s: string]: string } = {
+export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
   Node: "node|10.14",
   Flask: "python|3.7"
 };

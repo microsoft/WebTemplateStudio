@@ -19,7 +19,7 @@ import {
   DialogMessages,
   DialogResponses,
   ExtensionCommand,
-  BackendFrameworkVersionInfo
+  BackendFrameworkLinuxVersion
 } from "../constants";
 import {
   SubscriptionError,
@@ -481,7 +481,7 @@ export class AzureServices extends WizardServant {
       appServicePlanName: aspName,
       sku: CONSTANTS.SKU_DESCRIPTION.BASIC.name,
       linuxFxVersion:
-        BackendFrameworkVersionInfo[payload.engine.backendFramework],
+        BackendFrameworkLinuxVersion[payload.engine.backendFramework],
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
     };
 
