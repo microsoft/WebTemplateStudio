@@ -1,9 +1,7 @@
 import * as vscode from "vscode";
 import { Controller } from "./controller";
-// import { Deploy } from "./deploy";
-import * as childProcess from "child_process";
-const util = require("util");
-const exec = util.promisify(require("child_process").exec);
+import { Deploy } from "./deploy";
+import { IVSCodeProgressType } from "./types/vscodeProgressType";
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -16,35 +14,24 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "webTemplateStudioExtension.deployApp",
       async () => {
-        const folder = vscode.workspace.workspaceFolders
-          ? vscode.workspace.workspaceFolders[0]
-          : undefined;
-        const folderPath = folder ? folder.uri.fsPath : undefined;
+        const folderPath = Deploy.getCurrentWorkingDirectory();
         console.log(folderPath);
-        // const { stdout, stderr } = await exec("echo %cd%", {
-        //   cwd: folderPath
-        // });
-        // console.log(stdout);
-        // console.log(stderr);
-        // await exec(`cd ${folderPath}`);
-        // const { stdout, stderr } = await exec(
-        //   `npm install --prefix ${folderPath}`
-        // );
-        // console.log("here");
-        // console.log(stdout);
-        // console.log(stderr);
-        const { stdout, stderr } = await childProcess.spawn(
-          "npm",
-          ["install"],
-          { cwd: folderPath }
-        );
-        console.log("here");
-        console.log(stdout);
-        console.log(stderr);
-        await exec("npm build", { cwd: folderPath });
+        if (!folderPath) {
+          vscode.window.showErrorMessage("No Project Opened Up");
+          return;
+        }
 
-        // Deploy.installDependencies().then(() => Deploy.buildProject());
-        // Deploy.installDependencies();
+        vscode.window.withProgress(
+          {
+            location: vscode.ProgressLocation.Notification,
+            title: "Preparing for Deployment"
+          },
+          async (progress: vscode.Progress<IVSCodeProgressType>) => {
+            await Deploy.installDependencies(progress, folderPath);
+            console.log("here");
+            await Deploy.buildProject(progress, folderPath);
+          }
+        );
       }
     )
   );
