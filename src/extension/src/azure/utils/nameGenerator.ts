@@ -52,11 +52,15 @@ export namespace NameGenerator {
     const fullDate = new Date(unixTimestamp);
     const year = fullDate.getFullYear().toString();
     // getMonth() returns month as a zero-based value
-    const month = (fullDate.getMonth() + 1).toString();
-    const date = fullDate.getDate().toString();
-    const hour = fullDate.getHours().toString();
-    const min = fullDate.getMinutes().toString();
-    const sec = fullDate.getSeconds().toString();
+    const month = padStart(fullDate.getMonth() + 1);
+    const date = padStart(fullDate.getDate());
+    const hour = padStart(fullDate.getHours());
+    const min = padStart(fullDate.getMinutes());
+    const sec = padStart(fullDate.getSeconds());
     return year.concat(month, date, hour, min, sec);
+  }
+
+  function padStart(x: number): string {
+    return x.toString().padStart(2, "0");
   }
 }
