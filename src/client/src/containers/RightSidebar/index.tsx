@@ -50,6 +50,10 @@ import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
 import { getPageCount } from "../../selectors/wizardSelectionSelector";
+import {
+  getOutputPath,
+  getProjectName
+} from "../../selectors/wizardSelectionSelector";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -61,6 +65,8 @@ interface IDispatchProps {
 }
 
 interface IRightSidebarProps {
+  outputPath: string;
+  projectName: string;
   selection: SelectionState;
   projectTypeDropdownItems: IDropDownOptionType[];
   frontEndOptions: IOption[];
@@ -228,7 +234,9 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       intl,
       contentOptions,
       isValidNameAndProjectPath,
-      openViewLicensesModal
+      openViewLicensesModal,
+      outputPath,
+      projectName
     } = this.props;
     const { formatMessage } = intl;
     const { frontendOptions, backendOptions } = contentOptions;
@@ -250,6 +258,21 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 <div className={styles.title}>
                   {formatMessage(messages.yourProjectDetails)}
                 </div>
+                <div className={styles.statics}>
+                  <div className={styles.projectStatic}>
+                    {formatMessage(messages.projectName)}:
+                    <span title={projectName} className={styles.value}>
+                      {projectName}
+                    </span>
+                  </div>
+                  <div className={styles.projectStatic}>
+                    {formatMessage(messages.location)}:
+                    <span title={outputPath} className={styles.value}>
+                      {outputPath}
+                    </span>
+                  </div>
+                </div>
+                <div className={styles.decoratedLine} />
                 <RightSidebarDropdown
                   options={this.props.frontendDropdownItems}
                   handleDropdownChange={
@@ -351,6 +374,8 @@ function convertOptionToDropdownItem(option: any): IDropDownOptionType {
 }
 
 const mapStateToProps = (state: AppState): IRightSidebarProps => ({
+  outputPath: getOutputPath(state),
+  projectName: getProjectName(state),
   selection: state.selection,
   projectTypeDropdownItems: convertOptionsToDropdownItems(
     state.wizardContent.projectTypes

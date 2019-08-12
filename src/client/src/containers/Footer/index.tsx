@@ -262,7 +262,11 @@ class Footer extends React.Component<Props> {
               {pathname !== ROUTES.NEW_PROJECT && (
                 <Link
                   tabIndex={0}
-                  className={classnames(buttonStyles.buttonDark, styles.button)}
+                  className={classnames(
+                    buttonStyles.buttonDark,
+                    styles.button,
+                    styles.buttonBack
+                  )}
                   onClick={event => {
                     this.handleLinkBackClick(event, pathname);
                   }}
@@ -282,7 +286,7 @@ class Footer extends React.Component<Props> {
                   className={classnames(
                     styles.button,
                     styles.buttonNext,
-                    buttonStyles.buttonHighlightedBorder,
+                    buttonStyles.buttonHighlighted,
                     {
                       [buttonStyles.buttonDark]: !isValidNameAndProjectPath,
                       [styles.disabledOverlay]: !isValidNameAndProjectPath
@@ -306,11 +310,12 @@ class Footer extends React.Component<Props> {
               )}
               {enableCreateProjectButton && (
                 <button
-                  disabled={!areValidNames}
+                  disabled={!areValidNames || !isValidNameAndProjectPath}
                   className={classnames(styles.button, {
                     [buttonStyles.buttonDark]: !areValidNames,
-                    [buttonStyles.buttonHighlightedBorder]: areValidNames,
-                    [styles.disabledOverlay]: !areValidNames
+                    [buttonStyles.buttonHighlighted]: areValidNames,
+                    [styles.disabledOverlay]:
+                      !areValidNames || !isValidNameAndProjectPath
                   })}
                   onClick={this.logMessageToVsCode}
                 >

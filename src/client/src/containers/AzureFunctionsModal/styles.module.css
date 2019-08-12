@@ -41,11 +41,10 @@
 }
 
 .button {
-  margin-top: 2em;
-  font-size: 1.1em;
-  border: none;
-  height: 50%;
-  align-self: flex-end;
+  float: right;
+  padding: 0.6em 3.5em;
+  margin: 0.5em 0;
+  font-size: 1.3em;
 }
 
 .button:focus {
