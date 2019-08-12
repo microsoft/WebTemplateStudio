@@ -288,11 +288,13 @@ export const CONSTANTS = {
   },
   VALIDATION_LIMIT: 3,
   APP_SERVICE_DEPLOYMENT: {
+    SERVER_FOLDER: "server",
     DOT_VSCODE_FOLDER: ".vscode",
     SETTINGS_FILE_NAME: "settings.json",
-    SETTINGS_FILE: (id: string) => {
+    SETTINGS_FILE: (id: string, subpath: string) => {
       return `{
-    "appService.defaultWebAppToDeploy": "${id}"
+    "appService.defaultWebAppToDeploy": "${id}",
+    "appService.deploySubpath": "${subpath}"
 }`;
     },
     DEPLOYMENT_FILE_NAME: ".deployment",

@@ -42,7 +42,6 @@ export interface AppServiceSelections {
 }
 
 const APP_SERVICE_DEPLOYMENT_SUFFIX = "-app-service";
-
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
 
