@@ -68,13 +68,13 @@ export namespace NameGenerator {
     if (azureType === AzureResourceType.Cosmos) {
       return projectName.substr(
         0,
-        CONSTANTS.COSMOS_DB_NAME.MAX_LENGTH - suffixLength
+        CONSTANTS.COSMOS_DB_NAME.MAX_LENGTH - suffixLength + 1
       );
     }
     if (azureType === AzureResourceType.AppServicePlan) {
       return projectName.substr(
         0,
-        CONSTANTS.ASP_NAME.MAX_LENGTH - suffixLength
+        CONSTANTS.ASP_NAME.MAX_LENGTH - suffixLength + 1
       );
     }
     return projectName;
