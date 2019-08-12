@@ -15,7 +15,6 @@ export function activate(context: vscode.ExtensionContext) {
       "webTemplateStudioExtension.deployApp",
       async () => {
         const folderPath = Deploy.getCurrentWorkingDirectory();
-        console.log(folderPath);
         if (!folderPath) {
           vscode.window.showErrorMessage("No Project Opened Up");
           return;
@@ -27,9 +26,10 @@ export function activate(context: vscode.ExtensionContext) {
             title: "Preparing for Deployment"
           },
           async (progress: vscode.Progress<IVSCodeProgressType>) => {
-            await Deploy.installDependencies(progress, folderPath);
-            console.log("here");
-            await Deploy.buildProject(progress, folderPath);
+            // await Deploy.installDependencies(progress, folderPath);
+            // await Deploy.buildProject(progress, folderPath);
+            // const extension = vscode.extensions.getExtension("ms-azuretools.vscode-azureappservice")!.exports;
+            vscode.commands.executeCommand("appService.Deploy");
           }
         );
       }

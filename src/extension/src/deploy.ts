@@ -1,9 +1,7 @@
-import * as childProcess from "child_process";
+import { spawn } from "child_process";
 import * as vscode from "vscode";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import * as os from "os";
-// import * as util from "util";
-// const spawn = util.promisify(childProcess.spawn);
 
 export class Deploy {
   public static getCurrentWorkingDirectory(): string | undefined {
@@ -19,13 +17,11 @@ export class Deploy {
   ) {
     const command = os.platform() == "win32" ? "npm.cmd" : "npm";
     progress.report({ message: "Installing Dependencies" });
-    const cp = childProcess.spawnSync(command, ["install"], {
-      cwd: folderPath
-    });
-    console.log("ending process");
-    console.log(cp);
-    console.log(cp.stdout.toString());
-    console.log(cp.stderr.toString());
+    return Deploy.promiseFromChildProcess(
+      spawn(command, ["install"], {
+        cwd: folderPath
+      })
+    );
   }
 
   public static async buildProject(
@@ -34,8 +30,17 @@ export class Deploy {
   ) {
     const command = os.platform() == "win32" ? "npm.cmd" : "npm";
     progress.report({ message: "Building Project" });
-    childProcess.spawnSync(command, ["run-script", "build"], {
-      cwd: folderPath
+    return Deploy.promiseFromChildProcess(
+      spawn(command, ["run-script", "build"], {
+        cwd: folderPath
+      })
+    );
+  }
+
+  public static promiseFromChildProcess(child: any) {
+    return new Promise(function(resolve, reject) {
+      child.addListener("error", reject);
+      child.addListener("exit", resolve);
     });
   }
 }
