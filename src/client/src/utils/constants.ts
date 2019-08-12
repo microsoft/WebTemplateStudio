@@ -48,6 +48,14 @@ const ARIA_LABELS_NAVIGATION = defineMessages({
   }
 });
 
+enum PAGEID {
+  NEW_PROJECT = 1,
+  SELECT_FRAMEWORKS = 2,
+  SELECT_PAGES = 3,
+  AZURE_LOGIN = 4,
+  REVIEW_AND_GENERATE = 5
+}
+
 const PAYLOAD_MESSAGES_TEXT = {
   RESET_PAGES_TEXT: "Sending reset pages request...",
   SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
@@ -181,5 +189,6 @@ export {
   FRAMEWORK_TYPE,
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,
-  BOOTSTRAP_LICENSE
+  BOOTSTRAP_LICENSE,
+  PAGEID
 };
