@@ -55,7 +55,7 @@ export namespace NameGenerator {
     projectName: string,
     azureType?: AzureResourceType
   ): string {
-    const suffixLength = 15; // formar of suffix is "yyyymmddhhmmss-"
+    const suffixLength = 15; // format of suffix is "yyyymmddhhmmss-"
     if (
       azureType === AzureResourceType.AppService ||
       azureType === AzureResourceType.Functions
