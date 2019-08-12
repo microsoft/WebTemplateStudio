@@ -19,7 +19,7 @@ export const CONSTANTS = {
     ),
     CREATION_TRIES_EXCEEDED: (resourceType: string) => {
       return localize(
-        "error.triesExceedeed",
+        "error.triesExceeded",
         "Number of tries exceeded for creating {0}",
         resourceType
       );
@@ -43,6 +43,10 @@ export const CONSTANTS = {
         type
       );
     },
+    APP_SERVICE_UNDEFINED_ID: localize(
+      "error.appServiceUndefinedId",
+      "Undefined App Service ID"
+    ),
     LOGOUT_FAILED: localize(
       "error.loginTimeout",
       "Timeout. User is not logged in"
@@ -226,14 +230,14 @@ export const CONSTANTS = {
   },
   GENERATE_ENDPOINT: "/api/generate",
   ENGINE_DIRECTORY: "./src/api/darwin/CoreTemplateStudio.Api",
-  CONNECTION_STRING_MONGO: function(
+  CONNECTION_STRING_MONGO: (
     username: string,
     password: string,
     origin: string
-  ) {
+  ) => {
     return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMOSDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
   },
-  CONNECTION_STRING_SQL: function(origin: string, primaryKey: string) {
+  CONNECTION_STRING_SQL: (origin: string, primaryKey: string) => {
     return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
@@ -272,7 +276,19 @@ export const CONSTANTS = {
       tier: "Basic"
     }
   },
-  VALIDATION_LIMIT: 3
+  VALIDATION_LIMIT: 3,
+  APP_SERVICE_DEPLOYMENT: {
+    DOT_VSCODE_FOLDER: ".vscode",
+    SETTINGS_FILE_NAME: "settings.json",
+    SETTINGS_FILE: (id: string) => {
+      return `{
+    "appService.defaultWebAppToDeploy": "${id}"
+}`;
+    },
+    DEPLOYMENT_FILE_NAME: ".deployment",
+    DEPLOYMENT_FILE: `[config] 
+SCM_DO_BUILD_DURING_DEPLOYMENT=true`
+  }
 };
 
 export const PROJECT_NAME_VALIDATION_LIMIT = 50;
@@ -405,6 +421,6 @@ export enum OS {
 }
 
 export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
-  Node: "node|lts",
+  Node: "node|10.14",
   Flask: "python|3.7"
 };
