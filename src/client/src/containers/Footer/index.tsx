@@ -144,7 +144,7 @@ class Footer extends React.Component<Props> {
   public isReviewAndGenerate = (): boolean => {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
-  public findPageID = (pathname: string): string => {
+  public findPageID = (pathname: string): Number => {
     switch (pathname) {
       case ROUTES.NEW_PROJECT:
         return PAGEID.NEW_PROJECT;
@@ -169,7 +169,7 @@ class Footer extends React.Component<Props> {
       setRouteVisited(pathsNext[pathname]);
     }
     let pageNavLink = document.getElementById(
-      this.findPageID(pathsNext[pathname])
+      "page" + this.findPageID(pathsNext[pathname])
     );
     if (pageNavLink) {
       pageNavLink.focus();
@@ -186,7 +186,7 @@ class Footer extends React.Component<Props> {
       setRouteVisited(pathname);
     }
     let pageNavLink = document.getElementById(
-      this.findPageID(pathsBack[pathname])
+      "page" + this.findPageID(pathsBack[pathname])
     );
     if (pageNavLink) {
       pageNavLink.focus();

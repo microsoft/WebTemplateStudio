@@ -48,13 +48,13 @@ const ARIA_LABELS_NAVIGATION = defineMessages({
   }
 });
 
-const PAGEID = {
-  NEW_PROJECT: "page1",
-  SELECT_FRAMEWORKS: "page2",
-  SELECT_PAGES: "page3",
-  AZURE_LOGIN: "page4",
-  REVIEW_AND_GENERATE: "page5"
-};
+enum PAGEID {
+  NEW_PROJECT = 1,
+  SELECT_FRAMEWORKS = 2,
+  SELECT_PAGES = 3,
+  AZURE_LOGIN = 4,
+  REVIEW_AND_GENERATE = 5
+}
 
 const PAYLOAD_MESSAGES_TEXT = {
   RESET_PAGES_TEXT: "Sending reset pages request...",
