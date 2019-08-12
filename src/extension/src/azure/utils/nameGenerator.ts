@@ -1,9 +1,5 @@
 import { SubscriptionItem } from "../azure-auth/azureAuth";
-import {
-  AzureResourceType,
-  CONSTANTS,
-  PROJECT_NAME_VALIDATION_LIMIT
-} from "../../constants";
+import { AzureResourceType, CONSTANTS } from "../../constants";
 import { AzureServices } from "../azureServices";
 
 export namespace NameGenerator {
