@@ -3,7 +3,7 @@
   margin-bottom: 12px;
   cursor: pointer;
   padding: 12px;
-  background-color: var(--vscode-editor-lineHighlightBorder);
+  background-color: hsla(0, 0%, 47%, 0.2);
 }
 
 .container:focus {
