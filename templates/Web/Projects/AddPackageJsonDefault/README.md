@@ -11,11 +11,9 @@ In the root directory of the project...
 
 The generated templates can be deployed to Azure App Service using the following steps:
 
-1. In the root directory of the project `yarn build` or `npm build` to create a build folder.
-2. Move the build folder inside the server folder.
-3. Deploy the server folder to Azure App Service using the [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice).
-4. If a database is used, add the environment variables defined in .env to your Application Settings.
-5. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
+1. Press `Ctrl + Shift + P` in Windows/Linuc or `⇧⌘P` in Mac and type in "Web Template Studio: Deploy App" to start deploying your app.
+1. Once the deployment is done, click "Browse website" on the lower right corner to check out your newly deployed app.
+1. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
    Full documentation for deployment to Azure App Service can be found here: [Deployment Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md).
 
 ## File Structure
