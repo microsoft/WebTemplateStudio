@@ -260,9 +260,15 @@ export const CONSTANTS = {
     MAX_LENGTH: 60,
     MIN_LENGTH: 3
   },
+  ASP_NAME: {
+    MAX_LENGTH: 40
+  },
   COSMOS_DB_NAME: {
     MAX_LENGTH: 31,
     MIN_LENGTH: 3
+  },
+  DEPLOYMENT_NAME: {
+    MAX_LENGTH: 64
   },
   SKU_DESCRIPTION: {
     FREE: {
@@ -411,7 +417,8 @@ export const PAYLOAD_MESSAGES_TEXT = {
 export enum AzureResourceType {
   AppService = "app-service",
   Cosmos = "cosmos",
-  Functions = "functions"
+  Functions = "functions",
+  AppServicePlan = "app-service-plan"
 }
 
 export enum AppType {

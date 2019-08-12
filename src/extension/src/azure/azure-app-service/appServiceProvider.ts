@@ -11,7 +11,7 @@ import ResourceManagementClient, {
   ResourceManagementModels
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
 
-import { CONSTANTS, OS, AppType } from "../../constants";
+import { CONSTANTS, OS, AppType, AzureResourceType } from "../../constants";
 import {
   SubscriptionError,
   AuthorizationError,
@@ -66,9 +66,12 @@ export class AppServiceProvider {
         selections.subscriptionItem
       );
       this.writeARMTemplatesToApp(appPath, template, parameters);
+      const deploymentName = (
+        selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX
+      ).substr(0, CONSTANTS.DEPLOYMENT_NAME.MAX_LENGTH);
       const result = await azureResourceClient.deployments.createOrUpdate(
         selections.resourceGroupItem.name,
-        selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX,
+        deploymentName,
         options
       );
       return result.id;
@@ -236,11 +239,17 @@ export class AppServiceProvider {
   }
 
   public async generateValidASPName(name: string): Promise<string> {
-    let generatedName: string = NameGenerator.generateName(name);
+    let generatedName: string = NameGenerator.generateName(
+      name,
+      AzureResourceType.AppServicePlan
+    );
     let isValid: boolean = await this.validateASPName(generatedName);
     let tries = 0;
     while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
-      generatedName = NameGenerator.generateName(name);
+      generatedName = NameGenerator.generateName(
+        name,
+        AzureResourceType.AppServicePlan
+      );
       isValid = await this.validateASPName(generatedName);
       tries++;
     }
