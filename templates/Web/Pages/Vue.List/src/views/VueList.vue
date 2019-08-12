@@ -66,13 +66,6 @@ export default {
         });
     },
     handleAddListItem() {
-      // Warning Pop Up if the user submits an empty message
-      if (!this.textField) {
-        this.WarningMessageOpen = true;
-        this.WarningMessageText = CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE;
-        return;
-      }
-
       fetch(CONSTANTS.ENDPOINT.LIST, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

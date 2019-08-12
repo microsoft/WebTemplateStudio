@@ -7,6 +7,7 @@ import { AzureServices } from "./azure/azureServices";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { Controller } from "./controller";
 import { ResourceGroupSelection } from "./azure/azure-resource-group/resourceGroupModule";
+import { Settings } from "./azure/utils/settings";
 
 export class GenerationExperience extends WizardServant {
   private static reactPanelContext: ReactPanel;
@@ -155,7 +156,7 @@ export class GenerationExperience extends WizardServant {
             // tslint:disable-next-line: no-function-expression
             async function(this: IActionContext): Promise<void> {
               try {
-                await AzureServices.deployWebApp(payload);
+                const id: string = await AzureServices.deployWebApp(payload);
                 progressObject = {
                   ...progressObject,
                   appService: GenerationExperience.getProgressObject(true)
@@ -164,6 +165,8 @@ export class GenerationExperience extends WizardServant {
                   command: ExtensionCommand.UpdateGenStatus,
                   payload: progressObject
                 });
+                Settings.enableScmDoBuildDuringDeploy(enginePayload.path);
+                Settings.setDeployDefault(id, enginePayload.path);
               } catch (error) {
                 progressObject = {
                   ...progressObject,

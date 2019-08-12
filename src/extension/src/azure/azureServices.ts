@@ -466,7 +466,7 @@ export class AzureServices extends WizardServant {
     );
   }
 
-  public static async deployWebApp(payload: any): Promise<void> {
+  public static async deployWebApp(payload: any): Promise<string> {
     await AzureServices.updateAppServiceSubscriptionItemCache(
       payload.appService.subscription
     );
@@ -500,10 +500,23 @@ export class AzureServices extends WizardServant {
         throw error; //to log in telemetry
       });
 
-    await AzureServices.AzureAppServiceProvider.createWebApp(
+    const result = await AzureServices.AzureAppServiceProvider.createWebApp(
       userAppServiceSelection,
       payload.engine.path
     );
+    if (!result) {
+      throw new Error(CONSTANTS.ERRORS.APP_SERVICE_UNDEFINED_ID);
+    }
+    return AzureServices.convertId(result);
+  }
+
+  private static convertId(rawId: string): string {
+    // workaround to convert deployment id to app service id
+    const MS_RESOURCE_DEPLOYMENT = "Microsoft.Resources/deployments";
+    const MS_WEB_SITE = "Microsoft.Web/sites";
+    return rawId
+      .replace(MS_RESOURCE_DEPLOYMENT, MS_WEB_SITE)
+      .replace("-" + AzureResourceType.AppService, "");
   }
 
   public static async deployFunctionApp(

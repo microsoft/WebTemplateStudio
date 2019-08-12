@@ -47,10 +47,11 @@ const APP_SERVICE_DEPLOYMENT_SUFFIX = "-app-service";
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
 
+  // returns the id of the instance created
   public async createWebApp(
     selections: AppServiceSelections,
     appPath: string
-  ): Promise<void> {
+  ): Promise<string | undefined> {
     const template = this.getAppServiceARMTemplate();
     const parameters = this.getAppServiceARMParameter(selections);
     const deploymentParams = parameters.parameters;
@@ -66,11 +67,12 @@ export class AppServiceProvider {
         selections.subscriptionItem
       );
       this.writeARMTemplatesToApp(appPath, template, parameters);
-      await azureResourceClient.deployments.createOrUpdate(
+      const result = await azureResourceClient.deployments.createOrUpdate(
         selections.resourceGroupItem.name,
         selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX,
         options
       );
+      return result.id;
     } catch (error) {
       throw new DeploymentError(error.message);
     }
