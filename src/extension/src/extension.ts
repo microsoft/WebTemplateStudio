@@ -26,8 +26,8 @@ export function activate(context: vscode.ExtensionContext) {
             title: "Preparing for Deployment"
           },
           async (progress: vscode.Progress<IVSCodeProgressType>) => {
-            // await Deploy.installDependencies(progress, folderPath);
-            // await Deploy.buildProject(progress, folderPath);
+            await Deploy.installDependencies(progress, folderPath);
+            await Deploy.buildProject(progress, folderPath);
             // const extension = vscode.extensions.getExtension("ms-azuretools.vscode-azureappservice")!.exports;
             vscode.commands.executeCommand("appService.Deploy");
           }
