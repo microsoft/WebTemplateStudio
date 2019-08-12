@@ -1,10 +1,3 @@
-.azureTitle {
-  font-family: Segoe UI;
-  font-size: 21px;
-  font-weight: lighter;
-  line-height: 19px;
-  color: var(--vscode-editor-foreground);
-}
 .title {
   font-size: 21px;
   font-family: "Segoe UI";
@@ -13,12 +6,20 @@
   color: var(--vscode-editor-foreground);
 }
 
+h1 {
+  font-size: 2.5em;
+  font-weight: 600;
+  font-weight: lighter;
+  margin-bottom: 0px;
+}
+
 .section {
   margin-top: 40px;
 }
 
 .sectionLine {
-  margin-top: 20px;
+  margin-top: 15px;
+  font-size: 1.2em;
 }
 
 .sectionLineButton {
@@ -31,7 +32,7 @@
 }
 
 .footerContainer {
-  margin-top: 40px;
+  margin-top: 60px;
   float: right;
   align-items: center;
   display: flex;
@@ -53,18 +54,18 @@
 .iconCheck {
   margin-top: 3px;
   margin-left: 1em;
-  height: 14px;
+  height: 18px;
 }
 
 .iconError {
   margin-top: 3px;
   margin-left: 1em;
-  height: 14px;
-  width: 14px;
+  height: 18px;
+  width: 18px;
 }
 
-.iconError path{
-fill: var(--vscode-errorForeground);
+.iconError path {
+  fill: var(--vscode-errorForeground);
 }
 
 .iconCheck path {
@@ -73,8 +74,8 @@ fill: var(--vscode-errorForeground);
 
 .spinner {
   animation: rotate steps(60) 1s infinite;
-  height: 14px;
-  width: 14px;
+  height: 18px;
+  width: 18px;
   margin-top: 3px;
 }
 
@@ -93,25 +94,26 @@ fill: var(--vscode-errorForeground);
 }
 
 /* styles for generation status checkmark section*/
-.checkmarkSection{
+.checkmarkSection {
   background-color: var(--vscode-editorWidget-border);
 }
 
-.containerWithMargin{
+.containerWithMargin {
   padding-top: 0.6em;
   padding-bottom: 0.6em;
 }
 
-.checkmarkStatusRow{
+.checkmarkStatusRow {
   display: flex;
   justify-content: space-between;
 }
 
-.checkmarkStatusRow > div{
+.checkmarkStatusRow > div {
   padding: 0.6em 1.5em;
+  font-size: 1.2em;
 }
 
-.inLine{
+.inLine {
   display: flex;
 }
 
