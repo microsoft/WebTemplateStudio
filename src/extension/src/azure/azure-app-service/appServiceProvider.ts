@@ -11,7 +11,7 @@ import ResourceManagementClient, {
   ResourceManagementModels
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
 
-import { CONSTANTS, OS, AppType, AzureResourceType } from "../../constants";
+import { CONSTANTS, OS, AppType } from "../../constants";
 import {
   SubscriptionError,
   AuthorizationError,
