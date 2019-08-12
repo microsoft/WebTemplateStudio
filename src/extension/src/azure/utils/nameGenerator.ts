@@ -1,5 +1,9 @@
 import { SubscriptionItem } from "../azure-auth/azureAuth";
-import { AzureResourceType, CONSTANTS } from "../../constants";
+import {
+  AzureResourceType,
+  CONSTANTS,
+  PROJECT_NAME_VALIDATION_LIMIT
+} from "../../constants";
 import { AzureServices } from "../azureServices";
 
 export namespace NameGenerator {
@@ -42,20 +46,38 @@ export namespace NameGenerator {
     userProjectName: string,
     azureType?: AzureResourceType
   ): string {
-    let result;
     const timestamp = unixToSuffix(Date.now());
-    result = userProjectName + "-" + timestamp;
+    const suffix: string = "-" + timestamp;
+    return trimProjectName(userProjectName, azureType) + suffix;
+  }
+
+  function trimProjectName(
+    projectName: string,
+    azureType?: AzureResourceType
+  ): string {
+    const suffixLength = 15; // formar of suffix is "yyyymmddhhmmss-"
     if (
-      azureType === AzureResourceType.Functions ||
-      azureType === AzureResourceType.AppService
+      azureType === AzureResourceType.AppService ||
+      azureType === AzureResourceType.Functions
     ) {
-      return result.substr(0, CONSTANTS.APP_NAME.MAX_LENGTH);
+      return projectName.substr(
+        0,
+        CONSTANTS.APP_NAME.MAX_LENGTH - suffixLength + 1
+      );
     }
     if (azureType === AzureResourceType.Cosmos) {
-      return result.substr(0, CONSTANTS.COSMOS_DB_NAME.MAX_LENGTH);
-    } else {
-      return result;
+      return projectName.substr(
+        0,
+        CONSTANTS.COSMOS_DB_NAME.MAX_LENGTH - suffixLength
+      );
     }
+    if (azureType === AzureResourceType.AppServicePlan) {
+      return projectName.substr(
+        0,
+        CONSTANTS.ASP_NAME.MAX_LENGTH - suffixLength
+      );
+    }
+    return projectName;
   }
 
   function unixToSuffix(unixTimestamp: any): string {
