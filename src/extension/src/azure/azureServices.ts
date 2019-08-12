@@ -639,6 +639,7 @@ export class AzureServices extends WizardServant {
     const settings: StringDictionary = {
       properties: AzureServices.convertToSettings(parsed)
     };
+
     AzureServices.AzureAppServiceProvider.updateAppSettings(
       resourceGroupName,
       webAppName,
@@ -653,9 +654,8 @@ export class AzureServices extends WizardServant {
     const fields = parsedConnectionString.split("\n");
     const result: { [s: string]: string } = {};
     for (let i: number = 0; i < fields.length - 1; i++) {
-      let field = fields[i].split("=");
-      let key = field[0];
-      let value = field[1];
+      let key = fields[i].substr(0, fields[i].indexOf("="));
+      let value = fields[i].substr(fields[i].indexOf("=") + 1);
       result[key] = value;
     }
     return result;
