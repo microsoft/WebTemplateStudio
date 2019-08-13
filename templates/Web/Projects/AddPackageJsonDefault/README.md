@@ -26,9 +26,9 @@ If you did not select Azure App Service and would like to create a new Azure App
 2. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type in "Web Template Studio: Deploy App" to start deploying your app.
    - You will have to select the same subscription again
    - Find the web app that you've just created
-   - Click yes in the notification windows on the lower right corner (build prompt)
+   - Click yes in the notification window on the lower right corner (build prompt)
    - Click "Deploy" on the windows pop-up (deploy window)
-   - Click "Yes" on the notification windows on the lower right corner (default prompt)
+   - Click "Yes" on the notification window on the lower right corner (default prompt)
 3. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
 
 ## File Structure
