@@ -38,6 +38,7 @@ button {
 .buttonContainer {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .link {
