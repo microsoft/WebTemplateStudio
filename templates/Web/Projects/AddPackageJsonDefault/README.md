@@ -9,12 +9,22 @@ In the root directory of the project...
 
 ### Deployment
 
-The generated templates can be deployed to Azure App Service using the following steps:
+Follow these steps to deploy to Azure App Service if you selected Azure App Service when creating your project:
 
 1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type in "Web Template Studio: Deploy App" to start deploying your app.
 2. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
 3. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
    Full documentation for deployment to Azure App Service can be found here: [Deployment Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md).
+
+If you did not select Azure App Service and would like to create a new Azure App Service web app, follow these steps:
+
+1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type in "Azure App Service: Create New Web App..." to create a new web app. <br>
+   - Select your subscription
+   - Enter your web app name
+   - Select Linux as your OS
+   - Select Node.js 10.14 for a Node/Express application, Python 3.7 for a Flask application
+2. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type in "Web Template Studio: Deploy App" to start deploying your app.
+3. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
 
 ## File Structure
 
