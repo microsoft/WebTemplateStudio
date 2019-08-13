@@ -119,34 +119,26 @@ const PostGenerationModal = ({
   };
 
   const postGenMessage = () => {
-    if (isServicesSelected) {
-      return (
-        <div>
+    return (
+      <div>
+        {isServicesSelected && (
           <p className={styles.sectionLine}>
             {formatMessage(messages.generationCompleteWithAzure)}
           </p>
-          <p className={styles.sectionLine}>
-            {formatMessage(messages.seeReadMePrefixWithAzure)}
-            <span className={styles.readMeText}>
-              {formatMessage(messages.readMe)}
-            </span>
-            {formatMessage(messages.seeReadMeSuffix)}
-          </p>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <p className={styles.sectionLine}>
-            {formatMessage(messages.seeReadMePrefix)}
-            <span className={styles.readMeText}>
-              {formatMessage(messages.readMe)}
-            </span>
-            {formatMessage(messages.seeReadMeSuffix)}
-          </p>
-        </div>
-      );
-    }
+        )}
+        <p className={styles.sectionLine}>
+          {formatMessage(
+            isServicesSelected
+              ? messages.seeReadMePrefixWithAzure
+              : messages.seeReadMePrefix
+          )}
+          <span className={styles.readMeText}>
+            {formatMessage(messages.readMe)}
+          </span>
+          {formatMessage(messages.seeReadMeSuffix)}
+        </p>
+      </div>
+    );
   };
 
   const renderTemplatesError = () => {
