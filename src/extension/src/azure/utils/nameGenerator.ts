@@ -1,6 +1,5 @@
 import { SubscriptionItem } from "../azure-auth/azureAuth";
 import { AzureResourceType, CONSTANTS } from "../../constants";
-import { AzureServices } from "../azureServices";
 
 export namespace NameGenerator {
   export async function generateValidAzureTypeName(
@@ -16,26 +15,7 @@ export namespace NameGenerator {
       // Cosmos DB Account name can only have lowercase characters
       projectName = projectName.toLowerCase();
     }
-
-    let result = NameGenerator.generateName(projectName, azureType);
-    let isValid: boolean = await AzureServices.validateNameForAzureType(
-      projectName,
-      userSubscriptionItem,
-      azureType
-    );
-
-    let tries = 0;
-    while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
-      result = NameGenerator.generateName(projectName, azureType);
-      isValid = await AzureServices.validateNameForAzureType(
-        projectName,
-        userSubscriptionItem,
-        azureType
-      );
-      tries++;
-    }
-
-    return result;
+    return NameGenerator.generateName(projectName, azureType);
   }
 
   export function generateName(
@@ -52,25 +32,10 @@ export namespace NameGenerator {
     azureType?: AzureResourceType
   ): string {
     const suffixLength = 15; // format of suffix is "yyyymmddhhmmss-"
-    if (
-      azureType === AzureResourceType.AppService ||
-      azureType === AzureResourceType.Functions
-    ) {
-      return projectName.substr(
-        0,
-        CONSTANTS.APP_NAME.MAX_LENGTH - suffixLength + 1
-      );
-    }
-    if (azureType === AzureResourceType.Cosmos) {
-      return projectName.substr(
-        0,
-        CONSTANTS.COSMOS_DB_NAME.MAX_LENGTH - suffixLength + 1
-      );
-    }
     if (azureType === AzureResourceType.AppServicePlan) {
       return projectName.substr(
         0,
-        CONSTANTS.ASP_NAME.MAX_LENGTH - suffixLength + 1
+        CONSTANTS.APP_SERVICE_PLAN_NAME.MAX_LENGTH - suffixLength
       );
     }
     return projectName;

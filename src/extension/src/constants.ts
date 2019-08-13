@@ -260,7 +260,7 @@ export const CONSTANTS = {
     MAX_LENGTH: 60,
     MIN_LENGTH: 3
   },
-  ASP_NAME: {
+  APP_SERVICE_PLAN_NAME: {
     MAX_LENGTH: 40
   },
   COSMOS_DB_NAME: {
