@@ -18,7 +18,7 @@ Follow these steps to deploy to Azure App Service if you selected Azure App Serv
 
 If you did not select Azure App Service and would like to create a new Azure App Service web app, follow these steps:
 
-1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type in "Azure App Service: Create New Web App..." to create a new web app. <br>
+1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type in "Azure App Service: Create New Web App..." to create a new web app.
    - Select your subscription
    - Enter your web app name
    - Select Linux as your OS
