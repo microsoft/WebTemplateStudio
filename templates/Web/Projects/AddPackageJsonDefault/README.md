@@ -13,8 +13,6 @@ If you selected Azure App Service when creating your project, follow these steps
 
 1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type in "Web Template Studio: Deploy App" to start deploying your app.
 2. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
-3. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
-   Full documentation for deployment to Azure App Service can be found here: [Deployment Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md).
 
 If you did not select Azure App Service and would like to create a new Azure App Service web app, follow these steps:
 
@@ -30,6 +28,10 @@ If you did not select Azure App Service and would like to create a new Azure App
    - Click "Deploy" on the window pop-up (deploy window)
    - Click "Yes" on the notification window on the lower right corner (default prompt)
 3. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
+
+Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
+
+Full documentation for deployment to Azure App Service can be found here: [Deployment Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md).
 
 ## File Structure
 
