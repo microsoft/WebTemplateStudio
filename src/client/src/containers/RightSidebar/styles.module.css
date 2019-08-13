@@ -90,6 +90,7 @@
 
 .rightViewCropped.open {
   padding: 6vh 2vh;
+  border-left: 1px solid #7f7f7f;
 }
 .rightViewCroppedSummaryPage {
   width: 700px; /*change this width after top nav bar migration to change the width of the right side bar on summary page*/
