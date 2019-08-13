@@ -7,11 +7,11 @@ export const strings = defineMessages({
   },
   deploymentHalted: {
     id: "postGenerationModal.deploymentHalted",
-    defaultMessage: "ERROR: Halted due to template error."
+    defaultMessage: "ERROR: Azure Service deployment halted due to template error."
   },
   restartWizard: {
     id: "postGenerationModal.restartWizard",
-    defaultMessage: "Restart Wizard"
+    defaultMessage: "Restart"
   },
   error: {
     id: "postGenerationModal.error",
@@ -61,25 +61,29 @@ export const strings = defineMessages({
     id: "postGenerationModal.creatingYourProject",
     defaultMessage: "Creating Your Project"
   },
-  azureServices: {
-    id: "postGenerationModal.azureServices",
-    defaultMessage: "Azure Services"
+  projectCreation: {
+    id: "postGenerationModal.projectCreation",
+    defaultMessage: "Project Creation"
   },
-  generationComplete: {
-    id: "postGenerationModal.generationComplete",
-    defaultMessage: "Project successfully created."
+  generationCompleteWithAzure: {
+    id: "postGenerationModal.generationCompleteWithAzure",
+    defaultMessage: "Open your project while we take a few minutes to finish deploying Azure services."
   },
-  openReadMe: {
-    id: "postGenerationModal.openReadMe",
-    defaultMessage: "After 'Open Project' see "
+  seeReadMePrefix: {
+    id: "postGenerationModal.seeReadMePrefix",
+    defaultMessage: "Click 'Open Project' and see "
+  },
+  seeReadMePrefixWithAzure: {
+    id: "postGenerationModal.seeReadMePrefixWithAzure",
+    defaultMessage: "See "
   },
   readMe: {
     id: "postGenerationModal.readme",
     defaultMessage: "README.md"
   },
-  toStart: {
-    id: "postGenerationModal.toStart",
-    defaultMessage: " to start"
+  seeReadMeSuffix: {
+    id: "postGenerationModal.seeReadMeSuffix",
+    defaultMessage: " to get instructions."
   },
   templateGeneration: {
     id: "postGenerationModal.templateGeneration",
