@@ -104,7 +104,7 @@
 }
 
 .summaryContainer {
-  width: 32vh;
+  width: 30vh;
   flex: 1;
 }
 
@@ -203,13 +203,29 @@
   }
 }
 
+@media (min-width: 560px) and (max-width: 700px) {
+  .summaryContainer {
+    width: 27vh;
+  }
+}
 @media (min-width: 560px) {
   .rightViewCroppedAllPages.open {
     width: 500px;
   }
 }
 
+@media (min-width: 700px) and (max-width: 900px) {
+  .summaryContainer {
+    width: 29vh;
+  }
+}
 @media (min-width: 900px) {
+  .summaryContainer {
+    width: 32vh;
+  }
+}
+
+@media (min-width: 1200px) {
   .summaryContainer {
     width: 35vh;
   }
