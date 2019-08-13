@@ -87,12 +87,6 @@ const PostGenerationModal = ({
       {props.children}
     </a>
   );
-  const handleCloseWizard = () => {
-    vscode.postMessage({
-      module: EXTENSION_MODULES.GENERATE,
-      command: EXTENSION_COMMANDS.CLOSE_WIZARD
-    });
-  };
 
   const handleOpenProjectOrRestartWizard = () => {
     if (isTemplatesFailed) {
@@ -162,23 +156,23 @@ const PostGenerationModal = ({
     );
   };
 
-  const renderTemplatesCheckmark = () => {
+  const renderTemplatesStatus = () => {
     return (
       <div className={styles.checkmarkStatusRow}>
         <React.Fragment>
           <div>{formatMessage(messages.projectCreation)}</div>
-          {(templateGenerationInProgress && (
-            <div>
+          {templateGenerationInProgress && (
+            <div role="img" aria-label="project creation in progress">
               <Spinner className={styles.spinner} />
             </div>
-          )) ||
-            (templateGenerated && (
-              <div role="img" aria-label="project creation done">
-                <Checkmark className={styles.iconCheck} />
-              </div>
-            ))}
+          )}
+          {templateGenerated && (
+            <div role="img" aria-label="project creation done">
+              <Checkmark className={styles.iconCheck} />
+            </div>
+          )}
           {isTemplatesFailed && (
-            <div>
+            <div role="img" aria-label="project creation failed">
               <ErrorRed className={styles.iconError} />
             </div>
           )}
@@ -213,11 +207,12 @@ const PostGenerationModal = ({
     });
   };
 
-  const renderServiceCheckmark = () => {
+  const renderServiceStatus = () => {
     if (isTemplatesFailed) {
       return Object.keys(serviceStatus).map((service: string, idx: number) => {
         const serviceTitle = formatMessage(serviceStatus[service].title);
         if (serviceStatus[service].isSelected) {
+          const halted = `${serviceTitle} deployment halted`;
           return (
             <div
               className={styles.checkmarkStatusRow}
@@ -225,7 +220,7 @@ const PostGenerationModal = ({
             >
               <React.Fragment>
                 <div>{serviceTitle}</div>
-                <div>
+                <div role="img" aria-label={halted}>
                   <ErrorRed className={styles.iconError} />
                 </div>
               </React.Fragment>
@@ -238,6 +233,7 @@ const PostGenerationModal = ({
       const serviceTitle = formatMessage(serviceStatus[service].title);
       if (serviceStatus[service].isSelected) {
         if (serviceStatus[service].isFailed) {
+          const failed = `${serviceTitle} deployment failed`;
           return (
             <div
               className={styles.checkmarkStatusRow}
@@ -245,7 +241,7 @@ const PostGenerationModal = ({
             >
               <React.Fragment>
                 <div>{serviceTitle}</div>
-                <div>
+                <div role="img" aria-label={failed}>
                   <ErrorRed className={styles.iconError} />
                 </div>
               </React.Fragment>
@@ -253,6 +249,7 @@ const PostGenerationModal = ({
           );
         }
         if (serviceStatus[service].isDeployed) {
+          const deployed = `${serviceTitle} deployment done`;
           return (
             <div className={styles.checkmarkStatusRow}>
               <div>{serviceTitle}</div>
@@ -262,13 +259,14 @@ const PostGenerationModal = ({
                   key={`${messages.deploymentSuccess.defaultMessage}${idx}`}
                   renderers={{ link: LinkRenderer }}
                 />
-                <div role="img" aria-label="Azure Service Deploy done">
+                <div role="img" aria-label={deployed}>
                   <Checkmark className={styles.iconCheck} />
                 </div>
               </div>
             </div>
           );
         }
+        const inProgress = `${serviceTitle} deployment in progress`;
         return (
           <div
             className={styles.checkmarkStatusRow}
@@ -276,7 +274,7 @@ const PostGenerationModal = ({
           >
             <React.Fragment>
               <div>{serviceTitle}</div>
-              <div>
+              <div role="img" aria-label={inProgress}>
                 <Spinner className={styles.spinner} />
               </div>
             </React.Fragment>
@@ -303,8 +301,8 @@ const PostGenerationModal = ({
 
       <div className={classnames(styles.section, styles.checkmarkSection)}>
         <div className={styles.containerWithMargin}>
-          {renderTemplatesCheckmark()}
-          {isServicesSelected && renderServiceCheckmark()}
+          {renderTemplatesStatus()}
+          {isServicesSelected && renderServiceStatus()}
         </div>
       </div>
 
