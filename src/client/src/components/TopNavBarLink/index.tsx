@@ -55,6 +55,7 @@ const TopNavBarLink = ({
       onClick={handleClick}
       className={styles.container}
       onKeyUp={keyUpHandler}
+      id={"page" + pageNumber}
       aria-label={
         visitedCheck || isSelected
           ? getAriaLabel(
