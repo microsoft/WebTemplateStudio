@@ -17,6 +17,7 @@ import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector";
 
 import { setCosmosModalButtonStatus } from "./verifyButtonStatus";
 
@@ -65,6 +66,7 @@ interface IStateProps {
   accountNameAvailability: any;
   selection: any;
   chooseExistingRadioButtonSelected: boolean;
+  projectName: string;
 }
 
 let timeout: NodeJS.Timeout | undefined;
@@ -202,11 +204,13 @@ const CosmosResourceModal = (props: Props) => {
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
       // Get resource Group and locations and set the dropdown options to them
       setData({ ...cosmosData, resourceGroup: [] });
+      props.setValidationStatus(true);
       props.vscode.postMessage({
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
         track: true,
-        subscription: value
+        subscription: value,
+        projectName: props.projectName
       });
       updatedForm = {
         ...updatedForm,
@@ -220,6 +224,9 @@ const CosmosResourceModal = (props: Props) => {
   };
 
   React.useEffect(() => {
+    if (!cosmosFormData.accountName.value) {
+      return;
+    }
     setCosmosModalButtonStatus(
       cosmosFormData,
       props.isValidatingName,
@@ -264,10 +271,15 @@ const CosmosResourceModal = (props: Props) => {
   // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {
+      props.setCosmosResourceAccountNameAvailability({
+        isAvailable: true,
+        message: ""
+      });
       const newCosmosDBState = props.selection.dropdownSelection;
       newCosmosDBState.chooseExistingRadioButtonSelected =
         props.chooseExistingRadioButtonSelected;
-      handleChange(newCosmosDBState);
+      setFormIsSendable(true);
+      updateForm(newCosmosDBState);
     } else {
       props.setCosmosResourceAccountNameAvailability({
         isAvailable: false,
@@ -275,6 +287,38 @@ const CosmosResourceModal = (props: Props) => {
       });
     }
   }, []);
+
+  /**
+   * Update name field with a valid name generated from
+   * extension when a subscription is selected or changed
+   */
+  React.useEffect(() => {
+    if (props.subscriptionData.validName === "") return;
+
+    // if a selection exists (i.e. user has saved form data),
+    // this effect should only be run after selection has been loaded (i.e. subscription value is not empty)
+    const shouldRunEffect =
+      !props.selection || cosmosFormData.subscription.value !== "";
+    if (shouldRunEffect) {
+      updateForm({
+        ...cosmosFormData,
+        accountName: {
+          value: props.subscriptionData.validName,
+          label: props.subscriptionData.validName
+        }
+      });
+      // programatically updating <input>'s value field doesn't dispatch an event to handleInput
+      // so we manually simulate handleInput here
+      props.setValidationStatus(true);
+      handleChange({
+        ...cosmosFormData,
+        accountName: {
+          value: props.subscriptionData.validName,
+          label: props.subscriptionData.validName
+        }
+      });
+    }
+  }, [props.subscriptionData.validName]);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement
@@ -536,18 +580,27 @@ const CosmosResourceModal = (props: Props) => {
                 )}
                 className={styles.input}
                 onChange={handleInput}
-                value={cosmosFormData.accountName.value}
+                value={
+                  cosmosFormData.subscription.value === ""
+                    ? ""
+                    : cosmosFormData.accountName.value
+                }
                 placeholder={FORM_CONSTANTS.ACCOUNT_NAME.label}
                 disabled={cosmosFormData.subscription.value === ""}
               />
-              {isAccountNameAvailable && !isValidatingName && (
-                <GreenCheck className={styles.validationIcon} />
+              {cosmosFormData.subscription.value &&
+                isAccountNameAvailable &&
+                !isValidatingName && (
+                  <GreenCheck className={styles.validationIcon} />
+                )}
+              {cosmosFormData.subscription.value && isValidatingName && (
+                <Spinner className={styles.spinner} />
               )}
-              {isValidatingName && <Spinner className={styles.spinner} />}
             </div>
             {!isValidatingName &&
               !isAccountNameAvailable &&
-              cosmosFormData.accountName.value.length > 0 && (
+              cosmosFormData.accountName.value.length > 0 &&
+              props.accountNameAvailability.message && (
                 <div className={styles.errorMessage}>
                   {props.accountNameAvailability.message}
                 </div>
@@ -580,18 +633,13 @@ const CosmosResourceModal = (props: Props) => {
           true,
           props.intl.formatMessage(messages.apiSubLabel)
         )}
-      </div>
-      <div className={styles.buttonContainer}>
+        {/* Save Button */}
         <button
           className={getButtonClassNames()}
           disabled={!formIsSendable}
           onClick={handleAddResource}
         >
-          {(props.selection &&
-            props.intl.formatMessage(
-              azureModalMessages.azureModalSaveChanges
-            )) ||
-            props.intl.formatMessage(azureModalMessages.azureModalAddResource)}
+          {props.intl.formatMessage(azureModalMessages.azureModalSave)}
         </button>
       </div>
     </div>
@@ -608,7 +656,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   subscriptions: state.azureProfileData.profileData.subscriptions,
   vscode: state.vscode.vscodeObject,
   chooseExistingRadioButtonSelected:
-    state.selection.services.cosmosDB.chooseExistingRadioButtonSelected
+    state.selection.services.cosmosDB.chooseExistingRadioButtonSelected,
+  projectName: getProjectName(state)
 });
 
 const mapDispatchToProps = (

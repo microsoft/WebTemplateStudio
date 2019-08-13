@@ -17,10 +17,17 @@ export const CONSTANTS = {
       "error.resourceGroupNotFound",
       "No resource group found with this name"
     ),
-    TRIES_EXCEEDED: (resourceType: string) => {
+    CREATION_TRIES_EXCEEDED: (resourceType: string) => {
       return localize(
-        "error.triesExceedeed",
+        "error.triesExceeded",
         "Number of tries exceeded for creating {0}",
+        resourceType
+      );
+    },
+    VALIDATION_TRIES_EXCEEDED: (resourceType: string) => {
+      return localize(
+        "error.validationTriesExceeded",
+        "Number of tries exceeded for validating {0} name",
         resourceType
       );
     },
@@ -36,6 +43,10 @@ export const CONSTANTS = {
         type
       );
     },
+    APP_SERVICE_UNDEFINED_ID: localize(
+      "error.appServiceUndefinedId",
+      "Undefined App Service ID"
+    ),
     LOGOUT_FAILED: localize(
       "error.loginTimeout",
       "Timeout. User is not logged in"
@@ -219,14 +230,14 @@ export const CONSTANTS = {
   },
   GENERATE_ENDPOINT: "/api/generate",
   ENGINE_DIRECTORY: "./src/api/darwin/CoreTemplateStudio.Api",
-  CONNECTION_STRING_MONGO: function(
+  CONNECTION_STRING_MONGO: (
     username: string,
     password: string,
     origin: string
-  ) {
+  ) => {
     return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMOSDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
   },
-  CONNECTION_STRING_SQL: function(origin: string, primaryKey: string) {
+  CONNECTION_STRING_SQL: (origin: string, primaryKey: string) => {
     return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
@@ -265,7 +276,21 @@ export const CONSTANTS = {
       tier: "Basic"
     }
   },
-  VALIDATION_LIMIT: 3
+  VALIDATION_LIMIT: 3,
+  APP_SERVICE_DEPLOYMENT: {
+    SERVER_FOLDER: "server",
+    DOT_VSCODE_FOLDER: ".vscode",
+    SETTINGS_FILE_NAME: "settings.json",
+    SETTINGS_FILE: (id: string, subpath: string) => {
+      return `{
+    "appService.defaultWebAppToDeploy": "${id}",
+    "appService.deploySubpath": "${subpath}"
+}`;
+    },
+    DEPLOYMENT_FILE_NAME: ".deployment",
+    DEPLOYMENT_FILE: `[config] 
+SCM_DO_BUILD_DURING_DEPLOYMENT=true`
+  }
 };
 
 export const PROJECT_NAME_VALIDATION_LIMIT = 50;
@@ -311,7 +336,8 @@ export enum ExtensionModule {
   VSCodeUI = "VSCodeUI",
   Logger = "Logger",
   DependencyChecker = "DependencyChecker",
-  CoreTSModule = "CoreTSModule"
+  CoreTSModule = "CoreTSModule",
+  Defaults = "Defaults"
 }
 
 export enum TelemetryEventName {
@@ -366,7 +392,7 @@ export namespace DialogMessages {
   );
   export const resetPagesPrompt: string = localize(
     "dialog.resetPagesPrompt",
-    "Switching Frameworks will reset pages in your queue. Are you sure you want to proceed?"
+    "Are you sure you want to reset all the selected pages?"
   );
   export const logoutPrompt: string = localize(
     "dialog.logoutPrompt",
@@ -397,6 +423,6 @@ export enum OS {
 }
 
 export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
-  Node: "node|lts",
+  Node: "node|10.14",
   Flask: "python|3.7"
 };

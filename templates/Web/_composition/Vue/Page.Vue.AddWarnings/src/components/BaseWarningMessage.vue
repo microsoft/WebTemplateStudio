@@ -9,9 +9,12 @@
 
 <script>
 export default {
-  name: "WarningMessage",
+  name: "BaseWarningMessage",
   props: {
-    text: String
+    text: {
+      type: String,
+      required: true
+    }
   }
 };
 </script>

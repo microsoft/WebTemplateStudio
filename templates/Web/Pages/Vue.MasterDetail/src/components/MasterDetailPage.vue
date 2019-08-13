@@ -7,14 +7,10 @@
     </div>
     <div class="row">
       <div class="col-12 mt-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-white">
-            <li class="breadcrumb-item">
-              <a class="breadCrumbLink" href="#">Master Detail</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">{{textSampleData.title}}</li>
-          </ol>
-        </nav>
+        <b-breadcrumb class="bg-white">
+          <b-breadcrumb-item href="#">Master Detail</b-breadcrumb-item>
+          <b-breadcrumb-item active>{{textSampleData.title}}</b-breadcrumb-item>
+        </b-breadcrumb>
       </div>
       <div class="col-md-8 col-12 ml-3 mb-5">
         <p class="title">Status</p>
@@ -36,7 +32,21 @@
 export default {
   name: "MasterDetailPage",
   props: {
-    textSampleData: Object
+    textSampleData: {
+      type: Object,
+      required: true,
+      validator: function(value) {
+        return (
+          value.id !== undefined &&
+          value.longDescription !== undefined &&
+          value.orderDate !== undefined &&
+          value.orderTotal !== undefined &&
+          value.shipTo !== undefined &&
+          value.status !== undefined &&
+          value.title !== undefined
+        );
+      }
+    }
   }
 };
 </script>

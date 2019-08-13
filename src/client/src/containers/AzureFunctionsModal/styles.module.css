@@ -41,11 +41,10 @@
 }
 
 .button {
-  margin-top: 2em;
-  font-size: 1.1em;
-  border: none;
-  height: 50%;
-  align-self: flex-end;
+  float: right;
+  padding: 0.6em 3.5em;
+  margin: 0.5em 0;
+  font-size: 1.3em;
 }
 
 .button:focus {
@@ -100,14 +99,14 @@
   outline: none;
   padding: 9px;
   box-sizing: border-box;
-  background-color: var(--vscode-editor-background);
-  border: 0.5px solid var(--vscode-editor-foreground);
+  background: var(--vscode-editorWidget-border);
+  border: none;
 }
 
 .input {
   text-decoration: none;
   border: none;
-  background-color: var(--vscode-editor-background);
+  background: var(--vscode-editorWidget-border);
   color: var(--vscode-editor-foreground);
   font-size: 1em;
   width: 100%;

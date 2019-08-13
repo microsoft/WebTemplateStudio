@@ -30,12 +30,31 @@ const INTL_MESSAGES = defineMessages({
   }
 });
 
+const BOOTSTRAP_LICENSE =
+  "https://github.com/twbs/bootstrap/blob/master/LICENSE";
+
 const ARIA_LABELS_NAVIGATION = defineMessages({
   ARIA_LABELS_MESSAGES: {
     id: "ariaLabels.pageNavigation",
-    defaultMessage: "Go to {pagesText} page"
+    defaultMessage: "{pagesText} page"
+  },
+  ARIA_LABELS_CURRENT_PAGE: {
+    id: "ariaLabels.currentPage",
+    defaultMessage: "Currently on {pagesText} page"
+  },
+  ARIA_LABELS_DISABLED_PAGE: {
+    id: "ariaLabels.disabledPage",
+    defaultMessage: "{pagesText} page disabled"
   }
 });
+
+enum PAGEID {
+  NEW_PROJECT = 1,
+  SELECT_FRAMEWORKS = 2,
+  SELECT_PAGES = 3,
+  AZURE_LOGIN = 4,
+  REVIEW_AND_GENERATE = 5
+}
 
 const PAYLOAD_MESSAGES_TEXT = {
   RESET_PAGES_TEXT: "Sending reset pages request...",
@@ -119,7 +138,8 @@ const EXTENSION_MODULES = {
   VALIDATOR: "Validator",
   VSCODEUI: "VSCodeUI",
   DEPENDENCYCHECKER: "DependencyChecker",
-  CORETS: "CoreTSModule"
+  CORETS: "CoreTSModule",
+  DEFAULTS: "Defaults"
 };
 
 // Define extension commands here that should be received from the extension
@@ -168,5 +188,7 @@ export {
   WEB_TEMPLATE_STUDIO_LINKS,
   FRAMEWORK_TYPE,
   KEY_EVENTS,
-  PAYLOAD_MESSAGES_TEXT
+  PAYLOAD_MESSAGES_TEXT,
+  BOOTSTRAP_LICENSE,
+  PAGEID
 };

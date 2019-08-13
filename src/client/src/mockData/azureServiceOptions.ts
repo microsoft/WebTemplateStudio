@@ -101,14 +101,6 @@ export const azureMessages = defineMessages({
     id: "azureModal.createNew",
     defaultMessage: "Create New"
   },
-  azureModalAddResource: {
-    id: "azureModal.addResource",
-    defaultMessage: "Add Resource"
-  },
-  azureModalSaveChanges: {
-    id: "azureModal.saveChanges",
-    defaultMessage: "Save Changes"
-  },
   azureModalSubscriptionSubLabel: {
     id: "azureModal.subscriptionSubLabel",
     defaultMessage: "Choose a subscription to manage your billing preferences"
@@ -156,6 +148,10 @@ export const azureMessages = defineMessages({
   appServiceLearnMore: {
     id: "appService.learnMore",
     defaultMessage: "Learn More"
+  },
+  azureModalSave: {
+    id: "azureModal.save",
+    defaultMessage: "Save"
   }
 });
 

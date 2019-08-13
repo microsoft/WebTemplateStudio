@@ -1,19 +1,10 @@
-.buttonHighlightedBorder {
-  background-color: #0067b8;
-  color: white;
-  outline: 1px solid var(--vscode-editor-foreground);
-}
-
 .buttonHighlighted {
   background-color: #0067b8;
   color: white !important;
-  outline: 1px solid var(--vscode-editor-foreground);
-  /* To be removed after Demo Redmond, repaced with css variables */
 }
 
 .buttonLight,
 .buttonHighlighted,
-.buttonHighlightedBorder,
 .buttonDark {
   text-decoration: none;
   padding: 0.5em 1em;
@@ -21,14 +12,8 @@
   border: none;
 }
 
-.buttonLight {
-  background-color: var(--vscode-editor-background);
-  border: 1px solid var(--vscode-editor-foreground);
-}
-
 .buttonDark {
-  background-color: var(--vscode-editor-background);
-  outline: 1px solid var(--vscode-editor-foreground);
+  background-color: var(--vscode-editorWidget-border);
   color: var(--vscode-editor-foreground) !important;
 }
 

@@ -42,14 +42,14 @@ export interface AppServiceSelections {
 }
 
 const APP_SERVICE_DEPLOYMENT_SUFFIX = "-app-service";
-
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
 
+  // returns the id of the instance created
   public async createWebApp(
     selections: AppServiceSelections,
     appPath: string
-  ): Promise<void> {
+  ): Promise<string | undefined> {
     const template = this.getAppServiceARMTemplate();
     const parameters = this.getAppServiceARMParameter(selections);
     const deploymentParams = parameters.parameters;
@@ -65,11 +65,12 @@ export class AppServiceProvider {
         selections.subscriptionItem
       );
       this.writeARMTemplatesToApp(appPath, template, parameters);
-      await azureResourceClient.deployments.createOrUpdate(
+      const result = await azureResourceClient.deployments.createOrUpdate(
         selections.resourceGroupItem.name,
         selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX,
         options
       );
+      return result.id;
     } catch (error) {
       throw new DeploymentError(error.message);
     }
@@ -234,7 +235,7 @@ export class AppServiceProvider {
   }
 
   public async generateValidASPName(name: string): Promise<string> {
-    let generatedName: string = name + "-asp";
+    let generatedName: string = NameGenerator.generateName(name, "asp");
     let isValid: boolean = await this.validateASPName(generatedName);
     let tries = 0;
     while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
@@ -247,7 +248,7 @@ export class AppServiceProvider {
     }
     if (tries >= CONSTANTS.VALIDATION_LIMIT) {
       throw new AppServiceError(
-        CONSTANTS.ERRORS.TRIES_EXCEEDED("app service plan")
+        CONSTANTS.ERRORS.CREATION_TRIES_EXCEEDED("app service plan")
       );
     }
     return generatedName;
