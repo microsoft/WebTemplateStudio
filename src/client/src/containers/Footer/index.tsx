@@ -11,7 +11,8 @@ import {
   ROUTES,
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
-  PAYLOAD_MESSAGES_TEXT
+  PAYLOAD_MESSAGES_TEXT,
+  PAGEID
 } from "../../utils/constants";
 
 import { validateName } from "../../utils/validateName";
@@ -143,6 +144,20 @@ class Footer extends React.Component<Props> {
   public isReviewAndGenerate = (): boolean => {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
+  public findPageID = (pathname: string): Number => {
+    switch (pathname) {
+      case ROUTES.NEW_PROJECT:
+        return PAGEID.NEW_PROJECT;
+      case ROUTES.SELECT_FRAMEWORKS:
+        return PAGEID.SELECT_FRAMEWORKS;
+      case ROUTES.SELECT_PAGES:
+        return PAGEID.SELECT_PAGES;
+      case ROUTES.AZURE_LOGIN:
+        return PAGEID.AZURE_LOGIN;
+      default:
+        return PAGEID.REVIEW_AND_GENERATE;
+    }
+  };
   public handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
     const { isValidNameAndProjectPath, setRouteVisited } = this.props;
     this.trackPageForTelemetry(pathname);
@@ -153,6 +168,12 @@ class Footer extends React.Component<Props> {
     if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
       setRouteVisited(pathsNext[pathname]);
     }
+    let pageNavLink = document.getElementById(
+      "page" + this.findPageID(pathsNext[pathname])
+    );
+    if (pageNavLink) {
+      pageNavLink.focus();
+    }
   };
 
   public handleLinkBackClick = (
@@ -161,9 +182,14 @@ class Footer extends React.Component<Props> {
   ) => {
     const { setRouteVisited } = this.props;
     this.trackPageForTelemetry(pathname);
-
     if (pathname !== ROUTES.NEW_PROJECT) {
       setRouteVisited(pathname);
+    }
+    let pageNavLink = document.getElementById(
+      "page" + this.findPageID(pathsBack[pathname])
+    );
+    if (pageNavLink) {
+      pageNavLink.focus();
     }
   };
 
