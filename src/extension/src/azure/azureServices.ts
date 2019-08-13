@@ -38,6 +38,8 @@ import {
   AppServiceSelections
 } from "./azure-app-service/appServiceProvider";
 import { NameGenerator } from "./utils/nameGenerator";
+import { StringDictionary } from "azure-arm-website/lib/models";
+import { ConnectionString } from "./utils/connectionString";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -625,5 +627,37 @@ export class AzureServices extends WizardServant {
           startTime: start
         };
       });
+  }
+  public static async updateAppSettings(
+    resourceGroupName: string,
+    webAppName: string,
+    connectionString: string
+  ) {
+    const parsed: string = ConnectionString.parseConnectionString(
+      connectionString
+    );
+    const settings: StringDictionary = {
+      properties: AzureServices.convertToSettings(parsed)
+    };
+
+    AzureServices.AzureAppServiceProvider.updateAppSettings(
+      resourceGroupName,
+      webAppName,
+      settings
+    );
+  }
+
+  private static convertToSettings(
+    parsedConnectionString: string
+  ): { [s: string]: string } {
+    // format of parsedConnectionString: "<key1>=<value1>\n<key2>=<value2>\n<key3>=<value3>\n"
+    const fields = parsedConnectionString.split("\n");
+    const result: { [s: string]: string } = {};
+    for (let i: number = 0; i < fields.length - 1; i++) {
+      let key = fields[i].substr(0, fields[i].indexOf("="));
+      let value = fields[i].substr(fields[i].indexOf("=") + 1);
+      result[key] = value;
+    }
+    return result;
   }
 }
