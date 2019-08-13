@@ -78,6 +78,7 @@ const PostGenerationModal = ({
   history
 }: Props) => {
   const { formatMessage } = intl;
+  let serviceFailed = false;
   const templateGenerated = isTemplateGenerated && !isTemplatesFailed;
   const templateGenerationInProgress =
     !isTemplateGenerated && !isTemplatesFailed;
@@ -195,6 +196,7 @@ const PostGenerationModal = ({
         serviceStatus[service].isSelected &&
         serviceStatus[service].isFailed
       ) {
+        serviceFailed = true;
         return (
           <div
             className={styles.sectionLine}
@@ -307,7 +309,7 @@ const PostGenerationModal = ({
       </div>
 
       <div className={styles.footerContainer}>
-        {isTemplatesFailed && (
+        {(isTemplatesFailed || serviceFailed) && (
           <a
             className={styles.link}
             href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
