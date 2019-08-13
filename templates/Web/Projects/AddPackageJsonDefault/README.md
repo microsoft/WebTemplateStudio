@@ -13,7 +13,7 @@ The generated templates can be deployed to Azure App Service using the following
 
 1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type in "Web Template Studio: Deploy App" to start deploying your app.
 2. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
-1. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
+3. Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
    Full documentation for deployment to Azure App Service can be found here: [Deployment Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md).
 
 ## File Structure
