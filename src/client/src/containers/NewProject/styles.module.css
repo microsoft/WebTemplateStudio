@@ -41,18 +41,18 @@
 }
 
 .newProjectInfo {
-  width: 50%;
+  max-width: 50%;
   padding: 6vh;
 }
 
 @media (min-width: 850px) and (max-width: 1120px) {
-  .container {
+  .newProjectInfo {
     max-width: 70%;
   }
 }
 
 @media (max-width: 850px) {
-  .container {
+  .newProjectInfo {
     max-width: 100%;
   }
 }
