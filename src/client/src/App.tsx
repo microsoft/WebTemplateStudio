@@ -325,6 +325,8 @@ class App extends React.Component<Props> {
 
           <main
             className={classnames(appStyles.centerView, {
+              [appStyles.centerViewNewProjectPage]:
+                pathname === ROUTES.NEW_PROJECT,
               [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS,
               [appStyles.centerViewAzurePage]: pathname === ROUTES.AZURE_LOGIN
             })}
