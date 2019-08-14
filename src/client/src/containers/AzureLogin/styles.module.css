@@ -58,3 +58,9 @@
 .button:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
+
+@media (min-width: 830px) {
+  .azureProfile {
+    right: 7%;
+  }
+}
