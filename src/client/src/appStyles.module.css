@@ -26,8 +26,8 @@
 }
 
 .centerViewMaxHeight {
-  height: calc(100vh - 51px);
   margin-bottom: 0px;
+  height: calc(100vh - 70px);
 }
 
 @media (max-width: 825px) {
