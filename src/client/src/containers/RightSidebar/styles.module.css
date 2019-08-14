@@ -222,7 +222,7 @@
 }
 @media (min-width: 900px) {
   .summaryContainer {
-    width: 32vh;
+    width: 22em;
   }
 }
 
