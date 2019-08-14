@@ -62,7 +62,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'bootstrap': '^4.3.1', 'core-js': '^2.6.5', 'vue': '^2.6.6', 'vue-router': '^3.0.4'}",
+        "dict": "{'bootstrap': '^4.3.1', 'bootstrap-vue': '^2.0.0-rc.27', 'core-js': '^2.6.5', 'vue': '^2.6.6', 'vue-router': '^3.0.4', 'fs-extra': '8.1.0'}",
         "key": "dependencies",
         "jsonPath": "package.json"
       },
@@ -84,7 +84,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'start-frontend': 'vue-cli-service serve --open', 'build': 'vue-cli-service build && mv build server', 'lint': 'vue-cli-service lint'}",
+        "dict": "{'start-frontend': 'vue-cli-service serve --open', 'build': 'node ./buildScript', 'lint': 'vue-cli-service lint'}",
         "key": "scripts",
         "jsonPath": "package.json"
       },

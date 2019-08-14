@@ -100,7 +100,6 @@ const TopNavBar = (props: Props) => {
               };
               return (
                 <div
-                  role="Button"
                   className={classnames(styles.itemBorder, {
                     [styles.visitedPath]: alreadyVisitedRouteAndCanVisit,
                     [styles.nextPath]:

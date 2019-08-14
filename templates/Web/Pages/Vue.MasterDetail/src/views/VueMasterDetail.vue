@@ -6,20 +6,20 @@
           <div class="list-group list-group-flush border-bottom">
             <MasterDetailSideBarTab
               v-for="(textAssets, index) in masterDetailText"
-              @onDisplayTabClick="handleDisplayTabClick"
-              :tabText="textAssets.title"
-              :index="index"
               :key="textAssets.id"
+              :index="index"
+              :tabText="textAssets.title"
+              @onDisplayTabClick="handleDisplayTabClick"
             />
           </div>
         </div>
         <MasterDetailPage :textSampleData="masterDetailText[currentDisplayTabIndex]" />
       </div>
     </main>
-    <WarningMessage
+    <BaseWarningMessage
       v-if="WarningMessageOpen"
-      @onWarningClose="handleWarningClose"
       :text="WarningMessageText"
+      @onWarningClose="handleWarningClose"
     />
   </div>
 </template>
@@ -28,7 +28,7 @@
 import CONSTANTS from "@/constants";
 import MasterDetailPage from "@/components/MasterDetailPage";
 import MasterDetailSideBarTab from "@/components/MasterDetailSideBarTab";
-import WarningMessage from "@/components/WarningMessage";
+import BaseWarningMessage from "@/components/BaseWarningMessage";
 
 export default {
   name: "VueMasterDetail",
@@ -36,17 +36,20 @@ export default {
   components: {
     MasterDetailPage,
     MasterDetailSideBarTab,
-    WarningMessage
+    BaseWarningMessage
   },
 
   data() {
     return {
       masterDetailText: [
         {
-          paragraph: "",
-          title: "",
-          tabName: "",
-          id: 0
+          id: 0,
+          longDescription: "",
+          orderDate: "",
+          orderTotal: 0,
+          shipTo: "",
+          status: "",
+          title: ""
         }
       ],
       currentDisplayTabIndex: 0,

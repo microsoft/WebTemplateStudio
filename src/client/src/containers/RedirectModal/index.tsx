@@ -14,6 +14,7 @@ import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 export interface IRedirectModalData {
   redirectLink: string;
@@ -36,7 +37,7 @@ type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 const messages = defineMessages({
   beingRedirected: {
     id: "redirectModal.beingRedirected",
-    defaultMessage: "You are being redirected."
+    defaultMessage: "You are being redirected"
   },
   thirdPartyWebsite: {
     id: "redirectModal.thirdPartyWebsite",
@@ -50,10 +51,6 @@ const messages = defineMessages({
   toContinue: {
     id: "redirectModal.toContinue",
     defaultMessage: "To continue, press ok."
-  },
-  remainInWizard: {
-    id: "redirectModal.remainInWizard",
-    defaultMessage: "Click here to remain in wizard"
   },
   privacyStatement: {
     id: "redirectModal.privacyStatement",
@@ -106,20 +103,10 @@ const RedirectModal = (props: Props) => {
         rel="noreferrer noopener"
         className={styles.link}
         href={privacyStatementLink}
+        onKeyUp={keyUpHandler}
       >
         {intl.formatMessage(messages.privacyStatement)}
       </a>
-    );
-  } else {
-    footerLink = (
-      <button
-        className={styles.buttonToLink}
-        onClick={() => {
-          props.closeModal();
-        }}
-      >
-        {intl.formatMessage(messages.remainInWizard)}
-      </button>
     );
   }
 
@@ -140,7 +127,12 @@ const RedirectModal = (props: Props) => {
         {content}
         <div>{intl.formatMessage(messages.toContinue)}</div>
       </div>
-      <div className={styles.footerContainer}>
+      <div
+        className={classnames(styles.footerContainer, {
+          [styles.spaceBetween]: footerLink,
+          [styles.flexEnd]: !footerLink
+        })}
+      >
         {footerLink}
         <a
           target={"_blank"}
@@ -150,6 +142,7 @@ const RedirectModal = (props: Props) => {
             props.closeModal();
           }}
           className={classnames(buttonStyles.buttonHighlighted, styles.button)}
+          onKeyUp={keyUpHandler}
         >
           {intl.formatMessage(messages.OK)}
         </a>

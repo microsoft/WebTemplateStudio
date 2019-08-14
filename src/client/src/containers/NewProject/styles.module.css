@@ -1,15 +1,10 @@
 .container {
-  align-self: center;
   display: flex;
   flex-direction: column;
   max-width: 50%;
   margin-bottom: 3%;
   padding-left: 5%;
   z-index: 1;
-}
-
-.container > div {
-  flex: 1 0 100%;
 }
 
 .flex > div:first-child {
@@ -32,9 +27,6 @@
 }
 
 .projectDetailsContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   box-sizing: border-box;
   width: 80%;
 }
@@ -45,4 +37,17 @@
 
 .quickStartContainer {
   margin-top: 1em;
+  position: relative;
+}
+
+@media (min-width: 850px) and (max-width: 1120px) {
+  .container {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 850px) {
+  .container {
+    max-width: 100%;
+  }
 }

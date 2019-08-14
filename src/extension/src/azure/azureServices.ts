@@ -37,6 +37,9 @@ import {
   AppServiceProvider,
   AppServiceSelections
 } from "./azure-app-service/appServiceProvider";
+import { NameGenerator } from "./utils/nameGenerator";
+import { StringDictionary } from "azure-arm-website/lib/models";
+import { ConnectionString } from "./utils/connectionString";
 
 export class AzureServices extends WizardServant {
   clientCommandMap: Map<
@@ -123,14 +126,14 @@ export class AzureServices extends WizardServant {
     let payloadResponse: IPayloadResponse = { payload: success };
     return payloadResponse;
   }
-
   public static async sendAppServiceSubscriptionDataToClient(
     message: any
   ): Promise<IPayloadResponse> {
     return {
       payload: await AzureServices.getSubscriptionData(
         message.subscription,
-        AzureResourceType.AppService
+        AzureResourceType.AppService,
+        message.projectName
       )
     };
   }
@@ -141,7 +144,8 @@ export class AzureServices extends WizardServant {
     return {
       payload: await AzureServices.getSubscriptionData(
         message.subscription,
-        AzureResourceType.Cosmos
+        AzureResourceType.Cosmos,
+        message.projectName
       )
     };
   }
@@ -152,7 +156,8 @@ export class AzureServices extends WizardServant {
     return {
       payload: await AzureServices.getSubscriptionData(
         message.subscription,
-        AzureResourceType.Functions
+        AzureResourceType.Functions,
+        message.projectName
       )
     };
   }
@@ -164,7 +169,8 @@ export class AzureServices extends WizardServant {
    * */
   private static async getSubscriptionData(
     subscriptionLabel: string,
-    AzureType: AzureResourceType
+    AzureType: AzureResourceType,
+    projectName: string
   ) {
     let subscriptionItem = AzureServices.subscriptionItemList.find(
       subscriptionItem => subscriptionItem.label === subscriptionLabel
@@ -187,7 +193,12 @@ export class AzureServices extends WizardServant {
       return formatResourceGroupList;
     });
 
-    var locationItems: LocationItem[] = [];
+    let locationItems: LocationItem[] = [];
+    let validName: string = await NameGenerator.generateValidAzureTypeName(
+      projectName,
+      subscriptionItem,
+      AzureType
+    );
 
     switch (AzureType) {
       case AzureResourceType.Cosmos:
@@ -211,8 +222,38 @@ export class AzureServices extends WizardServant {
 
     return {
       resourceGroups: await resourceGroupItems,
-      locations: locations
+      locations: locations,
+      validName: validName
     };
+  }
+
+  public static async validateNameForAzureType(
+    projectName: string,
+    userSubscriptionItem: SubscriptionItem,
+    azureType: AzureResourceType
+  ): Promise<boolean> {
+    let validationResult;
+    switch (azureType) {
+      case AzureResourceType.AppService:
+        validationResult = await AzureServices.AzureAppServiceProvider.checkWebAppName(
+          projectName,
+          userSubscriptionItem
+        );
+        break;
+      case AzureResourceType.Cosmos:
+        validationResult = await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(
+          projectName,
+          userSubscriptionItem
+        );
+        break;
+      case AzureResourceType.Functions:
+        validationResult = await AzureServices.AzureFunctionProvider.checkFunctionAppName(
+          projectName,
+          userSubscriptionItem
+        );
+        break;
+    }
+    return validationResult === undefined;
   }
 
   public static async sendAppServiceNameValidationStatusToClient(
@@ -425,7 +466,7 @@ export class AzureServices extends WizardServant {
     );
   }
 
-  public static async deployWebApp(payload: any): Promise<void> {
+  public static async deployWebApp(payload: any): Promise<string> {
     await AzureServices.updateAppServiceSubscriptionItemCache(
       payload.appService.subscription
     );
@@ -459,10 +500,23 @@ export class AzureServices extends WizardServant {
         throw error; //to log in telemetry
       });
 
-    await AzureServices.AzureAppServiceProvider.createWebApp(
+    const result = await AzureServices.AzureAppServiceProvider.createWebApp(
       userAppServiceSelection,
       payload.engine.path
     );
+    if (!result) {
+      throw new Error(CONSTANTS.ERRORS.APP_SERVICE_UNDEFINED_ID);
+    }
+    return AzureServices.convertId(result);
+  }
+
+  private static convertId(rawId: string): string {
+    // workaround to convert deployment id to app service id
+    const MS_RESOURCE_DEPLOYMENT = "Microsoft.Resources/deployments";
+    const MS_WEB_SITE = "Microsoft.Web/sites";
+    return rawId
+      .replace(MS_RESOURCE_DEPLOYMENT, MS_WEB_SITE)
+      .replace("-" + AzureResourceType.AppService, "");
   }
 
   public static async deployFunctionApp(
@@ -573,5 +627,37 @@ export class AzureServices extends WizardServant {
           startTime: start
         };
       });
+  }
+  public static async updateAppSettings(
+    resourceGroupName: string,
+    webAppName: string,
+    connectionString: string
+  ) {
+    const parsed: string = ConnectionString.parseConnectionString(
+      connectionString
+    );
+    const settings: StringDictionary = {
+      properties: AzureServices.convertToSettings(parsed)
+    };
+
+    AzureServices.AzureAppServiceProvider.updateAppSettings(
+      resourceGroupName,
+      webAppName,
+      settings
+    );
+  }
+
+  private static convertToSettings(
+    parsedConnectionString: string
+  ): { [s: string]: string } {
+    // format of parsedConnectionString: "<key1>=<value1>\n<key2>=<value2>\n<key3>=<value3>\n"
+    const fields = parsedConnectionString.split("\n");
+    const result: { [s: string]: string } = {};
+    for (let i: number = 0; i < fields.length - 1; i++) {
+      let key = fields[i].substr(0, fields[i].indexOf("="));
+      let value = fields[i].substr(fields[i].indexOf("=") + 1);
+      result[key] = value;
+    }
+    return result;
   }
 }

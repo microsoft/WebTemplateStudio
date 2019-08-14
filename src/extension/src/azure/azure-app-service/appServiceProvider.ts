@@ -5,7 +5,8 @@ import { ServiceClientCredentials } from "ms-rest";
 import { WebSiteManagementClient } from "azure-arm-website";
 import {
   AppServicePlanCollection,
-  AppServicePlan
+  AppServicePlan,
+  StringDictionary
 } from "azure-arm-website/lib/models";
 import ResourceManagementClient, {
   ResourceManagementModels
@@ -42,14 +43,14 @@ export interface AppServiceSelections {
 }
 
 const APP_SERVICE_DEPLOYMENT_SUFFIX = "-app-service";
-
 export class AppServiceProvider {
   private webClient: WebSiteManagementClient | undefined;
 
+  // returns the id of the instance created
   public async createWebApp(
     selections: AppServiceSelections,
     appPath: string
-  ): Promise<void> {
+  ): Promise<string | undefined> {
     const template = this.getAppServiceARMTemplate();
     const parameters = this.getAppServiceARMParameter(selections);
     const deploymentParams = parameters.parameters;
@@ -65,11 +66,15 @@ export class AppServiceProvider {
         selections.subscriptionItem
       );
       this.writeARMTemplatesToApp(appPath, template, parameters);
-      await azureResourceClient.deployments.createOrUpdate(
+      const deploymentName = (
+        selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX
+      ).substr(0, CONSTANTS.DEPLOYMENT_NAME.MAX_LENGTH);
+      const result = await azureResourceClient.deployments.createOrUpdate(
         selections.resourceGroupItem.name,
-        selections.siteName + APP_SERVICE_DEPLOYMENT_SUFFIX,
+        deploymentName,
         options
       );
+      return result.id;
     } catch (error) {
       throw new DeploymentError(error.message);
     }
@@ -234,20 +239,23 @@ export class AppServiceProvider {
   }
 
   public async generateValidASPName(name: string): Promise<string> {
-    let generatedName: string = name + "-asp";
+    let generatedName: string = NameGenerator.generateName(
+      name,
+      AzureResourceType.AppServicePlan
+    );
     let isValid: boolean = await this.validateASPName(generatedName);
     let tries = 0;
     while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
       generatedName = NameGenerator.generateName(
         name,
-        AzureResourceType.AppService
+        AzureResourceType.AppServicePlan
       );
       isValid = await this.validateASPName(generatedName);
       tries++;
     }
     if (tries >= CONSTANTS.VALIDATION_LIMIT) {
       throw new AppServiceError(
-        CONSTANTS.ERRORS.TRIES_EXCEEDED("app service plan")
+        CONSTANTS.ERRORS.CREATION_TRIES_EXCEEDED("app service plan")
       );
     }
     return generatedName;
@@ -269,5 +277,20 @@ export class AppServiceProvider {
     return allASP.some(asp => {
       return asp.name === name;
     });
+  }
+
+  public async updateAppSettings(
+    resourceGroupName: string,
+    webAppName: string,
+    settings: StringDictionary
+  ): Promise<void> {
+    if (this.webClient === undefined) {
+      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
+    }
+    this.webClient.webApps.updateApplicationSettings(
+      resourceGroupName,
+      webAppName,
+      settings
+    );
   }
 }

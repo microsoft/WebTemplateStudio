@@ -4,7 +4,7 @@
 }
 
 .servicesCategory {
-  margin-bottom: 5%;
+  margin-bottom: 5em;
 }
 .categoryTitle {
   font-size: 1.2em;
@@ -38,7 +38,7 @@
   max-width: 300px;
   height: 250px;
   padding: 2.5em;
-  background-color: var(--vscode-editor-lineHighlightBorder);
+  background-color: hsla(0, 0%, 47%, 0.2);
 }
 
 .subtitle {

@@ -5,7 +5,7 @@
 
 .container {
   position: relative;
-  padding: 10vh 6vh;
+  padding: 6vh;
 }
 
 .signedIn {
@@ -13,7 +13,8 @@
 }
 
 .optionalFlag {
-  position: absolute;
+  display: flex;
+  justify-content: center;
   z-index: 1000;
   width: 100%;
   background-color: #0067b8;
@@ -37,7 +38,7 @@
 .azureProfile {
   display: flex;
   position: absolute;
-  right: 20px;
+  right: 14%;
   top: 20px;
 }
 
@@ -56,4 +57,10 @@
 
 .button:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+@media (min-width: 830px) {
+  .azureProfile {
+    right: 7%;
+  }
 }

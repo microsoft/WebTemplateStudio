@@ -101,14 +101,6 @@ export const azureMessages = defineMessages({
     id: "azureModal.createNew",
     defaultMessage: "Create New"
   },
-  azureModalAddResource: {
-    id: "azureModal.addResource",
-    defaultMessage: "Add Resource"
-  },
-  azureModalSaveChanges: {
-    id: "azureModal.saveChanges",
-    defaultMessage: "Save Changes"
-  },
   azureModalSubscriptionSubLabel: {
     id: "azureModal.subscriptionSubLabel",
     defaultMessage: "Choose a subscription to manage your billing preferences"
@@ -156,6 +148,10 @@ export const azureMessages = defineMessages({
   appServiceLearnMore: {
     id: "appService.learnMore",
     defaultMessage: "Learn More"
+  },
+  azureModalSave: {
+    id: "azureModal.save",
+    defaultMessage: "Save"
   }
 });
 
@@ -167,9 +163,9 @@ export const servicesEnum = {
 const azureServiceOptions: IOption[] = [
   {
     author: "Microsoft",
-    isPreview: true,
     type: servicesEnum.HOSTING,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE),
+    isPreview: false,
     title: azureMessages.appServiceTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     longDescription: azureMessages.appServiceLongDescription,
@@ -179,6 +175,7 @@ const azureServiceOptions: IOption[] = [
     author: "Microsoft",
     type: servicesEnum.HOSTING,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS),
+    isPreview: true,
     title: azureMessages.azureFunctionsTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
     longDescription: azureMessages.azureFunctionsLongDescription,
@@ -188,6 +185,7 @@ const azureServiceOptions: IOption[] = [
     author: "Microsoft",
     type: servicesEnum.DATABASE,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
+    isPreview: false,
     title: azureMessages.cosmosTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     longDescription: azureMessages.cosmosLongDescription,

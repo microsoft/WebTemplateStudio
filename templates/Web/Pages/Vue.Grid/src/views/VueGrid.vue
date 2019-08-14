@@ -25,10 +25,10 @@
         </div>
       </div>
     </main>
-    <WarningMessage
+    <BaseWarningMessage
       v-if="WarningMessageOpen"
-      @onWarningClose="handleWarningClose"
       :text="WarningMessageText"
+      @onWarningClose="handleWarningClose"
     />
   </div>
 </template>
@@ -36,22 +36,22 @@
 <script>
 import CONSTANTS from "@/constants";
 import GridComponent from "@/components/GridComponent";
-import WarningMessage from "@/components/WarningMessage";
+import BaseWarningMessage from "@/components/BaseWarningMessage";
 
 export default {
   name: "VueGrid",
 
   components: {
     GridComponent,
-    WarningMessage
+    BaseWarningMessage
   },
 
   data() {
     return {
       gridTextAssets: [
         {
-          description: "",
-          header: "",
+          shortDescription: "",
+          title: "",
           id: 0
         }
       ],

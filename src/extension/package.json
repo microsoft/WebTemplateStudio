@@ -15,7 +15,7 @@
     "color": "#eff1f3",
     "theme": "light"
   },
-  "icon": "resources/WebTemplateStudioLogo_blueBackground.png",
+  "icon": "resources/WebTSLogoSquare.png",
   "keywords": [
     "Garage",
     "Web Application",
@@ -38,7 +38,8 @@
     "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
-    "onCommand:webTemplateStudioExtension.wizardLaunch"
+    "onCommand:webTemplateStudioExtension.wizardLaunch",
+    "onCommand:webTemplateStudioExtension.deployApp"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -46,6 +47,11 @@
       {
         "command": "webTemplateStudioExtension.wizardLaunch",
         "title": "%webTemplateStudioExtension.commands.wizardLaunch%",
+        "category": "%webTemplateStudioExtension.commands.wts%"
+      },
+      {
+        "command": "webTemplateStudioExtension.deployApp",
+        "title": "%webTemplateStudioExtension.commands.deployApp%",
         "category": "%webTemplateStudioExtension.commands.wts%"
       }
     ],
