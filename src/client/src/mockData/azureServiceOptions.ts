@@ -163,9 +163,9 @@ export const servicesEnum = {
 const azureServiceOptions: IOption[] = [
   {
     author: "Microsoft",
-    isPreview: true,
     type: servicesEnum.HOSTING,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE),
+    isPreview: false,
     title: azureMessages.appServiceTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     longDescription: azureMessages.appServiceLongDescription,
@@ -175,6 +175,7 @@ const azureServiceOptions: IOption[] = [
     author: "Microsoft",
     type: servicesEnum.HOSTING,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS),
+    isPreview: true,
     title: azureMessages.azureFunctionsTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
     longDescription: azureMessages.azureFunctionsLongDescription,
@@ -184,6 +185,7 @@ const azureServiceOptions: IOption[] = [
     author: "Microsoft",
     type: servicesEnum.DATABASE,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
+    isPreview: false,
     title: azureMessages.cosmosTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     longDescription: azureMessages.cosmosLongDescription,
