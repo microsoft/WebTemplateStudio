@@ -23,7 +23,6 @@ Microsoft Web Template Studio was initially built by a great group of interns fr
 
 [Kirill Shchetynin](https://github.com/KirillShchetinin),
 [Lucas Wang](https://www.linkedin.com/in/uxfool/),
-[Mark Schramm](https://www.linkedin.com/in/markschramm/),
 [Mohannad Abwah](https://www.linkedin.com/in/mohannad-abwah-1156944a/),
 [Tejbir Sodhan](https://www.linkedin.com/in/tejbirsodhan/)
 
@@ -66,4 +65,3 @@ Microsoft Web Template Studio is currently built and maintained by a new group o
 **Sponsors**
 
 [Michael Harsh](https://www.linkedin.com/in/michael-harsh/),
-[Sibille Metzler](https://www.linkedin.com/in/sibille-metzler-823609/)
