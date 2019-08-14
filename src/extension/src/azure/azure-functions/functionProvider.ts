@@ -144,10 +144,13 @@ export class FunctionProvider {
       /*
        * Azure Resource Client to generate a function app using resource group name, function app name, and options
        */
+      const deploymentName = (
+        selections.functionAppName + FUNCTIONS_DEPLOYMENT_SUFFIX
+      ).substr(0, CONSTANTS.DEPLOYMENT_NAME.MAX_LENGTH);
       await azureResourceClient.deployments
         .createOrUpdate(
           selections.resourceGroupItem.name,
-          selections.functionAppName + FUNCTIONS_DEPLOYMENT_SUFFIX,
+          deploymentName,
           options
         )
         .then(async result => {
