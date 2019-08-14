@@ -17,8 +17,8 @@
   },
   "icon": "resources/WebTSLogoSquare.png",
   "keywords": [
-    "Open source",
-    "Full stack",
+    "Open Source",
+    "Full Stack",
     "Web Application",
     "Scaffolding",
     "Templates",
@@ -29,7 +29,7 @@
     "Node",
     "Express",
     "Flask",
-    "Azure services",
+    "Azure Services",
     "Azure Cosmos DB",
     "Azure App Service"
   ],
