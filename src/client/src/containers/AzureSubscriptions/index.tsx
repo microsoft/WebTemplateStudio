@@ -235,6 +235,15 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     const { isLoggedIn, setDetailPage, isPreview } = this.props;
     const serviceTypes = azureServiceOptions.map(option => option.type);
     const uniqueServiceTypes = [...new Set(serviceTypes)];
+
+    let numHostingServiceCards = 0;
+    azureServiceOptions.forEach(serviceOption => {
+      const isCardShown = isPreview || !serviceOption.isPreview;
+      if (serviceOption.type === servicesEnum.HOSTING && isCardShown) {
+        numHostingServiceCards++;
+      }
+    });
+
     return (
       <div className={styles.container}>
         {uniqueServiceTypes.map((serviceType: any) => {
@@ -243,7 +252,10 @@ class AzureSubscriptions extends React.Component<Props, IState> {
           switch (serviceType) {
             case servicesEnum.HOSTING:
               categoryTitle = messages.hostingTitle;
-              subtitle = messages.hostingOneServiceWarning;
+              subtitle =
+                numHostingServiceCards > 1
+                  ? messages.hostingOneServiceWarning
+                  : undefined;
               break;
             case servicesEnum.DATABASE:
               categoryTitle = messages.storageTitle;
