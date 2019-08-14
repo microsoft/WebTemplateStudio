@@ -21,6 +21,10 @@
   padding: 0;
 }
 
+.centerViewNewProjectPage {
+  padding: 0;
+}
+
 .centerViewMaxHeight {
   height: calc(100vh - 70px);
   margin-bottom: 0px;
@@ -42,7 +46,6 @@
   z-index: 0;
   bottom: 65px;
 }
-
 @media (max-width: 1120px) {
   .splash {
     display: none;
