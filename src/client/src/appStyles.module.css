@@ -5,7 +5,7 @@
 }
 
 .centerView {
-  display: flex;
+  display: block;
   padding: 6vh;
   overflow: auto;
   width: 100%;
@@ -14,6 +14,7 @@
   height: calc(100vh - 124px);
   justify-content: flex-start;
   position: relative;
+  flex: 1 1 auto;
 }
 
 .centerViewAzurePage {

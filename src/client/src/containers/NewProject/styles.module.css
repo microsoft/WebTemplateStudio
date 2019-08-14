@@ -37,6 +37,7 @@
 
 .quickStartContainer {
   margin-top: 1em;
+  position: relative;
 }
 
 @media (min-width: 850px) and (max-width: 1120px) {

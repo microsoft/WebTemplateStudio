@@ -82,6 +82,7 @@
   "projectName.ariaProjectName",
   "projectNameError.nameTooLong",
   "quickStart.optional",
+  "redirectModal.beingRedirected",
   "redirectModal.toContinue",
   "redirectModal.privacyStatement",
   "redirectModal.OK",
