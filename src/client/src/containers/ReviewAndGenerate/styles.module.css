@@ -8,6 +8,7 @@ h1 {
   font-size: 2.5em;
   font-weight: 600;
   font-weight: lighter;
+  margin-bottom: 15px;
 }
 
 .selectionContainer {
@@ -35,9 +36,11 @@ button {
   margin-left: 2%;
   width: calc(100% - 40px);
 }
+
 .buttonContainer {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .link {

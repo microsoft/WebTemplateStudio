@@ -38,7 +38,7 @@
 .azureProfile {
   display: flex;
   position: absolute;
-  right: 20px;
+  right: 14%;
   top: 20px;
 }
 
@@ -57,4 +57,10 @@
 
 .button:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+@media (min-width: 830px) {
+  .azureProfile {
+    right: 7%;
+  }
 }
