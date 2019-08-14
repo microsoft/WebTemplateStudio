@@ -17,8 +17,11 @@
   },
   "icon": "resources/WebTSLogoSquare.png",
   "keywords": [
-    "Garage",
+    "Open source",
+    "Full stack",
     "Web Application",
+    "Scaffolding",
+    "Templates",
     "Boilerplate",
     "React",
     "Angular",
@@ -26,8 +29,9 @@
     "Node",
     "Express",
     "Flask",
-    "Azure App Service",
-    "Scaffolding"
+    "Azure services",
+    "Azure Cosmos DB",
+    "Azure App Service"
   ],
   "preview": true,
   "homepage": "https://github.com/Microsoft/WebTemplateStudio/blob/master/README.md",
