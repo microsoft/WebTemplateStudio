@@ -206,7 +206,7 @@
 
 @media (min-width: 560px) and (max-width: 700px) {
   .summaryContainer {
-    width: 27vh;
+    width: 18em;
   }
 }
 @media (min-width: 560px) {
@@ -217,7 +217,7 @@
 
 @media (min-width: 700px) and (max-width: 900px) {
   .summaryContainer {
-    width: 29vh;
+    width: 20em;
   }
 }
 @media (min-width: 900px) {
@@ -228,6 +228,6 @@
 
 @media (min-width: 1200px) {
   .summaryContainer {
-    width: 35vh;
+    width: 24em;
   }
 }
