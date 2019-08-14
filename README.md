@@ -32,7 +32,7 @@ Visual Studio Code extensions are currently not signed. WebTS provides the Secur
 
 To verify the integrity of the package, download the vsix from the Marketplace, calculate the hash of the package using the powershell command ‘Get-FileHash’ or any other tool that allows you to calculate the packages hash, and compare both.
 
-## Instruction To Use
+## Instructions To Use
 
 ### Create a new project
 

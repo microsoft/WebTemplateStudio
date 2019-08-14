@@ -7,7 +7,7 @@ The resulting web application is well-formed, readable code that incorporates cl
 Azure while implementing proven patterns and best practices. Sprinkled throughout the generated code we have links to
 Docs to provide useful insights.
 
-## Instruction To Use
+## Instructions To Use
 
 ### Create a new project
 
