@@ -1,4 +1,5 @@
 ﻿## Next Steps
+
 //^^
 //{[{
 
@@ -11,4 +12,4 @@ Function it is recommended to install the [Azure Functions Extension](https://ma
 
 ### Deployment
 
-The generated templates can be deployed to Azure App Service using the following steps:
+If you selected Azure App Service when creating your project, follow these steps:
