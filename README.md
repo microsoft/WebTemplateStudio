@@ -51,7 +51,7 @@ To verify the integrity of the package, download the vsix from the Marketplace, 
 
 I need a full-stack web app that is deployed on Azure App Service Web App.
 
-![Readme-app-screenshot](./docs/resources/readme-app-screenshot.png)
+![Readme-app-screenshot](./docs/resources/readme-app-azure-screenshot.png)
 
 ## Features
 
