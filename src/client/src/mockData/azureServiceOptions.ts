@@ -149,7 +149,7 @@ export const azureMessages = defineMessages({
     defaultMessage: "Web App Name"
   },
   appServiceAriaAppNameLabel: {
-    id: "appService.appNameLabel",
+    id: "appService.ariaAppNameLabel",
     defaultMessage: "Web App Name Dropdown"
   },
   appServiceAppNameSubLabel: {
