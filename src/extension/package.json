@@ -64,6 +64,17 @@
         "category": "%webTemplateStudioExtension.commands.wts%"
       }
     ],
+    "colors": [
+      {
+        "id": "editorWidget.border",
+        "description": "Color for error message in the status bar.",
+        "defaults": {
+          "dark": "#454545",
+          "light": "#c8c8c8",
+          "highContrast": "#800000"
+        }
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "%webTemplateStudioExtension.commands.wts%",
