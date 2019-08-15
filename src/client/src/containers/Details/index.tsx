@@ -169,16 +169,14 @@ const Details = ({
                       defaultMessage="Author:"
                     />
                   </div>
-                  <div className={grid.col8}>
-                    {<ReactMarkdown source={detailInfo.author} /> ||
+                    {renderFormattedData(detailInfo.author, true) ||
                       intl!.formatMessage(messages.none)}
                   </div>
-                </div>
               )}
             </div>
             <div>
               {detailInfo.licenses && (
-                <div className={classnames(styles.metaData, grid.row)}>
+                <div className={classnames(styles.metaData)}>
                   <div
                     className={classnames(
                       styles.licenseCategory,
@@ -239,9 +237,7 @@ const Details = ({
                       defaultMessage="Version:"
                     />
                   </div>
-                  <div className={grid.col8}>
-                    <ReactMarkdown source={detailInfo.version} />
-                  </div>
+                    {renderFormattedData(detailInfo.version, true)}
                 </div>
               )}
             </div>

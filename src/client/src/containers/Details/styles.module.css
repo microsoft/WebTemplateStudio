@@ -15,6 +15,7 @@
 .backIcon {
   height: 24px;
   margin-right: 1em;
+  margin-top: 5px;
   cursor: pointer;
 }
 
@@ -55,10 +56,11 @@
 .licenseCategory,
 .category {
   margin-left: 0px;
+  font-size: 15px;
 }
 
 .detailsTitle {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 20px;
 }
 
@@ -79,11 +81,16 @@
   display: flex;
   align-items: center;
   width: 80% !important;
+  font-size: 15px;
+}
+
+.markdown {
+  font-size: 15px !important;
 }
 
 .details {
   padding-top: 2px;
-  font-size: 14px;
+  font-size: 20px;
   color: var(--vscode-textLink-foreground);
   cursor: pointer;
 }
@@ -104,6 +111,7 @@
 
 .longDescription {
   line-height: 1.75em;
+  font-size: 15px;
 }
 
 .colWidth {
@@ -112,7 +120,7 @@
 
 .licenseButton {
   text-decoration: none;
-  font-size: var(--vscode-font-size);
+  font-size: 15px;
   color: var(--vscode-textLink-foreground);
   font-weight: var(--vscode-font-weight);
   background: none;
