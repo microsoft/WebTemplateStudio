@@ -136,6 +136,7 @@
   "appService.learnMore",
   "appService.appNameLabel",
   "appService.ariaAppNameLabel",
+  "appService.appNameSubLabel",
   "azureModal.save",
   "azureFunctions.originalTitle",
   "cosmosDb.originalTitle",
