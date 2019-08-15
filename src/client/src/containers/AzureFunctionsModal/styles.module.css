@@ -17,13 +17,13 @@
   font-size: 1.8em;
 }
 
-.selectionContainer {
-  margin-bottom: 2em;
-}
-
 .leftHeader {
   font-weight: 500;
   font-size: 1.2em;
+}
+
+.selectionContainer {
+  margin-bottom: 45px;
 }
 
 .selectionContainerDisabled {
@@ -34,10 +34,6 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 3px;
-}
-
-.selectionInputContainer {
-  margin-bottom: 26px;
 }
 
 .button {
@@ -95,9 +91,9 @@
   display: flex;
   align-items: center;
   width: 100%;
-  font-size: 1.2em;
   outline: none;
   padding: 9px;
+  font-size: 1.2em;
   box-sizing: border-box;
   background: var(--vscode-editorWidget-border);
   border: none;
@@ -122,19 +118,9 @@ input::placeholder {
   color: var(--vscode-input-placeholderForeground);
 }
 
-.subLabel {
-  margin-bottom: 1em;
-}
-
-.createNew,
 .link {
-  float: right;
   text-decoration: none;
   color: var(--vscode-textLink-foreground);
-}
-
-.createNew:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .link:focus {
@@ -187,8 +173,10 @@ input::placeholder {
   position: relative;
 }
 
-.resourceGroupToggleContainer {
-  margin-top: 0.5em;
+.subLabel {
+  margin-bottom: 1em;
+  font-size: 90%;
+  opacity: 0.8;
 }
 
 .radioButtonContainer {

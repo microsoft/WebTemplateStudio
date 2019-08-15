@@ -2,7 +2,6 @@ import { IOption } from "../types/option";
 import { defineMessages } from "react-intl";
 import getSvgUrl from "../utils/getSvgUrl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../utils/constants";
-import appService from "../reducers/wizardSelectionReducers/services/appServiceReducer";
 
 export const azureMessages = defineMessages({
   azureSkipButton: {
@@ -136,18 +135,26 @@ export const azureMessages = defineMessages({
     id: "azureFunctionsModal.runtimeStackSubLabel",
     defaultMessage: "Your runtime stack is {runtimeStack}"
   },
-  appServicePlanLabel: {
-    id: "appService.appServicePlanLabel",
-    defaultMessage: "App Service Plan"
-  },
-  appServicePlanSubLabel: {
-    id: "appService.appServicePlanSubLabel",
+  appServiceInfo: {
+    id: "appService.appServiceInfo",
     defaultMessage:
-      "We will create a free BASIC tier 30 day trial app service plan for you. After you're done with the project, you can remove the resources you've created."
+      "A free BASIC tier 30 day trial app service plan will be created for you."
   },
   appServiceLearnMore: {
     id: "appService.learnMore",
     defaultMessage: "Learn More"
+  },
+  appServiceAppNameLabel: {
+    id: "appService.appNameLabel",
+    defaultMessage: "Web App Name"
+  },
+  appServiceAriaAppNameLabel: {
+    id: "appService.appNameLabel",
+    defaultMessage: "Web App Name Dropdown"
+  },
+  appServiceAppNameSubLabel: {
+    id: "appService.appNameSubLabel",
+    defaultMessage: "We have created a unique web app name that you can edit"
   },
   azureModalSave: {
     id: "azureModal.save",
