@@ -261,7 +261,6 @@ class Footer extends React.Component<Props> {
             <div className={styles.buttonContainer}>
               {pathname !== ROUTES.NEW_PROJECT && (
                 <Link
-                  id="footerBackNavigation"
                   tabIndex={0}
                   className={classnames(
                     buttonStyles.buttonDark,
@@ -283,7 +282,6 @@ class Footer extends React.Component<Props> {
               )}
               {pathname !== ROUTES.REVIEW_AND_GENERATE && (
                 <Link
-                  id="footerNextNavigation"
                   tabIndex={isValidNameAndProjectPath ? 0 : -1}
                   className={classnames(
                     styles.button,
