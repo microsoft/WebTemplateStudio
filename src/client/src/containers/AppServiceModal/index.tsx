@@ -542,21 +542,19 @@ const AppServiceModal = (props: Props) => {
             )}
           </div>
           {/* App Service Plan Information */}
-          {!appServiceFormData.chooseExistingRadioButtonSelected && (
-            <div>
-              <div className={styles.appServiceInfo}>
-                {intl.formatMessage(azureModalMessages.appServiceInfo)}
-              </div>
-              <a
-                className={styles.link}
-                target={"_blank"}
-                rel="noreferrer noopener"
-                href={WEB_TEMPLATE_STUDIO_LINKS.APP_SERVICE_PLAN}
-              >
-                {intl.formatMessage(azureModalMessages.appServiceLearnMore)}
-              </a>
+          <div>
+            <div className={styles.appServiceInfo}>
+              {intl.formatMessage(azureModalMessages.appServiceInfo)}
             </div>
-          )}
+            <a
+              className={styles.link}
+              target={"_blank"}
+              rel="noreferrer noopener"
+              href={WEB_TEMPLATE_STUDIO_LINKS.APP_SERVICE_PLAN}
+            >
+              {intl.formatMessage(azureModalMessages.appServiceLearnMore)}
+            </a>
+          </div>
         </div>
         {/* Site Name */}
         <div
