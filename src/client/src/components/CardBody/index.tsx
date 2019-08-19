@@ -1,5 +1,7 @@
 import * as React from "react";
 import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl";
+import { ReactComponent as PriceSVG } from "../../assets/money.svg";
+import { ReactComponent as TimeSVG } from "../../assets/timer.svg";
 
 import styles from "./styles.module.css";
 
@@ -7,8 +9,8 @@ interface IProps {
   body?: string;
   version?: string;
   formattedBody?: FormattedMessage.MessageDescriptor;
-  expectedPrice?: FormattedMessage.MessageDescriptor;
-  expextedTime?: FormattedMessage.MessageDescriptor;
+  expectedTime?: string;
+  expectedPrice?: string;
 }
 
 type Props = InjectedIntlProps & IProps;
@@ -17,15 +19,21 @@ const CardBody = ({
   body,
   version,
   formattedBody,
+  expectedTime,
   expectedPrice,
-  expextedTime,
   intl
 }: Props) => {
   return (
     <div className={styles.body}>
-      {expectedPrice && <div>{expectedPrice}</div>}
-      {expextedTime && <div>{expextedTime}</div>}
       {version && <div>v{version}</div>}
+      <div className={styles.expectedPrice}>
+        {expectedPrice && <PriceSVG className={styles.svg} />}
+        {expectedPrice && <div>{expectedPrice}</div>}
+      </div>
+      <div className={styles.expectedTime}>
+        {expectedTime && <TimeSVG className={styles.svg} />}
+        {expectedTime && <div>{expectedTime}</div>}
+      </div>
       {body || (formattedBody && intl.formatMessage(formattedBody))}{" "}
     </div>
   );

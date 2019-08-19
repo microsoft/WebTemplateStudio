@@ -148,6 +148,10 @@ export const azureMessages = defineMessages({
     id: "appService.learnMore",
     defaultMessage: "Learn More"
   },
+  appServiceExpectedTime: {
+    id: "appService.expectedTime",
+    defaultMessage: "1 click"
+  },
   azureModalSave: {
     id: "azureModal.save",
     defaultMessage: "Save"
@@ -157,6 +161,17 @@ export const azureMessages = defineMessages({
 export const servicesEnum = {
   HOSTING: "Cloud Hosting",
   DATABASE: "Cloud Database"
+};
+
+export const servicesExpectation = {
+  APP_SERVICE: {
+    price: "Free 30 Day Trial",
+    time: "Under 3 minute set-up time"
+  },
+  COSMOS_DB: {
+    price: "12 months of free access",
+    time: "Under 10 minutes set-up time"
+  }
 };
 
 const azureServiceOptions: IOption[] = [
@@ -169,10 +184,8 @@ const azureServiceOptions: IOption[] = [
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     longDescription: azureMessages.appServiceLongDescription,
     body: azureMessages.appServiceCardBody,
-    expectedPrice: "30 days free trial",
-    expectedPriceSvg: "",
-    expectedTime: "1 click",
-    expectedTimeSvg: ""
+    expectedPrice: servicesExpectation.APP_SERVICE.price,
+    expectedTime: servicesExpectation.APP_SERVICE.time
   },
   {
     author: "Microsoft",
@@ -193,10 +206,8 @@ const azureServiceOptions: IOption[] = [
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     longDescription: azureMessages.cosmosLongDescription,
     body: azureMessages.cosmosCardBody,
-    expectedPrice: "30 days free trial",
-    expectedPriceSvg: "",
-    expectedTime: "1 click",
-    expectedTimeSvg: ""
+    expectedPrice: servicesExpectation.COSMOS_DB.price,
+    expectedTime: servicesExpectation.COSMOS_DB.time
   }
 ];
 

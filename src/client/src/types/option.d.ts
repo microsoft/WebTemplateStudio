@@ -18,7 +18,5 @@ export interface IOption {
   isValidTitle?: boolean;
   author?: string;
   expectedTime?: string;
-  expectedTimeSvg?: string;
   expectedPrice?: string;
-  expectedPriceSvg?: string;
 }

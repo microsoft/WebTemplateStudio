@@ -44,7 +44,11 @@ export const Card = ({
       </div>
       <div className={styles.cardContent}>
         <div className={styles.cardBody}>
-          <CardBody formattedBody={formattedBody} />
+          <CardBody
+            formattedBody={formattedBody}
+            expectedTime={option.expectedTime}
+            expectedPrice={option.expectedPrice}
+          />
         </div>
         <div className={styles.selectionContainer}>
           <Link
