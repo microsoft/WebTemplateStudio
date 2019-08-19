@@ -59,6 +59,14 @@ export const azureMessages = defineMessages({
     defaultMessage:
       "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API."
   },
+  cosmosTimeExpectation: {
+    id: "cosmosDb.timeExpectation",
+    defaultMessage: "12 months of free access"
+  },
+  cosmosPriceExpectation: {
+    id: "cosmosDb.priceExpectation",
+    defaultMessage: "Under 10 minutes set-up time"
+  },
   azureModalChooseExisting: {
     id: "azureModal.chooseExisting",
     defaultMessage: "Choose existing"
@@ -148,6 +156,14 @@ export const azureMessages = defineMessages({
     id: "appService.learnMore",
     defaultMessage: "Learn More"
   },
+  appServicePriceExpectation: {
+    id: "appService.priceExpectation",
+    defaultMessage: "Free 30 Day Trial"
+  },
+  appServiceTimeExpectation: {
+    id: "appService.timeExpectation",
+    defaultMessage: "Under 3 minute set-up time"
+  },
   azureModalSave: {
     id: "azureModal.save",
     defaultMessage: "Save"
@@ -157,17 +173,6 @@ export const azureMessages = defineMessages({
 export const servicesEnum = {
   HOSTING: "Cloud Hosting",
   DATABASE: "Cloud Database"
-};
-
-export const servicesExpectation = {
-  APP_SERVICE: {
-    price: "Free 30 Day Trial",
-    time: "Under 3 minute set-up time"
-  },
-  COSMOS_DB: {
-    price: "12 months of free access",
-    time: "Under 10 minutes set-up time"
-  }
 };
 
 const azureServiceOptions: IOption[] = [
@@ -180,8 +185,8 @@ const azureServiceOptions: IOption[] = [
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     longDescription: azureMessages.appServiceLongDescription,
     body: azureMessages.appServiceCardBody,
-    expectedPrice: servicesExpectation.APP_SERVICE.price,
-    expectedTime: servicesExpectation.APP_SERVICE.time
+    expectedPrice: azureMessages.appServicePriceExpectation,
+    expectedTime: azureMessages.appServiceTimeExpectation
   },
   {
     author: "Microsoft",
@@ -202,8 +207,8 @@ const azureServiceOptions: IOption[] = [
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     longDescription: azureMessages.cosmosLongDescription,
     body: azureMessages.cosmosCardBody,
-    expectedPrice: servicesExpectation.COSMOS_DB.price,
-    expectedTime: servicesExpectation.COSMOS_DB.time
+    expectedPrice: azureMessages.cosmosPriceExpectation,
+    expectedTime: azureMessages.cosmosTimeExpectation
   }
 ];
 
