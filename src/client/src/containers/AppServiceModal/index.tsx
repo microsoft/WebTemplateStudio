@@ -12,7 +12,6 @@ import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
 import { appServiceModalInitialState } from "../../mockData/azureModalInitialStateData";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
-import { messages } from "./messages";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
@@ -152,7 +151,7 @@ const AppServiceModal = (props: Props) => {
       value: "resourceGroup"
     },
     SITE_NAME: {
-      label: intl.formatMessage(messages.siteNameLabel),
+      label: intl.formatMessage(azureModalMessages.appServiceAppNameLabel),
       value: "siteName"
     },
     RUNTIME_STACK: {
@@ -518,7 +517,7 @@ const AppServiceModal = (props: Props) => {
               {intl.formatMessage(azureModalMessages.azureModalChooseExisting)}
             </div>
           </div>
-          <div className={styles.resourceGroupToggleContainer}>
+          <div>
             {appServiceFormData.chooseExistingRadioButtonSelected ? (
               <Dropdown
                 ariaLabel={intl.formatMessage(
@@ -542,30 +541,42 @@ const AppServiceModal = (props: Props) => {
               )
             )}
           </div>
+          {/* App Service Plan Information */}
+          <div>
+            <div className={styles.appServiceInfo}>
+              {intl.formatMessage(azureModalMessages.appServiceInfo)}
+            </div>
+            <a
+              className={styles.link}
+              target={"_blank"}
+              rel="noreferrer noopener"
+              href={WEB_TEMPLATE_STUDIO_LINKS.APP_SERVICE_PLAN}
+            >
+              {intl.formatMessage(azureModalMessages.appServiceLearnMore)}
+            </a>
+          </div>
         </div>
         {/* Site Name */}
         <div
-          className={classNames(
-            styles.selectionInputContainer,
-            styles.selectionContainer,
-            {
-              [styles.selectionContainerDisabled]:
-                appServiceFormData.subscription.value === ""
-            }
-          )}
+          className={classNames(styles.selectionContainer, {
+            [styles.selectionContainerDisabled]:
+              appServiceFormData.subscription.value === ""
+          })}
         >
           <div className={styles.selectionHeaderContainer}>
             <div className={styles.leftHeader}>
-              {intl.formatMessage(messages.siteNameLabel)}
+              {intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
             </div>
           </div>
           <div className={styles.subLabel}>
-            {intl.formatMessage(messages.siteNameSubLabel)}
+            {intl.formatMessage(azureModalMessages.appServiceAppNameSubLabel)}
           </div>
           <div className={styles.errorStack}>
             <div className={styles.inputContainer}>
               <input
-                aria-label={intl.formatMessage(messages.ariaSiteNameLabel)}
+                aria-label={intl.formatMessage(
+                  azureModalMessages.appServiceAriaAppNameLabel
+                )}
                 className={styles.input}
                 onChange={handleInput}
                 value={
@@ -597,12 +608,7 @@ const AppServiceModal = (props: Props) => {
           </div>
         </div>
         {/* Runtime Stack */}
-        <div
-          className={classNames(
-            styles.selectionInputContainer,
-            styles.selectionContainer
-          )}
-        >
+        <div className={styles.selectionContainer}>
           <div
             className={classNames(
               styles.selectionHeaderContainer,
@@ -617,30 +623,6 @@ const AppServiceModal = (props: Props) => {
                 selectedBackend.internalName
               )
             })}
-          </div>
-        </div>
-        {/* App Service Plan */}
-        <div
-          className={classNames(
-            styles.selectionInputContainer,
-            styles.selectionContainer
-          )}
-        >
-          <div className={styles.selectionHeaderContainer}>
-            <div className={styles.leftHeader}>
-              {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
-            </div>
-            <a
-              className={styles.link}
-              target={"_blank"}
-              rel="noreferrer noopener"
-              href={WEB_TEMPLATE_STUDIO_LINKS.APP_SERVICE_PLAN}
-            >
-              {intl.formatMessage(azureModalMessages.appServiceLearnMore)}
-            </a>
-          </div>
-          <div>
-            {intl.formatMessage(azureModalMessages.appServicePlanSubLabel)}
           </div>
         </div>
         {/* Save Button */}

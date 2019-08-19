@@ -23,7 +23,7 @@
 }
 
 .selectionContainer {
-  margin-bottom: 2em;
+  margin-bottom: 35px;
 }
 
 .selectionContainerDisabled {
@@ -34,10 +34,6 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 3px;
-}
-
-.selectionInputContainer {
-  margin-bottom: 26px;
 }
 
 .button {
@@ -122,18 +118,12 @@ input::placeholder {
   color: var(--vscode-input-placeholderForeground);
 }
 
-.createNew,
 .link {
   text-decoration: none;
   color: var(--vscode-textLink-foreground);
-  float: right;
 }
 
 .link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.createNew:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
@@ -185,6 +175,8 @@ input::placeholder {
 
 .subLabel {
   margin-bottom: 1em;
+  font-size: 90%;
+  opacity: 0.8;
 }
 
 .radioButtonContainer {
