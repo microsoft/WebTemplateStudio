@@ -17,4 +17,8 @@ export interface IOption {
   unselectable?: boolean;
   isValidTitle?: boolean;
   author?: string;
+  expectedTime?: string;
+  expectedTimeSvg?: string;
+  expectedPrice?: string;
+  expectedPriceSvg?: string;
 }

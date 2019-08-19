@@ -2,7 +2,6 @@ import { IOption } from "../types/option";
 import { defineMessages } from "react-intl";
 import getSvgUrl from "../utils/getSvgUrl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../utils/constants";
-import appService from "../reducers/wizardSelectionReducers/services/appServiceReducer";
 
 export const azureMessages = defineMessages({
   azureSkipButton: {
@@ -169,7 +168,11 @@ const azureServiceOptions: IOption[] = [
     title: azureMessages.appServiceTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     longDescription: azureMessages.appServiceLongDescription,
-    body: azureMessages.appServiceCardBody
+    body: azureMessages.appServiceCardBody,
+    expectedPrice: "30 days free trial",
+    expectedPriceSvg: "",
+    expectedTime: "1 click",
+    expectedTimeSvg: ""
   },
   {
     author: "Microsoft",
@@ -189,7 +192,11 @@ const azureServiceOptions: IOption[] = [
     title: azureMessages.cosmosTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     longDescription: azureMessages.cosmosLongDescription,
-    body: azureMessages.cosmosCardBody
+    body: azureMessages.cosmosCardBody,
+    expectedPrice: "30 days free trial",
+    expectedPriceSvg: "",
+    expectedTime: "1 click",
+    expectedTimeSvg: ""
   }
 ];
 
