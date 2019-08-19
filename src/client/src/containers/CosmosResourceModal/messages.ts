@@ -31,7 +31,7 @@ export const messages = defineMessages({
   },
   accountNameSubLabel: {
     id: "cosmosResourceModule.accountNameSubLabel",
-    defaultMessage: "Create a unique account name"
+    defaultMessage: "We have created a unique account name that you can edit"
   },
   locationSubLabel: {
     id: "cosmosResourceModule.locationSubLabel",
