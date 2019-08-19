@@ -23,7 +23,7 @@ export const messages = defineMessages({
   },
   appNameSubLabel: {
     id: "azureFunctionsModal.appNameSubLabel",
-    defaultMessage: "Create a unique app name"
+    defaultMessage: "We have created a unique app name that you can edit"
   },
   locationSubLabel: {
     id: "azureFunctionsModal.locationSubLabel",
