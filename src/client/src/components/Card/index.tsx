@@ -46,8 +46,12 @@ export const Card = ({
         <div className={styles.cardBody}>
           <CardBody
             formattedBody={formattedBody}
-            expectedTime={option.expectedTime}
-            expectedPrice={option.expectedPrice}
+            expectedTime={
+              option.expectedTime as FormattedMessage.MessageDescriptor
+            }
+            expectedPrice={
+              option.expectedPrice as FormattedMessage.MessageDescriptor
+            }
           />
         </div>
         <div className={styles.selectionContainer}>

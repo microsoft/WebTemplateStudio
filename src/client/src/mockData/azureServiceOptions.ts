@@ -159,6 +159,7 @@ export const azureMessages = defineMessages({
   appServiceTimeExpectation: {
     id: "appService.timeExpectation",
     defaultMessage: "Under 3 minute set-up time"
+  },
   appServiceAppNameLabel: {
     id: "appService.appNameLabel",
     defaultMessage: "Web App Name"
