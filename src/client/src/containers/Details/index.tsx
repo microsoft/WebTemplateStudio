@@ -105,10 +105,13 @@ const Details = ({
     isMarkdown: boolean,
     isAuthorOrVersion?: boolean
   ) => {
-    if(isAuthorOrVersion) {
+    if (isAuthorOrVersion) {
       return (
-        <ReactMarkdown source={detailInfo.author} />
-      )
+        <ReactMarkdown
+          source={info as string}
+          renderers={{ link: LinkRenderer, paragraph: ParagraphRenderer }}
+        />
+      );
     }
     if (formatteDetailInfo) {
       if (isMarkdown) {
@@ -176,9 +179,10 @@ const Details = ({
                       defaultMessage="Author:"
                     />
                   </div>
-                    {detailInfo.author && renderFormattedData(detailInfo.author, false, true) ||
-                      intl!.formatMessage(messages.none)}
-                  </div>
+                  {(detailInfo.author &&
+                    renderFormattedData(detailInfo.author, false, true)) ||
+                    intl!.formatMessage(messages.none)}
+                </div>
               )}
             </div>
             <div>
@@ -244,7 +248,7 @@ const Details = ({
                       defaultMessage="Version:"
                     />
                   </div>
-                    {renderFormattedData(detailInfo.version, true, true)}
+                  {renderFormattedData(detailInfo.version, true, true)}
                 </div>
               )}
             </div>
