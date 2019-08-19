@@ -143,14 +143,10 @@ export const azureMessages = defineMessages({
     id: "azureFunctionsModal.runtimeStackSubLabel",
     defaultMessage: "Your runtime stack is {runtimeStack}"
   },
-  appServicePlanLabel: {
-    id: "appService.appServicePlanLabel",
-    defaultMessage: "App Service Plan"
-  },
-  appServicePlanSubLabel: {
-    id: "appService.appServicePlanSubLabel",
+  appServiceInfo: {
+    id: "appService.appServiceInfo",
     defaultMessage:
-      "We will create a free BASIC tier 30 day trial app service plan for you. After you're done with the project, you can remove the resources you've created."
+      "A free BASIC tier 30 day trial app service plan will be created for you."
   },
   appServiceLearnMore: {
     id: "appService.learnMore",
@@ -163,6 +159,17 @@ export const azureMessages = defineMessages({
   appServiceTimeExpectation: {
     id: "appService.timeExpectation",
     defaultMessage: "Under 3 minute set-up time"
+  appServiceAppNameLabel: {
+    id: "appService.appNameLabel",
+    defaultMessage: "Web App Name"
+  },
+  appServiceAriaAppNameLabel: {
+    id: "appService.ariaAppNameLabel",
+    defaultMessage: "Web App Name Dropdown"
+  },
+  appServiceAppNameSubLabel: {
+    id: "appService.appNameSubLabel",
+    defaultMessage: "We have created a unique web app name that you can edit"
   },
   azureModalSave: {
     id: "azureModal.save",
