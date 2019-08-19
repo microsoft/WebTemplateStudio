@@ -26,6 +26,7 @@ import {
   InjectedIntl,
   FormattedMessage
 } from "react-intl";
+import { format } from "path";
 
 interface IDispatchProps {
   openRedirectModal: (license: IRedirectModalData | undefined) => any;
@@ -101,8 +102,14 @@ const Details = ({
   };
   const renderFormattedData = (
     info: string | FormattedMessage.MessageDescriptor | undefined,
-    isMarkdown: boolean
+    isMarkdown: boolean,
+    isAuthorOrVersion?: boolean
   ) => {
+    if(isAuthorOrVersion) {
+      return (
+        <ReactMarkdown source={detailInfo.author} />
+      )
+    }
     if (formatteDetailInfo) {
       if (isMarkdown) {
         return (
@@ -169,7 +176,7 @@ const Details = ({
                       defaultMessage="Author:"
                     />
                   </div>
-                    {renderFormattedData(detailInfo.author, true) ||
+                    {detailInfo.author && renderFormattedData(detailInfo.author, false, true) ||
                       intl!.formatMessage(messages.none)}
                   </div>
               )}
@@ -237,7 +244,7 @@ const Details = ({
                       defaultMessage="Version:"
                     />
                   </div>
-                    {renderFormattedData(detailInfo.version, true)}
+                    {renderFormattedData(detailInfo.version, true, true)}
                 </div>
               )}
             </div>
