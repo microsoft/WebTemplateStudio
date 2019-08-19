@@ -534,7 +534,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
               )}
             </div>
           </div>
-          <div className={styles.resourceGroupToggleContainer}>
+          <div>
             {azureFunctionsFormData.chooseExistingRadioButtonSelected ? (
               <Dropdown
                 ariaLabel={props.intl.formatMessage(
@@ -564,14 +564,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
         </div>
         {/* App Name */}
         <div
-          className={classnames(
-            styles.selectionInputContainer,
-            styles.selectionContainer,
-            {
-              [styles.selectionContainerDisabled]:
-                azureFunctionsFormData.subscription.value === ""
-            }
-          )}
+          className={classnames(styles.selectionContainer, {
+            [styles.selectionContainerDisabled]:
+              azureFunctionsFormData.subscription.value === ""
+          })}
         >
           <div className={styles.selectionHeaderContainer}>
             <div className={styles.leftHeader}>
@@ -643,12 +639,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
           props.intl.formatMessage(messages.numFunctionsSubLabel)
         )}
         {/* Runtime Stack */}
-        <div
-          className={classnames(
-            styles.selectionInputContainer,
-            styles.selectionContainer
-          )}
-        >
+        <div className={styles.selectionContainer}>
           <div
             className={classnames(
               styles.selectionHeaderContainer,

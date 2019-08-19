@@ -555,14 +555,10 @@ const CosmosResourceModal = (props: Props) => {
         }
         {/* Account Name */}
         <div
-          className={classnames(
-            styles.selectionInputContainer,
-            styles.selectionContainer,
-            {
-              [styles.selectionContainerDisabled]:
-                cosmosFormData.subscription.value === ""
-            }
-          )}
+          className={classnames(styles.selectionContainer, {
+            [styles.selectionContainerDisabled]:
+              cosmosFormData.subscription.value === ""
+          })}
         >
           <div className={styles.selectionHeaderContainer}>
             <div className={styles.leftHeader}>
@@ -607,6 +603,18 @@ const CosmosResourceModal = (props: Props) => {
               )}
           </div>
         </div>
+        {/* API */}
+        {getDropdownSection(
+          FORM_CONSTANTS.API.label,
+          cosmosData.api,
+          FORM_CONSTANTS.API.value,
+          props.intl.formatMessage(messages.ariaApiLabel),
+          undefined,
+          false,
+          DEFAULT_VALUE,
+          true,
+          props.intl.formatMessage(messages.apiSubLabel)
+        )}
         {/* Location */}
         {getDropdownSection(
           FORM_CONSTANTS.LOCATION.label,
@@ -620,18 +628,6 @@ const CosmosResourceModal = (props: Props) => {
           DEFAULT_VALUE,
           true,
           props.intl.formatMessage(messages.locationSubLabel)
-        )}
-        {/* API */}
-        {getDropdownSection(
-          FORM_CONSTANTS.API.label,
-          cosmosData.api,
-          FORM_CONSTANTS.API.value,
-          props.intl.formatMessage(messages.ariaApiLabel),
-          undefined,
-          false,
-          DEFAULT_VALUE,
-          true,
-          props.intl.formatMessage(messages.apiSubLabel)
         )}
         {/* Save Button */}
         <button
