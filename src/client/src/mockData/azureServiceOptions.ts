@@ -148,10 +148,6 @@ export const azureMessages = defineMessages({
     id: "appService.learnMore",
     defaultMessage: "Learn More"
   },
-  appServiceExpectedTime: {
-    id: "appService.expectedTime",
-    defaultMessage: "1 click"
-  },
   azureModalSave: {
     id: "azureModal.save",
     defaultMessage: "Save"
