@@ -4,6 +4,8 @@ import { ModalType, MODAL_TYPES } from "../actions/modalActions/typeKeys";
 
 const getOpenModal = (state: AppState): ModalType =>
   state.modals.openModal.modalType;
+const isAzureLoginModalOpen = (modal: ModalType): boolean =>
+  modal === MODAL_TYPES.AZURE_LOGIN_MODAL;
 const isCosmosDbModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.COSMOS_DB_MODAL;
 const isAzureFunctionsModalOpen = (modal: ModalType): boolean =>
@@ -18,6 +20,11 @@ const isAppServiceModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.APP_SERVICE_MODAL;
 const isAddPagesModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.ADD_PAGES_MODAL;
+
+const isAzureLoginModalOpenSelector = createSelector(
+  getOpenModal,
+  isAzureLoginModalOpen
+);
 
 const isCosmosDbModalOpenSelector = createSelector(
   getOpenModal,
@@ -55,6 +62,7 @@ const isAddPagesModalOpenSelector = createSelector(
 );
 
 export {
+  isAzureLoginModalOpenSelector,
   isAzureFunctionsModalOpenSelector,
   isCosmosDbModalOpenSelector,
   isPostGenModalOpenSelector,

@@ -1,3 +1,12 @@
+.button {
+  margin-right: 1em;
+  text-align: center;
+}
+
+.button:hover {
+  color: #ffffff;
+}
+
 .centerViewAzure {
   padding: 0;
   width: 100%;
@@ -35,15 +44,41 @@
   margin-bottom: 10px;
 }
 
+.logInInfoBar {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
 .azureProfile {
   display: flex;
-  position: absolute;
-  right: 14%;
-  top: 20px;
+  justify-content: space-between;
+  background-color: var(--vscode-editorWidget-border);
+  color: var(--vscode-editor-foreground);
+  padding: 0.5em;
+  text-align: center;
+  margin: 10px;
+}
+
+.loginButton {
+  font-size: 1.2em;
+}
+
+.signOutButton {
+  padding-top: 2px;
+  padding: 1px;
+  font-size: 1.2em;
+}
+
+.azureProfile:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .profileName {
   margin-right: 2em;
+  padding-top: 2px;
+  padding: 1px;
+  font-size: 1.2em;
 }
 
 .button {
