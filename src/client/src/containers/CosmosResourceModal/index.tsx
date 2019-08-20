@@ -65,7 +65,6 @@ interface IStateProps {
   isValidatingName: boolean;
   accountNameAvailability: any;
   selection: any;
-  chooseExistingRadioButtonSelected: boolean;
   projectName: string;
 }
 
@@ -97,8 +96,7 @@ const initialState: CosmosDb = {
   internalName: {
     value: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     label: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
-  },
-  chooseExistingRadioButtonSelected: false
+  }
 };
 
 const CosmosResourceModal = (props: Props) => {
@@ -255,7 +253,7 @@ const CosmosResourceModal = (props: Props) => {
       props.accountNameAvailability,
       setFormIsSendable
     );
-  }, [cosmosFormData.chooseExistingRadioButtonSelected]);
+  });
 
   // Update form data with data from store if it exists
   React.useEffect(() => {
@@ -265,8 +263,6 @@ const CosmosResourceModal = (props: Props) => {
         message: ""
       });
       const newCosmosDBState = props.selection.dropdownSelection;
-      newCosmosDBState.chooseExistingRadioButtonSelected =
-        props.chooseExistingRadioButtonSelected;
       setFormIsSendable(true);
       updateForm(newCosmosDBState);
     } else {
@@ -399,8 +395,7 @@ const CosmosResourceModal = (props: Props) => {
       props.intl.formatMessage(azureModalMessages.azureModalChooseExisting)
     ) {
       updateForm({
-        ...cosmosFormData,
-        chooseExistingRadioButtonSelected: true
+        ...cosmosFormData
       });
     } else if (
       element.value ===
@@ -410,7 +405,6 @@ const CosmosResourceModal = (props: Props) => {
     ) {
       updateForm({
         ...cosmosFormData,
-        chooseExistingRadioButtonSelected: false,
         resourceGroup: {
           value: "",
           label: ""
@@ -534,8 +528,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   subscriptionData: state.azureProfileData.subscriptionData,
   subscriptions: state.azureProfileData.profileData.subscriptions,
   vscode: state.vscode.vscodeObject,
-  chooseExistingRadioButtonSelected:
-    state.selection.services.cosmosDB.chooseExistingRadioButtonSelected,
   projectName: getProjectName(state)
 });
 

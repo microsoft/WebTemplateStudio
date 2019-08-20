@@ -15,8 +15,7 @@ import WizardInfoType from "../../../actions/wizardInfoActions/wizardInfoActionT
         selection: ISelectedAppService | null,
         wizardContent: {
           serviceType: string,
-        },
-        chooseExistingRadioButtonSelected: boolean;
+        }
     }
 }
 */
@@ -41,7 +40,6 @@ export interface IAppServiceSelection {
   siteNameAvailability: IAvailability;
   selection: ISelectedAppService | null;
   wizardContent: IServiceContent;
-  chooseExistingRadioButtonSelected: boolean;
 }
 
 const initialState: IAppServiceSelection = {
@@ -52,8 +50,7 @@ const initialState: IAppServiceSelection = {
   selection: null,
   wizardContent: {
     serviceType: messages.appServiceOriginalTitle
-  },
-  chooseExistingRadioButtonSelected: false
+  }
 };
 
 const appService = (
@@ -82,9 +79,7 @@ const appService = (
           resourceGroup: action.payload.resourceGroup.value,
           internalName: action.payload.internalName.value,
           siteName: action.payload.siteName.value
-        },
-        chooseExistingRadioButtonSelected:
-          action.payload.chooseExistingRadioButtonSelected
+        }
       };
       return newSelectionState;
     default:

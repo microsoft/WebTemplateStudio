@@ -61,7 +61,6 @@ interface IStateProps {
   isValidatingName: boolean;
   siteNameAvailability: IAvailability;
   selection: ISelectionInformation | undefined;
-  chooseExistingRadioButtonSelected: boolean;
   selectedBackend: ISelected;
   projectName: string;
 }
@@ -117,8 +116,7 @@ const initialState: IAppServiceState = {
   internalName: {
     value: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     label: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
-  },
-  chooseExistingRadioButtonSelected: false
+  }
 };
 
 const AppServiceModal = (props: Props) => {
@@ -130,7 +128,6 @@ const AppServiceModal = (props: Props) => {
     isValidatingName,
     siteNameAvailability,
     selection,
-    chooseExistingRadioButtonSelected,
     setSiteNameAvailability,
     setValidationStatus,
     saveAppServiceSettings,
@@ -259,7 +256,7 @@ const AppServiceModal = (props: Props) => {
       siteNameAvailability,
       setFormIsSendable
     );
-  }, [appServiceFormData.chooseExistingRadioButtonSelected]);
+  });
 
   // Update form data with data from store if it exists
   React.useEffect(() => {
@@ -269,7 +266,6 @@ const AppServiceModal = (props: Props) => {
         message: ""
       });
       const newAppServiceState = selection.dropdownSelection;
-      newAppServiceState.chooseExistingRadioButtonSelected = chooseExistingRadioButtonSelected;
       setFormIsSendable(true);
       updateForm(newAppServiceState);
     } else {
@@ -407,36 +403,6 @@ const AppServiceModal = (props: Props) => {
       event.preventDefault();
       event.stopPropagation();
       closeModal();
-    }
-  };
-
-  // when user clicks a radio button, update form data
-  const radioButtonOnChangeHandler = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    const element = event.target as HTMLInputElement;
-    if (
-      element.value ===
-      intl.formatMessage(azureModalMessages.azureModalChooseExisting)
-    ) {
-      updateForm({
-        ...appServiceFormData,
-        chooseExistingRadioButtonSelected: true
-      });
-    } else if (
-      element.value ===
-      intl.formatMessage(
-        azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
-      )
-    ) {
-      updateForm({
-        ...appServiceFormData,
-        chooseExistingRadioButtonSelected: false,
-        resourceGroup: {
-          value: "",
-          label: ""
-        }
-      });
     }
   };
 
@@ -580,8 +546,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
     state.selection.services.appService.siteNameAvailability,
   isValidatingName: state.selection.isValidatingName,
   selection: getAppServiceSelectionInDropdownForm(state),
-  chooseExistingRadioButtonSelected:
-    state.selection.services.appService.chooseExistingRadioButtonSelected,
   selectedBackend: state.selection.backendFramework,
   projectName: getProjectName(state)
 });

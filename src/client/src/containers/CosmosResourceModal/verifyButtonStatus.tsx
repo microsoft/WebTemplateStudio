@@ -11,9 +11,7 @@ export const setCosmosModalButtonStatus = (
   let isAnyEmpty: boolean = false;
 
   isSubscriptionEmpty = selections.subscription.value === "";
-  isResourceGroupEmpty =
-    selections.chooseExistingRadioButtonSelected &&
-    selections.resourceGroup.value === "";
+  isResourceGroupEmpty = selections.resourceGroup.value === "";
   isAccountNameEmpty = selections.accountName.value === "";
   isApiEmpty = selections.api.value === "";
 

@@ -13,9 +13,7 @@ export const setAppServiceModalButtonStatus = (
   let isAnyEmpty: boolean = false;
 
   isSubscriptionEmpty = selections.subscription.value === "";
-  isResourceGroupEmpty =
-    selections.chooseExistingRadioButtonSelected &&
-    selections.resourceGroup.value === "";
+  isResourceGroupEmpty = selections.resourceGroup.value === "";
   isSiteNameEmpty = selections.siteName.value === "";
 
   isAnyEmpty = isSubscriptionEmpty || isResourceGroupEmpty || isSiteNameEmpty;
