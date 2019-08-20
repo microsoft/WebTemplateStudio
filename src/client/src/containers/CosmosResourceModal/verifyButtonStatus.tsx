@@ -7,7 +7,6 @@ export const setCosmosModalButtonStatus = (
   let isSubscriptionEmpty: boolean = false;
   let isResourceGroupEmpty: boolean = false;
   let isAccountNameEmpty: boolean = false;
-  // let isLocationEmpty: boolean = false;
   let isApiEmpty: boolean = false;
   let isAnyEmpty: boolean = false;
 
@@ -17,13 +16,11 @@ export const setCosmosModalButtonStatus = (
     selections.resourceGroup.value === "";
   isAccountNameEmpty = selections.accountName.value === "";
   isApiEmpty = selections.api.value === "";
-  // isLocationEmpty = selections.location.value === "";
 
   isAnyEmpty =
     isSubscriptionEmpty ||
     isResourceGroupEmpty ||
     isAccountNameEmpty ||
-    // isLocationEmpty ||
     isApiEmpty;
 
   const { isAccountNameAvailable } = accountNameAvailability;
