@@ -131,7 +131,7 @@ export class GenerationExperience extends WizardServant {
           )
         );
       });
-      // Update payload if service was chosen to be deployed to a new resource group
+      // Add the new resouce group name to payload
       // Note: all resource groups created will have the same name
       if (payload.selectedFunctions) {
         payload.functions.resourceGroup =
