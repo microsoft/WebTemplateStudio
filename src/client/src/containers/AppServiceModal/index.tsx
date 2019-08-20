@@ -468,7 +468,6 @@ const AppServiceModal = (props: Props) => {
           false,
           intl.formatMessage(azureModalMessages.azureModalSubscriptionSubLabel)
         )}
-
         {/* Site Name */}
         <div
           className={classNames(styles.selectionContainer, {
@@ -559,7 +558,6 @@ const AppServiceModal = (props: Props) => {
             })}
           </div>
         </div>
-
         {/* Save Button */}
         <button
           className={getButtonClassNames()}
