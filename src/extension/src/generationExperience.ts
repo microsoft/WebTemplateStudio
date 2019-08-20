@@ -94,9 +94,9 @@ export class GenerationExperience extends WizardServant {
     });
 
     if (
-      AzureServices.functionsSelectedNewResourceGroup(payload) ||
-      AzureServices.cosmosDBSelectedNewResourceGroup(payload) ||
-      AzureServices.appServiceSelectedNewResourceGroup(payload)
+      payload.selectedFunctions ||
+      payload.selectedCosmos ||
+      payload.selectedAppService
     ) {
       const distinctResourceGroupSelections: ResourceGroupSelection[] = await AzureServices.generateDistinctResourceGroupSelections(
         payload
@@ -133,15 +133,15 @@ export class GenerationExperience extends WizardServant {
       });
       // Update payload if service was chosen to be deployed to a new resource group
       // Note: all resource groups created will have the same name
-      if (AzureServices.functionsSelectedNewResourceGroup(payload)) {
+      if (payload.selectedFunctions) {
         payload.functions.resourceGroup =
           distinctResourceGroupSelections[0].resourceGroupName;
       }
-      if (AzureServices.cosmosDBSelectedNewResourceGroup(payload)) {
+      if (payload.selectedCosmos) {
         payload.cosmos.resourceGroup =
           distinctResourceGroupSelections[0].resourceGroupName;
       }
-      if (AzureServices.appServiceSelectedNewResourceGroup(payload)) {
+      if (payload.selectedAppService) {
         payload.appService.resourceGroup =
           distinctResourceGroupSelections[0].resourceGroupName;
       }

@@ -402,19 +402,19 @@ export class AzureServices extends WizardServant {
     const projectName = payload.engine.projectName;
     let allSubscriptions: SubscriptionItem[] = [];
 
-    if (AzureServices.functionsSelectedNewResourceGroup(payload)) {
+    if (payload.selectedFunctions) {
       await AzureServices.updateFunctionSubscriptionItemCache(
         payload.functions.subscription
       );
       allSubscriptions.push(AzureServices.usersFunctionSubscriptionItemCache);
     }
-    if (AzureServices.cosmosDBSelectedNewResourceGroup(payload)) {
+    if (payload.selectedCosmos) {
       await AzureServices.updateCosmosDBSubscriptionItemCache(
         payload.cosmos.subscription
       );
       allSubscriptions.push(AzureServices.usersCosmosDBSubscriptionItemCache);
     }
-    if (AzureServices.appServiceSelectedNewResourceGroup(payload)) {
+    if (payload.selectedAppService) {
       await AzureServices.updateAppServiceSubscriptionItemCache(
         payload.appService.subscription
       );
@@ -430,20 +430,6 @@ export class AzureServices extends WizardServant {
 
     return allDistinctSubscriptions.map(subscription =>
       AzureServices.generateResourceGroupSelection(generatedName, subscription)
-    );
-  }
-
-  public static functionsSelectedNewResourceGroup(payload: any): boolean {
-    return payload.selectedFunctions && payload.functions.resourceGroup === "";
-  }
-
-  public static cosmosDBSelectedNewResourceGroup(payload: any): boolean {
-    return payload.selectedCosmos && payload.cosmos.resourceGroup === "";
-  }
-
-  public static appServiceSelectedNewResourceGroup(payload: any): boolean {
-    return (
-      payload.selectedAppService && payload.appService.resourceGroup === ""
     );
   }
 
