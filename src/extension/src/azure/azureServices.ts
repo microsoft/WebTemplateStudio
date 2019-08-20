@@ -576,7 +576,7 @@ export class AzureServices extends WizardServant {
     let userCosmosDBSelection: CosmosDBSelections = {
       cosmosAPI: selections.api,
       cosmosDBResourceName: selections.accountName,
-      location: selections.location,
+      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
       resourceGroupItem: await AzureAuth.getResourceGroupItem(
         selections.resourceGroup,
         AzureServices.usersCosmosDBSubscriptionItemCache
