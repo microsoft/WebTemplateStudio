@@ -28,7 +28,7 @@ export interface ISelectedCosmosService {
   resourceGroup: string;
   accountName: string;
   api: string;
-  location: string;
+  // location: string;
   internalName: string;
 }
 
@@ -73,7 +73,7 @@ const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
           {
             subscription: action.payload.subscription.value,
             resourceGroup: action.payload.resourceGroup.value,
-            location: action.payload.location.value,
+            // location: action.payload.location.value,
             api: action.payload.api.value,
             accountName: action.payload.accountName.value,
             internalName: action.payload.internalName.value

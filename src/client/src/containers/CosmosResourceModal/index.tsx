@@ -94,10 +94,10 @@ const initialState: CosmosDb = {
     value: "",
     label: ""
   },
-  location: {
-    value: "",
-    label: ""
-  },
+  // location: {
+  //   value: "",
+  //   label: ""
+  // },
   internalName: {
     value: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     label: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
@@ -123,12 +123,12 @@ const CosmosResourceModal = (props: Props) => {
       label: props.intl.formatMessage(messages.apiLabel),
       value: "api"
     },
-    LOCATION: {
-      label: props.intl.formatMessage(
-        azureModalMessages.azureModalLocationLabel
-      ),
-      value: "location"
-    },
+    // LOCATION: {
+    //   label: props.intl.formatMessage(
+    //     azureModalMessages.azureModalLocationLabel
+    //   ),
+    //   value: "location"
+    // },
     ACCOUNT_NAME: {
       label: props.intl.formatMessage(messages.accountNameLabel),
       value: "accountName"
@@ -162,8 +162,8 @@ const CosmosResourceModal = (props: Props) => {
       ],
       api: [FORM_CONSTANTS.MONGO, FORM_CONSTANTS.SQL],
       subscription: props.subscriptions,
-      resourceGroup: props.subscriptionData.resourceGroups,
-      location: props.subscriptionData.locations
+      resourceGroup: props.subscriptionData.resourceGroups
+      // location: props.subscriptionData.locations
     });
   }, [props.subscriptionData]);
 
@@ -615,7 +615,7 @@ const CosmosResourceModal = (props: Props) => {
           true,
           props.intl.formatMessage(messages.apiSubLabel)
         )}
-        {/* Location */}
+        {/* Location
         {getDropdownSection(
           FORM_CONSTANTS.LOCATION.label,
           cosmosData.location,
@@ -628,7 +628,7 @@ const CosmosResourceModal = (props: Props) => {
           DEFAULT_VALUE,
           true,
           props.intl.formatMessage(messages.locationSubLabel)
-        )}
+        )} */}
         {/* Save Button */}
         <button
           className={getButtonClassNames()}
