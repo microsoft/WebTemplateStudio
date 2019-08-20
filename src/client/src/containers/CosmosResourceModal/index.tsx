@@ -243,18 +243,6 @@ const CosmosResourceModal = (props: Props) => {
     }
   }, [cosmosFormData.accountName]);
 
-  /*
-   * Listens on radio button change to update button status
-   */
-  React.useEffect(() => {
-    setCosmosModalButtonStatus(
-      cosmosFormData,
-      props.isValidatingName,
-      props.accountNameAvailability,
-      setFormIsSendable
-    );
-  });
-
   // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {

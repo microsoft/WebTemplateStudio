@@ -246,18 +246,6 @@ const AppServiceModal = (props: Props) => {
     }
   }, [appServiceFormData.siteName.value]);
 
-  /*
-   * Listens on radio button change to update button status
-   */
-  React.useEffect(() => {
-    setAppServiceModalButtonStatus(
-      appServiceFormData,
-      isValidatingName,
-      siteNameAvailability,
-      setFormIsSendable
-    );
-  });
-
   // Update form data with data from store if it exists
   React.useEffect(() => {
     if (selection) {
