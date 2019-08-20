@@ -24,7 +24,7 @@ _Note: If using Windows, use Git Bash_.
 
 3. Run `./build`. This script compiles the client and builds the extension.
 4. Open the `src/extension` folder using `VSCode`.
-5. Press `F5`. This should open the Extension Development Host in a new Visual Studio Code window.
+5. Start the debugger by pressing `F5`. This should open the Extension Development Host in a new Visual Studio Code window.
 6. In the Extension Development Host, press `Ctrl + Shift + P` on Windows/Linux or `Command ⌘ + Shift + P` to open the Command Palette.
 7. In the Command Palette, `Web Template Studio: Launch` and press `Enter` to launch the extension. Make sure that you don't have the Web Template Studio from the marketplace isntalled, otherwise it will throw an error.
 
