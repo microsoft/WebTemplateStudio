@@ -12,7 +12,7 @@
 
 _Note: If using Windows, use Git Bash_.
 
-## Quick Start
+## Running the Extension
 
 1. Clone the repository with `git clone https://github.com/microsoft/WebTemplateStudio.git`
 2. The repository depends on another submodule called [CoreTemplateStudio](https://github.com/microsoft/CoreTemplateStudio). To copy dependent code from submodule, run:
@@ -64,7 +64,7 @@ After installation, use `ctrl+shift+p (Windows)` or `cmd+shift+p (Mac)` to open 
 
 ## Running the client in the VSCode Extension
 
-To see any changes made on the client within VSCode, run the instructions shown in the `Quick Start` section to rebuild the client and the extension. The resulting changes should appear in VSCode when the extension runs.
+To see any changes made on the client within VSCode, run the instructions shown in the `Running the extension` section to rebuild the client and the extension. The resulting changes should appear in VSCode when the extension runs.
 
 Rebuilding the client is required because the client is injected into a [VSCode Webview](https://code.visualstudio.com/api/extension-guides/webview) using the production build of the client.
 
