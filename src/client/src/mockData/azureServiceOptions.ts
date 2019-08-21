@@ -61,11 +61,11 @@ export const azureMessages = defineMessages({
   },
   cosmosTimeExpectation: {
     id: "cosmosDb.timeExpectation",
-    defaultMessage: "12 months of free access"
+    defaultMessage: "Under 10 minutes set-up time"
   },
   cosmosPriceExpectation: {
     id: "cosmosDb.priceExpectation",
-    defaultMessage: "Under 10 minutes set-up time"
+    defaultMessage: "12 months of free access"
   },
   azureModalChooseExisting: {
     id: "azureModal.chooseExisting",
