@@ -182,16 +182,6 @@ const azureServiceOptions: IOption[] = [
     longDescription: azureMessages.appServiceLongDescription,
     body: azureMessages.appServiceCardBody
   },
-  // {
-  //   author: "Microsoft",
-  //   type: servicesEnum.HOSTING,
-  //   svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS),
-  //   isPreview: true,
-  //   title: azureMessages.azureFunctionsTitle,
-  //   internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
-  //   longDescription: azureMessages.azureFunctionsLongDescription,
-  //   body: azureMessages.azureFunctionsCardBody
-  // },
   {
     author: "Microsoft",
     type: servicesEnum.DATABASE,
