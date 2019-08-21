@@ -20,3 +20,7 @@
 .toggleIcon path {
   fill: var(--vscode-editor-foreground);
 }
+
+.toggleIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
