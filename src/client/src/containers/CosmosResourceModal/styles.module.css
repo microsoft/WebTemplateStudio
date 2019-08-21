@@ -178,17 +178,3 @@ input::placeholder {
   font-size: 90%;
   opacity: 0.8;
 }
-
-.radioButtonContainer {
-  display: flex;
-  padding-bottom: 1em;
-}
-
-.radioButtonLabel {
-  margin-right: 35px;
-}
-
-.radioButton {
-  margin-left: 0px;
-  margin-right: 5px;
-}
