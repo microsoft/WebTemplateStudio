@@ -14,7 +14,7 @@ _Note: If using Windows, use Git Bash_.
 
 ## Running the Extension
 
-1. Clone the repository with `git clone https://github.com/microsoft/WebTemplateStudio.git`
+1. Clone the repository with `git clone https://github.com/microsoft/WebTemplateStudio.git` or `git clone git@github.com:microsoft/WebTemplateStudio.git`.
 2. The repository depends on another submodule called [CoreTemplateStudio](https://github.com/microsoft/CoreTemplateStudio). To copy dependent code from submodule, run:
 
 ```
@@ -26,7 +26,7 @@ _Note: If using Windows, use Git Bash_.
 4. Open the `src/extension` folder using `VSCode`.
 5. Start the debugger by pressing `F5`. This should open the Extension Development Host in a new Visual Studio Code window.
 6. In the Extension Development Host, press `Ctrl + Shift + P` on Windows/Linux or `Command ⌘ + Shift + P` to open the Command Palette.
-7. In the Command Palette, `Web Template Studio: Launch` and press `Enter` to launch the extension. Make sure that you don't have the Web Template Studio from the marketplace isntalled, otherwise it will throw an error.
+7. In the Command Palette, type `Web Template Studio: Launch` and press `Enter` to launch the extension. Make sure that you don't have the Web Template Studio from the marketplace installed, otherwise it will throw an error.
 
 ## Developing the Client
 
@@ -36,7 +36,9 @@ The client lives in the `src/client` directory. To run the client for developmen
 yarn start
 ```
 
-to begin development in the browser. The client was bootstrapped using [Create-React-App with TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript).
+to begin development in the browser. We recommend using a chromium based browser such as Chrome.
+
+The client was bootstrapped using [Create-React-App with TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript).
 
 ## Creating VSIX Package
 
