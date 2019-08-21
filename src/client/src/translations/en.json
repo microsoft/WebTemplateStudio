@@ -43,7 +43,7 @@
   "azureLoginModal.createAccount": "Create Free Account",
   "azureLoginModal.freeAccountAnswer": "All you need is a phone number, a credit or debit card, and a GitHub account or Microsoft account username (formerly Windows Live ID).",
   "azureLoginModal.freeAccountQuestion": "What do I need to sign up for a free account?",
-  "azureLoginModal.freeTrialAnswer": "TODO",
+  "azureLoginModal.freeTrialAnswer": "After 12 months, any of these products you may be using will continue to run, and you’ll be billed at the standard pay-as-you-go rates.",
   "azureLoginModal.freeTrialQuestion": "What happens if I want to upgrade my free trial?",
   "azureLoginModal.freeTrialUpgradeAnswer": "We’ll notify you so you can decide if you want to upgrade to pay-as-you-go pricing and remove the spending limit. If you do, you’ll have access to all the free products. If you don’t, your account and products will be disabled, and you'll need to upgrade to resume usage.",
   "azureLoginModal.freeTrialUpgradeQuestion": "Do I get charged once I finish my free trail?",
