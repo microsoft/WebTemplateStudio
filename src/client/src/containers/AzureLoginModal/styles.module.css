@@ -82,11 +82,3 @@
 .cancelIcon:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
-
-.cancelIcon path {
-  fill: var(--vscode-editor-foreground);
-}
-
-.cancelIcon path {
-  fill: var(--vscode-editor-foreground);
-}

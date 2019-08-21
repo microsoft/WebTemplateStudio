@@ -5,6 +5,7 @@ import { ReactComponent as Up } from "../../assets/i-collapsibleUp.svg";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
+import { KEY_EVENTS } from "../../utils/constants";
 
 interface IProps {
   question: string;
@@ -27,15 +28,23 @@ const CollapsibleInfoBox = ({
     setAnswerShown(!isAnswerShown);
   };
 
+  const keyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleAnswerShown();
+    }
+  };
+
   return (
     <div>
       <div className={styles.questionTitle}>
         {question}
         {isAnswerShown ? (
-          <Up className={styles.toggleIcon} onClick={toggleAnswerShown} />
+          <Up className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
         ) : (
-          <Down className={styles.toggleIcon} onClick={toggleAnswerShown} />
-        )}
+            <Down className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
+          )}
       </div>
 
       {isAnswerShown && <div className={styles.question}>{answer}</div>}
