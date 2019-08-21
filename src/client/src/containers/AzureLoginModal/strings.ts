@@ -22,7 +22,7 @@ export const strings = defineMessages({
         id: "azureLoginModal.freeTrialUpgradeAnswer"
     },
     freeTrialQuestion: {
-        defaultMessage: "Do I get charged once I finish my free trail?",
+        defaultMessage: "Do I get charged once I finish my free trial?",
         id: "azureLoginModal.freeTrialUpgradeQuestion"
     },
     getStartedWithAzure: {
