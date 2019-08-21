@@ -61,11 +61,11 @@ export const azureMessages = defineMessages({
   },
   cosmosTimeExpectation: {
     id: "cosmosDb.timeExpectation",
-    defaultMessage: "Under 10 minutes set-up time"
+    defaultMessage: "5 - 10 minutes set-up time"
   },
   cosmosPriceExpectation: {
     id: "cosmosDb.priceExpectation",
-    defaultMessage: "12 months of free access"
+    defaultMessage: "Free 30 day access to your databse"
   },
   azureModalChooseExisting: {
     id: "azureModal.chooseExisting",
@@ -158,7 +158,7 @@ export const azureMessages = defineMessages({
   },
   appServiceTimeExpectation: {
     id: "appService.timeExpectation",
-    defaultMessage: "Under 3 minute set-up time"
+    defaultMessage: "3 - 5 minute set-up time"
   },
   appServiceAppNameLabel: {
     id: "appService.appNameLabel",

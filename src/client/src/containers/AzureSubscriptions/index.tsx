@@ -61,7 +61,7 @@ const messages = defineMessages({
   },
   addResource: {
     id: "azureSubscriptions.addResource",
-    defaultMessage: "Add Resource"
+    defaultMessage: "Add to my project"
   },
   azureFunctionsLongDesc: {
     id: "azureSubscriptions.azureFunctionsLongDesc",
@@ -97,7 +97,7 @@ const messages = defineMessages({
   },
   storageTitle: {
     id: "storageServices.title",
-    defaultMessage: "Create and connect to a database in the cloud"
+    defaultMessage: "Store your data in the cloud"
   },
   hostingOneServiceWarning: {
     id: "hostingServices.oneServiceWarning",
