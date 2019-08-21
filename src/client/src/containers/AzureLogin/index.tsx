@@ -47,11 +47,20 @@ class AzureLogin extends React.Component<Props> {
       track: true
     });
   };
-  keyDownClick = (event: React.KeyboardEvent) => {
+  signOutkeyDownHandler = (event: React.KeyboardEvent) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       this.signOutClick();
     }
   };
+
+  signInKeyDownHandler = (event: React.KeyboardEvent) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.props.openAzureLoginModal();
+    }
+  };
+
   public render() {
     const { isLoggedIn, intl, email, openAzureLoginModal } = this.props;
 
@@ -80,7 +89,7 @@ class AzureLogin extends React.Component<Props> {
                   tabIndex={0}
                   className={classnames(styles.button, styles.signOutButton)}
                   onClick={this.signOutClick}
-                  onKeyDown={this.keyDownClick}
+                  onKeyDown={this.signOutkeyDownHandler}
                 >
                   <FormattedMessage
                     id="header.signOut"
@@ -95,7 +104,7 @@ class AzureLogin extends React.Component<Props> {
                 tabIndex={0}
                 className={classnames(styles.loginButton, styles.azureProfile)}
                 onClick={openAzureLoginModal}
-                onKeyDown={this.keyDownClick}
+                onKeyDown={this.signInKeyDownHandler}
               >
                 <FormattedMessage
                   id="header.signIn"
