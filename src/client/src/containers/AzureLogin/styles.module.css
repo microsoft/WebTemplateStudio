@@ -39,11 +39,6 @@
   color: var(--vscode-extensionButton-prominentForeground);
 }
 
-.loginCard {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
 .logInInfoBar {
   display: flex;
   justify-content: space-between;
@@ -62,6 +57,7 @@
 
 .loginButton {
   font-size: 1.2em;
+  cursor: pointer;
 }
 
 .signOutButton {
