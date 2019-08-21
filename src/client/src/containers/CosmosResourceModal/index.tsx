@@ -65,7 +65,6 @@ interface IStateProps {
   isValidatingName: boolean;
   accountNameAvailability: any;
   selection: any;
-  chooseExistingRadioButtonSelected: boolean;
   projectName: string;
 }
 
@@ -94,15 +93,10 @@ const initialState: CosmosDb = {
     value: "",
     label: ""
   },
-  location: {
-    value: "",
-    label: ""
-  },
   internalName: {
     value: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     label: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
-  },
-  chooseExistingRadioButtonSelected: false
+  }
 };
 
 const CosmosResourceModal = (props: Props) => {
@@ -122,12 +116,6 @@ const CosmosResourceModal = (props: Props) => {
     API: {
       label: props.intl.formatMessage(messages.apiLabel),
       value: "api"
-    },
-    LOCATION: {
-      label: props.intl.formatMessage(
-        azureModalMessages.azureModalLocationLabel
-      ),
-      value: "location"
     },
     ACCOUNT_NAME: {
       label: props.intl.formatMessage(messages.accountNameLabel),
@@ -162,8 +150,7 @@ const CosmosResourceModal = (props: Props) => {
       ],
       api: [FORM_CONSTANTS.MONGO, FORM_CONSTANTS.SQL],
       subscription: props.subscriptions,
-      resourceGroup: props.subscriptionData.resourceGroups,
-      location: props.subscriptionData.locations
+      resourceGroup: props.subscriptionData.resourceGroups
     });
   }, [props.subscriptionData]);
 
@@ -256,18 +243,6 @@ const CosmosResourceModal = (props: Props) => {
     }
   }, [cosmosFormData.accountName]);
 
-  /*
-   * Listens on radio button change to update button status
-   */
-  React.useEffect(() => {
-    setCosmosModalButtonStatus(
-      cosmosFormData,
-      props.isValidatingName,
-      props.accountNameAvailability,
-      setFormIsSendable
-    );
-  }, [cosmosFormData.chooseExistingRadioButtonSelected]);
-
   // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {
@@ -276,8 +251,6 @@ const CosmosResourceModal = (props: Props) => {
         message: ""
       });
       const newCosmosDBState = props.selection.dropdownSelection;
-      newCosmosDBState.chooseExistingRadioButtonSelected =
-        props.chooseExistingRadioButtonSelected;
       setFormIsSendable(true);
       updateForm(newCosmosDBState);
     } else {
@@ -410,8 +383,7 @@ const CosmosResourceModal = (props: Props) => {
       props.intl.formatMessage(azureModalMessages.azureModalChooseExisting)
     ) {
       updateForm({
-        ...cosmosFormData,
-        chooseExistingRadioButtonSelected: true
+        ...cosmosFormData
       });
     } else if (
       element.value ===
@@ -421,7 +393,6 @@ const CosmosResourceModal = (props: Props) => {
     ) {
       updateForm({
         ...cosmosFormData,
-        chooseExistingRadioButtonSelected: false,
         resourceGroup: {
           value: "",
           label: ""
@@ -461,98 +432,6 @@ const CosmosResourceModal = (props: Props) => {
             azureModalMessages.azureModalSubscriptionSubLabel
           )
         )}
-        {/* Choose Resource Group */}
-        {
-          <div
-            className={classnames([styles.selectionContainer], {
-              [styles.selectionContainerDisabled]:
-                cosmosFormData.subscription.value === ""
-            })}
-          >
-            <div className={styles.selectionHeaderContainer}>
-              <div className={styles.leftHeader}>
-                {FORM_CONSTANTS.RESOURCE_GROUP.label}
-              </div>
-              {links[FORM_CONSTANTS.RESOURCE_GROUP.value] && (
-                <a
-                  tabIndex={cosmosFormData.subscription.value === "" ? -1 : 0}
-                  className={styles.link}
-                  href={links[FORM_CONSTANTS.RESOURCE_GROUP.value]}
-                >
-                  {props.intl.formatMessage(
-                    azureModalMessages.azureModalCreateNew
-                  )}
-                </a>
-              )}
-            </div>
-            <div className={styles.subLabel}>
-              {props.intl.formatMessage(
-                azureModalMessages.azureModalResourceGroupSubLabel
-              )}
-            </div>
-            {/* Radio Buttons for Choose Resource Group */}
-            <div
-              className={styles.radioButtonContainer}
-              onChange={radioButtonOnChangeHandler}
-            >
-              <input
-                className={styles.radioButton}
-                type="radio"
-                value={props.intl.formatMessage(
-                  azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
-                )}
-                disabled={cosmosFormData.subscription.value === ""}
-                checked={!cosmosFormData.chooseExistingRadioButtonSelected}
-              />
-              <div className={styles.radioButtonLabel}>
-                {props.intl.formatMessage(
-                  azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
-                )}
-              </div>
-              <input
-                className={styles.radioButton}
-                type="radio"
-                value={props.intl.formatMessage(
-                  azureModalMessages.azureModalChooseExisting
-                )}
-                disabled={cosmosFormData.subscription.value === ""}
-                checked={cosmosFormData.chooseExistingRadioButtonSelected}
-              />
-              <div className={styles.radioButtonLabel}>
-                {props.intl.formatMessage(
-                  azureModalMessages.azureModalChooseExisting
-                )}
-              </div>
-            </div>
-            <div className={styles.resourceGroupToggleContainer}>
-              {cosmosFormData.chooseExistingRadioButtonSelected ? (
-                <Dropdown
-                  ariaLabel={props.intl.formatMessage(
-                    azureModalMessages.azureModalAriaResourceGroupLabel
-                  )}
-                  options={cosmosData.resourceGroup}
-                  handleChange={option => {
-                    handleDropdown(
-                      FORM_CONSTANTS.RESOURCE_GROUP.value,
-                      option.value
-                    );
-                  }}
-                  value={
-                    cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value].value
-                      ? cosmosFormData[FORM_CONSTANTS.RESOURCE_GROUP.value]
-                      : DEFAULT_VALUE
-                  }
-                  disabled={cosmosFormData.subscription.value === ""}
-                  openDropdownUpwards={false}
-                />
-              ) : (
-                props.intl.formatMessage(
-                  azureModalMessages.azureModalCreateNewResourceGroupSelectedDisplayMessage
-                )
-              )}
-            </div>
-          </div>
-        }
         {/* Account Name */}
         <div
           className={classnames(styles.selectionContainer, {
@@ -615,20 +494,6 @@ const CosmosResourceModal = (props: Props) => {
           true,
           props.intl.formatMessage(messages.apiSubLabel)
         )}
-        {/* Location */}
-        {getDropdownSection(
-          FORM_CONSTANTS.LOCATION.label,
-          cosmosData.location,
-          FORM_CONSTANTS.LOCATION.value,
-          props.intl.formatMessage(
-            azureModalMessages.azureModalAriaLocationLabel
-          ),
-          undefined,
-          cosmosFormData.subscription.value === "",
-          DEFAULT_VALUE,
-          true,
-          props.intl.formatMessage(messages.locationSubLabel)
-        )}
         {/* Save Button */}
         <button
           className={getButtonClassNames()}
@@ -651,8 +516,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   subscriptionData: state.azureProfileData.subscriptionData,
   subscriptions: state.azureProfileData.profileData.subscriptions,
   vscode: state.vscode.vscodeObject,
-  chooseExistingRadioButtonSelected:
-    state.selection.services.cosmosDB.chooseExistingRadioButtonSelected,
   projectName: getProjectName(state)
 });
 
