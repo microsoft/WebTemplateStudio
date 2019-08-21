@@ -41,10 +41,20 @@ const CollapsibleInfoBox = ({
       <div className={styles.questionTitle}>
         {question}
         {isAnswerShown ? (
-          <Up className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
+          <Up
+            tabIndex={0}
+            className={styles.toggleIcon}
+            onClick={toggleAnswerShown}
+            onKeyDown={keyDownHandler}
+          />
         ) : (
-            <Down className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
-          )}
+          <Down
+            tabIndex={0}
+            className={styles.toggleIcon}
+            onClick={toggleAnswerShown}
+            onKeyDown={keyDownHandler}
+          />
+        )}
       </div>
 
       {isAnswerShown && <div className={styles.question}>{answer}</div>}
