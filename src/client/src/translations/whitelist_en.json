@@ -140,6 +140,7 @@
   "appService.ariaAppNameLabel",
   "appService.appNameSubLabel",
   "azureModal.save",
+  "azureModal.appServicePlanLabel",
   "azureFunctions.originalTitle",
   "cosmosDb.originalTitle",
   "appService.originalTitle",
