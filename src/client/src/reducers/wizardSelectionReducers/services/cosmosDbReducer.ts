@@ -28,7 +28,6 @@ export interface ISelectedCosmosService {
   resourceGroup: string;
   accountName: string;
   api: string;
-  location: string;
   internalName: string;
 }
 
@@ -40,7 +39,6 @@ export interface ICosmosDB {
   accountNameAvailability: IAvailability;
   selection: ISelectedCosmosService[];
   wizardContent: IServiceContent;
-  chooseExistingRadioButtonSelected: boolean;
 }
 
 const initialState = {
@@ -51,8 +49,7 @@ const initialState = {
   selection: [],
   wizardContent: {
     serviceType: messages.cosmosOriginalTitle
-  },
-  chooseExistingRadioButtonSelected: false
+  }
 };
 
 const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
@@ -73,14 +70,11 @@ const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
           {
             subscription: action.payload.subscription.value,
             resourceGroup: action.payload.resourceGroup.value,
-            location: action.payload.location.value,
             api: action.payload.api.value,
             accountName: action.payload.accountName.value,
             internalName: action.payload.internalName.value
           }
-        ],
-        chooseExistingRadioButtonSelected:
-          action.payload.chooseExistingRadioButtonSelected
+        ]
       };
       return newSelectionState;
     case AZURE_TYPEKEYS.SET_ACCOUNT_AVAILABILITY:
