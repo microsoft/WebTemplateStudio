@@ -175,6 +175,10 @@ export const azureMessages = defineMessages({
   azureModalSave: {
     id: "azureModal.save",
     defaultMessage: "Save"
+  },
+  appServicePlanLabel: {
+    id: "azureModal.appServicePlanLabel",
+    defaultMessage: "App Service Plan"
   }
 });
 
