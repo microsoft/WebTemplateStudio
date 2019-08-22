@@ -3,7 +3,6 @@ import * as React from "react";
 import { ReactComponent as Down } from "../../assets/i-collapsibleDown.svg";
 import { ReactComponent as Up } from "../../assets/i-collapsibleUp.svg";
 
-import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants";
 
@@ -13,7 +12,7 @@ interface IProps {
   initialAnswerShownState?: boolean;
 }
 
-type Props = IProps & InjectedIntlProps;
+type Props = IProps;
 
 const CollapsibleInfoBox = ({
   question,
@@ -62,4 +61,4 @@ const CollapsibleInfoBox = ({
   );
 };
 
-export default injectIntl(CollapsibleInfoBox);
+export default CollapsibleInfoBox;
