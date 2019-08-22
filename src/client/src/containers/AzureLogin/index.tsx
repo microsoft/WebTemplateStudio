@@ -84,6 +84,7 @@ class AzureLogin extends React.Component<Props> {
         >
           <div className={styles.logInInfoBar}>
             <Title>{intl.formatMessage(azureMessages.azureLoginTitle)}</Title>
+
           </div>
         </div>
         <AzureStudent />
@@ -93,6 +94,39 @@ class AzureLogin extends React.Component<Props> {
             [styles.signedIn]: isLoggedIn
           })}
         >
+
+            {isLoggedIn && (
+              <div className={styles.azureProfile}>
+                <div className={styles.profileName}>{email}</div>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  className={classnames(styles.button, styles.signOutButton)}
+                  onClick={this.signOutClick}
+                  onKeyDown={this.signOutkeyDownHandler}
+                >
+                  <FormattedMessage
+                    id="header.signOut"
+                    defaultMessage="Sign out"
+                  />
+                </div>
+              </div>
+            )}
+            {!isLoggedIn && (
+              <div
+                role="button"
+                tabIndex={0}
+                className={classnames(styles.loginButton, styles.azureProfile)}
+                onClick={openAzureLoginModal}
+                onKeyDown={this.signInKeyDownHandler}
+              >
+                <FormattedMessage
+                  id="header.signIn"
+                  defaultMessage="Log In / Create an Account"
+                />
+              </div>
+            )}
+          </div>
           <AzureSubscriptions />
         </div>
       </div>
