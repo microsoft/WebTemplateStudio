@@ -41,6 +41,7 @@
   "azureLogin.azureLoginTitle": "Add Azure Cloud Services to Your Project",
   "azureLogin.azureTitle": "Microsoft Azure",
   "azureLogin.longDescription": "Azure is a cloud computing service created by Microsoft for building, testing, deploying, and managing applications and services through Microsoft-managed data centers spread throughout the world. It offers more than a hundred services including scalable databases, container deployments, infrastructure management, serverless compute etc. These services combined with Microsoft's developer tools like Visual Studio and Visual Studio Code offer you great end-to-end tools to make you success. More information about Microsoft Azure can be found at [azure.microsoft.com](azure.microsoft.com).",
+  "azureModal.appServicePlanLabel": "App Service Plan",
   "azureLoginModal.azureReadMore": "Learn more about the Azure free account. Read the FAQ >",
   "azureLoginModal.createAccount": "Create Free Account",
   "azureLoginModal.freeAccountAnswer": "All you need is a phone number, a credit or debit card, and a GitHub account or Microsoft account username (formerly Windows Live ID).",

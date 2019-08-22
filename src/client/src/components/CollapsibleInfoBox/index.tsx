@@ -3,7 +3,6 @@ import * as React from "react";
 import { ReactComponent as Down } from "../../assets/i-collapsibleDown.svg";
 import { ReactComponent as Up } from "../../assets/i-collapsibleUp.svg";
 
-import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants";
 
@@ -13,7 +12,7 @@ interface IProps {
   initialAnswerShownState?: boolean;
 }
 
-type Props = IProps & InjectedIntlProps;
+type Props = IProps;
 
 const CollapsibleInfoBox = ({
   question,
@@ -41,10 +40,20 @@ const CollapsibleInfoBox = ({
       <div className={styles.questionTitle}>
         {question}
         {isAnswerShown ? (
-          <Up className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
+          <Up
+            tabIndex={0}
+            className={styles.toggleIcon}
+            onClick={toggleAnswerShown}
+            onKeyDown={keyDownHandler}
+          />
         ) : (
-            <Down className={styles.toggleIcon} onClick={toggleAnswerShown} onKeyDown={keyDownHandler} />
-          )}
+          <Down
+            tabIndex={0}
+            className={styles.toggleIcon}
+            onClick={toggleAnswerShown}
+            onKeyDown={keyDownHandler}
+          />
+        )}
       </div>
 
       {isAnswerShown && <div className={styles.question}>{answer}</div>}
@@ -52,4 +61,4 @@ const CollapsibleInfoBox = ({
   );
 };
 
-export default injectIntl(CollapsibleInfoBox);
+export default CollapsibleInfoBox;
