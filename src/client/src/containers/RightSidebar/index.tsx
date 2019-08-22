@@ -135,8 +135,9 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     if (!prevState.isSidebarUserControlled) {
       return {
         isSidebarOpen:
+          nextProps.selection.pages.length > 1 ||
           hasAzureServices(nextProps.services) ||
-          nextProps.selection.pages.length > 1
+          prevState.isSidebarOpen
       };
     }
     return null;
