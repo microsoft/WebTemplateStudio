@@ -1,0 +1,26 @@
+.questionTitle {
+  margin-top: 35px;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 15px;
+  line-height: 1.75em;
+  padding-top: 5px;
+}
+
+.toggleIcon {
+  cursor: pointer;
+  height: 13px;
+  width: 13px;
+  margin-left: 6px;
+}
+
+.toggleIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.toggleIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
