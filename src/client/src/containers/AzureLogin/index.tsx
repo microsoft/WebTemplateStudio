@@ -19,6 +19,7 @@ import { IOption } from "../../types/option";
 import { azureMessages } from "../../mockData/azureServiceOptions";
 import { AppState } from "../../reducers";
 import AzureSubscriptions from "../AzureSubscriptions";
+import AzureStudent from "../AzureStudent";
 import Title from "../../components/Title";
 import RootAction from "../../actions/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
@@ -66,6 +67,7 @@ class AzureLogin extends React.Component<Props> {
 
     return (
       <div className={styles.centerViewAzure}>
+        {/* Optional Info Banner */}
         <Link
           tabIndex={0}
           to={ROUTES.REVIEW_AND_GENERATE}
@@ -74,46 +76,23 @@ class AzureLogin extends React.Component<Props> {
         >
           {azureMessages.azureSkipButton.defaultMessage}
         </Link>
+        {/* Add Cloud Services and Login */}
         <div
-          className={classnames(styles.container, {
+          className={classnames(styles.header, {
             [styles.signedIn]: isLoggedIn
           })}
         >
           <div className={styles.logInInfoBar}>
             <Title>{intl.formatMessage(azureMessages.azureLoginTitle)}</Title>
-            {isLoggedIn && (
-              <div className={styles.azureProfile}>
-                <div className={styles.profileName}>{email}</div>
-                <div
-                  role="button"
-                  tabIndex={0}
-                  className={classnames(styles.button, styles.signOutButton)}
-                  onClick={this.signOutClick}
-                  onKeyDown={this.signOutkeyDownHandler}
-                >
-                  <FormattedMessage
-                    id="header.signOut"
-                    defaultMessage="Sign out"
-                  />
-                </div>
-              </div>
-            )}
-            {!isLoggedIn && (
-              <div
-                role="button"
-                tabIndex={0}
-                className={classnames(styles.loginButton, styles.azureProfile)}
-                onClick={openAzureLoginModal}
-                onKeyDown={this.signInKeyDownHandler}
-              >
-                <FormattedMessage
-                  id="header.signIn"
-                  defaultMessage="Log In / Create an Account"
-                />
-              </div>
-            )}
           </div>
-
+        </div>
+        <AzureStudent />
+        {/* Azure Services Card*/}
+        <div
+          className={classnames(styles.container, {
+            [styles.signedIn]: isLoggedIn
+          })}
+        >
           <AzureSubscriptions />
         </div>
       </div>

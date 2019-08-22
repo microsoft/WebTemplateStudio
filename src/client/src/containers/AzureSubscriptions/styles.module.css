@@ -34,7 +34,7 @@
 }
 
 .subscriptionCardContainer {
-  max-width: 300px;
+  width: 300px;
   height: 270px;
   padding: 2.5em;
   background-color: hsla(0, 0%, 47%, 0.2);
@@ -49,6 +49,6 @@
 
 .container {
   display: flex;
-  flex-wrap: wrap;
-  padding-right: 5px;
+  justify-content: space-around;
+  padding: 0 20em;
 }

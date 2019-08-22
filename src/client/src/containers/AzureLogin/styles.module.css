@@ -14,7 +14,7 @@
 
 .container {
   position: relative;
-  padding: 6vh;
+  padding: 2vh 6vh;
 }
 
 .signedIn {
@@ -41,7 +41,7 @@
 
 .logInInfoBar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-flow: row wrap;
 }
 
@@ -94,4 +94,9 @@
   .azureProfile {
     right: 7%;
   }
+}
+
+.header {
+  padding: 0 6vh;
+  padding-top: 2vh;
 }
