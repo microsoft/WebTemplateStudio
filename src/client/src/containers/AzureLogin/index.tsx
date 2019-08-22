@@ -19,6 +19,7 @@ import { IOption } from "../../types/option";
 import { azureMessages } from "../../mockData/azureServiceOptions";
 import { AppState } from "../../reducers";
 import AzureSubscriptions from "../AzureSubscriptions";
+import AzureStudent from "../AzureStudent";
 import Title from "../../components/Title";
 import RootAction from "../../actions/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
@@ -113,7 +114,7 @@ class AzureLogin extends React.Component<Props> {
               </div>
             )}
           </div>
-
+          <AzureStudent />
           <AzureSubscriptions />
         </div>
       </div>
