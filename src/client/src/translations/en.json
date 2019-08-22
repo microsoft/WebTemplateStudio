@@ -53,6 +53,7 @@
   "azureLoginModal.paymentAnswer": "No. Starting is free, plus you get a $200 credit you can spend during the first 30 days.",
   "azureLoginModal.paymentQuestion": "Do I pay anything to start with the Azure free account?",
   "azureLoginModal.signIn": "Sign In",
+  "azureModal.appServicePlanLabel": "App Service Plan",
   "azureModal.ariaLocationLabel": "Location Drop Down",
   "azureModal.ariaResourceGroupLabel": "Resource Group Drop Down",
   "azureModal.ariaSubscriptionLabel": "Subscription Drop Down",
