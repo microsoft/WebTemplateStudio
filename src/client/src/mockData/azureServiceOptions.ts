@@ -184,16 +184,6 @@ const azureServiceOptions: IOption[] = [
   },
   {
     author: "Microsoft",
-    type: servicesEnum.HOSTING,
-    svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS),
-    isPreview: true,
-    title: azureMessages.azureFunctionsTitle,
-    internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
-    longDescription: azureMessages.azureFunctionsLongDescription,
-    body: azureMessages.azureFunctionsCardBody
-  },
-  {
-    author: "Microsoft",
     type: servicesEnum.DATABASE,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
     isPreview: false,
