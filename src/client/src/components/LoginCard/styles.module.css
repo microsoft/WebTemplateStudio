@@ -1,0 +1,97 @@
+.loginContainer {
+  padding: 4%;
+  background-color: var(--vscode-sideBar-background);
+}
+
+.selectionContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--vscode-textLink-foreground);
+  font-size: var(--vscode-font-size);
+  max-width: 250px;
+}
+
+.createAccountButton {
+  text-decoration: none;
+  font-size: 1.2em;
+  color: var(--vscode-textLink-foreground);
+}
+
+.createAccountButton:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+}
+
+.computerSVG {
+  padding: 15px 0px;
+  display: block;
+}
+.signInButton {
+  font-size: 1.2em;
+  border: none;
+}
+
+.signInButton:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.loginInfo {
+  font-size: 1.5em;
+  text-align: center;
+  padding: 40px 0px;
+}
+.cardTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.cardBody {
+  margin-bottom: 35px;
+}
+
+.details {
+  color: var(--vscode-textLink-foreground);
+  font-size: 1.2em;
+  background: none;
+  border: none;
+  text-decoration: none;
+  padding: 0px;
+}
+
+.details:hover {
+  cursor: pointer;
+}
+
+.details:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.icon {
+  height: 36px;
+  margin-right: 10px;
+}
+
+@media (min-width: 850px) {
+  .computerSVG {
+    width: 300px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .computerSVG {
+    float: right;
+    margin-top: -40px;
+  }
+
+  .cardBody {
+    padding: 13px 0px;
+  }
+}

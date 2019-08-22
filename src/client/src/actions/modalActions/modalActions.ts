@@ -20,17 +20,6 @@ const closeModalAction = (): ICloseModal => ({
   type: MODAL_TYPEKEYS.CLOSE_MODALS
 });
 
-const openAzureLoginModalAction = () => {
-  return (dispatch: Dispatch<ModalActionType>) => {
-    dispatch(
-      openModalAction({
-        modalType: MODAL_TYPES.AZURE_LOGIN_MODAL,
-        modalData: null
-      })
-    );
-  };
-};
-
 const openCosmosDbModalAction = () => {
   return (dispatch: Dispatch<ModalActionType>) => {
     dispatch(
@@ -110,7 +99,6 @@ const openAddPagesModalAction = () => {
 
 export {
   closeModalAction,
-  openAzureLoginModalAction,
   openAzureFunctionsModalAction,
   openCosmosDbModalAction,
   openPostGenModalAction,

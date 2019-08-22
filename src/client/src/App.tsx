@@ -84,7 +84,6 @@ import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getB
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import frontendFramework from "./reducers/wizardSelectionReducers/selectFrontendFrameworkReducer";
-import AzureLoginModal from "./containers/AzureLoginModal";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -316,7 +315,6 @@ class App extends React.Component<Props> {
         <TopNavBar />
 
         <div className={appStyles.container}>
-          <AzureLoginModal />
           <CosmosResourceModal />
           <AzureFunctionsModal />
           <PostGenerationModal />
