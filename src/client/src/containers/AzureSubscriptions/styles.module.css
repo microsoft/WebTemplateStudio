@@ -5,6 +5,7 @@
 
 .servicesCategory {
   margin-bottom: 5em;
+  padding: 0em 0em;
 }
 .categoryTitle {
   font-size: 1.2em;
@@ -43,8 +44,9 @@
 
 .container {
   display: flex;
-  justify-content: space-around;
-  padding: 3em 20em;
+  justify-content: center;
+  align-items: center;
+  padding: 3em;
 }
 
 @media (max-width: 1300px) {
