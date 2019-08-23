@@ -33,6 +33,7 @@
 .feedback:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
+
 .topNavBar {
   position: relative;
   z-index: 1100;
