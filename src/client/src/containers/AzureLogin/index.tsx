@@ -90,7 +90,7 @@ class AzureLogin extends React.Component<Props> {
               </div>
             )}
           </div>
-          <AzureStudent />
+          {!isLoggedIn && <AzureStudent />}
           <AzureSubscriptions />
         </div>
       </div>

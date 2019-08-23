@@ -50,7 +50,7 @@
 .container {
   display: flex;
   justify-content: space-around;
-  padding: 0 20em;
+  padding: 3em 20em;
 }
 
 @media (max-width: 1000px) {
