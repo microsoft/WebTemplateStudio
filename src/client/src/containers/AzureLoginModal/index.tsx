@@ -6,7 +6,6 @@ import asModal from "../../components/Modal";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { AppState } from "../../reducers";
-import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 import { isAzureLoginModalOpenSelector } from "../../selectors/modalSelector";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
@@ -19,22 +18,34 @@ import { strings as messages } from "./strings";
 import { KEY_EVENTS } from "../../utils/constants";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import * as ModalActions from "../../actions/modalActions/modalActions";
+import { ThunkDispatch } from "redux-thunk";
 
 interface IStateProps {
   isModalOpen: boolean;
   vscode: any;
   isLoggedIn: boolean;
+  selectedAzureServiceName: string;
 }
 
 interface IDispatchProps {
   closeModal: () => any;
+  openAppServiceModal: () => any;
+  openCosmosDbModal: () => any;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const AzureLoginModal = (props: Props) => {
   const { formatMessage } = props.intl;
-  const { isLoggedIn, closeModal } = props;
+  const {
+    isLoggedIn,
+    closeModal,
+    selectedAzureServiceName,
+    openAppServiceModal,
+    openCosmosDbModal
+  } = props;
   const handleSignInClick = () => {
     // initiates a login command to VSCode ReactPanel class
     props.vscode.postMessage({
@@ -53,9 +64,20 @@ const AzureLoginModal = (props: Props) => {
   };
 
   React.useEffect(() => {
-    // close sign in modal when user logs in
+    // close sign in modal and opens azure service form
     if (isLoggedIn) {
       closeModal();
+      if (
+        selectedAzureServiceName &&
+        selectedAzureServiceName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
+      ) {
+        openAppServiceModal();
+      } else if (
+        selectedAzureServiceName &&
+        selectedAzureServiceName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
+      ) {
+        openCosmosDbModal();
+      }
     }
   }, [isLoggedIn]);
 
@@ -145,14 +167,21 @@ const mapStateToProps = (state: AppState): IStateProps => {
   return {
     isModalOpen: isAzureLoginModalOpenSelector(state),
     vscode: vscodeObject,
-    isLoggedIn
+    isLoggedIn,
+    selectedAzureServiceName: state.modals.openModal.modalData
   };
 };
 const mapDispatchToProps = (
-  dispatch: Dispatch<RootAction>
+  dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   closeModal: () => {
     dispatch(closeModalAction());
+  },
+  openCosmosDbModal: () => {
+    dispatch(ModalActions.openCosmosDbModalAction());
+  },
+  openAppServiceModal: () => {
+    dispatch(ModalActions.openAppServiceModalAction());
   }
 });
 
