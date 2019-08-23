@@ -20,6 +20,7 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/reselect": "^2.2.0",
     "classnames": "^2.2.6",
+    "focus-visible": "^5.0.2",
     "global": "^4.3.2",
     "lodash": "^4.17.14",
     "node-fetch": "^2.3.0",

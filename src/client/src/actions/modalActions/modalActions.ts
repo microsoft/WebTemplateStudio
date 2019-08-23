@@ -20,12 +20,12 @@ const closeModalAction = (): ICloseModal => ({
   type: MODAL_TYPEKEYS.CLOSE_MODALS
 });
 
-const openAzureLoginModalAction = () => {
+const openAzureLoginModalAction = (serviceInternalName: string) => {
   return (dispatch: Dispatch<ModalActionType>) => {
     dispatch(
       openModalAction({
         modalType: MODAL_TYPES.AZURE_LOGIN_MODAL,
-        modalData: null
+        modalData: serviceInternalName
       })
     );
   };
