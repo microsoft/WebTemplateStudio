@@ -26,12 +26,12 @@
   margin-top: 20px;
 }
 
-.subscriptionCardContainer {
+/* .subscriptionCardContainer {
   flex-basis: 43%;
   flex-grow: 9999;
   margin-right: 12px;
   margin-bottom: 12px;
-}
+} */
 
 .subscriptionCardContainer {
   width: 300px;
@@ -51,4 +51,14 @@
   display: flex;
   justify-content: space-around;
   padding: 0 20em;
+}
+
+@media (max-width: 1000px) {
+  .container {
+    display: block;
+  }
+
+  .servicesCategoryContainer {
+    display: block;
+  }
 }
