@@ -7,3 +7,20 @@
 .cardBody {
   margin-bottom: 0.5em;
 }
+
+.svg {
+  margin-right: 18px;
+  margin-top: 4px;
+  fill: var(--vscode-editor-foreground);
+}
+
+.expectedPrice {
+  margin-top: 5px;
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.expectedTime {
+  display: flex;
+  margin-bottom: 15px;
+}

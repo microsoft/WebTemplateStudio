@@ -1,7 +1,8 @@
 import classnames from "classnames";
 import * as React from "react";
-import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
+
+import keyUpHandler from "../../utils/keyUpHandler";
 import styles from "./styles.module.css";
 import { ReactComponent as CloudServicesSVG } from "../../assets/cloudservices.svg";
 
@@ -28,7 +29,11 @@ const AzureStudent = () => {
             defaultMessage="Add a service to create your account."
           />
         </div>
-        <a href="www.google.com" className={styles.link}>
+        <a
+          href="https://azure.microsoft.com/en-us/free/students/"
+          className={styles.link}
+          onKeyUp={keyUpHandler}
+        >
           <FormattedMessage
             id="azureStudent.learnMore"
             defaultMessage="Learn More"

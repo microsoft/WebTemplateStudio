@@ -59,6 +59,14 @@ export const azureMessages = defineMessages({
     defaultMessage:
       "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API."
   },
+  cosmosTimeExpectation: {
+    id: "cosmosDb.timeExpectation",
+    defaultMessage: "5 - 10 minutes set-up time"
+  },
+  cosmosPriceExpectation: {
+    id: "cosmosDb.priceExpectation",
+    defaultMessage: "Free 30 day access to your databse"
+  },
   azureModalChooseExisting: {
     id: "azureModal.chooseExisting",
     defaultMessage: "Choose existing"
@@ -144,6 +152,14 @@ export const azureMessages = defineMessages({
     id: "appService.learnMore",
     defaultMessage: "Learn More"
   },
+  appServicePriceExpectation: {
+    id: "appService.priceExpectation",
+    defaultMessage: "Free 30 Day Trial"
+  },
+  appServiceTimeExpectation: {
+    id: "appService.timeExpectation",
+    defaultMessage: "3 - 5 minute set-up time"
+  },
   appServiceAppNameLabel: {
     id: "appService.appNameLabel",
     defaultMessage: "Web App Name"
@@ -180,7 +196,9 @@ const azureServiceOptions: IOption[] = [
     title: azureMessages.appServiceTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     longDescription: azureMessages.appServiceLongDescription,
-    body: azureMessages.appServiceCardBody
+    body: azureMessages.appServiceCardBody,
+    expectedPrice: azureMessages.appServicePriceExpectation,
+    expectedTime: azureMessages.appServiceTimeExpectation
   },
   {
     author: "Microsoft",
@@ -190,7 +208,9 @@ const azureServiceOptions: IOption[] = [
     title: azureMessages.cosmosTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     longDescription: azureMessages.cosmosLongDescription,
-    body: azureMessages.cosmosCardBody
+    body: azureMessages.cosmosCardBody,
+    expectedPrice: azureMessages.cosmosPriceExpectation,
+    expectedTime: azureMessages.cosmosTimeExpectation
   }
 ];
 
