@@ -110,20 +110,6 @@ class AzureLogin extends React.Component<Props> {
               </div>
             </div>
           )}
-          {!isLoggedIn && (
-            <div
-              role="button"
-              tabIndex={0}
-              className={classnames(styles.loginButton, styles.azureProfile)}
-              onClick={openAzureLoginModal}
-              onKeyDown={this.signInKeyDownHandler}
-            >
-              <FormattedMessage
-                id="header.signIn"
-                defaultMessage="Log In / Create an Account"
-              />
-            </div>
-          )}
         </div>
         <AzureSubscriptions />
       </div>
