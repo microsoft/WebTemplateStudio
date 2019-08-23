@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
-import * as ModalActions from "../../actions/modalActions/modalActions";
 import styles from "./styles.module.css";
 
 import {
@@ -25,7 +24,6 @@ import keyUpHandler from "../../utils/keyUpHandler";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
-  openAzureLoginModal: () => any;
 }
 
 interface IAzureLoginProps {
@@ -53,16 +51,8 @@ class AzureLogin extends React.Component<Props> {
     }
   };
 
-  signInKeyDownHandler = (event: React.KeyboardEvent) => {
-    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      event.preventDefault();
-      event.stopPropagation();
-      this.props.openAzureLoginModal();
-    }
-  };
-
   public render() {
-    const { isLoggedIn, intl, email, openAzureLoginModal } = this.props;
+    const { isLoggedIn, intl, email } = this.props;
 
     return (
       <div className={styles.centerViewAzure}>
@@ -98,20 +88,6 @@ class AzureLogin extends React.Component<Props> {
                 </div>
               </div>
             )}
-            {!isLoggedIn && (
-              <div
-                role="button"
-                tabIndex={0}
-                className={classnames(styles.loginButton, styles.azureProfile)}
-                onClick={openAzureLoginModal}
-                onKeyDown={this.signInKeyDownHandler}
-              >
-                <FormattedMessage
-                  id="header.signIn"
-                  defaultMessage="Log In / Create an Account"
-                />
-              </div>
-            )}
           </div>
 
           <AzureSubscriptions />
@@ -135,9 +111,6 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  openAzureLoginModal: () => {
-    dispatch(ModalActions.openAzureLoginModalAction());
-  },
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
     dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));
