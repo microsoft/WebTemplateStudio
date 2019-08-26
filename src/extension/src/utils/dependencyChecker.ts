@@ -7,7 +7,7 @@ const exec = util.promisify(require("child_process").exec);
 
 const NODE_REGEX = RegExp("v(.+)");
 const NODE_REQUIREMENT = ">=10.15.x";
-const PYTHON_REGEX = RegExp("Python (.+)");
+const PYTHON_REGEX = RegExp("Python ([0-9.]+)");
 const PYTHON_REQUIREMENT = ">=3.5.x";
 
 export class DependencyChecker extends WizardServant {
@@ -34,22 +34,12 @@ export class DependencyChecker extends WizardServant {
       const { stdout, stderr} = await exec(command + " --version");
       // stderr is also processed for older versions of anaconda!
       const matches = stdout.match(PYTHON_REGEX) || stderr.match(PYTHON_REGEX);
-      const version: string = this.getVersionFromMatch(matches[1]);
+      const version: string = matches[1];
       installed = semver.satisfies(version, PYTHON_REQUIREMENT);
     } catch (err) {
       installed = false;
     }
     return installed;
-  }
-
-  private getVersionFromMatch(match: string): string {
-    let version = match;
-    // strip anything after the last number, problem occurs with older anaconda versions.
-    const index = version.search(/[^0-9.]/);
-    if (index > -1) {
-      version = version.substr(0, index);
-    }
-    return version;
   }
 
   async checkDependency(message: any): Promise<IPayloadResponse> {
