@@ -7,6 +7,7 @@
   margin-bottom: 5em;
   padding: 0em 0em;
 }
+
 .categoryTitle {
   font-size: 1.2em;
   font-weight: 600;
@@ -14,7 +15,6 @@
 
 .categoryDescriptor {
   font-size: 2em;
-  white-space: nowrap;
 }
 
 .servicesContainer {
@@ -30,7 +30,7 @@
 
 .subscriptionCardContainer {
   width: 300px;
-  height: 270px;
+  height: 300px;
   padding: 2.5em;
   background-color: hsla(0, 0%, 47%, 0.2);
   margin-bottom: 10px;
@@ -49,12 +49,17 @@
   padding: 3em;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1000px) {
   .container {
     display: block;
+    justify-content: center;
+    align-items: center;
+    padding: 3em;
   }
 
   .servicesCategoryContainer {
-    display: block;
+    align-items: left;
+    justify-content: left;
+    margin-top: 20px;
   }
 }

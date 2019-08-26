@@ -116,7 +116,6 @@
   "footer.license": "By continuing, you agree to the terms of all the licenses in the\n              licenses section.",
   "footer.navAriaLabel": "Navigate between pages and create project",
   "footer.next": "Next",
-  "header.signIn": "Log In / Create an Account",
   "header.signOut": "Sign out",
   "hostingServices.oneServiceWarning": "You can only add one hosting service at a time",
   "hostingServices.title": "Publish your project to the web",
