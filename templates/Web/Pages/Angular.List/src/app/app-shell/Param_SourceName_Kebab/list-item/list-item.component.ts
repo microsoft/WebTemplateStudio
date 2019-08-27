@@ -6,10 +6,11 @@
   styleUrls: ['./list-item.component.css']
 })
 export class ListItemComponent implements OnInit {
-  // tslint:disable-next-line
+  // tslint:disable-next-line:variable-name
   @Input() _id: number;
   @Input() text: string;
   @Output() deleteText = new EventEmitter<number>();
+
   constructor() { }
 
   ngOnInit() {
@@ -18,5 +19,4 @@ export class ListItemComponent implements OnInit {
   onDeleteListItem() {
     this.deleteText.emit(this._id);
   }
-
 }

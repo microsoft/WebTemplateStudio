@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
+import { IMasterDetailText } from './master-detail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,4 @@ export class MasterDetailService {
   getMasterDetailItems(): Observable<IMasterDetailText[]> {
     return this.http.get<IMasterDetailText[]>(this.listUrl);
   }
-}
-
-export interface IMasterDetailText {
-  title: string;
-  id: number;
-  status: string;
-  orderDate: string;
-  shipTo: string;
-  orderTotal: number;
-  shortDescription: string;
-  longDescription: string;
 }

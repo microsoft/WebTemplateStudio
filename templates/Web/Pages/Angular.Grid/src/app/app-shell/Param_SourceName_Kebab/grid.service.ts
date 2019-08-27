@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
+import { IGridTextItem } from './grid.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,4 @@ export class GridService {
   getGridItems(): Observable<IGridTextItem[]> {
     return this.http.get<IGridTextItem[]>(this.listUrl);
   }
-}
-
-
-export interface IGridTextItem {
-  description: string;
-  header: string;
-  id: number;
 }

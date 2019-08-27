@@ -291,6 +291,9 @@ paket-files/
 .idea/
 *.sln.iml
 
+# VSCode custom workspace settings
+.vscode/
+
 # CodeRush
 .cr/
 

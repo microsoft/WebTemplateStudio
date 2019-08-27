@@ -3,11 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
+import { IListItem } from './list.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListService {
+
   private listUrl = environment.endpoint.list;
 
   constructor(private http: HttpClient) { }
@@ -22,9 +24,11 @@ export class ListService {
         'Content-Type': 'application/json'
       })
     };
+
     const body = JSON.stringify({
       text: inputText
     });
+
     return this.http.post<IListItem>(this.listUrl, body, httpOptions);
   }
 
@@ -32,9 +36,3 @@ export class ListService {
     return this.http.delete<IListItem>(`${environment.endpoint.list}/${id}`);
   }
 }
-
-export interface IListItem {
-  _id: number;
-  text: string;
-}
-

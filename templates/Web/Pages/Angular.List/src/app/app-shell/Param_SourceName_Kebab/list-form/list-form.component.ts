@@ -7,6 +7,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./list-form.component.css']
 })
 export class ListFormComponent implements OnInit {
+
   listForm: FormGroup;
 
   @Output() inputText = new EventEmitter<string>();
