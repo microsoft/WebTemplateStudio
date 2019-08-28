@@ -34,7 +34,9 @@ const CardBody = ({
         {expectedTime && <TimeSVG className={styles.svg} />}
         {expectedTime && <div>{intl.formatMessage(expectedTime)}</div>}
       </div>
-      {body || (formattedBody && intl.formatMessage(formattedBody))}{" "}
+      <div className={styles.formattedBody}>
+        {body || (formattedBody && intl.formatMessage(formattedBody))}
+      </div>
     </div>
   );
 };

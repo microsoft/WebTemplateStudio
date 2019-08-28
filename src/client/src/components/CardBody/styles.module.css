@@ -4,6 +4,8 @@
   margin-bottom: 1.5em;
 }
 
+.formattedBody,
+
 .cardBody {
   margin-bottom: 0.5em;
 }
@@ -23,4 +25,10 @@
 .expectedTime {
   display: flex;
   margin-bottom: 15px;
+}
+
+@media (max-width: 475px) {
+  .formattedBody {
+    display: none;
+  }
 }
