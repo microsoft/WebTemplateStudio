@@ -6,15 +6,13 @@
   styleUrls: ['./warning-message.component.css']
 })
 export class WarningMessageComponent implements OnInit {
-
   open = false;
   @Input() text = '';
   @Output() warningMessageOpen = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onWarningClose() {
     this.text = '';

@@ -7,7 +7,7 @@
           *ngFor="let textAssets of masterDetailText; let i = index"
           (displayTabClick)="handleDisplayTabClick($event)"
           [tabText]="textAssets.title"
-          [image]="GreyAvatar"
+          [image]="greyAvatar"
           [index]="i"
           [key]="textAssets.id"
         >
@@ -21,9 +21,9 @@
     </div>
   </div>
   <app-warning-message
-    *ngIf="WarningMessageOpen"
-    [text]="WarningMessageText"
-    (WarningMessageOpen)="handleWarningClose($event)"
+    *ngIf="warningMessageOpen"
+    [text]="warningMessageText"
+    (warningMessageOpen)="handleWarningClose($event)"
   >
   </app-warning-message>
 </main>

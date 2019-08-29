@@ -9,14 +9,13 @@ import { IMasterDetailText } from './master-detail.model';
   styleUrls: ['./master-detail.component.css']
 })
 export class MasterDetailComponent implements OnInit {
-
   greyAvatar = require('../../../assets/GreyAvatar.svg') as string;
   warningMessageText = 'Request to get master detail text failed:';
   warningMessageOpen = false;
   currentDisplayTabIndex = 0;
   masterDetailText: IMasterDetailText[] = [];
 
-  constructor(private masterDetailService: MasterDetailService) { }
+  constructor(private masterDetailService: MasterDetailService) {}
 
   ngOnInit() {
     this.masterDetailService.getMasterDetailItems().subscribe(

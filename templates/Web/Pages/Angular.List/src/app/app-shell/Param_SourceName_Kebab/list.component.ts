@@ -9,12 +9,11 @@ import { IListItem } from './list.model';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-
   listItems: IListItem[] = [];
   warningMessageText = 'Request to get list items failed:';
   warningMessageOpen = false;
 
-  constructor(private listService: ListService) { }
+  constructor(private listService: ListService) {}
 
   ngOnInit() {
     this.listService.getListItems().subscribe(
@@ -43,7 +42,9 @@ export class ListComponent implements OnInit {
   handleDeleteListItem(id: number) {
     this.listService.deleteListItem(id).subscribe(
       (response: IListItem) => {
-        this.listItems = this.listItems.filter(item => item._id !== response._id);
+        this.listItems = this.listItems.filter(
+          item => item._id !== response._id
+        );
       },
       error => {
         this.warningMessageOpen = true;

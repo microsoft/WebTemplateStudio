@@ -342,6 +342,7 @@ src/extension/package.nls.*.json
 **/package-lock.json
 **/*.vsix
 src/extension/.vscode-test
+src/extension/src/template_test
 
 !templates/**/package-lock.json
 

@@ -7,10 +7,9 @@ import { IMasterDetailText } from '../master-detail.model';
   styleUrls: ['./master-detail-page.component.css']
 })
 export class MasterDetailPageComponent implements OnInit {
-
   @Input() textSampleData: IMasterDetailText;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.textSampleData = {

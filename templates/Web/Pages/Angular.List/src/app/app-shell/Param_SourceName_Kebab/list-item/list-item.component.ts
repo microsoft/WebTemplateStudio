@@ -11,10 +11,9 @@ export class ListItemComponent implements OnInit {
   @Input() text: string;
   @Output() deleteText = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onDeleteListItem() {
     this.deleteText.emit(this._id);

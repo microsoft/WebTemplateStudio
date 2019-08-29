@@ -9,7 +9,6 @@ import { IGridTextItem } from './grid.model';
   styleUrls: ['./grid.component.css']
 })
 export class GridComponent implements OnInit {
-
   greyBox = require('../../../assets/GreyBox.svg') as string;
   warningMessageText = 'Request to get grid text failed:';
   warningMessageOpen = false;
@@ -26,7 +25,7 @@ export class GridComponent implements OnInit {
     }
   ];
 
-  constructor(private gridService: GridService) { }
+  constructor(private gridService: GridService) {}
 
   ngOnInit() {
     this.gridService.getGridItems().subscribe(
