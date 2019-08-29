@@ -10,6 +10,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
+    "wts.compositionOrder": "0",
     "wts.compositionFilter": "$backendframework == Flask & groupIdentity == wts.Page.Grid|wts.Page.MasterDetail|wts.Page.List"
   },
     "sourceName": "wts.ItemName",
