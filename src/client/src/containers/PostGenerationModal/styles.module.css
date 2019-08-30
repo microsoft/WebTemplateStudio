@@ -1,4 +1,3 @@
-
 .title {
   font-size: 2.5em;
   font-weight: lighter;
@@ -80,7 +79,7 @@ h1 {
 }
 
 .spinner path {
-  stroke: #ffffff;
+  stroke: var(--vscode-editor-foreground);
 }
 
 @keyframes rotate {

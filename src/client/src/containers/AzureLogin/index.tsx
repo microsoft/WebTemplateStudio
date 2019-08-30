@@ -1,30 +1,25 @@
 import * as React from "react";
 import { withRouter, RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
-
-import LoginCard from "../../components/LoginCard";
-import Title from "../../components/Title";
-
-import azure from "../../assets/azure.svg";
+import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import styles from "./styles.module.css";
 
-import AzureSubscriptions from "../AzureSubscriptions";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   KEY_EVENTS,
   ROUTES
 } from "../../utils/constants";
-import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
+
 import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 import { IOption } from "../../types/option";
 import { azureMessages } from "../../mockData/azureServiceOptions";
-
-import { microsoftAzureDetails } from "../../mockData/azureServiceOptions";
-import { withLocalPath } from "../../utils/getSvgUrl";
 import { AppState } from "../../reducers";
-import { Dispatch } from "redux";
+import AzureSubscriptions from "../AzureSubscriptions";
+import AzureStudent from "../AzureStudent";
+import Title from "../../components/Title";
 import RootAction from "../../actions/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
 
@@ -44,15 +39,6 @@ type Props = IDispatchProps &
   RouteComponentProps;
 
 class AzureLogin extends React.Component<Props> {
-  handleClick = () => {
-    // initiates a login command to VSCode ReactPanel class
-
-    this.props.vscode.postMessage({
-      module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.AZURE_LOGIN,
-      track: true
-    });
-  };
   signOutClick = () => {
     this.props.vscode.postMessage({
       module: EXTENSION_MODULES.AZURE,
@@ -60,63 +46,51 @@ class AzureLogin extends React.Component<Props> {
       track: true
     });
   };
-  keyDownClick = (event: React.KeyboardEvent) => {
+  signOutkeyDownHandler = (event: React.KeyboardEvent) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       this.signOutClick();
     }
   };
+
   public render() {
-    const { isLoggedIn, intl, setDetailPage, email } = this.props;
+    const { isLoggedIn, intl, email } = this.props;
 
     return (
       <div className={styles.centerViewAzure}>
-        {!isLoggedIn && (
-          <Link
-            tabIndex={0}
-            to={ROUTES.REVIEW_AND_GENERATE}
-            className={styles.optionalFlag}
-            onKeyUp={keyUpHandler}
-          >
-            {azureMessages.azureSkipButton.defaultMessage}
-          </Link>
-        )}
+        <Link
+          tabIndex={0}
+          to={ROUTES.REVIEW_AND_GENERATE}
+          className={styles.optionalFlag}
+          onKeyUp={keyUpHandler}
+        >
+          {azureMessages.azureSkipButton.defaultMessage}
+        </Link>
         <div
           className={classnames(styles.container, {
             [styles.signedIn]: isLoggedIn
           })}
         >
-          {isLoggedIn && (
-            <div className={styles.azureProfile}>
-              <div className={styles.profileName}>{email}</div>
-              <div
-                role="button"
-                className={styles.button}
-                tabIndex={0}
-                onClick={this.signOutClick.bind(this)}
-                onKeyDown={this.keyDownClick.bind(this)}
-              >
-                <FormattedMessage
-                  id="header.signOut"
-                  defaultMessage="Sign out"
-                />
+          <div className={styles.logInInfoBar}>
+            <Title>{intl.formatMessage(azureMessages.azureLoginTitle)}</Title>
+            {isLoggedIn && (
+              <div className={styles.azureProfile}>
+                <div className={styles.profileName}>{email}</div>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  className={classnames(styles.button, styles.signOutButton)}
+                  onClick={this.signOutClick}
+                  onKeyDown={this.signOutkeyDownHandler}
+                >
+                  <FormattedMessage
+                    id="header.signOut"
+                    defaultMessage="Sign out"
+                  />
+                </div>
               </div>
-            </div>
-          )}
-          <Title>{intl.formatMessage(azureMessages.azureLoginTitle)}</Title>
-          <div className={styles.loginCard}>
-            {!isLoggedIn && (
-              <LoginCard
-                svgUrl={withLocalPath(azure)}
-                handleClick={() => {
-                  this.handleClick();
-                }}
-                cardTitle={intl.formatMessage(azureMessages.azureTitle)}
-                cardBody={intl.formatMessage(azureMessages.azureCardBody)}
-                handleDetailsClick={setDetailPage}
-                option={microsoftAzureDetails}
-              />
             )}
           </div>
+          {!isLoggedIn && <AzureStudent />}
           <AzureSubscriptions />
         </div>
       </div>
@@ -136,7 +110,7 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => {
 };
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<RootAction>
+  dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;

@@ -2,7 +2,6 @@ import { IOption } from "../types/option";
 import { defineMessages } from "react-intl";
 import getSvgUrl from "../utils/getSvgUrl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../utils/constants";
-import appService from "../reducers/wizardSelectionReducers/services/appServiceReducer";
 
 export const azureMessages = defineMessages({
   azureSkipButton: {
@@ -59,6 +58,14 @@ export const azureMessages = defineMessages({
     id: "cosmosDb.cardBody",
     defaultMessage:
       "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API."
+  },
+  cosmosTimeExpectation: {
+    id: "cosmosDb.timeExpectation",
+    defaultMessage: "5 - 10 minutes set-up time"
+  },
+  cosmosPriceExpectation: {
+    id: "cosmosDb.priceExpectation",
+    defaultMessage: "Free 30 day access to your databse"
   },
   azureModalChooseExisting: {
     id: "azureModal.chooseExisting",
@@ -136,22 +143,42 @@ export const azureMessages = defineMessages({
     id: "azureFunctionsModal.runtimeStackSubLabel",
     defaultMessage: "Your runtime stack is {runtimeStack}"
   },
-  appServicePlanLabel: {
-    id: "appService.appServicePlanLabel",
-    defaultMessage: "App Service Plan"
-  },
-  appServicePlanSubLabel: {
-    id: "appService.appServicePlanSubLabel",
+  appServiceInfo: {
+    id: "appService.appServiceInfo",
     defaultMessage:
-      "We will create a free BASIC tier 30 day trial app service plan for you. After you're done with the project, you can remove the resources you've created."
+      "A free BASIC tier 30 day trial app service plan will be created for you."
   },
   appServiceLearnMore: {
     id: "appService.learnMore",
     defaultMessage: "Learn More"
   },
+  appServicePriceExpectation: {
+    id: "appService.priceExpectation",
+    defaultMessage: "Free 30 Day Trial"
+  },
+  appServiceTimeExpectation: {
+    id: "appService.timeExpectation",
+    defaultMessage: "3 - 5 minute set-up time"
+  },
+  appServiceAppNameLabel: {
+    id: "appService.appNameLabel",
+    defaultMessage: "Web App Name"
+  },
+  appServiceAriaAppNameLabel: {
+    id: "appService.ariaAppNameLabel",
+    defaultMessage: "Web App Name Dropdown"
+  },
+  appServiceAppNameSubLabel: {
+    id: "appService.appNameSubLabel",
+    defaultMessage: "We have created a unique web app name that you can edit"
+  },
   azureModalSave: {
     id: "azureModal.save",
     defaultMessage: "Save"
+  },
+  appServicePlanLabel: {
+    id: "azureModal.appServicePlanLabel",
+    defaultMessage: "App Service Plan"
   }
 });
 
@@ -169,17 +196,9 @@ const azureServiceOptions: IOption[] = [
     title: azureMessages.appServiceTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     longDescription: azureMessages.appServiceLongDescription,
-    body: azureMessages.appServiceCardBody
-  },
-  {
-    author: "Microsoft",
-    type: servicesEnum.HOSTING,
-    svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS),
-    isPreview: true,
-    title: azureMessages.azureFunctionsTitle,
-    internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
-    longDescription: azureMessages.azureFunctionsLongDescription,
-    body: azureMessages.azureFunctionsCardBody
+    body: azureMessages.appServiceCardBody,
+    expectedPrice: azureMessages.appServicePriceExpectation,
+    expectedTime: azureMessages.appServiceTimeExpectation
   },
   {
     author: "Microsoft",
@@ -189,7 +208,9 @@ const azureServiceOptions: IOption[] = [
     title: azureMessages.cosmosTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     longDescription: azureMessages.cosmosLongDescription,
-    body: azureMessages.cosmosCardBody
+    body: azureMessages.cosmosCardBody,
+    expectedPrice: azureMessages.cosmosPriceExpectation,
+    expectedTime: azureMessages.cosmosTimeExpectation
   }
 ];
 
