@@ -5,7 +5,9 @@
 
 .servicesCategory {
   margin-bottom: 5em;
+  padding: 0em 0em;
 }
+
 .categoryTitle {
   font-size: 1.2em;
   font-weight: 600;
@@ -17,7 +19,7 @@
 
 .servicesContainer {
   display: block;
-  width: 100%;
+  margin-right: 10%;
 }
 
 .servicesCategoryContainer {
@@ -27,18 +29,11 @@
 }
 
 .subscriptionCardContainer {
-  flex-basis: 43%;
-  flex-grow: 9999;
-  margin-right: 12px;
-  margin-bottom: 12px;
-}
-
-.subscriptionCardContainer {
-  margin-bottom: 10px;
-  max-width: 300px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
   padding: 2.5em;
   background-color: hsla(0, 0%, 47%, 0.2);
+  margin-bottom: 10px;
 }
 
 .subtitle {
@@ -49,7 +44,30 @@
 
 .container {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding-right: 5px;
+  justify-content: center;
+  align-items: center;
+  padding: 3em;
+}
+
+@media (max-width: 1250px) {
+  .container {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding: 3em;
+  }
+
+  .servicesCategoryContainer {
+    align-items: left;
+    justify-content: left;
+    margin-top: 20px;
+  }
+
+  .subscriptionCardContainer {
+    width: 300px;
+    height: 300px;
+    padding: 2.5em;
+    background-color: hsla(0, 0%, 47%, 0.2);
+    margin-bottom: 10px;
+  }
 }
