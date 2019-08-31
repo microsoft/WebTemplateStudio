@@ -6,7 +6,9 @@ module.exports = {
 	/**
 	 * Service settings
 	 */
-	settings: {},
+	settings: {
+		rest: "/pages"
+	},
 
 	/**
 	 * Service dependencies
@@ -23,8 +25,12 @@ module.exports = {
 		 *
 		 * @returns
 		 */
-		hello() {
-			return "Hello Moleculer";
+
+		hello: {
+			rest: "/",
+			handler(ctx) {
+				return "Hello Moleculer";
+			}
 		}
 	},
 

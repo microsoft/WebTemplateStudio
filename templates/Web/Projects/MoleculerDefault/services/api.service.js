@@ -15,7 +15,9 @@ module.exports = {
 			whitelist: [
 				// Access to any actions in all services under "/api" URL
 				"**"
-			]
+			],
+			// Dynamically generate the routes
+			autoAliases: true
 		}],
 
 		// Serve assets from "public" folder
