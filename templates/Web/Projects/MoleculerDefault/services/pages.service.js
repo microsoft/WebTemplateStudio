@@ -1,61 +1,63 @@
 "use strict";
 
+const SERVICE_ACTIONS = require("./pages.actions");
+
 module.exports = {
-	name: "pages",
+  name: "pages",
 
-	/**
-	 * Service settings
-	 */
-	settings: {
-		rest: "/pages"
-	},
+  /**
+   * Service settings
+   * More info: https://moleculer.services/docs/0.13/services.html#Settings
+   */
+  settings: {
+    rest: "/"
+  },
 
-	/**
-	 * Service dependencies
-	 */
-	dependencies: [],
+  /**
+   * Service Mixin
+   * More info: https://moleculer.services/docs/0.13/services.html#Mixins
+   */
+  mixins: [SERVICE_ACTIONS],
 
-	/**
-	 * Actions
-	 */
-	actions: {
+  /**
+   * Service dependencies
+   * More info: https://moleculer.services/docs/0.13/services.html#Dependencies
+   */
+  dependencies: [],
 
-		/**
-		 * Say a 'Hello'
-		 *
-		 * @returns
-		 */
+  /**
+   * Actions
+   * More info: https://moleculer.services/docs/0.13/actions.html
+   */
+  actions: {},
 
-		hello: {
-			rest: "/",
-			handler(ctx) {
-				return "Hello Moleculer";
-			}
-		}
-	},
+  /**
+   * Events
+   * More info: https://moleculer.services/docs/0.13/events.html
+   */
+  events: {},
 
-	/**
-	 * Events
-	 */
-	events: {},
+  /**
+   * Methods
+   * More info: https://moleculer.services/docs/0.13/services.html#Methods
+   */
+  methods: {},
 
-	/**
-	 * Methods
-	 */
-	methods: {},
+  /**
+   * Service created lifecycle event handler
+   * More info: https://moleculer.services/docs/0.13/lifecycle.html#created-event-handler
+   */
+  created() {},
 
-	/**
-	 * Service created lifecycle event handler
-	 */
-	created() { },
+  /**
+   * Service started lifecycle event handler
+   * More info: https://moleculer.services/docs/0.13/lifecycle.html#started-event-handler
+   */
+  started() {},
 
-	/**
-	 * Service started lifecycle event handler
-	 */
-	started() { },
-
-	/**
-	 * Service stopped lifecycle event handler
-	 */
-	stopped() { }
+  /**
+   * Service stopped lifecycle event handler
+   * More info: https://moleculer.services/docs/0.13/lifecycle.html#stopped-event-handler
+   */
+  stopped() {}
 };

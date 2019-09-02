@@ -18,8 +18,8 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 ## Additional Documentation
 
 - Bootstrap CSS - https://getbootstrap.com/
-//{[{
+  //{[{
 - Moleculer - https://moleculer.services/
-//}]}
+  //}]}
 
   This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
