@@ -64,7 +64,8 @@ const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
   [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.Node],
   [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.Node],
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, dependencies.Python],
-  [WIZARD_CONTENT_INTERNAL_NAMES.NODE, dependencies.Node]
+  [WIZARD_CONTENT_INTERNAL_NAMES.NODE, dependencies.Node],
+  [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER, dependencies.Node]
 ]);
 
 interface IDependencyInfoProps {
