@@ -4,7 +4,7 @@
   "name": "Master Detail",
   "groupIdentity": "wts.Page.MasterDetail",
   "identity": "wts.Page.Vue.MasterDetail",
-  "description": "The master-detail page has a master pane and a details pane for content.",
+  "description": "A master pane and a details pane for content.",
   "tags": {
     "language": "Any",
     "type": "item",

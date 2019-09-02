@@ -11,13 +11,14 @@ import asModal from "../../components/Modal";
 
 import { saveAzureFunctionsSettingsAction } from "../../actions/azureActions/azureFunctionActions";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
-import { azureFunctionModalInitialState } from "../../mockData/cosmosDbModalData";
+import { azureFunctionModalInitialState } from "../../mockData/azureModalInitialStateData";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getFunctionsSelection } from "../../selectors/azureFunctionsServiceSelector";
 import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
@@ -42,6 +43,7 @@ import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import RootAction from "../../actions/ActionType";
 import { messages } from "./messages";
 import classNames from "classnames";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -66,6 +68,7 @@ interface IStateProps {
   appNameAvailability: any;
   selection: any;
   chooseExistingRadioButtonSelected: boolean;
+  projectName: string;
 }
 
 type Props = IDispatchProps & IStateProps & InjectedIntlProps;
@@ -118,7 +121,7 @@ const initialState: IFunctionsState = {
     value: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
     label: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS
   },
-  chooseExistingRadioButtonSelected: true
+  chooseExistingRadioButtonSelected: false
 };
 
 const AzureFunctionsResourceModal = (props: Props) => {
@@ -142,7 +145,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
       value: "location"
     },
     RUNTIME_STACK: {
-      label: props.intl.formatMessage(messages.runtimeStackLabel),
+      label: props.intl.formatMessage(azureModalMessages.runtimeStackLabel),
       value: "runtimeStack"
     },
     NUM_FUNCTIONS: {
@@ -207,11 +210,13 @@ const AzureFunctionsResourceModal = (props: Props) => {
         ...functionsData,
         resourceGroup: []
       });
+      props.setValidationStatus(true);
       props.vscode.postMessage({
         module: EXTENSION_MODULES.AZURE,
         command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
         track: true,
-        subscription: option.value
+        subscription: option.value,
+        projectName: props.projectName
       });
       updatedForm = {
         ...updatedForm,
@@ -260,10 +265,15 @@ const AzureFunctionsResourceModal = (props: Props) => {
   // Update form data with data from store if it exists
   React.useEffect(() => {
     if (props.selection) {
+      props.setAppNameAvailability({
+        isAvailable: true,
+        message: ""
+      });
       const newFunctionState = props.selection.dropdownSelection;
       newFunctionState.chooseExistingRadioButtonSelected =
         props.chooseExistingRadioButtonSelected;
-      handleChange(newFunctionState);
+      setFormIsSendable(true);
+      updateForm(newFunctionState);
     } else {
       props.setAppNameAvailability({
         isAvailable: false,
@@ -273,6 +283,9 @@ const AzureFunctionsResourceModal = (props: Props) => {
   }, []);
 
   React.useEffect(() => {
+    if (!azureFunctionsFormData.appName.value) {
+      return;
+    }
     setFunctionsModalButtonStatus(
       azureFunctionsFormData,
       props.isValidatingName,
@@ -280,6 +293,38 @@ const AzureFunctionsResourceModal = (props: Props) => {
       setFormIsSendable
     );
   }, [props.isValidatingName]);
+
+  /**
+   * Update name field with a valid name generated from
+   * extension when a subscription is selected or changed
+   */
+  React.useEffect(() => {
+    if (props.subscriptionData.validName === "") return;
+
+    // if a selection exists (i.e. user has saved form data),
+    // this effect should only be run after selection has been loaded (i.e. subscription value is not empty)
+    const shouldRunEffect =
+      !props.selection || azureFunctionsFormData.subscription.value !== "";
+    if (shouldRunEffect) {
+      updateForm({
+        ...azureFunctionsFormData,
+        appName: {
+          value: props.subscriptionData.validName,
+          label: props.subscriptionData.validName
+        }
+      });
+      // programatically updating <input>'s value field doesn't dispatch an event to handleInput
+      // so we manually simulate handleInput here
+      props.setValidationStatus(true);
+      handleChange({
+        ...azureFunctionsFormData,
+        appName: {
+          value: props.subscriptionData.validName,
+          label: props.subscriptionData.validName
+        }
+      });
+    }
+  }, [props.subscriptionData.validName]);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement
@@ -335,6 +380,7 @@ const AzureFunctionsResourceModal = (props: Props) => {
               tabIndex={disabled ? -1 : 0}
               className={styles.link}
               href={links[formSectionId]}
+              onKeyUp={keyUpHandler}
             >
               {rightHeader}
             </a>
@@ -461,20 +507,6 @@ const AzureFunctionsResourceModal = (props: Props) => {
               className={styles.radioButton}
               type="radio"
               value={props.intl.formatMessage(
-                azureModalMessages.azureModalChooseExisting
-              )}
-              disabled={azureFunctionsFormData.subscription.value === ""}
-              checked={azureFunctionsFormData.chooseExistingRadioButtonSelected}
-            />
-            <div className={styles.radioButtonLabel}>
-              {props.intl.formatMessage(
-                azureModalMessages.azureModalChooseExisting
-              )}
-            </div>
-            <input
-              className={styles.radiobutton}
-              type="radio"
-              value={props.intl.formatMessage(
                 azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
               )}
               disabled={azureFunctionsFormData.subscription.value === ""}
@@ -487,8 +519,22 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
               )}
             </div>
+            <input
+              className={styles.radioButton}
+              type="radio"
+              value={props.intl.formatMessage(
+                azureModalMessages.azureModalChooseExisting
+              )}
+              disabled={azureFunctionsFormData.subscription.value === ""}
+              checked={azureFunctionsFormData.chooseExistingRadioButtonSelected}
+            />
+            <div className={styles.radioButtonLabel}>
+              {props.intl.formatMessage(
+                azureModalMessages.azureModalChooseExisting
+              )}
+            </div>
           </div>
-          <div className={styles.resourceGroupToggleContainer}>
+          <div>
             {azureFunctionsFormData.chooseExistingRadioButtonSelected ? (
               <Dropdown
                 ariaLabel={props.intl.formatMessage(
@@ -518,14 +564,10 @@ const AzureFunctionsResourceModal = (props: Props) => {
         </div>
         {/* App Name */}
         <div
-          className={classnames(
-            styles.selectionInputContainer,
-            styles.selectionContainer,
-            {
-              [styles.selectionContainerDisabled]:
-                azureFunctionsFormData.subscription.value === ""
-            }
-          )}
+          className={classnames(styles.selectionContainer, {
+            [styles.selectionContainerDisabled]:
+              azureFunctionsFormData.subscription.value === ""
+          })}
         >
           <div className={styles.selectionHeaderContainer}>
             <div className={styles.leftHeader}>
@@ -541,21 +583,29 @@ const AzureFunctionsResourceModal = (props: Props) => {
                 aria-label={props.intl.formatMessage(messages.ariaAppNameLabel)}
                 className={styles.input}
                 onChange={handleInput}
-                value={azureFunctionsFormData.appName.value}
+                value={
+                  azureFunctionsFormData.subscription.value === ""
+                    ? ""
+                    : azureFunctionsFormData.appName.value
+                }
                 placeholder={FORM_CONSTANTS.APP_NAME.label}
-                disabled={azureFunctionsFormData.subscription === ""}
+                disabled={azureFunctionsFormData.subscription.value === ""}
                 tabIndex={
                   azureFunctionsFormData.subscription.value === "" ? -1 : 0
                 }
               />
-              {isAppNameAvailable && !isValidatingName && (
-                <GreenCheck className={styles.validationIcon} />
-              )}
-              {isValidatingName && <Spinner className={styles.spinner} />}
+              {azureFunctionsFormData.subscription.value &&
+                isAppNameAvailable &&
+                !isValidatingName && (
+                  <GreenCheck className={styles.validationIcon} />
+                )}
+              {azureFunctionsFormData.subscription.value &&
+                isValidatingName && <Spinner className={styles.spinner} />}
             </div>
             {!isValidatingName &&
               !isAppNameAvailable &&
-              azureFunctionsFormData.appName.value.length > 0 && (
+              azureFunctionsFormData.appName.value.length > 0 &&
+              props.appNameAvailability.message && (
                 <div className={styles.errorMessage}>
                   {props.appNameAvailability.message}
                 </div>
@@ -589,32 +639,30 @@ const AzureFunctionsResourceModal = (props: Props) => {
           props.intl.formatMessage(messages.numFunctionsSubLabel)
         )}
         {/* Runtime Stack */}
-        <div
-          className={classnames(
-            styles.selectionInputContainer,
-            styles.selectionContainer
-          )}
-        >
+        <div className={styles.selectionContainer}>
           <div
             className={classnames(
               styles.selectionHeaderContainer,
               styles.leftHeader
             )}
           >
-            {props.intl.formatMessage(messages.runtimeStackLabel)}
+            {props.intl.formatMessage(azureModalMessages.runtimeStackLabel)}
           </div>
-          <div>{props.intl.formatMessage(messages.runtimeStackSubLabel)}</div>
+          <div>
+            {props.intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
+              runtimeStack: WIZARD_CONTENT_INTERNAL_NAMES.NODE
+            })}
+          </div>
         </div>
+        {/* Save Button */}
+        <button
+          className={getButtonClassNames()}
+          onClick={handleAddResource}
+          disabled={!formIsSendable}
+        >
+          {props.intl.formatMessage(azureModalMessages.azureModalSave)}
+        </button>
       </div>
-      <button
-        className={getButtonClassNames()}
-        onClick={handleAddResource}
-        disabled={!formIsSendable}
-      >
-        {(props.selection &&
-          props.intl.formatMessage(azureModalMessages.azureModalSaveChanges)) ||
-          props.intl.formatMessage(azureModalMessages.azureModalAddResource)}
-      </button>
     </React.Fragment>
   );
 };
@@ -629,7 +677,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isValidatingName: state.selection.isValidatingName,
   selection: getFunctionsSelection(state),
   chooseExistingRadioButtonSelected:
-    state.selection.services.azureFunctions.chooseExistingRadioButtonSelected
+    state.selection.services.azureFunctions.chooseExistingRadioButtonSelected,
+  projectName: getProjectName(state)
 });
 
 const mapDispatchToProps = (

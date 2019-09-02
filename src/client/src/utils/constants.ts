@@ -9,6 +9,17 @@ const NEW_PROJECT = "/";
 
 const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
+const PAGE_NAME_CHARACTER_LIMIT = 50;
+
+const MAX_PAGES_ALLOWED = 20;
+
+const WEB_TEMPLATE_STUDIO_LINKS = {
+  REPO: "https://github.com/Microsoft/WebTemplateStudio",
+  ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues",
+  APP_SERVICE_PLAN:
+    "https://azure.microsoft.com/en-us/pricing/details/app-service/plans/"
+};
+
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
 
@@ -18,6 +29,38 @@ const INTL_MESSAGES = defineMessages({
     defaultMessage: "{fieldId} field cannot be empty"
   }
 });
+
+const BOOTSTRAP_LICENSE =
+  "https://github.com/twbs/bootstrap/blob/master/LICENSE";
+
+const ARIA_LABELS_NAVIGATION = defineMessages({
+  ARIA_LABELS_MESSAGES: {
+    id: "ariaLabels.pageNavigation",
+    defaultMessage: "{pagesText} page"
+  },
+  ARIA_LABELS_CURRENT_PAGE: {
+    id: "ariaLabels.currentPage",
+    defaultMessage: "Currently on {pagesText} page"
+  },
+  ARIA_LABELS_DISABLED_PAGE: {
+    id: "ariaLabels.disabledPage",
+    defaultMessage: "{pagesText} page disabled"
+  }
+});
+
+enum PAGEID {
+  NEW_PROJECT = 1,
+  SELECT_FRAMEWORKS = 2,
+  SELECT_PAGES = 3,
+  AZURE_LOGIN = 4,
+  REVIEW_AND_GENERATE = 5
+}
+
+const PAYLOAD_MESSAGES_TEXT = {
+  RESET_PAGES_TEXT: "Sending reset pages request...",
+  SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
+  SENT_GENERATION_INFO_TEXT: "Sending generation info..."
+};
 
 const ROUTES = {
   PAGE_DETAILS,
@@ -39,7 +82,8 @@ const ROUTES_ARRAY = [
 
 const SERVICE_KEYS = {
   COSMOS_DB: "cosmosDB",
-  AZURE_FUNCTIONS: "azureFunctions"
+  AZURE_FUNCTIONS: "azureFunctions",
+  APP_SERVICE: "appService"
 };
 
 const COSMOS_APIS = {
@@ -60,6 +104,7 @@ enum KEY_EVENTS {
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   ANGULAR: "Angular",
+  APP_SERVICE: "AppService",
   AZURE: "wts.Feature.Azure",
   AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
@@ -74,9 +119,10 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   COSMOS_DB_MONGO: "wts.Feature.Azure.Cosmos.Mongo",
   COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
   FULL_STACK_APP: "FullStackWebApp",
-  NODE_JS: "NodeJS",
+  NODE: "Node",
   FLASK: "Flask",
-  REACT_JS: "ReactJS",
+  PYTHON: "Python",
+  REACT: "React",
   REST_API: "RestAPI",
   VUE: "Vue",
   VUE_BLANK_PAGE: "wts.Page.Vue.Blank",
@@ -92,7 +138,8 @@ const EXTENSION_MODULES = {
   VALIDATOR: "Validator",
   VSCODEUI: "VSCodeUI",
   DEPENDENCYCHECKER: "DependencyChecker",
-  CORETS: "CoreTSModule"
+  CORETS: "CoreTSModule",
+  DEFAULTS: "Defaults"
 };
 
 // Define extension commands here that should be received from the extension
@@ -101,12 +148,15 @@ const EXTENSION_COMMANDS = {
   AZURE_LOGOUT: "logout",
   GENERATE: "generate",
   GET_OUTPUT_PATH: "get-output-path",
+  GET_PROJECT_NAME: "get-project-name",
   GET_USER_STATUS: "get-user-status",
   NAME_COSMOS: "name-cosmos",
   NAME_FUNCTIONS: "name-functions",
+  NAME_APP_SERVICE: "name-app-service",
   PROJECT_PATH_VALIDATION: "project-path-validation",
   SUBSCRIPTION_DATA_COSMOS: "subscription-data-for-cosmos",
   SUBSCRIPTION_DATA_FUNCTIONS: "subscription-data-for-functions",
+  SUBSCRIPTION_DATA_APP_SERVICE: "subscription-data-for-app-service",
   TRACK_PAGE_SWITCH: "track-page-switch",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
@@ -129,9 +179,16 @@ export {
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
+  ARIA_LABELS_NAVIGATION,
   COSMOS_APIS,
   DEVELOPMENT,
   PROJECT_NAME_CHARACTER_LIMIT,
+  PAGE_NAME_CHARACTER_LIMIT,
+  MAX_PAGES_ALLOWED,
+  WEB_TEMPLATE_STUDIO_LINKS,
   FRAMEWORK_TYPE,
-  KEY_EVENTS
+  KEY_EVENTS,
+  PAYLOAD_MESSAGES_TEXT,
+  BOOTSTRAP_LICENSE,
+  PAGEID
 };

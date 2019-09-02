@@ -19,7 +19,8 @@ import { MODAL_TYPES, ModalType } from "../../actions/modalActions/typeKeys";
  */
 const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
   // default width
-  let CUSTOM_WIDTH = "40%";
+  let CUSTOM_WIDTH = "50%";
+  let backgroundColor = "var(--vscode-menu-background)";
 
   // depends on modal type, customize width
   if (
@@ -27,7 +28,11 @@ const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
     (MODAL_TYPE === MODAL_TYPES.POST_GEN_MODAL ||
       MODAL_TYPE === MODAL_TYPES.VIEW_LICENSES_MODAL)
   ) {
-    CUSTOM_WIDTH = "30%";
+    CUSTOM_WIDTH = "40%";
+  }
+
+  if (MODAL_TYPE && MODAL_TYPE === MODAL_TYPES.ADD_PAGES_MODAL) {
+    backgroundColor = "var(--vscode-editor-background)";
   }
 
   return {
@@ -37,6 +42,7 @@ const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
       left: 0,
       right: 0,
       bottom: 0,
+      zIndex: 2000,
       backgroundColor: "rgba(0, 0, 0, 0.6)"
     },
     content: {
@@ -48,9 +54,11 @@ const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
       transform: "translate(-50%, -50%)",
       borderRadius: "3px",
       width: CUSTOM_WIDTH,
-      padding: "2.4%",
-      background: "var(--vscode-menu-background)",
-      border: "0.5px solid var(--vscode-editor-foreground)"
+      padding: "4vh",
+      background: backgroundColor,
+      border: "0.5px solid var(--vscode-editor-foreground)",
+      maxWidth: "700px",
+      minWidth: "300px"
     }
   };
 };

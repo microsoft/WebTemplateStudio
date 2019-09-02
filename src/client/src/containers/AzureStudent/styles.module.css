@@ -1,0 +1,36 @@
+.studentContainer {
+  display: flex;
+  width: 100%;
+  padding: 0.8em 0em;
+  background-color: hsla(0, 0%, 47%, 0.2);
+  margin-top: 0;
+  margin-right: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoContainer {
+  padding-left: 4em;
+}
+
+.link {
+  color: var(--vscode-textLink-foreground);
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.cloudServicesSvg {
+  width: 200px;
+}
+
+.azureForStudent {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+
+}
+
+.body {
+  font-size: 15px;
+  margin-bottom: 8px;
+}

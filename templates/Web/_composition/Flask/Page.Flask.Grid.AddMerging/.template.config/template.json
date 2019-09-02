@@ -1,29 +1,29 @@
 {
-    "author": "Microsoft Community",
-    "classifications": [
-      "Universal"
-    ],
-    "name": "Page.Flask.Grid.AddMerging",
+  "author": "Microsoft Community",
+  "classifications": [
+    "Universal"
+  ],
+  "name": "Page.Flask.Grid.AddMerging",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
+    "wts.compositionOrder": "1",
     "wts.compositionFilter": "$backendframework == Flask & groupIdentity == wts.Page.Grid"
   },
-    "sourceName": "wts.ItemName",
-    "preferNameDirectory": true,
-    "PrimaryOutputs": [
-    ],
-    "symbols": {
-      "wts.rootNamespace": {
-        "type": "parameter",
-        "replaces": "Param_RootNamespace"
-      },
-      "wts.itemNamespace": {
-        "type": "parameter",
-        "replaces": "Param_ItemNamespace"
-      }
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.itemNamespace": {
+      "type": "parameter",
+      "replaces": "Param_ItemNamespace"
     }
   }
+}

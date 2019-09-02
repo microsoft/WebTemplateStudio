@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router";
-import Details from "../../components/Details";
+import Details from "../Details";
 import { IOption } from "../../types/option";
 import { screenShotMapping } from "../../utils/getSvgUrl";
 import styles from "./styles.module.css";

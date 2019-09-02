@@ -11,8 +11,10 @@ import asModal from "../../components/Modal";
 import RootAction from "../../actions/ActionType";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import Licenses from "../Licenses";
+import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isViewLicensesModalOpenSelector } from "../../selectors/modalSelector";
 import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
+import { KEY_EVENTS } from "../../utils/constants";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -28,23 +30,38 @@ const messages = defineMessages({
   closeModalLabel: {
     id: "viewLicensesModal.closeModalLabel",
     defaultMessage: "Close"
+  },
+  licenses: {
+    id: "licenses.licenses",
+    defaultMessage: "Licenses"
   }
 });
 
 const ViewLicensesModal = ({ intl, closeModal }: Props) => {
   const { formatMessage } = intl;
 
+  const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
+      event.preventDefault();
+      event.stopPropagation();
+      closeModal();
+    }
+  };
+
   return (
     <div>
-      <Licenses />
-      <div className={styles.footerContainer}>
-        <button
-          className={classnames(buttonStyles.buttonHighlighted, styles.button)}
+      <div className={styles.headerContainer}>
+        <div className={styles.title}>
+          {intl.formatMessage(messages.licenses)}
+        </div>
+        <Cancel
+          tabIndex={0}
+          className={styles.cancelIcon}
           onClick={closeModal}
-        >
-          {formatMessage(messages.closeModalLabel)}
-        </button>
+          onKeyDown={cancelKeyDownHandler}
+        />
       </div>
+      <Licenses />
     </div>
   );
 };

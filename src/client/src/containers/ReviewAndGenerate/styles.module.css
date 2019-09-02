@@ -1,25 +1,27 @@
 .container {
   margin-right: 20%;
   width: 100%;
-  padding-top: 35px;
+  z-index: 1;
+}
+
+h1 {
+  font-size: 2.5em;
+  font-weight: 600;
+  font-weight: lighter;
+  margin-bottom: 15px;
 }
 
 .selectionContainer {
-  margin-bottom: 24px;
+  margin-bottom: 4em;
 }
 
-.reviewContextContainer {
-  float: left;
-  padding: 70px 100px;
+.selectionContainer > p {
+  font-size: 1.2em;
+  max-width: 350px;
 }
 
-.button {
-  margin-left: 1em;
-  font-size: 1em;
-}
-
-.leftButton {
-  font-size: 1em;
+button {
+  font-size: 1.1em;
 }
 
 .button:hover {
@@ -34,9 +36,11 @@
   margin-left: 2%;
   width: calc(100% - 40px);
 }
+
 .buttonContainer {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .link {

@@ -2,8 +2,6 @@ import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
 import { messages } from "../../../selectors/wizardSelectionSelector";
 import { FormattedMessage } from "react-intl";
 import AzureActionType from "../../../actions/azureActions/azureActionType";
-import { WIZARD_INFO_TYPEKEYS } from "../../../actions/wizardInfoActions/typeKeys";
-import WizardInfoType from "../../../actions/wizardInfoActions/wizardInfoActionType";
 import { IFunctionName } from "../../../containers/AzureFunctionsSelection";
 
 /* State Shape
@@ -58,7 +56,7 @@ const initialState = {
   wizardContent: {
     serviceType: messages.azureFunctionsOriginalTitle
   },
-  chooseExistingRadioButtonSelected: true
+  chooseExistingRadioButtonSelected: false
 };
 
 const getFunctionNames = (functionNames: IFunctionName[]): string[] => {
@@ -112,7 +110,7 @@ const createFunctionNames = (
 
 const azureFunctions = (
   state: IAzureFunctionsSelection = initialState,
-  action: AzureActionType | WizardInfoType
+  action: AzureActionType
 ) => {
   switch (action.type) {
     case AZURE_TYPEKEYS.UPDATE_AZURE_FUNCTION_NAMES:
@@ -130,7 +128,6 @@ const azureFunctions = (
         }
       };
       return newAvailabilityState;
-    case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
       return initialState;
     case AZURE_TYPEKEYS.REMOVE_AZURE_FUNCTIONS_APP:
@@ -160,7 +157,7 @@ const azureFunctions = (
       return newFunctionState;
     case AZURE_TYPEKEYS.SAVE_AZURE_FUNCTIONS_SETTINGS:
       const newSelectionState = {
-        ...initialState,
+        ...state,
         selection: [
           {
             subscription: action.payload.subscription,
@@ -180,7 +177,6 @@ const azureFunctions = (
           action.payload.chooseExistingRadioButtonSelected
       };
       return newSelectionState;
-
     default:
       return state;
   }

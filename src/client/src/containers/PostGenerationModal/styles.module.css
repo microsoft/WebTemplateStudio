@@ -1,16 +1,15 @@
-.azureTitle {
-  font-family: Segoe UI;
-  font-size: 21px;
-  font-weight: lighter;
-  line-height: 19px;
-  color: #ffffff;
-}
 .title {
-  font-size: 21px;
-  font-family: "Segoe UI";
+  font-size: 2.5em;
   font-weight: lighter;
   line-height: 25px;
-  color: #ffffff;
+  color: var(--vscode-editor-foreground);
+}
+
+h1 {
+  font-size: 2.5em;
+  font-weight: 600;
+  font-weight: lighter;
+  margin-bottom: 0px;
 }
 
 .section {
@@ -18,7 +17,8 @@
 }
 
 .sectionLine {
-  margin-top: 20px;
+  margin-top: 15px;
+  font-size: 1.2em;
 }
 
 .sectionLineButton {
@@ -31,16 +31,18 @@
 }
 
 .footerContainer {
-  margin-top: 40px;
+  margin-top: 60px;
   float: right;
   align-items: center;
+  display: flex;
 }
 
 .button {
+  align-items: center;
   font-size: 1.2em;
+  margin-left: 1em;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 10px 33px;
 }
 
@@ -48,12 +50,36 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
+.iconCheck {
+  margin-top: 3px;
+  margin-left: 1em;
+  height: 18px;
+}
+
+.iconError {
+  margin-top: 3px;
+  margin-left: 1em;
+  height: 18px;
+  width: 18px;
+}
+
+.iconError path {
+  fill: var(--vscode-errorForeground);
+}
+
+.iconCheck path {
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
+}
+
 .spinner {
-  margin-right: 5px;
+  animation: rotate steps(60) 1s infinite;
+  height: 18px;
+  width: 18px;
+  margin-top: 3px;
 }
 
 .spinner path {
-  stroke: #ffffff;
+  stroke: var(--vscode-editor-foreground);
 }
 
 @keyframes rotate {
@@ -66,30 +92,28 @@
   }
 }
 
-.spinner {
-  animation: rotate steps(60) 1s infinite;
-  height: 20px;
-  width: 20px;
+/* styles for generation status checkmark section*/
+.checkmarkSection {
+  background-color: var(--vscode-editorWidget-border);
 }
 
-.templateStatus {
+.containerWithMargin {
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
+}
+
+.checkmarkStatusRow {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 
-.buttonToLink {
-  display: inline-block;
-  border: none;
-  margin: 0;
-  text-decoration: none;
-  background: var(--vscode-menu-background);
-  color: var(--vscode-textLink-foreground);
-  font-family: sans-serif;
-  font-size: 1rem;
-  cursor: pointer;
-  text-align: center;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+.checkmarkStatusRow > div {
+  padding: 0.6em 1.5em;
+  font-size: 1.2em;
+}
+
+.inLine {
+  display: flex;
 }
 
 .loading {

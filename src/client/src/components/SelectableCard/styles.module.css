@@ -3,13 +3,17 @@
   margin-bottom: 12px;
   cursor: pointer;
   padding: 12px;
-  background-color: var(--vscode-sideBar-background);
-  border: 0.5px solid var(--vscode-editor-foreground);
+  background-color: hsla(0, 0%, 47%, 0.2);
 }
 
 .container:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
   border: 0.5px solid var(--vscode-contrastActiveBorder);
+}
+
+.container:focus:not([data-focus-visible-added]) {
+  outline: none;
+  border: none;
 }
 
 .selected,
@@ -18,15 +22,18 @@
 }
 
 .selected {
-  padding: 12.5px;
   border: none;
   outline: 3px solid var(--vscode-editor-foreground);
 }
 
 .selected:focus {
-  padding: 12.5px;
   border: none;
   outline: 3px solid var(--vscode-contrastActiveBorder);
+}
+
+.selected:focus:not([data-focus-visible-added]) {
+  border: none;
+  outline: 3px solid var(--vscode-editor-foreground);
 }
 
 .cardCount,
@@ -60,8 +67,10 @@
 }
 
 .boundingBox {
-  max-width: 198px;
-  min-height: 239px;
+  width: 230px;
+  height: 200px;
+  margin: 0px 30px 30px 0px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -72,15 +81,13 @@
 }
 
 .cardFooter {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   min-height: 30px;
 }
 
 .pageButtons {
   display: flex;
   justify-content: flex-end;
+  float: right;
 }
 
 .showCount {
@@ -127,7 +134,7 @@
 
 .link {
   color: var(--vscode-textLink-foreground);
-  font-size: 14px;
+  font-size: 15px;
   text-decoration: none;
 }
 
@@ -160,4 +167,10 @@
 .selectedText {
   display: flex;
   font-size: 14px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  outline: 0px;
+  cursor: default;
 }

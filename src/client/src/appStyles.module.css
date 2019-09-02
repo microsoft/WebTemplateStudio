@@ -5,8 +5,8 @@
 }
 
 .centerView {
-  display: flex;
-  padding: 1vh 4vh;
+  display: block;
+  padding: 6vh;
   overflow: auto;
   width: 100%;
   box-sizing: border-box;
@@ -14,22 +14,48 @@
   height: calc(100vh - 124px);
   justify-content: flex-start;
   position: relative;
+  flex: 1 1 auto;
 }
 
 .centerViewAzurePage {
   padding: 0;
 }
 
+.centerViewNewProjectPage {
+  padding: 0;
+}
+
 .centerViewMaxHeight {
-  height: calc(100vh - 51px);
+  height: calc(100vh - 70px);
   margin-bottom: 0px;
 }
 
-@media (max-width: 830px) {
+@media (max-width: 825px) {
   .centerView {
     padding: 1vh 2vh;
   }
   .centerViewAzurePage {
     padding: 0;
   }
+}
+
+.splash {
+  position: fixed;
+  max-width: 90%;
+  height: auto;
+  z-index: 0;
+  bottom: 65px;
+}
+@media (max-width: 1120px) {
+  .splash {
+    display: none;
+  }
+}
+
+.homeSplash {
+  right: 0;
+}
+
+.summarySplash {
+  left: 0;
 }

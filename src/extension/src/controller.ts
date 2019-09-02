@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+
 import { Validator } from "./utils/validator";
 import {
   CONSTANTS,
@@ -18,6 +19,7 @@ import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
 import { DependencyChecker } from "./utils/dependencyChecker";
 import { CoreTSModule } from "./coreTSModule";
+import { Defaults } from "./utils/defaults";
 
 export class Controller {
   /**
@@ -34,6 +36,7 @@ export class Controller {
   private Validator: Validator;
   private DependencyChecker: DependencyChecker;
   private CoreTSModule: CoreTSModule;
+  private Defaults: Defaults;
 
   /**
    *  Defines the WizardServant modules to which wizard client commands are routed
@@ -48,7 +51,8 @@ export class Controller {
       [ExtensionModule.Generate, this.GenExperience],
       [ExtensionModule.Logger, Controller.Logger],
       [ExtensionModule.DependencyChecker, this.DependencyChecker],
-      [ExtensionModule.CoreTSModule, this.CoreTSModule]
+      [ExtensionModule.CoreTSModule, this.CoreTSModule],
+      [ExtensionModule.Defaults, this.Defaults]
     ]);
   }
 
@@ -108,6 +112,7 @@ export class Controller {
     this.GenExperience = new GenerationExperience(Controller.Telemetry);
     this.DependencyChecker = new DependencyChecker();
     this.CoreTSModule = new CoreTSModule();
+    this.Defaults = new Defaults();
     Logger.initializeOutputChannel(
       Controller.Telemetry.getExtensionName(this.context)
     );
@@ -135,7 +140,7 @@ export class Controller {
   ): Promise<void> {
     const syncObject = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
-      async function (this: IActionContext) {
+      async function(this: IActionContext) {
         return await launchExperience
           .launchApiSyncModule(context)
           .catch(error => {
@@ -154,7 +159,6 @@ export class Controller {
       GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
       Controller.loadUserSettings();
-      Controller.sendPortToClient();
 
       Controller.getVersionAndSendToClient(
         context,
@@ -179,32 +183,11 @@ export class Controller {
     });
   }
 
-  private static sendPortToClient() {
-    const port = CoreTemplateStudio.GetExistingInstance().getPort();
-
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetPort,
-      payload: {
-        port
-      }
-    });
-  }
-
   private static loadUserSettings() {
-    let outputPathDefault = vscode.workspace
-      .getConfiguration()
-      .get<string>("wts.defaultOutputPath");
     const preview = vscode.workspace
       .getConfiguration()
       .get<boolean>("wts.enablePreviewMode");
-    if (outputPathDefault) {
-      Controller.reactPanelContext.postMessageWebview({
-        command: ExtensionCommand.GetOutputPath,
-        payload: {
-          outputPath: outputPathDefault
-        }
-      });
-    }
+
     if (preview !== undefined) {
       Controller.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.GetPreviewStatus,

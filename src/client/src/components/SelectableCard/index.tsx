@@ -2,6 +2,7 @@ import classNames from "classnames";
 import * as React from "react";
 
 import { Link } from "react-router-dom";
+import { injectIntl, InjectedIntl, defineMessages } from "react-intl";
 
 import CardBody from "../CardBody";
 import CardTitle from "../CardTitle";
@@ -20,12 +21,14 @@ import { ReactComponent as Plus } from "../../assets/plus.svg";
 import { ReactComponent as Subtract } from "../../assets/subtract.svg";
 import plus from "../../assets/plus.svg";
 import subtract from "../../assets/subtract.svg";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 const SelectableCard = ({
   iconPath,
   iconStyles,
   title,
   body,
+  version,
   selected,
   cardNumber,
   onCardClick,
@@ -36,12 +39,15 @@ const SelectableCard = ({
   isFrameworkSelection,
   isPagesSelection,
   addPage,
-  removePage
+  removePage,
+  showLink,
+  intl
 }: {
   iconPath: string | undefined;
   iconStyles: string;
   title: string;
   body: string;
+  version?: string;
   selected: boolean;
   option: IOption;
   cardNumber: number;
@@ -53,6 +59,8 @@ const SelectableCard = ({
   isPagesSelection: boolean;
   addPage: (idx: number) => void;
   removePage: (idx: number) => void;
+  showLink: boolean;
+  intl: InjectedIntl;
 }) => {
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -66,6 +74,21 @@ const SelectableCard = ({
       onCardClick(cardNumber);
     }
   };
+
+  const messages = defineMessages({
+    learnMore: {
+      id: "selectableCard.details",
+      defaultMessage: "Learn more"
+    },
+    preview: {
+      id: "selectableCard.preview",
+      defaultMessage: "Preview"
+    },
+    pageCount: {
+      id: "selectableCard.pageCount",
+      defaultMessage: "{number} {page}"
+    }
+  });
 
   return (
     <div
@@ -102,26 +125,33 @@ const SelectableCard = ({
         )}
         <div className={grid.row}>
           <div className={styles.body}>
-            <CardBody body={body} />
+            {version ? (
+              <CardBody body={body} version={version} />
+            ) : (
+              <CardBody body={body} />
+            )}
           </div>
         </div>
       </div>
       <div className={styles.cardFooter}>
-        <Link
-          onClick={detailsClickWrapper}
-          className={classNames(styles.link)}
-          to={ROUTES.PAGE_DETAILS}
-        >
-          <FormattedMessage
-            id="selectableCard.details"
-            defaultMessage="Details"
-          />
-        </Link>
+        {showLink && (
+          <Link
+            onClick={detailsClickWrapper}
+            className={styles.link}
+            to={ROUTES.PAGE_DETAILS}
+            onKeyUp={keyUpHandler}
+          >
+            {isPagesSelection
+              ? intl.formatMessage(messages.preview)
+              : intl.formatMessage(messages.learnMore)}
+          </Link>
+        )}
         <div className={styles.pageButtons}>
           {isPagesSelection && (
             <button
               className={classNames(styles.cardCount, styles.countButton)}
               onClick={() => removePage(cardNumber)}
+              disabled={!clickCount}
             >
               {subtract && <Subtract className={styles.subtractSVG} />}
             </button>
@@ -133,14 +163,17 @@ const SelectableCard = ({
               [styles.showCount]: isPagesSelection
             })}
           >
-            {(isPagesSelection && <div>{clickCount}</div>) || (
+            {(isPagesSelection && (
+              <section
+                aria-label={intl.formatMessage(messages.pageCount, {
+                  number: clickCount,
+                  page: clickCount == 1 ? "page" : "pages"
+                })}
+              >
+                {clickCount}
+              </section>
+            )) || (
               <div className={styles.selectedText}>
-                <div>
-                  <FormattedMessage
-                    id="selectableCard.selected"
-                    defaultMessage="Selected"
-                  />
-                </div>
                 <Check className={styles.iconCheckMark} />
               </div>
             )}
@@ -159,4 +192,4 @@ const SelectableCard = ({
   );
 };
 
-export default SelectableCard;
+export default injectIntl(SelectableCard);

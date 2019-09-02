@@ -4,8 +4,10 @@
 }
 
 .servicesCategory {
-  margin-bottom: 10%;
+  margin-bottom: 5em;
+  padding: 0em 0em;
 }
+
 .categoryTitle {
   font-size: 1.2em;
   font-weight: 600;
@@ -13,43 +15,59 @@
 
 .categoryDescriptor {
   font-size: 2em;
-  padding: 5px 0px 20px 0px;
-  font-weight: 600;
 }
 
 .servicesContainer {
   display: block;
-  width: 100%;
+  margin-right: 10%;
 }
 
 .servicesCategoryContainer {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .subscriptionCardContainer {
-  flex-basis: 43%;
-  flex-grow: 9999;
-  margin-right: 12px;
-  margin-bottom: 12px;
-}
-
-.subscriptionCardContainer {
+  width: 300px;
+  height: 300px;
+  padding: 2.5em;
+  background-color: hsla(0, 0%, 47%, 0.2);
   margin-bottom: 10px;
-  max-width: 198px;
-  padding: 15px;
-  background-color: var(--vscode-sideBar-background);
-  border: 1px solid var(--vscode-editorGroup-border);
 }
 
-.overlay {
-  opacity: 0.4;
-  position: relative;
+.subtitle {
+  font-size: 1.2em;
+  font-weight: normal;
+  padding-top: 5px;
 }
 
 .container {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding-right: 5px;
+  justify-content: center;
+  align-items: center;
+  padding: 3em;
+}
+
+@media (max-width: 1250px) {
+  .container {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding: 3em;
+  }
+
+  .servicesCategoryContainer {
+    align-items: left;
+    justify-content: left;
+    margin-top: 20px;
+  }
+
+  .subscriptionCardContainer {
+    width: 300px;
+    height: 300px;
+    padding: 2.5em;
+    background-color: hsla(0, 0%, 47%, 0.2);
+    margin-bottom: 10px;
+  }
 }

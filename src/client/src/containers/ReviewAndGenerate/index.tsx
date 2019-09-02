@@ -7,7 +7,6 @@ import * as ModalActions from "../../actions/modalActions/modalActions";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 
-import Title from "../../components/Title";
 import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
@@ -17,7 +16,11 @@ interface IDispatchProps {
   openViewLicensesModal: () => any;
 }
 
-type Props = IDispatchProps & InjectedIntlProps;
+interface IStateProps {
+  quickStartEnabled: boolean;
+}
+
+type Props = IDispatchProps & IStateProps & InjectedIntlProps;
 
 const messages = defineMessages({
   viewLicenses: {
@@ -33,47 +36,43 @@ const messages = defineMessages({
     defaultMessage:
       "You're almost done - review your project details on the right and make any necessary adjustments!"
   },
-  giveFeedback: {
-    id: "about.reportAnIssueLabel",
-    defaultMessage: "Give Feedback"
+  quickStart: {
+    id: "context.quickStart",
+    defaultMessage: `Woo-hoo! You skipped to the end where we'll get you started quickly. Just click "Create Project".`
   }
 });
 
 const ReviewAndGenerate = (props: Props) => {
-  const { intl, openViewLicensesModal } = props;
+  const { intl, openViewLicensesModal, quickStartEnabled } = props;
   const { formatMessage } = intl;
 
   return (
     <div className={styles.container}>
       <div className={styles.reviewContextContainer}>
         <div className={styles.selectionContainer}>
-          <Title>{formatMessage(messages.launchYourProject)}</Title>
-          {formatMessage(messages.almostDone)}
+          <h1>{formatMessage(messages.launchYourProject)}</h1>
+          {quickStartEnabled ? (
+            <p>{formatMessage(messages.quickStart)}</p>
+          ) : (
+            <p>{formatMessage(messages.almostDone)}</p>
+          )}
         </div>
         <div className={styles.buttonContainer}>
           <button
-            className={classnames(buttonStyles.buttonDark, styles.leftButton)}
+            className={classnames(buttonStyles.buttonDark, styles.button)}
             onClick={openViewLicensesModal}
           >
             {formatMessage(messages.viewLicenses)}
-          </button>
-          <button
-            className={classnames(buttonStyles.buttonDark, styles.button)}
-          >
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.link}
-              href="https://github.com/Microsoft/WebTemplateStudio/issues"
-            >
-              {formatMessage(messages.giveFeedback)}
-            </a>
           </button>
         </div>
       </div>
     </div>
   );
 };
+
+const mapStateToProps = (state: AppState): IStateProps => ({
+  quickStartEnabled: state.wizardContent.enableQuickStart
+});
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
@@ -84,6 +83,6 @@ const mapDispatchToProps = (
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(injectIntl(ReviewAndGenerate));

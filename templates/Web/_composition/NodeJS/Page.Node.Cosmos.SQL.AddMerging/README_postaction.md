@@ -13,7 +13,7 @@ Additional documentation can be found here: [Cosmos Docs](https://github.com/Mic
 
 ### Deployment
 
-The generated templates can be deployed to Azure App Service using the following steps:
+If you selected Azure App Service when creating your project, follow these steps:
 
 ├── server/ - Express server that provides API routes and serves front-end
 //{[{

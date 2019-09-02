@@ -1,0 +1,89 @@
+
+.title {
+  font-style: normal;
+  font-weight: lighter;
+  margin-bottom: 6px;
+  font-size: 2.5em;
+  color: var(--vscode-editor-foreground);
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.cancelIcon {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  padding: 1px;
+  margin-right: 2px;
+}
+
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cancelIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cancelIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.section {
+  margin-top: 20px;
+}
+
+.footerContainer {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.spaceBetween {
+  justify-content: space-between;
+}
+
+.flexEnd {
+  justify-content: flex-end;
+}
+
+.button {
+  font-size: 1.2em;
+  padding: 0.5em 3em;
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.link {
+  color: var(--vscode-textLink-foreground);
+  font-weight: var(--vscode-font-weight);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.buttonToLink {
+  text-decoration: none;
+  font-size: var(--vscode-font-size);
+  color: var(--vscode-textLink-foreground);
+  font-weight: var(--vscode-font-weight);
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: inherit;
+  margin-left: -5px;
+}

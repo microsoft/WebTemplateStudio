@@ -2,29 +2,31 @@
 
 ## Prerequisites
 
-[Git](https://git-scm.com/downloads), [Yarn](https://yarnpkg.com/en/docs/install), [Node.js](https://nodejs.org/en/download/), [Gulp](https://gulpjs.com/) and [VSCode](https://code.visualstudio.com/) must be installed prior to running the installation or build scripts.
-
-Run the command
-
-```
-npm config set scripts-prepend-node-path true
-```
-
-to tell VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
+1. Install [Node.js](https://nodejs.org/en/download/)
+2. Install [Gulp](https://gulpjs.com/)
+3. Install [Git](https://git-scm.com/downloads)
+4. Install [.NET Core SDK](https://dotnet.microsoft.com/download/dotnet-core/2.2)
+5. Install [Visual Studio Code](https://code.visualstudio.com/)
+6. Install [Yarn](https://yarnpkg.com/en/docs/install). You will need to finish installing Node.js before you install Yarn.
+7. Run the command `npm config set scripts-prepend-node-path true`. This tells VSCode which Node version to run during the extension compilation (otherwise you'll get an error during the build process).
 
 _Note: If using Windows, use Git Bash_.
 
-## Quick Start
+## Running the Extension
 
-To get started, the first step is to clone this repository. To install dependencies, compile the client, and compile the
-extension, run:
+1. Clone the repository with `git clone https://github.com/microsoft/WebTemplateStudio.git` or `git clone git@github.com:microsoft/WebTemplateStudio.git`.
+2. The repository depends on another submodule called [CoreTemplateStudio](https://github.com/microsoft/CoreTemplateStudio). To copy dependent code from submodule, run:
 
 ```
-./build
+  git submodule init
+  git submodule update
 ```
 
-Open `src/extension` using `VSCode` and press `F5` to run the extension. Use `Ctrl+Shift+P` to open VSCode's extension
-launcher. Select `Web Template Studio: Launch` and press `Enter` to launch the extension
+3. Run `./build`. This script compiles the client and builds the extension.
+4. Open the `src/extension` folder using `VSCode`.
+5. Start the debugger by pressing `F5`. This should open the Extension Development Host in a new Visual Studio Code window.
+6. In the Extension Development Host, press `Ctrl + Shift + P` on Windows/Linux or `Command ⌘ + Shift + P` to open the Command Palette.
+7. In the Command Palette, type `Web Template Studio: Launch` and press `Enter` to launch the extension. Make sure that you don't have the Web Template Studio from the marketplace installed, otherwise it will throw an error.
 
 ## Developing the Client
 
@@ -34,7 +36,9 @@ The client lives in the `src/client` directory. To run the client for developmen
 yarn start
 ```
 
-to begin development. The client was bootstrapped using [Create-React-App with TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript).
+to begin development in the browser. We recommend using a chromium based browser such as Chrome.
+
+The client was bootstrapped using [Create-React-App with TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript).
 
 ## Creating VSIX Package
 
@@ -62,7 +66,7 @@ After installation, use `ctrl+shift+p (Windows)` or `cmd+shift+p (Mac)` to open 
 
 ## Running the client in the VSCode Extension
 
-To see any changes made on the client within VSCode, run the instructions shown in the `Quick Start` section to rebuild the client and the extension. The resulting changes should appear in VSCode when the extension runs.
+To see any changes made on the client within VSCode, run the instructions shown in the `Running the extension` section to rebuild the client and the extension. The resulting changes should appear in VSCode when the extension runs.
 
 Rebuilding the client is required because the client is injected into a [VSCode Webview](https://code.visualstudio.com/api/extension-guides/webview) using the production build of the client.
 

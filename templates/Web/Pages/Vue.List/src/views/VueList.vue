@@ -5,28 +5,28 @@
         <h3>Bootstrap VueList Template</h3>
       </div>
       <div class="col-12 p-0">
-        <ListForm v-on:onAddListItem="handleAddListItem" v-model="textField"/>
+        <ListForm v-model="textField" @onAddListItem="handleAddListItem" />
       </div>
       <ListItem
         v-for="listItem in list"
-        v-bind:key="listItem._id"
-        v-bind:listItem="listItem"
-        v-on:onDeleteListItem="handleDeleteListItem"
+        :key="listItem._id"
+        :listItem="listItem"
+        @onDeleteListItem="handleDeleteListItem"
       />
-      <WarningMessage
+      <BaseWarningMessage
         v-if="WarningMessageOpen"
-        v-on:onWarningClose="handleWarningClose"
-        v-bind:text="WarningMessageText"
+        :text="WarningMessageText"
+        @onWarningClose="handleWarningClose"
       />
     </div>
   </main>
 </template>
 
 <script>
-import CONSTANTS from "../constants";
-import ListForm from "../components/ListForm";
-import ListItem from "../components/ListItem";
-import WarningMessage from "../components/WarningMessage";
+import CONSTANTS from "@/constants";
+import ListForm from "@/components/ListForm";
+import ListItem from "@/components/ListItem";
+import BaseWarningMessage from "@/components/BaseWarningMessage";
 
 export default {
   name: "VueList",
@@ -34,10 +34,10 @@ export default {
   components: {
     ListForm,
     ListItem,
-    WarningMessage
+    BaseWarningMessage
   },
 
-  data: function() {
+  data() {
     return {
       list: [],
       textField: "",
@@ -46,12 +46,12 @@ export default {
     };
   },
 
-  created: function() {
+  created() {
     this.fetchTextAssets();
   },
 
   methods: {
-    fetchTextAssets: function() {
+    fetchTextAssets() {
       fetch(CONSTANTS.ENDPOINT.LIST)
         .then(response => {
           if (!response.ok) {
@@ -62,19 +62,10 @@ export default {
         .then(result => (this.list = result))
         .catch(error => {
           this.WarningMessageOpen = true;
-          this.WarningMessageText = `${
-            CONSTANTS.ERROR_MESSAGE.LIST_GET
-          } ${error}`;
+          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`;
         });
     },
-    handleAddListItem: function() {
-      // Warning Pop Up if the user submits an empty message
-      if (!this.textField) {
-        this.WarningMessageOpen = true;
-        this.WarningMessageText = CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE;
-        return;
-      }
-
+    handleAddListItem() {
       fetch(CONSTANTS.ENDPOINT.LIST, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -94,9 +85,7 @@ export default {
         })
         .catch(error => {
           this.WarningMessageOpen = true;
-          this.WarningMessageText = `${
-            CONSTANTS.ERROR_MESSAGE.LIST_ADD
-          } ${error}`;
+          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`;
         });
     },
     handleDeleteListItem(listItem) {
@@ -112,9 +101,7 @@ export default {
         })
         .catch(error => {
           this.WarningMessageOpen = true;
-          this.WarningMessageText = `${
-            CONSTANTS.ERROR_MESSAGE.LIST_DELETE
-          } ${error}`;
+          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`;
         });
     },
     handleWarningClose() {

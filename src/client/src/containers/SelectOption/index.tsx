@@ -1,8 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import classnames from "classnames";
 
 import SelectableCard from "../../components/SelectableCard";
+import Notification from "../../components/Notification";
 import Title from "../../components/Title";
+import { MAX_PAGES_ALLOWED } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -12,13 +15,42 @@ import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
+import { AppState } from "../../reducers";
+
+import { isAddPagesModalOpenSelector } from "../../selectors/modalSelector";
+
+import { InjectedIntl, defineMessages, injectIntl } from "react-intl";
+
+const messages = defineMessages({
+  limitedPages: {
+    id: "pages.limitedPagesMessage",
+    defaultMessage: "You can select up to 20 pages"
+  },
+  overlimitPages: {
+    id: "pages.overlimitPagesMessage",
+    defaultMessage: "You cannot add more than 20 pages to the project"
+  },
+  noPageGeneration: {
+    id: "pages.noPageGeneration",
+    defaultMessage: "At least 1 page must be selected"
+  },
+  iconAltMessage: {
+    id: "pages.maxPagesText",
+    defaultMessage: "Notification"
+  }
+});
 
 interface ICount {
   [key: string]: number;
 }
 
+interface IProps {
+  intl: InjectedIntl;
+}
+
 interface ISelectOptionProps {
   title: string;
+  description: string;
   internalName?: string;
   selectCard?: (card: ISelected) => void;
   selectedCardIndices: number[];
@@ -34,28 +66,32 @@ interface ISelectOptionProps {
 
 interface ISelectOptionState {
   selectedCardIndices: number[];
+  pageOutOfBounds: boolean;
+  description: string;
 }
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => void;
 }
 
-type Props = IDispatchProps & ISelectOptionProps;
+interface IStateProps {
+  isAddPagesModalOpen: boolean;
+}
+
+type Props = IDispatchProps & ISelectOptionProps & IStateProps & IProps;
 
 class SelectOption extends React.Component<Props, ISelectOptionState> {
   constructor(props: Props) {
     super(props);
     const { selectedCardIndices } = props;
     this.state = {
-      selectedCardIndices
+      selectedCardIndices,
+      pageOutOfBounds: false,
+      description: props.intl.formatMessage(messages.limitedPages)
     };
   }
   public componentDidMount() {
-    const {
-      selectCard,
-      selectOptions,
-      selectedCardIndices
-    } = this.props;
+    const { selectCard, selectOptions, selectedCardIndices } = this.props;
     if (selectCard) {
       this.exchangeOption(selectedCardIndices[0]);
       this.setState({
@@ -144,11 +180,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     });
   }
 
-  public removeOption(
-    cardNumber: number,
-    cardCount: number,
-    internalName: string
-  ) {
+  public removeOption(internalName: string) {
     const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     if (selectOptions && currentCardData && currentCardData.length > 1) {
       const size = currentCardData.length;
@@ -197,10 +229,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public onCardClick(cardNumber: number) {
-    const {
-      options,
-      multiSelect
-    } = this.props;
+    const { options, multiSelect } = this.props;
     const { unselectable } = options[cardNumber];
     if (unselectable) {
       return;
@@ -227,9 +256,26 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     }
   };
 
-  public addPage(cardNumber: number) {
-    const { options, cardTypeCount, handleCountUpdate } = this.props;
+  public addPage = (cardNumber: number) => {
+    const {
+      options,
+      cardTypeCount,
+      handleCountUpdate,
+      currentCardData,
+      intl
+    } = this.props;
     const { internalName } = options[cardNumber];
+    if (currentCardData && currentCardData.length >= MAX_PAGES_ALLOWED) {
+      this.setState({
+        pageOutOfBounds: true,
+        description: intl.formatMessage(messages.overlimitPages)
+      });
+      return;
+    }
+    this.setState({
+      pageOutOfBounds: false,
+      description: intl.formatMessage(messages.limitedPages)
+    });
     if (cardTypeCount && handleCountUpdate) {
       cardTypeCount[internalName] = cardTypeCount[internalName]
         ? cardTypeCount[internalName] + 1
@@ -237,25 +283,37 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       handleCountUpdate(cardTypeCount);
       this.addOption(cardNumber, cardTypeCount[internalName], internalName);
     }
-  }
+  };
 
-  public removePage(cardNumber: number) {
+  public removePage = (cardNumber: number) => {
     const {
       options,
       currentCardData,
       cardTypeCount,
-      handleCountUpdate
+      handleCountUpdate,
+      intl
     } = this.props;
     const { internalName } = options[cardNumber];
+    if (currentCardData && currentCardData.length <= 1) {
+      this.setState({
+        pageOutOfBounds: true,
+        description: intl.formatMessage(messages.noPageGeneration)
+      });
+      return;
+    }
+    this.setState({
+      pageOutOfBounds: false,
+      description: intl.formatMessage(messages.limitedPages)
+    });
     if (
       cardTypeCount &&
       handleCountUpdate &&
       currentCardData &&
       currentCardData.length > 1
     ) {
-      this.removeOption(cardNumber, cardTypeCount[internalName], internalName);
+      this.removeOption(internalName);
     }
-  }
+  };
 
   public render() {
     const {
@@ -263,14 +321,42 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       options,
       setDetailPage,
       isFrameworkSelection,
-      isPagesSelection
+      isPagesSelection,
+      isAddPagesModalOpen,
+      intl
     } = this.props;
+    const { pageOutOfBounds, description } = this.state;
     return (
       <div>
         <Title>{title}</Title>
-        <div className={styles.container}>
+        {isPagesSelection && (
+          <div
+            className={classnames(styles.description, {
+              [styles.borderGreen]: !pageOutOfBounds,
+              [styles.borderYellow]: pageOutOfBounds
+            })}
+          >
+            <Notification
+              showWarning={pageOutOfBounds}
+              text={description}
+              altMessage={intl.formatMessage(messages.iconAltMessage)}
+            />
+          </div>
+        )}
+        <div
+          className={classnames(styles.container, {
+            [styles.modalContainer]: isAddPagesModalOpen
+          })}
+        >
           {options.map((option, cardNumber) => {
-            const { svgUrl, title, body, unselectable, internalName } = option;
+            const {
+              svgUrl,
+              title,
+              body,
+              unselectable,
+              internalName,
+              version
+            } = option;
             return (
               <SelectableCard
                 key={`${cardNumber} ${title}`}
@@ -287,10 +373,12 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 iconStyles={styles.icon}
                 title={title as string}
                 body={body as string}
+                version={version}
                 disabled={unselectable}
                 clickCount={this.getCardCount(internalName)}
                 addPage={(cardNumber: number) => this.addPage(cardNumber)}
                 removePage={(cardNumber: number) => this.removePage(cardNumber)}
+                showLink={!isAddPagesModalOpen}
               />
             );
           })}
@@ -299,6 +387,10 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     );
   }
 }
+
+const mapStateToProps = (state: AppState): IStateProps => ({
+  isAddPagesModalOpen: isAddPagesModalOpenSelector(state)
+});
 
 const mapDispatchToProps = (
   dispatch: Dispatch<RootAction>
@@ -309,6 +401,6 @@ const mapDispatchToProps = (
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(SelectOption);
+)(injectIntl(SelectOption));

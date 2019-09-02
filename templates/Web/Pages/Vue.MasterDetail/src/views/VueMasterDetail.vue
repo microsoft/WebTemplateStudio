@@ -6,29 +6,29 @@
           <div class="list-group list-group-flush border-bottom">
             <MasterDetailSideBarTab
               v-for="(textAssets, index) in masterDetailText"
-              v-on:onDisplayTabClick="handleDisplayTabClick"
-              v-bind:tabText="textAssets.title"
-              v-bind:index="index"
-              v-bind:key="textAssets.id"
+              :key="textAssets.id"
+              :index="index"
+              :tabText="textAssets.title"
+              @onDisplayTabClick="handleDisplayTabClick"
             />
           </div>
         </div>
-        <MasterDetailPage v-bind:textSampleData="masterDetailText[currentDisplayTabIndex]"/>
+        <MasterDetailPage :textSampleData="masterDetailText[currentDisplayTabIndex]" />
       </div>
     </main>
-    <WarningMessage
+    <BaseWarningMessage
       v-if="WarningMessageOpen"
-      v-on:onWarningClose="handleWarningClose"
-      v-bind:text="WarningMessageText"
+      :text="WarningMessageText"
+      @onWarningClose="handleWarningClose"
     />
   </div>
 </template>
 
 <script>
-import CONSTANTS from "../constants";
-import MasterDetailPage from "../components/MasterDetailPage";
-import MasterDetailSideBarTab from "../components/MasterDetailSideBarTab";
-import WarningMessage from "../components/WarningMessage";
+import CONSTANTS from "@/constants";
+import MasterDetailPage from "@/components/MasterDetailPage";
+import MasterDetailSideBarTab from "@/components/MasterDetailSideBarTab";
+import BaseWarningMessage from "@/components/BaseWarningMessage";
 
 export default {
   name: "VueMasterDetail",
@@ -36,17 +36,20 @@ export default {
   components: {
     MasterDetailPage,
     MasterDetailSideBarTab,
-    WarningMessage
+    BaseWarningMessage
   },
 
-  data: function() {
+  data() {
     return {
       masterDetailText: [
         {
-          paragraph: "",
-          title: "",
-          tabName: "",
-          id: 0
+          id: 0,
+          longDescription: "",
+          orderDate: "",
+          orderTotal: 0,
+          shipTo: "",
+          status: "",
+          title: ""
         }
       ],
       currentDisplayTabIndex: 0,
@@ -55,12 +58,12 @@ export default {
     };
   },
 
-  created: function() {
+  created() {
     this.fetchTextAssets();
   },
 
   methods: {
-    fetchTextAssets: function() {
+    fetchTextAssets() {
       fetch(CONSTANTS.ENDPOINT.MASTERDETAIL)
         .then(response => {
           if (!response.ok) {
@@ -73,16 +76,14 @@ export default {
         })
         .catch(error => {
           this.WarningMessageOpen = true;
-          this.WarningMessageText = `${
-            CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET
-          } ${error}`;
+          this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`;
         });
     },
-    handleWarningClose: function() {
+    handleWarningClose() {
       this.WarningMessageOpen = false;
       this.WarningMessageText = "";
     },
-    handleDisplayTabClick: function(id) {
+    handleDisplayTabClick(id) {
       this.currentDisplayTabIndex = id;
     }
   }

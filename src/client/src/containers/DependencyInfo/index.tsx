@@ -12,14 +12,10 @@ import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { ReactComponent as Warning } from "../../assets/warning.svg";
-import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
+import { IRedirectModalData } from "../RedirectModal";
+import Notification from "../../components/Notification";
 
 const messages = defineMessages({
-  installed: {
-    id: "dependencyChecker.installedMessage",
-    defaultMessage: "{dependencyName} detected!"
-  },
   notInstalled: {
     id: "dependencyChecker.notInstalledMessage",
     defaultMessage:
@@ -27,7 +23,7 @@ const messages = defineMessages({
   },
   iconAltMessage: {
     id: "dependencyChecker.iconAltMessage",
-    defaultMessage: "Icon for dependency checker"
+    defaultMessage: "Notification"
   }
 });
 
@@ -45,7 +41,7 @@ interface IDependencies {
 }
 
 const dependencies: IDependencies = {
-  NodeJS: {
+  Node: {
     dependencyStoreKey: "node",
     dependencyName: "Node",
     dependencyMinimumVersion: "v10.15+",
@@ -64,11 +60,11 @@ const dependencies: IDependencies = {
 };
 
 const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_JS, dependencies.NodeJS],
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.NodeJS],
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.NodeJS],
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT, dependencies.Node],
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR, dependencies.Node],
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.Node],
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, dependencies.Python],
-  [WIZARD_CONTENT_INTERNAL_NAMES.NODE_JS, dependencies.NodeJS]
+  [WIZARD_CONTENT_INTERNAL_NAMES.NODE, dependencies.Node]
 ]);
 
 interface IDependencyInfoProps {
@@ -78,7 +74,7 @@ interface IDependencyInfoProps {
 }
 
 interface IDispatchProps {
-  openPrivacyModal: (dependency: IDependency | undefined) => any;
+  openRedirectModal: (dependency: IRedirectModalData | undefined) => any;
 }
 
 type Props = IDependencyInfoProps & IDispatchProps;
@@ -93,7 +89,7 @@ class DependencyInfo extends React.Component<Props> {
       frameworkName,
       intl,
       dependenciesStore,
-      openPrivacyModal
+      openRedirectModal
     } = this.props;
     let dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
       frameworkName
@@ -108,54 +104,53 @@ class DependencyInfo extends React.Component<Props> {
       dependencyStoreKey,
       dependencyMinimumVersion
     } = dependency;
+
+    if (dependenciesStore[dependencyStoreKey] === undefined) {
+      return null;
+    }
     const installed: boolean = dependenciesStore[dependencyStoreKey].installed;
 
     let dependencyMessage: string = installed
-      ? intl.formatMessage(messages.installed, {
-          dependencyName: dependencyName
-        })
+      ? ""
       : intl.formatMessage(messages.notInstalled, {
           dependencyName: dependencyName,
           minimumVersion: dependencyMinimumVersion
         });
 
+    const privacyModalData = dependency
+      ? {
+          redirectLink: dependency.downloadLink,
+          redirectLinkLabel: dependency.downloadLinkLabel,
+          privacyStatementLink: dependency.privacyStatementLink,
+          isThirdPartyLink: true
+        }
+      : undefined;
+
     const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-        openPrivacyModal(dependency);
+        openRedirectModal(privacyModalData);
       }
     };
 
     return (
-      <div
-        role="button"
-        tabIndex={0}
-        onKeyDown={installed ? () => null : keyDownHandler}
-        onClick={() => openPrivacyModal(dependency)}
-        className={classnames(styles.dependencyContainer, {
-          [styles.disabled]: installed,
-          [styles.borderGreen]: installed,
-          [styles.borderYellow]: !installed
-        })}
-      >
+      !installed && (
         <div
-          role="img"
-          aria-label={intl.formatMessage(messages.iconAltMessage)}
-        >
-          {installed ? (
-            <Checkmark className={styles.iconCheck} />
-          ) : (
-            <Warning className={styles.iconWarning} />
+          role="button"
+          tabIndex={0}
+          onKeyDown={keyDownHandler}
+          onClick={() => openRedirectModal(privacyModalData)}
+          className={classnames(
+            styles.dependencyContainer,
+            styles.borderYellow
           )}
-        </div>
-        <div
-          className={classnames(styles.body, {
-            [styles.bodyGreen]: installed,
-            [styles.bodyYellow]: !installed
-          })}
         >
-          {`${dependencyMessage}`}
+          <Notification
+            showWarning={true}
+            text={dependencyMessage}
+            altMessage={intl.formatMessage(messages.iconAltMessage)}
+          />
         </div>
-      </div>
+      )
     );
   }
 }
@@ -169,8 +164,8 @@ const mapStateToProps = (state: AppState): any => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  openPrivacyModal: (dependency: IDependency | undefined) => {
-    dispatch(ModalActions.openPrivacyModalAction(dependency));
+  openRedirectModal: (dependency: IRedirectModalData | undefined) => {
+    dispatch(ModalActions.openRedirectModalAction(dependency));
   }
 });
 

@@ -25,7 +25,7 @@ export const azureMessages = defineMessages({
   },
   azureLoginTitle: {
     id: "azureLogin.azureLoginTitle",
-    defaultMessage: "Add Azure Cloud Services to Your Project."
+    defaultMessage: "Add Azure Cloud Services to Your Project"
   },
   azureLoginInfo: {
     id: "azureLogin.azureLoginInfo",
@@ -38,12 +38,12 @@ export const azureMessages = defineMessages({
   azureFunctionsLongDescription: {
     id: "azureFunctions.longDescription",
     defaultMessage:
-      "Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure. Think of it as deploying functions that executes on pre-defined triggers instead of having to write and manage a full-fledged server yourself. One of the most commonly used triggers is an HTTPTrigger which is a function that runs whenever it receives an HTTP request. This is essentially the same as an API endpoint. Web Template Studio allows you to deploy a function app with multiple 'hello world' HTTPTrigger functions (maximum of 10) so you can get to writing your business logic as soon as possible."
+      "Deploy serverless web applications using an event-driven platform."
   },
   azureFunctionsCardBody: {
     id: "azureFunctions.cardBody",
     defaultMessage:
-      "Azure Functions is a serverless compute service that enables you to run code on-demand without having to explicitly provision or manage infrastructure."
+      "Deploy serverless web applications using an event-driven platform."
   },
   cosmosTitle: {
     id: "cosmosDb.title",
@@ -57,7 +57,15 @@ export const azureMessages = defineMessages({
   cosmosCardBody: {
     id: "cosmosDb.cardBody",
     defaultMessage:
-      "Cosmos DB allows you to build and scale your application with a globally distributed, multi-model database service."
+      "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API."
+  },
+  cosmosTimeExpectation: {
+    id: "cosmosDb.timeExpectation",
+    defaultMessage: "5 - 10 minutes set-up time"
+  },
+  cosmosPriceExpectation: {
+    id: "cosmosDb.priceExpectation",
+    defaultMessage: "Free 30 day access to your databse"
   },
   azureModalChooseExisting: {
     id: "azureModal.chooseExisting",
@@ -100,14 +108,6 @@ export const azureMessages = defineMessages({
     id: "azureModal.createNew",
     defaultMessage: "Create New"
   },
-  azureModalAddResource: {
-    id: "azureModal.addResource",
-    defaultMessage: "Add Resource"
-  },
-  azureModalSaveChanges: {
-    id: "azureModal.saveChanges",
-    defaultMessage: "Save Changes"
-  },
   azureModalSubscriptionSubLabel: {
     id: "azureModal.subscriptionSubLabel",
     defaultMessage: "Choose a subscription to manage your billing preferences"
@@ -116,6 +116,69 @@ export const azureMessages = defineMessages({
     id: "azureModal.resourceGroupSubLabel",
     defaultMessage:
       "A resource group is a container that holds related resources for an Azure solution"
+  },
+  appServiceModalTitle: {
+    id: "appService.modalTitle",
+    defaultMessage: "Create App Service"
+  },
+  appServiceTitle: {
+    id: "appService.title",
+    defaultMessage: "App Service"
+  },
+  appServiceLongDescription: {
+    id: "appService.longDescription",
+    defaultMessage:
+      "Quickly build, deploy, and scale web apps with confidence. Meet rigorous, enterprise-grade performance, security, and compliance requirements by using the fully managed platform for your operational and monitoring tasks."
+  },
+  appServiceCardBody: {
+    id: "appService.cardBody",
+    defaultMessage:
+      "Quickly build, deploy, and scale your web apps with confidence."
+  },
+  runtimeStackLabel: {
+    id: "azureFunctionsModal.runtimeStackLabel",
+    defaultMessage: "Runtime Stack"
+  },
+  runtimeStackSubLabel: {
+    id: "azureFunctionsModal.runtimeStackSubLabel",
+    defaultMessage: "Your runtime stack is {runtimeStack}"
+  },
+  appServiceInfo: {
+    id: "appService.appServiceInfo",
+    defaultMessage:
+      "A free BASIC tier 30 day trial app service plan will be created for you."
+  },
+  appServiceLearnMore: {
+    id: "appService.learnMore",
+    defaultMessage: "Learn More"
+  },
+  appServicePriceExpectation: {
+    id: "appService.priceExpectation",
+    defaultMessage: "Free 30 Day Trial"
+  },
+  appServiceTimeExpectation: {
+    id: "appService.timeExpectation",
+    defaultMessage: "3 - 5 minute set-up time"
+  },
+  appServiceAppNameLabel: {
+    id: "appService.appNameLabel",
+    defaultMessage: "Web App Name"
+  },
+  appServiceAriaAppNameLabel: {
+    id: "appService.ariaAppNameLabel",
+    defaultMessage: "Web App Name Dropdown"
+  },
+  appServiceAppNameSubLabel: {
+    id: "appService.appNameSubLabel",
+    defaultMessage: "We have created a unique web app name that you can edit"
+  },
+  azureModalSave: {
+    id: "azureModal.save",
+    defaultMessage: "Save"
+  },
+  appServicePlanLabel: {
+    id: "azureModal.appServicePlanLabel",
+    defaultMessage: "App Service Plan"
   }
 });
 
@@ -128,20 +191,26 @@ const azureServiceOptions: IOption[] = [
   {
     author: "Microsoft",
     type: servicesEnum.HOSTING,
-    svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS),
-    title: azureMessages.azureFunctionsTitle,
-    internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS,
-    longDescription: azureMessages.azureFunctionsLongDescription,
-    body: azureMessages.azureFunctionsCardBody
+    svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE),
+    isPreview: false,
+    title: azureMessages.appServiceTitle,
+    internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
+    longDescription: azureMessages.appServiceLongDescription,
+    body: azureMessages.appServiceCardBody,
+    expectedPrice: azureMessages.appServicePriceExpectation,
+    expectedTime: azureMessages.appServiceTimeExpectation
   },
   {
     author: "Microsoft",
     type: servicesEnum.DATABASE,
     svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
+    isPreview: false,
     title: azureMessages.cosmosTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     longDescription: azureMessages.cosmosLongDescription,
-    body: azureMessages.cosmosCardBody
+    body: azureMessages.cosmosCardBody,
+    expectedPrice: azureMessages.cosmosPriceExpectation,
+    expectedTime: azureMessages.cosmosTimeExpectation
   }
 ];
 

@@ -8,8 +8,7 @@ import {
   DeploymentError
 } from "../../errors";
 import { CONSTANTS } from "../../constants";
-
-const VALIDATION_LIMIT = 3;
+import { NameGenerator } from "../utils/nameGenerator";
 
 export interface ResourceGroupSelection {
   subscriptionItem: SubscriptionItem;
@@ -61,7 +60,7 @@ export class ResourceGroupDeploy {
     name: string,
     userSubscriptionItems: SubscriptionItem[]
   ): Promise<string> {
-    let generatedName: string = this.generateResourceGroupName(name);
+    let generatedName: string = NameGenerator.generateName(name);
     // this allows the generated name to be validated against multiple subscriptions
     let isValid: boolean = await this.validateResourceGroupNameWithMultipleSubscriptions(
       generatedName,
@@ -69,17 +68,17 @@ export class ResourceGroupDeploy {
     );
 
     let tries = 0;
-    while (tries < VALIDATION_LIMIT && !isValid) {
-      generatedName = this.generateResourceGroupName(name);
+    while (tries < CONSTANTS.VALIDATION_LIMIT && !isValid) {
+      generatedName = NameGenerator.generateName(name);
       isValid = await this.validateResourceGroupNameWithMultipleSubscriptions(
         generatedName,
         userSubscriptionItems
       );
       tries++;
     }
-    if (tries >= VALIDATION_LIMIT) {
+    if (tries >= CONSTANTS.VALIDATION_LIMIT) {
       throw new ResourceGroupError(
-        CONSTANTS.ERRORS.RESOURCE_GROUP_TRIES_EXCEEDED
+        CONSTANTS.ERRORS.CREATION_TRIES_EXCEEDED("resource group")
       );
     }
     return generatedName;
@@ -115,23 +114,5 @@ export class ResourceGroupDeploy {
       name
     );
     return !exist;
-  }
-
-  private generateResourceGroupName(userProjectName: string): string {
-    const unixTimestamp = Date.now();
-    const suffix = this.unixToSuffix(unixTimestamp);
-    return userProjectName + "_" + suffix;
-  }
-
-  private unixToSuffix(unixTimestamp: any): string {
-    const fullDate = new Date(unixTimestamp);
-    const year = fullDate.getFullYear().toString();
-    // getMonth() returns month as a zero-based value
-    const month = (fullDate.getMonth() + 1).toString();
-    const date = fullDate.getDate().toString();
-    const hour = fullDate.getHours().toString();
-    const min = fullDate.getMinutes().toString();
-    const sec = fullDate.getSeconds().toString();
-    return year.concat(month, date, hour, min, sec);
   }
 }

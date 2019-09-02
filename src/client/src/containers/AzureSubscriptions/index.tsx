@@ -16,16 +16,26 @@ import { servicesEnum } from "../../mockData/azureServiceOptions";
 import { IOption } from "../../types/option";
 import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 
-import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+import {
+  InjectedIntlProps,
+  injectIntl,
+  defineMessages,
+  FormattedMessage
+} from "react-intl";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+
+import { isAzureFunctionsSelectedSelector } from "../../selectors/azureFunctionsServiceSelector";
+import { isAppServiceSelectedSelector } from "../../selectors/appServiceSelector";
 
 interface IDispatchProps {
   startLogOutToAzure: () => any;
   openCosmosDbModal: () => any;
   setDetailPage: (detailPageInfo: IOption) => void;
   openAzureFunctionsModal: () => any;
+  openAppServiceModal: () => any;
+  openAzureLoginModal: (serviceInternalName: string) => any;
 }
 
 interface IAzureLoginProps {
@@ -33,6 +43,10 @@ interface IAzureLoginProps {
   isCosmosDbModalOpen: boolean;
   azureFunctionsSelection: any;
   cosmosDbSelection: any;
+  appServiceSelection: any;
+  isPreview: boolean;
+  isAzureFunctionsSelected: boolean;
+  isAppServiceSelected: boolean;
 }
 
 interface IState {
@@ -48,7 +62,7 @@ const messages = defineMessages({
   },
   addResource: {
     id: "azureSubscriptions.addResource",
-    defaultMessage: "Add Resource"
+    defaultMessage: "Add to my project"
   },
   azureFunctionsLongDesc: {
     id: "azureSubscriptions.azureFunctionsLongDesc",
@@ -68,7 +82,7 @@ const messages = defineMessages({
   azureCosmosBody: {
     id: "azureSubscriptions.azureCosmosBody",
     defaultMessage:
-      "Cosmos DB allows you to build and scale your application with a globally distributed, multi-model database service."
+      "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API."
   },
   azureFunctions: {
     id: "azureSubscriptions.azureFunctions",
@@ -84,7 +98,11 @@ const messages = defineMessages({
   },
   storageTitle: {
     id: "storageServices.title",
-    defaultMessage: "Create and connect to a database in the cloud"
+    defaultMessage: "Store your data in the cloud"
+  },
+  hostingOneServiceWarning: {
+    id: "hostingServices.oneServiceWarning",
+    defaultMessage: "You can only add one hosting service at a time"
   }
 });
 
@@ -94,9 +112,12 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       return !_.isEmpty(this.props.azureFunctionsSelection);
     } else if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB) {
       return !_.isEmpty(this.props.cosmosDbSelection);
+    } else if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE) {
+      return !_.isEmpty(this.props.appServiceSelection);
     }
     return false;
   };
+
   public addOrEditResourceText = (internalName: string): string => {
     const { formatMessage } = this.props.intl;
     if (this.isSelectionCreated(internalName)) {
@@ -104,6 +125,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     }
     return formatMessage(messages.addResource);
   };
+
   /**
    * Returns a function that opens a modal for a specific internalName
    * @param internalName internal name of service within Core Engine
@@ -112,7 +134,9 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     const modalOpeners = {
       [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: this.props.openCosmosDbModal,
       [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: this.props
-        .openAzureFunctionsModal
+        .openAzureFunctionsModal,
+      [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: this.props
+        .openAppServiceModal
     };
     if (modalOpeners.hasOwnProperty(internalName)) {
       return modalOpeners[internalName];
@@ -120,13 +144,31 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return () => {};
   }
 
+  /**
+   * Returns internal name of Azure cloud hosting service that has been created
+   * If no service has been created yet, returns null
+   */
+  public getCreatedHostingService(): string | null {
+    const { isAzureFunctionsSelected, isAppServiceSelected } = this.props;
+    if (isAzureFunctionsSelected) {
+      return WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS;
+    } else if (isAppServiceSelected) {
+      return WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE;
+    } else {
+      return null;
+    }
+  }
+
   public getServicesOrganizer(
     type: string | undefined,
     isLoggedIn: boolean,
     setDetailPage: any,
-    title: any
+    title: any,
+    isPreview: boolean
   ) {
     const { formatMessage } = this.props.intl;
+    const { openAzureLoginModal } = this.props;
+
     return (
       <div
         className={classnames(styles.servicesContainer, {
@@ -140,7 +182,9 @@ class AzureSubscriptions extends React.Component<Props, IState> {
           </div>
           <div className={styles.servicesCategoryContainer}>
             {azureServiceOptions.map(option => {
-              if (option.type === type) {
+              // show cards with preview flag only if wizard is also in preview
+              const shouldShowCard = isPreview || !option.isPreview;
+              if (shouldShowCard && option.type === type) {
                 return (
                   <div
                     key={JSON.stringify(option.title)}
@@ -153,10 +197,11 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                       buttonText={this.addOrEditResourceText(
                         option.internalName
                       )}
-                      handleButtonClick={this.getServicesModalOpener(
-                        option.internalName
-                      )}
-                      disabled={!isLoggedIn}
+                      handleButtonClick={
+                        isLoggedIn
+                          ? this.getServicesModalOpener(option.internalName)
+                          : () => openAzureLoginModal(option.internalName)
+                      }
                       handleDetailsClick={setDetailPage}
                     />
                   </div>
@@ -168,10 +213,20 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       </div>
     );
   }
+
   public render() {
-    const { isLoggedIn, setDetailPage } = this.props;
+    const { isLoggedIn, setDetailPage, isPreview } = this.props;
     const serviceTypes = azureServiceOptions.map(option => option.type);
     const uniqueServiceTypes = [...new Set(serviceTypes)];
+
+    let numHostingServiceCards = 0;
+    azureServiceOptions.forEach(serviceOption => {
+      const isCardShown = isPreview || !serviceOption.isPreview;
+      if (serviceOption.type === servicesEnum.HOSTING && isCardShown) {
+        numHostingServiceCards++;
+      }
+    });
+
     return (
       <div className={styles.container}>
         {uniqueServiceTypes.map((serviceType: any) => {
@@ -188,7 +243,8 @@ class AzureSubscriptions extends React.Component<Props, IState> {
             serviceType,
             isLoggedIn,
             setDetailPage,
-            categoryTitle
+            categoryTitle,
+            isPreview
           );
         })}
       </div>
@@ -196,12 +252,19 @@ class AzureSubscriptions extends React.Component<Props, IState> {
   }
 }
 
-const mapStateToProps = (state: AppState): IAzureLoginProps => ({
-  isLoggedIn: state.azureProfileData.isLoggedIn,
-  isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
-  azureFunctionsSelection: state.selection.services.azureFunctions.selection,
-  cosmosDbSelection: state.selection.services.cosmosDB.selection
-});
+const mapStateToProps = (state: AppState): IAzureLoginProps => {
+  const { previewStatus } = state.wizardContent;
+  return {
+    isLoggedIn: state.azureProfileData.isLoggedIn,
+    isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
+    azureFunctionsSelection: state.selection.services.azureFunctions.selection,
+    cosmosDbSelection: state.selection.services.cosmosDB.selection,
+    appServiceSelection: state.selection.services.appService.selection,
+    isPreview: previewStatus,
+    isAzureFunctionsSelected: isAzureFunctionsSelectedSelector(state),
+    isAppServiceSelected: isAppServiceSelectedSelector(state)
+  };
+};
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
@@ -218,6 +281,12 @@ const mapDispatchToProps = (
   },
   openAzureFunctionsModal: () => {
     dispatch(ModalActions.openAzureFunctionsModalAction());
+  },
+  openAppServiceModal: () => {
+    dispatch(ModalActions.openAppServiceModalAction());
+  },
+  openAzureLoginModal: (serviceInternalName: string) => {
+    dispatch(ModalActions.openAzureLoginModalAction(serviceInternalName));
   }
 });
 

@@ -22,6 +22,10 @@ const initialState = {
   azureFunctions: {
     success: false,
     failure: false
+  },
+  appService: {
+    success: false,
+    failure: false
   }
 };
 
@@ -34,8 +38,6 @@ const genStatus = (
       return {
         ...action.payload
       };
-    case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
-      return initialState;
     default:
       return state;
   }

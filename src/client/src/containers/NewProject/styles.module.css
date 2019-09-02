@@ -1,14 +1,10 @@
 .container {
-  align-self: center;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  margin-bottom: 10%;
-  padding: 0px 80px;
-}
-
-.container > div {
-  flex: 1 0 100%;
+  width: 100%;
+  z-index: 1;
+  height: auto;
+  position: relative;
 }
 
 .flex > div:first-child {
@@ -31,13 +27,32 @@
 }
 
 .projectDetailsContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   box-sizing: border-box;
   width: 80%;
 }
 
 .getStarted {
   align-self: flex-end;
+}
+
+.quickStartContainer {
+  margin-top: 1em;
+  position: relative;
+}
+
+.newProjectInfo {
+  max-width: 50%;
+  padding: 6vh;
+}
+
+@media (min-width: 850px) and (max-width: 1120px) {
+  .newProjectInfo {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 850px) {
+  .newProjectInfo {
+    max-width: 100%;
+  }
 }

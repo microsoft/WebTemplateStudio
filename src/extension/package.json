@@ -15,14 +15,23 @@
     "color": "#eff1f3",
     "theme": "light"
   },
-  "icon": "resources/WebTemplateStudioLogo_blueBackground.png",
+  "icon": "resources/WebTSLogoSquare.png",
   "keywords": [
-    "Garage",
+    "Open Source",
+    "Full Stack",
     "Web Application",
+    "Scaffolding",
+    "Templates",
     "Boilerplate",
     "React",
+    "Angular",
+    "Vue.js",
+    "Node",
     "Express",
-    "Scaffolding"
+    "Flask",
+    "Azure Services",
+    "Azure Cosmos DB",
+    "Azure App Service"
   ],
   "preview": true,
   "homepage": "https://github.com/Microsoft/WebTemplateStudio/blob/master/README.md",
@@ -38,7 +47,8 @@
     "vscode-nls": "^4.0.0"
   },
   "activationEvents": [
-    "onCommand:webTemplateStudioExtension.wizardLaunch"
+    "onCommand:webTemplateStudioExtension.wizardLaunch",
+    "onCommand:webTemplateStudioExtension.deployApp"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -47,21 +57,30 @@
         "command": "webTemplateStudioExtension.wizardLaunch",
         "title": "%webTemplateStudioExtension.commands.wizardLaunch%",
         "category": "%webTemplateStudioExtension.commands.wts%"
+      },
+      {
+        "command": "webTemplateStudioExtension.deployApp",
+        "title": "%webTemplateStudioExtension.commands.deployApp%",
+        "category": "%webTemplateStudioExtension.commands.wts%"
       }
     ],
     "configuration": {
       "type": "object",
       "title": "%webTemplateStudioExtension.commands.wts%",
       "properties": {
-        "wts.defaultOutputPath": {
+        "wts.changeSaveToLocation": {
           "type": "string",
           "default": "",
-          "description": "Load a default output path on wizard launch."
+          "description": "Set default project location for your project."
         },
         "wts.enablePreviewMode": {
           "type": "boolean",
           "default": false,
           "description": "Enable upcoming features; Warning: may cause stability issues."
+        },
+        "wts.legalResources": {
+          "type": "null",
+          "markdownDescription": "[Privacy Link](https://privacy.microsoft.com/en-US/privacystatement) | [Terms of Use](https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx)"
         }
       }
     }
@@ -93,7 +112,8 @@
     "vscode-nls-dev": "3.2.7"
   },
   "extensionDependencies": [
-    "ms-vscode.azure-account"
+    "ms-vscode.azure-account",
+    "ms-azuretools.vscode-azureappservice"
   ],
   "dependencies": {
     "@aspnet/signalr": "^1.1.2",

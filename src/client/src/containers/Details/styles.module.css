@@ -1,0 +1,135 @@
+.icon {
+  height: 36px;
+  width: 36px;
+  margin-right: 16px;
+}
+
+.spacer {
+  margin-right: 52px;
+}
+
+.backIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.backIcon {
+  height: 24px;
+  margin-right: 1em;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.container {
+  margin: 48px;
+  max-width: 65%;
+}
+
+.backContainer {
+  display: flex;
+  margin-bottom: 48px;
+}
+
+.innerBackContainer {
+  padding-left: 1px;
+  padding-right: 2px;
+  display: flex;
+}
+
+.innerBackContainer:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.headerContainer,
+.detailsContainer {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.headerContainer {
+  align-items: center;
+}
+
+.licenseCategory {
+  align-self: flex-start;
+}
+
+.licenseCategory,
+.category {
+  margin-left: 0px;
+  font-size: 15px;
+}
+
+.detailsTitle {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.licenses {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.detailsDescription {
+  margin-bottom: 0px;
+}
+
+.categoriesContainer {
+  margin-right: 15%;
+}
+
+.metaData {
+  display: flex;
+  align-items: center;
+  width: 80% !important;
+  font-size: 15px;
+}
+
+.markdown {
+  font-size: 15px !important;
+}
+
+.details {
+  padding-top: 2px;
+  font-size: 20px;
+  color: var(--vscode-textLink-foreground);
+  cursor: pointer;
+}
+
+.details:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.link {
+  color: var(--vscode-textLink-foreground);
+  font-weight: var(--vscode-font-weight);
+  text-decoration: none;
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.longDescription {
+  line-height: 1.75em;
+  font-size: 15px;
+}
+
+.colWidth {
+  width: 70px;
+}
+
+.licenseButton {
+  text-decoration: none;
+  font-size: 15px;
+  color: var(--vscode-textLink-foreground);
+  font-weight: var(--vscode-font-weight);
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: inherit;
+  padding: 0px;
+}
+
+.licenseButton:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}

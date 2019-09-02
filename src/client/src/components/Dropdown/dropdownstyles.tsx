@@ -3,7 +3,7 @@
 
 export default {
   input: (base: any) => ({
-    color: "var(--vscode-editor-foreground);"
+    color: "var(--vscode-editor-foreground)"
   }),
   indicatorSeparator: (base: any) => ({
     ...base,
@@ -11,25 +11,26 @@ export default {
   }),
   singleValue: (base: any, state: any) => ({
     ...base,
-    color: "var(--vscode-editor-foreground);"
+    color: "var(--vscode-editor-foreground)"
   }),
   placeholder: (base: any) => ({
     ...base,
-    color: "var(--vscode-menu-foreground);"
+    color: "var(--vscode-menu-foreground)"
   }),
   control: (base: any, state: any): any => ({
     ...base,
     color: "white",
-    opacity: state.isDisabled ? 0.5 : 1,
     border: state.isFocused
       ? "1px solid var(--vscode-contrastActiveBorder)"
-      : "0.5px solid var(--vscode-editor-foreground)",
+      : "none",
     borderRadius: 0,
     boxShadow: "none",
-    background: "var(--vscode-input-background)",
+    background: "var(--vscode-editorWidget-border)",
     "&:hover": {
       outline: "0.5px solid rgba(0,0,0,0.5)"
     },
+    fontSize: "1.2em",
+    padding: "5px",
     cursor: "pointer"
   }),
   option: (provided: any, state: any) => ({
@@ -37,7 +38,7 @@ export default {
     backgroundColor: state.isFocused && "var(--vscode-menu-foreground)",
     color: state.isFocused && "var(--vscode-editor-background)",
     "&:hover": {
-      background: "var(--vscode-menu-foreground",
+      background: "var(--vscode-menu-foreground)",
       border: 0,
       color: "var(--vscode-editor-background)"
     },
@@ -60,8 +61,8 @@ export default {
     ...base,
     // kill the white space on first and last option
     padding: 0,
-    background: "var(--vscode-editor-background)",
-    border: "0.5px solid var(--vscode-editor-foreground)",
+    background: "var(--vscode-editorWidget-border)",
+    border: "none",
     maxHeight: "130px"
   })
 };

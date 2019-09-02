@@ -11,7 +11,6 @@
   justify-content: space-between;
   align-items: center;
   color: var(--vscode-textLink-foreground);
-  padding-top: 30px;
 }
 
 .buttonContainer {
@@ -38,8 +37,8 @@
 
 .cardTitle {
   margin-left: 10px;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .cardBody {

@@ -1,0 +1,38 @@
+.quickStart {
+  background-color: var(--vscode-editorWidget-border);
+  border: none;
+  color: inherit;
+  font: 1.2em;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 20px;
+  padding: 10px 20px;
+  vertical-align: middle;
+  display: inline-flex;
+  margin-bottom: 5vh;
+}
+
+.quickStart:focus {
+  border: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.description {
+  font-size: 1.4em;
+  line-height: 1.9em;
+  width: 85%;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.wand {
+  height: 25px;
+  margin-right: 10px;
+  margin-top: 3px;
+}
+
+.wand path {
+  fill: var(--vscode-editor-foreground);
+}

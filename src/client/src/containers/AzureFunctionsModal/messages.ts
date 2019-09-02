@@ -1,14 +1,6 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
-  runtimeStackLabel: {
-    id: "azureFunctionsModal.runtimeStackLabel",
-    defaultMessage: "Runtime Stack"
-  },
-  ariaRuntimeStackLabel: {
-    id: "azureFunctionsModal.ariaRuntimeStackLabel",
-    defaultMessage: "Runtime Stack Drop Down"
-  },
   numFunctionsLabel: {
     id: "azureFunctionsModal.numFunctionsLabel",
     defaultMessage: "Number of functions"
@@ -31,15 +23,11 @@ export const messages = defineMessages({
   },
   appNameSubLabel: {
     id: "azureFunctionsModal.appNameSubLabel",
-    defaultMessage: "Create a unique app name"
+    defaultMessage: "We have created a unique app name that you can edit"
   },
   locationSubLabel: {
     id: "azureFunctionsModal.locationSubLabel",
     defaultMessage: "Choose where you want your function to be hosted"
-  },
-  runtimeStackSubLabel: {
-    id: "azureFunctionsModal.runtimeStackSubLabel",
-    defaultMessage: "Your runtime stack is NodeJS"
   },
   numFunctionsSubLabel: {
     id: "azureFunctionsModal.numFunctionsSubLabel",

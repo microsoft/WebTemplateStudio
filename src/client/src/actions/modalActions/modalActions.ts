@@ -20,6 +20,17 @@ const closeModalAction = (): ICloseModal => ({
   type: MODAL_TYPEKEYS.CLOSE_MODALS
 });
 
+const openAzureLoginModalAction = (serviceInternalName: string) => {
+  return (dispatch: Dispatch<ModalActionType>) => {
+    dispatch(
+      openModalAction({
+        modalType: MODAL_TYPES.AZURE_LOGIN_MODAL,
+        modalData: serviceInternalName
+      })
+    );
+  };
+};
+
 const openCosmosDbModalAction = () => {
   return (dispatch: Dispatch<ModalActionType>) => {
     dispatch(
@@ -53,7 +64,7 @@ const openPostGenModalAction = () => {
   };
 };
 
-const openPrivacyModalAction = (data: any) => {
+const openRedirectModalAction = (data: any) => {
   return (dispatch: Dispatch<ModalActionType>) => {
     dispatch(
       openModalAction({
@@ -66,18 +77,45 @@ const openPrivacyModalAction = (data: any) => {
 
 const openViewLicensesModalAction = () => {
   return (dispatch: Dispatch<ModalActionType>) => {
-    dispatch(openModalAction({
-      modalType: MODAL_TYPES.VIEW_LICENSES_MODAL,
-      modalData: null
-    }));
+    dispatch(
+      openModalAction({
+        modalType: MODAL_TYPES.VIEW_LICENSES_MODAL,
+        modalData: null
+      })
+    );
+  };
+};
+
+const openAppServiceModalAction = () => {
+  return (dispatch: Dispatch<ModalActionType>) => {
+    dispatch(
+      openModalAction({
+        modalType: MODAL_TYPES.APP_SERVICE_MODAL,
+        modalData: null
+      })
+    );
+  };
+};
+
+const openAddPagesModalAction = () => {
+  return (dispatch: Dispatch<ModalActionType>) => {
+    dispatch(
+      openModalAction({
+        modalType: MODAL_TYPES.ADD_PAGES_MODAL,
+        modalData: null
+      })
+    );
   };
 };
 
 export {
   closeModalAction,
+  openAzureLoginModalAction,
   openAzureFunctionsModalAction,
   openCosmosDbModalAction,
   openPostGenModalAction,
-  openPrivacyModalAction,
-  openViewLicensesModalAction
+  openRedirectModalAction,
+  openViewLicensesModalAction,
+  openAppServiceModalAction,
+  openAddPagesModalAction
 };

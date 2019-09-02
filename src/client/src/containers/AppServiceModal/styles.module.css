@@ -1,0 +1,184 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5em;
+}
+
+/* scrollable part of the form */
+.bodyContainer {
+  padding-right: 20px;
+  max-height: calc(80vh - 200px);
+  overflow-y: auto;
+  margin-bottom: 5px;
+}
+
+.modalTitle {
+  font-size: 1.8em;
+}
+
+.leftHeader {
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.selectionContainer {
+  margin-bottom: 35px;
+}
+
+.selectionContainerDisabled {
+  opacity: 0.5;
+}
+
+.selectionHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.button {
+  float: right;
+  padding: 0.6em 3.5em;
+  margin: 0.5em 0;
+  font-size: 1.3em;
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  outline: none;
+  background-color: var(--vscode-badge-background);
+  cursor: default;
+}
+
+.icon {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  padding: 1px;
+  margin-right: 2px;
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.icon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.icon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.validationIcon {
+  height: 15px;
+  margin-right: 0.2em;
+}
+
+.validationIcon path {
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  outline: none;
+  padding: 9px;
+  font-size: 1.2em;
+  box-sizing: border-box;
+  background: var(--vscode-editorWidget-border);
+  border: none;
+}
+
+.input {
+  text-decoration: none;
+  border: none;
+  background: var(--vscode-editorWidget-border);
+  color: var(--vscode-editor-foreground);
+  font-size: 1em;
+  width: 100%;
+  margin-right: 10px;
+  padding: 2px 8px;
+}
+
+input:focus {
+  outline: none;
+}
+
+input::placeholder {
+  color: var(--vscode-input-placeholderForeground);
+}
+
+.link {
+  text-decoration: none;
+  color: var(--vscode-textLink-foreground);
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.errorMessage {
+  height: 38px;
+  background: var(--vscode-inputValidation-errorBackground);
+  border: 1px solid var(--vscode-inputValidation-errorBorder);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  font-size: 90%;
+  opacity: 50%;
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+.spinner {
+  height: 1em;
+  margin-right: 2px;
+}
+
+.spinner path {
+  stroke: var(--vscode-editor-foreground);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: rotate steps(60) 1s infinite;
+  height: 18px;
+  width: 18px;
+}
+
+.errorStack {
+  display: block;
+  position: relative;
+}
+
+.subLabel {
+  margin-bottom: 1em;
+  font-size: 90%;
+  opacity: 0.8;
+}
+
+.aspInfoContainer {
+  margin-bottom: 35px;
+}

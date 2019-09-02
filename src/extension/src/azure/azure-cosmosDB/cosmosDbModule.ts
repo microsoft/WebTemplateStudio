@@ -17,7 +17,7 @@ import * as appRoot from "app-root-path";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import { CONSTANTS } from "../../constants";
 import fs = require("fs");
-const Url = require("url-parse");
+import { ConnectionString } from "../utils/connectionString";
 
 export interface CosmosDBSelections {
   cosmosDBResourceName: string;
@@ -234,7 +234,7 @@ export class CosmosDBDeploy {
         userSubscriptionItem
       );
 
-      ARMFileHelper.creatDirIfNonExistent(path.join(genPath, "arm-templates"));
+      ARMFileHelper.createDirIfNonExistent(path.join(genPath, "arm-templates"));
       ARMFileHelper.writeObjectToJsonFile(
         path.join(genPath, "arm-templates", "cosmos-template.json"),
         template
@@ -332,8 +332,8 @@ export class CosmosDBDeploy {
     }
     name = name ? name.trim() : "";
 
-    const min = 3;
-    const max = 31;
+    const min = CONSTANTS.COSMOS_DB_NAME.MIN_LENGTH;
+    const max = CONSTANTS.COSMOS_DB_NAME.MAX_LENGTH;
 
     if (name.length < min || name.length > max) {
       return CONSTANTS.ERRORS.NAME_MIN_MAX(min, max);
@@ -400,28 +400,9 @@ export class CosmosDBDeploy {
      * Throws an error if the user deleted the project directory
      * @filePath: path of .env file
      */
-    let cosmosEnvironmentVariables = "";
-    if (
+    const cosmosEnvironmentVariables = ConnectionString.parseConnectionString(
       connectionString
-        .toLowerCase()
-        .startsWith(CONSTANTS.SQL_CONNECTION_STRING_PREFIX)
-    ) {
-      const [origin, primaryKey] = connectionString
-        .split(";")
-        .map(str => str.substr(str.indexOf("=") + 1));
-
-      cosmosEnvironmentVariables = CONSTANTS.CONNECTION_STRING_SQL(
-        origin,
-        primaryKey
-      );
-    } else {
-      const cosmosConnectionString = Url(connectionString);
-      cosmosEnvironmentVariables = CONSTANTS.CONNECTION_STRING_MONGO(
-        cosmosConnectionString.username,
-        cosmosConnectionString.password,
-        cosmosConnectionString.origin
-      );
-    }
+    );
 
     const envPath = path.join(filePath, ".env");
     try {

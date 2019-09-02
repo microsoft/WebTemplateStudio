@@ -7,6 +7,8 @@ import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalActions";
 
 import * as getSvg from "../../utils/getSvgUrl";
+import { ReactComponent as EditIcon } from "../../assets/edit.svg";
+import getSvgUrl, { withLocalPath } from "../../utils/getSvgUrl";
 
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants";
@@ -126,10 +128,7 @@ const AzureFunctionsSelection = ({
                   onKeyDown={onEditKeyDownHandler}
                   role="button"
                 >
-                  <FormattedMessage
-                    id="azureFunctionsSelection.edit"
-                    defaultMessage="Edit"
-                  />
+                  <EditIcon className={styles.editIcon} />
                 </div>
               </div>
               <DraggableSidebarItem
@@ -137,6 +136,7 @@ const AzureFunctionsSelection = ({
                 key={functionApp.appName.value + idx}
                 text={functionApp.appName.value}
                 closeSvgUrl={getSvg.getCancelSvg()}
+                azureFunctions={true}
                 withIndent={true}
                 idx={idx + 1}
                 handleCloseClick={removeAzureFunctionApp}
@@ -153,6 +153,11 @@ const AzureFunctionsSelection = ({
                       handleInputChange={handleInputChange}
                       idx={idx + 1}
                       handleCloseClick={removeAzureFunction}
+                      totalCount={
+                        functionApp.functionNames
+                          ? functionApp.functionNames.length
+                          : 0
+                      }
                     />
                   )
                 )}

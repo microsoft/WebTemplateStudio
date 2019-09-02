@@ -1,10 +1,10 @@
 ﻿<template>
   <button
-    v-on:click="$emit('onDisplayTabClick', index)"
-    type="button"
     class="list-group-item list-group-item-action styles.sidebarText"
+    type="button"
+    @click="$emit('onDisplayTabClick', index)"
   >
-    <img src="../assets/GreyAvatar.svg" alt="Default Grey Avatar" class="mr-3">
+    <img class="mr-3" src="@/assets/GreyAvatar.svg" alt="Default Grey Avatar" />
     {{tabText}}
   </button>
 </template>
@@ -13,8 +13,14 @@
 export default {
   name: "MasterDetailSideBarTab",
   props: {
-    tabText: String,
-    index: Number
+    tabText: {
+      type: String,
+      required: true
+    },
+    index: {
+      type: Number,
+      required: true
+    }
   }
 };
 </script>

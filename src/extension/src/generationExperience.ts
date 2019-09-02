@@ -7,6 +7,7 @@ import { AzureServices } from "./azure/azureServices";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { Controller } from "./controller";
 import { ResourceGroupSelection } from "./azure/azure-resource-group/resourceGroupModule";
+import { Settings } from "./azure/utils/settings";
 
 export class GenerationExperience extends WizardServant {
   private static reactPanelContext: ReactPanel;
@@ -55,8 +56,7 @@ export class GenerationExperience extends WizardServant {
         command: ExtensionCommand.UpdateGenStatus,
         payload: {
           templates: GenerationExperience.getProgressObject(false),
-          cosmos: GenerationExperience.getProgressObject(false),
-          azureFunctions: GenerationExperience.getProgressObject(false)
+          cosmos: GenerationExperience.getProgressObject(false)
         }
       });
       return;
@@ -68,8 +68,9 @@ export class GenerationExperience extends WizardServant {
       ),
       resourceGroup: {},
       cosmos: {},
-      azureFunctions: {}
+      appService: {}
     };
+    let connectionString: string;
 
     GenerationExperience.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.UpdateGenStatus,
@@ -80,7 +81,7 @@ export class GenerationExperience extends WizardServant {
     let resourceGroupQueue: Promise<any>[] = [];
 
     if (apiGenResult) {
-      enginePayload.path = apiGenResult.generationOutputPath;
+      enginePayload.path = apiGenResult.generationPath;
     } else {
       return { payload: undefined };
     }
@@ -89,11 +90,8 @@ export class GenerationExperience extends WizardServant {
       command: ExtensionCommand.GetOutputPath,
       payload: { outputPath: enginePayload.path }
     });
-    
-    if (
-      AzureServices.functionsSelectedNewResourceGroup(payload) ||
-      AzureServices.cosmosDBSelectedNewResourceGroup(payload)
-    ) {
+
+    if (payload.selectedCosmos || payload.selectedAppService) {
       const distinctResourceGroupSelections: ResourceGroupSelection[] = await AzureServices.generateDistinctResourceGroupSelections(
         payload
       );
@@ -127,43 +125,42 @@ export class GenerationExperience extends WizardServant {
           )
         );
       });
-      // Update payload if service was chosen to be deployed to a new resource group
+      // Add the new resouce group name to payload
       // Note: all resource groups created will have the same name
-      if (AzureServices.functionsSelectedNewResourceGroup(payload)) {
-        payload.functions.resourceGroup =
+      if (payload.selectedCosmos) {
+        payload.cosmos.resourceGroup =
           distinctResourceGroupSelections[0].resourceGroupName;
       }
-      if (AzureServices.cosmosDBSelectedNewResourceGroup(payload)) {
-        payload.cosmos.resourceGroup =
+      if (payload.selectedAppService) {
+        payload.appService.resourceGroup =
           distinctResourceGroupSelections[0].resourceGroupName;
       }
     }
 
     // Resource groups should be created before other deploy methods execute
     Promise.all(resourceGroupQueue).then(() => {
-      if (payload.selectedFunctions) {
+      if (payload.selectedAppService) {
         serviceQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
-            TelemetryEventName.FunctionsDeploy,
+            TelemetryEventName.AppServiceDeploy,
             // tslint:disable-next-line: no-function-expression
             async function(this: IActionContext): Promise<void> {
               try {
-                await AzureServices.deployFunctionApp(
-                  payload.functions,
-                  enginePayload.path
-                );
+                const id: string = await AzureServices.deployWebApp(payload);
                 progressObject = {
                   ...progressObject,
-                  azureFunctions: GenerationExperience.getProgressObject(true)
+                  appService: GenerationExperience.getProgressObject(true)
                 };
                 GenerationExperience.reactPanelContext.postMessageWebview({
                   command: ExtensionCommand.UpdateGenStatus,
                   payload: progressObject
                 });
+                Settings.enableScmDoBuildDuringDeploy(enginePayload.path);
+                Settings.setDeployDefault(id, enginePayload.path);
               } catch (error) {
                 progressObject = {
                   ...progressObject,
-                  azureFunctions: GenerationExperience.getProgressObject(false)
+                  appService: GenerationExperience.getProgressObject(false)
                 };
                 GenerationExperience.reactPanelContext.postMessageWebview({
                   command: ExtensionCommand.UpdateGenStatus,
@@ -195,6 +192,7 @@ export class GenerationExperience extends WizardServant {
                   command: ExtensionCommand.UpdateGenStatus,
                   payload: progressObject
                 });
+                connectionString = dbObject.connectionString;
                 AzureServices.promptUserForCosmosReplacement(
                   enginePayload.path,
                   dbObject
@@ -225,8 +223,17 @@ export class GenerationExperience extends WizardServant {
           )
         );
       }
+
       // kick off both services asynchronously
-      Promise.all(serviceQueue);
+      Promise.all(serviceQueue).then(() => {
+        if (payload.selectedAppService && connectionString) {
+          AzureServices.updateAppSettings(
+            payload.appService.resourceGroup,
+            payload.appService.siteName,
+            connectionString
+          );
+        }
+      });
     });
     return { payload: undefined };
   }
@@ -236,7 +243,6 @@ export class GenerationExperience extends WizardServant {
   ) {
     let apiInstance = CoreTemplateStudio.GetExistingInstance();
     return await apiInstance.generate({
-      port: apiInstance.getPort(),
       payload: enginePayload,
       liveMessageHandler: this.handleGenLiveMessage
     });

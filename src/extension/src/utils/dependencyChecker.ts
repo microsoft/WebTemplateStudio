@@ -2,10 +2,13 @@ import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { ExtensionCommand, CONSTANTS } from "../constants";
 const os = require("os");
 const util = require("util");
+const semver = require('semver');
 const exec = util.promisify(require("child_process").exec);
 
-const PYTHON3_REGEX = RegExp("^Python 3\\.[5-9]\\.[0-9]"); // minimum Python version required is 3.5.x
-const NODE_REGEX = RegExp("v10\\.(1[5-9]|[2-9][0-9])\\.[0-9]"); // minimum Node version required is 10.15.x
+const NODE_REGEX = RegExp("v(.+)");
+const NODE_REQUIREMENT = ">=10.15.x";
+const PYTHON_REGEX = RegExp("Python ([0-9.]+)");
+const PYTHON_REQUIREMENT = ">=3.5.x";
 
 export class DependencyChecker extends WizardServant {
   clientCommandMap: Map<
@@ -28,8 +31,11 @@ export class DependencyChecker extends WizardServant {
   private async runPythonVersionCommand(command: string) {
     let installed: boolean;
     try {
-      const { stdout } = await exec(command + " --version");
-      installed = PYTHON3_REGEX.test(stdout);
+      const { stdout, stderr} = await exec(command + " --version");
+      // stderr is also processed for older versions of anaconda!
+      const matches = stdout.match(PYTHON_REGEX) || stderr.match(PYTHON_REGEX);
+      const version: string = matches[1];
+      installed = semver.satisfies(version, PYTHON_REQUIREMENT);
     } catch (err) {
       installed = false;
     }
@@ -44,7 +50,8 @@ export class DependencyChecker extends WizardServant {
         const { stdout } = await exec(
           CONSTANTS.DEPENDENCY_CHECKER.NODE + " --version"
         );
-        state = NODE_REGEX.test(stdout);
+        const version = stdout.match(NODE_REGEX)[1];
+        state = semver.satisfies(version, NODE_REQUIREMENT);
       } catch (err) {
         state = false;
       }

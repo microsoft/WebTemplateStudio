@@ -1,8 +1,9 @@
 .headerContainer {
   display: flex;
   justify-content: space-between;
-  padding-left: 26px;
-  padding-right: 22px;
+  font-size: 1.1em;
+  font-weight: 500;
+  margin-bottom: 0.8em;
 }
 
 .edit {
@@ -14,12 +15,16 @@
   color: var(--vscode-textLink-foreground);
 }
 
+.editIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
 .edit:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .input {
-  background-color: var(--vscode-sideBar-background);
   color: var(--vscode-editor-foreground);
+  background: var(--vscode-editorWidget-border);
   text-overflow: ellipsis;
 }

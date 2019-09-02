@@ -6,11 +6,11 @@
       </div>
       <div class="col-1">
         <button
-          type="button"
+          aria-label="Close"
           class="close py-2"
           data-dismiss="alert"
-          aria-label="Close"
-          v-on:click="$emit('onDeleteListItem', listItem)"
+          type="button"
+          @click="$emit('onDeleteListItem', listItem)"
         >
           <div aria-hidden="true">&times;</div>
         </button>
@@ -23,7 +23,13 @@
 export default {
   name: "ListItem",
   props: {
-    listItem: Object
+    listItem: {
+      type: Object,
+      required: true,
+      validator: function(value) {
+        return value.text !== undefined && value._id !== undefined;
+      }
+    }
   }
 };
 </script>

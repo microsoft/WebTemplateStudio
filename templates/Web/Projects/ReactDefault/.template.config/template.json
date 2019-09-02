@@ -10,7 +10,7 @@
     "type": "project",
     "wts.type": "project",
     "wts.projecttype": "FullStackWebApp",
-    "wts.frontendframework": "ReactJS",
+    "wts.frontendframework": "React",
     "wts.backendframework": "all",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
@@ -62,7 +62,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'bootstrap': '^4.3.1', 'classnames': '^2.2.6', 'react': '^16.8.4', 'react-dom': '^16.8.4', 'react-router-dom': '^4.3.1', 'react-scripts': '^3.0.1'}",
+        "dict": "{'bootstrap': '^4.3.1', 'classnames': '^2.2.6', 'react': '^16.8.4', 'react-dom': '^16.8.4', 'react-router-dom': '^4.3.1', 'react-scripts': '^3.0.1', 'fs-extra': '8.1.0'}",
         "key": "dependencies",
         "jsonPath": "package.json"
       },
@@ -73,7 +73,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'start-frontend': 'react-scripts start', 'build': 'react-scripts build && mv build server', 'test': 'react-scripts test', 'eject': 'react-scripts eject'}",
+        "dict": "{'start-frontend': 'react-scripts start', 'build': 'node ./buildScript', 'test': 'react-scripts test', 'eject': 'react-scripts eject'}",
         "key": "scripts",
         "jsonPath": "package.json"
       },

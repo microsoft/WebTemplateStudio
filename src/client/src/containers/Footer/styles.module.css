@@ -10,11 +10,11 @@
   align-items: center;
   min-height: 65px;
   box-sizing: border-box;
+  z-index: 1100;
 }
 
 .button {
   margin-right: 1em;
-  font-size: 1.4em;
   text-align: center;
 }
 
@@ -24,6 +24,10 @@
 
 .buttonNext {
   min-width: 80px;
+}
+
+.buttonBack {
+  background: var(--vscode-editor-background);
 }
 
 .button:focus {
@@ -38,14 +42,23 @@
 .nextIcon {
   margin-left: 10px;
   height: 16px;
-  color: #ffffff;
 }
 
 .nextIcon path {
   fill: var(--vscode-editor-foreground);
 }
 
+.nextIconNotDisabled path {
+  fill: #ffffff;
+}
+
 .disabledOverlay {
   opacity: 0.5;
-  outline: 0px;
+  background: var(--vscode-editor-background);
+}
+
+@media (min-width: 730px) {
+  .button {
+    font-size: 1.4em;
+  }
 }

@@ -10,11 +10,16 @@ import styles from "./styles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES
+  EXTENSION_MODULES,
+  PAYLOAD_MESSAGES_TEXT,
+  PAGEID
 } from "../../utils/constants";
+
 import { validateName } from "../../utils/validateName";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+
 import { rootSelector } from "../../selectors/generationSelector";
 import {
   getCosmosDbSelectionSelector,
@@ -25,6 +30,10 @@ import {
   isAzureFunctionsSelectedSelector,
   getAzureFunctionsNamesSelector
 } from "../../selectors/azureFunctionsServiceSelector";
+import {
+  isAppServiceSelectedSelector,
+  getAppServiceSelectionSelector
+} from "../../selectors/appServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
@@ -50,6 +59,7 @@ import { IFunctionName } from "../AzureFunctionsSelection";
 
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -64,6 +74,8 @@ interface IStateProps {
   cosmos: any;
   selectedFunctions: boolean;
   functions: any;
+  selectedAppService: boolean;
+  appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
   isValidNameAndProjectPath: boolean;
   functionNames?: IFunctionName[];
@@ -103,6 +115,8 @@ class Footer extends React.Component<Props> {
       cosmos,
       selectedFunctions,
       functions,
+      selectedAppService,
+      appService,
       vscode,
       openPostGenModal
     } = this.props;
@@ -112,13 +126,15 @@ class Footer extends React.Component<Props> {
       module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
       track: false,
-      text: "Sending generation info...",
+      text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
       payload: {
         engine,
         selectedCosmos,
         cosmos,
         selectedFunctions,
-        functions
+        functions,
+        selectedAppService,
+        appService
       }
     });
     const { pathname } = this.props.location;
@@ -127,6 +143,20 @@ class Footer extends React.Component<Props> {
   };
   public isReviewAndGenerate = (): boolean => {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
+  };
+  public findPageID = (pathname: string): Number => {
+    switch (pathname) {
+      case ROUTES.NEW_PROJECT:
+        return PAGEID.NEW_PROJECT;
+      case ROUTES.SELECT_FRAMEWORKS:
+        return PAGEID.SELECT_FRAMEWORKS;
+      case ROUTES.SELECT_PAGES:
+        return PAGEID.SELECT_PAGES;
+      case ROUTES.AZURE_LOGIN:
+        return PAGEID.AZURE_LOGIN;
+      default:
+        return PAGEID.REVIEW_AND_GENERATE;
+    }
   };
   public handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
     const { isValidNameAndProjectPath, setRouteVisited } = this.props;
@@ -138,6 +168,12 @@ class Footer extends React.Component<Props> {
     if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
       setRouteVisited(pathsNext[pathname]);
     }
+    let pageNavLink = document.getElementById(
+      "page" + this.findPageID(pathsNext[pathname])
+    );
+    if (pageNavLink) {
+      pageNavLink.focus();
+    }
   };
 
   public handleLinkBackClick = (
@@ -146,9 +182,14 @@ class Footer extends React.Component<Props> {
   ) => {
     const { setRouteVisited } = this.props;
     this.trackPageForTelemetry(pathname);
-
     if (pathname !== ROUTES.NEW_PROJECT) {
       setRouteVisited(pathname);
+    }
+    let pageNavLink = document.getElementById(
+      "page" + this.findPageID(pathsBack[pathname])
+    );
+    if (pageNavLink) {
+      pageNavLink.focus();
     }
   };
 
@@ -221,10 +262,15 @@ class Footer extends React.Component<Props> {
               {pathname !== ROUTES.NEW_PROJECT && (
                 <Link
                   tabIndex={0}
-                  className={classnames(buttonStyles.buttonDark, styles.button)}
+                  className={classnames(
+                    buttonStyles.buttonDark,
+                    styles.button,
+                    styles.buttonBack
+                  )}
                   onClick={event => {
                     this.handleLinkBackClick(event, pathname);
                   }}
+                  onKeyUp={keyUpHandler}
                   to={
                     pathsBack[pathname] === undefined
                       ? ROUTES.NEW_PROJECT
@@ -240,7 +286,7 @@ class Footer extends React.Component<Props> {
                   className={classnames(
                     styles.button,
                     styles.buttonNext,
-                    buttonStyles.buttonHighlightedBorder,
+                    buttonStyles.buttonHighlighted,
                     {
                       [buttonStyles.buttonDark]: !isValidNameAndProjectPath,
                       [styles.disabledOverlay]: !isValidNameAndProjectPath
@@ -249,19 +295,27 @@ class Footer extends React.Component<Props> {
                   onClick={event => {
                     this.handleLinkClick(event, pathname);
                   }}
+                  onKeyUp={keyUpHandler}
                   to={pathsNext[pathname]}
                 >
                   <FormattedMessage id="footer.next" defaultMessage="Next" />
-                  {nextArrow && <NextArrow className={styles.nextIcon} />}
+                  {nextArrow && (
+                    <NextArrow
+                      className={classnames(styles.nextIcon, {
+                        [styles.nextIconNotDisabled]: isValidNameAndProjectPath
+                      })}
+                    />
+                  )}
                 </Link>
               )}
               {enableCreateProjectButton && (
                 <button
-                  disabled={!areValidNames}
+                  disabled={!areValidNames || !isValidNameAndProjectPath}
                   className={classnames(styles.button, {
                     [buttonStyles.buttonDark]: !areValidNames,
-                    [buttonStyles.buttonHighlightedBorder]: areValidNames,
-                    [styles.disabledOverlay]: !areValidNames
+                    [buttonStyles.buttonHighlighted]: areValidNames,
+                    [styles.disabledOverlay]:
+                      !areValidNames || !isValidNameAndProjectPath
                   })}
                   onClick={this.logMessageToVsCode}
                 >
@@ -286,6 +340,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   cosmos: getCosmosDbSelectionSelector(state),
   selectedFunctions: isAzureFunctionsSelectedSelector(state),
   functionNames: getAzureFunctionsNamesSelector(state),
+  selectedAppService: isAppServiceSelectedSelector(state),
+  appService: getAppServiceSelectionSelector(state),
   functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),

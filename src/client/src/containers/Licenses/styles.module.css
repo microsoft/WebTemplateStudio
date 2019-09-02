@@ -1,24 +1,18 @@
-.title {
-  font-family: Segoe UI;
-  font-style: normal;
-  font-weight: 300;
-  margin-bottom: 6px;
-  font-size: 24px;
-  color: #ffffff;
-}
-
 .container {
-  margin: 15px;
   margin-bottom: 30px;
 }
 
-.link {
+.licenseButton {
   text-decoration: none;
   font-size: var(--vscode-font-size);
   color: var(--vscode-textLink-foreground);
   font-weight: var(--vscode-font-weight);
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: inherit;
 }
 
-.link:focus {
+.licenseButton:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }

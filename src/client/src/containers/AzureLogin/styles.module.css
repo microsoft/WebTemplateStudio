@@ -1,3 +1,12 @@
+.button {
+  margin-right: 1em;
+  text-align: center;
+}
+
+.button:hover {
+  color: #ffffff;
+}
+
 .centerViewAzure {
   padding: 0;
   width: 100%;
@@ -5,11 +14,16 @@
 
 .container {
   position: relative;
-  padding: 65px 10%;
+  padding: 2vh 6vh;
+}
+
+.signedIn {
+  padding: 6vh;
 }
 
 .optionalFlag {
-  position: absolute;
+  display: flex;
+  justify-content: center;
   z-index: 1000;
   width: 100%;
   background-color: #0067b8;
@@ -17,28 +31,50 @@
   text-align: center;
   text-decoration: none;
   font-weight: lighter;
-  font-size: 1.4em;
-  padding: 10px 0px;
+  font-size: 1.6em;
+  padding: 0.8em 0px;
 }
 
 .optionalFlag:hover {
   color: var(--vscode-extensionButton-prominentForeground);
 }
 
-.loginCard {
-  width: 100%;
-  margin-bottom: 10px;
+.logInInfoBar {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
 }
 
 .azureProfile {
   display: flex;
-  position: absolute;
-  right: 20px;
-  top: 20px;
+  justify-content: space-between;
+  background-color: var(--vscode-editorWidget-border);
+  color: var(--vscode-editor-foreground);
+  padding: 0.5em;
+  text-align: center;
+  margin: 10px;
+}
+
+.loginButton {
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.signOutButton {
+  padding-top: 2px;
+  padding: 1px;
+  font-size: 1.2em;
+}
+
+.azureProfile:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .profileName {
   margin-right: 2em;
+  padding-top: 2px;
+  padding: 1px;
+  font-size: 1.2em;
 }
 
 .button {
@@ -52,4 +88,15 @@
 
 .button:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+@media (min-width: 830px) {
+  .azureProfile {
+    right: 7%;
+  }
+}
+
+.header {
+  padding: 0 6vh;
+  padding-top: 2vh;
 }
