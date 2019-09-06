@@ -9,8 +9,9 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 .
 //{[{
 ├── services/ - Moleculer services that provides API routes and serves front-end with data
-│ └── api.service.js - HTTP Gateway Service
-│ ├── pages.service.js - Serves the actual content
+│ └── api.service.js - HTTP gateway service
+│ ├── pages.service.js - Service that serves the data
+│ ├── pages.actions.js - Contains the actual handlers for the API calls
 //}]}
 └── README.md
 ```

@@ -12,8 +12,9 @@ Replace the default images stored in /src/images.
 
 .
 ├── services/ - Moleculer services that provides API routes and serves front-end with data
-│ └── api.service.js - HTTP Gateway Service
-│ ├── pages.service.js - Serves the actual content
+│ └── api.service.js - HTTP gateway service
+│ ├── pages.service.js - Service that serves the data
+│ ├── pages.actions.js - Contains the actual handlers for the API calls
 //{[{
-│ ├── sampleData.js - Contains all sample text data for generate pages
+│ ├── sampleData.js - Contains all sample text data required to generate pages
 //}]}
