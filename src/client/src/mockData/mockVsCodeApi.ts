@@ -192,8 +192,6 @@ const mockVsCodeApi = () => ({
                     summary: "JavaScript framework",
                     author: "Various",
                     order: "1",
-                    icon:
-                      "https://raw.githubusercontent.com/moleculerjs/branding/master/logo/logo-nocircle.svg",
                     licenses:
                       "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)",
                     platforms: ["Web"],
