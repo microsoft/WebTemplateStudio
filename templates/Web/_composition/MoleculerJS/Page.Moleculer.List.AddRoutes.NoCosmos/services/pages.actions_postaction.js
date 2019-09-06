@@ -1,5 +1,6 @@
 //{[{
 const sampleData = require("../data/sampleData");
+const { MoleculerError } = require("moleculer").Errors;
 //}]}
 
 const SERVICE_ACTIONS = {};
@@ -43,7 +44,6 @@ SERVICE_ACTIONS.actions.delete = {
       sampleData.listTextAssets.splice(index, 1);
       return { _id: Number(_id), text: "This commented was deleted" };
     } else {
-      //res.status(404).send("Could not find item with id:" + _id);
       return new MoleculerError(`Could not find item with id: ${_id}`, 404);
     }
   }
