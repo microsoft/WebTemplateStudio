@@ -1,7 +1,7 @@
-﻿{
+{
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "Page.Moleculer.List.AddRoutes.NoCosmos",
+  "name": "Page.Moleculer.List.RequireSampleData.NoCosmos",
   "tags": {
     "language": "Any",
     "type": "item",
@@ -9,7 +9,7 @@
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.compositionFilter": "$backendframework == Moleculer & groupIdentity == wts.Page.List & $feature != wts.Feature.Azure.Cosmos.Mongo & $feature != wts.Feature.Azure.Cosmos.SQL",
-    "wts.compositionOrder": "1"
+    "wts.compositionOrder": "0"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

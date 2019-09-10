@@ -1,7 +1,3 @@
-//{[{
-const sampleData = require("../data/sampleData");
-//}]}
-
 const SERVICE_ACTIONS = {};
 SERVICE_ACTIONS.actions = {};
 

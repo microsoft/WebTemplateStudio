@@ -1,5 +1,5 @@
-//{[{
 const sampleData = require("../data/sampleData");
+//{[{
 const { MoleculerError } = require("moleculer").Errors;
 //}]}
 
