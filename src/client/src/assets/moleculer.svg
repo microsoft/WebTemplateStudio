@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" alt="Moleculer icon" aria-hidden="true">
 <style type="text/css">
 	.st1{fill:#FFFFFF;}
 	.st2{fill:#3CAFCE;}
 </style>
+<title>Moleculer Logo</title>
 <g id="Layer_1">
 	<g id="XMLID_2_">
 		<circle id="XMLID_3_" class="st2" cx="294.9" cy="112.3" r="39"/>
