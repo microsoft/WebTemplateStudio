@@ -35,6 +35,7 @@ interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => void;
   openAzureFunctionsModal: () => any;
   openAppServiceModal: () => any;
+  openAzureLoginModal: (serviceInternalName: string) => any;
 }
 
 interface IAzureLoginProps {
@@ -61,7 +62,7 @@ const messages = defineMessages({
   },
   addResource: {
     id: "azureSubscriptions.addResource",
-    defaultMessage: "Add Resource"
+    defaultMessage: "Add to my project"
   },
   azureFunctionsLongDesc: {
     id: "azureSubscriptions.azureFunctionsLongDesc",
@@ -97,7 +98,7 @@ const messages = defineMessages({
   },
   storageTitle: {
     id: "storageServices.title",
-    defaultMessage: "Create and connect to a database in the cloud"
+    defaultMessage: "Store your data in the cloud"
   },
   hostingOneServiceWarning: {
     id: "hostingServices.oneServiceWarning",
@@ -163,11 +164,10 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     isLoggedIn: boolean,
     setDetailPage: any,
     title: any,
-    isPreview: boolean,
-    subtitle?: FormattedMessage.MessageDescriptor
+    isPreview: boolean
   ) {
     const { formatMessage } = this.props.intl;
-    const createdHostingServiceInternalName = this.getCreatedHostingService();
+    const { openAzureLoginModal } = this.props;
 
     return (
       <div
@@ -180,29 +180,11 @@ class AzureSubscriptions extends React.Component<Props, IState> {
           <div className={styles.categoryDescriptor}>
             {formatMessage(title)}
           </div>
-          {subtitle && (
-            <div className={styles.subtitle}>{formatMessage(subtitle)}</div>
-          )}
           <div className={styles.servicesCategoryContainer}>
             {azureServiceOptions.map(option => {
               // show cards with preview flag only if wizard is also in preview
               const shouldShowCard = isPreview || !option.isPreview;
               if (shouldShowCard && option.type === type) {
-                let isCardDisabled: boolean = !isLoggedIn;
-
-                switch (option.type) {
-                  case servicesEnum.HOSTING:
-                    // if a hosting service is already created, any other hosting services card should be disabled
-                    if (createdHostingServiceInternalName) {
-                      isCardDisabled =
-                        option.internalName !==
-                        createdHostingServiceInternalName;
-                    }
-                    break;
-                  default:
-                    break;
-                }
-
                 return (
                   <div
                     key={JSON.stringify(option.title)}
@@ -215,10 +197,11 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                       buttonText={this.addOrEditResourceText(
                         option.internalName
                       )}
-                      handleButtonClick={this.getServicesModalOpener(
-                        option.internalName
-                      )}
-                      disabled={isCardDisabled}
+                      handleButtonClick={
+                        isLoggedIn
+                          ? this.getServicesModalOpener(option.internalName)
+                          : () => openAzureLoginModal(option.internalName)
+                      }
                       handleDetailsClick={setDetailPage}
                     />
                   </div>
@@ -248,14 +231,9 @@ class AzureSubscriptions extends React.Component<Props, IState> {
       <div className={styles.container}>
         {uniqueServiceTypes.map((serviceType: any) => {
           let categoryTitle;
-          let subtitle;
           switch (serviceType) {
             case servicesEnum.HOSTING:
               categoryTitle = messages.hostingTitle;
-              subtitle =
-                numHostingServiceCards > 1
-                  ? messages.hostingOneServiceWarning
-                  : undefined;
               break;
             case servicesEnum.DATABASE:
               categoryTitle = messages.storageTitle;
@@ -266,8 +244,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
             isLoggedIn,
             setDetailPage,
             categoryTitle,
-            isPreview,
-            subtitle
+            isPreview
           );
         })}
       </div>
@@ -307,6 +284,9 @@ const mapDispatchToProps = (
   },
   openAppServiceModal: () => {
     dispatch(ModalActions.openAppServiceModalAction());
+  },
+  openAzureLoginModal: (serviceInternalName: string) => {
+    dispatch(ModalActions.openAzureLoginModalAction(serviceInternalName));
   }
 });
 

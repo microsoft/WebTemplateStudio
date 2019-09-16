@@ -84,6 +84,7 @@ import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getB
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import frontendFramework from "./reducers/wizardSelectionReducers/selectFrontendFrameworkReducer";
+import AzureLoginModal from "./containers/AzureLoginModal";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -315,6 +316,7 @@ class App extends React.Component<Props> {
         <TopNavBar />
 
         <div className={appStyles.container}>
+          <AzureLoginModal />
           <CosmosResourceModal />
           <AzureFunctionsModal />
           <PostGenerationModal />
@@ -325,6 +327,8 @@ class App extends React.Component<Props> {
 
           <main
             className={classnames(appStyles.centerView, {
+              [appStyles.centerViewNewProjectPage]:
+                pathname === ROUTES.NEW_PROJECT,
               [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS,
               [appStyles.centerViewAzurePage]: pathname === ROUTES.AZURE_LOGIN
             })}

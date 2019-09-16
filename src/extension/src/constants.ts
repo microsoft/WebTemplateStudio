@@ -120,6 +120,13 @@ export const CONSTANTS = {
         name
       );
     },
+    PATH_WITH_EMOJIS: (path: string) => {
+      return localize(
+        "error.pathWithEmojis",
+        "{0} is invalid. Project Path cannot contain emojis",
+        path
+      );
+    },
     PROJECT_PATH_EXISTS: (path: string, name: string) => {
       return localize(
         "error.projectPathExists",

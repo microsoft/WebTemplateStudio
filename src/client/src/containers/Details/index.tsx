@@ -26,6 +26,7 @@ import {
   InjectedIntl,
   FormattedMessage
 } from "react-intl";
+import { format } from "path";
 
 interface IDispatchProps {
   openRedirectModal: (license: IRedirectModalData | undefined) => any;
@@ -101,8 +102,17 @@ const Details = ({
   };
   const renderFormattedData = (
     info: string | FormattedMessage.MessageDescriptor | undefined,
-    isMarkdown: boolean
+    isMarkdown: boolean,
+    isAuthorOrVersion?: boolean
   ) => {
+    if (isAuthorOrVersion) {
+      return (
+        <ReactMarkdown
+          source={info as string}
+          renderers={{ link: LinkRenderer, paragraph: ParagraphRenderer }}
+        />
+      );
+    }
     if (formatteDetailInfo) {
       if (isMarkdown) {
         return (
@@ -169,16 +179,15 @@ const Details = ({
                       defaultMessage="Author:"
                     />
                   </div>
-                  <div className={grid.col8}>
-                    {<ReactMarkdown source={detailInfo.author} /> ||
-                      intl!.formatMessage(messages.none)}
-                  </div>
+                  {(detailInfo.author &&
+                    renderFormattedData(detailInfo.author, false, true)) ||
+                    intl!.formatMessage(messages.none)}
                 </div>
               )}
             </div>
             <div>
               {detailInfo.licenses && (
-                <div className={classnames(styles.metaData, grid.row)}>
+                <div className={classnames(styles.metaData)}>
                   <div
                     className={classnames(
                       styles.licenseCategory,
@@ -239,9 +248,7 @@ const Details = ({
                       defaultMessage="Version:"
                     />
                   </div>
-                  <div className={grid.col8}>
-                    <ReactMarkdown source={detailInfo.version} />
-                  </div>
+                  {renderFormattedData(detailInfo.version, true, true)}
                 </div>
               )}
             </div>

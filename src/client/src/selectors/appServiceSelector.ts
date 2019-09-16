@@ -9,7 +9,6 @@ interface ISelectedDropdowns {
   resourceGroup?: IDropDownOptionType;
   siteName?: IDropDownOptionType;
   internalName?: IDropDownOptionType;
-  chooseExistingRadioButtonSelected?: boolean;
 }
 
 export interface ISelectionInformation {

@@ -11,6 +11,11 @@
   border: 0.5px solid var(--vscode-contrastActiveBorder);
 }
 
+.container:focus:not([data-focus-visible-added]) {
+  outline: none;
+  border: none;
+}
+
 .selected,
 .button {
   font-size: 16px;
@@ -24,6 +29,11 @@
 .selected:focus {
   border: none;
   outline: 3px solid var(--vscode-contrastActiveBorder);
+}
+
+.selected:focus:not([data-focus-visible-added]) {
+  border: none;
+  outline: 3px solid var(--vscode-editor-foreground);
 }
 
 .cardCount,

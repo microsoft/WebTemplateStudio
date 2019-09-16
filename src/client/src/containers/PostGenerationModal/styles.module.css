@@ -1,6 +1,5 @@
 .title {
-  font-size: 21px;
-  font-family: "Segoe UI";
+  font-size: 2.5em;
   font-weight: lighter;
   line-height: 25px;
   color: var(--vscode-editor-foreground);
@@ -80,7 +79,7 @@ h1 {
 }
 
 .spinner path {
-  stroke: #ffffff;
+  stroke: var(--vscode-editor-foreground);
 }
 
 @keyframes rotate {
