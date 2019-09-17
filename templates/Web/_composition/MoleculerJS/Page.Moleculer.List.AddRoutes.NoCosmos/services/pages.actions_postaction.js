@@ -8,7 +8,7 @@ SERVICE_ACTIONS.actions = {};
 
 //{[{
 // GET list
-SERVICE_ACTIONS.actions.get = {
+SERVICE_ACTIONS.actions.listGet = {
   rest: "GET /list",
   handler(ctx) {
     return sampleData.listTextAssets;
@@ -16,7 +16,7 @@ SERVICE_ACTIONS.actions.get = {
 };
 
 // POST new entry
-SERVICE_ACTIONS.actions.post = {
+SERVICE_ACTIONS.actions.listPost = {
   rest: "POST /list",
   handler(ctx) {
     let listItem = {
@@ -32,7 +32,7 @@ SERVICE_ACTIONS.actions.post = {
 };
 
 // DELETE an entry
-SERVICE_ACTIONS.actions.delete = {
+SERVICE_ACTIONS.actions.listDelete = {
   rest: "DELETE /list/:_id",
   handler(ctx) {
     const { _id } = ctx.params;
