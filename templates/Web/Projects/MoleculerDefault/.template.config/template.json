@@ -1,8 +1,6 @@
 ﻿{
   "author": "André Mazayev",
-  "classifications": [
-    "Universal"
-  ],
+  "classifications": ["Universal"],
   "name": "MoleculerDefault",
   "groupIdentity": "wts.Proj.MoleculerDefault",
   "identity": "wts.Proj.MoleculerDefault",
