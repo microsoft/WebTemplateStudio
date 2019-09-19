@@ -1,7 +1,10 @@
 {
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
   "name": "Feature.Node.Azure.Cosmos.SQL",
+  "shortName": "Feature.Node.Azure.Cosmos.SQL",
+  "identity": "Feature.Node.Azure.Cosmos.SQL",
   "tags": {
     "language": "Any",
     "type": "item",

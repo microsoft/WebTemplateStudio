@@ -1,7 +1,10 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
   "name": "Page.Node.Cosmos.Mongo.AddMerging",
+  "shortName": "Page.Node.Cosmos.Mongo.AddMerging",
+  "identity": "Page.Node.Cosmos.Mongo.AddMerging",
   "tags": {
     "language": "Any",
     "type": "item",

@@ -1,7 +1,10 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
   "name": "Page.Moleculer.Grid.AddRoutes",
+  "shortName": "Page.Moleculer.Grid.AddRoutes",
+  "identity": "Page.Moleculer.Grid.AddRoutes",
   "tags": {
     "language": "Any",
     "type": "item",

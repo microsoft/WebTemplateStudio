@@ -1,9 +1,12 @@
 ﻿{
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
     "name": "Page.Vue.AddRoute",
+    "shortName": "Page.Vue.AddRoute",
+    "identity": "Page.Vue.AddRoute",
   "tags": {
     "language": "Any",
     "type": "item",

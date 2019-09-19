@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "André Mazayev",
   "classifications": ["Universal"],
   "name": "MoleculerDefault",
+  "shortName": "MoleculerDefault",
   "groupIdentity": "wts.Proj.MoleculerDefault",
   "identity": "wts.Proj.MoleculerDefault",
   "description": "",

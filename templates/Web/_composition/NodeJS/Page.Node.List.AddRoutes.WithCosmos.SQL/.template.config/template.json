@@ -1,7 +1,10 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
   "name": "Page.Node.List.AddRoutes.WithCosmos.SQL",
+  "shortName": "Page.Node.List.AddRoutes.WithCosmos.SQL",
+  "identity": "Page.Node.List.AddRoutes.WithCosmos.SQL",
   "tags": {
     "language": "Any",
     "type": "item",

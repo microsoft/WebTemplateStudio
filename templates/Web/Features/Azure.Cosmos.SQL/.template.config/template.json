@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "CosmosDB",
+  "shortName": "CosmosDB",
   "groupIdentity": "wts.Feature.Azure.Cosmos",
   "identity": "wts.Feature.Azure.Cosmos.SQL",
   "description": "Realtime distributed database.",

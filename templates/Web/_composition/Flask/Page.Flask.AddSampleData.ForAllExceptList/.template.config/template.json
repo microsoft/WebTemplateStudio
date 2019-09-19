@@ -1,9 +1,12 @@
 {
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
-  "name": "Page.Flask.AddSampleData.ForAllExceptList",
+    "name": "Page.Flask.AddSampleData.ForAllExceptList",
+    "shortName": "Page.Flask.AddSampleData.ForAllExceptList",
+    "identity": "Page.Flask.AddSampleData.ForAllExceptList",
   "tags": {
     "language": "Any",
     "type": "item",

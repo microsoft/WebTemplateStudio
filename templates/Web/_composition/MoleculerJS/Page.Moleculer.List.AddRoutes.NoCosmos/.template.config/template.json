@@ -1,7 +1,10 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
   "name": "Page.Moleculer.List.AddRoutes.NoCosmos",
+  "shortName": "Page.Moleculer.List.AddRoutes.NoCosmos",
+  "identity": "Page.Moleculer.List.AddRoutes.NoCosmos",
   "tags": {
     "language": "Any",
     "type": "item",

@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "Grid",
+  "shortName": "Grid",
   "groupIdentity": "wts.Page.Grid",
   "identity": "wts.Page.Angular.Grid",
   "description": "Simple image and text components which are organized into a grid.",

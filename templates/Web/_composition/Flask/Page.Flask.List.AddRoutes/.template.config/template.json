@@ -1,9 +1,12 @@
 {
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
     "name": "Page.Flask.List.AddRoutes",
+    "shortName": "Page.Flask.List.AddRoutes",
+    "identity": "Page.Flask.List.AddRoutes",
   "tags": {
     "language": "Any",
     "type": "item",

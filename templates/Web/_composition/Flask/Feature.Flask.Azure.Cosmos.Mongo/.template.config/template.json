@@ -1,7 +1,10 @@
 {
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": ["Universal"],
     "name": "Feature.Flask.Azure.Cosmos.Mongo",
+    "shortName": "Feature.Flask.Azure.Cosmos.Mongo",
+    "identity": "Feature.Flask.Azure.Cosmos.Mongo",
     "tags": {
       "language": "Any",
       "type": "item",

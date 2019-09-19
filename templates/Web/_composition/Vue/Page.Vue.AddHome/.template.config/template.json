@@ -1,9 +1,12 @@
 ﻿{
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
     "name": "Page.Vue.AddHome",
+    "shortName": "Page.Vue.AddHome",
+    "identity": "Page.Vue.AddHome",
   "tags": {
     "language": "Any",
     "type": "item",

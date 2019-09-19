@@ -1,7 +1,10 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
   "name": "Page.React.AddConstantsList",
+  "shortName": "Page.React.AddConstantsList",
+  "identity": "Page.React.AddConstantsList",
   "tags": {
     "language": "Any",
     "type": "item",

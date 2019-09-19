@@ -1,7 +1,10 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
   "name": "Page.React.AddConstantsMasterDetail",
+  "shortName": "Page.React.AddConstantsMasterDetail",
+  "identity": "Page.React.AddConstantsMasterDetail",
   "tags": {
     "language": "Any",
     "type": "item",

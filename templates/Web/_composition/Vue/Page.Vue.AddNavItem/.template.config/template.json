@@ -1,9 +1,12 @@
 ﻿{
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
     "name": "Page.Vue.AddNavItem",
+    "shortName": "Page.Vue.AddNavItem",
+    "identity": "Page.Vue.AddNavItem",
   "tags": {
     "language": "Any",
     "type": "item",

@@ -1,7 +1,10 @@
 {
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": ["Universal"],
     "name": "Page.Flask.Cosmos.SQL.AddMerging",
+    "shortName": "Page.Flask.Cosmos.SQL.AddMerging",
+    "identity": "Page.Flask.Cosmos.SQL.AddMerging",
     "tags": {
       "language": "Any",
       "type": "item",

@@ -1,7 +1,10 @@
 {
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": ["Universal"],
     "name": "Page.Flask.List.AddRoutes.WithCosmos.Mongo",
+    "shortName": "Page.Flask.List.AddRoutes.WithCosmos.Mongo",
+    "identity": "Page.Flask.List.AddRoutes.WithCosmos.Mongo",
     "tags": {
       "language": "Any",
       "type": "item",

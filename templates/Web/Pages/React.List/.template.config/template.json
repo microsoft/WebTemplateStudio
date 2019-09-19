@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "List",
+  "shortName": "List",
   "groupIdentity": "wts.Page.List",
   "identity": "wts.Page.React.List",
   "description": "Add and remove text from an adaptive list.",

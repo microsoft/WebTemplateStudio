@@ -1,9 +1,12 @@
 ﻿{
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
     "name": "Page.Vue.AddConstantsGrid",
+    "shortName": "Page.Vue.AddConstantsGrid",
+    "identity": "Page.Vue.AddConstantsGrid",
   "tags": {
     "language": "Any",
     "type": "item",

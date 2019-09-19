@@ -1,7 +1,10 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
   "name": "Page.Moleculer.MasterDetail.AddRoutes",
+  "shortName": "Page.Moleculer.MasterDetail.AddRoutes",
+  "identity": "Page.Moleculer.MasterDetail.AddRoutes",
   "tags": {
     "language": "Any",
     "type": "item",

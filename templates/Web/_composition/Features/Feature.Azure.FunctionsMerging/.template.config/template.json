@@ -1,7 +1,10 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
   "name": "Feature.Azure.FunctionsMerging",
+  "shortName": "Feature.Azure.FunctionsMerging",
+  "identity": "Feature.Azure.FunctionsMerging",
   "tags": {
     "language": "Any",
     "type": "item",

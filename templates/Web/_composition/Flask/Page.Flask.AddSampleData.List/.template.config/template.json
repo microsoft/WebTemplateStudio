@@ -1,9 +1,12 @@
 {
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
     "name": "Page.Flask.AddSampleData.List",
+    "shortName": "Page.Flask.AddSampleData.List",
+    "identity": "Page.Flask.AddSampleData.List",
   "tags": {
     "language": "Any",
     "type": "item",

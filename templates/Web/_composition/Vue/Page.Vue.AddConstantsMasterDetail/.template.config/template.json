@@ -1,9 +1,12 @@
 ﻿{
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
     "name": "Page.Vue.AddConstantsMasterDetail",
+    "shortName": "Page.Vue.AddConstantsMasterDetail",
+    "identity": "Page.Vue.AddConstantsMasterDetail",
   "tags": {
     "language": "Any",
     "type": "item",
