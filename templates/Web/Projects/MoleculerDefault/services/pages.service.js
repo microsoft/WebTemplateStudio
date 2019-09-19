@@ -26,19 +26,19 @@ module.exports = {
   dependencies: [],
 
   /**
-   * Actions
+   * Service Actions
    * More info: https://moleculer.services/docs/0.13/actions.html
    */
   actions: {},
 
   /**
-   * Events
+   * Service Events
    * More info: https://moleculer.services/docs/0.13/events.html
    */
   events: {},
 
   /**
-   * Methods
+   * Service Methods
    * More info: https://moleculer.services/docs/0.13/services.html#Methods
    */
   methods: {},
@@ -53,11 +53,11 @@ module.exports = {
    * Service started lifecycle event handler
    * More info: https://moleculer.services/docs/0.13/lifecycle.html#started-event-handler
    */
-  started() {},
+  async started() {},
 
   /**
    * Service stopped lifecycle event handler
    * More info: https://moleculer.services/docs/0.13/lifecycle.html#stopped-event-handler
    */
-  stopped() {}
+  async stopped() {}
 };

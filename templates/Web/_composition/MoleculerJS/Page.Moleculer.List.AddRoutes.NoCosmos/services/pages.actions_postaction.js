@@ -18,6 +18,14 @@ SERVICE_ACTIONS.actions.listGet = {
 // POST new entry
 SERVICE_ACTIONS.actions.listPost = {
   rest: "POST /list",
+  /**
+   * Param validation.
+   * More info: https://moleculer.services/docs/0.13/validating.html
+   */
+  params: {
+    text: { type: "string" }, // required field
+    $$strict: true // no additional properties allowed
+  },
   handler(ctx) {
     let listItem = {
       text: ctx.params.text,
@@ -34,6 +42,14 @@ SERVICE_ACTIONS.actions.listPost = {
 // DELETE an entry
 SERVICE_ACTIONS.actions.listDelete = {
   rest: "DELETE /list/:_id",
+  /**
+   * Param validation.
+   * More info: https://moleculer.services/docs/0.13/validating.html
+   */
+  params: {
+    _id: { type: "string", integer: true, positive: true, convert: true }, // required filed
+    $$strict: true // no additional properties allowed
+  },
   handler(ctx) {
     const { _id } = ctx.params;
     const index = sampleData.listTextAssets.findIndex(
