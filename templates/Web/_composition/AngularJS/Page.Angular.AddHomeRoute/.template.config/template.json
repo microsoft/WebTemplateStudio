@@ -32,10 +32,6 @@
       "wts.homePageName.casing.kebab": {
         "type": "parameter",
         "replaces": "Param_HomePageName_Kebab"
-      },
-      "wts.itemNamespace": {
-        "type": "parameter",
-        "replaces": "Param_ItemNamespace"
       }
     }
   }
