@@ -442,5 +442,6 @@ export enum OS {
 
 export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
   Node: "node|10.14",
-  Flask: "python|3.7"
+  Flask: "python|3.7",
+  Moleculer: "node|10.14"
 };
