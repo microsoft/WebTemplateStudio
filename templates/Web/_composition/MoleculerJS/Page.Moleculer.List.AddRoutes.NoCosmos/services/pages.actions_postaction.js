@@ -51,17 +51,17 @@ SERVICE_ACTIONS.actions.listDelete = {
     $$strict: true // no additional properties allowed
   },
   handler(ctx) {
-    const { _id } = ctx.params;
+    const _id = Number(ctx.params._id);
     const index = sampleData.listTextAssets.findIndex(
-      listItem => listItem._id === Number(_id)
+      listItem => listItem._id === _id
     );
 
-    if (index > -1) {
-      sampleData.listTextAssets.splice(index, 1);
-      return { _id: Number(_id), text: "This commented was deleted" };
-    } else {
-      return new MoleculerError(`Could not find item with id: ${_id}`, 404);
+    if (index === -1) {
+      throw new MoleculerError(`Could not find item with id: ${_id}`, 404);
     }
+
+    sampleData.listTextAssets.splice(index, 1);
+    return { _id, text: "This commented was deleted" };
   }
 };
 //}]}
