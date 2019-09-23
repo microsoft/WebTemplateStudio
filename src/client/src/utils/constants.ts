@@ -120,6 +120,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   COSMOS_DB_SQL: "wts.Feature.Azure.Cosmos.SQL",
   FULL_STACK_APP: "FullStackWebApp",
   NODE: "Node",
+  MOLECULER: "Moleculer",
   FLASK: "Flask",
   PYTHON: "Python",
   REACT: "React",
