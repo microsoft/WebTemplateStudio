@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "AddPackageJsonFullStackDefault",
+  "shortName": "AddPackageJsonFullStackDefault",
   "groupIdentity": "wts.Proj.AddPackageJsonFullStackDefault",
   "identity": "wts.Proj.AddPackageJsonFullStackDefault",
   "description": "",

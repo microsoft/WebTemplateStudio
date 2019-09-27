@@ -1,9 +1,12 @@
 {
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
     "name": "Page.Flask.List.AddRoutes",
+    "shortName": "Page.Flask.List.AddRoutes",
+    "identity": "Page.Flask.List.AddRoutes",
   "tags": {
     "language": "Any",
     "type": "item",
@@ -20,10 +23,6 @@
       "wts.rootNamespace": {
         "type": "parameter",
         "replaces": "Param_RootNamespace"
-      },
-      "wts.itemNamespace": {
-        "type": "parameter",
-        "replaces": "Param_ItemNamespace"
       }
     }
   }

@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "VueDefault",
+  "shortName": "VueDefault",
   "groupIdentity": "wts.Proj.VueDefault",
   "identity": "wts.Proj.VueDefault",
   "description": "",
