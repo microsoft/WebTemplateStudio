@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "List",
+  "shortName": "List",
   "groupIdentity": "wts.Page.List",
   "identity": "wts.Page.Angular.List",
   "description": "Add and remove text from an adaptive list.",
@@ -28,10 +30,6 @@
       "type": "parameter",
       "replaces": "Param_RootNamespace"
     },
-    "wts.itemNamespace": {
-      "type": "parameter",
-      "replaces": "Param_ItemNamespace"
-    },
     "wts.sourceName.casing.kebab": {
       "type": "parameter",
       "replaces": "Param_SourceName_Kebab"
@@ -39,14 +37,6 @@
     "wts.sourceName.casing.pascal": {
       "type": "parameter",
       "replaces": "Param_SourceName_Pascal"
-    },
-    "baseclass": {
-      "type": "parameter",
-      "replaces": "System.ComponentModel.INotifyPropertyChanged"
-    },
-    "setter": {
-      "type": "parameter",
-      "replaces": "Param_Setter"
     }
   }
 }

@@ -1,7 +1,9 @@
 {
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "FlaskDefault",
+  "shortName": "FlaskDefault",
   "groupIdentity": "wts.Proj.FlaskDefault",
   "identity": "wts.Proj.FlaskDefault",
   "description": "",
