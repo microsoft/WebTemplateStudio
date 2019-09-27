@@ -156,7 +156,10 @@ export const CONSTANTS = {
         min,
         max
       );
-    }
+    },
+    CANNOT_START_GENERATION_ENGINE: localize(
+      "error.cannotStartGenerationEngine",
+      "Cannot start generation engine.")
   },
   INFO: {
     COSMOS_ACCOUNT_DEPLOYED: (accountName: string) => {

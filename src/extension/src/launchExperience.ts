@@ -15,7 +15,12 @@ export class LaunchExperience {
   public async launchApiSyncModule(
     context: vscode.ExtensionContext
   ): Promise<ISyncReturnType> {
-    await CoreTemplateStudio.GetInstance(context);
+
+    await CoreTemplateStudio.GetInstance(context)
+      .catch((error: Error) => {
+        error.message = CONSTANTS.ERRORS.CANNOT_START_GENERATION_ENGINE.concat(" ", error.message);
+        throw error;
+    });
 
     LaunchExperience._progressObject.report({
       message: CONSTANTS.INFO.STARTING_GENERATION_SERVER

@@ -39,7 +39,7 @@ VS Code Version: ${vscode.version}`;
 <summary>Call Stack</summary>
 
 \`\`\`
-${parsedError.stack}
+${parsedError.stack.substring(0, 5000)}
 \`\`\`
 
 </details>`);

@@ -26,6 +26,7 @@
   "error.cosmosAccountNotAvailable": "Account name \"{0}\" is not available.",
   "error.cosmosValidCharacters": "The name can only contain lowercase letters, numbers, and the '-' character.",
   "error.nameMinMax": "The name must be between {0} and {1} characters.",
+  "error.cannotStartGenerationEngine": "Cannot start generation engine.",
   "info.cosmosAccountDeployed": "{0} has been deployed!",
   "info.functionAppDeployed": "Function App {0} has been deployed and is ready to use!",
   "info.fileReplacedMessage": "Replaced file at: ",
