@@ -14,15 +14,14 @@ module.exports = {
   settings: {
     rest: "/"
   },
-
+//{[{
+  
   /**
    * Service Mixin
    * More info: https://moleculer.services/docs/0.13/services.html#Mixins
    */
-  //{[{
   mixins: [SERVICE_ACTIONS, DBMixin()],
-  //}]}
-
+//}]}
   /**
    * Service dependencies
    * More info: https://moleculer.services/docs/0.13/services.html#Dependencies

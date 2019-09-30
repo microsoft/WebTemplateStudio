@@ -14,12 +14,6 @@ module.exports = {
   },
 
   /**
-   * Service Mixin
-   * More info: https://moleculer.services/docs/0.13/services.html#Mixins
-   */
-  mixins: [SERVICE_ACTIONS],
-
-  /**
    * Service dependencies
    * More info: https://moleculer.services/docs/0.13/services.html#Dependencies
    */
