@@ -10,7 +10,7 @@
   /**
    * Service Mixin
    * More info: https://moleculer.services/docs/0.13/services.html#Mixins
-   * This will extend `pages` service with action handlers.
+   * This will extend (current) `pages` service with action handlers.
    */
   mixins: [SERVICE_ACTIONS],
 //}]}

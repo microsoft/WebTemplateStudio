@@ -19,7 +19,7 @@ module.exports = {
   /**
    * Service Mixin
    * More info: https://moleculer.services/docs/0.13/services.html#Mixins
-   * This will extend `pages` service with action handlers and DB methods
+   * This will extend (current) `pages` service with action handlers and DB methods
    */
   mixins: [SERVICE_ACTIONS, DBMixin()],
 //}]}
