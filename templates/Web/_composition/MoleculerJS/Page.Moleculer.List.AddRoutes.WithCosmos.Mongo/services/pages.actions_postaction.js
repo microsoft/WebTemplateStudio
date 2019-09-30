@@ -6,6 +6,7 @@ SERVICE_ACTIONS.actions = {};
 SERVICE_ACTIONS.actions.listGet = {
   rest: "GET /list",
   handler(ctx) {
+    // Call find method that was loaded with `db.mixin.js`
     return this._find(ctx, ctx.params);
   }
 };
@@ -22,6 +23,7 @@ SERVICE_ACTIONS.actions.listPost = {
     $$strict: true // no additional properties allowed
   },
   handler(ctx) {
+    // Call create method that was loaded with `db.mixin.js`
     return this._create(ctx, ctx.params);
   }
 };
@@ -38,6 +40,7 @@ SERVICE_ACTIONS.actions.listDelete = {
     $$strict: true // no additional properties allowed
   },
   handler(ctx) {
+    // Call remove method that was loaded with `db.mixin.js`
     return this._remove(ctx, { id: ctx.params._id });
   }
 };
