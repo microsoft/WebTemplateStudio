@@ -1,0 +1,4 @@
+"start": "concurrently \"yarn start-frontend || npm run start-frontend\" \"yarn start-backend || npm run start-backend\"",
+//{[{
+"start-backend": "moleculer-runner --repl --hot services",
+//}]}
