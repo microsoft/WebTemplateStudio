@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "AngularDefault",
+  "shortName": "AngularDefault",
   "groupIdentity": "wts.Proj.AngularDefault",
   "identity": "wts.Proj.AngularDefault",
   "description": "",

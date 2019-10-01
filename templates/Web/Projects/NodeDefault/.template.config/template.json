@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "NodeDefault",
+  "shortName": "NodeDefault",
   "groupIdentity": "wts.Proj.NodeDefault",
   "identity": "wts.Proj.NodeDefault",
   "description": "",

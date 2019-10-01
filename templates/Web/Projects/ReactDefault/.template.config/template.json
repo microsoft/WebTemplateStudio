@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "ReactDefault",
+  "shortName": "ReactDefault",
   "groupIdentity": "wts.Proj.ReactDefault",
   "identity": "wts.Proj.ReactDefault",
   "description": "",

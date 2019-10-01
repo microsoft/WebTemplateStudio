@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "Blank",
+  "shortName": "Blank",
   "groupIdentity": "wts.Page.Blank",
   "identity": "wts.Page.React.Blank",
   "description": "A blank page for you to build your web application from scratch.",
@@ -26,18 +28,6 @@
     "wts.rootNamespace": {
       "type": "parameter",
       "replaces": "Param_RootNamespace"
-    },
-    "wts.itemNamespace": {
-      "type": "parameter",
-      "replaces": "Param_ItemNamespace"
-    },
-    "baseclass": {
-      "type": "parameter",
-      "replaces": "System.ComponentModel.INotifyPropertyChanged"
-    },
-    "setter": {
-      "type": "parameter",
-      "replaces": "Param_Setter"
     }
   }
 }
