@@ -18,11 +18,11 @@ Head over to [Visual Studio Marketplace’s Web Template Studio page](https://ma
    
 ![VSIX Download](./resources/vsix-download.png)
 
-1. Open VSCode
-2. Open the extensions menu from VSCode sidebar
-3. Click on the ellipsis in the upper right hand corner
-4. Choose _Install from VSIX_
-5. Select the `.vsix` you downloaded earlier. Web Template Studio is now ready to use
+3. Open VSCode
+4. Open the extensions menu from VSCode sidebar
+5. Click on the ellipsis in the upper right hand corner
+6. Choose _Install from VSIX_
+7. Select the `.vsix` you downloaded earlier. Web Template Studio is now ready to use
 
 ![VSIX Install Instructions](./resources/vsix-install-instructions.png)
 
