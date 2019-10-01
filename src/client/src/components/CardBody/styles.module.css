@@ -1,13 +1,16 @@
 .body {
   font-size: 15px;
   line-height: 1.75em;
-  margin-bottom: 1.5em;
 }
 
 .formattedBody,
 
 .cardBody {
   margin-bottom: 0.5em;
+}
+
+.version {
+  margin-bottom: 5px;
 }
 
 .svg {
