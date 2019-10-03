@@ -125,14 +125,20 @@ export abstract class AzureAuth {
         subscriptionClient.subscriptions,
         subscriptionClient.subscriptions.list()
       );
-      subscriptionItems.push(
-        ...subscriptions.map(subscription => ({
-          label: subscription.displayName || "",
-          subscriptionId: subscription.subscriptionId || "",
-          session,
-          subscription
-        }))
-      );
+
+      let filteredSubscriptions = subscriptions.reduce((items, subscription) => {
+        if (subscription.subscriptionId && !(subscriptionItems.some(item => item.subscriptionId === subscription.subscriptionId))) {
+          items.push({
+            label: subscription.displayName || "",
+            subscriptionId: subscription.subscriptionId || "",
+            session,
+            subscription
+          });
+        }
+        return items;
+      }, <SubscriptionItem[]>[]); 
+
+      subscriptionItems.push(...filteredSubscriptions);
     }
     subscriptionItems.sort((a, b) => a.label.localeCompare(b.label));
     return subscriptionItems;
