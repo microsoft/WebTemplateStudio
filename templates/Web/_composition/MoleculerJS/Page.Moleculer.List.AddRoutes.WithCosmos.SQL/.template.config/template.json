@@ -1,0 +1,38 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.Moleculer.List.AddRoutes.WithCosmos.SQL",
+  "shortName": "Page.Moleculer.List.AddRoutes.WithCosmos.SQL",
+  "identity": "Page.Moleculer.List.AddRoutes.WithCosmos.SQL",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$backendframework == Moleculer & groupIdentity == wts.Page.List & $feature == wts.Feature.Azure.Cosmos.SQL"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    }
+  },
+  "postActions": [
+    {
+      "description": "Add Cosmos SQL Dependencies",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'dotenv': '^8.1.0', 'moleculer-db': '^0.8.2', 'moleculer-db-adapter-cosmos': '^0.0.1'}",
+        "key": "dependencies",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    }
+  ]
+}
