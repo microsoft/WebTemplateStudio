@@ -13,8 +13,11 @@ Head over to [Visual Studio Marketplace’s Web Template Studio page](https://ma
 
 ## Installing the latest Microsoft Web Template Studio release manually
 
-1. Get the latest release from Web Template Studio [Github releases](https://github.com/Microsoft/WebTemplateStudio/releases)
-2. Scroll down to _Assets_ and download the `.vsix` file
+1. Head over to [Visual Studio Marketplace’s Web Template Studio page](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WebTemplateStudio-dev-nightly)
+2. In the right panel, section Resources, click on "Download Extension" and download the `.vsix` file
+   
+![VSIX Download](./resources/vsix-download.png)
+
 3. Open VSCode
 4. Open the extensions menu from VSCode sidebar
 5. Click on the ellipsis in the upper right hand corner
