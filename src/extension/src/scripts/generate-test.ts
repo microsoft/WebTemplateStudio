@@ -42,7 +42,7 @@ let generateProj = (
         backendFramework: backend,
         frontendFramework: frontend,
         pages: pagesObj,
-        path: "../../../../../src/extension/src/template_test",
+        path: "../../../../../template_test",
         projectName: backend + "-" + frontend,
         projectType: projType,
         services: []

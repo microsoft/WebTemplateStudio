@@ -358,3 +358,6 @@ src/extension/src/api/darwin/CoreTemplateStudio/
 src/extension/src/corets-cli/darwin/
 src/extension/src/corets-cli/linux/
 src/extension/src/corets-cli/win32/
+
+# Template tests
+template_test/
