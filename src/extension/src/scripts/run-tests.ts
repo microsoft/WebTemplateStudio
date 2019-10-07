@@ -95,8 +95,7 @@ asyncForEach(files, async (file: string) => {
 
   kill(serverProcess.pid);
   try {
-
-    if(packageJson.scripts.test){
+    if(packageJson.scripts.test) {
       testProcess = child_process.exec(
         "yarn test",
         {
@@ -115,13 +114,13 @@ asyncForEach(files, async (file: string) => {
           console.log(`Stdout from yarn test: ${stdout}`);
         }
       );
-    }    
-    testProcess.stdout.on("data", (data: any) => {
-      console.log(data);
-      if (data.toString().indexOf("FAILED") > -1) {
-        throw new Error("Error: Test failed");
-      }
-    });
+      testProcess.stdout.on("data", (data: any) => {
+        console.log(data);
+        if (data.toString().indexOf("FAILED") > -1) {
+          throw new Error("Error: Test failed");
+        }
+      });    
+    }
   } catch (err) {
     console.log("Test errored out");
     throw err;
