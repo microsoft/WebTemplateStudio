@@ -1,6 +1,4 @@
 "use strict";
-
-const SERVICE_ACTIONS = require("./pages.actions");
 //{[{
 const DBMixin = require("../mixins/db.mixin");
 //}]}
@@ -19,9 +17,9 @@ module.exports = {
   /**
    * Service Mixin
    * More info: https://moleculer.services/docs/0.13/services.html#Mixins
-   * This will extend (current) `pages` service with action handlers and DB methods
+   * This will extend (current) `pages` service with DB methods
    */
-  mixins: [SERVICE_ACTIONS, DBMixin()],
+  mixins: [DBMixin()],
 //}]}
   /**
    * Service dependencies

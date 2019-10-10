@@ -29,9 +29,9 @@ module.exports = {
       }
     ],
 
-    // Serve assets from "public" folder
+    // Serve assets from "server/build" folder
     assets: {
-      folder: "public"
+      folder: "server/build"
     }
   }
 };

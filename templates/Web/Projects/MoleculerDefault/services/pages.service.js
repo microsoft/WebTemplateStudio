@@ -1,7 +1,5 @@
 "use strict";
 
-const SERVICE_ACTIONS = require("./pages.actions");
-
 module.exports = {
   name: "pages",
 
@@ -23,7 +21,9 @@ module.exports = {
    * Service Actions
    * More info: https://moleculer.services/docs/0.13/actions.html
    */
-  actions: {},
+  actions: {
+    // Action handlers
+  },
 
   /**
    * Service Events
