@@ -10,14 +10,14 @@ type ILoggingPayload = {
   data: string;
 };
 
-const ABSOLUTE_LOG_PATH = path.join(__dirname, "../../logs");
+export const LOG_FILE = path.join(__dirname, "../../logs", "wts.log");
 const OUTPUT_CHANNEL_DEFAULT = "Web Template Studio";
 
 log4js.configure({
   appenders: {
     webtemplatestudio: {
       type: "file",
-      filename: path.join(ABSOLUTE_LOG_PATH, "wts.log"),
+      filename: LOG_FILE,
       pattern: ".yyyy-MM-dd",
       daysToKeep: 5
     }
