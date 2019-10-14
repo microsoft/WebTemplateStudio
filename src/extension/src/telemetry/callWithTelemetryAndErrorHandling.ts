@@ -3,12 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+ import * as vscode from "vscode";
 import { MessageItem, window } from "vscode";
 import { DialogResponses, DialogMessages } from "../constants";
 import { reportAnIssue } from "./reportAnIssue";
 import { IParsedError, parseError } from "./parseError";
 import { ExtensionContext } from "vscode";
-import { Logger } from "../utils/logger";
+import { Logger, LOG_FILE } from "../utils/logger";
 
 export interface IActionContext {
   properties: TelemetryProperties;
@@ -127,10 +128,14 @@ function handleError(
 
     // don't wait
     window
-      .showErrorMessage(message, DialogResponses.reportAnIssue)
+      .showErrorMessage(message, DialogResponses.showLog, DialogResponses.reportAnIssue)
       .then((result: MessageItem | undefined) => {
         if (result === DialogResponses.reportAnIssue) {
           reportAnIssue(vscodeContext, callbackId, errorData);
+        }
+        else if (result === DialogResponses.showLog) {
+          vscode.workspace.openTextDocument(LOG_FILE)
+          .then(TextDocument => vscode.window.showTextDocument(TextDocument));
         }
       });
   }

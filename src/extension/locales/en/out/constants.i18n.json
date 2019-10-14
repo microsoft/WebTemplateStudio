@@ -1,5 +1,5 @@
 {
-  "error.tooManyFailedSyncRequests": "Could not sync to template repository",
+  "error.tooManyFailedSyncRequests": "Could not sync to template repository. Details: {0}",
   "error.invalidCommand": "Invalid command used",
   "error.invalidModule": "Invalid module called",
   "error.resourceGroupNotFound": "No resource group found with this name",
@@ -26,6 +26,7 @@
   "error.cosmosAccountNotAvailable": "Account name \"{0}\" is not available.",
   "error.cosmosValidCharacters": "The name can only contain lowercase letters, numbers, and the '-' character.",
   "error.nameMinMax": "The name must be between {0} and {1} characters.",
+  "error.cannotStartGenerationEngine": "Cannot start generation engine.",
   "info.cosmosAccountDeployed": "{0} has been deployed!",
   "info.functionAppDeployed": "Function App {0} has been deployed and is ready to use!",
   "info.fileReplacedMessage": "Replaced file at: ",
@@ -38,6 +39,7 @@
   "dialog.dontWarnAgain": "Don't warn again",
   "dialog.skipForNow": "Skip for now",
   "dialog.reportAnIssue": "Report an issue",
+  "dialog.showLog": "Show log",
   "dialog.multilineError": "An error has occured. Check output window for more details.",
   "dialog.cosmosDBConnectStringReplacePrompt": "Replace your DB connection string in the .env file with the generated CosmosDB connection string?",
   "dialog.resetPagesPrompt": "Switching Frameworks will reset pages in your queue. Are you sure you want to proceed?"

@@ -15,7 +15,12 @@ export class LaunchExperience {
   public async launchApiSyncModule(
     context: vscode.ExtensionContext
   ): Promise<ISyncReturnType> {
-    await CoreTemplateStudio.GetInstance(context);
+
+    await CoreTemplateStudio.GetInstance(context)
+      .catch((error: Error) => {
+        error.message = CONSTANTS.ERRORS.CANNOT_START_GENERATION_ENGINE.concat(" ", error.message);
+        throw error;
+    });
 
     LaunchExperience._progressObject.report({
       message: CONSTANTS.INFO.STARTING_GENERATION_SERVER
@@ -23,7 +28,8 @@ export class LaunchExperience {
 
     let syncObject: ISyncReturnType = {
       successfullySynced: false,
-      templatesVersion: ""
+      templatesVersion: "",
+      errorMessage: ""
     };
     let syncAttempts = 0;
     while (
@@ -38,7 +44,7 @@ export class LaunchExperience {
     }
     if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
       CoreTemplateStudio.DestroyInstance();
-      throw new Error(CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS);
+      throw new Error(CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS(syncObject.errorMessage));
     }
 
     return { ...syncObject };
@@ -72,12 +78,16 @@ export class LaunchExperience {
         );
         return {
           successfullySynced: true,
-          templatesVersion: syncResult.templatesVersion
+          templatesVersion: syncResult.templatesVersion,
+          errorMessage: ""
         };
       })
       .catch((error: Error) => {
         Logger.appendLog("EXTENSION", "error", error.message);
-        return { successfullySynced: false, templatesVersion: "" };
+        return { 
+          successfullySynced: false,
+          templatesVersion: "",
+          errorMessage: error.message };
       });
   }
 
