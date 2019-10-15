@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const del = require("del");
 
-const testFolder = path.join(__dirname, "..", "..", "src", "template_test");
+const testFolder = path.join(__dirname, "..", "..", "..", "..", "template_test");
 console.log(testFolder);
 let files: string[] = [];
 
@@ -45,23 +45,28 @@ asyncForEach(files, async (file: string) => {
   const currDir = path.join(testFolder, file, file);
   child_process.execSync("yarn install", {
     cwd: currDir,
-    stdio: "inherit"
+    stdio: "inherit",
+    maxBuffer : 1024 * 1024
   });
   if (file.indexOf("Flask") > -1) {
     console.log("Installing Python dependencies");
     child_process.execSync("yarn install-requirements", {
       cwd: currDir,
-      stdio: "inherit"
+      stdio: "inherit",
+      maxBuffer : 1024 * 1024
     });
   }
   let serverProcess;
   let testProcess;
+  let packageJsonFile = path.join(testFolder, file, file, 'package.json');
+  let packageJson = require(packageJsonFile);
   try {
     serverProcess = child_process.exec(
       "yarn start",
       {
         cwd: path.join(testFolder, file, file),
-        stdio: "inherit"
+        stdio: "inherit",
+        maxBuffer : 1024 * 1024
       },
       (error: any, stdout: any, stderr: any) => {
         if (error) {
@@ -90,29 +95,32 @@ asyncForEach(files, async (file: string) => {
 
   kill(serverProcess.pid);
   try {
-    testProcess = child_process.exec(
-      "yarn test",
-      {
-        cwd: path.join(testFolder, file, file),
-        stdio: "inherit"
-      },
-      (error: any, stdout: any, stderr: any) => {
-        if (error) {
-          console.error(`Error from running yarn test: ${error}`);
-          return;
+    if(packageJson.scripts.test) {
+      testProcess = child_process.exec(
+        "yarn test",
+        {
+          cwd: path.join(testFolder, file, file),
+          stdio: "inherit",
+          maxBuffer : 1024 * 1024
+        },
+        (error: any, stdout: any, stderr: any) => {
+          if (error) {
+            console.error(`Error from running yarn test: ${error}`);
+            return;
+          }
+          if (stderr) {
+            throw stderr;
+          }
+          console.log(`Stdout from yarn test: ${stdout}`);
         }
-        if (stderr) {
-          throw stderr;
+      );
+      testProcess.stdout.on("data", (data: any) => {
+        console.log(data);
+        if (data.toString().indexOf("FAILED") > -1) {
+          throw new Error("Error: Test failed");
         }
-        console.log(`Stdout from yarn test: ${stdout}`);
-      }
-    );
-    testProcess.stdout.on("data", (data: any) => {
-      console.log(data);
-      if (data.toString().indexOf("FAILED") > -1) {
-        throw new Error("Error: Test failed");
-      }
-    });
+      });    
+    }
   } catch (err) {
     console.log("Test errored out");
     throw err;
