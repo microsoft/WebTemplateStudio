@@ -1,0 +1,25 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.Moleculer.StartConfig.WithCosmos",
+  "shortName": "Page.Moleculer.StartConfig.WithCosmos",
+  "identity": "Page.Moleculer.StartConfig.WithCosmos",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$backendframework == Moleculer & groupIdentity == wts.Page.List & $feature == wts.Feature.Azure.Cosmos.Mongo|wts.Feature.Azure.Cosmos.SQL"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    }
+  }
+}

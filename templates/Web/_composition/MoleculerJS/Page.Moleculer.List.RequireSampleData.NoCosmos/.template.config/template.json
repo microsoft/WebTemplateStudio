@@ -1,7 +1,10 @@
 {
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
   "name": "Page.Moleculer.List.RequireSampleData.NoCosmos",
+  "shortName": "Page.Moleculer.List.RequireSampleData.NoCosmos",
+  "identity": "Page.Moleculer.List.RequireSampleData.NoCosmos",
   "tags": {
     "language": "Any",
     "type": "item",
@@ -18,10 +21,6 @@
     "wts.rootNamespace": {
       "type": "parameter",
       "replaces": "Param_RootNamespace"
-    },
-    "wts.itemNamespace": {
-      "type": "parameter",
-      "replaces": "Param_ItemNamespace"
     }
   }
 }

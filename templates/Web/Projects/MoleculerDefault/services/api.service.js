@@ -21,14 +21,17 @@ module.exports = {
           // Access to any actions in all services under "/api" URL
           "**"
         ],
-        // Dynamically generate the routes
+        /**
+         * Dynamically generate the routes
+         * More info: https://moleculer.services/docs/0.14/moleculer-web.html#Auto-alias
+         */
         autoAliases: true
       }
     ],
 
-    // Serve assets from "public" folder
+    // Serve assets from "server/build" folder
     assets: {
-      folder: "public"
+      folder: "server/build"
     }
   }
 };

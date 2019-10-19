@@ -341,8 +341,6 @@ src/extension/package.nls.*.json
 **/build/
 **/package-lock.json
 **/*.vsix
-src/extension/.vscode-test
-src/extension/src/template_test
 
 !templates/**/package-lock.json
 
@@ -364,3 +362,5 @@ src/extension/src/corets-cli/darwin/
 src/extension/src/corets-cli/linux/
 src/extension/src/corets-cli/win32/
 
+# Template tests
+template_test/

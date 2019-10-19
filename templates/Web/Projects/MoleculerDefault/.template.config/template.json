@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "André Mazayev",
   "classifications": ["Universal"],
   "name": "MoleculerDefault",
+  "shortName": "MoleculerDefault",
   "groupIdentity": "wts.Proj.MoleculerDefault",
   "identity": "wts.Proj.MoleculerDefault",
   "description": "",
@@ -75,17 +77,6 @@
       "args": {
         "dict": "{'moleculer-repl': '^0.6.0'}",
         "key": "devDependencies",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    },
-    {
-      "description": "Add Moleculer Build Scripts",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'start-backend': 'moleculer-runner --repl --hot services'}",
-        "key": "scripts",
         "jsonPath": "package.json"
       },
       "continueOnError": false

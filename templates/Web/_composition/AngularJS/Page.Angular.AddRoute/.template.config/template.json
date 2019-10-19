@@ -1,9 +1,12 @@
 ﻿{
+    "$schema": "http://json.schemastore.org/template",
     "author": "Microsoft Community",
     "classifications": [
       "Universal"
     ],
     "name": "Page.Angular.AddRoute",
+    "shortName": "Page.Angular.AddRoute",
+    "identity": "Page.Angular.AddRoute",
   "tags": {
     "language": "Any",
     "type": "item",
@@ -25,10 +28,6 @@
       "wts.homePageName": {
         "type": "parameter",
         "replaces": "Param_HomePageName"
-      },
-      "wts.itemNamespace": {
-        "type": "parameter",
-        "replaces": "Param_ItemNamespace"
       },
       "wts.sourceName.casing.kebab": {
         "type": "parameter",
