@@ -7,10 +7,13 @@ const localize: nls.LocalizeFunc = nls.config({
 
 export const CONSTANTS = {
   ERRORS: {
-    TOO_MANY_FAILED_SYNC_REQUESTS: localize(
-      "error.tooManyFailedSyncRequests",
-      "Could not sync to template repository"
-    ),
+    TOO_MANY_FAILED_SYNC_REQUESTS: (errorMessage: string) => {
+      return localize(
+        "error.tooManyFailedSyncRequests",
+        "Could not sync to template repository. Details: {0}",
+        errorMessage
+      );
+    },
     INVALID_COMMAND: localize("error.invalidCommand", "Invalid command used"),
     INVALID_MODULE: localize("error.invalidModule", "Invalid module called"),
     RESOURCE_GROUP_NOT_FOUND: localize(
@@ -153,7 +156,10 @@ export const CONSTANTS = {
         min,
         max
       );
-    }
+    },
+    CANNOT_START_GENERATION_ENGINE: localize(
+      "error.cannotStartGenerationEngine",
+      "Cannot start generation engine.")
   },
   INFO: {
     COSMOS_ACCOUNT_DEPLOYED: (accountName: string) => {
@@ -397,6 +403,9 @@ export namespace DialogResponses {
   export const reportAnIssue: MessageItem = {
     title: localize("dialog.reportAnIssue", "Report an issue")
   };
+  export const showLog: MessageItem = {
+    title: localize("dialog.showLog", "Show log")
+  };
 }
 export namespace DialogMessages {
   export const multiLineError: string = localize(
@@ -442,5 +451,6 @@ export enum OS {
 
 export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
   Node: "node|10.14",
-  Flask: "python|3.7"
+  Flask: "python|3.7",
+  Moleculer: "node|10.14"
 };

@@ -1,0 +1,38 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.Moleculer.List.AddRoutes.WithCosmos.Mongo",
+  "shortName": "Page.Moleculer.List.AddRoutes.WithCosmos.Mongo",
+  "identity": "Page.Moleculer.List.AddRoutes.WithCosmos.Mongo",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$backendframework == Moleculer & groupIdentity == wts.Page.List & $feature == wts.Feature.Azure.Cosmos.Mongo"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    }
+  },
+  "postActions": [
+    {
+      "description": "Add Cosmos Mongo Dependencies",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'dotenv': '^8.1.0', 'moleculer-db': '^0.8.2', 'moleculer-db-adapter-mongo': '^0.4.5'}",
+        "key": "dependencies",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    }
+  ]
+}

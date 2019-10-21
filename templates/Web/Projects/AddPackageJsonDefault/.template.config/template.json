@@ -1,7 +1,9 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
   "name": "AddPackageJsonDefault",
+  "shortName": "AddPackageJsonDefault",
   "groupIdentity": "wts.Proj.AddPackageJsonDefault",
   "identity": "wts.Proj.AddPackageJsonDefault",
   "description": "",
@@ -11,7 +13,7 @@
     "wts.type": "project",
     "wts.projecttype": "all",
     "wts.frontendframework": "React|Angular|Vue",
-    "wts.backendframework": "Node|Flask",
+    "wts.backendframework": "Node|Flask|Moleculer",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.displayOrder": "1"

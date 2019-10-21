@@ -131,7 +131,7 @@ export class CoreTemplateStudio {
           })
           .once("eventError", data => {
             this.cliEvents.removeAllListeners();
-            reject(data);
+            reject(new Error(data));
           });
       });
     });

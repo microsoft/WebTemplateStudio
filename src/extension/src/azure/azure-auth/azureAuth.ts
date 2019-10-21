@@ -117,7 +117,8 @@ export abstract class AzureAuth {
 
   private static async loadSubscriptionItems(): Promise<SubscriptionItem[]> {
     await this.api.waitForFilters();
-    const subscriptionItems: SubscriptionItem[] = [];
+    let subscriptionItems: SubscriptionItem[] = [];
+    let subscriptionIds: Map<string, boolean> = new Map();
     for (const session of this.api.sessions) {
       const credentials = session.credentials;
       const subscriptionClient = new SC.SubscriptionClient(credentials);
@@ -125,14 +126,17 @@ export abstract class AzureAuth {
         subscriptionClient.subscriptions,
         subscriptionClient.subscriptions.list()
       );
-      subscriptionItems.push(
-        ...subscriptions.map(subscription => ({
-          label: subscription.displayName || "",
-          subscriptionId: subscription.subscriptionId || "",
-          session,
-          subscription
-        }))
-      );
+      for (const subscription of subscriptions) {
+        if (subscription.subscriptionId && !subscriptionIds.has(subscription.subscriptionId)) {
+          subscriptionIds.set( subscription.subscriptionId, true );
+          subscriptionItems.push({
+            label: subscription.displayName || "",
+            subscriptionId: subscription.subscriptionId || "",
+            session,
+            subscription
+          });
+        }
+      }
     }
     subscriptionItems.sort((a, b) => a.label.localeCompare(b.label));
     return subscriptionItems;

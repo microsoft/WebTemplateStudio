@@ -187,6 +187,21 @@ const mockVsCodeApi = () => ({
                     }
                   },
                   {
+                    name: "Moleculer",
+                    displayName: "Moleculer",
+                    summary: "JavaScript framework",
+                    author: "Various",
+                    order: "1",
+                    licenses:
+                      "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)",
+                    platforms: ["Web"],
+                    languages: ["Any"],
+                    tags: {
+                      version: "0.13.10",
+                      preview: false
+                    }
+                  },
+                  {
                     name: "Flask",
                     displayName: "Flask",
                     summary: "Python framework",

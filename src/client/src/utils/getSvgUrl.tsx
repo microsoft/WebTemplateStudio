@@ -14,6 +14,7 @@ import react from "../assets/react.svg";
 import angular from "../assets/angular.svg";
 import vue from "../assets/vue.svg";
 import node from "../assets/node.svg";
+import moleculer from "../assets/moleculer.svg";
 import flask from "../assets/flask.svg";
 import azure from "../assets/azure.svg";
 import appservice from "../assets/appservice.svg";
@@ -33,6 +34,7 @@ const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR]: angular,
   [WIZARD_CONTENT_INTERNAL_NAMES.VUE]: vue,
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE]: node,
+  [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER]: moleculer,
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK]: flask,
   [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: appservice,
   [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: azurefunctions,

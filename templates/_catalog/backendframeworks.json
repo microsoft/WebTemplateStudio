@@ -26,5 +26,19 @@
       "version": "1.0.3",
       "preview": false
     }
+  },
+  {
+    "name": "Moleculer",
+    "displayName": "Moleculer",
+    "summary": "JavaScript framework",
+    "author": "Various",
+    "order": "1",
+    "licenses": "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)",
+    "platforms": ["Web"],
+    "languages": ["Any"],
+    "tags": {
+      "version": "0.13.10",
+      "preview": false
+    }
   }
 ]
