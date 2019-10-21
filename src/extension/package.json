@@ -31,7 +31,9 @@
     "Flask",
     "Azure Services",
     "Azure Cosmos DB",
-    "Azure App Service"
+    "Azure App Service",
+    "Moleculer",
+    "MoleculerJS"
   ],
   "preview": true,
   "homepage": "https://github.com/Microsoft/WebTemplateStudio/blob/master/README.md",
