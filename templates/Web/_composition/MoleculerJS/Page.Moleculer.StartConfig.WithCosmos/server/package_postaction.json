@@ -1,7 +1,7 @@
 "private": true,
 //{[{
 "scripts": {
-  "start": "../node_modules/moleculer/bin/moleculer-runner.js --envfile ../.env services"
+  "start": "moleculer-runner --envfile ../.env services"
 },
 //}]}
 "dependencies": {
