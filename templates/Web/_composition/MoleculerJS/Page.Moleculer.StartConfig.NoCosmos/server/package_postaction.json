@@ -1,0 +1,7 @@
+"private": true,
+//{[{
+"scripts": {
+  "start": "../node_modules/moleculer/bin/moleculer-runner.js services"
+},
+//}]}
+"dependencies": {
