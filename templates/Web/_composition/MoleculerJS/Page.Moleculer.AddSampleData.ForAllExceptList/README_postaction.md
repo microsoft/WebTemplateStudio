@@ -11,6 +11,7 @@ Replace the sample data stored in `server/data/sampleData.js`.
 
 .
 ├── server/ Directory with everything backend-related
+│ ├── moleculer.config.js - Moleculer Service Broker configuration file. More info: https://moleculer.services/docs/0.13/broker.html
 │ ├── services/ - Moleculer services that provides API routes and serves front-end with data
 │ │ ├── api.service.js - HTTP gateway service
 │ │ └── pages.service.js - Service that serves the data and contains the actual handlers for the API calls
