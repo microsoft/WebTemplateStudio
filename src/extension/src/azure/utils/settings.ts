@@ -8,7 +8,10 @@ export namespace Settings {
       fsPath,
       CONSTANTS.APP_SERVICE_DEPLOYMENT.DOT_VSCODE_FOLDER
     );
-    await fse.mkdir(dotVSCodeFolder);
+    let vsCodeFolderExists = await fse.pathExists(dotVSCodeFolder);
+    if (!vsCodeFolderExists) {
+      await fse.mkdir(dotVSCodeFolder);
+    }
     const settingPath = path.join(
       dotVSCodeFolder,
       CONSTANTS.APP_SERVICE_DEPLOYMENT.SETTINGS_FILE_NAME
