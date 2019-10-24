@@ -10,7 +10,7 @@ module.exports = opt => {
      * This will extend `pages` service with DB handlers
      */
     mixins: [DBService],
-    // Setup DB Adapter. More info: https://moleculer.services/docs/0.13/moleculer-db.html
+    // Setup DB Adapter. More info: https://github.com/AndreMaz/moleculer-db-adapter-cosmos
     adapter: new CosmosAdapter(
       {
         endpoint: process.env.COSMOSDB_URI,

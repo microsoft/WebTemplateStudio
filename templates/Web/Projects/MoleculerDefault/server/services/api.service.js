@@ -1,6 +1,7 @@
 "use strict";
 
 const ApiGateway = require("moleculer-web");
+const path = require("path");
 
 module.exports = {
   name: "api",
@@ -29,9 +30,9 @@ module.exports = {
       }
     ],
 
-    // Serve assets from "server/build" folder
+    // Serve assets from "build" folder
     assets: {
-      folder: "server/build"
+      folder: path.resolve(__dirname, "..", "build")
     }
   }
 };
