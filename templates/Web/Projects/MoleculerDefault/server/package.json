@@ -1,0 +1,12 @@
+{
+  "name": "WebTemplateStudioMoleculer",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "moleculer": "^0.13.11",
+    "moleculer-web": "0.9.0-beta6"
+  },
+  "engines": {
+    "node": ">=10.14.1"
+  }
+}

@@ -1,0 +1,7 @@
+"moleculer": "^0.13.11",
+//{[{
+"dotenv": "^8.1.0",
+"moleculer-db": "^0.8.2",
+"moleculer-db-adapter-cosmos": "^0.0.2",
+//}]}
+"moleculer-web": "0.9.0-beta6"

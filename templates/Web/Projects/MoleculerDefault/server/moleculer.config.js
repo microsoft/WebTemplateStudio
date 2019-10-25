@@ -19,7 +19,7 @@ module.exports = {
   // Namespace of nodes to segment your nodes on the same network.
   namespace: "",
   // Unique node identifier. Must be unique in a namespace.
-  nodeID: null,
+  nodeID: "webTS",
 
   // Enable/disable logging or use custom logger. More info: https://moleculer.services/docs/0.13/logging.html
   logger: true,
@@ -29,6 +29,10 @@ module.exports = {
   logFormatter: "default",
   // Custom object & array printer for built-in console logger.
   logObjectPrinter: null,
+
+  // Define transporter.
+  // More info: https://moleculer.services/docs/0.14/networking.html
+  transporter: null,
 
   // Define a serializer.
   // Available values: "JSON", "Avro", "ProtoBuf", "MsgPack", "Notepack", "Thrift".
