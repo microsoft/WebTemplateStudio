@@ -1,0 +1,7 @@
+"private": true,
+//{[{
+"scripts": {
+  "start": "moleculer-runner services"
+},
+//}]}
+"dependencies": {
