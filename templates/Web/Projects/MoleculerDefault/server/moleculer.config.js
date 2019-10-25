@@ -30,6 +30,10 @@ module.exports = {
   // Custom object & array printer for built-in console logger.
   logObjectPrinter: null,
 
+  // Define transporter.
+  // More info: https://moleculer.services/docs/0.14/networking.html
+  transporter: null,
+
   // Define a serializer.
   // Available values: "JSON", "Avro", "ProtoBuf", "MsgPack", "Notepack", "Thrift".
   // More info: https://moleculer.services/docs/0.13/networking.html
