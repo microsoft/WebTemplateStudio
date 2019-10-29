@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { ListService, IListItem } from './list.service';
+import { ListService } from './list.service';
+import { IListItem } from './list.model';
 
 @Component({
   selector: 'app-list',
@@ -9,48 +10,51 @@ import { ListService, IListItem } from './list.service';
 })
 export class ListComponent implements OnInit {
   listItems: IListItem[] = [];
-  WarningMessageText = 'Request to get list items failed:';
-  WarningMessageOpen = false;
-  constructor(private listService: ListService) { }
+  warningMessageText = 'Request to get list items failed:';
+  warningMessageOpen = false;
+
+  constructor(private listService: ListService) {}
 
   ngOnInit() {
     this.listService.getListItems().subscribe(
-      response => {
+      (response: IListItem[]) => {
         this.listItems = response;
       },
       error => {
-        this.WarningMessageOpen = true;
-        this.WarningMessageText = `Request to get list items failed: ${error}`;
+        this.warningMessageOpen = true;
+        this.warningMessageText = `Request to get list items failed: ${error}`;
       }
     );
   }
 
   handleAddListItem(inputText: string) {
     this.listService.addListItem(inputText).subscribe(
-      (response) => {
+      (response: IListItem) => {
         this.listItems.splice(0, 0, response);
       },
       error => {
-        this.WarningMessageOpen = true;
-        this.WarningMessageText = `Request to add list item failed: ${error}`;
+        this.warningMessageOpen = true;
+        this.warningMessageText = `Request to add list item failed: ${error}`;
       }
     );
   }
 
   handleDeleteListItem(id: number) {
-
     this.listService.deleteListItem(id).subscribe(
-      response => {
-        this.listItems = this.listItems.filter(item => item._id !== response._id);
+      (response: IListItem) => {
+        this.listItems = this.listItems.filter(
+          item => item._id !== response._id
+        );
       },
       error => {
-        this.WarningMessageOpen = true;
-        this.WarningMessageText = `Request to delete list item failed: ${error}`;
+        this.warningMessageOpen = true;
+        this.warningMessageText = `Request to delete list item failed: ${error}`;
       }
     );
   }
+
   handleWarningClose(open: boolean) {
-    this.WarningMessageOpen = open;
-    this.WarningMessageText = '';
+    this.warningMessageOpen = open;
+    this.warningMessageText = '';
   }
 }

@@ -18,7 +18,6 @@ import { FooterComponent } from './app-shell/footer/footer.component';
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

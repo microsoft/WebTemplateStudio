@@ -2,6 +2,11 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+/* Features of development mode in Angular include:
+ * an additional change detection cycle
+ * printing out hints when the HTML sanitizer is stripping content
+ * running deep object comparison checks to detect model changes
+ */
 export const environment = {
   production: false,
 };

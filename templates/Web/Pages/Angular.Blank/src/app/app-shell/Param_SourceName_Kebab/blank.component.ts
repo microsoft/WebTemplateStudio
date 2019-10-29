@@ -6,10 +6,7 @@
   styleUrls: ['./blank.component.css']
 })
 export class BlankComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -21,15 +21,15 @@
         [key]="textAssets.id"
         [header]="textAssets.title"
         [description]="textAssets.shortDescription"
-        [image]="GreyBox"
+        [image]="greyBox"
       >
       </app-grid-box>
     </div>
   </div>
   <app-warning-message
-    *ngIf="WarningMessageOpen"
-    [text]="WarningMessageText"
-    (WarningMessageOpen)="handleWarningClose($event)"
+    *ngIf="warningMessageOpen"
+    [text]="warningMessageText"
+    (warningMessageOpen)="handleWarningClose($event)"
   >
   </app-warning-message>
 </main>

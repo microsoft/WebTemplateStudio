@@ -24,7 +24,6 @@ import { FooterComponent } from './app-shell/footer/footer.component';
     Param_SourceName_PascalModule,
     //}]}
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

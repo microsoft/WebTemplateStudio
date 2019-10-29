@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
-import { IMasterDetailText } from '../master-detail.service';
+import { IMasterDetailText } from '../master-detail.model';
 
 @Component({
   selector: 'app-master-detail-page',
@@ -7,9 +7,9 @@ import { IMasterDetailText } from '../master-detail.service';
   styleUrls: ['./master-detail-page.component.css']
 })
 export class MasterDetailPageComponent implements OnInit {
-
   @Input() textSampleData: IMasterDetailText;
-  constructor() { }
+
+  constructor() {}
 
   ngOnInit() {
     this.textSampleData = {
@@ -23,5 +23,4 @@ export class MasterDetailPageComponent implements OnInit {
       id: 0
     };
   }
-
 }

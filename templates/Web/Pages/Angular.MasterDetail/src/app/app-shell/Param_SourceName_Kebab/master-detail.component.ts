@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { MasterDetailService, IMasterDetailText } from './master-detail.service';
+import { MasterDetailService } from './master-detail.service';
+import { IMasterDetailText } from './master-detail.model';
 
 @Component({
   selector: 'app-master-detail',
@@ -8,23 +9,22 @@ import { MasterDetailService, IMasterDetailText } from './master-detail.service'
   styleUrls: ['./master-detail.component.css']
 })
 export class MasterDetailComponent implements OnInit {
-
-  GreyAvatar = require('../../../assets/GreyAvatar.svg') as string;
-  WarningMessageText = 'Request to get master detail text failed:';
-  WarningMessageOpen = false;
+  greyAvatar = require('../../../assets/GreyAvatar.svg') as string;
+  warningMessageText = 'Request to get master detail text failed:';
+  warningMessageOpen = false;
   currentDisplayTabIndex = 0;
   masterDetailText: IMasterDetailText[] = [];
 
-  constructor(private masterDetailService: MasterDetailService) { }
+  constructor(private masterDetailService: MasterDetailService) {}
 
   ngOnInit() {
     this.masterDetailService.getMasterDetailItems().subscribe(
-      result => {
+      (result: IMasterDetailText[]) => {
         this.masterDetailText = result;
       },
       error => {
-        this.WarningMessageOpen = true;
-        this.WarningMessageText = `Request to get master detail text failed: ${error}`;
+        this.warningMessageOpen = true;
+        this.warningMessageText = `Request to get master detail text failed: ${error}`;
       }
     );
   }
@@ -32,10 +32,9 @@ export class MasterDetailComponent implements OnInit {
   handleDisplayTabClick(id: number) {
     this.currentDisplayTabIndex = id;
   }
+
   handleWarningClose(open: boolean) {
-    this.WarningMessageOpen = open;
-    this.WarningMessageText = '';
+    this.warningMessageOpen = open;
+    this.warningMessageText = '';
   }
 }
-
-
