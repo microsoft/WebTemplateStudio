@@ -37,6 +37,7 @@ export interface AppServiceSelections {
   subscriptionItem: SubscriptionItem;
   resourceGroupItem: ResourceGroupItem;
   appServicePlanName: string;
+  tier: string;
   sku: string;
   linuxFxVersion: string;
   location: string;
@@ -179,6 +180,9 @@ export class AppServiceProvider {
       appServicePlanName: {
         value: selections.appServicePlanName
       },
+      tier: {
+        value: selections.tier
+      },
       sku: {
         value: selections.sku
       },
@@ -222,7 +226,7 @@ export class AppServiceProvider {
     }
     const appServicePlanSelection: AppServicePlan = {
       kind: OS.Linux,
-      sku: CONSTANTS.SKU_DESCRIPTION.BASIC,
+      sku: CONSTANTS.SKU_DESCRIPTION.FREE,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
     };
     try {

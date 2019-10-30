@@ -126,14 +126,19 @@ export class GenerationExperience extends WizardServant {
         );
       });
       // Add the new resouce group name to payload
-      // Note: all resource groups created will have the same name
       if (payload.selectedCosmos) {
+        let cosmosResourceGroups = distinctResourceGroupSelections.filter(
+          r => r.subscriptionItem.label === payload.cosmos.subscription
+        );
         payload.cosmos.resourceGroup =
-          distinctResourceGroupSelections[0].resourceGroupName;
+          cosmosResourceGroups[0].resourceGroupName;
       }
       if (payload.selectedAppService) {
+        let appServiceResourceGroup = distinctResourceGroupSelections.filter(
+          r => r.subscriptionItem.label === payload.appService.subscription
+        );
         payload.appService.resourceGroup =
-          distinctResourceGroupSelections[0].resourceGroupName;
+          appServiceResourceGroup[0].resourceGroupName;
       }
     }
 

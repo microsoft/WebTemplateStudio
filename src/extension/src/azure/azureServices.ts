@@ -428,18 +428,29 @@ export class AzureServices extends WizardServant {
       allDistinctSubscriptions
     );
 
-    return allDistinctSubscriptions.map(subscription =>
-      AzureServices.generateResourceGroupSelection(generatedName, subscription)
+    return await Promise.all(
+      allDistinctSubscriptions.map(
+        async subscription =>
+          await AzureServices.generateResourceGroupSelection(
+            generatedName,
+            subscription
+          )
+      )
     );
   }
 
-  private static generateResourceGroupSelection(
+  private static async generateResourceGroupSelection(
     generatedName: string,
     subscriptionItem: SubscriptionItem
-  ): ResourceGroupSelection {
+  ): Promise<ResourceGroupSelection> {
+    let resourceGroupName = generatedName;
+    if (AzureServices.IsMicrosoftLearnSubscription(subscriptionItem)) {
+      let resourceGroups = await AzureServices.AzureResourceGroupProvider.GetResourceGroups(subscriptionItem);
+      resourceGroupName = resourceGroups[0].name as string;
+    }
     return {
       subscriptionItem: subscriptionItem,
-      resourceGroupName: generatedName,
+      resourceGroupName: resourceGroupName,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
     };
   }
@@ -447,9 +458,11 @@ export class AzureServices extends WizardServant {
   public static async deployResourceGroup(
     selections: ResourceGroupSelection
   ): Promise<any> {
-    return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
-      selections
-    );
+    if (!AzureServices.IsMicrosoftLearnSubscription(selections.subscriptionItem)) {
+      return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
+        selections
+      );
+    }
   }
 
   public static async deployWebApp(payload: any): Promise<string> {
@@ -467,7 +480,8 @@ export class AzureServices extends WizardServant {
         AzureServices.usersAppServiceSubscriptionItemCache
       ),
       appServicePlanName: aspName,
-      sku: CONSTANTS.SKU_DESCRIPTION.BASIC.name,
+      tier: CONSTANTS.SKU_DESCRIPTION.FREE.tier,
+      sku: CONSTANTS.SKU_DESCRIPTION.FREE.name,
       linuxFxVersion:
         BackendFrameworkLinuxVersion[payload.engine.backendFramework],
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
@@ -645,5 +659,13 @@ export class AzureServices extends WizardServant {
       result[key] = value;
     }
     return result;
+  }
+
+  private static IsMicrosoftLearnSubscription(
+    subscriptionItem: SubscriptionItem
+  ): boolean {
+    return CONSTANTS.MICROSOFT_LEARN_TENANTS.includes(
+      subscriptionItem.session.tenantId
+    );
   }
 }

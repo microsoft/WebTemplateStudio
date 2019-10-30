@@ -299,6 +299,9 @@ export const CONSTANTS = {
       tier: "Basic"
     }
   },
+  MICROSOFT_LEARN_TENANTS: [
+    "" // Set Microsoft Learn Tenant Ids    
+  ],
   VALIDATION_LIMIT: 3,
   APP_SERVICE_DEPLOYMENT: {
     SERVER_FOLDER: "server",
