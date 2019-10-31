@@ -12,15 +12,8 @@ describe('MasterDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        MasterDetailComponent,
-        MasterDetailSidebarTabComponent,
-        MasterDetailPageComponent
-      ],
-      imports: [
-        WarningMessageModule,
-        HttpClientTestingModule
-      ]
+      declarations: [MasterDetailComponent,MasterDetailSidebarTabComponent,MasterDetailPageComponent],
+      imports: [WarningMessageModule,HttpClientTestingModule]
     }).compileComponents();
   }));
 

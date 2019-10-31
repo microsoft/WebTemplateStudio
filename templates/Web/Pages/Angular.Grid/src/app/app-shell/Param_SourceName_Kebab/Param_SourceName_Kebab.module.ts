@@ -7,10 +7,7 @@ import { GridBoxComponent } from './grid-box/grid-box.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 
 @NgModule({
-  declarations: [
-    GridComponent,
-    GridBoxComponent
-  ],
+  declarations: [GridComponent,GridBoxComponent],
   imports: [
     CommonModule,
     WarningMessageModule,
