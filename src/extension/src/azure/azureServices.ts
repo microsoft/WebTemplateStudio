@@ -1,4 +1,6 @@
 import * as vscode from "vscode";
+import { MICROSOFT_LEARN_TENANTS } from './../configuration.json';
+
 import {
   AzureAuth,
   SubscriptionItem,
@@ -664,7 +666,10 @@ export class AzureServices extends WizardServant {
   private static IsMicrosoftLearnSubscription(
     subscriptionItem: SubscriptionItem
   ): boolean {
-    return CONSTANTS.MICROSOFT_LEARN_TENANTS.includes(
+    console.log(MICROSOFT_LEARN_TENANTS);
+    console.log(MICROSOFT_LEARN_TENANTS[0]);
+    console.log(MICROSOFT_LEARN_TENANTS[1]);
+    return MICROSOFT_LEARN_TENANTS.includes(
       subscriptionItem.session.tenantId
     );
   }
