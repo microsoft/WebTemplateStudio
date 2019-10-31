@@ -9,7 +9,7 @@ import { IGridTextItem } from './grid.model';
   styleUrls: ['./grid.component.css']
 })
 export class GridComponent implements OnInit {
-  greyBox = require('../../../assets/GreyBox.svg') as string;
+  greyBoxUrl = '../../../assets/GreyBox.svg';
   warningMessageText = 'Request to get grid text failed:';
   warningMessageOpen = false;
   gridTextAssets: IGridTextItem[] = [
