@@ -666,9 +666,6 @@ export class AzureServices extends WizardServant {
   private static IsMicrosoftLearnSubscription(
     subscriptionItem: SubscriptionItem
   ): boolean {
-    console.log(MICROSOFT_LEARN_TENANTS);
-    console.log(MICROSOFT_LEARN_TENANTS[0]);
-    console.log(MICROSOFT_LEARN_TENANTS[1]);
     return MICROSOFT_LEARN_TENANTS.includes(
       subscriptionItem.session.tenantId
     );
