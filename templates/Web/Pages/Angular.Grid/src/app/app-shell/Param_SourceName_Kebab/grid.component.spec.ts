@@ -11,8 +11,8 @@ describe('GridComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GridComponent,GridBoxComponent],
-      imports: [WarningMessageModule,HttpClientTestingModule]
+      declarations: [GridComponent, GridBoxComponent],
+      imports: [WarningMessageModule, HttpClientTestingModule]
     }).compileComponents();
   }));
 
