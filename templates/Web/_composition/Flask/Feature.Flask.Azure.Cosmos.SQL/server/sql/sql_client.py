@@ -1,4 +1,6 @@
 import azure.cosmos.cosmos_client as cosmos_client
+import azure.cosmos.errors as errors
+import azure.cosmos.http_constants as http_constants
 
 from .settings import connection_key, master_key
 
