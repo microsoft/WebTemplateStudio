@@ -30,7 +30,7 @@ export class MasterDetailComponent implements OnInit {
     );
   }
 
-  handleDisplayTabClick(sampleOrder: ISampleOrder) {
+  selectSampleOrder(sampleOrder: ISampleOrder) {
     this.currentSampleOrder = sampleOrder;
   }
 

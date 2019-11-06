@@ -6,15 +6,11 @@ import { ISampleOrder } from '../master-detail.model';
   templateUrl: './master-detail-sidebar-tab.component.html',
   styleUrls: ['./master-detail-sidebar-tab.component.css']
 })
-export class MasterDetailSidebarTabComponent implements OnInit {
+export class MasterDetailSidebarTabComponent {
   @Input() sampleOrder: ISampleOrder;
-  @Output() displayTabClick = new EventEmitter<number>();
+  @Output() itemClick = new EventEmitter<ISampleOrder>();
 
-  constructor() {}
-
-  ngOnInit() {}
-
-  onDisplayTabClick() {
-    this.displayTabClick.emit();
+  selectSampleOrder() {
+    this.itemClick.emit();
   }
 }
