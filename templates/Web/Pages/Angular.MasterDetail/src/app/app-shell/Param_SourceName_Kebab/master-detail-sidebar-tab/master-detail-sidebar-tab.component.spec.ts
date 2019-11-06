@@ -8,9 +8,7 @@ describe('ListItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        MasterDetailSidebarTabComponent
-      ]
+      declarations: [MasterDetailSidebarTabComponent]
     }).compileComponents();
   }));
 

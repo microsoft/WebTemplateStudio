@@ -6,9 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { ISampleOrder } from './master-detail.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class MasterDetailService {
   private listUrl = environment.endpoint.masterdetail;
 

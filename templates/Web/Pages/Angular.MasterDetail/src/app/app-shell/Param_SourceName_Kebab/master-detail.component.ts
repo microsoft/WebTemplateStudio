@@ -9,7 +9,7 @@ import { ISampleOrder } from './master-detail.model';
   styleUrls: ['./master-detail.component.css']
 })
 export class MasterDetailComponent implements OnInit {
-  greyAvatar = require('../../../assets/GreyAvatar.svg') as string;
+  greyAvatarUrl = '../../../assets/GreyAvatar.svg';
   warningMessageText = 'Request to get master detail text failed:';
   warningMessageOpen = false;
   currentSampleOrder={};

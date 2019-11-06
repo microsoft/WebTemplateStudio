@@ -10,9 +10,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { IListItem } from './list.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class ListService {
   private listUrl = environment.endpoint.list;
 

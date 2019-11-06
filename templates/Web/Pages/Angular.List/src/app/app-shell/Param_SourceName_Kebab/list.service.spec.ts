@@ -6,9 +6,7 @@ import { ListService } from './list.service';
 describe('ListService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ]
+      imports: [HttpClientTestingModule]
     }).compileComponents();
   }));
 
