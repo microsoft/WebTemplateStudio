@@ -1,23 +1,18 @@
-﻿import React, {Component} from 'react';
+﻿import React, { Component } from 'react';
 
 export default class ListForm extends Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {
-      textField: ""
-    }
+  state = {
+    textField: ""
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.onAddListItem(this.state.textField);
-    this.setState({textField: ""});
+    this.setState({ textField: "" });
   }
 
   render() {
