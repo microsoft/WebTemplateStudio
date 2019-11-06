@@ -8,9 +8,7 @@ describe('MasterDetailPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        MasterDetailPageComponent
-      ]
+      declarations: [MasterDetailPageComponent]
     }).compileComponents();
   }));
 

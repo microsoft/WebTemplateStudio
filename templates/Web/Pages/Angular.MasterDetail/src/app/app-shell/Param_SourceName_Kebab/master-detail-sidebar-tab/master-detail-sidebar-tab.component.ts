@@ -7,7 +7,7 @@
 })
 export class MasterDetailSidebarTabComponent implements OnInit {
   @Input() tabText: string;
-  @Input() image: string;
+  @Input() imageUrl: string;
   @Input() index: number;
   @Input() key: number;
   @Output() displayTabClick = new EventEmitter<number>();

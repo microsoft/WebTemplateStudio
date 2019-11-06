@@ -6,9 +6,7 @@ import { Param_SourceName_PascalRoutingModule } from './Param_SourceName_Kebab-r
 
 
 @NgModule({
-  declarations: [
-    BlankComponent,
-  ],
+  declarations: [BlankComponent],
   imports: [
     CommonModule,
     Param_SourceName_PascalRoutingModule

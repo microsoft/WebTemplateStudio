@@ -8,11 +8,7 @@ import { MasterDetailPageComponent } from './master-detail-page/master-detail-pa
 import { Param_SourceName_PascalRoutingModule } from './Param_SourceName_Kebab-routing.module';
 
 @NgModule({
-  declarations: [
-    MasterDetailComponent,
-    MasterDetailSidebarTabComponent,
-    MasterDetailPageComponent
-  ],
+  declarations: [MasterDetailComponent, MasterDetailSidebarTabComponent, MasterDetailPageComponent],
   imports: [
     CommonModule,
     WarningMessageModule,

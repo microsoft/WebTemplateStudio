@@ -7,7 +7,7 @@
           *ngFor="let textAssets of masterDetailText; let i = index"
           (displayTabClick)="handleDisplayTabClick($event)"
           [tabText]="textAssets.title"
-          [image]="greyAvatar"
+          [imageUrl]="greyAvatarUrl"
           [index]="i"
           [key]="textAssets.id"
         >
