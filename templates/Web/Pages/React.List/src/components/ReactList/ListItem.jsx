@@ -1,7 +1,6 @@
 ﻿import React from "react";
 
-export default function ListItem(props) {
-  const { listItem, onDeleteListItem } = props;
+export default function ListItem({ listItem, onDeleteListItem }) {
   return (
     <div className="col-12 mb-3 border">
       <div className="row">

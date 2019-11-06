@@ -2,7 +2,7 @@
 import classnames from "classnames";
 import styles from "./masterdetail.module.css";
 
-export default function MasterDetailPage(props) {
+export default function MasterDetailPage({ textSampleData }) {
   const {
     longDescription,
     title,
@@ -10,7 +10,7 @@ export default function MasterDetailPage(props) {
     shipTo,
     orderTotal,
     orderDate
-  } = props.textSampleData;
+  } = textSampleData;
   return (
     <div className="col">
       <div className={classnames("row", styles.heading)}>

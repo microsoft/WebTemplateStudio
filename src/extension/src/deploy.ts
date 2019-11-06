@@ -1,7 +1,8 @@
-import { spawn } from "child_process";
+import { spawn, ChildProcess } from "child_process";
 import * as vscode from "vscode";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import * as os from "os";
+import { Logger } from "./utils/logger";
 
 export class Deploy {
   private folderPath: string | undefined;
@@ -36,8 +37,10 @@ export class Deploy {
       },
       async (progress: vscode.Progress<IVSCodeProgressType>) => {
         this.progressObject = progress;
+        Logger.appendLog("EXTENSION", "info", "Preparing for Deployment");
         await this.installDependencies();
         await this.buildProject();
+        Logger.appendLog("EXTENSION", "info", "Build Completed");
         vscode.commands.executeCommand("appService.Deploy");
       }
     );
@@ -52,7 +55,7 @@ export class Deploy {
 
   private async installDependencies() {
     const command = os.platform() == "win32" ? "npm.cmd" : "npm";
-    this.progressObject.report({ message: "Installing Dependencies" });
+    this.ReportProgress("Installing Dependencies");
     return Deploy.promiseFromChildProcess(
       spawn(command, ["install"], {
         cwd: this.folderPath
@@ -62,7 +65,7 @@ export class Deploy {
 
   private async buildProject() {
     const command = os.platform() == "win32" ? "npm.cmd" : "npm";
-    this.progressObject.report({ message: "Building Project" });
+    this.ReportProgress("Building Project");
     return Deploy.promiseFromChildProcess(
       spawn(command, ["run-script", "build"], {
         cwd: this.folderPath
@@ -70,10 +73,18 @@ export class Deploy {
     );
   }
 
-  private static promiseFromChildProcess(child: any) {
+  private static promiseFromChildProcess(child: ChildProcess) {
     return new Promise(function(resolve, reject) {
       child.addListener("error", reject);
       child.addListener("exit", resolve);
+      child.stderr.on("data", data =>
+        Logger.appendLog("EXTENSION", "error", data.toString())
+      );
     });
+  }
+
+  private ReportProgress(message: string) {
+    Logger.appendLog("EXTENSION", "info", message);
+    this.progressObject.report({ message });
   }
 }
