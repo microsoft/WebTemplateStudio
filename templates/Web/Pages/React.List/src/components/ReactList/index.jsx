@@ -5,17 +5,10 @@ import WarningMessage from "../WarningMessage";
 import CONSTANTS from "../../constants";
 
 export default class ReactList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: [],
-      WarningMessageOpen: false,
-      WarningMessageText: ""
-    };
-
-    this.handleWarningClose = this.handleWarningClose.bind(this);
-    this.handleDeleteListItem = this.handleDeleteListItem.bind(this);
-    this.handleAddListItem = this.handleAddListItem.bind(this);
+  state = {
+    list: [],
+    warningMessageOpen: false,
+    warningMessageText: ""
   }
 
   // Get the sample data from the back end
@@ -30,13 +23,13 @@ export default class ReactList extends Component {
       .then(result => this.setState({ list: result }))
       .catch(error =>
         this.setState({
-          WarningMessageOpen: true,
-          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
+          warningMessageOpen: true,
+          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
         })
       );
   }
 
-  handleDeleteListItem(listItem) {
+  handleDeleteListItem = (listItem) => {
     fetch(`${CONSTANTS.ENDPOINT.LIST}/${listItem._id}`, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
@@ -51,18 +44,18 @@ export default class ReactList extends Component {
       })
       .catch(error => {
         this.setState({
-          WarningMessageOpen: true,
-          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`
+          warningMessageOpen: true,
+          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`
         });
       });
   }
 
-  handleAddListItem(textField) {
+  handleAddListItem = (textField) => {
     // Warning Pop Up if the user submits an empty message
     if (!textField) {
       this.setState({
-        WarningMessageOpen: true,
-        WarningMessageText: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
+        warningMessageOpen: true,
+        warningMessageText: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
       });
       return;
     }
@@ -87,24 +80,24 @@ export default class ReactList extends Component {
       )
       .catch(error =>
         this.setState({
-          WarningMessageOpen: true,
-          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`
+          warningMessageOpen: true,
+          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`
         })
       );
   }
 
-  handleWarningClose() {
+  handleWarningClose = () => {
     this.setState({
-      WarningMessageOpen: false,
-      WarningMessageText: ""
+      warningMessageOpen: false,
+      warningMessageText: ""
     });
   }
 
   render() {
     const {
       list,
-      WarningMessageOpen,
-      WarningMessageText
+      warningMessageOpen,
+      warningMessageText
     } = this.state;
     return (
       <main id="mainContent" className="container">
@@ -125,8 +118,8 @@ export default class ReactList extends Component {
             />
           ))}
           <WarningMessage
-            open={WarningMessageOpen}
-            text={WarningMessageText}
+            open={warningMessageOpen}
+            text={warningMessageText}
             onWarningClose={this.handleWarningClose}
           />
         </div>
