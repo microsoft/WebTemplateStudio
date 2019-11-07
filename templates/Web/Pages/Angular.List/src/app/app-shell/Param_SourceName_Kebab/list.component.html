@@ -8,7 +8,7 @@
     </div>
     <app-list-item
       class="col-12 mb-3 border"
-      *ngFor="let listItem of listItems"
+      *ngFor="let listItem of (listItems | async)"
       [text]="listItem.text"
       [_id]="listItem._id"
       (deleteText)="handleDeleteListItem($event)"
