@@ -7,5 +7,5 @@ export interface ISampleOrder {
   orderTotal: number;
   shortDescription: string;
   longDescription: string;
-  imageUrl: string;
+  imageName: string;
 }
