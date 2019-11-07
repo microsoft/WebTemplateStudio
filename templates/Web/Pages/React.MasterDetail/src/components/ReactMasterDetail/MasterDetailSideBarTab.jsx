@@ -2,8 +2,7 @@
 import classnames from "classnames";
 import styles from "./masterdetail.module.css";
 
-export default function MasterDetailSideBarTab(props) {
-  const { index, image, tabText, onDisplayTabClick } = props;
+export default function MasterDetailSideBarTab({ index, image, tabText, onDisplayTabClick }) {
   return (
     <button
       onClick={() => onDisplayTabClick(index)}

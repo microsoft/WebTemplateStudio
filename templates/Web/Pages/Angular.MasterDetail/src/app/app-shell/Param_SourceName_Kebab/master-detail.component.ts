@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
 import { MasterDetailService } from './master-detail.service';
-import { IMasterDetailText } from './master-detail.model';
+import { ISampleOrder } from './master-detail.model';
 
 @Component({
   selector: 'app-master-detail',
@@ -9,18 +9,19 @@ import { IMasterDetailText } from './master-detail.model';
   styleUrls: ['./master-detail.component.css']
 })
 export class MasterDetailComponent implements OnInit {
-  greyAvatar = require('../../../assets/GreyAvatar.svg') as string;
+  greyAvatarUrl = '../../../assets/GreyAvatar.svg';
   warningMessageText = 'Request to get master detail text failed:';
   warningMessageOpen = false;
-  currentDisplayTabIndex = 0;
-  masterDetailText: IMasterDetailText[] = [];
+  currentSampleOrder={};
+  sampleOrders: ISampleOrder[] = [];
 
   constructor(private masterDetailService: MasterDetailService) {}
 
   ngOnInit() {
     this.masterDetailService.getMasterDetailItems().subscribe(
-      (result: IMasterDetailText[]) => {
-        this.masterDetailText = result;
+      (result: ISampleOrder[]) => {
+        this.sampleOrders = result;
+        this.currentSampleOrder = result[0];
       },
       error => {
         this.warningMessageOpen = true;
@@ -29,8 +30,8 @@ export class MasterDetailComponent implements OnInit {
     );
   }
 
-  handleDisplayTabClick(id: number) {
-    this.currentDisplayTabIndex = id;
+  selectSampleOrder(sampleOrder: ISampleOrder) {
+    this.currentSampleOrder = sampleOrder;
   }
 
   handleWarningClose(open: boolean) {

@@ -10,9 +10,7 @@ describe('ListFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        ListFormComponent
-      ],
+      declarations: [ListFormComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,

@@ -7,16 +7,13 @@ import styles from "./grid.module.css";
 import CONSTANTS from "../../constants";
 
 export default class ReactGrid extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      gridTextAssets: [{ description: "", header: "", id: 0 }],
-      WarningMessageOpen: false,
-      WarningMessageText: ""
-    };
-
-    this.handleWarningClose = this.handleWarningClose.bind(this);
+  state = {
+    gridTextAssets: [{ description: "", header: "", id: 0 }],
+    warningMessageOpen: false,
+    warningMessageText: ""
   }
+
+  centeredHeaderStyle = classnames("text-center", styles.header)
 
   // Get the text sample data from the back end
   componentDidMount() {
@@ -30,28 +27,28 @@ export default class ReactGrid extends Component {
       .then(result => this.setState({ gridTextAssets: result }))
       .catch(error =>
         this.setState({
-          WarningMessageOpen: true,
-          WarningMessageText: `Request to get grid text failed: ${error}`
+          warningMessageOpen: true,
+          warningMessageText: `Request to get grid text failed: ${error}`
         })
       );
   }
 
-  handleWarningClose() {
+  handleWarningClose = () => {
     this.setState({
-      WarningMessageOpen: false,
-      WarningMessageText: ""
+      warningMessageOpen: false,
+      warningMessageText: ""
     });
   }
 
   render() {
     const {
       gridTextAssets,
-      WarningMessageOpen,
-      WarningMessageText
+      warningMessageOpen,
+      warningMessageText
     } = this.state;
     return (
       <main id="mainContent">
-        <div className={classnames("text-center", styles.header)}>
+        <div className={this.centeredHeaderStyle}>
           <h1>Param_ProjectName</h1>
           <p>This is placeholder text. Your web app description goes here.</p>
           <a
@@ -79,8 +76,8 @@ export default class ReactGrid extends Component {
           </div>
         </div>
         <WarningMessage
-          open={WarningMessageOpen}
-          text={WarningMessageText}
+          open={warningMessageOpen}
+          text={warningMessageText}
           onWarningClose={this.handleWarningClose}
         />
       </main>

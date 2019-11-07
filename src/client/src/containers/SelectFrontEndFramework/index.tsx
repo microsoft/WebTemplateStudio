@@ -60,7 +60,7 @@ const messages = defineMessages({
 });
 
 class SelectFrontEndFramework extends React.Component<Props> {
-  public handleFrameworkChange(option: ISelected) {
+  public handleFrameworkChange = (option: ISelected) => {
     const {
       vscode,
       selectedFrontendFramework,
@@ -136,7 +136,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
       <div>
         {this.props.options.length > 0 && (
           <SelectOption
-            selectCard={this.handleFrameworkChange.bind(this)}
+            selectCard={this.handleFrameworkChange}
             multiSelect={false}
             title={intl.formatMessage(messages.selectFrontendFramework)}
             isFrameworkSelection={true}

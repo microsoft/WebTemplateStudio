@@ -1,8 +1,8 @@
 ﻿<button
-  (click)="onDisplayTabClick()"
+  (click)="selectSampleOrder()"
   type="button"
   class="list-group-item list-group-item-action sidebarText"
 >
-  <img src="{{ image }}" alt="Default Grey Avatar" class="mr-3" />
-  {{ tabText }}
+  <img src="../../../assets/{{ sampleOrder.imageName }}" alt="Default Grey Avatar" title="Default Grey Avatar" aria-label="Default Grey Avatar" class="mr-3" />
+  {{ sampleOrder.title }}
 </button>

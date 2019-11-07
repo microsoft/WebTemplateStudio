@@ -4,11 +4,9 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { IMasterDetailText } from './master-detail.model';
+import { ISampleOrder } from './master-detail.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class MasterDetailService {
   private listUrl = environment.endpoint.masterdetail;
 
@@ -30,9 +28,9 @@ export class MasterDetailService {
     return throwError('Something bad happened; please try again later.');
   }
 
-  getMasterDetailItems(): Observable<IMasterDetailText[]> {
+  getMasterDetailItems(): Observable<ISampleOrder[]> {
     return this.http
-      .get<IMasterDetailText[]>(this.listUrl)
+      .get<ISampleOrder[]>(this.listUrl)
       .pipe(catchError(this.handleError));
   }
 }

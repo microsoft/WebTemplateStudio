@@ -6,9 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { IGridTextItem } from './grid.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class GridService {
   private listUrl = environment.endpoint.grid;
 

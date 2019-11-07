@@ -8,14 +8,8 @@ import { FooterComponent } from './app-shell/footer/footer.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        NavBarComponent,
-        FooterComponent,
-      ],
-      imports: [
-        RouterTestingModule,
-      ]
+      declarations: [AppComponent, NavBarComponent, FooterComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

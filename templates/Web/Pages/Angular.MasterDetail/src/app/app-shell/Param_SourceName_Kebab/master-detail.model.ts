@@ -1,4 +1,4 @@
-export interface IMasterDetailText {
+export interface ISampleOrder {
   title: string;
   id: number;
   status: string;
@@ -7,4 +7,5 @@ export interface IMasterDetailText {
   orderTotal: number;
   shortDescription: string;
   longDescription: string;
+  imageName: string;
 }

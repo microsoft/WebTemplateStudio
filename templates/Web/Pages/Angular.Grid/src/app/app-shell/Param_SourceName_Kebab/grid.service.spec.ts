@@ -6,9 +6,7 @@ import { GridService } from './grid.service';
 describe('GridService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ]
+      imports: [HttpClientTestingModule]
     }).compileComponents();
   }));
 
