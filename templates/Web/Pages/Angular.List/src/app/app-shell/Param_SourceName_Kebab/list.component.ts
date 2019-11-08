@@ -26,7 +26,7 @@ export class ListComponent implements OnInit {
     }));
   }
 
-  handleAddListItem(inputText: string) {
+  addItem(inputText: string) {
     this.listService.addListItem(inputText).subscribe(
       (response: IListItem) => {
         this.listItems = this.listItems.pipe(map(_listItems => _listItems));
@@ -38,12 +38,11 @@ export class ListComponent implements OnInit {
     );
   }
 
-  handleDeleteListItem(id: number) {
+  deleteItem(id: number) {
     this.listService.deleteListItem(id).subscribe(
       (response: IListItem) => {
         this.listItems = this.listItems.pipe(map(_listItems => {
-          _listItems = _listItems.filter(item => item._id !== response._id)
-          return _listItems;
+          return _listItems.filter(item => item._id !== response._id);
         }));
       },
       error => {
