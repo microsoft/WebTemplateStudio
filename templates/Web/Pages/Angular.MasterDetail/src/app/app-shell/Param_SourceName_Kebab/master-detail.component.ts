@@ -2,7 +2,7 @@
 
 import { MasterDetailService } from './master-detail.service';
 import { ISampleOrder } from './master-detail.model';
-import {catchError} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 
 @Component({
@@ -21,14 +21,15 @@ export class MasterDetailComponent implements OnInit {
 
   ngOnInit() {
     this.sampleOrders = this.masterDetailService.getMasterDetailItems();
-    this.sampleOrders.pipe(catchError((error) => { 
-      this.warningMessageText = 'Request to get master detail text failed: ${error}'; 
-      this.warningMessageOpen = true; 
-      return of(null);
-    }))
-    .subscribe(listSampleOrders => {
-      this.currentSampleOrder = listSampleOrders[0];
-    });
+    this.sampleOrders.pipe(map(listSampleOrders => {
+        this.currentSampleOrder = listSampleOrders[0];
+      }),
+      catchError((error) => { 
+        this.warningMessageText = 'Request to get master detail text failed: ${error}'; 
+        this.warningMessageOpen = true; 
+        return of(null);
+      }))
+    .subscribe();
   }
 
   selectSampleOrder(sampleOrder: ISampleOrder) {
