@@ -2,6 +2,8 @@
 
 import { MasterDetailService } from './master-detail.service';
 import { ISampleOrder } from './master-detail.model';
+import {catchError, map} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-master-detail',
@@ -13,29 +15,29 @@ export class MasterDetailComponent implements OnInit {
   warningMessageText = 'Request to get master detail text failed:';
   warningMessageOpen = false;
   currentSampleOrder={};
-  sampleOrders: ISampleOrder[] = [];
+  sampleOrders: Observable<ISampleOrder[]>;
 
   constructor(private masterDetailService: MasterDetailService) {}
 
   ngOnInit() {
-    this.masterDetailService.getMasterDetailItems().subscribe(
-      (result: ISampleOrder[]) => {
-        this.sampleOrders = result;
-        this.currentSampleOrder = result[0];
-      },
-      error => {
-        this.warningMessageOpen = true;
-        this.warningMessageText = `Request to get master detail text failed: ${error}`;
-      }
-    );
+    this.sampleOrders = this.masterDetailService.getMasterDetailItems();
+    this.sampleOrders.pipe(map(listSampleOrders => {
+        this.currentSampleOrder = listSampleOrders[0];
+      }),
+      catchError((error) => { 
+        this.warningMessageText = `Request to get master detail text failed: ${error}`; 
+        this.warningMessageOpen = true; 
+        return of(null);
+      }))
+    .subscribe();
   }
 
   selectSampleOrder(sampleOrder: ISampleOrder) {
     this.currentSampleOrder = sampleOrder;
   }
 
-  handleWarningClose(open: boolean) {
-    this.warningMessageOpen = open;
-    this.warningMessageText = '';
+  handleWarningClose(open: boolean) {	
+    this.warningMessageOpen = open;	
+    this.warningMessageText = '';	
   }
 }

@@ -2,6 +2,8 @@
 
 import { GridService } from './grid.service';
 import { IGridTextItem } from './grid.model';
+import {catchError, map} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-grid',
@@ -12,35 +14,21 @@ export class GridComponent implements OnInit {
   greyBoxUrl = '../../../assets/GreyBox.svg';
   warningMessageText = 'Request to get grid text failed:';
   warningMessageOpen = false;
-  gridTextAssets: IGridTextItem[] = [
-    {
-      description: 'example1',
-      header: 'example1',
-      id: 0
-    },
-    {
-      description: 'example2',
-      header: 'example2',
-      id: 1
-    }
-  ];
+  listItems: Observable<IGridTextItem[]>;
 
   constructor(private gridService: GridService) {}
 
   ngOnInit() {
-    this.gridService.getGridItems().subscribe(
-      (result: IGridTextItem[]) => {
-        this.gridTextAssets = result;
-      },
-      error => {
-        this.warningMessageOpen = true;
-        this.warningMessageText = `Request to get grid text failed: ${error}`;
-      }
-    );
+    this.listItems = this.gridService.getGridItems();
+    this.listItems.pipe(catchError((error) => { 
+      this.warningMessageText =  `Request to get grid text failed: ${error}`;
+      this.warningMessageOpen = true; 
+      return of(null);
+    })).subscribe();
   }
 
-  handleWarningClose(open: boolean) {
-    this.warningMessageOpen = open;
-    this.warningMessageText = '';
+  handleWarningClose(open: boolean) {	
+    this.warningMessageOpen = open;	
+    this.warningMessageText = '';	
   }
 }
