@@ -8,27 +8,28 @@ import styles from "./masterdetail.module.css";
 import CONSTANTS from "../../constants";
 
 export default class ReactMasterDetail extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentDisplayTabIndex: 0,
-      masterDetailText: [
-        {
-          shortDescription: "",
-          longDescription: "",
-          title: "",
-          status: "",
-          shipTo: "",
-          orderTotal: 0.0,
-          orderDate: "",
-          id: 0
-        }
-      ]
-    };
-    this.handleDisplayTabClick = this.handleDisplayTabClick.bind(this);
-    this.handleWarningClose = this.handleWarningClose.bind(this);
+  state = {
+    currentDisplayTabIndex: 0,
+    masterDetailText: [
+      {
+        shortDescription: "",
+        longDescription: "",
+        title: "",
+        status: "",
+        shipTo: "",
+        orderTotal: 0.0,
+        orderDate: "",
+        id: 0
+      }
+    ]
   }
+
+  sidebarStyle = classnames(
+    "col-2",
+    "p-0",
+    "border-right",
+    styles.sidebar
+  )
 
   // Get the sample data from the back end
   componentDidMount() {
@@ -44,22 +45,22 @@ export default class ReactMasterDetail extends Component {
       })
       .catch(error =>
         this.setState({
-          WarningMessageOpen: true,
-          WarningMessageText: `${
+          warningMessageOpen: true,
+          warningMessageText: `${
             CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET
-          } ${error}`
+            } ${error}`
         })
       );
   }
 
-  handleWarningClose() {
+  handleWarningClose = () => {
     this.setState({
-      WarningMessageOpen: false,
-      WarningMessageText: ""
+      warningMessageOpen: false,
+      warningMessageText: ""
     });
   }
 
-  handleDisplayTabClick(id) {
+  handleDisplayTabClick = (id) => {
     this.setState({ currentDisplayTabIndex: id });
   }
 
@@ -67,20 +68,15 @@ export default class ReactMasterDetail extends Component {
     const {
       masterDetailText,
       currentDisplayTabIndex,
-      WarningMessageOpen,
-      WarningMessageText
+      warningMessageOpen,
+      warningMessageText
     } = this.state;
     return (
       <main id="mainContent">
         <div className="container-fluid">
           <div className="row">
             <div
-              className={classnames(
-                "col-2",
-                "p-0",
-                "border-right",
-                styles.sidebar
-              )}
+              className={this.sidebarStyle}
             >
               <div className="list-group list-group-flush border-bottom">
                 {masterDetailText.map((textAssets, index) => (
@@ -100,8 +96,8 @@ export default class ReactMasterDetail extends Component {
           </div>
         </div>
         <WarningMessage
-          open={WarningMessageOpen}
-          text={WarningMessageText}
+          open={warningMessageOpen}
+          text={warningMessageText}
           onWarningClose={this.handleWarningClose}
         />
       </main>

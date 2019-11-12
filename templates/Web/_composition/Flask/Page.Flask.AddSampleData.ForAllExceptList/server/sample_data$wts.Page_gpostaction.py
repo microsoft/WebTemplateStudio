@@ -20,7 +20,8 @@ sample_data['text_assets'] = [
     'shipTo': 'Francisco Pérez-Olaeta',
     'orderTotal': 2490.0,
     'orderDate': datetime.datetime.now(),
-    'id': 1
+    'id': 1,
+    'imageName':'GreyAvatar.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -30,7 +31,8 @@ sample_data['text_assets'] = [
     'shipTo': 'Soo Jung Lee',
     'orderTotal': 1760.0,
     'orderDate': datetime.datetime.now(),
-    'id': 2
+    'id': 2,
+    'imageName':'GreyAvatar.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -40,7 +42,8 @@ sample_data['text_assets'] = [
     'shipTo': 'Run Liu',
     'orderTotal': 665.0,
     'orderDate': datetime.datetime.now(),
-    'id': 3
+    'id': 3,
+    'imageName':'GreyAvatar.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -50,7 +53,8 @@ sample_data['text_assets'] = [
     'shipTo': "Soo Jung Lee",
     'orderTotal': 560.0,
     'orderDate': datetime.datetime.now(),
-    'id': 4
+    'id': 4,
+    'imageName':'GreyAvatar.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -60,7 +64,8 @@ sample_data['text_assets'] = [
     'shipTo': "John Rodman",
     'orderTotal': 810.0,
     'orderDate': datetime.datetime.now(),
-    'id': 5
+    'id': 5,
+    'imageName':'GreyAvatar.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -70,7 +75,8 @@ sample_data['text_assets'] = [
     'shipTo': "Elizabeth Andersen",
     'orderTotal': 196.5,
     'orderDate': datetime.datetime.now(),
-    'id': 6
+    'id': 6,
+    'imageName':'GreyAvatar.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -80,7 +86,8 @@ sample_data['text_assets'] = [
     'shipTo': "Peter Krschne",
     'orderTotal': 270.0,
     'orderDate': datetime.datetime.now(),
-    'id': 7
+    'id': 7,
+    'imageName':'GreyAvatar.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -90,7 +97,8 @@ sample_data['text_assets'] = [
     'shipTo': "Sven Mortensen",
     'orderTotal': 736.0,
     'orderDate': datetime.datetime.now(),
-    'id': 8
+    'id': 8,
+    'imageName':'GreyAvatar.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -100,7 +108,8 @@ sample_data['text_assets'] = [
     'shipTo': "Anna Bedecs",
     'orderTotal': 800.0,
     'orderDate': datetime.datetime.now(),
-    'id': 9
+    'id': 9,
+    'imageName':'GreyAvatar.svg'
   }
 ]
 //}]}

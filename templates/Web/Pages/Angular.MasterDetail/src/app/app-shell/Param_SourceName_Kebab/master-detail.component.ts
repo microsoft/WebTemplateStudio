@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { MasterDetailService, IMasterDetailText } from './master-detail.service';
+import { MasterDetailService } from './master-detail.service';
+import { ISampleOrder } from './master-detail.model';
 
 @Component({
   selector: 'app-master-detail',
@@ -8,34 +9,33 @@ import { MasterDetailService, IMasterDetailText } from './master-detail.service'
   styleUrls: ['./master-detail.component.css']
 })
 export class MasterDetailComponent implements OnInit {
+  greyAvatarUrl = '../../../assets/GreyAvatar.svg';
+  warningMessageText = 'Request to get master detail text failed:';
+  warningMessageOpen = false;
+  currentSampleOrder={};
+  sampleOrders: ISampleOrder[] = [];
 
-  GreyAvatar = require('../../../assets/GreyAvatar.svg') as string;
-  WarningMessageText = 'Request to get master detail text failed:';
-  WarningMessageOpen = false;
-  currentDisplayTabIndex = 0;
-  masterDetailText: IMasterDetailText[] = [];
-
-  constructor(private masterDetailService: MasterDetailService) { }
+  constructor(private masterDetailService: MasterDetailService) {}
 
   ngOnInit() {
     this.masterDetailService.getMasterDetailItems().subscribe(
-      result => {
-        this.masterDetailText = result;
+      (result: ISampleOrder[]) => {
+        this.sampleOrders = result;
+        this.currentSampleOrder = result[0];
       },
       error => {
-        this.WarningMessageOpen = true;
-        this.WarningMessageText = `Request to get master detail text failed: ${error}`;
+        this.warningMessageOpen = true;
+        this.warningMessageText = `Request to get master detail text failed: ${error}`;
       }
     );
   }
 
-  handleDisplayTabClick(id: number) {
-    this.currentDisplayTabIndex = id;
+  selectSampleOrder(sampleOrder: ISampleOrder) {
+    this.currentSampleOrder = sampleOrder;
   }
+
   handleWarningClose(open: boolean) {
-    this.WarningMessageOpen = open;
-    this.WarningMessageText = '';
+    this.warningMessageOpen = open;
+    this.warningMessageText = '';
   }
 }
-
-
