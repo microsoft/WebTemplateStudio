@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavBarComponent } from './app-shell/nav-bar/nav-bar.component';
 import { FooterComponent } from './app-shell/footer/footer.component';
-import { AuthInterceptorService } from './auth-interceptor.service';
+import { InterceptorService } from './interceptor.service';
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent, FooterComponent],
@@ -18,7 +18,7 @@ import { AuthInterceptorService } from './auth-interceptor.service';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
+      useClass: InterceptorService,
       multi: true
     }
   ],
