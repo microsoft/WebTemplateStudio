@@ -6,6 +6,10 @@ export class AppPage {
   }
 
   getTitleText() {
-    return element(by.css('app-root h1')).getText() as Promise<string>;
+    return element(by.css('.navbar-brand')).getText() as Promise<string>;
+  }
+
+  getNavigationElements() {
+   return element.all(by.css('.nav-link')).count() as Promise<number>;
   }
 }
