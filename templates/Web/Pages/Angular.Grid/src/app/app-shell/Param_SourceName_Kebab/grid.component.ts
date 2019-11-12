@@ -24,11 +24,6 @@ export class GridComponent implements OnInit {
       this.warningMessageText =  `Request to get grid text failed: ${error}`;
       this.warningMessageOpen = true; 
       return of(null);
-    }));
-  }
-
-  handleWarningClose(open: boolean) {
-    this.warningMessageOpen = open;
-    this.warningMessageText = '';
+    })).subscribe();
   }
 }

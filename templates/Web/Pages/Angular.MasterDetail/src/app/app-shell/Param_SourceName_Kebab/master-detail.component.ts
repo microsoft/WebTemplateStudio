@@ -25,7 +25,7 @@ export class MasterDetailComponent implements OnInit {
         this.currentSampleOrder = listSampleOrders[0];
       }),
       catchError((error) => { 
-        this.warningMessageText = 'Request to get master detail text failed: ${error}'; 
+        this.warningMessageText = `Request to get master detail text failed: ${error}`; 
         this.warningMessageOpen = true; 
         return of(null);
       }))
@@ -34,10 +34,5 @@ export class MasterDetailComponent implements OnInit {
 
   selectSampleOrder(sampleOrder: ISampleOrder) {
     this.currentSampleOrder = sampleOrder;
-  }
-
-  handleWarningClose(open: boolean) {
-    this.warningMessageOpen = open;
-    this.warningMessageText = '';
   }
 }

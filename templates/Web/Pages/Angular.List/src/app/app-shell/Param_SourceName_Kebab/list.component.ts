@@ -20,10 +20,10 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.listItems = this.listService.getListItems();
     this.listItems.pipe(catchError((error) => { 
-      this.warningMessageText = 'Request to get master detail text failed: ${error}'; 
+      this.warningMessageText = `Request to get list failed: ${error}`; 
       this.warningMessageOpen = true; 
       return of(null);
-    }));
+    })).subscribe();
   }
 
   addItem(inputText: string) {
@@ -50,10 +50,5 @@ export class ListComponent implements OnInit {
         this.warningMessageText = `Request to delete list item failed: ${error}`;
       }
     );
-  }
-
-  handleWarningClose(open: boolean) {
-    this.warningMessageOpen = open;
-    this.warningMessageText = '';
   }
 }
