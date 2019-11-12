@@ -51,4 +51,9 @@ export class ListComponent implements OnInit {
       }
     );
   }
+
+  handleWarningClose(open: boolean) {	
+    this.warningMessageOpen = open;	
+    this.warningMessageText = '';	
+  }
 }

@@ -35,4 +35,9 @@ export class MasterDetailComponent implements OnInit {
   selectSampleOrder(sampleOrder: ISampleOrder) {
     this.currentSampleOrder = sampleOrder;
   }
+
+  handleWarningClose(open: boolean) {	
+    this.warningMessageOpen = open;	
+    this.warningMessageText = '';	
+  }
 }
