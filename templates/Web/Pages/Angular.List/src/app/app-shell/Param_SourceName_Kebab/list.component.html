@@ -4,14 +4,14 @@
       <h3>Angular AngularList Template</h3>
     </div>
     <div class="col-12 p-0">
-      <app-list-form (inputText)="handleAddListItem($event)"></app-list-form>
+      <app-list-form (inputText)="addItem($event)"></app-list-form>
     </div>
     <app-list-item
       class="col-12 mb-3 border"
-      *ngFor="let listItem of listItems"
-      [text]="listItem.text"
-      [_id]="listItem._id"
-      (deleteText)="handleDeleteListItem($event)"
+      *ngFor="let item of (listItems$ | async)"
+      [text]="item.text"
+      [_id]="item._id"
+      (deleteText)="deleteItem($event)"
     >
     </app-list-item>
 
