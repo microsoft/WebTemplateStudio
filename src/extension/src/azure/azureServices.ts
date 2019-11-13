@@ -474,6 +474,12 @@ export class AzureServices extends WizardServant {
     const aspName = await AzureServices.AzureAppServiceProvider.generateValidASPName(
       payload.engine.projectName
     );
+    const appServicePlan = AzureServices.IsMicrosoftLearnSubscription(
+      AzureServices.usersAppServiceSubscriptionItemCache
+    )
+      ? CONSTANTS.SKU_DESCRIPTION.FREE
+      : CONSTANTS.SKU_DESCRIPTION.BASIC;
+
     const userAppServiceSelection: AppServiceSelections = {
       siteName: payload.appService.siteName,
       subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
@@ -482,8 +488,8 @@ export class AzureServices extends WizardServant {
         AzureServices.usersAppServiceSubscriptionItemCache
       ),
       appServicePlanName: aspName,
-      tier: CONSTANTS.SKU_DESCRIPTION.FREE.tier,
-      sku: CONSTANTS.SKU_DESCRIPTION.FREE.name,
+      tier: appServicePlan.tier,
+      sku: appServicePlan.name,
       linuxFxVersion:
         BackendFrameworkLinuxVersion[payload.engine.backendFramework],
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
