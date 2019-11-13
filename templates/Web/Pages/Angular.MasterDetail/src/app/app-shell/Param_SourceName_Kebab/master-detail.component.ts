@@ -15,13 +15,13 @@ export class MasterDetailComponent implements OnInit {
   warningMessageText = 'Request to get master detail text failed:';
   warningMessageOpen = false;
   currentSampleOrder={};
-  sampleOrders: Observable<ISampleOrder[]>;
+  sampleOrders$: Observable<ISampleOrder[]>;
 
   constructor(private masterDetailService: MasterDetailService) {}
 
   ngOnInit() {
-    this.sampleOrders = this.masterDetailService.getMasterDetailItems();
-    this.sampleOrders.pipe(map(listSampleOrders => {
+    this.sampleOrders$ = this.masterDetailService.getMasterDetailItems();
+    this.sampleOrders$.pipe(map(listSampleOrders => {
         this.currentSampleOrder = listSampleOrders[0];
       }),
       catchError((error) => { 
