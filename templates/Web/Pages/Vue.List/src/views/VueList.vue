@@ -5,13 +5,13 @@
         <h3>Bootstrap VueList Template</h3>
       </div>
       <div class="col-12 p-0">
-        <ListForm v-model="textField" @onAddListItem="handleAddListItem" />
+        <ListForm v-model="textField" @addListItem="addListItem" />
       </div>
       <ListItem
-        v-for="listItem in list"
+        v-for="listItem in listItems"
         :key="listItem._id"
         :listItem="listItem"
-        @onDeleteListItem="handleDeleteListItem"
+        @deleteListItem="deleteListItem"
       />
       <BaseWarningMessage
         v-if="WarningMessageOpen"
@@ -39,7 +39,7 @@ export default {
 
   data() {
     return {
-      list: [],
+      listItems: [],
       textField: "",
       WarningMessageOpen: false,
       WarningMessageText: ""
@@ -47,11 +47,11 @@ export default {
   },
 
   created() {
-    this.fetchTextAssets();
+    this.loadListItem();
   },
 
   methods: {
-    fetchTextAssets() {
+    loadListItem() {
       fetch(CONSTANTS.ENDPOINT.LIST)
         .then(response => {
           if (!response.ok) {
@@ -59,13 +59,13 @@ export default {
           }
           return response.json();
         })
-        .then(result => (this.list = result))
+        .then(result => (this.listItems = result))
         .catch(error => {
           this.WarningMessageOpen = true;
           this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`;
         });
     },
-    handleAddListItem() {
+    addListItem() {
       fetch(CONSTANTS.ENDPOINT.LIST, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -80,7 +80,7 @@ export default {
           return response.json();
         })
         .then(result => {
-          this.list.unshift(result);
+          this.listItems.unshift(result);
           this.textField = "";
         })
         .catch(error => {
@@ -88,7 +88,7 @@ export default {
           this.WarningMessageText = `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`;
         });
     },
-    handleDeleteListItem(listItem) {
+    deleteListItem(listItem) {
       fetch(`${CONSTANTS.ENDPOINT.LIST}/${listItem._id}`, { method: "DELETE" })
         .then(response => {
           if (!response.ok) {
@@ -97,7 +97,7 @@ export default {
           return response.json();
         })
         .then(result => {
-          this.list = this.list.filter(item => item._id !== result._id);
+          this.listItems = this.listItems.filter(item => item._id !== result._id);
         })
         .catch(error => {
           this.WarningMessageOpen = true;

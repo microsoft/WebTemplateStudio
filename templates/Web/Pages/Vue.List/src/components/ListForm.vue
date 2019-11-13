@@ -1,5 +1,5 @@
 ﻿<template>
-  <form class="input-group my-3" @submit.prevent="$emit('onAddListItem')">
+  <form class="input-group my-3" @submit.prevent="$emit('addListItem')">
     <div class="col-11">
       <input
         :value="value"
@@ -41,7 +41,7 @@ export default {
     this.$on("input", val => {
       this.isValid = this.isSubmitable = val.length > 0;
     });
-    this.$on("onAddListItem", () => {
+    this.$on("addListItem", () => {
       this.isValid = true;
       this.isSubmitable = false;
     });

@@ -29,7 +29,7 @@ export default class ReactList extends Component {
       );
   }
 
-  handleDeleteListItem = (listItem) => {
+  deleteListItem = (listItem) => {
     fetch(`${CONSTANTS.ENDPOINT.LIST}/${listItem._id}`, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
@@ -49,7 +49,7 @@ export default class ReactList extends Component {
       });
   }
 
-  handleAddListItem = (textField) => {
+  addListItem = (textField) => {
     // Warning Pop Up if the user submits an empty message
     if (!textField) {
       this.setState({
@@ -106,14 +106,14 @@ export default class ReactList extends Component {
           </div>
           <div className="col-12 p-0">
             <ListForm
-              onAddListItem={this.handleAddListItem}
+              addListItem={this.addListItem}
             />
           </div>
           {listItems.map(listItem => (
             <ListItem
               key={listItem._id}
               listItem={listItem}
-              onDeleteListItem={this.handleDeleteListItem}
+              deleteListItem={this.deleteListItem}
             />
           ))}
           <WarningMessage

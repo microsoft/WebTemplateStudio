@@ -11,7 +11,7 @@ export default class ListForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.onAddListItem(this.state.textField);
+    this.props.addListItem(this.state.textField);
     this.setState({ textField: "" });
   }
 
