@@ -11,15 +11,15 @@ import {Observable, of} from 'rxjs';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  listItems: Observable<IListItem[]>;
+  listItems$: Observable<IListItem[]>;
   warningMessageText = 'Request to get list items failed:';
   warningMessageOpen = false;
 
   constructor(private listService: ListService) {}
 
   ngOnInit() {
-    this.listItems = this.listService.getListItems();
-    this.listItems.pipe(catchError((error) => { 
+    this.listItems$ = this.listService.getListItems();
+    this.listItems$.pipe(catchError((error) => { 
       this.warningMessageText = `Request to get list failed: ${error}`; 
       this.warningMessageOpen = true; 
       return of(null);
@@ -29,7 +29,7 @@ export class ListComponent implements OnInit {
   addItem(inputText: string) {
     this.listService.addListItem(inputText).subscribe(
       (response: IListItem) => {
-        this.listItems = this.listItems.pipe(map(_listItems => _listItems));
+        this.listItems$ = this.listItems$.pipe(map(_listItems => _listItems));
       },
       error => {
         this.warningMessageOpen = true;
@@ -41,7 +41,7 @@ export class ListComponent implements OnInit {
   deleteItem(id: number) {
     this.listService.deleteListItem(id).subscribe(
       (response: IListItem) => {
-        this.listItems = this.listItems.pipe(map(_listItems => {
+        this.listItems$ = this.listItems$.pipe(map(_listItems => {
           return _listItems.filter(item => item._id !== response._id);
         }));
       },
