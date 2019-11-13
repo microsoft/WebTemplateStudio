@@ -9,7 +9,7 @@ import { Param_SourceName_PascalModule } from './app-shell/Param_SourceName_Keba
 //}]}
 import { NavBarComponent } from './app-shell/nav-bar/nav-bar.component';
 import { FooterComponent } from './app-shell/footer/footer.component';
-import { AuthInterceptorService } from './auth-interceptor.service';
+import { ServiceInterceptor } from './service.interceptor';
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent, FooterComponent],
@@ -24,7 +24,7 @@ import { AuthInterceptorService } from './auth-interceptor.service';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
+      useClass: ServiceInterceptor,
       multi: true
     }
   ],
