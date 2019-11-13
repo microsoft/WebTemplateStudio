@@ -6,7 +6,7 @@ import CONSTANTS from "../../constants";
 
 export default class ReactList extends Component {
   state = {
-    list: [],
+    listItems: [],
     warningMessageOpen: false,
     warningMessageText: ""
   }
@@ -20,7 +20,7 @@ export default class ReactList extends Component {
         }
         return response.json();
       })
-      .then(result => this.setState({ list: result }))
+      .then(result => this.setState({ listItems: result }))
       .catch(error =>
         this.setState({
           warningMessageOpen: true,
@@ -38,9 +38,8 @@ export default class ReactList extends Component {
         return response.json();
       })
       .then(result => {
-        let list = this.state.list;
-        list = list.filter(item => item._id !== result._id);
-        this.setState({ list: list });
+        let list = this.state.listItems.filter(item => item._id !== result._id);
+        this.setState({ listItems: list });
       })
       .catch(error => {
         this.setState({
@@ -75,7 +74,7 @@ export default class ReactList extends Component {
       })
       .then(result =>
         this.setState(prevState => ({
-          list: [result, ...prevState.list]
+          listItems: [result, ...prevState.listItems]
         }))
       )
       .catch(error =>
@@ -95,7 +94,7 @@ export default class ReactList extends Component {
 
   render() {
     const {
-      list,
+      listItems,
       warningMessageOpen,
       warningMessageText
     } = this.state;
@@ -110,7 +109,7 @@ export default class ReactList extends Component {
               onAddListItem={this.handleAddListItem}
             />
           </div>
-          {list.map(listItem => (
+          {listItems.map(listItem => (
             <ListItem
               key={listItem._id}
               listItem={listItem}
