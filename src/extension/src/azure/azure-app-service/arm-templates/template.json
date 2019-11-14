@@ -8,6 +8,7 @@
       "location": "[parameters('location')]",
       "dependsOn": [],
       "sku": {
+        "Tier": "[parameters('tier')]",
         "name": "[parameters('sku')]"
       },
       "properties": {
@@ -39,6 +40,9 @@
       "type": "string"
     },
     "appServicePlanName": {
+      "type": "string"
+    },
+    "tier": {
       "type": "string"
     },
     "sku": {

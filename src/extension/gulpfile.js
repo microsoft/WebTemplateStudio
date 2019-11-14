@@ -117,5 +117,11 @@ function compile(buildNls) {
     );
   }
 
+  // Copy configuration.json to out folder because gulp-typescript-package
+  // has a issue with resolveJsonModule option
+  // (https://github.com/ivogabe/gulp-typescript/issues/609)
+  gulp.src('src/configuration.json')
+    .pipe(gulp.dest(outDest));
+
   return r.pipe(gulp.dest(outDest));
 }
