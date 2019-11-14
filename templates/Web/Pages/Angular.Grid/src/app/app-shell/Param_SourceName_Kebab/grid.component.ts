@@ -14,13 +14,13 @@ export class GridComponent implements OnInit {
   greyBoxUrl = '../../../assets/GreyBox.svg';
   warningMessageText = 'Request to get grid text failed:';
   warningMessageOpen = false;
-  listItems: Observable<IGridTextItem[]>;
+  gridItems$: Observable<IGridTextItem[]>;
 
   constructor(private gridService: GridService) {}
 
   ngOnInit() {
-    this.listItems = this.gridService.getGridItems();
-    this.listItems.pipe(catchError((error) => { 
+    this.gridItems$ = this.gridService.getGridItems();
+    this.gridItems$.pipe(catchError((error) => { 
       this.warningMessageText =  `Request to get grid text failed: ${error}`;
       this.warningMessageOpen = true; 
       return of(null);
