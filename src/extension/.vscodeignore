@@ -13,4 +13,3 @@ vsc-extension-quickstart.md
 !src/azure/azure-cosmosDB/arm-templates
 !src/azure/azure-functions/arm-templates
 !src/azure/azure-functions/templates
-!src/configuration.json
