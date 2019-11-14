@@ -11,7 +11,7 @@ describe('workspace-project App', () => {
   });
 
   it('should display navbar with app name', () => {
-    expect(page.getTitleText()).toBe(name);
+    expect(page.getTitleText()).toBe('wts.AngularDefault');
   });
 
   it('should contain at least one template page ', () => {
