@@ -5,10 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
+            "type": "chrome",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}\\start"
-        }
+            "name": "Debug WebTS Client",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}\\src"
+          }
     ]
 }
