@@ -1,4 +1,6 @@
 import * as vscode from "vscode";
+import { MICROSOFT_LEARN_TENANTS } from './../configuration.json';
+
 import {
   AzureAuth,
   SubscriptionItem,
@@ -428,18 +430,29 @@ export class AzureServices extends WizardServant {
       allDistinctSubscriptions
     );
 
-    return allDistinctSubscriptions.map(subscription =>
-      AzureServices.generateResourceGroupSelection(generatedName, subscription)
+    return await Promise.all(
+      allDistinctSubscriptions.map(
+        async subscription =>
+          await AzureServices.generateResourceGroupSelection(
+            generatedName,
+            subscription
+          )
+      )
     );
   }
 
-  private static generateResourceGroupSelection(
+  private static async generateResourceGroupSelection(
     generatedName: string,
     subscriptionItem: SubscriptionItem
-  ): ResourceGroupSelection {
+  ): Promise<ResourceGroupSelection> {
+    let resourceGroupName = generatedName;
+    if (AzureServices.IsMicrosoftLearnSubscription(subscriptionItem)) {
+      let resourceGroups = await AzureServices.AzureResourceGroupProvider.GetResourceGroups(subscriptionItem);
+      resourceGroupName = resourceGroups[0].name as string;
+    }
     return {
       subscriptionItem: subscriptionItem,
-      resourceGroupName: generatedName,
+      resourceGroupName: resourceGroupName,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
     };
   }
@@ -447,9 +460,11 @@ export class AzureServices extends WizardServant {
   public static async deployResourceGroup(
     selections: ResourceGroupSelection
   ): Promise<any> {
-    return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
-      selections
-    );
+    if (!AzureServices.IsMicrosoftLearnSubscription(selections.subscriptionItem)) {
+      return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
+        selections
+      );
+    }
   }
 
   public static async deployWebApp(payload: any): Promise<string> {
@@ -459,6 +474,12 @@ export class AzureServices extends WizardServant {
     const aspName = await AzureServices.AzureAppServiceProvider.generateValidASPName(
       payload.engine.projectName
     );
+    const appServicePlan = AzureServices.IsMicrosoftLearnSubscription(
+      AzureServices.usersAppServiceSubscriptionItemCache
+    )
+      ? CONSTANTS.SKU_DESCRIPTION.FREE
+      : CONSTANTS.SKU_DESCRIPTION.BASIC;
+
     const userAppServiceSelection: AppServiceSelections = {
       siteName: payload.appService.siteName,
       subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
@@ -467,7 +488,8 @@ export class AzureServices extends WizardServant {
         AzureServices.usersAppServiceSubscriptionItemCache
       ),
       appServicePlanName: aspName,
-      sku: CONSTANTS.SKU_DESCRIPTION.BASIC.name,
+      tier: appServicePlan.tier,
+      sku: appServicePlan.name,
       linuxFxVersion:
         BackendFrameworkLinuxVersion[payload.engine.backendFramework],
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
@@ -645,5 +667,13 @@ export class AzureServices extends WizardServant {
       result[key] = value;
     }
     return result;
+  }
+
+  private static IsMicrosoftLearnSubscription(
+    subscriptionItem: SubscriptionItem
+  ): boolean {
+    return MICROSOFT_LEARN_TENANTS.includes(
+      subscriptionItem.session.tenantId
+    );
   }
 }
