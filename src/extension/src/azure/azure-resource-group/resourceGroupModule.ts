@@ -1,6 +1,6 @@
 import { SubscriptionItem } from "../azure-auth/azureAuth";
 import { ResourceManager } from "../azure-arm/resourceManager";
-import { ResourceGroup } from "azure-arm-resource/lib/resource/models";
+import { ResourceGroup, ResourceGroupListResult } from "azure-arm-resource/lib/resource/models";
 import { ResourceManagementClient } from "azure-arm-resource/lib/resource/resourceManagementClient";
 import {
   ResourceGroupError,
@@ -114,5 +114,18 @@ export class ResourceGroupDeploy {
       name
     );
     return !exist;
+  }
+
+  public async GetResourceGroups(
+    subscriptionItem: SubscriptionItem
+  ): Promise<ResourceGroupListResult> {
+    this.setAzureResourceClient(subscriptionItem);
+    if (this.azureResourceClient === undefined) {
+      throw new AuthorizationError(
+        CONSTANTS.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED
+      );
+    }
+    let groups = await this.azureResourceClient.resourceGroups.list();
+    return groups;
   }
 }
