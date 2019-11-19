@@ -30,6 +30,8 @@ _Note: If using Windows, use Git Bash_.
 
 ## Developing the Client
 
+The client was bootstrapped using [Create-React-App with TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript).
+
 The client lives in the `src/client` directory. To run the client for development, navigate to `src/client` and use the command
 
 ```
@@ -38,7 +40,23 @@ yarn start
 
 to begin development in the browser. We recommend using a chromium based browser such as Chrome.
 
-The client was bootstrapped using [Create-React-App with TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript).
+### To debug from Visual Studio Code:
+
+Install [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) in Visual Studio Code debug Wizard Client.
+
+Steps:
+
+- Use the command:
+```
+yarn start
+```
+- In VSCode Debug View (Ctrl+Shift+D) select "Debug WebTS Client" and start debugging (F5) 
+
+
+More info: 
+- https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
+- https://code.visualstudio.com/docs/editor/debugging
+
 
 ## Creating VSIX Package
 
