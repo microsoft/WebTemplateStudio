@@ -2,10 +2,10 @@
 import classnames from "classnames";
 import styles from "./masterdetail.module.css";
 
-export default function MasterDetailSideBarTab({ index, image, tabText, onDisplayTabClick }) {
+export default function MasterDetailSideBarTab({ sampleOrder, selectSampleOrder }) {
   return (
     <button
-      onClick={() => onDisplayTabClick(index)}
+      onClick={() => selectSampleOrder(sampleOrder)}
       type="button"
       className={classnames(
         "list-group-item",
@@ -13,8 +13,8 @@ export default function MasterDetailSideBarTab({ index, image, tabText, onDispla
         styles.sidebarText
       )}
     >
-      <img src={image} alt="Default Grey Avatar" className="mr-3" />
-      {tabText}
+      <img src={require('../../images/' + sampleOrder.imageName)} alt="Default Grey Avatar" className="mr-3" />
+      {sampleOrder.title}
     </button>
   );
 }

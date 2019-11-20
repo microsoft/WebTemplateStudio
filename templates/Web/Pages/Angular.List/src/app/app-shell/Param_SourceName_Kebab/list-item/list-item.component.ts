@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { IListItem } from '../list.model';
 
 @Component({
   selector: 'app-list-item',
@@ -8,14 +9,14 @@
 export class ListItemComponent implements OnInit {
   // tslint:disable-next-line:variable-name
   @Input() _id: number;
-  @Input() text: string;
-  @Output() deleteText = new EventEmitter<number>();
+  @Input() listItem: IListItem;
+  @Output() deleteItem = new EventEmitter<number>();
 
   constructor() {}
 
   ngOnInit() {}
 
-  onDeleteListItem() {
-    this.deleteText.emit(this._id);
+  deleteItemFn() {
+    this.deleteItem.emit(this._id);
   }
 }
