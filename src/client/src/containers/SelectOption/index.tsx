@@ -206,7 +206,7 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
       })
 
       if (cardTypeCount && handleCountUpdate) {
-        cardTypeCount[internalName] = currentCardData.filter(cc => cc.internalName==internalName).length;
+        cardTypeCount[internalName] = this.getCardCount(internalName);
         handleCountUpdate(cardTypeCount);
       }
 
@@ -291,7 +291,7 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
       description: intl.formatMessage(messages.limitedPages)
     });
     if (cardTypeCount && handleCountUpdate && currentCardData) {
-      cardTypeCount[internalName] = currentCardData.filter(cc => cc.internalName==internalName).length + 1;
+      cardTypeCount[internalName] = this.getCardCount(internalName) + 1;
       handleCountUpdate(cardTypeCount);
       this.addOption(cardNumber, cardTypeCount[internalName], internalName);
     }
