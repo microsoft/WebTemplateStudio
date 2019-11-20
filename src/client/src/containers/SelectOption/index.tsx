@@ -50,8 +50,8 @@ interface IProps {
 
 interface ISelectOptionProps {
   title: string;
-  description: string;
-  internalName?: string;
+  //description: string;
+  //internalName?: string;
   selectCard?: (card: ISelected) => void;
   selectedCardIndices: number[];
   currentCardData: ISelected[];
@@ -264,15 +264,10 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
    * If card can only be clicked once, this function returns undefined.
    */ 
   public getCardCount = (internalName: string) => {
-    const { selectedCardIndices, multiSelect, options } = this.props;
-    if (selectedCardIndices && multiSelect) {
-      return selectedCardIndices.reduce((cardCount: number, card: number) => {
-        if (options[card].internalName === internalName) {
-          return cardCount + 1;
-        }
-        return cardCount;
-      }, 0);
-    }
+    const { currentCardData } = this.props;
+    const counterCardData = currentCardData ? 
+      currentCardData.filter(cc => cc.internalName==internalName).length:0;
+    return counterCardData;
   };
 
   public addPage = (cardNumber: number) => {
