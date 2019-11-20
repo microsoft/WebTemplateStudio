@@ -80,7 +80,7 @@ interface IStateProps {
 
 type Props = IDispatchProps & ISelectOptionProps & IStateProps & IProps;
 
-class SelectOption extends React.Component<Props, ISelectOptionState> {
+export class SelectOption extends React.Component<Props, ISelectOptionState> {
   constructor(props: Props) {
     super(props);
     const { selectedCardIndices } = props;
@@ -169,7 +169,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     selectedCardIndices.push(cardNumber);
     if (selectOptions && currentCardData) {
-      const currentCards = currentCardData.splice(0);
+      let currentCards = currentCardData;
       currentCards.push(
         this.mapIndexToCardInfo(cardCount, internalName, cardNumber)
       );
@@ -181,13 +181,19 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public removeOption(internalName: string) {
-    const { selectedCardIndices, currentCardData, selectOptions } = this.props;
+    const { selectedCardIndices, currentCardData, selectOptions, handleCountUpdate, cardTypeCount } = this.props;
     if (selectOptions && currentCardData && currentCardData.length > 1) {
       const size = currentCardData.length;
-      const currentCards = currentCardData.splice(0);
+      const currentCards = currentCardData;
       for (let i = size - 1; i >= 0; i--) {
         if (currentCards[i].internalName === internalName) {
           currentCards.splice(i, 1);
+          if (cardTypeCount && handleCountUpdate) {
+            cardTypeCount[internalName] = cardTypeCount[internalName]
+              ? cardTypeCount[internalName] - 1
+              : 0;
+            handleCountUpdate(cardTypeCount);
+          }
           break;
         }
       }
