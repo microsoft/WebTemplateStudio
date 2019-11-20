@@ -5,15 +5,14 @@
         <div class="col-2 p-0 border-right sidebar">
           <div class="list-group list-group-flush border-bottom">
             <MasterDetailSideBarTab
-              v-for="(textAssets, index) in masterDetailText"
-              :key="textAssets.id"
-              :index="index"
-              :tabText="textAssets.title"
-              @onDisplayTabClick="handleDisplayTabClick"
+              v-for="(sampleOrder) in sampleOrders"
+              :key="sampleOrder.id"
+              :sampleOrder="sampleOrder"
+              @selectSampleOrder="selectSampleOrder"
             />
           </div>
         </div>
-        <MasterDetailPage :textSampleData="masterDetailText[currentDisplayTabIndex]" />
+        <MasterDetailPage v-if="currentSampleOrder.id" :sampleOrder="currentSampleOrder" />
       </div>
     </main>
     <BaseWarningMessage
@@ -41,18 +40,8 @@ export default {
 
   data() {
     return {
-      masterDetailText: [
-        {
-          id: 0,
-          longDescription: "",
-          orderDate: "",
-          orderTotal: 0,
-          shipTo: "",
-          status: "",
-          title: ""
-        }
-      ],
-      currentDisplayTabIndex: 0,
+      sampleOrders: [],
+      currentSampleOrder: {},
       WarningMessageOpen: false,
       WarningMessageText: ""
     };
@@ -71,8 +60,9 @@ export default {
           }
           return response.json();
         })
-        .then(result => {
-          this.masterDetailText = result;
+        .then(listSampleOrders => {
+          this.sampleOrders = listSampleOrders;
+          this.currentSampleOrder = listSampleOrders[0];
         })
         .catch(error => {
           this.WarningMessageOpen = true;
@@ -83,8 +73,8 @@ export default {
       this.WarningMessageOpen = false;
       this.WarningMessageText = "";
     },
-    handleDisplayTabClick(id) {
-      this.currentDisplayTabIndex = id;
+    selectSampleOrder(sampleOrder) {
+      this.currentSampleOrder = sampleOrder;
     }
   }
 };
