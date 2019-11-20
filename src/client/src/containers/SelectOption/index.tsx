@@ -148,19 +148,14 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   private getNewCard(
-    count: number,
     internalName: string,
     optionIndexContainingData: number
   ) {
-    const { defaultName, licenses, author } = this.props.options[
-      optionIndexContainingData
-    ];
-    const title = this.createTitleToNewCard(optionIndexContainingData);
-
+    const { defaultName, licenses, author } = this.props.options[optionIndexContainingData];
     const cardInfo: ISelected = {
-      title: title as string,
+      title: this.createTitleToNewCard(optionIndexContainingData) as string,
       internalName,
-      id: title as string,
+      id: this.createTitleToNewCard(optionIndexContainingData) as string,
       defaultName,
       isValidTitle: true,
       licenses,
@@ -177,17 +172,13 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
    */
   public addOption(
     cardNumber: number,
-    cardCount: number,
     internalName: string
   ) {
     const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     selectedCardIndices.push(cardNumber);
     if (selectOptions && currentCardData) {
-      let currentCards = currentCardData;
-      currentCards.push(
-        this.getNewCard(cardCount, internalName, cardNumber)
-      );
-      selectOptions(currentCards);
+      currentCardData.push(this.getNewCard(internalName, cardNumber));
+      selectOptions(currentCardData);
     }
     this.setState({
       selectedCardIndices
@@ -293,7 +284,7 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
     if (cardTypeCount && handleCountUpdate && currentCardData) {
       cardTypeCount[internalName] = this.getCardCount(internalName) + 1;
       handleCountUpdate(cardTypeCount);
-      this.addOption(cardNumber, cardTypeCount[internalName], internalName);
+      this.addOption(cardNumber, internalName);
     }
   };
 
