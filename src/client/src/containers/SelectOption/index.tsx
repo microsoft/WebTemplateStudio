@@ -54,7 +54,7 @@ interface ISelectOptionProps {
   internalName?: string;
   selectCard?: (card: ISelected) => void;
   selectedCardIndices: number[];
-  currentCardData?: ISelected[];
+  currentCardData: ISelected[];
   selectOptions?: (cards: ISelected[]) => void;
   options: IOption[];
   multiSelect: boolean;
@@ -125,15 +125,29 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
    * @param count
    * @param cardData
    */
-  public createTitle(optionIndexContainingData: number, count: number) {
-    const { title } = this.props.options[optionIndexContainingData];
-    if (count === 1) {
-      return title;
+  public createTitleToNewCard(optionIndexContainingData: number) {
+    const { title, internalName } = this.props.options[optionIndexContainingData];
+    const { currentCardData } = this.props;
+    let newTitle="";
+
+    if (currentCardData){
+      const currentCardDataFiltered = currentCardData.filter(cc => cc.internalName == internalName);
+      let titleSuggested=title.toString();
+      currentCardDataFiltered.forEach((card, index)=>{
+        titleSuggested = `${title}${index + 2}`;
+        const existTitleSuggested = currentCardDataFiltered.filter(cc => cc.title == titleSuggested).length>0;
+        if (!existTitleSuggested){
+          newTitle = titleSuggested;
+          return;
+        }
+      });
+      if (newTitle=="") newTitle = titleSuggested;
     }
-    return `${title}${count}`;
+
+    return newTitle;
   }
 
-  public mapIndexToCardInfo(
+  private getNewCard(
     count: number,
     internalName: string,
     optionIndexContainingData: number
@@ -141,7 +155,7 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
     const { defaultName, licenses, author } = this.props.options[
       optionIndexContainingData
     ];
-    const title = this.createTitle(optionIndexContainingData, count);
+    const title = this.createTitleToNewCard(optionIndexContainingData);
 
     const cardInfo: ISelected = {
       title: title as string,
@@ -171,7 +185,7 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
     if (selectOptions && currentCardData) {
       let currentCards = currentCardData;
       currentCards.push(
-        this.mapIndexToCardInfo(cardCount, internalName, cardNumber)
+        this.getNewCard(cardCount, internalName, cardNumber)
       );
       selectOptions(currentCards);
     }
@@ -181,23 +195,22 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public removeOption(internalName: string) {
-    const { selectedCardIndices, currentCardData, selectOptions, handleCountUpdate, cardTypeCount } = this.props;
-    if (selectOptions && currentCardData && currentCardData.length > 1) {
-      const size = currentCardData.length;
-      const currentCards = currentCardData;
-      for (let i = size - 1; i >= 0; i--) {
-        if (currentCards[i].internalName === internalName) {
-          currentCards.splice(i, 1);
-          if (cardTypeCount && handleCountUpdate) {
-            cardTypeCount[internalName] = cardTypeCount[internalName]
-              ? cardTypeCount[internalName] - 1
-              : 0;
-            handleCountUpdate(cardTypeCount);
-          }
-          break;
-        }
+    const { selectedCardIndices, selectOptions, handleCountUpdate, cardTypeCount } = this.props;
+    let { currentCardData } = this.props;
+    if (selectOptions && currentCardData.length > 1) {
+      const lastCurrentCarDataFiltered = currentCardData.filter(cc => cc.internalName==internalName)[
+        currentCardData.filter(cc => cc.internalName==internalName).length-1
+      ];
+      currentCardData.forEach((card, index)=>{
+        if (card.id==lastCurrentCarDataFiltered.id && card.internalName == internalName) currentCardData.splice(index, 1);
+      })
+
+      if (cardTypeCount && handleCountUpdate) {
+        cardTypeCount[internalName] = currentCardData.filter(cc => cc.internalName==internalName).length;
+        handleCountUpdate(cardTypeCount);
       }
-      selectOptions(currentCards);
+
+      selectOptions(currentCardData);
       this.setState({
         selectedCardIndices
       });
@@ -249,7 +262,7 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
    * Returns the number of times that a particular card was selected/clicked on.
    *
    * If card can only be clicked once, this function returns undefined.
-   */
+   */ 
   public getCardCount = (internalName: string) => {
     const { selectedCardIndices, multiSelect, options } = this.props;
     if (selectedCardIndices && multiSelect) {
@@ -282,10 +295,8 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
       pageOutOfBounds: false,
       description: intl.formatMessage(messages.limitedPages)
     });
-    if (cardTypeCount && handleCountUpdate) {
-      cardTypeCount[internalName] = cardTypeCount[internalName]
-        ? cardTypeCount[internalName] + 1
-        : 1;
+    if (cardTypeCount && handleCountUpdate && currentCardData) {
+      cardTypeCount[internalName] = currentCardData.filter(cc => cc.internalName==internalName).length + 1;
       handleCountUpdate(cardTypeCount);
       this.addOption(cardNumber, cardTypeCount[internalName], internalName);
     }
