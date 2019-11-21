@@ -112,16 +112,6 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
     return this.state.selectedCardIndices.includes(cardNumber);
   }
 
-  /**
-   * Creates a title for the card being selected (e.g. selected Page).
-   * Prepends a number of a certain card is selected more than once.
-   * Only changes the title of the last card selected.
-   *
-   * @param selectedCardIndex
-   * @param optionIndexContainingData
-   * @param count
-   * @param cardData
-   */
   public createTitleToNewCard(optionIndexContainingData: number) {
     const { title, internalName } = this.props.options[optionIndexContainingData];
     const { currentCardData } = this.props;
@@ -161,12 +151,6 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
     return cardInfo;
   }
 
-  /**
-   * Allows more than one option to be selected at a time.
-   * Updates the redux store with the selection.
-   *
-   * @param cardNumber
-   */
   public addOption(
     cardNumber: number,
     internalName: string
@@ -241,11 +225,6 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
     }
   }
 
-  /**
-   * Returns the number of times that a particular card was selected/clicked on.
-   *
-   * If card can only be clicked once, this function returns undefined.
-   */ 
   public getCardCount = (internalName: string) => {
     const { currentCardData } = this.props;
     const counterCardData = currentCardData ? 
