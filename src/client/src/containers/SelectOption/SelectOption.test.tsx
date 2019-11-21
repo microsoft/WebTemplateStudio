@@ -104,52 +104,52 @@ describe("SelectOption", () => {
 
     it("on first moment should have 1 page blank", () => {
       expect(props.currentCardData.length).toBe(1);
-      expect(props.cardTypeCount[masterAnyFrameworkBlank]).toBe(1);
+      expect(instance.getCardCount(masterAnyFrameworkBlank)).toBe(1);
     });
 
     it("add 1 page blank", () => {
       instance.addPage(0);
-      expect(props.cardTypeCount[masterAnyFrameworkBlank]).toBe(2);
+      expect(instance.getCardCount(masterAnyFrameworkBlank)).toBe(2);
     });
 
     it("add 1 page blank", () => {
       instance.addPage(0);
-      expect(props.cardTypeCount[masterAnyFrameworkBlank]).toBe(3);
+      expect(instance.getCardCount(masterAnyFrameworkBlank)).toBe(3);
     });
 
     it("remove 1 page blank", () => {
       instance.removePage(0);
-      expect(props.cardTypeCount[masterAnyFrameworkBlank]).toBe(2);
+      expect(instance.getCardCount(masterAnyFrameworkBlank)).toBe(2);
     });
 
     it("add 1 grid page", () => {
       instance.addPage(1);
-      expect(props.cardTypeCount[masterAnyFrameworkGrid]).toBe(1);
+      expect(instance.getCardCount(masterAnyFrameworkGrid)).toBe(1);
     });
 
     it("add 1 grid page", () => {
       instance.addPage(1);
-      expect(props.cardTypeCount[masterAnyFrameworkGrid]).toBe(2);
+      expect(instance.getCardCount(masterAnyFrameworkGrid)).toBe(2);
     });
 
     it("add 1 list page", () => {
       instance.addPage(2);
-      expect(props.cardTypeCount[masterAnyFrameworkList]).toBe(1);
+      expect(instance.getCardCount(masterAnyFrameworkList)).toBe(1);
     });
 
     it("add 1 master page", () => {
       instance.addPage(3);
-      expect(props.cardTypeCount[masterAnyFrameworkMaster]).toBe(1);
+      expect(instance.getCardCount(masterAnyFrameworkMaster)).toBe(1);
     });
 
     it("remove 1 list page", () => {
       instance.removePage(2);
-      expect(props.cardTypeCount[masterAnyFrameworkList]).toBe(0);
+      expect(instance.getCardCount(masterAnyFrameworkList)).toBe(0);
     });
 
     it("remove 1 master page", () => {
       instance.removePage(3);
-      expect(props.cardTypeCount[masterAnyFrameworkMaster]).toBe(0);
+      expect(instance.getCardCount(masterAnyFrameworkMaster)).toBe(0);
     });
 
   });

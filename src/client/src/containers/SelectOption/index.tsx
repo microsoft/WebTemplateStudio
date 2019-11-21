@@ -50,8 +50,6 @@ interface IProps {
 
 interface ISelectOptionProps {
   title: string;
-  //description: string;
-  //internalName?: string;
   selectCard?: (card: ISelected) => void;
   selectedCardIndices: number[];
   currentCardData: ISelected[];
@@ -60,7 +58,6 @@ interface ISelectOptionProps {
   multiSelect: boolean;
   isFrameworkSelection: boolean;
   isPagesSelection: boolean;
-  cardTypeCount?: ICount;
   handleCountUpdate?: (cardCount: ICount) => any;
 }
 
@@ -186,7 +183,7 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 
   public removeOption(internalName: string) {
-    const { selectedCardIndices, selectOptions, handleCountUpdate, cardTypeCount } = this.props;
+    const { selectedCardIndices, selectOptions, handleCountUpdate } = this.props;
     let { currentCardData } = this.props;
     if (selectOptions && currentCardData.length > 1) {
       const lastCurrentCarDataFiltered = currentCardData.filter(cc => cc.internalName==internalName)[
@@ -195,11 +192,6 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
       currentCardData.forEach((card, index)=>{
         if (card.id==lastCurrentCarDataFiltered.id && card.internalName == internalName) currentCardData.splice(index, 1);
       })
-
-      if (cardTypeCount && handleCountUpdate) {
-        cardTypeCount[internalName] = this.getCardCount(internalName);
-        handleCountUpdate(cardTypeCount);
-      }
 
       selectOptions(currentCardData);
       this.setState({
@@ -264,7 +256,6 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
   public addPage = (cardNumber: number) => {
     const {
       options,
-      cardTypeCount,
       handleCountUpdate,
       currentCardData,
       intl
@@ -281,18 +272,13 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
       pageOutOfBounds: false,
       description: intl.formatMessage(messages.limitedPages)
     });
-    if (cardTypeCount && handleCountUpdate && currentCardData) {
-      cardTypeCount[internalName] = this.getCardCount(internalName) + 1;
-      handleCountUpdate(cardTypeCount);
-      this.addOption(cardNumber, internalName);
-    }
+    this.addOption(cardNumber, internalName);
   };
 
   public removePage = (cardNumber: number) => {
     const {
       options,
       currentCardData,
-      cardTypeCount,
       handleCountUpdate,
       intl
     } = this.props;
@@ -309,7 +295,6 @@ export class SelectOption extends React.Component<Props, ISelectOptionState> {
       description: intl.formatMessage(messages.limitedPages)
     });
     if (
-      cardTypeCount &&
       handleCountUpdate &&
       currentCardData &&
       currentCardData.length > 1
