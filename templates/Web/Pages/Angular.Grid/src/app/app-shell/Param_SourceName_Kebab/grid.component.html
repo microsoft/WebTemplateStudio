@@ -16,11 +16,8 @@
     <div class="row justify-content-around text-center pb-5">
       <app-grid-box
         class="col-4 p-5"
-        *ngFor="let item of (gridItems$ | async)"
-        [key]="item.id"
-        [header]="item.title"
-        [description]="item.shortDescription"
-        [imageUrl]="greyBoxUrl"
+        *ngFor="let gridItem of (gridItems$ | async)"
+        [gridItem]="gridItem"
       >
       </app-grid-box>
     </div>

@@ -2,10 +2,10 @@
   <button
     class="list-group-item list-group-item-action styles.sidebarText"
     type="button"
-    @click="$emit('onDisplayTabClick', index)"
+    @click="$emit('selectSampleOrder', sampleOrder)"
   >
-    <img class="mr-3" src="@/assets/GreyAvatar.svg" alt="Default Grey Avatar" />
-    {{tabText}}
+    <img class="mr-3" :src="require('@/assets/' + this.sampleOrder.imageName)" alt="Default Grey Avatar" />
+    {{sampleOrder.title}}
   </button>
 </template>
 
@@ -13,12 +13,8 @@
 export default {
   name: "MasterDetailSideBarTab",
   props: {
-    tabText: {
-      type: String,
-      required: true
-    },
-    index: {
-      type: Number,
+    sampleOrder: {
+      type: Object,
       required: true
     }
   }

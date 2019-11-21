@@ -2,13 +2,12 @@
 import classnames from "classnames";
 import GridComponent from "./GridComponent";
 import WarningMessage from "../WarningMessage";
-import GreyBox from "../../images/GreyBox.svg";
 import styles from "./grid.module.css";
 import CONSTANTS from "../../constants";
 
 export default class ReactGrid extends Component {
   state = {
-    gridTextAssets: [{ description: "", header: "", id: 0 }],
+    gridItems: [],
     warningMessageOpen: false,
     warningMessageText: ""
   }
@@ -24,7 +23,7 @@ export default class ReactGrid extends Component {
         }
         return response.json();
       })
-      .then(result => this.setState({ gridTextAssets: result }))
+      .then(result => this.setState({ gridItems: result }))
       .catch(error =>
         this.setState({
           warningMessageOpen: true,
@@ -42,7 +41,7 @@ export default class ReactGrid extends Component {
 
   render() {
     const {
-      gridTextAssets,
+      gridItems,
       warningMessageOpen,
       warningMessageText
     } = this.state;
@@ -65,12 +64,10 @@ export default class ReactGrid extends Component {
           </div>
 
           <div className="row justify-content-around text-center pb-5">
-            {gridTextAssets.map(textAssets => (
+            {gridItems.map(griItem => (
               <GridComponent
-                key={textAssets.id}
-                header={textAssets.title}
-                description={textAssets.shortDescription}
-                image={GreyBox}
+              key={griItem.id}
+              griItem={griItem}
               />
             ))}
           </div>
