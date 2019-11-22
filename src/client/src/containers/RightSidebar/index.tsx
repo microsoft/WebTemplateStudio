@@ -300,130 +300,131 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
 
     return (
       <React.Fragment>
-        <div className={styles.hamburgerContainer}>
-          <button
-            tabIndex={0}
-            className={styles.hamburgerButton}
-            onClick={this.sidebarToggleClickHandler}
-            aria-label={intl.formatMessage(sideBarMessages.openSideBar)}
+        {!isSidebarOpen && (
+          <div className={styles.hamburgerContainer}>
+            <button
+              tabIndex={0}
+              className={styles.hamburgerButton}
+              onClick={this.sidebarToggleClickHandler}
+              aria-label={intl.formatMessage(sideBarMessages.openSideBar)}
+            >
+              <div className={styles.hamburgerLine} />
+              <div className={styles.hamburgerLine} />
+              <div className={styles.hamburgerLine} />
+            </button>
+          </div>
+        )}
+        {isSidebarOpen && (
+          <div
+            role="complementary"
+            className={classNames(styles.container, styles.rightViewCropped, {
+              [styles.rightViewCroppedSummaryPage]:
+                pathname === ROUTES.REVIEW_AND_GENERATE
+            })}
           >
-            <div className={styles.hamburgerLine} />
-            <div className={styles.hamburgerLine} />
-            <div className={styles.hamburgerLine} />
-          </button>
-        </div>
-        <div
-          role="complementary"
-          className={classNames(styles.container, styles.rightViewCropped, {
-            [styles.rightViewCroppedAllPages]:
-              pathname !== ROUTES.REVIEW_AND_GENERATE,
-            [styles.rightViewCroppedSummaryPage]:
-              pathname === ROUTES.REVIEW_AND_GENERATE,
-            [styles.open]: isSidebarOpen
-          })}
-        >
-          <div className={styles.summaryContainer}>
-            {pathname !== ROUTES.REVIEW_AND_GENERATE && (
-              <Cancel
-                tabIndex={0}
-                className={styles.icon}
-                onClick={this.sidebarToggleClickHandler}
-                onKeyDown={this.cancelKeyDownHandler}
-                aria-label={intl.formatMessage(sideBarMessages.closeSideBar)}
-              />
-            )}
-
-            <div className={styles.title}>
-              {formatMessage(messages.yourProjectDetails)}
-            </div>
-            <div className={styles.statics}>
-              <div className={styles.projectStatic}>
-                {formatMessage(messages.projectName)}:
-                <span title={projectName} className={styles.value}>
-                  {projectName}
-                </span>
-              </div>
-              <div className={styles.projectStatic}>
-                {formatMessage(messages.location)}:
-                <span title={outputPath} className={styles.value}>
-                  {outputPath}
-                </span>
-              </div>
-            </div>
-            <div className={styles.decoratedLine} />
-            <RightSidebarDropdown
-              options={this.props.frontendDropdownItems}
-              handleDropdownChange={
-                (showPages && this.handleFrameworkChange) || this.handleChange
-              }
-              selectDropdownOption={this.props.selectFrontendFramework}
-              isVisible={showFrameworks}
-              title={formatMessage(messages.frontendFramework)}
-              value={this.convertOptionToDropdownItem(
-                this.props.selection.frontendFramework
-              )}
-              optionsData={frontendOptions}
-              disabled={!isValidNameAndProjectPath}
-            />
-            <RightSidebarDropdown
-              options={this.props.backendDropdownItems}
-              handleDropdownChange={this.handleChange}
-              selectDropdownOption={this.props.selectBackendFramework}
-              isVisible={showFrameworks}
-              title={formatMessage(messages.backendFramework)}
-              value={this.convertOptionToDropdownItem(
-                this.props.selection.backendFramework
-              )}
-              optionsData={backendOptions}
-            />
-            <div className={styles.sortablePages}>
-              {showPages && (
-                <SortablePageList
-                  handleResetPages={this.resetAllPages}
-                  isSummaryPage={pathname === ROUTES.REVIEW_AND_GENERATE}
+            <div className={styles.summaryContainer}>
+              {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+                <Cancel
+                  tabIndex={0}
+                  className={styles.icon}
+                  onClick={this.sidebarToggleClickHandler}
+                  onKeyDown={this.cancelKeyDownHandler}
+                  aria-label={intl.formatMessage(sideBarMessages.closeSideBar)}
                 />
               )}
-            </div>
-            {showServices && (
-              <div className={styles.sidebarItem}>
-                <div className={styles.dropdownTitle}>
-                  {formatMessage(messages.services)}
-                </div>
-                {pathname === ROUTES.REVIEW_AND_GENERATE &&
-                  !hasAzureServices(this.props.services) && (
-                    <Link
-                      className={classnames(
-                        buttonStyles.buttonDark,
-                        styles.backToAzureBox
-                      )}
-                      to={ROUTES.AZURE_LOGIN}
-                      tabIndex={0}
-                    >
-                      {formatMessage(messages.backToAzurePage)}
-                    </Link>
-                  )}
-                <ServicesSidebarItem services={this.props.services} />
+
+              <div className={styles.title}>
+                {formatMessage(messages.yourProjectDetails)}
               </div>
-            )}
-            <div className={styles.container}>
-              {pathname !== ROUTES.REVIEW_AND_GENERATE && (
-                <div className={styles.buttonContainer}>
-                  <button
-                    className={classnames(
-                      buttonStyles.buttonDark,
-                      styles.button,
-                      styles.leftButton
+              <div className={styles.statics}>
+                <div className={styles.projectStatic}>
+                  {formatMessage(messages.projectName)}:
+                  <span title={projectName} className={styles.value}>
+                    {projectName}
+                  </span>
+                </div>
+                <div className={styles.projectStatic}>
+                  {formatMessage(messages.location)}:
+                  <span title={outputPath} className={styles.value}>
+                    {outputPath}
+                  </span>
+                </div>
+              </div>
+              <div className={styles.decoratedLine} />
+              <RightSidebarDropdown
+                options={this.props.frontendDropdownItems}
+                handleDropdownChange={
+                  (showPages && this.handleFrameworkChange) || this.handleChange
+                }
+                selectDropdownOption={this.props.selectFrontendFramework}
+                isVisible={showFrameworks}
+                title={formatMessage(messages.frontendFramework)}
+                value={this.convertOptionToDropdownItem(
+                  this.props.selection.frontendFramework
+                )}
+                optionsData={frontendOptions}
+                disabled={!isValidNameAndProjectPath}
+              />
+              <RightSidebarDropdown
+                options={this.props.backendDropdownItems}
+                handleDropdownChange={this.handleChange}
+                selectDropdownOption={this.props.selectBackendFramework}
+                isVisible={showFrameworks}
+                title={formatMessage(messages.backendFramework)}
+                value={this.convertOptionToDropdownItem(
+                  this.props.selection.backendFramework
+                )}
+                optionsData={backendOptions}
+              />
+              <div className={styles.sortablePages}>
+                {showPages && (
+                  <SortablePageList
+                    handleResetPages={this.resetAllPages}
+                    isSummaryPage={pathname === ROUTES.REVIEW_AND_GENERATE}
+                  />
+                )}
+              </div>
+              {showServices && (
+                <div className={styles.sidebarItem}>
+                  <div className={styles.dropdownTitle}>
+                    {formatMessage(messages.services)}
+                  </div>
+                  {pathname === ROUTES.REVIEW_AND_GENERATE &&
+                    !hasAzureServices(this.props.services) && (
+                      <Link
+                        className={classnames(
+                          buttonStyles.buttonDark,
+                          styles.backToAzureBox
+                        )}
+                        to={ROUTES.AZURE_LOGIN}
+                        tabIndex={0}
+                      >
+                        {formatMessage(messages.backToAzurePage)}
+                      </Link>
                     )}
-                    onClick={openViewLicensesModal}
-                  >
-                    {formatMessage(messages.viewLicenses)}
-                  </button>
+                  <ServicesSidebarItem services={this.props.services} />
                 </div>
               )}
-              <About />
+              <div className={styles.container}>
+                {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+                  <div className={styles.buttonContainer}>
+                    <button
+                      className={classnames(
+                        buttonStyles.buttonDark,
+                        styles.button,
+                        styles.leftButton
+                      )}
+                      onClick={openViewLicensesModal}
+                    >
+                      {formatMessage(messages.viewLicenses)}
+                    </button>
+                  </div>
+                )}
+                <About />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </React.Fragment>
     );
   }

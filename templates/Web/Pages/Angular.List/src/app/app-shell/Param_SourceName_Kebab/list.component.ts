@@ -19,9 +19,9 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.listItems$ = this.listService.getListItems();
-    this.listItems$.pipe(catchError((error) => { 
-      this.warningMessageText = `Request to get list failed: ${error}`; 
-      this.warningMessageOpen = true; 
+    this.listItems$.pipe(catchError((error) => {
+      this.warningMessageText = `Request to get list failed: ${error}`;
+      this.warningMessageOpen = true;
       return of(null);
     })).subscribe();
   }
@@ -52,8 +52,8 @@ export class ListComponent implements OnInit {
     );
   }
 
-  handleWarningClose(open: boolean) {	
-    this.warningMessageOpen = open;	
-    this.warningMessageText = '';	
+  handleWarningClose(open: boolean) {
+    this.warningMessageOpen = open;
+    this.warningMessageText = '';
   }
 }

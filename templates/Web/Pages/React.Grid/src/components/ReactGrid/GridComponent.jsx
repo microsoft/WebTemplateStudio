@@ -1,11 +1,11 @@
 ﻿import React from "react";
 
-export default function GridComponent({ image, header, description }) {
+export default function GridComponent({ griItem }) {
   return (
     <div className="col-md-4 col-sm-12 p-5">
-      <img src={image} alt="Default Grey Box" className="mb-3" />
-      <h3>{header}</h3>
-      <p>{description}</p>
+      <img src={require('../../images/' + griItem.imageName)} alt="Default Grey Box" className="mb-3" />
+      <h3>{griItem.header}</h3>
+      <p>{griItem.shortDescription}</p>
     </div>
   );
 }

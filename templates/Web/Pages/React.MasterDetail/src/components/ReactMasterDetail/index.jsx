@@ -3,25 +3,13 @@ import classnames from "classnames";
 import WarningMessage from "../WarningMessage";
 import MasterDetailPage from "./MasterDetailPage";
 import MasterDetailSideBarTab from "./MasterDetailSideBarTab";
-import GreyAvatar from "../../images/GreyAvatar.svg";
 import styles from "./masterdetail.module.css";
 import CONSTANTS from "../../constants";
 
 export default class ReactMasterDetail extends Component {
   state = {
-    currentDisplayTabIndex: 0,
-    masterDetailText: [
-      {
-        shortDescription: "",
-        longDescription: "",
-        title: "",
-        status: "",
-        shipTo: "",
-        orderTotal: 0.0,
-        orderDate: "",
-        id: 0
-      }
-    ]
+    currentSampleOrder: {},
+    sampleOrders: []
   }
 
   sidebarStyle = classnames(
@@ -40,8 +28,9 @@ export default class ReactMasterDetail extends Component {
         }
         return response.json();
       })
-      .then(result => {
-        this.setState({ masterDetailText: result });
+      .then(listSampleOrders => {
+        this.setState({ sampleOrders: listSampleOrders });
+        this.setState({ currentSampleOrder: listSampleOrders[0] });
       })
       .catch(error =>
         this.setState({
@@ -60,14 +49,14 @@ export default class ReactMasterDetail extends Component {
     });
   }
 
-  handleDisplayTabClick = (id) => {
-    this.setState({ currentDisplayTabIndex: id });
+  selectSampleOrder = (sampleOrder) => {
+    this.setState({ currentSampleOrder: sampleOrder });
   }
 
   render() {
     const {
-      masterDetailText,
-      currentDisplayTabIndex,
+      sampleOrders,
+      currentSampleOrder,
       warningMessageOpen,
       warningMessageText
     } = this.state;
@@ -79,20 +68,20 @@ export default class ReactMasterDetail extends Component {
               className={this.sidebarStyle}
             >
               <div className="list-group list-group-flush border-bottom">
-                {masterDetailText.map((textAssets, index) => (
+                {sampleOrders.map((sampleOrder) => (
                   <MasterDetailSideBarTab
-                    onDisplayTabClick={this.handleDisplayTabClick}
-                    tabText={textAssets.title}
-                    image={GreyAvatar}
-                    index={index}
-                    key={textAssets.id}
+                    selectSampleOrder={this.selectSampleOrder}
+                    sampleOrder={sampleOrder}
+                    key={sampleOrder.id}
                   />
                 ))}
               </div>
             </div>
-            <MasterDetailPage
-              textSampleData={masterDetailText[currentDisplayTabIndex]}
-            />
+            {currentSampleOrder.id && (
+              <MasterDetailPage
+                textSampleData={currentSampleOrder}
+              />
+            )}
           </div>
         </div>
         <WarningMessage

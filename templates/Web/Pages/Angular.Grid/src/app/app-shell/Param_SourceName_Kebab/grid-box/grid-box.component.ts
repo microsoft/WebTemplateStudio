@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
+import { IGridTextItem } from '../grid.model';
 
 @Component({
   selector: 'app-grid-box',
@@ -7,9 +8,7 @@
 })
 export class GridBoxComponent implements OnInit {
   @Input() key: number;
-  @Input() header: string;
-  @Input() description: string;
-  @Input() imageUrl: string;
+  @Input() gridItem: IGridTextItem;
 
   constructor() {}
 

@@ -10,7 +10,7 @@
           class="close py-2"
           data-dismiss="alert"
           type="button"
-          @click="$emit('onDeleteListItem', listItem)"
+          @click="$emit('deleteListItem', listItem)"
         >
           <div aria-hidden="true">&times;</div>
         </button>

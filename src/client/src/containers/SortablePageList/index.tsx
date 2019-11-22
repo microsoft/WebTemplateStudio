@@ -165,6 +165,9 @@ const SortablePageList = (props: Props) => {
           distance={DRAG_PIXEL_THRESHOLD}
           handleInputChange={handleInputChange}
           handleCloseClick={handleCloseClick}
+          lockToContainerEdges
+          lockAxis='y'
+          lockOffset='25%'
         />
       )}
       {/* Using a baseline of 1 for idx because !!0 === false */}
