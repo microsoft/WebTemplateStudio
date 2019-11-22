@@ -192,3 +192,7 @@
   font-weight: normal;
   margin-left: 7px;
 }
+
+.hide {
+  display: none;
+}

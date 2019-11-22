@@ -127,15 +127,10 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     nextProps: Props,
     prevState: IRightSidebarState
   ) {
-    if (nextProps.location.pathname === ROUTES.REVIEW_AND_GENERATE) {
-      return {
-        isSidebarOpen: true
-      };
-    }
     if (!prevState.isSidebarUserControlled) {
       return {
         isSidebarOpen:
-          nextProps.selection.pages.length > 1 ||
+          nextProps.selection.pages.length > 0 ||
           hasAzureServices(nextProps.services) ||
           prevState.isSidebarOpen
       };
@@ -299,8 +294,14 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const { isSidebarOpen } = this.state;
 
     return (
-      <React.Fragment>
-        {!isSidebarOpen && (
+        <div
+          className={
+            pathname === ROUTES.PAGE_DETAILS || pathname === ROUTES.NEW_PROJECT
+              ? styles.hide
+              : undefined
+          }
+        >
+          {!isSidebarOpen && (
           <div className={styles.hamburgerContainer}>
             <button
               tabIndex={0}
@@ -314,7 +315,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             </button>
           </div>
         )}
-        {isSidebarOpen && (
+        {(isSidebarOpen || pathname === ROUTES.REVIEW_AND_GENERATE) && (
           <div
             role="complementary"
             className={classNames(styles.container, styles.rightViewCropped, {
@@ -425,7 +426,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
             </div>
           </div>
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }
