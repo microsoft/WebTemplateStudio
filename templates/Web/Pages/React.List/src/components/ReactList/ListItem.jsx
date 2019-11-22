@@ -1,6 +1,6 @@
 ﻿import React from "react";
 
-export default function ListItem({ listItem, onDeleteListItem }) {
+export default function ListItem({ listItem, deleteListItem }) {
   return (
     <div className="col-12 mb-3 border">
       <div className="row">
@@ -13,7 +13,7 @@ export default function ListItem({ listItem, onDeleteListItem }) {
             className="close py-2"
             data-dismiss="alert"
             aria-label="Close"
-            onClick={() => onDeleteListItem(listItem)}
+            onClick={() => deleteListItem(listItem)}
           >
             <div aria-hidden="true">&times;</div>
           </button>

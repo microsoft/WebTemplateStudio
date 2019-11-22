@@ -301,6 +301,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               : undefined
           }
         >
+          {!isSidebarOpen && (
           <div className={styles.hamburgerContainer}>
             <button
               tabIndex={0}
@@ -313,14 +314,13 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               <div className={styles.hamburgerLine} />
             </button>
           </div>
+        )}
+        {(isSidebarOpen || pathname === ROUTES.REVIEW_AND_GENERATE) && (
           <div
             role="complementary"
             className={classNames(styles.container, styles.rightViewCropped, {
-              [styles.rightViewCroppedAllPages]:
-                pathname !== ROUTES.REVIEW_AND_GENERATE,
               [styles.rightViewCroppedSummaryPage]:
-                pathname === ROUTES.REVIEW_AND_GENERATE,
-              [styles.open]: isSidebarOpen || pathname === ROUTES.REVIEW_AND_GENERATE
+                pathname === ROUTES.REVIEW_AND_GENERATE
             })}
           >
             <div className={styles.summaryContainer}>
@@ -425,7 +425,8 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               </div>
             </div>
           </div>
-        </div>
+        )}
+      </div>
     );
   }
 }
