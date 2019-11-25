@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, eventEmitterLoad } from '@angular/core';
 
 import { ListService } from './list.service';
 import { IListItem } from './list.model';
@@ -14,23 +14,32 @@ export class ListComponent implements OnInit {
   listItems$: Observable<IListItem[]>;
   warningMessageText = 'Request to get list items failed:';
   warningMessageOpen = false;
+  eventEmitterLoad = new EventEmitter<Object>();
 
   constructor(private listService: ListService) {}
 
   ngOnInit() {
-    this.listItems$ = this.listService.getListItems();
-    this.listItems$.pipe(catchError((error) => {
-      this.warningMessageText = `Request to get list failed: ${error}`;
-      this.warningMessageOpen = true;
-      return of(null);
-    })).subscribe();
+    this.listItems$ = Observable.create((observer) =>{
+      this.eventEmitterLoad.subscribe((list:IListItem[])=>{
+        observer.next(list);
+      });
+    });
+    this.loadItems();
+  }
+
+  loadItems(){
+    this.listService.getListItems().subscribe(
+      (list:IListItem[])=>{this.eventEmitterLoad.emit(list)},
+      error => {
+        this.warningMessageOpen = true;
+        this.warningMessageText = `Request to add list item failed: ${error}`;
+      }
+    );
   }
 
   addItem(inputText: string) {
     this.listService.addListItem(inputText).subscribe(
-      (response: IListItem) => {
-        this.listItems$ = this.listItems$.pipe(map(_listItems => _listItems));
-      },
+      ()=>{this.loadItems()},
       error => {
         this.warningMessageOpen = true;
         this.warningMessageText = `Request to add list item failed: ${error}`;
@@ -40,11 +49,7 @@ export class ListComponent implements OnInit {
 
   deleteItem(id: number) {
     this.listService.deleteListItem(id).subscribe(
-      (response: IListItem) => {
-        this.listItems$ = this.listItems$.pipe(map(_listItems => {
-          return _listItems.filter(item => item._id !== response._id);
-        }));
-      },
+      ()=>{this.loadItems()},
       error => {
         this.warningMessageOpen = true;
         this.warningMessageText = `Request to delete list item failed: ${error}`;
