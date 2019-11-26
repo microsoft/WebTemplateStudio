@@ -1,9 +1,8 @@
-﻿import { Component, OnInit, eventEmitterLoad } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 
 import { ListService } from './list.service';
 import { IListItem } from './list.model';
-import {catchError, map} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -11,25 +10,19 @@ import {Observable, of} from 'rxjs';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  listItems$: Observable<IListItem[]>;
+  listItems$: Subject<IListItem[]> = new Subject();
   warningMessageText = 'Request to get list items failed:';
   warningMessageOpen = false;
-  eventEmitterLoad = new EventEmitter<Object>();
 
   constructor(private listService: ListService) {}
 
   ngOnInit() {
-    this.listItems$ = Observable.create((observer) =>{
-      this.eventEmitterLoad.subscribe((list:IListItem[])=>{
-        observer.next(list);
-      });
-    });
     this.loadItems();
   }
 
   loadItems(){
     this.listService.getListItems().subscribe(
-      (list:IListItem[])=>{this.eventEmitterLoad.emit(list)},
+      (list:IListItem[])=>{this.listItems$.next(list)},
       error => {
         this.warningMessageOpen = true;
         this.warningMessageText = `Request to add list item failed: ${error}`;
