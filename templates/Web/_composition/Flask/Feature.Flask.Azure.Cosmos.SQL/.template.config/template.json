@@ -11,7 +11,7 @@
       "wts.type": "composition",
       "wts.platform": "Web",
       "wts.version": "1.0.0",
-      "wts.compositionFilter": "$backendframework == Flask & groupIdentity == wts.Page.List & $feature == wts.Feature.Azure.Cosmos.SQL"
+      "wts.compositionFilter": "$backendframework == Flask & identity == wts.Feature.Azure.Cosmos.SQL"
     },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
