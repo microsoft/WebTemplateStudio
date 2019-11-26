@@ -8,7 +8,6 @@
     <div class="row">
       <div class="col-12 mt-3">
         <b-breadcrumb class="bg-white">
-          <b-breadcrumb-item href="#">Master Detail</b-breadcrumb-item>
           <b-breadcrumb-item active>{{sampleOrder.title}}</b-breadcrumb-item>
         </b-breadcrumb>
       </div>
@@ -55,10 +54,6 @@ export default {
 .title {
   font-weight: 700;
   margin-bottom: 0;
-}
-
-.breadCrumbLink {
-  color: #025fce;
 }
 
 .heading {

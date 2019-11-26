@@ -22,11 +22,6 @@ export default function MasterDetailPage({ textSampleData }) {
         <div className="col-12 mt-3">
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb bg-white mb-0">
-              <li className="breadcrumb-item">
-                <a className={styles.breadCrumbLink} href="/ReactMasterDetail">
-                  ReactMasterDetail
-                </a>
-              </li>
               <li className="breadcrumb-item active" aria-current="page">
                 {title}
               </li>
