@@ -22,7 +22,7 @@ export class ListComponent implements OnInit {
 
   loadItems(){
     this.listService.getListItems().subscribe(
-      (list:IListItem[])=>{this.listItems$.next(list)},
+      (listItem:IListItem[])=>{this.listItems$.next(listItem)},
       error => {
         this.warningMessageOpen = true;
         this.warningMessageText = `Request to add list item failed: ${error}`;
