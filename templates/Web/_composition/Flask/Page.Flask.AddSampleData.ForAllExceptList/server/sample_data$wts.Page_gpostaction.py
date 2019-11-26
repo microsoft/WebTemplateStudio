@@ -43,7 +43,7 @@ sample_data['text_assets'] = [
     'orderTotal': 665.0,
     'orderDate': datetime.datetime.now(),
     'id': 3,
-    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyA.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyC.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -54,7 +54,7 @@ sample_data['text_assets'] = [
     'orderTotal': 560.0,
     'orderDate': datetime.datetime.now(),
     'id': 4,
-    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyA.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyD.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -65,7 +65,7 @@ sample_data['text_assets'] = [
     'orderTotal': 810.0,
     'orderDate': datetime.datetime.now(),
     'id': 5,
-    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyA.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyE.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -76,7 +76,7 @@ sample_data['text_assets'] = [
     'orderTotal': 196.5,
     'orderDate': datetime.datetime.now(),
     'id': 6,
-    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyA.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyF.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -87,7 +87,7 @@ sample_data['text_assets'] = [
     'orderTotal': 270.0,
     'orderDate': datetime.datetime.now(),
     'id': 7,
-    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyA.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyG.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -98,7 +98,7 @@ sample_data['text_assets'] = [
     'orderTotal': 736.0,
     'orderDate': datetime.datetime.now(),
     'id': 8,
-    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyA.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyH.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -109,7 +109,7 @@ sample_data['text_assets'] = [
     'orderTotal': 800.0,
     'orderDate': datetime.datetime.now(),
     'id': 9,
-    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyA.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyI.svg'
   }
 ]
 //}]}

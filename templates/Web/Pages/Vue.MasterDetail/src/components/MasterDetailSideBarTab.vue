@@ -10,12 +10,18 @@
 </template>
 
 <script>
+import imgGreyAvatar from '../assets/GreyAvatar.svg';
 export default {
   name: "MasterDetailSideBarTab",
   props: {
     sampleOrder: {
       type: Object,
       required: true
+    }
+  },
+  data (){
+    return {
+      imgGreyAvatar
     }
   }
 };
