@@ -7,6 +7,11 @@
   --vscode-activityBarBadge-foreground: #ffffff;
   --vscode-badge-background: #c4c4c4;
   --vscode-badge-foreground: #333333;
+  --vscode-breadcrumb-activeSelectionForeground: #4e4e4e;	
+  --vscode-breadcrumb-background: #ffffff;	
+  --vscode-breadcrumb-focusForeground: #4e4e4e;	
+  --vscode-breadcrumb-foreground: rgba(97, 97, 97, 0.8);	
+  --vscode-breadcrumbPicker-background: #f3f3f3;
   --vscode-button-background: #007acc;
   --vscode-button-foreground: #ffffff;
   --vscode-button-hoverBackground: #0062a3;
