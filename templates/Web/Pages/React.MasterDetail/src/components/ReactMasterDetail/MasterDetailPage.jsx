@@ -19,16 +19,7 @@ export default function MasterDetailPage({ textSampleData }) {
         </div>
       </div>
       <div className="row">
-        <div className="col-12 mt-3">
-          <nav aria-label="breadcrumb">
-            <ol className="breadcrumb bg-white mb-0">
-              <li className="breadcrumb-item active" aria-current="page">
-                {title}
-              </li>
-            </ol>
-          </nav>
-        </div>
-        <div className="col-md-8 col-12 ml-3 mb-5">
+        <div className="col-md-8 col-12 ml-3 mb-5 mt-3">
           <p className={styles.title}>Status</p>
           <p>{status}</p>
           <p className={styles.title}>Order Date</p>
