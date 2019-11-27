@@ -22,6 +22,11 @@
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
+    "wts.projectName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_ProjectName"
+    },
     "wts.userName": {
       "type": "parameter",
       "dataType": "string",
