@@ -39,8 +39,7 @@ sampleData.textAssets = [
     shipTo: "Soo Jung Lee",
     orderTotal: 1760.0,
     orderDate: new Date(2017, 5, 24).toDateString(),
-    id: 2,
-    imageSrc:''
+    id: 2
   },
   {
     shortDescription: shortLoremIpsum,

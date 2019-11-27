@@ -31,8 +31,7 @@ sample_data['text_assets'] = [
     'shipTo': 'Soo Jung Lee',
     'orderTotal': 1760.0,
     'orderDate': datetime.datetime.now(),
-    'id': 2,
-    'imageSrc':''
+    'id': 2
   },
   {
     'shortDescription': short_lorem_ipsum,
