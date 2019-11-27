@@ -2,7 +2,7 @@
 
 import { ListService } from './list.service';
 import { IListItem } from './list.model';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -10,19 +10,21 @@ import { Subject } from 'rxjs';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  private listItems$: Subject<IListItem[]> = new Subject();
-  warningMessageText = 'Request to get list items failed:';
-  warningMessageOpen = false;
+  listItems$: Observable<IListItem[]> = new Observable();
+  private _dataSource: Subject<IListItem[]> = new Subject();
+  warningMessageText:string = '';
+  warningMessageOpen:boolean = false;
 
   constructor(private listService: ListService) {}
 
   ngOnInit() {
+    this.listItems$=this._dataSource.asObservable();
     this.loadItems();
   }
 
   loadItems(){
     this.listService.getListItems().subscribe(
-      (listItem:IListItem[])=>{this.listItems$.next(listItem)},
+      (listItem:IListItem[])=>{this._dataSource.next(listItem)},
       error => this.handleError(`Request to get list items failed: ${error}`)
     );
   }

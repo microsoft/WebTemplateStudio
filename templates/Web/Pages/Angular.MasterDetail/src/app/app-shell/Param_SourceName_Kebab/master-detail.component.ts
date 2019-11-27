@@ -12,8 +12,8 @@ import {Observable, of} from 'rxjs';
 })
 export class MasterDetailComponent implements OnInit {
   greyAvatarUrl = '../../../assets/GreyAvatar.svg';
-  warningMessageText = 'Request to get master detail text failed:';
-  warningMessageOpen = false;
+  warningMessageText:string = '';
+  warningMessageOpen:boolean = false;
   currentSampleOrder={};
   sampleOrders$: Observable<ISampleOrder[]>;
 
@@ -24,9 +24,9 @@ export class MasterDetailComponent implements OnInit {
     this.sampleOrders$.pipe(map(listSampleOrders => {
         this.currentSampleOrder = listSampleOrders[0];
       }),
-      catchError((error) => { 
-        this.warningMessageText = `Request to get master detail text failed: ${error}`; 
-        this.warningMessageOpen = true; 
+      catchError((error) => {
+        this.warningMessageText = `Request to get master detail text failed: ${error}`;
+        this.warningMessageOpen = true;
         return of(null);
       }))
     .subscribe();
@@ -36,8 +36,8 @@ export class MasterDetailComponent implements OnInit {
     this.currentSampleOrder = sampleOrder;
   }
 
-  handleWarningClose(open: boolean) {	
-    this.warningMessageOpen = open;	
-    this.warningMessageText = '';	
+  handleWarningClose(open: boolean) {
+    this.warningMessageOpen = open;
+    this.warningMessageText = '';
   }
 }
