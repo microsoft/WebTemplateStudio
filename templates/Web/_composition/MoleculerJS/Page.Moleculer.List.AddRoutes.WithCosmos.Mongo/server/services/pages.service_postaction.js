@@ -1,7 +1,9 @@
-  /**
-   * Service Actions
-   * More info: https://moleculer.services/docs/0.13/actions.html
-   */
+"use strict";
+//{[{
+const DBMixin = require("../mixins/db.mixin");
+//}]}
+module.exports = {
+  mixins: [/*{[{*/DBMixin()/*}]}*/],
   actions: {
     // Action handlers
   //{[{
@@ -44,3 +46,4 @@
     },
   //}]}
   },
+};
