@@ -21,7 +21,7 @@ sample_data['text_assets'] = [
     'orderTotal': 2490.0,
     'orderDate': datetime.datetime.now(),
     'id': 1,
-    'imageName':'GreyAvatar.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyA.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -31,8 +31,7 @@ sample_data['text_assets'] = [
     'shipTo': 'Soo Jung Lee',
     'orderTotal': 1760.0,
     'orderDate': datetime.datetime.now(),
-    'id': 2,
-    'imageName':'GreyAvatar.svg'
+    'id': 2
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -43,7 +42,7 @@ sample_data['text_assets'] = [
     'orderTotal': 665.0,
     'orderDate': datetime.datetime.now(),
     'id': 3,
-    'imageName':'GreyAvatar.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyC.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -54,7 +53,7 @@ sample_data['text_assets'] = [
     'orderTotal': 560.0,
     'orderDate': datetime.datetime.now(),
     'id': 4,
-    'imageName':'GreyAvatar.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyD.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -65,7 +64,7 @@ sample_data['text_assets'] = [
     'orderTotal': 810.0,
     'orderDate': datetime.datetime.now(),
     'id': 5,
-    'imageName':'GreyAvatar.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyE.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -76,7 +75,7 @@ sample_data['text_assets'] = [
     'orderTotal': 196.5,
     'orderDate': datetime.datetime.now(),
     'id': 6,
-    'imageName':'GreyAvatar.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyF.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -87,7 +86,7 @@ sample_data['text_assets'] = [
     'orderTotal': 270.0,
     'orderDate': datetime.datetime.now(),
     'id': 7,
-    'imageName':'GreyAvatar.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyG.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -98,7 +97,7 @@ sample_data['text_assets'] = [
     'orderTotal': 736.0,
     'orderDate': datetime.datetime.now(),
     'id': 8,
-    'imageName':'GreyAvatar.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyH.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -109,7 +108,7 @@ sample_data['text_assets'] = [
     'orderTotal': 800.0,
     'orderDate': datetime.datetime.now(),
     'id': 9,
-    'imageName':'GreyAvatar.svg'
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyI.svg'
   }
 ]
 //}]}
