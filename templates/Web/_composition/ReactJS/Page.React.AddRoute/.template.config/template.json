@@ -11,7 +11,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == React & wts.type == page"
+    "wts.compositionFilter": "$frontendframework == React & wts.type == page & $ishomepage == false"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,

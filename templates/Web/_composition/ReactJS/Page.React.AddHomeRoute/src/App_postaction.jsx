@@ -4,10 +4,9 @@
       <React.Fragment>
         <NavBar />
         <Switch>
+        //^^
         //{[{
-          <Route exact path = "/">
-            <Redirect to="/Param_HomePageName" />
-          </Route>
+          <Route exact path = "/" component = { wts.ItemName } />
         //}]}
         </Switch>
         <Footer />

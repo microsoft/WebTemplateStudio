@@ -2,16 +2,16 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "Page.React.AddHome",
-  "shortName": "Page.React.AddHome",
-  "identity": "Page.React.AddHome",
+  "name": "Page.React.AddHomeRoute",
+  "shortName": "Page.React.AddHomeRoute",
+  "identity": "Page.React.AddHomeRoute",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == React & wts.type == page"
+    "wts.compositionFilter": "$frontendframework == React & wts.type == page & $ishomepage == true"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
@@ -20,10 +20,6 @@
     "wts.rootNamespace": {
       "type": "parameter",
       "replaces": "Param_RootNamespace"
-    },
-    "wts.homePageName": {
-      "type": "parameter",
-      "replaces": "Param_HomePageName"
     }
   }
 }
