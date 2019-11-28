@@ -5,7 +5,7 @@ CONSTANTS.ERROR_MESSAGE = {};
 //{[{
 CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET =
   "Request to get master detail text failed:";
-}]}
+//}]}
 
 CONSTANTS.ENDPOINT = {};
 //^^

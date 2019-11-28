@@ -29,7 +29,7 @@ sampleData.textAssets = [
     orderTotal: 2490.0,
     orderDate: new Date(2017, 5, 24).toDateString(),
     id: 1,
-    imageName:'GreyAvatar.svg'
+    imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyA.svg'
   },
   {
     shortDescription: shortLoremIpsum,
@@ -39,8 +39,7 @@ sampleData.textAssets = [
     shipTo: "Soo Jung Lee",
     orderTotal: 1760.0,
     orderDate: new Date(2017, 5, 24).toDateString(),
-    id: 2,
-    imageName:'GreyAvatar.svg'
+    id: 2
   },
   {
     shortDescription: shortLoremIpsum,
@@ -51,7 +50,7 @@ sampleData.textAssets = [
     orderTotal: 665.0,
     orderDate: new Date(2017, 6, 3).toDateString(),
     id: 3,
-    imageName:'GreyAvatar.svg'
+    imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyC.svg'
   },
   {
     shortDescription: shortLoremIpsum,
@@ -62,7 +61,7 @@ sampleData.textAssets = [
     orderTotal: 560.0,
     orderDate: new Date(2017, 6, 5).toDateString(),
     id: 4,
-    imageName:'GreyAvatar.svg'
+    imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyD.svg'
   },
   {
     shortDescription: shortLoremIpsum,
@@ -73,7 +72,7 @@ sampleData.textAssets = [
     orderTotal: 810.0,
     orderDate: new Date(2017, 6, 7).toDateString(),
     id: 5,
-    imageName:'GreyAvatar.svg'
+    imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyE.svg'
   },
   {
     shortDescription: shortLoremIpsum,
@@ -84,7 +83,7 @@ sampleData.textAssets = [
     orderTotal: 196.5,
     orderDate: new Date(2017, 6, 7).toDateString(),
     id: 6,
-    imageName:'GreyAvatar.svg'
+    imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyF.svg'
   },
   {
     shortDescription: shortLoremIpsum,
@@ -95,7 +94,7 @@ sampleData.textAssets = [
     orderTotal: 270.0,
     orderDate: new Date(2017, 6, 11).toDateString(),
     id: 7,
-    imageName:'GreyAvatar.svg'
+    imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyG.svg'
   },
   {
     shortDescription: shortLoremIpsum,
@@ -106,7 +105,7 @@ sampleData.textAssets = [
     orderTotal: 736.0,
     orderDate: new Date(2017, 6, 14).toDateString(),
     id: 8,
-    imageName:'GreyAvatar.svg'
+    imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyH.svg'
   },
   {
     shortDescription: shortLoremIpsum,
@@ -117,7 +116,7 @@ sampleData.textAssets = [
     orderTotal: 800.0,
     orderDate: new Date(2017, 6, 18).toDateString(),
     id: 9,
-    imageName:'GreyAvatar.svg'
+    imageSrc:'https://wtsrepository.blob.core.windows.net/sampledata/CompanyI.svg'
   }
 ];
 //}]}

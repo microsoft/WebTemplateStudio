@@ -1,6 +1,7 @@
 ﻿import React from "react";
 import classnames from "classnames";
 import styles from "./masterdetail.module.css";
+import imgGreyAvatar from "../../images/GreyAvatar.svg";
 
 export default function MasterDetailSideBarTab({ sampleOrder, selectSampleOrder }) {
   return (
@@ -13,7 +14,7 @@ export default function MasterDetailSideBarTab({ sampleOrder, selectSampleOrder 
         styles.sidebarText
       )}
     >
-      <img src={require('../../images/' + sampleOrder.imageName)} alt="Default Grey Avatar" className="mr-3" />
+      <img src={ sampleOrder.imageSrc ? sampleOrder.imageSrc : imgGreyAvatar} alt="Default Grey Avatar" className="mr-3" />
       {sampleOrder.title}
     </button>
   );

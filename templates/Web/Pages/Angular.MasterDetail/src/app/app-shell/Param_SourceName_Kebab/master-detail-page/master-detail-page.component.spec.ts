@@ -13,7 +13,7 @@ describe('MasterDetailPageComponent', () => {
     orderTotal: 1,
     shortDescription: '',
     longDescription: '',
-    imageName: ''
+    imageSrc: ''
   };
 
   beforeEach(async(() => {

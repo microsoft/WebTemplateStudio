@@ -3,6 +3,6 @@
   type="button"
   class="list-group-item list-group-item-action sidebarText"
 >
-  <img src="../../../assets/{{ sampleOrder.imageName }}" alt="Default Grey Avatar" title="Default Grey Avatar" aria-label="Default Grey Avatar" class="mr-3" />
+  <img src="{{ sampleOrder.imageSrc ? sampleOrder.imageSrc : '../../../assets/GreyAvatar.svg' }}" alt="Default Grey Avatar" title="Default Grey Avatar" aria-label="Default Grey Avatar" class="mr-3" />
   {{ sampleOrder.title }}
 </button>
