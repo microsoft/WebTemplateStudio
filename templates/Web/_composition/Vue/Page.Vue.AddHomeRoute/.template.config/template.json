@@ -4,16 +4,16 @@
     "classifications": [
       "Universal"
     ],
-    "name": "Page.Vue.AddHome",
-    "shortName": "Page.Vue.AddHome",
-    "identity": "Page.Vue.AddHome",
+    "name": "Page.Vue.AddHomeRoute",
+    "shortName": "Page.Vue.AddHomeRoute",
+    "identity": "Page.Vue.AddHomeRoute",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == Vue & wts.type == page"
+    "wts.compositionFilter": "$frontendframework == Vue & wts.type == page & $ishomepage == true"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
@@ -23,10 +23,6 @@
       "wts.rootNamespace": {
         "type": "parameter",
         "replaces": "Param_RootNamespace"
-      },
-      "wts.homePageName": {
-        "type": "parameter",
-        "replaces": "Param_HomePageName"
       }
     }
   }

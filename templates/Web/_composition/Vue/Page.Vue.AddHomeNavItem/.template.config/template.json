@@ -4,16 +4,16 @@
     "classifications": [
       "Universal"
     ],
-    "name": "Page.Vue.AddRoute",
-    "shortName": "Page.Vue.AddRoute",
-    "identity": "Page.Vue.AddRoute",
+    "name": "Page.Vue.AddHomeNavItem",
+    "shortName": "Page.Vue.AddHomeNavItem",
+    "identity": "Page.Vue.AddNHomeavItem",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == Vue & wts.type == page & $ishomepage == false"
+    "wts.compositionFilter": "$frontendframework == Vue & wts.type == page & $ishomepage == true"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
