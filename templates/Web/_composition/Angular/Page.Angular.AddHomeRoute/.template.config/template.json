@@ -13,7 +13,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == Angular & wts.type == page",
+    "wts.compositionFilter": "$frontendframework == Angular & wts.type == page & $ishomepage == true",
     "wts.casing.homePageName":"kebab"
   },
     "sourceName": "wts.ItemName",
@@ -29,9 +29,13 @@
         "type": "parameter",
         "replaces": "Param_HomePageName"
       },
-      "wts.homePageName.casing.kebab": {
+      "wts.sourceName.casing.kebab": {
         "type": "parameter",
-        "replaces": "Param_HomePageName_Kebab"
+        "replaces": "Param_SourceName_Kebab"
+      },
+      "wts.sourceName.casing.pascal": {
+        "type": "parameter",
+        "replaces": "Param_SourceName_Pascal"
       }
     }
   }

@@ -4,16 +4,16 @@
     "classifications": [
       "Universal"
     ],
-    "name": "Page.Angular.AddRoute",
-    "shortName": "Page.Angular.AddRoute",
-    "identity": "Page.Angular.AddRoute",
+    "name": "Page.Angular.AddHomeNavItem",
+    "shortName": "Page.Angular.AddHomeNavItem",
+    "identity": "Page.Angular.AddHomeNavItem",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == Angular & wts.type == page & $ishomepage == false",
+    "wts.compositionFilter": "$frontendframework == Angular & wts.type == page & $ishomepage == true",
     "wts.casing.sourceName": "kebab|pascal|camel"
   },
     "sourceName": "wts.ItemName",
@@ -25,17 +25,9 @@
         "type": "parameter",
         "replaces": "Param_RootNamespace"
       },
-      "wts.homePageName": {
-        "type": "parameter",
-        "replaces": "Param_HomePageName"
-      },
       "wts.sourceName.casing.kebab": {
         "type": "parameter",
         "replaces": "Param_SourceName_Kebab"
-      },
-      "wts.sourceName.casing.pascal": {
-        "type": "parameter",
-        "replaces": "Param_SourceName_Pascal"
       }
     }
   }

@@ -3,7 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
 //{[{
-  { path: '',   redirectTo: '/Param_HomePageName_Kebab', pathMatch: 'full' },
+  {
+    path: '',
+    loadChildren: () => import('./app-shell/Param_SourceName_Kebab/Param_SourceName_Kebab.module').then(module => module.Param_SourceName_PascalModule)
+  },
 //}]}
 ];
 
