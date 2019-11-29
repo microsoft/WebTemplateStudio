@@ -75,6 +75,17 @@
   },
   "postActions": [
     {
+      "description": "Add Moleculer Build Scripts",
+      "manualInstructions": [],
+      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
+      "args": {
+        "dict": "{'start-backend': 'moleculer-runner --repl --hot --config server/moleculer.config.js server/services'}",
+        "key": "scripts",
+        "jsonPath": "package.json"
+      },
+      "continueOnError": false
+    },
+    {
       "description": "Add Moleculer Dependencies",
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",

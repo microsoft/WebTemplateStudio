@@ -11,7 +11,7 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == Node & groupIdentity == wts.Page.List & $feature == wts.Feature.Azure.Cosmos.Mongo"
+    "wts.compositionFilter": "$backendframework == Node & identity == wts.Feature.Azure.Cosmos.Mongo & $page == wts.Page.React.List|wts.Page.Angular.List|wts.Page.Vue.List"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
@@ -22,17 +22,5 @@
       "replaces": "Param_RootNamespace"
     }
   },
-  "postActions": [
-    {
-      "description": "Add Cosmos Mongo Dependencies",
-      "manualInstructions": [],
-      "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
-      "args": {
-        "dict": "{'dotenv': '^6.2.0', 'mongodb': '^3.1.13', 'mongoose': '^5.4.15'}",
-        "key": "dependencies",
-        "jsonPath": "package.json"
-      },
-      "continueOnError": false
-    }
-  ]
+  "postActions": []
 }
