@@ -1,7 +1,0 @@
-"private": true,
-//{[{
-"scripts": {
-  "start": "moleculer-runner --envfile ../.env services"
-},
-//}]}
-"dependencies": {

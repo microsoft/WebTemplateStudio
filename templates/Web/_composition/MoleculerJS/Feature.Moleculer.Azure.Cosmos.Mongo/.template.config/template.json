@@ -2,16 +2,16 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "Feature.Node.Azure.Cosmos.SQL",
-  "shortName": "Feature.Node.Azure.Cosmos.SQL",
-  "identity": "Feature.Node.Azure.Cosmos.SQL",
+  "name": "Feature.Moleculer.Azure.Cosmos.Mongo",
+  "shortName": "Feature.Moleculer.Azure.Cosmos.Mongo",
+  "identity": "Feature.Moleculer.Azure.Cosmos.Mongo",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == Node & identity == wts.Feature.Azure.Cosmos.SQL"
+    "wts.compositionFilter": "$backendframework == Moleculer & identity == wts.Feature.Azure.Cosmos.Mongo"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
@@ -24,22 +24,22 @@
   },
   "postActions": [
     {
-      "description": "Add Cosmos Sql Dependencies",
+      "description": "Add Cosmos Mongo Dependencies",
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'@azure/cosmos': '^2.1.5', 'dotenv': '^6.2.0'}",
+        "dict": "{'dotenv': '^8.1.0', 'moleculer-db': '^0.8.2', 'moleculer-db-adapter-mongo': '^0.4.5'}",
         "key": "dependencies",
         "jsonPath": "package.json"
       },
       "continueOnError": false
     },
     {
-      "description": "Add Cosmos Sql Dependencies to Server",
+      "description": "Add Cosmos Mongo Dependencies to Server",
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'@azure/cosmos': '^2.1.5', 'dotenv': '^6.2.0'}",
+        "dict": "{'dotenv': '^8.1.0', 'moleculer-db': '^0.8.2', 'moleculer-db-adapter-mongo': '^0.4.5'}",
         "key": "dependencies",
         "jsonPath": "server/package.json"
       },
