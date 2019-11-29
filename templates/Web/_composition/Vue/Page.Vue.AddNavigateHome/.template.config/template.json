@@ -4,9 +4,9 @@
     "classifications": [
       "Universal"
     ],
-    "name": "Page.Vue.AddHomeNavItem",
-    "shortName": "Page.Vue.AddHomeNavItem",
-    "identity": "Page.Vue.AddNHomeavItem",
+    "name": "Page.Vue.AddNavigateHome",
+    "shortName": "Page.Vue.AddNavigateHome",
+    "identity": "Page.Vue.AddNavigateHome",
   "tags": {
     "language": "Any",
     "type": "item",

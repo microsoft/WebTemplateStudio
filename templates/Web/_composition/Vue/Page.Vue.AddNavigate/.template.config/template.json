@@ -4,9 +4,9 @@
     "classifications": [
       "Universal"
     ],
-    "name": "Page.Vue.AddRoute",
-    "shortName": "Page.Vue.AddRoute",
-    "identity": "Page.Vue.AddRoute",
+    "name": "Page.Vue.AddNavigate",
+    "shortName": "Page.Vue.AddNavigate",
+    "identity": "Page.Vue.AddNavigate",
   "tags": {
     "language": "Any",
     "type": "item",
