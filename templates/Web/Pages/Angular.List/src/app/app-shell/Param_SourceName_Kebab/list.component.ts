@@ -2,8 +2,7 @@
 
 import { ListService } from './list.service';
 import { IListItem } from './list.model';
-import {catchError, map} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -11,49 +10,44 @@ import {Observable, of} from 'rxjs';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  listItems$: Observable<IListItem[]>;
-  warningMessageText = 'Request to get list items failed:';
-  warningMessageOpen = false;
+  listItems$: Observable<IListItem[]> = new Observable();
+  private _dataSource: Subject<IListItem[]> = new Subject();
+  warningMessageText:string = '';
+  warningMessageOpen:boolean = false;
 
   constructor(private listService: ListService) {}
 
   ngOnInit() {
-    this.listItems$ = this.listService.getListItems();
-    this.listItems$.pipe(catchError((error) => {
-      this.warningMessageText = `Request to get list failed: ${error}`;
-      this.warningMessageOpen = true;
-      return of(null);
-    })).subscribe();
+    this.listItems$=this._dataSource.asObservable();
+    this.loadItems();
+  }
+
+  loadItems(){
+    this.listService.getListItems().subscribe(
+      (listItem:IListItem[])=>{this._dataSource.next(listItem)},
+      error => this.handleError(`Request to get list items failed: ${error}`)
+    );
   }
 
   addItem(inputText: string) {
     this.listService.addListItem(inputText).subscribe(
-      (response: IListItem) => {
-        this.listItems$ = this.listItems$.pipe(map(_listItems => _listItems));
-      },
-      error => {
-        this.warningMessageOpen = true;
-        this.warningMessageText = `Request to add list item failed: ${error}`;
-      }
+      ()=> this.loadItems(), error => this.handleError(`Request to add item failed: ${error}`)
     );
   }
 
   deleteItem(id: number) {
     this.listService.deleteListItem(id).subscribe(
-      (response: IListItem) => {
-        this.listItems$ = this.listItems$.pipe(map(_listItems => {
-          return _listItems.filter(item => item._id !== response._id);
-        }));
-      },
-      error => {
-        this.warningMessageOpen = true;
-        this.warningMessageText = `Request to delete list item failed: ${error}`;
-      }
+      () => this.loadItems(), error => this.handleError(`Request to delete item failed: ${error}`)
     );
   }
 
   handleWarningClose(open: boolean) {
     this.warningMessageOpen = open;
     this.warningMessageText = '';
+  }
+
+  private handleError(warningMessageText:string) {
+    this.warningMessageOpen = true;
+    this.warningMessageText = warningMessageText;
   }
 }
