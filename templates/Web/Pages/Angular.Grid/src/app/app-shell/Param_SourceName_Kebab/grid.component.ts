@@ -12,23 +12,23 @@ import {Observable, of} from 'rxjs';
 })
 export class GridComponent implements OnInit {
   greyBoxUrl = '../../../assets/GreyBox.svg';
-  warningMessageText = 'Request to get grid text failed:';
-  warningMessageOpen = false;
+  warningMessageText:string = '';
+  warningMessageOpen:boolean = false;
   gridItems$: Observable<IGridTextItem[]>;
 
   constructor(private gridService: GridService) {}
 
   ngOnInit() {
     this.gridItems$ = this.gridService.getGridItems();
-    this.gridItems$.pipe(catchError((error) => { 
+    this.gridItems$.pipe(catchError((error) => {
       this.warningMessageText =  `Request to get grid text failed: ${error}`;
-      this.warningMessageOpen = true; 
+      this.warningMessageOpen = true;
       return of(null);
     })).subscribe();
   }
 
-  handleWarningClose(open: boolean) {	
-    this.warningMessageOpen = open;	
-    this.warningMessageText = '';	
+  handleWarningClose(open: boolean) {
+    this.warningMessageOpen = open;
+    this.warningMessageText = '';
   }
 }
