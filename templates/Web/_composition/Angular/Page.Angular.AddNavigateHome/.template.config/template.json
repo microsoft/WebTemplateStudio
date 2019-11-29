@@ -4,17 +4,17 @@
     "classifications": [
       "Universal"
     ],
-    "name": "Page.Angular.AddRoute",
-    "shortName": "Page.Angular.AddRoute",
-    "identity": "Page.Angular.AddRoute",
+    "name": "Page.Angular.AddNavigateHome",
+    "shortName": "Page.Angular.AddNavigateHome",
+    "identity": "Page.Angular.AddNavigateHome",
   "tags": {
     "language": "Any",
     "type": "item",
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$frontendframework == Angular & wts.type == page & $ishomepage == false",
-    "wts.casing.sourceName": "kebab|pascal|camel"
+    "wts.compositionFilter": "$frontendframework == Angular & wts.type == page & $ishomepage == true",
+    "wts.casing.sourceName": "kebab|pascal"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
@@ -24,10 +24,6 @@
       "wts.rootNamespace": {
         "type": "parameter",
         "replaces": "Param_RootNamespace"
-      },
-      "wts.homePageName": {
-        "type": "parameter",
-        "replaces": "Param_HomePageName"
       },
       "wts.sourceName.casing.kebab": {
         "type": "parameter",
