@@ -14,7 +14,7 @@
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.compositionFilter": "$frontendframework == Angular & wts.type == page & $ishomepage == true",
-    "wts.casing.sourceName": "kebab|pascal|camel"
+    "wts.casing.sourceName": "kebab|pascal"
   },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
@@ -28,6 +28,10 @@
       "wts.sourceName.casing.kebab": {
         "type": "parameter",
         "replaces": "Param_SourceName_Kebab"
+      },
+      "wts.sourceName.casing.pascal": {
+        "type": "parameter",
+        "replaces": "Param_SourceName_Pascal"
       }
     }
   }
