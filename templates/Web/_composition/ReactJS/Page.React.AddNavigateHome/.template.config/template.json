@@ -2,9 +2,9 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft Community",
   "classifications": ["Universal"],
-  "name": "Page.React.AddHomeRoute",
-  "shortName": "Page.React.AddHomeRoute",
-  "identity": "Page.React.AddHomeRoute",
+  "name": "Page.React.AddNavigateHome",
+  "shortName": "Page.React.AddNavigateHome",
+  "identity": "Page.React.AddNavigateHome",
   "tags": {
     "language": "Any",
     "type": "item",
