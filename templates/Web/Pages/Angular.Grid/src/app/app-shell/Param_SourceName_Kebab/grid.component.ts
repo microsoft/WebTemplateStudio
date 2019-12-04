@@ -19,12 +19,11 @@ export class GridComponent implements OnInit {
   constructor(private gridService: GridService) {}
 
   ngOnInit() {
-    this.gridItems$ = this.gridService.getGridItems();
-    this.gridItems$.pipe(catchError((error) => {
+    this.gridItems$ = this.gridService.getGridItems().pipe(catchError((error) => {
       this.warningMessageText =  `Request to get grid text failed: ${error}`;
       this.warningMessageOpen = true;
       return of(null);
-    })).subscribe();
+    }));
   }
 
   handleWarningClose(open: boolean) {
