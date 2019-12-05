@@ -64,10 +64,10 @@ export default class ReactGrid extends Component {
           </div>
 
           <div className="row justify-content-around text-center pb-5">
-            {gridItems.map(griItem => (
+            {gridItems.map(gridItem => (
               <GridComponent
-              key={griItem.id}
-              griItem={griItem}
+              key={gridItem.id}
+              gridItem={gridItem}
               />
             ))}
           </div>
