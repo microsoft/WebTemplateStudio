@@ -22,6 +22,11 @@
   "preferNameDirectory": true,
   "PrimaryOutputs": [],
   "symbols": {
+    "wts.projectName": {
+      "type": "parameter",
+      "dataType": "string",
+      "replaces": "Param_ProjectName"
+    },
     "wts.userName": {
       "type": "parameter",
       "dataType": "string",
@@ -56,6 +61,16 @@
       "parameters": {
         "format": "yyyy"
       }
+    },
+    "wts.ToLowerPackageJsonDefault":
+    {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source":"wts.projectName",
+        "toLower": true
+      },
+      "replaces": "Param_ToLowerPackageJsonDefault"
     }
   },
   "postActions": [
@@ -75,7 +90,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'nodemon': '^1.18.10'}",
+        "dict": "{}",
         "key": "devDependencies",
         "jsonPath": "package.json"
       },
@@ -86,7 +101,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'start-backend': 'nodemon server/server.js'}",
+        "dict": "{'start-backend': 'node server/server.js'}",
         "key": "scripts",
         "jsonPath": "package.json"
       },

@@ -1,12 +1,12 @@
 ﻿import React from "react";
 import classnames from "classnames";
 import styles from "./masterdetail.module.css";
+import imgGreyAvatar from "../../images/GreyAvatar.svg";
 
-export default function MasterDetailSideBarTab(props) {
-  const { index, image, tabText, onDisplayTabClick } = props;
+export default function MasterDetailSideBarTab({ sampleOrder, selectSampleOrder }) {
   return (
     <button
-      onClick={() => onDisplayTabClick(index)}
+      onClick={() => selectSampleOrder(sampleOrder)}
       type="button"
       className={classnames(
         "list-group-item",
@@ -14,8 +14,8 @@ export default function MasterDetailSideBarTab(props) {
         styles.sidebarText
       )}
     >
-      <img src={image} alt="Default Grey Avatar" className="mr-3" />
-      {tabText}
+      <img src={ sampleOrder.imageSrc ? sampleOrder.imageSrc : imgGreyAvatar} alt="Default Grey Avatar" className="mr-3" />
+      {sampleOrder.title}
     </button>
   );
 }

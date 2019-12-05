@@ -20,7 +20,8 @@ sample_data['text_assets'] = [
     'shipTo': 'Francisco Pérez-Olaeta',
     'orderTotal': 2490.0,
     'orderDate': datetime.datetime.now(),
-    'id': 1
+    'id': 1,
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyA.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -40,7 +41,8 @@ sample_data['text_assets'] = [
     'shipTo': 'Run Liu',
     'orderTotal': 665.0,
     'orderDate': datetime.datetime.now(),
-    'id': 3
+    'id': 3,
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyC.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -50,7 +52,8 @@ sample_data['text_assets'] = [
     'shipTo': "Soo Jung Lee",
     'orderTotal': 560.0,
     'orderDate': datetime.datetime.now(),
-    'id': 4
+    'id': 4,
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyD.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -60,7 +63,8 @@ sample_data['text_assets'] = [
     'shipTo': "John Rodman",
     'orderTotal': 810.0,
     'orderDate': datetime.datetime.now(),
-    'id': 5
+    'id': 5,
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyE.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -70,7 +74,8 @@ sample_data['text_assets'] = [
     'shipTo': "Elizabeth Andersen",
     'orderTotal': 196.5,
     'orderDate': datetime.datetime.now(),
-    'id': 6
+    'id': 6,
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyF.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -80,7 +85,8 @@ sample_data['text_assets'] = [
     'shipTo': "Peter Krschne",
     'orderTotal': 270.0,
     'orderDate': datetime.datetime.now(),
-    'id': 7
+    'id': 7,
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyG.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -90,7 +96,8 @@ sample_data['text_assets'] = [
     'shipTo': "Sven Mortensen",
     'orderTotal': 736.0,
     'orderDate': datetime.datetime.now(),
-    'id': 8
+    'id': 8,
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyH.svg'
   },
   {
     'shortDescription': short_lorem_ipsum,
@@ -100,7 +107,8 @@ sample_data['text_assets'] = [
     'shipTo': "Anna Bedecs",
     'orderTotal': 800.0,
     'orderDate': datetime.datetime.now(),
-    'id': 9
+    'id': 9,
+    'imageSrc':'https://wtsrepository.blob.core.windows.net/sampledata/CompanyI.svg'
   }
 ]
 //}]}

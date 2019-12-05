@@ -3,9 +3,8 @@
     <h1>Param_ProjectName</h1>
     <p>This is placeholder text. Your web app description goes here.</p>
     <a
-      href="https://github.com/Microsoft/WebTemplateStudio"
-      class="btn btn-primary my-2"
-    >
+      href="https://github.com/Microsoft/WebTemplateStudio" class="btn btn-primary my-2"
+      title="Link to our Github" aria-label="Link to our Github">
       Link to our Github
     </a>
   </div>
@@ -17,19 +16,16 @@
     <div class="row justify-content-around text-center pb-5">
       <app-grid-box
         class="col-4 p-5"
-        *ngFor="let textAssets of gridTextAssets"
-        [key]="textAssets.id"
-        [header]="textAssets.title"
-        [description]="textAssets.shortDescription"
-        [image]="GreyBox"
+        *ngFor="let gridItem of (gridItems$ | async)"
+        [gridItem]="gridItem"
       >
       </app-grid-box>
     </div>
   </div>
   <app-warning-message
-    *ngIf="WarningMessageOpen"
-    [text]="WarningMessageText"
-    (WarningMessageOpen)="handleWarningClose($event)"
+    *ngIf="warningMessageOpen"
+    [text]="warningMessageText"
+    (warningMessageOpen)="handleWarningClose($event)"
   >
   </app-warning-message>
 </main>

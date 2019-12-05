@@ -3,32 +3,21 @@ import classnames from "classnames";
 import WarningMessage from "../WarningMessage";
 import MasterDetailPage from "./MasterDetailPage";
 import MasterDetailSideBarTab from "./MasterDetailSideBarTab";
-import GreyAvatar from "../../images/GreyAvatar.svg";
 import styles from "./masterdetail.module.css";
 import CONSTANTS from "../../constants";
 
 export default class ReactMasterDetail extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentDisplayTabIndex: 0,
-      masterDetailText: [
-        {
-          shortDescription: "",
-          longDescription: "",
-          title: "",
-          status: "",
-          shipTo: "",
-          orderTotal: 0.0,
-          orderDate: "",
-          id: 0
-        }
-      ]
-    };
-    this.handleDisplayTabClick = this.handleDisplayTabClick.bind(this);
-    this.handleWarningClose = this.handleWarningClose.bind(this);
+  state = {
+    currentSampleOrder: {},
+    sampleOrders: []
   }
+
+  sidebarStyle = classnames(
+    "col-2",
+    "p-0",
+    "border-right",
+    styles.sidebar
+  )
 
   // Get the sample data from the back end
   componentDidMount() {
@@ -39,69 +28,65 @@ export default class ReactMasterDetail extends Component {
         }
         return response.json();
       })
-      .then(result => {
-        this.setState({ masterDetailText: result });
+      .then(listSampleOrders => {
+        this.setState({ sampleOrders: listSampleOrders });
+        this.setState({ currentSampleOrder: listSampleOrders[0] });
       })
       .catch(error =>
         this.setState({
-          WarningMessageOpen: true,
-          WarningMessageText: `${
+          warningMessageOpen: true,
+          warningMessageText: `${
             CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET
-          } ${error}`
+            } ${error}`
         })
       );
   }
 
-  handleWarningClose() {
+  handleWarningClose = () => {
     this.setState({
-      WarningMessageOpen: false,
-      WarningMessageText: ""
+      warningMessageOpen: false,
+      warningMessageText: ""
     });
   }
 
-  handleDisplayTabClick(id) {
-    this.setState({ currentDisplayTabIndex: id });
+  selectSampleOrder = (sampleOrder) => {
+    this.setState({ currentSampleOrder: sampleOrder });
   }
 
   render() {
     const {
-      masterDetailText,
-      currentDisplayTabIndex,
-      WarningMessageOpen,
-      WarningMessageText
+      sampleOrders,
+      currentSampleOrder,
+      warningMessageOpen,
+      warningMessageText
     } = this.state;
     return (
       <main id="mainContent">
         <div className="container-fluid">
           <div className="row">
             <div
-              className={classnames(
-                "col-2",
-                "p-0",
-                "border-right",
-                styles.sidebar
-              )}
+              className={this.sidebarStyle}
             >
               <div className="list-group list-group-flush border-bottom">
-                {masterDetailText.map((textAssets, index) => (
+                {sampleOrders.map((sampleOrder) => (
                   <MasterDetailSideBarTab
-                    onDisplayTabClick={this.handleDisplayTabClick}
-                    tabText={textAssets.title}
-                    image={GreyAvatar}
-                    index={index}
-                    key={textAssets.id}
+                    selectSampleOrder={this.selectSampleOrder}
+                    sampleOrder={sampleOrder}
+                    key={sampleOrder.id}
                   />
                 ))}
               </div>
             </div>
-            <MasterDetailPage
-              textSampleData={masterDetailText[currentDisplayTabIndex]}
-            />
+            {currentSampleOrder.id && (
+              <MasterDetailPage
+                textSampleData={currentSampleOrder}
+              />
+            )}
           </div>
         </div>
         <WarningMessage
-          open={WarningMessageOpen}
-          text={WarningMessageText}
+          open={warningMessageOpen}
+          text={warningMessageText}
           onWarningClose={this.handleWarningClose}
         />
       </main>

@@ -6,5 +6,6 @@
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   title = 'wts.AngularDefault';
 }

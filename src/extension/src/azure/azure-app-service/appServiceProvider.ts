@@ -5,14 +5,13 @@ import { ServiceClientCredentials } from "ms-rest";
 import { WebSiteManagementClient } from "azure-arm-website";
 import {
   AppServicePlanCollection,
-  AppServicePlan,
   StringDictionary
 } from "azure-arm-website/lib/models";
 import ResourceManagementClient, {
   ResourceManagementModels
 } from "azure-arm-resource/lib/resource/resourceManagementClient";
 
-import { CONSTANTS, OS, AppType, AzureResourceType } from "../../constants";
+import { CONSTANTS, AppType, AzureResourceType } from "../../constants";
 import {
   SubscriptionError,
   AuthorizationError,
@@ -26,17 +25,12 @@ import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
 import { ResourceManager } from "../azure-arm/resourceManager";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 
-export interface AppServicePlanSelection {
-  subscriptionItem: SubscriptionItem;
-  resourceGroup: string;
-  name: string;
-}
-
 export interface AppServiceSelections {
   siteName: string;
   subscriptionItem: SubscriptionItem;
   resourceGroupItem: ResourceGroupItem;
   appServicePlanName: string;
+  tier: string;
   sku: string;
   linuxFxVersion: string;
   location: string;
@@ -179,6 +173,9 @@ export class AppServiceProvider {
       appServicePlanName: {
         value: selections.appServicePlanName
       },
+      tier: {
+        value: selections.tier
+      },
       sku: {
         value: selections.sku
       },
@@ -210,32 +207,6 @@ export class AppServiceProvider {
       path.join(appPath, "arm-templates", "web-app-parameters.json"),
       parameters
     );
-  }
-
-  // Creates a Basic Tier App Service Plan (ASP)
-  public async createAppServicePlan(
-    aspSelection: AppServicePlanSelection
-  ): Promise<string> {
-    this.setWebClient(aspSelection.subscriptionItem);
-    if (this.webClient === undefined) {
-      throw new AuthorizationError(CONSTANTS.ERRORS.WEBSITE_CLIENT_NOT_DEFINED);
-    }
-    const appServicePlanSelection: AppServicePlan = {
-      kind: OS.Linux,
-      sku: CONSTANTS.SKU_DESCRIPTION.BASIC,
-      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
-    };
-    try {
-      const validName = await this.generateValidASPName(aspSelection.name);
-      await this.webClient.appServicePlans.createOrUpdate(
-        aspSelection.resourceGroup,
-        validName,
-        appServicePlanSelection
-      );
-      return validName;
-    } catch (error) {
-      throw new DeploymentError(error.message);
-    }
   }
 
   public async generateValidASPName(name: string): Promise<string> {

@@ -5,17 +5,10 @@ import WarningMessage from "../WarningMessage";
 import CONSTANTS from "../../constants";
 
 export default class ReactList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: [],
-      WarningMessageOpen: false,
-      WarningMessageText: ""
-    };
-
-    this.handleWarningClose = this.handleWarningClose.bind(this);
-    this.handleDeleteListItem = this.handleDeleteListItem.bind(this);
-    this.handleAddListItem = this.handleAddListItem.bind(this);
+  state = {
+    listItems: [],
+    warningMessageOpen: false,
+    warningMessageText: ""
   }
 
   // Get the sample data from the back end
@@ -27,16 +20,16 @@ export default class ReactList extends Component {
         }
         return response.json();
       })
-      .then(result => this.setState({ list: result }))
+      .then(result => this.setState({ listItems: result }))
       .catch(error =>
         this.setState({
-          WarningMessageOpen: true,
-          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
+          warningMessageOpen: true,
+          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
         })
       );
   }
 
-  handleDeleteListItem(listItem) {
+  deleteListItem = (listItem) => {
     fetch(`${CONSTANTS.ENDPOINT.LIST}/${listItem._id}`, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
@@ -45,24 +38,23 @@ export default class ReactList extends Component {
         return response.json();
       })
       .then(result => {
-        let list = this.state.list;
-        list = list.filter(item => item._id !== result._id);
-        this.setState({ list: list });
+        let list = this.state.listItems.filter(item => item._id !== result._id);
+        this.setState({ listItems: list });
       })
       .catch(error => {
         this.setState({
-          WarningMessageOpen: true,
-          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`
+          warningMessageOpen: true,
+          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_DELETE} ${error}`
         });
       });
   }
 
-  handleAddListItem(textField) {
+  addListItem = (textField) => {
     // Warning Pop Up if the user submits an empty message
     if (!textField) {
       this.setState({
-        WarningMessageOpen: true,
-        WarningMessageText: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
+        warningMessageOpen: true,
+        warningMessageText: CONSTANTS.ERROR_MESSAGE.LIST_EMPTY_MESSAGE
       });
       return;
     }
@@ -82,29 +74,29 @@ export default class ReactList extends Component {
       })
       .then(result =>
         this.setState(prevState => ({
-          list: [result, ...prevState.list]
+          listItems: [result, ...prevState.listItems]
         }))
       )
       .catch(error =>
         this.setState({
-          WarningMessageOpen: true,
-          WarningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`
+          warningMessageOpen: true,
+          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_ADD} ${error}`
         })
       );
   }
 
-  handleWarningClose() {
+  handleWarningClose = () => {
     this.setState({
-      WarningMessageOpen: false,
-      WarningMessageText: ""
+      warningMessageOpen: false,
+      warningMessageText: ""
     });
   }
 
   render() {
     const {
-      list,
-      WarningMessageOpen,
-      WarningMessageText
+      listItems,
+      warningMessageOpen,
+      warningMessageText
     } = this.state;
     return (
       <main id="mainContent" className="container">
@@ -114,19 +106,19 @@ export default class ReactList extends Component {
           </div>
           <div className="col-12 p-0">
             <ListForm
-              onAddListItem={this.handleAddListItem}
+              addListItem={this.addListItem}
             />
           </div>
-          {list.map(listItem => (
+          {listItems.map(listItem => (
             <ListItem
               key={listItem._id}
               listItem={listItem}
-              onDeleteListItem={this.handleDeleteListItem}
+              deleteListItem={this.deleteListItem}
             />
           ))}
           <WarningMessage
-            open={WarningMessageOpen}
-            text={WarningMessageText}
+            open={warningMessageOpen}
+            text={warningMessageText}
             onWarningClose={this.handleWarningClose}
           />
         </div>

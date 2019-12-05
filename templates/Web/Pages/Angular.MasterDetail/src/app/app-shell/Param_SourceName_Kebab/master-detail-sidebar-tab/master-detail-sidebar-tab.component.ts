@@ -1,24 +1,20 @@
 ﻿import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { ISampleOrder } from '../master-detail.model';
 
 @Component({
   selector: 'app-master-detail-sidebar-tab',
   templateUrl: './master-detail-sidebar-tab.component.html',
   styleUrls: ['./master-detail-sidebar-tab.component.css']
 })
-export class MasterDetailSidebarTabComponent implements OnInit {
+export class MasterDetailSidebarTabComponent implements OnInit{
+  @Input() sampleOrder: ISampleOrder;
+  @Output() itemClick = new EventEmitter<ISampleOrder>();
 
-  @Input() tabText: string;
-  @Input() image: string;
-  @Input() index: number;
-  @Input() key: number;
-  @Output() displayTabClick = new EventEmitter<number>();
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
-  onDisplayTabClick() {
-    this.displayTabClick.emit(this.index);
+  selectSampleOrder() {
+    this.itemClick.emit();
   }
 }

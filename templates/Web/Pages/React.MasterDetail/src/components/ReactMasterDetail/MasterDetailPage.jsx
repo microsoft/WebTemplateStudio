@@ -2,7 +2,7 @@
 import classnames from "classnames";
 import styles from "./masterdetail.module.css";
 
-export default function MasterDetailPage(props) {
+export default function MasterDetailPage({ textSampleData }) {
   const {
     longDescription,
     title,
@@ -10,7 +10,7 @@ export default function MasterDetailPage(props) {
     shipTo,
     orderTotal,
     orderDate
-  } = props.textSampleData;
+  } = textSampleData;
   return (
     <div className="col">
       <div className={classnames("row", styles.heading)}>
@@ -19,21 +19,7 @@ export default function MasterDetailPage(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-12 mt-3">
-          <nav aria-label="breadcrumb">
-            <ol className="breadcrumb bg-white mb-0">
-              <li className="breadcrumb-item">
-                <a className={styles.breadCrumbLink} href="/ReactMasterDetail">
-                  ReactMasterDetail
-                </a>
-              </li>
-              <li className="breadcrumb-item active" aria-current="page">
-                {title}
-              </li>
-            </ol>
-          </nav>
-        </div>
-        <div className="col-md-8 col-12 ml-3 mb-5">
+        <div className="col-md-8 col-12 ml-3 mb-5 mt-3">
           <p className={styles.title}>Status</p>
           <p>{status}</p>
           <p className={styles.title}>Order Date</p>

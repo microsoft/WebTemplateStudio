@@ -1,6 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { MasterDetailService, IMasterDetailText } from './master-detail.service';
+import { MasterDetailService } from './master-detail.service';
+import { ISampleOrder } from './master-detail.model';
+import {catchError, map} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-master-detail',
@@ -8,34 +11,31 @@ import { MasterDetailService, IMasterDetailText } from './master-detail.service'
   styleUrls: ['./master-detail.component.css']
 })
 export class MasterDetailComponent implements OnInit {
+  greyAvatarUrl = '../../../assets/GreyAvatar.svg';
+  warningMessageText:string = '';
+  warningMessageOpen:boolean = false;
+  currentSampleOrder={};
+  sampleOrders$: Observable<ISampleOrder[]>;
 
-  GreyAvatar = require('../../../assets/GreyAvatar.svg') as string;
-  WarningMessageText = 'Request to get master detail text failed:';
-  WarningMessageOpen = false;
-  currentDisplayTabIndex = 0;
-  masterDetailText: IMasterDetailText[] = [];
-
-  constructor(private masterDetailService: MasterDetailService) { }
+  constructor(private masterDetailService: MasterDetailService) {}
 
   ngOnInit() {
-    this.masterDetailService.getMasterDetailItems().subscribe(
-      result => {
-        this.masterDetailText = result;
-      },
-      error => {
-        this.WarningMessageOpen = true;
-        this.WarningMessageText = `Request to get master detail text failed: ${error}`;
-      }
-    );
+    this.sampleOrders$ = this.masterDetailService.getMasterDetailItems().pipe(catchError((error) => { 
+      this.warningMessageText = `Request to get master detail text failed: ${error}`; 
+      this.warningMessageOpen = true; 
+      return of(null);
+    }),map(listSampleOrders => {
+      this.currentSampleOrder = listSampleOrders[0];
+      return listSampleOrders;
+    }));
   }
 
-  handleDisplayTabClick(id: number) {
-    this.currentDisplayTabIndex = id;
+  selectSampleOrder(sampleOrder: ISampleOrder) {
+    this.currentSampleOrder = sampleOrder;
   }
+
   handleWarningClose(open: boolean) {
-    this.WarningMessageOpen = open;
-    this.WarningMessageText = '';
+    this.warningMessageOpen = open;
+    this.warningMessageText = '';
   }
 }
-
-

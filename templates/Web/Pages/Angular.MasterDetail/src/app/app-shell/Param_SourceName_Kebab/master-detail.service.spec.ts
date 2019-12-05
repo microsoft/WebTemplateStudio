@@ -6,9 +6,7 @@ import { MasterDetailService } from './master-detail.service';
 describe('MasterDetailService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ]
+      imports: [HttpClientTestingModule]
     }).compileComponents();
   }));
 

@@ -1,7 +1,10 @@
 {
-  "name": "WebTemplateStudioMoleculer",
+  "name": "Param_ToLowerPackageJsonDefault-server",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "start": "moleculer-runner services"
+  },
   "dependencies": {
     "moleculer": "^0.13.11",
     "moleculer-web": "0.9.0-beta6"

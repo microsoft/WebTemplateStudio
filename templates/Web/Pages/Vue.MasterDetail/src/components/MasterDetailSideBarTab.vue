@@ -2,24 +2,26 @@
   <button
     class="list-group-item list-group-item-action styles.sidebarText"
     type="button"
-    @click="$emit('onDisplayTabClick', index)"
+    @click="$emit('selectSampleOrder', sampleOrder)"
   >
-    <img class="mr-3" src="@/assets/GreyAvatar.svg" alt="Default Grey Avatar" />
-    {{tabText}}
+    <img class="mr-3" :src="sampleOrder.imageSrc ? sampleOrder.imageSrc : imgGreyAvatar" alt="Default Grey Avatar" />
+    {{sampleOrder.title}}
   </button>
 </template>
 
 <script>
+import imgGreyAvatar from '../assets/GreyAvatar.svg';
 export default {
   name: "MasterDetailSideBarTab",
   props: {
-    tabText: {
-      type: String,
+    sampleOrder: {
+      type: Object,
       required: true
-    },
-    index: {
-      type: Number,
-      required: true
+    }
+  },
+  data (){
+    return {
+      imgGreyAvatar
     }
   }
 };

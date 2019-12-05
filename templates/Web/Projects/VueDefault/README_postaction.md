@@ -52,7 +52,7 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 ```
 .
 //^^
-/{[{
+//{[{
 ├── src - Vue front-end
 │   ├── assets/                     - Default images
 │   ├── components/                 - Common Vue components shared between different views
@@ -71,7 +71,7 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 
 - Vue - https://vuejs.org/v2/guide/
 - Vue Router - https://router.vuejs.org/
-  //}]}
+//}]}
 - Bootstrap CSS - https://getbootstrap.com/
 
   This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).

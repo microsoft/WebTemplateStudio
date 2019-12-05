@@ -4,13 +4,17 @@ import { browser, logging } from 'protractor';
 describe('workspace-project App', () => {
   let page: AppPage;
 
-  beforeEach(() => {
+  beforeAll(() => {
     page = new AppPage();
+    page.navigateTo();
   });
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to materialui-multi-page!');
+  it('should display navbar with app name', () => {
+    expect(page.getTitleText()).toBe('wts.AngularDefault');
+  });
+
+  it('should contain at least one template page ', () => {
+    expect(page.getNavigationElements()).toBeGreaterThanOrEqual(1);
   });
 
   afterEach(async () => {

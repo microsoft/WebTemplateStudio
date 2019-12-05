@@ -14,11 +14,7 @@ describe('ListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        ListComponent,
-        ListFormComponent,
-        ListItemComponent
-      ],
+      declarations: [ListComponent, ListFormComponent, ListItemComponent],
       imports: [
         WarningMessageModule,
         FormsModule,
