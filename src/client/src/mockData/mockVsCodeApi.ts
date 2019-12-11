@@ -21,10 +21,17 @@ const mockSubscriptions = Array.from(Array(10).keys()).map(
   (element: number) => {
     return {
       label: SUBSCRIPTION_MOCK + element,
-      value: SUBSCRIPTION_MOCK + element
+      value: SUBSCRIPTION_MOCK + element,
+      isMicrosoftLearnSubscription: false
     };
   }
 );
+
+mockSubscriptions.push({
+  label: "Microsoft Learn Mock Subscription",
+      value: "Microsoft Learn Mock Subscription",
+      isMicrosoftLearnSubscription: true
+});
 
 const DEV_NO_ERROR_MSG: string = "in development, no error message";
 const DEV_NO_ERROR_TYPE: string = "in development, no error type";
