@@ -5,7 +5,7 @@ import { AppState } from "../reducers";
 import { ServiceState } from "../reducers/wizardSelectionReducers/services";
 
 interface ISelectedDropdowns {
-  subscription?: IDropDownOptionType;
+  subscription?: IDropDownSubscriptionOptionType;
   resourceGroup?: IDropDownOptionType;
   siteName?: IDropDownOptionType;
   internalName?: IDropDownOptionType;
@@ -76,7 +76,8 @@ const getAppServiceSelectionInDropdownForm = (
     };
     selectionInformation.dropdownSelection.subscription = {
       value: selection.subscription,
-      label: selection.subscription
+      label: selection.subscription,
+      isMicrosoftLearnSubscription: selection.isMicrosoftLearnSubscription
     };
 
     return selectionInformation;
