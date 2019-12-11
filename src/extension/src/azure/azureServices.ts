@@ -109,7 +109,8 @@ export class AzureServices extends WizardServant {
         subscriptionItem => {
           return {
             label: subscriptionItem.label,
-            value: subscriptionItem.label
+            value: subscriptionItem.label,
+            isMicrosoftLearnSubscription: AzureServices.IsMicrosoftLearnSubscription(subscriptionItem)
           };
         }
       );
