@@ -80,6 +80,12 @@ interface attributeLinks {
   [key: string]: string;
 }
 
+interface IDropDownSubscriptionOptionType {
+  value: any;
+  label: any;
+  isMicrosoftLearnSubscription: boolean;
+}
+
 let timeout: NodeJS.Timeout | undefined;
 
 const links: attributeLinks = {
@@ -107,7 +113,8 @@ export interface IAppServiceState {
 const initialState: IAppServiceState = {
   subscription: {
     value: "",
-    label: ""
+    label: "",
+    isMicrosoftLearnSubscription: false
   },
   resourceGroup: {
     value: "",
@@ -194,14 +201,15 @@ const AppServiceModal = (props: Props) => {
     updateForm(updatedAppServiceForm);
   };
 
-  const handleDropdown = (infoLabel: string, option: IDropDownOptionType) => {
+  const handleDropdown = (infoLabel: string, option: IDropDownSubscriptionOptionType) => {
     // Send command to extension on change
     // Populate resource groups on received commands
     let updatedForm = {
       ...appServiceFormData,
       [infoLabel]: {
         value: option.value,
-        label: option.label
+        label: option.label,
+        isMicrosoftLearnSubscription: option.isMicrosoftLearnSubscription
       }
     };
     if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
@@ -487,7 +495,12 @@ const AppServiceModal = (props: Props) => {
           >
             {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
           </div>
-          <div>{intl.formatMessage(azureModalMessages.appServiceInfo)}</div>
+          
+          <div>
+            {appServiceFormData.subscription.isMicrosoftLearnSubscription 
+            ? intl.formatMessage(azureModalMessages.appServiceFreeTierInfo) 
+            : intl.formatMessage(azureModalMessages.appServiceBasicTierInfo)}
+          </div>
           <a
             className={styles.link}
             target={"_blank"}
