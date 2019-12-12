@@ -18,7 +18,7 @@ import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getAppServiceSelectionInDropdownForm } from "../../selectors/appServiceSelector";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
 import { getProjectName } from "../../selectors/wizardSelectionSelector";
-
+import RuntimeStackInfo from "./RuntimeStackInfo";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import { setAppServiceModalButtonStatus } from "./verifyButtonStatus";
@@ -61,7 +61,6 @@ interface IStateProps {
   isValidatingName: boolean;
   siteNameAvailability: IAvailability;
   selection: ISelectionInformation | undefined;
-  selectedBackend: ISelected;
   projectName: string;
 }
 
@@ -86,18 +85,6 @@ const links: attributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade"
 };
-
-const backendFrameworkNameToAppServiceRuntimeStack: Map<
-  string,
-  string
-> = new Map([
-  [WIZARD_CONTENT_INTERNAL_NAMES.NODE, WIZARD_CONTENT_INTERNAL_NAMES.NODE],
-  [
-    WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER,
-    WIZARD_CONTENT_INTERNAL_NAMES.NODE
-  ],
-  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, WIZARD_CONTENT_INTERNAL_NAMES.PYTHON]
-]);
 
 // state of user's selections (selected form data)
 export interface IAppServiceState {
@@ -137,7 +124,6 @@ const AppServiceModal = (props: Props) => {
     setValidationStatus,
     saveAppServiceSettings,
     closeModal,
-    selectedBackend,
     projectName
   } = props;
 
@@ -506,23 +492,8 @@ const AppServiceModal = (props: Props) => {
         </div>
 
         {/* Runtime Stack */}
-        <div className={styles.selectionContainer}>
-          <div
-            className={classNames(
-              styles.selectionHeaderContainer,
-              styles.leftHeader
-            )}
-          >
-            {intl.formatMessage(azureModalMessages.runtimeStackLabel)}
-          </div>
-          <div>
-            {intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
-              runtimeStack: backendFrameworkNameToAppServiceRuntimeStack.get(
-                selectedBackend.internalName
-              )
-            })}
-          </div>
-        </div>
+          <RuntimeStackInfo />
+        
         {/* Save Button */}
         <button
           className={getButtonClassNames()}
@@ -545,7 +516,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
     state.selection.services.appService.siteNameAvailability,
   isValidatingName: state.selection.isValidatingName,
   selection: getAppServiceSelectionInDropdownForm(state),
-  selectedBackend: state.selection.backendFramework,
   projectName: getProjectName(state)
 });
 
