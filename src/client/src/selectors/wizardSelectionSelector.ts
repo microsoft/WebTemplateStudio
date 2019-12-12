@@ -32,6 +32,28 @@ const getProjectNameValidation = (state: AppState): IValidation =>
   state.selection.projectNameObject.validation;
 const getOutputPath = (state: AppState): string =>
   state.selection.outputPathObject.outputPath;
+const isEnableNextPage = (state: AppState): boolean =>{
+  let valid = false;
+  if (state.wizardRoutes.isVisited["/"]==true && !state.wizardRoutes.isVisited["/SelectFrameworks"] && 
+    state.selection.projectNameObject.validation.isValid && state.selection.outputPathObject.outputPath!=""){
+      valid = true;
+    } 
+
+  if (state.wizardRoutes.isVisited["/SelectFrameworks"]==true && !state.wizardRoutes.isVisited["/SelectPages"] && 
+    state.selection.frontendFramework.title!="" && state.selection.backendFramework.title!=""){
+      valid = true;
+    } 
+
+  if (state.wizardRoutes.isVisited["/SelectPages"]==true && !state.wizardRoutes.isVisited["/AzureLogin"]){
+    valid = true;
+  } 
+  if (state.wizardRoutes.isVisited["/AzureLogin"]==true || state.wizardRoutes.isVisited["/AzureLogin"]){
+    valid = true;
+  } 
+
+  return valid;
+}
+
 const getOutputPathValidation = (state: AppState): IValidation =>
   state.selection.outputPathObject.validation;
 const getPageCount = (state: AppState): IPageCount => state.selection.pageCount;
@@ -157,5 +179,6 @@ export {
   getProjectName,
   getPageCount,
   getProjectNameValidation,
-  isValidNameAndProjectPathSelector
+  isValidNameAndProjectPathSelector,
+  isEnableNextPage
 };
