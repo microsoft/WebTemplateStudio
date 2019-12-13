@@ -36,6 +36,7 @@ import {
 } from "../../selectors/appServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
+import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
 import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
 import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
@@ -60,9 +61,11 @@ import { IFunctionName } from "../AzureFunctionsSelection";
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
+import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
+  setPage: (route: string) => void;
   openPostGenModal: () => any;
   updateCreateProjectButton: (enable: boolean) => any;
 }
@@ -159,7 +162,7 @@ class Footer extends React.Component<Props> {
     }
   };
   public handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
-    const { isEnableNextPage, setRouteVisited } = this.props;
+    const { isEnableNextPage, setRouteVisited, setPage } = this.props;
     this.trackPageForTelemetry(pathname);
     if (!isEnableNextPage) {
       event.preventDefault();
@@ -168,6 +171,7 @@ class Footer extends React.Component<Props> {
     if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
       setRouteVisited(pathsNext[pathname]);
     }
+    setPage(pathsNext[pathname]);
     let pageNavLink = document.getElementById(
       "page" + this.findPageID(pathsNext[pathname])
     );
@@ -180,11 +184,12 @@ class Footer extends React.Component<Props> {
     event: React.SyntheticEvent,
     pathname: string
   ) => {
-    const { setRouteVisited } = this.props;
+    const { setRouteVisited, setPage } = this.props;
     this.trackPageForTelemetry(pathname);
     if (pathname !== ROUTES.NEW_PROJECT) {
       setRouteVisited(pathname);
     }
+    setPage(pathsBack[pathname]);
     let pageNavLink = document.getElementById(
       "page" + this.findPageID(pathsBack[pathname])
     );
@@ -353,6 +358,9 @@ const mapDispatchToProps = (
 ): IDispatchProps => ({
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
+  },
+  setPage: (route: string) => {
+    dispatch(setPageWizardPageAction(route));
   },
   openPostGenModal: () => {
     dispatch(openPostGenModalAction());

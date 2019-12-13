@@ -34,22 +34,23 @@ const getOutputPath = (state: AppState): string =>
   state.selection.outputPathObject.outputPath;
 const isEnableNextPage = (state: AppState): boolean =>{
   let valid = false;
-  if (state.wizardRoutes.isVisited["/"]==true && !state.wizardRoutes.isVisited["/SelectFrameworks"] && 
+  if (state.wizardRoutes.selected == "/" &&
     state.selection.projectNameObject.validation.isValid && state.selection.outputPathObject.outputPath!=""){
-      valid = true;
-    } 
+    valid = true;
+  }
 
-  if (state.wizardRoutes.isVisited["/SelectFrameworks"]==true && !state.wizardRoutes.isVisited["/SelectPages"] && 
+  if (state.wizardRoutes.selected == "/SelectFrameworks" &&
     state.selection.frontendFramework.title!="" && state.selection.backendFramework.title!=""){
-      valid = true;
-    } 
+    valid = true;
+  }
 
-  if (state.wizardRoutes.isVisited["/SelectPages"]==true && !state.wizardRoutes.isVisited["/AzureLogin"]){
+  if (state.wizardRoutes.selected == "/SelectPages" && state.selection.pages.length>0){
     valid = true;
-  } 
-  if (state.wizardRoutes.isVisited["/AzureLogin"]==true || state.wizardRoutes.isVisited["/AzureLogin"]){
+  }
+
+  if (state.wizardRoutes.selected == "/AzureLogin"){
     valid = true;
-  } 
+  }
 
   return valid;
 }
