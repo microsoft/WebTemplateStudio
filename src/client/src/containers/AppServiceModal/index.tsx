@@ -19,6 +19,7 @@ import { getAppServiceSelectionInDropdownForm } from "../../selectors/appService
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
 import { getProjectName } from "../../selectors/wizardSelectionSelector";
 import RuntimeStackInfo from "./RuntimeStackInfo";
+import AppServicePlanInfo from "./AppServicePlanInfo";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import { setAppServiceModalButtonStatus } from "./verifyButtonStatus";
@@ -28,8 +29,7 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  KEY_EVENTS,
-  WEB_TEMPLATE_STUDIO_LINKS
+  KEY_EVENTS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
@@ -41,7 +41,6 @@ import {
 import { AppState } from "../../reducers";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import RootAction from "../../actions/ActionType";
-import { ISelected } from "../../types/selected";
 import { ISelectionInformation } from "../../selectors/appServiceSelector";
 import { IAvailability } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -465,35 +464,8 @@ const AppServiceModal = (props: Props) => {
               )}
           </div>
         </div>
-        {/* App Service Plan Information */}
-        <div className={styles.aspInfoContainer}>
-          <div
-            className={classNames(
-              styles.selectionHeaderContainer,
-              styles.leftHeader
-            )}
-          >
-            {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
-          </div>
-          
-          <div>
-            {appServiceFormData.subscription.isMicrosoftLearnSubscription 
-            ? intl.formatMessage(azureModalMessages.appServiceFreeTierInfo) 
-            : intl.formatMessage(azureModalMessages.appServiceBasicTierInfo)}
-          </div>
-          <a
-            className={styles.link}
-            target={"_blank"}
-            rel="noreferrer noopener"
-            href={WEB_TEMPLATE_STUDIO_LINKS.APP_SERVICE_PLAN}
-          >
-            {intl.formatMessage(azureModalMessages.appServiceLearnMore)}
-          </a>
-        </div>
-
-        {/* Runtime Stack */}
-          <RuntimeStackInfo />
-        
+        <AppServicePlanInfo subscription={appServiceFormData.subscription} />
+        <RuntimeStackInfo />
         {/* Save Button */}
         <button
           className={getButtonClassNames()}
