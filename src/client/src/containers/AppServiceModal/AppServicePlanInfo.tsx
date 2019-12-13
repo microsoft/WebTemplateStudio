@@ -24,7 +24,7 @@ const AppServicePlanInfo = (props: Props) => {
         {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
       </div>
 
-      <div>
+      <div id="message">
         {subscription.isMicrosoftLearnSubscription
           ? intl.formatMessage(azureModalMessages.appServiceFreeTierInfo)
           : intl.formatMessage(azureModalMessages.appServiceBasicTierInfo)}
