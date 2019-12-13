@@ -4,27 +4,53 @@ import AppServicePlanInfo from "./AppServicePlanInfo";
 
 describe("AppServicePlanInfo", () => {
   let props: any;
-  let wrapper: any;
 
   beforeEach(() => {
     props = {
       subscription: {
         label: "",
         value: "",
-        isMicrosoftLearnSubscription: true
+        isMicrosoftLearnSubscription: null
       },
       intl: global.intl
     };
-    wrapper = mountWithIntl(<AppServicePlanInfo {...props} />);
   });
 
-  it("renders without crashing", () => {
-    expect(wrapper).toBeDefined();
+  describe("When isMicrosoftLearnSubscription is true", () => {
+    let wrapper: any;
+
+    beforeEach(() => {
+      props.subscription.isMicrosoftLearnSubscription = true;
+      wrapper = mountWithIntl(<AppServicePlanInfo {...props} />);
+    });
+
+    it("renders without crashing", () => {
+      expect(wrapper).toBeDefined();
+    });
+
+    it("should have a free subscription message", () => {
+      const intl = wrapper.props().intl;
+      const message = wrapper.find("#message").text();
+      expect(message).toBe(intl.formatMessage(azureMessages.appServiceFreeTierInfo));
+    });
   });
 
-  it("should have free subscription message", () => {
-    const intl = wrapper.props().intl;
-    const message = wrapper.find("#message").text();
-    expect(message).toBe(intl.formatMessage(azureMessages.appServiceFreeTierInfo));
+  describe("When isMicrosoftLearnSubscription is false", () => {
+    let wrapper: any;
+
+    beforeEach(() => {
+      props.subscription.isMicrosoftLearnSubscription = false;
+      wrapper = mountWithIntl(<AppServicePlanInfo {...props} />);
+    });
+
+    it("renders without crashing", () => {
+      expect(wrapper).toBeDefined();
+    });
+
+    it("should have a basic subscription message", () => {
+      const intl = wrapper.props().intl;
+      const message = wrapper.find("#message").text();
+      expect(message).toBe(intl.formatMessage(azureMessages.appServiceBasicTierInfo));
+    });
   });
 });
