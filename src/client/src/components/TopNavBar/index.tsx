@@ -12,6 +12,10 @@ import styles from "./styles.module.css";
 import { ROUTES_ARRAY } from "../../utils/constants";
 import { IRoutes } from "../../reducers/wizardRoutes/navigationReducer";
 import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
+import { ThunkDispatch } from "redux-thunk";
+import { AppState } from "../../reducers";
+import RootAction from "../../actions/ActionType";
+import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
 
 const messages = defineMessages({
   ariaNavLabel: {
@@ -45,7 +49,11 @@ interface IStateProps {
   isValidNameAndProjectPath: boolean;
 }
 
-type Props = RouteComponentProps & IStateProps & InjectedIntlProps;
+interface IDispatchProps {
+  setPage: (route: string) => void;
+}
+
+type Props = RouteComponentProps & IStateProps & IDispatchProps & InjectedIntlProps;
 
 const TopNavBar = (props: Props) => {
   const { formatMessage } = props.intl;
@@ -73,7 +81,7 @@ const TopNavBar = (props: Props) => {
   React.useEffect(() => {
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
   });
-  const { isVisited, intl, isValidNameAndProjectPath } = props;
+  const { isVisited, intl, isValidNameAndProjectPath, setPage } = props;
   return (
     <React.Fragment>
       {
@@ -116,6 +124,7 @@ const TopNavBar = (props: Props) => {
                     visitedCheck={isOtherVisitedRoute}
                     isSelected={idx === currentPathIndex}
                     pageNumber={idx + 1}
+                    reducerSetPage={setPage}
                   />
                 </div>
               );
@@ -131,5 +140,13 @@ const mapStateToProps = (state: any): IStateProps => ({
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
   isVisited: state.wizardRoutes.isVisited
 });
+ 
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
+  setPage: (route: string) => {
+    dispatch(setPageWizardPageAction(route));
+  }
+});
 
-export default withRouter(connect(mapStateToProps)(injectIntl(TopNavBar)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(injectIntl(TopNavBar)));

@@ -8,6 +8,7 @@ import { defineMessages } from "react-intl";
 import { IValidation } from "../reducers/wizardSelectionReducers/updateOutputPath";
 import { AppState } from "../reducers";
 import { SelectionState } from "../reducers/wizardSelectionReducers";
+import { ROUTES } from "../utils/constants";
 
 export const messages = defineMessages({
   azureFunctionsOriginalTitle: {
@@ -34,21 +35,21 @@ const getOutputPath = (state: AppState): string =>
   state.selection.outputPathObject.outputPath;
 const isEnableNextPage = (state: AppState): boolean =>{
   let valid = false;
-  if (state.wizardRoutes.selected == "/" &&
+  if (state.wizardRoutes.selected == ROUTES.NEW_PROJECT &&
     state.selection.projectNameObject.validation.isValid && state.selection.outputPathObject.outputPath!=""){
     valid = true;
   }
 
-  if (state.wizardRoutes.selected == "/SelectFrameworks" &&
+  if (state.wizardRoutes.selected == ROUTES.SELECT_FRAMEWORKS &&
     state.selection.frontendFramework.title!="" && state.selection.backendFramework.title!=""){
     valid = true;
   }
 
-  if (state.wizardRoutes.selected == "/SelectPages" && state.selection.pages.length>0){
+  if (state.wizardRoutes.selected == ROUTES.SELECT_PAGES && state.selection.pages.length>0){
     valid = true;
   }
 
-  if (state.wizardRoutes.selected == "/AzureLogin"){
+  if (state.wizardRoutes.selected == ROUTES.AZURE_LOGIN || state.wizardRoutes.selected == ROUTES.REVIEW_AND_GENERATE){
     valid = true;
   }
 

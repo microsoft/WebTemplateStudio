@@ -61,7 +61,7 @@ import { IFunctionName } from "../AzureFunctionsSelection";
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
-import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
+
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -351,7 +351,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isVisited: getIsVisitedRoutesSelector(state),
   isEnableNextPage: isEnableNextPage(state),
   enableCreateProjectButton: state.wizardContent.createProjectButton
-});
+}); 
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
