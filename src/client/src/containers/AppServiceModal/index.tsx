@@ -80,12 +80,6 @@ interface attributeLinks {
   [key: string]: string;
 }
 
-interface IDropDownSubscriptionOptionType {
-  value: any;
-  label: any;
-  isMicrosoftLearnSubscription: boolean;
-}
-
 let timeout: NodeJS.Timeout | undefined;
 
 const links: attributeLinks = {
