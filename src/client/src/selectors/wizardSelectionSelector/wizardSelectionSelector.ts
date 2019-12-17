@@ -49,7 +49,7 @@ const isEnableNextPage = (state: AppState): boolean =>{
     valid = true;
   }
 
-if (state.wizardRoutes.selected == ROUTES.AZURE_LOGIN || state.wizardRoutes.selected == ROUTES.REVIEW_AND_GENERATE){
+  if (state.wizardRoutes.selected == ROUTES.AZURE_LOGIN || state.wizardRoutes.selected == ROUTES.REVIEW_AND_GENERATE){
     valid = true;
   }
 

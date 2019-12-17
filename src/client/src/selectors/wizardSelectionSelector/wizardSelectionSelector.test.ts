@@ -20,7 +20,14 @@ describe("wizardSelectionSelector", () => {
         },
         outputPathObject:{
           outputPath:""
-        }
+        },
+        frontendFramework:{
+          title:""
+        },
+        backendFramework:{
+          title:""
+        },
+        pages:[]
       }
     };
   })
@@ -33,15 +40,6 @@ describe("wizardSelectionSelector", () => {
       mock.selection.outputPathObject.outputPath="c:/sadadasd";
       let store = mockStore(mock);
       expect(isEnableNextPage(store.getState())).toBeTruthy();
-    })
-
-    it("isEnableNextPage invalid (route wrong)",()=>{
-      const mockStore = configureMockStore();
-      mock.wizardRoutes.selected = "/wrong";
-      mock.selection.projectNameObject.validation.isValid = true;
-      mock.selection.outputPathObject.outputPath="c:/sadadasd";
-      let store = mockStore(mock);
-      expect(isEnableNextPage(store.getState())).toBeFalsy();
     })
 
     it("isEnableNextPage invalid (project name invalid)",()=>{
@@ -61,5 +59,69 @@ describe("wizardSelectionSelector", () => {
       let store = mockStore(mock);
       expect(isEnableNextPage(store.getState())).toBeFalsy();
     })
+  });
+
+  describe("on select framework", () => {
+    it("isEnableNextPage valid",()=>{
+      const mockStore = configureMockStore();
+      mock.wizardRoutes.selected = ROUTES.SELECT_FRAMEWORKS;
+      mock.selection.frontendFramework.title = "sfsdf";
+      mock.selection.backendFramework.title = "sfsdf";
+      let store = mockStore(mock);
+      expect(isEnableNextPage(store.getState())).toBeTruthy();
+    })
+
+    it("isEnableNextPage invalid (frontendFramework unselected)",()=>{
+      const mockStore = configureMockStore();
+      mock.wizardRoutes.selected = ROUTES.SELECT_FRAMEWORKS;
+      mock.selection.frontendFramework.title = "";
+      mock.selection.backendFramework.title = "sfsdf";
+      let store = mockStore(mock);
+      expect(isEnableNextPage(store.getState())).toBeFalsy();
+    })
+
+    it("isEnableNextPage invalid (backendFramework unselected)",()=>{
+      const mockStore = configureMockStore();
+      mock.wizardRoutes.selected = ROUTES.SELECT_FRAMEWORKS;
+      mock.selection.frontendFramework.title = "sdfsdf";
+      mock.selection.backendFramework.title = "";
+      let store = mockStore(mock);
+      expect(isEnableNextPage(store.getState())).toBeFalsy();
+    })
+  });
+
+  describe("on select pages", () => {
+    it("isEnableNextPage valid",()=>{
+      const mockStore = configureMockStore();
+      mock.wizardRoutes.selected = ROUTES.SELECT_PAGES;
+      mock.selection.pages.push({});
+      let store = mockStore(mock);
+      expect(isEnableNextPage(store.getState())).toBeTruthy();
+    })
+
+    it("isEnableNextPage invalid (frontendFramework unselected)",()=>{
+      const mockStore = configureMockStore();
+      mock.wizardRoutes.selected = ROUTES.SELECT_PAGES;
+      let store = mockStore(mock);
+      expect(isEnableNextPage(store.getState())).toBeFalsy();
+    })
+  });
+
+  describe("on azure login", () => {
+    it("isEnableNextPage valid always",()=>{
+      const mockStore = configureMockStore();
+      mock.wizardRoutes.selected = ROUTES.AZURE_LOGIN;
+      let store = mockStore(mock);
+      expect(isEnableNextPage(store.getState())).toBeTruthy();
+    });
+  });
+
+  describe("on review and generate", () => {
+    it("isEnableNextPage valid always",()=>{
+      const mockStore = configureMockStore();
+      mock.wizardRoutes.selected = ROUTES.REVIEW_AND_GENERATE;
+      let store = mockStore(mock);
+      expect(isEnableNextPage(store.getState())).toBeTruthy();
+    });
   });
 });
