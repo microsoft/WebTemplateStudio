@@ -143,10 +143,15 @@ export const azureMessages = defineMessages({
     id: "azureFunctionsModal.runtimeStackSubLabel",
     defaultMessage: "Your runtime stack is {runtimeStack}"
   },
-  appServiceInfo: {
-    id: "appService.appServiceInfo",
+  appServiceBasicTierInfo: {
+    id: "appService.appServiceBasicTierInfo",
     defaultMessage:
       "A free BASIC tier 30 day trial app service plan will be created for you."
+  },
+  appServiceFreeTierInfo: {
+    id: "appService.appServiceFreeTierInfo",
+    defaultMessage:
+      "A FREE tier app service plan will be created for you."
   },
   appServiceLearnMore: {
     id: "appService.learnMore",
