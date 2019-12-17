@@ -27,7 +27,7 @@ interface IStateProps {
 type Props = IStateProps & InjectedIntlProps;
 
 const RuntimeStackInfo = (props : Props) => {
-
+  
   const {intl, selectedBackend} = props;
 
     return (
@@ -40,7 +40,7 @@ const RuntimeStackInfo = (props : Props) => {
             >
             {intl.formatMessage(azureModalMessages.runtimeStackLabel)}
             </div>
-            <div>
+            <div id="message">
             {intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
                 runtimeStack: backendFrameworkNameToAppServiceRuntimeStack.get(
                 selectedBackend.internalName
@@ -55,4 +55,4 @@ const mapStateToProps = (state: AppState): IStateProps => ({
     selectedBackend: state.selection.backendFramework
   });
 
-export default connect(mapStateToProps, null)(injectIntl(RuntimeStackInfo));
+export default connect(mapStateToProps)(injectIntl(RuntimeStackInfo));
