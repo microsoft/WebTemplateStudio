@@ -11,27 +11,27 @@ import { Subject, Observable } from 'rxjs';
 })
 export class ListComponent implements OnInit {
   listItems$: Observable<IListItem[]> = new Observable();
-  private _dataSource: Subject<IListItem[]> = new Subject();
-  warningMessageText:string = '';
-  warningMessageOpen:boolean = false;
+  private dataSource: Subject<IListItem[]> = new Subject();
+  warningMessageText = '';
+  warningMessageOpen = false;
 
   constructor(private listService: ListService) {}
 
   ngOnInit() {
-    this.listItems$=this._dataSource.asObservable();
+    this.listItems$ = this.dataSource.asObservable();
     this.loadItems();
   }
 
-  loadItems(){
+  loadItems() {
     this.listService.getListItems().subscribe(
-      (listItem:IListItem[])=>{this._dataSource.next(listItem)},
+      (listItem: IListItem[]) => this.dataSource.next(listItem),
       error => this.handleError(`Request to get list items failed: ${error}`)
     );
   }
 
   addItem(inputText: string) {
     this.listService.addListItem(inputText).subscribe(
-      ()=> this.loadItems(), error => this.handleError(`Request to add item failed: ${error}`)
+      () => this.loadItems(), error => this.handleError(`Request to add item failed: ${error}`)
     );
   }
 
@@ -46,7 +46,7 @@ export class ListComponent implements OnInit {
     this.warningMessageText = '';
   }
 
-  private handleError(warningMessageText:string) {
+  private handleError(warningMessageText: string) {
     this.warningMessageOpen = true;
     this.warningMessageText = warningMessageText;
   }
