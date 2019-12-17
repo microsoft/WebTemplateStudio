@@ -1,14 +1,14 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { RowType } from "../types/rowType";
-import { ISelected } from "../types/selected";
-import getSvgUrl from "../utils/getSvgUrl";
-import { IPageCount } from "../reducers/wizardSelectionReducers/pageCountReducer";
+import { RowType } from "../../types/rowType";
+import { ISelected } from "../../types/selected";
+import getSvgUrl from "../../utils/getSvgUrl";
+import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { defineMessages } from "react-intl";
-import { IValidation } from "../reducers/wizardSelectionReducers/updateOutputPath";
-import { AppState } from "../reducers";
-import { SelectionState } from "../reducers/wizardSelectionReducers";
-import { ROUTES } from "../utils/constants";
+import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
+import { AppState } from "../../reducers";
+import { SelectionState } from "../../reducers/wizardSelectionReducers";
+import { ROUTES } from "../../utils/constants";
 
 export const messages = defineMessages({
   azureFunctionsOriginalTitle: {
@@ -49,7 +49,7 @@ const isEnableNextPage = (state: AppState): boolean =>{
     valid = true;
   }
 
-  if (state.wizardRoutes.selected == ROUTES.AZURE_LOGIN || state.wizardRoutes.selected == ROUTES.REVIEW_AND_GENERATE){
+if (state.wizardRoutes.selected == ROUTES.AZURE_LOGIN || state.wizardRoutes.selected == ROUTES.REVIEW_AND_GENERATE){
     valid = true;
   }
 

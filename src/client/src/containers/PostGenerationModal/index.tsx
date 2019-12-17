@@ -25,7 +25,7 @@ import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 import { AppState } from "../../reducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getOutputPath } from "../../selectors/wizardSelectionSelector";
+import { getOutputPath } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";

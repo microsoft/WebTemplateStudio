@@ -11,7 +11,7 @@ import styles from "./styles.module.css";
 
 import { ROUTES_ARRAY } from "../../utils/constants";
 import { IRoutes } from "../../reducers/wizardRoutes/navigationReducer";
-import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
+import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";

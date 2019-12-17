@@ -10,7 +10,7 @@ import {
 
 import { IOption } from "../../types/option";
 import { ISelected } from "../../types/selected";
-import { getPageCount } from "../../selectors/wizardSelectionSelector";
+import { getPageCount } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 
 import { defineMessages, InjectedIntl, injectIntl } from "react-intl";

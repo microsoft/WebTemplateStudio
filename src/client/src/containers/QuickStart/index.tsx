@@ -15,7 +15,7 @@ import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setV
 import { enableQuickStartAction } from "../../actions/wizardInfoActions/enableQuickStartAction";
 
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
+import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import { AppState } from "../../reducers";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";

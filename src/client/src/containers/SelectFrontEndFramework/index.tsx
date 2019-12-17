@@ -25,7 +25,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { getPageCount } from "../../selectors/wizardSelectionSelector";
+import { getPageCount } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import {
   getIsVisitedRoutesSelector,
