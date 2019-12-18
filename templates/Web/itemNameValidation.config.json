@@ -1,0 +1,9 @@
+﻿{  
+    "regexs" : [
+    ],
+    "reservedNames" : [ 
+      ],
+    "validateExistingNames": true,
+    "validateDefaultNames": true,
+    "validateEmptyNames": true
+}
