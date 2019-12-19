@@ -6,7 +6,7 @@
     "start": "moleculer-runner services"
   },
   "dependencies": {
-    "moleculer": "^0.13.11",
+    "moleculer": "0.13.12",
     "moleculer-web": "0.9.0-beta6"
   },
   "engines": {
