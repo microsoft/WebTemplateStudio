@@ -204,7 +204,7 @@ const mockVsCodeApi = () => ({
                     platforms: ["Web"],
                     languages: ["Any"],
                     tags: {
-                      version: "0.13.11",
+                      version: "0.13.12",
                       preview: false
                     }
                   },
