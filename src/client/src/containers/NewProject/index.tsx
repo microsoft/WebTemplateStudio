@@ -15,7 +15,7 @@ import {
   getProjectNameValidation,
   getProjectName,
   getOutputPathValidation
-} from "../../selectors/wizardSelectionSelector";
+} from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";

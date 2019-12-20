@@ -2,7 +2,7 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { ISelected } from "../types/selected";
 import { ITemplateInfo } from "../types/templateInfo";
-import { getOutputPath, getProjectName } from "./wizardSelectionSelector";
+import { getOutputPath, getProjectName } from "./wizardSelectionSelector/wizardSelectionSelector";
 import {
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,

@@ -18,7 +18,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getFunctionsSelection } from "../../selectors/azureFunctionsServiceSelector";
 import { isAzureFunctionsModalOpenSelector } from "../../selectors/modalSelector";
-import { getProjectName } from "../../selectors/wizardSelectionSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 

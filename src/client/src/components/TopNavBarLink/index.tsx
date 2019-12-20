@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import * as React from "react";
-import { defineMessages } from "react-intl";
 import { injectIntl, FormattedMessage, InjectedIntl } from "react-intl";
 
 import { Link } from "react-router-dom";
@@ -16,7 +15,8 @@ const TopNavBarLink = ({
   path,
   disabled,
   isSelected,
-  intl
+  intl,
+  reducerSetPage
 }: {
   pageNumber: number;
   text: string;
@@ -25,10 +25,13 @@ const TopNavBarLink = ({
   disabled: boolean;
   isSelected: boolean;
   intl: InjectedIntl;
+  reducerSetPage:(route: string) => void
 }) => {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     if (disabled) {
       e.preventDefault();
+    }else{
+      reducerSetPage(path);
     }
   };
 
