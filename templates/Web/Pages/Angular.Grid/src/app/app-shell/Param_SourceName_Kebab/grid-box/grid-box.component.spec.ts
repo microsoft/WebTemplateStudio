@@ -1,21 +1,9 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { GridBoxComponent } from './grid-box.component';
-import { IGridTextItem } from '../grid.model';
 
 describe('GridBoxComponent', () => {
   let component: GridBoxComponent;
   let fixture: ComponentFixture<GridBoxComponent>;
-  let mockGridItem:IGridTextItem = {
-    id: 1,
-    longDescription: '1',
-    orderTotal: 1,
-    shipTo: '',
-    shortDescription: '',
-    status: true,
-    title: '',
-    orderDate: new Date()
-  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,7 +14,16 @@ describe('GridBoxComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GridBoxComponent);
     component = fixture.componentInstance;
-    component.gridItem = mockGridItem;
+    component.gridItem = {
+      id: 1,
+      longDescription: '1',
+      orderTotal: 1,
+      shipTo: '',
+      shortDescription: '',
+      status: true,
+      title: '',
+      orderDate: new Date()
+    };
     fixture.detectChanges();
   });
 

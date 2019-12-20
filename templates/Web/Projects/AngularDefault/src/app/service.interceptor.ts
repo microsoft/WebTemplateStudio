@@ -9,12 +9,11 @@ export class ServiceInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    //WTS TODO: You can personalize your http interception (token for login, handle errors, redirections, loggers ...)
-    //More information in:
-    //https://angular.io/api/common/http/HttpInterceptor
-    //https://blog.angulartraining.com/http-interceptors-in-angular-61dcf80b6bdd
+    // WTS TODO: You can personalize your http interception (token for login, handle errors, redirections, loggers ...)
+    // More information in:
+    // https://angular.io/api/common/http/HttpInterceptor
+    // https://blog.angulartraining.com/http-interceptors-in-angular-61dcf80b6bdd
 
     return next.handle(req);
   }
-
 }

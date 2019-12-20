@@ -12,8 +12,8 @@ import {Observable, of} from 'rxjs';
 })
 export class GridComponent implements OnInit {
   greyBoxUrl = '../../../assets/GreyBox.svg';
-  warningMessageText:string = '';
-  warningMessageOpen:boolean = false;
+  warningMessageText = '';
+  warningMessageOpen = false;
   gridItems$: Observable<IGridTextItem[]>;
 
   constructor(private gridService: GridService) {}

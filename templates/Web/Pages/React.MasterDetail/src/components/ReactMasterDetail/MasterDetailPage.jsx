@@ -1,8 +1,9 @@
 ﻿import React from "react";
 import classnames from "classnames";
 import styles from "./masterdetail.module.css";
+import PropTypes from "prop-types";
 
-export default function MasterDetailPage({ textSampleData }) {
+const MasterDetailPage = ({ textSampleData }) => {
   const {
     longDescription,
     title,
@@ -35,3 +36,9 @@ export default function MasterDetailPage({ textSampleData }) {
     </div>
   );
 }
+
+MasterDetailPage.propTypes = {
+  textSampleData: PropTypes.any
+}
+
+export default MasterDetailPage;
