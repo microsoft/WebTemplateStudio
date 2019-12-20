@@ -50,12 +50,12 @@ import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountRedu
 import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
-import { getPageCount } from "../../selectors/wizardSelectionSelector";
+import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { getPageCount } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import {
   getOutputPath,
   getProjectName
-} from "../../selectors/wizardSelectionSelector";
+} from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;

@@ -17,7 +17,7 @@ import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
-import { getProjectName } from "../../selectors/wizardSelectionSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import { setCosmosModalButtonStatus } from "./verifyButtonStatus";
 

@@ -1,13 +1,14 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { RowType } from "../types/rowType";
-import { ISelected } from "../types/selected";
-import getSvgUrl from "../utils/getSvgUrl";
-import { IPageCount } from "../reducers/wizardSelectionReducers/pageCountReducer";
+import { RowType } from "../../types/rowType";
+import { ISelected } from "../../types/selected";
+import getSvgUrl from "../../utils/getSvgUrl";
+import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { defineMessages } from "react-intl";
-import { IValidation } from "../reducers/wizardSelectionReducers/updateOutputPath";
-import { AppState } from "../reducers";
-import { SelectionState } from "../reducers/wizardSelectionReducers";
+import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
+import { AppState } from "../../reducers";
+import { SelectionState } from "../../reducers/wizardSelectionReducers";
+import { ROUTES } from "../../utils/constants";
 
 export const messages = defineMessages({
   azureFunctionsOriginalTitle: {
@@ -32,6 +33,29 @@ const getProjectNameValidation = (state: AppState): IValidation =>
   state.selection.projectNameObject.validation;
 const getOutputPath = (state: AppState): string =>
   state.selection.outputPathObject.outputPath;
+const isEnableNextPage = (state: AppState): boolean =>{
+  let valid = false;
+  if (state.wizardRoutes.selected == ROUTES.NEW_PROJECT &&
+    state.selection.projectNameObject.validation.isValid && state.selection.outputPathObject.outputPath!=""){
+    valid = true;
+  }
+
+  if (state.wizardRoutes.selected == ROUTES.SELECT_FRAMEWORKS &&
+    state.selection.frontendFramework.title!="" && state.selection.backendFramework.title!=""){
+    valid = true;
+  }
+
+  if (state.wizardRoutes.selected == ROUTES.SELECT_PAGES && state.selection.pages.length>0){
+    valid = true;
+  }
+
+  if (state.wizardRoutes.selected == ROUTES.AZURE_LOGIN || state.wizardRoutes.selected == ROUTES.REVIEW_AND_GENERATE){
+    valid = true;
+  }
+
+  return valid;
+}
+
 const getOutputPathValidation = (state: AppState): IValidation =>
   state.selection.outputPathObject.validation;
 const getPageCount = (state: AppState): IPageCount => state.selection.pageCount;
@@ -157,5 +181,6 @@ export {
   getProjectName,
   getPageCount,
   getProjectNameValidation,
-  isValidNameAndProjectPathSelector
+  isValidNameAndProjectPathSelector,
+  isEnableNextPage
 };

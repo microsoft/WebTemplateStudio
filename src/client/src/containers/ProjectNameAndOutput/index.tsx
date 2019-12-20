@@ -13,7 +13,7 @@ import {
   getProjectName,
   getProjectNameValidation,
   getOutputPathValidation
-} from "../../selectors/wizardSelectionSelector";
+} from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import {

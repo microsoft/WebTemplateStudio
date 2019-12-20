@@ -36,6 +36,7 @@ import {
 } from "../../selectors/appServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
+import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
 import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
 import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
@@ -46,12 +47,12 @@ import {
   InjectedIntlProps,
   injectIntl
 } from "react-intl";
-
+  
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
-import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
+import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
@@ -61,8 +62,10 @@ import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
 
+
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
+  setPage: (route: string) => void;
   openPostGenModal: () => any;
   updateCreateProjectButton: (enable: boolean) => any;
 }
@@ -77,7 +80,7 @@ interface IStateProps {
   selectedAppService: boolean;
   appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
-  isValidNameAndProjectPath: boolean;
+  isEnableNextPage: boolean;
   functionNames?: IFunctionName[];
   enableCreateProjectButton: boolean;
 }
@@ -159,15 +162,16 @@ class Footer extends React.Component<Props> {
     }
   };
   public handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
-    const { isValidNameAndProjectPath, setRouteVisited } = this.props;
+    const { isEnableNextPage, setRouteVisited, setPage } = this.props;
     this.trackPageForTelemetry(pathname);
-    if (!isValidNameAndProjectPath) {
+    if (!isEnableNextPage) {
       event.preventDefault();
       return;
     }
     if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
       setRouteVisited(pathsNext[pathname]);
     }
+    setPage(pathsNext[pathname]);
     let pageNavLink = document.getElementById(
       "page" + this.findPageID(pathsNext[pathname])
     );
@@ -180,11 +184,12 @@ class Footer extends React.Component<Props> {
     event: React.SyntheticEvent,
     pathname: string
   ) => {
-    const { setRouteVisited } = this.props;
+    const { setRouteVisited, setPage } = this.props;
     this.trackPageForTelemetry(pathname);
     if (pathname !== ROUTES.NEW_PROJECT) {
       setRouteVisited(pathname);
     }
+    setPage(pathsBack[pathname]);
     let pageNavLink = document.getElementById(
       "page" + this.findPageID(pathsBack[pathname])
     );
@@ -233,7 +238,7 @@ class Footer extends React.Component<Props> {
     }
 
     const {
-      isValidNameAndProjectPath,
+      isEnableNextPage,
       location,
       isVisited,
       intl,
@@ -282,14 +287,14 @@ class Footer extends React.Component<Props> {
               )}
               {pathname !== ROUTES.REVIEW_AND_GENERATE && (
                 <Link
-                  tabIndex={isValidNameAndProjectPath ? 0 : -1}
+                  tabIndex={isEnableNextPage ? 0 : -1}
                   className={classnames(
                     styles.button,
                     styles.buttonNext,
                     buttonStyles.buttonHighlighted,
                     {
-                      [buttonStyles.buttonDark]: !isValidNameAndProjectPath,
-                      [styles.disabledOverlay]: !isValidNameAndProjectPath
+                      [buttonStyles.buttonDark]: !isEnableNextPage,
+                      [styles.disabledOverlay]: !isEnableNextPage
                     }
                   )}
                   onClick={event => {
@@ -302,7 +307,7 @@ class Footer extends React.Component<Props> {
                   {nextArrow && (
                     <NextArrow
                       className={classnames(styles.nextIcon, {
-                        [styles.nextIconNotDisabled]: isValidNameAndProjectPath
+                        [styles.nextIconNotDisabled]: isEnableNextPage
                       })}
                     />
                   )}
@@ -310,12 +315,12 @@ class Footer extends React.Component<Props> {
               )}
               {enableCreateProjectButton && (
                 <button
-                  disabled={!areValidNames || !isValidNameAndProjectPath}
+                  disabled={!areValidNames || !isEnableNextPage}
                   className={classnames(styles.button, {
                     [buttonStyles.buttonDark]: !areValidNames,
                     [buttonStyles.buttonHighlighted]: areValidNames,
                     [styles.disabledOverlay]:
-                      !areValidNames || !isValidNameAndProjectPath
+                      !areValidNames || !isEnableNextPage
                   })}
                   onClick={this.logMessageToVsCode}
                 >
@@ -344,15 +349,18 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   appService: getAppServiceSelectionSelector(state),
   functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
-  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
+  isEnableNextPage: isEnableNextPage(state),
   enableCreateProjectButton: state.wizardContent.createProjectButton
-});
+}); 
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
+  },
+  setPage: (route: string) => {
+    dispatch(setPageWizardPageAction(route));
   },
   openPostGenModal: () => {
     dispatch(openPostGenModalAction());

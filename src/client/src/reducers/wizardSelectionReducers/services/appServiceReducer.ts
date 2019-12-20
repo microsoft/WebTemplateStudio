@@ -1,5 +1,5 @@
 import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
-import { messages } from "../../../selectors/wizardSelectionSelector";
+import { messages } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { FormattedMessage } from "react-intl";
 import AzureActionType from "../../../actions/azureActions/azureActionType";
 import { WIZARD_INFO_TYPEKEYS } from "../../../actions/wizardInfoActions/typeKeys";

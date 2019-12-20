@@ -17,7 +17,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getAppServiceSelectionInDropdownForm } from "../../selectors/appServiceSelector";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
-import { getProjectName } from "../../selectors/wizardSelectionSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import RuntimeStackInfo from "./RuntimeStackInfo";
 import AppServicePlanInfo from "./AppServicePlanInfo";
 import { InjectedIntlProps, injectIntl } from "react-intl";
