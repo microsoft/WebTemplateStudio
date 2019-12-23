@@ -11,20 +11,19 @@ generates to your database instance.
 
 To deploy Cosmos DB using Web Template Studio:
 
-![azure-cosmos-modal](../resources/azure-cosmos-modal.png)
+- Navigate to Add Optional Cloud Services step. Click Add to my project button in CosmosDB card.
 
-- Click _Add Resource_ on Cosmos DB under _Services_ tab
+![azure-cosmos-card](../../resources/azure-cosmos-card.png)
 
-- Select a _Subscription_ and _Resource Group_ from the _Create Cosmos DB Account_ tab that just opened. Use _Create New_
-  option if you want to create a new _Subscription_ or _Resource Group. _**Note:**\_ New subscription will take you to Azure portal to create a subscription.
+- Select a _Subscription_ from the _Create Cosmos DB Account_ tab that just opened. Use _Create New_
+  option if you want to create a new _Subscription_ _**Note:**\_ New subscription will take you to Azure portal to create a subscription.
 
 - Enter a _Name_ for your cosmos account. This name is globally unique since your database will be available as
   `<cosmos_account_name>.documents.azure.com`.
 
-- Select a _Location_ where your Cosmos DB instance will be deployed initially. You can scale it to multiple locations
-  through the Azure portal after!
-
-- Select an API for your database (Mongo/Core (SQL)/Azure Table/Cassandra/Gremlin (GraphQL) etc).
+- Select an API for your database. _**Note:**\_ Web Template Studio only supports MongoDB API and SQL API.
+- 
+  ![azure-cosmos-modal](../../resources/azure-cosmos-modal.png)
 
 Once you hit generate on the summary page, Web Template Studio will deploy your database and display a popup with your
 database connection string once it's available (usually within 5-6 minutes). This will prompt you to replace the
@@ -50,7 +49,7 @@ file!
 
 ## Cosmos DB in Azure Portal
 
-![azure-cosmos-portal](../resources/azure-cosmos-portal.png)
+![azure-cosmos-portal](../../resources/azure-cosmos-portal.png)
 
 You can access and modify your database instance through the [Azure portal](https://portal.azure.com). Once you login to
 the portal, select Azure Cosmos DB from the menu bar on the left side. This will list different database
@@ -60,7 +59,7 @@ collections, setting up firewalls, viewing metrics for your deployment etc.
 
 ## VSCode Extension for Azure Cosmos DB
 
-![azure-cosmos-extension](../resources/azure-cosmos-extension.png)
+![azure-cosmos-extension](../../resources/azure-cosmos-extension.png)
 
 If you would like to manage your Cosmos DB environment from VSCode itself, we recommend you install the
 [Azure Cosmos](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-cosmosdb) extension for VSCode.
