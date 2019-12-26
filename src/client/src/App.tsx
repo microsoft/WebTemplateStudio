@@ -293,6 +293,9 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.GET_PREVIEW_STATUS:
           this.props.setPreviewStatus(message.payload.preview);
           break;
+        case EXTENSION_COMMANDS.GET_VALIDATIONS:
+          alert("get validations!")
+          break;
       }
     });
   }

@@ -339,6 +339,7 @@ export enum ExtensionCommand {
   GetUserStatus = "get-user-status",
   GetFrameworks = "get-frameworks",
   GetPages = "get-pages",
+  GetValidations = "get-validations",
   TrackPageSwitch = "track-page-switch",
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",

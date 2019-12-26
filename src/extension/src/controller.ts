@@ -164,6 +164,13 @@ export class Controller {
         context,
         syncObject.templatesVersion
       );
+      Controller.getValidationsAndSendToClient(
+        context,
+        {
+          itemNameValidationConfig:syncObject.itemNameValidationConfig,
+          projectNameValidationConfig:syncObject.projectNameValidationConfig
+        }
+      );
       Controller.Telemetry.trackExtensionStartUpTime(
         TelemetryEventName.ExtensionLaunch
       );
@@ -178,6 +185,19 @@ export class Controller {
       command: ExtensionCommand.GetVersions,
       payload: {
         templatesVersion,
+        wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
+      }
+    });
+  }
+
+  private static getValidationsAndSendToClient(
+    ctx: vscode.ExtensionContext,
+    validations: Object
+  ) {
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetValidations,
+      payload: {
+        validations,
         wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
       }
     });
