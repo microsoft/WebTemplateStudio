@@ -47,6 +47,7 @@ import AzureLogin from "./containers/AzureLogin";
 import { getSubscriptionData } from "./actions/azureActions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
 import { setProjectPathValidation } from "./actions/wizardSelectionActions/setProjectPathValidation";
+import { setValidations } from "./actions/wizardSelectionActions/setValidations";
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
@@ -107,6 +108,7 @@ interface IDispatchProps {
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
   setProjectPathValidation: (validation: any) => void;
+  setValidations: (validations: any) => void;
   setAzureValidationStatus: (status: boolean) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
@@ -142,6 +144,7 @@ class App extends React.Component<Props> {
     setCosmosResourceAccountNameAvailability: () => {},
     setAppNameAvailability: () => {},
     setProjectPathValidation: () => {},
+    setValidations: () => {},
     setAzureValidationStatus: () => {},
     updateDependencyInfo: () => {},
     getBackendFrameworksSuccess: () => {},
@@ -294,7 +297,7 @@ class App extends React.Component<Props> {
           this.props.setPreviewStatus(message.payload.preview);
           break;
         case EXTENSION_COMMANDS.GET_VALIDATIONS:
-          alert("get validations!")
+          this.props.setValidations(message.payload.validations);
           break;
       }
     });
@@ -409,6 +412,9 @@ const mapDispatchToProps = (
   },
   setProjectPathValidation: (validation: any) => {
     dispatch(setProjectPathValidation(validation));
+  },
+  setValidations: (validations: any) => {
+    dispatch(setValidations(validations));
   },
   setAzureValidationStatus: (status: boolean) => {
     dispatch(setAzureValidationStatusAction(status));
