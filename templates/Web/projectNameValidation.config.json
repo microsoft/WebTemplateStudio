@@ -5,8 +5,7 @@
         "pattern" : "^[^\\$]"
       }
     ],
-    "reservedNames" : [
-    ],
+    "reservedNames" : [],
     "validateEmptyNames": true,
     "validateExistingNames": true
 }

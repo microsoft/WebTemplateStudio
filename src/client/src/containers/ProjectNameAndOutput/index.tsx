@@ -8,11 +8,13 @@ import {
   updateOutputPathAction,
   updateProjectNameAction
 } from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
+
 import {
   getOutputPath,
   getProjectName,
   getProjectNameValidation,
-  getOutputPathValidation
+  getOutputPathValidation,
+  getValidations
 } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -30,11 +32,15 @@ import {
   InjectedIntlProps,
   FormattedMessage
 } from "react-intl";
+
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
+import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
+import { setValidations } from "../../actions/wizardSelectionActions/setValidations";
+import { IStateValidationProjectName, validateProjectName, messages as projectNameValidationMessages} from "../../utils/validations/projectName";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -42,6 +48,7 @@ interface IStateProps {
   projectName: string;
   projectPathValidation: IValidation;
   projectNameValidation: IValidation;
+  validations: IValidations;
 }
 
 interface IDispatchProps {
@@ -60,10 +67,6 @@ const messages = defineMessages({
     id: "projectName.ariaProjectName",
     defaultMessage: "Project Name Input"
   },
-  nameTooLong: {
-    id: "projectNameError.nameTooLong",
-    defaultMessage: `Project name can only be {maxLength} characters long`
-  },
   outputPathTitle: {
     id: "projectName.outputPathTitle",
     defaultMessage: "Save To"
@@ -71,7 +74,10 @@ const messages = defineMessages({
 });
 
 const ProjectNameAndOutput = (props: Props) => {
-  const [projectNameMaxLength, setProjectNameMaxLength] = React.useState(false);
+  const [stateValidationProjectName, setStateValidationProjectName] = 
+    React.useState<IStateValidationProjectName>({isValid:true, 
+      errorMessage:projectNameValidationMessages.default});
+  const [isDirtyProjectName, setDirtyProjectName] = React.useState(false);
 
   const {
     vscode,
@@ -79,9 +85,17 @@ const ProjectNameAndOutput = (props: Props) => {
     projectPathValidation,
     projectNameValidation,
     projectName,
+    validations,
     updateProjectName,
     updateOutputPath
   } = props;
+
+  React.useEffect(() => {
+    let validateState = validateProjectName(projectName, validations);
+    setStateValidationProjectName(validateState);
+    //set dirty state to true, only the first time
+    if (!isDirtyProjectName && projectName!="") setDirtyProjectName(true);
+  },[projectName]);
 
   React.useEffect(() => {
     if (projectName === "") {
@@ -112,6 +126,7 @@ const ProjectNameAndOutput = (props: Props) => {
           projectName: projectName
         });
       }
+    
     }
   }, [outputPath, projectName]);
   const handleProjectNameChange = (
@@ -119,17 +134,6 @@ const ProjectNameAndOutput = (props: Props) => {
   ) => {
     const element = e.currentTarget as HTMLInputElement;
     updateProjectName(element.value);
-  };
-  const validateKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const element = e.target as HTMLInputElement;
-    const inputKeyCheck = /^[A-Za-z0-9_\- ]$/;
-
-    if (element.value.length === 50 && inputKeyCheck.test(e.key)) {
-      setProjectNameMaxLength(true);
-      e.stopPropagation();
-    } else {
-      setProjectNameMaxLength(false);
-    }
   };
 
   const handleOutputPathChange = (
@@ -145,6 +149,7 @@ const ProjectNameAndOutput = (props: Props) => {
       track: false
     });
   };
+
   return (
     <React.Fragment>
       <div className={styles.inputContainer}>
@@ -153,25 +158,15 @@ const ProjectNameAndOutput = (props: Props) => {
         </div>
         <Input
           handleChange={handleProjectNameChange}
-          handleKeyDown={validateKey}
           ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
           value={projectName}
           maxLength={PROJECT_NAME_CHARACTER_LIMIT}
           autoFocus={true}
         />
-        {projectNameValidation.error && (
+        
+        {!stateValidationProjectName.isValid && isDirtyProjectName && (
           <div className={styles.errorMessage}>
-            {props.intl.formatMessage(
-              projectNameValidation.error as FormattedMessage.MessageDescriptor
-            )}
-          </div>
-        )}
-        {projectNameMaxLength && (
-          <div className={styles.errorMessage}>
-            {props.intl.formatMessage(
-              messages.nameTooLong as FormattedMessage.MessageDescriptor,
-              { maxLength: PROJECT_NAME_CHARACTER_LIMIT }
-            )}
+            {props.intl.formatMessage(stateValidationProjectName.errorMessage)}
           </div>
         )}
       </div>
@@ -197,6 +192,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: getVSCodeApiSelector(state),
   outputPath: getOutputPath(state),
   projectName: getProjectName(state),
+  validations: getValidations(state),
   projectPathValidation: getOutputPathValidation(state),
   projectNameValidation: getProjectNameValidation(state)
 });

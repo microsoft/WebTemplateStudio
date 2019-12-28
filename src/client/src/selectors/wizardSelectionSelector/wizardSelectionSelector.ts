@@ -6,6 +6,7 @@ import getSvgUrl from "../../utils/getSvgUrl";
 import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { defineMessages } from "react-intl";
 import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
+import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
 import { ROUTES } from "../../utils/constants";
@@ -31,6 +32,8 @@ const getProjectName = (state: AppState): string =>
   state.selection.projectNameObject.projectName;
 const getProjectNameValidation = (state: AppState): IValidation =>
   state.selection.projectNameObject.validation;
+const getValidations = (state: AppState): IValidations =>
+  state.selection.validations;
 const getOutputPath = (state: AppState): string =>
   state.selection.outputPathObject.outputPath;
 const isEnableNextPage = (state: AppState): boolean =>{
@@ -179,6 +182,7 @@ export {
   getOutputPath,
   getOutputPathValidation,
   getProjectName,
+  getValidations,
   getPageCount,
   getProjectNameValidation,
   isValidNameAndProjectPathSelector,
