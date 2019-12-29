@@ -163,7 +163,6 @@
   "projectName.outputPathTitle": "Output Path:",
   "projectName.projectNameTitle": "Project Name:",
   "projectNameError.invalidRegex": "Name may only contain letters, numbers, dashes or underscores",
-  "projectNameError.nameTooLong": "Project name can only be {maxLength} characters long",
   "quickStart.button": "Quick Start Web Project",
   "quickStart.description": "To get started quickly with your preferred frameworks and just a blank page, use quick start.",
   "quickStart.optional": "OPTIONAL",

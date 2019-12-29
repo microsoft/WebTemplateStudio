@@ -40,7 +40,7 @@ import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 import { setValidations } from "../../actions/wizardSelectionActions/setValidations";
-import { IStateValidationProjectName, validateProjectName, messages as projectNameValidationMessages} from "../../utils/validations/projectName";
+import { IStateValidationProjectName, validateProjectName} from "../../utils/validations/projectName";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -75,8 +75,7 @@ const messages = defineMessages({
 
 const ProjectNameAndOutput = (props: Props) => {
   const [stateValidationProjectName, setStateValidationProjectName] = 
-    React.useState<IStateValidationProjectName>({isValid:true, 
-      errorMessage:projectNameValidationMessages.default});
+    React.useState<IStateValidationProjectName>({isValid:true, errorMessage:""});
   const [isDirtyProjectName, setDirtyProjectName] = React.useState(false);
 
   const {
@@ -91,11 +90,15 @@ const ProjectNameAndOutput = (props: Props) => {
   } = props;
 
   React.useEffect(() => {
-    let validateState = validateProjectName(projectName, validations);
-    setStateValidationProjectName(validateState);
+    //debugger;
+    validateProjectName(projectName, outputPath, validations.projectNameValidationConfig, vscode).then((validateState:IStateValidationProjectName)=>{
+      //debugger;
+      setStateValidationProjectName(validateState);
+    });
+
     //set dirty state to true, only the first time
     if (!isDirtyProjectName && projectName!="") setDirtyProjectName(true);
-  },[projectName]);
+  },[projectName, outputPath]);
 
   React.useEffect(() => {
     if (projectName === "") {
@@ -126,7 +129,6 @@ const ProjectNameAndOutput = (props: Props) => {
           projectName: projectName
         });
       }
-    
     }
   }, [outputPath, projectName]);
   const handleProjectNameChange = (
@@ -166,7 +168,7 @@ const ProjectNameAndOutput = (props: Props) => {
         
         {!stateValidationProjectName.isValid && isDirtyProjectName && (
           <div className={styles.errorMessage}>
-            {props.intl.formatMessage(stateValidationProjectName.errorMessage)}
+            {stateValidationProjectName.errorMessage}
           </div>
         )}
       </div>

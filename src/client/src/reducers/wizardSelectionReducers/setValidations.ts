@@ -7,14 +7,14 @@ interface IRegex {
   pattern:String;
 }
 
-interface IprojectNameValidationConfig {
+export interface IprojectNameValidationConfig {
   regexs:Array<IRegex>;
   reservedNames:Array<string>;
   validateEmptyNames:Boolean;
   validateExistingNames:Boolean;
 }
 
-interface InameValidationConfig {
+export interface InameValidationConfig {
   regexs:Array<IRegex>;
   reservedNames:Array<string>;
   validateEmptyNames:Boolean;
