@@ -37,7 +37,7 @@ const initialState = {
   },
   projectNameValidationConfig:{
     "regexs" : [],
-    "reservedNames" : [],
+    "reservedNames" : ["reserve1"],
     "validateEmptyNames": true,
     "validateExistingNames": true
   }

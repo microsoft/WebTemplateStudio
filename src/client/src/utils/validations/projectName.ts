@@ -11,46 +11,75 @@ export interface IStateValidationProjectName {
   errorMessage:string;
 }
 
-const emptyName:string = "Project name is required";
+const errorMessageEmptyName:string = "Project name is required";
+const errorMessageReservedName:string = "Project name is reserved";
 
 export const validateProjectName = (projectName:string, outputPath:string,
   validations:IprojectNameValidationConfig, vscode: IVSCodeObject):Promise<IStateValidationProjectName> => {
-  let stateValidation:IStateValidationProjectName = {
-    isValid:true,
-    errorMessage:""
-  };
 
   let promise = new Promise<IStateValidationProjectName>((resolve) => {
-    let isDirtyValidation = false;
-    if (validations.validateEmptyNames==true && projectName==""){
-      stateValidation.isValid = false;
-      stateValidation.errorMessage = emptyName;
-      isDirtyValidation = true;
-      resolve(stateValidation);
-    }
+    let isEmpty = validations.validateEmptyNames==true && projectName=="";
+    let isExistingName = validations.validateExistingNames==true && projectName!="" &&
+    outputPath !="";
+    let isReservedName = validations.reservedNames.filter(name => name.toLowerCase() === projectName.toLowerCase()).length>0;
 
-    if (validations.validateExistingNames==true && !isDirtyValidation && projectName!="" && outputPath !=""){
-      const callbackListenerPathValidation = (event:any) =>{
-        const message = event.data;
-        if (message.command == EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION){
-            //message.payload.projectPathValidation
-            stateValidation.isValid = message.payload.projectPathValidation.isValid;
-            stateValidation.errorMessage = message.payload.projectPathValidation.error;
-            resolve(stateValidation);
+    const listPromise:Array<Promise<IStateValidationProjectName>>=[];
+
+      let promiseIsEmpty = new Promise<IStateValidationProjectName>((resolveIsEmpty) => {
+        if (isEmpty){
+          resolveIsEmpty({isValid:false, errorMessage:errorMessageEmptyName});
+        }else{
+          resolveIsEmpty({isValid:true, errorMessage:""});
         }
-      }
-      window.removeEventListener("message",callbackListenerPathValidation);
-      window.addEventListener("message", callbackListenerPathValidation);
-
-      vscode.postMessage({
-        module: EXTENSION_MODULES.VALIDATOR,
-        command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-        track: false,
-        projectPath: outputPath,
-        projectName: projectName
       });
-    }
-    if (!isDirtyValidation) resolve(stateValidation);
+      listPromise.push(promiseIsEmpty);
+
+      let promiseIsExistingName = new Promise<IStateValidationProjectName>((resolveIsExistingName) => {
+        if (isExistingName){
+          const callbackListenerPathValidation = (event:any) =>{
+            const message = event.data;
+            if (message.command == EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION){
+                resolveIsExistingName({isValid:message.payload.projectPathValidation.isValid,
+                  errorMessage:message.payload.projectPathValidation.error});
+            }
+          }
+          window.removeEventListener("message",callbackListenerPathValidation);
+          window.addEventListener("message", callbackListenerPathValidation);
+
+          vscode.postMessage({
+            module: EXTENSION_MODULES.VALIDATOR,
+            command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+            track: false,
+            projectPath: outputPath,
+            projectName: projectName
+          });
+        }else{
+          resolveIsExistingName({isValid:true, errorMessage:""});
+        }
+      });
+      listPromise.push(promiseIsExistingName);
+
+      let promiseIsRservedName = new Promise<IStateValidationProjectName>((resolveIsReservedName) => {
+        if (isReservedName){
+          resolveIsReservedName({isValid:false, errorMessage:errorMessageReservedName});
+        }else{
+          resolveIsReservedName({isValid:true, errorMessage:""});
+        }
+      });
+      listPromise.push(promiseIsRservedName);
+
+      Promise.all(listPromise).then((listResponse:Array<IStateValidationProjectName>)=>{
+        let isDirtyValidation = false;
+
+        listResponse.forEach((stateValidate)=>{
+          if (!isDirtyValidation && !stateValidate.isValid){
+            isDirtyValidation=true;
+            resolve(stateValidate);
+          }
+        });
+        if (!isDirtyValidation) resolve({isValid:true,errorMessage:""});
+        
+      })
   });
   return promise;
 };

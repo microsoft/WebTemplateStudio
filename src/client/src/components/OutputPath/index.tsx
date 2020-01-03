@@ -67,10 +67,7 @@ const OutputPath = ({
                 fieldId: intl.formatMessage(messages.outputPath)
               })}
             </div>
-          )) ||
-            (validation && !validation.isValid && (
-              <div className={styles.errorMessage}>{validation.error}</div>
-            ))}
+          ))}
         </div>
         <button
           className={classNames(
