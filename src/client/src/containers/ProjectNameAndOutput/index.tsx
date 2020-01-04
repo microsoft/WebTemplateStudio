@@ -39,7 +39,6 @@ import { IValidations } from "../../reducers/wizardSelectionReducers/setValidati
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
-import { setValidations } from "../../actions/wizardSelectionActions/setValidations";
 import { IStateValidationProjectName, validateProjectName} from "../../utils/validations/projectName";
 
 interface IStateProps {
@@ -74,7 +73,7 @@ const messages = defineMessages({
 });
 
 const ProjectNameAndOutput = (props: Props) => {
-  const [stateValidationProjectName, setStateValidationProjectName] = 
+  const [stateValidationProjectName, setStateValidationProjectName] =
     React.useState<IStateValidationProjectName>({isValid:true, errorMessage:""});
   const [isDirtyProjectName, setDirtyProjectName] = React.useState(false);
 
@@ -90,13 +89,10 @@ const ProjectNameAndOutput = (props: Props) => {
   } = props;
 
   React.useEffect(() => {
-    //debugger;
     validateProjectName(projectName, outputPath, validations.projectNameValidationConfig, vscode).then((validateState:IStateValidationProjectName)=>{
-      //debugger;
       setStateValidationProjectName(validateState);
     });
 
-    //set dirty state to true, only the first time
     if (!isDirtyProjectName && projectName!="") setDirtyProjectName(true);
   },[projectName, outputPath]);
 

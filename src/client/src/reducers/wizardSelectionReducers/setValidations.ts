@@ -14,7 +14,7 @@ export interface IprojectNameValidationConfig {
   validateExistingNames:Boolean;
 }
 
-export interface InameValidationConfig {
+export interface IitemNameValidationConfig {
   regexs:Array<IRegex>;
   reservedNames:Array<string>;
   validateEmptyNames:Boolean;
@@ -23,7 +23,7 @@ export interface InameValidationConfig {
 }
 
 export interface IValidations {
-  itemNameValidationConfig:InameValidationConfig;
+  itemNameValidationConfig:IitemNameValidationConfig;
   projectNameValidationConfig:IprojectNameValidationConfig
 }
 
