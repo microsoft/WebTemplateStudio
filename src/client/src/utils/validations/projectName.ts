@@ -13,10 +13,14 @@ export const validateProjectName = (projectName:string, outputPath:string,
   let promise = new Promise<IStateValidationProjectName>((resolve) => {
     const listPromise:Array<Promise<IStateValidationProjectName>>=[];
 
-    listPromise.push(addRequiredValidate(projectName, validations));
-    listPromise.push(addExistingNameValidate(projectName,outputPath,validations,vscode));
-    listPromise.push(addReservedNameValidate(projectName,validations));
-    listPromise.push(addRegexValidate(projectName, validations));
+    if (validations.validateEmptyNames)
+      listPromise.push(addRequiredValidate(projectName));
+    if (validations.validateExistingNames)
+      listPromise.push(addExistingNameValidate(projectName, outputPath, vscode));
+    if (validations.reservedNames.length>0)
+      listPromise.push(addReservedNameValidate(projectName, validations.reservedNames));
+    if (validations.regexs.length>0)
+      listPromise.push(addRegexValidate(projectName, validations.regexs));
 
     Promise.all(listPromise).then((listResponse:Array<IStateValidationProjectName>)=>{
       let isDirtyValidation = false;

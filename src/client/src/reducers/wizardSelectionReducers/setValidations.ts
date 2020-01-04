@@ -29,8 +29,11 @@ export interface IValidations {
 
 const initialState = {
   itemNameValidationConfig: {
-    "regexs" : [],
-    "reservedNames" : [],
+    "regexs" : [{
+      "name" : "projectStartWith$",
+      "pattern" : "^[^\\$]"
+    }],
+    "reservedNames" : ["reserve1"],
     "validateEmptyNames": true,
     "validateExistingNames": true,
     "validateDefaultNames": true

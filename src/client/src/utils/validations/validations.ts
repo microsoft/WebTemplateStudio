@@ -1,5 +1,5 @@
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { IprojectNameValidationConfig, IRegex } from "../../reducers/wizardSelectionReducers/setValidations";
+import { IRegex } from "../../reducers/wizardSelectionReducers/setValidations";
 
 import {
   EXTENSION_COMMANDS,
@@ -15,9 +15,9 @@ const errorMessageRequired:string = "Project name is required";
 const errorMessageReservedName:string = "Project name is reserved";
 const errorMessageProjectStartWith$ = "Project start with $";
 
-export const addRequiredValidate = (projectName:string, validations:IprojectNameValidationConfig) =>{
+export const addRequiredValidate = (projectName:string) =>{
   let promiseRequired = new Promise<IStateValidationProjectName>((resolveIsEmpty) => {
-    let isEmpty = validations.validateEmptyNames==true && projectName=="";
+    let isEmpty = projectName=="";
     if (isEmpty){
       resolveIsEmpty({isValid:false, errorMessage:errorMessageRequired});
     }else{
@@ -28,10 +28,9 @@ export const addRequiredValidate = (projectName:string, validations:IprojectName
 }
 
 export const addExistingNameValidate = (projectName:string, outputPath:string,
-  validations:IprojectNameValidationConfig, vscode: IVSCodeObject) =>{
+  vscode: IVSCodeObject) =>{
   let promiseIsExistingName = new Promise<IStateValidationProjectName>((resolveIsExistingName) => {
-    let isExistingName = validations.validateExistingNames==true && projectName!="" &&
-outputPath !="";
+    let isExistingName = projectName!="" && outputPath !="";
     if (isExistingName){
       const callbackListenerPathValidation = (event:any) =>{
         const message = event.data;
@@ -57,11 +56,10 @@ outputPath !="";
   return promiseIsExistingName;
 }
 
-
 export const addReservedNameValidate = (projectName:string,
-  validations:IprojectNameValidationConfig) =>{
+  reservedNames:Array<string>) =>{
   let promiseIsReservedName = new Promise<IStateValidationProjectName>((resolveIsReservedName) => {
-    let isReservedName = validations.reservedNames.filter(name => name.toLowerCase() === projectName.toLowerCase()).length>0;
+    let isReservedName = reservedNames.filter(name => name.toLowerCase() === projectName.toLowerCase()).length>0;
     if (isReservedName){
       resolveIsReservedName({isValid:false, errorMessage:errorMessageReservedName});
     }else{
@@ -72,15 +70,15 @@ export const addReservedNameValidate = (projectName:string,
 }
 
 export const addRegexValidate = (projectName:string,
-  validations:IprojectNameValidationConfig)=>{
+  regexs:Array<IRegex>)=>{
   let promiseHasRegex = new Promise<IStateValidationProjectName>((resolveHasRegex) => {
     const getInvalidRegex = ()=>{
-      let regexs:Array<IRegex> = validations.regexs.filter(regex =>{
+      let regexsFiltered:Array<IRegex> = regexs.filter(regex =>{
         let regObj = new RegExp(regex.pattern.toString());
         let isValid = regObj.test(projectName);
         return !isValid;
       })
-      return regexs;
+      return regexsFiltered;
     }
     let hasInvalidRegex = getInvalidRegex().length>0;
 
