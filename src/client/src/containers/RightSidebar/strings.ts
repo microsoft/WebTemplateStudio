@@ -40,11 +40,6 @@ const messages = defineMessages({
   feedbackRedirectLinkLabel: {
     id: "feedback.redirectLinkLabel",
     defaultMessage: "GitHub.com"
-  },
-  backToAzurePage: {
-    id: "rightSidebar.backToAzurePage",
-    defaultMessage:
-      "You haven’t added any hosting or database services. Click here to add services."
   }
 });
 

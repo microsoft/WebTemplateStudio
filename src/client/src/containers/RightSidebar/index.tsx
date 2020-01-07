@@ -2,7 +2,7 @@ import classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { injectIntl, InjectedIntlProps, defineMessages } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
@@ -277,8 +277,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public render() {
     const {
       showFrameworks,
-      showPages,
-      showServices
+      showPages
     } = this.props.isRoutesVisited;
     const { pathname } = this.props.location;
     const {
@@ -385,24 +384,11 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   />
                 )}
               </div>
-              {showServices && (
+              {hasAzureServices(this.props.services) && (
                 <div className={styles.sidebarItem}>
                   <div className={styles.dropdownTitle}>
                     {formatMessage(messages.services)}
                   </div>
-                  {pathname === ROUTES.REVIEW_AND_GENERATE &&
-                    !hasAzureServices(this.props.services) && (
-                      <Link
-                        className={classnames(
-                          buttonStyles.buttonDark,
-                          styles.backToAzureBox
-                        )}
-                        to={ROUTES.AZURE_LOGIN}
-                        tabIndex={0}
-                      >
-                        {formatMessage(messages.backToAzurePage)}
-                      </Link>
-                    )}
                   <ServicesSidebarItem services={this.props.services} />
                 </div>
               )}

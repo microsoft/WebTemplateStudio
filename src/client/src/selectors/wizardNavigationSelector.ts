@@ -6,14 +6,12 @@ import { IRoutes } from "../reducers/wizardRoutes/navigationReducer";
 export interface IVisitedPages {
   showFrameworks: boolean;
   showPages: boolean;
-  showServices: boolean;
 }
 
 const getIsVisitedRoutes = (state: AppState) => state.wizardRoutes.isVisited;
 const transformIsVisited = (isVisitedRoutes: IRoutes): IVisitedPages => ({
   showFrameworks: isVisitedRoutes[ROUTES.SELECT_FRAMEWORKS],
-  showPages: isVisitedRoutes[ROUTES.SELECT_PAGES],
-  showServices: isVisitedRoutes[ROUTES.AZURE_LOGIN]
+  showPages: isVisitedRoutes[ROUTES.SELECT_PAGES]
 });
 const getIsVisitedRoutesSelector = createSelector(
   getIsVisitedRoutes,
