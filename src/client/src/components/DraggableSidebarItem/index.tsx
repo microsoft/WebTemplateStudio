@@ -71,7 +71,11 @@ interface IStatePropsRedux {
   validations: IValidations;
 }
 
-type Props = IStateProps & IStatePropsRedux & InjectedIntlProps;
+interface ISortablePageListProps {
+  selectedPages: Array<ISelected>;
+}
+
+type Props = IStateProps & IStatePropsRedux & ISortablePageListProps & InjectedIntlProps;
 
 const DraggableSidebarItem = ({
   page,
@@ -93,9 +97,9 @@ const DraggableSidebarItem = ({
   customInputStyle,
   isAzureFunction,
   totalCount,
-  validations
+  validations,
+  selectedPages
 }:Props) => {
-  const [pageNameMaxLength, setPageNameMaxLength] = React.useState(false);
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleCloseOnClick();
@@ -105,22 +109,11 @@ const DraggableSidebarItem = ({
     idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
   };
 
-  const handleKeyDownInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const inputKeyCheck = /^[A-Za-z0-9_\- ]$/;
-    const event = e.target as HTMLInputElement;
-    if (event.value.length === maxInputLength && inputKeyCheck.test(e.key)) {
-      setPageNameMaxLength(true);
-      e.stopPropagation();
-    } else {
-      setPageNameMaxLength(false);
-    }
-  };
-
   const [stateValidationItemName, setStateValidationItemName] =
     React.useState<IStateValidationItemName>({isValid:true, errorMessage:""});
 
   React.useEffect(() => {
-    validateItemName(page.title, validations.itemNameValidationConfig).then((validateState:IStateValidationItemName)=>{
+    validateItemName(page.title, validations.itemNameValidationConfig, selectedPages).then((validateState:IStateValidationItemName)=>{
       setStateValidationItemName(validateState);
     });
   },[page.title]);
@@ -176,7 +169,6 @@ const DraggableSidebarItem = ({
                       handleInputChange(e.target.value, idx - 1);
                     }
                   }}
-                  onKeyDown={handleKeyDownInput}
                 />
               ) : (
                 <input
@@ -195,9 +187,9 @@ const DraggableSidebarItem = ({
             <div
               className={classnames({
                 [styles.errorTextContainer]:
-                  withIndent || reorderSvgUrl || true,
-                [styles.textContainer]: !withIndent,
-                [styles.largeIndentContainer]: withLargeIndent
+                  true,
+                [styles.textContainer]: true,
+                [styles.largeIndentContainer]: false
               })}
             >
               {stateValidationItemName.errorMessage}
@@ -219,8 +211,9 @@ const DraggableSidebarItem = ({
   );
 };
 
-const mapStateToProps = (state: AppState): IStatePropsRedux => ({
-  validations: getValidations(state)
+const mapStateToProps = (state: AppState) => ({
+  validations: getValidations(state),
+  selectedPages: state.selection.pages
 });
 
 export default connect(

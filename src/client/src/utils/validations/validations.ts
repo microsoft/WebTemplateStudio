@@ -1,5 +1,6 @@
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { IRegex } from "../../reducers/wizardSelectionReducers/setValidations";
+import { ISelected } from "../../types/selected";
 
 import {
   EXTENSION_COMMANDS,
@@ -14,6 +15,7 @@ export interface IStateValidationProjectName {
 const errorMessageRequired:string = "Project name is required";
 const errorMessageReservedName:string = "Project name is reserved";
 const errorMessageProjectStartWith$ = "Project start with $";
+const errorMessagePageNameExist = "The page exist";
 
 export const addRequiredValidate = (projectName:string) =>{
   let promiseRequired = new Promise<IStateValidationProjectName>((resolveIsEmpty) => {
@@ -27,7 +29,19 @@ export const addRequiredValidate = (projectName:string) =>{
   return promiseRequired;
 }
 
-export const addExistingNameValidate = (projectName:string, outputPath:string,
+export const addExistingItemNameValidate = (pageTitle:string, selectedPages:Array<ISelected>) =>{
+  let promiseRequired = new Promise<IStateValidationProjectName>((resolveExistPage) => {
+    let existPage = selectedPages.filter(page => page.title==pageTitle).length > 1;
+    if (existPage){
+      resolveExistPage({isValid:false, errorMessage:errorMessagePageNameExist});
+    }else{
+      resolveExistPage({isValid:true, errorMessage:""});
+    }
+  });
+  return promiseRequired;
+}
+
+export const addExistingProjectNameValidate = (projectName:string, outputPath:string,
   vscode: IVSCodeObject) =>{
   let promiseIsExistingName = new Promise<IStateValidationProjectName>((resolveIsExistingName) => {
     let isExistingName = projectName!="" && outputPath !="";

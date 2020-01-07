@@ -1,6 +1,6 @@
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { IitemNameValidationConfig } from "../../reducers/wizardSelectionReducers/setValidations";
-import { addExistingNameValidate, addRegexValidate, addRequiredValidate, addReservedNameValidate} from './validations';
+import { addExistingItemNameValidate, addRegexValidate, addRequiredValidate, addReservedNameValidate} from './validations';
+import { ISelected } from "../../types/selected";
 
 export interface IStateValidationItemName {
   isValid:boolean;
@@ -8,15 +8,16 @@ export interface IStateValidationItemName {
 }
 
 export const validateItemName = (itemName:string, 
-  validations:IitemNameValidationConfig):Promise<IStateValidationItemName> => {
+  validations:IitemNameValidationConfig,
+  selectedPages: Array<ISelected>):Promise<IStateValidationItemName> => {
 
   let promise = new Promise<IStateValidationItemName>((resolve) => {
     const listPromise:Array<Promise<IStateValidationItemName>>=[];
 
     if (validations.validateEmptyNames)
       listPromise.push(addRequiredValidate(itemName));
-    //if (validations.validateExistingNames)
-    //  listPromise.push(addExistingNameValidate(itemName, outputPath, vscode));
+    if (validations.validateExistingNames)
+      listPromise.push(addExistingItemNameValidate(itemName, selectedPages));
     if (validations.reservedNames.length>0)
       listPromise.push(addReservedNameValidate(itemName, validations.reservedNames));
     if (validations.regexs.length>0)
