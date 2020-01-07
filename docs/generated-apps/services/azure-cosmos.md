@@ -11,12 +11,12 @@ generates to your database instance.
 
 To deploy Cosmos DB using Web Template Studio:
 
-- Navigate to Add Optional Cloud Services step. Click Add to my project button in CosmosDB card.
+- Navigate to the "Add Optional Cloud Services" step. Click the "Add to my project" button in CosmosDB card.
 
 ![azure-cosmos-card](../../resources/azure-cosmos-services-card.png)
 
 - Select a _Subscription_ from the _Create Cosmos DB Account_ tab that just opened. Use _Create New_
-  option if you want to create a new _Subscription_. _**Note:**_ New subscription will take you to Azure portal to create a subscription.
+  option if you want to create a new _Subscription_. _**Note:**_ Create new will take you to Azure portal to create a subscription.
 
 - Enter a _Name_ for your cosmos account. This name is globally unique since your database will be available as
   `<cosmos_account_name>.documents.azure.com`.
