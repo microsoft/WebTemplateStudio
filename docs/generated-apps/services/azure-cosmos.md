@@ -16,14 +16,14 @@ To deploy Cosmos DB using Web Template Studio:
 ![azure-cosmos-card](../../resources/azure-cosmos-services-card.png)
 
 - Select a _Subscription_ from the _Create Cosmos DB Account_ tab that just opened. Use _Create New_
-  option if you want to create a new _Subscription_ _**Note:**\_ New subscription will take you to Azure portal to create a subscription.
+  option if you want to create a new _Subscription_. _**Note:**_ New subscription will take you to Azure portal to create a subscription.
 
 - Enter a _Name_ for your cosmos account. This name is globally unique since your database will be available as
   `<cosmos_account_name>.documents.azure.com`.
 
-- Select an API for your database. _**Note:**\_ Web Template Studio only supports MongoDB API and SQL API.
-- 
-  ![azure-cosmos-modal](../../resources/azure-cosmos-modal.png)
+- Select an API for your database. _**Note:**_ Web Template Studio only supports MongoDB API and SQL API.
+  
+![azure-cosmos-modal](../../resources/azure-cosmos-modal.png)
 
 Once you hit generate on the summary page, Web Template Studio will deploy your database and display a popup with your
 database connection string once it's available (usually within 5-6 minutes). This will prompt you to replace the
