@@ -1,9 +1,10 @@
 ﻿import React from "react";
 import classnames from "classnames";
 import styles from "./warningmessage.module.css";
+import PropTypes from "prop-types";
 
 // A pop up message used to warn users about failed API calls to the back end
-export default function WarningMessage({ open, text, onWarningClose }) {
+const WarningMessage = ({ open, text, onWarningClose }) => {
   return (
     <React.Fragment>
       {open && (
@@ -29,3 +30,11 @@ export default function WarningMessage({ open, text, onWarningClose }) {
     </React.Fragment>
   );
 }
+
+WarningMessage.propTypes = {
+  open: PropTypes.bool,
+  text: PropTypes.string,
+  onWarningClose:PropTypes.func
+}
+
+export default WarningMessage;

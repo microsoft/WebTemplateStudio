@@ -5,10 +5,6 @@ import { IListItem } from '../list.model';
 describe('ListItemComponent', () => {
   let component: ListItemComponent;
   let fixture: ComponentFixture<ListItemComponent>;
-  let mockListItem:IListItem = {
-    _id: 1,
-    text: ''
-  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,7 +15,10 @@ describe('ListItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ListItemComponent);
     component = fixture.componentInstance;
-    component.listItem = mockListItem;
+    component.listItem = {
+      _id: 1,
+      text: ''
+    };
     fixture.detectChanges();
   });
 

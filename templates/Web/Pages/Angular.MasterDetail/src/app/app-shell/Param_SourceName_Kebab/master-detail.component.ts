@@ -12,19 +12,19 @@ import {Observable, of} from 'rxjs';
 })
 export class MasterDetailComponent implements OnInit {
   greyAvatarUrl = '../../../assets/GreyAvatar.svg';
-  warningMessageText:string = '';
-  warningMessageOpen:boolean = false;
-  currentSampleOrder={};
+  warningMessageText = '';
+  warningMessageOpen = false;
+  currentSampleOrder = {};
   sampleOrders$: Observable<ISampleOrder[]>;
 
   constructor(private masterDetailService: MasterDetailService) {}
 
   ngOnInit() {
-    this.sampleOrders$ = this.masterDetailService.getMasterDetailItems().pipe(catchError((error) => { 
-      this.warningMessageText = `Request to get master detail text failed: ${error}`; 
-      this.warningMessageOpen = true; 
+    this.sampleOrders$ = this.masterDetailService.getMasterDetailItems().pipe(catchError((error) => {
+      this.warningMessageText = `Request to get master detail text failed: ${error}`;
+      this.warningMessageOpen = true;
       return of(null);
-    }),map(listSampleOrders => {
+    }), map(listSampleOrders => {
       this.currentSampleOrder = listSampleOrders[0];
       return listSampleOrders;
     }));

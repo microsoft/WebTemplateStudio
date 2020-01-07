@@ -2,8 +2,9 @@
 import classnames from "classnames";
 import styles from "./masterdetail.module.css";
 import imgGreyAvatar from "../../images/GreyAvatar.svg";
+import PropTypes from "prop-types";
 
-export default function MasterDetailSideBarTab({ sampleOrder, selectSampleOrder }) {
+const MasterDetailSideBarTab = ({ sampleOrder, selectSampleOrder }) => {
   return (
     <button
       onClick={() => selectSampleOrder(sampleOrder)}
@@ -19,3 +20,10 @@ export default function MasterDetailSideBarTab({ sampleOrder, selectSampleOrder 
     </button>
   );
 }
+
+MasterDetailSideBarTab.propTypes = {
+  sampleOrder: PropTypes.any,
+  selectSampleOrder: PropTypes.func
+}
+
+export default MasterDetailSideBarTab;

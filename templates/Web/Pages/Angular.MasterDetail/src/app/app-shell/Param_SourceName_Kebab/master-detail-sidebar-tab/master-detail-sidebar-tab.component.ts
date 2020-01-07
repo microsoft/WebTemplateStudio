@@ -6,7 +6,7 @@ import { ISampleOrder } from '../master-detail.model';
   templateUrl: './master-detail-sidebar-tab.component.html',
   styleUrls: ['./master-detail-sidebar-tab.component.css']
 })
-export class MasterDetailSidebarTabComponent implements OnInit{
+export class MasterDetailSidebarTabComponent implements OnInit {
   @Input() sampleOrder: ISampleOrder;
   @Output() itemClick = new EventEmitter<ISampleOrder>();
 
