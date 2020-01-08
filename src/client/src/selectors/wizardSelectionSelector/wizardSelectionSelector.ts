@@ -38,9 +38,9 @@ const getOutputPath = (state: AppState): string =>
   state.selection.outputPathObject.outputPath;
 const isEnableNextPage = (state: AppState): boolean =>{
   let valid = false;
-  if (state.wizardRoutes.selected == ROUTES.NEW_PROJECT &&
-    state.selection.projectNameObject.validation.isValid && state.selection.outputPathObject.outputPath!=""){
-    valid = true;
+  if (state.wizardRoutes.selected == ROUTES.NEW_PROJECT){
+    valid = state.selection.projectNameObject.validation.isValid === true && 
+      state.selection.outputPathObject.outputPath!="";
   }
 
   if (state.wizardRoutes.selected == ROUTES.SELECT_FRAMEWORKS &&

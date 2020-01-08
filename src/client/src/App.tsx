@@ -34,8 +34,7 @@ import {
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
 import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
 import {
-  updateOutputPathAction,
-  updateProjectNameAction
+  updateOutputPathAction
 } from "./actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   setAccountAvailability,
@@ -46,7 +45,6 @@ import {
 import AzureLogin from "./containers/AzureLogin";
 import { getSubscriptionData } from "./actions/azureActions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
-import { setProjectPathValidation } from "./actions/wizardSelectionActions/setProjectPathValidation";
 import { setValidations } from "./actions/wizardSelectionActions/setValidations";
 import {
   updateTemplateGenerationStatusMessageAction,
@@ -93,7 +91,6 @@ if (process.env.NODE_ENV === DEVELOPMENT) {
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
-  updateProjectName: (projectName: string) => any;
   getVSCodeApi: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
   startLogOutToAzure: () => any;
@@ -107,7 +104,6 @@ interface IDispatchProps {
   setSiteNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
-  setProjectPathValidation: (validation: any) => void;
   setValidations: (validations: any) => void;
   setAzureValidationStatus: (status: boolean) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
@@ -143,7 +139,6 @@ class App extends React.Component<Props> {
     updateOutputPath: () => {},
     setCosmosResourceAccountNameAvailability: () => {},
     setAppNameAvailability: () => {},
-    setProjectPathValidation: () => {},
     setValidations: () => {},
     setAzureValidationStatus: () => {},
     updateDependencyInfo: () => {},
@@ -188,11 +183,6 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           if (message.payload != null && message.payload.outputPath != null) {
             this.props.updateOutputPath(message.payload.outputPath);
-          }
-          break;
-        case EXTENSION_COMMANDS.GET_PROJECT_NAME:
-          if (message.payload != null && message.payload.projectName != null) {
-            this.props.updateProjectName(message.payload.projectName);
           }
           break;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
@@ -247,11 +237,6 @@ class App extends React.Component<Props> {
             message: message.payload.reason
           });
           this.props.setAzureValidationStatus(false);
-          break;
-        case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
-          this.props.setProjectPathValidation(
-            message.payload.projectPathValidation
-          );
           break;
         case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
           this.props.updateTemplateGenStatusMessage(message.payload.status);
@@ -396,9 +381,6 @@ const mapDispatchToProps = (
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
   },
-  updateProjectName: (projectName: string) => {
-    dispatch(updateProjectNameAction(projectName));
-  },
   setCosmosResourceAccountNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => {
@@ -409,9 +391,6 @@ const mapDispatchToProps = (
   },
   setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => {
     dispatch(setSiteNameAvailabilityAction(isAvailableObject));
-  },
-  setProjectPathValidation: (validation: any) => {
-    dispatch(setProjectPathValidation(validation));
   },
   setValidations: (validations: any) => {
     dispatch(setValidations(validations));

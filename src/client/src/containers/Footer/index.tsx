@@ -47,7 +47,7 @@ import {
   InjectedIntlProps,
   injectIntl
 } from "react-intl";
-  
+
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages

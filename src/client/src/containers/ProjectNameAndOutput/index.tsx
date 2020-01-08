@@ -29,8 +29,7 @@ import styles from "./styles.module.css";
 import {
   injectIntl,
   defineMessages,
-  InjectedIntlProps,
-  FormattedMessage
+  InjectedIntlProps
 } from "react-intl";
 
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
@@ -40,6 +39,7 @@ import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 import { IStateValidationProjectName, validateProjectName} from "../../utils/validations/projectName";
+import { setProjectPathValidation } from "../../actions/wizardSelectionActions/setProjectPathValidation";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -51,8 +51,9 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  updateProjectName: (projectName: string) => any;
+  updateProjectName: (projectName: string, validation:any) => any;
   updateOutputPath: (outputPath: string) => any;
+  setProjectPathValidation: (validation: any) => void;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
@@ -85,24 +86,15 @@ const ProjectNameAndOutput = (props: Props) => {
     projectName,
     validations,
     updateProjectName,
-    updateOutputPath
+    updateOutputPath,
+    setProjectPathValidation
   } = props;
 
   React.useEffect(() => {
-    validateProjectName(projectName, outputPath, validations.projectNameValidationConfig, vscode).then((validateState:IStateValidationProjectName)=>{
-      setStateValidationProjectName(validateState);
-    });
-
-    if (!isDirtyProjectName && projectName!="") setDirtyProjectName(true);
-  },[projectName, outputPath]);
+    validateSetProjectValueAndSetDirty(projectName);
+  },[outputPath]);
 
   React.useEffect(() => {
-    if (projectName === "") {
-      vscode.postMessage({
-        module: EXTENSION_MODULES.DEFAULTS,
-        command: EXTENSION_COMMANDS.GET_PROJECT_NAME
-      });
-    }
     if (outputPath === "") {
       vscode.postMessage({
         module: EXTENSION_MODULES.DEFAULTS,
@@ -111,29 +103,23 @@ const ProjectNameAndOutput = (props: Props) => {
     }
   }, [vscode]);
 
-  React.useEffect(() => {
-    if (vscode) {
-      if (
-        projectPathValidation ||
-        (outputPath !== "" && !projectPathValidation)
-      ) {
-        vscode.postMessage({
-          module: EXTENSION_MODULES.VALIDATOR,
-          command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-          track: false,
-          projectPath: outputPath,
-          projectName: projectName
-        });
-      }
+  const validateSetProjectValueAndSetDirty = (projectNameToSet:string) =>{
+    validateProjectName(projectNameToSet, outputPath, validations.projectNameValidationConfig, vscode).then((validateState:IStateValidationProjectName)=>{
+      setStateValidationProjectName(validateState);
+      updateProjectName(projectNameToSet, {isValid:validateState.isValid, error:validateState.errorMessage});
+    });
+
+    if (!isDirtyProjectName && projectNameToSet!=""){
+      setDirtyProjectName(true);
+      setProjectPathValidation({isValid: true});
     }
-  }, [outputPath, projectName]);
+  }
   const handleProjectNameChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
     const element = e.currentTarget as HTMLInputElement;
-    updateProjectName(element.value);
+    validateSetProjectValueAndSetDirty(element.value);
   };
-
   const handleOutputPathChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
@@ -161,7 +147,7 @@ const ProjectNameAndOutput = (props: Props) => {
           maxLength={PROJECT_NAME_CHARACTER_LIMIT}
           autoFocus={true}
         />
-        
+
         {!stateValidationProjectName.isValid && isDirtyProjectName && (
           <div className={styles.errorMessage}>
             {stateValidationProjectName.errorMessage}
@@ -198,12 +184,15 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 const mapDispatchToProps = (
   dispatch: Dispatch<RootAction>
 ): IDispatchProps => ({
-  updateProjectName: (projectName: string) => {
-    dispatch(updateProjectNameAction(projectName));
+  updateProjectName: (projectName: string, validate:any) => {
+    dispatch(updateProjectNameAction(projectName, validate));
   },
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
-  }
+  },
+  setProjectPathValidation: (validation: any) => {
+    dispatch(setProjectPathValidation(validation));
+  },
 });
 
 export default connect(
