@@ -3,10 +3,9 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
-import { injectIntl, InjectedIntlProps, defineMessages } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
-import _ from "lodash";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
 import ServicesListContainer from "../ServicesList";
@@ -93,17 +92,6 @@ type Props = IRightSidebarProps &
   RouteComponentProps &
   IDispatchProps &
   InjectedIntlProps;
-
-const sideBarMessages = defineMessages({
-  openSideBar: {
-    id: "rightSidebar.open",
-    defaultMessage: "View project details menu"
-  },
-  closeSideBar: {
-    id: "rightSidebar.close",
-    defaultMessage: "Close project details menu"
-  }
-});
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {
@@ -302,7 +290,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               tabIndex={0}
               className={styles.hamburgerButton}
               onClick={this.sidebarToggleClickHandler}
-              aria-label={intl.formatMessage(sideBarMessages.openSideBar)}
+              aria-label={intl.formatMessage(messages.openSideBar)}
             >
               <div className={styles.hamburgerLine} />
               <div className={styles.hamburgerLine} />
@@ -325,7 +313,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   className={styles.icon}
                   onClick={this.sidebarToggleClickHandler}
                   onKeyDown={this.cancelKeyDownHandler}
-                  aria-label={intl.formatMessage(sideBarMessages.closeSideBar)}
+                  aria-label={intl.formatMessage(messages.closeSideBar)}
                 />
               )}
 

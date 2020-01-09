@@ -36,6 +36,14 @@ const messages = defineMessages({
   feedbackRedirectLinkLabel: {
     id: "feedback.redirectLinkLabel",
     defaultMessage: "GitHub.com"
+  },
+  openSideBar: {
+    id: "rightSidebar.open",
+    defaultMessage: "View project details menu"
+  },
+  closeSideBar: {
+    id: "rightSidebar.close",
+    defaultMessage: "Close project details menu"
   }
 });
 
