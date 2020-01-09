@@ -6,6 +6,7 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES
 } from "../../utils/constants";
+import {postMessage} from "../serviceExtension";
 
 export interface IStateValidationProjectName {
   isValid:boolean;
@@ -43,28 +44,22 @@ export const addExistingItemNameValidate = (pageTitle:string, selectedPages:Arra
 
 export const addExistingProjectNameValidate = (projectName:string, outputPath:string,
   vscode: IVSCodeObject) =>{
-  let promiseIsExistingName = new Promise<IStateValidationProjectName>((resolveIsExistingName) => {
+  let promiseIsExistingName = new Promise<IStateValidationProjectName>((resolve) => {
     let isExistingName = projectName!="" && outputPath !="";
     if (isExistingName){
-      const callbackListenerPathValidation = (event:any) =>{
-        const message = event.data;
-        if (message.command == EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION){
-            resolveIsExistingName({isValid:message.payload.projectPathValidation.isValid,
-              errorMessage:message.payload.projectPathValidation.error});
-        }
-      }
-      window.removeEventListener("message",callbackListenerPathValidation);
-      window.addEventListener("message", callbackListenerPathValidation);
-
-      vscode.postMessage({
+      postMessage(EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION, {
         module: EXTENSION_MODULES.VALIDATOR,
         command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
         track: false,
         projectPath: outputPath,
         projectName: projectName
-      });
+      }, vscode).then((event:any)=>{
+        const message = event.data;
+        resolve({isValid:message.payload.projectPathValidation.isValid,
+          errorMessage:message.payload.projectPathValidation.error});
+      })
     }else{
-      resolveIsExistingName({isValid:true, errorMessage:""});
+      resolve({isValid:true, errorMessage:""});
     }
   });
   return promiseIsExistingName;
