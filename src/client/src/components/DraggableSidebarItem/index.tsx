@@ -105,16 +105,20 @@ const DraggableSidebarItem = ({
       handleCloseOnClick();
     }
   };
+  
   const handleCloseOnClick = () => {
     idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
   };
 
   const [stateValidationItemName, setStateValidationItemName] =
     React.useState<IStateValidationItemName>({isValid:true, errorMessage:""});
+  const [validValue, setValidValue] =
+    React.useState<string>(page.title);
 
   React.useEffect(() => {
     validateItemName(page.title, validations.itemNameValidationConfig, selectedPages).then((validateState:IStateValidationItemName)=>{
       setStateValidationItemName(validateState);
+      if (validateState.isValid) setValidValue(page.title);
     });
   },[page.title]);
 
@@ -167,6 +171,12 @@ const DraggableSidebarItem = ({
                   onChange={e => {
                     if (handleInputChange && idx) {
                       handleInputChange(e.target.value, idx - 1);
+                    }
+                  }}
+                  onBlur={e => {
+                    if (handleInputChange && idx && !stateValidationItemName.isValid) {
+                      setStateValidationItemName({isValid:true, errorMessage:""});
+                      handleInputChange(validValue, idx - 1);
                     }
                   }}
                 />
