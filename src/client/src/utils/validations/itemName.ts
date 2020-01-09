@@ -7,33 +7,24 @@ export interface IStateValidationItemName {
   errorMessage:string;
 }
 
-export const validateItemName = (itemName:string, 
+export const validateItemName = async (itemName:string, 
   validations:IitemNameValidationConfig,
-  selectedPages: Array<ISelected>):Promise<IStateValidationItemName> => {
+  selectedPages: Array<ISelected>) => {
 
-  let promise = new Promise<IStateValidationItemName>((resolve) => {
-    const listPromise:Array<Promise<IStateValidationItemName>>=[];
+  let listValidations:Array<IStateValidationItemName>=[];
+  let validate:IStateValidationItemName = {isValid:true,errorMessage:""};
 
-    if (validations.validateEmptyNames)
-      listPromise.push(addRequiredValidate(itemName));
-    if (validations.validateExistingNames)
-      listPromise.push(addExistingItemNameValidate(itemName, selectedPages));
-    if (validations.reservedNames.length>0)
-      listPromise.push(addReservedNameValidate(itemName, validations.reservedNames));
-    if (validations.regexs.length>0)
-      listPromise.push(addRegexValidate(itemName, validations.regexs));
+  if (validations.validateEmptyNames)
+    listValidations.push(addRequiredValidate(itemName));
+  if (validations.validateExistingNames)
+    listValidations.push(addExistingItemNameValidate(itemName, selectedPages));
+  if (validations.reservedNames.length>0)
+    listValidations.push(addReservedNameValidate(itemName, validations.reservedNames));
+  if (validations.regexs.length>0)
+    listValidations.push(addRegexValidate(itemName, validations.regexs));
 
-    Promise.all(listPromise).then((listResponse:Array<IStateValidationItemName>)=>{
-      let isDirtyValidation = false;
+  const invalids = listValidations.filter(validate=>validate.isValid===false);
+  if (invalids.length>0) validate = invalids[0];
 
-      listResponse.forEach((stateValidate)=>{
-        if (!isDirtyValidation && !stateValidate.isValid){
-          isDirtyValidation=true;
-          resolve(stateValidate);
-        }
-      });
-      if (!isDirtyValidation) resolve({isValid:true,errorMessage:""});
-    })
-  });
-  return promise;
+  return validate;
 };

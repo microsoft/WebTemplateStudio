@@ -7,32 +7,22 @@ export interface IStateValidationProjectName {
   errorMessage:string;
 }
 
-export const validateProjectName = (projectName:string, outputPath:string,
-  validations:IprojectNameValidationConfig, vscode: IVSCodeObject):Promise<IStateValidationProjectName> => {
+export const validateProjectName = async (projectName:string, outputPath:string,
+  validations:IprojectNameValidationConfig, vscode: IVSCodeObject) => {
 
-  let promise = new Promise<IStateValidationProjectName>((resolve) => {
-    const listPromise:Array<Promise<IStateValidationProjectName>>=[];
+  let listValidations:Array<IStateValidationProjectName>=[];
+  let validate:IStateValidationProjectName = {isValid:true,errorMessage:""};
+  if (validations.validateEmptyNames)
+    listValidations.push(addRequiredValidate(projectName));
+  if (validations.validateExistingNames)
+    listValidations.push(await addExistingProjectNameValidate(projectName, outputPath, vscode));
+  if (validations.reservedNames.length>0)
+    listValidations.push(addReservedNameValidate(projectName, validations.reservedNames));
+  if (validations.regexs.length>0)
+    listValidations.push(addRegexValidate(projectName, validations.regexs));
 
-    if (validations.validateEmptyNames)
-      listPromise.push(addRequiredValidate(projectName));
-    if (validations.validateExistingNames)
-      listPromise.push(addExistingProjectNameValidate(projectName, outputPath, vscode));
-    if (validations.reservedNames.length>0)
-      listPromise.push(addReservedNameValidate(projectName, validations.reservedNames));
-    if (validations.regexs.length>0)
-      listPromise.push(addRegexValidate(projectName, validations.regexs));
+  const invalids = listValidations.filter(validate=>validate.isValid===false);
+  if (invalids.length>0) validate = invalids[0];
 
-    Promise.all(listPromise).then((listResponse:Array<IStateValidationProjectName>)=>{
-      let isDirtyValidation = false;
-
-      listResponse.forEach((stateValidate)=>{
-        if (!isDirtyValidation && !stateValidate.isValid){
-          isDirtyValidation=true;
-          resolve(stateValidate);
-        }
-      });
-      if (!isDirtyValidation) resolve({isValid:true,errorMessage:""});
-    })
-  });
-  return promise;
+  return validate;
 };
