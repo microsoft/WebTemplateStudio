@@ -6,7 +6,7 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES
 } from "../../utils/constants";
-import {postMessage} from "../serviceExtension";
+import {postMessageAsync} from "../extensionService";
 
 export interface IStateValidationProjectName {
   isValid:boolean;
@@ -47,7 +47,7 @@ export const addExistingProjectNameValidate = (projectName:string, outputPath:st
   let promiseIsExistingName = new Promise<IStateValidationProjectName>((resolve) => {
     let isExistingName = projectName!="" && outputPath !="";
     if (isExistingName){
-      postMessage(EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION, {
+      postMessageAsync(EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION, {
         module: EXTENSION_MODULES.VALIDATOR,
         command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
         track: false,
