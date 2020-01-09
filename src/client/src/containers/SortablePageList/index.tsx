@@ -25,6 +25,11 @@ import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 
 import { PAGE_NAME_CHARACTER_LIMIT } from "../../utils/constants";
+import { validateItemName} from "../../utils/validations/itemName";
+import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
+import {
+  getValidations
+} from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 interface ISortablePageListProps {
   selectedPages: any[];
@@ -34,6 +39,7 @@ interface IStateProps {
   isSummaryPage?: boolean;
   selectionTitle?: string;
   handleResetPages: () => void;
+  validations: IValidations;
 }
 
 interface ISortableDispatchProps {
@@ -74,7 +80,8 @@ const SortablePageList = (props: Props) => {
     selectedPages,
     selectPages,
     isSummaryPage,
-    openAddPagesModal
+    openAddPagesModal,
+    validations
   } = props;
   const [pages, setPages] = React.useState(selectedPages);
   const [isMinimized, setMinimized] = React.useState(false);
@@ -83,21 +90,13 @@ const SortablePageList = (props: Props) => {
     setPages(selectedPages);
   }, [selectedPages]);
 
-  const handleInputChange = (newTitle: string, idx: number) => {
+  const handleInputChange = async (newTitle: string, idx: number) => {
     pages[idx].title = newTitle;
     pages[idx].error = "";
-    const validationResult = validateName(pages[idx].title, "page");
-    if (validationResult.error) {
-      pages[idx].error = props.intl!.formatMessage(validationResult.error);
-    }
+    const validationResult = await validateItemName(newTitle, validations.itemNameValidationConfig, selectedPages);
+    pages[idx].error = validationResult.errorMessage;
     pages[idx].isValidTitle = validationResult.isValid;
-    for (let i = 0; i < pages.length; i++) {
-      if (pages[i].title === pages[idx].title && i !== idx) {
-        pages[idx].isValidTitle = false;
-        pages[idx].error = props.intl!.formatMessage(messages.duplicateName);
-        break;
-      }
-    }
+
     setPages(pages);
     props.selectPages(pages);
   };
@@ -175,8 +174,9 @@ const SortablePageList = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState): ISortablePageListProps => ({
-  selectedPages: state.selection.pages
+const mapStateToProps = (state: AppState) => ({
+  selectedPages: state.selection.pages,
+  validations: getValidations(state)
 });
 
 const mapDispatchToProps = (

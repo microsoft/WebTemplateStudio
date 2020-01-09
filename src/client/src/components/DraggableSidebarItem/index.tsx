@@ -17,11 +17,7 @@ import { KEY_EVENTS } from "../../utils/constants";
 
 import { injectIntl, InjectedIntl, defineMessages, InjectedIntlProps } from "react-intl";
 import { IFunctionName } from "../../containers/AzureFunctionsSelection";
-import { IStateValidationItemName, validateItemName} from "../../utils/validations/itemName";
-import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
-import {
-  getValidations
-} from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+
 import { AppState } from "../../reducers";
 
 const messages = defineMessages({
@@ -67,15 +63,11 @@ interface IStateProps {
   totalCount?: number;
 }
 
-interface IStatePropsRedux {
-  validations: IValidations;
-}
-
 interface ISortablePageListProps {
   selectedPages: Array<ISelected>;
 }
 
-type Props = IStateProps & IStatePropsRedux & ISortablePageListProps & InjectedIntlProps;
+type Props = IStateProps & ISortablePageListProps & InjectedIntlProps;
 
 const DraggableSidebarItem = ({
   page,
@@ -97,7 +89,6 @@ const DraggableSidebarItem = ({
   customInputStyle,
   isAzureFunction,
   totalCount,
-  validations,
   selectedPages
 }:Props) => {
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -105,21 +96,17 @@ const DraggableSidebarItem = ({
       handleCloseOnClick();
     }
   };
-  
+
   const handleCloseOnClick = () => {
     idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
   };
 
-  const [stateValidationItemName, setStateValidationItemName] =
-    React.useState<IStateValidationItemName>({isValid:true, errorMessage:""});
+ 
   const [validValue, setValidValue] =
     React.useState<string>(page.title);
 
   React.useEffect(() => {
-    validateItemName(page.title, validations.itemNameValidationConfig, selectedPages).then((validateState:IStateValidationItemName)=>{
-      setStateValidationItemName(validateState);
-      if (validateState.isValid) setValidValue(page.title);
-    });
+    if (page.isValidTitle) setValidValue(page.title);
   },[page.title]);
 
   return (
@@ -174,8 +161,7 @@ const DraggableSidebarItem = ({
                     }
                   }}
                   onBlur={e => {
-                    if (handleInputChange && idx && !stateValidationItemName.isValid) {
-                      setStateValidationItemName({isValid:true, errorMessage:""});
+                    if (handleInputChange && idx && page.isValidTitle===false) {
                       handleInputChange(validValue, idx - 1);
                     }
                   }}
@@ -193,7 +179,7 @@ const DraggableSidebarItem = ({
               )}
             </div>
           </div>
-          {!stateValidationItemName.isValid && (
+          {!page.isValidTitle && (
             <div
               className={classnames({
                 [styles.errorTextContainer]:
@@ -202,7 +188,7 @@ const DraggableSidebarItem = ({
                 [styles.largeIndentContainer]: false
               })}
             >
-              {stateValidationItemName.errorMessage}
+              {page.error}
             </div>
           )}
 
@@ -222,7 +208,6 @@ const DraggableSidebarItem = ({
 };
 
 const mapStateToProps = (state: AppState) => ({
-  validations: getValidations(state),
   selectedPages: state.selection.pages
 });
 

@@ -48,7 +48,8 @@ const isEnableNextPage = (state: AppState): boolean =>{
     valid = true;
   }
 
-  if (state.wizardRoutes.selected == ROUTES.SELECT_PAGES && state.selection.pages.length>0){
+  if (state.wizardRoutes.selected == ROUTES.SELECT_PAGES && state.selection.pages.length>0 && 
+    state.selection.pages.filter(page => !page.isValidTitle).length==0){
     valid = true;
   }
 
