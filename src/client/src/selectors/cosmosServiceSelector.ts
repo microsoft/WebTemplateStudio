@@ -2,7 +2,7 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { ISelectedCosmosService } from "../reducers/wizardSelectionReducers/services/cosmosDbReducer";
 import { AppState } from "../reducers";
-import { IServices } from "../reducers/wizardSelectionReducers/services";
+import { ServiceState } from "../reducers/wizardSelectionReducers/services";
 
 interface ISelectedDropdowns {
   subscription?: IDropDownOptionType;
@@ -18,14 +18,14 @@ interface ISelectionInformation {
   previousFormData: ISelectedCosmosService;
 }
 
-const getServicesSelector = (state: AppState): IServices =>
+const getServices = (state: AppState): ServiceState =>
   state.selection.services;
   
 const isCosmosDbSelected = (services: any): boolean => {
   return !_.isEmpty(services.cosmosDB.selection);
 };
 const isCosmosResourceCreatedSelector = createSelector(
-  getServicesSelector,
+  getServices,
   isCosmosDbSelected
 );
 const getCosmosDbOptions = (services: any, isCosmosSelected: boolean): any => {
@@ -34,7 +34,7 @@ const getCosmosDbOptions = (services: any, isCosmosSelected: boolean): any => {
   }
 };
 const getCosmosDbSelectionSelector = createSelector(
-  getServicesSelector,
+  getServices,
   isCosmosResourceCreatedSelector,
   getCosmosDbOptions
 );
@@ -75,6 +75,5 @@ export {
   getCosmosDbSelectionSelector,
   getFunctionsSelection,
   getCosmosSelectionInDropdownForm,
-  getServicesSelector,
   isCosmosResourceCreatedSelector
 };

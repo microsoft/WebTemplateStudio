@@ -22,7 +22,7 @@ import {
 } from "../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 
-import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
+import { getServicesSelector, hasServicesSelector } from "../../selectors/servicesSelector";
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
@@ -56,7 +56,7 @@ import {
   getOutputPath,
   getProjectName
 } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
-import { IServices } from "../../reducers/wizardSelectionReducers/services";
+import { ServiceState } from "../../reducers/wizardSelectionReducers/services";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -76,7 +76,8 @@ interface IRightSidebarProps {
   pageCount: IPageCount;
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
-  services: IServices;
+  services: ServiceState;
+  hasServices: boolean;
   vscode: IVSCodeObject;
   isValidNameAndProjectPath: boolean;
   isRoutesVisited: IVisitedPages;
@@ -92,10 +93,6 @@ type Props = IRightSidebarProps &
   RouteComponentProps &
   IDispatchProps &
   InjectedIntlProps;
-
-const hasAzureServices = (services: IServices) => {
-  return services.appService.selection || services.cosmosDB.selection.length > 0
-};
 
 const sideBarMessages = defineMessages({
   openSideBar: {
@@ -129,7 +126,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       return {
         isSidebarOpen:
           nextProps.selection.pages.length > 0 ||
-          hasAzureServices(nextProps.services) ||
+          nextProps.hasServices ||
           prevState.isSidebarOpen
       };
     }
@@ -284,7 +281,8 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       isValidNameAndProjectPath,
       openViewLicensesModal,
       outputPath,
-      projectName
+      projectName,
+      hasServices
     } = this.props;
     const { formatMessage } = intl;
     const { frontendOptions, backendOptions } = contentOptions;
@@ -382,9 +380,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   />
                 )}
               </div>
-              {hasAzureServices(this.props.services) && (
-                <ServicesListContainer />
-              )}
+              {hasServices && <ServicesListContainer />}
               <div className={styles.container}>
                 {pathname !== ROUTES.REVIEW_AND_GENERATE && (
                   <div className={styles.buttonContainer}>
@@ -446,6 +442,7 @@ const mapStateToProps = (state: AppState): IRightSidebarProps => ({
   ),
   vscode: getVSCodeApiSelector(state),
   services: getServicesSelector(state),
+  hasServices : hasServicesSelector(state),
   isRoutesVisited: getIsVisitedRoutesSelector(state),
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
   contentOptions: state.wizardContent

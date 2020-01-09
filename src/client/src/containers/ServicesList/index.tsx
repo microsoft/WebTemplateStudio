@@ -1,16 +1,16 @@
 import { connect } from "react-redux";
 import { AppState } from "../../reducers";
-import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
+import { getServicesSelector } from "../../selectors/servicesSelector";
 import React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import messages from "./strings";
 import styles from "./styles.module.css";
 import CosmosDBSelection from "../CosmosDBSelection";
 import AppServiceSelection from "../AppServiceSelection";
-import { IServices } from "../../reducers/wizardSelectionReducers/services";
+import { ServiceState } from "../../reducers/wizardSelectionReducers/services";
 
 interface IProps {
-  services: IServices;
+  services: ServiceState;
 }
 
 type Props = IProps & InjectedIntlProps;
