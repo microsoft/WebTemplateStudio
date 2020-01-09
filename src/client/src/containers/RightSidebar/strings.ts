@@ -25,10 +25,6 @@ const messages = defineMessages({
     id: "rightSidebar.backendFramework",
     defaultMessage: "Back-end Framework"
   },
-  services: {
-    id: "rightSidebar.services",
-    defaultMessage: "Services"
-  },
   viewLicenses: {
     id: "licenses.viewLicenses",
     defaultMessage: "View Licenses"

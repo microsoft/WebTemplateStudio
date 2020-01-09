@@ -9,7 +9,7 @@ import classnames from "classnames";
 import _ from "lodash";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
-import ServicesSidebarItem from "../../components/ServicesSidebarItem";
+import ServicesListContainer from "../ServicesList";
 import About from "../About";
 import SortablePageList from "../SortablePageList";
 
@@ -56,6 +56,7 @@ import {
   getOutputPath,
   getProjectName
 } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { IServices } from "../../reducers/wizardSelectionReducers/services";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -75,7 +76,7 @@ interface IRightSidebarProps {
   pageCount: IPageCount;
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
-  services: any;
+  services: IServices;
   vscode: IVSCodeObject;
   isValidNameAndProjectPath: boolean;
   isRoutesVisited: IVisitedPages;
@@ -92,11 +93,8 @@ type Props = IRightSidebarProps &
   IDispatchProps &
   InjectedIntlProps;
 
-const hasAzureServices = (services: any) => {
-  for (const key in services) {
-    if (!_.isEmpty(services[key].selection)) return true;
-  }
-  return false;
+const hasAzureServices = (services: IServices) => {
+  return services.appService.selection || services.cosmosDB.selection.length > 0
 };
 
 const sideBarMessages = defineMessages({
@@ -385,12 +383,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                 )}
               </div>
               {hasAzureServices(this.props.services) && (
-                <div className={styles.sidebarItem}>
-                  <div className={styles.dropdownTitle}>
-                    {formatMessage(messages.services)}
-                  </div>
-                  <ServicesSidebarItem services={this.props.services} />
-                </div>
+                <ServicesListContainer />
               )}
               <div className={styles.container}>
                 {pathname !== ROUTES.REVIEW_AND_GENERATE && (

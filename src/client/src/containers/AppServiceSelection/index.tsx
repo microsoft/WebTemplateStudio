@@ -6,7 +6,7 @@ import * as getSvg from "../../utils/getSvgUrl";
 import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
 import { removeAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
-import { IAppServiceSelection } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { IAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { ReactComponent as EditIcon } from "../../assets/edit.svg";
 
 import { openAppServiceModalAction } from "../../actions/modalActions/modalActions";
@@ -20,7 +20,7 @@ import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 
 interface IProps {
-  appServiceSelection: IAppServiceSelection;
+  appServiceSelection: IAppService;
 }
 
 interface IDispatchProps {
