@@ -18,8 +18,10 @@ import RootAction from "../../actions/ActionType";
 import { AppState } from "../../reducers";
 
 import { isAddPagesModalOpenSelector } from "../../selectors/modalSelector";
+import { getSelectedPages } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import { InjectedIntl, defineMessages, injectIntl } from "react-intl";
+import { inferItemName} from "../../utils/infer/itemName";
 
 const messages = defineMessages({
   limitedPages: {
@@ -76,6 +78,7 @@ interface IDispatchProps {
 
 interface IStateProps {
   isAddPagesModalOpen: boolean;
+  selectedPages: any[];
 }
 
 type Props = IDispatchProps & ISelectOptionProps & IStateProps & IProps;
@@ -133,7 +136,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     return `${title}${count}`;
   }
 
-  public mapIndexToCardInfo(
+  public async mapIndexToCardInfo(
     count: number,
     internalName: string,
     optionIndexContainingData: number
@@ -141,8 +144,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const { defaultName, licenses, author } = this.props.options[
       optionIndexContainingData
     ];
-    const title = this.createTitle(optionIndexContainingData, count);
-
+    const selectedPages:Array<any> = this.props.selectedPages;
+    const title = await inferItemName(defaultName ? defaultName : "", selectedPages);
     const cardInfo: ISelected = {
       title: title as string,
       internalName,
@@ -168,16 +171,17 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   ) {
     const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     selectedCardIndices.push(cardNumber);
+    const suggesteName="";
     if (selectOptions && currentCardData) {
-      const currentCards = currentCardData.splice(0);
-      currentCards.push(
-        this.mapIndexToCardInfo(cardCount, internalName, cardNumber)
-      );
-      selectOptions(currentCards);
+      this.mapIndexToCardInfo(cardCount, internalName, cardNumber).then(card=>{
+        const currentCards = currentCardData.splice(0);
+        currentCards.push(card);
+        selectOptions(currentCards);
+        this.setState({selectedCardIndices});
+      });
+    }else{
+      this.setState({selectedCardIndices});
     }
-    this.setState({
-      selectedCardIndices
-    });
   }
 
   public removeOption(internalName: string) {
@@ -389,7 +393,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
 }
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  isAddPagesModalOpen: isAddPagesModalOpenSelector(state)
+  isAddPagesModalOpen: isAddPagesModalOpenSelector(state),
+  selectedPages: getSelectedPages(state),
 });
 
 const mapDispatchToProps = (

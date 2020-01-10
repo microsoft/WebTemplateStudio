@@ -34,6 +34,8 @@ const getProjectNameValidation = (state: AppState): IValidation =>
   state.selection.projectNameObject.validation;
 const getValidations = (state: AppState): IValidations =>
   state.selection.validations;
+const getSelectedPages = (state: AppState): Array<ISelected> =>
+  state.selection.pages;
 const getOutputPath = (state: AppState): string =>
   state.selection.outputPathObject.outputPath;
 const isEnableNextPage = (state: AppState): boolean =>{
@@ -187,5 +189,6 @@ export {
   getPageCount,
   getProjectNameValidation,
   isValidNameAndProjectPathSelector,
-  isEnableNextPage
+  isEnableNextPage,
+  getSelectedPages
 };
