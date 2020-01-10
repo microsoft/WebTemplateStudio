@@ -8,6 +8,7 @@ import styles from "./styles.module.css";
 import CosmosDBSelection from "../CosmosDBSelection";
 import AppServiceSelection from "../AppServiceSelection";
 import { ServiceState } from "../../reducers/wizardSelectionReducers/services";
+import _ from "lodash";
 
 interface IProps {
   services: ServiceState;
@@ -17,12 +18,14 @@ type Props = IProps & InjectedIntlProps;
 
 function ServicesList({ services, intl }: Props) {
   const { formatMessage } = intl;
+  const hasAppService = services.appService && services.appService.selection;
+  const hasCosmos = services.cosmosDB && !_.isEmpty(services.cosmosDB.selection);
 
   return (
     <div className={styles.servicesSection}>
       <div className={styles.title}>{formatMessage(messages.services)}</div>
-      {services.appService && <AppServiceSelection appServiceSelection={services.appService} />}
-      {services.cosmosDB && <CosmosDBSelection cosmosSelection={services.cosmosDB} />}
+      {hasAppService && <AppServiceSelection appServiceSelection={services.appService} />}
+      {hasCosmos && <CosmosDBSelection cosmosSelection={services.cosmosDB} />}
     </div>
   );
 }

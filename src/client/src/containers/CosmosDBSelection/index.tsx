@@ -66,7 +66,7 @@ const CosmosDBSelection = ({
               <DraggableSidebarItem
                 cosmosDB={true}
                 customInputStyle={styles.input}
-                key={accountName}
+                key={`${accountName} ${idx + 1}`}
                 text={accountName}
                 closeSvgUrl={getSvg.getCancelSvg()}
                 withIndent={true}
