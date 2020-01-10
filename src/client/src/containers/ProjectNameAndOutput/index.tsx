@@ -39,6 +39,7 @@ import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 import { IStateValidationProjectName, validateProjectName} from "../../utils/validations/projectName";
+import { inferProjectName} from "../../utils/infer/projectName";
 import { setProjectPathValidation } from "../../actions/wizardSelectionActions/setProjectPathValidation";
 
 interface IStateProps {
@@ -93,6 +94,14 @@ const ProjectNameAndOutput = (props: Props) => {
   React.useEffect(() => {
     validateSetProjectValueAndSetDirty(projectName);
   },[outputPath]);
+
+  React.useEffect(() => {
+    if (projectName==="" && outputPath!==""){
+      inferProjectName(outputPath,vscode).then(suggestedProjectName => {
+        updateProjectName(suggestedProjectName, {isValid:true, error:""});
+      });
+    }
+  },[projectName, outputPath]);
 
   React.useEffect(() => {
     if (outputPath === "") {
