@@ -8,7 +8,7 @@ import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
-import ServicesListContainer from "../ServicesList";
+import ServicesList from "../ServicesList";
 import About from "../About";
 import SortablePageList from "../SortablePageList";
 
@@ -368,7 +368,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   />
                 )}
               </div>
-              {hasServices && <ServicesListContainer />}
+              {hasServices && <ServicesList />}
               <div className={styles.container}>
                 {pathname !== ROUTES.REVIEW_AND_GENERATE && (
                   <div className={styles.buttonContainer}>
