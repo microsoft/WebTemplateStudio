@@ -62,6 +62,14 @@ const isEnableNextPage = (state: AppState): boolean =>{
   return valid;
 }
 
+export interface ISelectedPages {
+  selectedPages: Array<ISelected>;
+}
+
+export const mapStateSelectedPages = (state: AppState): ISelectedPages => ({
+  selectedPages: getSelectedPages(state),
+});
+
 const getOutputPathValidation = (state: AppState): IValidation =>
   state.selection.outputPathObject.validation;
 const getPageCount = (state: AppState): IPageCount => state.selection.pageCount;
@@ -189,6 +197,5 @@ export {
   getPageCount,
   getProjectNameValidation,
   isValidNameAndProjectPathSelector,
-  isEnableNextPage,
-  getSelectedPages
+  isEnableNextPage
 };
