@@ -1,14 +1,10 @@
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { addExistingProjectNameValidate} from '../validations/validations';
+import { addExistingProjectNameValidate, IValidation} from '../validations/validations';
 
-export interface IStateValidationProjectName {
-  isValid:boolean;
-  errorMessage:string;
-}
 
 export const inferProjectName = async (outputPath:string, vscode: IVSCodeObject) => {
   let projectName:string = "";
-  let validate:IStateValidationProjectName;
+  let validate:IValidation;
   const baseProjectName:string = "myApp";
 
   validate = await addExistingProjectNameValidate(baseProjectName, outputPath, vscode);
@@ -17,7 +13,7 @@ export const inferProjectName = async (outputPath:string, vscode: IVSCodeObject)
   if (projectName==""){
     for (var i=1; i<100; i++){
       let sugeredProjectName = baseProjectName + i.toString();
-      let validate:IStateValidationProjectName = await addExistingProjectNameValidate(projectName, outputPath, vscode);
+      let validate:IValidation = await addExistingProjectNameValidate(projectName, outputPath, vscode);
       if (validate.isValid){
         projectName=sugeredProjectName;
         break;

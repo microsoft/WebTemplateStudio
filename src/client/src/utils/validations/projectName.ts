@@ -1,17 +1,13 @@
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { IprojectNameValidationConfig } from "../../reducers/wizardSelectionReducers/setValidations";
-import { addExistingProjectNameValidate, addRegexValidate, addRequiredValidate, addReservedNameValidate} from './validations';
+import { addExistingProjectNameValidate, addRegexValidate, addRequiredValidate, addReservedNameValidate, IValidation} from './validations';
 
-export interface IStateValidationProjectName {
-  isValid:boolean;
-  errorMessage:string;
-}
 
 export const validateProjectName = async (projectName:string, outputPath:string,
   validations:IprojectNameValidationConfig, vscode: IVSCodeObject) => {
 
-  let listValidations:Array<IStateValidationProjectName>=[];
-  let validate:IStateValidationProjectName = {isValid:true,errorMessage:""};
+  let listValidations:Array<IValidation>=[];
+  let validate:IValidation = {isValid:true,error:""};
   if (validations.validateEmptyNames)
     listValidations.push(addRequiredValidate(projectName));
   if (validations.validateExistingNames)

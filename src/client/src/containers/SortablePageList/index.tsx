@@ -94,7 +94,7 @@ const SortablePageList = (props: Props) => {
     pages[idx].title = newTitle;
     pages[idx].error = "";
     const validationResult = await validateItemName(newTitle, validations.itemNameValidationConfig, selectedPages);
-    pages[idx].error = validationResult.errorMessage;
+    pages[idx].error = validationResult.error;
     pages[idx].isValidTitle = validationResult.isValid;
 
     setPages(pages);
