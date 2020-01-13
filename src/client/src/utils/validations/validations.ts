@@ -7,7 +7,7 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES
 } from "../../utils/constants";
-import {projectPathValidation} from "../extensionService";
+import {projectPathValidation} from "../extensionService/extensionService";
 
 export interface IValidation {
   isValid: boolean;

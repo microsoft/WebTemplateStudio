@@ -1,8 +1,7 @@
-import { IVSCodeObject } from "../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES
-} from "./../utils/constants";
+  EXTENSION_COMMANDS
+} from "../constants";
 
 const postMessageAsync = (command:string, paramsMessage:any, vscode: IVSCodeObject)=>{
   let promise = new Promise<any>((resolve) => {
@@ -20,7 +19,7 @@ const postMessageAsync = (command:string, paramsMessage:any, vscode: IVSCodeObje
 };
 
 const projectPathValidation = (paramsMessage:any, vscode: IVSCodeObject):Promise<any> => {
-  let promise:Promise<any> = postMessageAsync(EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION, paramsMessage,vscode);
+  let promise:Promise<any> = postMessageAsync(EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION, paramsMessage, vscode);
   return promise;
 }
 
