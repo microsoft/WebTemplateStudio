@@ -19,16 +19,16 @@ const errorMessageReservedName:string = "Project name is reserved";
 const errorMessageProjectStartWith$ = "Project start with $";
 const errorMessagePageNameExist = "The page exist";
 
-export const addRequiredValidate = (projectName:string) =>{
+export const addRequiredValidate = (name:string) =>{
   let validate:IValidation = {isValid:true, error:""};
-  let isEmpty = projectName=="";
+  let isEmpty = name === "";
   if (isEmpty) validate = {isValid:false, error:errorMessageRequired};
   return validate;
 }
 
 export const addExistingItemNameValidate = (pageTitle:string, selectedPages:Array<ISelected>) =>{
   let validate:IValidation = {isValid:true, error:""};
-  let existPage = selectedPages.filter(page => page.title==pageTitle).length > 1;
+  let existPage = selectedPages.filter(page => page.title.toLowerCase()==pageTitle.toLowerCase()).length > 1;
   if (existPage) validate = {isValid:false, error:errorMessagePageNameExist};
   return validate;
 }
@@ -52,10 +52,10 @@ export const addExistingProjectNameValidate = async (projectName:string, outputP
   return validate;
 }
 
-export const addReservedNameValidate = (projectName:string,
+export const addReservedNameValidate = (name:string,
   reservedNames:Array<string>) =>{
   let validate:IValidation = {isValid:true, error:""};
-  let isReservedName = reservedNames.filter(name => name.toLowerCase() === projectName.toLowerCase()).length>0;
+  let isReservedName = reservedNames.filter(nameReserve => nameReserve.toLowerCase() === name.toLowerCase()).length>0;
   if (isReservedName) validate = {isValid:false, error:errorMessageReservedName};
 
   return validate;
