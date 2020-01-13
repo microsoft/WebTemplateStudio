@@ -97,7 +97,7 @@ const ProjectNameAndOutput = (props: Props) => {
   },[outputPath]);
 
   React.useEffect(() => {
-    if (projectName==="" && outputPath!==""){
+    if (projectName==="" && !isDirtyProjectName && outputPath!==""){
       inferProjectName(outputPath,vscode).then(suggestedProjectName => {
         updateProjectName(suggestedProjectName, {isValid:true, error:""});
       });
