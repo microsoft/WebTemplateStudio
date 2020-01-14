@@ -30,6 +30,13 @@ h1 {
   color: var(--vscode-editorMarkerNavigationWarning-background);
 }
 
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
 .footerContainer {
   margin-top: 60px;
   float: right;
@@ -151,5 +158,21 @@ h1 {
 }
 
 .link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.closeIcon {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  padding: 1px;
+  margin-right: 2px;
+}
+
+.closeIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.closeIcon:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }

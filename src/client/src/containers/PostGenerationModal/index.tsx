@@ -5,6 +5,7 @@ import { RouteComponentProps, withRouter } from "react-router";
 import ReactMarkdown from "react-markdown";
 import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
 import { ReactComponent as ErrorRed } from "../../assets/errorred.svg";
+import { ReactComponent as Close } from "../../assets/cancel.svg";
 
 import asModal from "../../components/Modal";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
@@ -17,6 +18,7 @@ import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
+  KEY_EVENTS,
   ROUTES,
   WEB_TEMPLATE_STUDIO_LINKS
 } from "../../utils/constants";
@@ -105,7 +107,7 @@ const PostGenerationModal = ({
         }
       });
     }
-  };
+  };  
   const openProjectOrRestartWizardMessage = () => {
     if (isTemplatesFailed) {
       return formatMessage(messages.restartWizard);
@@ -116,6 +118,19 @@ const PostGenerationModal = ({
   const handleCreateAnotherProject = () => {
     resetWizard();
     history.push(ROUTES.NEW_PROJECT);
+  };
+
+  const handleClose = () => {
+    resetWizard();
+    history.push(ROUTES.NEW_PROJECT);
+  };  
+
+  const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
+      event.preventDefault();
+      event.stopPropagation();
+      handleClose();
+    }
   };
 
   const postGenMessage = () => {
@@ -280,8 +295,16 @@ const PostGenerationModal = ({
 
   return (
     <div>
-      <div className={styles.title}>
-        {formatMessage(messages.creatingYourProject)}
+      <div className={styles.headerContainer}>
+        <div className={styles.title}>
+          {formatMessage(messages.creatingYourProject)}
+        </div>      
+        <Close
+            tabIndex={0}
+            className={styles.closeIcon}
+            onClick={handleClose}
+            onKeyDown={closeKeyDownHandler}
+          />
       </div>
 
       <div className={styles.section}>
