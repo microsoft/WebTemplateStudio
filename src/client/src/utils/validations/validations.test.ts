@@ -1,5 +1,6 @@
 
-import { addRequiredValidate, IValidation, addExistingItemNameValidate, addExistingProjectNameValidate, addReservedNameValidate } from "./validations";
+import { addRequiredValidate, IValidation, addExistingItemNameValidate, 
+  addExistingProjectNameValidate, addReservedNameValidate, addRegexValidate } from "./validations";
 import { ISelected } from "../../types/selected";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
@@ -33,6 +34,25 @@ describe("validations", () => {
       expect(validate.isValid).toBeTruthy();
     });
   });
+
+  describe("regex", () => {
+    it("valid",()=>{
+      const validate:IValidation = addRegexValidate("$project1",[{
+        "name" : "projectStartWith$",
+        "pattern" : "^[^\\$]"
+      }])
+      expect(validate.isValid).toBeFalsy();
+    });
+
+    it("not valid",()=>{
+      const validate:IValidation = addRegexValidate("project1",[{
+        "name" : "projectStartWith$",
+        "pattern" : "^[^\\$]"
+      }])
+      expect(validate.isValid).toBeTruthy();
+    });
+  });
+  
 });
 
 describe("validations project", () => {

@@ -61,13 +61,13 @@ export const addReservedNameValidate = (name:string,
   return validate;
 }
 
-export const addRegexValidate = (projectName:string,
+export const addRegexValidate = (name:string,
   regexs:Array<IRegex>)=>{
   let validate:IValidation = {isValid:true, error:""};
   const getInvalidRegex = ()=>{
     let regexsFiltered:Array<IRegex> = regexs.filter(regex =>{
       let regObj = new RegExp(regex.pattern.toString());
-      let isValid = regObj.test(projectName);
+      let isValid = regObj.test(name);
       return !isValid;
     })
     return regexsFiltered;
