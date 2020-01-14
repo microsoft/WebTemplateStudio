@@ -20,7 +20,7 @@ describe("wizardSelectionSelector", () => {
         window.addEventListener = jest.fn((event, cb) => {
           callbackExtension = cb;
         });
-  
+
         mockCallbackProjectPathValidation = {
           data:{
             command:EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
@@ -31,7 +31,7 @@ describe("wizardSelectionSelector", () => {
             }
           }
         };
-  
+
         const postMessage= (message: any) =>{
           callbackExtension(mockCallbackProjectPathValidation);
         }
