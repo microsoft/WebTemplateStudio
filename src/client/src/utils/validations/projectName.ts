@@ -18,6 +18,8 @@ export const validateProjectName = async (projectName:string, outputPath:string,
   if (validations.regexs.length>0)
     listValidations.push(addRegexValidate(projectName, validations.regexs));
 
+
+  
   const invalids = listValidations.filter(validate=>validate.isValid===false);
   if (invalids.length>0) validate = invalids[0];
 

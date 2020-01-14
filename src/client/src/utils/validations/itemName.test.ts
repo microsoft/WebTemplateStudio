@@ -2,7 +2,7 @@ jest.mock('./validations',()=>{return {
   addRequiredValidate:jest.fn(() => {
     return {isValid:true, error:""};
   }),
-  addExistingProjectNameValidate:jest.fn(() => {
+  addExistingItemNameValidate:jest.fn(() => {
     return {isValid:true, error:""};
   }),
   addRegexValidate:jest.fn(() => {
@@ -12,25 +12,26 @@ jest.mock('./validations',()=>{return {
     return {isValid:true, error:""};
   })
 }});
-import { validateProjectName } from "./projectName";
-import { IprojectNameValidationConfig } from "../../reducers/wizardSelectionReducers/setValidations";
+import { validateItemName } from "./itemName";
+import { IitemNameValidationConfig } from "../../reducers/wizardSelectionReducers/setValidations";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { addRequiredValidate, addExistingProjectNameValidate, addRegexValidate,
+import { addRequiredValidate, addExistingItemNameValidate, addRegexValidate,
   addReservedNameValidate } from './validations';
 
 describe("validate", () => {
   it("config validate",(resolve)=>{
     const postMessage = ()=>{};
     let mockVsCode:IVSCodeObject = { postMessage };
-    let validations:IprojectNameValidationConfig = {
+    let validations:IitemNameValidationConfig = {
       regexs:[],
       reservedNames:[],
       validateEmptyNames:false,
-      validateExistingNames:false
+      validateExistingNames:false,
+      validateDefaultNames:false
     }
-    validateProjectName("dfgfd","sdfsdf",validations,mockVsCode).then(()=>{
+    validateItemName("dfgfd",validations,[]).then(()=>{
       expect(addRequiredValidate).toHaveBeenCalledTimes(0);
-      expect(addExistingProjectNameValidate).toHaveBeenCalledTimes(0);
+      expect(addExistingItemNameValidate).toHaveBeenCalledTimes(0);
       expect(addRegexValidate).toHaveBeenCalledTimes(0);
       expect(addReservedNameValidate).toHaveBeenCalledTimes(0);
       resolve();
@@ -39,18 +40,19 @@ describe("validate", () => {
   it("config no validate",(resolve)=>{
     const postMessage = ()=>{};
     let mockVsCode:IVSCodeObject = { postMessage };
-    let validations:IprojectNameValidationConfig = {
+    let validations:IitemNameValidationConfig = {
       regexs:[{
         "name" : "projectStartWith$",
         "pattern" : "^[^\\$]"
       }],
       reservedNames:["111"],
       validateEmptyNames:true,
-      validateExistingNames:true
+      validateExistingNames:true,
+      validateDefaultNames:true
     }
-    validateProjectName("dfgfd","sdfsdf",validations,mockVsCode).then(()=>{
+    validateItemName("dfgfd",validations,[]).then(()=>{
       expect(addRequiredValidate).toHaveBeenCalledTimes(1);
-      expect(addExistingProjectNameValidate).toHaveBeenCalledTimes(1);
+      expect(addExistingItemNameValidate).toHaveBeenCalledTimes(1);
       expect(addRegexValidate).toHaveBeenCalledTimes(1);
       expect(addReservedNameValidate).toHaveBeenCalledTimes(1);
       resolve();
