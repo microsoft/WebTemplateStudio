@@ -142,7 +142,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       defaultName,
       isValidTitle: true,
       licenses,
-      author
+      author,
+      ref:React.createRef()
     };
     return cardInfo;
   }
@@ -161,6 +162,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
         currentCards.push(card);
         selectOptions(currentCards);
         this.setState({selectedCardIndices});
+        card.ref.current.focus();
       });
     }else{
       this.setState({selectedCardIndices});

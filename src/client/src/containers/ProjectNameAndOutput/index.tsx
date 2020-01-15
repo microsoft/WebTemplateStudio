@@ -33,7 +33,6 @@ import {
 } from "react-intl";
 
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-//import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
 import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
@@ -84,7 +83,6 @@ const ProjectNameAndOutput = (props: Props) => {
     vscode,
     outputPath,
     projectPathValidation,
-    projectNameValidation,
     projectName,
     validations,
     updateProjectName,

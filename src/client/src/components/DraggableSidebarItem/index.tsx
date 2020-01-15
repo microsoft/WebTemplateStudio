@@ -165,6 +165,7 @@ const DraggableSidebarItem = ({
                       handleInputChange(validValue, idx - 1);
                     }
                   }}
+                  ref={page.ref}
                 />
               ) : (
                 <input

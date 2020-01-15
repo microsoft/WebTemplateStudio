@@ -12,4 +12,5 @@ export interface ISelected {
   author?: string;
   originalTitle?: string;
   version?: string;
+  ref?: any;
 }
