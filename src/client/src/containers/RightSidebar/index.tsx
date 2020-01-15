@@ -2,14 +2,13 @@ import classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
-import { withRouter, Link } from "react-router-dom";
-import { injectIntl, InjectedIntlProps, defineMessages } from "react-intl";
+import { withRouter } from "react-router-dom";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
-import _ from "lodash";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
-import ServicesSidebarItem from "../../components/ServicesSidebarItem";
+import ServicesList from "../ServicesList";
 import About from "../About";
 import SortablePageList from "../SortablePageList";
 
@@ -22,7 +21,7 @@ import {
 } from "../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 
-import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
+import { getServicesSelector, hasServicesSelector } from "../../selectors/servicesSelector";
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
@@ -56,6 +55,7 @@ import {
   getOutputPath,
   getProjectName
 } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { ServiceState } from "../../reducers/wizardSelectionReducers/services";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -75,7 +75,8 @@ interface IRightSidebarProps {
   pageCount: IPageCount;
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
-  services: any;
+  services: ServiceState;
+  hasServices: boolean;
   vscode: IVSCodeObject;
   isValidNameAndProjectPath: boolean;
   isRoutesVisited: IVisitedPages;
@@ -91,24 +92,6 @@ type Props = IRightSidebarProps &
   RouteComponentProps &
   IDispatchProps &
   InjectedIntlProps;
-
-const hasAzureServices = (services: any) => {
-  for (const key in services) {
-    if (!_.isEmpty(services[key].selection)) return true;
-  }
-  return false;
-};
-
-const sideBarMessages = defineMessages({
-  openSideBar: {
-    id: "rightSidebar.open",
-    defaultMessage: "View project details menu"
-  },
-  closeSideBar: {
-    id: "rightSidebar.close",
-    defaultMessage: "Close project details menu"
-  }
-});
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {
@@ -131,7 +114,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       return {
         isSidebarOpen:
           nextProps.selection.pages.length > 0 ||
-          hasAzureServices(nextProps.services) ||
+          nextProps.hasServices ||
           prevState.isSidebarOpen
       };
     }
@@ -277,8 +260,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public render() {
     const {
       showFrameworks,
-      showPages,
-      showServices
+      showPages
     } = this.props.isRoutesVisited;
     const { pathname } = this.props.location;
     const {
@@ -287,7 +269,8 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       isValidNameAndProjectPath,
       openViewLicensesModal,
       outputPath,
-      projectName
+      projectName,
+      hasServices
     } = this.props;
     const { formatMessage } = intl;
     const { frontendOptions, backendOptions } = contentOptions;
@@ -307,7 +290,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               tabIndex={0}
               className={styles.hamburgerButton}
               onClick={this.sidebarToggleClickHandler}
-              aria-label={intl.formatMessage(sideBarMessages.openSideBar)}
+              aria-label={intl.formatMessage(messages.openSideBar)}
             >
               <div className={styles.hamburgerLine} />
               <div className={styles.hamburgerLine} />
@@ -330,7 +313,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   className={styles.icon}
                   onClick={this.sidebarToggleClickHandler}
                   onKeyDown={this.cancelKeyDownHandler}
-                  aria-label={intl.formatMessage(sideBarMessages.closeSideBar)}
+                  aria-label={intl.formatMessage(messages.closeSideBar)}
                 />
               )}
 
@@ -385,27 +368,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   />
                 )}
               </div>
-              {showServices && (
-                <div className={styles.sidebarItem}>
-                  <div className={styles.dropdownTitle}>
-                    {formatMessage(messages.services)}
-                  </div>
-                  {pathname === ROUTES.REVIEW_AND_GENERATE &&
-                    !hasAzureServices(this.props.services) && (
-                      <Link
-                        className={classnames(
-                          buttonStyles.buttonDark,
-                          styles.backToAzureBox
-                        )}
-                        to={ROUTES.AZURE_LOGIN}
-                        tabIndex={0}
-                      >
-                        {formatMessage(messages.backToAzurePage)}
-                      </Link>
-                    )}
-                  <ServicesSidebarItem services={this.props.services} />
-                </div>
-              )}
+              {hasServices && <ServicesList />}
               <div className={styles.container}>
                 {pathname !== ROUTES.REVIEW_AND_GENERATE && (
                   <div className={styles.buttonContainer}>
@@ -467,6 +430,7 @@ const mapStateToProps = (state: AppState): IRightSidebarProps => ({
   ),
   vscode: getVSCodeApiSelector(state),
   services: getServicesSelector(state),
+  hasServices : hasServicesSelector(state),
   isRoutesVisited: getIsVisitedRoutesSelector(state),
   isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
   contentOptions: state.wizardContent
