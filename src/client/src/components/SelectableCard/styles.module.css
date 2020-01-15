@@ -84,10 +84,17 @@
   min-height: 30px;
 }
 
+.pageCounter {
+  display: flex;
+  justify-content: flex-end;
+  float: right;
+}
+
 .pageButtons {
   display: flex;
   justify-content: flex-end;
   float: right;
+  width: 100%;
 }
 
 .showCount {
