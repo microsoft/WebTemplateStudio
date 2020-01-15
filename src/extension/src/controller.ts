@@ -164,9 +164,7 @@ export class Controller {
         context,
         syncObject.templatesVersion
       );
-      Controller.Telemetry.trackExtensionStartUpTime(
-        TelemetryEventName.ExtensionLaunch
-      );
+      Controller.Telemetry.trackExtensionStartUpTime();
     }
   }
 

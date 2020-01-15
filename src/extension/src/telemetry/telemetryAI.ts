@@ -31,8 +31,12 @@ export class TelemetryAI extends WizardServant{
         return reporter;
     }
 
-    public trackExtensionStartUpTime(eventName : string = TelemetryEventName.ExtensionLaunch){
-        this.trackTimeDuration(eventName, this.extensionStartTime, Date.now());
+    public trackExtensionStartUpTime(){
+        this.trackTimeDuration(TelemetryEventName.ExtensionLaunch, this.extensionStartTime, Date.now());
+    }
+
+    public trackWizardTotalSessionTimeToGenerate(){
+        this.trackTimeDuration(TelemetryEventName.WizardSession, this.wizardSessionStartTime, Date.now());
     }
 
     /*
@@ -43,10 +47,6 @@ export class TelemetryAI extends WizardServant{
         this.trackTimeDuration(TelemetryEventName.PageChange, this.pageStartTime, Date.now(), {"Page-Name": payload.pageName});
         this.pageStartTime = Date.now();
         return {payload: true};
-    }
-
-    public trackWizardTotalSessionTimeToGenerate(eventName : string = TelemetryEventName.WizardSession){
-        this.trackTimeDuration(eventName, this.wizardSessionStartTime, Date.now());
     }
 
     public trackCustomEventTime(customEventName: string, startTime: number, endTime: number = Date.now(), customEventProperties?: { [key: string]: string | undefined }){
