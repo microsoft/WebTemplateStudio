@@ -103,11 +103,11 @@ const DraggableSidebarItem = ({
 
  
   const [validValue, setValidValue] =
-    React.useState<string>(page.title);
+    React.useState<string>(page ? page.title:"");
 
   React.useEffect(() => {
-    if (page.isValidTitle) setValidValue(page.title);
-  },[page.title]);
+    if (page && page.isValidTitle) setValidValue(page.title);
+  },[page ? page.title:""]);
 
   return (
     <div>
@@ -161,7 +161,7 @@ const DraggableSidebarItem = ({
                     }
                   }}
                   onBlur={e => {
-                    if (handleInputChange && idx && page.isValidTitle===false) {
+                    if (handleInputChange && idx && page && page.isValidTitle===false) {
                       handleInputChange(validValue, idx - 1);
                     }
                   }}
@@ -180,7 +180,7 @@ const DraggableSidebarItem = ({
               )}
             </div>
           </div>
-          {!page.isValidTitle && (
+          {page && page.isValidTitle===false && (
             <div
               className={classnames({
                 [styles.errorTextContainer]:
