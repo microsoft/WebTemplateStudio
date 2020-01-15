@@ -16,7 +16,7 @@ export interface ISelectionInformation {
   previousFormData: ISelectedAppService | null;
 }
 
-const getServicesSelector = (state: AppState): ServiceState =>
+const getServices = (state: AppState): ServiceState =>
   state.selection.services;
 
 const isAppServiceSelected = (services: ServiceState): boolean => {
@@ -24,7 +24,7 @@ const isAppServiceSelected = (services: ServiceState): boolean => {
 };
 
 const isAppServiceSelectedSelector = createSelector(
-  getServicesSelector,
+  getServices,
   isAppServiceSelected
 );
 
@@ -40,7 +40,7 @@ const getAppServiceOptions = (
 };
 
 const getAppServiceSelectionSelector = createSelector(
-  getServicesSelector,
+  getServices,
   isAppServiceSelectedSelector,
   getAppServiceOptions
 );

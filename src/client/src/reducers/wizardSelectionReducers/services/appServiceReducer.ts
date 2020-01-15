@@ -37,13 +37,13 @@ interface IServiceContent {
   serviceType: FormattedMessage.MessageDescriptor;
 }
 
-export interface IAppServiceSelection {
+export interface IAppService {
   siteNameAvailability: IAvailability;
   selection: ISelectedAppService | null;
   wizardContent: IServiceContent;
 }
 
-const initialState: IAppServiceSelection = {
+const initialState: IAppService = {
   siteNameAvailability: {
     isSiteNameAvailable: false,
     message: "App name unavailable"
@@ -55,7 +55,7 @@ const initialState: IAppServiceSelection = {
 };
 
 const appService = (
-  state: IAppServiceSelection = initialState,
+  state: IAppService = initialState,
   action: AzureActionType | WizardInfoType
 ) => {
   switch (action.type) {

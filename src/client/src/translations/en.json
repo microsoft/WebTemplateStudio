@@ -174,7 +174,6 @@
   "redirectModal.privacyStatement": "Privacy Statement",
   "redirectModal.thirdPartyWebsite": "You will be taken to a third-party website which is a non-Microsoft service.",
   "redirectModal.toContinue": "To continue, press ok.",
-  "rightSidebar.backToAzurePage": "You haven’t added any hosting or database services. Click here to add services.",
   "rightSidebar.backendFramework": "Back-end Framework",
   "rightSidebar.close": "Close project details menu",
   "rightSidebar.frontendFramework": "Front-end Framework",
