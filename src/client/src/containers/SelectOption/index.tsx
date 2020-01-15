@@ -355,7 +355,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 disabled={unselectable}
                 clickCount={this.getCardCount(internalName)}
                 addPage={(cardNumber: number) => this.addPage(cardNumber)}
-                removePage={(cardNumber: number) => this.removePage(cardNumber)}
                 showLink={!isAddPagesModalOpen}
               />
             );
