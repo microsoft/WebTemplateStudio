@@ -12,7 +12,8 @@ export const inferProjectName = async (outputPath:string, vscode: IVSCodeObject)
   }else{
     for (var i=1; i<100; i++){
       let sugeredProjectName = baseProjectName + i.toString();
-      let validate:IValidation = await addExistingProjectNameValidate(projectName, outputPath, vscode);
+      let validate:IValidation = await addExistingProjectNameValidate(sugeredProjectName, outputPath, vscode);
+
       if (validate.isValid){
         projectName=sugeredProjectName;
         break;
