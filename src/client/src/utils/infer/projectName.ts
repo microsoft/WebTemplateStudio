@@ -1,7 +1,6 @@
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { addExistingProjectNameValidate, IValidation} from '../validations/validations';
 
-
 export const inferProjectName = async (outputPath:string, vscode: IVSCodeObject) => {
   let projectName:string = "";
   let validate:IValidation;
