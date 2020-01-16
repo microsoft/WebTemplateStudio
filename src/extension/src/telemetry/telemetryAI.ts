@@ -11,6 +11,7 @@ export class TelemetryAI extends WizardServant{
     clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
         [ExtensionCommand.TrackPageSwitch, this.trackWizardPageTimeToNext],
         [ExtensionCommand.TrackCreateNewProject, this.trackCreateNewProject],
+        [ExtensionCommand.TrackOpenAddPagesModal, this.trackOpenAddPagesModal],
     ]);
 
     private static telemetryReporter: ITelemetryReporter;
@@ -49,6 +50,11 @@ export class TelemetryAI extends WizardServant{
     public async trackCreateNewProject(payload: any): Promise<IPayloadResponse>{        
         this.wizardSessionStartTime = Date.now();
         this.trackCustomEvent(TelemetryEventName.CreateNewProject, {"Entry-point": payload.entryPoint});
+        return {payload: true};
+    }
+
+    public async trackOpenAddPagesModal(): Promise<IPayloadResponse>{ 
+        this.trackCustomEvent(TelemetryEventName.TrackOpenAddPagesModal);
         return {payload: true};
     }
 

@@ -344,6 +344,7 @@ export enum ExtensionCommand {
   GetPages = "get-pages",
   TrackPageSwitch = "track-page-switch",
   TrackCreateNewProject = "track-create-new-project",
+  TrackOpenAddPagesModal = "track-open-add-pages-modal",
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
@@ -384,7 +385,8 @@ export enum TelemetryEventName {
   ConnectionStringReplace = "Connection-String-Replaced",
   PerformLogin = "Perform-Login",
   PerformLogout = "Perform-Logout",
-  GetUserLoginStatus = "Get-User-Login-Status"
+  GetUserLoginStatus = "Get-User-Login-Status",
+  TrackOpenAddPagesModal = "Open-Add-Pages-Modal",
 }
 
 export namespace DialogResponses {
