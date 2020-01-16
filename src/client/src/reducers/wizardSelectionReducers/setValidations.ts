@@ -1,5 +1,4 @@
 import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
-import { IValidation } from "./updateOutputPath";
 import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 
 export interface IRegex {
@@ -30,7 +29,7 @@ export interface IValidations {
 const initialState = {
   itemNameValidationConfig: {
     "regexs" : [{
-      "name" : "projectStartWith$",
+      "name" : "nameStartWith$",
       "pattern" : "^[^\\$]"
     }],
     "reservedNames" : ["reserve1"],
@@ -40,7 +39,7 @@ const initialState = {
   },
   projectNameValidationConfig:{
     "regexs" : [{
-      "name" : "projectStartWith$",
+      "name" : "nameStartWith$",
       "pattern" : "^[^\\$]"
     }],
     "reservedNames" : ["reserve1"],

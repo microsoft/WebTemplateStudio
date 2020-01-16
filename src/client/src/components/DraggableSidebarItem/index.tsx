@@ -180,7 +180,7 @@ const DraggableSidebarItem = ({
               )}
             </div>
           </div>
-          {page && page.isValidTitle===false && (
+          {page && page.isValidTitle===false && page.error && (
             <div
               className={classnames({
                 [styles.errorTextContainer]:
@@ -189,7 +189,7 @@ const DraggableSidebarItem = ({
                 [styles.largeIndentContainer]: false
               })}
             >
-              {page.error}
+              {intl.formatMessage(page.error)}
             </div>
           )}
 

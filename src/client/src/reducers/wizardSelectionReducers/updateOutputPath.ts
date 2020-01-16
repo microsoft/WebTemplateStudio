@@ -1,21 +1,7 @@
 import { FormattedMessage } from "react-intl";
 import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
 import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
-
-/* State Shape
-{
-    outputPath: string,
-    validation: {
-      isValid: false,
-      error: string
-    }
-}
-*/
-
-export interface IValidation {
-  isValid: boolean;
-  error: string | FormattedMessage.MessageDescriptor;
-}
+import {IValidation} from "../../utils/validations/validations/validations";
 
 export interface IOutputPath {
   outputPath: string;

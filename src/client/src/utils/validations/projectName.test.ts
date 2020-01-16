@@ -16,7 +16,7 @@ import { validateProjectName } from "./projectName";
 import { IprojectNameValidationConfig } from "../../reducers/wizardSelectionReducers/setValidations";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { addRequiredValidate, addExistingProjectNameValidate, addRegexValidate,
-  addReservedNameValidate } from './validations';
+  addReservedNameValidate } from './validations/validations';
 
 describe("validate", () => {
   it("config validate",(resolve)=>{
@@ -41,7 +41,7 @@ describe("validate", () => {
     let mockVsCode:IVSCodeObject = { postMessage };
     let validations:IprojectNameValidationConfig = {
       regexs:[{
-        "name" : "projectStartWith$",
+        "name" : "nameStartWith$",
         "pattern" : "^[^\\$]"
       }],
       reservedNames:["111"],

@@ -16,7 +16,7 @@ import { validateItemName } from "./itemName";
 import { IitemNameValidationConfig } from "../../reducers/wizardSelectionReducers/setValidations";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { addRequiredValidate, addExistingItemNameValidate, addRegexValidate,
-  addReservedNameValidate } from './validations';
+  addReservedNameValidate } from './validations/validations';
 
 describe("validate", () => {
   it("config validate",(resolve)=>{
@@ -42,7 +42,7 @@ describe("validate", () => {
     let mockVsCode:IVSCodeObject = { postMessage };
     let validations:IitemNameValidationConfig = {
       regexs:[{
-        "name" : "projectStartWith$",
+        "name" : "nameStartWith$",
         "pattern" : "^[^\\$]"
       }],
       reservedNames:["111"],

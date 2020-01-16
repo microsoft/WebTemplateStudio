@@ -5,7 +5,7 @@ import { ISelected } from "../../types/selected";
 import getSvgUrl from "../../utils/getSvgUrl";
 import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { defineMessages } from "react-intl";
-import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
+import { IValidation } from "../../utils/validations/validations/validations";
 import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";

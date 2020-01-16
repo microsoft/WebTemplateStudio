@@ -1,5 +1,6 @@
 import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
-import { IValidation } from "./updateOutputPath";
+import { IValidation } from "../../utils/validations/validations/validations";
+import { validationMessages } from "../../utils/validations/validations/messages";
 import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 
 /* State Shape
@@ -21,7 +22,7 @@ const initialState = {
   projectName: "",
   validation: {
     isValid: false,
-    error: ""
+    error: validationMessages.default
   }
 };
 

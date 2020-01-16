@@ -38,9 +38,10 @@ import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 import { validateProjectName} from "../../utils/validations/projectName";
-import { IValidation} from "../../utils/validations/validations";
+import { IValidation} from "../../utils/validations/validations/validations";
 import { inferProjectName} from "../../utils/infer/projectName";
 import { setProjectPathValidation } from "../../actions/wizardSelectionActions/setProjectPathValidation";
+import { validationMessages } from '../../utils/validations/validations/messages';
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -76,7 +77,7 @@ const messages = defineMessages({
 
 const ProjectNameAndOutput = (props: Props) => {
   const [stateValidationProjectName, setStateValidationProjectName] =
-    React.useState<IValidation>({isValid:true, error:""});
+    React.useState<IValidation>({isValid:true, error:validationMessages.default});
   const [isDirtyProjectName, setDirtyProjectName] = React.useState(false);
 
   const {
@@ -87,7 +88,8 @@ const ProjectNameAndOutput = (props: Props) => {
     validations,
     updateProjectName,
     updateOutputPath,
-    setProjectPathValidation
+    setProjectPathValidation,
+    intl
   } = props;
 
   React.useEffect(() => {
@@ -158,7 +160,7 @@ const ProjectNameAndOutput = (props: Props) => {
 
         {!stateValidationProjectName.isValid && isDirtyProjectName && (
           <div className={styles.errorMessage}>
-            {stateValidationProjectName.error}
+            {props.intl.formatMessage(stateValidationProjectName.error) }
           </div>
         )}
       </div>

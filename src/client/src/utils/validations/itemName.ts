@@ -1,5 +1,6 @@
 import { IitemNameValidationConfig } from "../../reducers/wizardSelectionReducers/setValidations";
-import { addExistingItemNameValidate, addRegexValidate, addRequiredValidate, addReservedNameValidate, IValidation} from './validations';
+import { addExistingItemNameValidate, addRegexValidate, addRequiredValidate, addReservedNameValidate, IValidation} from './validations/validations';
+import { validationMessages } from './validations/messages';
 import { ISelected } from "../../types/selected";
 
 export const validateItemName = async (itemName:string, 
@@ -7,7 +8,7 @@ export const validateItemName = async (itemName:string,
   selectedPages: Array<ISelected>) => {
 
   let listValidations:Array<IValidation>=[];
-  let validate:IValidation = {isValid:true,error:""};
+  let validate:IValidation = {isValid:true,error:validationMessages.default};
 
   if (validations.validateEmptyNames)
     listValidations.push(addRequiredValidate(itemName));
