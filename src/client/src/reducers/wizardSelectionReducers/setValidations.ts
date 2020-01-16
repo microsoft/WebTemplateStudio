@@ -28,10 +28,7 @@ export interface IValidations {
 
 const initialState = {
   itemNameValidationConfig: {
-    "regexs" : [{
-      "name" : "nameStartWith$",
-      "pattern" : "^[^\\$]"
-    },
+    "regexs" : [
     {
       "name":"nameStartLetter",
       "pattern" : "^[^A-Za-z]"
@@ -47,10 +44,6 @@ const initialState = {
   },
   projectNameValidationConfig:{
     "regexs" : [
-      {
-        "name":"nameStartWith$",
-        "pattern" : "^[$]"
-      },
       {
         "name":"nameStartLetter",
         "pattern" : "^[^A-Za-z]"
