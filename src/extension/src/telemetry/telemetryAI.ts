@@ -17,7 +17,7 @@ export class TelemetryAI extends WizardServant{
     private wizardSessionStartTime: number;
     private pageStartTime: number;
 
-    constructor(private vscodeContext: vscode.ExtensionContext, private extensionStartTime: number){
+    constructor(private vscodeContext: vscode.ExtensionContext){
         super();
         TelemetryAI.telemetryReporter = this.createTelemetryReporter(vscodeContext);
         this.wizardSessionStartTime = Date.now();
@@ -30,10 +30,6 @@ export class TelemetryAI extends WizardServant{
         // adding to the array of disposables
         ctx.subscriptions.push(reporter);
         return reporter;
-    }
-
-    public trackExtensionStartUpTime(){
-        this.trackTimeDuration(TelemetryEventName.ExtensionLaunch, this.extensionStartTime, Date.now());
     }
 
     public trackWizardTotalSessionTimeToGenerate(){

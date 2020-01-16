@@ -368,7 +368,8 @@ export enum ExtensionModule {
 }
 
 export enum TelemetryEventName {
-  ExtensionLaunch = "Extension-Launch-Time",
+  ExtensionLaunch = "Extension-Launch",
+  ExtensionClosed = "Extension-closed",
   WizardSession = "Wizard-To-Generate-Session-Time",
   Subscriptions = "Acquire-Subscription-Names",
   SubscriptionData = "Acquire-Subscription-Data",

@@ -37,6 +37,7 @@ export class Controller {
   private DependencyChecker: DependencyChecker;
   private CoreTSModule: CoreTSModule;
   private Defaults: Defaults;
+  private SyncCompleted: boolean = false;
 
   /**
    *  Defines the WizardServant modules to which wizard client commands are routed
@@ -87,25 +88,25 @@ export class Controller {
    * @returns Singleton Controller type
    */
   public static getInstance(
-    context: vscode.ExtensionContext,
-    extensionStartTime: number
+    context: vscode.ExtensionContext
   ) {
     if (this._instance) {
       this._instance.showReactPanel();
     } else {
-      this._instance = new Controller(context, extensionStartTime);
+      this._instance = new Controller(context);
     }
     return this._instance;
   }
 
   private constructor(
-    private context: vscode.ExtensionContext,
-    private extensionStartTime: number
+    private context: vscode.ExtensionContext
   ) {
     Controller.Telemetry = new TelemetryAI(
-      this.context,
-      this.extensionStartTime
+      this.context
     );
+
+    Controller.Telemetry.trackCustomEvent(TelemetryEventName.ExtensionLaunch);
+
     this.vscodeUI = new VSCodeUI();
     this.Validator = new Validator();
     this.AzureService = new AzureServices();
@@ -152,6 +153,7 @@ export class Controller {
     );
 
     if (syncObject) {
+      this.SyncCompleted = true;
       Controller.reactPanelContext = ReactPanel.createOrShow(
         context.extensionPath,
         this.routingMessageReceieverDelegate
@@ -164,7 +166,6 @@ export class Controller {
         context,
         syncObject.templatesVersion
       );
-      Controller.Telemetry.trackExtensionStartUpTime();
       Controller.Telemetry.trackCreateNewProject({
         entryPoint: CONSTANTS.TELEMETRY.LAUNCH_WIZARD_STARTED_POINT
       });
@@ -217,6 +218,9 @@ export class Controller {
   }
 
   static dispose() {
+    Controller.Telemetry.trackCustomEvent(TelemetryEventName.ExtensionClosed, {
+      syncCompleted: this._instance?.SyncCompleted.toString()
+    });
     CoreTemplateStudio.DestroyInstance();
     this._instance = undefined;
   }
