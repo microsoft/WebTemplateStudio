@@ -159,6 +159,7 @@ const EXTENSION_COMMANDS = {
   SUBSCRIPTION_DATA_FUNCTIONS: "subscription-data-for-functions",
   SUBSCRIPTION_DATA_APP_SERVICE: "subscription-data-for-app-service",
   TRACK_PAGE_SWITCH: "track-page-switch",
+  TRACK_CREATE_NEW_PROJECT: "track-create-new-project",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
@@ -170,6 +171,11 @@ const EXTENSION_COMMANDS = {
   GET_FRAMEWORKS: "get-frameworks",
   GET_PAGES: "get-pages"
 };
+
+const TELEMETRY = {
+  CLOSE_GENERATION_MODAL_BUTTON: "Generate Modal, close button",
+  CREATE_NEW_PROJECT_BUTTON: "Generate Modal, create new project button"
+}
 
 export {
   PRODUCTION,
@@ -191,5 +197,6 @@ export {
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,
   BOOTSTRAP_LICENSE,
-  PAGEID
+  PAGEID,
+  TELEMETRY
 };

@@ -165,6 +165,9 @@ export class Controller {
         syncObject.templatesVersion
       );
       Controller.Telemetry.trackExtensionStartUpTime();
+      Controller.Telemetry.trackCreateNewProject({
+        entryPoint: CONSTANTS.TELEMETRY.LAUNCH_WIZARD_STARTED_POINT
+      });
     }
   }
 

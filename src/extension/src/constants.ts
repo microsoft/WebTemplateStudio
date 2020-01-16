@@ -313,6 +313,9 @@ export const CONSTANTS = {
     DEPLOYMENT_FILE_NAME: ".deployment",
     DEPLOYMENT_FILE: `[config] 
 SCM_DO_BUILD_DURING_DEPLOYMENT=true`
+  },
+  TELEMETRY: {
+    LAUNCH_WIZARD_STARTED_POINT: "Launch wizard"
   }
 };
 
@@ -340,6 +343,7 @@ export enum ExtensionCommand {
   GetFrameworks = "get-frameworks",
   GetPages = "get-pages",
   TrackPageSwitch = "track-page-switch",
+  TrackCreateNewProject = "track-create-new-project",
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
@@ -374,6 +378,7 @@ export enum TelemetryEventName {
   FunctionsDeploy = "Azure-Functions-Deployment",
   ResourceGroupDeploy = "Azure-Resource-Group-Deployment",
   PageChange = "Wizard-Page-Change",
+  CreateNewProject = "Create-New-Project",
   SyncEngine = "Sync-Engine",
   ConnectionStringReplace = "Connection-String-Replaced",
   PerformLogin = "Perform-Login",

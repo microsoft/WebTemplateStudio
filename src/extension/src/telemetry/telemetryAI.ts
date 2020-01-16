@@ -10,6 +10,7 @@ export type IActionContext = IActionContext;
 export class TelemetryAI extends WizardServant{
     clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
         [ExtensionCommand.TrackPageSwitch, this.trackWizardPageTimeToNext],
+        [ExtensionCommand.TrackCreateNewProject, this.trackCreateNewProject],
     ]);
 
     private static telemetryReporter: ITelemetryReporter;
@@ -43,14 +44,24 @@ export class TelemetryAI extends WizardServant{
     * @param pageToTrack is the name of the page the wizard is on before the user clicks the next button; this page name will be sent to Application Insights as property
     * 
     */
-    public async trackWizardPageTimeToNext(payload: any){
-        this.trackTimeDuration(TelemetryEventName.PageChange, this.pageStartTime, Date.now(), {"Page-Name": payload.pageName});
-        this.pageStartTime = Date.now();
+   public async trackWizardPageTimeToNext(payload: any): Promise<IPayloadResponse>{
+    this.trackTimeDuration(TelemetryEventName.PageChange, this.pageStartTime, Date.now(), {"Page-Name": payload.pageName});
+    this.pageStartTime = Date.now();
+    return {payload: true};
+}
+    
+    public async trackCreateNewProject(payload: any): Promise<IPayloadResponse>{        
+        this.wizardSessionStartTime = Date.now();
+        this.trackCustomEvent(TelemetryEventName.CreateNewProject, {"Entry-point": payload.entryPoint});
         return {payload: true};
     }
 
     public trackCustomEventTime(customEventName: string, startTime: number, endTime: number = Date.now(), customEventProperties?: { [key: string]: string | undefined }){
         this.trackTimeDuration(customEventName, startTime, endTime, customEventProperties);
+    }
+
+    public trackCustomEvent(customEventName: string, customEventProperties?: { [key: string]: string | undefined }){
+        TelemetryAI.telemetryReporter.sendTelemetryEvent(customEventName, customEventProperties);
     }
 
     private trackTimeDuration(eventName : string, startTime : number, endTime : number, properties?: { [key: string]: string | undefined }){
