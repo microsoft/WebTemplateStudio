@@ -31,6 +31,14 @@ const initialState = {
     "regexs" : [{
       "name" : "nameStartWith$",
       "pattern" : "^[^\\$]"
+    },
+    {
+      "name":"nameStartLetter",
+      "pattern" : "^[^A-Za-z]"
+    },
+    {
+      "name":"nameContainLettersNumbersDashes",
+      "pattern" : "[^A-Za-z0-9-_]"
     }],
     "reservedNames" : ["reserve1"],
     "validateEmptyNames": true,

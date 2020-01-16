@@ -58,8 +58,7 @@ export const addReservedNameValidate = (name:string,
   return validate;
 }
 
-export const addRegexValidate = (name:string,
-  regexs:Array<IRegex>):IValidation=>{
+export const addRegexValidate = (name:string, regexs:Array<IRegex>):IValidation=>{
   let validate:IValidation = {isValid:true, error:validationMessages.default};
   const getInvalidRegex = ()=>{
     let regexsFiltered:Array<IRegex> = regexs.filter(regex =>{
