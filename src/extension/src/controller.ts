@@ -218,9 +218,11 @@ export class Controller {
   }
 
   static dispose() {
-    Controller.Telemetry.trackCustomEvent(TelemetryEventName.ExtensionClosed, {
-      syncCompleted: this._instance?.SyncCompleted.toString()
-    });
+    if(this._instance){
+      Controller.Telemetry.trackCustomEvent(TelemetryEventName.ExtensionClosed, {
+        syncCompleted: this._instance.SyncCompleted.toString()
+      });
+    }
     CoreTemplateStudio.DestroyInstance();
     this._instance = undefined;
   }
