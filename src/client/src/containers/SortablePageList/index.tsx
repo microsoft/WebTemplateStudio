@@ -25,7 +25,7 @@ import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 
 import { PAGE_NAME_CHARACTER_LIMIT } from "../../utils/constants";
-import { validateItemName} from "../../utils/validations/itemName";
+import { validateItemName} from "../../utils/validations/itemName/itemName";
 import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 import {
   getValidations

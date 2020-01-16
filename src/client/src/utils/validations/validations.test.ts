@@ -1,12 +1,12 @@
 
 import { addRequiredValidate, IValidation, addExistingItemNameValidate, 
   addExistingProjectNameValidate, addReservedNameValidate, addRegexValidate } from "./validations";
-import { ISelected } from "../../../types/selected";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+import { ISelected } from "../../types/selected";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 import {
   EXTENSION_COMMANDS
-} from "../../constants";
+} from "../constants";
 import { SSL_OP_COOKIE_EXCHANGE } from "constants";
 
 describe("validations", () => {

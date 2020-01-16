@@ -1,7 +1,7 @@
-import { IitemNameValidationConfig } from "../../reducers/wizardSelectionReducers/setValidations";
-import { addExistingItemNameValidate, addRegexValidate, addRequiredValidate, addReservedNameValidate, IValidation} from './validations/validations';
-import { validationMessages } from './validations/messages';
-import { ISelected } from "../../types/selected";
+import { IitemNameValidationConfig } from "../../../reducers/wizardSelectionReducers/setValidations";
+import { addExistingItemNameValidate, addRegexValidate, addRequiredValidate, addReservedNameValidate, IValidation} from '../validations';
+import { validationMessages } from '../messages';
+import { ISelected } from "../../../types/selected";
 
 export const validateItemName = async (itemName:string, 
   validations:IitemNameValidationConfig,

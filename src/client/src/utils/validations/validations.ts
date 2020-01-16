@@ -1,14 +1,14 @@
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
-import { IRegex } from "../../../reducers/wizardSelectionReducers/setValidations";
-import { ISelected } from "../../../types/selected";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { IRegex } from "../../reducers/wizardSelectionReducers/setValidations";
+import { ISelected } from "../../types/selected";
 import { FormattedMessage } from "react-intl";
 import { validationMessages } from './messages';
 
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES
-} from "../../constants";
-import {projectPathValidation} from "../../extensionService/extensionService";
+} from "../constants";
+import {projectPathValidation} from "../extensionService/extensionService";
 
 export interface IValidation {
   isValid: boolean;
@@ -64,17 +64,20 @@ export const addRegexValidate = (name:string,
   const getInvalidRegex = ()=>{
     let regexsFiltered:Array<IRegex> = regexs.filter(regex =>{
       let regObj = new RegExp(regex.pattern.toString());
-      let isValid = regObj.test(name);
-      return !isValid;
+      let containInvalidCarachter = regObj.test(name);
+      return containInvalidCarachter === true;
     })
     return regexsFiltered;
   }
-  let hasInvalidRegex = getInvalidRegex().length>0;
+  if (name!=""){
+    let hasInvalidRegex = getInvalidRegex().length>0;
 
-  if (hasInvalidRegex){
-    let firstInvalidRegex = getInvalidRegex()[0];
-    if (firstInvalidRegex.name === "nameStartWith$")
-    validate = {isValid:false, error:validationMessages.nameStartWith$};
+    if (hasInvalidRegex){
+      let firstInvalidRegex = getInvalidRegex()[0];
+      if (firstInvalidRegex.name === "nameStartWith$") validate = {isValid:false, error:validationMessages.nameStartWith$};
+      if (firstInvalidRegex.name === "nameStartLetter") validate = {isValid:false, error:validationMessages.nameStartLetter};
+      if (firstInvalidRegex.name === "nameContainLettersNumbersDashes") validate = {isValid:false, error:validationMessages.nameContainLettersNumbersDashes};
+    }
   }
   return validate;
 }

@@ -13,10 +13,10 @@ jest.mock('./validations',()=>{return {
   })
 }});
 import { validateProjectName } from "./projectName";
-import { IprojectNameValidationConfig } from "../../reducers/wizardSelectionReducers/setValidations";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { IprojectNameValidationConfig } from "../../../reducers/wizardSelectionReducers/setValidations";
+import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { addRequiredValidate, addExistingProjectNameValidate, addRegexValidate,
-  addReservedNameValidate } from './validations/validations';
+  addReservedNameValidate } from '../validations';
 
 describe("validate", () => {
   it("config validate",(resolve)=>{

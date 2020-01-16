@@ -38,15 +38,30 @@ const initialState = {
     "validateDefaultNames": true
   },
   projectNameValidationConfig:{
-    "regexs" : [{
-      "name" : "nameStartWith$",
-      "pattern" : "^[^\\$]"
-    }],
+    "regexs" : [
+      {
+        "name":"nameStartWith$",
+        "pattern" : "^[$]"
+      },
+      {
+        "name":"nameStartLetter",
+        "pattern" : "^[^A-Za-z]"
+      },
+      {
+        "name":"nameContainLettersNumbersDashes",
+        "pattern" : "[^A-Za-z0-9-_]"
+      }
+    ],
     "reservedNames" : ["reserve1"],
     "validateEmptyNames": true,
     "validateExistingNames": true
   }
 };
+
+/*{
+  "name":"nameContainLettersNumbersDashes",
+  "pattern":"!^[A-Za-z][A-Za-z0-9_-]"
+}*/
 
 const validationsReducer = (
   state: IValidations = initialState,

@@ -51,16 +51,7 @@ export function validateName(title: string, type: string): any {
         error = messages.invalidRegex;
       }
     }
-  } else if (type === "function") {
-    if (!/^[A-Za-z0-9][A-Za-z0-9-]*[a-zA-Z0-9]$/.test(title)) {
-      isValid = false;
-      if (/^[-]$/.test(title[0])) {
-        error = messages.functionNameInvalidFirstLetter;
-      } else {
-        error = messages.invalidFunctionName;
-      }
-    }
-  }
+  } 
   return {
     isValid,
     error

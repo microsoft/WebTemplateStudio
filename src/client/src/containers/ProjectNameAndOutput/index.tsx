@@ -37,11 +37,11 @@ import { IValidations } from "../../reducers/wizardSelectionReducers/setValidati
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
-import { validateProjectName} from "../../utils/validations/projectName";
-import { IValidation} from "../../utils/validations/validations/validations";
+import { validateProjectName} from "../../utils/validations/projectName/projectName";
+import { IValidation} from "../../utils/validations/validations";
 import { inferProjectName} from "../../utils/infer/projectName";
 import { setProjectPathValidation } from "../../actions/wizardSelectionActions/setProjectPathValidation";
-import { validationMessages } from '../../utils/validations/validations/messages';
+import { validationMessages } from '../../utils/validations/messages';
 
 interface IStateProps {
   vscode: IVSCodeObject;

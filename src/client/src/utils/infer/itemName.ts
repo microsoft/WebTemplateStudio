@@ -10,6 +10,10 @@ export const inferItemName = async (basePageName:string,
   selectedPages: Array<ISelected>) => {
 
   let suggestedName:string="", index=1;
+  if (selectedPages.filter(page => page.title===basePageName).length===0){
+    suggestedName = basePageName;
+  }
+
   while (suggestedName===""){
     let exist = selectedPages.filter(page => page.title===basePageName + index.toString()).length>0;
     if (!exist){
@@ -18,5 +22,6 @@ export const inferItemName = async (basePageName:string,
       index++;
     }
   }
+
   return suggestedName;
 };

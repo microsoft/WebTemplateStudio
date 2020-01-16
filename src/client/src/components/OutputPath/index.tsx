@@ -4,7 +4,7 @@ import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { IValidation } from "../../utils/validations/validations/validations";
+import { IValidation } from "../../utils/validations/validations";
 import classNames from "classnames";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
