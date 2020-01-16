@@ -9,20 +9,7 @@ import classNames from "classnames";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
 
-const messages = defineMessages({
-  outputPath: {
-    id: "outputPath.outputPath",
-    defaultMessage: "Output Path"
-  },
-  ariaOutputPathLabel: {
-    id: "outputPath.ariaOutputPath",
-    defaultMessage: "Input for Output Path"
-  },
-  browseButtonLabel: {
-    id: "outputPath.browseButtonLabel",
-    defaultMessage: "Browse"
-  }
-});
+import messages from "./messages";
 
 interface IProps {
   handleChange: (e: React.SyntheticEvent<HTMLInputElement>) => any;

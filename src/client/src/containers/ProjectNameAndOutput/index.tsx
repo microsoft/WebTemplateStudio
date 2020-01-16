@@ -42,6 +42,7 @@ import { IValidation} from "../../utils/validations/validations";
 import { inferProjectName} from "../../utils/infer/projectName";
 import { setProjectPathValidation } from "../../actions/wizardSelectionActions/setProjectPathValidation";
 import { validationMessages } from '../../utils/validations/messages';
+import messages from "./messages";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -59,21 +60,6 @@ interface IDispatchProps {
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
-
-const messages = defineMessages({
-  projectNameTitle: {
-    id: "projectName.projectNameTitle",
-    defaultMessage: "Project Name"
-  },
-  ariaProjectNameLabel: {
-    id: "projectName.ariaProjectName",
-    defaultMessage: "Project Name Input"
-  },
-  outputPathTitle: {
-    id: "projectName.outputPathTitle",
-    defaultMessage: "Save To"
-  }
-});
 
 const ProjectNameAndOutput = (props: Props) => {
   const [stateValidationProjectName, setStateValidationProjectName] =

@@ -13,6 +13,7 @@ import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import messages from "./messages";
 
 interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
@@ -25,13 +26,6 @@ interface ISelectBackendProps {
 }
 
 type Props = IDispatchProps & ISelectBackendProps & InjectedIntlProps;
-
-const messages = defineMessages({
-  selectBackendFramework: {
-    id: "selectBackendFramework.selectBackendFramework",
-    defaultMessage: "Select a back-end framework"
-  }
-});
 
 class SelectBackEndFramework extends React.Component<Props> {
   /**

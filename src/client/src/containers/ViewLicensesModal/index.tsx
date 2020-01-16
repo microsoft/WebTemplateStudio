@@ -15,6 +15,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isViewLicensesModalOpenSelector } from "../../selectors/modalSelector";
 import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
 import { KEY_EVENTS } from "../../utils/constants";
+import messages from "./messages";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -25,17 +26,6 @@ interface IDispatchProps {
 }
 
 type Props = IStateProps & InjectedIntlProps & IDispatchProps;
-
-const messages = defineMessages({
-  closeModalLabel: {
-    id: "viewLicensesModal.closeModalLabel",
-    defaultMessage: "Close"
-  },
-  licenses: {
-    id: "licenses.licenses",
-    defaultMessage: "Licenses"
-  }
-});
 
 const ViewLicensesModal = ({ intl, closeModal }: Props) => {
   const { formatMessage } = intl;

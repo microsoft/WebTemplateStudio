@@ -23,6 +23,7 @@ import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import { removeCosmosSelectionAction } from "../../actions/azureActions/saveCosmosDbSettings";
+import messages from "./messages";
 
 interface IProps {
   selectionTitle: string;
@@ -43,13 +44,6 @@ interface IDispatchProps {
 }
 
 type Props = IDispatchProps & IProps & IStateProps & InjectedIntlProps;
-
-const messages = defineMessages({
-  duplicateFunctionName: {
-    id: "summarySection.duplicateName",
-    defaultMessage: "Function name has to be unique"
-  }
-});
 
 const SummarySection = ({
   selectionTitle,

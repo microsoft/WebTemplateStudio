@@ -20,20 +20,7 @@ import { IFunctionName } from "../../containers/AzureFunctionsSelection";
 
 import { AppState } from "../../reducers";
 
-const messages = defineMessages({
-  changeItemName: {
-    id: "draggableSidebarItem.changeItemName",
-    defaultMessage: "Change Item Name"
-  },
-  pageNameMaxLength: {
-    id: "draggableSidebarItem.pageNameMaxLength",
-    defaultMessage: "Page name must be under {maxLength} characters long. "
-  },
-  deleteItem: {
-    id: "draggableSidebarItem.deleteItem",
-    defaultMessage: "Delete item"
-  }
-});
+import messages from "./messages";
 
 /**
  * Takes in either a page (type ISelected) or text, but not both

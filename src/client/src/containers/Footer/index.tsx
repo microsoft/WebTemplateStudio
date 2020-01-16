@@ -61,7 +61,7 @@ import { IFunctionName } from "../AzureFunctionsSelection";
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
-
+import messages from "./messages";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -102,13 +102,6 @@ const pathsBack: any = {
   [ROUTES.AZURE_LOGIN]: ROUTES.SELECT_PAGES,
   [ROUTES.REVIEW_AND_GENERATE]: ROUTES.AZURE_LOGIN
 };
-
-const messages = defineMessages({
-  navAriaLabel: {
-    id: "footer.navAriaLabel",
-    defaultMessage: "Navigate between pages and create project"
-  }
-});
 
 class Footer extends React.Component<Props> {
   public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {

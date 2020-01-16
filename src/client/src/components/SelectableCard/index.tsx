@@ -20,7 +20,7 @@ import { getSvg } from "../../utils/getSvgUrl";
 import { ReactComponent as Plus } from "../../assets/plus.svg";
 
 import keyUpHandler from "../../utils/keyUpHandler";
-
+import messages from "./messages";
 const SelectableCard = ({
   iconPath,
   iconStyles,
@@ -73,20 +73,7 @@ const SelectableCard = ({
     }
   };
 
-  const messages = defineMessages({
-    learnMore: {
-      id: "selectableCard.details",
-      defaultMessage: "Learn more"
-    },
-    preview: {
-      id: "selectableCard.preview",
-      defaultMessage: "Preview"
-    },
-    pageCount: {
-      id: "selectableCard.pageCount",
-      defaultMessage: "{number} {page}"
-    }
-  });
+  
 
   return (
     <div

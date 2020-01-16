@@ -11,21 +11,6 @@ import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
 import { ROUTES } from "../../utils/constants";
 
-export const messages = defineMessages({
-  azureFunctionsOriginalTitle: {
-    id: "azureFunctions.originalTitle",
-    defaultMessage: "Azure Functions"
-  },
-  cosmosOriginalTitle: {
-    id: "cosmosDb.originalTitle",
-    defaultMessage: "CosmosDB"
-  },
-  appServiceOriginalTitle: {
-    id: "appService.originalTitle",
-    defaultMessage: "App Service"
-  }
-});
-
 const getWizardSelectionsSelector = (state: AppState): SelectionState =>
   state.selection;
 const getProjectName = (state: AppState): string =>
