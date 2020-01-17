@@ -88,13 +88,11 @@ const DraggableSidebarItem = ({
     idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
   };
 
- 
-  const [validValue, setValidValue] =
-    React.useState<string>(page ? page.title:"");
+  const [validValue, setValidValue] = React.useState<string>(page ? page.title:"");
 
-  React.useEffect(() => {
+  /*React.useEffect(() => {
     if (page && page.isValidTitle) setValidValue(page.title);
-  },[page ? page.title:""]);
+  },[page ? page.title:""]);*/
 
   return (
     <div>
@@ -151,6 +149,7 @@ const DraggableSidebarItem = ({
                     if (handleInputChange && idx && page && page.isValidTitle===false) {
                       handleInputChange(validValue, idx - 1);
                     }
+                    if (page.isValidTitle) setValidValue(page.title);
                   }}
                   ref={page.ref}
                 />
