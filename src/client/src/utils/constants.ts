@@ -161,6 +161,7 @@ const EXTENSION_COMMANDS = {
   TRACK_PAGE_SWITCH: "track-page-switch",
   TRACK_CREATE_NEW_PROJECT: "track-create-new-project",
   TRACK_OPEN_ADD_PAGES_MODAL: "track-open-add-pages-modal",
+  TRACK_PRESS_QUICKSTART: "track-press-quickstart",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",

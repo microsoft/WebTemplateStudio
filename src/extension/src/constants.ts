@@ -345,6 +345,7 @@ export enum ExtensionCommand {
   TrackPageSwitch = "track-page-switch",
   TrackCreateNewProject = "track-create-new-project",
   TrackOpenAddPagesModal = "track-open-add-pages-modal",
+  TrackPressQuickstart = "track-press-quickstart",
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
@@ -387,6 +388,7 @@ export enum TelemetryEventName {
   PerformLogout = "Perform-Logout",
   GetUserLoginStatus = "Get-User-Login-Status",
   TrackOpenAddPagesModal = "Open-Add-Pages-Modal",
+  TrackPressQuickstart = "Press-Quickstart",
 }
 
 export namespace DialogResponses {
