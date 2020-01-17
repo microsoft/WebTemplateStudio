@@ -28,32 +28,15 @@ export interface IValidations {
 
 const initialState = {
   itemNameValidationConfig: {
-    "regexs" : [
-    {
-      "name":"nameStartLetter",
-      "pattern" : "^[^A-Za-z]"
-    },
-    {
-      "name":"nameContainLettersNumbersDashes",
-      "pattern" : "[^A-Za-z0-9-_]"
-    }],
-    "reservedNames" : ["reserve1"],
+    "regexs" : [],
+    "reservedNames" : [],
     "validateEmptyNames": true,
     "validateExistingNames": true,
     "validateDefaultNames": true
   },
   projectNameValidationConfig:{
-    "regexs" : [
-      {
-        "name":"nameStartLetter",
-        "pattern" : "^[^A-Za-z]"
-      },
-      {
-        "name":"nameContainLettersNumbersDashes",
-        "pattern" : "[^A-Za-z0-9-_]"
-      }
-    ],
-    "reservedNames" : ["reserve1"],
+    "regexs" : [],
+    "reservedNames" : [],
     "validateEmptyNames": true,
     "validateExistingNames": true
   }
