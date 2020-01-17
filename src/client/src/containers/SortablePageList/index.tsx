@@ -18,8 +18,6 @@ import { ReactComponent as HideIcon } from "../../assets/i-hide.svg";
 import { ReactComponent as ResetIcon } from "../../assets/i-reset.svg";
 import { ReactComponent as Plus } from "../../assets/plus.svg";
 
-import { validateName } from "../../utils/validateName";
-
 import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";

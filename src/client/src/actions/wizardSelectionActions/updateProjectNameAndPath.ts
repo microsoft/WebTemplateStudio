@@ -1,5 +1,4 @@
 import { WIZARD_SELECTION_TYPEKEYS } from "./typeKeys";
-import { validateName } from "../../utils/validateName";
 import { IProjectName } from "../../reducers/wizardSelectionReducers/updateProjectName";
 
 export interface IUpdateProjectNameActionType {

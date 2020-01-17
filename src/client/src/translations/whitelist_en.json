@@ -93,8 +93,6 @@
   "instructionHeading.launchYourProject",
   "context.almostDone",
   "context.quickStart",
-  "rightSidebar.open",
-  "rightSidebar.close",
   "rightSidebar.yourProjectDetails",
   "rightSidebar.projectName",
   "rightSidebar.location",
@@ -102,6 +100,8 @@
   "rightSidebar.frontendFramework",
   "rightSidebar.backendFramework",
   "about.reportAnIssueLabel",
+  "rightSidebar.open",
+  "rightSidebar.close",
   "selectBackendFramework.selectBackendFramework",
   "selectFrontendFramework.selectFrontendFramework",
   "pages.limitedPagesMessage",
@@ -155,11 +155,5 @@
   "constants.emptyField",
   "ariaLabels.pageNavigation",
   "ariaLabels.currentPage",
-  "ariaLabels.disabledPage",
-  "pageNameError.duplicateName",
-  "pageNameError.emptyName",
-  "pageNameError.invalidRegex",
-  "projectNameError.invalidRegex",
-  "FunctionNameError.invalidFunctionStartLetter",
-  "FunctionNameError.invalidRegex"
+  "ariaLabels.disabledPage"
 ]

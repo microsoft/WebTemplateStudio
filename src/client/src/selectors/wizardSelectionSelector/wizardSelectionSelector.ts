@@ -31,7 +31,8 @@ const isEnableNextPage = (state: AppState): boolean =>{
   }
 
   if (state.wizardRoutes.selected == ROUTES.SELECT_FRAMEWORKS &&
-    state.selection.frontendFramework.title!="" && state.selection.backendFramework.title!=""){
+    state.selection.frontendFramework.title!="" && state.selection.backendFramework.title!="" &&
+    state.selection.pages.filter(page => !page.isValidTitle).length==0){
     valid = true;
   }
 
@@ -40,7 +41,8 @@ const isEnableNextPage = (state: AppState): boolean =>{
     valid = true;
   }
 
-  if (state.wizardRoutes.selected == ROUTES.AZURE_LOGIN || state.wizardRoutes.selected == ROUTES.REVIEW_AND_GENERATE){
+  if ((state.wizardRoutes.selected == ROUTES.AZURE_LOGIN || state.wizardRoutes.selected == ROUTES.REVIEW_AND_GENERATE)
+    && state.selection.pages.filter(page => !page.isValidTitle).length==0){
     valid = true;
   }
 

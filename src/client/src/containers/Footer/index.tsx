@@ -15,8 +15,6 @@ import {
   PAGEID
 } from "../../utils/constants";
 
-import { validateName } from "../../utils/validateName";
-
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
 
@@ -203,31 +201,9 @@ class Footer extends React.Component<Props> {
     // Validate the page names and do not generate if they are invalid or if there are duplicates
     const pageNames = new Set();
     const functionNames = new Set();
-    let areValidNames = true;
     for (const page of this.props.engine.pages) {
       const pageName = page.name;
-      areValidNames = validateName(pageName, "page").isValid;
-      if (pageNames.has(pageName)) {
-        areValidNames = false;
-      } else {
-        pageNames.add(pageName);
-      }
-      if (!areValidNames) {
-        break;
-      }
-    }
-    if (areValidNames && this.props.functionNames) {
-      for (const functionName of this.props.functionNames) {
-        areValidNames = functionName.isValidTitle;
-        if (functionNames.has(functionName)) {
-          areValidNames = false;
-        } else {
-          functionNames.add(functionName);
-        }
-        if (!areValidNames) {
-          break;
-        }
-      }
+      pageNames.add(pageName); 
     }
 
     const {
@@ -308,12 +284,11 @@ class Footer extends React.Component<Props> {
               )}
               {enableCreateProjectButton && (
                 <button
-                  disabled={!areValidNames || !isEnableNextPage}
+                  disabled={!isEnableNextPage}
                   className={classnames(styles.button, {
-                    [buttonStyles.buttonDark]: !areValidNames,
-                    [buttonStyles.buttonHighlighted]: areValidNames,
-                    [styles.disabledOverlay]:
-                      !areValidNames || !isEnableNextPage
+                    [buttonStyles.buttonDark]: !isEnableNextPage,
+                    [buttonStyles.buttonHighlighted]: isEnableNextPage,
+                    [styles.disabledOverlay]:!isEnableNextPage
                   })}
                   onClick={this.logMessageToVsCode}
                 >

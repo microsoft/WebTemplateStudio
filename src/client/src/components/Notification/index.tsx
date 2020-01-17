@@ -6,6 +6,7 @@ import { ReactComponent as Warning } from "../../assets/warning.svg";
 import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
 
 import styles from "./styles.module.css";
+import getMessages from "./messages";
 
 interface IProps {
   showWarning: Boolean;
@@ -14,12 +15,7 @@ interface IProps {
 }
 
 const Notification = ({ showWarning, text, altMessage }: IProps) => {
-  const messages = defineMessages({
-    notificationMessage: {
-      id: "notification.notificationAltMessage",
-      defaultMessage: altMessage
-    }
-  });
+  const messages =getMessages(altMessage);
 
   return (
     <React.Fragment>

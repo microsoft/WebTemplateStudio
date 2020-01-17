@@ -13,6 +13,7 @@ import { WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants";
 import { IRedirectModalData } from "../RedirectModal";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import messages from "./messages";
 
 interface IStateProps {
   versions: IVersions;
@@ -23,29 +24,6 @@ interface IDispatchProps {
 }
 
 type Props = IStateProps & InjectedIntlProps & IDispatchProps;
-
-const messages = defineMessages({
-  templatesVersion: {
-    id: "about.templatesVersion",
-    defaultMessage: "Templates version:"
-  },
-  wizardVersion: {
-    id: "about.wizardVersion",
-    defaultMessage: "Wizard version:"
-  },
-  reportIssue: {
-    id: "about.reportAnIssue",
-    defaultMessage: "Report an Issue"
-  },
-  visitRepo: {
-    id: "about.visitRepo",
-    defaultMessage: "Visit our GitHub"
-  },
-  feedbackRedirectLinkLabel: {
-    id: "feedback.redirectLinkLabel",
-    defaultMessage: "GitHub.com"
-  }
-});
 
 const About = ({ versions, intl, openRedirectModal }: Props) => {
   const { templatesVersion, wizardVersion } = versions;

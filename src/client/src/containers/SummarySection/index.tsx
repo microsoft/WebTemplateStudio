@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 
 import SummaryTile from "../../components/SummaryTile";
 
-import { validateName } from "../../utils/validateName";
-
 import styles from "./styles.module.css";
 
 import { IFunctionApp } from "../AzureFunctionsSelection";
@@ -63,23 +61,8 @@ const SummarySection = ({
       functionNames[idx].title = newTitle;
       functionNames[idx].isValidTitle = true;
       functionNames[idx].error = "";
-      const validationResult = validateName(
-        functionNames[idx].title,
-        "function"
-      );
-      if (validationResult.error) {
-        functionNames[idx].error = intl.formatMessage(validationResult.error);
-      }
-      functionNames[idx].isValidTitle = validationResult.isValid;
-      for (let i = 0; i < functionNames.length; i++) {
-        if (functionNames[i].title === functionNames[idx].title && i !== idx) {
-          functionNames[idx].isValidTitle = false;
-          functionNames[idx].error = intl.formatMessage(
-            messages.duplicateFunctionName
-          );
-          break;
-        }
-      }
+      
+      
       updateFunctionNames({
         appIndex: 0,
         functionNames

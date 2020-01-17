@@ -16,33 +16,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
-
-const messages = defineMessages({
-  ariaNavLabel: {
-    defaultMessage: "Navigate between pages in the Wizard",
-    id: "topNavBar.ariaNavLabel"
-  },
-  frameworks: {
-    id: "topNavBar.frameworks",
-    defaultMessage: "Add Frameworks"
-  },
-  pages: {
-    id: "topNavBar.pages",
-    defaultMessage: "Add Pages"
-  },
-  services: {
-    defaultMessage: "Add Optional Cloud Services",
-    id: "topNavBar.services"
-  },
-  summary: {
-    defaultMessage: "Summary",
-    id: "topNavBar.summary"
-  },
-  welcome: {
-    defaultMessage: "New Project",
-    id: "topNavBar.newProject"
-  }
-});
+import messages from "./messages";
 
 interface IStateProps {
   isVisited: IRoutes;
