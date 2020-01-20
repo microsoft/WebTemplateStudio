@@ -17,7 +17,7 @@ const initialState = {
 
 const versions = (state: IVersions = initialState, action: any) => {
   switch (action.type) {
-    case WIZARD_INFO_TYPEKEYS.GET_VERSIONS:
+    case WIZARD_INFO_TYPEKEYS.GET_TEMPLATE_INFO:
       return action.payload;
     default:
       return state;

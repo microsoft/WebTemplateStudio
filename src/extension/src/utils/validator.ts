@@ -3,8 +3,6 @@ import { CONSTANTS, ExtensionCommand } from "../constants";
 import fs = require("fs");
 import path = require("path");
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import itemNameValidationConfig from "../itemNameValidation.config.json";
-import projectNameValidationConfig from "../projectNameValidation.config.json";
 
 export class Validator extends WizardServant {
   clientCommandMap: Map<
@@ -15,20 +13,8 @@ export class Validator extends WizardServant {
     [
       ExtensionCommand.ProjectPathValidation,
       Validator.handleProjectPathValidation
-    ],
-    [ExtensionCommand.GetValidations, Validator.sendConfigValidation]
+    ]
   ]);
-
-  public static async sendConfigValidation(): Promise<IPayloadResponse>{
-    let response:any = {
-      payload: {
-        validations:{
-          itemNameValidationConfig, projectNameValidationConfig
-        }
-      }
-    };
-    return response;
-  }
 
   public static async sendOutputPathSelectionToClient(
     message: any

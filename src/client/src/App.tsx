@@ -82,9 +82,7 @@ import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
-import frontendFramework from "./reducers/wizardSelectionReducers/selectFrontendFrameworkReducer";
 import AzureLoginModal from "./containers/AzureLoginModal";
-import {getValidationsConfig} from "./utils/extensionService/extensionService";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -246,8 +244,16 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.GEN_STATUS:
           this.props.updateTemplateGenStatus(message.payload);
           break;
-        case EXTENSION_COMMANDS.GET_VERSIONS:
-          this.props.getVersionsData(message.payload);
+        case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
+          let versionData:IVersions = {
+            templatesVersion:message.payload.templatesVersion,
+            wizardVersion: message.payload.wizardVersion
+          };
+          this.props.getVersionsData(versionData);
+          this.props.setValidations({
+            itemNameValidationConfig:message.payload.itemNameValidationConfig,
+            projectaNameValidationConfig:message.payload.projectNameValidationConfig
+          });
           break;
         case EXTENSION_COMMANDS.RESET_PAGES:
           if (message.payload.resetPages) {
@@ -285,19 +291,6 @@ class App extends React.Component<Props> {
           break;
       }
     });
-    
-    /*
-    document.getElementsByClassName("styles_newProjectInfo__2B9K_")[0].innerHTML="paso 1";
-    getValidationsConfig({
-      module: EXTENSION_MODULES.VALIDATOR,
-      command: EXTENSION_COMMANDS.GET_VALIDATIONS,
-      track: false
-    }, vscode).then((event:any)=>{
-      document.getElementsByClassName("styles_newProjectInfo__2B9K_")[0].innerHTML="<p>paso 2.1::" + 
-        JSON.stringify(event) + "</p>";
-      let validateConfig = event.data.payload.validations;
-      this.props.setValidations(validateConfig);
-    });*/
   }
 
   public componentDidUpdate(prevProps: Props) {

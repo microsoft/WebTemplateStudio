@@ -20,6 +20,7 @@ import { LaunchExperience } from "./launchExperience";
 import { DependencyChecker } from "./utils/dependencyChecker";
 import { CoreTSModule } from "./coreTSModule";
 import { Defaults } from "./utils/defaults";
+import { ISyncReturnType } from "./types/syncReturnType";
 
 export class Controller {
   /**
@@ -81,6 +82,7 @@ export class Controller {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_MODULE);
     }
   }
+
   /**
    * Provides access to the Controller. Maintains Singleton Pattern. Function will bring up ReactPanel to View if Controller instance exists, otherwise will instantiate a new Controller.
    * @param message The payload received from the wizard client. Message payload must include field 'module'
@@ -160,16 +162,9 @@ export class Controller {
 
       Controller.loadUserSettings();
 
-      Controller.getVersionAndSendToClient(
+      Controller.getTemplateInfoAndSendToClient(
         context,
-        syncObject.templatesVersion
-      );
-      Controller.getValidationsAndSendToClient(
-        context,
-        {
-          itemNameValidationConfig:syncObject.itemNameValidationConfig,
-          projectNameValidationConfig:syncObject.projectNameValidationConfig
-        }
+        syncObject
       );
       Controller.Telemetry.trackExtensionStartUpTime(
         TelemetryEventName.ExtensionLaunch
@@ -177,27 +172,16 @@ export class Controller {
     }
   }
 
-  private static getVersionAndSendToClient(
+  private static getTemplateInfoAndSendToClient(
     ctx: vscode.ExtensionContext,
-    templatesVersion: string
+    syncObject: ISyncReturnType
   ) {
     Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetVersions,
+      command: ExtensionCommand.GetTemplateInfo,
       payload: {
-        templatesVersion,
-        wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
-      }
-    });
-  }
-
-  private static getValidationsAndSendToClient(
-    ctx: vscode.ExtensionContext,
-    validations: Object
-  ) {
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetValidations,
-      payload: {
-        validations,
+        templatesVersion:syncObject.templatesVersion,
+        itemNameValidationConfig: syncObject.itemNameValidationConfig,
+        projectNameValidationConfig: syncObject.projectNameValidationConfig,
         wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
       }
     });
