@@ -166,7 +166,6 @@ const EXTENSION_COMMANDS = {
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
   GET_VERSIONS: "get-versions",
-  CLOSE_WIZARD: "close-wizard",
   RESET_PAGES: "reset-pages",
   GET_PREVIEW_STATUS: "get-preview",
   GET_DEPENDENCY_INFO: "check-dependency",

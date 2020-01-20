@@ -5,7 +5,6 @@ import { IActionContext, ITelemetryService } from "./telemetry/telemetryService"
 import { ReactPanel } from "./reactPanel";
 import { AzureServices } from "./azure/azureServices";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
-import { Controller } from "./controller";
 import { ResourceGroupSelection } from "./azure/azure-resource-group/resourceGroupModule";
 import { Settings } from "./azure/utils/settings";
 
@@ -20,8 +19,7 @@ export class GenerationExperience extends WizardServant {
     [
       ExtensionCommand.OpenProjectVSCode,
       GenerationExperience.openProjectVSCode
-    ],
-    [ExtensionCommand.CloseWizard, this.handleCloseWizard]
+    ]
   ]);
   /**
    *
@@ -33,11 +31,6 @@ export class GenerationExperience extends WizardServant {
 
   public static setReactPanel(reactPanelContext: ReactPanel) {
     GenerationExperience.reactPanelContext = reactPanelContext;
-  }
-
-  public async handleCloseWizard() {
-    Controller.reactPanelContext.dispose();
-    return { payload: true };
   }
 
   ////TODO: MAKE GEN CALL CLIENTCOMMANDMAP FUNCTIONS VIA TO WRAP TELEMETRY AUTOMATICALLY
