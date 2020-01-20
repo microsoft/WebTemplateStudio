@@ -48,6 +48,15 @@ export function getPackageInfo(ctx?: vscode.ExtensionContext): { extensionName: 
 
     const extensionId: string = `${packageJson.publisher}.${packageJson.name}`;
 
-    return { extensionName, extensionVersion, aiKey, extensionId, bugsUrl };
+    return { extensionName, extensionVersion, aiKey, extensionId, bugsUrl };    
 }
 
+export function getExtensionName(ctx: vscode.ExtensionContext) {
+    const { extensionName } = getPackageInfo(ctx);
+    return extensionName;
+}
+
+export function  getExtensionVersionNumber(ctx: vscode.ExtensionContext){
+    const { extensionVersion } = getPackageInfo(ctx);
+    return extensionVersion;
+}

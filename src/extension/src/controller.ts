@@ -21,6 +21,7 @@ import { DependencyChecker } from "./utils/dependencyChecker";
 import { CoreTSModule } from "./coreTSModule";
 import { Defaults } from "./utils/defaults";
 import { Telemetry } from "./client-modules/telemetry";
+import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
 
 export class Controller {
   /**
@@ -117,9 +118,7 @@ export class Controller {
     this.CoreTSModule = new CoreTSModule();
     this.Telemetry = new Telemetry(Controller.TelemetryService);
     this.Defaults = new Defaults();
-    Logger.initializeOutputChannel(
-      Controller.TelemetryService.getExtensionName(this.context)
-    );
+    Logger.initializeOutputChannel(getExtensionName(this.context));
     this.defineExtensionModule();
     vscode.window.withProgress(
       {
@@ -183,7 +182,7 @@ export class Controller {
       command: ExtensionCommand.GetVersions,
       payload: {
         templatesVersion,
-        wizardVersion: this.TelemetryService.getExtensionVersionNumber(ctx)
+        wizardVersion: getExtensionVersionNumber(ctx)
       }
     });
   }

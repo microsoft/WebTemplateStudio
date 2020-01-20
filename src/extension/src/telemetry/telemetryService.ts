@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import TelemetryReporter from 'vscode-extension-telemetry';
-import { getPackageInfo } from './getPackageInfo';
+import { getPackageInfo } from '../utils/packageInfo';
 import { IActionContext, ITelemetryReporter, callWithTelemetryAndCatchErrors } from './callWithTelemetryAndErrorHandling';
 
 export type IActionContext = IActionContext;
@@ -46,16 +46,6 @@ export class TelemetryService implements ITelemetryService{
 
     public callWithTelemetryAndCatchHandleErrors<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>{
         return callWithTelemetryAndCatchErrors(this.vscodeContext, callbackId,callback, TelemetryService.telemetryReporter);
-    }
-
-    public getExtensionName(ctx: vscode.ExtensionContext) {
-        const { extensionName } = getPackageInfo(ctx);
-        return extensionName;
-      }
-
-    public getExtensionVersionNumber(ctx: vscode.ExtensionContext){
-        const { extensionVersion } = getPackageInfo(ctx);
-        return extensionVersion;
     }
 }
 

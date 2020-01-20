@@ -6,7 +6,7 @@
 // tslint:disable-next-line:no-require-imports
 import opn = require("opn");
 import * as vscode from 'vscode';
-import { getPackageInfo } from "./getPackageInfo";
+import { getPackageInfo } from "../utils/packageInfo";
 import { IParsedError } from "./parseError";
 
 /**
