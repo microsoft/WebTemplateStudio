@@ -23,6 +23,11 @@ const projectPathValidation = (paramsMessage:any, vscode: IVSCodeObject):Promise
   return promise;
 }
 
+const getValidationsConfig = (paramsMessage:any, vscode: IVSCodeObject):Promise<any> => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_VALIDATIONS, paramsMessage, vscode);
+}
+
 export {
-  projectPathValidation
+  projectPathValidation,
+  getValidationsConfig
 }

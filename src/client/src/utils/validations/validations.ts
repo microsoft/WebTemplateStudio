@@ -64,7 +64,7 @@ export const addRegexValidate = (name:string, regexs:Array<IRegex>):IValidation=
     let regexsFiltered:Array<IRegex> = regexs.filter(regex =>{
       let regObj = new RegExp(regex.pattern.toString());
       let containInvalidCarachter = regObj.test(name);
-      return containInvalidCarachter === true;
+      return containInvalidCarachter === false;
     })
     return regexsFiltered;
   }

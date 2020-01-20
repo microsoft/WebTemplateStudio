@@ -1,0 +1,15 @@
+﻿{
+  "regexs": [
+  {
+    "name":"nameStartLetter",
+    "pattern" : "^[A-Za-z]"
+  },
+  {
+    "name":"nameContainLettersNumbersDashes",
+    "pattern" : "^((?!\\d)\\w+)$"
+  }],
+  "reservedNames" : ["reserve1"],
+  "validateEmptyNames": true,
+  "validateExistingNames": true,
+  "validateDefaultNames": true
+}

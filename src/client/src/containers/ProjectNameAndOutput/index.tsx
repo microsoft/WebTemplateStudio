@@ -34,6 +34,7 @@ import {
 
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
+import { setValidations } from "../../actions/wizardSelectionActions/setValidations";
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
@@ -43,6 +44,7 @@ import { inferProjectName} from "../../utils/infer/projectName";
 import { setProjectPathValidation } from "../../actions/wizardSelectionActions/setProjectPathValidation";
 import { validationMessages } from '../../utils/validations/messages';
 import messages from "./messages";
+import {getValidationsConfig} from "../../utils/extensionService/extensionService";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -57,6 +59,7 @@ interface IDispatchProps {
   updateProjectName: (projectName: string, validation:any) => any;
   updateOutputPath: (outputPath: string) => any;
   setProjectPathValidation: (validation: any) => void;
+  setValidations: (validations: any) => void;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
@@ -75,7 +78,8 @@ const ProjectNameAndOutput = (props: Props) => {
     updateProjectName,
     updateOutputPath,
     setProjectPathValidation,
-    intl
+    intl,
+    setValidations
   } = props;
 
   React.useEffect(() => {
@@ -91,6 +95,14 @@ const ProjectNameAndOutput = (props: Props) => {
   },[projectName, outputPath]);
 
   React.useEffect(() => {
+    getValidationsConfig({
+      module: EXTENSION_MODULES.VALIDATOR,
+      command: EXTENSION_COMMANDS.GET_VALIDATIONS,
+      track: false
+    }, vscode).then((event:any)=>{
+      let validateConfig = event.data.payload.validations;
+      setValidations(validateConfig);
+    });
     if (outputPath === "") {
       vscode.postMessage({
         module: EXTENSION_MODULES.DEFAULTS,
@@ -189,6 +201,9 @@ const mapDispatchToProps = (
   setProjectPathValidation: (validation: any) => {
     dispatch(setProjectPathValidation(validation));
   },
+  setValidations: (validations: any) => {
+    dispatch(setValidations(validations));
+  }
 });
 
 export default connect(

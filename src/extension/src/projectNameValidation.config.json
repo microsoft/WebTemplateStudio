@@ -2,11 +2,11 @@
   "regexs" : [
     {
       "name":"nameStartLetter",
-      "pattern" : "^[^A-Za-z]"
+      "pattern" : "^[A-Za-z]"
     },
     {
       "name":"nameContainLettersNumbersDashes",
-      "pattern" : "[^A-Za-z0-9-_]"
+      "pattern" : "^((?!\\d)\\w+)$"
     }
   ],
   "reservedNames" : ["reserve1"],

@@ -84,6 +84,7 @@ import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/get
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import frontendFramework from "./reducers/wizardSelectionReducers/selectFrontendFrameworkReducer";
 import AzureLoginModal from "./containers/AzureLoginModal";
+import {getValidationsConfig} from "./utils/extensionService/extensionService";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -153,6 +154,7 @@ class App extends React.Component<Props> {
 
   public componentDidMount() {
     this.props.getVSCodeApi();
+    const { vscode } = this.props;
     // listens for a login event from VSCode
     window.addEventListener("message", event => {
       const message = event.data;
@@ -281,11 +283,21 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.GET_PREVIEW_STATUS:
           this.props.setPreviewStatus(message.payload.preview);
           break;
-        case EXTENSION_COMMANDS.GET_VALIDATIONS:
-          this.props.setValidations(message.payload.validations);
-          break;
       }
     });
+    
+    /*
+    document.getElementsByClassName("styles_newProjectInfo__2B9K_")[0].innerHTML="paso 1";
+    getValidationsConfig({
+      module: EXTENSION_MODULES.VALIDATOR,
+      command: EXTENSION_COMMANDS.GET_VALIDATIONS,
+      track: false
+    }, vscode).then((event:any)=>{
+      document.getElementsByClassName("styles_newProjectInfo__2B9K_")[0].innerHTML="<p>paso 2.1::" + 
+        JSON.stringify(event) + "</p>";
+      let validateConfig = event.data.payload.validations;
+      this.props.setValidations(validateConfig);
+    });*/
   }
 
   public componentDidUpdate(prevProps: Props) {

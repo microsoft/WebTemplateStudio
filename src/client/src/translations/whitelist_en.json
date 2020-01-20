@@ -6,6 +6,9 @@
   "outputPath.outputPath",
   "outputPath.ariaOutputPath",
   "outputPath.browseButtonLabel",
+  "selectableCard.details",
+  "selectableCard.preview",
+  "selectableCard.pageCount",
   "summaryTile.changeItemName",
   "topNavBar.ariaNavLabel",
   "topNavBar.frameworks",
@@ -155,5 +158,11 @@
   "constants.emptyField",
   "ariaLabels.pageNavigation",
   "ariaLabels.currentPage",
-  "ariaLabels.disabledPage"
+  "ariaLabels.disabledPage",
+  "default",
+  "validations.comun.emptyName",
+  "validations.comun.duplicateName",
+  "validations.comun.nameStartWith$",
+  "validations.comun.nameStartLetter",
+  "validations.name.nameContainLettersNumbersDashes"
 ]
