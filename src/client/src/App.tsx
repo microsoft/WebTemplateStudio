@@ -252,7 +252,7 @@ class App extends React.Component<Props> {
           this.props.getVersionsData(versionData);
           this.props.setValidations({
             itemNameValidationConfig:message.payload.itemNameValidationConfig,
-            projectaNameValidationConfig:message.payload.projectNameValidationConfig
+            projectNameValidationConfig:message.payload.projectNameValidationConfig
           });
           break;
         case EXTENSION_COMMANDS.RESET_PAGES:
