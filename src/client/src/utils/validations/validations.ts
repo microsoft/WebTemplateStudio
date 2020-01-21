@@ -25,7 +25,7 @@ export const addRequiredValidate = (name:string) =>{
 export const addExistingItemNameValidate = (pageTitle:string, selectedPages:Array<ISelected>) =>{
   let validate:IValidation = {isValid:true, error:validationMessages.default};
   let existPage = selectedPages.filter(page => page.title.toLowerCase()==pageTitle.toLowerCase()).length > 1;
-  if (existPage) validate = {isValid:false, error:validationMessages.duplicateName};
+  if (existPage) validate = {isValid:false, error:validationMessages.duplicateItemName};
   return validate;
 }
 
@@ -44,7 +44,7 @@ export const addExistingProjectNameValidate = async (projectName:string, outputP
     }, vscode);
 
     validate = event.data.payload.projectPathValidation;
-    validate.error = validationMessages.duplicateName;
+    validate.error = validationMessages.duplicateProjectName;
   }
   return validate;
 }

@@ -7,23 +7,27 @@ export const validationMessages = defineMessages({
     defaultMessage: "default"
   },
   emptyName: {
-    id: "validations.comun.emptyName",
+    id: "validations.common.emptyName",
     defaultMessage: "Name cannot be empty"
   },
-  duplicateName: {
-    id: "validations.comun.duplicateName",
+  duplicateItemName: {
+    id: "validations.name.duplicateName",
     defaultMessage: "Name has to be unique"
   },
+  duplicateProjectName: {
+    id: "validations.project.duplicateName",
+    defaultMessage: "Directory already exists in the specified path. Please choose a unique name."
+  },
   reservedName: {
-    id: "validations.comun.duplicateName",
+    id: "validations.common.reservedName",
     defaultMessage: "Name is reserved"
   },
   nameStartWith$:{
-    id: "validations.comun.nameStartWith$",
+    id: "validations.common.nameStartWith$",
     defaultMessage: "Name cannot begin with $"
   },
   nameStartLetter: {
-    id: "validations.comun.nameStartLetter",
+    id: "validations.common.nameStartLetter",
     defaultMessage: "Name may only start with letters"
   },
   nameContainLettersNumbersDashes: {
