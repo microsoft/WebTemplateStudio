@@ -42,11 +42,6 @@ const initialState = {
   }
 };
 
-/*{
-  "name":"nameContainLettersNumbersDashes",
-  "pattern":"!^[A-Za-z][A-Za-z0-9_-]"
-}*/
-
 const validationsReducer = (
   state: IValidations = initialState,
   action: WizardSelectionActionType
