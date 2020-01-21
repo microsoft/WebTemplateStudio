@@ -1,5 +1,4 @@
-﻿class App extends Component {
-  render() {
+﻿const App = () => {
     return (
       <React.Fragment>
         <NavBar />
@@ -12,5 +11,4 @@
         <Footer />
       </React.Fragment>
     );
-  }
 }
