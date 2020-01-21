@@ -1,4 +1,4 @@
-jest.mock('./validations',()=>{return {
+jest.mock('../validations',()=>{return {
   addRequiredValidate:jest.fn(() => {
     return {isValid:true, error:""};
   }),
