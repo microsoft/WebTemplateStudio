@@ -20,7 +20,8 @@ import {
   EXTENSION_MODULES,
   KEY_EVENTS,
   ROUTES,
-  WEB_TEMPLATE_STUDIO_LINKS
+  WEB_TEMPLATE_STUDIO_LINKS,
+  TELEMETRY
 } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -115,23 +116,38 @@ const PostGenerationModal = ({
     return formatMessage(messages.openInCode);
   };
 
-  const handleCreateAnotherProject = () => {
+  const closeModalAndCreateAnotherProject = (param: any) => {
+    trackCreateNewProjectTelemetry(param);
     resetWizard();
     history.push(ROUTES.NEW_PROJECT);
   };
-
-  const handleClose = () => {
-    resetWizard();
-    history.push(ROUTES.NEW_PROJECT);
-  };  
 
   const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
-      handleClose();
+      closeModalAndCreateAnotherProject({ fromCloseButton:true });
     }
   };
+
+  const trackCreateNewProjectTelemetry = ({ fromCloseButton, fromCreateNewProjectButton }: any) => 
+  {
+    let entryPoint = '';
+
+    if (fromCloseButton){
+      entryPoint = TELEMETRY.CLOSE_GENERATION_MODAL_BUTTON;
+    }
+
+    if (fromCreateNewProjectButton){
+      entryPoint = TELEMETRY.CREATE_NEW_PROJECT_BUTTON;
+    }
+
+    vscode.postMessage({
+      module: EXTENSION_MODULES.TELEMETRY,
+      command: EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT,
+      entryPoint
+    });
+  }
 
   const postGenMessage = () => {
     return (
@@ -302,7 +318,7 @@ const PostGenerationModal = ({
         <Close
             tabIndex={0}
             className={styles.closeIcon}
-            onClick={handleClose}
+            onClick={() => closeModalAndCreateAnotherProject({ fromCloseButton:true })}
             onKeyDown={closeKeyDownHandler}
           />
       </div>
@@ -337,7 +353,7 @@ const PostGenerationModal = ({
         {templateGenerated && isServicesDeployed && (
           <button
             className={classnames(styles.button, buttonStyles.buttonDark)}
-            onClick={handleCreateAnotherProject}
+            onClick={() => closeModalAndCreateAnotherProject({ fromCreateNewProjectButton:true })}
           >
             {formatMessage(messages.createAnotherProject)}
           </button>

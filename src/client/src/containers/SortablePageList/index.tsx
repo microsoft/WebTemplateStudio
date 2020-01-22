@@ -22,15 +22,18 @@ import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 
-import { PAGE_NAME_CHARACTER_LIMIT } from "../../utils/constants";
+import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
 import { validateItemName} from "../../utils/validations/itemName/itemName";
 import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 import {
   getValidations
 } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 interface ISortablePageListProps {
+  vscode: IVSCodeObject;
   selectedPages: any[];
 }
 
@@ -57,6 +60,7 @@ type Props = ISortablePageListProps &
 
 const SortablePageList = (props: Props) => {
   const {
+    vscode,
     selectedPages,
     selectPages,
     isSummaryPage,
@@ -80,6 +84,14 @@ const SortablePageList = (props: Props) => {
     setPages(pages);
     props.selectPages(pages);
   };
+
+  const handleOpenAddPagesModal = () => {
+    vscode.postMessage({
+      module: EXTENSION_MODULES.TELEMETRY,
+      command: EXTENSION_COMMANDS.TRACK_OPEN_ADD_PAGES_MODAL
+    });
+    openAddPagesModal();
+  }
 
   const onSortEnd = ({
     oldIndex,
@@ -111,7 +123,7 @@ const SortablePageList = (props: Props) => {
           {isSummaryPage && (
             <button
               className={styles.addPagesButton}
-              onClick={openAddPagesModal}
+              onClick={handleOpenAddPagesModal}
             >
               <Plus className={styles.plusIcon} />
             </button>
@@ -156,7 +168,8 @@ const SortablePageList = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   selectedPages: state.selection.pages,
-  validations: getValidations(state)
+  validations: getValidations(state),
+  vscode: getVSCodeApiSelector(state),
 });
 
 const mapDispatchToProps = (
@@ -165,7 +178,7 @@ const mapDispatchToProps = (
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
   },
-  openAddPagesModal: () => {
+  openAddPagesModal: () => { 
     dispatch(ModalActions.openAddPagesModalAction());
   }
 });

@@ -313,6 +313,9 @@ export const CONSTANTS = {
     DEPLOYMENT_FILE_NAME: ".deployment",
     DEPLOYMENT_FILE: `[config] 
 SCM_DO_BUILD_DURING_DEPLOYMENT=true`
+  },
+  TELEMETRY: {
+    LAUNCH_WIZARD_STARTED_POINT: "Launch wizard"
   }
 };
 
@@ -322,24 +325,22 @@ export enum ExtensionCommand {
   Log = "log",
   Login = "login",
   Logout = "logout",
-  Subscriptions = "subscriptions",
   SubscriptionDataForFunctions = "subscription-data-for-functions",
   SubscriptionDataForCosmos = "subscription-data-for-cosmos",
   SubscriptionDataForAppService = "subscription-data-for-app-service",
   NameFunctions = "name-functions",
   NameCosmos = "name-cosmos",
   NameAppService = "name-app-service",
-  DeployFunctions = "deploy-functions",
-  DeployCosmos = "deploy-cosmos",
   Generate = "generate",
   GetOutputPath = "get-output-path",
   GetProjectName = "get-project-name",
-  GetFunctionsRuntimes = "get-functions-runtimes",
-  GetCosmosAPIs = "get-cosmos-apis",
   GetUserStatus = "get-user-status",
   GetFrameworks = "get-frameworks",
   GetPages = "get-pages",
   TrackPageSwitch = "track-page-switch",
+  TrackCreateNewProject = "track-create-new-project",
+  TrackOpenAddPagesModal = "track-open-add-pages-modal",
+  TrackPressQuickstart = "track-press-quickstart",
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
@@ -347,6 +348,7 @@ export enum ExtensionCommand {
   GetTemplateInfo = "get-template-info",
   CloseWizard = "close-wizard",
   GetPort = "get-port",
+  GetVersions = "get-versions",
   ResetPages = "reset-pages",
   GetPreviewStatus = "get-preview",
   CheckDependency = "check-dependency"
@@ -364,21 +366,18 @@ export enum ExtensionModule {
 }
 
 export enum TelemetryEventName {
-  ExtensionLaunch = "Extension-Launch-Time",
+  ExtensionLaunch = "Extension-Launch",
+  ExtensionClosed = "Extension-closed",
   WizardSession = "Wizard-To-Generate-Session-Time",
-  Subscriptions = "Acquire-Subscription-Names",
-  SubscriptionData = "Acquire-Subscription-Data",
-  EngineGeneration = "Engine-Generation-Time",
   AppServiceDeploy = "Azure-App-Service-Deployment",
   CosmosDBDeploy = "Azure-Cosmos-Deployment",
-  FunctionsDeploy = "Azure-Functions-Deployment",
   ResourceGroupDeploy = "Azure-Resource-Group-Deployment",
   PageChange = "Wizard-Page-Change",
+  CreateNewProject = "Create-New-Project",
   SyncEngine = "Sync-Engine",
   ConnectionStringReplace = "Connection-String-Replaced",
-  PerformLogin = "Perform-Login",
-  PerformLogout = "Perform-Logout",
-  GetUserLoginStatus = "Get-User-Login-Status"
+  TrackOpenAddPagesModal = "Open-Add-Pages-Modal",
+  TrackPressQuickstart = "Press-Quickstart",
 }
 
 export namespace DialogResponses {
