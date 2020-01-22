@@ -9,7 +9,7 @@
       "pattern" : "^((?!\\d)[a-zA-Z0-9_-]+)$"
     }
   ],
-  "reservedNames" : ["reserve1"],
+  "reservedNames" : [],
   "validateEmptyNames": true,
   "validateExistingNames": true
 }
