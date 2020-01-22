@@ -73,7 +73,6 @@ export const addRegexValidate = (name:string, regexs:Array<IRegex>):IValidation=
 
     if (hasInvalidRegex){
       let firstInvalidRegex = getInvalidRegex()[0];
-      if (firstInvalidRegex.name === "nameStartWith$") validate = {isValid:false, error:validationMessages.nameStartWith$};
       if (firstInvalidRegex.name === "nameStartLetter") validate = {isValid:false, error:validationMessages.nameStartLetter};
       if (firstInvalidRegex.name === "nameContainLettersNumbersDashes") validate = {isValid:false, error:validationMessages.nameContainLettersNumbersDashes};
     }

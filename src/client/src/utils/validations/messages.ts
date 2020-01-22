@@ -22,10 +22,6 @@ export const validationMessages = defineMessages({
     id: "validations.common.reservedName",
     defaultMessage: "Name is reserved"
   },
-  nameStartWith$:{
-    id: "validations.common.nameStartWith$",
-    defaultMessage: "Name cannot begin with $"
-  },
   nameStartLetter: {
     id: "validations.common.nameStartLetter",
     defaultMessage: "Name may only start with letters"
