@@ -41,7 +41,7 @@ describe("validations", () => {
         "name" : "nameStartWith$",
         "pattern" : "^[^\\$]"
       }])
-      expect(validate.isValid).toBeFalsy();
+      expect(validate.isValid).toBeTruthy();
     });
 
     it("not valid",()=>{
