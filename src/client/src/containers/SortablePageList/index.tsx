@@ -24,9 +24,12 @@ import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 
-import { PAGE_NAME_CHARACTER_LIMIT } from "../../utils/constants";
+import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 interface ISortablePageListProps {
+  vscode: IVSCodeObject;
   selectedPages: any[];
 }
 
@@ -71,6 +74,7 @@ const messages = defineMessages({
 
 const SortablePageList = (props: Props) => {
   const {
+    vscode,
     selectedPages,
     selectPages,
     isSummaryPage,
@@ -102,6 +106,14 @@ const SortablePageList = (props: Props) => {
     props.selectPages(pages);
   };
 
+  const handleOpenAddPagesModal = () => {
+    vscode.postMessage({
+      module: EXTENSION_MODULES.TELEMETRY,
+      command: EXTENSION_COMMANDS.TRACK_OPEN_ADD_PAGES_MODAL
+    });
+    openAddPagesModal();
+  }
+
   const onSortEnd = ({
     oldIndex,
     newIndex
@@ -132,7 +144,7 @@ const SortablePageList = (props: Props) => {
           {isSummaryPage && (
             <button
               className={styles.addPagesButton}
-              onClick={openAddPagesModal}
+              onClick={handleOpenAddPagesModal}
             >
               <Plus className={styles.plusIcon} />
             </button>
@@ -176,6 +188,7 @@ const SortablePageList = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): ISortablePageListProps => ({
+  vscode: getVSCodeApiSelector(state),
   selectedPages: state.selection.pages
 });
 
@@ -185,7 +198,7 @@ const mapDispatchToProps = (
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
   },
-  openAddPagesModal: () => {
+  openAddPagesModal: () => { 
     dispatch(ModalActions.openAddPagesModalAction());
   }
 });

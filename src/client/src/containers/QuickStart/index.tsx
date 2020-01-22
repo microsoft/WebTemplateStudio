@@ -33,10 +33,9 @@ import {
 } from "./defaultSelection";
 
 import { getAllFrameworks, getAllPages } from "./loadWizardContent";
-import { ROUTES, ROUTES_ARRAY } from "../../utils/constants";
+import { ROUTES, ROUTES_ARRAY, EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
 
 import styles from "./styles.module.css";
-import { updateAzureFunctionNamesAction } from "../../actions/azureActions/azureFunctionActions";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -56,10 +55,6 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps & RouteComponentProps;
 
 class QuickStart extends Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   handleClick = () => {
     const {
       vscode,
@@ -73,6 +68,7 @@ class QuickStart extends Component<Props> {
       enableQuickStart
     } = this.props;
 
+    this.pressQuickstartButtonTelemetry();
     enableQuickStart();
     getAllFrameworks(vscode, isPreview);
     getAllPages(vscode);
@@ -83,6 +79,14 @@ class QuickStart extends Component<Props> {
     ROUTES_ARRAY.forEach(route => setRouteVisited(route));
     history.push(ROUTES.REVIEW_AND_GENERATE);
   };
+
+  pressQuickstartButtonTelemetry = () => {
+    this.props.vscode.postMessage({
+      module: EXTENSION_MODULES.TELEMETRY,
+      command: EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART,
+      track: false
+    });
+  }
 
   render() {
     const { isValidNameAndProjectPath } = this.props;

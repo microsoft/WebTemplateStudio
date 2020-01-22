@@ -1,5 +1,5 @@
 import { ExtensionCommand, CONSTANTS } from "./constants";
-import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
+import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 
 export abstract class WizardServant {
   abstract clientCommandMap: Map<
@@ -19,7 +19,7 @@ export abstract class WizardServant {
   public static executeWizardCommandOnServantClass(
     messagePayload: any,
     classModule: WizardServant,
-    Telemetry: TelemetryAI
+    Telemetry: ITelemetryService
   ) {
     classModule._commandBidding = classModule.clientCommandMap.get(
       messagePayload.command

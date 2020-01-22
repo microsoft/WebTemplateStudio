@@ -1,17 +1,16 @@
 import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "./wizardServant";
 import { ExtensionCommand, TelemetryEventName, CONSTANTS } from "./constants";
-import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
+import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { ReactPanel } from "./reactPanel";
 import { AzureServices } from "./azure/azureServices";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
-import { Controller } from "./controller";
 import { ResourceGroupSelection } from "./azure/azure-resource-group/resourceGroupModule";
 import { Settings } from "./azure/utils/settings";
 
 export class GenerationExperience extends WizardServant {
   private static reactPanelContext: ReactPanel;
-  private static Telemetry: TelemetryAI;
+  private static Telemetry: ITelemetryService;
   clientCommandMap: Map<
     ExtensionCommand,
     (message: any) => Promise<IPayloadResponse>
@@ -20,13 +19,12 @@ export class GenerationExperience extends WizardServant {
     [
       ExtensionCommand.OpenProjectVSCode,
       GenerationExperience.openProjectVSCode
-    ],
-    [ExtensionCommand.CloseWizard, this.handleCloseWizard]
+    ]
   ]);
   /**
    *
    */
-  constructor(private Telemetry: TelemetryAI) {
+  constructor(private Telemetry: ITelemetryService) {
     super();
     GenerationExperience.Telemetry = this.Telemetry;
   }
@@ -35,17 +33,12 @@ export class GenerationExperience extends WizardServant {
     GenerationExperience.reactPanelContext = reactPanelContext;
   }
 
-  public async handleCloseWizard() {
-    Controller.reactPanelContext.dispose();
-    return { payload: true };
-  }
-
   ////TODO: MAKE GEN CALL CLIENTCOMMANDMAP FUNCTIONS VIA TO WRAP TELEMETRY AUTOMATICALLY
   // tslint:disable-next-line: max-func-body-length
   public async handleGeneratePayloadFromClient(
     message: any
   ): Promise<IPayloadResponse> {
-    GenerationExperience.Telemetry.trackWizardTotalSessionTimeToGenerate();
+    GenerationExperience.trackWizardTotalSessionTimeToGenerate();
     var payload = message.payload;
     var enginePayload: any = payload.engine;
     const apiGenResult = await this.sendTemplateGenInfoToApiAndSendStatusToClient(
@@ -206,7 +199,7 @@ export class GenerationExperience extends WizardServant {
                   cosmosReplaceResponse => {
                     if (cosmosReplaceResponse.userReplacedEnv) {
                       // Temporary Disable
-                      GenerationExperience.Telemetry.trackCustomEventTime(
+                      GenerationExperience.Telemetry.trackEventWithDuration(
                         TelemetryEventName.ConnectionStringReplace,
                         cosmosReplaceResponse.startTime,
                         Date.now()
@@ -278,5 +271,13 @@ export class GenerationExperience extends WizardServant {
       success: didSucceed,
       failure: !didSucceed
     };
+  }  
+
+  private static trackWizardTotalSessionTimeToGenerate() {
+    GenerationExperience.Telemetry.trackEventWithDuration(
+      TelemetryEventName.WizardSession,
+      GenerationExperience.Telemetry.wizardSessionStartTime,
+      Date.now()
+    );
   }
 }

@@ -146,7 +146,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     vscode.postMessage({
       module: EXTENSION_MODULES.VSCODEUI,
       command: EXTENSION_COMMANDS.RESET_PAGES,
-      track: false,
+      track: true,
       text: PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT,
       payload: {
         internalName: frontendFramework.internalName,
