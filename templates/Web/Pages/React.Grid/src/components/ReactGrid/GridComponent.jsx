@@ -12,4 +12,8 @@ const GridComponent = ({ gridItem }) => {
   );
 }
 
+GridComponent.propTypes = {
+  gridItem: PropTypes.any
+}
+
 export default GridComponent;
