@@ -35,7 +35,6 @@ const ReactGrid = () => {
   return (
     <main id="mainContent">
       <div className={centeredHeaderStyle}>
-        <h1>rtytryrty</h1>
         <p>This is placeholder text. Your web app description goes here.</p>
         <a
           href="https://github.com/Microsoft/WebTemplateStudio"
