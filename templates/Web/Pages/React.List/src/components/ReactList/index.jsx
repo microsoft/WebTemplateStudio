@@ -66,8 +66,8 @@ const List = () => {
         }
         return response.json();
       })
-      .then(() =>{
-        return getListItem().then(listItems => setListItems(listItems))
+      .then(itemAdded =>{
+        setListItems([itemAdded, ...listItems]);
       })
       .catch(error =>
         setWarningMessage({
