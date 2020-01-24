@@ -133,6 +133,7 @@
     "azure-arm-website": "^5.7.0",
     "fs-extra": "^7.0.1",
     "global": "^4.3.2",
+    "latest-version": "^5.1.0",
     "log4js": "^4.1.0",
     "ms-rest": "^2.5.0",
     "ms-rest-azure": "^2.6.0",

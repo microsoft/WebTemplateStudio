@@ -9,6 +9,8 @@ import { ICommandPayload } from "./types/commandPayload";
 import { IGenerationPayloadType } from "./types/generationPayloadType";
 import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
+import latestVersion from 'latest-version';
+import asyncForEach from "./utils/extensions";
 
 class CliEventEmitter extends EventEmitter {}
 
@@ -155,7 +157,31 @@ export class CoreTemplateStudio {
     return this.awaitCliEvent(
       CONSTANTS.CLI.GET_FRAMEWORKS_COMPLETE_STATE,
       getFrameworksCommand
-    );
+    ).then(async (listFrameworks)=>{
+      return asyncForEach(listFrameworks, async (framework:any) => {
+        if (framework.name === "React"){
+          framework.tags.latestVersion = await latestVersion("React");
+        }
+        if (framework.name === "Angular"){
+          framework.tags.latestVersion = await latestVersion("@angular/core");
+        }
+        if (framework.name === "Vue"){
+          framework.tags.latestVersion = await latestVersion("vue");
+        }
+        if (framework.name === "Node"){
+          framework.tags.latestVersion = await latestVersion("node");
+        }
+        if (framework.name === "Flask"){
+          framework.tags.latestVersion = await latestVersion("flask");
+        }
+        if (framework.name === "Moleculer"){
+          framework.tags.latestVersion = await latestVersion("moleculer");
+        }
+      }).then(()=>{
+        return listFrameworks;
+      });
+      
+    });
   }
 
   public async getPages(

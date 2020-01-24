@@ -14,6 +14,7 @@
     ],
     "tags": {
       "version": "16.12.0",
+      "latestVersion":"",
       "preview": false
     }
   },
@@ -32,6 +33,7 @@
     ],
     "tags": {
       "version": "8.2.14",
+      "latestVersion":"",
       "preview": false
     }
   },
@@ -50,6 +52,7 @@
     ],
     "tags": {
       "version": "2.6.10",
+      "latestVersion":"",
       "preview": false
     }
   }

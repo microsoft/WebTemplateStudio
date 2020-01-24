@@ -2,6 +2,7 @@ const child_process = require("child_process");
 const path = require("path");
 const fs = require("fs");
 const del = require("del");
+import asyncForEach from "../utils/extensions";
 
 const testFolder = path.join(__dirname, "..", "..", "..", "..", "template_test");
 console.log(testFolder);
@@ -33,11 +34,11 @@ function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function asyncForEach(array: string[], callback: any) {
+/*async function asyncForEach(array: string[], callback: any) {
   for (let index = 0; index < array.length; index++) {
     await callback(array[index], index, array);
   }
-}
+}*/
 
 asyncForEach(files, async (file: string) => {
   console.log(`Current file: ${file}`);
