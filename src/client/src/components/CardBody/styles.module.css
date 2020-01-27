@@ -11,7 +11,11 @@
 
 .versionGridLayout{
   display: grid;
-  grid-template-columns: 3.5rem auto;
+  grid-template-columns: auto auto;
+}
+
+.versionGridLayout .latestVersion{
+  padding-left: 0.5rem;
 }
 
 .svg {

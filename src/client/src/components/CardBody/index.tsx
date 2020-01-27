@@ -30,7 +30,7 @@ const CardBody = ({
       {version &&
       <div className={styles.versionGridLayout}>
         <div>v{version}</div>
-        {latestVersion && latestVersion!==version && <div>(latest version: v{latestVersion})</div>}
+        {latestVersion && latestVersion!==version && <div className={styles.latestVersion}>(latest version: v{latestVersion})</div>}
       </div>}
       {expectedPrice &&
         <div className={styles.expectedPrice}>
