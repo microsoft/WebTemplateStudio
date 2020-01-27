@@ -47,6 +47,7 @@ function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
     selected: val.selected,
     svgUrl: getSvgUrl(val.name),
     title: val.displayName,
-    version: val.tags!.version
+    version: val.tags!.version,
+    latestVersion: val.tags!.latestVersion
   }));
 }

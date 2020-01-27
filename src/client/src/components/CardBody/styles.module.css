@@ -9,8 +9,9 @@
   margin-bottom: 0.5em;
 }
 
-.version {
-  margin-bottom: 5px;
+.versionGridLayout{
+  display: grid;
+  grid-template-columns: 3.5rem auto;
 }
 
 .svg {

@@ -355,7 +355,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
               body,
               unselectable,
               internalName,
-              version
+              version,
+              latestVersion
             } = option;
             return (
               <SelectableCard
@@ -374,6 +375,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 title={title as string}
                 body={body as string}
                 version={version}
+                latestVersion={latestVersion}
                 disabled={unselectable}
                 clickCount={this.getCardCount(internalName)}
                 addPage={(cardNumber: number) => this.addPage(cardNumber)}

@@ -29,6 +29,7 @@ const SelectableCard = ({
   title,
   body,
   version,
+  latestVersion,
   selected,
   cardNumber,
   onCardClick,
@@ -48,6 +49,7 @@ const SelectableCard = ({
   title: string;
   body: string;
   version?: string;
+  latestVersion?:string;
   selected: boolean;
   option: IOption;
   cardNumber: number;
@@ -126,7 +128,7 @@ const SelectableCard = ({
         <div className={grid.row}>
           <div className={styles.body}>
             {version ? (
-              <CardBody body={body} version={version} />
+              <CardBody body={body} version={version} latestVersion={latestVersion} />
             ) : (
               <CardBody body={body} />
             )}

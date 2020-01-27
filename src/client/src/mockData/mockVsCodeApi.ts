@@ -88,6 +88,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "16.8.4",
+                      latestVersion: "16.8.4",
                       preview: false,
                       enabled: true,
                       type: "frontend"
@@ -120,6 +121,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "7.2.0",
+                      latestVersion: "",
                       preview: false,
                       enabled: true,
                       type: "frontend"
@@ -150,6 +152,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "2.6.6",
+                      latestVersion: "2.6.8",
                       preview: true,
                       enabled: true,
                       type: "frontend"
@@ -188,6 +191,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "10.15.0",
+                      latestVersion: "10.15.0",
                       preview: false,
                       enabled: true,
                       type: "backend"
@@ -205,6 +209,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "0.13.12",
+                      latestVersion: "0.13.15",
                       preview: false
                     }
                   },
@@ -230,6 +235,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "1.0.3",
+                      latestVersion: "1.0.6",
                       preview: false,
                       enabled: true,
                       type: "backend"
