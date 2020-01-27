@@ -2,7 +2,9 @@ const child_process = require("child_process");
 const path = require("path");
 const fs = require("fs");
 const del = require("del");
-const warningColor = "\x1b[33m%s\x1b[0m";
+const cyanColor = "\x1b[36m%s\x1b[0m";
+const redColor = "\x1b[31m%s\x1b[0m";
+const yellowColor = "\x1b[33m%s\x1b[0m";
 
 const testFolder = path.join(
   __dirname,
@@ -12,7 +14,7 @@ const testFolder = path.join(
   "..",
   "template_test"
 );
-console.log(`Run test scripts from ${testFolder}`);
+console.log(cyanColor, `Run test scripts from ${testFolder}`);
 
 let files: string[] = [];
 fs.readdirSync(testFolder).forEach((file: string) => {
@@ -26,7 +28,7 @@ async function asyncForEach(array: string[], callback: any) {
 }
 
 asyncForEach(files, async (file: string) => {
-  console.log(`Current file: ${file}`);
+  console.log(cyanColor, `Current project: ${file}`);
 
   let packageJsonFile = path.join(testFolder, file, file, "package.json");
   let packageJson = require(packageJsonFile);
@@ -51,7 +53,7 @@ asyncForEach(files, async (file: string) => {
   });
 
 function installDependencies(file: string) {
-  console.log("Installing dependencies");
+  console.log(cyanColor, "Installing dependencies");
   const currDir = path.join(testFolder, file, file);
   child_process.execSync("yarn install", {
     cwd: currDir,
@@ -60,7 +62,7 @@ function installDependencies(file: string) {
   });
 
   if (file.indexOf("Flask") > -1) {
-    console.log("Installing Python dependencies");
+    console.log(cyanColor, "Installing Python dependencies");
     child_process.execSync("yarn install-requirements", {
       cwd: currDir,
       stdio: "inherit",
@@ -70,6 +72,7 @@ function installDependencies(file: string) {
 }
 
 function executeLintScript(file: string) {
+  console.log(cyanColor, "Execute lint script");
   try {
     child_process.execSync("yarn lint --no-fix", {
       cwd: path.join(testFolder, file, file),
@@ -82,6 +85,7 @@ function executeLintScript(file: string) {
 }
 
 async function executeStartScript(file: string) {
+  console.log(cyanColor, "Execute Start script");
   let serverProcess;
   try {
     serverProcess = child_process.exec(
@@ -93,13 +97,12 @@ async function executeStartScript(file: string) {
       },
       (error: any, stdout: any, stderr: any) => {
         if (error) {
-          console.error(`Error from running yarn start: ${error}`);
+          console.error(redColor, `Error from running yarn start: ${error}`);
           return;
         }
         if (stderr) {
           throw stderr;
         }
-        console.log(`Stdout from yarn start: ${stdout}`);
       }
     );
     serverProcess.stdout.on("data", (data: any) => {
@@ -120,6 +123,7 @@ async function executeStartScript(file: string) {
 }
 
 async function executeTestScript(file: string, packageJson: any) {
+  console.log(cyanColor, "Execute test script");
   let testProcess;
   try {
     if (packageJson.scripts.test) {
@@ -132,13 +136,12 @@ async function executeTestScript(file: string, packageJson: any) {
         },
         (error: any, stdout: any, stderr: any) => {
           if (error) {
-            console.error(`Error from running yarn test: ${error}`);
+            console.error(redColor, `Error from running yarn test: ${error}`);
             return;
           }
           if (stderr) {
             throw stderr;
           }
-          console.log(`Stdout from yarn test: ${stdout}`);
         }
       );
       testProcess.stdout.on("data", (data: any) => {
@@ -148,20 +151,22 @@ async function executeTestScript(file: string, packageJson: any) {
         }
       });
     } else {
-      console.warn(warningColor, `The test script was not found in ${file}`);
+      console.warn(yellowColor, `The test script was not found in ${file}`);
     }
   } catch (err) {
-    console.log("Test errored out");
+    console.log(redColor, "Test errored out");
     throw err;
   }
-  await sleep(80000);
-  kill(testProcess.pid);
+  if(testProcess) {
+    await sleep(80000);
+    kill(testProcess.pid);
+  }
 }
 
 function deleteProject() {
-  console.log("Deleting generated projects");
+  console.log(cyanColor, "Deleting generated projects");
   del.sync(testFolder);
-  console.log("Finished deleting projects");
+  console.log(cyanColor, "Finished deleting projects");
   if (!fs.existsSync(testFolder)) {
     fs.mkdirSync(testFolder);
   }
@@ -172,15 +177,16 @@ function kill(pid: any) {
     child_process.execSync(
       "taskkill /PID " + pid + " /T /F",
       (error: any, stdout: any, stderr: any) => {
-        console.log("Stdout from kill: " + stdout);
-        console.log("Stderr from kill:" + stderr);
+        console.log(cyanColor, "Stdout from kill: " + stdout);
+        console.log(cyanColor, "Stderr from kill:" + stderr);
         if (error !== null) {
-          console.log("Error from kill: " + error);
+          console.log(redColor, "Error from kill: " + error);
         }
       }
     );
   } catch (err) {
-    console.log(`Error from taskkill: ${err}`);
+    console.log(redColor, `Error from taskkill: ${err}`);
+    throw err;
   }
 }
 
