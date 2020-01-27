@@ -196,10 +196,11 @@
   "topNavBar.pages": "Pages",
   "topNavBar.services": "Add Optional Cloud Services",
   "topNavBar.summary": "Summary",
-  "validations.comun.duplicateName": "Name is reserved",
-  "validations.comun.emptyName": "Name cannot be empty",
-  "validations.comun.nameStartLetter": "Name may only start with letters",
-  "validations.comun.nameStartWith$": "Name cannot begin with $",
+  "validations.common.emptyName": "Name cannot be empty",
+  "validations.common.nameStartLetter": "Name may only start with letters",
+  "validations.common.reservedName": "Name is reserved",
+  "validations.name.duplicateName": "Name has to be unique",
   "validations.name.nameContainLettersNumbersDashes": "Name may only contain letters, numbers or dashes",
+  "validations.project.duplicateName": "Directory already exists in the specified path. Please choose a unique name.",
   "viewLicensesModal.closeModalLabel": "Close"
 }

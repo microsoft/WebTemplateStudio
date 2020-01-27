@@ -160,9 +160,10 @@
   "ariaLabels.currentPage",
   "ariaLabels.disabledPage",
   "default",
-  "validations.comun.emptyName",
-  "validations.comun.duplicateName",
-  "validations.comun.nameStartWith$",
-  "validations.comun.nameStartLetter",
+  "validations.common.emptyName",
+  "validations.name.duplicateName",
+  "validations.project.duplicateName",
+  "validations.common.reservedName",
+  "validations.common.nameStartLetter",
   "validations.name.nameContainLettersNumbersDashes"
 ]
