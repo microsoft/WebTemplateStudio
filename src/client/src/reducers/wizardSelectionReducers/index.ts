@@ -5,6 +5,7 @@ import frontendFramework from "./selectFrontendFrameworkReducer";
 import pages from "./selectPagesReducer";
 import appType from "./selectWebAppReducer";
 import projectNameObject from "./updateProjectName";
+import validations from "./setValidations";
 import outputPathObject from "./updateOutputPath";
 import services from "./services";
 import pageCount from "./pageCountReducer";
@@ -19,7 +20,8 @@ const selectionStateReducer = combineReducers({
   outputPathObject,
   pageCount,
   isValidatingName,
-  projectNameObject
+  projectNameObject,
+  validations
 });
 
 export default selectionStateReducer;

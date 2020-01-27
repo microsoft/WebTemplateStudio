@@ -18,13 +18,17 @@ import { ReactComponent as HideIcon } from "../../assets/i-hide.svg";
 import { ReactComponent as ResetIcon } from "../../assets/i-reset.svg";
 import { ReactComponent as Plus } from "../../assets/plus.svg";
 
-import { validateName } from "../../utils/validateName";
-
 import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 
 import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
+import { validateItemName} from "../../utils/validations/itemName/itemName";
+import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
+import {
+  getValidations
+} from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import messages from "./messages";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
@@ -37,6 +41,7 @@ interface IStateProps {
   isSummaryPage?: boolean;
   selectionTitle?: string;
   handleResetPages: () => void;
+  validations: IValidations;
 }
 
 interface ISortableDispatchProps {
@@ -53,32 +58,14 @@ type Props = ISortablePageListProps &
   IStateProps &
   IIntlProps;
 
-const messages = defineMessages({
-  duplicateName: {
-    id: "sortablePageList.duplicateName",
-    defaultMessage: "Page name has to be unique"
-  },
-  hide: {
-    id: "sortablePageList.hide",
-    defaultMessage: "Hide"
-  },
-  show: {
-    id: "sortablePageList.show",
-    defaultMessage: "Show"
-  },
-  pages: {
-    id: "sortablePageList.pages",
-    defaultMessage: "Pages"
-  }
-});
-
 const SortablePageList = (props: Props) => {
   const {
     vscode,
     selectedPages,
     selectPages,
     isSummaryPage,
-    openAddPagesModal
+    openAddPagesModal,
+    validations
   } = props;
   const [pages, setPages] = React.useState(selectedPages);
   const [isMinimized, setMinimized] = React.useState(false);
@@ -87,21 +74,13 @@ const SortablePageList = (props: Props) => {
     setPages(selectedPages);
   }, [selectedPages]);
 
-  const handleInputChange = (newTitle: string, idx: number) => {
+  const handleInputChange = async (newTitle: string, idx: number) => {
     pages[idx].title = newTitle;
     pages[idx].error = "";
-    const validationResult = validateName(pages[idx].title, "page");
-    if (validationResult.error) {
-      pages[idx].error = props.intl!.formatMessage(validationResult.error);
-    }
+    const validationResult = await validateItemName(newTitle, validations.itemNameValidationConfig, selectedPages);
+    pages[idx].error = validationResult.error;
     pages[idx].isValidTitle = validationResult.isValid;
-    for (let i = 0; i < pages.length; i++) {
-      if (pages[i].title === pages[idx].title && i !== idx) {
-        pages[idx].isValidTitle = false;
-        pages[idx].error = props.intl!.formatMessage(messages.duplicateName);
-        break;
-      }
-    }
+
     setPages(pages);
     props.selectPages(pages);
   };
@@ -187,9 +166,10 @@ const SortablePageList = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState): ISortablePageListProps => ({
+const mapStateToProps = (state: AppState) => ({
+  selectedPages: state.selection.pages,
+  validations: getValidations(state),
   vscode: getVSCodeApiSelector(state),
-  selectedPages: state.selection.pages
 });
 
 const mapDispatchToProps = (

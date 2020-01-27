@@ -34,8 +34,7 @@ import {
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
 import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
 import {
-  updateOutputPathAction,
-  updateProjectNameAction
+  updateOutputPathAction
 } from "./actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   setAccountAvailability,
@@ -46,7 +45,7 @@ import {
 import AzureLogin from "./containers/AzureLogin";
 import { getSubscriptionData } from "./actions/azureActions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
-import { setProjectPathValidation } from "./actions/wizardSelectionActions/setProjectPathValidation";
+import { setValidations } from "./actions/wizardSelectionActions/setValidations";
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
@@ -83,7 +82,6 @@ import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
 import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
-import frontendFramework from "./reducers/wizardSelectionReducers/selectFrontendFrameworkReducer";
 import AzureLoginModal from "./containers/AzureLoginModal";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
@@ -92,7 +90,6 @@ if (process.env.NODE_ENV === DEVELOPMENT) {
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
-  updateProjectName: (projectName: string) => any;
   getVSCodeApi: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
   startLogOutToAzure: () => any;
@@ -106,7 +103,7 @@ interface IDispatchProps {
   setSiteNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
-  setProjectPathValidation: (validation: any) => void;
+  setValidations: (validations: any) => void;
   setAzureValidationStatus: (status: boolean) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
@@ -141,7 +138,7 @@ class App extends React.Component<Props> {
     updateOutputPath: () => {},
     setCosmosResourceAccountNameAvailability: () => {},
     setAppNameAvailability: () => {},
-    setProjectPathValidation: () => {},
+    setValidations: () => {},
     setAzureValidationStatus: () => {},
     updateDependencyInfo: () => {},
     getBackendFrameworksSuccess: () => {},
@@ -155,6 +152,7 @@ class App extends React.Component<Props> {
 
   public componentDidMount() {
     this.props.getVSCodeApi();
+    const { vscode } = this.props;
     // listens for a login event from VSCode
     window.addEventListener("message", event => {
       const message = event.data;
@@ -185,11 +183,6 @@ class App extends React.Component<Props> {
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           if (message.payload != null && message.payload.outputPath != null) {
             this.props.updateOutputPath(message.payload.outputPath);
-          }
-          break;
-        case EXTENSION_COMMANDS.GET_PROJECT_NAME:
-          if (message.payload != null && message.payload.projectName != null) {
-            this.props.updateProjectName(message.payload.projectName);
           }
           break;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
@@ -245,19 +238,22 @@ class App extends React.Component<Props> {
           });
           this.props.setAzureValidationStatus(false);
           break;
-        case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
-          this.props.setProjectPathValidation(
-            message.payload.projectPathValidation
-          );
-          break;
         case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
           this.props.updateTemplateGenStatusMessage(message.payload.status);
           break;
         case EXTENSION_COMMANDS.GEN_STATUS:
           this.props.updateTemplateGenStatus(message.payload);
           break;
-        case EXTENSION_COMMANDS.GET_VERSIONS:
-          this.props.getVersionsData(message.payload);
+        case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
+          let versionData:IVersions = {
+            templatesVersion:message.payload.templatesVersion,
+            wizardVersion: message.payload.wizardVersion
+          };
+          this.props.getVersionsData(versionData);
+          this.props.setValidations({
+            itemNameValidationConfig:message.payload.itemNameValidationConfig,
+            projectNameValidationConfig:message.payload.projectNameValidationConfig
+          });
           break;
         case EXTENSION_COMMANDS.RESET_PAGES:
           if (message.payload.resetPages) {
@@ -390,9 +386,6 @@ const mapDispatchToProps = (
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
   },
-  updateProjectName: (projectName: string) => {
-    dispatch(updateProjectNameAction(projectName));
-  },
   setCosmosResourceAccountNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => {
@@ -404,8 +397,8 @@ const mapDispatchToProps = (
   setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => {
     dispatch(setSiteNameAvailabilityAction(isAvailableObject));
   },
-  setProjectPathValidation: (validation: any) => {
-    dispatch(setProjectPathValidation(validation));
+  setValidations: (validations: any) => {
+    dispatch(setValidations(validations));
   },
   setAzureValidationStatus: (status: boolean) => {
     dispatch(setAzureValidationStatusAction(status));

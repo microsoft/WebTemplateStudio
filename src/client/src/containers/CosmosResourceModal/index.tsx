@@ -41,7 +41,7 @@ import {
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { messages } from "./messages";
+import messages from "./messages";
 import classNames from "classnames";
 import keyUpHandler from "../../utils/keyUpHandler";
 

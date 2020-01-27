@@ -11,6 +11,7 @@ import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
+import messages from "./messages";
 
 interface IDispatchProps {
   openViewLicensesModal: () => any;
@@ -21,26 +22,6 @@ interface IStateProps {
 }
 
 type Props = IDispatchProps & IStateProps & InjectedIntlProps;
-
-const messages = defineMessages({
-  viewLicenses: {
-    id: "licenses.viewLicenses",
-    defaultMessage: "View Licenses"
-  },
-  launchYourProject: {
-    id: "instructionHeading.launchYourProject",
-    defaultMessage: "Launch Your Project"
-  },
-  almostDone: {
-    id: "context.almostDone",
-    defaultMessage:
-      "You're almost done - review your project details on the right and make any necessary adjustments!"
-  },
-  quickStart: {
-    id: "context.quickStart",
-    defaultMessage: `Woo-hoo! You skipped to the end where we'll get you started quickly. Just click "Create Project".`
-  }
-});
 
 const ReviewAndGenerate = (props: Props) => {
   const { intl, openViewLicensesModal, quickStartEnabled } = props;

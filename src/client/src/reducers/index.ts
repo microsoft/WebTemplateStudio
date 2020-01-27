@@ -40,11 +40,11 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
       dependencyInfo: undefined,
       generationStatus: undefined,
       modals: undefined,
-      selection: undefined,
+      selection: {validations:state!.selection.validations},
       versions: state!.versions,
       vscode: state!.vscode,
       wizardContent: { previewStatus },
-      wizardRoutes: undefined
+      wizardRoutes: undefined,
     };
   } else {
     passedState = state;

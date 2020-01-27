@@ -1,22 +1,7 @@
 import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
 import { FormattedMessage } from "react-intl";
-import { messages } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import messages from "../../../selectors/wizardSelectionSelector/messages";
 import AzureActionType from "../../../actions/azureActions/azureActionType";
-
-/* State Shape
-{
-  cosmosDB: {
-    appNameAvailability: {
-        isAppNameAvailable: boolean,
-        message: string
-    },
-    selection: [],
-    wizardContent: {
-      serviceType: string,
-    }
-  }
-}
-*/
 
 export interface IAvailability {
   isAccountNameAvailable: boolean;
