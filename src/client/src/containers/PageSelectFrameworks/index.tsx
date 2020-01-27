@@ -20,8 +20,8 @@ import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
 import { IOption } from "../../types/option";
 import { parseFrameworksPayload } from "../../utils/parseFrameworksPayload";
-import { getBackendFrameworksSuccess } from "../../actions/wizardContentActions/getBackendFrameworks";
-import { getFrontendFrameworksSuccess } from "../../actions/wizardContentActions/getFrontendFrameworks";
+import { setBackendFrameworks } from "../../actions/wizardContentActions/getBackendFrameworks";
+import { setFrontendFrameworks } from "../../actions/wizardContentActions/getFrontendFrameworks";
 
 interface ISelectFrameworksProps {
   vscode: IVSCodeObject;
@@ -29,15 +29,15 @@ interface ISelectFrameworksProps {
 }
 
 interface IDispatchProps {
-  getBackendFrameworksSuccess: (frameworks: IOption[]) => any;
-  getFrontendFrameworksSuccess: (frameworks: IOption[]) => any;
+  setBackendFrameworks: (frameworks: IOption[]) => any;
+  setFrontendFrameworks: (frameworks: IOption[]) => any;
 }
 
 type Props = ISelectFrameworksProps & IDispatchProps;
 
 const SelectFrameworks = (props:Props) => {
   React.useEffect(()=>{
-    const { vscode, isPreview, getFrontendFrameworksSuccess, getBackendFrameworksSuccess } = props;
+    const { vscode, isPreview, setFrontendFrameworks, setBackendFrameworks } = props;
     // send messages to extension to check dependency info when this component loads
     vscode.postMessage({
       module: EXTENSION_MODULES.DEPENDENCYCHECKER,
@@ -62,14 +62,14 @@ const SelectFrameworks = (props:Props) => {
       }
     }, vscode).then((event:any)=>{
       let message = event.data;
-      getFrontendFrameworksSuccess(
+      setFrontendFrameworks(
         parseFrameworksPayload(
           message.payload.frameworks,
           FRAMEWORK_TYPE.FRONTEND,
           message.payload.isPreview
         )
       );
-      getBackendFrameworksSuccess(
+      setBackendFrameworks(
         parseFrameworksPayload(
           message.payload.frameworks,
           FRAMEWORK_TYPE.BACKEND,
@@ -95,11 +95,11 @@ interface IStateProps {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  getBackendFrameworksSuccess: (frameworks: IOption[]) => {
-    dispatch(getBackendFrameworksSuccess(frameworks));
+  setBackendFrameworks: (frameworks: IOption[]) => {
+    dispatch(setBackendFrameworks(frameworks));
   },
-  getFrontendFrameworksSuccess: (frameworks: IOption[]) => {
-    dispatch(getFrontendFrameworksSuccess(frameworks));
+  setFrontendFrameworks: (frameworks: IOption[]) => {
+    dispatch(setFrontendFrameworks(frameworks));
   }
 });
 

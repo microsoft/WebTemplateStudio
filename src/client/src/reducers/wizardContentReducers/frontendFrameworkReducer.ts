@@ -13,7 +13,7 @@ const frontendFrameworkOptions = (
   action: WizardContentActionType
 ) => {
   switch (action.type) {
-    case WIZARD_CONTENT_TYPEKEYS.GET_FRONTEND_FRAMEWORKS_SUCCESS:
+    case WIZARD_CONTENT_TYPEKEYS.SET_FRONTEND_FRAMEWORKS:
       const newState = [...state];
       for (const frameworkToAdd of action.payload) {
         let found = false;
