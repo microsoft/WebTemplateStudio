@@ -22,6 +22,7 @@ import { CoreTSModule } from "./coreTSModule";
 import { Defaults } from "./utils/defaults";
 import { Telemetry } from "./client-modules/telemetry";
 import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
+import { ISyncReturnType } from "./types/syncReturnType";
 
 export class Controller {
   /**
@@ -85,6 +86,7 @@ export class Controller {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_MODULE);
     }
   }
+
   /**
    * Provides access to the Controller. Maintains Singleton Pattern. Function will bring up ReactPanel to View if Controller instance exists, otherwise will instantiate a new Controller.
    * @param message The payload received from the wizard client. Message payload must include field 'module'
@@ -164,9 +166,9 @@ export class Controller {
 
       Controller.loadUserSettings();
 
-      Controller.getVersionAndSendToClient(
+      Controller.getTemplateInfoAndSendToClient(
         context,
-        syncObject.templatesVersion
+        syncObject
       );
       this.Telemetry.trackCreateNewProject({
         entryPoint: CONSTANTS.TELEMETRY.LAUNCH_WIZARD_STARTED_POINT
@@ -174,15 +176,17 @@ export class Controller {
     }
   }
 
-  private static getVersionAndSendToClient(
+  private static getTemplateInfoAndSendToClient(
     ctx: vscode.ExtensionContext,
-    templatesVersion: string
+    syncObject: ISyncReturnType
   ) {
     Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetVersions,
+      command: ExtensionCommand.GetTemplateInfo,
       payload: {
-        templatesVersion,
-        wizardVersion: getExtensionVersionNumber(ctx)
+        templatesVersion:syncObject.templatesVersion,
+        wizardVersion: getExtensionVersionNumber(ctx),
+        itemNameValidationConfig: syncObject.itemNameValidationConfig,
+        projectNameValidationConfig: syncObject.projectNameValidationConfig,
       }
     });
   }

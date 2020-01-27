@@ -165,12 +165,15 @@ const EXTENSION_COMMANDS = {
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
+  GET_TEMPLATE_INFO: "get-template-info",
+  CLOSE_WIZARD: "close-wizard",
   GET_VERSIONS: "get-versions",
   RESET_PAGES: "reset-pages",
   GET_PREVIEW_STATUS: "get-preview",
   GET_DEPENDENCY_INFO: "check-dependency",
   GET_FRAMEWORKS: "get-frameworks",
-  GET_PAGES: "get-pages"
+  GET_PAGES: "get-pages",
+  GET_VALIDATIONS: "get-validations"
 };
 
 const TELEMETRY = {

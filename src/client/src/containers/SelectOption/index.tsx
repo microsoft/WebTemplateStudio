@@ -18,27 +18,11 @@ import RootAction from "../../actions/ActionType";
 import { AppState } from "../../reducers";
 
 import { isAddPagesModalOpenSelector } from "../../selectors/modalSelector";
+import { ISelectedPages, mapStateSelectedPages } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import { InjectedIntl, defineMessages, injectIntl } from "react-intl";
-
-const messages = defineMessages({
-  limitedPages: {
-    id: "pages.limitedPagesMessage",
-    defaultMessage: "You can select up to 20 pages"
-  },
-  overlimitPages: {
-    id: "pages.overlimitPagesMessage",
-    defaultMessage: "You cannot add more than 20 pages to the project"
-  },
-  noPageGeneration: {
-    id: "pages.noPageGeneration",
-    defaultMessage: "At least 1 page must be selected"
-  },
-  iconAltMessage: {
-    id: "pages.maxPagesText",
-    defaultMessage: "Notification"
-  }
-});
+import { inferItemName} from "../../utils/infer/itemName";
+import messages from "./messages";
 
 interface ICount {
   [key: string]: number;
@@ -78,7 +62,7 @@ interface IStateProps {
   isAddPagesModalOpen: boolean;
 }
 
-type Props = IDispatchProps & ISelectOptionProps & IStateProps & IProps;
+type Props = IDispatchProps & ISelectOptionProps & IStateProps & ISelectedPages & IProps;
 
 class SelectOption extends React.Component<Props, ISelectOptionState> {
   constructor(props: Props) {
@@ -115,16 +99,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     return this.state.selectedCardIndices.includes(cardNumber);
   }
 
-  /**
-   * Creates a title for the card being selected (e.g. selected Page).
-   * Prepends a number of a certain card is selected more than once.
-   * Only changes the title of the last card selected.
-   *
-   * @param selectedCardIndex
-   * @param optionIndexContainingData
-   * @param count
-   * @param cardData
-   */
   public createTitle(optionIndexContainingData: number, count: number) {
     const { title } = this.props.options[optionIndexContainingData];
     if (count === 1) {
@@ -133,7 +107,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     return `${title}${count}`;
   }
 
-  public mapIndexToCardInfo(
+  public async mapIndexToCardInfo(
     count: number,
     internalName: string,
     optionIndexContainingData: number
@@ -141,8 +115,8 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     const { defaultName, licenses, author } = this.props.options[
       optionIndexContainingData
     ];
-    const title = this.createTitle(optionIndexContainingData, count);
-
+    const selectedPages:Array<any> = this.props.selectedPages;
+    const title = await inferItemName(defaultName ? defaultName : "", selectedPages);
     const cardInfo: ISelected = {
       title: title as string,
       internalName,
@@ -150,17 +124,12 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       defaultName,
       isValidTitle: true,
       licenses,
-      author
+      author,
+      ref:React.createRef()
     };
     return cardInfo;
   }
 
-  /**
-   * Allows more than one option to be selected at a time.
-   * Updates the redux store with the selection.
-   *
-   * @param cardNumber
-   */
   public addOption(
     cardNumber: number,
     cardCount: number,
@@ -168,16 +137,18 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   ) {
     const { selectedCardIndices, currentCardData, selectOptions } = this.props;
     selectedCardIndices.push(cardNumber);
+    const suggesteName="";
     if (selectOptions && currentCardData) {
-      const currentCards = currentCardData.splice(0);
-      currentCards.push(
-        this.mapIndexToCardInfo(cardCount, internalName, cardNumber)
-      );
-      selectOptions(currentCards);
+      this.mapIndexToCardInfo(cardCount, internalName, cardNumber).then(card=>{
+        const currentCards = currentCardData.splice(0);
+        currentCards.push(card);
+        selectOptions(currentCards);
+        this.setState({selectedCardIndices});
+        card.ref.current.focus();
+      });
+    }else{
+      this.setState({selectedCardIndices});
     }
-    this.setState({
-      selectedCardIndices
-    });
   }
 
   public removeOption(internalName: string) {
@@ -198,12 +169,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     }
   }
 
-  /**
-   * Ensures only one option can be selected at a time.
-   * Updates the component state and the redux store with selection.
-   *
-   * @param cardNumber
-   */
   public exchangeOption(cardNumber: number) {
     const { selectedCardIndices } = this.state;
     const { selectCard, options } = this.props;
@@ -239,11 +204,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
     }
   }
 
-  /**
-   * Returns the number of times that a particular card was selected/clicked on.
-   *
-   * If card can only be clicked once, this function returns undefined.
-   */
   public getCardCount = (internalName: string) => {
     const { selectedCardIndices, multiSelect, options } = this.props;
     if (selectedCardIndices && multiSelect) {
@@ -379,7 +339,6 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
                 disabled={unselectable}
                 clickCount={this.getCardCount(internalName)}
                 addPage={(cardNumber: number) => this.addPage(cardNumber)}
-                removePage={(cardNumber: number) => this.removePage(cardNumber)}
                 showLink={!isAddPagesModalOpen}
               />
             );
@@ -390,7 +349,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
   }
 }
 
-const mapStateToProps = (state: AppState): IStateProps => ({
+const mapStateToPropsOpenModal = (state: AppState): IStateProps => ({
   isAddPagesModalOpen: isAddPagesModalOpenSelector(state)
 });
 
@@ -403,6 +362,6 @@ const mapDispatchToProps = (
 });
 
 export default connect(
-  mapStateToProps,
+  mapStateToPropsOpenModal && mapStateSelectedPages,
   mapDispatchToProps
 )(injectIntl(SelectOption));

@@ -543,11 +543,11 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
-        case EXTENSION_COMMANDS.GET_VERSIONS:
+        case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
           // produces a mock login response from VSCode in development
           window.postMessage(
             {
-              command: EXTENSION_COMMANDS.GET_VERSIONS,
+              command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
               payload: {
                 wizardVersion: "1.x",
                 templatesVersion: "1.x"

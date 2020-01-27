@@ -27,6 +27,7 @@ import {
   FormattedMessage
 } from "react-intl";
 import { format } from "path";
+import messages from "./messages";
 
 interface IDispatchProps {
   openRedirectModal: (license: IRedirectModalData | undefined) => any;
@@ -40,21 +41,6 @@ interface IProps {
 }
 
 type Props = IProps & IDispatchProps;
-
-const messages = defineMessages({
-  none: {
-    id: "details.none",
-    defaultMessage: "None"
-  },
-  redirectLabel: {
-    id: "licenses.redirectLinkLabel",
-    defaultMessage: "{redirectLabel}"
-  },
-  genericRedirect: {
-    id: "redirectLabel.generic",
-    defaultMessage: "here"
-  }
-});
 
 const Details = ({
   detailInfo,

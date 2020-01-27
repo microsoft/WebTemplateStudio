@@ -11,42 +11,16 @@ import styles from "./styles.module.css";
 
 import { ROUTES_ARRAY } from "../../utils/constants";
 import { IRoutes } from "../../reducers/wizardRoutes/navigationReducer";
-import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
-
-const messages = defineMessages({
-  ariaNavLabel: {
-    defaultMessage: "Navigate between pages in the Wizard",
-    id: "topNavBar.ariaNavLabel"
-  },
-  frameworks: {
-    id: "topNavBar.frameworks",
-    defaultMessage: "Add Frameworks"
-  },
-  pages: {
-    id: "topNavBar.pages",
-    defaultMessage: "Add Pages"
-  },
-  services: {
-    defaultMessage: "Add Optional Cloud Services",
-    id: "topNavBar.services"
-  },
-  summary: {
-    defaultMessage: "Summary",
-    id: "topNavBar.summary"
-  },
-  welcome: {
-    defaultMessage: "New Project",
-    id: "topNavBar.newProject"
-  }
-});
+import messages from "./messages";
 
 interface IStateProps {
   isVisited: IRoutes;
-  isValidNameAndProjectPath: boolean;
+  isEnableNextPage: boolean;
 }
 
 interface IDispatchProps {
@@ -81,7 +55,7 @@ const TopNavBar = (props: Props) => {
   React.useEffect(() => {
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
   });
-  const { isVisited, intl, isValidNameAndProjectPath, setPage } = props;
+  const { isVisited, intl, isEnableNextPage, setPage } = props;
   return (
     <React.Fragment>
       {
@@ -92,7 +66,7 @@ const TopNavBar = (props: Props) => {
           <div>
             {topNavBarData.map((sidebartitle, idx) => {
               const alreadyVisitedRouteAndCanVisit =
-                isVisited[ROUTES_ARRAY[idx]] && isValidNameAndProjectPath;
+                isVisited[ROUTES_ARRAY[idx]] && isEnableNextPage;
               const isOtherVisitedRoute =
                 idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]];
 
@@ -137,7 +111,7 @@ const TopNavBar = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => ({
-  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
+  isEnableNextPage: isEnableNextPage(state),
   isVisited: state.wizardRoutes.isVisited
 });
  

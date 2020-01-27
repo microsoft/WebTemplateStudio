@@ -14,7 +14,7 @@ import styles from "./styles.module.css";
 import classnames from "classnames";
 import { FormattedMessage } from "react-intl";
 import keyUpHandler from "../../utils/keyUpHandler";
-import { strings as messages } from "./strings";
+import messages from "./messages";
 import { KEY_EVENTS } from "../../utils/constants";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";

@@ -28,7 +28,6 @@ import {
 import RootAction from "../../actions/ActionType";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
-import { validateName } from "../../utils/validateName";
 
 interface IProps {
   functionApps: IAzureFunctionsSelection;
@@ -84,24 +83,6 @@ const AzureFunctionsSelection = ({
     const { functionNames } = functionApps.selection[0];
     if (functionNames) {
       functionNames[idx].title = newTitle;
-      functionNames[idx].error = "";
-      const validationResult = validateName(
-        functionNames[idx].title,
-        "function"
-      );
-      if (validationResult.error) {
-        functionNames[idx].error = intl.formatMessage(validationResult.error);
-      }
-      functionNames[idx].isValidTitle = validationResult.isValid;
-      for (let i = 0; i < functionNames.length; i++) {
-        if (functionNames[i].title === functionNames[idx].title && i !== idx) {
-          functionNames[idx].isValidTitle = false;
-          functionNames[idx].error = intl.formatMessage(
-            messages.duplicateFunctionName
-          );
-          break;
-        }
-      }
       updateFunctionNames({
         appIndex: 0,
         functionNames

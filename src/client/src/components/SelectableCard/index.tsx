@@ -13,16 +13,14 @@ import grid from "../../css/grid.module.css";
 import styles from "./styles.module.css";
 
 import { IOption } from "../../types/option";
-import { FormattedMessage } from "react-intl";
+
 import { ROUTES, KEY_EVENTS } from "../../utils/constants";
 import { getSvg } from "../../utils/getSvgUrl";
 
 import { ReactComponent as Plus } from "../../assets/plus.svg";
-import { ReactComponent as Subtract } from "../../assets/subtract.svg";
-import plus from "../../assets/plus.svg";
-import subtract from "../../assets/subtract.svg";
-import keyUpHandler from "../../utils/keyUpHandler";
 
+import keyUpHandler from "../../utils/keyUpHandler";
+import messages from "./messages";
 const SelectableCard = ({
   iconPath,
   iconStyles,
@@ -40,7 +38,6 @@ const SelectableCard = ({
   isFrameworkSelection,
   isPagesSelection,
   addPage,
-  removePage,
   showLink,
   intl
 }: {
@@ -60,10 +57,11 @@ const SelectableCard = ({
   isFrameworkSelection: boolean;
   isPagesSelection: boolean;
   addPage: (idx: number) => void;
-  removePage: (idx: number) => void;
   showLink: boolean;
   intl: InjectedIntl;
 }) => {
+  const [isShown, setIsShown] = React.useState(false);
+
   function detailsClickWrapper(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) {
@@ -77,20 +75,7 @@ const SelectableCard = ({
     }
   };
 
-  const messages = defineMessages({
-    learnMore: {
-      id: "selectableCard.details",
-      defaultMessage: "Learn more"
-    },
-    preview: {
-      id: "selectableCard.preview",
-      defaultMessage: "Preview"
-    },
-    pageCount: {
-      id: "selectableCard.pageCount",
-      defaultMessage: "{number} {page}"
-    }
-  });
+  
 
   return (
     <div
@@ -98,16 +83,19 @@ const SelectableCard = ({
       tabIndex={0}
       onClick={() => {
         onCardClick(cardNumber);
+        addPage(cardNumber);
       }}
       onKeyDown={keyDownHandler}
       className={classNames(styles.container, styles.boundingBox, {
         [styles.selected]: selected,
         [styles.unselectable]: disabled
       })}
+      onMouseEnter={() => setIsShown(true)}
+      onMouseLeave={() => setIsShown(false)}
     >
       <div>
-        <div className={styles.cardHeader}>
-          <div className={styles.icon}>
+        <div className={styles.gridLayoutCardHeader}>
+          <div>
             {getSvg(option.internalName, iconStyles) ||
               (iconPath && (
                 <img src={iconPath} className={iconStyles} alt="" />
@@ -121,6 +109,15 @@ const SelectableCard = ({
           >
             <CardTitle title={title} />
           </div>
+          {isPagesSelection && isShown &&(
+            <div className={styles.pageButtons}>
+            <button
+              className={classNames(styles.cardCount, styles.countButton)}
+            >
+              <Plus />
+            </button>
+            </div>
+          )}
         </div>
         {isFrameworkSelection && selected && (
           <DependencyInfo frameworkName={option.internalName} />
@@ -135,7 +132,7 @@ const SelectableCard = ({
           </div>
         </div>
       </div>
-      <div className={styles.cardFooter}>
+      <div className={styles.gridLayoutCardFooter}>
         {showLink && (
           <Link
             onClick={detailsClickWrapper}
@@ -148,16 +145,7 @@ const SelectableCard = ({
               : intl.formatMessage(messages.learnMore)}
           </Link>
         )}
-        <div className={styles.pageButtons}>
-          {isPagesSelection && (
-            <button
-              className={classNames(styles.cardCount, styles.countButton)}
-              onClick={() => removePage(cardNumber)}
-              disabled={!clickCount}
-            >
-              {subtract && <Subtract className={styles.subtractSVG} />}
-            </button>
-          )}
+        <div className={styles.pageCounter}>
           <div
             className={classNames({
               [styles.hidden]: !selected && !isPagesSelection,
@@ -180,14 +168,6 @@ const SelectableCard = ({
               </div>
             )}
           </div>
-          {isPagesSelection && (
-            <button
-              className={classNames(styles.cardCount, styles.countButton)}
-              onClick={() => addPage(cardNumber)}
-            >
-              {plus && <Plus />}
-            </button>
-          )}
         </div>
       </div>
     </div>

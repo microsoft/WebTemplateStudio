@@ -14,18 +14,7 @@ import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
 import { IRedirectModalData } from "../RedirectModal";
 import Notification from "../../components/Notification";
-
-const messages = defineMessages({
-  notInstalled: {
-    id: "dependencyChecker.notInstalledMessage",
-    defaultMessage:
-      "{dependencyName} {minimumVersion} not detected. Click to install."
-  },
-  iconAltMessage: {
-    id: "dependencyChecker.iconAltMessage",
-    defaultMessage: "Notification"
-  }
-});
+import messages from "./messages";
 
 export interface IDependency {
   dependencyStoreKey: string;

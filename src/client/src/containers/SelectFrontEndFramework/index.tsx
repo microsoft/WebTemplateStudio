@@ -32,6 +32,7 @@ import {
   IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
 import { optionCSS } from "react-select/lib/components/Option";
+import messages from "./messages";
 
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
@@ -51,13 +52,6 @@ interface ISelectFrontEndFrameworkProps {
 }
 
 type Props = IDispatchProps & ISelectFrontEndFrameworkProps & InjectedIntlProps;
-
-const messages = defineMessages({
-  selectFrontendFramework: {
-    id: "selectFrontendFramework.selectFrontendFramework",
-    defaultMessage: "Select a front-end framework"
-  }
-});
 
 class SelectFrontEndFramework extends React.Component<Props> {
   public handleFrameworkChange = (option: ISelected) => {

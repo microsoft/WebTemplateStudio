@@ -3,81 +3,107 @@ const path = require("path");
 const fs = require("fs");
 const del = require("del");
 import asyncForEach from "../utils/extensions";
+const cyanColor = "\x1b[36m%s\x1b[0m";
+const redColor = "\x1b[31m%s\x1b[0m";
+const yellowColor = "\x1b[33m%s\x1b[0m";
 
-const testFolder = path.join(__dirname, "..", "..", "..", "..", "template_test");
-console.log(testFolder);
+const testFolder = path.join(
+  __dirname,
+  "..",
+  "..",
+  "..",
+  "..",
+  "template_test"
+);
+console.log(cyanColor, `Run test scripts from ${testFolder}`);
+
 let files: string[] = [];
-
 fs.readdirSync(testFolder).forEach((file: string) => {
   files.push(file.toString());
 });
-
-function kill(pid: any) {
-  try {
-    child_process.execSync("taskkill /PID " + pid + " /T /F", (
-      error: any,
-      stdout: any,
-      stderr: any
-    ) => {
-      console.log("Stdout from kill: " + stdout);
-      console.log("Stderr from kill:" + stderr);
-      if (error !== null) {
-        console.log("Error from kill: " + error);
-      }
-    });
-  } catch (err) {
-    console.log(`Error from taskkill: ${err}`);
-  }
-}
-
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-/*async function asyncForEach(array: string[], callback: any) {
+/*
+async function asyncForEach(array: string[], callback: any) {
   for (let index = 0; index < array.length; index++) {
     await callback(array[index], index, array);
   }
 }*/
 
 asyncForEach(files, async (file: string) => {
-  console.log(`Current file: ${file}`);
+  console.log(cyanColor, `Current project: ${file}`);
 
+  let packageJsonFile = path.join(testFolder, file, file, "package.json");
+  let packageJson = require(packageJsonFile);
+
+  // TODO: Enable when Vue project has test script
+  // if(!packageJson.scripts.test) {
+  //  throw new Error(`Not test script in ${file}`);
+  // }
+
+  if (!packageJson.scripts.lint) {
+    throw new Error(`Not lint script in ${file}`);
+  }
+
+  installDependencies(file);
+  executeLintScript(file);
+  await executeStartScript(file);
+  await executeTestScript(file, packageJson);
+})
+  .then(() => deleteProject())
+  .catch(err => {
+    throw err;
+  });
+
+function installDependencies(file: string) {
+  console.log(cyanColor, "Installing dependencies");
   const currDir = path.join(testFolder, file, file);
   child_process.execSync("yarn install", {
     cwd: currDir,
     stdio: "inherit",
-    maxBuffer : 1024 * 1024
+    maxBuffer: 1024 * 1024
   });
+
   if (file.indexOf("Flask") > -1) {
-    console.log("Installing Python dependencies");
+    console.log(cyanColor, "Installing Python dependencies");
     child_process.execSync("yarn install-requirements", {
       cwd: currDir,
       stdio: "inherit",
-      maxBuffer : 1024 * 1024
+      maxBuffer: 1024 * 1024
     });
   }
+}
+
+function executeLintScript(file: string) {
+  console.log(cyanColor, "Execute lint script");
+  try {
+    child_process.execSync("yarn lint --no-fix", {
+      cwd: path.join(testFolder, file, file),
+      stdio: "inherit",
+      maxBuffer: 1024 * 1024
+    });
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function executeStartScript(file: string) {
+  console.log(cyanColor, "Execute Start script");
   let serverProcess;
-  let testProcess;
-  let packageJsonFile = path.join(testFolder, file, file, 'package.json');
-  let packageJson = require(packageJsonFile);
   try {
     serverProcess = child_process.exec(
       "yarn start",
       {
         cwd: path.join(testFolder, file, file),
         stdio: "inherit",
-        maxBuffer : 1024 * 1024
+        maxBuffer: 1024 * 1024
       },
       (error: any, stdout: any, stderr: any) => {
         if (error) {
-          console.error(`Error from running yarn start: ${error}`);
+          console.error(redColor, `Error from running yarn start: ${error}`);
           return;
         }
         if (stderr) {
           throw stderr;
         }
-        console.log(`Stdout from yarn start: ${stdout}`);
       }
     );
     serverProcess.stdout.on("data", (data: any) => {
@@ -95,24 +121,28 @@ asyncForEach(files, async (file: string) => {
   console.log("Localhost terminated");
 
   kill(serverProcess.pid);
+}
+
+async function executeTestScript(file: string, packageJson: any) {
+  console.log(cyanColor, "Execute test script");
+  let testProcess;
   try {
-    if(packageJson.scripts.test) {
+    if (packageJson.scripts.test) {
       testProcess = child_process.exec(
         "yarn test",
         {
           cwd: path.join(testFolder, file, file),
           stdio: "inherit",
-          maxBuffer : 1024 * 1024
+          maxBuffer: 1024 * 1024
         },
         (error: any, stdout: any, stderr: any) => {
           if (error) {
-            console.error(`Error from running yarn test: ${error}`);
+            console.error(redColor, `Error from running yarn test: ${error}`);
             return;
           }
           if (stderr) {
             throw stderr;
           }
-          console.log(`Stdout from yarn test: ${stdout}`);
         }
       );
       testProcess.stdout.on("data", (data: any) => {
@@ -120,27 +150,47 @@ asyncForEach(files, async (file: string) => {
         if (data.toString().indexOf("FAILED") > -1) {
           throw new Error("Error: Test failed");
         }
-      });    
+      });
+    } else {
+      console.warn(yellowColor, `The test script was not found in ${file}`);
     }
   } catch (err) {
-    console.log("Test errored out");
+    console.log(redColor, "Test errored out");
     throw err;
   }
-  await sleep(80000);
-  try {
+  if(testProcess) {
+    await sleep(80000);
     kill(testProcess.pid);
-  } catch (err) {
-    console.log(err);
   }
-})
-  .then(() => {
-    console.log("Deleting generated projects");
-    del.sync(testFolder);
-    console.log("Finished deleting projects");
-    if (!fs.existsSync(testFolder)) {
-      fs.mkdirSync(testFolder);
-    }
-  })
-  .catch(err => {
+}
+
+function deleteProject() {
+  console.log(cyanColor, "Deleting generated projects");
+  del.sync(testFolder);
+  console.log(cyanColor, "Finished deleting projects");
+  if (!fs.existsSync(testFolder)) {
+    fs.mkdirSync(testFolder);
+  }
+}
+
+function kill(pid: any) {
+  try {
+    child_process.execSync(
+      "taskkill /PID " + pid + " /T /F",
+      (error: any, stdout: any, stderr: any) => {
+        console.log(cyanColor, "Stdout from kill: " + stdout);
+        console.log(cyanColor, "Stderr from kill:" + stderr);
+        if (error !== null) {
+          console.log(redColor, "Error from kill: " + error);
+        }
+      }
+    );
+  } catch (err) {
+    console.log(redColor, `Error from taskkill: ${err}`);
     throw err;
-  });
+  }
+}
+
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

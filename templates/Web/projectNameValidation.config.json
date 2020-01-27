@@ -1,12 +1,15 @@
-﻿{  
-    "regexs" : [
-      {
-        "name" : "projectStartWith$",
-        "pattern" : "^[^\\$]"
-      }
-    ],
-    "reservedNames" : [
-    ],
-    "validateEmptyNames": true,
-    "validateExistingNames": true
+﻿{
+  "regexs" : [
+    {
+      "name":"nameStartLetter",
+      "pattern" : "^[A-Za-z]"
+    },
+    {
+      "name":"nameContainLettersNumbersDashes",
+      "pattern" : "^((?!\\d)[a-zA-Z0-9_-]+)$"
+    }
+  ],
+  "reservedNames" : [],
+  "validateEmptyNames": true,
+  "validateExistingNames": true
 }

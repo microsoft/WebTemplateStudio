@@ -14,6 +14,7 @@ import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
+import messages from "./messages";
 
 interface IDispatchProps {
   selectWebApp: (selectedApp: ISelected) => void;
@@ -30,13 +31,6 @@ interface IIntlProps {
 }
 
 type Props = IDispatchProps & IStoreProps & IIntlProps;
-
-const messages = defineMessages({
-  webAppTitleQuestion: {
-    id: "selectPages.webAppTitleQuestion",
-    defaultMessage: "Select a project type."
-  }
-});
 
 class SelectWebApp extends React.Component<Props> {
   public componentDidMount() {
