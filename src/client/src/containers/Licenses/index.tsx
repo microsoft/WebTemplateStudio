@@ -18,6 +18,7 @@ import * as ModalActions from "../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
 import { IRedirectModalData } from "../RedirectModal";
+import messages from "./messages";
 
 interface IStateProps {
   frameworkLicenses: string[];
@@ -30,13 +31,6 @@ interface IDispatchProps {
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
-
-const messages = defineMessages({
-  redirectLinkLabel: {
-    id: "licenses.redirectLinkLabel",
-    defaultMessage: "{licenseName} license link"
-  }
-});
 
 const Licenses = ({
   frameworkLicenses,

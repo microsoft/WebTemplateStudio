@@ -7,6 +7,7 @@ import {
 } from "./selectPages";
 import { ISelectProjectTypeAction } from "./selectWebApp";
 import { IProjectPathValidationAction } from "./setProjectPathValidation";
+import { IValidationsAction } from "./setValidations";
 import {
   IUpdateProjectNameActionType,
   IUpdateProjectPathActionType
@@ -18,6 +19,7 @@ type WizardSelectionActionType =
   | ISelectPagesAction
   | ISelectProjectTypeAction
   | IProjectPathValidationAction
+  | IValidationsAction
   | IUpdatePageCountAction
   | IUpdateProjectNameActionType
   | IUpdateProjectPathActionType

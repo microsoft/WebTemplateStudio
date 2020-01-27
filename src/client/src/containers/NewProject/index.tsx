@@ -8,8 +8,6 @@ import ProjectNameAndOutput from "../ProjectNameAndOutput";
 import QuickStart from "../QuickStart";
 import { FormattedMessage } from "react-intl";
 
-import { updateProjectNameAction } from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
-
 import {
   getOutputPath,
   getProjectNameValidation,
@@ -23,7 +21,6 @@ import RootAction from "../../actions/ActionType";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => any;
-  updateProjectName: (projectName: string) => any;
 }
 
 interface IStateProps {
@@ -41,8 +38,7 @@ const NewProject = ({
   projectPathValidation,
   outputPath,
   projectNameValidation,
-  projectName,
-  updateProjectName
+  projectName
 }: Props) => {
   return (
     <div className={styles.container}>
@@ -73,9 +69,6 @@ const NewProject = ({
 const mapDispatchToProps = (
   dispatch: Dispatch<RootAction>
 ): IDispatchProps => ({
-  updateProjectName: (projectName: string) => {
-    dispatch(updateProjectNameAction(projectName));
-  },
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
   }

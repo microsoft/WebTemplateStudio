@@ -94,7 +94,7 @@ describe("wizardSelectionSelector", () => {
     it("isEnableNextPage valid",()=>{
       const mockStore = configureMockStore();
       mock.wizardRoutes.selected = ROUTES.SELECT_PAGES;
-      mock.selection.pages.push({});
+      mock.selection.pages.push({isValidTitle:true});
       let store = mockStore(mock);
       expect(isEnableNextPage(store.getState())).toBeTruthy();
     })

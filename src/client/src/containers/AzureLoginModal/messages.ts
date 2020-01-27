@@ -1,6 +1,6 @@
 import { defineMessages } from "react-intl";
 
-export const strings = defineMessages({
+const messages = defineMessages({
     freeAccountAnswer: {
         defaultMessage: "All you need is a phone number, a credit or debit card, and a GitHub account or Microsoft account username (formerly Windows Live ID).",
         id: "azureLoginModal.freeAccountAnswer"
@@ -38,3 +38,4 @@ export const strings = defineMessages({
         id: "azureLoginModal.paymentQuestion"
     }
 });
+export default messages;

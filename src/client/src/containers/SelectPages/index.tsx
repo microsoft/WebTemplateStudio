@@ -24,6 +24,7 @@ import {
   EXTENSION_COMMANDS,
   WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../utils/constants";
+import messages from "./messages";
 
 interface IDispatchProps {
   selectPages: (pages: ISelected[]) => void;
@@ -45,13 +46,6 @@ interface IIntlProps {
 }
 
 type Props = IDispatchProps & ISelectPagesProps & IIntlProps;
-
-const messages = defineMessages({
-  pagesTitleQuestion: {
-    id: "selectPages.pagesTitleQuestion",
-    defaultMessage: "Select pages for your application"
-  }
-});
 
 class SelectPages extends React.Component<Props> {
   public componentDidMount() {

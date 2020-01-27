@@ -15,13 +15,7 @@ import { ReactComponent as FolderSVG } from "../../assets/folder.svg";
 import styles from "./styles.module.css";
 import getSvgUrl, { getSvg } from "../../utils/getSvgUrl";
 import { KEY_EVENTS } from "../../utils/constants";
-
-const messages = defineMessages({
-  changeItemName: {
-    id: "summaryTile.changeItemName",
-    defaultMessage: "Change Item Name"
-  }
-});
+import messages from "./messages";
 
 interface IProps {
   withIndent?: boolean;
