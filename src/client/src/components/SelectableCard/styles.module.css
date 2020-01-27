@@ -80,7 +80,9 @@
   color: var(--vscode-textLink-foreground);
 }
 
-.cardFooter {
+.gridLayoutCardFooter {
+  display: grid;
+  grid-template-columns: auto 3rem;
   min-height: 30px;
 }
 
@@ -111,26 +113,22 @@
   margin-top: 3px;
 }
 
-.icon {
-  height: 36px;
-}
-
 .iconHeight {
   height: 36px;
 }
 
-.cardHeader {
-  display: flex;
-  align-items: center;
+.gridLayoutCardHeader {
+  display: grid;
+  grid-template-columns: 3rem auto 3rem;
   max-height: 51px;
 }
 
-.titleLeftJustified,
-.title {
-  margin: 15px 10px;
+.gridLayoutCardHeader .title {
+  margin-left: 1rem;
+  margin-top: 0.2rem;
 }
 
-.titleLeftJustified {
+.gridLayoutCardHeader .titleLeftJustified {
   margin-left: 10px;
 }
 
@@ -172,7 +170,6 @@
 }
 
 .selectedText {
-  display: flex;
   font-size: 14px;
 }
 

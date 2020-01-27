@@ -92,8 +92,8 @@ const SelectableCard = ({
       onMouseLeave={() => setIsShown(false)}
     >
       <div>
-        <div className={styles.cardHeader}>
-          <div className={styles.icon}>
+        <div className={styles.gridLayoutCardHeader}>
+          <div>
             {getSvg(option.internalName, iconStyles) ||
               (iconPath && (
                 <img src={iconPath} className={iconStyles} alt="" />
@@ -130,7 +130,7 @@ const SelectableCard = ({
           </div>
         </div>
       </div>
-      <div className={styles.cardFooter}>
+      <div className={styles.gridLayoutCardFooter}>
         {showLink && (
           <Link
             onClick={detailsClickWrapper}
