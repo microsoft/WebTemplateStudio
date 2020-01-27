@@ -16,7 +16,7 @@
     "wts.frontendframework": "React",
     "wts.backendframework": "all",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1",
+    "wts.displayOrder": "2",
     "wts.genGroup": "0",
     "wts.rightClickEnabled": "true",
     "wts.licenses": "[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)"
