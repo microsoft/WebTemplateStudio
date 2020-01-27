@@ -1,18 +1,18 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SelectOption from "../SelectOption";
+import SelectOption from "../../SelectOption";
 
-import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
-import { IOption } from "../../types/option";
-import { ISelected } from "../../types/selected";
+import { selectBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectBackEndFramework";
+import { IOption } from "../../../types/option";
+import { ISelected } from "../../../types/selected";
 
 import styles from "./styles.module.css";
 
 import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
-import { AppState } from "../../reducers";
+import { AppState } from "../../../reducers";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../actions/ActionType";
+import RootAction from "../../../actions/ActionType";
 import messages from "./messages";
 
 interface IDispatchProps {

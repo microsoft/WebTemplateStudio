@@ -1,36 +1,36 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SelectOption from "../SelectOption";
+import SelectOption from "../../SelectOption";
 
-import { selectFrontendFramework as selectFrontendAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
+import { selectFrontendFramework as selectFrontendAction } from "../../../actions/wizardSelectionActions/selectFrontEndFramework";
 import {
   selectPagesAction,
   updatePageCountAction
-} from "../../actions/wizardSelectionActions/selectPages";
+} from "../../../actions/wizardSelectionActions/selectPages";
 
-import { IOption } from "../../types/option";
-import { ISelected } from "../../types/selected";
+import { IOption } from "../../../types/option";
+import { ISelected } from "../../../types/selected";
 import {
   EXTENSION_MODULES,
   EXTENSION_COMMANDS,
   PAYLOAD_MESSAGES_TEXT,
   WIZARD_CONTENT_INTERNAL_NAMES
-} from "../../utils/constants";
+} from "../../../utils/constants";
 
 import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
-import { AppState } from "../../reducers";
-import RootAction from "../../actions/ActionType";
+import { AppState } from "../../../reducers";
+import RootAction from "../../../actions/ActionType";
 import { ThunkDispatch } from "redux-thunk";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { getPageCount } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+import { IPageCount } from "../../../reducers/wizardSelectionReducers/pageCountReducer";
+import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
+import { getPageCount } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
-} from "../../selectors/wizardNavigationSelector";
+} from "../../../selectors/wizardNavigationSelector";
 import { optionCSS } from "react-select/lib/components/Option";
 import messages from "./messages";
 

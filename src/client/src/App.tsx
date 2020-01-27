@@ -5,7 +5,7 @@ import { withRouter } from "react-router";
 import { Route, RouteComponentProps, Link } from "react-router-dom";
 
 import PageDetails from "./containers/PageDetails";
-import SelectFrameworks from "./containers/SelectFrameworks";
+import SelectFrameworks from "./containers/PageSelectFrameworks";
 import SelectPages from "./containers/SelectPages";
 import NewProject from "./containers/NewProject";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
@@ -78,9 +78,6 @@ import { setPortAction } from "./actions/wizardContentActions/setPort";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
-import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
-import { getBackendFrameworksSuccess } from "./actions/wizardContentActions/getBackendFrameworks";
-import { getFrontendFrameworksSuccess } from "./actions/wizardContentActions/getFrontendFrameworks";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import AzureLoginModal from "./containers/AzureLoginModal";
 
@@ -109,8 +106,6 @@ interface IDispatchProps {
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
-  getBackendFrameworksSuccess: (frameworks: IOption[]) => any;
-  getFrontendFrameworksSuccess: (frameworks: IOption[]) => any;
   getPages: (pages: IOption[]) => any;
   selectPages: (pages: ISelected[]) => void;
   updatePageCount: (pageCount: IPageCount) => any;
@@ -141,8 +136,6 @@ class App extends React.Component<Props> {
     setValidations: () => {},
     setAzureValidationStatus: () => {},
     updateDependencyInfo: () => {},
-    getBackendFrameworksSuccess: () => {},
-    getFrontendFrameworksSuccess: () => {},
     updateTemplateGenStatusMessage: () => {},
     updateTemplateGenStatus: () => {},
     getVersionsData: () => {},
@@ -158,22 +151,6 @@ class App extends React.Component<Props> {
       const message = event.data;
       switch (message.command) {
         // get frameworks from extension message
-        case EXTENSION_COMMANDS.GET_FRAMEWORKS:
-          this.props.getFrontendFrameworksSuccess(
-            parseFrameworksPayload(
-              message.payload.frameworks,
-              FRAMEWORK_TYPE.FRONTEND,
-              message.payload.isPreview
-            )
-          );
-          this.props.getBackendFrameworksSuccess(
-            parseFrameworksPayload(
-              message.payload.frameworks,
-              FRAMEWORK_TYPE.BACKEND,
-              message.payload.isPreview
-            )
-          );
-          break;
         case EXTENSION_COMMANDS.GET_PAGES:
           this.props.getPages(message.payload.pages);
           break;
@@ -411,12 +388,6 @@ const mapDispatchToProps = (
   },
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => {
     dispatch(updateDependencyInfoAction(dependencyInfo));
-  },
-  getBackendFrameworksSuccess: (frameworks: IOption[]) => {
-    dispatch(getBackendFrameworksSuccess(frameworks));
-  },
-  getFrontendFrameworksSuccess: (frameworks: IOption[]) => {
-    dispatch(getFrontendFrameworksSuccess(frameworks));
   },
   getPages: (pages: IOption[]) => {
     dispatch(getPagesOptionsAction(pages));

@@ -27,7 +27,12 @@ const getValidationsConfig = (paramsMessage:any, vscode: IVSCodeObject):Promise<
   return postMessageAsync(EXTENSION_COMMANDS.GET_VALIDATIONS, paramsMessage, vscode);
 }
 
+const getFrameworks = (paramsMessage:any, vscode: IVSCodeObject):Promise<any> => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_FRAMEWORKS, paramsMessage, vscode);
+}
+
 export {
   projectPathValidation,
-  getValidationsConfig
+  getValidationsConfig,
+  getFrameworks
 }
