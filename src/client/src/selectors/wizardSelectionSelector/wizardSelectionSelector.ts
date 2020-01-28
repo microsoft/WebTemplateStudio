@@ -5,25 +5,11 @@ import { ISelected } from "../../types/selected";
 import getSvgUrl from "../../utils/getSvgUrl";
 import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { defineMessages } from "react-intl";
-import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
+import { IValidation } from "../../utils/validations/validations";
+import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
 import { ROUTES } from "../../utils/constants";
-
-export const messages = defineMessages({
-  azureFunctionsOriginalTitle: {
-    id: "azureFunctions.originalTitle",
-    defaultMessage: "Azure Functions"
-  },
-  cosmosOriginalTitle: {
-    id: "cosmosDb.originalTitle",
-    defaultMessage: "CosmosDB"
-  },
-  appServiceOriginalTitle: {
-    id: "appService.originalTitle",
-    defaultMessage: "App Service"
-  }
-});
 
 const getWizardSelectionsSelector = (state: AppState): SelectionState =>
   state.selection;
@@ -31,30 +17,45 @@ const getProjectName = (state: AppState): string =>
   state.selection.projectNameObject.projectName;
 const getProjectNameValidation = (state: AppState): IValidation =>
   state.selection.projectNameObject.validation;
+const getValidations = (state: AppState): IValidations =>
+  state.selection.validations;
+const getSelectedPages = (state: AppState): Array<ISelected> =>
+  state.selection.pages;
 const getOutputPath = (state: AppState): string =>
   state.selection.outputPathObject.outputPath;
 const isEnableNextPage = (state: AppState): boolean =>{
   let valid = false;
-  if (state.wizardRoutes.selected == ROUTES.NEW_PROJECT &&
-    state.selection.projectNameObject.validation.isValid && state.selection.outputPathObject.outputPath!=""){
-    valid = true;
+  if (state.wizardRoutes.selected == ROUTES.NEW_PROJECT){
+    valid = state.selection.projectNameObject.validation.isValid === true && 
+      state.selection.outputPathObject.outputPath!="";
   }
 
   if (state.wizardRoutes.selected == ROUTES.SELECT_FRAMEWORKS &&
-    state.selection.frontendFramework.title!="" && state.selection.backendFramework.title!=""){
+    state.selection.frontendFramework.title!="" && state.selection.backendFramework.title!="" &&
+    state.selection.pages.filter(page => !page.isValidTitle).length==0){
     valid = true;
   }
 
-  if (state.wizardRoutes.selected == ROUTES.SELECT_PAGES && state.selection.pages.length>0){
+  if (state.wizardRoutes.selected == ROUTES.SELECT_PAGES && state.selection.pages.length>0 && 
+    state.selection.pages.filter(page => !page.isValidTitle).length==0){
     valid = true;
   }
 
-  if (state.wizardRoutes.selected == ROUTES.AZURE_LOGIN || state.wizardRoutes.selected == ROUTES.REVIEW_AND_GENERATE){
+  if ((state.wizardRoutes.selected == ROUTES.AZURE_LOGIN || state.wizardRoutes.selected == ROUTES.REVIEW_AND_GENERATE)
+    && state.selection.pages.filter(page => !page.isValidTitle).length==0){
     valid = true;
   }
 
   return valid;
 }
+
+export interface ISelectedPages {
+  selectedPages: Array<ISelected>;
+}
+
+export const mapStateSelectedPages = (state: AppState): ISelectedPages => ({
+  selectedPages: getSelectedPages(state),
+});
 
 const getOutputPathValidation = (state: AppState): IValidation =>
   state.selection.outputPathObject.validation;
@@ -179,6 +180,7 @@ export {
   getOutputPath,
   getOutputPathValidation,
   getProjectName,
+  getValidations,
   getPageCount,
   getProjectNameValidation,
   isValidNameAndProjectPathSelector,

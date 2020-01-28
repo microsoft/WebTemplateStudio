@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
+import { connect } from "react-redux";
 
 import { ReactComponent as Reorder } from "../../assets/reorder.svg";
 import { ReactComponent as AzureFunctionsIcon } from "../../assets/azurefunctions.svg";
@@ -14,50 +15,20 @@ import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants";
 
-import { injectIntl, InjectedIntl, defineMessages } from "react-intl";
+import { injectIntl, InjectedIntl, defineMessages, InjectedIntlProps } from "react-intl";
 import { IFunctionName } from "../../containers/AzureFunctionsSelection";
 
-const messages = defineMessages({
-  changeItemName: {
-    id: "draggableSidebarItem.changeItemName",
-    defaultMessage: "Change Item Name"
-  },
-  pageNameMaxLength: {
-    id: "draggableSidebarItem.pageNameMaxLength",
-    defaultMessage: "Page name must be under {maxLength} characters long. "
-  },
-  deleteItem: {
-    id: "draggableSidebarItem.deleteItem",
-    defaultMessage: "Delete item"
-  }
-});
+import { AppState } from "../../reducers";
+
+import messages from "./messages";
 
 /**
  * Takes in either a page (type ISelected) or text, but not both
  * If a page is given, then text prop will not be rendered
  */
-const DraggableSidebarItem = ({
-  page,
-  text,
-  azureFunctions,
-  cosmosDB,
-  appService,
-  pageSvgUrl,
-  reorderSvgUrl,
-  itemTitle,
-  handleInputChange,
-  maxInputLength,
-  idx,
-  azureFunctionName,
-  withIndent,
-  withLargeIndent,
-  handleCloseClick,
-  intl,
-  customInputStyle,
-  isAzureFunction,
-  totalCount
-}: {
-  page?: ISelected;
+
+interface IStateProps {
+  page: ISelected;
   text?: string;
   azureFunctions?: boolean;
   cosmosDB?: boolean;
@@ -77,27 +48,52 @@ const DraggableSidebarItem = ({
   customInputStyle?: string;
   isAzureFunction?: boolean;
   totalCount?: number;
-}) => {
-  const [pageNameMaxLength, setPageNameMaxLength] = React.useState(false);
+}
+
+interface ISortablePageListProps {
+  selectedPages: Array<ISelected>;
+}
+
+type Props = IStateProps & ISortablePageListProps & InjectedIntlProps;
+
+const DraggableSidebarItem = ({
+  page,
+  text,
+  azureFunctions,
+  cosmosDB,
+  appService,
+  pageSvgUrl,
+  reorderSvgUrl,
+  itemTitle,
+  handleInputChange,
+  maxInputLength,
+  idx,
+  azureFunctionName,
+  withIndent,
+  withLargeIndent,
+  handleCloseClick,
+  intl,
+  customInputStyle,
+  isAzureFunction,
+  totalCount,
+  selectedPages
+}:Props) => {
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleCloseOnClick();
     }
   };
+
   const handleCloseOnClick = () => {
     idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
   };
 
-  const handleKeyDownInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const inputKeyCheck = /^[A-Za-z0-9_\- ]$/;
-    const event = e.target as HTMLInputElement;
-    if (event.value.length === maxInputLength && inputKeyCheck.test(e.key)) {
-      setPageNameMaxLength(true);
-      e.stopPropagation();
-    } else {
-      setPageNameMaxLength(false);
-    }
-  };
+  const [validValue, setValidValue] = React.useState<string>(page ? page.title:"");
+
+  /*React.useEffect(() => {
+    if (page && page.isValidTitle) setValidValue(page.title);
+  },[page ? page.title:""]);*/
+
   return (
     <div>
       {itemTitle && (
@@ -149,7 +145,13 @@ const DraggableSidebarItem = ({
                       handleInputChange(e.target.value, idx - 1);
                     }
                   }}
-                  onKeyDown={handleKeyDownInput}
+                  onBlur={e => {
+                    if (handleInputChange && idx && page && page.isValidTitle===false) {
+                      handleInputChange(validValue, idx - 1);
+                    }
+                    if (page.isValidTitle) setValidValue(page.title);
+                  }}
+                  ref={page.ref}
                 />
               ) : (
                 <input
@@ -164,34 +166,19 @@ const DraggableSidebarItem = ({
               )}
             </div>
           </div>
-          {pageNameMaxLength && (
+          {page && page.isValidTitle===false && page.error && (
             <div
               className={classnames({
                 [styles.errorTextContainer]:
-                  withIndent || reorderSvgUrl || true,
-                [styles.textContainer]: !withIndent,
-                [styles.largeIndentContainer]: withLargeIndent
+                  true,
+                [styles.textContainer]: true,
+                [styles.largeIndentContainer]: false
               })}
             >
-              {intl.formatMessage(messages.pageNameMaxLength, {
-                maxLength: maxInputLength
-              })}
+              {intl.formatMessage(page.error)}
             </div>
           )}
-          {((page && !page.isValidTitle) ||
-            (azureFunctionName && !azureFunctionName.isValidTitle)) && (
-            <div
-              className={classnames({
-                [styles.errorTextContainer]:
-                  withIndent || reorderSvgUrl || true,
-                [styles.textContainer]: !withIndent,
-                [styles.largeIndentContainer]: withLargeIndent
-              })}
-            >
-              {(page && page.error) ||
-                (azureFunctionName && azureFunctionName.error)}
-            </div>
-          )}
+
         </div>
         {(totalCount !== undefined ? totalCount > 1 : true) && (
           <CloseSVG
@@ -207,4 +194,10 @@ const DraggableSidebarItem = ({
   );
 };
 
-export default injectIntl(DraggableSidebarItem);
+const mapStateToProps = (state: AppState) => ({
+  selectedPages: state.selection.pages
+});
+
+export default connect(
+  mapStateToProps
+)(injectIntl(DraggableSidebarItem));

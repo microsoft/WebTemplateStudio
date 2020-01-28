@@ -1,24 +1,9 @@
 import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
-import { messages } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import messages from "../../../selectors/wizardSelectionSelector/messages";
 import { FormattedMessage } from "react-intl";
 import AzureActionType from "../../../actions/azureActions/azureActionType";
 import { WIZARD_INFO_TYPEKEYS } from "../../../actions/wizardInfoActions/typeKeys";
 import WizardInfoType from "../../../actions/wizardInfoActions/wizardInfoActionType";
-
-/* State Shape
-{
-    appService: {
-        siteNameAvailability: {
-          isSiteNameAvailable: boolean,
-          message: string
-        },
-        selection: ISelectedAppService | null,
-        wizardContent: {
-          serviceType: string,
-        }
-    }
-}
-*/
 
 export interface IAvailability {
   isSiteNameAvailable: boolean;

@@ -29,7 +29,9 @@ export class LaunchExperience {
     let syncObject: ISyncReturnType = {
       successfullySynced: false,
       templatesVersion: "",
-      errorMessage: ""
+      errorMessage: "",
+      itemNameValidationConfig: {},
+      projectNameValidationConfig: {}
     };
     let syncAttempts = 0;
     while (
@@ -79,15 +81,20 @@ export class LaunchExperience {
         return {
           successfullySynced: true,
           templatesVersion: syncResult.templatesVersion,
-          errorMessage: ""
+          errorMessage: "",
+          itemNameValidationConfig: syncResult.itemNameValidationConfig,
+          projectNameValidationConfig: syncResult.projectNameValidationConfig
         };
       })
       .catch((error: Error) => {
         Logger.appendLog("EXTENSION", "error", error.message);
-        return { 
+        return {
           successfullySynced: false,
           templatesVersion: "",
-          errorMessage: error.message };
+          errorMessage: error.message,
+          itemNameValidationConfig: {},
+          projectNameValidationConfig: {}
+        };
       });
   }
 

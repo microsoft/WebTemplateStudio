@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 
 import SummaryTile from "../../components/SummaryTile";
 
-import { validateName } from "../../utils/validateName";
-
 import styles from "./styles.module.css";
 
 import { IFunctionApp } from "../AzureFunctionsSelection";
@@ -23,6 +21,7 @@ import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
 import { removeCosmosSelectionAction } from "../../actions/azureActions/saveCosmosDbSettings";
+import messages from "./messages";
 
 interface IProps {
   selectionTitle: string;
@@ -44,13 +43,6 @@ interface IDispatchProps {
 
 type Props = IDispatchProps & IProps & IStateProps & InjectedIntlProps;
 
-const messages = defineMessages({
-  duplicateFunctionName: {
-    id: "summarySection.duplicateName",
-    defaultMessage: "Function name has to be unique"
-  }
-});
-
 const SummarySection = ({
   selectionTitle,
   selectionRows,
@@ -69,23 +61,8 @@ const SummarySection = ({
       functionNames[idx].title = newTitle;
       functionNames[idx].isValidTitle = true;
       functionNames[idx].error = "";
-      const validationResult = validateName(
-        functionNames[idx].title,
-        "function"
-      );
-      if (validationResult.error) {
-        functionNames[idx].error = intl.formatMessage(validationResult.error);
-      }
-      functionNames[idx].isValidTitle = validationResult.isValid;
-      for (let i = 0; i < functionNames.length; i++) {
-        if (functionNames[i].title === functionNames[idx].title && i !== idx) {
-          functionNames[idx].isValidTitle = false;
-          functionNames[idx].error = intl.formatMessage(
-            messages.duplicateFunctionName
-          );
-          break;
-        }
-      }
+      
+      
       updateFunctionNames({
         appIndex: 0,
         functionNames

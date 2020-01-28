@@ -15,7 +15,7 @@ import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setV
 import { enableQuickStartAction } from "../../actions/wizardInfoActions/enableQuickStartAction";
 
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import { AppState } from "../../reducers";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -40,7 +40,7 @@ import styles from "./styles.module.css";
 interface IStateProps {
   vscode: IVSCodeObject;
   isPreview: boolean;
-  isValidNameAndProjectPath: boolean;
+  isEnableNextPage: boolean;
 }
 
 interface IDispatchProps {
@@ -89,7 +89,7 @@ class QuickStart extends Component<Props> {
   }
 
   render() {
-    const { isValidNameAndProjectPath } = this.props;
+    const { isEnableNextPage } = this.props;
     return (
       <div>
         <p className={styles.description}>
@@ -108,7 +108,7 @@ class QuickStart extends Component<Props> {
           tabIndex={0}
           className={styles.quickStart}
           onClick={this.handleClick}
-          disabled={!isValidNameAndProjectPath}
+          disabled={!isEnableNextPage}
         >
           <div>
             {quickStartWand && <QuickStartWand className={styles.wand} />}
@@ -130,7 +130,7 @@ const mapStateToProps = (state: AppState): IStateProps => {
   return {
     isPreview: previewStatus,
     vscode: getVSCodeApiSelector(state),
-    isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state)
+    isEnableNextPage: isEnableNextPage(state)
   };
 };
 

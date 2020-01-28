@@ -1,6 +1,6 @@
 import { defineMessages } from "react-intl";
 
-export const messages = defineMessages({
+const messages = defineMessages({
   apiLabel: {
     id: "cosmosResourceModule.apiLabel",
     defaultMessage: "API"
@@ -42,3 +42,4 @@ export const messages = defineMessages({
     defaultMessage: "Choose your preferred API to use"
   }
 });
+export default messages;

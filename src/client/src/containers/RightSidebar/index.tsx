@@ -49,7 +49,6 @@ import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountRedu
 import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { getPageCount } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import {
   getOutputPath,
@@ -78,7 +77,6 @@ interface IRightSidebarProps {
   services: ServiceState;
   hasServices: boolean;
   vscode: IVSCodeObject;
-  isValidNameAndProjectPath: boolean;
   isRoutesVisited: IVisitedPages;
   contentOptions: WizardContentType;
 }
@@ -266,7 +264,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const {
       intl,
       contentOptions,
-      isValidNameAndProjectPath,
       openViewLicensesModal,
       outputPath,
       projectName,
@@ -347,7 +344,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   this.props.selection.frontendFramework
                 )}
                 optionsData={frontendOptions}
-                disabled={!isValidNameAndProjectPath}
               />
               <RightSidebarDropdown
                 options={this.props.backendDropdownItems}
@@ -432,7 +428,6 @@ const mapStateToProps = (state: AppState): IRightSidebarProps => ({
   services: getServicesSelector(state),
   hasServices : hasServicesSelector(state),
   isRoutesVisited: getIsVisitedRoutesSelector(state),
-  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
   contentOptions: state.wizardContent
 });
 

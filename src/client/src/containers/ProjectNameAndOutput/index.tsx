@@ -8,11 +8,13 @@ import {
   updateOutputPathAction,
   updateProjectNameAction
 } from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
+
 import {
   getOutputPath,
   getProjectName,
   getProjectNameValidation,
-  getOutputPathValidation
+  getOutputPathValidation,
+  getValidations
 } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
@@ -26,15 +28,21 @@ import styles from "./styles.module.css";
 
 import {
   injectIntl,
-  defineMessages,
-  InjectedIntlProps,
-  FormattedMessage
+  InjectedIntlProps
 } from "react-intl";
+
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
+import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
+
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../actions/ActionType";
+import { validateProjectName} from "../../utils/validations/projectName/projectName";
+import { IValidation} from "../../utils/validations/validations";
+import { inferProjectName} from "../../utils/infer/projectName";
+import { setProjectPathValidation } from "../../actions/wizardSelectionActions/setProjectPathValidation";
+import { validationMessages } from '../../utils/validations/messages';
+import messages from "./messages";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -42,54 +50,47 @@ interface IStateProps {
   projectName: string;
   projectPathValidation: IValidation;
   projectNameValidation: IValidation;
+  validations: IValidations;
 }
 
 interface IDispatchProps {
-  updateProjectName: (projectName: string) => any;
+  updateProjectName: (projectName: string, validation:any) => any;
   updateOutputPath: (outputPath: string) => any;
+  setProjectPathValidation: (validation: any) => void;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
-const messages = defineMessages({
-  projectNameTitle: {
-    id: "projectName.projectNameTitle",
-    defaultMessage: "Project Name"
-  },
-  ariaProjectNameLabel: {
-    id: "projectName.ariaProjectName",
-    defaultMessage: "Project Name Input"
-  },
-  nameTooLong: {
-    id: "projectNameError.nameTooLong",
-    defaultMessage: `Project name can only be {maxLength} characters long`
-  },
-  outputPathTitle: {
-    id: "projectName.outputPathTitle",
-    defaultMessage: "Save To"
-  }
-});
-
 const ProjectNameAndOutput = (props: Props) => {
-  const [projectNameMaxLength, setProjectNameMaxLength] = React.useState(false);
+  const [stateValidationProjectName, setStateValidationProjectName] =
+    React.useState<IValidation>({isValid:true, error:validationMessages.default});
+  const [isDirtyProjectName, setDirtyProjectName] = React.useState(false);
 
   const {
     vscode,
     outputPath,
     projectPathValidation,
-    projectNameValidation,
     projectName,
+    validations,
     updateProjectName,
-    updateOutputPath
+    updateOutputPath,
+    setProjectPathValidation,
+    intl
   } = props;
 
   React.useEffect(() => {
-    if (projectName === "") {
-      vscode.postMessage({
-        module: EXTENSION_MODULES.DEFAULTS,
-        command: EXTENSION_COMMANDS.GET_PROJECT_NAME
+    validateSetProjectValueAndSetDirty(projectName);
+  },[outputPath]);
+
+  React.useEffect(() => {
+    if (projectName==="" && !isDirtyProjectName && outputPath!==""){
+      inferProjectName(outputPath,vscode).then(suggestedProjectName => {
+        updateProjectName(suggestedProjectName, {isValid:true, error:""});
       });
     }
+  },[projectName, outputPath]);
+
+  React.useEffect(() => {
     if (outputPath === "") {
       vscode.postMessage({
         module: EXTENSION_MODULES.DEFAULTS,
@@ -98,40 +99,23 @@ const ProjectNameAndOutput = (props: Props) => {
     }
   }, [vscode]);
 
-  React.useEffect(() => {
-    if (vscode) {
-      if (
-        projectPathValidation ||
-        (outputPath !== "" && !projectPathValidation)
-      ) {
-        vscode.postMessage({
-          module: EXTENSION_MODULES.VALIDATOR,
-          command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-          track: false,
-          projectPath: outputPath,
-          projectName: projectName
-        });
-      }
+  const validateSetProjectValueAndSetDirty = (projectNameToSet:string) =>{
+    validateProjectName(projectNameToSet, outputPath, validations.projectNameValidationConfig, vscode).then((validateState:IValidation)=>{
+      setStateValidationProjectName(validateState);
+      updateProjectName(projectNameToSet, validateState);
+    });
+
+    if (!isDirtyProjectName && projectNameToSet!=""){
+      setDirtyProjectName(true);
+      setProjectPathValidation({isValid: true});
     }
-  }, [outputPath, projectName]);
+  }
   const handleProjectNameChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
     const element = e.currentTarget as HTMLInputElement;
-    updateProjectName(element.value);
+    validateSetProjectValueAndSetDirty(element.value);
   };
-  const validateKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const element = e.target as HTMLInputElement;
-    const inputKeyCheck = /^[A-Za-z0-9_\- ]$/;
-
-    if (element.value.length === 50 && inputKeyCheck.test(e.key)) {
-      setProjectNameMaxLength(true);
-      e.stopPropagation();
-    } else {
-      setProjectNameMaxLength(false);
-    }
-  };
-
   const handleOutputPathChange = (
     e: React.SyntheticEvent<HTMLInputElement>
   ) => {
@@ -145,6 +129,7 @@ const ProjectNameAndOutput = (props: Props) => {
       track: false
     });
   };
+
   return (
     <React.Fragment>
       <div className={styles.inputContainer}>
@@ -153,25 +138,15 @@ const ProjectNameAndOutput = (props: Props) => {
         </div>
         <Input
           handleChange={handleProjectNameChange}
-          handleKeyDown={validateKey}
           ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
           value={projectName}
           maxLength={PROJECT_NAME_CHARACTER_LIMIT}
           autoFocus={true}
         />
-        {projectNameValidation.error && (
+
+        {!stateValidationProjectName.isValid && isDirtyProjectName && (
           <div className={styles.errorMessage}>
-            {props.intl.formatMessage(
-              projectNameValidation.error as FormattedMessage.MessageDescriptor
-            )}
-          </div>
-        )}
-        {projectNameMaxLength && (
-          <div className={styles.errorMessage}>
-            {props.intl.formatMessage(
-              messages.nameTooLong as FormattedMessage.MessageDescriptor,
-              { maxLength: PROJECT_NAME_CHARACTER_LIMIT }
-            )}
+            {props.intl.formatMessage(stateValidationProjectName.error) }
           </div>
         )}
       </div>
@@ -197,6 +172,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: getVSCodeApiSelector(state),
   outputPath: getOutputPath(state),
   projectName: getProjectName(state),
+  validations: getValidations(state),
   projectPathValidation: getOutputPathValidation(state),
   projectNameValidation: getProjectNameValidation(state)
 });
@@ -204,11 +180,14 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 const mapDispatchToProps = (
   dispatch: Dispatch<RootAction>
 ): IDispatchProps => ({
-  updateProjectName: (projectName: string) => {
-    dispatch(updateProjectNameAction(projectName));
+  updateProjectName: (projectName: string, validate:any) => {
+    dispatch(updateProjectNameAction(projectName, validate));
   },
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
+  },
+  setProjectPathValidation: (validation: any) => {
+    dispatch(setProjectPathValidation(validation));
   }
 });
 

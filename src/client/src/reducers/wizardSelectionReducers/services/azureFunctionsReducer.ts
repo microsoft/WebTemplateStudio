@@ -1,23 +1,8 @@
 import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
-import { messages } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import messages from "../../../selectors/wizardSelectionSelector/messages";
 import { FormattedMessage } from "react-intl";
 import AzureActionType from "../../../actions/azureActions/azureActionType";
 import { IFunctionName } from "../../../containers/AzureFunctionsSelection";
-
-/* State Shape
-{
-    azureFunctions: {
-        appNameAvailability: {
-            isAppNameAvailable: boolean,
-            message: string
-        },
-        selection: [],
-        wizardContent: {
-          serviceType: string,
-        }
-    }
-}
-*/
 
 interface IAvailability {
   isAppNameAvailable: boolean;

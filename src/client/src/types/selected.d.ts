@@ -6,10 +6,11 @@ export interface ISelected {
   internalName: string;
   id?: string;
   isValidTitle?: boolean;
-  error?: string;
+  error?: FormattedMessage.MessageDescriptor;
   version?: string;
   licenses?: License;
   author?: string;
   originalTitle?: string;
   version?: string;
+  ref?: any;
 }
