@@ -38,11 +38,9 @@ const Master_Detail = () => {
         setCurrentSampleOrder(listSampleOrders[0]);
     })
     .catch(error =>
-      {
-        console.log('error' + error)
-        setWarningMessage({warningMessageOpen: true, warningMessageText: `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`});
-      }
-     )
+    {
+      setWarningMessage({warningMessageOpen: true, warningMessageText: `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`});
+    });
   }, []);
 
   return (
