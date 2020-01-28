@@ -15,12 +15,6 @@ const List = () => {
         }
         return response.json();
       })
-      .catch(error =>
-        setWarningMessage({
-          warningMessageOpen: true,
-          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
-        })
-      );
     return promiseList;
   }
 
@@ -85,7 +79,14 @@ const List = () => {
   };
 
   React.useEffect(() => {
-    getListItem().then(list => {setListItems(list)})
+    getListItem()
+      .then(list => {setListItems(list)})
+      .catch(error =>
+        setWarningMessage({
+          warningMessageOpen: true,
+          warningMessageText: `${CONSTANTS.ERROR_MESSAGE.LIST_GET} ${error}`
+        })
+      );
   }, []);
 
   return (

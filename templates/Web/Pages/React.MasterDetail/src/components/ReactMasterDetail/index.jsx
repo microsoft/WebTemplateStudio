@@ -19,9 +19,7 @@ const Master_Detail = () => {
         }
         return response.json();
       })
-      .catch(error =>
-        setWarningMessage({warningMessageOpen: true, warningMessageText: `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`})
-      );
+
     return promiseSampleOrders;
   }
 
@@ -34,10 +32,17 @@ const Master_Detail = () => {
   }
 
   React.useEffect(() => {
-    getSampleOrders().then(listSampleOrders => {
-      setSampleOrders(listSampleOrders)
-      setCurrentSampleOrder(listSampleOrders[0]);
+    getSampleOrders()
+    .then(listSampleOrders => {
+        setSampleOrders(listSampleOrders)
+        setCurrentSampleOrder(listSampleOrders[0]);
     })
+    .catch(error =>
+      {
+        console.log('error' + error)
+        setWarningMessage({warningMessageOpen: true, warningMessageText: `${CONSTANTS.ERROR_MESSAGE.MASTERDETAIL_GET} ${error}`});
+      }
+     )
   }, []);
 
   return (

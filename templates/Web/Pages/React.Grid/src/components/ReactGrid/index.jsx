@@ -11,14 +11,13 @@ const ReactGrid = () => {
   const centeredHeaderStyle = classnames("text-center", styles.header);
   const getListGrids = () => {
     const promiseListGrids = fetch(CONSTANTS.ENDPOINT.GRID)
-    .then(result => result.json())
-    .catch(error =>
-      setWarningMessage({
-        warningMessageOpen: true,
-        warningMessageText: `Request to get grid text failed: ${error}`
-      })
-    );
-    
+    .then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    });
+
     return promiseListGrids;
   }
   const handleWarningClose = () => {
@@ -29,7 +28,14 @@ const ReactGrid = () => {
   }
 
   React.useEffect(() => {
-    getListGrids().then(listGrids => {setGridItems(listGrids)})
+    getListGrids()
+    .then(listGrids => {setGridItems(listGrids)})
+    .catch(error =>
+      setWarningMessage({
+        warningMessageOpen: true,
+        warningMessageText: `Request to get grid text failed: ${error}`
+      })
+    );
   }, []);
 
   return (
