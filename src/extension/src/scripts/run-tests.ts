@@ -80,6 +80,7 @@ function executeLintScript(file: string) {
       maxBuffer: 1024 * 1024
     });
   } catch (err) {
+    process.exitCode = 1;
     throw err;
   }
 }
@@ -165,7 +166,7 @@ async function executeTestScript(file: string, packageJson: any) {
 
 function deleteProject() {
   console.log(cyanColor, "Deleting generated projects");
-  del.sync(testFolder);
+  del.sync(testFolder, {force: true});
   console.log(cyanColor, "Finished deleting projects");
   if (!fs.existsSync(testFolder)) {
     fs.mkdirSync(testFolder);
