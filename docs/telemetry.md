@@ -4,7 +4,7 @@ Web Template Studio logs usage data and diagnostics telemetry through [Applicati
 
 The class [TelemetryService](../src/extension/src/telemetry/telemetryService.ts), within the extension code, isolates the telemetry service implementation details and offers a smooth and easy way to invoke telemetry events.
 
-
+Apart from the data logged in Web Template Studio, Core Template Studio tracks telemetry data on generation. For more info see [Core Template Studio Telemetry](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/telemetry.md)
 
 ## Trends
 
@@ -43,6 +43,8 @@ Through the Application Insights API, telemetry events are collected to gather b
 |**Open-Add-Pages-Modal**|Track the event that occurs when you press the Add Pages button on the right side of the extension.|
 |**open-project-vscode**|Track the time it takes to open the project generated in a new instance of Visual Studio Code.|
 |**reset-pages**|Track the time it takes to clean the added pages while we are creating a project.|
+
+For events related to session and project generation see [Core Template Studio -  Usage telemetry collected](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/telemetry.md#usage-telemetry-collected). 
 
 ## Telemetry Configuration
 
