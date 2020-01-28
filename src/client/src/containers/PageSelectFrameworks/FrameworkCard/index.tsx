@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -5,6 +6,8 @@ import { ISelectProps, IDispatchProps, IStateProps } from "./interfaces";
 import {mapDispatchToProps, mapStateToProps} from "./store";
 import { ISelected } from "../../../types/selected";
 import { setBackendFrameworks } from "../../../actions/wizardContentActions/getBackendFrameworks";
+import styles from "./styles.module.css";
+import { getSvg } from "../../../utils/getSvgUrl";
 
 type Props = ISelectProps & IDispatchProps & IStateProps;
 
@@ -12,7 +15,9 @@ const FrameworkCard = (props:Props) => {
   const { framework, setFrontendSelect, frontEndSelect,
     setBackendSelect, backEndSelect, isFrontEnd } = props;
 
-  const [ selected, setSelected ] = React.useState(false);
+  const [selected, setSelected] = React.useState(false);
+  const [isShown, setIsShown] = React.useState(false);
+
   React.useEffect(()=>{
     getLatestVersion();
   },[]);
@@ -46,12 +51,38 @@ const FrameworkCard = (props:Props) => {
     }
   }
 
+  const keyDownHandler = () =>{
+  };
+
   return (
+    <div
+    role="button"
+    tabIndex={0}
+    onClick={selectCard}
+    onKeyDown={keyDownHandler}
+    className={classNames(styles.container, styles.boundingBox, {
+      [styles.selected]: selected
+    })}
+    onMouseEnter={() => setIsShown(true)}
+    onMouseLeave={() => setIsShown(false)}>
     <div>
-      card component!!
-      <p>{selected && (<p>selected ole ryryryryryrry</p>)}</p>
-      <p onClick={selectCard}>select</p>
+      <div className={styles.gridLayoutCardHeader}>
+        <div>
+          {getSvg(framework.internalName, styles.icon) ||
+            (framework.svgUrl && (
+              <img src={framework.svgUrl} alt="" />
+            ))}
+        </div>
+        <div
+          className={classNames({
+            [styles.title]: framework.svgUrl,
+            [styles.titleLeftJustified]: framework.svgUrl === undefined ? true : false
+          })}
+        >
+        </div>
+      </div>
     </div>
+  </div>
   );
 }
 
