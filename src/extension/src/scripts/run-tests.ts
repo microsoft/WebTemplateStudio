@@ -212,7 +212,6 @@ function kill(pid: any) {
     );
   } catch (err) {
     console.error(redColor, `Error from taskkill: ${err}`);
-    throw err;
   }
 }
 
