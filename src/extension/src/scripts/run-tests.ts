@@ -49,6 +49,7 @@ asyncForEach(files, async (file: string) => {
 })
   .then(() => deleteProject())
   .catch(err => {
+    process.exitCode = 1;
     throw err;
   });
 
@@ -80,7 +81,6 @@ function executeLintScript(file: string) {
       maxBuffer: 1024 * 1024
     });
   } catch (err) {
-    process.exitCode = 1;
     throw err;
   }
 }
