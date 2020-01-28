@@ -15,7 +15,8 @@ describe('BlankComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BlankComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges();    
+    console.debug("Check if lint test failed");
   });
 
   it('should create', () => {
