@@ -13,8 +13,9 @@ import {
 
 import {getFrameworks} from "../../utils/extensionService/extensionService";
 import { parseFrameworksPayload } from "../../utils/parseFrameworksPayload";
-import { ISelectFrameworksProps, IDispatchProps, IStateProps } from "./interfaces";
+import { ISelectFrameworksProps, IDispatchProps } from "./interfaces";
 import {mapDispatchToProps, mapStateToProps} from "./store";
+import FrameworkCard from "./FrameworkCard";
 
 type Props = ISelectFrameworksProps & IDispatchProps;
 
@@ -81,7 +82,7 @@ const SelectFrameworks = (props:Props) => {
     <div>
       {frontendOptions.map((option) => {
         return (
-          <p>Card!!</p>
+          <FrameworkCard framework={option} isFrontEnd={true}/>
         );
       })}
       {backendOptions.map((option) => {
