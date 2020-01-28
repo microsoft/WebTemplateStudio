@@ -50,30 +50,39 @@ asyncForEach(files, async (file: string) => {
 })
   .then(() => deleteProject())
   .catch(err => {
+    process.exitCode = 1;
     throw err;
   });
 
 function installDependencies(file: string) {
-  console.log(cyanColor, "Installing dependencies");
-  const currDir = path.join(testFolder, file, file);
-  child_process.execSync("yarn install", {
-    cwd: currDir,
-    stdio: "inherit",
-    maxBuffer: 1024 * 1024
-  });
-
-  if (file.indexOf("Flask") > -1) {
-    console.log(cyanColor, "Installing Python dependencies");
-    child_process.execSync("yarn install-requirements", {
+  console.log(cyanColor, `Installing dependencies in ${file}`);
+  try {
+    const currDir = path.join(testFolder, file, file);
+    child_process.execSync("yarn install", {
       cwd: currDir,
       stdio: "inherit",
       maxBuffer: 1024 * 1024
     });
+
+    if (file.indexOf("Flask") > -1) {
+      console.log(cyanColor, `Installing Python dependencies in ${file}`);
+      child_process.execSync("yarn install-requirements", {
+        cwd: currDir,
+        stdio: "inherit",
+        maxBuffer: 1024 * 1024
+      });
+    }
+  } catch (err) {
+    console.error(
+      redColor,
+      `Error from installing dependencies in ${file}: ${err}`
+    );
+    throw err;
   }
 }
 
 function executeLintScript(file: string) {
-  console.log(cyanColor, "Execute lint script");
+  console.log(cyanColor, `Execute lint script in ${file}`);
   try {
     child_process.execSync("yarn lint --no-fix", {
       cwd: path.join(testFolder, file, file),
@@ -81,12 +90,16 @@ function executeLintScript(file: string) {
       maxBuffer: 1024 * 1024
     });
   } catch (err) {
+    console.error(
+      redColor,
+      `Error from execute lint script in ${file}: ${err}`
+    );
     throw err;
   }
 }
 
 async function executeStartScript(file: string) {
-  console.log(cyanColor, "Execute Start script");
+  console.log(cyanColor, `Execute Start script in ${file}`);
   let serverProcess;
   try {
     serverProcess = child_process.exec(
@@ -113,6 +126,10 @@ async function executeStartScript(file: string) {
       }
     });
   } catch (err) {
+    console.error(
+      redColor,
+      `Error from execute start script in ${file}: ${err}`
+    );
     throw err;
   }
 
@@ -124,7 +141,7 @@ async function executeStartScript(file: string) {
 }
 
 async function executeTestScript(file: string, packageJson: any) {
-  console.log(cyanColor, "Execute test script");
+  console.log(cyanColor, `Execute test script in ${file}`);
   let testProcess;
   try {
     if (packageJson.scripts.test) {
@@ -155,21 +172,30 @@ async function executeTestScript(file: string, packageJson: any) {
       console.warn(yellowColor, `The test script was not found in ${file}`);
     }
   } catch (err) {
-    console.log(redColor, "Test errored out");
+    console.error(
+      redColor,
+      `Error from execute test script in ${file}: ${err}`
+    );
     throw err;
   }
-  if(testProcess) {
+
+  if (testProcess) {
     await sleep(80000);
     kill(testProcess.pid);
   }
 }
 
 function deleteProject() {
-  console.log(cyanColor, "Deleting generated projects");
-  del.sync(testFolder);
-  console.log(cyanColor, "Finished deleting projects");
-  if (!fs.existsSync(testFolder)) {
-    fs.mkdirSync(testFolder);
+  try {
+    console.log(cyanColor, "Deleting generated projects");
+    del.sync(testFolder, { force: true });
+    console.log(cyanColor, "Finished deleting projects");
+    if (!fs.existsSync(testFolder)) {
+      fs.mkdirSync(testFolder);
+    }
+  } catch (err) {
+    console.error(redColor, `Error from deleting generated projects`);
+    throw err;
   }
 }
 
@@ -181,13 +207,12 @@ function kill(pid: any) {
         console.log(cyanColor, "Stdout from kill: " + stdout);
         console.log(cyanColor, "Stderr from kill:" + stderr);
         if (error !== null) {
-          console.log(redColor, "Error from kill: " + error);
+          console.error(redColor, "Error from kill: " + error);
         }
       }
     );
   } catch (err) {
-    console.log(redColor, `Error from taskkill: ${err}`);
-    throw err;
+    console.error(redColor, `Error from taskkill: ${err}`);
   }
 }
 
