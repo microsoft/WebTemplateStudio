@@ -4,7 +4,7 @@ import styles from "./navbar.module.css";
 
 //TODO Web Template Studio: Add a new link in the NavBar for your page here.
 // A skip link is included as an accessibility best practice. For more information visit https://www.w3.org/WAI/WCAG21/Techniques/general/G1.
-export default function NavBar() {
+const NavBar = () => {
   return (
     <React.Fragment>
       <div className={styles.skipLink}>
@@ -20,3 +20,4 @@ export default function NavBar() {
     </React.Fragment>
   );
 }
+export default NavBar;
