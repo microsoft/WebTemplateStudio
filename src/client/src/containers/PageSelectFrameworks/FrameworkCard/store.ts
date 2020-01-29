@@ -10,6 +10,7 @@ import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { selectFrontendFramework } from "../../../actions/wizardSelectionActions/selectFrontEndFramework";
 import { selectBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectBackEndFramework";
 import { ISelected } from "../../../types/selected";
+import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
@@ -19,7 +20,10 @@ const mapDispatchToProps = (
   },
   setBackendSelect: (framework: ISelected) => {
     dispatch(selectBackendFrameworkAction(framework));
-  }
+  },
+  setDetailPage: (detailPageInfo: IOption) => {
+    dispatch(setDetailPageAction(detailPageInfo));
+  }  
 });
 
 const mapStateToProps = (state: AppState): IStateProps => {

@@ -84,6 +84,7 @@
   display: grid;
   grid-template-columns: auto 3rem;
   min-height: 30px;
+  margin-top:5rem;
 }
 
 .pageCounter {
@@ -126,6 +127,8 @@
 .gridLayoutCardHeader .title {
   margin-left: 1rem;
   margin-top: 0.2rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
 }
 
 .gridLayoutCardHeader .titleLeftJustified {
@@ -177,4 +180,15 @@ button:disabled {
   opacity: 0.5;
   outline: 0px;
   cursor: default;
+}
+
+.version{
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.description{
+  font-size: 1.2rem;
+  line-height: 1.5;
 }

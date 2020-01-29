@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -16,6 +17,7 @@ import { parseFrameworksPayload } from "../../utils/parseFrameworksPayload";
 import { ISelectFrameworksProps, IDispatchProps } from "./interfaces";
 import {mapDispatchToProps, mapStateToProps} from "./store";
 import FrameworkCard from "./FrameworkCard";
+import styles from "./styles.module.css";
 
 type Props = ISelectFrameworksProps & IDispatchProps;
 
@@ -80,16 +82,22 @@ const SelectFrameworks = (props:Props) => {
 
   return (
     <div>
-      {frontendOptions.map((option) => {
-        return (
-          <FrameworkCard framework={option} isFrontEnd={true}/>
-        );
-      })}
-      {backendOptions.map((option) => {
-        return (
-          <p>Card!!</p>
-        );
-      })}
+      <h1 className={styles.title}>Select a front-end framework</h1>
+      <div className={styles.flexContainer}>
+        {frontendOptions.map((option) => {
+          return (
+            <FrameworkCard framework={option} isFrontEnd={true}/>
+          );
+        })}
+      </div>
+      <h1 className={styles.title}>Select a back-end framework</h1>
+      <div>
+        {backendOptions.map((option) => {
+          return (
+            <p>Card!!</p>
+          );
+        })}
+      </div>
       <SelectFrontEndFramework />
       <SelectBackEndFramework />
     </div>
