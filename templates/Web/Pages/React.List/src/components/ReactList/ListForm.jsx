@@ -1,41 +1,34 @@
-﻿import React, { Component } from 'react';
-import PropTypes from "prop-types";
+﻿import React, { useState } from 'react';
 
-export default class ListForm extends Component {
-  state = {
-    textField: ""
+const ListForm = (params) =>{
+  const [textField, setTextField] = useState("");
+
+  const handleChange = (e) => {
+    setTextField(e.target.value);
   }
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    this.props.addListItem(this.state.textField);
-    this.setState({ textField: "" });
+    params.addListItem(textField);
+    setTextField("");
   }
 
-  propTypes = {
-    addListItem: PropTypes.bool,
-  }
-
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit} className="input-group my-3">
-        <input
-          type="text"
-          onChange={this.handleChange}
-          value={this.state.textField}
-          name="textField"
-          className="form-control"
-          placeholder="Add text here..."
-          aria-label="Add text here..."
-        />
-        <button type="submit" className="btn btn-primary ml-2">
-          Submit
-        </button>
-      </form>
-    );
-  }
+  return (
+    <form onSubmit={handleSubmit} className="input-group my-3">
+      <input
+        type="text"
+        onChange={handleChange}
+        value={textField}
+        name="textField"
+        className="form-control"
+        placeholder="Add text here..."
+        aria-label="Add text here..."
+      />
+      <button type="submit" className="btn btn-primary ml-2">
+        Submit
+      </button>
+    </form>
+  );
 }
+
+export default ListForm;
