@@ -1,7 +1,7 @@
 ﻿import React from "react";
 import PropTypes from "prop-types";
 
-const ListItem = ({ listItem, deleteListItem })=> {
+const ListItem = ({ listItem, deleteListItem }) => {
   return (
     <div className="col-12 mb-3 border">
       <div className="row">
