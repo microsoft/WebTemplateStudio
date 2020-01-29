@@ -34,14 +34,7 @@ const SelectFrameworks = (props:Props) => {
       backendOptions && backendOptions.length>0;
 
     if (!frameworkListLoaded){
-      getFrameworks({
-        module: EXTENSION_MODULES.CORETS,
-        command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
-        payload: {
-          isPreview: isPreview,
-          projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
-        }
-      }, vscode).then((event:any)=>{
+      getFrameworks(vscode).then((event:any)=>{
         let message = event.data;
         setFrontendFrameworks(
           parseFrameworksPayload(
@@ -91,15 +84,13 @@ const SelectFrameworks = (props:Props) => {
         })}
       </div>
       <h1 className={styles.title}>Select a back-end framework</h1>
-      <div>
+      <div className={styles.flexContainer}>
         {backendOptions.map((option) => {
           return (
-            <p>Card!!</p>
+            <FrameworkCard framework={option} isFrontEnd={false}/>
           );
         })}
       </div>
-      <SelectFrontEndFramework />
-      <SelectBackEndFramework />
     </div>
   );
 }

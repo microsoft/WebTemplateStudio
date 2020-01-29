@@ -1,5 +1,6 @@
 .flexContainer {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .title{

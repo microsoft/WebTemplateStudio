@@ -20,9 +20,9 @@ const FrameworkCard = (props:Props) => {
     setBackendSelect, backEndSelect, isFrontEnd, intl, setDetailPage } = props;
 
   const [selected, setSelected] = React.useState(false);
-  const [isShown, setIsShown] = React.useState(false);
 
   React.useEffect(()=>{
+    selectWhenLoadWithoutSelection();
     getLatestVersion();
   },[]);
 
@@ -36,6 +36,15 @@ const FrameworkCard = (props:Props) => {
 
   const getLatestVersion = () =>{
 
+  }
+
+  const selectWhenLoadWithoutSelection = () => {
+    if (isFrontEnd && frontEndSelect.internalName==="" && framework.internalName === "React"){
+      selectCard();
+    }
+    if (!isFrontEnd && backEndSelect.internalName==="" && framework.internalName === "Node"){
+      selectCard();
+    }
   }
 
   const selectCard = ()=>{
@@ -69,9 +78,7 @@ const FrameworkCard = (props:Props) => {
     onClick={selectCard}
     className={classNames(styles.container, styles.boundingBox, {
       [styles.selected]: selected
-    })}
-    onMouseEnter={() => setIsShown(true)}
-    onMouseLeave={() => setIsShown(false)}>
+    })}>
     <div>
       <div className={styles.gridLayoutCardHeader}>
         <div>
@@ -81,20 +88,21 @@ const FrameworkCard = (props:Props) => {
             ))}
         </div>
         <div className={classNames({
-            [styles.title]: framework.svgUrl,
-            [styles.titleLeftJustified]: framework.svgUrl === undefined ? true : false
+          [styles.title]: framework.svgUrl,
+          [styles.titleLeftJustified]: framework.svgUrl === undefined ? true : false
           })}>
-            {framework.title}
+          {framework.title}
         </div>
       </div>
-      {selected && (
-        <DependencyInfo frameworkName={framework.internalName} />
-      )}
+
       <div className={styles.version}>
         v{framework.version}
       </div>
       <div className={styles.description}>
         {framework.body}
+      </div>
+      <div className={styles.DependencyInfo}>
+        <DependencyInfo frameworkName={framework.internalName} />
       </div>
       <div className={styles.gridLayoutCardFooter}>
         <Link

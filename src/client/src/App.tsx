@@ -5,7 +5,6 @@ import { withRouter } from "react-router";
 import { Route, RouteComponentProps, Link } from "react-router-dom";
 
 import PageDetails from "./containers/PageDetails";
-import SelectFrameworks from "./containers/PageSelectFrameworks";
 import SelectPages from "./containers/SelectPages";
 import NewProject from "./containers/NewProject";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
@@ -80,6 +79,7 @@ import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import AzureLoginModal from "./containers/AzureLoginModal";
+import pageSelectFrameworks from './containers/PageSelectFrameworks';
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -328,7 +328,7 @@ class App extends React.Component<Props> {
             />
             <Route
               path={ROUTES.SELECT_FRAMEWORKS}
-              component={SelectFrameworks}
+              component={pageSelectFrameworks}
             />
             <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
             <Route

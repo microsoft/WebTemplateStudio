@@ -84,7 +84,6 @@
   display: grid;
   grid-template-columns: auto 3rem;
   min-height: 30px;
-  margin-top:5rem;
 }
 
 .pageCounter {
@@ -122,6 +121,7 @@
   display: grid;
   grid-template-columns: 3rem auto 3rem;
   max-height: 51px;
+  width: 20rem;
 }
 
 .gridLayoutCardHeader .title {
@@ -191,4 +191,9 @@ button:disabled {
 .description{
   font-size: 1.2rem;
   line-height: 1.5;
+}
+
+.DependencyInfo{
+  margin-top: 1rem;
+  height: 4.5rem;
 }
