@@ -19,7 +19,7 @@ const messages = defineMessages({
     defaultMessage: "Visit our GitHub"
   },
   feedbackRedirectLinkLabel: {
-    id: "feedback.redirectLinkLabel",
+    id: "about.redirectLinkLabel",
     defaultMessage: "GitHub.com"
   }
 });
