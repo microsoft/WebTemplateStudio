@@ -108,7 +108,6 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^5.0.1",
     "run-sequence": "^2.2.1",
-    "tslint": "^5.8.0",
     "typescript": "^3.1.4",
     "vscode": "^1.1.32",
     "vscode-nls-dev": "3.2.7"
@@ -140,7 +139,6 @@
     "opn": "^5.5.0",
     "portfinder": "^1.0.20",
     "rimraf": "^2.6.3",
-    "tslint-microsoft-contrib": "^6.1.0",
     "url-parse": "^1.4.4",
     "vsce": "^1.57.1",
     "vscode-extension-telemetry": "^0.1.1",
