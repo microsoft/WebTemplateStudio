@@ -100,7 +100,10 @@
   "devDependencies": {
     "@types/mocha": "^2.2.42",
     "@types/node": "^8.10.25",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
     "del": "^4.0.0",
+    "eslint": "^6.8.0",
     "event-stream": "^4.0.1",
     "gulp": "^4.0.0",
     "gulp-cli": "^2.1.0",
