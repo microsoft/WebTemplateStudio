@@ -1,6 +1,5 @@
 import { WIZARD_SELECTION_TYPEKEYS } from "./typeKeys";
 import { ISelected } from "../../types/selected";
-import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 
 export interface ISelectPagesAction {
   type: WIZARD_SELECTION_TYPEKEYS.SELECT_PAGES;

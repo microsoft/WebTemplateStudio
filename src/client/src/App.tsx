@@ -62,7 +62,6 @@ import appStyles from "./appStyles.module.css";
 import { startLogOutAzure } from "./actions/azureActions/logOutAzure";
 import { IVersions } from "./types/version";
 import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
-import { IPageCount } from "./reducers/wizardSelectionReducers/pageCountReducer";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
 import { setAzureValidationStatusAction } from "./actions/azureActions/setAzureValidationStatusAction";
 import { IServiceStatus } from "./reducers/generationStatus/genStatus";
@@ -237,8 +236,6 @@ class App extends React.Component<Props> {
 
             // reset page count
             const key = `wts.Page.${selectedFrontend.internalName}.Blank`;
-            const PAGE_TYPE_COUNT: IPageCount = {};
-            PAGE_TYPE_COUNT[key] = 1;
 
             // select default blank page
             const PAGES_SELECTION: ISelected[] = [

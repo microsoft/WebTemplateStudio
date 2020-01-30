@@ -44,11 +44,9 @@ import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
 import RootAction from "../../actions/ActionType";
 import { WizardContentType } from "../../reducers/wizardContentReducers";
-import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { getPageCount } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import {
   getOutputPath,
   getProjectName
@@ -69,7 +67,6 @@ interface IRightSidebarProps {
   selection: SelectionState;
   projectTypeDropdownItems: IDropDownOptionType[];
   frontEndOptions: IOption[];
-  pageCount: IPageCount;
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
   services: ServiceState;
@@ -155,8 +152,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const {
       frontendFramework,
       backendFramework,
-      pages,
-      pageCount
+      pages
     } = this.props.selection;
     const {
       vscode,
@@ -187,14 +183,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           };
         }
       });
-      const cardCountType: IPageCount = {};
-      for (const pageType in pageCount) {
-        const newKey = pageType.replace(
-          frontendFramework.internalName,
-          option.value
-        );
-        cardCountType[newKey] = pageCount[pageType];
-      }
 
       const newPages: ISelected[] = pages.map(page => {
         return {
@@ -414,7 +402,6 @@ const mapStateToProps = (state: AppState): IRightSidebarProps => ({
     state.wizardContent.projectTypes
   ),
   frontEndOptions: state.wizardContent.frontendOptions,
-  pageCount: getPageCount(state),
   frontendDropdownItems: convertOptionsToDropdownItems(
     state.wizardContent.frontendOptions
   ),

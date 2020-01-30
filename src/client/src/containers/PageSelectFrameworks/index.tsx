@@ -1,14 +1,9 @@
-import classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-
-import SelectBackEndFramework from "./SelectBackendFramework";
-import SelectFrontEndFramework from "./SelectFrontEndFramework";
 
 import {
   EXTENSION_MODULES,
   EXTENSION_COMMANDS,
-  WIZARD_CONTENT_INTERNAL_NAMES,
   FRAMEWORK_TYPE
 } from "../../utils/constants";
 
@@ -77,17 +72,17 @@ const SelectFrameworks = (props:Props) => {
     <div>
       <h1 className={styles.title}>Select a front-end framework</h1>
       <div className={styles.flexContainer}>
-        {frontendOptions.map((option) => {
+        {frontendOptions.map((framework) => {
           return (
-            <FrameworkCard framework={option} isFrontEnd={true}/>
+            <FrameworkCard framework={framework} isFrontEnd={true}/>
           );
         })}
       </div>
       <h1 className={styles.title}>Select a back-end framework</h1>
       <div className={styles.flexContainer}>
-        {backendOptions.map((option) => {
+        {backendOptions.map((framework) => {
           return (
-            <FrameworkCard framework={option} isFrontEnd={false}/>
+            <FrameworkCard framework={framework} isFrontEnd={false}/>
           );
         })}
       </div>

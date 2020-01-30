@@ -1,5 +1,4 @@
 import { ISelected } from "../../types/selected";
-import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 
 const FRONT_END_SELECTION: ISelected = {
   author: "Facebook",
@@ -36,13 +35,8 @@ const PAGES_SELECTION: ISelected[] = [
   }
 ];
 
-const PAGE_TYPE_COUNT: IPageCount = {
-  "wts.Page.React.Blank": 1
-};
-
 export {
   FRONT_END_SELECTION,
   BACK_END_SELECTION,
-  PAGES_SELECTION,
-  PAGE_TYPE_COUNT
+  PAGES_SELECTION
 };

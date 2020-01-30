@@ -3,7 +3,6 @@ import { createSelector } from "reselect";
 import { RowType } from "../../types/rowType";
 import { ISelected } from "../../types/selected";
 import getSvgUrl from "../../utils/getSvgUrl";
-import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { defineMessages } from "react-intl";
 import { IValidation } from "../../utils/validations/validations";
 import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
@@ -59,7 +58,6 @@ export const mapStateSelectedPages = (state: AppState): ISelectedPages => ({
 
 const getOutputPathValidation = (state: AppState): IValidation =>
   state.selection.outputPathObject.validation;
-const getPageCount = (state: AppState): IPageCount => state.selection.pageCount;
 
 const isValidNameAndProjectPath = (
   projectNameValidationObject: IValidation,
@@ -181,7 +179,6 @@ export {
   getOutputPathValidation,
   getProjectName,
   getValidations,
-  getPageCount,
   getProjectNameValidation,
   isValidNameAndProjectPathSelector,
   isEnableNextPage

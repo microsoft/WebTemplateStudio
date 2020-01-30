@@ -18,7 +18,6 @@ import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizard
 
 import { AppState } from "../../reducers";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { ISelected } from "../../types/selected";
 
 import { ReactComponent as QuickStartWand } from "../../assets/quickStartWand.svg";
@@ -27,8 +26,7 @@ import quickStartWand from "../../assets/quickStartWand.svg";
 import {
   FRONT_END_SELECTION,
   BACK_END_SELECTION,
-  PAGES_SELECTION,
-  PAGE_TYPE_COUNT
+  PAGES_SELECTION
 } from "./defaultSelection";
 
 import { getAllFrameworks, getAllPages } from "./loadWizardContent";
