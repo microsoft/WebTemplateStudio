@@ -19,10 +19,9 @@ import { inferItemName } from "../../../utils/infer/itemName";
 type Props = ISelectProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
 const PageCard = (props:Props) => {
-  const { page,
-     intl, setPages, selectedPages, setDetailPage } = props;
-
+  const { page, intl, setPages, selectedPages, setDetailPage } = props;
   const [isMosueOver, setIsMouseOver] = React.useState(false);
+  const [pageOutOfBounds, setPageOutOdBounds] = React.useState(false);
 
   React.useEffect(()=>{
     if (selectedPages.length==0 && page.defaultName == "Blank"){
@@ -30,6 +29,11 @@ const PageCard = (props:Props) => {
       console.log("useEffect")
     }
   },[page]);
+
+  React.useEffect(()=>{
+    const limitPages=20;
+    setPageOutOdBounds(selectedPages.length == limitPages);
+  },[selectedPages]);
 
 
   const addPage = ()=>{
@@ -41,10 +45,12 @@ const PageCard = (props:Props) => {
       licenses:page.licenses,
       title:inferItemName(page.defaultName,selectedPages)
     };
-    
-    let newSelectedPages:ISelected[] = selectedPages.splice(0);
-    newSelectedPages.push(select);
-    setPages(newSelectedPages);
+
+    if (!pageOutOfBounds){
+      let newSelectedPages:ISelected[] = selectedPages.splice(0);
+      newSelectedPages.push(select);
+      setPages(newSelectedPages);
+    }
   }
 
   const showMoreInfo = (

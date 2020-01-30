@@ -1,5 +1,4 @@
 import { IOption } from "../../types/option";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { setBackendFrameworks } from "../../actions/wizardContentActions/getBackendFrameworks";
 import { setFrontendFrameworks } from "../../actions/wizardContentActions/getFrontendFrameworks";
 import { ThunkDispatch } from "redux-thunk";

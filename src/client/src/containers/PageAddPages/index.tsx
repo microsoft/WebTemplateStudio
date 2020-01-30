@@ -1,22 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { injectIntl } from "react-intl";
 
-import SelectOption from "../SelectOption";
-
-import {
-  updatePageCountAction
-} from "../../actions/wizardSelectionActions/selectPages";
-
-import { IOption } from "../../types/option";
-import { ISelected } from "../../types/selected";
-import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
-
-import { InjectedIntl, injectIntl } from "react-intl";
-import { AppState } from "../../reducers";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../actions/ActionType";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import {
   EXTENSION_MODULES,
   EXTENSION_COMMANDS,
@@ -25,28 +10,32 @@ import {
 import messages from "./messages";
 import PageCard from "./PageCard";
 import styles from "./styles.module.css";
+import classnames from "classnames";
+import Notification from "../../components/Notification";
+import { ISelectProps, IDispatchProps, IIntlProps } from "./interfaces";
+import { mapDispatchToProps, mapStateToProps} from "./store";
 
-interface IDispatchProps {
-  updatePageCount: (pageCount: IPageCount) => any;
-}
+type Props = IDispatchProps & ISelectProps & IIntlProps;
 
-interface ISelectPagesProps {
-  vscode: IVSCodeObject;
-  options: IOption[];
-  selectedBackend: ISelected;
-  selectedFrontend: ISelected;
-}
+//class PageAddPages extends React.Component<Props> {
+const PageAddPages = (props:Props) => {
+  const { selectedBackend, selectedFrontend, vscode, options, intl, selectedPages } = props;
+  const [pageOutOfBounds, setPageOutOdBounds] = React.useState(false);
 
-interface IIntlProps {
-  intl: InjectedIntl;
-}
+  React.useEffect(()=>{
+    getPages();
+  },[]);
 
-type Props = IDispatchProps & ISelectPagesProps & IIntlProps;
+  React.useEffect(()=>{
+    if (options.length===0) getPages();
+  },[selectedBackend,selectedFrontend]);
 
-class PageAddPages extends React.Component<Props> {
-  public componentDidMount() {
-    const { selectedBackend, selectedFrontend, vscode } = this.props;
+  React.useEffect(()=>{
+    const limitPages=20;
+    setPageOutOdBounds(selectedPages.length == limitPages);
+  },[selectedPages]);
 
+  const getPages = () =>{
     vscode.postMessage({
       module: EXTENSION_MODULES.CORETS,
       command: EXTENSION_COMMANDS.GET_PAGES,
@@ -58,74 +47,29 @@ class PageAddPages extends React.Component<Props> {
     });
   }
 
-  public componentDidUpdate(newProps: ISelectPagesProps) {
-    if (newProps.options.length === 0) {
-      const { selectedBackend, selectedFrontend, vscode } = this.props;
-      vscode.postMessage({
-        module: EXTENSION_MODULES.CORETS,
-        command: EXTENSION_COMMANDS.GET_PAGES,
-        payload: {
-          projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
-          frontendFramework: selectedFrontend.internalName,
-          backendFramework: selectedBackend.internalName
-        }
-      });
-    }
-  }
-
-  public convertSelectedPagesToIndices = (pages: ISelected[]): number[] => {
-    const { options } = this.props;
-    const selectedPageIndices = [];
-    for (let i = 0; i < pages.length; i++) {
-      for (let j = 0; j < options.length; j++) {
-        if (pages[i].internalName === options[j].internalName) {
-          selectedPageIndices.push(j);
-        }
-      }
-    }
-    return selectedPageIndices;
-  };
-  public render() {
-    const {
-      options,
-      intl,
-      updatePageCount
-    } = this.props;
-
-    return (
-      <div>
-        <h1 className={styles.title}>Select a front-end framework</h1>
-        <div className={styles.flexContainer}>
-          {options.map((option)=>{
-            return (<PageCard page={option}/>)
+  return (
+    <div>
+      <h1 className={styles.title}>Select a front-end framework</h1>
+      <div
+          className={classnames(styles.description, {
+            [styles.borderGreen]: !pageOutOfBounds,
+            [styles.borderYellow]: pageOutOfBounds
           })}
-        </div>
+        >
+        <Notification
+          showWarning={pageOutOfBounds}
+          text={"Max 20 pages can be selected"}
+          altMessage={intl.formatMessage(messages.iconAltMessage)}
+        />
       </div>
-    );
-  }
+      <div className={styles.flexContainer}>
+        {options.map((option)=>{
+          return (<PageCard page={option}/>)
+        })}
+      </div>
+    </div>
+  );
 }
-
-const mapStateToProps = (state: AppState): ISelectPagesProps => {
-  const vscode = getVSCodeApiSelector(state);
-  const { pageOptions } = state.wizardContent;
-  const { frontendFramework } = state.selection;
-  const { backendFramework } = state.selection;
-
-  return {
-    vscode: vscode,
-    options: pageOptions,
-    selectedBackend: backendFramework,
-    selectedFrontend: frontendFramework
-  };
-};
-
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  updatePageCount: (pageCount: IPageCount) => {
-    dispatch(updatePageCountAction(pageCount));
-  }
-});
 
 export default connect(
   mapStateToProps,
