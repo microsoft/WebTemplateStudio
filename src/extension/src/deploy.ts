@@ -8,7 +8,7 @@ export class Deploy {
   private folderPath: string | undefined;
   private progressObject!: vscode.Progress<IVSCodeProgressType>;
 
-  public static getInstance() {
+  public static getInstance(): Deploy {
     return new Deploy();
   }
 
@@ -29,7 +29,7 @@ export class Deploy {
     return true;
   }
 
-  private async prepareForDeployment() {
+  private async prepareForDeployment(): Promise<void> {
     vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
@@ -53,7 +53,7 @@ export class Deploy {
     return folder ? folder.uri.fsPath : undefined;
   }
 
-  private async installDependencies() {
+  private async installDependencies(): Promise<void> {
     const command = os.platform() == "win32" ? "npm.cmd" : "npm";
     this.ReportProgress("Installing Dependencies");
     return Deploy.promiseFromChildProcess(
@@ -63,7 +63,7 @@ export class Deploy {
     );
   }
 
-  private async buildProject() {
+  private async buildProject(): Promise<void> {
     const command = os.platform() == "win32" ? "npm.cmd" : "npm";
     this.ReportProgress("Building Project");
     return Deploy.promiseFromChildProcess(
@@ -73,7 +73,7 @@ export class Deploy {
     );
   }
 
-  private static promiseFromChildProcess(child: ChildProcess) {
+  private static promiseFromChildProcess(child: ChildProcess): Promise<void> {
     return new Promise(function(resolve, reject) {
       child.addListener("error", reject);
       child.addListener("exit", resolve);
@@ -83,7 +83,7 @@ export class Deploy {
     });
   }
 
-  private ReportProgress(message: string) {
+  private ReportProgress(message: string): void {
     Logger.appendLog("EXTENSION", "info", message);
     this.progressObject.report({ message });
   }

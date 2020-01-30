@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import * as os from 'os';
 
 export interface IParsedError {
@@ -8,8 +9,8 @@ export interface IParsedError {
 }
 
 export function parseError(error: any): IParsedError {
-    let errorType: string = '';
-    let message: string = '';
+    let errorType = '';
+    let message = '';
     let stack: string | undefined;
 
     if (typeof (error) === 'object' && error !== null) {
@@ -35,8 +36,6 @@ export function parseError(error: any): IParsedError {
     }
 
     message = unpackErrorsInMessage(message);
-
-    // tslint:disable-next-line:strict-boolean-expressions
     errorType = errorType || typeof (error);
     message = message || 'Unknown Error';
 
@@ -91,7 +90,6 @@ function unpackErrorsInMessage(message: string): string {
 }
 
 function getCallstack(error: { stack?: string }): string | undefined {
-    // tslint:disable-next-line: strict-boolean-expressions
     const stack: string = error.stack || '';
 
     // Standardize to using '/' for path separator for all platforms

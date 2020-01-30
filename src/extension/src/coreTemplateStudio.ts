@@ -52,7 +52,7 @@ export class CoreTemplateStudio {
       cliExecutableName += ".exe";
     }
 
-    let cliPath = path.join(
+    const cliPath = path.join(
       extensionPath,
       "src",
       "corets-cli",
@@ -69,7 +69,6 @@ export class CoreTemplateStudio {
 
     if (os.platform() !== CONSTANTS.CLI.WINDOWS_PLATFORM_VERSION) {
       // Not unsafe as the parameter comes from trusted source
-      // tslint:disable-next-line:non-literal-fs-path
       fs.chmodSync(cliPath, 0o755);
     }
 
@@ -81,7 +80,7 @@ export class CoreTemplateStudio {
     return CoreTemplateStudio._instance;
   }
 
-  public static DestroyInstance() {
+  public static DestroyInstance(): void {
     if (CoreTemplateStudio._instance) {
       CoreTemplateStudio._instance.stop();
       CoreTemplateStudio._instance = undefined;
@@ -97,7 +96,7 @@ export class CoreTemplateStudio {
 
   // This function is a listener, in the constructor, it gets attached
   // then it will always get triggered when a command is write to the cli and there is responses from cli, until the process gets killed
-  public async readStream(process: ChildProcess) {
+  public async readStream(process: ChildProcess): Promise<void> {
     let data = "";
     process.stdout.on("data", chunk => {
       data += chunk;
@@ -199,7 +198,7 @@ export class CoreTemplateStudio {
   }
 
   public async generate(payload: ICommandPayload): Promise<any> {
-    const typedPayload = <IGenerationPayloadType>payload.payload;
+    const typedPayload = payload.payload as IGenerationPayloadType;
     const generatePayload = JSON.stringify(
       this.makeEngineGenerationPayload(typedPayload)
     );
@@ -258,16 +257,16 @@ export class CoreTemplateStudio {
     };
   }
 
-  public stop() {
+  public stop(): void {
     if (this._processCli) {
       this.killProcess(this._processCli);
     }
   }
 
-  private killProcess(processToKill: ChildProcess) {
+  private killProcess(processToKill: ChildProcess): void {
     if (process.platform === CONSTANTS.CLI.WINDOWS_PLATFORM_VERSION) {
-      let pid = processToKill.pid;
-      let spawn = require("child_process").spawn;
+      const pid = processToKill.pid;
+      const spawn = require("child_process").spawn;
       spawn("taskkill", ["/pid", pid, "/f", "/t"]);
     } else {
       processToKill.kill("SIGKILL");
