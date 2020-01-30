@@ -26,7 +26,7 @@ const messages = defineMessages({
     defaultMessage: "Back-end Framework"
   },
   viewLicenses: {
-    id: "licenses.viewLicenses",
+    id: "rightSidebar.viewLicenses",
     defaultMessage: "View Licenses"
   },
   giveFeedback: {
@@ -34,7 +34,7 @@ const messages = defineMessages({
     defaultMessage: "Give Feedback"
   },
   feedbackRedirectLinkLabel: {
-    id: "feedback.redirectLinkLabel",
+    id: "rightSidebar.redirectLinkLabel",
     defaultMessage: "GitHub.com"
   },
   openSideBar: {
