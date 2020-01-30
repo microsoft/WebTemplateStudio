@@ -10,7 +10,7 @@ export class ResourceManager {
   private createResourceManagementClient(
     userSubscriptionItem: SubscriptionItem
   ): ResourceManagementClient {
-    let userCredentials: ServiceClientCredentials =
+    const userCredentials: ServiceClientCredentials =
       userSubscriptionItem.session.credentials;
     if (
       userSubscriptionItem === undefined ||
@@ -38,6 +38,6 @@ export class ResourceManager {
         userSubscriptionItem
       );
     }
-    return this.AzureResourceManagementClient!;
+    return this.AzureResourceManagementClient;
   }
 }

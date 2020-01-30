@@ -18,7 +18,7 @@ export class ReactPanel {
   private readonly _panel: vscode.WebviewPanel;
   private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
-  private static _controllerFunctionDelegate = function(message: any) {
+  private static _controllerFunctionDelegate = function(message: any): void {
     //default behavior
     if (message.command === "alert") {
       vscode.window.showErrorMessage(message.text);
@@ -29,7 +29,7 @@ export class ReactPanel {
     extensionPath: string,
     controllerFunctionDelegate: (message: any) => any = this
       ._controllerFunctionDelegate
-  ) {
+  ): ReactPanel {
     const column = vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
       : undefined;
@@ -42,21 +42,19 @@ export class ReactPanel {
 
       ReactPanel.currentPanel = new ReactPanel(
         extensionPath,
-        column || vscode.ViewColumn.One,
-        controllerFunctionDelegate
+        column || vscode.ViewColumn.One
       );
     }
     return ReactPanel.currentPanel;
   }
 
-  public postMessageWebview(object: Object) {
+  public postMessageWebview(object: any): void {
     this._panel.webview.postMessage(object);
   }
 
   private constructor(
     extensionPath: string,
-    column: vscode.ViewColumn,
-    controllerClassDelegate: (message: any) => any
+    column: vscode.ViewColumn
   ) {
     this._extensionPath = extensionPath;
 
@@ -81,7 +79,7 @@ export class ReactPanel {
 
     // Set the webview's initial html content
     this._panel.webview.html = this._getHtmlForWebview();
-    this._panel.title = CONSTANTS.REACT_PANEL.Project_Title;
+    this._panel.title = CONSTANTS.REACT_PANEL.PROJECT_TITLE;
 
     // Listen for when the panel is disposed
     // This happens when the user closes the panel or when the panel is closed programatically
@@ -94,7 +92,7 @@ export class ReactPanel {
       this._disposables
     );
   }
-  public dispose() {
+  public dispose(): void {
     ReactPanel.currentPanel = undefined;
     CoreTemplateStudio.DestroyInstance();
     if (Logger.outputChannel) {
@@ -111,7 +109,7 @@ export class ReactPanel {
     deactivate();
   }
 
-  private _getHtmlForWebview() {
+  private _getHtmlForWebview(): string {
     const manifest = require(path.join(
       this._extensionPath,
       "react",

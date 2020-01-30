@@ -7,10 +7,22 @@ export interface AppNameValidationResult {
 }
 
 export namespace NameValidator {
+
+  function checkNameRegex(name: string): AppNameValidationResult {
+    const regexp = /^[a-zA-Z0-9]+[a-zA-Z0-9-]*[a-zA-Z0-9]+$/;
+    if (!regexp.test(name)) {
+      return {
+        isValid: false,
+        message: CONSTANTS.ERRORS.APP_INVALID_NAME(name)
+      };
+    }
+    return { isValid: true, message: "" };
+  }
+  
   export function validateFunctionNames(
     names: string[]
   ): AppNameValidationResult {
-    for (var name of names) {
+    for (const name of names) {
       if (
         name.length > CONSTANTS.APP_NAME.MAX_LENGTH ||
         name.length < CONSTANTS.APP_NAME.MIN_LENGTH
@@ -23,7 +35,7 @@ export namespace NameValidator {
           )
         };
       }
-      let regexResult: AppNameValidationResult = checkNameRegex(name);
+      const regexResult: AppNameValidationResult = checkNameRegex(name);
       if (!regexResult.isValid) {
         return regexResult;
       }
@@ -58,16 +70,5 @@ export namespace NameValidator {
       };
     }
     return checkNameRegex(name);
-  }
-
-  function checkNameRegex(name: string): AppNameValidationResult {
-    let regexp = /^[a-zA-Z0-9]+[a-zA-Z0-9-]*[a-zA-Z0-9]+$/;
-    if (!regexp.test(name)) {
-      return {
-        isValid: false,
-        message: CONSTANTS.ERRORS.APP_INVALID_NAME(name)
-      };
-    }
-    return { isValid: true, message: "" };
   }
 }

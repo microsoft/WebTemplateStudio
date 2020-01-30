@@ -52,7 +52,7 @@ export class LaunchExperience {
     return { ...syncObject };
   }
 
-  private timeout(ms: number) {
+  private timeout(ms: number): Promise<unknown> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
@@ -65,7 +65,7 @@ export class LaunchExperience {
       pathToTemplates = CONSTANTS.API.PRODUCTION_PATH_TO_TEMPLATES;
     }
 
-    let apiInstance = CoreTemplateStudio.GetExistingInstance();
+    const apiInstance = CoreTemplateStudio.GetExistingInstance();
     return await apiInstance
       .sync({
         payload: { path: pathToTemplates },
@@ -98,7 +98,7 @@ export class LaunchExperience {
       });
   }
 
-  private handleSyncLiveData(status: string, progress?: number) {
+  private handleSyncLiveData(status: string, progress?: number): void {
     let output = `Templates - ${status}`;
     let increment: number | undefined;
 

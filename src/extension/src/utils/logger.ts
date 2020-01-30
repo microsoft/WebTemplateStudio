@@ -56,7 +56,7 @@ export class Logger extends WizardServant {
       "[".concat(new Date().toLocaleString(), "]", "[", source, "] ", data)
     );
   }
-  public static display(level: LogLevel): void {
+  public static display(): void {
     if (Logger.outputChannel === undefined) {
       Logger.initializeOutputChannel(OUTPUT_CHANNEL_DEFAULT);
     }
@@ -66,7 +66,7 @@ export class Logger extends WizardServant {
     message: ILoggingPayload
   ): Promise<IPayloadResponse> {
     Logger.appendLog("WIZARD", message.level, message.data);
-    Logger.display(message.level);
+    Logger.display();
     return {
       payload: null
     };

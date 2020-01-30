@@ -88,21 +88,17 @@ export class AzureServices extends WizardServant {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersAppServiceSubscriptionItemCache: SubscriptionItem;
 
-  public static async performLoginForSubscriptions(
-    message: any
-  ): Promise<IPayloadResponse> {
+  public static async performLoginForSubscriptions(): Promise<IPayloadResponse> {
     Logger.appendLog("EXTENSION", "info", "Attempt to log user in");
-    let isLoggedIn = await AzureAuth.login();
+    const isLoggedIn = await AzureAuth.login();
     if (isLoggedIn) {
       Logger.appendLog("EXTENSION", "info", "User logged in");
-      return AzureServices.sendUserStatusIfLoggedIn(message);
+      return AzureServices.sendUserStatusIfLoggedIn();
     }
     throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
   }
 
-  public static async sendUserStatusIfLoggedIn(
-    message: any
-  ): Promise<IPayloadResponse> {
+  public static async sendUserStatusIfLoggedIn(): Promise<IPayloadResponse> {
     if (AzureAuth.getEmail()) {
       AzureServices.subscriptionItemList = await AzureAuth.getSubscriptions();
       const subscriptionListToDisplay = AzureServices.subscriptionItemList.map(
@@ -124,9 +120,9 @@ export class AzureServices extends WizardServant {
       return { payload: null };
     }
   }
-  public static async performLogout(message: any): Promise<IPayloadResponse> {
-    let success = await AzureAuth.logout();
-    let payloadResponse: IPayloadResponse = { payload: success };
+  public static async performLogout(): Promise<IPayloadResponse> {
+    const success = await AzureAuth.logout();
+    const payloadResponse: IPayloadResponse = { payload: success };
     return payloadResponse;
   }
   public static async sendAppServiceSubscriptionDataToClient(
@@ -174,17 +170,17 @@ export class AzureServices extends WizardServant {
     subscriptionLabel: string,
     AzureType: AzureResourceType,
     projectName: string
-  ) {
-    let subscriptionItem = AzureServices.subscriptionItemList.find(
+  ): Promise<any> {
+    const subscriptionItem = AzureServices.subscriptionItemList.find(
       subscriptionItem => subscriptionItem.label === subscriptionLabel
     );
     if (subscriptionItem === undefined) {
       throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
     }
-    let resourceGroupItems = AzureAuth.getAllResourceGroupItems(
+    const resourceGroupItems = AzureAuth.getAllResourceGroupItems(
       subscriptionItem
     ).then(resourceGroups => {
-      let formatResourceGroupList = [];
+      const formatResourceGroupList = [];
       formatResourceGroupList.push(
         ...resourceGroups.map(resourceGroup => {
           return {
@@ -197,7 +193,7 @@ export class AzureServices extends WizardServant {
     });
 
     let locationItems: LocationItem[] = [];
-    let validName: string = await NameGenerator.generateValidAzureTypeName(
+    const validName: string = await NameGenerator.generateValidAzureTypeName(
       projectName,
       subscriptionItem,
       AzureType
@@ -213,7 +209,7 @@ export class AzureServices extends WizardServant {
         break;
     }
 
-    let locations = [];
+    const locations = [];
     locations.push(
       ...locationItems.map(location => {
         return {
@@ -344,13 +340,13 @@ export class AzureServices extends WizardServant {
 
   private static async updateAppServiceSubscriptionItemCache(
     subscriptionLabel: string
-  ) {
+  ): Promise<void> {
     if (
       AzureServices.usersAppServiceSubscriptionItemCache === undefined ||
       subscriptionLabel !==
         AzureServices.usersAppServiceSubscriptionItemCache.label
     ) {
-      let subscriptionItem = AzureServices.subscriptionItemList.find(
+      const subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
       );
       if (subscriptionItem) {
@@ -369,7 +365,7 @@ export class AzureServices extends WizardServant {
       subscriptionLabel !==
         AzureServices.usersCosmosDBSubscriptionItemCache.label
     ) {
-      let subscriptionItem = AzureServices.subscriptionItemList.find(
+      const subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
       );
       if (subscriptionItem) {
@@ -388,7 +384,7 @@ export class AzureServices extends WizardServant {
       subscriptionLabel !==
         AzureServices.usersFunctionSubscriptionItemCache.label
     ) {
-      let subscriptionItem = AzureServices.subscriptionItemList.find(
+      const subscriptionItem = AzureServices.subscriptionItemList.find(
         subscriptionItem => subscriptionItem.label === subscriptionLabel
       );
       if (subscriptionItem) {
@@ -403,7 +399,7 @@ export class AzureServices extends WizardServant {
     payload: any
   ): Promise<ResourceGroupSelection[]> {
     const projectName = payload.engine.projectName;
-    let allSubscriptions: SubscriptionItem[] = [];
+    const allSubscriptions: SubscriptionItem[] = [];
 
     if (payload.selectedFunctions) {
       await AzureServices.updateFunctionSubscriptionItemCache(
@@ -448,7 +444,7 @@ export class AzureServices extends WizardServant {
   ): Promise<ResourceGroupSelection> {
     let resourceGroupName = generatedName;
     if (AzureServices.IsMicrosoftLearnSubscription(subscriptionItem)) {
-      let resourceGroups = await AzureServices.AzureResourceGroupProvider.GetResourceGroups(subscriptionItem);
+      const resourceGroups = await AzureServices.AzureResourceGroupProvider.GetResourceGroups(subscriptionItem);
       resourceGroupName = resourceGroups[0].name as string;
     }
     return {
@@ -536,7 +532,7 @@ export class AzureServices extends WizardServant {
       selections.subscription
     );
 
-    let userFunctionsSelections: FunctionSelections = {
+    const userFunctionsSelections: FunctionSelections = {
       functionAppName: selections.appName,
       subscriptionItem: AzureServices.usersFunctionSubscriptionItemCache,
       resourceGroupItem: await AzureAuth.getResourceGroupItem(
@@ -548,7 +544,7 @@ export class AzureServices extends WizardServant {
       functionNames: selections.functionNames
     };
 
-    let functionNamesValidation: AppNameValidationResult = NameValidator.validateFunctionNames(
+    const functionNamesValidation: AppNameValidationResult = NameValidator.validateFunctionNames(
       userFunctionsSelections.functionNames
     );
     if (!functionNamesValidation.isValid) {
@@ -582,7 +578,7 @@ export class AzureServices extends WizardServant {
       selections.subscription
     );
 
-    let userCosmosDBSelection: CosmosDBSelections = {
+    const userCosmosDBSelection: CosmosDBSelections = {
       cosmosAPI: selections.api,
       cosmosDBResourceName: selections.accountName,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
@@ -614,14 +610,14 @@ export class AzureServices extends WizardServant {
   public static async promptUserForCosmosReplacement(
     pathToEnv: string,
     dbObject: DatabaseObject
-  ) {
+  ): Promise<any> {
     return await vscode.window
       .showInformationMessage(
         DialogMessages.cosmosDBConnectStringReplacePrompt,
         ...[DialogResponses.yes, DialogResponses.no]
       )
       .then((selection: vscode.MessageItem | undefined) => {
-        var start = Date.now();
+        const start = Date.now();
         if (selection === DialogResponses.yes) {
           CosmosDBDeploy.updateConnectionStringInEnvFile(
             pathToEnv,
@@ -641,7 +637,7 @@ export class AzureServices extends WizardServant {
     resourceGroupName: string,
     webAppName: string,
     connectionString: string
-  ) {
+  ): Promise<void> {
     const parsed: string = ConnectionString.parseConnectionString(
       connectionString
     );
@@ -662,9 +658,9 @@ export class AzureServices extends WizardServant {
     // format of parsedConnectionString: "<key1>=<value1>\n<key2>=<value2>\n<key3>=<value3>\n"
     const fields = parsedConnectionString.split("\n");
     const result: { [s: string]: string } = {};
-    for (let i: number = 0; i < fields.length - 1; i++) {
-      let key = fields[i].substr(0, fields[i].indexOf("="));
-      let value = fields[i].substr(fields[i].indexOf("=") + 1);
+    for (let i = 0; i < fields.length - 1; i++) {
+      const key = fields[i].substr(0, fields[i].indexOf("="));
+      const value = fields[i].substr(fields[i].indexOf("=") + 1);
       result[key] = value;
     }
     return result;

@@ -19,7 +19,7 @@ export interface ResourceGroupSelection {
 export class ResourceGroupDeploy {
   private azureResourceClient: ResourceManagementClient | undefined;
 
-  private setAzureResourceClient(userSubscriptionItem: SubscriptionItem) {
+  private setAzureResourceClient(userSubscriptionItem: SubscriptionItem): void {
     if (
       this.azureResourceClient === undefined ||
       this.azureResourceClient.subscriptionId !==
@@ -88,7 +88,7 @@ export class ResourceGroupDeploy {
     name: string,
     userSubscriptionItems: SubscriptionItem[]
   ): Promise<boolean> {
-    let isValid: boolean = true;
+    let isValid = true;
     userSubscriptionItems.forEach(async userSubscriptionItem => {
       isValid =
         isValid &&
@@ -125,7 +125,7 @@ export class ResourceGroupDeploy {
         CONSTANTS.ERRORS.AZURE_RESOURCE_CLIENT_NOT_DEFINED
       );
     }
-    let groups = await this.azureResourceClient.resourceGroups.list();
+    const groups = await this.azureResourceClient.resourceGroups.list();
     return groups;
   }
 }

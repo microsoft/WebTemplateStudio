@@ -1,7 +1,7 @@
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { ExtensionCommand, CONSTANTS } from "../constants";
-const os = require("os");
-const util = require("util");
+import os = require("os");
+import util = require("util");
 const semver = require('semver');
 const exec = util.promisify(require("child_process").exec);
 
@@ -28,7 +28,7 @@ export class DependencyChecker extends WizardServant {
     return new Map([[ExtensionCommand.CheckDependency, this.checkDependency]]);
   }
 
-  private async runPythonVersionCommand(command: string) {
+  private async runPythonVersionCommand(command: string): Promise<boolean> {
     let installed: boolean;
     try {
       const { stdout, stderr} = await exec(command + " --version");
@@ -43,8 +43,8 @@ export class DependencyChecker extends WizardServant {
   }
 
   async checkDependency(message: any): Promise<IPayloadResponse> {
-    let name: string = message.payload.dependency;
-    let state: boolean = false;
+    const name: string = message.payload.dependency;
+    let state = false;
     if (name === CONSTANTS.DEPENDENCY_CHECKER.NODE) {
       try {
         const { stdout } = await exec(
@@ -56,8 +56,8 @@ export class DependencyChecker extends WizardServant {
         state = false;
       }
     } else if (name === CONSTANTS.DEPENDENCY_CHECKER.PYTHON) {
-      let userOS: string = os.platform();
-      let userOnWin: boolean = userOS.indexOf("win") === 0;
+      const userOS: string = os.platform();
+      const userOnWin: boolean = userOS.indexOf("win") === 0;
 
       if (
         await this.runPythonVersionCommand(CONSTANTS.DEPENDENCY_CHECKER.PYTHON3)

@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-// tslint:disable-next-line:no-require-imports
 import opn = require("opn");
 import * as vscode from 'vscode';
 import { getPackageInfo } from "../utils/packageInfo";
@@ -15,7 +14,7 @@ import { IParsedError } from "./parseError";
 export function reportAnIssue(vscodeContext: vscode.ExtensionContext, actionId: string, parsedError: IParsedError): void {
     const { extensionName, extensionVersion, bugsUrl } = getPackageInfo(vscodeContext);
 
-    let body: string = `
+    let body = `
 <!-- IMPORTANT: Please be sure to remove any private information before submitting. -->
 
 Repro steps:
@@ -46,8 +45,6 @@ ${parsedError.stack.substring(0, 5000)}
     }
 
     const baseUrl: string = bugsUrl || `https://github.com/Microsoft/${extensionName}/issues`;
-    const url: string = `${baseUrl}/new?body=${encodeURIComponent(body)}`;
-
-    // tslint:disable-next-line:no-floating-promises
+    const url = `${baseUrl}/new?body=${encodeURIComponent(body)}`;
     opn(url);
 }

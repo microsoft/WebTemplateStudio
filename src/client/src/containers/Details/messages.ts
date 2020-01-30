@@ -6,7 +6,7 @@ const messages = defineMessages({
     defaultMessage: "None"
   },
   redirectLabel: {
-    id: "licenses.redirectLinkLabel",
+    id: "details.redirectLinkLabel",
     defaultMessage: "{redirectLabel}"
   },
   genericRedirect: {

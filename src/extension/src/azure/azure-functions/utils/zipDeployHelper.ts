@@ -15,7 +15,7 @@ export namespace ZipDeployHelper {
 
     const zipRequestUrl = `https://${appName.toLowerCase()}${FUNCTION_ZIP_DEPLOY_DOMAIN}`;
 
-    let tokenCache = await (<any>credentials).tokenCache;
+    const tokenCache = await (credentials as any).tokenCache;
 
     const options = {
       url: zipRequestUrl,
