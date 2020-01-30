@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { ROUTES } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
-//import { getLatestVersion } from "../../../utils/extensionService/extensionService";
+import { getLatestVersion } from "../../../utils/extensionService/extensionService";
 import vscodeApi from "../../../reducers/vscodeApiReducer";
 //import Notification from "../../../components/Notification";
 
@@ -27,9 +27,10 @@ const FrameworkCard = (props:Props) => {
 
   React.useEffect(()=>{
     selectWhenLoadWithoutSelection();
-    //getLatestVersion(vscode, framework.internalName).then((isLatestVersion:boolean)=>{
-    //  setIsLatestVersion(isLatestVersion);
-    //});
+    getLatestVersion(vscode, framework.internalName).then((latestVersion:boolean)=>{
+      //console.log('comp' + latestVersion);
+      setIsLatestVersion(latestVersion);
+    });
   },[]);
 
   React.useEffect(()=>{
@@ -97,8 +98,11 @@ const FrameworkCard = (props:Props) => {
         </div>
       </div>
 
-      <div className={styles.version}>
-        v{framework.version} {isLatestVersion && (<div className={styles.latestVersion}>{isLatestVersion}(Latest)</div>)}
+      <div className={styles.gridLayoutVersion}>
+        <div className={styles.version}>v{framework.version}</div>
+        {isLatestVersion &&
+          (<div className={styles.latestVersion}>{isLatestVersion}(Latest)</div>)
+        }
       </div>
       <div className={styles.description}>
         {framework.body}

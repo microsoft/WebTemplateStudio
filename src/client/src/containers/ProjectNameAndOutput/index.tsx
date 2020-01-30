@@ -43,6 +43,7 @@ import { inferProjectName} from "../../utils/infer/projectName";
 import { setProjectPathValidation } from "../../actions/wizardSelectionActions/setProjectPathValidation";
 import { validationMessages } from '../../utils/validations/messages';
 import messages from "./messages";
+import { getOutput_Path } from "../../utils/extensionService/extensionService";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -92,10 +93,12 @@ const ProjectNameAndOutput = (props: Props) => {
 
   React.useEffect(() => {
     if (outputPath === "") {
-      vscode.postMessage({
-        module: EXTENSION_MODULES.DEFAULTS,
-        command: EXTENSION_COMMANDS.GET_OUTPUT_PATH
-      });
+      getOutput_Path(vscode).then((event)=>{
+        const message = event.data;
+        if (message.payload != null && message.payload.outputPath != null) {
+          updateOutputPath(message.payload.outputPath);
+        }
+      })
     }
   }, [vscode]);
 
