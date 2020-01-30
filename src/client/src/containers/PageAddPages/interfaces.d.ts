@@ -7,7 +7,7 @@ interface IDispatchProps {
   updatePageCount: (pageCount: IPageCount) => any;
 }
 
-interface ISelectProps {
+interface IStoreProps {
   vscode: IVSCodeObject;
   options: IOption[];
   selectedBackend: ISelected;
@@ -19,4 +19,8 @@ interface IIntlProps {
   intl: InjectedIntl;
 }
 
-export { IIntlProps, IDispatchProps, ISelectProps };
+interface IProps {
+  isModal?: boolean;
+}
+
+export { IIntlProps, IDispatchProps, IStoreProps, IProps };

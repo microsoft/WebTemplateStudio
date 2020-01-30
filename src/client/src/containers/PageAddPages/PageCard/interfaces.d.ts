@@ -3,9 +3,10 @@ import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import Select from "react-select/lib/Select";
 import { ISelected } from "../../../types/selected";
 
-interface ISelectProps {
+interface IProps {
   vscode: IVSCodeObject;
   page:IOption;
+  isModal?:boolean;
 }
 
 interface IDispatchProps {
@@ -18,4 +19,4 @@ interface IStateProps {
   selectedPages: ISelected[];
 }
 
-export { IStateProps, IDispatchProps, ISelectProps };
+export { IStateProps, IDispatchProps, IProps };

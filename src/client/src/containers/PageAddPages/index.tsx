@@ -12,14 +12,13 @@ import PageCard from "./PageCard";
 import styles from "./styles.module.css";
 import classnames from "classnames";
 import Notification from "../../components/Notification";
-import { ISelectProps, IDispatchProps, IIntlProps } from "./interfaces";
+import { IStoreProps, IDispatchProps, IIntlProps, IProps } from "./interfaces";
 import { mapDispatchToProps, mapStateToProps} from "./store";
 
-type Props = IDispatchProps & ISelectProps & IIntlProps;
+type Props = IDispatchProps & IStoreProps & IIntlProps & IProps;
 
-//class PageAddPages extends React.Component<Props> {
 const PageAddPages = (props:Props) => {
-  const { selectedBackend, selectedFrontend, vscode, options, intl, selectedPages } = props;
+  const { selectedBackend, selectedFrontend, vscode, options, intl, selectedPages, isModal } = props;
   const [pageOutOfBounds, setPageOutOdBounds] = React.useState(false);
 
   React.useEffect(()=>{
@@ -64,7 +63,7 @@ const PageAddPages = (props:Props) => {
       </div>
       <div className={styles.flexContainer}>
         {options.map((option)=>{
-          return (<PageCard page={option}/>)
+          return (<PageCard page={option} isModal={isModal}/>)
         })}
       </div>
     </div>

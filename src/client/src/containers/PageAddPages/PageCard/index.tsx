@@ -2,7 +2,7 @@ import classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { ISelectProps, IDispatchProps, IStateProps } from "./interfaces";
+import { IProps, IDispatchProps, IStateProps } from "./interfaces";
 import {mapDispatchToProps, mapStateToProps} from "./store";
 import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
@@ -16,10 +16,10 @@ import { ISelected } from "../../../types/selected";
 import { inferItemName } from "../../../utils/infer/itemName";
 
 
-type Props = ISelectProps & IDispatchProps & IStateProps & InjectedIntlProps;
+type Props = IProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
 const PageCard = (props:Props) => {
-  const { page, intl, setPages, selectedPages, setDetailPage } = props;
+  const { page, intl, setPages, selectedPages, setDetailPage, isModal } = props;
   const [isMosueOver, setIsMouseOver] = React.useState(false);
   const [pageOutOfBounds, setPageOutOdBounds] = React.useState(false);
 
@@ -93,12 +93,16 @@ const PageCard = (props:Props) => {
         {page.body}
       </div>
       <div className={styles.gridLayoutCardFooter}>
-        <Link
-          onClick={showMoreInfo}
-          className={styles.link}
-          to={ROUTES.PAGE_DETAILS}>
-          {intl.formatMessage(messages.Preview)}
-        </Link>
+        <div>
+          {isModal===false && (
+            <Link
+            onClick={showMoreInfo}
+            className={styles.link}
+            to={ROUTES.PAGE_DETAILS}>
+            {intl.formatMessage(messages.Preview)}
+          </Link>
+          )}
+        </div>
         <div className={styles.pageCounter}>
           {selectedPages.filter((selectedPage) => selectedPage.internalName === page.internalName).length}
         </div>

@@ -5,7 +5,7 @@ import { withRouter } from "react-router";
 import { Route, RouteComponentProps, Link } from "react-router-dom";
 
 import PageDetails from "./containers/PageDetails";
-import SelectPages from "./containers/PageAddPages";
+import PageAddPages from "./containers/PageAddPages";
 import NewProject from "./containers/NewProject";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
@@ -330,7 +330,7 @@ class App extends React.Component<Props> {
               path={ROUTES.SELECT_FRAMEWORKS}
               component={pageSelectFrameworks}
             />
-            <Route path={ROUTES.SELECT_PAGES} component={SelectPages} />
+            <Route path={ROUTES.SELECT_PAGES} component={PageAddPages} />
             <Route
               exact={true}
               path={ROUTES.NEW_PROJECT}
