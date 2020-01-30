@@ -123,13 +123,13 @@ export class FunctionProvider {
       throw new FileError(error.message);
     }
 
-    let template = this.getFunctionsARMTemplate();
-    let parameters = this.getFunctionsARMParameters(selections);
+    const template = this.getFunctionsARMTemplate();
+    const parameters = this.getFunctionsARMParameters(selections);
 
-    let deploymentParams = parameters.parameters;
+    const deploymentParams = parameters.parameters;
 
     try {
-      var options: ResourceManagementModels.Deployment = {
+      const options: ResourceManagementModels.Deployment = {
         properties: {
           mode: "Incremental",
           parameters: deploymentParams,
@@ -137,7 +137,7 @@ export class FunctionProvider {
         }
       };
 
-      let azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
+      const azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
         selections.subscriptionItem
       );
 
@@ -198,7 +198,7 @@ export class FunctionProvider {
    * gets ARM template for Azure Functions
    */
   private getFunctionsARMTemplate(): any {
-    let templatePath = path.join(
+    const templatePath = path.join(
       appRoot.toString(),
       "src",
       "azure",
@@ -214,7 +214,7 @@ export class FunctionProvider {
    * sets and returns ARM templates parameters with user selections
    */
   private getFunctionsARMParameters(selections: FunctionSelections): any {
-    let parametersPath = path.join(
+    const parametersPath = path.join(
       appRoot.toString(),
       "src",
       "azure",
@@ -223,7 +223,7 @@ export class FunctionProvider {
       "parameters.json"
     );
 
-    let parameters = JSON.parse(fs.readFileSync(parametersPath, "utf8"));
+    const parameters = JSON.parse(fs.readFileSync(parametersPath, "utf8"));
 
     parameters.parameters = {
       name: {
@@ -250,7 +250,7 @@ export class FunctionProvider {
     appPath: string,
     template: any,
     parameters: any
-  ) {
+  ): void {
     ARMFileHelper.createDirIfNonExistent(path.join(appPath, "arm-templates"));
     ARMFileHelper.writeObjectToJsonFile(
       path.join(appPath, "arm-templates", "functions-template.json"),
@@ -277,7 +277,7 @@ export class FunctionProvider {
   private createWebClient(
     userSubscriptionItem: SubscriptionItem
   ): WebSiteManagementClient {
-    let credentials: ServiceClientCredentials =
+    const credentials: ServiceClientCredentials =
       userSubscriptionItem.session.credentials;
 
     if (
@@ -315,7 +315,7 @@ export class FunctionProvider {
       return error.message;
     }
 
-    let validationStatus: AppNameValidationResult = NameValidator.validateAppName(
+    const validationStatus: AppNameValidationResult = NameValidator.validateAppName(
       appName
     );
     if (!validationStatus.isValid) {

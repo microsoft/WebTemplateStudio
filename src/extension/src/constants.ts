@@ -7,7 +7,7 @@ const localize: nls.LocalizeFunc = nls.config({
 
 export const CONSTANTS = {
   ERRORS: {
-    TOO_MANY_FAILED_SYNC_REQUESTS: (errorMessage: string) => {
+    TOO_MANY_FAILED_SYNC_REQUESTS: (errorMessage: string): string => {
       return localize(
         "error.tooManyFailedSyncRequests",
         "Could not sync to template repository. Details: {0}",
@@ -20,14 +20,14 @@ export const CONSTANTS = {
       "error.resourceGroupNotFound",
       "No resource group found with this name"
     ),
-    CREATION_TRIES_EXCEEDED: (resourceType: string) => {
+    CREATION_TRIES_EXCEEDED: (resourceType: string): string => {
       return localize(
         "error.triesExceeded",
         "Number of tries exceeded for creating {0}",
         resourceType
       );
     },
-    VALIDATION_TRIES_EXCEEDED: (resourceType: string) => {
+    VALIDATION_TRIES_EXCEEDED: (resourceType: string): string => {
       return localize(
         "error.validationTriesExceeded",
         "Number of tries exceeded for validating {0} name",
@@ -38,7 +38,7 @@ export const CONSTANTS = {
       "error.subscriptionNotFound",
       "No subscription found with this name."
     ),
-    APP_NAME_NOT_AVAILABLE: (appName: string, type: string) => {
+    APP_NAME_NOT_AVAILABLE: (appName: string, type: string): string => {
       return localize(
         "error.functionAppNameNotAvailable",
         "{1} app name {0} is not available",
@@ -90,7 +90,7 @@ export const CONSTANTS = {
       "error.functionsNoDuplicate",
       "No duplicates allowed for function names"
     ),
-    APP_INVALID_NAME: (name: string) => {
+    APP_INVALID_NAME: (name: string): string => {
       return localize(
         "error.functionInvalidName",
         "Invalid name {0}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters",
@@ -109,28 +109,28 @@ export const CONSTANTS = {
       "error.projectNameLengthExceededMax",
       "Project Name has to be less than 50 chars long."
     ),
-    INVALID_OUTPUT_PATH: (path: string) => {
+    INVALID_OUTPUT_PATH: (path: string): string => {
       return localize(
         "error.invalidOutputPath",
         "Path {0} does not exist.",
         path
       );
     },
-    INVALID_PROJECT_NAME: (name: string) => {
+    INVALID_PROJECT_NAME: (name: string): string => {
       return localize(
         "error.invalidProjectName",
         "{0} is invalid. The project name attribute may only contain letters, numbers, and spaces",
         name
       );
     },
-    PATH_WITH_EMOJIS: (path: string) => {
+    PATH_WITH_EMOJIS: (path: string): string => {
       return localize(
         "error.pathWithEmojis",
         "{0} is invalid. Project Path cannot contain emojis",
         path
       );
     },
-    PROJECT_PATH_EXISTS: (path: string, name: string) => {
+    PROJECT_PATH_EXISTS: (path: string, name: string): string => {
       return localize(
         "error.projectPathExists",
         "There exists a directory named {0} in the specified path '{1}', please choose a unique path",
@@ -138,7 +138,7 @@ export const CONSTANTS = {
         path
       );
     },
-    COSMOS_ACCOUNT_NOT_AVAILABLE: (name: string) => {
+    COSMOS_ACCOUNT_NOT_AVAILABLE: (name: string): string => {
       return localize(
         "error.cosmosAccountNotAvailable",
         'Account name "{0}" is not available.',
@@ -149,7 +149,7 @@ export const CONSTANTS = {
       "error.cosmosValidCharacters",
       "The name can only contain lowercase letters, numbers, and the '-' character."
     ),
-    NAME_MIN_MAX: (min: number, max: number) => {
+    NAME_MIN_MAX: (min: number, max: number): string => {
       return localize(
         "error.nameMinMax",
         "The name must be between {0} and {1} characters.",
@@ -162,14 +162,14 @@ export const CONSTANTS = {
       "Cannot start generation engine.")
   },
   INFO: {
-    COSMOS_ACCOUNT_DEPLOYED: (accountName: string) => {
+    COSMOS_ACCOUNT_DEPLOYED: (accountName: string): string => {
       return localize(
         "info.cosmosAccountDeployed",
         "{0} has been deployed!",
         accountName
       );
     },
-    APP_DEPLOYED: (appName: string, type: string) => {
+    APP_DEPLOYED: (appName: string): string => {
       return localize(
         "info.functionAppDeployed",
         "{1} App {0} has been deployed and is ready to use!",
@@ -239,7 +239,7 @@ export const CONSTANTS = {
     LOGGED_OUT: "LoggedOut"
   },
   REACT_PANEL: {
-    Project_Title: "Microsoft Web Template Studio"
+    PROJECT_TITLE: "Microsoft Web Template Studio"
   },
   GENERATE_ENDPOINT: "/api/generate",
   ENGINE_DIRECTORY: "./src/api/darwin/CoreTemplateStudio.Api",
@@ -247,10 +247,10 @@ export const CONSTANTS = {
     username: string,
     password: string,
     origin: string
-  ) => {
+  ): string => {
     return `COSMOSDB_CONNSTR=${origin}/${username}\nCOSMOSDB_USER=${username}\nCOSMOSDB_PASSWORD=${password}\n`;
   },
-  CONNECTION_STRING_SQL: (origin: string, primaryKey: string) => {
+  CONNECTION_STRING_SQL: (origin: string, primaryKey: string): string => {
     return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
@@ -304,7 +304,7 @@ export const CONSTANTS = {
     SERVER_FOLDER: "server",
     DOT_VSCODE_FOLDER: ".vscode",
     SETTINGS_FILE_NAME: "settings.json",
-    SETTINGS_FILE: (id: string, subpath: string) => {
+    SETTINGS_FILE: (id: string, subpath: string): string => {
       return `{
     "appService.defaultWebAppToDeploy": "${id}",
     "appService.deploySubpath": "${subpath}"

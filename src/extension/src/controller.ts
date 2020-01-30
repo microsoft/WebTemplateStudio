@@ -41,13 +41,13 @@ export class Controller {
   private CoreTSModule: CoreTSModule;
   private Telemetry: Telemetry;
   private Defaults: Defaults;
-  private SyncCompleted: boolean = false;
+  private SyncCompleted = false;
 
   /**
    *  Defines the WizardServant modules to which wizard client commands are routed
    */
   private static extensionModuleMap: Map<ExtensionModule, WizardServant>;
-  private defineExtensionModule() {
+  private defineExtensionModule(): void {
     Controller.extensionModuleMap = new Map([
       [ExtensionModule.Telemetry, this.Telemetry],
       [ExtensionModule.VSCodeUI, this.vscodeUI],
@@ -65,13 +65,13 @@ export class Controller {
    * This is the function behavior map passed to the ReactPanel (wizard client)
    * @param message The payload received from the wizard client. Message payload must include field 'module'
    */
-  private async routingMessageReceieverDelegate(message: any) {
-    let extensionModule = message.module;
+  private async routingMessageReceieverDelegate(message: any): Promise<void> {
+    const extensionModule = message.module;
 
     if (extensionModule) {
-      let classModule = Controller.extensionModuleMap.get(extensionModule);
+      const classModule = Controller.extensionModuleMap.get(extensionModule);
       if (classModule) {
-        let responsePayload = await WizardServant.executeWizardCommandOnServantClass(
+        const responsePayload = await WizardServant.executeWizardCommandOnServantClass(
           message,
           classModule,
           Controller.TelemetryService
@@ -94,7 +94,7 @@ export class Controller {
    */
   public static getInstance(
     context: vscode.ExtensionContext
-  ) {
+  ): Controller {
     if (this._instance) {
       this._instance.showReactPanel();
     } else {
@@ -179,7 +179,7 @@ export class Controller {
   private static getTemplateInfoAndSendToClient(
     ctx: vscode.ExtensionContext,
     syncObject: ISyncReturnType
-  ) {
+  ): void {
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetTemplateInfo,
       payload: {
@@ -191,7 +191,7 @@ export class Controller {
     });
   }
 
-  private static loadUserSettings() {
+  private static loadUserSettings(): void {
     const preview = vscode.workspace
       .getConfiguration()
       .get<boolean>("wts.enablePreviewMode");
@@ -209,12 +209,12 @@ export class Controller {
   private static handleValidMessage(
     commandName: ExtensionCommand,
     responsePayload?: any
-  ) {
+  ): void {
     responsePayload.command = commandName;
     this.reactPanelContext.postMessageWebview(responsePayload);
   }
 
-  showReactPanel() {
+  showReactPanel(): void {
     if (ReactPanel.currentPanel) {
       ReactPanel.createOrShow(
         this.context.extensionPath,
@@ -223,7 +223,7 @@ export class Controller {
     }
   }
 
-  static dispose() {
+  static dispose(): void {
     if(this._instance){
       Controller.TelemetryService.trackEvent(TelemetryEventName.ExtensionClosed, {
         syncCompleted: this._instance.SyncCompleted.toString()

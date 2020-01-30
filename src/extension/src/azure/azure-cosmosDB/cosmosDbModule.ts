@@ -86,7 +86,7 @@ export function GetAvailableAPIs(): APIObject[] {
 interface APIdefinition {
   readonly kind: string;
   readonly defaultExperience: string;
-  readonly capabilities: Object[];
+  readonly capabilities: any[];
 }
 
 export class CosmosDBDeploy {
@@ -145,21 +145,23 @@ export class CosmosDBDeploy {
     /*
      * Create Cosmos Client with users credentials and selected subscription *
      */
+
+    let userSubscriptionItem: SubscriptionItem;
+
     try {
-      var userSubscriptionItem: SubscriptionItem =
-        userCosmosDBSelection.subscriptionItem;
+      userSubscriptionItem = userCosmosDBSelection.subscriptionItem;
       this.setCosmosClient(userSubscriptionItem);
     } catch (error) {
       throw new AuthorizationError(error.message);
     }
 
-    var resourceGroup = userCosmosDBSelection.resourceGroupItem.name;
-    var databaseName = userCosmosDBSelection.cosmosDBResourceName;
+    const resourceGroup = userCosmosDBSelection.resourceGroupItem.name;
+    const databaseName = userCosmosDBSelection.cosmosDBResourceName;
 
-    var location = userCosmosDBSelection.location;
-    var experience = userCosmosDBSelection.cosmosAPI;
+    const location = userCosmosDBSelection.location;
+    const experience = userCosmosDBSelection.cosmosAPI;
 
-    let template = JSON.parse(
+    const template = JSON.parse(
       fs.readFileSync(
         path.join(
           appRoot.toString(),
@@ -173,7 +175,7 @@ export class CosmosDBDeploy {
       )
     );
 
-    let parameters = JSON.parse(
+    const parameters = JSON.parse(
       fs.readFileSync(
         path.join(
           appRoot.toString(),
@@ -187,7 +189,7 @@ export class CosmosDBDeploy {
       )
     );
 
-    let definitions: APIdefinition = this.APIdefinitionMap.get(experience)!;
+    const definitions: APIdefinition = this.APIdefinitionMap.get(experience)!;
 
     parameters.parameters = {
       name: {
@@ -213,9 +215,9 @@ export class CosmosDBDeploy {
       }
     };
 
-    let deploymentParams = parameters.parameters;
+    const deploymentParams = parameters.parameters;
 
-    var options: ResourceManagementModels.Deployment = {
+    const options: ResourceManagementModels.Deployment = {
       properties: {
         mode: "Incremental",
         parameters: deploymentParams,
@@ -230,7 +232,7 @@ export class CosmosDBDeploy {
         );
       }
 
-      let azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
+      const azureResourceClient: ResourceManagementClient = new ResourceManager().getResourceManagementClient(
         userSubscriptionItem
       );
 
@@ -253,25 +255,26 @@ export class CosmosDBDeploy {
         options
       );
 
-      var databaseAccount: DatabaseAccount = await this.SubscriptionItemCosmosClient.databaseAccounts.get(
+      const databaseAccount: DatabaseAccount = await this.SubscriptionItemCosmosClient.databaseAccounts.get(
         resourceGroup,
         databaseName
       );
 
-      var connectionString = await this.getConnectionString(
+      const connectionString = await this.getConnectionString(
         this.SubscriptionItemCosmosClient,
         resourceGroup,
         databaseName
-      );
-    } catch (error) {
-      throw new DeploymentError(error.message);
-    }
+      );      
 
     /*
      * Returning a tuple which includes databaseAccount from callback and its connection string
      */
-    var db: DatabaseObject = { databaseAccount, connectionString };
+    const db: DatabaseObject = { databaseAccount, connectionString };
     return db;
+
+    } catch (error) {
+      throw new DeploymentError(error.message);
+    }
   }
 
   /*
@@ -292,7 +295,7 @@ export class CosmosDBDeploy {
   private createCosmosClient(
     userSubscriptionItem: SubscriptionItem
   ): CosmosDBManagementClient {
-    let userCredentials: ServiceClientCredentials =
+    const userCredentials: ServiceClientCredentials =
       userSubscriptionItem.session.credentials;
     if (
       userSubscriptionItem === undefined ||

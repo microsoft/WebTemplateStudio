@@ -14,31 +14,16 @@ export namespace FileHelper {
   const BASE_NODE_FUNCTION_CONFIG_PATH = "/base/node/function.json";
   const APP_NODE_SETTINGS_PATH = "/app/node";
 
-  export function initFunctionDirectory(
-    basePath: string,
-    appName: string,
-    functionNames: string[],
-    runtime: Runtime
-  ): void {
-    let funcAppPath: string = path.join(basePath, appName);
-    createFolder(funcAppPath);
-
-    for (let i = 0; i < functionNames.length; i++) {
-      switch (runtime) {
-        case "node":
-          createFolderForNode(path.join(funcAppPath, functionNames[i]));
-          break;
-        case "dotnet":
-          throw new Error(CONSTANTS.ERRORS.RUNTIME_NOT_IMPLEMENTED);
-      }
+  function createFolder(dirPath: string): void {
+    if (fsx.pathExistsSync(dirPath)) {
+      fsx.removeSync(dirPath);
     }
 
-    copySettingsFiles(funcAppPath);
-    createTempZip(basePath, appName);
+    fsx.mkdirpSync(dirPath);
   }
 
-  function copySettingsFiles(funcAppPath: string) {
-    let appSettingsPath: string = path.join(
+  function copySettingsFiles(funcAppPath: string): void {
+    const appSettingsPath: string = path.join(
       appRoot.toString(),
       FUNCTION_TEMPLATES_RELATIVE_PATH,
       APP_NODE_SETTINGS_PATH
@@ -49,12 +34,12 @@ export namespace FileHelper {
   function createFolderForNode(dirPath: string): void {
     createFolder(dirPath);
 
-    let indexPath: string = path.join(
+    const indexPath: string = path.join(
       appRoot.toString(),
       FUNCTION_TEMPLATES_RELATIVE_PATH,
       BASE_NODE_FUNCTION_PATH
     );
-    let funcJsonPath: string = path.join(
+    const funcJsonPath: string = path.join(
       appRoot.toString(),
       FUNCTION_TEMPLATES_RELATIVE_PATH,
       BASE_NODE_FUNCTION_CONFIG_PATH
@@ -64,21 +49,13 @@ export namespace FileHelper {
     fs.copyFileSync(funcJsonPath, path.join(dirPath, "function.json"));
   }
 
-  function createFolder(dirPath: string): void {
-    if (fsx.pathExistsSync(dirPath)) {
-      fsx.removeSync(dirPath);
-    }
-
-    fsx.mkdirpSync(dirPath);
-  }
-
   function createTempZip(basePath: string, funcAppName: string): void {
     fsx.mkdirpSync(path.join(basePath, "tmp"));
 
-    let zipPath: string = path.join(basePath, "tmp", "out.zip");
+    const zipPath: string = path.join(basePath, "tmp", "out.zip");
     const output = fs.createWriteStream(zipPath);
 
-    var archive = archiver("zip", {
+    const archive = archiver("zip", {
       zlib: { level: 9 } // Sets the compression level.
     });
 
@@ -95,8 +72,32 @@ export namespace FileHelper {
     archive.finalize();
   }
 
+  export function initFunctionDirectory(
+    basePath: string,
+    appName: string,
+    functionNames: string[],
+    runtime: Runtime
+  ): void {
+    const funcAppPath: string = path.join(basePath, appName);
+    createFolder(funcAppPath);
+
+    for (let i = 0; i < functionNames.length; i++) {
+      switch (runtime) {
+        case "node":
+          createFolderForNode(path.join(funcAppPath, functionNames[i]));
+          break;
+        case "dotnet":
+          throw new Error(CONSTANTS.ERRORS.RUNTIME_NOT_IMPLEMENTED);
+      }
+    }
+
+    copySettingsFiles(funcAppPath);
+    createTempZip(basePath, appName);
+  }
+
   export function deleteTempZip(basePath: string): void {
     fsx.removeSync(path.join(basePath, "tmp"));
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     rimraf(path.join(basePath, "tmp"), () => {});
   }
 }

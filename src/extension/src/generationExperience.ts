@@ -29,18 +29,17 @@ export class GenerationExperience extends WizardServant {
     GenerationExperience.Telemetry = this.Telemetry;
   }
 
-  public static setReactPanel(reactPanelContext: ReactPanel) {
+  public static setReactPanel(reactPanelContext: ReactPanel): void {
     GenerationExperience.reactPanelContext = reactPanelContext;
   }
 
   ////TODO: MAKE GEN CALL CLIENTCOMMANDMAP FUNCTIONS VIA TO WRAP TELEMETRY AUTOMATICALLY
-  // tslint:disable-next-line: max-func-body-length
   public async handleGeneratePayloadFromClient(
     message: any
   ): Promise<IPayloadResponse> {
     GenerationExperience.trackWizardTotalSessionTimeToGenerate();
-    var payload = message.payload;
-    var enginePayload: any = payload.engine;
+    const payload = message.payload;
+    const enginePayload: any = payload.engine;
     const apiGenResult = await this.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
     ).catch(error => {
@@ -70,8 +69,8 @@ export class GenerationExperience extends WizardServant {
       payload: progressObject
     });
 
-    var serviceQueue: Promise<any>[] = [];
-    let resourceGroupQueue: Promise<any>[] = [];
+    const serviceQueue: Promise<any>[] = [];
+    const resourceGroupQueue: Promise<any>[] = [];
 
     if (apiGenResult) {
       enginePayload.path = apiGenResult.generationPath;
@@ -92,7 +91,6 @@ export class GenerationExperience extends WizardServant {
         resourceGroupQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.ResourceGroupDeploy,
-            // tslint:disable-next-line: no-function-expression
             async function(this: IActionContext): Promise<void> {
               try {
                 await AzureServices.deployResourceGroup(resourceGroupSelection);
@@ -120,14 +118,14 @@ export class GenerationExperience extends WizardServant {
       });
       // Add the new resouce group name to payload
       if (payload.selectedCosmos) {
-        let cosmosResourceGroups = distinctResourceGroupSelections.filter(
+        const cosmosResourceGroups = distinctResourceGroupSelections.filter(
           r => r.subscriptionItem.label === payload.cosmos.subscription
         );
         payload.cosmos.resourceGroup =
           cosmosResourceGroups[0].resourceGroupName;
       }
       if (payload.selectedAppService) {
-        let appServiceResourceGroup = distinctResourceGroupSelections.filter(
+        const appServiceResourceGroup = distinctResourceGroupSelections.filter(
           r => r.subscriptionItem.label === payload.appService.subscription
         );
         payload.appService.resourceGroup =
@@ -141,7 +139,6 @@ export class GenerationExperience extends WizardServant {
         serviceQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.AppServiceDeploy,
-            // tslint:disable-next-line: no-function-expression
             async function(this: IActionContext): Promise<void> {
               try {
                 const id: string = await AzureServices.deployWebApp(payload);
@@ -174,11 +171,10 @@ export class GenerationExperience extends WizardServant {
         serviceQueue.push(
           GenerationExperience.Telemetry.callWithTelemetryAndCatchHandleErrors(
             TelemetryEventName.CosmosDBDeploy,
-            // tslint:disable-next-line: no-function-expression
             async function(this: IActionContext): Promise<void> {
-              var cosmosPayload: any = payload.cosmos;
+              const cosmosPayload: any = payload.cosmos;
               try {
-                var dbObject = await AzureServices.deployCosmosResource(
+                const dbObject = await AzureServices.deployCosmosResource(
                   cosmosPayload,
                   enginePayload.path
                 );
@@ -238,15 +234,15 @@ export class GenerationExperience extends WizardServant {
 
   public async sendTemplateGenInfoToApiAndSendStatusToClient(
     enginePayload: any
-  ) {
-    let apiInstance = CoreTemplateStudio.GetExistingInstance();
+  ): Promise<any> {
+    const apiInstance = CoreTemplateStudio.GetExistingInstance();
     return await apiInstance.generate({
       payload: enginePayload,
       liveMessageHandler: this.handleGenLiveMessage
     });
   }
 
-  private handleGenLiveMessage(message: string) {
+  private handleGenLiveMessage(message: string): void {
     GenerationExperience.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.UpdateGenStatusMessage,
       payload: {
@@ -266,14 +262,14 @@ export class GenerationExperience extends WizardServant {
     return { payload: true };
   }
 
-  private static getProgressObject(didSucceed: boolean) {
+  private static getProgressObject(didSucceed: boolean): any {
     return {
       success: didSucceed,
       failure: !didSucceed
     };
   }  
 
-  private static trackWizardTotalSessionTimeToGenerate() {
+  private static trackWizardTotalSessionTimeToGenerate(): void {
     GenerationExperience.Telemetry.trackEventWithDuration(
       TelemetryEventName.WizardSession,
       GenerationExperience.Telemetry.wizardSessionStartTime,

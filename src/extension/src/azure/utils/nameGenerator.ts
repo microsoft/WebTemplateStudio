@@ -18,13 +18,20 @@ export namespace NameGenerator {
     return NameGenerator.generateName(projectName, azureType);
   }
 
-  export function generateName(
-    userProjectName: string,
-    azureType?: AzureResourceType
-  ): string {
-    const timestamp = unixToSuffix(Date.now());
-    const suffix: string = "-" + timestamp;
-    return trimProjectName(userProjectName, azureType) + suffix;
+  function padStart(x: number): string {
+    return x.toString().padStart(2, "0");
+  }
+
+  function unixToSuffix(unixTimestamp: any): string {
+    const fullDate = new Date(unixTimestamp);
+    const year = fullDate.getFullYear().toString();
+    // getMonth() returns month as a zero-based value
+    const month = padStart(fullDate.getMonth() + 1);
+    const date = padStart(fullDate.getDate());
+    const hour = padStart(fullDate.getHours());
+    const min = padStart(fullDate.getMinutes());
+    const sec = padStart(fullDate.getSeconds());
+    return year.concat(month, date, hour, min, sec);
   }
 
   function trimProjectName(
@@ -41,19 +48,12 @@ export namespace NameGenerator {
     return projectName;
   }
 
-  function unixToSuffix(unixTimestamp: any): string {
-    const fullDate = new Date(unixTimestamp);
-    const year = fullDate.getFullYear().toString();
-    // getMonth() returns month as a zero-based value
-    const month = padStart(fullDate.getMonth() + 1);
-    const date = padStart(fullDate.getDate());
-    const hour = padStart(fullDate.getHours());
-    const min = padStart(fullDate.getMinutes());
-    const sec = padStart(fullDate.getSeconds());
-    return year.concat(month, date, hour, min, sec);
-  }
-
-  function padStart(x: number): string {
-    return x.toString().padStart(2, "0");
+  export function generateName(
+    userProjectName: string,
+    azureType?: AzureResourceType
+  ): string {
+    const timestamp = unixToSuffix(Date.now());
+    const suffix: string = "-" + timestamp;
+    return trimProjectName(userProjectName, azureType) + suffix;
   }
 }
