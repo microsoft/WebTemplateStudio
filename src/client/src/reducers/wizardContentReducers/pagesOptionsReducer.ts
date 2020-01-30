@@ -17,8 +17,6 @@ const pageOptions = (
   switch (action.type) {
     case WIZARD_CONTENT_TYPEKEYS.GET_PAGES_OPTIONS_SUCCESS:
       return action.payload;
-    case WIZARD_SELECTION_TYPEKEYS.RESET_PAGES:
-      return [];
     default:
       return state;
   }

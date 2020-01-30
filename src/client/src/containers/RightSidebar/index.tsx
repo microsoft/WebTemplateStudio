@@ -139,6 +139,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   };
 
   public resetAllPages = () => {
+    debugger;
     const { pages, frontendFramework } = this.props.selection;
     const { vscode } = this.props;
     vscode.postMessage({

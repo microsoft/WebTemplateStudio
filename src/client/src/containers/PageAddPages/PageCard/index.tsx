@@ -26,7 +26,6 @@ const PageCard = (props:Props) => {
   React.useEffect(()=>{
     if (selectedPages.length==0 && page.defaultName == "Blank"){
       setTimeout(()=> setPages([page]),200);
-      console.log("useEffect")
     }
   },[page]);
 
