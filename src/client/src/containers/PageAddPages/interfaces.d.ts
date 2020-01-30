@@ -4,7 +4,6 @@ import Select from "react-select/lib/Select";
 import { ISelected } from "../../../types/selected";
 
 interface IDispatchProps {
-  updatePageCount: (pageCount: IPageCount) => any;
 }
 
 interface IStoreProps {

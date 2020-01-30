@@ -50,8 +50,7 @@ import {
   updateTemplateGenerationStatusAction
 } from "./actions/wizardInfoActions/updateGenStatusActions";
 import {
-  selectPagesAction,
-  updatePageCountAction
+  selectPagesAction
 } from "./actions/wizardSelectionActions/selectPages";
 import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
 import {
@@ -108,7 +107,6 @@ interface IDispatchProps {
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
   getPages: (pages: IOption[]) => any;
   selectPages: (pages: ISelected[]) => void;
-  updatePageCount: (pageCount: IPageCount) => any;
   resetPageSelection: () => any;
   selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
@@ -241,7 +239,6 @@ class App extends React.Component<Props> {
             const key = `wts.Page.${selectedFrontend.internalName}.Blank`;
             const PAGE_TYPE_COUNT: IPageCount = {};
             PAGE_TYPE_COUNT[key] = 1;
-            this.props.updatePageCount(PAGE_TYPE_COUNT);
 
             // select default blank page
             const PAGES_SELECTION: ISelected[] = [
@@ -394,9 +391,6 @@ const mapDispatchToProps = (
   },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
-  },
-  updatePageCount: (pageCount: IPageCount) => {
-    dispatch(updatePageCountAction(pageCount));
   },
   getVersionsData: (versions: IVersions) => {
     dispatch(getVersionsDataAction(versions));

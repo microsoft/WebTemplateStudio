@@ -13,7 +13,7 @@ import styles from "./styles.module.css";
 import classnames from "classnames";
 import Notification from "../../components/Notification";
 import { IStoreProps, IDispatchProps, IIntlProps, IProps } from "./interfaces";
-import { mapDispatchToProps, mapStateToProps} from "./store";
+import { mapStateToProps} from "./store";
 
 type Props = IDispatchProps & IStoreProps & IIntlProps & IProps;
 
@@ -71,6 +71,5 @@ const PageAddPages = (props:Props) => {
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(injectIntl(PageAddPages));

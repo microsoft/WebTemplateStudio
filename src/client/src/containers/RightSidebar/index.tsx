@@ -16,8 +16,7 @@ import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActio
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
 import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectWebApp";
 import {
-  selectPagesAction,
-  updatePageCountAction
+  selectPagesAction
 } from "../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 
@@ -61,7 +60,6 @@ interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
   selectProjectType: (projectType: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
-  updatePageCount: (pageCount: IPageCount) => any;
   openViewLicensesModal: () => any;
 }
 
@@ -139,7 +137,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   };
 
   public resetAllPages = () => {
-    debugger;
     const { pages, frontendFramework } = this.props.selection;
     const { vscode } = this.props;
     vscode.postMessage({
@@ -165,8 +162,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       vscode,
       selectPages,
       frontEndOptions,
-      selectFrontendFramework,
-      updatePageCount
+      selectFrontendFramework
     } = this.props;
     if (frontendFramework.internalName !== option.value) {
       vscode.postMessage({
@@ -199,7 +195,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         );
         cardCountType[newKey] = pageCount[pageType];
       }
-      updatePageCount(cardCountType);
+
       const newPages: ISelected[] = pages.map(page => {
         return {
           title: page.title,
@@ -446,9 +442,6 @@ const mapDispatchToProps = (
   },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
-  },
-  updatePageCount: (pageCount: IPageCount) => {
-    dispatch(updatePageCountAction(pageCount));
   },
   openViewLicensesModal: () => {
     dispatch(ModalActions.openViewLicensesModalAction());

@@ -5,8 +5,7 @@ import SelectOption from "../../SelectOption";
 
 import { selectFrontendFramework as selectFrontendAction } from "../../../actions/wizardSelectionActions/selectFrontEndFramework";
 import {
-  selectPagesAction,
-  updatePageCountAction
+  selectPagesAction
 } from "../../../actions/wizardSelectionActions/selectPages";
 
 import { IOption } from "../../../types/option";
@@ -37,7 +36,6 @@ import messages from "./messages";
 interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
-  updatePageCount: (pageCount: IPageCount) => any;
 }
 
 interface ISelectFrontEndFrameworkProps {
@@ -62,8 +60,7 @@ class SelectFrontEndFramework extends React.Component<Props> {
       selectFrontendFramework,
       selectedPages,
       selectPages,
-      pageCount,
-      updatePageCount
+      pageCount
     } = this.props;
 
     const { showPages } = this.props.isRoutesVisited;
@@ -91,7 +88,6 @@ class SelectFrontEndFramework extends React.Component<Props> {
         cardCountType[newKey] = pageCount[pageType];
       }
 
-      updatePageCount(cardCountType);
       const newPages: ISelected[] = selectedPages.map(page => {
         return {
           title: page.title,
@@ -170,9 +166,6 @@ const mapDispatchToProps = (
   },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
-  },
-  updatePageCount: (pageCount: IPageCount) => {
-    dispatch(updatePageCountAction(pageCount));
   }
 });
 

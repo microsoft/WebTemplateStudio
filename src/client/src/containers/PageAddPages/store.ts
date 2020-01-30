@@ -1,10 +1,7 @@
-import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
-import RootAction from "../../actions/ActionType";
-import { IDispatchProps, IStoreProps } from "./interfaces";
+
+import { IStoreProps } from "./interfaces";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
-import { updatePageCountAction } from "../../actions/wizardSelectionActions/selectPages";
 
 const mapStateToProps = (state: AppState): IStoreProps => {
   return {
@@ -16,12 +13,4 @@ const mapStateToProps = (state: AppState): IStoreProps => {
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  updatePageCount: (pageCount: IPageCount) => {
-    dispatch(updatePageCountAction(pageCount));
-  }
-});
-
-export {mapDispatchToProps, mapStateToProps};
+export { mapStateToProps};

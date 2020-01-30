@@ -8,8 +8,7 @@ import RootAction from "../../actions/ActionType";
 import { selectFrontendFramework as selectFrontendAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
 import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
 import {
-  selectPagesAction,
-  updatePageCountAction
+  selectPagesAction
 } from "../../actions/wizardSelectionActions/selectPages";
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import { enableQuickStartAction } from "../../actions/wizardInfoActions/enableQuickStartAction";
@@ -47,7 +46,6 @@ interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
   selectBackendFramework: (backendFramework: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
-  updatePageCount: (pageCount: IPageCount) => any;
   setRouteVisited: (route: string) => void;
   enableQuickStart: () => void;
 }
@@ -64,7 +62,6 @@ class QuickStart extends Component<Props> {
       selectPages,
       history,
       setRouteVisited,
-      updatePageCount,
       enableQuickStart
     } = this.props;
 
@@ -75,7 +72,6 @@ class QuickStart extends Component<Props> {
     selectFrontendFramework(FRONT_END_SELECTION);
     selectBackendFramework(BACK_END_SELECTION);
     selectPages(PAGES_SELECTION);
-    updatePageCount(PAGE_TYPE_COUNT);
     ROUTES_ARRAY.forEach(route => setRouteVisited(route));
     history.push(ROUTES.REVIEW_AND_GENERATE);
   };
@@ -145,9 +141,6 @@ const mapDispatchToProps = (
   },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
-  },
-  updatePageCount: (pageCount: IPageCount) => {
-    dispatch(updatePageCountAction(pageCount));
   },
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
