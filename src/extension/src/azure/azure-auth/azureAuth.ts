@@ -8,8 +8,8 @@ import {
 import { AuthorizationError, ResourceGroupError } from "../../errors";
 import { CONSTANTS, DialogMessages, DialogResponses } from "../../constants";
 
-const MICROSOFT_DOCUMENT_DB_PROVIDER: string = "Microsoft.DocumentDb";
-const MICROSOFT_WEB_PROVIDER: string = "Microsoft.Web";
+const MICROSOFT_DOCUMENT_DB_PROVIDER = "Microsoft.DocumentDb";
+const MICROSOFT_WEB_PROVIDER = "Microsoft.Web";
 
 const WEB_RESOURCE_SITES = "sites";
 const DOCUMENT_DB_RESOURCE_ACCOUNTS = "databaseAccounts";
@@ -40,7 +40,7 @@ export abstract class AzureAuth {
 
   private static locationsCache: LocationItem[] | undefined;
 
-  private static async initialize() {
+  private static async initialize(): Promise<void> {
     /**
      * Initializes the AzureAccount object if not initialized.
      * Will get called whenever a function that uses AzureAccount object is called
@@ -52,14 +52,14 @@ export abstract class AzureAuth {
     }
   }
 
-  public static async promptUsersToLogout() {
+  public static async promptUsersToLogout(): Promise<any> {
     return await vscode.window
       .showInformationMessage(
         DialogMessages.logoutPrompt,
         ...[DialogResponses.yes, DialogResponses.no]
       )
       .then((selection: vscode.MessageItem | undefined) => {
-        let userConfirmation = {
+        const userConfirmation = {
           signOut: false
         };
         if (selection === DialogResponses.yes) {
@@ -117,8 +117,8 @@ export abstract class AzureAuth {
 
   private static async loadSubscriptionItems(): Promise<SubscriptionItem[]> {
     await this.api.waitForFilters();
-    let subscriptionItems: SubscriptionItem[] = [];
-    let subscriptionIds: Map<string, boolean> = new Map();
+    const subscriptionItems: SubscriptionItem[] = [];
+    const subscriptionIds: Map<string, boolean> = new Map();
     for (const session of this.api.sessions) {
       const credentials = session.credentials;
       const subscriptionClient = new SC.SubscriptionClient(credentials);
@@ -173,7 +173,7 @@ export abstract class AzureAuth {
     subscriptionItem: SubscriptionItem
   ): Promise<ResourceGroupItem> {
     return this.getAllResourceGroupItems(subscriptionItem).then(items => {
-      for (let resourceGroup of items) {
+      for (const resourceGroup of items) {
         if (resourceGroup.name === resourceName) {
           return resourceGroup;
         }
@@ -188,10 +188,10 @@ export abstract class AzureAuth {
     a: LocationItem[],
     b: LocationItem[]
   ): LocationItem[] {
-    let resultLocationItem: LocationItem[] = [];
+    const resultLocationItem: LocationItem[] = [];
 
-    let aLocations: string[] = a.map(element => element.locationDisplayName);
-    let bLocations: string[] = b.map(element => element.locationDisplayName);
+    const aLocations: string[] = a.map(element => element.locationDisplayName);
+    const bLocations: string[] = b.map(element => element.locationDisplayName);
 
     aLocations
       .filter(value => bLocations.indexOf(value) !== -1)
@@ -210,17 +210,17 @@ export abstract class AzureAuth {
     }
 
     await this.initializeLocations(subscriptionItem);
-    let azureResourceClient: RMC.ResourceManagementClient = new RMC.ResourceManagementClient(
+    const azureResourceClient: RMC.ResourceManagementClient = new RMC.ResourceManagementClient(
       subscriptionItem.session.credentials,
       subscriptionItem.subscription.subscriptionId!
     );
-    let cosmosLocations: LocationItem[] = [];
+    const cosmosLocations: LocationItem[] = [];
 
-    let documentDBProvider = await azureResourceClient.providers.get(
+    const documentDBProvider = await azureResourceClient.providers.get(
       MICROSOFT_DOCUMENT_DB_PROVIDER
     );
 
-    let databaseAccounts = documentDBProvider!.resourceTypes!.find(element => {
+    const databaseAccounts = documentDBProvider!.resourceTypes!.find(element => {
       return element.resourceType === DOCUMENT_DB_RESOURCE_ACCOUNTS;
     });
 
@@ -244,16 +244,16 @@ export abstract class AzureAuth {
     }
 
     await this.initializeLocations(subscriptionItem);
-    let azureResourceClient: RMC.ResourceManagementClient = new RMC.ResourceManagementClient(
+    const azureResourceClient: RMC.ResourceManagementClient = new RMC.ResourceManagementClient(
       subscriptionItem.session.credentials,
       subscriptionItem.subscription.subscriptionId!
     );
-    let functionsLocations: LocationItem[] = [];
-    let webProvider = await azureResourceClient.providers.get(
+    const functionsLocations: LocationItem[] = [];
+    const webProvider = await azureResourceClient.providers.get(
       MICROSOFT_WEB_PROVIDER
     );
 
-    let sites = webProvider!.resourceTypes!.find(element => {
+    const sites = webProvider!.resourceTypes!.find(element => {
       return element.resourceType === WEB_RESOURCE_SITES;
     });
 
@@ -281,7 +281,7 @@ export abstract class AzureAuth {
       session.credentials,
       session.environment.resourceManagerEndpointUrl
     );
-    let locations: SubscriptionModels.LocationListResult = await subscriptionClient.subscriptions.listLocations(
+    const locations: SubscriptionModels.LocationListResult = await subscriptionClient.subscriptions.listLocations(
       subscription.subscriptionId!
     );
     locations.sort((l1, l2) => l1.displayName!.localeCompare(l2.displayName!));

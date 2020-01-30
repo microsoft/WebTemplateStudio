@@ -11,13 +11,12 @@ export interface IPackageJson {
     };
 }
 
-export function getPackageInfo(ctx?: vscode.ExtensionContext): { extensionName: string, extensionVersion: string, aiKey: string, extensionId: string, bugsUrl: string | undefined } {
+export function getPackageInfo(ctx?: vscode.ExtensionContext): { extensionName: string; extensionVersion: string; aiKey: string; extensionId: string; bugsUrl: string | undefined } {
         
     let packageJson: IPackageJson;
     try {
         if (ctx) {
-            // tslint:disable-next-line:non-literal-require
-            packageJson = <IPackageJson>fse.readJsonSync(ctx.asAbsolutePath('package.json'));
+            packageJson = fse.readJsonSync(ctx.asAbsolutePath('package.json')) as IPackageJson;
         } else {
             throw new Error('No extension context');
         }
@@ -46,17 +45,17 @@ export function getPackageInfo(ctx?: vscode.ExtensionContext): { extensionName: 
         throw new Error('Extension\'s package.json is missing version');
     }
 
-    const extensionId: string = `${packageJson.publisher}.${packageJson.name}`;
+    const extensionId = `${packageJson.publisher}.${packageJson.name}`;
 
     return { extensionName, extensionVersion, aiKey, extensionId, bugsUrl };    
 }
 
-export function getExtensionName(ctx: vscode.ExtensionContext) {
+export function getExtensionName(ctx: vscode.ExtensionContext): string {
     const { extensionName } = getPackageInfo(ctx);
     return extensionName;
 }
 
-export function  getExtensionVersionNumber(ctx: vscode.ExtensionContext){
+export function  getExtensionVersionNumber(ctx: vscode.ExtensionContext): string{
     const { extensionVersion } = getPackageInfo(ctx);
     return extensionVersion;
 }

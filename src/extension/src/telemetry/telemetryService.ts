@@ -8,8 +8,8 @@ export type IActionContext = IActionContext;
 export interface ITelemetryService {
     wizardSessionStartTime: number;
     pageStartTime: number;
-    trackEvent(eventName: string, properties?: { [key: string]: string | undefined }) : void;
-    trackEventWithDuration(eventName : string, startTime : number, endTime: number, properties?: { [key: string]: string | undefined }) : void;
+    trackEvent(eventName: string, properties?: { [key: string]: string | undefined }): void;
+    trackEventWithDuration(eventName: string, startTime: number, endTime: number, properties?: { [key: string]: string | undefined }): void;
     callWithTelemetryAndCatchHandleErrors<T>(callbackId: string, callback: (this: IActionContext) => T | PromiseLike<T>): Promise<T | undefined>;
 }
 
@@ -25,7 +25,7 @@ export class TelemetryService implements ITelemetryService{
         TelemetryService.telemetryReporter = this.createTelemetryReporter(vscodeContext);
     }
 
-    private createTelemetryReporter(ctx: vscode.ExtensionContext) {
+    private createTelemetryReporter(ctx: vscode.ExtensionContext): TelemetryReporter {
         const { extensionName, extensionVersion, aiKey } = getPackageInfo(ctx);
         const reporter: TelemetryReporter = new TelemetryReporter(extensionName, extensionVersion, aiKey);
         // adding to the array of disposables
@@ -33,12 +33,12 @@ export class TelemetryService implements ITelemetryService{
         return reporter;
     }
 
-    public trackEvent(eventName: string, properties?: { [key: string]: string | undefined }){
+    public trackEvent(eventName: string, properties?: { [key: string]: string | undefined }): void{
         TelemetryService.telemetryReporter.sendTelemetryEvent(eventName, properties);
     }
 
-    public trackEventWithDuration(eventName : string, startTime : number, endTime: number = Date.now(), properties?: { [key: string]: string | undefined }){
-        var measurement = {
+    public trackEventWithDuration(eventName: string, startTime: number, endTime: number = Date.now(), properties?: { [key: string]: string | undefined }): void{
+        const measurement = {
             duration: (endTime - startTime) / 1000
         };
         TelemetryService.telemetryReporter.sendTelemetryEvent(eventName, properties, measurement)
