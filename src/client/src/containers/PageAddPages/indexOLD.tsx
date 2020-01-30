@@ -102,23 +102,40 @@ class SelectPages extends React.Component<Props> {
       pageCount,
       updatePageCount
     } = this.props;
+    
     return (
       <div>
+         {options.map((option, cardNumber) => {
+            const {
+              svgUrl,
+              title,
+              body,
+              unselectable,
+              internalName,
+              version,
+              latestVersion
+            } = option;
+            return (
+              <p>111</p>
+            )})}
         {options.length > 0 && (
-          <SelectOption
-            selectOptions={selectPages}
-            multiSelect={true}
-            selectedCardIndices={this.convertSelectedPagesToIndices(
-              selectedPages
-            )}
-            title={intl.formatMessage(messages.pagesTitleQuestion)}
-            description="Max 20 pages can be selected"
-            options={options}
-            currentCardData={selectedPages}
-            cardTypeCount={pageCount}
-            handleCountUpdate={updatePageCount}
-            isPagesSelection={true}
-          />
+          <div>
+            <p>222</p>
+            <SelectOption
+              selectOptions={selectPages}
+              multiSelect={true}
+              selectedCardIndices={this.convertSelectedPagesToIndices(
+                selectedPages
+              )}
+              title={intl.formatMessage(messages.pagesTitleQuestion)}
+              description="Max 20 pages can be selected"
+              options={options}
+              currentCardData={selectedPages}
+              cardTypeCount={pageCount}
+              handleCountUpdate={updatePageCount}
+              isPagesSelection={true}
+            />
+          </div>
         )}
       </div>
     );

@@ -12,18 +12,24 @@ import { Link } from "react-router-dom";
 import { ROUTES } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
+//import { getLatestVersion } from "../../../utils/extensionService/extensionService";
+import vscodeApi from "../../../reducers/vscodeApiReducer";
+//import Notification from "../../../components/Notification";
 
 type Props = ISelectProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
 const FrameworkCard = (props:Props) => {
   const { framework, setFrontendSelect, frontEndSelect,
-    setBackendSelect, backEndSelect, isFrontEnd, intl, setDetailPage } = props;
+    setBackendSelect, backEndSelect, isFrontEnd, intl, setDetailPage, vscode } = props;
 
   const [selected, setSelected] = React.useState(false);
+  const [isLatestVersion, setIsLatestVersion] = React.useState(false);
 
   React.useEffect(()=>{
     selectWhenLoadWithoutSelection();
-    getLatestVersion();
+    //getLatestVersion(vscode, framework.internalName).then((isLatestVersion:boolean)=>{
+    //  setIsLatestVersion(isLatestVersion);
+    //});
   },[]);
 
   React.useEffect(()=>{
@@ -34,17 +40,13 @@ const FrameworkCard = (props:Props) => {
     if (!isFrontEnd) setSelected(backEndSelect.internalName === framework.internalName);
   },[backEndSelect]);
 
-  const getLatestVersion = () =>{
-
-  }
-
   const selectWhenLoadWithoutSelection = () => {
-    if (isFrontEnd && frontEndSelect.internalName==="" && framework.internalName === "React"){
+    const frameworkSelectableFirstTime = isFrontEnd ?
+      frontEndSelect.internalName==="" && framework.internalName === "React":
+      backEndSelect.internalName==="" && framework.internalName === "Node";
+
+    if (frameworkSelectableFirstTime)
       selectCard();
-    }
-    if (!isFrontEnd && backEndSelect.internalName==="" && framework.internalName === "Node"){
-      selectCard();
-    }
   }
 
   const selectCard = ()=>{
@@ -96,7 +98,7 @@ const FrameworkCard = (props:Props) => {
       </div>
 
       <div className={styles.version}>
-        v{framework.version}
+        v{framework.version} {isLatestVersion && (<div className={styles.latestVersion}>{isLatestVersion}(Latest)</div>)}
       </div>
       <div className={styles.description}>
         {framework.body}

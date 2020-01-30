@@ -6,7 +6,7 @@ export interface IStateValidationItemName {
   errorMessage:string;
 }
 
-export const inferItemName = async (basePageName:string, 
+export const inferItemName = (basePageName:string, 
   selectedPages: Array<ISelected>) => {
 
   let suggestedName:string="", index=1;

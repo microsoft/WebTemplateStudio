@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 import asModal from "../../components/Modal";
 import RootAction from "../../actions/ActionType";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
-import SelectPages from "../SelectPages";
+import SelectPages from "../PageAddPages";
 import { isAddPagesModalOpenSelector } from "../../selectors/modalSelector";
 import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
 import { KEY_EVENTS } from "../../utils/constants";

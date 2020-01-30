@@ -1,6 +1,8 @@
 .title {
   font-size: 1.8em;
-  padding: 24px 24px;
+  margin-right: 1%;
+  margin-bottom: 1em;
+  margin-top: 0;
   font-weight: lighter;
 }
 
@@ -14,4 +16,9 @@
 
 .icon {
   height: 36px;
+}
+
+.flexContainer {
+  display: flex;
+  flex-wrap: wrap;
 }

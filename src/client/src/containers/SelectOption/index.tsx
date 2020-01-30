@@ -116,7 +116,7 @@ class SelectOption extends React.Component<Props, ISelectOptionState> {
       optionIndexContainingData
     ];
     const selectedPages:Array<any> = this.props.selectedPages;
-    const title = await inferItemName(defaultName ? defaultName : "", selectedPages);
+    const title = inferItemName(defaultName ? defaultName : "", selectedPages);
     const cardInfo: ISelected = {
       title: title as string,
       internalName,
