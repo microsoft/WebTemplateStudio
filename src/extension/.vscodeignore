@@ -5,7 +5,7 @@ src/**
 .gitignore
 vsc-extension-quickstart.md
 **/tsconfig.json
-**/tslint.json
+**/.eslintrc.js
 **/*.map
 **/*.ts
 !src/corets-cli/**
