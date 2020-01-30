@@ -21,30 +21,12 @@ const PageAddPages = (props:Props) => {
   const { selectedBackend, selectedFrontend, vscode, options, intl, selectedPages, isModal } = props;
   const [pageOutOfBounds, setPageOutOdBounds] = React.useState(false);
 
-  React.useEffect(()=>{
-    getPages();
-  },[]);
-
-  React.useEffect(()=>{
-    if (options.length===0) getPages();
-  },[selectedBackend,selectedFrontend]);
 
   React.useEffect(()=>{
     const limitPages=20;
     setPageOutOdBounds(selectedPages.length == limitPages);
   },[selectedPages]);
 
-  const getPages = () =>{
-    vscode.postMessage({
-      module: EXTENSION_MODULES.CORETS,
-      command: EXTENSION_COMMANDS.GET_PAGES,
-      payload: {
-        projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
-        frontendFramework: selectedFrontend.internalName,
-        backendFramework: selectedBackend.internalName
-      }
-    });
-  }
 
   return (
     <div>

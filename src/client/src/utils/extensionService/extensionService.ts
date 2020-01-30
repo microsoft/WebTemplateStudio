@@ -38,8 +38,21 @@ const getFrameworks = (vscode: IVSCodeObject):Promise<any> => {
   }, vscode);
 }
 
+const getPages = (vscode: IVSCodeObject, frontEndInternalName:string, backEndInternalName:string)=>{
+  return postMessageAsync( EXTENSION_COMMANDS.GET_PAGES, {
+    module: EXTENSION_MODULES.CORETS,
+    command: EXTENSION_COMMANDS.GET_PAGES,
+    payload: {
+      projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+      frontendFramework: frontEndInternalName,
+      backendFramework: backEndInternalName
+    }
+  }, vscode);
+}
+
 export {
   projectPathValidation,
   getValidationsConfig,
-  getFrameworks
+  getFrameworks,
+  getPages
 }
