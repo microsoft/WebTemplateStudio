@@ -92,6 +92,7 @@
     "compile": "gulp compile",
     "build": "gulp build",
     "watch": "tsc -watch -p ./",
+    "lint": "yarn eslint ./src/**/*.{ts,tsx}",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test",
     "template-tests": "node ./out/scripts/generate-test && node ./out/scripts/run-tests",
