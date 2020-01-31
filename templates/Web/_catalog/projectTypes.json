@@ -6,7 +6,7 @@
     "author": "Microsoft",
     "order": "1",
     "licenses": "",
-    "platforms": ["Web"],
+    "platform": "Web",
     "languages": ["Any"]
   }
 ]
