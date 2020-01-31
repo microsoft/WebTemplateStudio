@@ -4,10 +4,10 @@ import {
 } from "../constants";
 
 const postMessageAsync = (command:string, paramsMessage:any, vscode: IVSCodeObject)=>{
-  
+
   let promise = new Promise<any>((resolve) => {
     let scope = Math.random();
-    
+
     paramsMessage.payload = paramsMessage.payload || {};
     paramsMessage.payload.scope = scope;
     const callbackVsCode = (event:any) =>{

@@ -156,30 +156,38 @@ export class CoreTemplateStudio {
     return this.awaitCliEvent(
       CONSTANTS.CLI.GET_FRAMEWORKS_COMPLETE_STATE,
       getFrameworksCommand
+    );
+  }
+
+  public async getLatestVersion(projectType: string, internalName:string): Promise<any> {
+    const getFrameworksCommand = `${
+      CONSTANTS.CLI.GET_FRAMEWORKS_COMMAND_PREFIX
+    } -p ${projectType}\n`;
+    return this.awaitCliEvent(
+      CONSTANTS.CLI.GET_FRAMEWORKS_COMPLETE_STATE,
+      getFrameworksCommand
     ).then(async (listFrameworks)=>{
-      return asyncForEach(listFrameworks, async (framework:any) => {
-        if (framework.name === "React"){
-          framework.tags.latestVersion = await latestVersion("React");
-        }
-        if (framework.name === "Angular"){
-          framework.tags.latestVersion = await latestVersion("@angular/core");
-        }
-        if (framework.name === "Vue"){
-          framework.tags.latestVersion = await latestVersion("vue");
-        }
-        if (framework.name === "Node"){
-          framework.tags.latestVersion = await latestVersion("node");
-        }
-        if (framework.name === "Flask"){
-          framework.tags.latestVersion = await latestVersion("flask");
-        }
-        if (framework.name === "Moleculer"){
-          framework.tags.latestVersion = await latestVersion("moleculer");
-        }
-      }).then(()=>{
-        return listFrameworks;
-      });
-      
+      const version = listFrameworks.filter((framework:any) => framework.internalName === internalName)[0].version;
+      let lastVersion = "";
+      if (internalName === "React"){
+        lastVersion = await latestVersion("React");
+      }
+      if (internalName === "Angular"){
+        lastVersion = await latestVersion("@angular/core");
+      }
+      if (internalName === "Vue"){
+        lastVersion = await latestVersion("vue");
+      }
+      if (internalName === "Node"){
+        lastVersion = await latestVersion("node");
+      }
+      if (internalName === "Flask"){
+        lastVersion = await latestVersion("flask");
+      }
+      if (internalName === "Moleculer"){
+        lastVersion = await latestVersion("moleculer");
+      }
+      return version === lastVersion;
     });
   }
 
