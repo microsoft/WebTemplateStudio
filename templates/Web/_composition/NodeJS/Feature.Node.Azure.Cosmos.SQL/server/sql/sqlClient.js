@@ -6,9 +6,7 @@ module.exports = class SQLClient {
   constructor(databaseId, containerId) {
     this.client = new CosmosClient({
       endpoint: process.env.COSMOSDB_URI,
-      auth: {
-        masterKey: process.env.COSMOSDB_PRIMARY_KEY
-      }
+      key: process.env.COSMOSDB_PRIMARY_KEY
     });
 
     this.databaseId = databaseId;
