@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import opn = require("opn");
+const opn = require("opn");
 import * as vscode from 'vscode';
 import { getPackageInfo } from "../utils/packageInfo";
 import { IParsedError } from "./parseError";
