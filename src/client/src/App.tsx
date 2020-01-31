@@ -233,13 +233,13 @@ const App = (props:Props) => {
             props.resetPageSelection();
 
             // reset page count
-            const key = `wts.Page.${selectedFrontend.internalName}.Blank`;
+            const key = `wts.Page.${message.payload.internalName}.Blank`;
 
             // select default blank page
             const PAGES_SELECTION: ISelected[] = [
               {
                 title: "Blank",
-                internalName: `wts.Page.${selectedFrontend.internalName}.Blank`,
+                internalName: `wts.Page.${message.payload.internalName}.Blank`,
                 id: "Blank",
                 defaultName: "Blank",
                 isValidTitle: true,
