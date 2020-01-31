@@ -158,11 +158,6 @@ const App = (props:Props) => {
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           props.updateDependencyInfo(message.payload);
           break;
-        case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
-          if (message.payload != null && message.payload.outputPath != null) {
-            props.updateOutputPath(message.payload.outputPath);
-          }
-          break;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
         case EXTENSION_COMMANDS.AZURE_LOGIN:
           // email will be null or undefined if login didn't work correctly

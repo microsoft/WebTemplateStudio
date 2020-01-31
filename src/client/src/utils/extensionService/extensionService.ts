@@ -12,7 +12,7 @@ const postMessageAsync = (command:string, paramsMessage:any, vscode: IVSCodeObje
     paramsMessage.payload.scope = scope;
     const callbackVsCode = (event:any) =>{
       if (event.data.command === command){
-        if (event.data.payload.scope === scope){
+        if (event.data.payload && event.data.payload.scope === scope){
           resolve(event);
           window.removeEventListener("message",callbackVsCode);
         }
@@ -46,15 +46,18 @@ const getFrameworks = (vscode: IVSCodeObject):Promise<any> => {
 }
 
 const getLatestVersion = (vscode: IVSCodeObject, internalName:string):Promise<any> => {
+  console.log("fameworkCard2")
+  console.log("internal name:" + internalName);
   return postMessageAsync(EXTENSION_COMMANDS.GET_LATEST_VERSION, {
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
     payload: {
-      internalName
+      internalName,
+      projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
     }
   }, vscode).then((event)=>{
+    console.log("fameworkCard3")
     const latestVersion = event.data.payload.latestVersion;
-    console.log('extensionService' + latestVersion);
     return latestVersion;
   });
 }

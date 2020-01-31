@@ -19,7 +19,7 @@ export class CoreTSModule extends WizardServant {
   > {
     return new Map([
       [ExtensionCommand.GetFrameworks, this.getFrameworks],
-      [ExtensionCommand.GetFrameworks, this.getLatestVersion],
+      [ExtensionCommand.GetLatestVersion, this.getLatestVersion],
       [ExtensionCommand.GetPages, this.getPages]
     ]);
   }
@@ -58,6 +58,7 @@ export class CoreTSModule extends WizardServant {
     );
     return {
       payload: {
+        scope:message.payload.scope,
         pages: result
       }
     };

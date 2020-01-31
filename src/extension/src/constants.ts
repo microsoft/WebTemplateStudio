@@ -336,6 +336,7 @@ export enum ExtensionCommand {
   GetProjectName = "get-project-name",
   GetUserStatus = "get-user-status",
   GetFrameworks = "get-frameworks",
+  GetLatestVersion = "get-latest-version",
   GetPages = "get-pages",
   TrackPageSwitch = "track-page-switch",
   TrackCreateNewProject = "track-create-new-project",
