@@ -36,6 +36,9 @@ import keyUpHandler from "../../utils/keyUpHandler";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { resetVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
+import { inferProjectName } from "../../utils/infer/projectName";
+import { updateProjectNameAction } from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
+import { getEventBus } from "../../utils/eventBus";
 
 interface LinksDict {
   [serviceId: string]: string;
@@ -66,6 +69,7 @@ interface IDispatchProps {
   closeModal:() => any;
   resetRoutesVisited:() => any;
   updateCreateProjectButton:(visible:boolean) => any;
+  updateProjectName:(projectName: string, validate:any) => void;
 }
 
 type Props = IStateProps &
@@ -87,7 +91,8 @@ const PostGenerationModal = ({
   history,
   closeModal,
   resetRoutesVisited,
-  updateCreateProjectButton
+  updateCreateProjectButton,
+  updateProjectName
 }: Props) => {
   const { formatMessage } = intl;
   let serviceFailed = false;
@@ -130,6 +135,15 @@ const PostGenerationModal = ({
     closeModal();
     resetRoutesVisited();
     updateCreateProjectButton(false);
+    debugger;
+    getEventBus().$emit("inferProjectName",{});
+    /*inferProjectName(outputPath,vscode).then(suggestedProjectName => {
+      updateProjectName("", {isValid:true, error:""});
+      setTimeout(()=>{
+        console.log("wwwww1")
+        updateProjectName(suggestedProjectName, {isValid:true, error:""});
+      },2000);
+    });*/
     history.push(ROUTES.NEW_PROJECT);
   };
 
@@ -411,7 +425,10 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   },
   updateCreateProjectButton: (enable: boolean) => {
     dispatch(updateCreateProjectButtonAction(enable));
-  }
+  },
+  updateProjectName: (projectName: string, validate:any) => {
+    dispatch(updateProjectNameAction(projectName, validate));
+  },
 });
 
 export default withRouter(

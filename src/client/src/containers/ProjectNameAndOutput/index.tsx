@@ -44,6 +44,7 @@ import { setProjectPathValidation } from "../../actions/wizardSelectionActions/s
 import { validationMessages } from '../../utils/validations/messages';
 import messages from "./messages";
 import { getOutput_Path } from "../../utils/extensionService/extensionService";
+import { getEventBus } from "../../utils/eventBus";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -78,6 +79,15 @@ const ProjectNameAndOutput = (props: Props) => {
     setProjectPathValidation,
     intl
   } = props;
+
+  React.useEffect(()=>{
+    
+    getEventBus().$on("inferProjectName",()=>{
+      debugger;
+      setDirtyProjectName(false);
+      updateProjectName("", {isValid:false, error:""});
+    });
+  },[]);
 
   React.useEffect(() => {
     validateSetProjectValueAndSetDirty(projectName);

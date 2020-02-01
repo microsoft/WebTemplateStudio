@@ -80,6 +80,7 @@ import AzureLoginModal from "./containers/AzureLoginModal";
 import pageSelectFrameworks from './containers/PageSelectFrameworks';
 import { selectBackendFrameworkAction } from "./actions/wizardSelectionActions/selectBackEndFramework";
 import { getPages } from "./utils/extensionService/extensionService";
+import { getEventBus } from "./utils/eventBus";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
