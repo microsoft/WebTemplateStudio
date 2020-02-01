@@ -15,8 +15,8 @@ const updateProjectNameAction = (
   projectName: string, validation:any
 ): IUpdateProjectNameActionType => {
   const projectNameObject = {
-    projectName: projectName,
-    validation: validation
+    projectName,
+    validation
   };
   return {
     type: WIZARD_SELECTION_TYPEKEYS.UPDATE_PROJECT_NAME,

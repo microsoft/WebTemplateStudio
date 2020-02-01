@@ -33,6 +33,9 @@ import { strings as messages } from "./strings";
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
+import { closeModalAction } from "../../actions/modalActions/modalActions";
+import { resetVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
+import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
 
 interface LinksDict {
   [serviceId: string]: string;
@@ -60,6 +63,9 @@ interface IStateProps {
 
 interface IDispatchProps {
   resetWizard: () => any;
+  closeModal:() => any;
+  resetRoutesVisited:() => any;
+  updateCreateProjectButton:(visible:boolean) => any;
 }
 
 type Props = IStateProps &
@@ -78,7 +84,10 @@ const PostGenerationModal = ({
   isTemplatesFailed,
   isServicesSelected,
   resetWizard,
-  history
+  history,
+  closeModal,
+  resetRoutesVisited,
+  updateCreateProjectButton
 }: Props) => {
   const { formatMessage } = intl;
   let serviceFailed = false;
@@ -118,7 +127,9 @@ const PostGenerationModal = ({
 
   const closeModalAndCreateAnotherProject = (param: any) => {
     trackCreateNewProjectTelemetry(param);
-    resetWizard();
+    closeModal();
+    resetRoutesVisited();
+    updateCreateProjectButton(false);
     history.push(ROUTES.NEW_PROJECT);
   };
 
@@ -314,7 +325,7 @@ const PostGenerationModal = ({
       <div className={styles.headerContainer}>
         <div className={styles.title}>
           {formatMessage(messages.creatingYourProject)}
-        </div>      
+        </div>
         <Close
             tabIndex={0}
             className={styles.closeIcon}
@@ -391,6 +402,15 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   resetWizard: () => {
     dispatch(resetWizardAction());
+  },
+  closeModal:()=>{
+    dispatch(closeModalAction());
+  },
+  resetRoutesVisited:()=>{
+    dispatch(resetVisitedWizardPageAction());
+  },
+  updateCreateProjectButton: (enable: boolean) => {
+    dispatch(updateCreateProjectButtonAction(enable));
   }
 });
 
