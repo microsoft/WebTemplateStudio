@@ -1,25 +1,25 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import asModal from "../../components/Modal";
+import asModal from "../../../components/Modal";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { closeModalAction } from "../../actions/modalActions/modalActions";
-import { AppState } from "../../reducers";
-import RootAction from "../../actions/ActionType";
-import { isAzureLoginModalOpenSelector } from "../../selectors/modalSelector";
-import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import { closeModalAction } from "../../../actions/modalActions/modalActions";
+import { AppState } from "../../../reducers";
+import RootAction from "../../../actions/ActionType";
+import { isAzureLoginModalOpenSelector } from "../../../selectors/modalSelector";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../../utils/constants";
+import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import classnames from "classnames";
 import { FormattedMessage } from "react-intl";
-import keyUpHandler from "../../utils/keyUpHandler";
+import keyUpHandler from "../../../utils/keyUpHandler";
 import messages from "./messages";
-import { KEY_EVENTS } from "../../utils/constants";
-import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
-import * as ModalActions from "../../actions/modalActions/modalActions";
+import { KEY_EVENTS } from "../../../utils/constants";
+import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
+import CollapsibleInfoBox from "../../../components/CollapsibleInfoBox";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
+import * as ModalActions from "../../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
 
 interface IStateProps {

@@ -1,5 +1,5 @@
 import { AZURE_TYPEKEYS } from "./typeKeys";
-import { IAppServiceState } from "../../containers/AppServiceModal";
+import { IAppServiceState } from "../../containers/PageAzureLogin/AppServiceModal";
 
 export interface ISaveAppServiceSettings {
   type: AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS;

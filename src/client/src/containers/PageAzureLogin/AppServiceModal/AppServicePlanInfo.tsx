@@ -2,8 +2,8 @@ import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
-import { WEB_TEMPLATE_STUDIO_LINKS } from "../../utils/constants";
+import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
+import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 
 interface IStateProps {
   subscription: any;

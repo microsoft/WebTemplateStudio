@@ -3,7 +3,7 @@ import configureMockStore from "redux-mock-store";
 import ServicesList from "./index";
 import { Provider } from "react-redux";
 import AppServiceSelection from "../AppServiceSelection";
-import CosmosDBSelection from "../CosmosDBSelection";
+import CosmosDBSelection from "./CosmosDBSelection";
 
 const mockStore = configureMockStore();
 

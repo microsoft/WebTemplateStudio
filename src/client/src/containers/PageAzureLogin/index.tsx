@@ -22,6 +22,8 @@ import AzureStudent from "../AzureStudent";
 import Title from "../../components/Title";
 import RootAction from "../../actions/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
+import AzureLoginModal from "./AzureLoginModal";
+import AppServiceModal from "./AppServiceModal";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
@@ -57,6 +59,8 @@ class AzureLogin extends React.Component<Props> {
 
     return (
       <div className={styles.centerViewAzure}>
+        <AzureLoginModal/>
+        <AppServiceModal/>
         <Link
           tabIndex={0}
           to={ROUTES.REVIEW_AND_GENERATE}

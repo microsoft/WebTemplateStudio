@@ -1,4 +1,4 @@
-import { IAppServiceState } from "../containers/AppServiceModal";
+import { IAppServiceState } from "../containers/PageAzureLogin/AppServiceModal";
 
 export const azureModalInitialState: any = {
   subscription: [

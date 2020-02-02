@@ -1,12 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { ISelected } from "../../types/selected";
+import { ISelected } from "../../../types/selected";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-import { AppState } from "../../reducers";
-import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import { AppState } from "../../../reducers";
+import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 
 const backendFrameworkNameToAppServiceRuntimeStack: Map<
   string,

@@ -2,18 +2,18 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { AppState } from "../../reducers";
+import { AppState } from "../../../reducers";
 import styles from "./styles.module.css";
-import asModal from "../../components/Modal";
-import RootAction from "../../actions/ActionType";
-import { closeModalAction } from "../../actions/modalActions/modalActions";
-import PageAddPages from "../PageAddPages";
-import { isAddPagesModalOpenSelector } from "../../selectors/modalSelector";
-import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
-import { KEY_EVENTS } from "../../utils/constants";
+import asModal from "../../../components/Modal";
+import RootAction from "../../../actions/ActionType";
+import { closeModalAction } from "../../../actions/modalActions/modalActions";
+import PageAddPages from "../../PageAddPages";
+import { isAddPagesModalOpenSelector } from "../../../selectors/modalSelector";
+import { MODAL_TYPES } from "../../../actions/modalActions/typeKeys";
+import { KEY_EVENTS } from "../../../utils/constants";
 import classnames from "classnames";
 
-import { ReactComponent as Cancel } from "../../assets/cancel.svg";
+import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
 
 interface IStateProps {
   isModalOpen: boolean;

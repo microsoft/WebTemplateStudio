@@ -12,11 +12,8 @@ import Footer from "./containers/Footer";
 import Header from "./containers/Header";
 import PageReviewAndGenerate from "./containers/PageReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
-import PostGenerationModal from "./containers/PostGenerationModal";
 import RedirectModal from "./containers/RedirectModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
-import AppServiceModal from "./containers/AppServiceModal";
-import AddPagesModal from "./containers/AddPagesModal";
 
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
@@ -43,7 +40,6 @@ import {
 } from "./actions/azureActions/setAccountAvailability";
 import PageAzureLogin from "./containers/PageAzureLogin";
 import { getSubscriptionData } from "./actions/azureActions/subscriptionData";
-import AzureFunctionsModal from "./containers/AzureFunctionsModal";
 import { setValidations } from "./actions/wizardSelectionActions/setValidations";
 import {
   updateTemplateGenerationStatusMessageAction,
@@ -76,7 +72,6 @@ import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
-import PageAzureLoginModal from "./containers/AzureLoginModal";
 import PageSelectFrameworks from './containers/PageSelectFrameworks';
 import { selectBackendFrameworkAction } from "./actions/wizardSelectionActions/selectBackEndFramework";
 import { getPages } from "./utils/extensionService/extensionService";
@@ -270,14 +265,9 @@ const App = (props:Props) => {
       <TopNavBar />
 
       <div className={appStyles.container}>
-        <PageAzureLoginModal />
         <CosmosResourceModal />
-        <AzureFunctionsModal />
-        <PostGenerationModal />
         <RedirectModal />
         <ViewLicensesModal />
-        <AppServiceModal />
-        <AddPagesModal />
 
         <main
           className={classnames(appStyles.centerView, {

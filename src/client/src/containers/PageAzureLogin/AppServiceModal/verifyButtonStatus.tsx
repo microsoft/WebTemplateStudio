@@ -1,5 +1,5 @@
 import { IAppServiceState } from "./index";
-import { IAvailability } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { IAvailability } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
 
 export const setAppServiceModalButtonStatus = (
   selections: IAppServiceState,
