@@ -135,15 +135,7 @@ const PostGenerationModal = ({
     closeModal();
     resetRoutesVisited();
     updateCreateProjectButton(false);
-    debugger;
     getEventBus().$emit("inferProjectName",{});
-    /*inferProjectName(outputPath,vscode).then(suggestedProjectName => {
-      updateProjectName("", {isValid:true, error:""});
-      setTimeout(()=>{
-        console.log("wwwww1")
-        updateProjectName(suggestedProjectName, {isValid:true, error:""});
-      },2000);
-    });*/
     history.push(ROUTES.NEW_PROJECT);
   };
 

@@ -81,9 +81,8 @@ const ProjectNameAndOutput = (props: Props) => {
   } = props;
 
   React.useEffect(()=>{
-    
+
     getEventBus().$on("inferProjectName",()=>{
-      debugger;
       setDirtyProjectName(false);
       updateProjectName("", {isValid:false, error:""});
     });

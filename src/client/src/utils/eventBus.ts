@@ -8,16 +8,13 @@ export const getEventBus = () => {
         }
 
         const $emit = (id:string, params:any) => {
-            debugger;
             bus.filter(event => event.id === id).forEach((event)=>{
-                debugger;
                 event.callback(params);
             })
         }
         return {$on,$emit};
     }
-    debugger;
-    
+
     busEvent = busEvent || EventBus();
     return busEvent;
 }

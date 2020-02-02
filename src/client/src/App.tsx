@@ -6,11 +6,11 @@ import { Route, RouteComponentProps, Link } from "react-router-dom";
 
 import PageDetails from "./containers/PageDetails";
 import PageAddPages from "./containers/PageAddPages";
-import NewProject from "./containers/NewProject";
+import PageNewProject from "./containers/PageNewProject";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";
-import ReviewAndGenerate from "./containers/ReviewAndGenerate";
+import PageReviewAndGenerate from "./containers/PageReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import PostGenerationModal from "./containers/PostGenerationModal";
 import RedirectModal from "./containers/RedirectModal";
@@ -41,7 +41,7 @@ import {
   setSiteNameAvailabilityAction,
   IAvailabilityFromExtension
 } from "./actions/azureActions/setAccountAvailability";
-import AzureLogin from "./containers/AzureLogin";
+import PageAzureLogin from "./containers/PageAzureLogin";
 import { getSubscriptionData } from "./actions/azureActions/subscriptionData";
 import AzureFunctionsModal from "./containers/AzureFunctionsModal";
 import { setValidations } from "./actions/wizardSelectionActions/setValidations";
@@ -76,8 +76,8 @@ import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
-import AzureLoginModal from "./containers/AzureLoginModal";
-import pageSelectFrameworks from './containers/PageSelectFrameworks';
+import PageAzureLoginModal from "./containers/AzureLoginModal";
+import PageSelectFrameworks from './containers/PageSelectFrameworks';
 import { selectBackendFrameworkAction } from "./actions/wizardSelectionActions/selectBackEndFramework";
 import { getPages } from "./utils/extensionService/extensionService";
 import { getEventBus } from "./utils/eventBus";
@@ -270,7 +270,7 @@ const App = (props:Props) => {
       <TopNavBar />
 
       <div className={appStyles.container}>
-        <AzureLoginModal />
+        <PageAzureLoginModal />
         <CosmosResourceModal />
         <AzureFunctionsModal />
         <PostGenerationModal />
@@ -302,20 +302,20 @@ const App = (props:Props) => {
             />
           ) : null}
           <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
-          <Route path={ROUTES.AZURE_LOGIN} component={AzureLogin} />
+          <Route path={ROUTES.AZURE_LOGIN} component={PageAzureLogin} />
           <Route
             path={ROUTES.REVIEW_AND_GENERATE}
-            component={ReviewAndGenerate}
+            component={PageReviewAndGenerate}
           />
           <Route
             path={ROUTES.SELECT_FRAMEWORKS}
-            component={pageSelectFrameworks}
+            component={PageSelectFrameworks}
           />
           <Route path={ROUTES.SELECT_PAGES} component={PageAddPages} />
           <Route
             exact={true}
             path={ROUTES.NEW_PROJECT}
-            component={NewProject}
+            component={PageNewProject}
           />
         </main>
         <RightSidebar />
