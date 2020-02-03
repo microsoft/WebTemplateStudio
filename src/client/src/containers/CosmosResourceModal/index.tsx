@@ -6,44 +6,44 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import Dropdown from "../../../components/Dropdown";
-import asModal from "../../../components/Modal";
+import Dropdown from "../../components/Dropdown";
+import asModal from "../../components/Modal";
 
-import { closeModalAction } from "../../../actions/modalActions/modalActions";
-import { saveCosmosDbSettingsAction } from "../../../actions/azureActions/saveCosmosDbSettings";
-import { azureModalInitialState as cosmosInitialState } from "../../../mockData/azureModalInitialStateData";
-import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
-import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
-import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
-import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
-import { isCosmosDbModalOpenSelector } from "../../../selectors/modalSelector";
-import { getProjectName } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { closeModalAction } from "../../actions/modalActions/modalActions";
+import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
+import { azureModalInitialState as cosmosInitialState } from "../../mockData/azureModalInitialStateData";
+import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
+import { ReactComponent as Spinner } from "../../assets/spinner.svg";
+import { ReactComponent as Cancel } from "../../assets/cancel.svg";
+import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
+import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import { setCosmosModalButtonStatus } from "./verifyButtonStatus";
 
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
   COSMOS_APIS,
   KEY_EVENTS
-} from "../../../utils/constants";
+} from "../../utils/constants";
 import styles from "./styles.module.css";
-import { getCosmosSelectionInDropdownForm } from "../../../selectors/cosmosServiceSelector";
+import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { setAzureValidationStatusAction } from "../../../actions/azureActions/setAzureValidationStatusAction";
+import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
 import {
   setAccountAvailability,
   IAvailabilityFromExtension
-} from "../../../actions/azureActions/setAccountAvailability";
-import { AppState } from "../../../reducers";
+} from "../../actions/azureActions/setAccountAvailability";
+import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../../actions/ActionType";
+import RootAction from "../../actions/ActionType";
 import messages from "./messages";
 import classNames from "classnames";
-import keyUpHandler from "../../../utils/keyUpHandler";
+import keyUpHandler from "../../utils/keyUpHandler";
 
 const DEFAULT_VALUE = {
   value: "Select...",

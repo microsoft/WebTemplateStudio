@@ -7,7 +7,7 @@ import { Route, RouteComponentProps, Link } from "react-router-dom";
 import PageDetails from "./containers/PageDetails";
 import PageAddPages from "./containers/PageAddPages";
 import PageNewProject from "./containers/PageNewProject";
-import CosmosResourceModal from "./containers/PageAzureLogin/CosmosResourceModal";
+import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";
 import PageReviewAndGenerate from "./containers/PageReviewAndGenerate";
@@ -73,9 +73,9 @@ import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import PageSelectFrameworks from './containers/PageSelectFrameworks';
-import { selectBackendFrameworkAction } from "./actions/wizardSelectionActions/selectBackEndFramework";
 import { getPages } from "./utils/extensionService/extensionService";
 import { getEventBus } from "./utils/eventBus";
+import AppServiceModal from "./containers/AppServiceModal";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -273,6 +273,8 @@ const App = (props:Props) => {
       <div className={appStyles.container}>
         <RedirectModal />
         <ViewLicensesModal />
+        <AppServiceModal/>
+        <CosmosResourceModal/>
 
         <main
           className={classnames(appStyles.centerView, {
@@ -284,7 +286,7 @@ const App = (props:Props) => {
         >
           {pathname === ROUTES.NEW_PROJECT ? (
             <HomeSplashSVG
-              className={classnames(appStyles.splash, appStyles.homeSplash)}
+             className={classnames(appStyles.splash, appStyles.homeSplash)}
             />
           ) : null}
 

@@ -5,46 +5,46 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import Dropdown from "../../../components/Dropdown";
-import asModal from "../../../components/Modal";
+import Dropdown from "../../components/Dropdown";
+import asModal from "../../components/Modal";
 
-import { closeModalAction } from "../../../actions/modalActions/modalActions";
-import { saveAppServiceSettingsAction } from "../../../actions/azureActions/appServiceActions";
-import { appServiceModalInitialState } from "../../../mockData/azureModalInitialStateData";
-import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
-import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
-import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
-import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
-import { getAppServiceSelectionInDropdownForm } from "../../../selectors/appServiceSelector";
-import { isAppServiceModalOpenSelector } from "../../../selectors/modalSelector";
-import { getProjectName } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { closeModalAction } from "../../actions/modalActions/modalActions";
+import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
+import { appServiceModalInitialState } from "../../mockData/azureModalInitialStateData";
+import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
+import { ReactComponent as Spinner } from "../../assets/spinner.svg";
+import { ReactComponent as Cancel } from "../../assets/cancel.svg";
+import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
+import { getAppServiceSelectionInDropdownForm } from "../../selectors/appServiceSelector";
+import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import RuntimeStackInfo from "./RuntimeStackInfo";
 import AppServicePlanInfo from "./AppServicePlanInfo";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import { setAppServiceModalButtonStatus } from "./verifyButtonStatus";
 
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
   KEY_EVENTS
-} from "../../../utils/constants";
+} from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
-import { setAzureValidationStatusAction } from "../../../actions/azureActions/setAzureValidationStatusAction";
+import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
 import {
   setSiteNameAvailabilityAction,
   IAvailabilityFromExtension
-} from "../../../actions/azureActions/setAccountAvailability";
-import { AppState } from "../../../reducers";
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import RootAction from "../../../actions/ActionType";
-import { ISelectionInformation } from "../../../selectors/appServiceSelector";
-import { IAvailability } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
-import { ISubscriptionData } from "../../../reducers/azureLoginReducers/subscriptionDataReducer";
+} from "../../actions/azureActions/setAccountAvailability";
+import { AppState } from "../../reducers";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import RootAction from "../../actions/ActionType";
+import { ISelectionInformation } from "../../selectors/appServiceSelector";
+import { IAvailability } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { ISubscriptionData } from "../../reducers/azureLoginReducers/subscriptionDataReducer";
 import classNames from "classnames";
 
 const DEFAULT_VALUE = {
