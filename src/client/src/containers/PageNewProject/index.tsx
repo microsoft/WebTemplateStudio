@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import styles from "./styles.module.css";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
-import ProjectNameAndOutput from "../ProjectNameAndOutput";
+import ProjectNameAndOutput from "./ProjectNameAndOutput";
 import QuickStart from "../QuickStart";
 import { FormattedMessage } from "react-intl";
 

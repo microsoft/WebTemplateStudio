@@ -1,13 +1,13 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import Input from "../../components/Input";
-import OutputPath from "../../components/OutputPath";
+import Input from "../../../components/Input";
+import OutputPath from "../../../components/OutputPath";
 
 import {
   updateOutputPathAction,
   updateProjectNameAction
-} from "../../actions/wizardSelectionActions/updateProjectNameAndPath";
+} from "../../../actions/wizardSelectionActions/updateProjectNameAndPath";
 
 import {
   getOutputPath,
@@ -15,14 +15,14 @@ import {
   getProjectNameValidation,
   getOutputPathValidation,
   getValidations
-} from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+} from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   PROJECT_NAME_CHARACTER_LIMIT
-} from "../../utils/constants";
+} from "../../../utils/constants";
 
 import styles from "./styles.module.css";
 
@@ -31,20 +31,20 @@ import {
   InjectedIntlProps
 } from "react-intl";
 
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
+import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
+import { IValidations } from "../../../reducers/wizardSelectionReducers/setValidations";
 
-import { AppState } from "../../reducers";
+import { AppState } from "../../../reducers";
 import { Dispatch } from "redux";
-import RootAction from "../../actions/ActionType";
-import { validateProjectName} from "../../utils/validations/projectName/projectName";
-import { IValidation} from "../../utils/validations/validations";
-import { inferProjectName} from "../../utils/infer/projectName";
-import { setProjectPathValidation } from "../../actions/wizardSelectionActions/setProjectPathValidation";
-import { validationMessages } from '../../utils/validations/messages';
+import RootAction from "../../../actions/ActionType";
+import { validateProjectName} from "../../../utils/validations/projectName/projectName";
+import { IValidation} from "../../../utils/validations/validations";
+import { inferProjectName} from "../../../utils/infer/projectName";
+import { setProjectPathValidation } from "../../../actions/wizardSelectionActions/setProjectPathValidation";
+import { validationMessages } from '../../../utils/validations/messages';
 import messages from "./messages";
-import { getOutput_Path } from "../../utils/extensionService/extensionService";
-import { getEventBus } from "../../utils/eventBus";
+import { getOutput_Path } from "../../../utils/extensionService/extensionService";
+import { getEventBus } from "../../../utils/eventBus";
 
 interface IStateProps {
   vscode: IVSCodeObject;
