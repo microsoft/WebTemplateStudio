@@ -24,6 +24,7 @@ import RootAction from "../../actions/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import AppServiceModal from "./AppServiceModal";
+import CosmosResourceModal from "./CosmosResourceModal";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
@@ -61,6 +62,7 @@ class AzureLogin extends React.Component<Props> {
       <div className={styles.centerViewAzure}>
         <AzureLoginModal/>
         <AppServiceModal/>
+        <CosmosResourceModal/>
         <Link
           tabIndex={0}
           to={ROUTES.REVIEW_AND_GENERATE}

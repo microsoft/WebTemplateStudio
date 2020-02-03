@@ -7,7 +7,7 @@ import { Route, RouteComponentProps, Link } from "react-router-dom";
 import PageDetails from "./containers/PageDetails";
 import PageAddPages from "./containers/PageAddPages";
 import PageNewProject from "./containers/PageNewProject";
-import CosmosResourceModal from "./containers/CosmosResourceModal";
+import CosmosResourceModal from "./containers/PageAzureLogin/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";
 import PageReviewAndGenerate from "./containers/PageReviewAndGenerate";
@@ -271,7 +271,6 @@ const App = (props:Props) => {
       <TopNavBar />
 
       <div className={appStyles.container}>
-        <CosmosResourceModal />
         <RedirectModal />
         <ViewLicensesModal />
 

@@ -9,7 +9,7 @@ import classnames from "classnames";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
 import ServicesList from "../ServicesList";
-import About from "../About";
+import About from "./About";
 import SortablePageList from "../SortablePageList";
 
 import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
