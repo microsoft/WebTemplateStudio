@@ -3,18 +3,18 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import Card from "../../components/Card";
+import Card from "../../../components/Card";
 
 import styles from "./styles.module.css";
-import * as AzureActions from "../../actions/azureActions/logOutAzure";
-import * as ModalActions from "../../actions/modalActions/modalActions";
-import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import * as AzureActions from "../../../actions/azureActions/logOutAzure";
+import * as ModalActions from "../../../actions/modalActions/modalActions";
+import { isCosmosDbModalOpenSelector } from "../../../selectors/modalSelector";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 
-import azureServiceOptions from "../../mockData/azureServiceOptions";
-import { servicesEnum } from "../../mockData/azureServiceOptions";
-import { IOption } from "../../types/option";
-import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
+import azureServiceOptions from "../../../mockData/azureServiceOptions";
+import { servicesEnum } from "../../../mockData/azureServiceOptions";
+import { IOption } from "../../../types/option";
+import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
 
 import {
   InjectedIntlProps,
@@ -22,12 +22,12 @@ import {
   defineMessages,
   FormattedMessage
 } from "react-intl";
-import { AppState } from "../../reducers";
+import { AppState } from "../../../reducers";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../actions/ActionType";
+import RootAction from "../../../actions/ActionType";
 
-import { isAzureFunctionsSelectedSelector } from "../../selectors/azureFunctionsServiceSelector";
-import { isAppServiceSelectedSelector } from "../../selectors/appServiceSelector";
+import { isAzureFunctionsSelectedSelector } from "../../../selectors/azureFunctionsServiceSelector";
+import { isAppServiceSelectedSelector } from "../../../selectors/appServiceSelector";
 import messages from "./messages";
 
 interface IDispatchProps {

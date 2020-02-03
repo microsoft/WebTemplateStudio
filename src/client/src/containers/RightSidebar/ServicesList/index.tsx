@@ -6,7 +6,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import messages from "./strings";
 import styles from "./styles.module.css";
 import CosmosDBSelection from "./CosmosDBSelection";
-import AppServiceSelection from "../../AppServiceSelection";
+import AppServiceSelection from "../AppServiceSelection";
 import { ServiceState } from "../../../reducers/wizardSelectionReducers/services";
 import _ from "lodash";
 
