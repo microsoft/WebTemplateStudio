@@ -108,6 +108,7 @@ interface IDispatchProps {
   selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
   setPort: (port: number) => void;
+  setPages: (pages: ISelected[]) => void;
 }
 
 interface IStateProps {
@@ -115,12 +116,13 @@ interface IStateProps {
   frontendOptions: IOption[];
   selectedFrontend: ISelected;
   selectedBackend: ISelected;
+  selectedPages: ISelected[];
 }
 
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
 
 const App = (props:Props) => {
-  const { selectedFrontend, selectedBackend, vscode } = props;
+  const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages } = props;
 
   React.useEffect(()=>{
     loadPages();
@@ -144,6 +146,10 @@ const App = (props:Props) => {
   const loadPages = () => {
     getPages(vscode, selectedFrontend.internalName, selectedBackend.internalName).then((event)=>{
       props.getPages(event.data.payload.pages);
+      selectedPages.map((selectedPage)=>{
+        selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName}`;
+      });
+      setPages(selectedPages);
     });
   }
 
@@ -379,14 +385,18 @@ const mapDispatchToProps = (
   },
   setPort: (port: number) => {
     dispatch(setPortAction(port));
-  }
+  },
+  setPages: (pages: ISelected[]) => {
+    dispatch(selectPagesAction(pages));
+  },
 });
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: getVSCodeApiSelector(state),
   selectedFrontend: state.selection.frontendFramework,
   selectedBackend: state.selection.backendFramework,
-  frontendOptions: state.wizardContent.frontendOptions
+  frontendOptions: state.wizardContent.frontendOptions,
+  selectedPages: state.selection.pages
 });
 
 export default withRouter(

@@ -19,7 +19,7 @@ import { inferItemName } from "../../../utils/infer/itemName";
 type Props = IProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
 const PageCard = (props:Props) => {
-  const { page, intl, setPages, selectedPages, setDetailPage, isModal } = props;
+  const { page, intl, setPages, selectedPages, setDetailPage, isModal, selectedFrontend } = props;
   const [isMosueOver, setIsMouseOver] = React.useState(false);
   const [pageOutOfBounds, setPageOutOdBounds] = React.useState(false);
 
@@ -103,7 +103,7 @@ const PageCard = (props:Props) => {
           )}
         </div>
         <div className={styles.pageCounter}>
-          {selectedPages.filter((selectedPage) => selectedPage.internalName === page.internalName).length}
+          {selectedPages.filter((selectedPage) => selectedPage.internalName.indexOf(page.defaultName)>0).length}
         </div>
       </div>
     </div>

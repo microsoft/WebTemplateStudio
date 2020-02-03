@@ -25,7 +25,8 @@ const mapStateToProps = (state: AppState): IStateProps => {
   //const { frontendFramework, backendFramework } = state.selection;
   return {
     vscode: getVSCodeApiSelector(state),
-    selectedPages: state.selection.pages
+    selectedPages: state.selection.pages,
+    selectedFrontend: state.selection.frontendFramework
   };
 };
 

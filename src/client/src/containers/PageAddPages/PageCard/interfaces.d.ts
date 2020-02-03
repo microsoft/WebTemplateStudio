@@ -17,6 +17,7 @@ interface IDispatchProps {
 interface IStateProps {
   vscode: IVSCodeObject;
   selectedPages: ISelected[];
+  selectedFrontend: ISelected;
 }
 
 export { IStateProps, IDispatchProps, IProps };
