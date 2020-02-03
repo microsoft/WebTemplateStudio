@@ -8,9 +8,9 @@ import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
-import ServicesList from "../ServicesList";
+import ServicesList from "./ServicesList";
 import About from "./About";
-import SortablePageList from "../SortablePageList";
+import SortablePageList from "./SortablePageList";
 
 import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";

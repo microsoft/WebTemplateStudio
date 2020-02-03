@@ -6,31 +6,31 @@ import { ThunkDispatch } from "redux-thunk";
 
 import { defineMessages, injectIntl, InjectedIntl } from "react-intl";
 
-import SortableList from "../../components/SortableSelectionList";
+import SortableList from "../../../components/SortableSelectionList";
 
-import { selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
-import * as ModalActions from "../../actions/modalActions/modalActions";
+import { selectPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
+import * as ModalActions from "../../../actions/modalActions/modalActions";
 
-import { ISelected } from "../../types/selected";
+import { ISelected } from "../../../types/selected";
 
-import { ReactComponent as ShowIcon } from "../../assets/i-show.svg";
-import { ReactComponent as HideIcon } from "../../assets/i-hide.svg";
-import { ReactComponent as ResetIcon } from "../../assets/i-reset.svg";
-import { ReactComponent as Plus } from "../../assets/plus.svg";
+import { ReactComponent as ShowIcon } from "../../../assets/i-show.svg";
+import { ReactComponent as HideIcon } from "../../../assets/i-hide.svg";
+import { ReactComponent as ResetIcon } from "../../../assets/i-reset.svg";
+import { ReactComponent as Plus } from "../../../assets/plus.svg";
 
 import styles from "./styles.module.css";
-import { AppState } from "../../reducers";
-import RootAction from "../../actions/ActionType";
+import { AppState } from "../../../reducers";
+import RootAction from "../../../actions/ActionType";
 
-import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
-import { validateItemName} from "../../utils/validations/itemName/itemName";
-import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
+import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants";
+import { validateItemName} from "../../../utils/validations/itemName/itemName";
+import { IValidations } from "../../../reducers/wizardSelectionReducers/setValidations";
 import {
   getValidations
-} from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+} from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 
 interface ISortablePageListProps {
   vscode: IVSCodeObject;

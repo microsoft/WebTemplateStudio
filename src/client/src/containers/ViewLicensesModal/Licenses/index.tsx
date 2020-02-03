@@ -4,20 +4,20 @@ import { connect } from "react-redux";
 import {
   getFrameworkLicensesSelector,
   getPageLicencesSelector
-} from "../../selectors/licenseSelector";
-import { ILicenseObject } from "../../types/license";
+} from "../../../selectors/licenseSelector";
+import { ILicenseObject } from "../../../types/license";
 
 import styles from "./styles.module.css";
 import { injectIntl, InjectedIntlProps, defineMessages } from "react-intl";
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
-} from "../../selectors/wizardNavigationSelector";
-import { AppState } from "../../reducers";
-import * as ModalActions from "../../actions/modalActions/modalActions";
+} from "../../../selectors/wizardNavigationSelector";
+import { AppState } from "../../../reducers";
+import * as ModalActions from "../../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../actions/ActionType";
-import { IRedirectModalData } from "../RedirectModal";
+import RootAction from "../../../actions/ActionType";
+import { IRedirectModalData } from "../../RedirectModal";
 import messages from "./messages";
 
 interface IStateProps {

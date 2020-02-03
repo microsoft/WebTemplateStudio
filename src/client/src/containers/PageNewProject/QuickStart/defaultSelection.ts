@@ -1,4 +1,4 @@
-import { ISelected } from "../../types/selected";
+import { ISelected } from "../../../types/selected";
 
 const FRONT_END_SELECTION: ISelected = {
   author: "Facebook",

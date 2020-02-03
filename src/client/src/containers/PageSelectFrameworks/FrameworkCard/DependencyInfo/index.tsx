@@ -6,14 +6,14 @@ import { injectIntl, defineMessages, InjectedIntl } from "react-intl";
 import {
   WIZARD_CONTENT_INTERNAL_NAMES,
   KEY_EVENTS
-} from "../../utils/constants";
-import { AppState } from "../../reducers";
-import { IDependenciesInstalled } from "../../reducers/dependencyInfoReducers";
-import * as ModalActions from "../../actions/modalActions/modalActions";
+} from "../../../../utils/constants";
+import { AppState } from "../../../../reducers";
+import { IDependenciesInstalled } from "../../../../reducers/dependencyInfoReducers";
+import * as ModalActions from "../../../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../actions/ActionType";
-import { IRedirectModalData } from "../RedirectModal";
-import Notification from "../../components/Notification";
+import RootAction from "../../../../actions/ActionType";
+import { IRedirectModalData } from "../../../RedirectModal";
+import Notification from "../../../../components/Notification";
 import messages from "./messages";
 
 export interface IDependency {

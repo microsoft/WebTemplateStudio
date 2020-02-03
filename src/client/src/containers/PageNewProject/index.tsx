@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import ProjectNameAndOutput from "./ProjectNameAndOutput";
-import QuickStart from "../QuickStart";
+import QuickStart from "./QuickStart";
 import { FormattedMessage } from "react-intl";
 
 import {

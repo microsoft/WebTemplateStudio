@@ -4,24 +4,24 @@ import { ThunkDispatch } from "redux-thunk";
 import { RouteComponentProps, withRouter } from "react-router";
 import { FormattedMessage } from "react-intl";
 
-import RootAction from "../../actions/ActionType";
-import { selectFrontendFramework as selectFrontendAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
-import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
+import RootAction from "../../../actions/ActionType";
+import { selectFrontendFramework as selectFrontendAction } from "../../../actions/wizardSelectionActions/selectFrontEndFramework";
+import { selectBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectBackEndFramework";
 import {
   selectPagesAction
-} from "../../actions/wizardSelectionActions/selectPages";
-import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
-import { enableQuickStartAction } from "../../actions/wizardInfoActions/enableQuickStartAction";
+} from "../../../actions/wizardSelectionActions/selectPages";
+import { setVisitedWizardPageAction } from "../../../actions/wizardInfoActions/setVisitedWizardPage";
+import { enableQuickStartAction } from "../../../actions/wizardInfoActions/enableQuickStartAction";
 
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
+import { isEnableNextPage } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
-import { AppState } from "../../reducers";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { ISelected } from "../../types/selected";
+import { AppState } from "../../../reducers";
+import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+import { ISelected } from "../../../types/selected";
 
-import { ReactComponent as QuickStartWand } from "../../assets/quickStartWand.svg";
-import quickStartWand from "../../assets/quickStartWand.svg";
+import { ReactComponent as QuickStartWand } from "../../../assets/quickStartWand.svg";
+import quickStartWand from "../../../assets/quickStartWand.svg";
 
 import {
   FRONT_END_SELECTION,
@@ -30,7 +30,7 @@ import {
 } from "./defaultSelection";
 
 import { getAllFrameworks, getAllPages } from "./loadWizardContent";
-import { ROUTES, ROUTES_ARRAY, EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../utils/constants";
+import { ROUTES, ROUTES_ARRAY, EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants";
 
 import styles from "./styles.module.css";
 

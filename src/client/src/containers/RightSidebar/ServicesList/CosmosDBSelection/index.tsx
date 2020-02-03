@@ -2,23 +2,23 @@ import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import * as getSvg from "../../../utils/getSvgUrl";
+import * as getSvg from "../../../../utils/getSvgUrl";
 
-import DraggableSidebarItem from "../../../components/DraggableSidebarItem";
+import DraggableSidebarItem from "../../../../components/DraggableSidebarItem";
 
-import { removeCosmosSelectionAction } from "../../../actions/azureActions/saveCosmosDbSettings";
-import { ICosmosDB } from "../../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
-import { ReactComponent as EditIcon } from "../../../assets/edit.svg";
+import { removeCosmosSelectionAction } from "../../../../actions/azureActions/saveCosmosDbSettings";
+import { ICosmosDB } from "../../../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
+import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
-import { openCosmosDbModalAction } from "../../../actions/modalActions/modalActions";
+import { openCosmosDbModalAction } from "../../../../actions/modalActions/modalActions";
 
 import styles from "./styles.module.css";
-import { KEY_EVENTS } from "../../../utils/constants";
+import { KEY_EVENTS } from "../../../../utils/constants";
 
 import { injectIntl, FormattedMessage, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../../reducers";
-import RootAction from "../../../actions/ActionType";
+import { AppState } from "../../../../reducers";
+import RootAction from "../../../../actions/ActionType";
 
 interface IProps {
   cosmosSelection: ICosmosDB;

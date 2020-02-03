@@ -4,21 +4,21 @@ import ReactMarkdown from "react-markdown";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 
-import { AppState } from "../../reducers";
-import RootAction from "../../actions/ActionType";
-import { openRedirectModalAction } from "../../actions/modalActions/modalActions";
+import { AppState } from "../../../reducers";
+import RootAction from "../../../actions/ActionType";
+import { openRedirectModalAction } from "../../../actions/modalActions/modalActions";
 
-import { ReactComponent as BackArrow } from "../../assets/backarrow.svg";
-import { getSvg } from "../../utils/getSvgUrl";
+import { ReactComponent as BackArrow } from "../../../assets/backarrow.svg";
+import { getSvg } from "../../../utils/getSvgUrl";
 
 import styles from "./styles.module.css";
-import grid from "../../css/grid.module.css";
-import backArrow from "../../assets/backarrow.svg";
-import { KEY_EVENTS } from "../../utils/constants";
+import grid from "../../../css/grid.module.css";
+import backArrow from "../../../assets/backarrow.svg";
+import { KEY_EVENTS } from "../../../utils/constants";
 
-import { IOption } from "../../types/option";
-import { ILicenseObject, License } from "../../types/license";
-import { IRedirectModalData } from "../RedirectModal";
+import { IOption } from "../../../types/option";
+import { ILicenseObject, License } from "../../../types/license";
+import { IRedirectModalData } from "../../RedirectModal";
 
 import {
   injectIntl,

@@ -2,9 +2,9 @@ import classnames from "classnames";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
-import keyUpHandler from "../../utils/keyUpHandler";
+import keyUpHandler from "../../../utils/keyUpHandler";
 import styles from "./styles.module.css";
-import { ReactComponent as CloudServicesSVG } from "../../assets/cloudservices.svg";
+import { ReactComponent as CloudServicesSVG } from "../../../assets/cloudservices.svg";
 
 const AzureStudent = () => {
   return (

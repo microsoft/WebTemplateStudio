@@ -6,7 +6,7 @@ import { ISelectProps, IDispatchProps, IStateProps } from "./interfaces";
 import {mapDispatchToProps, mapStateToProps} from "./store";
 import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
-import DependencyInfo from "../../DependencyInfo";
+import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../../utils/constants";

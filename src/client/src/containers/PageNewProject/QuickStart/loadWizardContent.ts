@@ -1,11 +1,11 @@
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 
 import { FRONT_END_SELECTION, BACK_END_SELECTION } from "./defaultSelection";
 import {
   EXTENSION_MODULES,
   EXTENSION_COMMANDS,
   WIZARD_CONTENT_INTERNAL_NAMES
-} from "../../utils/constants";
+} from "../../../utils/constants";
 
 const getAllFrameworks = (vscode: IVSCodeObject, isPreview: boolean) => {
   vscode.postMessage({
