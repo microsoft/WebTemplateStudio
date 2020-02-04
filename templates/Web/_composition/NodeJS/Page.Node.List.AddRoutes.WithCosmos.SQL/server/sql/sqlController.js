@@ -37,8 +37,8 @@ module.exports = class SQLController {
       text: req.body.text
     };
     try {
-      const { item } = await this.sqlClient.container.items.upsert(listItem);
-      res.json({ _id: item.id, text: listItem.text });
+      const { resource } =  await this.sqlClient.container.items.create(listItem);
+      res.json({ _id: resource.id, text: listItem.text });
     } catch (error) {
       next(error);
     }
