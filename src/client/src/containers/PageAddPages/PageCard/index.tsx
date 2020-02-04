@@ -86,7 +86,7 @@ const PageCard = (props:Props) => {
       </div>
       <div className={styles.gridLayoutCardFooter}>
         <div>
-          {isModal===false && (
+          {!isModal && (
             <Link
             onClick={showMoreInfo}
             className={styles.link}

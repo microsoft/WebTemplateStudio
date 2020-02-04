@@ -6,7 +6,7 @@ import { ISelected } from "../../../types/selected";
 interface IProps {
   vscode: IVSCodeObject;
   page:IOption;
-  isModal?:boolean;
+  isModal:boolean;
 }
 
 interface IDispatchProps {
