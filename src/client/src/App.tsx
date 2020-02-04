@@ -62,7 +62,6 @@ import { IVSCodeObject } from "./reducers/vscodeApiReducer";
 import { setAzureValidationStatusAction } from "./actions/azureActions/setAzureValidationStatusAction";
 import { IServiceStatus } from "./reducers/generationStatus/genStatus";
 import { resetPagesAction } from "./actions/wizardSelectionActions/selectPages";
-import { selectFrontendFramework } from "./actions/wizardSelectionActions/selectFrontEndFramework";
 import { ISelected } from "./types/selected";
 import { AppState } from "./reducers";
 import { IOption } from "./types/option";
@@ -105,7 +104,6 @@ interface IDispatchProps {
   getPages: (pages: IOption[]) => any;
   selectPages: (pages: ISelected[]) => void;
   resetPageSelection: () => any;
-  selectFrontend: (frontendFramework: ISelected) => any;
   setPreviewStatus: (isPreview: boolean) => void;
   setPort: (port: number) => void;
   setPages: (pages: ISelected[]) => void;
@@ -377,9 +375,6 @@ const mapDispatchToProps = (
   },
   resetPageSelection: () => {
     dispatch(resetPagesAction());
-  },
-  selectFrontend: (frontendFramework: ISelected) => {
-    dispatch(selectFrontendFramework(frontendFramework));
   },
   setPreviewStatus: (isPreview: boolean) => {
     dispatch(setPreviewStatusAction(isPreview));

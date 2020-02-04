@@ -69,7 +69,7 @@ const PageCard = (props:Props) => {
           ))}
         </div>
         <div className={classNames(styles.title)}>
-          {page.title}
+          {page.defaultName}
         </div>
         {isMosueOver && (
           <div className={styles.pageButtons}>

@@ -13,15 +13,7 @@ import { mapStateToProps} from "./store";
 type Props = IDispatchProps & IStoreProps & IIntlProps & IProps;
 
 const PageAddPages = (props:Props) => {
-  const { selectedBackend, selectedFrontend, vscode, options, intl, selectedPages, isModal } = props;
-  const [pageOutOfBounds, setPageOutOdBounds] = React.useState(false);
-
-
-  React.useEffect(()=>{
-    const limitPages=20;
-    setPageOutOdBounds(selectedPages.length == limitPages);
-  },[selectedPages]);
-
+  const { options, intl, isModal, pageOutOfBounds } = props;
 
   return (
     <div>

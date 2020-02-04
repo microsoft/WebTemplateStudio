@@ -7,11 +7,8 @@ interface IDispatchProps {
 }
 
 interface IStoreProps {
-  vscode: IVSCodeObject;
   options: IOption[];
-  selectedBackend: ISelected;
-  selectedFrontend: ISelected;
-  selectedPages: ISelected[];
+  pageOutOfBounds:boolean;
 }
 
 interface IIntlProps {
