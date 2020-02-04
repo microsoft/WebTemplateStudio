@@ -2,11 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { injectIntl } from "react-intl";
 
-import {
-  EXTENSION_MODULES,
-  EXTENSION_COMMANDS,
-  WIZARD_CONTENT_INTERNAL_NAMES
-} from "../../utils/constants";
 import messages from "./messages";
 import PageCard from "./PageCard";
 import styles from "./styles.module.css";
@@ -30,7 +25,7 @@ const PageAddPages = (props:Props) => {
 
   return (
     <div>
-      <h1 className={styles.title}>Select a front-end framework</h1>
+      <h1 className={styles.title}>Select Pages</h1>
       <div
           className={classnames(styles.description, {
             [styles.borderGreen]: !pageOutOfBounds,

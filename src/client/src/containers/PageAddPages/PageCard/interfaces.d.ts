@@ -18,6 +18,7 @@ interface IStateProps {
   vscode: IVSCodeObject;
   selectedPages: ISelected[];
   selectedFrontend: ISelected;
+  pageOutOfBounds:boolean;
 }
 
 export { IStateProps, IDispatchProps, IProps };

@@ -26,7 +26,8 @@ const mapStateToProps = (state: AppState): IStateProps => {
   return {
     vscode: getVSCodeApiSelector(state),
     selectedPages: state.selection.pages,
-    selectedFrontend: state.selection.frontendFramework
+    selectedFrontend: state.selection.frontendFramework,
+    pageOutOfBounds: state.selection.pages.length>=20
   };
 };
 

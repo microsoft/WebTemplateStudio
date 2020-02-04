@@ -19,21 +19,14 @@ import { inferItemName } from "../../../utils/infer/itemName";
 type Props = IProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
 const PageCard = (props:Props) => {
-  const { page, intl, setPages, selectedPages, setDetailPage, isModal, selectedFrontend } = props;
+  const { page, intl, setPages, selectedPages, setDetailPage, isModal, pageOutOfBounds } = props;
   const [isMosueOver, setIsMouseOver] = React.useState(false);
-  const [pageOutOfBounds, setPageOutOdBounds] = React.useState(false);
 
   React.useEffect(()=>{
     if (selectedPages.length==0 && page.defaultName == "Blank"){
       setTimeout(()=> setPages([page]),200);
     }
   },[page]);
-
-  React.useEffect(()=>{
-    const limitPages=20;
-    setPageOutOdBounds(selectedPages.length == limitPages);
-  },[selectedPages]);
-
 
   const addPage = ()=>{
     const select:ISelected = {
@@ -103,7 +96,7 @@ const PageCard = (props:Props) => {
           )}
         </div>
         <div className={styles.pageCounter}>
-          {selectedPages.filter((selectedPage) => selectedPage.internalName.indexOf(page.defaultName)>0).length}
+          {selectedPages.filter((selectedPage) => selectedPage.defaultName===page.defaultName).length}
         </div>
       </div>
     </div>
