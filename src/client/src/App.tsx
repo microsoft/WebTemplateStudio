@@ -147,7 +147,7 @@ const App = (props:Props) => {
     getPages(vscode, selectedFrontend.internalName, selectedBackend.internalName).then((event)=>{
       props.getPages(event.data.payload.pages);
       selectedPages.map((selectedPage)=>{
-        selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName}`;
+        selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName ? selectedPage.defaultName.replace(" ",""):""}`;
       });
       setPages(selectedPages);
     });

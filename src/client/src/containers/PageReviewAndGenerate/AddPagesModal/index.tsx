@@ -11,7 +11,6 @@ import PageAddPages from "../../PageAddPages";
 import { isAddPagesModalOpenSelector } from "../../../selectors/modalSelector";
 import { MODAL_TYPES } from "../../../actions/modalActions/typeKeys";
 import { KEY_EVENTS } from "../../../utils/constants";
-import classnames from "classnames";
 
 import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
 
