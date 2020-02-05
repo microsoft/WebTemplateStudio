@@ -28,7 +28,7 @@ import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 
 import { AppState } from "../../../reducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getOutputPath } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { getOutputPath, getProjectName } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { MODAL_TYPES } from "../../../actions/modalActions/typeKeys";
 import keyUpHandler from "../../../utils/keyUpHandler";
@@ -65,6 +65,7 @@ interface IStateProps {
   isServicesSelected: boolean;
   vscode: IVSCodeObject;
   outputPath: string;
+  projectName: string;
   frontendOptions:IOption[],
   backendOptions:IOption[]
 }
@@ -90,6 +91,7 @@ const PostGenerationModal = ({
   isServicesDeployed,
   templateGenStatus,
   outputPath,
+  projectName,
   vscode,
   intl,
   isTemplatesFailed,
@@ -124,12 +126,13 @@ const PostGenerationModal = ({
       return;
     }
     if (isTemplateGenerated) {
+      const fullpath = outputPath + "\\" + projectName + "\\" + projectName;
       vscode.postMessage({
         module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
         track: true,
         payload: {
-          outputPath
+          outputPath:fullpath
         }
       });
     }
@@ -433,6 +436,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isTemplateGenerated: PostGenSelectors.isTemplateGeneratedSelector(state),
   isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),
   outputPath: getOutputPath(state),
+  projectName: getProjectName(state),
   serviceStatus: PostGenSelectors.servicesToDeploySelector(state),
   templateGenStatus: PostGenSelectors.getSyncStatusSelector(state),
   vscode: getVSCodeApiSelector(state),
