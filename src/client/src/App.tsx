@@ -122,10 +122,10 @@ type Props = IDispatchProps & IStateProps & RouteComponentProps;
 const App = (props:Props) => {
   const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages } = props;
 
+  messageEventsFromExtension();
   React.useEffect(()=>{
     loadPages();
     props.getVSCodeApi();
-    messageEventsFromExtension();
   },[]);
 
   React.useEffect(()=>{
@@ -151,7 +151,7 @@ const App = (props:Props) => {
     });
   }
 
-  const messageEventsFromExtension = () =>{
+  function messageEventsFromExtension(){
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
