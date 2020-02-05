@@ -15,6 +15,7 @@ interface IDispatchProps {
   setFrontendSelect: (framework: ISelected) => any;
   setBackendSelect: (framework: ISelected) => any;
   setDetailPage: (framework: IOption) => any;
+  updateFrameworks: (frameworks: IOption[]) => any;
 }
 
 interface IStateProps {

@@ -13,24 +13,25 @@ import { ROUTES } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import { getLatestVersion } from "../../../utils/extensionService/extensionService";
-import vscodeApi from "../../../reducers/vscodeApiReducer";
-//import Notification from "../../../components/Notification";
 
 type Props = ISelectProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
 const FrameworkCard = (props:Props) => {
   const { framework, setFrontendSelect, frontEndSelect,
-    setBackendSelect, backEndSelect, isFrontEnd, intl, setDetailPage, vscode } = props;
+    setBackendSelect, backEndSelect, isFrontEnd, intl, setDetailPage, vscode, updateFrameworks } = props;
 
   const [selected, setSelected] = React.useState(false);
-  const [isLatestVersion, setIsLatestVersion] = React.useState(false);
+  //const [isLatestVersion, setIsLatestVersion] = React.useState(false);
 
   React.useEffect(()=>{
     selectWhenLoadWithoutSelection();
-    getLatestVersion(vscode, framework.internalName).then((latestVersion:boolean)=>{
-      //console.log('comp' + latestVersion);
-      setIsLatestVersion(latestVersion);
-    });
+    if (!framework.latestVersionLoaded){
+      getLatestVersion(vscode, framework.internalName).then((latestVersion:boolean)=>{
+        framework.latestVersion = latestVersion;
+        framework.latestVersionLoaded = true;
+        updateFrameworks([framework]);
+      });
+    }
   },[]);
 
   React.useEffect(()=>{
@@ -100,8 +101,8 @@ const FrameworkCard = (props:Props) => {
 
       <div className={styles.gridLayoutVersion}>
         <div className={styles.version}>v{framework.version}</div>
-        {isLatestVersion &&
-          (<div className={styles.latestVersion}>{isLatestVersion}(Latest)</div>)
+        {framework.latestVersion &&
+          (<div className={styles.latestVersion}>(Latest)</div>)
         }
       </div>
       <div className={styles.description}>

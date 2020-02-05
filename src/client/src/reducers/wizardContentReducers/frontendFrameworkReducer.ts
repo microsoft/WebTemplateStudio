@@ -27,6 +27,12 @@ const frontendFrameworkOptions = (
         }
       }
       return newState;
+    case WIZARD_CONTENT_TYPEKEYS.UPDATE_FRAMEWORK:
+      const newStateUpdate = [...state];
+      for (const frameworkToUpdate of action.payload) {
+        newStateUpdate.filter((framework)=> framework.internalName == frameworkToUpdate.internalName)[0] = frameworkToUpdate;
+      }
+      return newStateUpdate;
     default:
       return state;
   }

@@ -11,6 +11,7 @@ import { selectFrontendFramework } from "../../../actions/wizardSelectionActions
 import { selectBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectBackEndFramework";
 import { ISelected } from "../../../types/selected";
 import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
+import { updateFrameworks } from "../../../actions/wizardContentActions/updateFrameworks";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
@@ -23,7 +24,10 @@ const mapDispatchToProps = (
   },
   setDetailPage: (detailPageInfo: IOption) => {
     dispatch(setDetailPageAction(detailPageInfo));
-  }  
+  },
+  updateFrameworks: (frameworks: IOption[]) => {
+    dispatch(updateFrameworks(frameworks));
+  }
 });
 
 const mapStateToProps = (state: AppState): IStateProps => {
