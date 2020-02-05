@@ -50,7 +50,6 @@ interface IStateProps {
   isModalOpen: boolean;
   vscode: IVSCodeObject;
   subscriptionData: ISubscriptionData;
-  subscriptions: [];
   isValidatingName: boolean;
   siteNameAvailability: IAvailability;
   selection: ISelectionInformation | undefined;
@@ -99,7 +98,6 @@ const AppServiceModal = (props: Props) => {
   const {
     intl,
     vscode,
-    subscriptions,
     subscriptionData,
     isValidatingName,
     siteNameAvailability,
@@ -145,7 +143,6 @@ const AppServiceModal = (props: Props) => {
           label: ""
         }
       ],
-      subscription: subscriptions,
       resourceGroup: subscriptionData.resourceGroups
     });
   }, [subscriptionData]);
@@ -165,7 +162,7 @@ const AppServiceModal = (props: Props) => {
     updateForm(updatedAppServiceForm);
   };
 
-  const handleDropdown = (infoLabel: string, option: IDropDownSubscriptionOptionType) => {
+  const onSubscriptionChange = (infoLabel: string, option: IDropDownSubscriptionOptionType) => {
     // Send command to extension on change
     // Populate resource groups on received commands
     let updatedForm = {
@@ -336,7 +333,9 @@ const AppServiceModal = (props: Props) => {
         />
       </div>
       <div className={styles.bodyContainer}>
-        <SubscriptionSelection handleDropdown={handleDropdown} appServiceFormData={appServiceFormData} appServiceData={appServiceData} />
+        <SubscriptionSelection 
+          onSubscriptionChange={onSubscriptionChange}
+          selectedSubscription={appServiceFormData.subscription} />
         {/* Site Name */}
         <div
           className={classNames(styles.selectionContainer, {
@@ -407,7 +406,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAppServiceModalOpenSelector(state),
   vscode: getVSCodeApiSelector(state),
   subscriptionData: state.azureProfileData.subscriptionData,
-  subscriptions: state.azureProfileData.profileData.subscriptions,
   siteNameAvailability:
     state.selection.services.appService.siteNameAvailability,
   isValidatingName: state.selection.isValidatingName,

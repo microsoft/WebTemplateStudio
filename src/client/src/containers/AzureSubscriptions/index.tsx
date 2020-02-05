@@ -120,7 +120,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     const { openAzureLoginModal } = this.props;
 
     return (
-      <div
+      <div key={type}
         className={classnames(styles.servicesContainer, {
           [styles.overlay]: !isLoggedIn
         })}
