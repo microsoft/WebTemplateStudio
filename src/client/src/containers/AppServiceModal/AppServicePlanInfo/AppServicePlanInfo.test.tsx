@@ -1,5 +1,5 @@
 import * as React from "react";
-import { azureMessages } from "../../mockData/azureServiceOptions";
+import { azureMessages } from "../../../mockData/azureServiceOptions";
 import AppServicePlanInfo from "./AppServicePlanInfo";
 
 describe("AppServicePlanInfo", () => {

@@ -16,8 +16,9 @@ import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getAppServiceSelectionInDropdownForm } from "../../selectors/appServiceSelector";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
 import { getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
-import RuntimeStackInfo from "./RuntimeStackInfo";
-import AppServicePlanInfo from "./AppServicePlanInfo";
+import RuntimeStackInfo from "./RuntimeStackInfo/RuntimeStackInfo";
+import AppServicePlanInfo from "./AppServicePlanInfo/AppServicePlanInfo";
+import SubscriptionSelection from "./SubscriptionSelection/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import { setAppServiceModalButtonStatus } from "./verifyButtonStatus";
@@ -44,7 +45,6 @@ import { IAvailability } from "../../reducers/wizardSelectionReducers/services/a
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { ISubscriptionData } from "../../reducers/azureLoginReducers/subscriptionDataReducer";
 import classNames from "classnames";
-import SubscriptionSelection from "./SubscriptionSelection";
 
 interface IStateProps {
   isModalOpen: boolean;

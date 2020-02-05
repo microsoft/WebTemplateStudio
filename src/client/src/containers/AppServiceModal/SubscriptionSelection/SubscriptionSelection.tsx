@@ -1,11 +1,11 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "./styles.module.css";
+import styles from "../styles.module.css";
 import classNames from "classnames";
-import { azureMessages as messages } from "../../mockData/azureServiceOptions";
-import Dropdown from "../../components/Dropdown";
-import { IAppServiceState } from ".";
-import { AppState } from "../../reducers";
+import { azureMessages as messages } from "../../../mockData/azureServiceOptions";
+import Dropdown from "../../../components/Dropdown";
+import { IAppServiceState } from "..";
+import { AppState } from "../../../reducers";
 import { connect } from "react-redux";
 
 const createSubscriptionLink =
