@@ -4,8 +4,6 @@
  */
 import * as React from "react";
 import { connect } from "react-redux";
-
-import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions/modalActions";
@@ -46,11 +44,7 @@ import { IAvailability } from "../../reducers/wizardSelectionReducers/services/a
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { ISubscriptionData } from "../../reducers/azureLoginReducers/subscriptionDataReducer";
 import classNames from "classnames";
-
-const DEFAULT_VALUE = {
-  value: "Select...",
-  label: "Select..."
-};
+import SubscriptionSelection from "./SubscriptionSelection";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -74,16 +68,7 @@ interface IDispatchProps {
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
-interface attributeLinks {
-  [key: string]: string;
-}
-
 let timeout: NodeJS.Timeout | undefined;
-
-const links: attributeLinks = {
-  subscription:
-    "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade"
-};
 
 // state of user's selections (selected form data)
 export interface IAppServiceState {
@@ -125,7 +110,7 @@ const AppServiceModal = (props: Props) => {
     closeModal,
     projectName
   } = props;
-
+  
   const FORM_CONSTANTS = {
     SUBSCRIPTION: {
       label: intl.formatMessage(azureModalMessages.azureModalSubscriptionLabel),
@@ -328,54 +313,6 @@ const AppServiceModal = (props: Props) => {
     saveAppServiceSettings(appServiceFormData);
   };
 
-  const getDropdownSection = (
-    leftHeader: string,
-    options: any,
-    formSectionId: string,
-    ariaLabel: string,
-    rightHeader?: string,
-    disabled?: boolean,
-    defaultValue?: any,
-    openDropdownUpwards?: boolean,
-    subLabel?: string
-  ) => {
-    return (
-      <div
-        className={classNames([styles.selectionContainer], {
-          [styles.selectionContainerDisabled]: disabled
-        })}
-      >
-        <div className={styles.selectionHeaderContainer}>
-          <div className={styles.leftHeader}>{leftHeader}</div>
-          {links[formSectionId] && (
-            <a
-              tabIndex={disabled ? -1 : 0}
-              className={styles.link}
-              href={links[formSectionId]}
-            >
-              {rightHeader}
-            </a>
-          )}
-        </div>
-        <div className={styles.subLabel}>{subLabel}</div>
-        <Dropdown
-          ariaLabel={ariaLabel}
-          options={options}
-          handleChange={option => {
-            handleDropdown(formSectionId, option);
-          }}
-          value={
-            appServiceFormData[formSectionId].value
-              ? appServiceFormData[formSectionId]
-              : defaultValue
-          }
-          disabled={disabled}
-          openDropdownUpwards={openDropdownUpwards}
-        />
-      </div>
-    );
-  };
-
   const { isSiteNameAvailable } = siteNameAvailability;
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
@@ -399,20 +336,7 @@ const AppServiceModal = (props: Props) => {
         />
       </div>
       <div className={styles.bodyContainer}>
-        {/* Subscription */}
-        {getDropdownSection(
-          FORM_CONSTANTS.SUBSCRIPTION.label,
-          appServiceData.subscription,
-          FORM_CONSTANTS.SUBSCRIPTION.value,
-          intl.formatMessage(
-            azureModalMessages.azureModalAriaSubscriptionLabel
-          ),
-          intl.formatMessage(azureModalMessages.azureModalCreateNew),
-          false,
-          DEFAULT_VALUE,
-          false,
-          intl.formatMessage(azureModalMessages.azureModalSubscriptionSubLabel)
-        )}
+        <SubscriptionSelection handleDropdown={handleDropdown} appServiceFormData={appServiceFormData} appServiceData={appServiceData} />
         {/* Site Name */}
         <div
           className={classNames(styles.selectionContainer, {
