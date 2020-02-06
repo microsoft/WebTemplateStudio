@@ -16,12 +16,12 @@ const DEFAULT_VALUE = {
 };
 
 interface IProps {
-  selectedSubscription: IDropDownSubscriptionOptionType;
+  subscription: string;
   onSubscriptionChange(option: IDropDownSubscriptionOptionType): void;
 }
 
 interface IStateProps {
-  subscriptions: [];
+  subscriptions: [any];
 }
 
 type Props = IProps & IStateProps & InjectedIntlProps;
@@ -30,9 +30,11 @@ const SubscriptionSelection = (props: Props) => {
   const {
     intl,
     onSubscriptionChange,
-    selectedSubscription,
+    subscription,
     subscriptions
   } = props;
+
+  const selectedSubscription = subscriptions.find(s => s.value === subscription);
 
   return (
     <div className={classNames([styles.selectionContainer])}>
@@ -54,7 +56,7 @@ const SubscriptionSelection = (props: Props) => {
           onSubscriptionChange(newSubscription);
         }}
         value={
-          selectedSubscription.value
+          selectedSubscription
             ? selectedSubscription
             : DEFAULT_VALUE
         }

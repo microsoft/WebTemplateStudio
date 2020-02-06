@@ -61,11 +61,11 @@ const appService = (
       const newSelectionState = {
         ...state,
         selection: {
-          subscription: action.payload.subscription.value,
-          isMicrosoftLearnSubscription: action.payload.subscription.isMicrosoftLearnSubscription,
-          resourceGroup: action.payload.resourceGroup.value,
-          internalName: action.payload.internalName.value,
-          siteName: action.payload.siteName.value
+          subscription: action.payload.subscription,
+          isMicrosoftLearnSubscription: action.payload.isMicrosoftLearnSubscription,
+          resourceGroup: action.payload.resourceGroup,
+          internalName: action.payload.internalName,
+          siteName: action.payload.siteName
         }
       };
       return newSelectionState;

@@ -45,49 +45,7 @@ const getAppServiceSelectionSelector = createSelector(
   getAppServiceOptions
 );
 
-/**
- * Returns the App Service selection made by the user
- * Returns undefined if a selection was not made.
- *
- * @param services An object of all the services available in Web Template Studio
- */
-const getAppServiceSelectionInDropdownForm = (
-  appState: AppState
-): ISelectionInformation | undefined => {
-  const selection: ISelectedAppService | null =
-    appState.selection.services.appService.selection;
-  if (selection && !_.isEmpty(selection)) {
-    const selectionInformation: ISelectionInformation = {
-      dropdownSelection: {},
-      previousFormData: selection
-    };
-
-    selectionInformation.dropdownSelection.internalName = {
-      value: selection.internalName,
-      label: selection.internalName
-    };
-    selectionInformation.dropdownSelection.siteName = {
-      value: selection.siteName,
-      label: selection.siteName
-    };
-    selectionInformation.dropdownSelection.resourceGroup = {
-      value: selection.resourceGroup,
-      label: selection.resourceGroup
-    };
-    selectionInformation.dropdownSelection.subscription = {
-      value: selection.subscription,
-      label: selection.subscription,
-      isMicrosoftLearnSubscription: selection.isMicrosoftLearnSubscription
-    };
-
-    return selectionInformation;
-  } else {
-    return undefined;
-  }
-};
-
 export {
-  getAppServiceSelectionInDropdownForm,
   isAppServiceSelectedSelector,
   getAppServiceSelectionSelector
 };
