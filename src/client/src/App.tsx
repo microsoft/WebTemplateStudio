@@ -124,7 +124,6 @@ const App = (props:Props) => {
 
   messageEventsFromExtension();
   React.useEffect(()=>{
-    loadPages();
     props.getVSCodeApi();
   },[]);
 

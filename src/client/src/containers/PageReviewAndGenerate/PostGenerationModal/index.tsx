@@ -32,17 +32,9 @@ import { getOutputPath, getProjectName } from "../../../selectors/wizardSelectio
 import { strings as messages } from "./strings";
 import { MODAL_TYPES } from "../../../actions/modalActions/typeKeys";
 import keyUpHandler from "../../../utils/keyUpHandler";
-import { closeModalAction } from "../../../actions/modalActions/modalActions";
-import { resetVisitedWizardPageAction } from "../../../actions/wizardInfoActions/setVisitedWizardPage";
-import { updateCreateProjectButtonAction } from "../../../actions/wizardInfoActions/updateCreateProjectButton";
-import { updateProjectNameAction } from "../../../actions/wizardSelectionActions/updateProjectNameAndPath";
 import { getEventBus } from "../../../utils/eventBus";
-import { selectPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
-import { ISelected } from "../../../types/selected";
-import { selectFrontendFramework } from "../../../actions/wizardSelectionActions/selectFrontEndFramework";
-import { selectBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectBackEndFramework";
-import { IOption } from "../../../types/option";
 
+import { resetWizardAction } from "../../../actions/wizardInfoActions/resetWizardAction";
 interface LinksDict {
   [serviceId: string]: string;
 }
@@ -66,18 +58,10 @@ interface IStateProps {
   vscode: IVSCodeObject;
   outputPath: string;
   projectName: string;
-  frontendOptions:IOption[],
-  backendOptions:IOption[]
 }
 
 interface IDispatchProps {
-  closeModal:() => any;
-  resetRoutesVisited:() => any;
-  updateCreateProjectButton:(visible:boolean) => any;
-  updateProjectName:(projectName: string, validate:any) => void;
-  setPages: (pages: ISelected[]) => void;
-  setFrontendSelect: (framework: ISelected) => any;
-  setBackendSelect: (framework: ISelected) => any;
+  resetWizard: () => any;
 }
 
 type Props = IStateProps &
@@ -91,20 +75,13 @@ const PostGenerationModal = ({
   isServicesDeployed,
   templateGenStatus,
   outputPath,
-  projectName,
   vscode,
   intl,
   isTemplatesFailed,
   isServicesSelected,
+  resetWizard,
   history,
-  closeModal,
-  resetRoutesVisited,
-  updateCreateProjectButton,
-  setPages,
-  frontendOptions,
-  backendOptions,
-  setFrontendSelect,
-  setBackendSelect
+  projectName
 }: Props) => {
   const { formatMessage } = intl;
   let serviceFailed = false;
@@ -119,9 +96,8 @@ const PostGenerationModal = ({
   );
 
   const handleOpenProjectOrRestartWizard = () => {
-    cleanStoreAndSetNewProjectName();
     if (isTemplatesFailed) {
-      closeModalAndCreateAnotherProject({ fromCloseButton:true });
+      resetWizard();
       history.push(ROUTES.NEW_PROJECT);
       return;
     }
@@ -136,7 +112,7 @@ const PostGenerationModal = ({
         }
       });
     }
-  };
+  };  
   const openProjectOrRestartWizardMessage = () => {
     if (isTemplatesFailed) {
       return formatMessage(messages.restartWizard);
@@ -144,35 +120,11 @@ const PostGenerationModal = ({
     return formatMessage(messages.openInCode);
   };
 
-  const getDefaultSelectFromOption = (internalNameFilter:string, params:any)=>{
-    const sOptions:IOption[] = params.isFrontEnd ? frontendOptions: backendOptions;
-    const { title, internalName, licenses, author, version } = 
-      sOptions.filter((option)=>option.internalName===internalNameFilter)[0];
-    const shorthandVersionLabel = `v${version || "1.0"}`;
-    const selectedFramework:ISelected = {
-      internalName,
-      title: title as string,
-      version: shorthandVersionLabel,
-      licenses,
-      author
-    };
-    return selectedFramework
-  }
-
-  const cleanStoreAndSetNewProjectName = () =>{
-    resetRoutesVisited();
-    updateCreateProjectButton(false);
-    setPages([]);
-    setFrontendSelect(getDefaultSelectFromOption("React",{isFrontEnd:true}));
-    setBackendSelect(getDefaultSelectFromOption("Node",{isFrontEnd:false}));
-    getEventBus().$emit("inferProjectName",{});
-  }
-
   const closeModalAndCreateAnotherProject = (param: any) => {
     trackCreateNewProjectTelemetry(param);
-    closeModal();
-    cleanStoreAndSetNewProjectName();
+    resetWizard();
     history.push(ROUTES.NEW_PROJECT);
+
   };
 
   const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -367,7 +319,7 @@ const PostGenerationModal = ({
       <div className={styles.headerContainer}>
         <div className={styles.title}>
           {formatMessage(messages.creatingYourProject)}
-        </div>
+        </div>      
         <Close
             tabIndex={0}
             className={styles.closeIcon}
@@ -436,36 +388,16 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isTemplateGenerated: PostGenSelectors.isTemplateGeneratedSelector(state),
   isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),
   outputPath: getOutputPath(state),
-  projectName: getProjectName(state),
   serviceStatus: PostGenSelectors.servicesToDeploySelector(state),
   templateGenStatus: PostGenSelectors.getSyncStatusSelector(state),
   vscode: getVSCodeApiSelector(state),
-  frontendOptions: state.wizardContent.frontendOptions,
-  backendOptions: state.wizardContent.backendOptions,
+  projectName: getProjectName(state)
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  closeModal:()=>{
-    dispatch(closeModalAction());
-  },
-  resetRoutesVisited:()=>{
-    dispatch(resetVisitedWizardPageAction());
-  },
-  updateCreateProjectButton: (enable: boolean) => {
-    dispatch(updateCreateProjectButtonAction(enable));
-  },
-  updateProjectName: (projectName: string, validate:any) => {
-    dispatch(updateProjectNameAction(projectName, validate));
-  },
-  setPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
-  },
-  setFrontendSelect: (framework: ISelected) => {
-    dispatch(selectFrontendFramework(framework));
-  },
-  setBackendSelect: (framework: ISelected) => {
-    dispatch(selectBackendFrameworkAction(framework));
-  },
+  resetWizard: () => {
+    dispatch(resetWizardAction());
+  }
 });
 
 export default withRouter(

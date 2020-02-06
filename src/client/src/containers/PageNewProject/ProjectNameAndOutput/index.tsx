@@ -64,10 +64,6 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const ProjectNameAndOutput = (props: Props) => {
-  const [stateValidationProjectName, setStateValidationProjectName] =
-    React.useState<IValidation>({isValid:true, error:validationMessages.default});
-  const [isDirtyProjectName, setDirtyProjectName] = React.useState(false);
-
   const {
     vscode,
     outputPath,
@@ -77,25 +73,18 @@ const ProjectNameAndOutput = (props: Props) => {
     updateProjectName,
     updateOutputPath,
     setProjectPathValidation,
-    intl
+    projectNameValidation
   } = props;
-
-  React.useEffect(()=>{
-
-    getEventBus().$on("inferProjectName",()=>{
-      setDirtyProjectName(false);
-      updateProjectName("", {isValid:false, error:""});
-    });
-  },[]);
 
   React.useEffect(() => {
     validateSetProjectValueAndSetDirty(projectName);
   },[outputPath]);
 
   React.useEffect(() => {
-    if (projectName==="" && !isDirtyProjectName && outputPath!==""){
+    if (projectName==="" && outputPath!=="" && projectNameValidation.isDirty==false){
       inferProjectName(outputPath,vscode).then(suggestedProjectName => {
-        updateProjectName(suggestedProjectName, {isValid:true, error:""});
+        updateProjectName(suggestedProjectName, {isValid:true, error:"", isDirty:true});
+        //setProjectPathValidation({isValid: true});
       });
     }
   },[projectName, outputPath]);
@@ -113,12 +102,11 @@ const ProjectNameAndOutput = (props: Props) => {
 
   const validateSetProjectValueAndSetDirty = (projectNameToSet:string) =>{
     validateProjectName(projectNameToSet, outputPath, validations.projectNameValidationConfig, vscode).then((validateState:IValidation)=>{
-      setStateValidationProjectName(validateState);
+      validateState.isDirty = projectNameValidation.isDirty;
       updateProjectName(projectNameToSet, validateState);
     });
 
-    if (!isDirtyProjectName && projectNameToSet!=""){
-      setDirtyProjectName(true);
+    if (projectNameToSet!=""){
       setProjectPathValidation({isValid: true});
     }
   }
@@ -156,9 +144,9 @@ const ProjectNameAndOutput = (props: Props) => {
           autoFocus={true}
         />
 
-        {!stateValidationProjectName.isValid && isDirtyProjectName && (
+        {!projectNameValidation.isValid && projectNameValidation.isDirty && (
           <div className={styles.errorMessage}>
-            {props.intl.formatMessage(stateValidationProjectName.error) }
+            {props.intl.formatMessage(projectNameValidation.error) }
           </div>
         )}
       </div>

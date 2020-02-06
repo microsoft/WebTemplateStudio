@@ -13,6 +13,7 @@ import {projectPathValidation} from "../extensionService/extensionService";
 export interface IValidation {
   isValid: boolean;
   error: FormattedMessage.MessageDescriptor;
+  isDirty?:boolean;
 }
 
 export const addRequiredValidate = (name:string) =>{
