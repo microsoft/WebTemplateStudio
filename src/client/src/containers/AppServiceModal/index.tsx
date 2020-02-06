@@ -65,7 +65,6 @@ let timeout: NodeJS.Timeout | undefined;
 
 const initialState: ISelectedAppService = {
   subscription: "",
-  isMicrosoftLearnSubscription: false,
   resourceGroup: "",
   siteName: "",
   internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
@@ -89,6 +88,7 @@ const AppServiceModal = (props: Props) => {
   // The data the user has entered into the modal
   const [appServiceFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
+  const [isMicrosoftLearnSubscriptionSelected, setIsMicrosoftLearnSubscriptionSelected] = React.useState(false);
 
   // Updates the data the user enters as the user types
   const handleChange = (updatedAppServiceForm: ISelectedAppService) => {
@@ -101,13 +101,13 @@ const AppServiceModal = (props: Props) => {
     updateForm(updatedAppServiceForm);
   };
 
-  const onSubscriptionChange = (selectedSubscription: any) => {
+  const onSubscriptionChange = (selectedSubscription: {value:string, isMicrosoftLearnSubscription:boolean}) => {
     let updatedForm = {
       ...appServiceFormData,
-      subscription: selectedSubscription.value,
-      isMicrosoftLearnSubscription: selectedSubscription.isMicrosoftLearnSubscription,
+      subscription: selectedSubscription.value
     };
 
+    setIsMicrosoftLearnSubscriptionSelected(selectedSubscription.isMicrosoftLearnSubscription);
     setValidationStatus(true);
     vscode.postMessage({
       module: EXTENSION_MODULES.AZURE,
@@ -299,7 +299,7 @@ const AppServiceModal = (props: Props) => {
               )}
           </div>
         </div>
-        <AppServicePlanInfo isMicrosoftLearnSubscription={appServiceFormData.isMicrosoftLearnSubscription} />
+        <AppServicePlanInfo isMicrosoftLearnSubscription={isMicrosoftLearnSubscriptionSelected} />
         <RuntimeStackInfo />
         {/* Save Button */}
         <button

@@ -12,7 +12,6 @@ export interface IAvailability {
 
 export interface ISelectedAppService {
   subscription: string;
-  isMicrosoftLearnSubscription: boolean;
   resourceGroup: string;
   siteName: string;
   internalName: string;
@@ -62,7 +61,6 @@ const appService = (
         ...state,
         selection: {
           subscription: action.payload.subscription,
-          isMicrosoftLearnSubscription: action.payload.isMicrosoftLearnSubscription,
           resourceGroup: action.payload.resourceGroup,
           internalName: action.payload.internalName,
           siteName: action.payload.siteName

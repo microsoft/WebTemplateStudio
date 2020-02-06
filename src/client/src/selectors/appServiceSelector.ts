@@ -4,18 +4,6 @@ import { ISelectedAppService } from "../reducers/wizardSelectionReducers/service
 import { AppState } from "../reducers";
 import { ServiceState } from "../reducers/wizardSelectionReducers/services";
 
-interface ISelectedDropdowns {
-  subscription?: IDropDownSubscriptionOptionType;
-  resourceGroup?: IDropDownOptionType;
-  siteName?: IDropDownOptionType;
-  internalName?: IDropDownOptionType;
-}
-
-export interface ISelectionInformation {
-  dropdownSelection: ISelectedDropdowns;
-  previousFormData: ISelectedAppService | null;
-}
-
 const getServices = (state: AppState): ServiceState =>
   state.selection.services;
 

@@ -17,7 +17,7 @@ const DEFAULT_VALUE = {
 
 interface IProps {
   subscription: string;
-  onSubscriptionChange(option: IDropDownSubscriptionOptionType): void;
+  onSubscriptionChange(option: {value:string, isMicrosoftLearnSubscription:boolean}): void;
 }
 
 interface IStateProps {
