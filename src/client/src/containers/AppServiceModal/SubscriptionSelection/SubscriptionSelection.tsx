@@ -4,7 +4,6 @@ import styles from "../styles.module.css";
 import classNames from "classnames";
 import { azureMessages as messages } from "../../../mockData/azureServiceOptions";
 import Dropdown from "../../../components/Dropdown";
-import { IAppServiceState } from "..";
 import { AppState } from "../../../reducers";
 import { connect } from "react-redux";
 
@@ -18,11 +17,7 @@ const DEFAULT_VALUE = {
 
 interface IProps {
   selectedSubscription: IDropDownSubscriptionOptionType;
-  appServiceFormData: IAppServiceState;
-  onSubscriptionChange(
-    formSectionId: string,
-    option: IDropDownSubscriptionOptionType
-  ): void;
+  onSubscriptionChange(option: IDropDownSubscriptionOptionType): void;
 }
 
 interface IStateProps {
@@ -55,8 +50,8 @@ const SubscriptionSelection = (props: Props) => {
       <Dropdown
         ariaLabel={intl.formatMessage(messages.azureModalAriaSubscriptionLabel)}
         options={subscriptions}
-        handleChange={option => {
-          onSubscriptionChange("subscription", option);
+        handleChange={newSubscription => {
+          onSubscriptionChange(newSubscription);
         }}
         value={
           selectedSubscription.value

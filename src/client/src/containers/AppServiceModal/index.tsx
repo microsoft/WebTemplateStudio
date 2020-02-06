@@ -8,7 +8,6 @@ import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
-import { appServiceModalInitialState } from "../../mockData/azureModalInitialStateData";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
@@ -71,7 +70,23 @@ let timeout: NodeJS.Timeout | undefined;
 
 // state of user's selections (selected form data)
 export interface IAppServiceState {
-  [key: string]: any;
+  subscription: {
+    value: string;
+    label: string;
+    isMicrosoftLearnSubscription: boolean;
+  },
+  resourceGroup: {
+    value: string,
+    label: string
+  },
+  siteName: {
+    value: string,
+    label: string
+  },
+  internalName: {
+    value: string,
+    label: string
+  }
 }
 
 const initialState: IAppServiceState = {
@@ -108,44 +123,6 @@ const AppServiceModal = (props: Props) => {
     closeModal,
     projectName
   } = props;
-  
-  const FORM_CONSTANTS = {
-    SUBSCRIPTION: {
-      label: intl.formatMessage(azureModalMessages.azureModalSubscriptionLabel),
-      value: "subscription"
-    },
-    RESOURCE_GROUP: {
-      label: intl.formatMessage(
-        azureModalMessages.azureModalResourceGroupLabel
-      ),
-      value: "resourceGroup"
-    },
-    SITE_NAME: {
-      label: intl.formatMessage(azureModalMessages.appServiceAppNameLabel),
-      value: "siteName"
-    },
-    RUNTIME_STACK: {
-      label: intl.formatMessage(azureModalMessages.runtimeStackLabel),
-      value: "runtimeStack"
-    }
-  };
-
-  // data we are presenting to the user (available subscriptions, resource groups, etc.)
-  const [appServiceData, setData] = React.useState(appServiceModalInitialState);
-
-  // Updates the data we are presenting to the user when the subscription changes
-  React.useEffect(() => {
-    setData({
-      ...appServiceData,
-      siteName: [
-        {
-          value: "",
-          label: ""
-        }
-      ],
-      resourceGroup: subscriptionData.resourceGroups
-    });
-  }, [subscriptionData]);
 
   // The data the user has entered into the modal
   const [appServiceFormData, updateForm] = React.useState(initialState);
@@ -162,39 +139,30 @@ const AppServiceModal = (props: Props) => {
     updateForm(updatedAppServiceForm);
   };
 
-  const onSubscriptionChange = (infoLabel: string, option: IDropDownSubscriptionOptionType) => {
+  const onSubscriptionChange = (selectedSubscription: IDropDownSubscriptionOptionType) => {
     // Send command to extension on change
     // Populate resource groups on received commands
     let updatedForm = {
       ...appServiceFormData,
-      [infoLabel]: {
-        value: option.value,
-        label: option.label,
-        isMicrosoftLearnSubscription: option.isMicrosoftLearnSubscription
+      subscription: selectedSubscription
+    };
+
+    setValidationStatus(true);
+    vscode.postMessage({
+      module: EXTENSION_MODULES.AZURE,
+      command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
+      track: true,
+      subscription: selectedSubscription.value,
+      projectName
+    });
+    updatedForm = {
+      ...updatedForm,
+      resourceGroup: {
+        value: "",
+        label: ""
       }
     };
-    if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
-      // Get resource Group and locations and set the dropdown options to them
-      setData({
-        ...appServiceData,
-        resourceGroup: []
-      });
-      setValidationStatus(true);
-      vscode.postMessage({
-        module: EXTENSION_MODULES.AZURE,
-        command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
-        track: true,
-        subscription: option.value,
-        projectName
-      });
-      updatedForm = {
-        ...updatedForm,
-        resourceGroup: {
-          value: "",
-          label: ""
-        }
-      };
-    }
+
     handleChange(updatedForm);
   };
 
@@ -226,7 +194,7 @@ const AppServiceModal = (props: Props) => {
         isAvailable: true,
         message: ""
       });
-      const newAppServiceState = selection.dropdownSelection;
+      const newAppServiceState = selection.dropdownSelection as IAppServiceState;
       setFormIsSendable(true);
       updateForm(newAppServiceState);
     } else {
@@ -364,7 +332,7 @@ const AppServiceModal = (props: Props) => {
                     ? ""
                     : appServiceFormData.siteName.value
                 }
-                placeholder={FORM_CONSTANTS.SITE_NAME.label}
+                placeholder={intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
                 disabled={appServiceFormData.subscription.value === ""}
                 tabIndex={appServiceFormData.subscription.value === "" ? -1 : 0}
               />
