@@ -7,11 +7,7 @@ describe("AppServicePlanInfo", () => {
 
   beforeEach(() => {
     props = {
-      subscription: {
-        label: "",
-        value: "",
-        isMicrosoftLearnSubscription: null
-      },
+      isMicrosoftLearnSubscription: null,
       intl: global.intl
     };
   });
@@ -20,7 +16,7 @@ describe("AppServicePlanInfo", () => {
     let wrapper: any;
 
     beforeEach(() => {
-      props.subscription.isMicrosoftLearnSubscription = true;
+      props.isMicrosoftLearnSubscription = true;
       wrapper = mountWithIntl(<AppServicePlanInfo {...props} />);
     });
 
@@ -39,7 +35,7 @@ describe("AppServicePlanInfo", () => {
     let wrapper: any;
 
     beforeEach(() => {
-      props.subscription.isMicrosoftLearnSubscription = false;
+      props.isMicrosoftLearnSubscription = false;
       wrapper = mountWithIntl(<AppServicePlanInfo {...props} />);
     });
 
