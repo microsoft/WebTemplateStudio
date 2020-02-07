@@ -46,8 +46,6 @@ const getFrameworks = (vscode: IVSCodeObject):Promise<any> => {
 }
 
 const getLatestVersion = (vscode: IVSCodeObject, internalName:string):Promise<any> => {
-  console.log("fameworkCard2")
-  console.log("internal name:" + internalName);
   return postMessageAsync(EXTENSION_COMMANDS.GET_LATEST_VERSION, {
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
@@ -56,7 +54,6 @@ const getLatestVersion = (vscode: IVSCodeObject, internalName:string):Promise<an
       projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
     }
   }, vscode).then((event)=>{
-    console.log("fameworkCard3")
     const latestVersion = event.data.payload.latestVersion;
     return latestVersion;
   });

@@ -254,7 +254,6 @@ const mockVsCodeApi = () => ({
             const min=1;
             const max=8;
             const latestVersion = (Math.floor(Math.random() * (+max - +min)) + +min) % 2 === 0;
-            console.log('mockvs' + latestVersion);
             window.postMessage(
               {
                 command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
