@@ -19,11 +19,11 @@ module.exports = class SQLController {
     };
 
     try {
-      const { result: results } = await this.sqlClient.container.items
+      const { resources } = await this.sqlClient.container.items
         .query(querySpec)
-        .toArray();
+        .fetchAll();
 
-      res.json(results);
+      res.json(resources);
     } catch (error) {
       next(error);
     }
@@ -37,8 +37,8 @@ module.exports = class SQLController {
       text: req.body.text
     };
     try {
-      let created = await this.sqlClient.container.items.create(listItem);
-      res.json({ _id: created.body.id, text: listItem.text });
+      const { resource } =  await this.sqlClient.container.items.create(listItem);
+      res.json({ _id: resource.id, text: listItem.text });
     } catch (error) {
       next(error);
     }
@@ -48,9 +48,8 @@ module.exports = class SQLController {
   async destroy(req, res, next) {
     const { _id } = req.params;
     try {
-      let listItem = await this.sqlClient.container.item(_id).read();
       await this.sqlClient.container.item(_id).delete();
-      res.json({ _id: listItem.body.id });
+      res.json({ _id });
     } catch (error) {
       next(error);
     }
