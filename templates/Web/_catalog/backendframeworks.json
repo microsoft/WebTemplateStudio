@@ -10,7 +10,6 @@
     "languages": ["Any"],
     "tags": {
       "version": "4.17.1",
-      "latestVersion":"",
       "preview": false
     }
   },
@@ -25,7 +24,6 @@
     "languages": ["Any"],
     "tags": {
       "version": "1.1.1",
-      "latestVersion":"",
       "preview": false
     }
   },
