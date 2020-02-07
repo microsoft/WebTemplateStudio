@@ -3,7 +3,7 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   Preview: {
-      id: "selectableCard.details",
+      id: "pageCard.details",
       defaultMessage: "Preview"
     }
   });

@@ -3,7 +3,7 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
     learnMore: {
-      id: "selectableCard.details",
+      id: "frameworkCard.details",
       defaultMessage: "Learn more"
     }
   });
