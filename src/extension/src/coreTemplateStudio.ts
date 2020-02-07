@@ -9,7 +9,6 @@ import { ICommandPayload } from "./types/commandPayload";
 import { IGenerationPayloadType } from "./types/generationPayloadType";
 import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
-import latestVersion from 'latest-version';
 
 class CliEventEmitter extends EventEmitter {}
 
@@ -156,40 +155,6 @@ export class CoreTemplateStudio {
       CONSTANTS.CLI.GET_FRAMEWORKS_COMPLETE_STATE,
       getFrameworksCommand
     );
-  }
-
-  public async getLatestVersion(projectType: string, internalName:string): Promise<any> {
-    const getFrameworksCommand = `${
-      CONSTANTS.CLI.GET_FRAMEWORKS_COMMAND_PREFIX
-    } -p ${projectType}\n`;
-    return this.awaitCliEvent(
-      CONSTANTS.CLI.GET_FRAMEWORKS_COMPLETE_STATE,
-      getFrameworksCommand
-    ).then(async (listFrameworks)=>{
-      const version = listFrameworks.filter((framework:any) => framework.name === internalName)[0].tags.version;
-      let lastVersion = "";
-      try{
-        if (internalName === "React"){
-          lastVersion = await latestVersion("React");
-        }
-        if (internalName === "Angular"){
-          lastVersion = await latestVersion("@angular/core");
-        }
-        if (internalName === "Vue"){
-          lastVersion = await latestVersion("vue");
-        }
-        if (internalName === "Node"){
-          lastVersion = await latestVersion("node");
-        }
-        if (internalName === "Flask"){
-          lastVersion = await latestVersion("flask");
-        }
-        if (internalName === "Moleculer"){
-          lastVersion = await latestVersion("moleculer");
-        }
-      }catch(ee){}
-      return version === lastVersion;
-    });
   }
 
   public async getPages(

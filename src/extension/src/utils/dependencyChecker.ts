@@ -2,6 +2,8 @@ import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { ExtensionCommand, CONSTANTS } from "../constants";
 import os = require("os");
 import util = require("util");
+import latestVersion from 'latest-version';
+
 const semver = require('semver');
 const exec = util.promisify(require("child_process").exec);
 
@@ -25,7 +27,8 @@ export class DependencyChecker extends WizardServant {
     ExtensionCommand,
     (message: any) => Promise<IPayloadResponse>
   > {
-    return new Map([[ExtensionCommand.CheckDependency, this.checkDependency]]);
+    return new Map([[ExtensionCommand.CheckDependency, this.checkDependency],
+      [ExtensionCommand.GetLatestVersion, this.getLatestVersion]]);
   }
 
   private async runPythonVersionCommand(command: string): Promise<boolean> {
@@ -85,4 +88,21 @@ export class DependencyChecker extends WizardServant {
       }
     };
   }
+
+  public async getLatestVersion(message: any): Promise<any> {
+      const checkVersionPackageName = message.payload.checkVersionPackageName;
+      const checkVersionPackageSource = message.payload.checkVersionPackageSource;
+      let latestVersionStr:string="";
+      if (checkVersionPackageSource==="npm"){
+        latestVersionStr = await latestVersion(checkVersionPackageName);
+      }
+
+      return Promise.resolve({
+        payload: {
+          scope:message.payload.scope,
+          latestVersion:latestVersionStr
+        }
+      });
+  }
+
 }

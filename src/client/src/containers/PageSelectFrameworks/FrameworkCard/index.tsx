@@ -26,7 +26,7 @@ const FrameworkCard = (props:Props) => {
   React.useEffect(()=>{
     selectWhenLoadWithoutSelection();
     if (!framework.latestVersionLoaded){
-      getLatestVersion(vscode, framework.internalName).then((latestVersion:boolean)=>{
+      getLatestVersion(vscode, framework.checkVersionPackageName, framework.checkVersionPackageSource).then((latestVersion:boolean)=>{
         framework.latestVersion = latestVersion;
         framework.latestVersionLoaded = true;
         updateFrameworks([framework]);
@@ -101,7 +101,7 @@ const FrameworkCard = (props:Props) => {
 
       <div className={styles.gridLayoutVersion}>
         <div className={styles.version}>v{framework.version}</div>
-        {framework.latestVersion &&
+        {framework.latestVersion === framework.version &&
           (<div className={styles.latestVersion}>(Latest)</div>)
         }
       </div>

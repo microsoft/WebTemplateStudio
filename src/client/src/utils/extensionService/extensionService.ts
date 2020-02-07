@@ -45,13 +45,13 @@ const getFrameworks = (vscode: IVSCodeObject, isPreview:boolean):Promise<any> =>
   }, vscode);
 }
 
-const getLatestVersion = (vscode: IVSCodeObject, internalName:string):Promise<any> => {
+const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackageName:string, checkVersionPackageSource:string):Promise<any> => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_LATEST_VERSION, {
-    module: EXTENSION_MODULES.CORETS,
+    module: EXTENSION_MODULES.DEPENDENCYCHECKER,
     command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
     payload: {
-      internalName,
-      projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
+      checkVersionPackageName,
+      checkVersionPackageSource
     }
   }, vscode).then((event)=>{
     const latestVersion = event.data.payload.latestVersion;

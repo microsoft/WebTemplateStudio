@@ -19,7 +19,6 @@ export class CoreTSModule extends WizardServant {
   > {
     return new Map([
       [ExtensionCommand.GetFrameworks, this.getFrameworks],
-      [ExtensionCommand.GetLatestVersion, this.getLatestVersion],
       [ExtensionCommand.GetPages, this.getPages]
     ]);
   }
@@ -34,18 +33,6 @@ export class CoreTSModule extends WizardServant {
         frameworks: result,
         isPreview: message.payload.isPreview,
         projectType: message.payload.projectType
-      }
-    };
-  }
-
-  async getLatestVersion(message: any): Promise<IPayloadResponse> {
-    const latestVersion = await CoreTemplateStudio.GetExistingInstance().getLatestVersion(
-      message.payload.projectType, message.payload.internalName
-    );
-    return {
-      payload: {
-        scope:message.payload.scope,
-        latestVersion
       }
     };
   }
