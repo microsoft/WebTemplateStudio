@@ -34,12 +34,12 @@ const getValidationsConfig = (paramsMessage:any, vscode: IVSCodeObject):Promise<
   return postMessageAsync(EXTENSION_COMMANDS.GET_VALIDATIONS, paramsMessage, vscode);
 }
 
-const getFrameworks = (vscode: IVSCodeObject):Promise<any> => {
+const getFrameworks = (vscode: IVSCodeObject, isPreview:boolean):Promise<any> => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_FRAMEWORKS, {
     module: EXTENSION_MODULES.CORETS,
     command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
     payload: {
-      isPreview: false,
+      isPreview,
       projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP
     }
   }, vscode);

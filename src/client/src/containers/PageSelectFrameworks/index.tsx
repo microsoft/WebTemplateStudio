@@ -17,7 +17,7 @@ import styles from "./styles.module.css";
 type Props = ISelectFrameworksProps & IDispatchProps;
 
 const SelectFrameworks = (props:Props) => {
-  const { frontendOptions, backendOptions } = props;
+  const { frontendOptions, backendOptions, isPreview } = props;
   React.useEffect(()=>{
     getFrameworksListAndSetToStore();
     getDependencyInfoAndSetToStore();
@@ -29,7 +29,7 @@ const SelectFrameworks = (props:Props) => {
       backendOptions && backendOptions.length>0;
 
     if (!frameworkListLoaded){
-      getFrameworks(vscode).then((event:any)=>{
+      getFrameworks(vscode, isPreview).then((event:any)=>{
         let message = event.data;
         setFrontendFrameworks(
           parseFrameworksPayload(
