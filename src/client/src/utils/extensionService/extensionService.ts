@@ -25,8 +25,14 @@ const postMessageAsync = (command:string, paramsMessage:any, vscode: IVSCodeObje
   return promise;
 };
 
-const projectPathValidation = (paramsMessage:any, vscode: IVSCodeObject):Promise<any> => {
-  let promise:Promise<any> = postMessageAsync(EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION, paramsMessage, vscode);
+const projectPathValidation = (projectPath:string, projectName:string, vscode: IVSCodeObject):Promise<any> => {
+  let promise:Promise<any> = postMessageAsync(EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION, {
+    module: EXTENSION_MODULES.VALIDATOR,
+    command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
+    track: false,
+    projectPath,
+    projectName
+  }, vscode);
   return promise;
 }
 
