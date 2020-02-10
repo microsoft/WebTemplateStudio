@@ -73,7 +73,6 @@ import TopNavBar from "./components/TopNavBar";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import PageSelectFrameworks from './containers/PageSelectFrameworks';
 import { getPages } from "./utils/extensionService/extensionService";
-import { getEventBus } from "./utils/eventBus";
 import AppServiceModal from "./containers/AppServiceModal";
 import PostGenerationModal from "./containers/PostGenerationModal";
 

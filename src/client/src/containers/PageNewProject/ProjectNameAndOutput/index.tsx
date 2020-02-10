@@ -41,10 +41,8 @@ import { validateProjectName} from "../../../utils/validations/projectName/proje
 import { IValidation} from "../../../utils/validations/validations";
 import { inferProjectName} from "../../../utils/infer/projectName";
 import { setProjectPathValidation } from "../../../actions/wizardSelectionActions/setProjectPathValidation";
-import { validationMessages } from '../../../utils/validations/messages';
 import messages from "./messages";
 import { getOutput_Path } from "../../../utils/extensionService/extensionService";
-import { getEventBus } from "../../../utils/eventBus";
 
 interface IStateProps {
   vscode: IVSCodeObject;
