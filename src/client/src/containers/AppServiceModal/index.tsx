@@ -113,7 +113,7 @@ const AppServiceModal = (props: Props) => {
       module: EXTENSION_MODULES.AZURE,
       command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
       track: true,
-      subscription: selectedSubscription,
+      subscription: selectedSubscription.value,
       projectName
     });
     updatedForm = {
