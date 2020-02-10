@@ -1,51 +1,39 @@
 import * as React from "react";
 import SubscriptionSelection from "./SubscriptionSelection";
-import configureMockStore from "redux-mock-store";
-import { Provider } from "react-redux";
-
-const mockStore = configureMockStore();
 
 describe("SubscriptionSelection", () => {
   let props: any;
-  let store: any;
 
   beforeEach(() => {
     props = {
       intl: global.intl,
       subscription: "",
-      subscriptions: [],
+      subscriptions: [
+        {
+          label: "subscription 1 label",
+          value: "subscription 1 value",
+          isMicrosoftLearnSubscription: false
+        },
+        {
+          label: "subscription 2 label",
+          value: "subscription 2 value",
+          isMicrosoftLearnSubscription: false
+        },
+        {
+          label: "subscription 3 label",
+          value: "subscription 3 value",
+          isMicrosoftLearnSubscription: false
+        }
+      ],
       onSubscriptionChange: jest.fn()
     };
-    store = mockStore({
-      azureProfileData: {
-        profileData: {
-          subscriptions: [
-            {
-              label: "subscription 1",
-              value: "subscription 1",
-              isMicrosoftLearnSubscription: false
-            },
-            {
-              label: "subscription 2",
-              value: "subscription 2",
-              isMicrosoftLearnSubscription: false
-            },
-            {
-              label: "subscription 3",
-              value: "subscription 3",
-              isMicrosoftLearnSubscription: false
-            }
-          ]
-        }
-      }
-    });
   });
 
   const subscriptionCases = [
     [null, "Select..."],
     [undefined, "Select..."],
     ["invalid subscription", "Select..."],
-    ["subscription 2", "subscription 2"]
+    ["subscription 2 value", "subscription 2 value"]
   ];
 
   test.each(subscriptionCases)(
@@ -53,9 +41,7 @@ describe("SubscriptionSelection", () => {
     (subscription, result) => {
       props.subscription = subscription;
       let wrapper = mountWithIntl(
-        <Provider store={store}>
-          <SubscriptionSelection {...props} />
-        </Provider>
+        <SubscriptionSelection {...props} />
       ).children();
 
       expect(wrapper).toBeDefined();
@@ -68,11 +54,7 @@ describe("SubscriptionSelection", () => {
   describe("When selected a subscription in a dropdown", () => {
     let wrapper: any;
     beforeEach(() => {
-      wrapper = mountWithIntl(
-        <Provider store={store}>
-          <SubscriptionSelection {...props} />
-        </Provider>
-      ).children();
+      wrapper = mountWithIntl(<SubscriptionSelection {...props} />).children();
     });
 
     it("renders without crashing", () => {
@@ -81,13 +63,13 @@ describe("SubscriptionSelection", () => {
 
     it(`should launch subscription change event function`, () => {
       const event = {
-        label: "subscription 3",
-        value: "subscription 3",
+        label: "subscription 3 label",
+        value: "subscription 3 value",
         isMicrosoftLearnSubscription: false
       };
       const select = wrapper.find("Select").at(0);
       select.props().onChange(event);
-      expect(props.onSubscriptionChange).toHaveBeenCalledWith(event);
+      expect(props.onSubscriptionChange).toHaveBeenCalledWith(event.value);
     });
   });
 });

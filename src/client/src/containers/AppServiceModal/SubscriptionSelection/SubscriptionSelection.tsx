@@ -4,8 +4,6 @@ import styles from "../styles.module.css";
 import classNames from "classnames";
 import { azureMessages as messages } from "../../../mockData/azureServiceOptions";
 import Dropdown from "../../../components/Dropdown";
-import { AppState } from "../../../reducers";
-import { connect } from "react-redux";
 
 const createSubscriptionLink =
   "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade";
@@ -17,24 +15,18 @@ const DEFAULT_VALUE = {
 
 interface IProps {
   subscription: string;
-  onSubscriptionChange(option: {value:string, isMicrosoftLearnSubscription:boolean}): void;
-}
-
-interface IStateProps {
   subscriptions: [any];
+  onSubscriptionChange(selectedSubscription: string): void;
 }
 
-type Props = IProps & IStateProps & InjectedIntlProps;
+type Props = IProps & InjectedIntlProps;
 
 const SubscriptionSelection = (props: Props) => {
-  const {
-    intl,
-    onSubscriptionChange,
-    subscription,
-    subscriptions
-  } = props;
+  const { intl, onSubscriptionChange, subscription, subscriptions } = props;
 
-  const selectedSubscription = subscriptions.find(s => s.value === subscription);
+  const selectedSubscription = subscriptions.find(
+    s => s.value === subscription
+  );
 
   return (
     <div className={classNames([styles.selectionContainer])}>
@@ -53,20 +45,12 @@ const SubscriptionSelection = (props: Props) => {
         ariaLabel={intl.formatMessage(messages.azureModalAriaSubscriptionLabel)}
         options={subscriptions}
         handleChange={newSubscription => {
-          onSubscriptionChange(newSubscription);
+          onSubscriptionChange(newSubscription.value);
         }}
-        value={
-          selectedSubscription
-            ? selectedSubscription
-            : DEFAULT_VALUE
-        }
+        value={selectedSubscription ? selectedSubscription : DEFAULT_VALUE}
       />
     </div>
   );
 };
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  subscriptions: state.azureProfileData.profileData.subscriptions
-});
-
-export default connect(mapStateToProps)(injectIntl(SubscriptionSelection));
+export default injectIntl(SubscriptionSelection);

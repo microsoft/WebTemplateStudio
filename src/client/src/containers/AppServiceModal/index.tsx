@@ -43,6 +43,7 @@ import classNames from "classnames";
 interface IStateProps {
   isModalOpen: boolean;
   vscode: IVSCodeObject;
+  subscriptions: [any];
   subscriptionData: ISubscriptionData;
   isValidatingName: boolean;
   siteNameAvailability: IAvailability;
@@ -74,6 +75,7 @@ const AppServiceModal = (props: Props) => {
   const {
     intl,
     vscode,
+    subscriptions,
     subscriptionData,
     isValidatingName,
     siteNameAvailability,
@@ -88,7 +90,6 @@ const AppServiceModal = (props: Props) => {
   // The data the user has entered into the modal
   const [appServiceFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
-  const [isMicrosoftLearnSubscriptionSelected, setIsMicrosoftLearnSubscriptionSelected] = React.useState(false);
 
   // Updates the data the user enters as the user types
   const handleChange = (updatedAppServiceForm: ISelectedAppService) => {
@@ -101,23 +102,19 @@ const AppServiceModal = (props: Props) => {
     updateForm(updatedAppServiceForm);
   };
 
-  const onSubscriptionChange = (selectedSubscription: {value:string, isMicrosoftLearnSubscription:boolean}) => {
-    let updatedForm = {
-      ...appServiceFormData,
-      subscription: selectedSubscription.value
-    };
-
-    setIsMicrosoftLearnSubscriptionSelected(selectedSubscription.isMicrosoftLearnSubscription);
+  const onSubscriptionChange = (subscription: string) => {
     setValidationStatus(true);
     vscode.postMessage({
       module: EXTENSION_MODULES.AZURE,
       command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
       track: true,
-      subscription: selectedSubscription.value,
+      subscription,
       projectName
     });
-    updatedForm = {
-      ...updatedForm,
+
+    let updatedForm = {
+      ...appServiceFormData,
+      subscription,
       resourceGroup: ""
     };
 
@@ -231,6 +228,11 @@ const AppServiceModal = (props: Props) => {
     }
   };
 
+  const isMicrosoftLearnSubscription = (subscription : string): boolean => {
+    const s = subscriptions.find(s => s.value === subscription);
+    return s && s.isMicrosoftLearnSubscription;
+  }
+
   return (
     <React.Fragment>
       <div className={styles.headerContainer}>
@@ -246,6 +248,7 @@ const AppServiceModal = (props: Props) => {
       </div>
       <div className={styles.bodyContainer}>
         <SubscriptionSelection 
+          subscriptions={subscriptions}
           onSubscriptionChange={onSubscriptionChange}
           subscription={appServiceFormData.subscription} />
         {/* Site Name */}
@@ -299,7 +302,7 @@ const AppServiceModal = (props: Props) => {
               )}
           </div>
         </div>
-        <AppServicePlanInfo isMicrosoftLearnSubscription={isMicrosoftLearnSubscriptionSelected} />
+        <AppServicePlanInfo isMicrosoftLearnSubscription={isMicrosoftLearnSubscription(appServiceFormData.subscription)} />
         <RuntimeStackInfo />
         {/* Save Button */}
         <button
@@ -317,6 +320,7 @@ const AppServiceModal = (props: Props) => {
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAppServiceModalOpenSelector(state),
   vscode: getVSCodeApiSelector(state),
+  subscriptions: state.azureProfileData.profileData.subscriptions,
   subscriptionData: state.azureProfileData.subscriptionData,
   siteNameAvailability:
     state.selection.services.appService.siteNameAvailability,
