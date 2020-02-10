@@ -13,7 +13,6 @@ import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 import messages from "./messages";
 import AddPagesModal from "./AddPagesModal";
-import PostGenerationModal from "./PostGenerationModal";
 
 interface IDispatchProps {
   openViewLicensesModal: () => any;
@@ -32,7 +31,6 @@ const ReviewAndGenerate = (props: Props) => {
   return (
     <div className={styles.container}>
       <AddPagesModal/>
-      <PostGenerationModal/>
       <div className={styles.reviewContextContainer}>
         <div className={styles.selectionContainer}>
           <h1>{formatMessage(messages.launchYourProject)}</h1>

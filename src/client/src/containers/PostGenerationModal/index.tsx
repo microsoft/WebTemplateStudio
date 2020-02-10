@@ -3,18 +3,18 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import ReactMarkdown from "react-markdown";
-import { ReactComponent as Checkmark } from "../../../assets/checkgreen.svg";
-import { ReactComponent as ErrorRed } from "../../../assets/errorred.svg";
-import { ReactComponent as Close } from "../../../assets/cancel.svg";
+import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
+import { ReactComponent as ErrorRed } from "../../assets/errorred.svg";
+import { ReactComponent as Close } from "../../assets/cancel.svg";
 
-import asModal from "../../../components/Modal";
-import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
+import asModal from "../../components/Modal";
+import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import * as PostGenSelectors from "../../../selectors/postGenerationSelector";
-import { isPostGenModalOpenSelector } from "../../../selectors/modalSelector";
+import * as PostGenSelectors from "../../selectors/postGenerationSelector";
+import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
@@ -22,19 +22,18 @@ import {
   ROUTES,
   WEB_TEMPLATE_STUDIO_LINKS,
   TELEMETRY
-} from "../../../utils/constants";
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+} from "../../utils/constants";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
-import { AppState } from "../../../reducers";
+import { AppState } from "../../reducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getOutputPath, getProjectName } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { getOutputPath, getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
-import { MODAL_TYPES } from "../../../actions/modalActions/typeKeys";
-import keyUpHandler from "../../../utils/keyUpHandler";
-import { getEventBus } from "../../../utils/eventBus";
+import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
+import keyUpHandler from "../../utils/keyUpHandler";
 
-import { resetWizardAction } from "../../../actions/wizardInfoActions/resetWizardAction";
+import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 interface LinksDict {
   [serviceId: string]: string;
 }

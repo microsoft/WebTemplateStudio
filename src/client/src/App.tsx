@@ -75,6 +75,7 @@ import PageSelectFrameworks from './containers/PageSelectFrameworks';
 import { getPages } from "./utils/extensionService/extensionService";
 import { getEventBus } from "./utils/eventBus";
 import AppServiceModal from "./containers/AppServiceModal";
+import PostGenerationModal from "./containers/PostGenerationModal";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -272,6 +273,7 @@ const App = (props:Props) => {
         <ViewLicensesModal />
         <AppServiceModal/>
         <CosmosResourceModal/>
+        <PostGenerationModal/>
 
         <main
           className={classnames(appStyles.centerView, {
