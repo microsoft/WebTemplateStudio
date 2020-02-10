@@ -92,7 +92,7 @@ export class DependencyChecker extends WizardServant {
   public async getLatestVersion(message: any): Promise<any> {
       const checkVersionPackageName = message.payload.checkVersionPackageName;
       const checkVersionPackageSource = message.payload.checkVersionPackageSource;
-      let latestVersionStr:string="";
+      let latestVersionStr="";
       if (checkVersionPackageSource==="npm"){
         latestVersionStr = await latestVersion(checkVersionPackageName);
       }

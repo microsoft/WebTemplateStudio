@@ -21,12 +21,6 @@ let files: string[] = [];
 fs.readdirSync(testFolder).forEach((file: string) => {
   files.push(file.toString());
 });
-/*
-async function asyncForEach(array: string[], callback: any) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-}*/
 
 asyncForEach(files, async (file: string) => {
   console.log(cyanColor, `Current project: ${file}`);
