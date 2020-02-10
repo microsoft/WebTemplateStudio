@@ -6,7 +6,7 @@ export interface IFrontendFrameworksActionType {
   payload: IOption[];
 }
 
-export const setFrontendFrameworks = (
+export const setFrontendFrameworksAction = (
   frameworks: IOption[]
 ): IFrontendFrameworksActionType => ({
   type: WIZARD_CONTENT_TYPEKEYS.SET_FRONTEND_FRAMEWORKS,

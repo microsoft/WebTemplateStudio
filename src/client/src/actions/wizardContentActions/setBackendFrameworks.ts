@@ -6,7 +6,7 @@ export interface IBackendFrameworksSuccessActionType {
   payload: IOption[];
 }
 
-export const setBackendFrameworks = (
+export const setBackendFrameworksAction = (
   frameworks: IOption[]
 ): IBackendFrameworksSuccessActionType => ({
   type: WIZARD_CONTENT_TYPEKEYS.SET_BACKEND_FRAMEWORKS,

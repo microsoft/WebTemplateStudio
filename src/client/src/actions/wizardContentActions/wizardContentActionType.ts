@@ -1,5 +1,5 @@
-import { IBackendFrameworksSuccessActionType } from "./getBackendFrameworks";
-import { IFrontendFrameworksActionType } from "./getFrontendFrameworks";
+import { IBackendFrameworksSuccessActionType } from "./setBackendFrameworks";
+import { IFrontendFrameworksActionType } from "./setFrontendFrameworks";
 import { IUpdateFrameworkActionType } from "./updateFrameworks";
 import { IPageOptionsActionType } from "./getPagesOptions";
 import { IProjectTypesActionType } from "./getProjectTypes";

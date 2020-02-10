@@ -10,8 +10,8 @@
     "languages": ["Any"],
     "tags": {
       "version": "4.17.1",
-      "checkVersionPackageName":"node",
-      "checkVersionPackageSource":"",
+      "checkVersionPackageName":"express",
+      "checkVersionPackageSource":"npm",
       "preview": false
     }
   },
