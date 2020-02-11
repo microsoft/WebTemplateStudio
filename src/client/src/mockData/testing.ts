@@ -54,9 +54,9 @@ export const getInitialState = () => {
         }
       },
       serverPort: 9502,
-      previewStatus: true,
+      previewStatus: false,
       createProjectButton: false,
-      enableQuickStart: false
+      enableQuickStart: false,
     },
     selection: {
       appType: {

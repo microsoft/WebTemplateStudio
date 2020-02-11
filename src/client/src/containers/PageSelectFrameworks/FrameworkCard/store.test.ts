@@ -9,9 +9,9 @@ describe("validate infer name", () => {
     for (let key in mapStateToPropsInstance) counterAttributes++;
 
     expect(mapStateToPropsInstance.vscode != undefined).toBeTruthy();
-    expect(mapStateToPropsInstance.pageOutOfBounds).toBeFalsy();
-    expect(mapStateToPropsInstance.selectedFrontend != undefined).toBeTruthy();
-    expect(mapStateToPropsInstance.selectedPages != undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.isPreview).toBeFalsy();
+    expect(mapStateToPropsInstance.frontEndSelect != undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.backEndSelect != undefined).toBeTruthy();
     expect(counterAttributes === 4).toBeTruthy();
   });
 });
