@@ -29,7 +29,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
   let passedState: any;
 
   if (action.type === WIZARD_INFO_TYPEKEYS.RESET_WIZARD) {
-    const { previewStatus } = state!.wizardContent;
+    const { previewStatus, backendOptions, frontendOptions, pageOptions } = state!.wizardContent;
 
     /* Elements that are undefined tell the reducer to replace the element
      * with the initial state that is specified in the element's reducer.
@@ -40,12 +40,26 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
       dependencyInfo: undefined,
       generationStatus: undefined,
       modals: undefined,
-      selection: {validations:state!.selection.validations},
+      selection: {
+        validations:state!.selection.validations, 
+        projectNameObject:{
+          projectName:"",
+          validation:{
+            isValid:true,
+            error:"",
+            isDirty:false
+          }
+        },
+        frontendFramework:frontendOptions.filter((frame)=>frame.internalName=="React")[0],
+        backendFramework:backendOptions.filter((frame)=>frame.internalName=="Node")[0]
+      },
       versions: state!.versions,
       vscode: state!.vscode,
-      wizardContent: { previewStatus },
+      wizardContent: { previewStatus,backendOptions, frontendOptions, pageOptions },
       wizardRoutes: undefined,
     };
+
+
   } else {
     passedState = state;
   }

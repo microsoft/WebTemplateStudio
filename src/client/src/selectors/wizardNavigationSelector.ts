@@ -13,6 +13,7 @@ const transformIsVisited = (isVisitedRoutes: IRoutes): IVisitedPages => ({
   showFrameworks: isVisitedRoutes[ROUTES.SELECT_FRAMEWORKS],
   showPages: isVisitedRoutes[ROUTES.SELECT_PAGES]
 });
+
 const getIsVisitedRoutesSelector = createSelector(
   getIsVisitedRoutes,
   transformIsVisited

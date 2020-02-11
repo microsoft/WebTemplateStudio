@@ -14,6 +14,10 @@ export interface IOption {
   selected?: boolean;
   author?: string;
   version?: string;
+  latestVersion?: string="";
+  latestVersionLoaded?: boolean=false;
+  checkVersionPackageName?: string="";
+  checkVersionPackageSource?: string="";
   unselectable?: boolean;
   isValidTitle?: boolean;
   author?: string;

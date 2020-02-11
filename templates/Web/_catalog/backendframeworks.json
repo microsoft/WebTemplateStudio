@@ -10,6 +10,8 @@
     "languages": ["Any"],
     "tags": {
       "version": "4.17.1",
+      "checkVersionPackageName":"express",
+      "checkVersionPackageSource":"npm",
       "preview": false
     }
   },
@@ -24,6 +26,8 @@
     "languages": ["Any"],
     "tags": {
       "version": "1.1.1",
+      "checkVersionPackageName":"flask",
+      "checkVersionPackageSource":"",
       "preview": false
     }
   },
@@ -38,6 +42,9 @@
     "languages": ["Any"],
     "tags": {
       "version": "0.13.12",
+      "latestVersion":"",
+      "checkVersionPackageName":"moleculer",
+      "checkVersionPackageSource":"npm",
       "preview": false
     }
   }

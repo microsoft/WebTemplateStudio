@@ -59,6 +59,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_FRAMEWORKS,
               payload: {
+                scope:message.payload.scope,
                 frameworks: [
                   {
                     name: "React",
@@ -88,6 +89,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "16.8.4",
+                      latestVersion: "16.8.4",
                       preview: false,
                       enabled: true,
                       type: "frontend"
@@ -120,6 +122,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "7.2.0",
+                      latestVersion: "",
                       preview: false,
                       enabled: true,
                       type: "frontend"
@@ -150,6 +153,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "2.6.6",
+                      latestVersion: "2.6.8",
                       preview: true,
                       enabled: true,
                       type: "frontend"
@@ -188,6 +192,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "10.15.0",
+                      latestVersion: "10.15.0",
                       preview: false,
                       enabled: true,
                       type: "backend"
@@ -205,6 +210,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "0.13.12",
+                      latestVersion: "0.13.15",
                       preview: false
                     }
                   },
@@ -230,6 +236,7 @@ const mockVsCodeApi = () => ({
                     languages: ["Any"],
                     tags: {
                       version: "1.0.3",
+                      latestVersion: "1.0.6",
                       preview: false,
                       enabled: true,
                       type: "backend"
@@ -243,11 +250,27 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
+        case EXTENSION_COMMANDS.GET_LATEST_VERSION:
+            const min=1;
+            const max=8;
+            const latestVersion = (Math.floor(Math.random() * (+max - +min)) + +min) % 2 === 0;
+            window.postMessage(
+              {
+                command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
+                payload: {
+                  scope:message.payload.scope,
+                  latestVersion,
+                }
+              },
+              "*"
+            );
+            break;
         case EXTENSION_COMMANDS.GET_PAGES:
           window.postMessage(
             {
               command: EXTENSION_COMMANDS.GET_PAGES,
               payload: {
+                scope:message.payload.scope,
                 pages: [
                   {
                     templateId: "wts.Page.React.Blank",
@@ -375,6 +398,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
               payload: {
+                scope:message.payload.scope,
                 dependency: "node",
                 installed: true
               }
@@ -385,6 +409,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
               payload: {
+                scope:message.payload.scope,
                 dependency: "python",
                 installed: false
               }
@@ -398,6 +423,7 @@ const mockVsCodeApi = () => ({
               module: EXTENSION_MODULES.AZURE,
               command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
               payload: {
+                scope:message.payload.scope,
                 isAvailable: message.appName.length > 0
               },
               message: DEV_NO_ERROR_MSG,
@@ -412,6 +438,7 @@ const mockVsCodeApi = () => ({
               module: EXTENSION_MODULES.AZURE,
               command: EXTENSION_COMMANDS.NAME_COSMOS,
               payload: {
+                scope:message.payload.scope,
                 isAvailable: message.appName.length > 0
               },
               message: DEV_NO_ERROR_MSG,
@@ -426,6 +453,7 @@ const mockVsCodeApi = () => ({
               module: EXTENSION_MODULES.AZURE,
               command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
               payload: {
+                scope:message.payload.scope,
                 isAvailable: message.appName.length > 0
               },
               message: DEV_NO_ERROR_MSG,
@@ -441,6 +469,7 @@ const mockVsCodeApi = () => ({
               module: EXTENSION_MODULES.AZURE,
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
               payload: {
+                scope:message.payload.scope,
                 locations: mockLocations,
                 resourceGroups: mockResourceGroups,
                 validName: mockCosmosDBName
@@ -456,6 +485,7 @@ const mockVsCodeApi = () => ({
               module: EXTENSION_MODULES.AZURE,
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
               payload: {
+                scope:message.payload.scope,
                 locations: mockLocations,
                 resourceGroups: mockResourceGroups,
                 validName: mockFunctionsName
@@ -471,6 +501,7 @@ const mockVsCodeApi = () => ({
               module: EXTENSION_MODULES.AZURE,
               command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
               payload: {
+                scope:message.payload.scope,
                 locations: mockLocations,
                 resourceGroups: mockResourceGroups,
                 validName: mockAppServiceName
@@ -485,6 +516,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GEN_STATUS_MESSAGE,
               payload: {
+                scope:message.payload.scope,
                 status: "updated status message..."
               }
             },
@@ -495,6 +527,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GEN_STATUS,
               payload: {
+                scope:message.payload.scope,
                 templates: {
                   success: true,
                   failure: false
@@ -522,6 +555,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
               payload: {
+                scope:message.payload.scope,
                 outputPath: "/generic_output_path"
               }
             },
@@ -531,6 +565,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_PREVIEW_STATUS,
               payload: {
+                scope:message.payload.scope,
                 preview: true
               }
             },
@@ -543,6 +578,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
               payload: {
+                scope:message.payload.scope,
                 wizardVersion: "1.x",
                 templatesVersion: "1.x"
               }
@@ -558,6 +594,7 @@ const mockVsCodeApi = () => ({
             {
               command: "login",
               payload: {
+                scope:message.payload.scope,
                 email: "devEnvironment2@email.com",
                 subscriptions: mockSubscriptions
               }
@@ -571,6 +608,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
               payload: {
+                scope:message.payload.scope,
                 projectPathValidation: {
                   isValid: true,
                   error: ""
@@ -585,6 +623,7 @@ const mockVsCodeApi = () => ({
             {
               command: EXTENSION_COMMANDS.RESET_PAGES,
               payload: {
+                scope:message.payload.scope,
                 internalName: message.payload.internalName,
                 resetPages: true
               }

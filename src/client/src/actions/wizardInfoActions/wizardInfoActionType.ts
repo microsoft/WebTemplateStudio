@@ -1,6 +1,6 @@
 import { IVersionData } from "./getVersionData";
 import { ISetDetails } from "./setDetailsPage";
-import { ISetVisitedPage } from "./setVisitedWizardPage";
+import { ISetVisitedPage, IResetVisitedPage } from "./setVisitedWizardPage";
 import { ISetPage } from "./setPageWizardPage";
 import { IUpdateCreateProjectButton } from "./updateCreateProjectButton";
 import {
@@ -15,6 +15,7 @@ type WizardInfoType =
   | IVersionData
   | ISetDetails
   | ISetVisitedPage
+  | IResetVisitedPage
   | ISetPage
   | IUpdateGenStatus
   | IResetWizard

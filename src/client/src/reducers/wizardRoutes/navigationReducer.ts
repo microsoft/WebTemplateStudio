@@ -25,6 +25,8 @@ const wizardNavigation = (
         [action.payload]: true
       };
       return newSelectionState;
+    case WIZARD_INFO_TYPEKEYS.RESET_VISITED_WIZARD_PAGE:
+        return initialState;
     default:
       return state;
   }

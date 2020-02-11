@@ -3,16 +3,6 @@ import { IValidation } from "../../utils/validations/validations";
 import { validationMessages } from "../../utils/validations/messages";
 import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 
-/* State Shape
-{
-    projectName: string,
-    validation: {
-      isValid: false,
-      error: string
-    }
-}
-*/
-
 export interface IProjectName {
   projectName: string;
   validation: IValidation;
@@ -22,7 +12,8 @@ const initialState = {
   projectName: "",
   validation: {
     isValid: false,
-    error: validationMessages.default
+    error: validationMessages.default,
+    isDirty:false
   }
 };
 
