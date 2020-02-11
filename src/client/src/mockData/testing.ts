@@ -28,7 +28,7 @@ export const getIVSCodeApi = () => {
   return mockVSCode;
 };
 
-export const getInitialState = () => {
+export const getInitialState = (frameWorkName:string) => {
   const initialState:AppState={
     vscode: {
       isVsCodeApiAcquired: true,
@@ -37,7 +37,7 @@ export const getInitialState = () => {
     wizardContent: {
       backendOptions: [],
       frontendOptions: [],
-      pageOptions: [],
+      pageOptions: getPages(frameWorkName),
       projectTypes: [],
       detailsPage: {
         isIntlFormatted: false,
@@ -206,4 +206,78 @@ export const getInitialState = () => {
     }
   };
   return initialState;
+}
+
+const getPages = (frameWorkName:string):Array<any>=>{
+  let blankPage = {
+    body: 'A blank page for you to build your web application from scratch.',
+    internalName: 'wts.Page.' + frameWorkName + '.Blank',
+    licenses: [
+      {
+        text: 'Bootstrap',
+        url: 'https://github.com/twbs/bootstrap/blob/master/LICENSE'
+      }
+    ],
+    longDescription: 'This is the most basic page. A blank canvas to mold into whatever you wish. The blank page leaves pretty much everything up to you.',
+    selected: false,
+    title: 'Blank',
+    defaultName: 'Blank',
+    isValidTitle: true,
+    author: 'Microsoft'
+  }
+  let gridPage = {
+    body: 'Simple image and text components which are organized into a grid.',
+    internalName: 'wts.Page.' + frameWorkName + '.Grid',
+    licenses: [
+      {
+        text: 'Bootstrap',
+        url: 'https://github.com/twbs/bootstrap/blob/master/LICENSE'
+      }
+    ],
+    longDescription: 'A page displaying simple image and text components which are organized into a grid. Grid pages are a system for creating order among elements in a website.',
+    selected: false,
+    title: 'Grid',
+    defaultName: 'Grid',
+    isValidTitle: true,
+    author: 'Microsoft'
+  };
+  let listPage = {
+    body: 'Add and remove text from an adaptive list.',
+    internalName: 'wts.Page.' + frameWorkName + '.List',
+    licenses: [
+      {
+        text: 'Bootstrap',
+        url: 'https://github.com/twbs/bootstrap/blob/master/LICENSE'
+      }
+    ],
+    longDescription: 'The list page allows you to add custom text in the form of an adaptive list. This pattern is frequently used for blog pages and messaging apps. If a database is selected from the Azure Cloud Services the list page will automatically connect to the deployed Azure database.',
+    selected: false,
+    title: 'List',
+    defaultName: 'List',
+    isValidTitle: true,
+    author: 'Microsoft'
+  }
+  let masterPage = {
+    body: 'A master pane and a details pane for content.',
+    internalName: 'wts.Page.' + frameWorkName + '.MasterDetail',
+    licenses: [
+      {
+        text: 'Bootstrap',
+        url: 'https://github.com/twbs/bootstrap/blob/master/LICENSE'
+      }
+    ],
+    longDescription: 'The master-detail page has a master pane and a details pane for content. When an item in the master list is selected, the details pane is updated. This pattern is frequently used for email and address books.',
+    selected: false,
+    title: 'Master Detail',
+    defaultName: 'Master Detail',
+    isValidTitle: true,
+    author: 'Microsoft'
+  };
+  let pages:Array<any> = new Array<any>();
+  pages.push(blankPage);
+  pages.push(gridPage);
+  pages.push(listPage);
+  pages.push(masterPage);
+  
+  return pages;
 }
