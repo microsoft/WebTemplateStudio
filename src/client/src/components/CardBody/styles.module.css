@@ -9,8 +9,13 @@
   margin-bottom: 0.5em;
 }
 
-.version {
-  margin-bottom: 5px;
+.versionGridLayout{
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.versionGridLayout .latestVersion{
+  padding-left: 0.5rem;
 }
 
 .svg {

@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
 import TelemetryReporter from 'vscode-extension-telemetry';
 import { getPackageInfo } from '../utils/packageInfo';
-import { IActionContext, ITelemetryReporter, callWithTelemetryAndCatchErrors } from './callWithTelemetryAndErrorHandling';
+import { IActionContext as dd, ITelemetryReporter, callWithTelemetryAndCatchErrors } from './callWithTelemetryAndErrorHandling';
 
-export type IActionContext = IActionContext;
+export type IActionContext = dd;
 
 export interface ITelemetryService {
     wizardSessionStartTime: number;

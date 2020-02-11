@@ -13,6 +13,7 @@ import {projectPathValidation} from "../extensionService/extensionService";
 export interface IValidation {
   isValid: boolean;
   error: FormattedMessage.MessageDescriptor;
+  isDirty?:boolean;
 }
 
 export const addRequiredValidate = (name:string) =>{
@@ -35,14 +36,7 @@ export const addExistingProjectNameValidate = async (projectName:string, outputP
   let isExistingName = projectName!="" && outputPath !="";
 
   if (isExistingName){
-    const event:any = await projectPathValidation({
-      module: EXTENSION_MODULES.VALIDATOR,
-      command: EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-      track: false,
-      projectPath: outputPath,
-      projectName: projectName
-    }, vscode);
-
+    const event:any = await projectPathValidation(outputPath,projectName, vscode);
     validate = event.data.payload.projectPathValidation;
     validate.error = validationMessages.duplicateProjectName;
   }

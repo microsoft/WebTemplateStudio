@@ -1,0 +1,12 @@
+.flexContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.title{
+    font-size: 1.8em;
+    margin-right: 1%;
+    margin-bottom: 1em;
+    margin-top: 0;
+    font-weight: lighter;
+}

@@ -8,7 +8,7 @@ import {
 } from "../constants";
 
 
-describe("wizardSelectionSelector", () => {
+xdescribe("wizardSelectionSelector", () => {
   let mockVsCode:IVSCodeObject;
   let callbackExtension:Function;
 
@@ -25,6 +25,7 @@ describe("wizardSelectionSelector", () => {
           data:{
             command:EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
             payload:{
+              scope:222,
               projectPathValidation:{
                 isValid:true
               }
@@ -37,41 +38,10 @@ describe("wizardSelectionSelector", () => {
         }
         mockVsCode = { postMessage };
       })
-  
+
       it("is valid, dont exist",(resolve)=>{
-        projectPathValidation("", mockVsCode).then((event:any)=>{
+        projectPathValidation("dfss","sdfsdf", mockVsCode).then((event:any)=>{
           expect(event.data.payload.projectPathValidation.isValid).toBeTruthy();
-          resolve();
-        })
-      })
-    });
-
-    describe("exist => not valid", () => {
-      beforeEach(()=>{
-        window.addEventListener = jest.fn((event, cb) => {
-          callbackExtension = cb;
-        });
-
-        mockCallbackProjectPathValidation = {
-          data:{
-            command:EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
-            payload:{
-              projectPathValidation:{
-                isValid:false
-              }
-            }
-          }
-        };
-
-        const postMessage= (message: any) =>{
-          callbackExtension(mockCallbackProjectPathValidation);
-        }
-        mockVsCode = { postMessage };
-      })
-
-      it("is valid, dont exist",(resolve)=>{
-        projectPathValidation("", mockVsCode).then((event:any)=>{
-          expect(event.data.payload.projectPathValidation.isValid).toBeFalsy();
           resolve();
         })
       })

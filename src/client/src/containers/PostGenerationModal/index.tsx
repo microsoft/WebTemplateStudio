@@ -28,12 +28,12 @@ import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 import { AppState } from "../../reducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getOutputPath } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { getOutputPath, getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
-import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
+import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 interface LinksDict {
   [serviceId: string]: string;
 }
@@ -56,6 +56,7 @@ interface IStateProps {
   isServicesSelected: boolean;
   vscode: IVSCodeObject;
   outputPath: string;
+  projectName: string;
 }
 
 interface IDispatchProps {
@@ -78,7 +79,8 @@ const PostGenerationModal = ({
   isTemplatesFailed,
   isServicesSelected,
   resetWizard,
-  history
+  history,
+  projectName
 }: Props) => {
   const { formatMessage } = intl;
   let serviceFailed = false;
@@ -99,12 +101,13 @@ const PostGenerationModal = ({
       return;
     }
     if (isTemplateGenerated) {
+      const fullpath = outputPath + "\\" + projectName + "\\" + projectName;
       vscode.postMessage({
         module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
         track: true,
         payload: {
-          outputPath
+          outputPath:fullpath
         }
       });
     }
@@ -120,6 +123,7 @@ const PostGenerationModal = ({
     trackCreateNewProjectTelemetry(param);
     resetWizard();
     history.push(ROUTES.NEW_PROJECT);
+
   };
 
   const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -385,7 +389,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   outputPath: getOutputPath(state),
   serviceStatus: PostGenSelectors.servicesToDeploySelector(state),
   templateGenStatus: PostGenSelectors.getSyncStatusSelector(state),
-  vscode: getVSCodeApiSelector(state)
+  vscode: getVSCodeApiSelector(state),
+  projectName: getProjectName(state)
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({

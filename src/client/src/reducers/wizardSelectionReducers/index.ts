@@ -8,7 +8,6 @@ import projectNameObject from "./updateProjectName";
 import validations from "./setValidations";
 import outputPathObject from "./updateOutputPath";
 import services from "./services";
-import pageCount from "./pageCountReducer";
 import isValidatingName from "./validatingNameReducer";
 
 const selectionStateReducer = combineReducers({
@@ -18,7 +17,6 @@ const selectionStateReducer = combineReducers({
   pages,
   services,
   outputPathObject,
-  pageCount,
   isValidatingName,
   projectNameObject,
   validations

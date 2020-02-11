@@ -10,7 +10,7 @@ import styles from "./styles.module.css";
 import asModal from "../../components/Modal";
 import RootAction from "../../actions/ActionType";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
-import Licenses from "../Licenses";
+import Licenses from "./Licenses";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isViewLicensesModalOpenSelector } from "../../selectors/modalSelector";
 import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";

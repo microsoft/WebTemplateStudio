@@ -1,0 +1,210 @@
+.container {
+  margin-right: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  padding: 12px;
+  background-color: hsla(0, 0%, 47%, 0.2);
+}
+
+.container:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+  border: 0.5px solid var(--vscode-contrastActiveBorder);
+}
+
+.container:focus:not([data-focus-visible-added]) {
+  outline: none;
+  border: none;
+}
+
+.selected,
+.button {
+  font-size: 16px;
+}
+
+.selected {
+  border: none;
+  outline: 3px solid var(--vscode-editor-foreground);
+}
+
+.selected:focus {
+  border: none;
+  outline: 3px solid var(--vscode-contrastActiveBorder);
+}
+
+.selected:focus:not([data-focus-visible-added]) {
+  border: none;
+  outline: 3px solid var(--vscode-editor-foreground);
+}
+
+.cardCount,
+.selectedCheckMark {
+  display: flex;
+  justify-content: center;
+}
+
+.countButton {
+  background: none;
+  color: inherit;
+  border: none;
+  font: 1.2em;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.iconCheckMark {
+  margin-left: 8px;
+  height: 18px;
+  width: 18px;
+  align-self: center;
+}
+
+.iconCheckMark path {
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
+}
+
+.hidden {
+  display: none;
+}
+
+.boundingBox {
+  width: 230px;
+  height: 200px;
+  margin: 0px 30px 30px 0px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.button {
+  color: var(--vscode-textLink-foreground);
+}
+
+.gridLayoutCardFooter {
+  display: grid;
+  grid-template-columns: auto 3rem;
+  min-height: 30px;
+}
+
+.pageCounter {
+  display: flex;
+  justify-content: flex-end;
+  float: right;
+}
+
+.pageButtons {
+  display: flex;
+  justify-content: flex-end;
+  float: right;
+  width: 100%;
+}
+
+.showCount {
+  min-width: 20px;
+  text-align: center;
+  font-size: 16px;
+  margin-left: 7px;
+  margin-right: 7px;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.subtractSVG {
+  margin-top: 3px;
+}
+
+.iconHeight {
+  height: 36px;
+}
+
+.gridLayoutCardHeader {
+  display: grid;
+  grid-template-columns: 3rem auto 3rem;
+  max-height: 51px;
+  width: 20rem;
+}
+
+.gridLayoutCardHeader .title {
+  margin-left: 1rem;
+  margin-top: 0.2rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.gridLayoutCardHeader .titleLeftJustified {
+  margin-left: 10px;
+}
+
+.body {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.link {
+  color: var(--vscode-textLink-foreground);
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.unselectable {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.cardCount {
+  text-align: center;
+  border: 1.8px solid var(--vscode-editor-foreground);
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  font-size: 16px;
+}
+
+.cardCount path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.cardCount:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.selectedText {
+  font-size: 14px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  outline: 0px;
+  cursor: default;
+}
+
+.gridLayoutVersion{
+  display: grid;
+  grid-template-columns: min-content auto;
+}
+
+.version{
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+.latestVersion{
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  padding-left: 0.5rem;
+}
+
+.description{
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.DependencyInfo{
+  margin-top: 1rem;
+  height: 4.5rem;
+}

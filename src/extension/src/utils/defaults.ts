@@ -6,7 +6,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 export class Defaults extends WizardServant {
-  clientCommandMap: Map<ExtensionCommand, () => Promise<IPayloadResponse>>;
+  clientCommandMap: Map<ExtensionCommand,(message: any) => Promise<IPayloadResponse>>;
 
   constructor() {
     super();
@@ -15,7 +15,7 @@ export class Defaults extends WizardServant {
 
   private defineCommandMap(): Map<
     ExtensionCommand,
-    () => Promise<IPayloadResponse>
+    (message: any) => Promise<IPayloadResponse>
   > {
     return new Map([
       [ExtensionCommand.GetProjectName, this.getProjectName],
@@ -23,7 +23,7 @@ export class Defaults extends WizardServant {
     ]);
   }
 
-  public async getProjectName(): Promise<IPayloadResponse> {
+  public async getProjectName(message: any): Promise<IPayloadResponse> {
     const userOutputPath = vscode.workspace
       .getConfiguration()
       .get<string>("wts.changeSaveToLocation");
@@ -44,12 +44,13 @@ export class Defaults extends WizardServant {
     }
     return {
       payload: {
+        scope:message.payload.scope,
         projectName: newAppName
       }
     };
   }
 
-  public async getOutputPath(): Promise<IPayloadResponse> {
+  public async getOutputPath(message: any): Promise<IPayloadResponse> {
     const userOutputPath = vscode.workspace
       .getConfiguration()
       .get<string>("wts.changeSaveToLocation");
@@ -57,6 +58,7 @@ export class Defaults extends WizardServant {
     const outputPath: string = userOutputPath ? userOutputPath : os.homedir();
     return {
       payload: {
+        scope:message.payload.scope,
         outputPath: outputPath
       }
     };

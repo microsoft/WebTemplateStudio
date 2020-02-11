@@ -8,16 +8,15 @@ import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
-import ServicesList from "../ServicesList";
-import About from "../About";
-import SortablePageList from "../SortablePageList";
+import ServicesList from "./ServicesList";
+import About from "./About";
+import SortablePageList from "./SortablePageList";
 
 import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
 import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
 import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectWebApp";
 import {
-  selectPagesAction,
-  updatePageCountAction
+  selectPagesAction
 } from "../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 
@@ -45,11 +44,9 @@ import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
 import RootAction from "../../actions/ActionType";
 import { WizardContentType } from "../../reducers/wizardContentReducers";
-import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { getPageCount } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import {
   getOutputPath,
   getProjectName
@@ -61,7 +58,6 @@ interface IDispatchProps {
   selectFrontendFramework: (framework: ISelected) => void;
   selectProjectType: (projectType: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
-  updatePageCount: (pageCount: IPageCount) => any;
   openViewLicensesModal: () => any;
 }
 
@@ -71,7 +67,6 @@ interface IRightSidebarProps {
   selection: SelectionState;
   projectTypeDropdownItems: IDropDownOptionType[];
   frontEndOptions: IOption[];
-  pageCount: IPageCount;
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
   services: ServiceState;
@@ -157,15 +152,13 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const {
       frontendFramework,
       backendFramework,
-      pages,
-      pageCount
+      pages
     } = this.props.selection;
     const {
       vscode,
       selectPages,
       frontEndOptions,
-      selectFrontendFramework,
-      updatePageCount
+      selectFrontendFramework
     } = this.props;
     if (frontendFramework.internalName !== option.value) {
       vscode.postMessage({
@@ -190,15 +183,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           };
         }
       });
-      const cardCountType: IPageCount = {};
-      for (const pageType in pageCount) {
-        const newKey = pageType.replace(
-          frontendFramework.internalName,
-          option.value
-        );
-        cardCountType[newKey] = pageCount[pageType];
-      }
-      updatePageCount(cardCountType);
+
       const newPages: ISelected[] = pages.map(page => {
         return {
           title: page.title,
@@ -417,7 +402,6 @@ const mapStateToProps = (state: AppState): IRightSidebarProps => ({
     state.wizardContent.projectTypes
   ),
   frontEndOptions: state.wizardContent.frontendOptions,
-  pageCount: getPageCount(state),
   frontendDropdownItems: convertOptionsToDropdownItems(
     state.wizardContent.frontendOptions
   ),
@@ -445,9 +429,6 @@ const mapDispatchToProps = (
   },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
-  },
-  updatePageCount: (pageCount: IPageCount) => {
-    dispatch(updatePageCountAction(pageCount));
   },
   openViewLicensesModal: () => {
     dispatch(ModalActions.openViewLicensesModalAction());
