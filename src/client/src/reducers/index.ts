@@ -25,6 +25,10 @@ const appReducer = combineReducers({
 
 export type AppState = ReturnType<typeof appReducer>;
 
+export const getDefaultState = () =>{
+
+}
+
 const rootReducer = (state: AppState | undefined, action: RootAction) => {
   let passedState: any;
 
@@ -41,7 +45,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
       generationStatus: undefined,
       modals: undefined,
       selection: {
-        validations:state!.selection.validations, 
+        validations:state!.selection.validations,
         projectNameObject:{
           projectName:"",
           validation:{
