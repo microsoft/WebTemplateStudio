@@ -109,7 +109,7 @@ const FrameworkCard = (props:Props) => {
         {framework.body}
       </div>
       <div className={styles.DependencyInfo}>
-        <DependencyInfo frameworkName={framework.internalName} />
+        {selected && (<DependencyInfo frameworkName={framework.internalName} />)}
       </div>
       <div className={styles.gridLayoutCardFooter}>
         <Link
