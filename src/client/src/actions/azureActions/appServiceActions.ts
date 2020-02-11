@@ -1,9 +1,9 @@
 import { AZURE_TYPEKEYS } from "./typeKeys";
-import { IAppServiceState } from "../../containers/AppServiceModal";
+import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
 
 export interface ISaveAppServiceSettings {
   type: AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS;
-  payload: IAppServiceState;
+  payload: ISelectedAppService;
 }
 
 export interface IRemoveAppServiceSettings {
@@ -11,7 +11,7 @@ export interface IRemoveAppServiceSettings {
 }
 
 const saveAppServiceSettingsAction = (
-  appServiceSettings: IAppServiceState
+  appServiceSettings: ISelectedAppService
 ): ISaveAppServiceSettings => ({
   type: AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS,
   payload: appServiceSettings

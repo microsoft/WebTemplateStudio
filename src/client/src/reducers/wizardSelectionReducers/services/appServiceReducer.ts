@@ -12,7 +12,6 @@ export interface IAvailability {
 
 export interface ISelectedAppService {
   subscription: string;
-  isMicrosoftLearnSubscription: boolean;
   resourceGroup: string;
   siteName: string;
   internalName: string;
@@ -61,11 +60,10 @@ const appService = (
       const newSelectionState = {
         ...state,
         selection: {
-          subscription: action.payload.subscription.value,
-          isMicrosoftLearnSubscription: action.payload.subscription.isMicrosoftLearnSubscription,
-          resourceGroup: action.payload.resourceGroup.value,
-          internalName: action.payload.internalName.value,
-          siteName: action.payload.siteName.value
+          subscription: action.payload.subscription,
+          resourceGroup: action.payload.resourceGroup,
+          internalName: action.payload.internalName,
+          siteName: action.payload.siteName
         }
       };
       return newSelectionState;

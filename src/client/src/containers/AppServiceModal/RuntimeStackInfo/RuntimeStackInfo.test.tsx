@@ -1,8 +1,8 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { azureMessages } from "../../mockData/azureServiceOptions";
+import { azureMessages } from "../../../mockData/azureServiceOptions";
 import RuntimeStackInfo from "./RuntimeStackInfo";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 import { Provider } from "react-redux";
 
 const mockStore = configureMockStore();

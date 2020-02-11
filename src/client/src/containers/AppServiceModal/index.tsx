@@ -1,25 +1,19 @@
-/**
- * This component uses React Hooks in lieu of Class Components.
- * https://reactjs.org/docs/hooks-intro.html
- */
 import * as React from "react";
 import { connect } from "react-redux";
-
-import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
-import { appServiceModalInitialState } from "../../mockData/azureModalInitialStateData";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
-import { getAppServiceSelectionInDropdownForm } from "../../selectors/appServiceSelector";
+import { getAppServiceSelectionSelector } from "../../selectors/appServiceSelector";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
 import { getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
-import RuntimeStackInfo from "./RuntimeStackInfo";
-import AppServicePlanInfo from "./AppServicePlanInfo";
+import RuntimeStackInfo from "./RuntimeStackInfo/RuntimeStackInfo";
+import AppServicePlanInfo from "./AppServicePlanInfo/AppServicePlanInfo";
+import SubscriptionSelection from "./SubscriptionSelection/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import { setAppServiceModalButtonStatus } from "./verifyButtonStatus";
@@ -41,31 +35,25 @@ import {
 import { AppState } from "../../reducers";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import RootAction from "../../actions/ActionType";
-import { ISelectionInformation } from "../../selectors/appServiceSelector";
-import { IAvailability } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { IAvailability, ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { ISubscriptionData } from "../../reducers/azureLoginReducers/subscriptionDataReducer";
 import classNames from "classnames";
 
-const DEFAULT_VALUE = {
-  value: "Select...",
-  label: "Select..."
-};
-
 interface IStateProps {
   isModalOpen: boolean;
   vscode: IVSCodeObject;
+  subscriptions: [any];
   subscriptionData: ISubscriptionData;
-  subscriptions: [];
   isValidatingName: boolean;
   siteNameAvailability: IAvailability;
-  selection: ISelectionInformation | undefined;
+  appServiceSelection: ISelectedAppService | null;
   projectName: string;
 }
 
 interface IDispatchProps {
   closeModal: () => any;
-  saveAppServiceSettings: (appServiceSettings: IAppServiceState) => any;
+  saveAppServiceSettings: (appServiceSettings: ISelectedAppService) => any;
   setValidationStatus: (status: boolean) => any;
   setSiteNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
@@ -74,40 +62,13 @@ interface IDispatchProps {
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
-interface attributeLinks {
-  [key: string]: string;
-}
-
 let timeout: NodeJS.Timeout | undefined;
 
-const links: attributeLinks = {
-  subscription:
-    "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade"
-};
-
-// state of user's selections (selected form data)
-export interface IAppServiceState {
-  [key: string]: any;
-}
-
-const initialState: IAppServiceState = {
-  subscription: {
-    value: "",
-    label: "",
-    isMicrosoftLearnSubscription: false
-  },
-  resourceGroup: {
-    value: "",
-    label: ""
-  },
-  siteName: {
-    value: "",
-    label: ""
-  },
-  internalName: {
-    value: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
-    label: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
-  }
+const initialState: ISelectedAppService = {
+  subscription: "",
+  resourceGroup: "",
+  siteName: "",
+  internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
 };
 
 const AppServiceModal = (props: Props) => {
@@ -118,7 +79,7 @@ const AppServiceModal = (props: Props) => {
     subscriptionData,
     isValidatingName,
     siteNameAvailability,
-    selection,
+    appServiceSelection,
     setSiteNameAvailability,
     setValidationStatus,
     saveAppServiceSettings,
@@ -126,51 +87,12 @@ const AppServiceModal = (props: Props) => {
     projectName
   } = props;
 
-  const FORM_CONSTANTS = {
-    SUBSCRIPTION: {
-      label: intl.formatMessage(azureModalMessages.azureModalSubscriptionLabel),
-      value: "subscription"
-    },
-    RESOURCE_GROUP: {
-      label: intl.formatMessage(
-        azureModalMessages.azureModalResourceGroupLabel
-      ),
-      value: "resourceGroup"
-    },
-    SITE_NAME: {
-      label: intl.formatMessage(azureModalMessages.appServiceAppNameLabel),
-      value: "siteName"
-    },
-    RUNTIME_STACK: {
-      label: intl.formatMessage(azureModalMessages.runtimeStackLabel),
-      value: "runtimeStack"
-    }
-  };
-
-  // data we are presenting to the user (available subscriptions, resource groups, etc.)
-  const [appServiceData, setData] = React.useState(appServiceModalInitialState);
-
-  // Updates the data we are presenting to the user when the subscription changes
-  React.useEffect(() => {
-    setData({
-      ...appServiceData,
-      siteName: [
-        {
-          value: "",
-          label: ""
-        }
-      ],
-      subscription: subscriptions,
-      resourceGroup: subscriptionData.resourceGroups
-    });
-  }, [subscriptionData]);
-
   // The data the user has entered into the modal
   const [appServiceFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
 
   // Updates the data the user enters as the user types
-  const handleChange = (updatedAppServiceForm: IAppServiceState) => {
+  const handleChange = (updatedAppServiceForm: ISelectedAppService) => {
     setAppServiceModalButtonStatus(
       updatedAppServiceForm,
       isValidatingName,
@@ -180,39 +102,22 @@ const AppServiceModal = (props: Props) => {
     updateForm(updatedAppServiceForm);
   };
 
-  const handleDropdown = (infoLabel: string, option: IDropDownSubscriptionOptionType) => {
-    // Send command to extension on change
-    // Populate resource groups on received commands
+  const onSubscriptionChange = (subscription: string) => {
+    setValidationStatus(true);
+    vscode.postMessage({
+      module: EXTENSION_MODULES.AZURE,
+      command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
+      track: true,
+      subscription,
+      projectName
+    });
+
     let updatedForm = {
       ...appServiceFormData,
-      [infoLabel]: {
-        value: option.value,
-        label: option.label,
-        isMicrosoftLearnSubscription: option.isMicrosoftLearnSubscription
-      }
+      subscription,
+      resourceGroup: ""
     };
-    if (infoLabel === FORM_CONSTANTS.SUBSCRIPTION.value) {
-      // Get resource Group and locations and set the dropdown options to them
-      setData({
-        ...appServiceData,
-        resourceGroup: []
-      });
-      setValidationStatus(true);
-      vscode.postMessage({
-        module: EXTENSION_MODULES.AZURE,
-        command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
-        track: true,
-        subscription: option.value,
-        projectName
-      });
-      updatedForm = {
-        ...updatedForm,
-        resourceGroup: {
-          value: "",
-          label: ""
-        }
-      };
-    }
+
     handleChange(updatedForm);
   };
 
@@ -220,7 +125,7 @@ const AppServiceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    if (appServiceFormData.siteName.value !== "") {
+    if (appServiceFormData.siteName !== "") {
       if (timeout) {
         clearTimeout(timeout);
       }
@@ -230,23 +135,22 @@ const AppServiceModal = (props: Props) => {
           module: EXTENSION_MODULES.AZURE,
           command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
           track: false,
-          appName: appServiceFormData.siteName.value,
-          subscription: appServiceFormData.subscription.value
+          appName: appServiceFormData.siteName,
+          subscription: appServiceFormData.subscription
         });
       }, 700);
     }
-  }, [appServiceFormData.siteName.value]);
+  }, [appServiceFormData.siteName]);
 
   // Update form data with data from store if it exists
   React.useEffect(() => {
-    if (selection) {
+    if (appServiceSelection) {
       setSiteNameAvailability({
         isAvailable: true,
         message: ""
       });
-      const newAppServiceState = selection.dropdownSelection;
       setFormIsSendable(true);
-      updateForm(newAppServiceState);
+      updateForm(appServiceSelection);
     } else {
       setSiteNameAvailability({
         isAvailable: false,
@@ -256,7 +160,7 @@ const AppServiceModal = (props: Props) => {
   }, []);
 
   React.useEffect(() => {
-    if (!appServiceFormData.siteName.value) {
+    if (!appServiceFormData.siteName) {
       return;
     }
     setAppServiceModalButtonStatus(
@@ -277,24 +181,18 @@ const AppServiceModal = (props: Props) => {
     // if a selection exists (i.e. user has saved form data),
     // this effect should only be run after selection has been loaded (i.e. subscription value is not empty)
     const shouldRunEffect =
-      !selection || appServiceFormData.subscription.value !== "";
+      !appServiceSelection || appServiceFormData.subscription !== "";
     if (shouldRunEffect) {
       updateForm({
         ...appServiceFormData,
-        siteName: {
-          value: subscriptionData.validName,
-          label: subscriptionData.validName
-        }
+        siteName:subscriptionData.validName
       });
       // programatically updating <input>'s value field doesn't dispatch an event to handleInput
       // so we manually simulate handleInput here
       setValidationStatus(true);
       handleChange({
         ...appServiceFormData,
-        siteName: {
-          value: subscriptionData.validName,
-          label: subscriptionData.validName
-        }
+        siteName: subscriptionData.validName
       });
     }
   }, [subscriptionData.validName]);
@@ -309,10 +207,7 @@ const AppServiceModal = (props: Props) => {
     setValidationStatus(true);
     handleChange({
       ...appServiceFormData,
-      siteName: {
-        value: element.value,
-        label: element.value
-      }
+      siteName: element.value
     });
   };
 
@@ -324,58 +219,6 @@ const AppServiceModal = (props: Props) => {
     return classNames(buttonClass, styles.button);
   };
 
-  const handleAddResource = () => {
-    saveAppServiceSettings(appServiceFormData);
-  };
-
-  const getDropdownSection = (
-    leftHeader: string,
-    options: any,
-    formSectionId: string,
-    ariaLabel: string,
-    rightHeader?: string,
-    disabled?: boolean,
-    defaultValue?: any,
-    openDropdownUpwards?: boolean,
-    subLabel?: string
-  ) => {
-    return (
-      <div
-        className={classNames([styles.selectionContainer], {
-          [styles.selectionContainerDisabled]: disabled
-        })}
-      >
-        <div className={styles.selectionHeaderContainer}>
-          <div className={styles.leftHeader}>{leftHeader}</div>
-          {links[formSectionId] && (
-            <a
-              tabIndex={disabled ? -1 : 0}
-              className={styles.link}
-              href={links[formSectionId]}
-            >
-              {rightHeader}
-            </a>
-          )}
-        </div>
-        <div className={styles.subLabel}>{subLabel}</div>
-        <Dropdown
-          ariaLabel={ariaLabel}
-          options={options}
-          handleChange={option => {
-            handleDropdown(formSectionId, option);
-          }}
-          value={
-            appServiceFormData[formSectionId].value
-              ? appServiceFormData[formSectionId]
-              : defaultValue
-          }
-          disabled={disabled}
-          openDropdownUpwards={openDropdownUpwards}
-        />
-      </div>
-    );
-  };
-
   const { isSiteNameAvailable } = siteNameAvailability;
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
@@ -384,6 +227,11 @@ const AppServiceModal = (props: Props) => {
       closeModal();
     }
   };
+
+  const isMicrosoftLearnSubscription = (subscription : string): boolean => {
+    const s = subscriptions.find(s => s.value === subscription);
+    return s && s.isMicrosoftLearnSubscription;
+  }
 
   return (
     <React.Fragment>
@@ -399,25 +247,15 @@ const AppServiceModal = (props: Props) => {
         />
       </div>
       <div className={styles.bodyContainer}>
-        {/* Subscription */}
-        {getDropdownSection(
-          FORM_CONSTANTS.SUBSCRIPTION.label,
-          appServiceData.subscription,
-          FORM_CONSTANTS.SUBSCRIPTION.value,
-          intl.formatMessage(
-            azureModalMessages.azureModalAriaSubscriptionLabel
-          ),
-          intl.formatMessage(azureModalMessages.azureModalCreateNew),
-          false,
-          DEFAULT_VALUE,
-          false,
-          intl.formatMessage(azureModalMessages.azureModalSubscriptionSubLabel)
-        )}
+        <SubscriptionSelection 
+          subscriptions={subscriptions}
+          onSubscriptionChange={onSubscriptionChange}
+          subscription={appServiceFormData.subscription} />
         {/* Site Name */}
         <div
           className={classNames(styles.selectionContainer, {
             [styles.selectionContainerDisabled]:
-              appServiceFormData.subscription.value === ""
+              appServiceFormData.subscription === ""
           })}
         >
           <div className={styles.selectionHeaderContainer}>
@@ -437,26 +275,26 @@ const AppServiceModal = (props: Props) => {
                 className={styles.input}
                 onChange={handleInput}
                 value={
-                  appServiceFormData.subscription.value === ""
+                  appServiceFormData.subscription === ""
                     ? ""
-                    : appServiceFormData.siteName.value
+                    : appServiceFormData.siteName
                 }
-                placeholder={FORM_CONSTANTS.SITE_NAME.label}
-                disabled={appServiceFormData.subscription.value === ""}
-                tabIndex={appServiceFormData.subscription.value === "" ? -1 : 0}
+                placeholder={intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
+                disabled={appServiceFormData.subscription === ""}
+                tabIndex={appServiceFormData.subscription === "" ? -1 : 0}
               />
-              {appServiceFormData.subscription.value &&
+              {appServiceFormData.subscription &&
                 isSiteNameAvailable &&
                 !isValidatingName && (
                   <GreenCheck className={styles.validationIcon} />
                 )}
-              {appServiceFormData.subscription.value && isValidatingName && (
+              {appServiceFormData.subscription && isValidatingName && (
                 <Spinner className={styles.spinner} />
               )}
             </div>
             {!isValidatingName &&
               !isSiteNameAvailable &&
-              appServiceFormData.siteName.value.length > 0 &&
+              appServiceFormData.siteName.length > 0 &&
               siteNameAvailability.message && (
                 <div className={styles.errorMessage}>
                   {siteNameAvailability.message}
@@ -464,12 +302,12 @@ const AppServiceModal = (props: Props) => {
               )}
           </div>
         </div>
-        <AppServicePlanInfo subscription={appServiceFormData.subscription} />
+        <AppServicePlanInfo isMicrosoftLearnSubscription={isMicrosoftLearnSubscription(appServiceFormData.subscription)} />
         <RuntimeStackInfo />
         {/* Save Button */}
         <button
           className={getButtonClassNames()}
-          onClick={handleAddResource}
+          onClick={() => saveAppServiceSettings(appServiceFormData)}
           disabled={!formIsSendable}
         >
           {intl.formatMessage(azureModalMessages.azureModalSave)}
@@ -482,12 +320,12 @@ const AppServiceModal = (props: Props) => {
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAppServiceModalOpenSelector(state),
   vscode: getVSCodeApiSelector(state),
-  subscriptionData: state.azureProfileData.subscriptionData,
   subscriptions: state.azureProfileData.profileData.subscriptions,
+  subscriptionData: state.azureProfileData.subscriptionData,
   siteNameAvailability:
     state.selection.services.appService.siteNameAvailability,
   isValidatingName: state.selection.isValidatingName,
-  selection: getAppServiceSelectionInDropdownForm(state),
+  appServiceSelection: getAppServiceSelectionSelector(state),
   projectName: getProjectName(state)
 });
 
@@ -497,7 +335,7 @@ const mapDispatchToProps = (
   closeModal: () => {
     dispatch(closeModalAction());
   },
-  saveAppServiceSettings: (appServiceSettings: IAppServiceState) => {
+  saveAppServiceSettings: (appServiceSettings: ISelectedAppService) => {
     dispatch(saveAppServiceSettingsAction(appServiceSettings));
   },
   setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
