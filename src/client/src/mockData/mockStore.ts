@@ -1,7 +1,6 @@
 import { ISelected } from "../types/selected";
 import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../reducers/vscodeApiReducer";
 import mockVsCodeApi from "./mockVsCodeApi";
-import { IAvailability } from "../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../reducers";
 
@@ -28,7 +27,7 @@ export const getIVSCodeApi = () => {
   return mockVSCode;
 };
 
-export const getInitialState = (frameWorkName:string) => {
+export const getInitialState = () => {
   const initialState:AppState={
     vscode: {
       isVsCodeApiAcquired: true,
@@ -37,7 +36,7 @@ export const getInitialState = (frameWorkName:string) => {
     wizardContent: {
       backendOptions: [],
       frontendOptions: [],
-      pageOptions: getPages(frameWorkName),
+      pageOptions: [],
       projectTypes: [],
       detailsPage: {
         isIntlFormatted: false,
@@ -208,7 +207,7 @@ export const getInitialState = (frameWorkName:string) => {
   return initialState;
 }
 
-const getPages = (frameWorkName:string):Array<any>=>{
+const loadPages = (frameWorkName:string):Array<any>=>{
   let blankPage = {
     body: 'A blank page for you to build your web application from scratch.',
     internalName: 'wts.Page.' + frameWorkName + '.Blank',
@@ -280,4 +279,8 @@ const getPages = (frameWorkName:string):Array<any>=>{
   pages.push(masterPage);
   
   return pages;
+}
+
+export const loadMasters = (store:any) =>{
+  store.wizardContent.pageOptions = loadPages("React");
 }

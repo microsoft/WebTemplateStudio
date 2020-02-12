@@ -73,7 +73,7 @@ const PageCard = (props:Props) => {
         </div>
         {isMosueOver && (
           <div className={styles.pageButtons}>
-          <button
+          <button id="btnAddPage"
             className={classNames(styles.cardCount, styles.countButton)}
           >
             <Plus />
