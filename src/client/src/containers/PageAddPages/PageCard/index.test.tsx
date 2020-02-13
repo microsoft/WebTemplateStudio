@@ -1,15 +1,33 @@
+jest.mock('../../../actions/wizardSelectionActions/selectPages',()=>{
+ 
+  const fn1 = (pages: ISelected[]) => ({
+    type: "WIZARD_SELECTION_TYPEKEYS.SELECT_PAGES",
+    payload: pages
+  });
+  const fn2 = () => ({
+    type: "WIZARD_SELECTION_TYPEKEYS.RESET_PAGES"
+  });
+  return {
+    selectPagesAction: jest.fn(fn1),
+    resetPagesAction: jest.fn(fn2)
+  }
+});
+
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { azureMessages } from "../../../mockData/azureServiceOptions";
 import PageCard from "./index";
 import { Provider } from "react-redux";
 import { getInitialState, loadMasters } from "../../../mockData/mockStore";
+import { render, fireEvent } from "@testing-library/react";
+import {IntlProvider} from 'react-intl';
+import { ISelected } from "../../../types/selected";
+import { selectPagesAction} from "../../../actions/wizardSelectionActions/selectPages";
 
-xdescribe("PageCard Index", () => {
+describe("PageCard Index", () => {
   let props: any;
   let wrapper: any;
+  let wrapper2: any;
   let store: any;
-  let svgUrl: string;
   const mockStore = configureMockStore();
 
   beforeEach(()=>{
@@ -21,35 +39,38 @@ xdescribe("PageCard Index", () => {
       isModal:true,
       intl: global.intl
     };
-    svgUrl = props.page.internalName;
-    svgUrl = svgUrl.substring(svgUrl.indexOf('React'));
-    svgUrl = svgUrl.substring(svgUrl.indexOf('.')+1).toLowerCase() + 'page.svg';
 
-    wrapper = mountWithIntl(
-      <Provider store={store}>
-        <PageCard {...props} />
-      </Provider>
-    ).children();
+   wrapper = render(<IntlProvider locale="en"><Provider store={store}>
+      <PageCard {...props} />
+    </Provider></IntlProvider>);
   });
 
   it("test instance", ()=>{
-    expect(wrapper).toBeDefined();
+    const pageCard = wrapper.getByTestId("pageCard");
+    expect(pageCard.children.length).toBe(1);
   });
 
-  it("test DOM", ()=>{
-    const svgUrlWrapper = wrapper.find("svg").text();
-    expect(svgUrlWrapper).toBe(svgUrl);
+  it("dont show button add page", ()=>{
+    expect(wrapper.queryByTestId("addPage")).toBe(null);
   });
 
-  it("dont show add button", ()=>{
-    expect(wrapper.find('#btnAddPage')).toHaveLength(0);
+  it("check img svg", ()=>{
+    let svgUrl = props.page.internalName;
+    svgUrl = svgUrl.substring(svgUrl.indexOf('React'));
+    svgUrl = svgUrl.substring(svgUrl.indexOf('.')+1).toLowerCase() + 'page.svg';
+    const svgUrlWrapper = wrapper.getByText(svgUrl);
+    expect(svgUrlWrapper).toBeDefined();
   });
 
-  it("show add button", ()=>{
-    console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
-    console.log("qq..->" + wrapper.instance().addPage);
-    wrapper.find('div[role="button"]').simulate('mouseOver');
-    expect(wrapper.find('#btnAddPage')).toHaveLength(1);
-    //expect(spy).toHaveBeenCalled();
+  it("on mouse over show button add page", ()=>{
+    fireEvent.mouseOver(wrapper.getByTestId("pageCard"));
+    const addPage = wrapper.getByTestId("addPage");
+    expect(addPage.children.length).toBe(1);
+  });
+
+  it("add page", ()=>{
+    fireEvent.click(wrapper.getByTestId("pageCard"));
+    expect(selectPagesAction).toBeCalled();
+    console.log(wrapper.getByTestId("pageCard").children[0].innerHTML);
   });
 });

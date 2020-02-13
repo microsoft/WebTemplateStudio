@@ -59,10 +59,11 @@ const PageCard = (props:Props) => {
     onClick={addPage}
     className={classNames(styles.container, styles.boundingBox)}
     onMouseLeave={()=>setIsMouseOver(false)}
-    onMouseOver={()=>setIsMouseOver(true)}>
+    onMouseOver={()=>setIsMouseOver(true)} 
+    data-testid="pageCard">
     <div>
       <div className={styles.gridLayoutCardHeader}>
-        <div>
+        <div data-testid="pageCardImg">
         {getSvg(page.internalName, styles.icon) ||
           (page.svgUrl && (
             <img src={page.svgUrl} alt="" />
@@ -72,10 +73,9 @@ const PageCard = (props:Props) => {
           {page.defaultName}
         </div>
         {isMosueOver && (
-          <div className={styles.pageButtons}>
+          <div className={styles.pageButtons} data-testid="addPage">
           <button id="btnAddPage"
-            className={classNames(styles.cardCount, styles.countButton)}
-          >
+            className={classNames(styles.cardCount, styles.countButton)}>
             <Plus />
           </button>
         </div>
