@@ -33,6 +33,7 @@ import { getAllFrameworks, getAllPages } from "./loadWizardContent";
 import { ROUTES, ROUTES_ARRAY, EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants";
 
 import styles from "./styles.module.css";
+import { sendTelemetry } from "../../../utils/extensionService/extensionService";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -63,7 +64,7 @@ class QuickStart extends Component<Props> {
       enableQuickStart
     } = this.props;
 
-    this.pressQuickstartButtonTelemetry();
+    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART);
     enableQuickStart();
     getAllFrameworks(vscode, isPreview);
     getAllPages(vscode);
@@ -73,14 +74,6 @@ class QuickStart extends Component<Props> {
     ROUTES_ARRAY.forEach(route => setRouteVisited(route));
     history.push(ROUTES.REVIEW_AND_GENERATE);
   };
-
-  pressQuickstartButtonTelemetry = () => {
-    this.props.vscode.postMessage({
-      module: EXTENSION_MODULES.TELEMETRY,
-      command: EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART,
-      track: false
-    });
-  }
 
   render() {
     const { isEnableNextPage } = this.props;

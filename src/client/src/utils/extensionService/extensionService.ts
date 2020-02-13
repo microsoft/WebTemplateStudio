@@ -1,4 +1,4 @@
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import vscodeApi, { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import {
   EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES
 } from "../constants";
@@ -84,11 +84,21 @@ const getOutput_Path = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
+const sendTelemetry = (vscode: IVSCodeObject, command: string, payload?: any): void =>
+{
+  vscode.postMessage({
+    module: EXTENSION_MODULES.TELEMETRY,
+    command,
+    ...payload
+  });
+}
+
 export {
   projectPathValidation,
   getValidationsConfig,
   getFrameworks,
   getLatestVersion,
   getPages,
-  getOutput_Path
+  getOutput_Path,
+  sendTelemetry
 }
