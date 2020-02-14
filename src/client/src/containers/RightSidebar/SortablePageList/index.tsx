@@ -31,6 +31,7 @@ import {
 import messages from "./messages";
 import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
+import { sendTelemetry } from "../../../utils/extensionService/extensionService";
 
 interface ISortablePageListProps {
   vscode: IVSCodeObject;
@@ -86,10 +87,7 @@ const SortablePageList = (props: Props) => {
   };
 
   const handleOpenAddPagesModal = () => {
-    vscode.postMessage({
-      module: EXTENSION_MODULES.TELEMETRY,
-      command: EXTENSION_COMMANDS.TRACK_OPEN_ADD_PAGES_MODAL
-    });
+    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_ADD_PAGES_MODAL);
     openAddPagesModal();
   }
 
