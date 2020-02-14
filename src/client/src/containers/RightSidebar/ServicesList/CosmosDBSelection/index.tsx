@@ -13,15 +13,22 @@ import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 import { openCosmosDbModalAction } from "../../../../actions/modalActions/modalActions";
 
 import styles from "./styles.module.css";
-import { KEY_EVENTS } from "../../../../utils/constants";
+import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 
 import { injectIntl, FormattedMessage, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../../../reducers";
 import RootAction from "../../../../actions/ActionType";
+import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
+import { getVSCodeApiSelector } from "../../../../selectors/vscodeApiSelector";
+import { IVSCodeObject } from "../../../../reducers/vscodeApiReducer";
 
 interface IProps {
   cosmosSelection: ICosmosDB;
+}
+
+interface IStateProps {
+  vscode: IVSCodeObject;
 }
 
 interface IDispatchProps {
@@ -29,19 +36,26 @@ interface IDispatchProps {
   openCosmosDbModal: () => any;
 }
 
-type Props = IProps & IDispatchProps & InjectedIntlProps;
+type Props = IProps & IStateProps & IDispatchProps & InjectedIntlProps;
 
 // This component lives in "containers" because the accountName can change via redux in the future
 const CosmosDBSelection = ({
   cosmosSelection,
   removeCosmosResource,
   openCosmosDbModal,
+  vscode,
   intl
 }: Props) => {
   const { serviceType } = cosmosSelection.wizardContent;
+
+  const openCosmosDbModalAndSendTelemetry = () => {
+    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST)
+    openCosmosDbModal();
+  }
+
   const onEditKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      openCosmosDbModal();
+      openCosmosDbModalAndSendTelemetry();
     }
   };
   return (
@@ -54,7 +68,7 @@ const CosmosDBSelection = ({
               role="button"
               tabIndex={0}
               className={styles.edit}
-              onClick={openCosmosDbModal}
+              onClick={openCosmosDbModalAndSendTelemetry}
               onKeyDown={onEditKeyDownHandler}
             >
               <EditIcon className={styles.editIcon} />
@@ -81,6 +95,10 @@ const CosmosDBSelection = ({
   );
 };
 
+const mapStateToProps = (state: AppState): IStateProps => ({
+  vscode: getVSCodeApiSelector(state)
+});
+
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ) => ({
@@ -93,6 +111,6 @@ const mapDispatchToProps = (
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(injectIntl(CosmosDBSelection));
