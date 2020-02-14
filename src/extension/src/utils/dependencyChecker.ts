@@ -97,8 +97,9 @@ export class DependencyChecker extends WizardServant {
       if (checkVersionPackageSource==="npm"){
         latestVersionStr = await latestVersion(checkVersionPackageName);
       }
-      if (checkVersionPackageSource==="git"){
-        const response = await axios.get(checkVersionPackageName);
+      if (checkVersionPackageSource==="github"){
+        const urlGitHub = "https://api.github.com/repos/" + checkVersionPackageName + "/latest";
+        const response = await axios.get(urlGitHub);
         latestVersionStr = response.data.tag_name;
       }
 
