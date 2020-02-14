@@ -1,15 +1,15 @@
 jest.mock('../../../actions/wizardSelectionActions/selectPages',()=>{
- 
-  const fn1 = (pages: ISelected[]) => ({
+  const selectPagesAction = jest.fn((pages: ISelected[]) => ({
     type: "WIZARD_SELECTION_TYPEKEYS.SELECT_PAGES",
     payload: pages
-  });
-  const fn2 = () => ({
+  }));
+  const resetPagesAction = jest.fn(() => ({
     type: "WIZARD_SELECTION_TYPEKEYS.RESET_PAGES"
-  });
+  }));
+
   return {
-    selectPagesAction: jest.fn(fn1),
-    resetPagesAction: jest.fn(fn2)
+    selectPagesAction,
+    resetPagesAction
   }
 });
 
@@ -23,10 +23,9 @@ import {IntlProvider} from 'react-intl';
 import { ISelected } from "../../../types/selected";
 import { selectPagesAction} from "../../../actions/wizardSelectionActions/selectPages";
 
-describe("PageCard Index", () => {
+describe("PageCard", () => {
   let props: any;
   let wrapper: any;
-  let wrapper2: any;
   let store: any;
   const mockStore = configureMockStore();
 
@@ -46,31 +45,31 @@ describe("PageCard Index", () => {
   });
 
   it("test instance", ()=>{
-    const pageCard = wrapper.getByTestId("pageCard");
+    const pageCard = wrapper.getByRole("pageCard");
     expect(pageCard.children.length).toBe(1);
   });
 
   it("dont show button add page", ()=>{
-    expect(wrapper.queryByTestId("addPage")).toBe(null);
+    expect(wrapper.queryByRole("pageCard.buttonAddPage")).toBe(null);
   });
 
   it("check img svg", ()=>{
     let svgUrl = props.page.internalName;
-    svgUrl = svgUrl.substring(svgUrl.indexOf('React'));
+    svgUrl = svgUrl.substring(svgUrl.indexOf('.')+1);
+    svgUrl = svgUrl.substring(svgUrl.indexOf('.')+1);
     svgUrl = svgUrl.substring(svgUrl.indexOf('.')+1).toLowerCase() + 'page.svg';
     const svgUrlWrapper = wrapper.getByText(svgUrl);
     expect(svgUrlWrapper).toBeDefined();
   });
 
   it("on mouse over show button add page", ()=>{
-    fireEvent.mouseOver(wrapper.getByTestId("pageCard"));
-    const addPage = wrapper.getByTestId("addPage");
+    fireEvent.mouseOver(wrapper.getByRole("pageCard"));
+    const addPage = wrapper.getByRole("pageCard.buttonAddPage");
     expect(addPage.children.length).toBe(1);
   });
 
   it("add page", ()=>{
-    fireEvent.click(wrapper.getByTestId("pageCard"));
+    fireEvent.click(wrapper.getByRole("pageCard"));
     expect(selectPagesAction).toBeCalled();
-    console.log(wrapper.getByTestId("pageCard").children[0].innerHTML);
   });
 });

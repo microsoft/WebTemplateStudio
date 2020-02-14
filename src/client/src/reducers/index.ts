@@ -25,10 +25,6 @@ const appReducer = combineReducers({
 
 export type AppState = ReturnType<typeof appReducer>;
 
-export const getDefaultState = () =>{
-
-}
-
 const rootReducer = (state: AppState | undefined, action: RootAction) => {
   let passedState: any;
 
