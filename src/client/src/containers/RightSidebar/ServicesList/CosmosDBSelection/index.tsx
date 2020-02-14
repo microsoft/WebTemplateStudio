@@ -49,7 +49,7 @@ const CosmosDBSelection = ({
   const { serviceType } = cosmosSelection.wizardContent;
 
   const openCosmosDbModalAndSendTelemetry = () => {
-    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST)
+    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST)
     openCosmosDbModal();
   }
 
