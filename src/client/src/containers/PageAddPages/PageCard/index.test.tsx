@@ -45,12 +45,12 @@ describe("PageCard", () => {
   });
 
   it("test instance", ()=>{
-    const pageCard = wrapper.getByRole("pageCard");
+    const pageCard = wrapper.getByRole("button");
     expect(pageCard.children.length).toBe(1);
   });
 
   it("dont show button add page", ()=>{
-    expect(wrapper.queryByRole("pageCard.buttonAddPage")).toBe(null);
+    expect(wrapper.queryByRole("figure")).toBe(null);
   });
 
   it("check img svg", ()=>{
@@ -63,13 +63,13 @@ describe("PageCard", () => {
   });
 
   it("on mouse over show button add page", ()=>{
-    fireEvent.mouseOver(wrapper.getByRole("pageCard"));
-    const addPage = wrapper.getByRole("pageCard.buttonAddPage");
-    expect(addPage.children.length).toBe(1);
+    fireEvent.mouseOver(wrapper.getByRole("button"));
+    const addPage = wrapper.getByRole("figure");
+    expect(addPage).toBeDefined();
   });
 
   it("add page", ()=>{
-    fireEvent.click(wrapper.getByRole("pageCard"));
+    fireEvent.click(wrapper.getByRole("button"));
     expect(selectPagesAction).toBeCalled();
   });
 });
