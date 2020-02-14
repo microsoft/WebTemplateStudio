@@ -6,7 +6,6 @@ import { Link, withRouter } from "react-router-dom";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
-
 import {
   ROUTES,
   EXTENSION_COMMANDS,
@@ -60,6 +59,7 @@ import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
 import messages from "./messages";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -190,10 +190,7 @@ class Footer extends React.Component<Props> {
   };
 
   public trackPageForTelemetry = (pathname: string) => {
-    this.props.vscode.postMessage({
-      module: EXTENSION_MODULES.TELEMETRY,
-      command: EXTENSION_COMMANDS.TRACK_PAGE_SWITCH,
-      track: false,
+    sendTelemetry(this.props.vscode, EXTENSION_COMMANDS.TRACK_PAGE_SWITCH, {
       pageName: pathname
     });
   };

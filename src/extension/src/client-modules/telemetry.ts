@@ -10,7 +10,15 @@ export class Telemetry extends WizardServant {
     [ExtensionCommand.TrackPageSwitch, this.trackWizardPageTimeToNext],
     [ExtensionCommand.TrackCreateNewProject, this.trackCreateNewProject],
     [ExtensionCommand.TrackOpenAddPagesModal, this.trackOpenAddPagesModal],
-    [ExtensionCommand.TrackPressQuickstart, this.trackPressQuickstart]
+    [ExtensionCommand.TrackPressQuickstart, this.trackPressQuickstart],
+    [
+      ExtensionCommand.TrackOpenAppServiceModalFromServicesList,
+      this.trackOpenAppServiceModalFromServicesList
+    ],
+    [
+      ExtensionCommand.TrackOpenCosmosDBServiceModalFromServicesList,
+      this.trackOpenCosmosDBServiceModalFromServicesList
+    ]
   ]);
 
   constructor(private telemetry: ITelemetryService) {
@@ -44,8 +52,24 @@ export class Telemetry extends WizardServant {
   }
 
   public async trackOpenAddPagesModal(): Promise<IPayloadResponse> {
+    this.telemetry.trackEvent(TelemetryEventName.TrackOpenAddPagesModal);
+    return { payload: true };
+  }
+
+  public async trackOpenAppServiceModalFromServicesList(): Promise<
+    IPayloadResponse
+  > {
     this.telemetry.trackEvent(
-      TelemetryEventName.TrackOpenAddPagesModal
+      TelemetryEventName.OpenAppServiceModalFromServicesList
+    );
+    return { payload: true };
+  }
+
+  public async trackOpenCosmosDBServiceModalFromServicesList(): Promise<
+    IPayloadResponse
+  > {
+    this.telemetry.trackEvent(
+      TelemetryEventName.OpenCosmosDBServiceModalFromServicesList
     );
     return { payload: true };
   }

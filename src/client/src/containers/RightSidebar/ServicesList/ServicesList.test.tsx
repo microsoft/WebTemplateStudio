@@ -4,6 +4,7 @@ import ServicesList from "./index";
 import { Provider } from "react-redux";
 import AppServiceSelection from "../AppServiceSelection";
 import CosmosDBSelection from "./CosmosDBSelection";
+import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 
 const mockStore = configureMockStore();
 
@@ -35,6 +36,12 @@ const emptyAppService = {
   }
 };
 
+const mockVsCode = {
+  vscodeObject:{
+    postMessage: jest.fn()
+  }
+}
+
 describe("ServicesList", () => {
   let props: any;
   let wrapper: any;
@@ -47,7 +54,8 @@ describe("ServicesList", () => {
           services: {
             appService: emptyAppService
           }
-        }
+        },
+        vscode: mockVsCode
       });
 
       wrapper = mountWithIntl(
@@ -76,7 +84,8 @@ describe("ServicesList", () => {
           services: {
             appService: appService
           }
-        }
+        },
+        vscode: mockVsCode
       });
 
       wrapper = mountWithIntl(
@@ -103,7 +112,8 @@ describe("ServicesList", () => {
           services: {
             cosmosDB: emptyCosmosDB
           }
-        }
+        },
+        vscode: mockVsCode
       });
 
       wrapper = mountWithIntl(
@@ -132,7 +142,8 @@ describe("ServicesList", () => {
           services: {
             cosmosDB: cosmosDB
           }
-        }
+        },
+        vscode: mockVsCode
       });
 
       wrapper = mountWithIntl(
