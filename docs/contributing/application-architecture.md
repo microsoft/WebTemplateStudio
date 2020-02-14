@@ -2,7 +2,7 @@ Web Template Studio is a [Visual Studio Code Extension](https://code.visualstudi
 
   - The extension's backend (referred to as the [extension](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/extension)), which is written in [Typescript](https://www.typescriptlang.org/).
   -  The front-end wizard (referred to as the [client](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/client)), written in [React](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/).
-  - Generation engine referred as [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio) written in [.NET Core](https://dotnet.microsoft.com/download). 
+  - Generation engine (referred to as [Core Template Studio](https://github.com/Microsoft/CoreTemplateStudio)) written in [.NET Core](https://dotnet.microsoft.com/download). 
   
 ![Architecture Diagram](../resources/webts-architecture-diagram.png)
 
@@ -10,18 +10,18 @@ All three components are included in Web Template Studio vsix.
 
 ## Extension
 
-It is the main part of Web Template Studio. It has been built using the [Visual Studio Code Extensibility API](https://code.visualstudio.com/api) to build extensions. It is responsible for launching the client in a Visual Studio Code tab and for communication between the wizard client and the Core Template Studio CLI. It is also responsible for creating the Azure Services (App Service and CosmosDB Service) and the deployment the generated applications.
+The extension is the main part of Web Template Studio. It has been built using the [Visual Studio Code Extensibility API](https://code.visualstudio.com/api) to build extensions. It is responsible for launching the client in a Visual Studio Code tab and for communication between the wizard client and the Core Template Studio CLI. It is also responsible for creating the Azure Services (App Service and CosmosDB Service) and the deployment the generated applications.
 
 It contains two commands that can be called from Visual Studio Code:
 
-- [webTemplateStudioExtension.wizardLaunch](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L7-L11): It is executed when we launch the "Web Template Studio: Launch" command from Visual Studio Code. It is responsible to start the Core Template Studio CLI in a `child_process`, synchronizing the templates and opening the wizard in a Visual Studio Code tab. While the wizard is open, it is also responsible for maintaining communication between the wizard client and the Core Template Studio CLI to obtain templates and generate projects.
+- [webTemplateStudioExtension.wizardLaunch](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L7-L11): This command is executed when we launch the "Web Template Studio: Launch" command from Visual Studio Code. It is responsible to start the Core Template Studio CLI in a `child_process`, synchronizing the templates and opening the wizard in a Visual Studio Code tab. While the wizard is open, it is also responsible for maintaining communication between the wizard client and the Core Template Studio CLI to obtain templates and generate projects.
   
-- [webTemplateStudioExtension.deployApp](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L13-L18): It is executed when we launch the "Web Template Studio: Deploy App" command from Visual Studio Code. It is responsible for deploying a generated application in Azure. Note: For this command to work properly, we need a web application generated with Web Template Studio opened and configured with an App Service.
+- [webTemplateStudioExtension.deployApp](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/extension.ts#L13-L18): This command is executed when we launch the "Web Template Studio: Deploy App" command from Visual Studio Code. It is responsible for deploying a generated application in Azure. Note: For this command to work properly, we need a web application generated with Web Template Studio opened and configured with an App Service.
 
 
 ## Client
 
-The wizard client is the visual component to the extension. It is a [React](https://reactjs.org/) app that is compiled into JavaScript that gets injected into html, which then gets served using [VSCode's Webview API](https://code.visualstudio.com/api/extension-guides/webview). It is shown in a Visual Studio Code tab when the user executes the "Web Template Studio: Launch" extension command.
+The wizard client is the visual component of the extension. It is a [React](https://reactjs.org/) app that is compiled into JavaScript that gets injected into html, which then gets served using [VSCode's Webview API](https://code.visualstudio.com/api/extension-guides/webview). It is shown in a Visual Studio Code tab when the user executes the "Web Template Studio: Launch" extension command.
 
 It is responsible for the interaction with the user and is responsible for collecting the name and route of the project, the selected frameworks, pages and services and sending them to the extension for processing with Core Template Studio.
 
@@ -29,14 +29,14 @@ The wizard client keeps track of the state using [Redux](https://react-redux.js.
 
 ## Generation Engine (Core Template Studio)
 
-The Generation Engine is responsible for sync templates, get frameworks, get templates and generating projects. It consists of a [CLI](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md#cli-project) that receives request from the extension and processed by [Core Template Studio](https://github.com/microsoft/CoreTemplateStudio/). Once the request is processed, return the response in json format to the extension.
+The Generation Engine is responsible for template synchronisation, get frameworks, get templates and generating projects. It consists of a [CLI](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md#cli-project) that receives requests from the extension and get processed by [Core Template Studio](https://github.com/microsoft/CoreTemplateStudio/). Once the request is processed, it returns the response in json format to the extension.
 
-More Info in [Core Template Studio Docs](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md).
+For more Info see [Core Template Studio Docs](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md).
 
 
 ## Extension and CLI Core Template Studio communication
 
-The communication between the extension and the Core Template Studio CLI is defined in the [coreTemplateStudio.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) file. This static class is responsible for start/stop the Core Template Studio CLI in a `child_process`, and manages the Core Template Studio CLI request and responses (include notifications and errors). 
+The communication between the extension and the Core Template Studio CLI is defined in the [coreTemplateStudio.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) file. This static class is responsible for starting/stopping the Core Template Studio CLI in a `child_process`, and managing the Core Template Studio CLI requests and responses (including notifications and errors). 
 
 It also exposes public functions to call the Core Template Studio CLI commands. Currently the functions offered by the [coreTemplateStudio](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) class are:
 
@@ -49,7 +49,7 @@ It also exposes public functions to call the Core Template Studio CLI commands. 
 - generate(payload: ICommandPayload): Promise<any>
 ```
 
-To execute a Core Template Studio CLI command from the extension we have to instantiate the [coreTemplateStudio](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) class and execute the function that has the map we want to execute.
+To execute a Core Template Studio CLI command from the extension we have to instantiate the [coreTemplateStudio](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/coreTemplateStudio.ts) class and execute the function that has the command we want to execute.
 
  Example:
 
@@ -71,7 +71,7 @@ To see the Core Template Studio CLI available commands visit [Core Template Stud
 When the client wants to execute an extension command, it will call `vscode.postMessage()` function, passing through parameters an object with the following properties:
 
 - module: extension module that should process this request.
-- command. extension command that should process the request.
+- command: extension command that should process the request.
 - payload: data that we send in the request.
 
  Example:
@@ -87,6 +87,11 @@ vscode.postMessage({
         }
       });
 ```
+
+When the extension create the webview (that includes the client), the `routingMessageReceieverDelegate()` function found in [controller.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/controller.ts) is passed by parameters. This function is responsible for receiving client requests and locating the module that processes the request. All modules that can process customer requests are registered in [Controller.extensionModuleMap](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/controller.ts#L50-L61).
+
+The modules inherit from [WizardServant](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/wizardServant.ts) which is the class responsible for executing the function associated with each command, controlling errors and recording telemetry if necessary.
+
 NOTE: In the development environment (running the app in the browser), the Visual Studio Code extension is not available for the client to interact with. The communication is mocked using the [mockVsCodeAPI.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/client/src/mockData/mockVsCodeApi.ts), which uses the native `window.postMessage()` command to send messages to the application.
 
 ### Client receive from extension
@@ -132,9 +137,7 @@ reactPanelContext.postMessageWebview({
       }
 ```
 
-When the extension create the webview (that includes the client), the `routingMessageReceieverDelegate()` function found in [controller.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/controller.ts) is passed by parameters. This function is responsible for receiving client requests and locating the module that processes the request. All modules that can process customer requests are registered in [Controller.extensionModuleMap](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/controller.ts#L50-L61).
 
-The modules inherit from [WizardServant](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/extension/src/wizardServant.ts) which is the class responsible for executing the function associated with each command, controlling errors and recording telemetry if necessary.
 
 
 ## Separating the UI from the Logic:
