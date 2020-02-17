@@ -14,7 +14,7 @@ export class MasterDetailComponent implements OnInit {
   greyAvatarUrl = '../../../assets/GreyAvatar.svg';
   warningMessageText = '';
   warningMessageOpen = false;
-  currentSampleOrder = {};
+  currentSampleOrder: ISampleOrder;
   sampleOrders$: Observable<ISampleOrder[]>;
 
   constructor(private masterDetailService: MasterDetailService) {}
