@@ -11,7 +11,9 @@ describe("PageSelectFramework", () => {
     expect(mapStateToPropsInstance.vscode != undefined).toBeTruthy();
     expect(mapStateToPropsInstance.frontendOptions != undefined).toBeTruthy();
     expect(mapStateToPropsInstance.backendOptions != undefined).toBeTruthy();
-    expect(counterAttributes === 3).toBeTruthy();
+    expect(mapStateToPropsInstance.isPreview).toBeFalsy();
+
+    expect(counterAttributes === 4).toBeTruthy();
   });
 
   
