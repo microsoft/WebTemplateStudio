@@ -162,6 +162,8 @@ const EXTENSION_COMMANDS = {
   TRACK_CREATE_NEW_PROJECT: "track-create-new-project",
   TRACK_OPEN_ADD_PAGES_MODAL: "track-open-add-pages-modal",
   TRACK_PRESS_QUICKSTART: "track-press-quickstart",
+  TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-app-service-modal-from-services-list",
+  TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-cosmosdb-service-modal-from-services-list",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",

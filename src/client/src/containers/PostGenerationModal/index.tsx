@@ -34,6 +34,7 @@ import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
 interface LinksDict {
   [serviceId: string]: string;
 }
@@ -145,12 +146,7 @@ const PostGenerationModal = ({
     if (fromCreateNewProjectButton){
       entryPoint = TELEMETRY.CREATE_NEW_PROJECT_BUTTON;
     }
-
-    vscode.postMessage({
-      module: EXTENSION_MODULES.TELEMETRY,
-      command: EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT,
-      entryPoint
-    });
+    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, {entryPoint});
   }
 
   const postGenMessage = () => {
