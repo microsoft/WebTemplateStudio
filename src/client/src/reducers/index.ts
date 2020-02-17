@@ -41,7 +41,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
       generationStatus: undefined,
       modals: undefined,
       selection: {
-        validations:state!.selection.validations, 
+        validations:state!.selection.validations,
         projectNameObject:{
           projectName:"",
           validation:{

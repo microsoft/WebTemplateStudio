@@ -26,8 +26,8 @@
     "languages": ["Any"],
     "tags": {
       "version": "1.1.1",
-      "checkVersionPackageName":"flask",
-      "checkVersionPackageSource":"",
+      "checkVersionPackageName":"pallets/flask",
+      "checkVersionPackageSource":"github",
       "preview": false
     }
   },

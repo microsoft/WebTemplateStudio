@@ -3,6 +3,7 @@ import { ExtensionCommand, CONSTANTS } from "../constants";
 import os = require("os");
 import util = require("util");
 import latestVersion from 'latest-version';
+const axios = require('axios');
 
 const semver = require('semver');
 const exec = util.promisify(require("child_process").exec);
@@ -95,6 +96,11 @@ export class DependencyChecker extends WizardServant {
       let latestVersionStr="";
       if (checkVersionPackageSource==="npm"){
         latestVersionStr = await latestVersion(checkVersionPackageName);
+      }
+      if (checkVersionPackageSource==="github"){
+        const urlGitHub = "https://api.github.com/repos/" + checkVersionPackageName + "/releases/latest";
+        const response = await axios.get(urlGitHub);
+        latestVersionStr = response.data.tag_name;
       }
 
       return Promise.resolve({

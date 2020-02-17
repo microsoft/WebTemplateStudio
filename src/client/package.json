@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/react-hooks": "^3.2.1",
     "@types/classnames": "^2.2.7",
     "@types/jest": "23.3.13",
     "@types/lodash": "^4.14.121",

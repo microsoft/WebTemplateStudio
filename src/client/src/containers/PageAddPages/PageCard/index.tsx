@@ -59,7 +59,7 @@ const PageCard = (props:Props) => {
     onClick={addPage}
     className={classNames(styles.container, styles.boundingBox)}
     onMouseLeave={()=>setIsMouseOver(false)}
-    onMouseOver={()=>setIsMouseOver(true)}>
+    onMouseOver={()=>setIsMouseOver(true)} >
     <div>
       <div className={styles.gridLayoutCardHeader}>
         <div>
@@ -73,10 +73,9 @@ const PageCard = (props:Props) => {
         </div>
         {isMosueOver && (
           <div className={styles.pageButtons}>
-          <button
-            className={classNames(styles.cardCount, styles.countButton)}
-          >
-            <Plus />
+          <button 
+            className={classNames(styles.cardCount, styles.countButton)}>
+            <Plus role="figure"/>
           </button>
         </div>
         )}

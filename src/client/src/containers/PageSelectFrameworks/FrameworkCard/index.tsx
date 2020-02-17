@@ -21,7 +21,6 @@ const FrameworkCard = (props:Props) => {
     setBackendSelect, backEndSelect, isFrontEnd, intl, setDetailPage, vscode, updateFrameworks } = props;
 
   const [selected, setSelected] = React.useState(false);
-  //const [isLatestVersion, setIsLatestVersion] = React.useState(false);
 
   React.useEffect(()=>{
     selectWhenLoadWithoutSelection();

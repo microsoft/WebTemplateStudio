@@ -20,7 +20,7 @@ export interface IVSCodeObject {
   postMessage: (message: any) => void;
 }
 
-interface IVSCodeAPI {
+export interface IVSCodeAPI {
   isVsCodeApiAcquired: boolean;
   vscodeObject: IVSCodeObject;
 }
