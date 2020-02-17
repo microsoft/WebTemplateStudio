@@ -6,8 +6,8 @@ import { AppState } from "../../../reducers";
 import RootAction from "../../../actions/ActionType";
 import { IDispatchProps, IStateProps } from "./interfaces";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { selectFrontendFramework } from "../../../actions/wizardSelectionActions/selectFrontEndFramework";
-import { selectBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectBackEndFramework";
+import { setSelectedFrontendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedFrontendFramework";
+import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedBackEndFramework";
 import { ISelected } from "../../../types/selected";
 import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
 import { updateFrameworks } from "../../../actions/wizardContentActions/updateFrameworks";
@@ -16,10 +16,10 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   setFrontendSelect: (framework: ISelected) => {
-    dispatch(selectFrontendFramework(framework));
+    dispatch(setSelectedFrontendFrameworkAction(framework));
   },
   setBackendSelect: (framework: ISelected) => {
-    dispatch(selectBackendFrameworkAction(framework));
+    dispatch(setSelectedBackendFrameworkAction(framework));
   },
   setDetailPage: (detailPageInfo: IOption) => {
     dispatch(setDetailPageAction(detailPageInfo));

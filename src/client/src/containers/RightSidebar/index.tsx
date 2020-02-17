@@ -12,8 +12,8 @@ import ServicesList from "./ServicesList";
 import About from "./About";
 import SortablePageList from "./SortablePageList";
 
-import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
-import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
+import { setSelectedBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectedBackEndFramework";
+import { setSelectedFrontendFrameworkAction } from "../../actions/wizardSelectionActions/selectedFrontendFramework";
 import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectWebApp";
 import {
   selectPagesAction
@@ -419,10 +419,10 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   selectBackendFramework: (framework: ISelected) => {
-    dispatch(selectBackendFrameworkAction(framework));
+    dispatch(setSelectedBackendFrameworkAction(framework));
   },
   selectFrontendFramework: (framework: ISelected) => {
-    dispatch(selectFrontEndFrameworkAction(framework));
+    dispatch(setSelectedFrontendFrameworkAction(framework));
   },
   selectProjectType: (projectType: ISelected) => {
     dispatch(selectWebAppAction(projectType));

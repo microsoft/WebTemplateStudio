@@ -117,7 +117,7 @@ const FrameworkCard = (props:Props) => {
           to={ROUTES.PAGE_DETAILS}>
           {intl.formatMessage(messages.learnMore)}
         </Link>
-        {selected && (<Check className={styles.iconCheckMark} />)}
+        {selected && (<Check role="figure" className={styles.iconCheckMark} />)}
       </div>
     </div>
   </div>

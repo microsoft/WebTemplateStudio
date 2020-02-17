@@ -6,11 +6,11 @@ export interface ISelectFrontendAction {
   payload: ISelected;
 }
 
-const selectFrontendFramework = (
+const setSelectedFrontendFrameworkAction = (
   frontendFramework: ISelected
 ): ISelectFrontendAction => ({
   type: WIZARD_SELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK,
   payload: frontendFramework
 });
 
-export { selectFrontendFramework };
+export { setSelectedFrontendFrameworkAction };

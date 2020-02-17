@@ -5,7 +5,6 @@ import Select from "react-select/lib/Select";
 import { ISelected } from "../../../types/selected";
 
 interface ISelectProps {
-  vscode: IVSCodeObject;
   framework:IOption;
   isFrontEnd:boolean;
 }
