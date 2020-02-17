@@ -1,16 +1,17 @@
 import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
-interface ISelectFrameworksProps {
-  vscode: IVSCodeObject;
-  frontendOptions:IOption[];
-  backendOptions:IOption[];
+interface IDispatchProps {
+  setBackendFrameworks: (frameworks: IOption[]) => any;
+  setFrontendFrameworks: (frameworks: IOption[]) => any;
 }
 
 interface IStateProps {
   vscode: IVSCodeObject;
   frontendOptions: IOption[];
   backendOptions: IOption[];
+  isPreview: boolean;
 }
 
-export { IStateProps, ISelectFrameworksProps };
+export { IStateProps, IDispatchProps };
+export { IStateProps, IDispatchProps };

@@ -23,7 +23,6 @@ import {
   EXTENSION_MODULES,
   ROUTES,
   DEVELOPMENT,
-  FRAMEWORK_TYPE,
   BOOTSTRAP_LICENSE
 } from "./utils/constants";
 
@@ -120,9 +119,8 @@ interface IStateProps {
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
 
 const App = (props:Props) => {
-  const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages } = props;
+  const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions } = props;
 
-  messageEventsFromExtension();
   React.useEffect(()=>{
     props.getVSCodeApi();
   },[]);
@@ -139,6 +137,10 @@ const App = (props:Props) => {
   React.useEffect(()=>{
     loadPages();
   },[selectedFrontend, selectedBackend]);
+
+  if (frontendOptions.length===0){
+    messageEventsFromExtension();
+  }
 
   const loadPages = () => {
     getPages(vscode, selectedFrontend.internalName, selectedBackend.internalName).then((event)=>{

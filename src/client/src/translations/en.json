@@ -124,6 +124,7 @@
   "outputPath.outputPath": "Output Path",
   "pageAddPages.iconAltMessage": "Notification",
   "pageAddPages.pagesTitleQuestion": "Select pages for your application",
+  "pageAddPages.title": "Select pages",
   "pageCard.details": "Preview",
   "postGenerationModal.closeWizard": "Close Wizard",
   "postGenerationModal.createAnotherProject": "Create New Project",
