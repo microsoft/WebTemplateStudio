@@ -102,7 +102,7 @@ const PostGenerationModal = ({
       return;
     }
     if (isTemplateGenerated) {
-      const fullpath = outputPath + "\\" + projectName + "\\" + projectName;
+      const fullpath = outputPath;
       vscode.postMessage({
         module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
@@ -112,7 +112,8 @@ const PostGenerationModal = ({
         }
       });
     }
-  };  
+  };
+
   const openProjectOrRestartWizardMessage = () => {
     if (isTemplatesFailed) {
       return formatMessage(messages.restartWizard);
