@@ -14,8 +14,10 @@ import FrameworkCard from "./FrameworkCard";
 import styles from "./styles.module.css";
 import { getFrameworks } from "../../utils/extensionService/extensionService";
 import { parseFrameworksPayload } from "../../utils/parseFrameworksPayload";
+import messages from "./messages";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
-type Props = IStateProps & IDispatchProps;
+type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 class SelectFrameworks extends React.Component<Props> {
 
@@ -26,7 +28,6 @@ class SelectFrameworks extends React.Component<Props> {
   }
 
   getFrameworksListAndSetToStore (){
-    console.log("getFrameworksListAndSetToStore");
     const { vscode, isPreview, setFrontendFrameworks, setBackendFrameworks } = this.props;
 
     getFrameworks(vscode, isPreview).then((event:any)=>{
@@ -68,10 +69,10 @@ class SelectFrameworks extends React.Component<Props> {
   }
 
   public render() {
-    const { frontendOptions, backendOptions } = this.props;
+    const { frontendOptions, backendOptions, intl } = this.props;
     return (
       <div>
-        <h1 className={styles.title}>Select a front-end framework</h1>
+        <h1 className={styles.title}>{intl.formatMessage(messages.frontendTitle)}</h1>
         <div className={styles.flexContainer}>
           {frontendOptions.map((framework) => {
             return (
@@ -79,7 +80,7 @@ class SelectFrameworks extends React.Component<Props> {
             );
           })}
         </div>
-        <h1 className={styles.title}>Select a back-end framework</h1>
+        <h1 className={styles.title}>{intl.formatMessage(messages.backendTitle)}</h1>
         <div className={styles.flexContainer}>
           {backendOptions.map((framework) => {
             return (
@@ -92,4 +93,4 @@ class SelectFrameworks extends React.Component<Props> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectFrameworks);
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(SelectFrameworks));

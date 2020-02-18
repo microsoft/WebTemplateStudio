@@ -14,4 +14,3 @@ interface IStateProps {
 }
 
 export { IStateProps, IDispatchProps };
-export { IStateProps, IDispatchProps };
