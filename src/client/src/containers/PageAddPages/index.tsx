@@ -17,7 +17,7 @@ const PageAddPages = (props:Props) => {
 
   return (
     <div>
-      <h1 className={styles.title}>Select Pages</h1>
+      <h1 className={styles.title}>{intl.formatMessage(messages.pagesTitleQuestion)}</h1>
       <div
           className={classnames(styles.description, {
             [styles.borderGreen]: !pageOutOfBounds,

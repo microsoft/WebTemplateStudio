@@ -7,19 +7,21 @@ import {
 } from "../../utils/constants";
 
 
-import { ISelectFrameworksProps } from "./interfaces";
+import { IStateProps, IDispatchProps } from "./interfaces";
 import {mapStateToProps} from "./store";
 import FrameworkCard from "./FrameworkCard";
 import styles from "./styles.module.css";
+import { InjectedIntlProps, injectIntl } from "react-intl";
+import messages from "./messages";
 
-type Props = ISelectFrameworksProps;
+type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const SelectFrameworks = (props:Props) => {
-  const { frontendOptions, backendOptions } = props;
+  const { frontendOptions, backendOptions, intl } = props;
+
   React.useEffect(()=>{
     getDependencyInfoAndSetToStore();
   },[]);
-
 
   const getDependencyInfoAndSetToStore = () =>{
     const { vscode } = props;
@@ -42,7 +44,7 @@ const SelectFrameworks = (props:Props) => {
 
   return (
     <div>
-      <h1 className={styles.title}>Select a front-end framework</h1>
+      <h1 className={styles.title}>{intl.formatMessage(messages.frontendTitle)}</h1>
       <div className={styles.flexContainer}>
         {frontendOptions.map((framework) => {
           return (
@@ -50,7 +52,7 @@ const SelectFrameworks = (props:Props) => {
           );
         })}
       </div>
-      <h1 className={styles.title}>Select a back-end framework</h1>
+      <h1 className={styles.title}>{intl.formatMessage(messages.backendTitle)}</h1>
       <div className={styles.flexContainer}>
         {backendOptions.map((framework) => {
           return (
@@ -62,4 +64,4 @@ const SelectFrameworks = (props:Props) => {
   );
 }
 
-export default connect(mapStateToProps)(SelectFrameworks);
+export default connect(mapStateToProps)(injectIntl(SelectFrameworks));

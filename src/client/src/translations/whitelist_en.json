@@ -66,6 +66,8 @@
   "dependencyChecker.notInstalledMessage",
   "dependencyChecker.iconAltMessage",
   "frameworkCard.details",
+  "pageSelectFramework.frontendTitle",
+  "pageSelectFramework.backendTitle",
   "postGenerationModal.restartWizard",
   "postGenerationModal.deploymentFailure",
   "postGenerationModal.closeWizard",

@@ -1,5 +1,5 @@
-import { ISelectBackendAction } from "./selectBackEndFramework";
-import { ISelectFrontendAction } from "./selectFrontEndFramework";
+import { ISelectBackendAction } from "./selectedBackEndFramework";
+import { ISelectFrontendAction } from "./selectedFrontendFramework";
 import {
   ISelectPagesAction,
   IResetPagesAction

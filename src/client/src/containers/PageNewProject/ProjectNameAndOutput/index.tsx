@@ -75,14 +75,9 @@ const ProjectNameAndOutput = (props: Props) => {
   } = props;
 
   React.useEffect(() => {
-    validateSetProjectValueAndSetDirty(projectName);
-  },[outputPath]);
-
-  React.useEffect(() => {
     if (projectName==="" && outputPath!=="" && projectNameValidation.isDirty==false){
       inferProjectName(outputPath,vscode).then(suggestedProjectName => {
         updateProjectName(suggestedProjectName, {isValid:true, error:"", isDirty:true});
-        //setProjectPathValidation({isValid: true});
       });
     }
   },[projectName, outputPath]);
