@@ -38,7 +38,7 @@ describe("PageAddPages", () => {
   });
 
   it("check title", ()=>{
-    expect(wrapper.getByText(intl.formatMessage(messages.title))).toBeDefined();
+    expect(wrapper.getByText(intl.formatMessage(messages.pagesTitleQuestion))).toBeDefined();
   });
 
  
