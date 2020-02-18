@@ -5,8 +5,8 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { FormattedMessage } from "react-intl";
 
 import RootAction from "../../../actions/ActionType";
-import { selectFrontendFramework as selectFrontendAction } from "../../../actions/wizardSelectionActions/selectFrontEndFramework";
-import { selectBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectBackEndFramework";
+import { setSelectedFrontendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedFrontendFramework";
+import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedBackEndFramework";
 import {
   selectPagesAction
 } from "../../../actions/wizardSelectionActions/selectPages";
@@ -125,10 +125,10 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   selectFrontendFramework: (framework: ISelected) => {
-    dispatch(selectFrontendAction(framework));
+    dispatch(setSelectedFrontendFrameworkAction(framework));
   },
   selectBackendFramework: (backendFramework: ISelected) => {
-    dispatch(selectBackendFrameworkAction(backendFramework));
+    dispatch(setSelectedBackendFrameworkAction(backendFramework));
   },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));

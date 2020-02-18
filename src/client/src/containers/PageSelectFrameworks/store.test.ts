@@ -6,13 +6,12 @@ describe("PageSelectFramework", () => {
   it("React",()=>{
     const mapStateToPropsInstance:IStateProps = mapStateToProps(getInitialState());
     let counterAttributes:number=0;
-    for (let key in mapStateToPropsInstance) counterAttributes++;
+    for (let key in mapStateToPropsInstance) if (key) counterAttributes++;
 
     expect(mapStateToPropsInstance.vscode != undefined).toBeTruthy();
     expect(mapStateToPropsInstance.frontendOptions != undefined).toBeTruthy();
     expect(mapStateToPropsInstance.backendOptions != undefined).toBeTruthy();
-    expect(counterAttributes === 3).toBeTruthy();
-  });
 
-  
+    expect(counterAttributes).toBe(3);
+  });
 });

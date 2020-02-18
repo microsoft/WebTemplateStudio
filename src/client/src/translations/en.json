@@ -125,6 +125,8 @@
   "pageAddPages.iconAltMessage": "Notification",
   "pageAddPages.pagesTitleQuestion": "Select pages for your application",
   "pageCard.details": "Preview",
+  "pageSelectFramework.backendTitle": "Select a back-end framework",
+  "pageSelectFramework.frontendTitle": "Select a front-end framework",
   "postGenerationModal.closeWizard": "Close Wizard",
   "postGenerationModal.createAnotherProject": "Create New Project",
   "postGenerationModal.creatingYourProject": "Creating Your Project",

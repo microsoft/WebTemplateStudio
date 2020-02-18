@@ -23,8 +23,8 @@ import {
   EXTENSION_MODULES,
   ROUTES,
   DEVELOPMENT,
-  FRAMEWORK_TYPE,
-  BOOTSTRAP_LICENSE
+  BOOTSTRAP_LICENSE,
+  FRAMEWORK_TYPE
 } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
@@ -72,9 +72,12 @@ import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import PageSelectFrameworks from './containers/PageSelectFrameworks';
-import { getPages } from "./utils/extensionService/extensionService";
+import { getPages, getFrameworks } from "./utils/extensionService/extensionService";
 import AppServiceModal from "./containers/AppServiceModal";
 import PostGenerationModal from "./containers/PostGenerationModal";
+import { setBackendFrameworksAction } from "./actions/wizardContentActions/setBackendFrameworks";
+import { setFrontendFrameworksAction } from "./actions/wizardContentActions/setFrontendFrameworks";
+import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -107,6 +110,8 @@ interface IDispatchProps {
   setPreviewStatus: (isPreview: boolean) => void;
   setPort: (port: number) => void;
   setPages: (pages: ISelected[]) => void;
+  setBackendFrameworks: (frameworks: IOption[]) => any;
+  setFrontendFrameworks: (frameworks: IOption[]) => any;
 }
 
 interface IStateProps {
@@ -115,30 +120,52 @@ interface IStateProps {
   selectedFrontend: ISelected;
   selectedBackend: ISelected;
   selectedPages: ISelected[];
+  isPreview: boolean;
 }
 
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
 
 const App = (props:Props) => {
-  const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages } = props;
+  const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,isPreview, setFrontendFrameworks, setBackendFrameworks } = props;
 
-  messageEventsFromExtension();
   React.useEffect(()=>{
     props.getVSCodeApi();
   },[]);
 
   React.useEffect(()=>{
-    const { vscode } = props;
-      vscode.postMessage({
-        module: EXTENSION_MODULES.AZURE,
-        command: EXTENSION_COMMANDS.GET_USER_STATUS,
-        track: true
-      });
+      const { vscode } = props;
+        vscode.postMessage({
+          module: EXTENSION_MODULES.AZURE,
+          command: EXTENSION_COMMANDS.GET_USER_STATUS,
+          track: true
+        });
+      messageEventsFromExtension();
+      getFrameworksListAndSetToStore();
   },[props.vscode]);
 
   React.useEffect(()=>{
     loadPages();
   },[selectedFrontend, selectedBackend]);
+
+  const getFrameworksListAndSetToStore = ()=>{
+    getFrameworks(vscode, isPreview).then((event:any)=>{
+      let message = event.data;
+      setFrontendFrameworks(
+        parseFrameworksPayload(
+          message.payload.frameworks,
+          FRAMEWORK_TYPE.FRONTEND,
+          message.payload.isPreview
+        )
+      );
+      setBackendFrameworks(
+        parseFrameworksPayload(
+          message.payload.frameworks,
+          FRAMEWORK_TYPE.BACKEND,
+          message.payload.isPreview
+        )
+      );
+    });
+  }
 
   const loadPages = () => {
     getPages(vscode, selectedFrontend.internalName, selectedBackend.internalName).then((event)=>{
@@ -156,6 +183,11 @@ const App = (props:Props) => {
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           props.updateDependencyInfo(message.payload);
+          break;
+        case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
+          if (message.payload != null && message.payload.outputPath != null) {
+            props.updateOutputPath(message.payload.outputPath);
+          }
           break;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
         case EXTENSION_COMMANDS.AZURE_LOGIN:
@@ -385,6 +417,12 @@ const mapDispatchToProps = (
   setPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
   },
+  setBackendFrameworks: (frameworks: IOption[]) => {
+    dispatch(setBackendFrameworksAction(frameworks));
+  },
+  setFrontendFrameworks: (frameworks: IOption[]) => {
+    dispatch(setFrontendFrameworksAction(frameworks));
+  }
 });
 
 const mapStateToProps = (state: AppState): IStateProps => ({
@@ -392,7 +430,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selectedFrontend: state.selection.frontendFramework,
   selectedBackend: state.selection.backendFramework,
   frontendOptions: state.wizardContent.frontendOptions,
-  selectedPages: state.selection.pages
+  selectedPages: state.selection.pages,
+  isPreview:  state.wizardContent.previewStatus
 });
 
 export default withRouter(
