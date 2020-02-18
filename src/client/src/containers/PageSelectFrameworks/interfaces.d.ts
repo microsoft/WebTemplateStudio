@@ -10,7 +10,6 @@ interface IStateProps {
   vscode: IVSCodeObject;
   frontendOptions: IOption[];
   backendOptions: IOption[];
-  isPreview: boolean;
 }
 
 export { IStateProps, IDispatchProps };

@@ -24,8 +24,7 @@ const mapStateToProps = (state: AppState): IStateProps => {
   return {
     frontendOptions,
     backendOptions,
-    vscode: getVSCodeApiSelector(state),
-    isPreview:  state.wizardContent.previewStatus
+    vscode: getVSCodeApiSelector(state)
   };
 };
 
