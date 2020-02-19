@@ -1,15 +1,15 @@
 ﻿import { browser, by, element } from 'protractor';
 
 export class AppPage {
-  navigateTo() {
+  navigateTo(): Promise<any> {
     return browser.get(browser.baseUrl) as Promise<any>;
   }
 
-  getTitleText() {
+  getTitleText(): Promise<string> {
     return element(by.css('.navbar-brand')).getText() as Promise<string>;
   }
 
-  getNavigationElements() {
+  getNavigationElements(): Promise<number> {
    return element.all(by.css('.nav-link')).count() as Promise<number>;
   }
 }
