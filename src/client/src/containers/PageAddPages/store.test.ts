@@ -10,7 +10,7 @@ describe("pageAddPages", () => {
       if (key) counterAttributes++;
     }
 
-    expect(mapStateToPropsInstance.options != undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.options !== undefined).toBeTruthy();
     expect(mapStateToPropsInstance.pageOutOfBounds).toBeFalsy();
     expect(counterAttributes === 2).toBeTruthy();
   });

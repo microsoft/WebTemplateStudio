@@ -55,6 +55,7 @@ const getCosmosSelectionInDropdownForm = (services: any): any => {
     };
     for (const selectionKey in selection[0]) {
       if (selectionKey) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore to allow dynamic key selection
         selectionInformation.dropdownSelection[selectionKey] = {
           value: selection[0][selectionKey],

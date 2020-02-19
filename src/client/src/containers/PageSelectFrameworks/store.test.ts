@@ -10,9 +10,9 @@ describe("PageSelectFramework", () => {
       if (key) counterAttributes++;
     }
 
-    expect(mapStateToPropsInstance.vscode != undefined).toBeTruthy();
-    expect(mapStateToPropsInstance.frontendOptions != undefined).toBeTruthy();
-    expect(mapStateToPropsInstance.backendOptions != undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.vscode !== undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.frontendOptions !== undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.backendOptions !== undefined).toBeTruthy();
 
     expect(counterAttributes).toBe(3);
   });

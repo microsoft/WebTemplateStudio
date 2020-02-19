@@ -21,7 +21,7 @@ export const addRequiredValidate = (name: string) =>{
 
 export const addExistingItemNameValidate = (pageTitle: string, selectedPages: Array<ISelected>) =>{
   let validate: IValidation = {isValid:true, error:validationMessages.default};
-  const existPage = selectedPages.filter(page => page.title.toLowerCase()==pageTitle.toLowerCase()).length > 1;
+  const existPage = selectedPages.filter(page => page.title.toLowerCase() === pageTitle.toLowerCase()).length > 1;
   if (existPage) validate = {isValid:false, error:validationMessages.duplicateItemName};
   return validate;
 }
@@ -29,7 +29,7 @@ export const addExistingItemNameValidate = (pageTitle: string, selectedPages: Ar
 export const addExistingProjectNameValidate = async (projectName: string, outputPath: string,
   vscode: IVSCodeObject) =>{
   let validate: IValidation = {isValid: true, error:validationMessages.default};
-  const isExistingName = projectName!="" && outputPath !="";
+  const isExistingName = projectName !== "" && outputPath !== "";
 
   if (isExistingName){
     const event: any = await projectPathValidation(outputPath,projectName, vscode);
@@ -57,7 +57,7 @@ export const addRegexValidate = (name: string, regexs: Array<IRegex>): IValidati
     })
     return regexsFiltered;
   }
-  if (name!=""){
+  if (name !== ""){
     const hasInvalidRegex = getInvalidRegex().length>0;
 
     if (hasInvalidRegex){

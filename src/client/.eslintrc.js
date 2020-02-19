@@ -32,13 +32,15 @@ module.exports = {
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-var-requires": "off",
-  
+      "react/display-name" : "off",
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-use-before-define": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "eqeqeq": "warn",
   
       //React Hooks
       "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-      "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
+      //"react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
     },
     settings: {
       react: {

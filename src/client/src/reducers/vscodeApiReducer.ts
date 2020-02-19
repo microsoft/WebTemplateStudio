@@ -40,6 +40,7 @@ function vscodeApi(
         newState.vscodeObject =
           process.env.NODE_ENV === PRODUCTION
             ? //
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
               // @ts-ignore because function does not exist in dev environment
               acquireVsCodeApi()
             : mockVsCodeApi();

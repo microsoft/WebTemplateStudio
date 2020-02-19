@@ -89,7 +89,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     if (modalOpeners.hasOwnProperty(internalName)) {
       return modalOpeners[internalName];
     }
-    return () => {};
+    return () => void(0);
   }
 
   /**

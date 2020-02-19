@@ -75,7 +75,7 @@ const ProjectNameAndOutput = (props: Props) => {
   } = props;
 
   React.useEffect(() => {
-    if (projectName==="" && outputPath!=="" && projectNameValidation.isDirty==false){
+    if (projectName==="" && outputPath!=="" && projectNameValidation.isDirty===false){
       inferProjectName(outputPath,vscode).then(suggestedProjectName => {
         updateProjectName(suggestedProjectName, {isValid:true, error:"", isDirty:true});
       });
@@ -86,7 +86,7 @@ const ProjectNameAndOutput = (props: Props) => {
     if (outputPath === "") {
       getOutputPathFromExtension(vscode).then((event)=>{
         const message = event.data;
-        if (message.payload != null && message.payload.outputPath != null) {
+        if (message.payload !== null && message.payload.outputPath !== null) {
           updateOutputPath(message.payload.outputPath);
         }
       })
@@ -99,7 +99,7 @@ const ProjectNameAndOutput = (props: Props) => {
       updateProjectName(projectNameToSet, validateState);
     });
 
-    if (projectNameToSet!=""){
+    if (projectNameToSet!==""){
       setProjectPathValidation({isValid: true});
     }
   }

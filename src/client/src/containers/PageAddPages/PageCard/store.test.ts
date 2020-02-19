@@ -10,10 +10,10 @@ describe("Page Card", () => {
       if (key) counterAttributes++;
     }
 
-    expect(mapStateToPropsInstance.vscode != undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.vscode !== undefined).toBeTruthy();
     expect(mapStateToPropsInstance.pageOutOfBounds).toBeFalsy();
-    expect(mapStateToPropsInstance.selectedFrontend != undefined).toBeTruthy();
-    expect(mapStateToPropsInstance.selectedPages != undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.selectedFrontend !== undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.selectedPages !== undefined).toBeTruthy();
     expect(counterAttributes === 4).toBeTruthy();
   });
 

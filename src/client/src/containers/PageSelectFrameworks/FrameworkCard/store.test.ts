@@ -10,10 +10,10 @@ describe("Framework Card", () => {
       if (key) counterAttributes++;
     }
 
-    expect(mapStateToPropsInstance.vscode != undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.vscode !== undefined).toBeTruthy();
     expect(mapStateToPropsInstance.isPreview).toBeFalsy();
-    expect(mapStateToPropsInstance.frontEndSelect != undefined).toBeTruthy();
-    expect(mapStateToPropsInstance.backEndSelect != undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.frontEndSelect !== undefined).toBeTruthy();
+    expect(mapStateToPropsInstance.backEndSelect !== undefined).toBeTruthy();
     expect(counterAttributes === 4).toBeTruthy();
   });
 

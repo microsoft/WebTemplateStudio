@@ -23,7 +23,7 @@ const PageCard = (props: Props) => {
   const [isMosueOver, setIsMouseOver] = React.useState(false);
 
   React.useEffect(()=>{
-    if (selectedPages.length==0 && page.defaultName == "Blank"){
+    if (selectedPages.length === 0 && page.defaultName === "Blank"){
       setTimeout(()=> setPages([page]),200);
     }
   },[page]);

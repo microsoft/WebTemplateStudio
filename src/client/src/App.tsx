@@ -185,14 +185,14 @@ const App = (props: Props) => {
           props.updateDependencyInfo(message.payload);
           break;
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
-          if (message.payload != null && message.payload.outputPath != null) {
+          if (message.payload !== null && message.payload.outputPath !== null) {
             props.updateOutputPath(message.payload.outputPath);
           }
           break;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
         case EXTENSION_COMMANDS.AZURE_LOGIN:
           // email will be null or undefined if login didn't work correctly
-          if (message.payload != null) {
+          if (message.payload !== null) {
             props.logIntoAzure(
               message.payload.email,
               message.payload.subscriptions
@@ -211,7 +211,7 @@ const App = (props: Props) => {
           // Expect resource groups and locations on this request
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
-          if (message.payload != null) {
+          if (message.payload !== null) {
             props.saveSubscriptionData({
               locations: message.payload.locations,
               resourceGroups: message.payload.resourceGroups,

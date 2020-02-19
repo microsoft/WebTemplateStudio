@@ -7,10 +7,10 @@ import PageCard from "./PageCard";
 import styles from "./styles.module.css";
 import classnames from "classnames";
 import Notification from "../../components/Notification";
-import { IStoreProps, IDispatchProps, IIntlProps, IProps } from "./interfaces";
+import { IStoreProps, IIntlProps, IProps } from "./interfaces";
 import { mapStateToProps} from "./store";
 
-type Props = IDispatchProps & IStoreProps & IIntlProps & IProps;
+type Props = IStoreProps & IIntlProps & IProps;
 
 const PageAddPages = (props: Props) => {
   const { options, intl, isModal, pageOutOfBounds } = props;
