@@ -4,9 +4,11 @@ import { getInitialState } from '../../../mockData/mockStore';
 
 describe("Page Card", () => {
   it("React",()=>{
-    const mapStateToPropsInstance:IStateProps = mapStateToProps(getInitialState());
-    let counterAttributes:number=0;
-    for (let key in mapStateToPropsInstance) counterAttributes++;
+    const mapStateToPropsInstance: IStateProps = mapStateToProps(getInitialState());
+    let counterAttributes = 0;
+    for (const key in mapStateToPropsInstance) {      
+      if (key) counterAttributes++;
+    }
 
     expect(mapStateToPropsInstance.vscode != undefined).toBeTruthy();
     expect(mapStateToPropsInstance.pageOutOfBounds).toBeFalsy();

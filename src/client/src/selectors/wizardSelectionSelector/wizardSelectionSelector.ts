@@ -3,7 +3,6 @@ import { createSelector } from "reselect";
 import { RowType } from "../../types/rowType";
 import { ISelected } from "../../types/selected";
 import getSvgUrl from "../../utils/getSvgUrl";
-import { defineMessages } from "react-intl";
 import { IValidation } from "../../utils/validations/validations";
 import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 import { AppState } from "../../reducers";

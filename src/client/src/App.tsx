@@ -2,7 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { Route, RouteComponentProps, Link } from "react-router-dom";
+import { Route, RouteComponentProps } from "react-router-dom";
 
 import PageDetails from "./containers/PageDetails";
 import PageAddPages from "./containers/PageAddPages";
@@ -125,8 +125,8 @@ interface IStateProps {
 
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
 
-const App = (props:Props) => {
-  const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,isPreview, setFrontendFrameworks, setBackendFrameworks } = props;
+const App = (props: Props) => {
+  const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, isPreview, setFrontendFrameworks, setBackendFrameworks } = props;
 
   React.useEffect(()=>{
     props.getVSCodeApi();
@@ -148,8 +148,8 @@ const App = (props:Props) => {
   },[selectedFrontend, selectedBackend]);
 
   const getFrameworksListAndSetToStore = ()=>{
-    getFrameworks(vscode, isPreview).then((event:any)=>{
-      let message = event.data;
+    getFrameworks(vscode, isPreview).then((event: any)=>{
+      const message = event.data;
       setFrontendFrameworks(
         parseFrameworksPayload(
           message.payload.frameworks,
@@ -249,7 +249,7 @@ const App = (props:Props) => {
           props.updateTemplateGenStatus(message.payload);
           break;
         case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
-          let versionData:IVersions = {
+          const versionData: IVersions = {
             templatesVersion:message.payload.templatesVersion,
             wizardVersion: message.payload.wizardVersion
           };
@@ -262,10 +262,7 @@ const App = (props:Props) => {
         case EXTENSION_COMMANDS.RESET_PAGES:
           if (message.payload.resetPages) {
             props.resetPageSelection();
-
-            // reset page count
-            const key = `wts.Page.${message.payload.internalName}.Blank`;
-
+            
             // select default blank page
             const PAGES_SELECTION: ISelected[] = [
               {

@@ -8,7 +8,7 @@ interface IDispatchProps {
 
 interface IStoreProps {
   options: IOption[];
-  pageOutOfBounds:boolean;
+  pageOutOfBounds: boolean;
 }
 
 interface IIntlProps {

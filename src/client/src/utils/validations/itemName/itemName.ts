@@ -3,12 +3,12 @@ import { addExistingItemNameValidate, addRegexValidate, addRequiredValidate, add
 import { validationMessages } from '../messages';
 import { ISelected } from "../../../types/selected";
 
-export const validateItemName = async (itemName:string, 
-  validations:IitemNameValidationConfig,
+export const validateItemName = async (itemName: string, 
+  validations: IitemNameValidationConfig,
   selectedPages: Array<ISelected>) => {
 
-  let listValidations:Array<IValidation>=[];
-  let validate:IValidation = {isValid:true,error:validationMessages.default};
+  const listValidations: Array<IValidation>=[];
+  let validate: IValidation = {isValid:true,error:validationMessages.default};
 
   if (validations.validateEmptyNames)
     listValidations.push(addRequiredValidate(itemName));

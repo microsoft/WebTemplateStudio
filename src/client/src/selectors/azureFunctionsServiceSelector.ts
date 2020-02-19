@@ -43,7 +43,7 @@ const getAzureFunctionsOptions = (
   isAzureFunctionsSelected: boolean
 ): any => {
   if (isAzureFunctionsSelected) {
-    let selections = state.selection.services.azureFunctions.selection[0];
+    const selections = state.selection.services.azureFunctions.selection[0];
     let updatedSelections;
     if (selections.functionNames) {
       updatedSelections = {
@@ -89,7 +89,7 @@ const getAzureFunctionsSelectionInDropdownForm = (
       previousFormData: selection[0]
     };
     for (const selectionKey in selectionInformation.previousFormData) {
-      let selectionInfo = selectionInformation.previousFormData[
+      const selectionInfo = selectionInformation.previousFormData[
         selectionKey
       ] as IDropDownOptionType;
       if (selectionKey) {

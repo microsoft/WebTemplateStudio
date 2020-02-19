@@ -15,7 +15,7 @@ import { ISelected } from "../../types/selected";
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants";
 
-import { injectIntl, InjectedIntl, defineMessages, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
 import { IFunctionName } from "../../containers/AzureFunctionsSelection";
 
 import { AppState } from "../../reducers";
@@ -75,9 +75,8 @@ const DraggableSidebarItem = ({
   intl,
   customInputStyle,
   isAzureFunction,
-  totalCount,
-  selectedPages
-}:Props) => {
+  totalCount
+}: Props) => {
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleCloseOnClick();
@@ -145,7 +144,7 @@ const DraggableSidebarItem = ({
                       handleInputChange(e.target.value, idx - 1);
                     }
                   }}
-                  onBlur={e => {
+                  onBlur={() => {
                     if (handleInputChange && idx && page && page.isValidTitle===false) {
                       handleInputChange(validValue, idx - 1);
                     }

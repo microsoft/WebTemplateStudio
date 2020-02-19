@@ -9,7 +9,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isRedirectModalOpenSelector } from "../../selectors/modalSelector";
 import { KEY_EVENTS } from "../../utils/constants";
 
-import { defineMessages, injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { AppState } from "../../reducers";
 import { Dispatch } from "redux";

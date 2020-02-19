@@ -41,7 +41,6 @@ function vscodeApi(
           process.env.NODE_ENV === PRODUCTION
             ? //
               // @ts-ignore because function does not exist in dev environment
-              // eslint-disable-next-line
               acquireVsCodeApi()
             : mockVsCodeApi();
         return newState;

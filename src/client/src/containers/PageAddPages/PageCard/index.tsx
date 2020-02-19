@@ -18,7 +18,7 @@ import { inferItemName } from "../../../utils/infer/itemName";
 
 type Props = IProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
-const PageCard = (props:Props) => {
+const PageCard = (props: Props) => {
   const { page, intl, setPages, selectedPages, setDetailPage, isModal, pageOutOfBounds } = props;
   const [isMosueOver, setIsMouseOver] = React.useState(false);
 
@@ -29,7 +29,7 @@ const PageCard = (props:Props) => {
   },[page]);
 
   const addPage = ()=>{
-    const select:ISelected = {
+    const select: ISelected = {
       author:page.author,
       defaultName:page.defaultName,
       internalName:page.internalName,
@@ -39,7 +39,7 @@ const PageCard = (props:Props) => {
     };
 
     if (!pageOutOfBounds){
-      let newSelectedPages:ISelected[] = selectedPages.splice(0);
+      const newSelectedPages: ISelected[] = selectedPages.splice(0);
       newSelectedPages.push(select);
       setPages(newSelectedPages);
     }

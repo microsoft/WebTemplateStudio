@@ -1,4 +1,3 @@
-import { Dispatch } from "react";
 import { IMetadata } from "../../types/metadata";
 import { IOption } from "../../types/option";
 import getSvgUrl from "../../utils/getSvgUrl";

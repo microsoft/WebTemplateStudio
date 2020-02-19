@@ -20,9 +20,9 @@ import { addRequiredValidate, addExistingProjectNameValidate, addRegexValidate,
 
 describe("validate", () => {
   it("config validate",(resolve)=>{
-    const postMessage = ()=>{};
-    let mockVsCode:IVSCodeObject = { postMessage };
-    let validations:IprojectNameValidationConfig = {
+    const postMessage = jest.fn();
+    const mockVsCode: IVSCodeObject = { postMessage };
+    const validations: IprojectNameValidationConfig = {
       regexs:[],
       reservedNames:[],
       validateEmptyNames:false,
@@ -37,9 +37,9 @@ describe("validate", () => {
     });
   });
   it("config no validate",(resolve)=>{
-    const postMessage = ()=>{};
-    let mockVsCode:IVSCodeObject = { postMessage };
-    let validations:IprojectNameValidationConfig = {
+    const postMessage = jest.fn();
+    const mockVsCode: IVSCodeObject = { postMessage };
+    const validations: IprojectNameValidationConfig = {
       regexs:[{
         "name" : "nameStartWith$",
         "pattern" : "^[^\\$]"
