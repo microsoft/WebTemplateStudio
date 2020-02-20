@@ -45,6 +45,14 @@ const PageCard = (props:Props) => {
     }
   }
 
+  const addPageIfEnterOrSpace = (e:any) =>{
+    const isSelectableCard = e.key == 'Enter' || e.key == ' ';
+    if (isSelectableCard){
+      e.preventDefault();
+      addPage();
+    }
+  }
+
   const showMoreInfo = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
@@ -56,6 +64,7 @@ const PageCard = (props:Props) => {
     <div
     role="button"
     tabIndex={0}
+    onKeyDown={addPageIfEnterOrSpace}
     onClick={addPage}
     className={classNames(styles.container, styles.boundingBox)}
     onMouseLeave={()=>setIsMouseOver(false)}

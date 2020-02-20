@@ -67,6 +67,14 @@ const FrameworkCard = (props:Props) => {
     }
   }
 
+  const selectCardIfEnterOrSpace = (e:any) =>{
+    const isSelectableCard = e.key == 'Enter' || e.key == ' ';
+    if (isSelectableCard){
+      e.preventDefault();
+      selectCard();
+    }
+  }
+
   const detailsClickWrapper = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
@@ -79,6 +87,7 @@ const FrameworkCard = (props:Props) => {
     role="button"
     tabIndex={0}
     onClick={selectCard}
+    onKeyDown={selectCardIfEnterOrSpace}
     className={classNames(styles.container, styles.boundingBox, {
       [styles.selected]: selected
     })}>
