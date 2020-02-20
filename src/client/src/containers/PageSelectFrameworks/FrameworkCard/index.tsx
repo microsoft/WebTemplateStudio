@@ -9,7 +9,7 @@ import { getSvg } from "../../../utils/getSvgUrl";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../../utils/constants";
+import { ROUTES, KEY_EVENTS } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import { getLatestVersion } from "../../../utils/extensionService/extensionService";
@@ -67,10 +67,10 @@ const FrameworkCard = (props:Props) => {
     }
   }
 
-  const selectCardIfEnterOrSpace = (e:any) =>{
-    const isSelectableCard = e.key == 'Enter' || e.key == ' ';
+  const selectCardIfEnterOrSpace = (event:React.KeyboardEvent<HTMLDivElement>) =>{
+    const isSelectableCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
     if (isSelectableCard){
-      e.preventDefault();
+      event.preventDefault();
       selectCard();
     }
   }
