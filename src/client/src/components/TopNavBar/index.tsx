@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
-import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import TopNavBarLink from "../TopNavBarLink";
 

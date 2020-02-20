@@ -25,7 +25,7 @@ const TopNavBarLink = ({
   disabled: boolean;
   isSelected: boolean;
   intl: InjectedIntl;
-  reducerSetPage:(route: string) => void
+  reducerSetPage: (route: string) => void;
 }) => {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     if (disabled) {

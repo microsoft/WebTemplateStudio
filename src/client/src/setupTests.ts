@@ -1,6 +1,6 @@
 import { configure, shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { IntlProvider, FormattedRelative, intlShape } from "react-intl";
+import { IntlProvider, intlShape } from "react-intl";
 import React from "react";
 
 /**

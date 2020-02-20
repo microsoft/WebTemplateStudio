@@ -42,7 +42,7 @@ import { IValidation} from "../../../utils/validations/validations";
 import { inferProjectName} from "../../../utils/infer/projectName";
 import { setProjectPathValidation } from "../../../actions/wizardSelectionActions/setProjectPathValidation";
 import messages from "./messages";
-import { getOutput_Path } from "../../../utils/extensionService/extensionService";
+import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -54,7 +54,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  updateProjectName: (projectName: string, validation:any) => any;
+  updateProjectName: (projectName: string, validation: any) => any;
   updateOutputPath: (outputPath: string) => any;
   setProjectPathValidation: (validation: any) => void;
 }
@@ -75,7 +75,7 @@ const ProjectNameAndOutput = (props: Props) => {
   } = props;
 
   React.useEffect(() => {
-    if (projectName==="" && outputPath!=="" && projectNameValidation.isDirty==false){
+    if (projectName==="" && outputPath!=="" && projectNameValidation.isDirty===false){
       inferProjectName(outputPath,vscode).then(suggestedProjectName => {
         updateProjectName(suggestedProjectName, {isValid:true, error:"", isDirty:true});
       });
@@ -84,22 +84,22 @@ const ProjectNameAndOutput = (props: Props) => {
 
   React.useEffect(() => {
     if (outputPath === "") {
-      getOutput_Path(vscode).then((event)=>{
+      getOutputPathFromExtension(vscode).then((event)=>{
         const message = event.data;
-        if (message.payload != null && message.payload.outputPath != null) {
+        if (message.payload !== null && message.payload.outputPath !== null) {
           updateOutputPath(message.payload.outputPath);
         }
       })
     }
   }, [vscode]);
 
-  const validateSetProjectValueAndSetDirty = (projectNameToSet:string) =>{
-    validateProjectName(projectNameToSet, outputPath, validations.projectNameValidationConfig, vscode).then((validateState:IValidation)=>{
+  const validateSetProjectValueAndSetDirty = (projectNameToSet: string) =>{
+    validateProjectName(projectNameToSet, outputPath, validations.projectNameValidationConfig, vscode).then((validateState: IValidation)=>{
       validateState.isDirty = projectNameValidation.isDirty;
       updateProjectName(projectNameToSet, validateState);
     });
 
-    if (projectNameToSet!=""){
+    if (projectNameToSet!==""){
       setProjectPathValidation({isValid: true});
     }
   }
@@ -173,7 +173,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 const mapDispatchToProps = (
   dispatch: Dispatch<RootAction>
 ): IDispatchProps => ({
-  updateProjectName: (projectName: string, validate:any) => {
+  updateProjectName: (projectName: string, validate: any) => {
     dispatch(updateProjectNameAction(projectName, validate));
   },
   updateOutputPath: (outputPath: string) => {

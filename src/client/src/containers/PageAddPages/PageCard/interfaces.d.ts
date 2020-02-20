@@ -1,11 +1,10 @@
 import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import Select from "react-select/lib/Select";
 import { ISelected } from "../../../types/selected";
 
 interface IProps {
-  page:IOption;
-  isModal:boolean;
+  page: IOption;
+  isModal: boolean;
 }
 
 interface IDispatchProps {
@@ -17,7 +16,7 @@ interface IStateProps {
   vscode: IVSCodeObject;
   selectedPages: ISelected[];
   selectedFrontend: ISelected;
-  pageOutOfBounds:boolean;
+  pageOutOfBounds: boolean;
 }
 
 export { IStateProps, IDispatchProps, IProps };

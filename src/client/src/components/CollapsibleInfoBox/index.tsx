@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import * as React from "react";
 import { ReactComponent as Down } from "../../assets/i-collapsibleDown.svg";
 import { ReactComponent as Up } from "../../assets/i-collapsibleUp.svg";

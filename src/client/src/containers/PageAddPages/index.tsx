@@ -7,12 +7,12 @@ import PageCard from "./PageCard";
 import styles from "./styles.module.css";
 import classnames from "classnames";
 import Notification from "../../components/Notification";
-import { IStoreProps, IDispatchProps, IIntlProps, IProps } from "./interfaces";
+import { IStoreProps, IIntlProps, IProps } from "./interfaces";
 import { mapStateToProps} from "./store";
 
-type Props = IDispatchProps & IStoreProps & IIntlProps & IProps;
+type Props = IStoreProps & IIntlProps & IProps;
 
-const PageAddPages = (props:Props) => {
+const PageAddPages = (props: Props) => {
   const { options, intl, isModal, pageOutOfBounds } = props;
 
   return (
@@ -31,8 +31,8 @@ const PageAddPages = (props:Props) => {
         />
       </div>
       <div className={styles.flexContainer}>
-        {options.map((option)=>{
-          return (<PageCard page={option} isModal={isModal}/>)
+        {options.map((option, key)=>{
+          return (<PageCard key={key} page={option} isModal={isModal}/>)
         })}
       </div>
     </div>

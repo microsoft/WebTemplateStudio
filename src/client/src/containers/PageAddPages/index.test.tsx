@@ -14,7 +14,7 @@ describe("PageAddPages", () => {
   let props: any;
   let wrapper: any;
   let store: any;
-  let initialState:any;
+  let initialState: any;
   const mockStore = configureMockStore();
 
   beforeEach(()=>{

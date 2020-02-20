@@ -7,7 +7,7 @@ import AzureActionType from "../../actions/azureActions/azureActionType";
 }
 */
 
-const profileData = (state: boolean = false, action: AzureActionType) => {
+const profileData = (state = false, action: AzureActionType) => {
   switch (action.type) {
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
       return false;

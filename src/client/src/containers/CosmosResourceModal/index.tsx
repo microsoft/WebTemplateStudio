@@ -71,11 +71,11 @@ interface IStateProps {
 let timeout: NodeJS.Timeout | undefined;
 type Props = IDispatchProps & IStateProps & InjectedIntlProps;
 
-interface attributeLinks {
+interface AttributeLinks {
   [key: string]: any;
 }
 
-const links: attributeLinks = {
+const links: AttributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
   api: null,
@@ -370,34 +370,6 @@ const CosmosResourceModal = (props: Props) => {
       event.preventDefault();
       event.stopPropagation();
       props.closeModal();
-    }
-  };
-
-  // when user clicks a radio button, update form data
-  const radioButtonOnChangeHandler = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    let element = event.target as HTMLInputElement;
-    if (
-      element.value ===
-      props.intl.formatMessage(azureModalMessages.azureModalChooseExisting)
-    ) {
-      updateForm({
-        ...cosmosFormData
-      });
-    } else if (
-      element.value ===
-      props.intl.formatMessage(
-        azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
-      )
-    ) {
-      updateForm({
-        ...cosmosFormData,
-        resourceGroup: {
-          value: "",
-          label: ""
-        }
-      });
     }
   };
 

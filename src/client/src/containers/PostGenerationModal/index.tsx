@@ -80,8 +80,7 @@ const PostGenerationModal = ({
   isTemplatesFailed,
   isServicesSelected,
   resetWizard,
-  history,
-  projectName
+  history
 }: Props) => {
   const { formatMessage } = intl;
   let serviceFailed = false;

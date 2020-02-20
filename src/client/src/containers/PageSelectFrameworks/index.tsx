@@ -16,7 +16,7 @@ import messages from "./messages";
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
-const SelectFrameworks = (props:Props) => {
+const SelectFrameworks = (props: Props) => {
   const { frontendOptions, backendOptions, intl } = props;
 
   React.useEffect(()=>{
@@ -48,7 +48,7 @@ const SelectFrameworks = (props:Props) => {
       <div className={styles.flexContainer}>
         {frontendOptions.map((framework) => {
           return (
-            <FrameworkCard framework={framework} isFrontEnd={true}/>
+            <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={true}/>
           );
         })}
       </div>
@@ -56,7 +56,7 @@ const SelectFrameworks = (props:Props) => {
       <div className={styles.flexContainer}>
         {backendOptions.map((framework) => {
           return (
-            <FrameworkCard framework={framework} isFrontEnd={false}/>
+            <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={false}/>
           );
         })}
       </div>

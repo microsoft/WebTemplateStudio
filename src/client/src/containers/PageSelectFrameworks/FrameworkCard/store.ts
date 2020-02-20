@@ -1,5 +1,4 @@
 import { IOption } from "../../../types/option";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../../reducers";

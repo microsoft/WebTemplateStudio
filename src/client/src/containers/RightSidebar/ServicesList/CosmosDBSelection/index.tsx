@@ -15,7 +15,7 @@ import { openCosmosDbModalAction } from "../../../../actions/modalActions/modalA
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 
-import { injectIntl, FormattedMessage, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../../../reducers";
 import RootAction from "../../../../actions/ActionType";
