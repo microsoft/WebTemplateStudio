@@ -8,7 +8,6 @@ import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalA
 
 import * as getSvg from "../../utils/getSvgUrl";
 import { ReactComponent as EditIcon } from "../../assets/edit.svg";
-import getSvgUrl, { withLocalPath } from "../../utils/getSvgUrl";
 
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants";
@@ -20,10 +19,8 @@ import {
 } from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
 import {
-  FormattedMessage,
   injectIntl,
-  InjectedIntlProps,
-  defineMessages
+  InjectedIntlProps
 } from "react-intl";
 import RootAction from "../../actions/ActionType";
 import { ThunkDispatch } from "redux-thunk";
@@ -53,13 +50,6 @@ interface IDispatchProps {
 }
 
 type Props = IProps & IDispatchProps & InjectedIntlProps;
-
-const messages = defineMessages({
-  duplicateFunctionName: {
-    id: "azureFunctionsSelection.duplicateName",
-    defaultMessage: "Function name has to be unique"
-  }
-});
 
 /**
  *  The current implementation only allows for one Azure Function application to be created.

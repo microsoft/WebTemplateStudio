@@ -2,14 +2,14 @@
 // custom styling for dropdown component using the Style API provided by react-select
 
 export default {
-  input: (base: any) => ({
+  input: () => ({
     color: "var(--vscode-editor-foreground)"
   }),
   indicatorSeparator: (base: any) => ({
     ...base,
     display: "none"
   }),
-  singleValue: (base: any, state: any) => ({
+  singleValue: (base: any) => ({
     ...base,
     color: "var(--vscode-editor-foreground)"
   }),
@@ -57,7 +57,7 @@ export default {
     // prevent menu to scroll y
     wordWrap: "break-word"
   }),
-  menuList: (base: any, state: any) => ({
+  menuList: (base: any) => ({
     ...base,
     // kill the white space on first and last option
     padding: 0,

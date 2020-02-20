@@ -74,7 +74,7 @@ const asModal = <P extends object>(
 ) => {
   return class extends React.Component<P & IProps> {
     static defaultProps = {
-      closeModal: () => {},
+      closeModal: () => void(0),
       isModalOpen: false
     };
     render() {

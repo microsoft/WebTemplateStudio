@@ -1,10 +1,9 @@
-import { ROUTES } from "../../utils/constants";
 import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
 import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType";
 
 
 const wizardNavigation = (
-  state: string = "/",
+  state = "/",
   action: WizardInfoType
 ) => {
   switch (action.type) {

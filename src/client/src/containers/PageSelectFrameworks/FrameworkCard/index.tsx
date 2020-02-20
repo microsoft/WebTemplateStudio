@@ -16,7 +16,7 @@ import { getLatestVersion } from "../../../utils/extensionService/extensionServi
 
 type Props = ISelectProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
-const FrameworkCard = (props:Props) => {
+const FrameworkCard = (props: Props) => {
   const { framework, setFrontendSelect, frontEndSelect,
     setBackendSelect, backEndSelect, isFrontEnd, intl, setDetailPage, vscode, updateFrameworks } = props;
 
@@ -25,7 +25,7 @@ const FrameworkCard = (props:Props) => {
   React.useEffect(()=>{
     selectWhenLoadWithoutSelection();
     if (!framework.latestVersionLoaded){
-      getLatestVersion(vscode, framework.checkVersionPackageName, framework.checkVersionPackageSource).then((latestVersion:boolean)=>{
+      getLatestVersion(vscode, framework.checkVersionPackageName, framework.checkVersionPackageSource).then((latestVersion: boolean)=>{
         framework.latestVersion = latestVersion;
         framework.latestVersionLoaded = true;
         updateFrameworks([framework]);

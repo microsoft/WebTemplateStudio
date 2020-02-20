@@ -50,8 +50,8 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
             isDirty:false
           }
         },
-        frontendFramework:frontendOptions.filter((frame)=>frame.internalName=="React")[0],
-        backendFramework:backendOptions.filter((frame)=>frame.internalName=="Node")[0]
+        frontendFramework:frontendOptions.filter((frame)=>frame.internalName==="React")[0],
+        backendFramework:backendOptions.filter((frame)=>frame.internalName==="Node")[0]
       },
       versions: state!.versions,
       vscode: state!.vscode,

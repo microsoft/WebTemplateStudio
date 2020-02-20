@@ -40,7 +40,7 @@ describe("SubscriptionSelection", () => {
     `when subscription is %p, should have %p value in a dropdown selected value`,
     (subscription, result) => {
       props.subscription = subscription;
-      let wrapper = mountWithIntl(
+      const wrapper = mountWithIntl(
         <SubscriptionSelection {...props} />
       ).children();
 

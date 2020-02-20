@@ -22,7 +22,7 @@ const getPagesOptionsSuccess = (
 });
 
 function getApiTemplateInfoFromJson(items: any[]): IApiTemplateInfo[] {
-  let listItems = items.map<IApiTemplateInfo>(val => ({
+  const listItems = items.map<IApiTemplateInfo>(val => ({
     displayName: val.name,
     licenses: val.licenses,
     longDescription: val.richDescription,
@@ -34,7 +34,7 @@ function getApiTemplateInfoFromJson(items: any[]): IApiTemplateInfo[] {
     tags: val.tags,
     defaultName: val.defaultName,
     author: val.author
-  })).sort((a:IApiTemplateInfo, b:IApiTemplateInfo) => a.position - b.position);
+  })).sort((a: IApiTemplateInfo, b: IApiTemplateInfo) => a.position - b.position);
 
   return listItems;
 }

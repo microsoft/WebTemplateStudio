@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import styles from "./styles.module.css";
 import classnames from "classnames";
-import { injectIntl, defineMessages, InjectedIntl } from "react-intl";
+import { injectIntl, InjectedIntl } from "react-intl";
 import {
   WIZARD_CONTENT_INTERNAL_NAMES,
   KEY_EVENTS
@@ -75,13 +75,13 @@ type Props = IDependencyInfoProps & IDispatchProps;
  */
 class DependencyInfo extends React.Component<Props> {
   public render() {
-    let {
+    const {
       frameworkName,
       intl,
       dependenciesStore,
       openRedirectModal
     } = this.props;
-    let dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
+    const dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
       frameworkName
     );
 
@@ -100,7 +100,7 @@ class DependencyInfo extends React.Component<Props> {
     }
     const installed: boolean = dependenciesStore[dependencyStoreKey].installed;
 
-    let dependencyMessage: string = installed
+    const dependencyMessage: string = installed
       ? ""
       : intl.formatMessage(messages.notInstalled, {
           dependencyName: dependencyName,

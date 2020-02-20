@@ -4,10 +4,10 @@ export const setCosmosModalButtonStatus = (
   accountNameAvailability: any,
   setFormIsSendable: (status: boolean) => void
 ): boolean => {
-  let isSubscriptionEmpty: boolean = false;
-  let isAccountNameEmpty: boolean = false;
-  let isApiEmpty: boolean = false;
-  let isAnyEmpty: boolean = false;
+  let isSubscriptionEmpty = false;
+  let isAccountNameEmpty = false;
+  let isApiEmpty = false;
+  let isAnyEmpty = false;
 
   isSubscriptionEmpty = selections.subscription.value === "";
   isAccountNameEmpty = selections.accountName.value === "";

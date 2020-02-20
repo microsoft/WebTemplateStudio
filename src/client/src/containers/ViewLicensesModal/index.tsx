@@ -1,11 +1,9 @@
-import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import { AppState } from "../../reducers";
-import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import asModal from "../../components/Modal";
 import RootAction from "../../actions/ActionType";
@@ -28,7 +26,6 @@ interface IDispatchProps {
 type Props = IStateProps & InjectedIntlProps & IDispatchProps;
 
 const ViewLicensesModal = ({ intl, closeModal }: Props) => {
-  const { formatMessage } = intl;
 
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {

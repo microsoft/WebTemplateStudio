@@ -7,7 +7,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import { IValidation } from "../../utils/validations/validations";
 import classNames from "classnames";
 
-import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import messages from "./messages";
 
@@ -23,7 +23,6 @@ const OutputPath = ({
   handleChange,
   handleSaveClick,
   value,
-  validation,
   isEmpty,
   intl,
   placeholder

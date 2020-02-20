@@ -26,7 +26,7 @@ interface IStateProps {
 
 type Props = IStateProps & InjectedIntlProps;
 
-const RuntimeStackInfo = (props : Props) => {
+const RuntimeStackInfo = (props: Props) => {
   
   const {intl, selectedBackend} = props;
 

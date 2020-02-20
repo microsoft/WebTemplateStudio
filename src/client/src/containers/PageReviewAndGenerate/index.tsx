@@ -7,7 +7,7 @@ import * as ModalActions from "../../actions/modalActions/modalActions";
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 
-import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";

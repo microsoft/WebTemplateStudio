@@ -1,22 +1,19 @@
 import React from "react";
 import classnames from "classnames";
-import { injectIntl, defineMessages, InjectedIntl } from "react-intl";
+import { injectIntl } from "react-intl";
 
 import { ReactComponent as Warning } from "../../assets/warning.svg";
 import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
 
 import styles from "./styles.module.css";
-import getMessages from "./messages";
 
 interface IProps {
-  showWarning: Boolean;
+  showWarning: boolean;
   text: string;
   altMessage: string;
 }
 
 const Notification = ({ showWarning, text, altMessage }: IProps) => {
-  const messages =getMessages(altMessage);
-
   return (
     <React.Fragment>
       <div role="img" aria-label={altMessage}>

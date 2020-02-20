@@ -8,7 +8,7 @@ import WizardContentActionType from "../../actions/wizardContentActions/wizardCo
 */
 
 const previewStatus = (
-  state: boolean = false,
+  state = false,
   action: WizardContentActionType
 ) => {
   switch (action.type) {

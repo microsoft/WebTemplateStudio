@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { AppState } from "../reducers";
 
 export const getISelected = () => {
-  let selected:ISelected = {
+  const selected: ISelected = {
     title:"title1",
     internalName:"internamName1"
   };
@@ -14,21 +14,21 @@ export const getISelected = () => {
 
 
 export const getIVSCodeApi = () => {
-  const isVsCodeApiAcquired: boolean = false;
+  const isVsCodeApiAcquired = false;
   const vscodeObject: IVSCodeObject = mockVsCodeApi();
 
-  const vscode:IVSCodeAPI = {
+  const vscode: IVSCodeAPI = {
     isVsCodeApiAcquired,
     vscodeObject
   };
-  const mockVSCode:IVSCode = {
+  const mockVSCode: IVSCode = {
     vscode
   };
   return mockVSCode;
 };
 
 export const getInitialState = () => {
-  const initialState:AppState={
+  const initialState: AppState={
     vscode: {
       isVsCodeApiAcquired: true,
       vscodeObject: getIVSCodeApi().vscode.vscodeObject
@@ -207,8 +207,8 @@ export const getInitialState = () => {
   return initialState;
 }
 
-const loadPages = (frameWorkName:string):Array<any>=>{
-  let blankPage = {
+const loadPages = (frameWorkName: string): Array<any>=>{
+  const blankPage = {
     body: 'A blank page for you to build your web application from scratch.',
     internalName: 'wts.Page.' + frameWorkName + '.Blank',
     licenses: [
@@ -224,7 +224,7 @@ const loadPages = (frameWorkName:string):Array<any>=>{
     isValidTitle: true,
     author: 'Microsoft'
   }
-  let gridPage = {
+  const gridPage = {
     body: 'Simple image and text components which are organized into a grid.',
     internalName: 'wts.Page.' + frameWorkName + '.Grid',
     licenses: [
@@ -240,7 +240,7 @@ const loadPages = (frameWorkName:string):Array<any>=>{
     isValidTitle: true,
     author: 'Microsoft'
   };
-  let listPage = {
+  const listPage = {
     body: 'Add and remove text from an adaptive list.',
     internalName: 'wts.Page.' + frameWorkName + '.List',
     licenses: [
@@ -256,7 +256,7 @@ const loadPages = (frameWorkName:string):Array<any>=>{
     isValidTitle: true,
     author: 'Microsoft'
   }
-  let masterPage = {
+  const masterPage = {
     body: 'A master pane and a details pane for content.',
     internalName: 'wts.Page.' + frameWorkName + '.MasterDetail',
     licenses: [
@@ -272,7 +272,7 @@ const loadPages = (frameWorkName:string):Array<any>=>{
     isValidTitle: true,
     author: 'Microsoft'
   };
-  let pages:Array<any> = new Array<any>();
+  const pages: Array<any> = new Array<any>();
   pages.push(blankPage);
   pages.push(gridPage);
   pages.push(listPage);
@@ -281,6 +281,6 @@ const loadPages = (frameWorkName:string):Array<any>=>{
   return pages;
 }
 
-export const loadMasters = (store:any) =>{
+export const loadMasters = (store: any) =>{
   store.wizardContent.pageOptions = loadPages("React");
 }
