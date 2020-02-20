@@ -146,27 +146,29 @@ type Props = IDispatchProps & IStateProps & RouteComponentProps;
 
 const App = (props:Props) => {
   const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,isPreview, setFrontendFrameworks, setBackendFrameworks } = props;
+  if (frontendOptions.length==0){
+    messageEventsFromExtension();
+    getFrameworksListAndSetToStore();
+  }
 
   React.useEffect(()=>{
     props.getVSCodeApi();
   },[]);
 
   React.useEffect(()=>{
-      const { vscode } = props;
-        vscode.postMessage({
-          module: EXTENSION_MODULES.AZURE,
-          command: EXTENSION_COMMANDS.GET_USER_STATUS,
-          track: true
-        });
-      messageEventsFromExtension();
-      getFrameworksListAndSetToStore();
+    const { vscode } = props;
+    vscode.postMessage({
+      module: EXTENSION_MODULES.AZURE,
+      command: EXTENSION_COMMANDS.GET_USER_STATUS,
+      track: true
+    });
   },[props.vscode]);
 
   React.useEffect(()=>{
     loadPages();
   },[selectedFrontend, selectedBackend]);
 
-  const getFrameworksListAndSetToStore = ()=>{
+  function getFrameworksListAndSetToStore(){
     getFrameworks(vscode, isPreview).then((event:any)=>{
       let message = event.data;
       setFrontendFrameworks(
