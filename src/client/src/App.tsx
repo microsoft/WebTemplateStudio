@@ -4,13 +4,10 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Route, RouteComponentProps, Link } from "react-router-dom";
 
-import PageDetails from "./containers/PageDetails";
-import PageAddPages from "./containers/PageAddPages";
 import PageNewProject from "./containers/PageNewProject";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";
-import PageReviewAndGenerate from "./containers/PageReviewAndGenerate";
 import RightSidebar from "./containers/RightSidebar";
 import RedirectModal from "./containers/RedirectModal";
 import ViewLicensesModal from "./containers/ViewLicensesModal";
@@ -38,7 +35,7 @@ import {
   setSiteNameAvailabilityAction,
   IAvailabilityFromExtension
 } from "./actions/azureActions/setAccountAvailability";
-import PageAzureLogin from "./containers/PageAzureLogin";
+
 import { getSubscriptionData } from "./actions/azureActions/subscriptionData";
 import { setValidations } from "./actions/wizardSelectionActions/setValidations";
 import {
@@ -71,13 +68,35 @@ import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
-import PageSelectFrameworks from './containers/PageSelectFrameworks';
 import { getPages, getFrameworks } from "./utils/extensionService/extensionService";
 import AppServiceModal from "./containers/AppServiceModal";
 import PostGenerationModal from "./containers/PostGenerationModal";
 import { setBackendFrameworksAction } from "./actions/wizardContentActions/setBackendFrameworks";
 import { setFrontendFrameworksAction } from "./actions/wizardContentActions/setFrontendFrameworks";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
+
+import Loadable from "react-loadable";
+
+const PageSelectFrameworks = Loadable({
+  loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
+  loading:() => <div/>
+});
+const PageAddPages = Loadable({
+  loader: () => import(/* webpackChunkName: "PageAddPages" */  "./containers/PageAddPages"),
+  loading:() => <div/>
+});
+const PageReviewAndGenerate = Loadable({
+  loader: () => import(/* webpackChunkName: "PageReviewAndGenerate" */  "./containers/PageReviewAndGenerate"),
+  loading:() => <div/>
+});
+const PageAzureLogin = Loadable({
+  loader: () => import(/* webpackChunkName: "PageAzureLogin" */  "./containers/PageAzureLogin"),
+  loading:() => <div/>
+});
+const PageDetails = Loadable({
+  loader: () => import(/* webpackChunkName: "PageDetails" */  "./containers/PageDetails"),
+  loading:() => <div/>
+});
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
