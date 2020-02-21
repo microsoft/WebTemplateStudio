@@ -5,9 +5,6 @@ import { withRouter } from "react-router";
 import { Route, RouteComponentProps } from "react-router-dom";
 
 import PageNewProject from "./containers/PageNewProject";
-import Footer from "./containers/Footer";
-import Header from "./containers/Header";
-import RightSidebar from "./containers/RightSidebar";
 
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
@@ -17,7 +14,6 @@ import {
   EXTENSION_MODULES,
   ROUTES,
   DEVELOPMENT,
-  BOOTSTRAP_LICENSE,
   FRAMEWORK_TYPE
 } from "./utils/constants";
 
@@ -55,7 +51,6 @@ import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
 import { setAzureValidationStatusAction } from "./actions/azureActions/setAzureValidationStatusAction";
 import { IServiceStatus } from "./reducers/generationStatus/genStatus";
-import { resetPagesAction } from "./actions/wizardSelectionActions/selectPages";
 import { ISelected } from "./types/selected";
 import { AppState } from "./reducers";
 import { IOption } from "./types/option";
@@ -63,7 +58,6 @@ import { setPreviewStatusAction } from "./actions/wizardContentActions/setPrevie
 import { setPortAction } from "./actions/wizardContentActions/setPort";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
-import TopNavBar from "./components/TopNavBar";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import { getPages, getFrameworks } from "./utils/extensionService/extensionService";
 
@@ -162,10 +156,38 @@ type Props = IDispatchProps & IStateProps & RouteComponentProps;
 const App = (props: Props) => {
   const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,
     isPreview, setFrontendFrameworks, setBackendFrameworks, modalState } = props;
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const promisesLoading:Array<any> = new Array<any>();
+  
+  const addToPromisesList = (promise:Promise<any>)=>{
+    promisesLoading.push(promise);
+    return promise;
+  }
+  const Header = Loadable({
+    loader: () => addToPromisesList(import(/* webpackChunkName: "Header" */  "./containers/Header")),
+    loading:() => <div/>
+  });
+  const TopNavBar = Loadable({
+    loader: () => addToPromisesList(import(/* webpackChunkName: "TopNavBar" */  "./components/TopNavBar")),
+    loading:() => <div/>
+  });
+  const RightSidebar = Loadable({
+    loader: () => addToPromisesList(import(/* webpackChunkName: "RightSidebar" */  "./containers/RightSidebar")),
+    loading:() => <div/>
+  });
+  const Footer = Loadable({
+    loader: () => addToPromisesList(import(/* webpackChunkName: "Footer" */  "./containers/Footer")),
+    loading:() => <div/>
+  });
+  
   if (frontendOptions.length === 0){
     messageEventsFromExtension();
     getFrameworksListAndSetToStore();
   }
+
+  Promise.all(promisesLoading).then(()=>{
+    setIsLoaded(true);
+  })
 
   React.useEffect(()=>{
     props.getVSCodeApi();
