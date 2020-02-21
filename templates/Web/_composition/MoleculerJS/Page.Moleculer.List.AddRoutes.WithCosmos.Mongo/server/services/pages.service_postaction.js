@@ -3,10 +3,10 @@
 const DBMixin = require("../mixins/db.mixin");
 //}]}
 module.exports = {
-  mixins: [/*{[{*/DBMixin()/*}]}*/],
+  mixins: [/*{[{*/ DBMixin() /*}]}*/],
   actions: {
     // Action handlers
-  //{[{
+    //{[{
     listGet: {
       rest: "GET /list",
       handler(ctx) {
@@ -18,7 +18,7 @@ module.exports = {
       rest: "POST /list",
       /**
        * Param validation.
-       * More info: https://moleculer.services/docs/0.13/validating.html
+       * More info: https://moleculer.services/docs/0.14/validating.html
        */
       params: {
         text: { type: "string" }, // required field
@@ -33,7 +33,7 @@ module.exports = {
       rest: "DELETE /list/:_id",
       /**
        * Param validation.
-       * More info: https://moleculer.services/docs/0.13/validating.html
+       * More info: https://moleculer.services/docs/0.14/validating.html
        */
       params: {
         _id: { type: "string" }, // required filed
@@ -43,7 +43,7 @@ module.exports = {
         // Call remove method that was loaded with `db.mixin.js`
         return this._remove(ctx, { id: ctx.params._id });
       }
-    },
-  //}]}
-  },
+    }
+    //}]}
+  }
 };
