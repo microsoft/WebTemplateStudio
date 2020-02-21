@@ -140,7 +140,6 @@ interface IDispatchProps {
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
   getPages: (pages: IOption[]) => any;
   selectPages: (pages: ISelected[]) => void;
-  resetPageSelection: () => any;
   setPreviewStatus: (isPreview: boolean) => void;
   setPort: (port: number) => void;
   setPages: (pages: ISelected[]) => void;
@@ -297,30 +296,6 @@ const App = (props: Props) => {
             projectNameValidationConfig:message.payload.projectNameValidationConfig
           });
           break;
-        case EXTENSION_COMMANDS.RESET_PAGES:
-          if (message.payload.resetPages) {
-            props.resetPageSelection();
-            
-            // select default blank page
-            const PAGES_SELECTION: ISelected[] = [
-              {
-                title: "Blank",
-                internalName: `wts.Page.${message.payload.internalName}.Blank`,
-                id: "Blank",
-                defaultName: "Blank",
-                isValidTitle: true,
-                licenses: [
-                  {
-                    text: "Bootstrap",
-                    url: BOOTSTRAP_LICENSE
-                  }
-                ],
-                author: "Microsoft"
-              }
-            ];
-            props.selectPages(PAGES_SELECTION);
-          }
-          break;
         case EXTENSION_COMMANDS.GET_PREVIEW_STATUS:
           props.setPreviewStatus(message.payload.preview);
           break;
@@ -439,9 +414,6 @@ const mapDispatchToProps = (
   },
   getVersionsData: (versions: IVersions) => {
     dispatch(getVersionsDataAction(versions));
-  },
-  resetPageSelection: () => {
-    dispatch(resetPagesAction());
   },
   setPreviewStatus: (isPreview: boolean) => {
     dispatch(setPreviewStatusAction(isPreview));

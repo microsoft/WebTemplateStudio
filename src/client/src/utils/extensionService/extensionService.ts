@@ -1,6 +1,6 @@
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import {
-  EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES
+  EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES, PAYLOAD_MESSAGES_TEXT
 } from "../constants";
 
 const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject)=>{
@@ -84,6 +84,19 @@ const getOutputPath = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
+const resetAllPages = (vscode: IVSCodeObject, internalName:string, pagesLength:number) => {
+  return postMessageAsync(EXTENSION_COMMANDS.RESET_PAGES, {
+    module: EXTENSION_MODULES.VSCODEUI,
+    command: EXTENSION_COMMANDS.RESET_PAGES,
+    track: true,
+    text: PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT,
+    payload: {
+      internalName: internalName,
+      pagesLength: pagesLength
+    }
+  }, vscode);
+}
+
 const sendTelemetry = (vscode: IVSCodeObject, command: string, payload?: any): void =>
 {
   vscode.postMessage({
@@ -100,5 +113,6 @@ export {
   getLatestVersion,
   getPages,
   getOutputPath,
-  sendTelemetry
+  sendTelemetry,
+  resetAllPages
 }
