@@ -29,7 +29,7 @@
       "Any"
     ],
     "tags": {
-      "version": "8.2.14",
+      "version": "9.0.2",
       "checkVersionPackageName":"@angular/core",
       "checkVersionPackageSource":"npm",
       "preview": false
@@ -47,7 +47,7 @@
       "Any"
     ],
     "tags": {
-      "version": "2.6.10",
+      "version": "2.6.11",
       "checkVersionPackageName":"vue",
       "checkVersionPackageSource":"npm",
       "preview": false
