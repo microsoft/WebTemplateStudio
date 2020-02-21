@@ -70,12 +70,13 @@ import TopNavBar from "./components/TopNavBar";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import { getPages, getFrameworks } from "./utils/extensionService/extensionService";
 import AppServiceModal from "./containers/AppServiceModal";
-import PostGenerationModal from "./containers/PostGenerationModal";
+
 import { setBackendFrameworksAction } from "./actions/wizardContentActions/setBackendFrameworks";
 import { setFrontendFrameworksAction } from "./actions/wizardContentActions/setFrontendFrameworks";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 
 import Loadable from "react-loadable";
+import PageDetails from "./containers/PageDetails";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -93,8 +94,8 @@ const PageAzureLogin = Loadable({
   loader: () => import(/* webpackChunkName: "PageAzureLogin" */  "./containers/PageAzureLogin"),
   loading:() => <div/>
 });
-const PageDetails = Loadable({
-  loader: () => import(/* webpackChunkName: "PageDetails" */  "./containers/PageDetails"),
+const PostGenerationModal = Loadable({
+  loader: () => import(/* webpackChunkName: "PostGenerationModal" */  "./containers/PostGenerationModal"),
   loading:() => <div/>
 });
 
@@ -140,12 +141,14 @@ interface IStateProps {
   selectedBackend: ISelected;
   selectedPages: ISelected[];
   isPreview: boolean;
+  modalState:any;
 }
 
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
 
 const App = (props: Props) => {
-  const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,isPreview, setFrontendFrameworks, setBackendFrameworks } = props;
+  const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,
+    isPreview, setFrontendFrameworks, setBackendFrameworks, modalState } = props;
   if (frontendOptions.length === 0){
     messageEventsFromExtension();
     getFrameworksListAndSetToStore();
@@ -322,7 +325,7 @@ const App = (props: Props) => {
         <ViewLicensesModal />
         <AppServiceModal/>
         <CosmosResourceModal/>
-        <PostGenerationModal/>
+        {(modalState.modalType && modalState.modalType == "POST_GEN_MODAL") && (<PostGenerationModal/>)}
 
         <main
           className={classnames(appStyles.centerView, {
@@ -449,7 +452,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selectedBackend: state.selection.backendFramework,
   frontendOptions: state.wizardContent.frontendOptions,
   selectedPages: state.selection.pages,
-  isPreview:  state.wizardContent.previewStatus
+  isPreview:  state.wizardContent.previewStatus,
+  modalState: state.modals.openModal
 });
 
 export default withRouter(
