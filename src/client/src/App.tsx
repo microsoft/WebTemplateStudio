@@ -5,12 +5,9 @@ import { withRouter } from "react-router";
 import { Route, RouteComponentProps } from "react-router-dom";
 
 import PageNewProject from "./containers/PageNewProject";
-import CosmosResourceModal from "./containers/CosmosResourceModal";
 import Footer from "./containers/Footer";
 import Header from "./containers/Header";
 import RightSidebar from "./containers/RightSidebar";
-import RedirectModal from "./containers/RedirectModal";
-import ViewLicensesModal from "./containers/ViewLicensesModal";
 
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
@@ -69,7 +66,6 @@ import RootAction from "./actions/ActionType";
 import TopNavBar from "./components/TopNavBar";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import { getPages, getFrameworks } from "./utils/extensionService/extensionService";
-import AppServiceModal from "./containers/AppServiceModal";
 
 import { setBackendFrameworksAction } from "./actions/wizardContentActions/setBackendFrameworks";
 import { setFrontendFrameworksAction } from "./actions/wizardContentActions/setFrontendFrameworks";
@@ -77,6 +73,7 @@ import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 
 import Loadable from "react-loadable";
 import PageDetails from "./containers/PageDetails";
+import { MODAL_TYPES } from "./actions/modalActions/typeKeys";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -98,6 +95,23 @@ const PostGenerationModal = Loadable({
   loader: () => import(/* webpackChunkName: "PostGenerationModal" */  "./containers/PostGenerationModal"),
   loading:() => <div/>
 });
+const CosmosResourceModal = Loadable({
+  loader: () => import(/* webpackChunkName: "CosmosResourceModal" */  "./containers/CosmosResourceModal"),
+  loading:() => <div/>
+});
+const AppServiceModal = Loadable({
+  loader: () => import(/* webpackChunkName: "AppServiceModal" */  "./containers/AppServiceModal"),
+  loading:() => <div/>
+});
+const ViewLicensesModal = Loadable({
+  loader: () => import(/* webpackChunkName: "ViewLicensesModal" */  "./containers/ViewLicensesModal"),
+  loading:() => <div/>
+});
+const RedirectModal = Loadable({
+  loader: () => import(/* webpackChunkName: "RedirectModal" */  "./containers/RedirectModal"),
+  loading:() => <div/>
+});
+//import RedirectModal from "./containers/RedirectModal";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -321,11 +335,11 @@ const App = (props: Props) => {
       <TopNavBar />
 
       <div className={appStyles.container}>
-        <RedirectModal />
-        <ViewLicensesModal />
-        <AppServiceModal/>
-        <CosmosResourceModal/>
-        {(modalState.modalType && modalState.modalType == "POST_GEN_MODAL") && (<PostGenerationModal/>)}
+        {(modalState.modalType == MODAL_TYPES.PRIVACY_MODAL) && (<RedirectModal />)}
+        {(modalState.modalType == MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
+        {(modalState.modalType == MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
+        {(modalState.modalType == MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosResourceModal/>)}
+        {(modalState.modalType == MODAL_TYPES.POST_GEN_MODAL) && (<PostGenerationModal/>)}
 
         <main
           className={classnames(appStyles.centerView, {
