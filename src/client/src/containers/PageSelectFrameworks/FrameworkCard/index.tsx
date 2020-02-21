@@ -9,7 +9,7 @@ import { getSvg } from "../../../utils/getSvgUrl";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../../utils/constants";
+import { ROUTES, KEY_EVENTS } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import { getLatestVersion } from "../../../utils/extensionService/extensionService";
@@ -67,6 +67,14 @@ const FrameworkCard = (props: Props) => {
     }
   }
 
+  const selectCardIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) =>{
+    const isSelectableCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
+    if (isSelectableCard){
+      event.preventDefault();
+      selectCard();
+    }
+  }
+
   const detailsClickWrapper = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
@@ -79,6 +87,7 @@ const FrameworkCard = (props: Props) => {
     role="button"
     tabIndex={0}
     onClick={selectCard}
+    onKeyDown={selectCardIfEnterOrSpace}
     className={classNames(styles.container, styles.boundingBox, {
       [styles.selected]: selected
     })}>

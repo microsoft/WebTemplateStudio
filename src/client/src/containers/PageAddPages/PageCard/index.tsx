@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
 import messages from "./messages";
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../../utils/constants";
+import { ROUTES, KEY_EVENTS } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
@@ -45,6 +45,14 @@ const PageCard = (props: Props) => {
     }
   }
 
+  const addPageIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) =>{
+    const isSelectableCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
+    if (isSelectableCard){
+      event.preventDefault();
+      addPage();
+    }
+  }
+
   const showMoreInfo = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
@@ -56,6 +64,7 @@ const PageCard = (props: Props) => {
     <div
     role="button"
     tabIndex={0}
+    onKeyDown={addPageIfEnterOrSpace}
     onClick={addPage}
     className={classNames(styles.container, styles.boundingBox)}
     onMouseLeave={()=>setIsMouseOver(false)}
