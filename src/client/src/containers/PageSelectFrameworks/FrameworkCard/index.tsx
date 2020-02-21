@@ -67,7 +67,7 @@ const FrameworkCard = (props: Props) => {
     }
   }
 
-  const selectCardIfEnterOrSpace = (event:React.KeyboardEvent<HTMLDivElement>) =>{
+  const selectCardIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) =>{
     const isSelectableCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
     if (isSelectableCard){
       event.preventDefault();

@@ -45,7 +45,7 @@ const PageCard = (props: Props) => {
     }
   }
 
-  const addPageIfEnterOrSpace = (event:React.KeyboardEvent<HTMLDivElement>) =>{
+  const addPageIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) =>{
     const isSelectableCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
     if (isSelectableCard){
       event.preventDefault();
