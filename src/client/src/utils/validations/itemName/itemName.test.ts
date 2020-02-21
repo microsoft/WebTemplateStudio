@@ -14,15 +14,12 @@ jest.mock('../validations',()=>{return {
 }});
 import { validateItemName } from "./itemName";
 import { IitemNameValidationConfig } from "../../../reducers/wizardSelectionReducers/setValidations";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { addRequiredValidate, addExistingItemNameValidate, addRegexValidate,
   addReservedNameValidate } from '../validations';
 
 describe("validate", () => {
   it("config validate",(resolve)=>{
-    const postMessage = ()=>{};
-    let mockVsCode:IVSCodeObject = { postMessage };
-    let validations:IitemNameValidationConfig = {
+    const validations: IitemNameValidationConfig = {
       regexs:[],
       reservedNames:[],
       validateEmptyNames:false,
@@ -37,10 +34,8 @@ describe("validate", () => {
       resolve();
     });
   });
-  it("config no validate",(resolve)=>{
-    const postMessage = ()=>{};
-    let mockVsCode:IVSCodeObject = { postMessage };
-    let validations:IitemNameValidationConfig = {
+    it("config no validate",(resolve)=>{
+    const validations: IitemNameValidationConfig = {
       regexs:[{
         "name" : "nameStartWith$",
         "pattern" : "^[^\\$]"

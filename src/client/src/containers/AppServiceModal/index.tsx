@@ -112,7 +112,7 @@ const AppServiceModal = (props: Props) => {
       projectName
     });
 
-    let updatedForm = {
+    const updatedForm = {
       ...appServiceFormData,
       subscription,
       resourceGroup: ""
@@ -228,7 +228,7 @@ const AppServiceModal = (props: Props) => {
     }
   };
 
-  const isMicrosoftLearnSubscription = (subscription : string): boolean => {
+  const isMicrosoftLearnSubscription = (subscription: string): boolean => {
     const s = subscriptions.find(s => s.value === subscription);
     return s && s.isMicrosoftLearnSubscription;
   }

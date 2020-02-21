@@ -12,7 +12,7 @@ export interface IUpdateProjectPathActionType {
 }
 
 const updateProjectNameAction = (
-  projectName: string, validation:any
+  projectName: string, validation: any
 ): IUpdateProjectNameActionType => {
   const projectNameObject = {
     projectName,

@@ -20,8 +20,8 @@ describe("Card", () => {
       },
       buttonText: "Test",
       disabled: true,
-      handleButtonClick: () => {},
-      handleDetailsClick: () => {},
+      handleButtonClick: jest.fn(),
+      handleDetailsClick: jest.fn(),
       intl: global.intl
     };
     wrapper = shallow(<Card {...props} />);

@@ -6,9 +6,9 @@ export const setAppServiceModalButtonStatus = (
   siteNameAvailability: IAvailability,
   setFormIsSendable: (status: boolean) => void
 ): boolean => {
-  let isSubscriptionEmpty: boolean = false;
-  let isSiteNameEmpty: boolean = false;
-  let isAnyEmpty: boolean = false;
+  let isSubscriptionEmpty = false;
+  let isSiteNameEmpty = false;
+  let isAnyEmpty = false;
 
   isSubscriptionEmpty = selections.subscription === "";
   isSiteNameEmpty = selections.siteName === "";

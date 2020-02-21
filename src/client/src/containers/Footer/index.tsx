@@ -40,7 +40,6 @@ import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import {
   FormattedMessage,
-  defineMessages,
   InjectedIntlProps,
   injectIntl
 } from "react-intl";
@@ -115,7 +114,6 @@ class Footer extends React.Component<Props> {
       openPostGenModal
     } = this.props;
     e.preventDefault();
-    // @ts-ignore
     vscode.postMessage({
       module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
@@ -138,7 +136,7 @@ class Footer extends React.Component<Props> {
   public isReviewAndGenerate = (): boolean => {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
-  public findPageID = (pathname: string): Number => {
+  public findPageID = (pathname: string): number => {
     switch (pathname) {
       case ROUTES.NEW_PROJECT:
         return PAGEID.NEW_PROJECT;
@@ -163,7 +161,7 @@ class Footer extends React.Component<Props> {
       setRouteVisited(pathsNext[pathname]);
     }
     setPage(pathsNext[pathname]);
-    let pageNavLink = document.getElementById(
+    const pageNavLink = document.getElementById(
       "page" + this.findPageID(pathsNext[pathname])
     );
     if (pageNavLink) {
@@ -181,7 +179,7 @@ class Footer extends React.Component<Props> {
       setRouteVisited(pathname);
     }
     setPage(pathsBack[pathname]);
-    let pageNavLink = document.getElementById(
+    const pageNavLink = document.getElementById(
       "page" + this.findPageID(pathsBack[pathname])
     );
     if (pageNavLink) {
@@ -197,7 +195,6 @@ class Footer extends React.Component<Props> {
   public render() {
     // Validate the page names and do not generate if they are invalid or if there are duplicates
     const pageNames = new Set();
-    const functionNames = new Set();
     for (const page of this.props.engine.pages) {
       const pageName = page.name;
       pageNames.add(pageName); 

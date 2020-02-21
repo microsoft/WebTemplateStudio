@@ -9,11 +9,11 @@ import {
 
 
 xdescribe("wizardSelectionSelector", () => {
-  let mockVsCode:IVSCodeObject;
-  let callbackExtension:Function;
+  let mockVsCode: IVSCodeObject;
+  let callbackExtension: Function;
 
   describe("validate project name", () => {
-    let mockCallbackProjectPathValidation:Object = {};
+    let mockCallbackProjectPathValidation = {};
 
     describe("not exist => valid", () => {
       beforeEach(()=>{
@@ -33,14 +33,12 @@ xdescribe("wizardSelectionSelector", () => {
           }
         };
 
-        const postMessage= (message: any) =>{
-          callbackExtension(mockCallbackProjectPathValidation);
-        }
+        const postMessage = jest.fn(() =>callbackExtension(mockCallbackProjectPathValidation));
         mockVsCode = { postMessage };
       })
 
       it("is valid, dont exist",(resolve)=>{
-        projectPathValidation("dfss","sdfsdf", mockVsCode).then((event:any)=>{
+        projectPathValidation("dfss","sdfsdf", mockVsCode).then((event: any)=>{
           expect(event.data.payload.projectPathValidation.isValid).toBeTruthy();
           resolve();
         })

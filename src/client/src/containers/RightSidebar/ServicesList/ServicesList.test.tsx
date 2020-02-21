@@ -4,7 +4,6 @@ import ServicesList from "./index";
 import { Provider } from "react-redux";
 import AppServiceSelection from "../AppServiceSelection";
 import CosmosDBSelection from "./CosmosDBSelection";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 
 const mockStore = configureMockStore();
 
@@ -70,7 +69,7 @@ describe("ServicesList", () => {
     });
 
     it("Should not have a rendered AppServiceSelection component", () => {
-      let appServiceComponent = wrapper.find(AppServiceSelection);
+      const appServiceComponent = wrapper.find(AppServiceSelection);
       expect(appServiceComponent).toHaveLength(0);
     });
   });
@@ -100,7 +99,7 @@ describe("ServicesList", () => {
     });
 
     it("Should have a rendered AppServiceSelection component", () => {
-      let appServiceComponent = wrapper.find(AppServiceSelection);
+    const appServiceComponent = wrapper.find(AppServiceSelection);
       expect(appServiceComponent).toHaveLength(1);
     });
   });
@@ -128,7 +127,7 @@ describe("ServicesList", () => {
     });
 
     it("Should not have a rendered CosmosDBSelection component", () => {
-      let cosmosDBComponent = wrapper.find(CosmosDBSelection);
+      const cosmosDBComponent = wrapper.find(CosmosDBSelection);
       expect(cosmosDBComponent).toHaveLength(0);
     });
   });
@@ -158,7 +157,7 @@ describe("ServicesList", () => {
     });
 
     it("Should have a rendered CosmosDBSelection component", () => {
-      let cosmosDBComponent = wrapper.find(CosmosDBSelection);
+      const cosmosDBComponent = wrapper.find(CosmosDBSelection);
       expect(cosmosDBComponent).toHaveLength(1);
     });
   });

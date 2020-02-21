@@ -2,28 +2,28 @@ import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/
 import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 
 export interface IRegex {
-  name:String;
-  pattern:String;
+  name: string;
+  pattern: string;
 }
 
 export interface IprojectNameValidationConfig {
-  regexs:Array<IRegex>;
-  reservedNames:Array<string>;
-  validateEmptyNames:Boolean;
-  validateExistingNames:Boolean;
+  regexs: Array<IRegex>;
+  reservedNames: Array<string>;
+  validateEmptyNames: boolean;
+  validateExistingNames: boolean;
 }
 
 export interface IitemNameValidationConfig {
-  regexs:Array<IRegex>;
-  reservedNames:Array<string>;
-  validateEmptyNames:Boolean;
-  validateExistingNames:Boolean;
-  validateDefaultNames:Boolean;
+  regexs: Array<IRegex>;
+  reservedNames: Array<string>;
+  validateEmptyNames: boolean;
+  validateExistingNames: boolean;
+  validateDefaultNames: boolean;
 }
 
 export interface IValidations {
-  itemNameValidationConfig:IitemNameValidationConfig;
-  projectNameValidationConfig:IprojectNameValidationConfig
+  itemNameValidationConfig: IitemNameValidationConfig;
+  projectNameValidationConfig: IprojectNameValidationConfig;
 }
 
 const initialState = {

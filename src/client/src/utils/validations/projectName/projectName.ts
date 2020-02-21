@@ -5,11 +5,11 @@ import { addExistingProjectNameValidate, addRegexValidate, addRequiredValidate,
 import { validationMessages } from '../messages';
 
 
-export const validateProjectName = async (projectName:string, outputPath:string,
-  validations:IprojectNameValidationConfig, vscode: IVSCodeObject) => {
+export const validateProjectName = async (projectName: string, outputPath: string,
+  validations: IprojectNameValidationConfig, vscode: IVSCodeObject) => {
 
-  let listValidations:Array<IValidation>=[];
-  let validate:IValidation = {isValid:true,error:validationMessages.default};
+  const listValidations: Array<IValidation>=[];
+  let validate: IValidation = {isValid:true,error:validationMessages.default};
   if (validations.validateEmptyNames)
     listValidations.push(addRequiredValidate(projectName));
   if (validations.validateExistingNames)

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
 import { ThunkDispatch } from "redux-thunk";
 
-import { defineMessages, injectIntl, InjectedIntl } from "react-intl";
+import { injectIntl, InjectedIntl } from "react-intl";
 
 import SortableList from "../../../components/SortableSelectionList";
 
@@ -22,7 +22,7 @@ import styles from "./styles.module.css";
 import { AppState } from "../../../reducers";
 import RootAction from "../../../actions/ActionType";
 
-import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants";
+import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_COMMANDS } from "../../../utils/constants";
 import { validateItemName} from "../../../utils/validations/itemName/itemName";
 import { IValidations } from "../../../reducers/wizardSelectionReducers/setValidations";
 import {

@@ -1,4 +1,3 @@
-import { FormattedMessage } from "react-intl";
 import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
 import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
 import {IValidation} from "../../utils/validations/validations";

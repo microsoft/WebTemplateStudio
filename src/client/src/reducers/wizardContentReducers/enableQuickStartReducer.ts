@@ -2,7 +2,7 @@ import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
 import { IEnableQuickStart } from "../../actions/wizardInfoActions/enableQuickStartAction";
 
 const enableQuickStart = (
-  state: boolean = false,
+  state = false,
   action: IEnableQuickStart
 ) => {
   switch (action.type) {

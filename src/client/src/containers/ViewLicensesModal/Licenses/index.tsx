@@ -8,7 +8,7 @@ import {
 import { ILicenseObject } from "../../../types/license";
 
 import styles from "./styles.module.css";
-import { injectIntl, InjectedIntlProps, defineMessages } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages

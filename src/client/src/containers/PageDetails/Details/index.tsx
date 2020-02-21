@@ -22,11 +22,9 @@ import { IRedirectModalData } from "../../RedirectModal";
 
 import {
   injectIntl,
-  defineMessages,
   InjectedIntl,
   FormattedMessage
 } from "react-intl";
-import { format } from "path";
 import messages from "./messages";
 
 interface IDispatchProps {

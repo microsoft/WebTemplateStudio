@@ -1,12 +1,10 @@
 import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-
-import Select from "react-select/lib/Select";
 import { ISelected } from "../../../types/selected";
 
 interface ISelectProps {
-  framework:IOption;
-  isFrontEnd:boolean;
+  framework: IOption;
+  isFrontEnd: boolean;
 }
 
 interface IDispatchProps {

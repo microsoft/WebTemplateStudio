@@ -18,9 +18,7 @@ import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetai
 
 import {
   InjectedIntlProps,
-  injectIntl,
-  defineMessages,
-  FormattedMessage
+  injectIntl
 } from "react-intl";
 import { AppState } from "../../../reducers";
 import { ThunkDispatch } from "redux-thunk";
@@ -91,7 +89,7 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     if (modalOpeners.hasOwnProperty(internalName)) {
       return modalOpeners[internalName];
     }
-    return () => {};
+    return () => void(0);
   }
 
   /**
@@ -168,14 +166,6 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     const { isLoggedIn, setDetailPage, isPreview } = this.props;
     const serviceTypes = azureServiceOptions.map(option => option.type);
     const uniqueServiceTypes = [...new Set(serviceTypes)];
-
-    let numHostingServiceCards = 0;
-    azureServiceOptions.forEach(serviceOption => {
-      const isCardShown = isPreview || !serviceOption.isPreview;
-      if (serviceOption.type === servicesEnum.HOSTING && isCardShown) {
-        numHostingServiceCards++;
-      }
-    });
 
     return (
       <div className={styles.container}>

@@ -88,10 +88,10 @@ type Props = IRightSidebarProps &
 
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {
-    selectBackendFramework: () => {},
-    selectFrontendFramework: () => {},
-    selectWebApp: () => {},
-    selectPages: () => {}
+    selectBackendFramework: () => void(0),
+    selectFrontendFramework: () => void(0),
+    selectWebApp: () => void(0),
+    selectPages: () => void(0)
   };
 
   state: IRightSidebarState = {

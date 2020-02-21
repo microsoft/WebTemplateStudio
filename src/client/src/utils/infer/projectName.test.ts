@@ -1,19 +1,15 @@
 import { inferProjectName } from './projectName';
-import { ISelected } from "../../types/selected";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import {
   EXTENSION_COMMANDS
 } from "../constants";
 
 describe("validate infer name", () => {
   xit("is not same",(resolve)=>{
-    let mockVsCode:IVSCodeObject;
-    let callbackExtension:Function;
-    let mockCallbackProjectPathValidation:Object = {};
+    let callbackExtension: Function;
+    let mockCallbackProjectPathValidation = {};
 
-    const postMessage= (message: any) =>{
-      callbackExtension(mockCallbackProjectPathValidation);
-    }
+    const postMessage = jest.fn(() => callbackExtension(mockCallbackProjectPathValidation));
+    const mockVsCode = { postMessage };
     mockCallbackProjectPathValidation = {
       data:{
         command:EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION,
@@ -24,8 +20,7 @@ describe("validate infer name", () => {
         }
       }
     };
-    mockVsCode = { postMessage };
-    inferProjectName("t2",mockVsCode).then((newName:string)=>{
+    inferProjectName("t2",mockVsCode).then((newName: string)=>{
       expect(newName === "").toBeTruthy();
       resolve();
     });

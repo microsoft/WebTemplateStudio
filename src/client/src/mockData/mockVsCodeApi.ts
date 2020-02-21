@@ -4,19 +4,19 @@ import {
   EXTENSION_MODULES
 } from "../utils/constants";
 
-const WEST_US: string = "WEST US";
+const WEST_US = "WEST US";
 const mockLocations = Array.from({ length: 12 }).fill({
   label: WEST_US,
   value: WEST_US
 });
 
-const RESOURCE_GROUP_MOCK: string = "resourceGroupMock";
+const RESOURCE_GROUP_MOCK = "resourceGroupMock";
 const mockResourceGroups = Array.from({ length: 12 }).fill({
   label: RESOURCE_GROUP_MOCK,
   value: RESOURCE_GROUP_MOCK
 });
 
-const SUBSCRIPTION_MOCK: string = "GIV.Hackathon";
+const SUBSCRIPTION_MOCK = "GIV.Hackathon";
 const mockSubscriptions = Array.from(Array(10).keys()).map(
   (element: number) => {
     return {
@@ -33,12 +33,12 @@ mockSubscriptions.push({
       isMicrosoftLearnSubscription: true
 });
 
-const DEV_NO_ERROR_MSG: string = "in development, no error message";
-const DEV_NO_ERROR_TYPE: string = "in development, no error type";
+const DEV_NO_ERROR_MSG = "in development, no error message";
+const DEV_NO_ERROR_TYPE = "in development, no error type";
 
-const mockAppServiceName: string = "mockappservicename";
-const mockFunctionsName: string = "mockfunctionsname";
-const mockCosmosDBName: string = "mockcosmosdbname";
+const mockAppServiceName = "mockappservicename";
+const mockFunctionsName = "mockfunctionsname";
+const mockCosmosDBName = "mockcosmosdbname";
 
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
@@ -511,7 +511,6 @@ const mockVsCodeApi = () => ({
           );
           break;
         case EXTENSION_COMMANDS.GENERATE:
-          // @ts-ignore mocks a generation status message
           window.postMessage(
             {
               command: EXTENSION_COMMANDS.GEN_STATUS_MESSAGE,
@@ -522,7 +521,6 @@ const mockVsCodeApi = () => ({
             },
             "*"
           );
-          // @ts-ignore mocks a generation status object
           window.postMessage(
             {
               command: EXTENSION_COMMANDS.GEN_STATUS,

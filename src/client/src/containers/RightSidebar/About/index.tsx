@@ -6,9 +6,8 @@ import * as ModalActions from "../../../actions/modalActions/modalActions";
 
 import { getVersionsSelector } from "../../../selectors/vscodeApiSelector";
 import { IVersions } from "../../../types/version";
-import { defineMessages, InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../../reducers";
-import keyUpHandler from "../../../utils/keyUpHandler";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 import { IRedirectModalData } from "../../RedirectModal";
 import { ThunkDispatch } from "redux-thunk";

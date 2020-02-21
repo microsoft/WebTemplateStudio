@@ -2,7 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { Route, RouteComponentProps, Link } from "react-router-dom";
+import { Route, RouteComponentProps } from "react-router-dom";
 
 import PageNewProject from "./containers/PageNewProject";
 import CosmosResourceModal from "./containers/CosmosResourceModal";
@@ -144,9 +144,9 @@ interface IStateProps {
 
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
 
-const App = (props:Props) => {
+const App = (props: Props) => {
   const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,isPreview, setFrontendFrameworks, setBackendFrameworks } = props;
-  if (frontendOptions.length==0){
+  if (frontendOptions.length === 0){
     messageEventsFromExtension();
     getFrameworksListAndSetToStore();
   }
@@ -169,8 +169,8 @@ const App = (props:Props) => {
   },[selectedFrontend, selectedBackend]);
 
   function getFrameworksListAndSetToStore(){
-    getFrameworks(vscode, isPreview).then((event:any)=>{
-      let message = event.data;
+    getFrameworks(vscode, isPreview).then((event: any)=>{
+      const message = event.data;
       setFrontendFrameworks(
         parseFrameworksPayload(
           message.payload.frameworks,
@@ -206,14 +206,14 @@ const App = (props:Props) => {
           props.updateDependencyInfo(message.payload);
           break;
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
-          if (message.payload != null && message.payload.outputPath != null) {
+          if (message.payload !== null && message.payload.outputPath !== null) {
             props.updateOutputPath(message.payload.outputPath);
           }
           break;
         case EXTENSION_COMMANDS.GET_USER_STATUS:
         case EXTENSION_COMMANDS.AZURE_LOGIN:
           // email will be null or undefined if login didn't work correctly
-          if (message.payload != null) {
+          if (message.payload !== null) {
             props.logIntoAzure(
               message.payload.email,
               message.payload.subscriptions
@@ -232,7 +232,7 @@ const App = (props:Props) => {
           // Expect resource groups and locations on this request
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)
-          if (message.payload != null) {
+          if (message.payload !== null) {
             props.saveSubscriptionData({
               locations: message.payload.locations,
               resourceGroups: message.payload.resourceGroups,
@@ -270,7 +270,7 @@ const App = (props:Props) => {
           props.updateTemplateGenStatus(message.payload);
           break;
         case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
-          let versionData:IVersions = {
+          const versionData: IVersions = {
             templatesVersion:message.payload.templatesVersion,
             wizardVersion: message.payload.wizardVersion
           };
@@ -283,10 +283,7 @@ const App = (props:Props) => {
         case EXTENSION_COMMANDS.RESET_PAGES:
           if (message.payload.resetPages) {
             props.resetPageSelection();
-
-            // reset page count
-            const key = `wts.Page.${message.payload.internalName}.Blank`;
-
+            
             // select default blank page
             const PAGES_SELECTION: ISelected[] = [
               {
