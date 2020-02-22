@@ -1,6 +1,6 @@
   /**
    * Service Actions
-   * More info: https://moleculer.services/docs/0.13/actions.html
+   * More info: https://moleculer.services/docs/0.14/actions.html
    */
   actions: {
     // Action handlers
