@@ -109,12 +109,7 @@ const ProjectNameAndOutput = (props: Props) => {
     const element = e.currentTarget as HTMLInputElement;
     validateSetProjectValueAndSetDirty(element.value);
   };
-  const handleOutputPathChange = (
-    e: React.SyntheticEvent<HTMLInputElement>
-  ) => {
-    const element = e.currentTarget as HTMLInputElement;
-    updateOutputPath(element.value);
-  };
+ 
   const handleSaveClick = () => {
     vscode.postMessage({
       module: EXTENSION_MODULES.VALIDATOR,
@@ -149,7 +144,7 @@ const ProjectNameAndOutput = (props: Props) => {
         </div>
         <div>
           <OutputPath
-            handleChange={handleOutputPathChange}
+            handleChange={()=>{}}
             handleSaveClick={handleSaveClick}
             value={outputPath}
             validation={projectPathValidation}
