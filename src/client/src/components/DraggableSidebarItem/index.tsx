@@ -88,10 +88,14 @@ const DraggableSidebarItem = ({
   };
 
   const [validValue, setValidValue] = React.useState<string>(page ? page.title:"");
-
-  /*React.useEffect(() => {
-    if (page && page.isValidTitle) setValidValue(page.title);
-  },[page ? page.title:""]);*/
+  let inputRef = React.createRef<HTMLInputElement>();
+    React.useEffect(() => {
+      if (idx === totalCount){
+        const node = inputRef.current!
+        node.focus();
+        node.select();
+      }
+    },[idx,totalCount]);
 
   return (
     <div>
@@ -150,7 +154,7 @@ const DraggableSidebarItem = ({
                     }
                     if (page.isValidTitle) setValidValue(page.title);
                   }}
-                  ref={page.ref}
+                  ref={inputRef}
                 />
               ) : (
                 <input
