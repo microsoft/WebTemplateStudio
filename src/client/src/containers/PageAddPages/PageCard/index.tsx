@@ -60,13 +60,23 @@ const PageCard = (props: Props) => {
     setDetailPage(page);
   }
 
+  const showLinkIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) =>{
+    const isShowCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
+    if (isShowCard){
+      event.stopPropagation();
+      setDetailPage(page);
+    }
+  }
+
   return (
     <div
     role="button"
     tabIndex={0}
     onKeyDown={addPageIfEnterOrSpace}
     onClick={addPage}
-    className={classNames(styles.container, styles.boundingBox)}
+    className={classNames(styles.container, styles.boundingBox, {
+      [styles.selected]: selectedPages.filter((selectedPage) => selectedPage.defaultName===page.defaultName).length > 0
+    })}
     onMouseLeave={()=>setIsMouseOver(false)}
     onMouseOver={()=>setIsMouseOver(true)} >
     <div>
@@ -82,7 +92,7 @@ const PageCard = (props: Props) => {
         </div>
         {isMosueOver && (
           <div className={styles.pageButtons}>
-          <button 
+          <button
             className={classNames(styles.cardCount, styles.countButton)}>
             <Plus role="figure"/>
           </button>
@@ -92,7 +102,7 @@ const PageCard = (props: Props) => {
       <div className={styles.description}>
         {page.body}
       </div>
-      <div className={styles.gridLayoutCardFooter}>
+      <div className={styles.gridLayoutCardFooter} onKeyDown={showLinkIfEnterOrSpace}>
         <div>
           {!isModal && (
             <Link

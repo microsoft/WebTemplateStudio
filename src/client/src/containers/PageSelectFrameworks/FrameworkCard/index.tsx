@@ -75,6 +75,14 @@ const FrameworkCard = (props: Props) => {
     }
   }
 
+  const showLinkIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) =>{
+    const isShowCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
+    if (isShowCard){
+      event.stopPropagation();
+      setDetailPage(framework);
+    }
+  }
+
   const detailsClickWrapper = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
@@ -119,7 +127,7 @@ const FrameworkCard = (props: Props) => {
       <div className={styles.DependencyInfo}>
         {selected && (<DependencyInfo frameworkName={framework.internalName} />)}
       </div>
-      <div className={styles.gridLayoutCardFooter}>
+      <div className={styles.gridLayoutCardFooter} onKeyDown={showLinkIfEnterOrSpace}>
         <Link
           onClick={detailsClickWrapper}
           className={styles.link}
