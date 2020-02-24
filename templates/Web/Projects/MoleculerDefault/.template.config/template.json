@@ -90,7 +90,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'moleculer': '0.13.12', 'moleculer-web': '0.9.0-beta6'}",
+        "dict": "{'moleculer': '0.14.2', 'moleculer-web': '0.9.0'}",
         "key": "dependencies",
         "jsonPath": "package.json"
       },
@@ -101,7 +101,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'moleculer-repl': '0.6.0'}",
+        "dict": "{'moleculer-repl': '0.6.2'}",
         "key": "devDependencies",
         "jsonPath": "package.json"
       },
