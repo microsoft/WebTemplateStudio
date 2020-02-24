@@ -87,4 +87,4 @@ vscode.postMessage({
 
 In extension code, the abstract class `wizardServant` (which is extended by all the modules of the extension with commands that can be called from the client code) is responsible for processing these requests and tracking the duration of the execution of the command or if an error occurred during its execution.
 
-También existe en la extensión un módulo exclusivo de telemetría, que podemos llamar desde el cliente para trackear eventos simples. Hay que lanzar este comando con la propiedad `track: false` para que la clase wizardServant no vuelva a trackear el evento.
+There is also an exclusive telemetry module in the extension, which we can call from the client to track simple events. You send this command with the `track: false` property so that the wizardServant class does not re-trace the event.
