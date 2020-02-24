@@ -6,7 +6,7 @@ const CosmosAdapter = require("moleculer-db-adapter-cosmos");
 module.exports = opt => {
   return {
     /**
-     * Load DB Methods. More info: https://moleculer.services/docs/0.13/moleculer-db.html
+     * Load DB Methods. More info: https://moleculer.services/docs/0.14/moleculer-db.html
      * This will extend `pages` service with DB handlers
      */
     mixins: [DBService],

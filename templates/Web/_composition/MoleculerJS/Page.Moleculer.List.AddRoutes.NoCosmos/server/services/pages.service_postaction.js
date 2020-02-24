@@ -6,7 +6,7 @@ const { MoleculerError } = require("moleculer").Errors;
 
   /**
    * Service Actions
-   * More info: https://moleculer.services/docs/0.13/actions.html
+   * More info: https://moleculer.services/docs/0.14/actions.html
    */
   actions: {
     // Action handlers
@@ -21,7 +21,7 @@ const { MoleculerError } = require("moleculer").Errors;
       rest: "POST /list",
       /**
        * Param validation.
-       * More info: https://moleculer.services/docs/0.13/validating.html
+       * More info: https://moleculer.services/docs/0.14/validating.html
        */
       params: {
         text: { type: "string" }, // required field
@@ -43,7 +43,7 @@ const { MoleculerError } = require("moleculer").Errors;
       rest: "DELETE /list/:_id",
       /**
        * Param validation.
-       * More info: https://moleculer.services/docs/0.13/validating.html
+       * More info: https://moleculer.services/docs/0.14/validating.html
        */
       params: {
         _id: { type: "string", integer: true, positive: true, convert: true }, // required filed
