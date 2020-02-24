@@ -11,7 +11,7 @@ describe('GridService', () => {
   }));
 
   it('should be created', () => {
-    const service: GridService = TestBed.get(GridService);
+    const service: GridService = TestBed.inject(GridService);
     expect(service).toBeTruthy();
   });
 });
