@@ -11,7 +11,7 @@ describe('MasterDetailService', () => {
   }));
 
   it('should be created', () => {
-    const service: MasterDetailService = TestBed.get(MasterDetailService);
+    const service: MasterDetailService = TestBed.inject(MasterDetailService);
     expect(service).toBeTruthy();
   });
 });
