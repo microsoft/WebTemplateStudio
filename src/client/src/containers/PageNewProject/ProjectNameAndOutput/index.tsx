@@ -144,7 +144,6 @@ const ProjectNameAndOutput = (props: Props) => {
         </div>
         <div>
           <OutputPath
-            handleChange={()=>{}}
             handleSaveClick={handleSaveClick}
             value={outputPath}
             validation={projectPathValidation}
