@@ -33,7 +33,6 @@ import {
 
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { IValidations } from "../../../reducers/wizardSelectionReducers/setValidations";
-
 import { AppState } from "../../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../../actions/ActionType";
