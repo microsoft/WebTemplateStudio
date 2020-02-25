@@ -20,7 +20,7 @@ type Props = IProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
 const PageCard = (props: Props) => {
   const { page, intl, setPages, selectedPages, setDetailPage, isModal, pageOutOfBounds } = props;
-  const [isMosueOver, setIsMouseOver] = React.useState(false);
+  const [showPlusIcon, setShowPlusIcon] = React.useState(false);
 
   React.useEffect(()=>{
     if (selectedPages.length === 0 && page.defaultName === "Blank"){
@@ -76,8 +76,10 @@ const PageCard = (props: Props) => {
     className={classNames(styles.container, styles.boundingBox, {
       [styles.selected]: selectedPages.filter((selectedPage) => selectedPage.defaultName===page.defaultName).length > 0
     })}
-    onMouseLeave={()=>setIsMouseOver(false)}
-    onMouseOver={()=>setIsMouseOver(true)} >
+    onFocus={()=>setShowPlusIcon(true)}
+    onBlur={()=>setShowPlusIcon(false)}
+    onMouseLeave={()=>setShowPlusIcon(false)}
+    onMouseOver={()=>setShowPlusIcon(true)} >
     <div>
       <div className={styles.gridLayoutCardHeader}>
         <div>
@@ -89,13 +91,10 @@ const PageCard = (props: Props) => {
         <div className={classNames(styles.title)}>
           {page.defaultName}
         </div>
-        {isMosueOver && (
-          <div className={styles.pageButtons}>
-          <button
-            className={classNames(styles.cardCount, styles.countButton)}>
-            <Plus role="figure"/>
-          </button>
-        </div>
+        {showPlusIcon && (
+           <div className={classNames(styles.headerIconContainer)}>
+           <Plus role="figure"/>
+         </div>
         )}
       </div>
       <div className={styles.description}>

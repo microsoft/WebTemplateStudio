@@ -36,21 +36,6 @@
   outline: 3px solid var(--vscode-editor-foreground);
 }
 
-.cardCount,
-.selectedCheckMark {
-  display: flex;
-  justify-content: center;
-}
-
-.countButton {
-  background: none;
-  color: inherit;
-  border: none;
-  font: 1.2em;
-  cursor: pointer;
-  outline: inherit;
-}
-
 .iconCheckMark {
   margin-left: 8px;
   height: 18px;
@@ -90,13 +75,6 @@
   font-size: 1.2rem;
 }
 
-.pageButtons {
-  display: flex;
-  justify-content: flex-end;
-  float: right;
-  width: 100%;
-}
-
 .showCount {
   min-width: 20px;
   text-align: center;
@@ -117,7 +95,7 @@
 
 .gridLayoutCardHeader {
   display: grid;
-  grid-template-columns: 3rem auto 3rem;
+  grid-template-columns: 3rem auto 2.7rem;
   max-height: 51px;
   width: 17.5rem;
 }
@@ -153,21 +131,14 @@
   cursor: default;
 }
 
-.cardCount {
-  text-align: center;
+.headerIconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1.8px solid var(--vscode-editor-foreground);
   height: 30px;
   width: 30px;
   border-radius: 50%;
-  font-size: 16px;
-}
-
-.cardCount path {
-  fill: var(--vscode-editor-foreground);
-}
-
-.cardCount:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
 .selectedText {
