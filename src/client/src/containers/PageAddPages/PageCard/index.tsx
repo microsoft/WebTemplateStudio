@@ -60,10 +60,9 @@ const PageCard = (props: Props) => {
     setDetailPage(page);
   }
 
-  const showLinkIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) =>{
-    const isShowCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
-    if (isShowCard){
-      event.stopPropagation();
+  const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) =>{
+    event.stopPropagation();
+    if (event.key === KEY_EVENTS.ENTER){
       setDetailPage(page);
     }
   }
@@ -102,11 +101,12 @@ const PageCard = (props: Props) => {
       <div className={styles.description}>
         {page.body}
       </div>
-      <div className={styles.gridLayoutCardFooter} onKeyDown={showLinkIfEnterOrSpace}>
-        <div>
+      <div className={styles.gridLayoutCardFooter}>
+      <div>
           {!isModal && (
             <Link
             onClick={showMoreInfo}
+            onKeyDown={showDetailIfPressEnterKey}
             className={styles.link}
             to={ROUTES.PAGE_DETAILS}>
             {intl.formatMessage(messages.Preview)}

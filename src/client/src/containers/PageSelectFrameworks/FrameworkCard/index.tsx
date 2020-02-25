@@ -75,10 +75,9 @@ const FrameworkCard = (props: Props) => {
     }
   }
 
-  const showLinkIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) =>{
-    const isShowCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
-    if (isShowCard){
-      event.stopPropagation();
+  const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) =>{
+    event.stopPropagation();
+    if (event.key === KEY_EVENTS.ENTER){
       setDetailPage(framework);
     }
   }
@@ -127,13 +126,16 @@ const FrameworkCard = (props: Props) => {
       <div className={styles.DependencyInfo}>
         {selected && (<DependencyInfo frameworkName={framework.internalName} />)}
       </div>
-      <div className={styles.gridLayoutCardFooter} onKeyDown={showLinkIfEnterOrSpace}>
-        <Link
-          onClick={detailsClickWrapper}
-          className={styles.link}
-          to={ROUTES.PAGE_DETAILS}>
-          {intl.formatMessage(messages.learnMore)}
-        </Link>
+      <div className={styles.gridLayoutCardFooter}>
+        <div>
+          <Link
+            onClick={detailsClickWrapper}
+            onKeyDown={showDetailIfPressEnterKey}
+            className={styles.link}
+            to={ROUTES.PAGE_DETAILS}>
+            {intl.formatMessage(messages.learnMore)}
+          </Link>
+        </div>
         {selected && (<Check role="figure" className={styles.iconCheckMark} />)}
       </div>
     </div>
