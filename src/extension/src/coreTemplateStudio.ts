@@ -9,6 +9,7 @@ import { ICommandPayload } from "./types/commandPayload";
 import { IGenerationPayloadType } from "./types/generationPayloadType";
 import { EventEmitter } from "events";
 import { IEngineGenerationPayloadType } from "./types/engineGenerationPayloadType";
+import { Logger } from "./utils/logger";
 
 class CliEventEmitter extends EventEmitter {}
 
@@ -129,8 +130,11 @@ export class CoreTemplateStudio {
             resolve(data);
           })
           .once("eventError", data => {
+            Logger.appendLog("EXTENSION", "error", `Error on execute Cli command: ${data}`);
             this.cliEvents.removeAllListeners();
             reject(new Error(data));
+            //Reset promise chain to allow execute next Cli command
+            this.promiseChain = Promise.resolve(null);
           });
       });
     });
