@@ -12,7 +12,6 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import messages from "./messages";
 
 interface IProps {
-  handleChange: (e: React.SyntheticEvent<HTMLInputElement>) => any;
   handleSaveClick: () => any;
   value: string;
   validation?: IValidation;
@@ -20,7 +19,6 @@ interface IProps {
   placeholder?: string;
 }
 const OutputPath = ({
-  handleChange,
   handleSaveClick,
   value,
   isEmpty,
@@ -39,7 +37,6 @@ const OutputPath = ({
         <div className={styles.errorStack}>
           <div className={styles.outputPath} onClick={handleSaveClick}>
             <Input
-              handleChange={handleChange}
               ariaLabel={intl.formatMessage(messages.ariaOutputPathLabel)}
               value={value}
               customStyle={styles.pathInput}
