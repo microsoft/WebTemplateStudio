@@ -44,7 +44,7 @@ export class GenerationExperience extends WizardServant {
     const apiGenResult = await this.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
     ).catch(error => {
-      console.log(error);
+      Logger.appendLog("EXTENSION", "error", `Error on generation: ${error}`);
       GenerationExperience.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.UpdateGenStatus,
         payload: {
