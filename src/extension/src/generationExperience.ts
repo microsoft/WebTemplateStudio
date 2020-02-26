@@ -104,7 +104,7 @@ export class GenerationExperience extends WizardServant {
                   payload: progressObject
                 });
               } catch (error) {                
-                Logger.appendLog("EXTENSION", "error", `Error on create Azure Resource Group: ${error}`);
+                Logger.appendLog("EXTENSION", "error", `Error on Azure Resource Group creation: ${error}`);
                 progressObject = {
                   ...progressObject,
                   resourceGroup: GenerationExperience.getProgressObject(false)
