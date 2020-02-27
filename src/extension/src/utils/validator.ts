@@ -16,9 +16,7 @@ export class Validator extends WizardServant {
     ]
   ]);
 
-  public static async sendOutputPathSelectionToClient(
-    message: any
-  ): Promise<IPayloadResponse> {
+  public static async sendOutputPathSelectionToClient(): Promise<IPayloadResponse> {
     return vscode.window
       .showOpenDialog({
         canSelectFiles: false,
@@ -52,7 +50,7 @@ export class Validator extends WizardServant {
     let projectPathError = "";
     let isInvalidProjectPath = false;
 
-    let validationObject = Validator.isValidProjectPath(
+    const validationObject = Validator.isValidProjectPath(
       projectPath,
       projectName
     );
@@ -62,6 +60,7 @@ export class Validator extends WizardServant {
 
     return {
       payload: {
+        scope:message.payload.scope,
         projectPathValidation: {
           isValid: !isInvalidProjectPath,
           error: projectPathError
@@ -70,7 +69,7 @@ export class Validator extends WizardServant {
     };
   }
 
-  private static isValidProjectPath = (path: string, name: string) => {
+  private static isValidProjectPath = (path: string, name: string): any => {
     let isValid = true;
     let error = "";
 
@@ -95,7 +94,7 @@ export class Validator extends WizardServant {
     };
   };
 
-  private static isUniquePath = (projectPath: string, name: string) => {
+  private static isUniquePath = (projectPath: string, name: string): boolean => {
     return !fs.existsSync(path.join(projectPath, name));
   };
 }

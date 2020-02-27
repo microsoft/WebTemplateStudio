@@ -1,24 +1,9 @@
 import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
-import { messages } from "../../../selectors/wizardSelectionSelector";
+import messages from "../../../selectors/wizardSelectionSelector/messages";
 import { FormattedMessage } from "react-intl";
 import AzureActionType from "../../../actions/azureActions/azureActionType";
 import { WIZARD_INFO_TYPEKEYS } from "../../../actions/wizardInfoActions/typeKeys";
 import WizardInfoType from "../../../actions/wizardInfoActions/wizardInfoActionType";
-
-/* State Shape
-{
-    appService: {
-        siteNameAvailability: {
-          isSiteNameAvailable: boolean,
-          message: string
-        },
-        selection: ISelectedAppService | null,
-        wizardContent: {
-          serviceType: string,
-        }
-    }
-}
-*/
 
 export interface IAvailability {
   isSiteNameAvailable: boolean;
@@ -27,7 +12,6 @@ export interface IAvailability {
 
 export interface ISelectedAppService {
   subscription: string;
-  isMicrosoftLearnSubscription: boolean;
   resourceGroup: string;
   siteName: string;
   internalName: string;
@@ -37,13 +21,13 @@ interface IServiceContent {
   serviceType: FormattedMessage.MessageDescriptor;
 }
 
-export interface IAppServiceSelection {
+export interface IAppService {
   siteNameAvailability: IAvailability;
   selection: ISelectedAppService | null;
   wizardContent: IServiceContent;
 }
 
-const initialState: IAppServiceSelection = {
+const initialState: IAppService = {
   siteNameAvailability: {
     isSiteNameAvailable: false,
     message: "App name unavailable"
@@ -55,7 +39,7 @@ const initialState: IAppServiceSelection = {
 };
 
 const appService = (
-  state: IAppServiceSelection = initialState,
+  state: IAppService = initialState,
   action: AzureActionType | WizardInfoType
 ) => {
   switch (action.type) {
@@ -76,11 +60,10 @@ const appService = (
       const newSelectionState = {
         ...state,
         selection: {
-          subscription: action.payload.subscription.value,
-          isMicrosoftLearnSubscription: action.payload.subscription.isMicrosoftLearnSubscription,
-          resourceGroup: action.payload.resourceGroup.value,
-          internalName: action.payload.internalName.value,
-          siteName: action.payload.siteName.value
+          subscription: action.payload.subscription,
+          resourceGroup: action.payload.resourceGroup,
+          internalName: action.payload.internalName,
+          siteName: action.payload.siteName
         }
       };
       return newSelectionState;

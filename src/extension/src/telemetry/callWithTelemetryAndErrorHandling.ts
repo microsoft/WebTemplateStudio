@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
@@ -66,7 +67,7 @@ export async function callWithTelemetryAndCatchErrors<T>(
   const [start, actionContext] = initContext();
 
   try {
-    return await (<Promise<T>>Promise.resolve(callback.call(actionContext)));
+    return await (Promise.resolve(callback.call(actionContext)) as Promise<T>);
   } catch (error) {
     handleError(vscodeContext, actionContext, callbackId, error);
     return undefined;
@@ -95,7 +96,6 @@ function initContext(): [number, IActionContext] {
   return [start, context];
 }
 
-// tslint:disable-next-line:no-any
 function handleError(
   vscodeContext: ExtensionContext,
   context: IActionContext,
@@ -140,8 +140,7 @@ function handleError(
       });
   }
   Logger.appendLog("EXTENSION", "error", error);
-  Logger.display("error");
-  //Logger.display("error");
+  Logger.display();
   if (context.rethrowError) {
     throw error;
   }

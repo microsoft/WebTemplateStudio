@@ -29,6 +29,7 @@ export class CoreTSModule extends WizardServant {
     );
     return {
       payload: {
+        scope:message.payload.scope,
         frameworks: result,
         isPreview: message.payload.isPreview,
         projectType: message.payload.projectType
@@ -44,6 +45,7 @@ export class CoreTSModule extends WizardServant {
     );
     return {
       payload: {
+        scope:message.payload.scope,
         pages: result
       }
     };

@@ -13,7 +13,7 @@ export interface ISetDetails {
 
 export const setDetailPageAction = (
   detailPageInfo: IOption,
-  isIntlFormatted: boolean = false
+  isIntlFormatted = false
 ): ISetDetails => ({
   type: WIZARD_INFO_TYPEKEYS.SET_DETAILS_PAGE_INFO,
   payload: {

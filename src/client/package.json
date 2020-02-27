@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/react-hooks": "^3.2.1",
     "@types/classnames": "^2.2.7",
     "@types/jest": "23.3.13",
     "@types/lodash": "^4.14.121",
@@ -22,8 +24,10 @@
     "classnames": "^2.2.6",
     "focus-visible": "^5.0.2",
     "global": "^4.3.2",
+    "latest-version": "^5.1.0",
     "lodash": "^4.17.14",
     "node-fetch": "^2.3.0",
+    "npm": "^6.13.6",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-intl": "^2.8.0",
@@ -36,12 +40,10 @@
     "react-select": "^2.3.0",
     "react-sortable-hoc": "^1.7.1",
     "redux": "^4.0.1",
+    "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "rewire": "^4.0.1",
-    "tslint": "^5.12.1",
-    "tslint-microsoft-contrib": "^6.1.0",
-    "tslint-react": "^3.6.0",
     "typescript": "3.2.4",
     "typescript-react-intl": "^0.3.0"
   },
@@ -53,9 +55,8 @@
     "manage:translations": "node scripts/manageTranslations.js",
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
-    "lint": "tslint -c tslint.json src/**/*.{ts,tsx}",
     "format": "prettier --write src/**/*.{ts,tsx}",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json"
+    "lint": "eslint ./src/**/*.{ts,tsx}"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -69,12 +70,15 @@
   "devDependencies": {
     "@types/enzyme": "^3.9.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.4.0",
     "react-intl-translations-manager": "^5.0.3",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-microsoft-contrib": "^6.1.0",
-    "tslint-react-hooks": "^2.0.0"
+    "redux-mock-store": "^1.5.4"
   },
   "proxy": "http://localhost:9052"
 }

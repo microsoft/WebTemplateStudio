@@ -1,0 +1,51 @@
+﻿[
+  {
+    "name": "Node",
+    "displayName": "Node/Express",
+    "summary": "JavaScript framework",
+    "author": "Various",
+    "order": "1",
+    "licenses": "[Node](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)",
+    "platform": "Web",
+    "languages": ["Any"],
+    "tags": {
+      "version": "4.17.1",
+      "checkVersionPackageName":"express",
+      "checkVersionPackageSource":"npm",
+      "preview": false
+    }
+  },
+  {
+    "name": "Flask",
+    "displayName": "Flask",
+    "summary": "Python framework",
+    "author": "Various",
+    "order": "1",
+    "licenses": "[Flask](https://github.com/pallets/flask/blob/master/LICENSE)",
+    "platform": "Web",
+    "languages": ["Any"],
+    "tags": {
+      "version": "1.1.1",
+      "checkVersionPackageName":"pallets/flask",
+      "checkVersionPackageSource":"github",
+      "preview": false
+    }
+  },
+  {
+    "name": "Moleculer",
+    "displayName": "Moleculer",
+    "summary": "JavaScript framework",
+    "author": "Various",
+    "order": "1",
+    "licenses": "[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)",
+    "platform": "Web",
+    "languages": ["Any"],
+    "tags": {
+      "version": "0.14.2",
+      "latestVersion":"",
+      "checkVersionPackageName":"moleculer",
+      "checkVersionPackageSource":"npm",
+      "preview": false
+    }
+  }
+]

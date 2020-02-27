@@ -2,12 +2,12 @@ import * as vscode from "vscode";
 import { Controller } from "./controller";
 import { Deploy } from "./deploy";
 
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "webTemplateStudioExtension.wizardLaunch",
       async () => {
-        Controller.getInstance(context, Date.now());
+        Controller.getInstance(context);
       }
     ),
     vscode.commands.registerCommand(
@@ -19,6 +19,6 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-export function deactivate() {
+export function deactivate(): void {
   Controller.dispose();
 }

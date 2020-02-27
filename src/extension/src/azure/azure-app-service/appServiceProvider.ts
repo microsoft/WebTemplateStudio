@@ -164,7 +164,7 @@ export class AppServiceProvider {
       "parameters.json"
     );
 
-    let parameters = JSON.parse(fs.readFileSync(parameterPath, "utf8"));
+    const parameters = JSON.parse(fs.readFileSync(parameterPath, "utf8"));
 
     parameters.parameters = {
       name: {
@@ -197,7 +197,7 @@ export class AppServiceProvider {
     appPath: string,
     template: any,
     parameters: any
-  ) {
+  ): void {
     ARMFileHelper.createDirIfNonExistent(path.join(appPath, "arm-templates"));
     ARMFileHelper.writeObjectToJsonFile(
       path.join(appPath, "arm-templates", "web-app-template.json"),

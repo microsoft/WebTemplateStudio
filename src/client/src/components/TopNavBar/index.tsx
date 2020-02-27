@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
-import { InjectedIntlProps, injectIntl, defineMessages } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import TopNavBarLink from "../TopNavBarLink";
 
@@ -11,41 +11,23 @@ import styles from "./styles.module.css";
 
 import { ROUTES_ARRAY } from "../../utils/constants";
 import { IRoutes } from "../../reducers/wizardRoutes/navigationReducer";
-import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
-
-const messages = defineMessages({
-  ariaNavLabel: {
-    defaultMessage: "Navigate between pages in the Wizard",
-    id: "topNavBar.ariaNavLabel"
-  },
-  frameworks: {
-    id: "topNavBar.frameworks",
-    defaultMessage: "Add Frameworks"
-  },
-  pages: {
-    id: "topNavBar.pages",
-    defaultMessage: "Add Pages"
-  },
-  services: {
-    defaultMessage: "Add Optional Cloud Services",
-    id: "topNavBar.services"
-  },
-  summary: {
-    defaultMessage: "Summary",
-    id: "topNavBar.summary"
-  },
-  welcome: {
-    defaultMessage: "New Project",
-    id: "topNavBar.newProject"
-  }
-});
+import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { ThunkDispatch } from "redux-thunk";
+import { AppState } from "../../reducers";
+import RootAction from "../../actions/ActionType";
+import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
+import messages from "./messages";
 
 interface IStateProps {
   isVisited: IRoutes;
-  isValidNameAndProjectPath: boolean;
+  isEnableNextPage: boolean;
 }
 
-type Props = RouteComponentProps & IStateProps & InjectedIntlProps;
+interface IDispatchProps {
+  setPage: (route: string) => void;
+}
+
+type Props = RouteComponentProps & IStateProps & IDispatchProps & InjectedIntlProps;
 
 const TopNavBar = (props: Props) => {
   const { formatMessage } = props.intl;
@@ -73,7 +55,7 @@ const TopNavBar = (props: Props) => {
   React.useEffect(() => {
     setPathIndex(ROUTES_ARRAY.indexOf(pathname));
   });
-  const { isVisited, intl, isValidNameAndProjectPath } = props;
+  const { isVisited, intl, isEnableNextPage, setPage } = props;
   return (
     <React.Fragment>
       {
@@ -84,7 +66,7 @@ const TopNavBar = (props: Props) => {
           <div>
             {topNavBarData.map((sidebartitle, idx) => {
               const alreadyVisitedRouteAndCanVisit =
-                isVisited[ROUTES_ARRAY[idx]] && isValidNameAndProjectPath;
+                isVisited[ROUTES_ARRAY[idx]] && isEnableNextPage;
               const isOtherVisitedRoute =
                 idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]];
 
@@ -116,6 +98,7 @@ const TopNavBar = (props: Props) => {
                     visitedCheck={isOtherVisitedRoute}
                     isSelected={idx === currentPathIndex}
                     pageNumber={idx + 1}
+                    reducerSetPage={setPage}
                   />
                 </div>
               );
@@ -128,8 +111,16 @@ const TopNavBar = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => ({
-  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
+  isEnableNextPage: isEnableNextPage(state),
   isVisited: state.wizardRoutes.isVisited
 });
+ 
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): IDispatchProps => ({
+  setPage: (route: string) => {
+    dispatch(setPageWizardPageAction(route));
+  }
+});
 
-export default withRouter(connect(mapStateToProps)(injectIntl(TopNavBar)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(injectIntl(TopNavBar)));

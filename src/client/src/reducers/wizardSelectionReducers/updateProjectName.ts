@@ -1,16 +1,7 @@
 import { WIZARD_SELECTION_TYPEKEYS } from "../../actions/wizardSelectionActions/typeKeys";
-import { IValidation } from "./updateOutputPath";
+import { IValidation } from "../../utils/validations/validations";
+import { validationMessages } from "../../utils/validations/messages";
 import WizardSelectionActionType from "../../actions/wizardSelectionActions/wizardSelectionActionType";
-
-/* State Shape
-{
-    projectName: string,
-    validation: {
-      isValid: false,
-      error: string
-    }
-}
-*/
 
 export interface IProjectName {
   projectName: string;
@@ -21,7 +12,8 @@ const initialState = {
   projectName: "",
   validation: {
     isValid: false,
-    error: ""
+    error: validationMessages.default,
+    isDirty:false
   }
 };
 

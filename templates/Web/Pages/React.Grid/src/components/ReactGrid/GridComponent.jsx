@@ -1,7 +1,8 @@
 ﻿import React from "react";
 import ImgGreyBox from "../../images/GreyBox.svg"
+import PropTypes from "prop-types";
 
-export default function GridComponent({ gridItem }) {
+const GridComponent = ({ gridItem }) => {
   return (
     <div className="col-md-4 col-sm-12 p-5">
       <img src={ImgGreyBox} alt="Default Grey Box" className="mb-3" />
@@ -10,3 +11,9 @@ export default function GridComponent({ gridItem }) {
     </div>
   );
 }
+
+GridComponent.propTypes = {
+  gridItem: PropTypes.any
+}
+
+export default GridComponent;

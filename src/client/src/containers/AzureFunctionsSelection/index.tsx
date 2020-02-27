@@ -8,7 +8,6 @@ import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalA
 
 import * as getSvg from "../../utils/getSvgUrl";
 import { ReactComponent as EditIcon } from "../../assets/edit.svg";
-import getSvgUrl, { withLocalPath } from "../../utils/getSvgUrl";
 
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants";
@@ -20,15 +19,12 @@ import {
 } from "../../reducers/wizardSelectionReducers/services/azureFunctionsReducer";
 
 import {
-  FormattedMessage,
   injectIntl,
-  InjectedIntlProps,
-  defineMessages
+  InjectedIntlProps
 } from "react-intl";
 import RootAction from "../../actions/ActionType";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
-import { validateName } from "../../utils/validateName";
 
 interface IProps {
   functionApps: IAzureFunctionsSelection;
@@ -55,13 +51,6 @@ interface IDispatchProps {
 
 type Props = IProps & IDispatchProps & InjectedIntlProps;
 
-const messages = defineMessages({
-  duplicateFunctionName: {
-    id: "azureFunctionsSelection.duplicateName",
-    defaultMessage: "Function name has to be unique"
-  }
-});
-
 /**
  *  The current implementation only allows for one Azure Function application to be created.
  *  This is stored in the redux state in an array at position 0, which is why the value of '0'
@@ -84,24 +73,6 @@ const AzureFunctionsSelection = ({
     const { functionNames } = functionApps.selection[0];
     if (functionNames) {
       functionNames[idx].title = newTitle;
-      functionNames[idx].error = "";
-      const validationResult = validateName(
-        functionNames[idx].title,
-        "function"
-      );
-      if (validationResult.error) {
-        functionNames[idx].error = intl.formatMessage(validationResult.error);
-      }
-      functionNames[idx].isValidTitle = validationResult.isValid;
-      for (let i = 0; i < functionNames.length; i++) {
-        if (functionNames[i].title === functionNames[idx].title && i !== idx) {
-          functionNames[idx].isValidTitle = false;
-          functionNames[idx].error = intl.formatMessage(
-            messages.duplicateFunctionName
-          );
-          break;
-        }
-      }
       updateFunctionNames({
         appIndex: 0,
         functionNames

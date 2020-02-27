@@ -159,17 +159,30 @@ const EXTENSION_COMMANDS = {
   SUBSCRIPTION_DATA_FUNCTIONS: "subscription-data-for-functions",
   SUBSCRIPTION_DATA_APP_SERVICE: "subscription-data-for-app-service",
   TRACK_PAGE_SWITCH: "track-page-switch",
+  TRACK_CREATE_NEW_PROJECT: "track-create-new-project",
+  TRACK_OPEN_ADD_PAGES_MODAL: "track-open-add-pages-modal",
+  TRACK_PRESS_QUICKSTART: "track-press-quickstart",
+  TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-app-service-modal-from-services-list",
+  TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-cosmosdb-service-modal-from-services-list",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
-  GET_VERSIONS: "get-versions",
+  GET_TEMPLATE_INFO: "get-template-info",
   CLOSE_WIZARD: "close-wizard",
+  GET_VERSIONS: "get-versions",
   RESET_PAGES: "reset-pages",
   GET_PREVIEW_STATUS: "get-preview",
   GET_DEPENDENCY_INFO: "check-dependency",
   GET_FRAMEWORKS: "get-frameworks",
-  GET_PAGES: "get-pages"
+  GET_LATEST_VERSION:"get-latest-version",
+  GET_PAGES: "get-pages",
+  GET_VALIDATIONS: "get-validations"
 };
+
+const TELEMETRY = {
+  CLOSE_GENERATION_MODAL_BUTTON: "Generate Modal, close button",
+  CREATE_NEW_PROJECT_BUTTON: "Generate Modal, create new project button"
+}
 
 export {
   PRODUCTION,
@@ -191,5 +204,6 @@ export {
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,
   BOOTSTRAP_LICENSE,
-  PAGEID
+  PAGEID,
+  TELEMETRY
 };

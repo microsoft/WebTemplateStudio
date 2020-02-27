@@ -1,14 +1,14 @@
 import { ExtensionCommand, CONSTANTS } from "./constants";
-import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
+import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 
 export abstract class WizardServant {
   abstract clientCommandMap: Map<
     ExtensionCommand,
     (message: any) => Promise<IPayloadResponse>
   >;
-  private _commandBidding = (message: any) => {
+  private _commandBidding = (message: any): Promise<any> => {
     return new Promise(() => {
-      payload: "";
+      payload: message;
     });
   };
   /**
@@ -19,8 +19,8 @@ export abstract class WizardServant {
   public static executeWizardCommandOnServantClass(
     messagePayload: any,
     classModule: WizardServant,
-    Telemetry: TelemetryAI
-  ) {
+    Telemetry: ITelemetryService
+  ): Promise<unknown> {
     classModule._commandBidding = classModule.clientCommandMap.get(
       messagePayload.command
     )!;

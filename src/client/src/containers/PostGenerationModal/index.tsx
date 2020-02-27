@@ -5,6 +5,7 @@ import { RouteComponentProps, withRouter } from "react-router";
 import ReactMarkdown from "react-markdown";
 import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
 import { ReactComponent as ErrorRed } from "../../assets/errorred.svg";
+import { ReactComponent as Close } from "../../assets/cancel.svg";
 
 import asModal from "../../components/Modal";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
@@ -17,20 +18,23 @@ import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
+  KEY_EVENTS,
   ROUTES,
-  WEB_TEMPLATE_STUDIO_LINKS
+  WEB_TEMPLATE_STUDIO_LINKS,
+  TELEMETRY
 } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 
 import { AppState } from "../../reducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getOutputPath } from "../../selectors/wizardSelectionSelector";
+import { getOutputPath, getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
-import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
+import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
 interface LinksDict {
   [serviceId: string]: string;
 }
@@ -53,6 +57,7 @@ interface IStateProps {
   isServicesSelected: boolean;
   vscode: IVSCodeObject;
   outputPath: string;
+  projectName: string;
 }
 
 interface IDispatchProps {
@@ -96,16 +101,18 @@ const PostGenerationModal = ({
       return;
     }
     if (isTemplateGenerated) {
+      const fullpath = outputPath;
       vscode.postMessage({
         module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
         track: true,
         payload: {
-          outputPath
+          outputPath:fullpath
         }
       });
     }
   };
+
   const openProjectOrRestartWizardMessage = () => {
     if (isTemplatesFailed) {
       return formatMessage(messages.restartWizard);
@@ -113,10 +120,34 @@ const PostGenerationModal = ({
     return formatMessage(messages.openInCode);
   };
 
-  const handleCreateAnotherProject = () => {
+  const closeModalAndCreateAnotherProject = (param: any) => {
+    trackCreateNewProjectTelemetry(param);
     resetWizard();
     history.push(ROUTES.NEW_PROJECT);
+
   };
+
+  const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
+      event.preventDefault();
+      event.stopPropagation();
+      closeModalAndCreateAnotherProject({ fromCloseButton:true });
+    }
+  };
+
+  const trackCreateNewProjectTelemetry = ({ fromCloseButton, fromCreateNewProjectButton }: any) => 
+  {
+    let entryPoint = '';
+
+    if (fromCloseButton){
+      entryPoint = TELEMETRY.CLOSE_GENERATION_MODAL_BUTTON;
+    }
+
+    if (fromCreateNewProjectButton){
+      entryPoint = TELEMETRY.CREATE_NEW_PROJECT_BUTTON;
+    }
+    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, {entryPoint});
+  }
 
   const postGenMessage = () => {
     return (
@@ -280,8 +311,16 @@ const PostGenerationModal = ({
 
   return (
     <div>
-      <div className={styles.title}>
-        {formatMessage(messages.creatingYourProject)}
+      <div className={styles.headerContainer}>
+        <div className={styles.title}>
+          {formatMessage(messages.creatingYourProject)}
+        </div>      
+        <Close
+            tabIndex={0}
+            className={styles.closeIcon}
+            onClick={() => closeModalAndCreateAnotherProject({ fromCloseButton:true })}
+            onKeyDown={closeKeyDownHandler}
+          />
       </div>
 
       <div className={styles.section}>
@@ -314,7 +353,7 @@ const PostGenerationModal = ({
         {templateGenerated && isServicesDeployed && (
           <button
             className={classnames(styles.button, buttonStyles.buttonDark)}
-            onClick={handleCreateAnotherProject}
+            onClick={() => closeModalAndCreateAnotherProject({ fromCreateNewProjectButton:true })}
           >
             {formatMessage(messages.createAnotherProject)}
           </button>
@@ -346,7 +385,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   outputPath: getOutputPath(state),
   serviceStatus: PostGenSelectors.servicesToDeploySelector(state),
   templateGenStatus: PostGenSelectors.getSyncStatusSelector(state),
-  vscode: getVSCodeApiSelector(state)
+  vscode: getVSCodeApiSelector(state),
+  projectName: getProjectName(state)
 });
 
 const mapDispatchToProps = (dispatch: any): IDispatchProps => ({

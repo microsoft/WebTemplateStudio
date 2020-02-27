@@ -1,12 +1,11 @@
-﻿import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+﻿import React from "react";
+import { Switch, Route } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 
 //TODO Web Template Studio: Add routes for your new pages here.
-class App extends Component {
-  render() {
+const App = () => {
     return (
       <React.Fragment>
         <NavBar />
@@ -15,7 +14,6 @@ class App extends Component {
         <Footer />
       </React.Fragment>
     );
-  }
 }
 
 export default App;

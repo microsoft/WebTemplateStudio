@@ -1,6 +1,7 @@
 ﻿import React from "react";
+import PropTypes from "prop-types";
 
-export default function ListItem({ listItem, deleteListItem }) {
+const ListItem = ({ listItem, deleteListItem }) => {
   return (
     <div className="col-12 mb-3 border">
       <div className="row">
@@ -22,3 +23,10 @@ export default function ListItem({ listItem, deleteListItem }) {
     </div>
   );
 }
+
+ListItem.propTypes = {
+  listItem: PropTypes.any,
+  deleteListItem: PropTypes.func
+}
+
+export default ListItem;

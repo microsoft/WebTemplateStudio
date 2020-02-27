@@ -2,27 +2,25 @@ import classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
-import { withRouter, Link } from "react-router-dom";
-import { injectIntl, InjectedIntlProps, defineMessages } from "react-intl";
+import { withRouter } from "react-router-dom";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
-import _ from "lodash";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
-import ServicesSidebarItem from "../../components/ServicesSidebarItem";
-import About from "../About";
-import SortablePageList from "../SortablePageList";
+import ServicesList from "./ServicesList";
+import About from "./About";
+import SortablePageList from "./SortablePageList";
 
-import { selectBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectBackEndFramework";
-import { selectFrontendFramework as selectFrontEndFrameworkAction } from "../../actions/wizardSelectionActions/selectFrontEndFramework";
+import { setSelectedBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectedBackEndFramework";
+import { setSelectedFrontendFrameworkAction } from "../../actions/wizardSelectionActions/selectedFrontendFramework";
 import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectWebApp";
 import {
-  selectPagesAction,
-  updatePageCountAction
+  selectPagesAction
 } from "../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 
-import { getServicesSelector } from "../../selectors/cosmosServiceSelector";
+import { getServicesSelector, hasServicesSelector } from "../../selectors/servicesSelector";
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
@@ -46,23 +44,20 @@ import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
 import RootAction from "../../actions/ActionType";
 import { WizardContentType } from "../../reducers/wizardContentReducers";
-import { IPageCount } from "../../reducers/wizardSelectionReducers/pageCountReducer";
 import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
-import { getPageCount } from "../../selectors/wizardSelectionSelector";
 import {
   getOutputPath,
   getProjectName
-} from "../../selectors/wizardSelectionSelector";
+} from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { ServiceState } from "../../reducers/wizardSelectionReducers/services";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
   selectFrontendFramework: (framework: ISelected) => void;
   selectProjectType: (projectType: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
-  updatePageCount: (pageCount: IPageCount) => any;
   openViewLicensesModal: () => any;
 }
 
@@ -72,12 +67,11 @@ interface IRightSidebarProps {
   selection: SelectionState;
   projectTypeDropdownItems: IDropDownOptionType[];
   frontEndOptions: IOption[];
-  pageCount: IPageCount;
   frontendDropdownItems: IDropDownOptionType[];
   backendDropdownItems: IDropDownOptionType[];
-  services: any;
+  services: ServiceState;
+  hasServices: boolean;
   vscode: IVSCodeObject;
-  isValidNameAndProjectPath: boolean;
   isRoutesVisited: IVisitedPages;
   contentOptions: WizardContentType;
 }
@@ -92,30 +86,12 @@ type Props = IRightSidebarProps &
   IDispatchProps &
   InjectedIntlProps;
 
-const hasAzureServices = (services: any) => {
-  for (const key in services) {
-    if (!_.isEmpty(services[key].selection)) return true;
-  }
-  return false;
-};
-
-const sideBarMessages = defineMessages({
-  openSideBar: {
-    id: "rightSidebar.open",
-    defaultMessage: "View project details menu"
-  },
-  closeSideBar: {
-    id: "rightSidebar.close",
-    defaultMessage: "Close project details menu"
-  }
-});
-
 class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public static defaultProps = {
-    selectBackendFramework: () => {},
-    selectFrontendFramework: () => {},
-    selectWebApp: () => {},
-    selectPages: () => {}
+    selectBackendFramework: () => void(0),
+    selectFrontendFramework: () => void(0),
+    selectWebApp: () => void(0),
+    selectPages: () => void(0)
   };
 
   state: IRightSidebarState = {
@@ -131,7 +107,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
       return {
         isSidebarOpen:
           nextProps.selection.pages.length > 0 ||
-          hasAzureServices(nextProps.services) ||
+          nextProps.hasServices ||
           prevState.isSidebarOpen
       };
     }
@@ -163,7 +139,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     vscode.postMessage({
       module: EXTENSION_MODULES.VSCODEUI,
       command: EXTENSION_COMMANDS.RESET_PAGES,
-      track: false,
+      track: true,
       text: PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT,
       payload: {
         internalName: frontendFramework.internalName,
@@ -176,15 +152,13 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     const {
       frontendFramework,
       backendFramework,
-      pages,
-      pageCount
+      pages
     } = this.props.selection;
     const {
       vscode,
       selectPages,
       frontEndOptions,
-      selectFrontendFramework,
-      updatePageCount
+      selectFrontendFramework
     } = this.props;
     if (frontendFramework.internalName !== option.value) {
       vscode.postMessage({
@@ -209,15 +183,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
           };
         }
       });
-      const cardCountType: IPageCount = {};
-      for (const pageType in pageCount) {
-        const newKey = pageType.replace(
-          frontendFramework.internalName,
-          option.value
-        );
-        cardCountType[newKey] = pageCount[pageType];
-      }
-      updatePageCount(cardCountType);
+
       const newPages: ISelected[] = pages.map(page => {
         return {
           title: page.title,
@@ -277,17 +243,16 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
   public render() {
     const {
       showFrameworks,
-      showPages,
-      showServices
+      showPages
     } = this.props.isRoutesVisited;
     const { pathname } = this.props.location;
     const {
       intl,
       contentOptions,
-      isValidNameAndProjectPath,
       openViewLicensesModal,
       outputPath,
-      projectName
+      projectName,
+      hasServices
     } = this.props;
     const { formatMessage } = intl;
     const { frontendOptions, backendOptions } = contentOptions;
@@ -307,7 +272,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
               tabIndex={0}
               className={styles.hamburgerButton}
               onClick={this.sidebarToggleClickHandler}
-              aria-label={intl.formatMessage(sideBarMessages.openSideBar)}
+              aria-label={intl.formatMessage(messages.openSideBar)}
             >
               <div className={styles.hamburgerLine} />
               <div className={styles.hamburgerLine} />
@@ -317,20 +282,20 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         )}
         {(isSidebarOpen || pathname === ROUTES.REVIEW_AND_GENERATE) && (
           <div
-            role="complementary"
+            role="complementary" id="dvRightSideBar"
             className={classNames(styles.container, styles.rightViewCropped, {
               [styles.rightViewCroppedSummaryPage]:
                 pathname === ROUTES.REVIEW_AND_GENERATE
             })}
           >
-            <div className={styles.summaryContainer}>
+            <div className={styles.summaryContainer} id="dvSummaryContainer">
               {pathname !== ROUTES.REVIEW_AND_GENERATE && (
                 <Cancel
                   tabIndex={0}
                   className={styles.icon}
                   onClick={this.sidebarToggleClickHandler}
                   onKeyDown={this.cancelKeyDownHandler}
-                  aria-label={intl.formatMessage(sideBarMessages.closeSideBar)}
+                  aria-label={intl.formatMessage(messages.closeSideBar)}
                 />
               )}
 
@@ -364,7 +329,6 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   this.props.selection.frontendFramework
                 )}
                 optionsData={frontendOptions}
-                disabled={!isValidNameAndProjectPath}
               />
               <RightSidebarDropdown
                 options={this.props.backendDropdownItems}
@@ -385,27 +349,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
                   />
                 )}
               </div>
-              {showServices && (
-                <div className={styles.sidebarItem}>
-                  <div className={styles.dropdownTitle}>
-                    {formatMessage(messages.services)}
-                  </div>
-                  {pathname === ROUTES.REVIEW_AND_GENERATE &&
-                    !hasAzureServices(this.props.services) && (
-                      <Link
-                        className={classnames(
-                          buttonStyles.buttonDark,
-                          styles.backToAzureBox
-                        )}
-                        to={ROUTES.AZURE_LOGIN}
-                        tabIndex={0}
-                      >
-                        {formatMessage(messages.backToAzurePage)}
-                      </Link>
-                    )}
-                  <ServicesSidebarItem services={this.props.services} />
-                </div>
-              )}
+              {hasServices && <ServicesList />}
               <div className={styles.container}>
                 {pathname !== ROUTES.REVIEW_AND_GENERATE && (
                   <div className={styles.buttonContainer}>
@@ -458,7 +402,6 @@ const mapStateToProps = (state: AppState): IRightSidebarProps => ({
     state.wizardContent.projectTypes
   ),
   frontEndOptions: state.wizardContent.frontendOptions,
-  pageCount: getPageCount(state),
   frontendDropdownItems: convertOptionsToDropdownItems(
     state.wizardContent.frontendOptions
   ),
@@ -467,8 +410,8 @@ const mapStateToProps = (state: AppState): IRightSidebarProps => ({
   ),
   vscode: getVSCodeApiSelector(state),
   services: getServicesSelector(state),
+  hasServices : hasServicesSelector(state),
   isRoutesVisited: getIsVisitedRoutesSelector(state),
-  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
   contentOptions: state.wizardContent
 });
 
@@ -476,19 +419,16 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   selectBackendFramework: (framework: ISelected) => {
-    dispatch(selectBackendFrameworkAction(framework));
+    dispatch(setSelectedBackendFrameworkAction(framework));
   },
   selectFrontendFramework: (framework: ISelected) => {
-    dispatch(selectFrontEndFrameworkAction(framework));
+    dispatch(setSelectedFrontendFrameworkAction(framework));
   },
   selectProjectType: (projectType: ISelected) => {
     dispatch(selectWebAppAction(projectType));
   },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
-  },
-  updatePageCount: (pageCount: IPageCount) => {
-    dispatch(updatePageCountAction(pageCount));
   },
   openViewLicensesModal: () => {
     dispatch(ModalActions.openViewLicensesModalAction());

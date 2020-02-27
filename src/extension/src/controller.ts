@@ -11,7 +11,7 @@ import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { VSCodeUI } from "./utils/vscodeUI";
 import { AzureServices } from "./azure/azureServices";
-import { TelemetryAI, IActionContext } from "./telemetry/telemetryAI";
+import { TelemetryService, IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { Logger } from "./utils/logger";
 import { WizardServant } from "./wizardServant";
 import { GenerationExperience } from "./generationExperience";
@@ -20,6 +20,9 @@ import { LaunchExperience } from "./launchExperience";
 import { DependencyChecker } from "./utils/dependencyChecker";
 import { CoreTSModule } from "./coreTSModule";
 import { Defaults } from "./utils/defaults";
+import { Telemetry } from "./client-modules/telemetry";
+import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
+import { ISyncReturnType } from "./types/syncReturnType";
 
 export class Controller {
   /**
@@ -28,7 +31,7 @@ export class Controller {
    */
   private static _instance: Controller | undefined;
   public static reactPanelContext: ReactPanel;
-  public static Telemetry: TelemetryAI;
+  public static TelemetryService: ITelemetryService;
   private vscodeUI: VSCodeUI;
   public static Logger: Logger;
   private AzureService: AzureServices;
@@ -36,15 +39,17 @@ export class Controller {
   private Validator: Validator;
   private DependencyChecker: DependencyChecker;
   private CoreTSModule: CoreTSModule;
+  private Telemetry: Telemetry;
   private Defaults: Defaults;
+  private SyncCompleted = false;
 
   /**
    *  Defines the WizardServant modules to which wizard client commands are routed
    */
   private static extensionModuleMap: Map<ExtensionModule, WizardServant>;
-  private defineExtensionModule() {
+  private defineExtensionModule(): void {
     Controller.extensionModuleMap = new Map([
-      [ExtensionModule.Telemetry, Controller.Telemetry],
+      [ExtensionModule.Telemetry, this.Telemetry],
       [ExtensionModule.VSCodeUI, this.vscodeUI],
       [ExtensionModule.Azure, this.AzureService],
       [ExtensionModule.Validator, this.Validator],
@@ -60,16 +65,16 @@ export class Controller {
    * This is the function behavior map passed to the ReactPanel (wizard client)
    * @param message The payload received from the wizard client. Message payload must include field 'module'
    */
-  private async routingMessageReceieverDelegate(message: any) {
-    let extensionModule = message.module;
+  private async routingMessageReceieverDelegate(message: any): Promise<void> {
+    const extensionModule = message.module;
 
     if (extensionModule) {
-      let classModule = Controller.extensionModuleMap.get(extensionModule);
+      const classModule = Controller.extensionModuleMap.get(extensionModule);
       if (classModule) {
-        let responsePayload = await WizardServant.executeWizardCommandOnServantClass(
+        const responsePayload = await WizardServant.executeWizardCommandOnServantClass(
           message,
           classModule,
-          Controller.Telemetry
+          Controller.TelemetryService
         );
         if (responsePayload) {
           Controller.handleValidMessage(message.command, responsePayload);
@@ -81,41 +86,41 @@ export class Controller {
       vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_MODULE);
     }
   }
+
   /**
    * Provides access to the Controller. Maintains Singleton Pattern. Function will bring up ReactPanel to View if Controller instance exists, otherwise will instantiate a new Controller.
    * @param message The payload received from the wizard client. Message payload must include field 'module'
    * @returns Singleton Controller type
    */
   public static getInstance(
-    context: vscode.ExtensionContext,
-    extensionStartTime: number
-  ) {
+    context: vscode.ExtensionContext
+  ): Controller {
     if (this._instance) {
       this._instance.showReactPanel();
     } else {
-      this._instance = new Controller(context, extensionStartTime);
+      this._instance = new Controller(context);
     }
     return this._instance;
   }
 
   private constructor(
-    private context: vscode.ExtensionContext,
-    private extensionStartTime: number
+    private context: vscode.ExtensionContext
   ) {
-    Controller.Telemetry = new TelemetryAI(
-      this.context,
-      this.extensionStartTime
+    Controller.TelemetryService = new TelemetryService(
+      this.context
     );
+
+    Controller.TelemetryService.trackEvent(TelemetryEventName.ExtensionLaunch);
+
     this.vscodeUI = new VSCodeUI();
     this.Validator = new Validator();
     this.AzureService = new AzureServices();
-    this.GenExperience = new GenerationExperience(Controller.Telemetry);
+    this.GenExperience = new GenerationExperience(Controller.TelemetryService);
     this.DependencyChecker = new DependencyChecker();
     this.CoreTSModule = new CoreTSModule();
+    this.Telemetry = new Telemetry(Controller.TelemetryService);
     this.Defaults = new Defaults();
-    Logger.initializeOutputChannel(
-      Controller.Telemetry.getExtensionName(this.context)
-    );
+    Logger.initializeOutputChannel(getExtensionName(this.context));
     this.defineExtensionModule();
     vscode.window.withProgress(
       {
@@ -138,7 +143,7 @@ export class Controller {
     context: vscode.ExtensionContext,
     launchExperience: LaunchExperience
   ): Promise<void> {
-    const syncObject = await Controller.Telemetry.callWithTelemetryAndCatchHandleErrors(
+    const syncObject = await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
       async function(this: IActionContext) {
         return await launchExperience
@@ -152,6 +157,7 @@ export class Controller {
     );
 
     if (syncObject) {
+      this.SyncCompleted = true;
       Controller.reactPanelContext = ReactPanel.createOrShow(
         context.extensionPath,
         this.routingMessageReceieverDelegate
@@ -160,30 +166,32 @@ export class Controller {
 
       Controller.loadUserSettings();
 
-      Controller.getVersionAndSendToClient(
+      Controller.getTemplateInfoAndSendToClient(
         context,
-        syncObject.templatesVersion
+        syncObject
       );
-      Controller.Telemetry.trackExtensionStartUpTime(
-        TelemetryEventName.ExtensionLaunch
-      );
+      this.Telemetry.trackCreateNewProject({
+        entryPoint: CONSTANTS.TELEMETRY.LAUNCH_WIZARD_STARTED_POINT
+      });
     }
   }
 
-  private static getVersionAndSendToClient(
+  private static getTemplateInfoAndSendToClient(
     ctx: vscode.ExtensionContext,
-    templatesVersion: string
-  ) {
+    syncObject: ISyncReturnType
+  ): void {
     Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetVersions,
+      command: ExtensionCommand.GetTemplateInfo,
       payload: {
-        templatesVersion,
-        wizardVersion: this.Telemetry.getExtensionVersionNumber(ctx)
+        templatesVersion:syncObject.templatesVersion,
+        wizardVersion: getExtensionVersionNumber(ctx),
+        itemNameValidationConfig: syncObject.itemNameValidationConfig,
+        projectNameValidationConfig: syncObject.projectNameValidationConfig,
       }
     });
   }
 
-  private static loadUserSettings() {
+  private static loadUserSettings(): void {
     const preview = vscode.workspace
       .getConfiguration()
       .get<boolean>("wts.enablePreviewMode");
@@ -201,12 +209,12 @@ export class Controller {
   private static handleValidMessage(
     commandName: ExtensionCommand,
     responsePayload?: any
-  ) {
+  ): void {
     responsePayload.command = commandName;
     this.reactPanelContext.postMessageWebview(responsePayload);
   }
 
-  showReactPanel() {
+  showReactPanel(): void {
     if (ReactPanel.currentPanel) {
       ReactPanel.createOrShow(
         this.context.extensionPath,
@@ -215,7 +223,12 @@ export class Controller {
     }
   }
 
-  static dispose() {
+  static dispose(): void {
+    if(this._instance){
+      Controller.TelemetryService.trackEvent(TelemetryEventName.ExtensionClosed, {
+        syncCompleted: this._instance.SyncCompleted.toString()
+      });
+    }
     CoreTemplateStudio.DestroyInstance();
     this._instance = undefined;
   }

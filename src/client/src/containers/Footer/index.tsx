@@ -6,7 +6,6 @@ import { Link, withRouter } from "react-router-dom";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
-
 import {
   ROUTES,
   EXTENSION_COMMANDS,
@@ -14,8 +13,6 @@ import {
   PAYLOAD_MESSAGES_TEXT,
   PAGEID
 } from "../../utils/constants";
-
-import { validateName } from "../../utils/validateName";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
@@ -36,13 +33,13 @@ import {
 } from "../../selectors/appServiceSelector";
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
+import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
 import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
 import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import {
   FormattedMessage,
-  defineMessages,
   InjectedIntlProps,
   injectIntl
 } from "react-intl";
@@ -51,7 +48,7 @@ import {
   getIsVisitedRoutesSelector,
   IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
-import { isValidNameAndProjectPathSelector } from "../../selectors/wizardSelectionSelector";
+import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
@@ -60,9 +57,12 @@ import { IFunctionName } from "../AzureFunctionsSelection";
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
+import messages from "./messages";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
+  setPage: (route: string) => void;
   openPostGenModal: () => any;
   updateCreateProjectButton: (enable: boolean) => any;
 }
@@ -77,7 +77,7 @@ interface IStateProps {
   selectedAppService: boolean;
   appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
-  isValidNameAndProjectPath: boolean;
+  isEnableNextPage: boolean;
   functionNames?: IFunctionName[];
   enableCreateProjectButton: boolean;
 }
@@ -100,13 +100,6 @@ const pathsBack: any = {
   [ROUTES.REVIEW_AND_GENERATE]: ROUTES.AZURE_LOGIN
 };
 
-const messages = defineMessages({
-  navAriaLabel: {
-    id: "footer.navAriaLabel",
-    defaultMessage: "Navigate between pages and create project"
-  }
-});
-
 class Footer extends React.Component<Props> {
   public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
     const {
@@ -121,7 +114,6 @@ class Footer extends React.Component<Props> {
       openPostGenModal
     } = this.props;
     e.preventDefault();
-    // @ts-ignore
     vscode.postMessage({
       module: EXTENSION_MODULES.GENERATE,
       command: EXTENSION_COMMANDS.GENERATE,
@@ -144,7 +136,7 @@ class Footer extends React.Component<Props> {
   public isReviewAndGenerate = (): boolean => {
     return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
   };
-  public findPageID = (pathname: string): Number => {
+  public findPageID = (pathname: string): number => {
     switch (pathname) {
       case ROUTES.NEW_PROJECT:
         return PAGEID.NEW_PROJECT;
@@ -159,16 +151,17 @@ class Footer extends React.Component<Props> {
     }
   };
   public handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
-    const { isValidNameAndProjectPath, setRouteVisited } = this.props;
+    const { isEnableNextPage, setRouteVisited, setPage } = this.props;
     this.trackPageForTelemetry(pathname);
-    if (!isValidNameAndProjectPath) {
+    if (!isEnableNextPage) {
       event.preventDefault();
       return;
     }
     if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
       setRouteVisited(pathsNext[pathname]);
     }
-    let pageNavLink = document.getElementById(
+    setPage(pathsNext[pathname]);
+    const pageNavLink = document.getElementById(
       "page" + this.findPageID(pathsNext[pathname])
     );
     if (pageNavLink) {
@@ -180,12 +173,13 @@ class Footer extends React.Component<Props> {
     event: React.SyntheticEvent,
     pathname: string
   ) => {
-    const { setRouteVisited } = this.props;
+    const { setRouteVisited, setPage } = this.props;
     this.trackPageForTelemetry(pathname);
     if (pathname !== ROUTES.NEW_PROJECT) {
       setRouteVisited(pathname);
     }
-    let pageNavLink = document.getElementById(
+    setPage(pathsBack[pathname]);
+    const pageNavLink = document.getElementById(
       "page" + this.findPageID(pathsBack[pathname])
     );
     if (pageNavLink) {
@@ -194,46 +188,20 @@ class Footer extends React.Component<Props> {
   };
 
   public trackPageForTelemetry = (pathname: string) => {
-    this.props.vscode.postMessage({
-      module: EXTENSION_MODULES.TELEMETRY,
-      command: EXTENSION_COMMANDS.TRACK_PAGE_SWITCH,
-      track: false,
+    sendTelemetry(this.props.vscode, EXTENSION_COMMANDS.TRACK_PAGE_SWITCH, {
       pageName: pathname
     });
   };
   public render() {
     // Validate the page names and do not generate if they are invalid or if there are duplicates
     const pageNames = new Set();
-    const functionNames = new Set();
-    let areValidNames = true;
     for (const page of this.props.engine.pages) {
       const pageName = page.name;
-      areValidNames = validateName(pageName, "page").isValid;
-      if (pageNames.has(pageName)) {
-        areValidNames = false;
-      } else {
-        pageNames.add(pageName);
-      }
-      if (!areValidNames) {
-        break;
-      }
-    }
-    if (areValidNames && this.props.functionNames) {
-      for (const functionName of this.props.functionNames) {
-        areValidNames = functionName.isValidTitle;
-        if (functionNames.has(functionName)) {
-          areValidNames = false;
-        } else {
-          functionNames.add(functionName);
-        }
-        if (!areValidNames) {
-          break;
-        }
-      }
+      pageNames.add(pageName); 
     }
 
     const {
-      isValidNameAndProjectPath,
+      isEnableNextPage,
       location,
       isVisited,
       intl,
@@ -282,14 +250,14 @@ class Footer extends React.Component<Props> {
               )}
               {pathname !== ROUTES.REVIEW_AND_GENERATE && (
                 <Link
-                  tabIndex={isValidNameAndProjectPath ? 0 : -1}
+                  tabIndex={isEnableNextPage ? 0 : -1}
                   className={classnames(
                     styles.button,
                     styles.buttonNext,
                     buttonStyles.buttonHighlighted,
                     {
-                      [buttonStyles.buttonDark]: !isValidNameAndProjectPath,
-                      [styles.disabledOverlay]: !isValidNameAndProjectPath
+                      [buttonStyles.buttonDark]: !isEnableNextPage,
+                      [styles.disabledOverlay]: !isEnableNextPage
                     }
                   )}
                   onClick={event => {
@@ -302,7 +270,7 @@ class Footer extends React.Component<Props> {
                   {nextArrow && (
                     <NextArrow
                       className={classnames(styles.nextIcon, {
-                        [styles.nextIconNotDisabled]: isValidNameAndProjectPath
+                        [styles.nextIconNotDisabled]: isEnableNextPage
                       })}
                     />
                   )}
@@ -310,12 +278,11 @@ class Footer extends React.Component<Props> {
               )}
               {enableCreateProjectButton && (
                 <button
-                  disabled={!areValidNames || !isValidNameAndProjectPath}
+                  disabled={!isEnableNextPage}
                   className={classnames(styles.button, {
-                    [buttonStyles.buttonDark]: !areValidNames,
-                    [buttonStyles.buttonHighlighted]: areValidNames,
-                    [styles.disabledOverlay]:
-                      !areValidNames || !isValidNameAndProjectPath
+                    [buttonStyles.buttonDark]: !isEnableNextPage,
+                    [buttonStyles.buttonHighlighted]: isEnableNextPage,
+                    [styles.disabledOverlay]:!isEnableNextPage
                   })}
                   onClick={this.logMessageToVsCode}
                 >
@@ -344,15 +311,18 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   appService: getAppServiceSelectionSelector(state),
   functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
-  isValidNameAndProjectPath: isValidNameAndProjectPathSelector(state),
+  isEnableNextPage: isEnableNextPage(state),
   enableCreateProjectButton: state.wizardContent.createProjectButton
-});
+}); 
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
+  },
+  setPage: (route: string) => {
+    dispatch(setPageWizardPageAction(route));
   },
   openPostGenModal: () => {
     dispatch(openPostGenModalAction());

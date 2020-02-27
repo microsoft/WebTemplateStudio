@@ -1,0 +1,56 @@
+﻿[
+  {
+    "name": "React",
+    "displayName": "React",
+    "summary": "JavaScript framework",
+    "author": "Facebook",
+    "order": "1",
+    "licenses": "[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)",
+    "platform": "Web",
+    "languages": [
+      "Any"
+    ],
+    "tags": {
+      "version": "16.12.0",
+      "checkVersionPackageName":"react",
+      "checkVersionPackageSource":"npm",
+      "preview": false
+    }
+  },
+  {
+    "name": "Angular",
+    "displayName": "Angular",
+    "summary": "JavaScript framework",
+    "author": "Google",
+    "order": "1",
+    "licenses": "[Angular](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)",
+    "platform": "Web",
+    "languages": [
+      "Any"
+    ],
+    "tags": {
+      "version": "9.0.2",
+      "checkVersionPackageName":"@angular/core",
+      "checkVersionPackageSource":"npm",
+      "preview": false
+    }
+  },
+  {
+    "name": "Vue",
+    "displayName": "Vue.js",
+    "summary": "JavaScript framework",
+    "author": "Evan You",
+    "order": "1",
+    "licenses": "[Vue](https://github.com/vuejs/vue/blob/dev/LICENSE)  \n[Vue CLI](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)",
+    "platform": "Web",
+    "languages": [
+      "Any"
+    ],
+    "tags": {
+      "version": "2.6.11",
+      "checkVersionPackageName":"vue",
+      "checkVersionPackageSource":"npm",
+      "preview": false
+    }
+  }
+]

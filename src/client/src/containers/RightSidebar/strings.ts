@@ -25,12 +25,8 @@ const messages = defineMessages({
     id: "rightSidebar.backendFramework",
     defaultMessage: "Back-end Framework"
   },
-  services: {
-    id: "rightSidebar.services",
-    defaultMessage: "Services"
-  },
   viewLicenses: {
-    id: "licenses.viewLicenses",
+    id: "rightSidebar.viewLicenses",
     defaultMessage: "View Licenses"
   },
   giveFeedback: {
@@ -38,13 +34,16 @@ const messages = defineMessages({
     defaultMessage: "Give Feedback"
   },
   feedbackRedirectLinkLabel: {
-    id: "feedback.redirectLinkLabel",
+    id: "rightSidebar.redirectLinkLabel",
     defaultMessage: "GitHub.com"
   },
-  backToAzurePage: {
-    id: "rightSidebar.backToAzurePage",
-    defaultMessage:
-      "You haven’t added any hosting or database services. Click here to add services."
+  openSideBar: {
+    id: "rightSidebar.open",
+    defaultMessage: "View project details menu"
+  },
+  closeSideBar: {
+    id: "rightSidebar.close",
+    defaultMessage: "Close project details menu"
   }
 });
 

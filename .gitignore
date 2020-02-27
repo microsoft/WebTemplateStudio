@@ -333,6 +333,7 @@ ASALocalRun/
 .mfractor/
 
 # Ignore compiled files from the extension 
+**/extension/logs/
 **/out/
 !src/extension/locales/**/out/
 src/extension/package.nls.*.json

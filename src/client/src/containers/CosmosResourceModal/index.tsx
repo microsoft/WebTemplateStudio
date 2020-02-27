@@ -17,7 +17,7 @@ import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
-import { getProjectName } from "../../selectors/wizardSelectionSelector";
+import { getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
 import { setCosmosModalButtonStatus } from "./verifyButtonStatus";
 
@@ -41,7 +41,7 @@ import {
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { messages } from "./messages";
+import messages from "./messages";
 import classNames from "classnames";
 import keyUpHandler from "../../utils/keyUpHandler";
 
@@ -71,11 +71,11 @@ interface IStateProps {
 let timeout: NodeJS.Timeout | undefined;
 type Props = IDispatchProps & IStateProps & InjectedIntlProps;
 
-interface attributeLinks {
+interface AttributeLinks {
   [key: string]: any;
 }
 
-const links: attributeLinks = {
+const links: AttributeLinks = {
   subscription:
     "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
   api: null,
@@ -370,34 +370,6 @@ const CosmosResourceModal = (props: Props) => {
       event.preventDefault();
       event.stopPropagation();
       props.closeModal();
-    }
-  };
-
-  // when user clicks a radio button, update form data
-  const radioButtonOnChangeHandler = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    let element = event.target as HTMLInputElement;
-    if (
-      element.value ===
-      props.intl.formatMessage(azureModalMessages.azureModalChooseExisting)
-    ) {
-      updateForm({
-        ...cosmosFormData
-      });
-    } else if (
-      element.value ===
-      props.intl.formatMessage(
-        azureModalMessages.azureModalCreateNewResourceGroupDisplayMessage
-      )
-    ) {
-      updateForm({
-        ...cosmosFormData,
-        resourceGroup: {
-          value: "",
-          label: ""
-        }
-      });
     }
   };
 

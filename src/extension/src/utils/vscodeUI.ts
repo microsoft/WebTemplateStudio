@@ -30,7 +30,7 @@ export class VSCodeUI extends WizardServant {
     ]);
   }
 
-  async promptUsersToResetPages(message: any) {
+  async promptUsersToResetPages(message: any): Promise<any> {
     if (
       message.payload.pagesLength > 0 &&
       message.text === PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT

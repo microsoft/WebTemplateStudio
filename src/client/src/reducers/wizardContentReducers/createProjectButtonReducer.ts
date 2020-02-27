@@ -2,7 +2,7 @@ import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
 import { IUpdateCreateProjectButton } from "../../actions/wizardInfoActions/updateCreateProjectButton";
 
 const createProjectButton = (
-  state: boolean = false,
+  state = false,
   action: IUpdateCreateProjectButton
 ) => {
   switch (action.type) {

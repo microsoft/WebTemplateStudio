@@ -4,28 +4,14 @@ import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants";
 
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { IValidation } from "../../reducers/wizardSelectionReducers/updateOutputPath";
+import { IValidation } from "../../utils/validations/validations";
 import classNames from "classnames";
 
-import { injectIntl, defineMessages, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 
-const messages = defineMessages({
-  outputPath: {
-    id: "outputPath.outputPath",
-    defaultMessage: "Output Path"
-  },
-  ariaOutputPathLabel: {
-    id: "outputPath.ariaOutputPath",
-    defaultMessage: "Input for Output Path"
-  },
-  browseButtonLabel: {
-    id: "outputPath.browseButtonLabel",
-    defaultMessage: "Browse"
-  }
-});
+import messages from "./messages";
 
 interface IProps {
-  handleChange: (e: React.SyntheticEvent<HTMLInputElement>) => any;
   handleSaveClick: () => any;
   value: string;
   validation?: IValidation;
@@ -33,10 +19,8 @@ interface IProps {
   placeholder?: string;
 }
 const OutputPath = ({
-  handleChange,
   handleSaveClick,
   value,
-  validation,
   isEmpty,
   intl,
   placeholder
@@ -53,7 +37,6 @@ const OutputPath = ({
         <div className={styles.errorStack}>
           <div className={styles.outputPath} onClick={handleSaveClick}>
             <Input
-              handleChange={handleChange}
               ariaLabel={intl.formatMessage(messages.ariaOutputPathLabel)}
               value={value}
               customStyle={styles.pathInput}
@@ -67,10 +50,7 @@ const OutputPath = ({
                 fieldId: intl.formatMessage(messages.outputPath)
               })}
             </div>
-          )) ||
-            (validation && !validation.isValid && (
-              <div className={styles.errorMessage}>{validation.error}</div>
-            ))}
+          ))}
         </div>
         <button
           className={classNames(
