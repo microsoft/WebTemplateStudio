@@ -131,6 +131,8 @@ export class CoreTemplateStudio {
           .once("eventError", data => {
             this.cliEvents.removeAllListeners();
             reject(new Error(data));
+            //Reset promise chain to allow execute next Cli command
+            this.promiseChain = Promise.resolve(null);
           });
       });
     });

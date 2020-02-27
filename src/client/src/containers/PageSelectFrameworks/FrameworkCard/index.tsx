@@ -75,6 +75,13 @@ const FrameworkCard = (props: Props) => {
     }
   }
 
+  const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) =>{
+    event.stopPropagation();
+    if (event.key === KEY_EVENTS.ENTER){
+      setDetailPage(framework);
+    }
+  }
+
   const detailsClickWrapper = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
@@ -120,12 +127,15 @@ const FrameworkCard = (props: Props) => {
         {selected && (<DependencyInfo frameworkName={framework.internalName} />)}
       </div>
       <div className={styles.gridLayoutCardFooter}>
-        <Link
-          onClick={detailsClickWrapper}
-          className={styles.link}
-          to={ROUTES.PAGE_DETAILS}>
-          {intl.formatMessage(messages.learnMore)}
-        </Link>
+        <div>
+          <Link
+            onClick={detailsClickWrapper}
+            onKeyDown={showDetailIfPressEnterKey}
+            className={styles.link}
+            to={ROUTES.PAGE_DETAILS}>
+            {intl.formatMessage(messages.learnMore)}
+          </Link>
+        </div>
         {selected && (<Check role="figure" className={styles.iconCheckMark} />)}
       </div>
     </div>

@@ -73,6 +73,8 @@ const SortablePageList = (props: Props) => {
 
   React.useEffect(() => {
     setPages(selectedPages);
+    if (document.getElementById("dvRightSideBar") && document.getElementById("dvSummaryContainer")) 
+      document.getElementById("dvRightSideBar")!.scrollTop= document.getElementById("dvSummaryContainer")!.offsetHeight;
   }, [selectedPages]);
 
   const handleInputChange = async (newTitle: string, idx: number) => {

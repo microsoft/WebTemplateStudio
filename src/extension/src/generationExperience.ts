@@ -7,6 +7,7 @@ import { AzureServices } from "./azure/azureServices";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { ResourceGroupSelection } from "./azure/azure-resource-group/resourceGroupModule";
 import { Settings } from "./azure/utils/settings";
+import { Logger } from "./utils/logger";
 
 export class GenerationExperience extends WizardServant {
   private static reactPanelContext: ReactPanel;
@@ -43,7 +44,7 @@ export class GenerationExperience extends WizardServant {
     const apiGenResult = await this.sendTemplateGenInfoToApiAndSendStatusToClient(
       enginePayload
     ).catch(error => {
-      console.log(error);
+      Logger.appendLog("EXTENSION", "error", `Error on generation: ${error}`);
       GenerationExperience.reactPanelContext.postMessageWebview({
         command: ExtensionCommand.UpdateGenStatus,
         payload: {
@@ -102,7 +103,8 @@ export class GenerationExperience extends WizardServant {
                   command: ExtensionCommand.UpdateGenStatus,
                   payload: progressObject
                 });
-              } catch (error) {
+              } catch (error) {                
+                Logger.appendLog("EXTENSION", "error", `Error on Azure Resource Group creation: ${error}`);
                 progressObject = {
                   ...progressObject,
                   resourceGroup: GenerationExperience.getProgressObject(false)
@@ -152,7 +154,8 @@ export class GenerationExperience extends WizardServant {
                 });
                 Settings.enableScmDoBuildDuringDeploy(enginePayload.path);
                 Settings.setDeployDefault(id, enginePayload.path);
-              } catch (error) {
+              } catch (error) {                
+                Logger.appendLog("EXTENSION", "error", `Error on deploy Azure App Service: ${error}`);
                 progressObject = {
                   ...progressObject,
                   appService: GenerationExperience.getProgressObject(false)
@@ -203,7 +206,8 @@ export class GenerationExperience extends WizardServant {
                     }
                   }
                 );
-              } catch (error) {
+              } catch (error) {                
+                Logger.appendLog("EXTENSION", "error", `Error on deploy CosmosDB Service: ${error}`);
                 progressObject = {
                   ...progressObject,
                   cosmos: GenerationExperience.getProgressObject(false)
