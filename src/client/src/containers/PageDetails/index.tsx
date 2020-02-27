@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router";
 import Details from "./Details";
 import { IOption } from "../../types/option";
-import { screenShotMapping } from "../../utils/getSvgUrl";
+import { getScreenShot } from "../../utils/getSvgUrl";
 import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
 
@@ -24,13 +24,7 @@ const PageDetails = (props: Props) => {
         formatteDetailInfo={isIntlFormatted ? detailsPageInfo : undefined}
       />
       <div className={styles.screenShotContainer}>
-      {screenShotMapping(detailsPageInfo.internalName) && (
-          <img
-            className={styles.screenshot}
-            src={screenShotMapping(props.detailsPageInfo.internalName)}
-            alt="Screenshot preview of web page that will be generated"
-          />
-        )}
+      {getScreenShot(detailsPageInfo.internalName, styles.screenshot)}
       </div>
     </div>
   );

@@ -25,10 +25,10 @@ import warning from "../assets/warning.svg";
 import cancel from "../assets/cancel.svg";
 import greencheck from "../assets/checkgreen.svg";
 
-import masterdetailscreenshot from "../assets/masterdetailscreenshot.svg";
-import listscreenshot from "../assets/listscreenshot.svg";
-import gridscreenshot from "../assets/gridscreenshot.svg";
-import blankscreenshot from "../assets/blankscreenshot.svg";
+import { ReactComponent as Masterdetailscreenshot }  from "../assets/masterdetailscreenshot.svg";
+import { ReactComponent as Listscreenshot } from "../assets/listscreenshot.svg";
+import { ReactComponent as Gridscreenshot }  from "../assets/gridscreenshot.svg";
+import { ReactComponent as Blankscreenshot } from "../assets/blankscreenshot.svg";
 
 const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT]: (style: string) => (
@@ -106,27 +106,51 @@ const SVG_REACTCOMPONENT_MAPPINGS = {
 };
 
 const SVG_SCREENSHOT_MAPPINGS = {
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_MASTER_DETAIL]: masterdetailscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_MASTER_DETAIL]: masterdetailscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_MASTER_DETAIL]: masterdetailscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_CONTENT_GRID]: gridscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_CONTENT_GRID]: gridscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_CONTENT_GRID]: gridscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_LIST]: listscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_LIST]: listscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_LIST]: listscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_BLANK_PAGE]: blankscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_BLANK_PAGE]: blankscreenshot,
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_BLANK_PAGE]: blankscreenshot
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_MASTER_DETAIL]: (style: string) => (
+    <Masterdetailscreenshot className={classnames(style)} />
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_MASTER_DETAIL]: (style: string) => (
+    <Masterdetailscreenshot className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_MASTER_DETAIL]: (style: string) => (
+    <Masterdetailscreenshot  className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_CONTENT_GRID]: (style: string) => (
+    <Gridscreenshot className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_CONTENT_GRID]: (style: string) => (
+    <Gridscreenshot className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_CONTENT_GRID]: (style: string) => (
+    <Gridscreenshot className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_LIST]: (style: string) => (
+    <Listscreenshot className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_LIST]: (style: string) => (
+    <Listscreenshot className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_LIST]: (style: string) => (
+    <Listscreenshot className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT_BLANK_PAGE]: (style: string) => (
+    <Blankscreenshot className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR_BLANK_PAGE]: (style: string) => (
+    <Blankscreenshot className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE_BLANK_PAGE]: (style: string) => (
+    <Blankscreenshot className={classnames(style)}/>
+  )
 };
 
 export const withLocalPath = (absolutePath: string): string => {
   return process.env.REACT_APP_RELATIVE_PATH + absolutePath;
 };
 
-export const screenShotMapping = (internalName: string): string | undefined => {
+export const getScreenShot = (internalName: string, style?: string) => {
   if (SVG_SCREENSHOT_MAPPINGS[internalName] !== undefined) {
-    return withLocalPath(SVG_SCREENSHOT_MAPPINGS[internalName]);
+    return SVG_SCREENSHOT_MAPPINGS[internalName](style || "");
   }
 };
 
