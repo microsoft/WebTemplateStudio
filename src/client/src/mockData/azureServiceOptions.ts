@@ -1,6 +1,5 @@
 import { IOption } from "../types/option";
 import { defineMessages } from "react-intl";
-import getSvgUrl from "../utils/getSvgUrl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../utils/constants";
 
 export const azureMessages = defineMessages({
@@ -196,7 +195,7 @@ const azureServiceOptions: IOption[] = [
   {
     author: "Microsoft",
     type: servicesEnum.HOSTING,
-    svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE),
+    svgUrl: "",
     isPreview: false,
     title: azureMessages.appServiceTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
@@ -208,7 +207,7 @@ const azureServiceOptions: IOption[] = [
   {
     author: "Microsoft",
     type: servicesEnum.DATABASE,
-    svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
+    svgUrl: "",
     isPreview: false,
     title: azureMessages.cosmosTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
@@ -221,7 +220,7 @@ const azureServiceOptions: IOption[] = [
 
 export const microsoftAzureDetails: IOption = {
   author: "Microsoft",
-  svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE),
+  svgUrl: "",
   title: azureMessages.azureTitle,
   internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE,
   longDescription: azureMessages.azureLongDescription,

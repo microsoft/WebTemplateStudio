@@ -3,9 +3,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Route, RouteComponentProps } from "react-router-dom";
-
-import PageNewProject from "./containers/PageNewProject";
-
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 
@@ -158,7 +155,7 @@ const App = (props: Props) => {
     isPreview, setFrontendFrameworks, setBackendFrameworks, modalState } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading:Array<any> = new Array<any>();
-  
+
   const addToPromisesList = (promise:Promise<any>)=>{
     promisesLoading.push(promise);
     return promise;
@@ -179,7 +176,11 @@ const App = (props: Props) => {
     loader: () => addToPromisesList(import(/* webpackChunkName: "Footer" */  "./containers/Footer")),
     loading:() => <div/>
   });
-  
+  const PageNewProject = Loadable({
+    loader: () => addToPromisesList(import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject")),
+    loading:() => <div/>
+  });
+
   if (frontendOptions.length === 0){
     messageEventsFromExtension();
     getFrameworksListAndSetToStore();

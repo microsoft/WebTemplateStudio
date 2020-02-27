@@ -1,6 +1,5 @@
 import { IMetadata } from "../../types/metadata";
 import { IOption } from "../../types/option";
-import getSvgUrl from "../../utils/getSvgUrl";
 import { WIZARD_CONTENT_TYPEKEYS } from "./typeKeys";
 
 export interface IProjectTypesActionType {
@@ -42,7 +41,7 @@ function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
     longDescription: val.longDescription,
     position: val.position,
     selected: val.selected,
-    svgUrl: getSvgUrl(val.name),
+    svgUrl: "",
     title: val.displayName
   }));
 }

@@ -2,7 +2,6 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { RowType } from "../../types/rowType";
 import { ISelected } from "../../types/selected";
-import getSvgUrl from "../../utils/getSvgUrl";
 import { IValidation } from "../../utils/validations/validations";
 import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 import { AppState } from "../../reducers";
@@ -135,7 +134,7 @@ const getServices = (selection: SelectionState): RowType[] => {
       title: azureFunctions.selection[0].appName.value,
       originalTitle: "Azure Functions",
       company: "Microsoft",
-      svgUrl: getSvgUrl(azureFunctions.selection[0].internalName.value),
+      svgUrl: "",
       functionNames: azureFunctions.selection[0].functionNames,
       internalName: azureFunctions.selection[0].internalName.value,
       version: "1.0"
@@ -146,7 +145,7 @@ const getServices = (selection: SelectionState): RowType[] => {
       title: cosmosDB.selection[0].accountName,
       originalTitle: "CosmosDB",
       company: "Microsoft",
-      svgUrl: getSvgUrl(cosmosDB.selection[0].internalName),
+      svgUrl: "",
       internalName: cosmosDB.selection[0].internalName,
       version: "1.0"
     });

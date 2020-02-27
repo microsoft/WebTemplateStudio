@@ -10,18 +10,19 @@ import { ReactComponent as List } from "../assets/list.svg";
 import svgStyles from "./svgStyles.module.css";
 
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants";
-import react from "../assets/react.svg";
-import angular from "../assets/angular.svg";
-import vue from "../assets/vue.svg";
-import node from "../assets/node.svg";
-import moleculer from "../assets/moleculer.svg";
-import flask from "../assets/flask.svg";
-import azure from "../assets/azure.svg";
-import appservice from "../assets/appservice.svg";
-import azurefunctions from "../assets/azurefunctions.svg";
-import cancel from "../assets/cancel.svg";
-import cosmosdb from "../assets/cosmosdb.svg";
+import { ReactComponent as ReactIcon } from "../assets/react.svg";
+import { ReactComponent as AngularIcon } from "../assets/angular.svg";
+import { ReactComponent as VueIcon } from "../assets/vue.svg";
+import { ReactComponent as NodeIcon } from "../assets/node.svg";
+import { ReactComponent as MoleculerIcon } from "../assets/moleculer.svg";
+import { ReactComponent as FlaskIcon } from "../assets/flask.svg";
+import { ReactComponent as AzureIcon } from "../assets/azure.svg";
+import { ReactComponent as AppserviceIcon } from "../assets/appservice.svg";
+import { ReactComponent as AzurefunctionsIcon } from "../assets/azurefunctions.svg";
+
+import { ReactComponent as CosmosdbIcon } from "../assets/cosmosdb.svg";
 import warning from "../assets/warning.svg";
+import cancel from "../assets/cancel.svg";
 import greencheck from "../assets/checkgreen.svg";
 
 import masterdetailscreenshot from "../assets/masterdetailscreenshot.svg";
@@ -30,16 +31,36 @@ import gridscreenshot from "../assets/gridscreenshot.svg";
 import blankscreenshot from "../assets/blankscreenshot.svg";
 
 const SVG_MAPPINGS = {
-  [WIZARD_CONTENT_INTERNAL_NAMES.REACT]: react,
-  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR]: angular,
-  [WIZARD_CONTENT_INTERNAL_NAMES.VUE]: vue,
-  [WIZARD_CONTENT_INTERNAL_NAMES.NODE]: node,
-  [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER]: moleculer,
-  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK]: flask,
-  [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: appservice,
-  [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: azurefunctions,
-  [WIZARD_CONTENT_INTERNAL_NAMES.AZURE]: azure,
-  [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: cosmosdb
+  [WIZARD_CONTENT_INTERNAL_NAMES.REACT]: (style: string) => (
+    <ReactIcon className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.ANGULAR]: (style: string) => (
+    <AngularIcon className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.VUE]: (style: string) => (
+    <VueIcon className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.NODE]: (style: string) => (
+    <NodeIcon className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER]: (style: string) => (
+    <MoleculerIcon className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK]: (style: string) => (
+    <FlaskIcon className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: (style: string) => (
+    <AppserviceIcon className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: (style: string) => (
+    <AzurefunctionsIcon className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.AZURE]: (style: string) => (
+    <AzureIcon className={classnames(style)}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: (style: string) => (
+    <CosmosdbIcon className={classnames(style)}/>
+  )
 };
 
 const SVG_REACTCOMPONENT_MAPPINGS = {
@@ -113,11 +134,8 @@ export const getSvg = (internalName: string, style?: string) => {
   if (SVG_REACTCOMPONENT_MAPPINGS[internalName]) {
     return SVG_REACTCOMPONENT_MAPPINGS[internalName](style || "");
   }
-};
-
-export default (internalName: string): string | undefined => {
-  if (SVG_MAPPINGS[internalName] !== undefined) {
-    return withLocalPath(SVG_MAPPINGS[internalName]);
+  if (SVG_MAPPINGS[internalName]) {
+    return SVG_MAPPINGS[internalName](style || "");
   }
 };
 

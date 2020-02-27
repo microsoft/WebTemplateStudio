@@ -94,13 +94,12 @@ const FrameworkCard = (props: Props) => {
     <div>
       <div className={styles.gridLayoutCardHeader}>
         <div>
-          {getSvg(framework.internalName, styles.icon) ||
+          {getSvg(framework.internalName) ||
             (framework.svgUrl && (
               <img src={framework.svgUrl} alt="" />
             ))}
         </div>
-        <div className={classNames({
-          [styles.title]: framework.svgUrl,
+        <div className={classNames(styles.title,{
           [styles.titleLeftJustified]: framework.svgUrl === undefined ? true : false
           })}>
           {framework.title}

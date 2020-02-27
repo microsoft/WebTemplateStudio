@@ -1,10 +1,10 @@
 {
-  "name": "__EXTENSIONNAME__",
-  "displayName": "__DISPLAYNAME__",
+  "name": "wts",
+  "displayName": "wts",
   "description": "Web Template Studio enables developers to quickly scaffold full-stack web applications with cloud services.",
   "version": "0.0.0-UNTRACKEDVERSION",
-  "publisher": "__PUBLISHER__",
-  "aiKey": "__AIKEY__",
+  "publisher": "javi",
+  "aiKey": "javi",
   "engines": {
     "vscode": "^1.32.0"
   },

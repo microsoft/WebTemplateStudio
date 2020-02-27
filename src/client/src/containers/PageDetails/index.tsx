@@ -24,7 +24,7 @@ const PageDetails = (props: Props) => {
         formatteDetailInfo={isIntlFormatted ? detailsPageInfo : undefined}
       />
       <div className={styles.screenShotContainer}>
-        {screenShotMapping(detailsPageInfo.internalName) && (
+      {screenShotMapping(detailsPageInfo.internalName) && (
           <img
             className={styles.screenshot}
             src={screenShotMapping(props.detailsPageInfo.internalName)}
