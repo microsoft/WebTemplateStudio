@@ -329,10 +329,10 @@ const App = (props: Props) => {
   const { pathname } = props.location;
   return (
     <React.Fragment>
-      <Header />
-      <TopNavBar />
+      {isLoaded && (<Header />)}
+      {isLoaded && (<TopNavBar />)}
 
-      <div className={appStyles.container}>
+      {isLoaded && (<div className={appStyles.container}>
         {(modalState.modalType == MODAL_TYPES.PRIVACY_MODAL) && (<RedirectModal />)}
         {(modalState.modalType == MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType == MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
@@ -379,8 +379,9 @@ const App = (props: Props) => {
           />
         </main>
         <RightSidebar />
-      </div>
-      <Footer />
+      </div>)}
+      {isLoaded && (<Footer />)}
+      {!isLoaded && (<div className={appStyles.spinnerContainer}></div>)}
     </React.Fragment>
   );
 }
