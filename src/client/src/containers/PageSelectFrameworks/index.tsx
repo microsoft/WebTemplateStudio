@@ -13,11 +13,12 @@ import FrameworkCard from "./FrameworkCard";
 import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
+import { getDepencyInfo } from "../../utils/extensionService/extensionService";
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const SelectFrameworks = (props: Props) => {
-  const { frontendOptions, backendOptions, intl } = props;
+  const { frontendOptions, backendOptions, intl, updateDependencyInfo } = props;
 
   React.useEffect(()=>{
     getDependencyInfoAndSetToStore();
@@ -26,20 +27,12 @@ const SelectFrameworks = (props: Props) => {
   const getDependencyInfoAndSetToStore = () =>{
     const { vscode } = props;
     // send messages to extension to check dependency info when this component loads
-    vscode.postMessage({
-      module: EXTENSION_MODULES.DEPENDENCYCHECKER,
-      command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
-      payload: {
-        dependency: "node"
-      }
-    });
-    vscode.postMessage({
-      module: EXTENSION_MODULES.DEPENDENCYCHECKER,
-      command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
-      payload: {
-        dependency: "python"
-      }
-    });
+    const callbackGetDepencyInfo = (event: any)=>{
+      const message = event.data;
+      updateDependencyInfo(message.payload);
+    };
+    getDepencyInfo(vscode, "node").then(callbackGetDepencyInfo);
+    getDepencyInfo(vscode, "python").then(callbackGetDepencyInfo);
   }
 
   return (

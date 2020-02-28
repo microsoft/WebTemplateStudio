@@ -6,6 +6,7 @@ import RootAction from "../../actions/ActionType";
 import { IOption } from "../../types/option";
 import { setFrontendFrameworksAction } from "../../actions/wizardContentActions/setFrontendFrameworks";
 import { setBackendFrameworksAction } from "../../actions/wizardContentActions/setBackendFrameworks";
+import { updateDependencyInfoAction, IDependencyInfo } from "../../actions/wizardInfoActions/updateDependencyInfo";
 
 
 const mapDispatchToProps = (
@@ -16,7 +17,10 @@ const mapDispatchToProps = (
   },
   setFrontendFrameworks: (frameworks: IOption[]) => {
     dispatch(setFrontendFrameworksAction(frameworks));
-  }
+  },
+  updateDependencyInfo: (dependencyInfo: IDependencyInfo) => {
+    dispatch(updateDependencyInfoAction(dependencyInfo));
+  },
 });
 
 const mapStateToProps = (state: AppState): IStateProps => {

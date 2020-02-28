@@ -4,6 +4,7 @@ import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 interface IDispatchProps {
   setBackendFrameworks: (frameworks: IOption[]) => any;
   setFrontendFrameworks: (frameworks: IOption[]) => any;
+  updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
 }
 
 interface IStateProps {

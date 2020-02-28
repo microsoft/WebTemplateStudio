@@ -36,10 +36,6 @@ import {
   selectPagesAction
 } from "./actions/wizardSelectionActions/selectPages";
 import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
-import {
-  updateDependencyInfoAction,
-  IDependencyInfo
-} from "./actions/wizardInfoActions/updateDependencyInfo";
 
 import appStyles from "./appStyles.module.css";
 import { startLogOutAzure } from "./actions/azureActions/logOutAzure";
@@ -128,7 +124,6 @@ interface IDispatchProps {
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
-  updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
   getPages: (pages: IOption[]) => any;
   selectPages: (pages: ISelected[]) => void;
   setPreviewStatus: (isPreview: boolean) => void;
@@ -241,9 +236,6 @@ const App = (props: Props) => {
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
-        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
-          props.updateDependencyInfo(message.payload);
-          break;
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           if (message.payload !== null && message.payload.outputPath !== undefined) {
             props.updateOutputPath(message.payload.outputPath);
@@ -426,9 +418,6 @@ const mapDispatchToProps = (
   },
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => {
     dispatch(updateTemplateGenerationStatusAction(isGenerated));
-  },
-  updateDependencyInfo: (dependencyInfo: IDependencyInfo) => {
-    dispatch(updateDependencyInfoAction(dependencyInfo));
   },
   getPages: (pages: IOption[]) => {
     dispatch(getPagesOptionsAction(pages));

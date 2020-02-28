@@ -97,6 +97,14 @@ const resetAllPages = (vscode: IVSCodeObject, internalName: string, pagesLength:
   }, vscode);
 }
 
+const getDepencyInfo = (vscode: IVSCodeObject, dependency: string) => {
+  return postMessageAsync(EXTENSION_COMMANDS.RESET_PAGES, {
+    module: EXTENSION_MODULES.DEPENDENCYCHECKER,
+    command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
+    payload: { dependency }
+  }, vscode);
+}
+
 const sendTelemetry = (vscode: IVSCodeObject, command: string, payload?: any): void =>
 {
   vscode.postMessage({
@@ -114,5 +122,6 @@ export {
   getPages,
   getOutputPath,
   sendTelemetry,
-  resetAllPages
+  resetAllPages,
+  getDepencyInfo
 }
