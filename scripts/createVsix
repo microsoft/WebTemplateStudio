@@ -1,4 +1,4 @@
-./build || bash build
+./build-release || bash build-release
 yarn --cwd ./src/extension createVsixPackage
 RED='\033[0;31m'
 CYAN='\033[0;36m'
