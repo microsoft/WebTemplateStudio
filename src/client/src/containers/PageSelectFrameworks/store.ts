@@ -12,12 +12,6 @@ import { updateDependencyInfoAction, IDependencyInfo } from "../../actions/wizar
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  setBackendFrameworks: (frameworks: IOption[]) => {
-    dispatch(setBackendFrameworksAction(frameworks));
-  },
-  setFrontendFrameworks: (frameworks: IOption[]) => {
-    dispatch(setFrontendFrameworksAction(frameworks));
-  },
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => {
     dispatch(updateDependencyInfoAction(dependencyInfo));
   },

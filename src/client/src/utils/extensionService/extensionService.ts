@@ -98,12 +98,21 @@ const resetAllPages = (vscode: IVSCodeObject, internalName: string, pagesLength:
 }
 
 const getDepencyInfo = (vscode: IVSCodeObject, dependency: string) => {
-  return postMessageAsync(EXTENSION_COMMANDS.RESET_PAGES, {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_DEPENDENCY_INFO, {
     module: EXTENSION_MODULES.DEPENDENCYCHECKER,
     command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
     payload: { dependency }
   }, vscode);
 }
+
+const azureLogout = (vscode: IVSCodeObject) => {
+  return postMessageAsync(EXTENSION_COMMANDS.AZURE_LOGOUT, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.AZURE_LOGOUT,
+    track: true
+  }, vscode);
+}
+
 
 const sendTelemetry = (vscode: IVSCodeObject, command: string, payload?: any): void =>
 {
@@ -123,5 +132,6 @@ export {
   getOutputPath,
   sendTelemetry,
   resetAllPages,
-  getDepencyInfo
+  getDepencyInfo,
+  azureLogout
 }
