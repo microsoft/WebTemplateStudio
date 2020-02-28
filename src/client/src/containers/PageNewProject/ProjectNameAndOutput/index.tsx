@@ -33,7 +33,6 @@ import {
 
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { IValidations } from "../../../reducers/wizardSelectionReducers/setValidations";
-
 import { AppState } from "../../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../../actions/ActionType";
@@ -109,12 +108,7 @@ const ProjectNameAndOutput = (props: Props) => {
     const element = e.currentTarget as HTMLInputElement;
     validateSetProjectValueAndSetDirty(element.value);
   };
-  const handleOutputPathChange = (
-    e: React.SyntheticEvent<HTMLInputElement>
-  ) => {
-    const element = e.currentTarget as HTMLInputElement;
-    updateOutputPath(element.value);
-  };
+ 
   const handleSaveClick = () => {
     vscode.postMessage({
       module: EXTENSION_MODULES.VALIDATOR,
@@ -149,7 +143,6 @@ const ProjectNameAndOutput = (props: Props) => {
         </div>
         <div>
           <OutputPath
-            handleChange={handleOutputPathChange}
             handleSaveClick={handleSaveClick}
             value={outputPath}
             validation={projectPathValidation}

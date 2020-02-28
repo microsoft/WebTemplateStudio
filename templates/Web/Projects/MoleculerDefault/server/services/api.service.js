@@ -7,11 +7,11 @@ module.exports = {
   name: "api",
   /**
    * Service Mixin
-   * More info: https://moleculer.services/docs/0.13/services.html#Mixins
+   * More info: https://moleculer.services/docs/0.14/services.html#Mixins
    */
   mixins: [ApiGateway],
 
-  // More info about settings: https://moleculer.services/docs/0.13/moleculer-web.html
+  // More info about settings: https://moleculer.services/docs/0.14/moleculer-web.html
   settings: {
     port: process.env.PORT || 3001,
 

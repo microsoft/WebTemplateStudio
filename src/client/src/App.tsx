@@ -245,7 +245,7 @@ const App = (props: Props) => {
           props.updateDependencyInfo(message.payload);
           break;
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
-          if (message.payload !== null && message.payload.outputPath !== null) {
+          if (message.payload !== null && message.payload.outputPath !== undefined) {
             props.updateOutputPath(message.payload.outputPath);
           }
           break;

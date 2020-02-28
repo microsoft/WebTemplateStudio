@@ -6,11 +6,11 @@ const MongoAdapter = require("moleculer-db-adapter-mongo");
 module.exports = opt => {
   return {
     /**
-     * Load DB Methods. More info: https://moleculer.services/docs/0.13/moleculer-db.html
+     * Load DB Methods. More info: https://moleculer.services/docs/0.14/moleculer-db.html
      * This will extend `pages` service with DB handlers
      */
     mixins: [DBService],
-    // Setup DB Adapter. More info: https://moleculer.services/docs/0.13/moleculer-db.html#Mongo-Adapter
+    // Setup DB Adapter. More info: https://moleculer.services/docs/0.14/moleculer-db.html#Mongo-Adapter
     adapter: new MongoAdapter(
       `${process.env.COSMOSDB_CONNSTR}?ssl=true&replicaSet=globaldb`,
       {

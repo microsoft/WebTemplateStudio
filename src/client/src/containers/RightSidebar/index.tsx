@@ -297,13 +297,13 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         )}
         {(isSidebarOpen || pathname === ROUTES.REVIEW_AND_GENERATE) && (
           <div
-            role="complementary"
+            role="complementary" id="dvRightSideBar"
             className={classNames(styles.container, styles.rightViewCropped, {
               [styles.rightViewCroppedSummaryPage]:
                 pathname === ROUTES.REVIEW_AND_GENERATE
             })}
           >
-            <div className={styles.summaryContainer}>
+            <div className={styles.summaryContainer} id="dvSummaryContainer">
               {pathname !== ROUTES.REVIEW_AND_GENERATE && (
                 <Cancel
                   tabIndex={0}

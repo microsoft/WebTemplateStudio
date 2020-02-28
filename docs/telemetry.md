@@ -41,6 +41,8 @@ Through the Application Insights API, telemetry events are collected to gather b
 |**Connection-String-Replaced**|Track the time it takes for the extension to replace the connection strings when we add a Azure CosmosDB service.|
 |**Press-Quickstart**|Track the event that occurs when you press the Quickstart button when you start the application.|
 |**Open-Add-Pages-Modal**|Track the event that occurs when you press the Add Pages button on the right side of the extension.|
+|**Open-AppService-Modal-From-Services-List**|Track the event that occurs when you press the Edit App Service button on the right side of the extension.|
+|**Open-CosmosDBService-Modal-From-Services-List**|Track the event that occurs when you press the Edit CosmosDB Service button on the right side of the extension.|
 |**open-project-vscode**|Track the time it takes to open the project generated in a new instance of Visual Studio Code.|
 |**reset-pages**|Track the time it takes to clean the added pages while we are creating a project.|
 
@@ -85,4 +87,4 @@ vscode.postMessage({
 
 In extension code, the abstract class `wizardServant` (which is extended by all the modules of the extension with commands that can be called from the client code) is responsible for processing these requests and tracking the duration of the execution of the command or if an error occurred during its execution.
 
-También existe en la extensión un módulo exclusivo de telemetría, que podemos llamar desde el cliente para trackear eventos simples. Hay que lanzar este comando con la propiedad `track: false` para que la clase wizardServant no vuelva a trackear el evento.
+There is also an exclusive telemetry module in the extension, which we can call from the client to track simple events. You send this command with the `track: false` property so that the wizardServant class does not re-trace the event.
