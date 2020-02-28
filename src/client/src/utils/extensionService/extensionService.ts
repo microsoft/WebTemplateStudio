@@ -84,7 +84,7 @@ const getOutputPath = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
-const resetAllPages = (vscode: IVSCodeObject, internalName:string, pagesLength:number) => {
+const resetAllPages = (vscode: IVSCodeObject, internalName: string, pagesLength: number) => {
   return postMessageAsync(EXTENSION_COMMANDS.RESET_PAGES, {
     module: EXTENSION_MODULES.VSCODEUI,
     command: EXTENSION_COMMANDS.RESET_PAGES,

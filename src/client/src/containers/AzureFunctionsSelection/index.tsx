@@ -6,7 +6,7 @@ import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
 import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalActions";
 
-import { getSvg, getCancelSvg } from "../../utils/getSvgUrl";
+import { getCancelSvg } from "../../utils/getSvgUrl";
 import { ReactComponent as EditIcon } from "../../assets/edit.svg";
 
 import styles from "./styles.module.css";

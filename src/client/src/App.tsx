@@ -145,7 +145,7 @@ interface IStateProps {
   selectedBackend: ISelected;
   selectedPages: ISelected[];
   isPreview: boolean;
-  modalState:any;
+  modalState: any;
 }
 
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
@@ -154,9 +154,9 @@ const App = (props: Props) => {
   const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,
     isPreview, setFrontendFrameworks, setBackendFrameworks, modalState } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
-  const promisesLoading:Array<any> = new Array<any>();
+  const promisesLoading: Array<any> = new Array<any>();
 
-  const addToPromisesList = (promise:Promise<any>)=>{
+  const addToPromisesList = (promise: Promise<any>)=>{
     promisesLoading.push(promise);
     return promise;
   }
@@ -333,11 +333,11 @@ const App = (props: Props) => {
       {isLoaded && (<TopNavBar />)}
 
       {isLoaded && (<div className={appStyles.container}>
-        {(modalState.modalType == MODAL_TYPES.PRIVACY_MODAL) && (<RedirectModal />)}
-        {(modalState.modalType == MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
-        {(modalState.modalType == MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
-        {(modalState.modalType == MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosResourceModal/>)}
-        {(modalState.modalType == MODAL_TYPES.POST_GEN_MODAL) && (<PostGenerationModal/>)}
+        {(modalState.modalType === MODAL_TYPES.PRIVACY_MODAL) && (<RedirectModal />)}
+        {(modalState.modalType === MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
+        {(modalState.modalType === MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
+        {(modalState.modalType === MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosResourceModal/>)}
+        {(modalState.modalType === MODAL_TYPES.POST_GEN_MODAL) && (<PostGenerationModal/>)}
 
         <main
           className={classnames(appStyles.centerView, {

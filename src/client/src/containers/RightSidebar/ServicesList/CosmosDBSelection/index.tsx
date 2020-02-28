@@ -2,7 +2,7 @@ import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { getSvg, getCancelSvg } from "../../../../utils/getSvgUrl";
+import { getCancelSvg } from "../../../../utils/getSvgUrl";
 
 import DraggableSidebarItem from "../../../../components/DraggableSidebarItem";
 
