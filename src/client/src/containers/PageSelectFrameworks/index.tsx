@@ -6,25 +6,41 @@ import FrameworkCard from "./FrameworkCard";
 import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
-import { getDepencyInfo } from "../../utils/extensionService/extensionService";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const SelectFrameworks = (props: Props) => {
   const { frontendOptions, backendOptions, intl } = props;
-
   React.useEffect(()=>{
     getDependencyInfoAndSetToStore();
   },[]);
 
   const getDependencyInfoAndSetToStore = () =>{
     const { vscode, updateDependencyInfo } = props;
-    const callbackGetDepencyInfo = (event: any)=>{
+    window.addEventListener("message", event => {
       const message = event.data;
-      updateDependencyInfo(message.payload);
-    };
-    getDepencyInfo(vscode, "node").then(callbackGetDepencyInfo);
-    getDepencyInfo(vscode, "python").then(callbackGetDepencyInfo);
+      switch (message.command) {
+        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
+          updateDependencyInfo(message.payload);
+          break;
+      }
+    });
+    
+    vscode.postMessage({
+      module: EXTENSION_MODULES.DEPENDENCYCHECKER,
+      command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
+      payload: {
+        dependency: "python"
+      }
+    });
+    vscode.postMessage({
+      module: EXTENSION_MODULES.DEPENDENCYCHECKER,
+      command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
+      payload: {
+        dependency: "node"
+      }
+    });
   }
 
   return (
