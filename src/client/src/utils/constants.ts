@@ -156,7 +156,6 @@ const EXTENSION_COMMANDS = {
   NAME_APP_SERVICE: "name-app-service",
   PROJECT_PATH_VALIDATION: "project-path-validation",
   SUBSCRIPTION_DATA_COSMOS: "subscription-data-for-cosmos",
-  SUBSCRIPTION_DATA_FUNCTIONS: "subscription-data-for-functions",
   SUBSCRIPTION_DATA_APP_SERVICE: "subscription-data-for-app-service",
   TRACK_PAGE_SWITCH: "track-page-switch",
   TRACK_CREATE_NEW_PROJECT: "track-create-new-project",

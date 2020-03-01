@@ -44,6 +44,8 @@ import RootAction from "../../actions/ActionType";
 import messages from "./messages";
 import classNames from "classnames";
 import keyUpHandler from "../../utils/keyUpHandler";
+import { subscriptionDataCosmos } from "../../utils/extensionService/extensionService";
+import { getSubscriptionData } from "../../actions/azureActions/subscriptionData";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -55,6 +57,7 @@ interface IDispatchProps {
   saveCosmosOptions: (cosmosOptions: any) => any;
   setValidationStatus: (status: boolean) => any;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
+  saveSubscriptionData: (subscriptionData: any) => void;
 }
 
 interface IStateProps {
@@ -192,12 +195,16 @@ const CosmosResourceModal = (props: Props) => {
       // Get resource Group and locations and set the dropdown options to them
       setData({ ...cosmosData, resourceGroup: [] });
       props.setValidationStatus(true);
-      props.vscode.postMessage({
-        module: EXTENSION_MODULES.AZURE,
-        command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
-        track: true,
-        subscription: value,
-        projectName: props.projectName
+
+      subscriptionDataCosmos(props.vscode, value, props.projectName).then((event)=>{
+        const message = event.data;
+        if (message.payload !== null) {
+          props.saveSubscriptionData({
+            locations: message.payload.locations,
+            resourceGroups: message.payload.resourceGroups,
+            validName: message.payload.validName
+          });
+        }
       });
       updatedForm = {
         ...updatedForm,
@@ -499,6 +506,9 @@ const mapDispatchToProps = (
   },
   saveCosmosOptions: (cosmosOptions: any) => {
     dispatch(saveCosmosDbSettingsAction(cosmosOptions));
+  },
+  saveSubscriptionData: (subscriptionData: any) => {
+    dispatch(getSubscriptionData(subscriptionData));
   },
   setCosmosResourceAccountNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension

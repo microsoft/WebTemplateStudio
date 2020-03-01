@@ -39,6 +39,8 @@ import { IAvailability, ISelectedAppService } from "../../reducers/wizardSelecti
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { ISubscriptionData } from "../../reducers/azureLoginReducers/subscriptionDataReducer";
 import classNames from "classnames";
+import { subscriptionDataAppService } from "../../utils/extensionService/extensionService";
+import { getSubscriptionData } from "../../actions/azureActions/subscriptionData";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -58,6 +60,7 @@ interface IDispatchProps {
   setSiteNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
+  saveSubscriptionData: (subscriptionData: any) => void;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
@@ -104,12 +107,15 @@ const AppServiceModal = (props: Props) => {
 
   const onSubscriptionChange = (subscription: string) => {
     setValidationStatus(true);
-    vscode.postMessage({
-      module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
-      track: true,
-      subscription,
-      projectName
+    subscriptionDataAppService(vscode, subscription, projectName).then((event)=>{
+      const message = event.data;
+      if (message.payload !== null) {
+        props.saveSubscriptionData({
+          locations: message.payload.locations,
+          resourceGroups: message.payload.resourceGroups,
+          validName: message.payload.validName
+        });
+      }
     });
 
     const updatedForm = {
@@ -337,6 +343,9 @@ const mapDispatchToProps = (
   },
   saveAppServiceSettings: (appServiceSettings: ISelectedAppService) => {
     dispatch(saveAppServiceSettingsAction(appServiceSettings));
+  },
+  saveSubscriptionData: (subscriptionData: any) => {
+    dispatch(getSubscriptionData(subscriptionData));
   },
   setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
     dispatch(setSiteNameAvailabilityAction(isAvailableObject)),

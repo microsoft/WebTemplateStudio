@@ -21,7 +21,6 @@ import {
 } from "./actions/wizardSelectionActions/updateProjectNameAndPath";
 import {
   setAccountAvailability,
-  setAppNameAvailabilityAction,
   setSiteNameAvailabilityAction,
   IAvailabilityFromExtension
 } from "./actions/azureActions/setAccountAvailability";
@@ -109,11 +108,7 @@ interface IDispatchProps {
   getVSCodeApi: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
   startLogOutToAzure: () => any;
-  saveSubscriptionData: (subscriptionData: any) => void;
   setCosmosResourceAccountNameAvailability: (
-    isAvailableObject: IAvailabilityFromExtension
-  ) => any;
-  setAppNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
   setSiteNameAvailability: (
@@ -257,31 +252,10 @@ const App = (props: Props) => {
             props.startLogOutToAzure();
           }
           break;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE:
-          // Expect resource groups and locations on this request
-          // Receive resource groups and locations
-          // and update redux (resourceGroups, locations)
-          if (message.payload !== null) {
-            props.saveSubscriptionData({
-              locations: message.payload.locations,
-              resourceGroups: message.payload.resourceGroups,
-              validName: message.payload.validName
-            });
-          }
-          break;
         case EXTENSION_COMMANDS.NAME_COSMOS:
           // Receive input validation
           // and update redux (boolean, string)
           props.setCosmosResourceAccountNameAvailability({
-            isAvailable: message.payload.isAvailable,
-            message: message.payload.reason
-          });
-          props.setAzureValidationStatus(false);
-          break;
-        case EXTENSION_COMMANDS.NAME_FUNCTIONS:
-          props.setAppNameAvailability({
             isAvailable: message.payload.isAvailable,
             message: message.payload.reason
           });
@@ -390,9 +364,6 @@ const mapDispatchToProps = (
   startLogOutToAzure: () => {
     dispatch(startLogOutAzure());
   },
-  saveSubscriptionData: (subscriptionData: any) => {
-    dispatch(getSubscriptionData(subscriptionData));
-  },
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
   },
@@ -400,9 +371,6 @@ const mapDispatchToProps = (
     isAvailableObject: IAvailabilityFromExtension
   ) => {
     dispatch(setAccountAvailability(isAvailableObject));
-  },
-  setAppNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => {
-    dispatch(setAppNameAvailabilityAction(isAvailableObject));
   },
   setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => {
     dispatch(setSiteNameAvailabilityAction(isAvailableObject));
