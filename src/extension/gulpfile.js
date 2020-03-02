@@ -58,6 +58,7 @@ gulp.task("vsce:publish", function() {
 
 gulp.task("vsce:package", function() {
   return vsce.createVSIX({
+    useYarn: "true",
     packagePath: "../../dist/webts-0.0.0-UNTRACKEDVERSION.vsix"
   });
 });
