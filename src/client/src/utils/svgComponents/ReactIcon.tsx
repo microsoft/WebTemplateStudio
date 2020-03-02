@@ -6,6 +6,6 @@ interface IProps {
   style: string;
 }
 
-export default (props:IProps) => {
+export default (props: IProps) => {
   return (<ReactIcon className={classnames(props.style)}/>);
 }

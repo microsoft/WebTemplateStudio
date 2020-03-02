@@ -7,6 +7,6 @@ interface IProps {
   style: string;
 }
 
-export default (props:IProps) => {
+export default (props: IProps) => {
   return (<BlankPage className={classnames(props.style, svgStyles.icon)}/>);
 }

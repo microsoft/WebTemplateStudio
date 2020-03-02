@@ -6,6 +6,6 @@ interface IProps {
   style: string;
 }
 
-export default (props:IProps) => {
+export default (props: IProps) => {
   return (<NodeIcon className={classnames(props.style)}/>);
 }

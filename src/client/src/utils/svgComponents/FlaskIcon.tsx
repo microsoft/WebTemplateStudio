@@ -6,6 +6,6 @@ interface IProps {
   style: string;
 }
 
-export default (props:IProps) => {
+export default (props: IProps) => {
   return (<FlaskIcon className={classnames(props.style)}/>);
 }

@@ -37,7 +37,6 @@ const DEV_NO_ERROR_MSG = "in development, no error message";
 const DEV_NO_ERROR_TYPE = "in development, no error type";
 
 const mockAppServiceName = "mockappservicename";
-const mockFunctionsName = "mockfunctionsname";
 const mockCosmosDBName = "mockcosmosdbname";
 
 /**

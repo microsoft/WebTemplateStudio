@@ -7,6 +7,6 @@ interface IProps {
   style: string;
 }
 
-export default (props:IProps) => {
+export default (props: IProps) => {
   return (<List className={classnames(props.style, svgStyles.icon)}/>);
 }

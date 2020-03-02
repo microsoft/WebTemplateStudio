@@ -3,9 +3,6 @@ import { IStateProps, IDispatchProps } from "./interfaces";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { IOption } from "../../types/option";
-import { setFrontendFrameworksAction } from "../../actions/wizardContentActions/setFrontendFrameworks";
-import { setBackendFrameworksAction } from "../../actions/wizardContentActions/setBackendFrameworks";
 import { updateDependencyInfoAction, IDependencyInfo } from "../../actions/wizardInfoActions/updateDependencyInfo";
 
 

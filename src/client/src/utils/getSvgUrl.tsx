@@ -1,5 +1,4 @@
 import * as React from "react";
-import classnames from "classnames";
 import Loadable from "react-loadable";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants";
 

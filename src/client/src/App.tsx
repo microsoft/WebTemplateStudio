@@ -25,7 +25,6 @@ import {
   IAvailabilityFromExtension
 } from "./actions/azureActions/setAccountAvailability";
 
-import { getSubscriptionData } from "./actions/azureActions/subscriptionData";
 import { setValidations } from "./actions/wizardSelectionActions/setValidations";
 import {
   updateTemplateGenerationStatusMessageAction,
@@ -47,7 +46,6 @@ import { ISelected } from "./types/selected";
 import { AppState } from "./reducers";
 import { IOption } from "./types/option";
 import { setPreviewStatusAction } from "./actions/wizardContentActions/setPreviewStatus";
-import { setPortAction } from "./actions/wizardContentActions/setPort";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
@@ -122,7 +120,6 @@ interface IDispatchProps {
   getPages: (pages: IOption[]) => any;
   selectPages: (pages: ISelected[]) => void;
   setPreviewStatus: (isPreview: boolean) => void;
-  setPort: (port: number) => void;
   setPages: (pages: ISelected[]) => void;
   setBackendFrameworks: (frameworks: IOption[]) => any;
   setFrontendFrameworks: (frameworks: IOption[]) => any;
@@ -398,9 +395,6 @@ const mapDispatchToProps = (
   },
   setPreviewStatus: (isPreview: boolean) => {
     dispatch(setPreviewStatusAction(isPreview));
-  },
-  setPort: (port: number) => {
-    dispatch(setPortAction(port));
   },
   setPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
