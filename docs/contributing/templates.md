@@ -23,10 +23,10 @@ The [Templates Repository](../../templates) has the following structure:
 
 - [Web](../../templates/Web): this folder contains all templates used for Web projects
   - [_catalog](../../templates/Web/_catalog): this folder contains the catalog of available Frameworks and Project Types, including the required information and metadata (descriptions, icons, images, etc.) to be displayed in the Wizard.
-  - [_comp](../templates/Web/_comp): this folder contains the partial code templates that will be generated when certain constraints are met, including framework specific templates.
-  - [Projects](../templates/Web/Projects): Project templates which define the actual folder structure, source files and auxiliary files to create a base project.
-  - [Pages](../templates/Web/Pages): Page templates define the source files needed to create a page of a certain type.
-  - [Features](../templates/Web/Features): Feature templates with the sources required to add different features and / or capabilities to the target web app.
+  - [_composition](../../templates/Web/_composition): this folder contains the partial code templates that will be generated when certain constraints are met, including framework specific templates.
+  - [Projects](../../templates/Web/Projects): Project templates which define the actual folder structure, source files and auxiliary files to create a base project.
+  - [Pages](../../templates/Web/Pages): Page templates define the source files needed to create a page of a certain type.
+  - [Features](../../templates/Web/Features): Feature templates with the sources required to add different features and / or capabilities to the target web app.
 
 
 ## Learn more
