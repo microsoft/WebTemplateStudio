@@ -20,8 +20,6 @@ import { setAppServiceModalButtonStatus } from "./verifyButtonStatus";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
   KEY_EVENTS
 } from "../../utils/constants";
@@ -39,7 +37,7 @@ import { IAvailability, ISelectedAppService } from "../../reducers/wizardSelecti
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { ISubscriptionData } from "../../reducers/azureLoginReducers/subscriptionDataReducer";
 import classNames from "classnames";
-import { subscriptionDataAppService } from "../../utils/extensionService/extensionService";
+import { subscriptionDataAppService, nameAppService } from "../../utils/extensionService/extensionService";
 import { getSubscriptionData } from "../../actions/azureActions/subscriptionData";
 
 interface IStateProps {
@@ -137,12 +135,13 @@ const AppServiceModal = (props: Props) => {
       }
       timeout = setTimeout(() => {
         timeout = undefined;
-        vscode.postMessage({
-          module: EXTENSION_MODULES.AZURE,
-          command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
-          track: false,
-          appName: appServiceFormData.siteName,
-          subscription: appServiceFormData.subscription
+        nameAppService(vscode, appServiceFormData.subscription, appServiceFormData.siteName).then((event)=>{
+          const message = event.data;
+          props.setSiteNameAvailability({
+            isAvailable: message.payload.isAvailable,
+            message: message.payload.reason
+          });
+          props.setValidationStatus(false);
         });
       }, 700);
     }

@@ -36,11 +36,9 @@ import {
 import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
 
 import appStyles from "./appStyles.module.css";
-import { startLogOutAzure } from "./actions/azureActions/logOutAzure";
 import { IVersions } from "./types/version";
 import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
-import { setAzureValidationStatusAction } from "./actions/azureActions/setAzureValidationStatusAction";
 import { IServiceStatus } from "./reducers/generationStatus/genStatus";
 import { ISelected } from "./types/selected";
 import { AppState } from "./reducers";
@@ -105,7 +103,6 @@ interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
-  startLogOutToAzure: () => any;
   setCosmosResourceAccountNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
@@ -113,7 +110,6 @@ interface IDispatchProps {
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
   setValidations: (validations: any) => void;
-  setAzureValidationStatus: (status: boolean) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
@@ -243,28 +239,6 @@ const App = (props: Props) => {
             );
           }
           break;
-        case EXTENSION_COMMANDS.AZURE_LOGOUT:
-          // Update UI only if user sign out is confirmed by the extension
-          if (message.payload) {
-            props.startLogOutToAzure();
-          }
-          break;
-        case EXTENSION_COMMANDS.NAME_COSMOS:
-          // Receive input validation
-          // and update redux (boolean, string)
-          props.setCosmosResourceAccountNameAvailability({
-            isAvailable: message.payload.isAvailable,
-            message: message.payload.reason
-          });
-          props.setAzureValidationStatus(false);
-          break;
-        case EXTENSION_COMMANDS.NAME_APP_SERVICE:
-          props.setSiteNameAvailability({
-            isAvailable: message.payload.isAvailable,
-            message: message.payload.reason
-          });
-          props.setAzureValidationStatus(false);
-          break;
         case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
           props.updateTemplateGenStatusMessage(message.payload.status);
           break;
@@ -358,9 +332,6 @@ const mapDispatchToProps = (
   logIntoAzure: (email: string, subscriptions: any[]) => {
     dispatch(logIntoAzureAction({ email, subscriptions }));
   },
-  startLogOutToAzure: () => {
-    dispatch(startLogOutAzure());
-  },
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
   },
@@ -374,9 +345,6 @@ const mapDispatchToProps = (
   },
   setValidations: (validations: any) => {
     dispatch(setValidations(validations));
-  },
-  setAzureValidationStatus: (status: boolean) => {
-    dispatch(setAzureValidationStatusAction(status));
   },
   updateTemplateGenStatusMessage: (status: string) => {
     dispatch(updateTemplateGenerationStatusMessageAction(status));

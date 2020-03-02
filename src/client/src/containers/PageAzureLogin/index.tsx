@@ -7,8 +7,6 @@ import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import styles from "./styles.module.css";
 
 import {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
   KEY_EVENTS,
   ROUTES
 } from "../../utils/constants";
@@ -23,9 +21,12 @@ import Title from "../../components/Title";
 import RootAction from "../../actions/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
+import { azureLogout } from "../../utils/extensionService/extensionService";
+import { startLogOutAzure } from "../../actions/azureActions/logOutAzure";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
+  startLogOutToAzure: () => any;
 }
 
 interface IAzureLoginProps {
@@ -41,10 +42,11 @@ type Props = IDispatchProps &
 
 class AzureLogin extends React.Component<Props> {
   signOutClick = () => {
-    this.props.vscode.postMessage({
-      module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.AZURE_LOGOUT,
-      track: true
+    azureLogout(this.props.vscode).then((event)=>{
+      const message = event.data;
+      if (message.payload) {
+        this.props.startLogOutToAzure();
+      }
     });
   };
   signOutkeyDownHandler = (event: React.KeyboardEvent) => {
@@ -117,7 +119,10 @@ const mapDispatchToProps = (
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
     dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));
-  }
+  },
+  startLogOutToAzure: () => {
+    dispatch(startLogOutAzure());
+  },
 });
 
 export default withRouter(

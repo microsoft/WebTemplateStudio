@@ -23,8 +23,6 @@ import { setCosmosModalButtonStatus } from "./verifyButtonStatus";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
   COSMOS_APIS,
   KEY_EVENTS
@@ -44,7 +42,7 @@ import RootAction from "../../actions/ActionType";
 import messages from "./messages";
 import classNames from "classnames";
 import keyUpHandler from "../../utils/keyUpHandler";
-import { subscriptionDataCosmos } from "../../utils/extensionService/extensionService";
+import { subscriptionDataCosmos, nameCosmos } from "../../utils/extensionService/extensionService";
 import { getSubscriptionData } from "../../actions/azureActions/subscriptionData";
 
 const DEFAULT_VALUE = {
@@ -58,6 +56,7 @@ interface IDispatchProps {
   setValidationStatus: (status: boolean) => any;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
   saveSubscriptionData: (subscriptionData: any) => void;
+  setAzureValidationStatus: (status: boolean) => void;
 }
 
 interface IStateProps {
@@ -239,12 +238,13 @@ const CosmosResourceModal = (props: Props) => {
       }
       timeout = setTimeout(() => {
         timeout = undefined;
-        props.vscode.postMessage({
-          module: EXTENSION_MODULES.AZURE,
-          command: EXTENSION_COMMANDS.NAME_COSMOS,
-          track: false,
-          appName: cosmosFormData.accountName.value,
-          subscription: cosmosFormData.subscription.value
+        nameCosmos(props.vscode, cosmosFormData.subscription.value, cosmosFormData.accountName.value).then((event)=>{
+          const message = event.data;
+          props.setCosmosResourceAccountNameAvailability({
+            isAvailable: message.payload.isAvailable,
+            message: message.payload.reason
+          });
+          props.setAzureValidationStatus(false);
         });
       }, 700);
     }
@@ -509,6 +509,9 @@ const mapDispatchToProps = (
   },
   saveSubscriptionData: (subscriptionData: any) => {
     dispatch(getSubscriptionData(subscriptionData));
+  },
+  setAzureValidationStatus: (status: boolean) => {
+    dispatch(setAzureValidationStatusAction(status));
   },
   setCosmosResourceAccountNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
