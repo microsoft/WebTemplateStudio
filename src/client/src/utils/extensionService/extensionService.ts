@@ -145,6 +145,22 @@ const nameAppService = (vscode: IVSCodeObject, subscription: string, appName: st
   }, vscode);
 }
 
+const azureLogin = (vscode: IVSCodeObject)=>{
+  return postMessageAsync(EXTENSION_COMMANDS.AZURE_LOGIN, {
+    command: EXTENSION_COMMANDS.AZURE_LOGIN,
+    module: EXTENSION_MODULES.AZURE,
+    track: true
+  }, vscode);
+}
+
+const getUserStatus = (vscode: IVSCodeObject)=>{
+  return postMessageAsync(EXTENSION_COMMANDS.GET_USER_STATUS, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.GET_USER_STATUS,
+    track: true
+  }, vscode);
+}
+
 const sendTelemetry = (vscode: IVSCodeObject, command: string, payload?: any): void =>
 {
   vscode.postMessage({
@@ -167,5 +183,7 @@ export {
   subscriptionDataCosmos,
   subscriptionDataAppService,
   nameCosmos,
-  nameAppService
+  nameAppService,
+  azureLogin,
+  getUserStatus
 }

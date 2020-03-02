@@ -8,7 +8,6 @@ import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 
 import {
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
   ROUTES,
   DEVELOPMENT,
   FRAMEWORK_TYPE
@@ -19,11 +18,6 @@ import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
 import {
   updateOutputPathAction
 } from "./actions/wizardSelectionActions/updateProjectNameAndPath";
-import {
-  setAccountAvailability,
-  setSiteNameAvailabilityAction,
-  IAvailabilityFromExtension
-} from "./actions/azureActions/setAccountAvailability";
 
 import { setValidations } from "./actions/wizardSelectionActions/setValidations";
 import {
@@ -47,7 +41,7 @@ import { setPreviewStatusAction } from "./actions/wizardContentActions/setPrevie
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
-import { getPages, getFrameworks } from "./utils/extensionService/extensionService";
+import { getPages, getFrameworks, getUserStatus } from "./utils/extensionService/extensionService";
 
 import { setBackendFrameworksAction } from "./actions/wizardContentActions/setBackendFrameworks";
 import { setFrontendFrameworksAction } from "./actions/wizardContentActions/setFrontendFrameworks";
@@ -103,18 +97,11 @@ interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;
   logIntoAzure: (email: string, subscriptions: []) => void;
-  setCosmosResourceAccountNameAvailability: (
-    isAvailableObject: IAvailabilityFromExtension
-  ) => any;
-  setSiteNameAvailability: (
-    isAvailableObject: IAvailabilityFromExtension
-  ) => any;
   setValidations: (validations: any) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
   getPages: (pages: IOption[]) => any;
-  selectPages: (pages: ISelected[]) => void;
   setPreviewStatus: (isPreview: boolean) => void;
   setPages: (pages: ISelected[]) => void;
   setBackendFrameworks: (frameworks: IOption[]) => any;
@@ -135,7 +122,7 @@ type Props = IDispatchProps & IStateProps & RouteComponentProps;
 
 const App = (props: Props) => {
   const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,
-    isPreview, setFrontendFrameworks, setBackendFrameworks, modalState } = props;
+    isPreview, setFrontendFrameworks, setBackendFrameworks, modalState, logIntoAzure } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading: Array<any> = new Array<any>();
 
@@ -178,11 +165,14 @@ const App = (props: Props) => {
   },[]);
 
   React.useEffect(()=>{
-    const { vscode } = props;
-    vscode.postMessage({
-      module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.GET_USER_STATUS,
-      track: true
+    getUserStatus(vscode).then((event)=>{
+      const message = event.data;
+      if (message.payload !== null) {
+        logIntoAzure(
+          message.payload.email,
+          message.payload.subscriptions
+        );
+      }
     });
   },[props.vscode]);
 
@@ -227,16 +217,6 @@ const App = (props: Props) => {
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           if (message.payload !== null && message.payload.outputPath !== undefined) {
             props.updateOutputPath(message.payload.outputPath);
-          }
-          break;
-        case EXTENSION_COMMANDS.GET_USER_STATUS:
-        case EXTENSION_COMMANDS.AZURE_LOGIN:
-          // email will be null or undefined if login didn't work correctly
-          if (message.payload !== null) {
-            props.logIntoAzure(
-              message.payload.email,
-              message.payload.subscriptions
-            );
           }
           break;
         case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
@@ -335,14 +315,6 @@ const mapDispatchToProps = (
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));
   },
-  setCosmosResourceAccountNameAvailability: (
-    isAvailableObject: IAvailabilityFromExtension
-  ) => {
-    dispatch(setAccountAvailability(isAvailableObject));
-  },
-  setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) => {
-    dispatch(setSiteNameAvailabilityAction(isAvailableObject));
-  },
   setValidations: (validations: any) => {
     dispatch(setValidations(validations));
   },
@@ -354,9 +326,6 @@ const mapDispatchToProps = (
   },
   getPages: (pages: IOption[]) => {
     dispatch(getPagesOptionsAction(pages));
-  },
-  selectPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
   },
   getVersionsData: (versions: IVersions) => {
     dispatch(getVersionsDataAction(versions));
