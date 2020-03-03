@@ -38,8 +38,8 @@ export class CoreTSModule extends WizardServant {
     };
   }
 
-  async getTemplateConfig(message: any) {
-    let payload = CoreTemplateStudio.GetExistingInstance().getTemplateConfig();
+  async getTemplateConfig(message: any): Promise<IPayloadResponse>{
+    const payload = CoreTemplateStudio.GetExistingInstance().getTemplateConfig();
     payload.scope = message.payload.scope;
     return { payload };
   }
