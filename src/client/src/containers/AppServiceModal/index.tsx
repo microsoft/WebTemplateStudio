@@ -5,14 +5,13 @@ import asModal from "../../components/Modal";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
-import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { ReactComponent as GreenCheck } from "../../assets/checkgreen.svg";
 import { getAppServiceSelectionSelector } from "../../selectors/appServiceSelector";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
 import { getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import RuntimeStackInfo from "./RuntimeStackInfo/RuntimeStackInfo";
 import AppServicePlanInfo from "./AppServicePlanInfo/AppServicePlanInfo";
+import AppName from "./AppName/AppName";
 import SubscriptionSelection from "./SubscriptionSelection/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
@@ -121,6 +120,17 @@ const AppServiceModal = (props: Props) => {
     handleChange(updatedForm);
   };
 
+  
+
+  const onSiteNameChange = (newSiteName: string) => {
+    // Changes in account name will trigger an update in validation status
+  setValidationStatus(true);
+  handleChange({
+    ...appServiceFormData,
+    siteName: newSiteName
+  });
+  }
+
   /**
    * Listens on account name change and validates the input in VSCode
    */
@@ -197,19 +207,6 @@ const AppServiceModal = (props: Props) => {
     }
   }, [subscriptionData.validName]);
 
-  /**
-   * To obtain the input value, must cast as HTMLInputElement
-   * https://stackoverflow.com/questions/42066421/property-value-does-not-exist-on-type-eventtarget
-   */
-  const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
-    const element = e.currentTarget as HTMLInputElement;
-    // Changes in account name will trigger an update in validation status
-    setValidationStatus(true);
-    handleChange({
-      ...appServiceFormData,
-      siteName: element.value
-    });
-  };
 
   const getButtonClassNames = () => {
     const buttonClass = formIsSendable
@@ -219,7 +216,6 @@ const AppServiceModal = (props: Props) => {
     return classNames(buttonClass, styles.button);
   };
 
-  const { isSiteNameAvailable } = siteNameAvailability;
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
@@ -251,57 +247,13 @@ const AppServiceModal = (props: Props) => {
           subscriptions={subscriptions}
           onSubscriptionChange={onSubscriptionChange}
           subscription={appServiceFormData.subscription} />
-        {/* Site Name */}
-        <div
-          className={classNames(styles.selectionContainer, {
-            [styles.selectionContainerDisabled]:
-              appServiceFormData.subscription === ""
-          })}
-        >
-          <div className={styles.selectionHeaderContainer}>
-            <div className={styles.leftHeader}>
-              {intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
-            </div>
-          </div>
-          <div className={styles.subLabel}>
-            {intl.formatMessage(azureModalMessages.appServiceAppNameSubLabel)}
-          </div>
-          <div className={styles.errorStack}>
-            <div className={styles.inputContainer}>
-              <input
-                aria-label={intl.formatMessage(
-                  azureModalMessages.appServiceAriaAppNameLabel
-                )}
-                className={styles.input}
-                onChange={handleInput}
-                value={
-                  appServiceFormData.subscription === ""
-                    ? ""
-                    : appServiceFormData.siteName
-                }
-                placeholder={intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
-                disabled={appServiceFormData.subscription === ""}
-                tabIndex={appServiceFormData.subscription === "" ? -1 : 0}
-              />
-              {appServiceFormData.subscription &&
-                isSiteNameAvailable &&
-                !isValidatingName && (
-                  <GreenCheck className={styles.validationIcon} />
-                )}
-              {appServiceFormData.subscription && isValidatingName && (
-                <Spinner className={styles.spinner} />
-              )}
-            </div>
-            {!isValidatingName &&
-              !isSiteNameAvailable &&
-              appServiceFormData.siteName.length > 0 &&
-              siteNameAvailability.message && (
-                <div className={styles.errorMessage}>
-                  {siteNameAvailability.message}
-                </div>
-              )}
-          </div>
-        </div>
+        <AppName
+         subscription={appServiceFormData.subscription}
+         siteName={appServiceFormData.siteName}
+         onSiteNameChange={onSiteNameChange}
+         isValidatingName={isValidatingName}
+         siteNameAvailability={siteNameAvailability}
+          />
         <AppServicePlanInfo isMicrosoftLearnSubscription={isMicrosoftLearnSubscription(appServiceFormData.subscription)} />
         <RuntimeStackInfo />
         {/* Save Button */}
