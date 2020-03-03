@@ -41,7 +41,7 @@ import { setPreviewStatusAction } from "./actions/wizardContentActions/setPrevie
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
-import { getPages, getFrameworks, getUserStatus } from "./utils/extensionService/extensionService";
+import { getPages, getFrameworks, getUserStatus, getTemplateInfo } from "./utils/extensionService/extensionService";
 
 import { setBackendFrameworksAction } from "./actions/wizardContentActions/setBackendFrameworks";
 import { setFrontendFrameworksAction } from "./actions/wizardContentActions/setFrontendFrameworks";
@@ -174,6 +174,20 @@ const App = (props: Props) => {
         );
       }
     });
+
+    getTemplateInfo(vscode).then((event)=>{
+      const message = event.data;
+      const versionData: IVersions = {
+        templatesVersion:message.payload.templatesVersion,
+        wizardVersion: message.payload.wizardVersion
+      };
+      props.getVersionsData(versionData);
+      props.setValidations({
+        itemNameValidationConfig:message.payload.itemNameValidationConfig,
+        projectNameValidationConfig:message.payload.projectNameValidationConfig
+      });
+      props.setPreviewStatus(message.payload.preview);
+    });
   },[props.vscode]);
 
   React.useEffect(()=>{
@@ -224,20 +238,6 @@ const App = (props: Props) => {
           break;
         case EXTENSION_COMMANDS.GEN_STATUS:
           props.updateTemplateGenStatus(message.payload);
-          break;
-        case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
-          const versionData: IVersions = {
-            templatesVersion:message.payload.templatesVersion,
-            wizardVersion: message.payload.wizardVersion
-          };
-          props.getVersionsData(versionData);
-          props.setValidations({
-            itemNameValidationConfig:message.payload.itemNameValidationConfig,
-            projectNameValidationConfig:message.payload.projectNameValidationConfig
-          });
-          break;
-        case EXTENSION_COMMANDS.GET_PREVIEW_STATUS:
-          props.setPreviewStatus(message.payload.preview);
           break;
       }
     });

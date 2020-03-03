@@ -18,6 +18,7 @@ class CliEventEmitter extends EventEmitter {}
  */
 export class CoreTemplateStudio {
   private static _instance: CoreTemplateStudio | undefined;
+  public static _templateConfig: any;
 
   private _processCli: ChildProcess;
   private promiseChain: Promise<any>;
@@ -157,6 +158,10 @@ export class CoreTemplateStudio {
       CONSTANTS.CLI.GET_FRAMEWORKS_COMPLETE_STATE,
       getFrameworksCommand
     );
+  }
+
+  public getTemplateConfig(): any {
+    return CoreTemplateStudio._templateConfig;
   }
 
   public async getPages(

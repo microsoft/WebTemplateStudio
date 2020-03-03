@@ -527,16 +527,6 @@ const mockVsCodeApi = () => ({
             },
             "*"
           );
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.GET_PREVIEW_STATUS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                preview: true
-              }
-            },
-            "*"
-          );
           break;
         case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
           // produces a mock login response from VSCode in development
@@ -546,7 +536,8 @@ const mockVsCodeApi = () => ({
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 wizardVersion: "1.x",
-                templatesVersion: "1.x"
+                templatesVersion: "1.x",
+                preview:false
               }
             },
             "*"

@@ -19,7 +19,8 @@ export class CoreTSModule extends WizardServant {
   > {
     return new Map([
       [ExtensionCommand.GetFrameworks, this.getFrameworks],
-      [ExtensionCommand.GetPages, this.getPages]
+      [ExtensionCommand.GetPages, this.getPages],
+      [ExtensionCommand.GetTemplateInfo, this.getTemplateConfig]
     ]);
   }
 
@@ -35,6 +36,12 @@ export class CoreTSModule extends WizardServant {
         projectType: message.payload.projectType
       }
     };
+  }
+
+  async getTemplateConfig(message: any) {
+    let payload = CoreTemplateStudio.GetExistingInstance().getTemplateConfig();
+    payload.scope = message.payload.scope;
+    return { payload };
   }
 
   async getPages(message: any): Promise<IPayloadResponse> {

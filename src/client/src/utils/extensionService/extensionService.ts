@@ -51,6 +51,14 @@ const getFrameworks = (vscode: IVSCodeObject, isPreview: boolean): Promise<any> 
   }, vscode);
 }
 
+const getTemplateInfo = (vscode: IVSCodeObject): Promise<any> => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_TEMPLATE_INFO, {
+    module: EXTENSION_MODULES.CORETS,
+    command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
+    payload: {}
+  }, vscode);
+}
+
 const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackageName: string, checkVersionPackageSource: string): Promise<any> => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_LATEST_VERSION, {
     module: EXTENSION_MODULES.DEPENDENCYCHECKER,
@@ -185,5 +193,6 @@ export {
   nameCosmos,
   nameAppService,
   azureLogin,
-  getUserStatus
+  getUserStatus,
+  getTemplateInfo
 }
