@@ -104,6 +104,16 @@ const GetSubscriptionData = (subscription: string, projectName: string, vscode: 
   }, vscode);
 }
 
+const ValidateAppServiceName = (subscription: string, appName: string, vscode: IVSCodeObject): Promise<any> => {
+  return postMessageAsync(
+    EXTENSION_COMMANDS.NAME_APP_SERVICE, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
+    subscription,
+    appName
+  }, vscode);
+}
+
 export {
   projectPathValidation,
   getValidationsConfig,
@@ -112,5 +122,6 @@ export {
   getPages,
   getOutputPath,
   sendTelemetry,
-  GetSubscriptionData
+  GetSubscriptionData,
+  ValidateAppServiceName
 }

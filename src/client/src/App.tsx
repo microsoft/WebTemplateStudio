@@ -236,13 +236,6 @@ const App = (props: Props) => {
           });
           props.setAzureValidationStatus(false);
           break;
-        case EXTENSION_COMMANDS.NAME_APP_SERVICE:
-          props.setSiteNameAvailability({
-            isAvailable: message.payload.isAvailable,
-            message: message.payload.reason
-          });
-          props.setAzureValidationStatus(false);
-          break;
         case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
           props.updateTemplateGenStatusMessage(message.payload.status);
           break;

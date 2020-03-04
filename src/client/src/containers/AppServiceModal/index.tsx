@@ -16,14 +16,11 @@ import SubscriptionSelection from "./SubscriptionSelection/SubscriptionSelection
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
   KEY_EVENTS
 } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
-import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
 import {
   setSiteNameAvailabilityAction,
   IAvailabilityFromExtension
@@ -33,17 +30,13 @@ import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import RootAction from "../../actions/ActionType";
 import { IAvailability, ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { ISubscriptionData } from "../../reducers/azureLoginReducers/subscriptionDataReducer";
 import classNames from "classnames";
-import { GetSubscriptionData } from "../../utils/extensionService/extensionService";
-import { getSubscriptionData as getSubscriptionDataFromStore } from "../../actions/azureActions/subscriptionData";
+import { GetSubscriptionData, ValidateAppServiceName } from "../../utils/extensionService/extensionService";
 
 interface IStateProps {
   isModalOpen: boolean;
   vscode: IVSCodeObject;
   subscriptions: [any];
-  subscriptionData: ISubscriptionData;
-  isValidatingName: boolean;
   siteNameAvailability: IAvailability;
   appServiceSelection: ISelectedAppService | null;
   projectName: string;
@@ -52,8 +45,6 @@ interface IStateProps {
 interface IDispatchProps {
   closeModal: () => any;
   saveAppServiceSettings: (appServiceSettings: ISelectedAppService) => any;
-  setValidationStatus: (status: boolean) => any;
-  saveSubscriptionData: (subscriptionData: any) => void;
   setSiteNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
@@ -75,12 +66,9 @@ const AppServiceModal = (props: Props) => {
     intl,
     vscode,
     subscriptions,
-    subscriptionData,
-    isValidatingName,
     siteNameAvailability,
     appServiceSelection,
     setSiteNameAvailability,
-    setValidationStatus,
     saveAppServiceSettings,
     closeModal,
     projectName
@@ -89,38 +77,31 @@ const AppServiceModal = (props: Props) => {
   // The data the user has entered into the modal
   const [appServiceFormData, updateForm] = React.useState(initialState);
   const [formIsSendable, setFormIsSendable] = React.useState(false);
+  const [isValidatingName, setIsValidatingName] = React.useState(false);
 
-  // Updates the data the user enters as the user types
-  const handleChange = (updatedAppServiceForm: ISelectedAppService) => {
+  const onSubscriptionChange = (subscription: string) => {    
     setAppServiceModalButtonStatus();
-    updateForm(updatedAppServiceForm);
-  };
+    GetSubscriptionData(subscription, projectName, vscode)
+    .then((event) => {
 
-  const onSubscriptionChange =  (subscription: string) => {
-    setValidationStatus(true);
-    GetSubscriptionData(subscription, projectName, vscode).then((event) => {
-      props.saveSubscriptionData({
-        locations: event.data.payload.locations,
-        resourceGroups: event.data.payload.resourceGroups,
-        validName: event.data.payload.validName
-      });
+      const siteName = appServiceFormData.siteName === '' 
+        ? event.data.payload.validName 
+        : appServiceFormData.siteName;
+
+      const updatedForm = {
+        ...appServiceFormData,
+        subscription,
+        resourceGroup: "",
+        siteName
+      };
+      updateForm(updatedForm);
     });
-
-    const updatedForm = {
-      ...appServiceFormData,
-      subscription,
-      resourceGroup: ""
-    };
-
-    handleChange(updatedForm);
-  };
-
-  
+  };  
 
   const onSiteNameChange = (newSiteName: string) => {
     // Changes in account name will trigger an update in validation status
-  setValidationStatus(true);
-  handleChange({
+  setAppServiceModalButtonStatus();
+  updateForm({
     ...appServiceFormData,
     siteName: newSiteName
   });
@@ -130,21 +111,27 @@ const AppServiceModal = (props: Props) => {
    * Listens on account name change and validates the input in VSCode
    */
   React.useEffect(() => {
-    if (appServiceFormData.siteName !== "") {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-      timeout = setTimeout(() => {
-        timeout = undefined;
-        vscode.postMessage({
-          module: EXTENSION_MODULES.AZURE,
-          command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
-          track: false,
-          appName: appServiceFormData.siteName,
-          subscription: appServiceFormData.subscription
-        });
-      }, 700);
+    if (appServiceFormData.siteName === "") {
+      return    
     }
+
+    setIsValidatingName(true);
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(() => {
+      timeout = undefined;
+      ValidateAppServiceName(appServiceFormData.subscription, appServiceFormData.siteName, vscode).then((event) => {
+             
+        setSiteNameAvailability({
+          isAvailable: event.data.payload.isAvailable,
+          message: event.data.payload.reason
+        });
+
+        setIsValidatingName(false);
+      });
+    }, 700);
+
   }, [appServiceFormData.siteName]);
 
   // Update form data with data from store if it exists
@@ -170,33 +157,6 @@ const AppServiceModal = (props: Props) => {
     }
     setAppServiceModalButtonStatus();
   }, [isValidatingName]);
-
-  /**
-   * Update name field with a valid name generated from
-   * extension when a subscription is selected or changed
-   */
-  React.useEffect(() => {
-    if (subscriptionData.validName === "") return;
-
-    // if a selection exists (i.e. user has saved form data),
-    // this effect should only be run after selection has been loaded (i.e. subscription value is not empty)
-    const shouldRunEffect =
-      !appServiceSelection || appServiceFormData.subscription !== "";
-    if (shouldRunEffect) {
-      updateForm({
-        ...appServiceFormData,
-        siteName:subscriptionData.validName
-      });
-      // programatically updating <input>'s value field doesn't dispatch an event to handleInput
-      // so we manually simulate handleInput here
-      setValidationStatus(true);
-      handleChange({
-        ...appServiceFormData,
-        siteName: subscriptionData.validName
-      });
-    }
-  }, [subscriptionData.validName]);
-
 
   const getButtonClassNames = () => {
     const buttonClass = formIsSendable
@@ -273,10 +233,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAppServiceModalOpenSelector(state),
   vscode: getVSCodeApiSelector(state),
   subscriptions: state.azureProfileData.profileData.subscriptions,
-  subscriptionData: state.azureProfileData.subscriptionData,
-  siteNameAvailability:
-    state.selection.services.appService.siteNameAvailability,
-  isValidatingName: state.selection.isValidatingName,
+  siteNameAvailability:state.selection.services.appService.siteNameAvailability,
   appServiceSelection: getAppServiceSelectionSelector(state),
   projectName: getProjectName(state)
 });
@@ -290,13 +247,8 @@ const mapDispatchToProps = (
   saveAppServiceSettings: (appServiceSettings: ISelectedAppService) => {
     dispatch(saveAppServiceSettingsAction(appServiceSettings));
   },
-  saveSubscriptionData: (subscriptionData: any) => {
-    dispatch(getSubscriptionDataFromStore(subscriptionData));
-  },
   setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
-    dispatch(setSiteNameAvailabilityAction(isAvailableObject)),
-  setValidationStatus: (status: boolean) =>
-    dispatch(setAzureValidationStatusAction(status))
+    dispatch(setSiteNameAvailabilityAction(isAvailableObject))
 });
 
 export default connect(
