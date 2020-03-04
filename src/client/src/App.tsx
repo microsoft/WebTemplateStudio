@@ -209,7 +209,6 @@ const App = (props: Props) => {
           break;
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
         case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE:
           // Expect resource groups and locations on this request
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)

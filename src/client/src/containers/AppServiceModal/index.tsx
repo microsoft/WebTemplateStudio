@@ -14,9 +14,6 @@ import AppServicePlanInfo from "./AppServicePlanInfo/AppServicePlanInfo";
 import AppName from "./AppName/AppName";
 import SubscriptionSelection from "./SubscriptionSelection/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-
-import { setAppServiceModalButtonStatus } from "./verifyButtonStatus";
-
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   EXTENSION_COMMANDS,
@@ -38,6 +35,8 @@ import { IAvailability, ISelectedAppService } from "../../reducers/wizardSelecti
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { ISubscriptionData } from "../../reducers/azureLoginReducers/subscriptionDataReducer";
 import classNames from "classnames";
+import { GetSubscriptionData } from "../../utils/extensionService/extensionService";
+import { getSubscriptionData as getSubscriptionDataFromStore } from "../../actions/azureActions/subscriptionData";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -54,6 +53,7 @@ interface IDispatchProps {
   closeModal: () => any;
   saveAppServiceSettings: (appServiceSettings: ISelectedAppService) => any;
   setValidationStatus: (status: boolean) => any;
+  saveSubscriptionData: (subscriptionData: any) => void;
   setSiteNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
@@ -92,23 +92,18 @@ const AppServiceModal = (props: Props) => {
 
   // Updates the data the user enters as the user types
   const handleChange = (updatedAppServiceForm: ISelectedAppService) => {
-    setAppServiceModalButtonStatus(
-      updatedAppServiceForm,
-      isValidatingName,
-      siteNameAvailability,
-      setFormIsSendable
-    );
+    setAppServiceModalButtonStatus();
     updateForm(updatedAppServiceForm);
   };
 
-  const onSubscriptionChange = (subscription: string) => {
+  const onSubscriptionChange =  (subscription: string) => {
     setValidationStatus(true);
-    vscode.postMessage({
-      module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
-      track: true,
-      subscription,
-      projectName
+    GetSubscriptionData(subscription, projectName, vscode).then((event) => {
+      props.saveSubscriptionData({
+        locations: event.data.payload.locations,
+        resourceGroups: event.data.payload.resourceGroups,
+        validName: event.data.payload.validName
+      });
     });
 
     const updatedForm = {
@@ -173,12 +168,7 @@ const AppServiceModal = (props: Props) => {
     if (!appServiceFormData.siteName) {
       return;
     }
-    setAppServiceModalButtonStatus(
-      appServiceFormData,
-      isValidatingName,
-      siteNameAvailability,
-      setFormIsSendable
-    );
+    setAppServiceModalButtonStatus();
   }, [isValidatingName]);
 
   /**
@@ -228,6 +218,16 @@ const AppServiceModal = (props: Props) => {
     const s = subscriptions.find(s => s.value === subscription);
     return s && s.isMicrosoftLearnSubscription;
   }
+
+  const setAppServiceModalButtonStatus = (): void => {  
+    const isSubscriptionEmpty = appServiceFormData.subscription === "";
+    const isSiteNameEmpty = appServiceFormData.siteName === "";  
+    const { isSiteNameAvailable } = siteNameAvailability;
+  
+    const isDisabled =  isSubscriptionEmpty || isSiteNameEmpty || isValidatingName || !isSiteNameAvailable;
+  
+    setFormIsSendable(!isDisabled);
+  };
 
   return (
     <React.Fragment>
@@ -289,6 +289,9 @@ const mapDispatchToProps = (
   },
   saveAppServiceSettings: (appServiceSettings: ISelectedAppService) => {
     dispatch(saveAppServiceSettingsAction(appServiceSettings));
+  },
+  saveSubscriptionData: (subscriptionData: any) => {
+    dispatch(getSubscriptionDataFromStore(subscriptionData));
   },
   setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
     dispatch(setSiteNameAvailabilityAction(isAvailableObject)),

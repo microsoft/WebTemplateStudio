@@ -93,6 +93,17 @@ const sendTelemetry = (vscode: IVSCodeObject, command: string, payload?: any): v
   });
 }
 
+const GetSubscriptionData = (subscription: string, projectName: string, vscode: IVSCodeObject): Promise<any> => {
+  return postMessageAsync(
+    EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
+    track: true,
+    subscription,
+    projectName
+  }, vscode);
+}
+
 export {
   projectPathValidation,
   getValidationsConfig,
@@ -100,5 +111,6 @@ export {
   getLatestVersion,
   getPages,
   getOutputPath,
-  sendTelemetry
+  sendTelemetry,
+  GetSubscriptionData
 }
