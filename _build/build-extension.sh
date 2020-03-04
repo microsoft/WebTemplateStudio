@@ -13,4 +13,3 @@ yarn --cwd ../src/extension build
 
 echo "Finished building extension"
 
-read

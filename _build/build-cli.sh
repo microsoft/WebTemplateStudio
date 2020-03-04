@@ -14,10 +14,8 @@ if [ ! -z "$1" ] && ([ "$1" == "release" ] || [ "$1" == "debug" ]); then # Check
 
     echo "Finished building the cli"
 
-    read
 else
     echo "Invalid parmeter $1, expected values: 'debug' or ' release' for build configuration."
-    read
 fi
 
 

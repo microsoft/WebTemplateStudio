@@ -13,4 +13,3 @@ yarn --cwd ../src/client build
 
 echo "Finished building the client"
 
-read
