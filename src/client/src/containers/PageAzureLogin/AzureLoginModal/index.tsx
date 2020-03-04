@@ -14,14 +14,12 @@ import classnames from "classnames";
 import { FormattedMessage } from "react-intl";
 import keyUpHandler from "../../../utils/keyUpHandler";
 import messages from "./messages";
-import { KEY_EVENTS } from "../../../utils/constants";
+import { KEY_EVENTS, EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../../utils/constants";
 import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
 import CollapsibleInfoBox from "../../../components/CollapsibleInfoBox";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 import * as ModalActions from "../../../actions/modalActions/modalActions";
 import { ThunkDispatch } from "redux-thunk";
-import { azureLogin } from "../../../utils/extensionService/extensionService";
-import { logIntoAzureAction } from "../../../actions/azureActions/logIntoAzure";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -34,7 +32,6 @@ interface IDispatchProps {
   closeModal: () => any;
   openAppServiceModal: () => any;
   openCosmosDbModal: () => any;
-  logIntoAzure: (email: string, subscriptions: []) => void;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
@@ -46,20 +43,15 @@ const AzureLoginModal = (props: Props) => {
     closeModal,
     selectedAzureServiceName,
     openAppServiceModal,
-    openCosmosDbModal,
-    logIntoAzure
+    openCosmosDbModal
   } = props;
+
   const handleSignInClick = () => {
-    // initiates a login command to VSCode ReactPanel class
-    azureLogin(props.vscode).then((event)=>{
-      const message = event.data;
-      if (message.payload !== null) {
-        logIntoAzure(
-          message.payload.email,
-          message.payload.subscriptions
-        );
-      }
-    })
+    props.vscode.postMessage({
+      command: EXTENSION_COMMANDS.AZURE_LOGIN,
+      module: EXTENSION_MODULES.AZURE,
+      track: true
+    });
   };
 
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -189,10 +181,7 @@ const mapDispatchToProps = (
   },
   openAppServiceModal: () => {
     dispatch(ModalActions.openAppServiceModalAction());
-  },
-  logIntoAzure: (email: string, subscriptions: any[]) => {
-    dispatch(logIntoAzureAction({ email, subscriptions }));
-  },
+  }
 });
 
 export default connect(
