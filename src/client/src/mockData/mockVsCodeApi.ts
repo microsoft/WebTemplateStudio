@@ -448,13 +448,16 @@ const mockVsCodeApi = () => ({
           );
           break;
         case EXTENSION_COMMANDS.NAME_APP_SERVICE:
+          const isAvailable = message.appName.length > 3
+          const reason = isAvailable ? '' : 'Invalid name';
           window.postMessage(
             {
               module: EXTENSION_MODULES.AZURE,
               command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                isAvailable: message.appName.length > 0
+                reason,
+                isAvailable
               },
               message: DEV_NO_ERROR_MSG,
               errorType: DEV_NO_ERROR_TYPE

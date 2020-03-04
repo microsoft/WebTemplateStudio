@@ -6,14 +6,13 @@ import classNames from "classnames";
 import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
 import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
-import { IAvailability } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
 
 interface IStateProps {
   subscription: string;
   siteName: string;
   onSiteNameChange(newSiteName: string): void;
   isValidatingName: boolean;
-  siteNameAvailability: IAvailability;
+  invalidAppNameMessage: string;
 }
 
 type Props = IStateProps & InjectedIntlProps;
@@ -25,9 +24,8 @@ const AppName = (props: Props) => {
     siteName,
     onSiteNameChange,
     isValidatingName,
-    siteNameAvailability
+    invalidAppNameMessage
   } = props;
-  const { isSiteNameAvailable } = siteNameAvailability;
 
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const newSiteName = e.currentTarget as HTMLInputElement;
@@ -63,19 +61,16 @@ const AppName = (props: Props) => {
             disabled={subscription === ""}
             tabIndex={subscription === "" ? -1 : 0}
           />
-          {subscription && isSiteNameAvailable && !isValidatingName && (
+          {subscription && invalidAppNameMessage.length === 0 && !isValidatingName && (
             <GreenCheck className={styles.validationIcon} />
           )}
           {subscription && isValidatingName && (
             <Spinner className={styles.spinner} />
           )}
         </div>
-        {!isValidatingName &&
-          !isSiteNameAvailable &&
-          siteName.length > 0 &&
-          siteNameAvailability.message && (
+        {!isValidatingName && siteName.length > 0 && invalidAppNameMessage && (
             <div className={styles.errorMessage}>
-              {siteNameAvailability.message}
+              {invalidAppNameMessage}
             </div>
           )}
       </div>
