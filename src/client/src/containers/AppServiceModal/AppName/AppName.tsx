@@ -18,16 +18,9 @@ interface IStateProps {
 type Props = IStateProps & InjectedIntlProps;
 
 const AppName = (props: Props) => {
-  const {
-    intl,
-    subscription,
-    siteName,
-    onSiteNameChange,
-    isValidatingName,
-    appNameInvalidMessage
-  } = props;
+  const { intl, subscription, siteName, onSiteNameChange, isValidatingName, appNameInvalidMessage } = props;
 
-  const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
+  const notifyAppNameChanged = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const newSiteName = e.currentTarget as HTMLInputElement;
     onSiteNameChange(newSiteName.value);
   };
@@ -35,44 +28,29 @@ const AppName = (props: Props) => {
   return (
     <div
       className={classNames(styles.selectionContainer, {
-        [styles.selectionContainerDisabled]: subscription === ""
+        [styles.selectionContainerDisabled]: subscription === "",
       })}
     >
       <div className={styles.selectionHeaderContainer}>
-        <div className={styles.leftHeader}>
-          {intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
-        </div>
+        <div className={styles.leftHeader}>{intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}</div>
       </div>
-      <div className={styles.subLabel}>
-        {intl.formatMessage(azureModalMessages.appServiceAppNameSubLabel)}
-      </div>
+      <div className={styles.subLabel}>{intl.formatMessage(azureModalMessages.appServiceAppNameSubLabel)}</div>
       <div className={styles.errorStack}>
         <div className={styles.inputContainer}>
           <input
-            aria-label={intl.formatMessage(
-              azureModalMessages.appServiceAriaAppNameLabel
-            )}
+            aria-label={intl.formatMessage(azureModalMessages.appServiceAriaAppNameLabel)}
             className={styles.input}
-            onChange={handleInput}
-            value={subscription === "" ? "" : siteName}
-            placeholder={intl.formatMessage(
-              azureModalMessages.appServiceAppNameLabel
-            )}
+            onChange={notifyAppNameChanged}
+            value={siteName}
+            placeholder={intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
             disabled={subscription === ""}
-            tabIndex={subscription === "" ? -1 : 0}
           />
-          {subscription && appNameInvalidMessage.length === 0 && !isValidatingName && (
-            <GreenCheck className={styles.validationIcon} />
-          )}
-          {subscription && isValidatingName && (
-            <Spinner className={styles.spinner} />
-          )}
+          {subscription && appNameInvalidMessage.length === 0 && !isValidatingName && <GreenCheck className={styles.validationIcon} />}
+          {subscription && isValidatingName && <Spinner className={styles.spinner} />}
         </div>
         {!isValidatingName && siteName.length > 0 && appNameInvalidMessage && (
-            <div className={styles.errorMessage}>
-              {appNameInvalidMessage}
-            </div>
-          )}
+          <div className={styles.errorMessage}>{appNameInvalidMessage}</div>
+        )}
       </div>
     </div>
   );
