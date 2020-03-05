@@ -1,8 +1,13 @@
 #!/bin/bash
-echo "Building client"
-echo
+
+# This script installs and builds the client and cli and copies the output to the extensions folder
+
+magenta='\033[0;35m'
+red='\033[0;31m'
+nc='\033[0m'
+
+# Build the client
 sh ./build-client.sh
 
-echo "Building cli"
-echo
+# Build the cli in debug
 sh ./build-cli.sh "debug"
