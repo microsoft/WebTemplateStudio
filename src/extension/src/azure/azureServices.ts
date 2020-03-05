@@ -128,12 +128,13 @@ export class AzureServices extends WizardServant {
   public static async sendAppServiceSubscriptionDataToClient(
     message: any
   ): Promise<IPayloadResponse> {
+    const data = await AzureServices.getSubscriptionData(
+      message.subscription,
+      AzureResourceType.AppService,
+      message.projectName
+    );
     return {
-      payload: await AzureServices.getSubscriptionData(
-        message.subscription,
-        AzureResourceType.AppService,
-        message.projectName
-      )
+      payload: { ...data, scope: message.payload.scope }
     };
   }
 
@@ -272,7 +273,8 @@ export class AzureServices extends WizardServant {
               !invalidReason ||
               invalidReason === undefined ||
               invalidReason === "",
-            reason: invalidReason
+            reason: invalidReason,
+            scope: message.payload.scope
           }
         };
       })
