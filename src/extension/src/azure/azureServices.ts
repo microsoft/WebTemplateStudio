@@ -88,17 +88,17 @@ export class AzureServices extends WizardServant {
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersAppServiceSubscriptionItemCache: SubscriptionItem;
 
-  public static async performLoginForSubscriptions(): Promise<IPayloadResponse> {
+  public static async performLoginForSubscriptions(message: any): Promise<IPayloadResponse> {
     Logger.appendLog("EXTENSION", "info", "Attempt to log user in");
     const isLoggedIn = await AzureAuth.login();
     if (isLoggedIn) {
       Logger.appendLog("EXTENSION", "info", "User logged in");
-      return AzureServices.sendUserStatusIfLoggedIn();
+      return AzureServices.sendUserStatusIfLoggedIn(message);
     }
     throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
   }
 
-  public static async sendUserStatusIfLoggedIn(): Promise<IPayloadResponse> {
+  public static async sendUserStatusIfLoggedIn(message: any): Promise<IPayloadResponse> {
     if (AzureAuth.getEmail()) {
       AzureServices.subscriptionItemList = await AzureAuth.getSubscriptions();
       const subscriptionListToDisplay = AzureServices.subscriptionItemList.map(
@@ -112,6 +112,7 @@ export class AzureServices extends WizardServant {
       );
       return {
         payload: {
+          scope:message.payload.scope,
           email: AzureAuth.getEmail(),
           subscriptions: subscriptionListToDisplay
         }
@@ -120,9 +121,10 @@ export class AzureServices extends WizardServant {
       return { payload: null };
     }
   }
-  public static async performLogout(): Promise<IPayloadResponse> {
+  public static async performLogout(message: any): Promise<IPayloadResponse> {
     const success = await AzureAuth.logout();
-    const payloadResponse: IPayloadResponse = { payload: success };
+    const payload: any = {scope : message.payload.scope, success};
+    const payloadResponse: IPayloadResponse = { payload };
     return payloadResponse;
   }
   public static async sendAppServiceSubscriptionDataToClient(

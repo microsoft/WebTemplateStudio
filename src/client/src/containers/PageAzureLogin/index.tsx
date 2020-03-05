@@ -44,7 +44,7 @@ class AzureLogin extends React.Component<Props> {
   signOutClick = () => {
     azureLogout(this.props.vscode).then((event)=>{
       const message = event.data;
-      if (message.payload) {
+      if (message.payload.success) {
         this.props.startLogOutToAzure();
       }
     });

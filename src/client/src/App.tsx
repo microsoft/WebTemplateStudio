@@ -10,8 +10,7 @@ import {
   EXTENSION_COMMANDS,
   ROUTES,
   DEVELOPMENT,
-  FRAMEWORK_TYPE,
-  EXTENSION_MODULES
+  FRAMEWORK_TYPE
 } from "./utils/constants";
 
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
@@ -189,12 +188,6 @@ const App = (props: Props) => {
       });
       props.setPreviewStatus(message.payload.preview);
     });
-
-    props.vscode.postMessage({
-      command: EXTENSION_COMMANDS.AZURE_LOGIN,
-      module: EXTENSION_MODULES.AZURE,
-      track: true
-    });
   },[props.vscode]);
 
   React.useEffect(()=>{
@@ -245,15 +238,6 @@ const App = (props: Props) => {
           break;
         case EXTENSION_COMMANDS.GEN_STATUS:
           props.updateTemplateGenStatus(message.payload);
-          break;
-        case EXTENSION_COMMANDS.AZURE_LOGIN:
-          // email will be null or undefined if login didn't work correctly
-          if (message.payload !== null) {
-            props.logIntoAzure(
-              message.payload.email,
-              message.payload.subscriptions
-            );
-          }
           break;
       }
     });
