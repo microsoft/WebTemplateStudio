@@ -12,9 +12,9 @@ if [ ! -z "$1" ] && ([ "$1" == "release" ] || [ "$1" == "debug" ]); then # Check
     echo -e "${magenta}Building and publishing cli in configuration $configuration ${nc}"
     echo
 
-    dotnet publish ../src/CoreTemplateStudio/code/src/CoreTemplateStudio/CoreTemplateStudio.Cli/CoreTemplateStudio.Cli.csproj -c $configuration -r win-x64 --self-contained true -p:PublishSingleFile=true -o ../src/extension/src/corets-cli/win32/
-    dotnet publish ../src/CoreTemplateStudio/code/src/CoreTemplateStudio/CoreTemplateStudio.Cli/CoreTemplateStudio.Cli.csproj -c $configuration -r linux-x64 --self-contained true -p:PublishSingleFile=true -o ../src/extension/src/corets-cli/linux/
-    dotnet publish ../src/CoreTemplateStudio/code/src/CoreTemplateStudio/CoreTemplateStudio.Cli/CoreTemplateStudio.Cli.csproj -c $configuration -r osx-x64 --self-contained true -p:PublishSingleFile=true -o ../src/extension/src/corets-cli/darwin/
+    dotnet publish ../src/CoreTemplateStudio/code/src/CoreTemplateStudio/CoreTemplateStudio.Cli/CoreTemplateStudio.Cli.csproj -c $configuration -r win-x64 --self-contained true -o ../src/extension/src/corets-cli/win32/
+    dotnet publish ../src/CoreTemplateStudio/code/src/CoreTemplateStudio/CoreTemplateStudio.Cli/CoreTemplateStudio.Cli.csproj -c $configuration -r linux-x64 --self-contained true -o ../src/extension/src/corets-cli/linux/
+    dotnet publish ../src/CoreTemplateStudio/code/src/CoreTemplateStudio/CoreTemplateStudio.Cli/CoreTemplateStudio.Cli.csproj -c $configuration -r osx-x64 --self-contained true -o ../src/extension/src/corets-cli/darwin/
 
 
     echo -e "${magenta}Copy config file $configuration ${nc}"
