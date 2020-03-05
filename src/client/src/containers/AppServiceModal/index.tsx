@@ -24,7 +24,7 @@ import RootAction from "../../actions/ActionType";
 import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import classNames from "classnames";
-import { GetSubscriptionData, ValidateAppServiceName } from "../../utils/extensionService/extensionService";
+import { GetValidAppServiceName, ValidateAppServiceName } from "../../utils/extensionService/extensionService";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -62,15 +62,18 @@ const AppServiceModal = (props: Props) => {
   }, []);
 
   React.useEffect(() => {
-    GetSubscriptionData(appServiceFormData.subscription, projectName, vscode).then(event => {
-      const siteName = appServiceFormData.siteName === "" ? event.data.payload.validName : appServiceFormData.siteName;
+    if (appServiceFormData.siteName === "") {
+      GetValidAppServiceName(projectName, vscode).then(event => {
+        const siteName =
+          appServiceFormData.siteName === "" ? event.data.payload.validName : appServiceFormData.siteName;
 
-      setAppServiceFormData({
-        ...appServiceFormData,
-        resourceGroup: "",
-        siteName,
+        setAppServiceFormData({
+          ...appServiceFormData,
+          resourceGroup: "",
+          siteName,
+        });
       });
-    });
+    }
   }, [appServiceFormData.subscription]);
 
   React.useEffect(() => {

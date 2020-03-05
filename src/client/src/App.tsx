@@ -207,8 +207,7 @@ const App = (props: Props) => {
             props.startLogOutToAzure();
           }
           break;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
+        case EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS:
           // Expect resource groups and locations on this request
           // Receive resource groups and locations
           // and update redux (resourceGroups, locations)

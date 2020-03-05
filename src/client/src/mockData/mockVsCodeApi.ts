@@ -37,7 +37,6 @@ const DEV_NO_ERROR_MSG = "in development, no error message";
 const DEV_NO_ERROR_TYPE = "in development, no error type";
 
 const mockAppServiceName = "mockappservicename";
-const mockFunctionsName = "mockfunctionsname";
 const mockCosmosDBName = "mockcosmosdbname";
 
 /**
@@ -465,12 +464,12 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
+        case EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS:
           // produces locations and resource groups in development
           window.postMessage(
             {
               module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
+              command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 locations: mockLocations,
@@ -481,32 +480,28 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
+        case EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE:
           // produces locations and resource groups in development
           window.postMessage(
             {
               module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
+              command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE,
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 locations: mockLocations,
                 resourceGroups: mockResourceGroups,
-                validName: mockFunctionsName
               }
             },
             "*"
           );
           break;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE:
-          // produces locations and resource groups in development
+        case EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME:
           window.postMessage(
             {
               module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
+              command: EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME,
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                locations: mockLocations,
-                resourceGroups: mockResourceGroups,
                 validName: mockAppServiceName
               }
             },

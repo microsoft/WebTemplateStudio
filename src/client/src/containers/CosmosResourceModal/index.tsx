@@ -194,7 +194,7 @@ const CosmosResourceModal = (props: Props) => {
       props.setValidationStatus(true);
       props.vscode.postMessage({
         module: EXTENSION_MODULES.AZURE,
-        command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
+        command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
         track: true,
         subscription: value,
         projectName: props.projectName
