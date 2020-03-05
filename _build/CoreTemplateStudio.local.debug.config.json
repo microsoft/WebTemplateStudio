@@ -1,5 +1,5 @@
 {
-  "Environment": "LocalEnvWebTSDebug",
+  "Environment": "WebTSDebug",
   "CdnUrl": "",
   "RemoteTelemetryKey": "",
   "LogFileFolderPath": "WebTS\\Logs",

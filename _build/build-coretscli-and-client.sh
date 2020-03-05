@@ -10,4 +10,4 @@ nc='\033[0m'
 sh ./build-client.sh
 
 # Build the cli in debug
-sh ./build-cli.sh "debug"
+sh ./build-coretscli.sh "debug"
