@@ -12,7 +12,7 @@ interface IStateProps {
   siteName: string;
   onSiteNameChange(newSiteName: string): void;
   isValidatingName: boolean;
-  invalidAppNameMessage: string;
+  appNameInvalidMessage: string;
 }
 
 type Props = IStateProps & InjectedIntlProps;
@@ -24,7 +24,7 @@ const AppName = (props: Props) => {
     siteName,
     onSiteNameChange,
     isValidatingName,
-    invalidAppNameMessage
+    appNameInvalidMessage
   } = props;
 
   const handleInput = (e: React.SyntheticEvent<HTMLInputElement>): void => {
@@ -61,16 +61,16 @@ const AppName = (props: Props) => {
             disabled={subscription === ""}
             tabIndex={subscription === "" ? -1 : 0}
           />
-          {subscription && invalidAppNameMessage.length === 0 && !isValidatingName && (
+          {subscription && appNameInvalidMessage.length === 0 && !isValidatingName && (
             <GreenCheck className={styles.validationIcon} />
           )}
           {subscription && isValidatingName && (
             <Spinner className={styles.spinner} />
           )}
         </div>
-        {!isValidatingName && siteName.length > 0 && invalidAppNameMessage && (
+        {!isValidatingName && siteName.length > 0 && appNameInvalidMessage && (
             <div className={styles.errorMessage}>
-              {invalidAppNameMessage}
+              {appNameInvalidMessage}
             </div>
           )}
       </div>

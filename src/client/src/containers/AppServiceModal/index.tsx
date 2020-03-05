@@ -76,6 +76,10 @@ const AppServiceModal = (props: Props) => {
   }, []);
 
   React.useEffect(() => {
+    if(appServiceFormData.subscription === '') {
+      return;
+    }
+
     setIsValidatingName(true);
     if (timeout) {
       clearTimeout(timeout);
@@ -84,7 +88,8 @@ const AppServiceModal = (props: Props) => {
       timeout = undefined;
       ValidateAppServiceName(appServiceFormData.subscription, appServiceFormData.siteName, vscode)
       .then((event) => {
-        setAppNameInvalidMessage(event.data.payload.reason)
+        const invalidAppNameMessage = event.data.payload.isAvailable ? '' : event.data.payload.reason;
+        setAppNameInvalidMessage(invalidAppNameMessage)
         setIsValidatingName(false);
       });
     }, 700);
@@ -181,7 +186,7 @@ const AppServiceModal = (props: Props) => {
          siteName={appServiceFormData.siteName}
          onSiteNameChange={onSiteNameChange}
          isValidatingName={isValidatingName}
-         invalidAppNameMessage={appNameInvalidMessage}
+         appNameInvalidMessage={appNameInvalidMessage}
           />
         <AppServicePlanInfo isMicrosoftLearnSubscription={isMicrosoftLearnSubscription(appServiceFormData.subscription)} />
         <RuntimeStackInfo />
