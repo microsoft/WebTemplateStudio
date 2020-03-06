@@ -27,10 +27,14 @@ if($vsixName){
     $localDisplayName = $packagejsonContent.displayName
     $localVersionNumber = $packagejsonContent.version
 
+    Write-Host "Replacing $LocalIdentity by  $vsixName"
+    Write-Host "Replacing $localDisplayName by  $vsixDisplayName"
+    Write-Host "Replacing $localVersionNumber by  $versionNumber"
+
     $content = (Get-Content -path $vsixPackageJson -Raw)
 
     $content = $content -replace "$LocalIdentity" , "$vsixName"
-    $content = $content -replace "$localDisplayName" , "$vsixDisplayName"
+    $content = $content -replace [regex]::Escape("$localDisplayName") , "$vsixDisplayName"
     $content = $content -replace "$localVersionNumber" , "$versionNumber"
 
     $content | Set-Content -Path $vsixPackageJson
