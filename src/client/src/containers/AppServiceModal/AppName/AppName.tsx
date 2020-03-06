@@ -12,13 +12,13 @@ interface IStateProps {
   siteName: string;
   onAppNameChange(newSiteName: string): void;
   isValidatingName: boolean;
-  appNameInvalidMessage: string;
+  invalidAppNameMessage: string;
 }
 
 type Props = IStateProps & InjectedIntlProps;
 
 const AppName = (props: Props) => {
-  const { intl, subscription, siteName, onAppNameChange, isValidatingName, appNameInvalidMessage } = props;
+  const { intl, subscription, siteName, onAppNameChange, isValidatingName, invalidAppNameMessage } = props;
 
   const notifyAppNameChanged = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const newSiteName = e.currentTarget as HTMLInputElement;
@@ -45,11 +45,11 @@ const AppName = (props: Props) => {
             placeholder={intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
             disabled={subscription === ""}
           />
-          {subscription && appNameInvalidMessage.length === 0 && !isValidatingName && <GreenCheck className={styles.validationIcon} />}
+          {subscription && invalidAppNameMessage.length === 0 && !isValidatingName && <GreenCheck className={styles.validationIcon} />}
           {subscription && isValidatingName && <Spinner className={styles.spinner} />}
         </div>
-        {!isValidatingName && siteName.length > 0 && appNameInvalidMessage && (
-          <div className={styles.errorMessage}>{appNameInvalidMessage}</div>
+        {!isValidatingName && siteName.length > 0 && invalidAppNameMessage && (
+          <div className={styles.errorMessage}>{invalidAppNameMessage}</div>
         )}
       </div>
     </div>

@@ -55,7 +55,7 @@ const AppServiceModal = (props: Props) => {
   const [subscription, setSubscription] = React.useState("");
   const [appName, setAppName] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);
-  const [appNameInvalidMessage, setAppNameInvalidMessage] = React.useState("");
+  const [invalidAppNameMessage, setInvalidAppNameMessage] = React.useState("");
 
   React.useEffect(() => {
     if (savedAppServiceSelection) {
@@ -77,25 +77,17 @@ const AppServiceModal = (props: Props) => {
       setTimeout(() => {
         ValidateAppServiceName(subscription, appName, vscode).then(event => {
           const message = event.data.payload.isAvailable ? "" : event.data.payload.reason;
-          setAppNameInvalidMessage(message);
+          setInvalidAppNameMessage(message);
           setIsValidatingName(false);
         });
       }, 700);
     }
   }, [appName]);
 
-  const onSubscriptionChange = (subscription: string) => {
-    setSubscription(subscription);
-  };
-
-  const onAppNameChange = (newAppName: string) => {
-    setAppName(newAppName);
-  };
-
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
     const isAppNameEmpty = appName === "";
-    const isAppNameAvailable = appNameInvalidMessage === "";
+    const isAppNameAvailable = invalidAppNameMessage === "";
 
     return !(isSubscriptionEmpty || isAppNameEmpty || isValidatingName || !isAppNameAvailable);
   };
@@ -132,19 +124,17 @@ const AppServiceModal = (props: Props) => {
       <div className={styles.bodyContainer}>
         <SubscriptionSelection
           subscriptions={subscriptions}
-          onSubscriptionChange={onSubscriptionChange}
+          onSubscriptionChange={setSubscription}
           subscription={subscription}
         />
         <AppName
           subscription={subscription}
           siteName={appName}
-          onAppNameChange={onAppNameChange}
+          onAppNameChange={setAppName}
           isValidatingName={isValidatingName}
-          appNameInvalidMessage={appNameInvalidMessage}
+          invalidAppNameMessage={invalidAppNameMessage}
         />
-        <AppServicePlanInfo 
-          subscriptions={subscriptions}
-          subscription={subscription} />
+        <AppServicePlanInfo subscriptions={subscriptions} subscription={subscription} />
         <RuntimeStackInfo />
         <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
           {intl.formatMessage(azureModalMessages.azureModalSave)}
