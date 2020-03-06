@@ -10,7 +10,7 @@ import { azureMessages as azureModalMessages } from "../../../mockData/azureServ
 interface IStateProps {
   subscription: string;
   siteName: string;
-  onSiteNameChange(newSiteName: string): void;
+  onAppNameChange(newSiteName: string): void;
   isValidatingName: boolean;
   appNameInvalidMessage: string;
 }
@@ -18,11 +18,11 @@ interface IStateProps {
 type Props = IStateProps & InjectedIntlProps;
 
 const AppName = (props: Props) => {
-  const { intl, subscription, siteName, onSiteNameChange, isValidatingName, appNameInvalidMessage } = props;
+  const { intl, subscription, siteName, onAppNameChange, isValidatingName, appNameInvalidMessage } = props;
 
   const notifyAppNameChanged = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const newSiteName = e.currentTarget as HTMLInputElement;
-    onSiteNameChange(newSiteName.value);
+    onAppNameChange(newSiteName.value);
   };
 
   return (

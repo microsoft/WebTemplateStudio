@@ -30,7 +30,7 @@ interface IStateProps {
   isModalOpen: boolean;
   vscode: IVSCodeObject;
   subscriptions: [any];
-  appServiceSelection: ISelectedAppService | null;
+  savedAppServiceSelection: ISelectedAppService | null;
   projectName: string;
 }
 
@@ -41,75 +41,63 @@ interface IDispatchProps {
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
-const initialState: ISelectedAppService = {
-  subscription: "",
-  resourceGroup: "",
-  siteName: "",
-  internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
-};
-
 const AppServiceModal = (props: Props) => {
-  const { intl, vscode, subscriptions, appServiceSelection, saveAppServiceSettings, closeModal, projectName } = props;
+  const {
+    intl,
+    vscode,
+    subscriptions,
+    savedAppServiceSelection,
+    saveAppServiceSettings,
+    closeModal,
+    projectName,
+  } = props;
 
-  const [appServiceFormData, setAppServiceFormData] = React.useState(initialState);
+  const [subscription, setSubscription] = React.useState("");
+  const [appName, setAppName] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);
   const [appNameInvalidMessage, setAppNameInvalidMessage] = React.useState("");
 
   React.useEffect(() => {
-    if (appServiceSelection) {
-      setAppServiceFormData(appServiceSelection);
+    if (savedAppServiceSelection) {
+      setSubscription(savedAppServiceSelection.subscription);
+      setAppName(savedAppServiceSelection.siteName);
     }
   }, []);
 
   React.useEffect(() => {
-    if (appServiceFormData.siteName === "") {
-      GetValidAppServiceName(projectName, vscode).then(event => {
-        const siteName =
-          appServiceFormData.siteName === "" ? event.data.payload.validName : appServiceFormData.siteName;
-
-        setAppServiceFormData({
-          ...appServiceFormData,
-          resourceGroup: "",
-          siteName,
-        });
-      });
+    if (appName === "") {
+      GetValidAppServiceName(projectName, vscode)
+      .then(event => setAppName(event.data.payload.validName));
     }
-  }, [appServiceFormData.subscription]);
+  }, [subscription]);
 
   React.useEffect(() => {
-    const isValid = appServiceFormData.subscription !== "";
-    if (isValid) {
+    if (subscription !== "") {
       setIsValidatingName(true);
       setTimeout(() => {
-        ValidateAppServiceName(appServiceFormData.subscription, appServiceFormData.siteName, vscode).then(event => {
-          const invalidAppNameMessage = event.data.payload.isAvailable ? "" : event.data.payload.reason;
-          setAppNameInvalidMessage(invalidAppNameMessage);
+        ValidateAppServiceName(subscription, appName, vscode).then(event => {
+          const message = event.data.payload.isAvailable ? "" : event.data.payload.reason;
+          setAppNameInvalidMessage(message);
           setIsValidatingName(false);
         });
       }, 700);
     }
-  }, [appServiceFormData.siteName]);
+  }, [appName]);
 
   const onSubscriptionChange = (subscription: string) => {
-    setAppServiceFormData({
-      ...appServiceFormData,
-      subscription,
-    });
+    setSubscription(subscription);
   };
 
-  const onSiteNameChange = (newSiteName: string) => {
-    setAppServiceFormData({
-      ...appServiceFormData,
-      siteName: newSiteName,
-    });
+  const onAppNameChange = (newAppName: string) => {
+    setAppName(newAppName);
   };
 
   const isEnableSaveButton = (): boolean => {
-    const isSubscriptionEmpty = appServiceFormData.subscription === "";
-    const isSiteNameEmpty = appServiceFormData.siteName === "";
-    const isSiteNameAvailable = appNameInvalidMessage === "";
+    const isSubscriptionEmpty = subscription === "";
+    const isAppNameEmpty = appName === "";
+    const isAppNameAvailable = appNameInvalidMessage === "";
 
-    return !(isSubscriptionEmpty || isSiteNameEmpty || isValidatingName || !isSiteNameAvailable);
+    return !(isSubscriptionEmpty || isAppNameEmpty || isValidatingName || !isAppNameAvailable);
   };
 
   const getButtonClassNames = () => {
@@ -117,7 +105,7 @@ const AppServiceModal = (props: Props) => {
     return classNames(buttonClass, styles.button);
   };
 
-  const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+  const closeModalIfPressEnterOrSpaceKey = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
@@ -125,39 +113,40 @@ const AppServiceModal = (props: Props) => {
     }
   };
 
-  const isMicrosoftLearnSubscription = (subscription: string): boolean => {
-    const s = subscriptions.find(s => s.value === subscription);
-    return s && s.isMicrosoftLearnSubscription;
+  const saveAppServiceSelection = (): void => {
+    const appServiceSelection: ISelectedAppService = {
+      subscription,
+      resourceGroup: "",
+      siteName: appName,
+      internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
+    };
+    saveAppServiceSettings(appServiceSelection);
   };
 
   return (
     <React.Fragment>
       <div className={styles.headerContainer}>
         <div className={styles.modalTitle}>{intl.formatMessage(azureModalMessages.appServiceModalTitle)}</div>
-        <Cancel tabIndex={0} className={styles.icon} onClick={closeModal} onKeyDown={cancelKeyDownHandler} />
+        <Cancel className={styles.icon} onClick={closeModal} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
       </div>
       <div className={styles.bodyContainer}>
         <SubscriptionSelection
           subscriptions={subscriptions}
           onSubscriptionChange={onSubscriptionChange}
-          subscription={appServiceFormData.subscription}
+          subscription={subscription}
         />
         <AppName
-          subscription={appServiceFormData.subscription}
-          siteName={appServiceFormData.siteName}
-          onSiteNameChange={onSiteNameChange}
+          subscription={subscription}
+          siteName={appName}
+          onAppNameChange={onAppNameChange}
           isValidatingName={isValidatingName}
           appNameInvalidMessage={appNameInvalidMessage}
         />
-        <AppServicePlanInfo
-          isMicrosoftLearnSubscription={isMicrosoftLearnSubscription(appServiceFormData.subscription)}
-        />
+        <AppServicePlanInfo 
+          subscriptions={subscriptions}
+          subscription={subscription} />
         <RuntimeStackInfo />
-        <button
-          className={getButtonClassNames()}
-          onClick={() => saveAppServiceSettings(appServiceFormData)}
-          disabled={!isEnableSaveButton()}
-        >
+        <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
           {intl.formatMessage(azureModalMessages.azureModalSave)}
         </button>
       </div>
@@ -169,7 +158,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAppServiceModalOpenSelector(state),
   vscode: getVSCodeApiSelector(state),
   subscriptions: state.azureProfileData.profileData.subscriptions,
-  appServiceSelection: getAppServiceSelectionSelector(state),
+  savedAppServiceSelection: getAppServiceSelectionSelector(state),
   projectName: getProjectName(state),
 });
 

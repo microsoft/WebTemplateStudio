@@ -6,26 +6,28 @@ import { azureMessages as azureModalMessages } from "../../../mockData/azureServ
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 
 interface IStateProps {
-  isMicrosoftLearnSubscription: boolean;
+  subscription: string;
+  subscriptions: [any];
 }
 
 type Props = IStateProps & InjectedIntlProps;
 
 const AppServicePlanInfo = (props: Props) => {
-  const { intl, isMicrosoftLearnSubscription } = props;
+  const { intl, subscription, subscriptions } = props;
+
+  const isMicrosoftLearnSubscription = (subscription: string): boolean => {
+    const s = subscriptions.find(s => s.value === subscription);
+    return s && s.isMicrosoftLearnSubscription;
+  };
+
   return (
     <div className={styles.aspInfoContainer}>
-      <div
-        className={classNames(
-          styles.selectionHeaderContainer,
-          styles.leftHeader
-        )}
-      >
+      <div className={classNames(styles.selectionHeaderContainer, styles.leftHeader)}>
         {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
       </div>
 
       <div id="message">
-        {isMicrosoftLearnSubscription
+        {isMicrosoftLearnSubscription(subscription)
           ? intl.formatMessage(azureModalMessages.appServiceFreeTierInfo)
           : intl.formatMessage(azureModalMessages.appServiceBasicTierInfo)}
       </div>
