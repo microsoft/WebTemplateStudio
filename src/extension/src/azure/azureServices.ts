@@ -196,7 +196,7 @@ export class AzureServices extends WizardServant {
   }
 
   public static async GetValidAppServiceName(message: any): Promise<IPayloadResponse> {
-    const validName = NameGenerator.generateValidAzureTypeName(message.projectName, AzureResourceType.AppService);
+    const validName = await NameGenerator.generateValidAzureTypeName(message.projectName, AzureResourceType.AppService);
     return {
       payload: {
         validName,
@@ -206,7 +206,7 @@ export class AzureServices extends WizardServant {
   }
 
   public static async GetValidCosmosName(message: any): Promise<IPayloadResponse> {
-    const validName = NameGenerator.generateValidAzureTypeName(message.projectName, AzureResourceType.Cosmos);
+    const validName = await NameGenerator.generateValidAzureTypeName(message.projectName, AzureResourceType.Cosmos);
     return {
       payload: {
         validName,
