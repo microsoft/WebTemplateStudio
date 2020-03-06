@@ -9,7 +9,7 @@ nc='\033[0m'
 sh ./build-client.sh
 
 # Build the cli in release
-sh ./build-cli.sh "release"
+sh ./build-coretscli.sh "release"
 
 # Create vsix package
 echo -e "${magenta}Creating vsix package ${nc}"
