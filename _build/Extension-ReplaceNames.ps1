@@ -10,7 +10,10 @@ Param(
   [string]$vsixDisplayName,
 
   [Parameter(Mandatory=$True,Position=4)]
-  [string]$versionNumber
+  [string]$versionNumber,
+
+  [Parameter(Mandatory=$True,Position=5)]
+  [string]$aikey
 )
 function Clear-WhiteSpace ($Text) {
   "$($Text -replace "(`t|`n|`r)"," " -replace "\s+"," ")".Trim()
@@ -26,6 +29,7 @@ if($vsixName){
     $LocalIdentity = $packagejsonContent.name
     $localDisplayName = $packagejsonContent.displayName
     $localVersionNumber = $packagejsonContent.version
+    $localAiKey = $packagejsonContent.aiKey
 
     Write-Host "Replacing $LocalIdentity by  $vsixName"
     Write-Host "Replacing $localDisplayName by  $vsixDisplayName"
@@ -36,8 +40,9 @@ if($vsixName){
     $content = $content -replace "$LocalIdentity" , "$vsixName"
     $content = $content -replace [regex]::Escape("$localDisplayName") , "$vsixDisplayName"
     $content = $content -replace "$localVersionNumber" , "$versionNumber"
+    $content = $content -replace "$localAiKey" , "$aikey"
 
-    $content | Set-Content -Path $vsixPackageJson
+    [System.IO.File]::WriteAllLines($vsixPackageJson, $content, [System.Text.UTF8Encoding]($False))
 
     Write-Host "$resolvedPath - Version, Name & DisplayName applied ($versionNumber, $vsixName, $vsixDisplayName)"
   }
