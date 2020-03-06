@@ -228,6 +228,8 @@ const App = (props: Props) => {
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
+        //only one way
+        //from extension to client
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           if (message.payload !== null && message.payload.outputPath !== undefined) {
             props.updateOutputPath(message.payload.outputPath);

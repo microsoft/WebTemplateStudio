@@ -43,12 +43,14 @@ export class VSCodeUI extends WizardServant {
         .then((selection: vscode.MessageItem | undefined) => {
           let userConfirmation = {
             resetPages: false,
-            internalName: message.payload.internalName
+            internalName: message.payload.internalName,
+            scope:Number
           };
           if (selection === DialogResponses.yes) {
             userConfirmation = {
               resetPages: true,
-              internalName: message.payload.internalName
+              internalName: message.payload.internalName,
+              scope: message.payload.scope
             };
           }
           return { payload: userConfirmation };
@@ -56,6 +58,7 @@ export class VSCodeUI extends WizardServant {
     } else {
       return {
         payload: {
+          scope: message.payload.scope,
           resetPages: true,
           internalName: message.payload.internalName
         }
