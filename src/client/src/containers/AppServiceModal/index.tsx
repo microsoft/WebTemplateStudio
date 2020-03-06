@@ -65,7 +65,7 @@ const AppServiceModal = (props: Props) => {
   }, []);
 
   React.useEffect(() => {
-    if (appName === "") {
+    if (subscription !== "" && appName === "") {
       GetValidAppServiceName(projectName, vscode)
       .then(event => setAppName(event.data.payload.validName));
     }
