@@ -35,7 +35,7 @@ if($vsixName){
 
     $content | Set-Content -Path $vsixPackageJson
 
-    Write-Host "$resolvedPath - Version, Name & DisplayName applied ($versionNumber, $vsixIdentity, $vsixDisplayName)"
+    Write-Host "$resolvedPath - Version, Name & DisplayName applied ($versionNumber, $vsixName, $vsixDisplayName)"
   }
   else{
     throw "No VSIX package json file found."
