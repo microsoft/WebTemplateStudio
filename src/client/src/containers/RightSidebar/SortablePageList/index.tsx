@@ -8,7 +8,7 @@ import { injectIntl, InjectedIntl } from "react-intl";
 
 import SortableList from "../../../components/SortableSelectionList";
 
-import { selectPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
+import { selectPageAction, selectPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../../actions/modalActions/modalActions";
 
 import { ISelected } from "../../../types/selected";
@@ -46,6 +46,7 @@ interface IStateProps {
 }
 
 interface ISortableDispatchProps {
+  updatePage: (page: ISelected) => any;
   selectPages: (pages: ISelected[]) => any;
   openAddPagesModal: () => any;
 }
@@ -84,8 +85,7 @@ const SortablePageList = (props: Props) => {
     pages[idx].error = validationResult.error;
     pages[idx].isValidTitle = validationResult.isValid;
 
-    setPages(pages);
-    props.selectPages(pages);
+    props.updatePage(pages[idx]);
   };
 
   const handleOpenAddPagesModal = () => {
@@ -175,10 +175,13 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): ISortableDispatchProps => ({
+  updatePage: (page: ISelected) => {
+    dispatch(selectPageAction(page));
+  },
   selectPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
   },
-  openAddPagesModal: () => { 
+  openAddPagesModal: () => {
     dispatch(ModalActions.openAddPagesModalAction());
   }
 });

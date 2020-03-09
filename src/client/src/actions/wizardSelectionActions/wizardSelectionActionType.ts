@@ -2,7 +2,8 @@ import { ISelectBackendAction } from "./selectedBackEndFramework";
 import { ISelectFrontendAction } from "./selectedFrontendFramework";
 import {
   ISelectPagesAction,
-  IResetPagesAction
+  IResetPagesAction,
+  ISelectPageAction
 } from "./selectPages";
 import { ISelectProjectTypeAction } from "./selectWebApp";
 import { IProjectPathValidationAction } from "./setProjectPathValidation";
@@ -16,6 +17,7 @@ type WizardSelectionActionType =
   | ISelectBackendAction
   | ISelectFrontendAction
   | ISelectPagesAction
+  | ISelectPageAction
   | ISelectProjectTypeAction
   | IProjectPathValidationAction
   | IValidationsAction

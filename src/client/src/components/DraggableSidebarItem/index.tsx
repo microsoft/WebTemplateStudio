@@ -95,7 +95,7 @@ const DraggableSidebarItem = ({
       node.focus();
       node.select();
     }
-  },[idx,totalCount]);
+  },[totalCount]);
 
   return (
     <div>
