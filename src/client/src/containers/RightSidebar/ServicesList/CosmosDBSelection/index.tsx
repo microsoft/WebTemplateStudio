@@ -2,7 +2,7 @@ import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import * as getSvg from "../../../../utils/getSvgUrl";
+import { getCancelSvg } from "../../../../utils/getSvgUrl";
 
 import DraggableSidebarItem from "../../../../components/DraggableSidebarItem";
 
@@ -82,7 +82,7 @@ const CosmosDBSelection = ({
                 customInputStyle={styles.input}
                 key={`${accountName} ${idx + 1}`}
                 text={accountName}
-                closeSvgUrl={getSvg.getCancelSvg()}
+                closeSvgUrl={getCancelSvg()}
                 withIndent={true}
                 handleCloseClick={removeCosmosResource}
                 idx={idx + 1}

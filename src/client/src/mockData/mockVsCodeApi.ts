@@ -37,7 +37,6 @@ const DEV_NO_ERROR_MSG = "in development, no error message";
 const DEV_NO_ERROR_TYPE = "in development, no error type";
 
 const mockAppServiceName = "mockappservicename";
-const mockFunctionsName = "mockfunctionsname";
 const mockCosmosDBName = "mockcosmosdbname";
 
 /**
@@ -417,21 +416,6 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
-        case EXTENSION_COMMANDS.NAME_FUNCTIONS:
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                isAvailable: message.appName.length > 0
-              },
-              message: DEV_NO_ERROR_MSG,
-              errorType: DEV_NO_ERROR_TYPE
-            },
-            "*"
-          );
-          break;
         case EXTENSION_COMMANDS.NAME_COSMOS:
           window.postMessage(
             {
@@ -473,22 +457,6 @@ const mockVsCodeApi = () => ({
                 locations: mockLocations,
                 resourceGroups: mockResourceGroups,
                 validName: mockCosmosDBName
-              }
-            },
-            "*"
-          );
-          break;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
-          // produces locations and resource groups in development
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                locations: mockLocations,
-                resourceGroups: mockResourceGroups,
-                validName: mockFunctionsName
               }
             },
             "*"
@@ -559,16 +527,6 @@ const mockVsCodeApi = () => ({
             },
             "*"
           );
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.GET_PREVIEW_STATUS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                preview: true
-              }
-            },
-            "*"
-          );
           break;
         case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
           // produces a mock login response from VSCode in development
@@ -578,7 +536,8 @@ const mockVsCodeApi = () => ({
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 wizardVersion: "1.x",
-                templatesVersion: "1.x"
+                templatesVersion: "1.x",
+                preview:false
               }
             },
             "*"

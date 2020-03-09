@@ -21,6 +21,12 @@ import { IFunctionName } from "../../containers/AzureFunctionsSelection";
 import { AppState } from "../../reducers";
 
 import messages from "./messages";
+import { ThunkDispatch } from "redux-thunk";
+import RootAction from "../../actions/ActionType";
+import { selectPageAction } from "../../actions/wizardSelectionActions/selectPages";
+import { validateItemName } from "../../utils/validations/itemName/itemName";
+import { getValidations } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 
 /**
  * Takes in either a page (type ISelected) or text, but not both
@@ -52,9 +58,14 @@ interface IStateProps {
 
 interface ISortablePageListProps {
   selectedPages: Array<ISelected>;
+  validations: IValidations;
 }
 
-type Props = IStateProps & ISortablePageListProps & InjectedIntlProps;
+interface ISortableDispatchProps {
+  updatePage: (page: ISelected) => any;
+}
+
+type Props = IStateProps & ISortablePageListProps & InjectedIntlProps & ISortableDispatchProps;
 
 const DraggableSidebarItem = ({
   page,
@@ -65,7 +76,6 @@ const DraggableSidebarItem = ({
   pageSvgUrl,
   reorderSvgUrl,
   itemTitle,
-  handleInputChange,
   maxInputLength,
   idx,
   azureFunctionName,
@@ -75,7 +85,10 @@ const DraggableSidebarItem = ({
   intl,
   customInputStyle,
   isAzureFunction,
-  totalCount
+  totalCount,
+  updatePage,
+  validations,
+  selectedPages
 }: Props) => {
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
@@ -89,13 +102,23 @@ const DraggableSidebarItem = ({
 
   const [validValue, setValidValue] = React.useState<string>(page ? page.title:"");
   const inputRef = React.createRef<HTMLInputElement>();
-  React.useEffect(() => {
-    if (idx === totalCount){
+  /*const setFocus = () =>{
       const node = inputRef.current!
       node.focus();
-      node.select();
-    }
-  },[idx,totalCount]);
+  }
+  const setSelect = () =>{
+    const node = inputRef.current!
+    node.select();
+  }*/
+
+  const handleInputChange = async (newTitle: string, idx: number, isDirty: boolean) => {
+    page.title = newTitle;
+    const validationResult = await validateItemName(newTitle, validations.itemNameValidationConfig, selectedPages);
+    page.error = validationResult.error;
+    page.isValidTitle = validationResult.isValid;
+    page.isDirty=isDirty
+    updatePage(page);
+  };
 
   return (
     <div>
@@ -145,15 +168,19 @@ const DraggableSidebarItem = ({
                   value={page ? page.title : azureFunctionName!.title}
                   onChange={e => {
                     if (handleInputChange && idx) {
-                      handleInputChange(e.target.value, idx - 1);
+                      handleInputChange(e.target.value, idx - 1, true);
                     }
                   }}
-                  onBlur={() => {
+                  onBlur={e => {
                     if (handleInputChange && idx && page && page.isValidTitle===false) {
-                      handleInputChange(validValue, idx - 1);
+                      handleInputChange(validValue, idx - 1, false);
+                    }else{
+                      handleInputChange(e.target.value, idx - 1, false);
                     }
                     if (page.isValidTitle) setValidValue(page.title);
                   }}
+                  autoFocus={page.isDirty}
+                  disabled={selectedPages.filter(selPage => selPage.title!==page.title && selPage.isValidTitle===false).length>0}
                   ref={inputRef}
                 />
               ) : (
@@ -198,9 +225,19 @@ const DraggableSidebarItem = ({
 };
 
 const mapStateToProps = (state: AppState) => ({
-  selectedPages: state.selection.pages
+  selectedPages: state.selection.pages,
+  validations: getValidations(state)
+});
+
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<AppState, void, RootAction>
+): ISortableDispatchProps => ({
+  updatePage: (page: ISelected) => {
+    dispatch(selectPageAction(page));
+  }
 });
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(injectIntl(DraggableSidebarItem));

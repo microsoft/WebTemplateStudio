@@ -20,8 +20,6 @@ import { setAppServiceModalButtonStatus } from "./verifyButtonStatus";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
   WIZARD_CONTENT_INTERNAL_NAMES,
   KEY_EVENTS
 } from "../../utils/constants";
@@ -39,6 +37,8 @@ import { IAvailability, ISelectedAppService } from "../../reducers/wizardSelecti
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { ISubscriptionData } from "../../reducers/azureLoginReducers/subscriptionDataReducer";
 import classNames from "classnames";
+import { subscriptionDataAppService, nameAppService } from "../../utils/extensionService/extensionService";
+import { getSubscriptionData } from "../../actions/azureActions/subscriptionData";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -58,6 +58,7 @@ interface IDispatchProps {
   setSiteNameAvailability: (
     isAvailableObject: IAvailabilityFromExtension
   ) => any;
+  saveSubscriptionData: (subscriptionData: any) => void;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
@@ -104,12 +105,15 @@ const AppServiceModal = (props: Props) => {
 
   const onSubscriptionChange = (subscription: string) => {
     setValidationStatus(true);
-    vscode.postMessage({
-      module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
-      track: true,
-      subscription,
-      projectName
+    subscriptionDataAppService(vscode, subscription, projectName).then((event)=>{
+      const message = event.data;
+      if (message.payload !== null) {
+        props.saveSubscriptionData({
+          locations: message.payload.locations,
+          resourceGroups: message.payload.resourceGroups,
+          validName: message.payload.validName
+        });
+      }
     });
 
     const updatedForm = {
@@ -131,12 +135,13 @@ const AppServiceModal = (props: Props) => {
       }
       timeout = setTimeout(() => {
         timeout = undefined;
-        vscode.postMessage({
-          module: EXTENSION_MODULES.AZURE,
-          command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
-          track: false,
-          appName: appServiceFormData.siteName,
-          subscription: appServiceFormData.subscription
+        nameAppService(vscode, appServiceFormData.subscription, appServiceFormData.siteName).then((event)=>{
+          const message = event.data;
+          props.setSiteNameAvailability({
+            isAvailable: message.payload.isAvailable,
+            message: message.payload.reason
+          });
+          props.setValidationStatus(false);
         });
       }, 700);
     }
@@ -337,6 +342,9 @@ const mapDispatchToProps = (
   },
   saveAppServiceSettings: (appServiceSettings: ISelectedAppService) => {
     dispatch(saveAppServiceSettingsAction(appServiceSettings));
+  },
+  saveSubscriptionData: (subscriptionData: any) => {
+    dispatch(getSubscriptionData(subscriptionData));
   },
   setSiteNameAvailability: (isAvailableObject: IAvailabilityFromExtension) =>
     dispatch(setSiteNameAvailabilityAction(isAvailableObject)),

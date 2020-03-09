@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 
 import cancel from "../../assets/cancel.svg";
 import reorder from "../../assets/reorder.svg";
-import getSvgUrl, { withLocalPath } from "../../utils/getSvgUrl";
+import { withLocalPath, getSvg } from "../../utils/getSvgUrl";
 import { ISelected } from "../../types/selected";
 
 const SortableSidebarItem = SortableElement(
@@ -30,7 +30,7 @@ const SortableSidebarItem = SortableElement(
       <DraggableSidebarItem
         page={page}
         closeSvgUrl={withLocalPath(cancel)}
-        pageSvgUrl={getSvgUrl(page.internalName)}
+        pageSvgUrl={getSvg(page.internalName)}
         reorderSvgUrl={withLocalPath(reorder)}
         handleInputChange={handleInputChange}
         handleCloseClick={handleCloseClick}

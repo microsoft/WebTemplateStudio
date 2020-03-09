@@ -6,7 +6,7 @@ import DraggableSidebarItem from "../../components/DraggableSidebarItem";
 
 import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalActions";
 
-import * as getSvg from "../../utils/getSvgUrl";
+import { getCancelSvg } from "../../utils/getSvgUrl";
 import { ReactComponent as EditIcon } from "../../assets/edit.svg";
 
 import styles from "./styles.module.css";
@@ -106,7 +106,7 @@ const AzureFunctionsSelection = ({
                 customInputStyle={styles.input}
                 key={functionApp.appName.value + idx}
                 text={functionApp.appName.value}
-                closeSvgUrl={getSvg.getCancelSvg()}
+                closeSvgUrl={getCancelSvg()}
                 azureFunctions={true}
                 withIndent={true}
                 idx={idx + 1}
@@ -117,7 +117,7 @@ const AzureFunctionsSelection = ({
                   (functionName: IFunctionName, idx: number) => (
                     <DraggableSidebarItem
                       key={functionApp.appName.value + idx.toString()}
-                      closeSvgUrl={getSvg.getCancelSvg()}
+                      closeSvgUrl={getCancelSvg()}
                       withLargeIndent={true}
                       azureFunctionName={functionName}
                       isAzureFunction={true}

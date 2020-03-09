@@ -11,6 +11,7 @@ import { IOption } from "../../types/option";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/constants";
 import keyUpHandler from "../../utils/keyUpHandler";
+import { getSvg } from "../../utils/getSvgUrl";
 
 interface IProps {
   buttonText: string;
@@ -35,9 +36,7 @@ export const Card = ({
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cardTitleContainer}>
-        {option.svgUrl && (
-          <img className={styles.icon} src={option.svgUrl} alt="" />
-        )}
+        {getSvg(option.internalName, styles.icon)}
         <div className={styles.cardTitle}>
           {intl.formatMessage(formattedTitle)}
         </div>

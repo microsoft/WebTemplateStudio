@@ -1,43 +1,44 @@
 import * as React from "react";
 import { connect } from "react-redux";
-
-import {
-  EXTENSION_MODULES,
-  EXTENSION_COMMANDS
-} from "../../utils/constants";
-
-
 import { IStateProps, IDispatchProps } from "./interfaces";
-import {mapStateToProps} from "./store";
+import {mapStateToProps, mapDispatchToProps} from "./store";
 import FrameworkCard from "./FrameworkCard";
 import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const SelectFrameworks = (props: Props) => {
   const { frontendOptions, backendOptions, intl } = props;
-
   React.useEffect(()=>{
     getDependencyInfoAndSetToStore();
   },[]);
 
   const getDependencyInfoAndSetToStore = () =>{
-    const { vscode } = props;
-    // send messages to extension to check dependency info when this component loads
+    const { vscode, updateDependencyInfo } = props;
+    window.addEventListener("message", event => {
+      const message = event.data;
+      switch (message.command) {
+        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
+          updateDependencyInfo(message.payload);
+          break;
+      }
+    });
+    
     vscode.postMessage({
       module: EXTENSION_MODULES.DEPENDENCYCHECKER,
       command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
       payload: {
-        dependency: "node"
+        dependency: "python"
       }
     });
     vscode.postMessage({
       module: EXTENSION_MODULES.DEPENDENCYCHECKER,
       command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
       payload: {
-        dependency: "python"
+        dependency: "node"
       }
     });
   }
@@ -64,4 +65,4 @@ const SelectFrameworks = (props: Props) => {
   );
 }
 
-export default connect(mapStateToProps)(injectIntl(SelectFrameworks));
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(SelectFrameworks));

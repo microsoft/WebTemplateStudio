@@ -1,6 +1,6 @@
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import {
-  EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES
+  EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES, PAYLOAD_MESSAGES_TEXT
 } from "../constants";
 
 const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject)=>{
@@ -51,6 +51,14 @@ const getFrameworks = (vscode: IVSCodeObject, isPreview: boolean): Promise<any> 
   }, vscode);
 }
 
+const getTemplateInfo = (vscode: IVSCodeObject): Promise<any> => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_TEMPLATE_INFO, {
+    module: EXTENSION_MODULES.CORETS,
+    command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
+    payload: {}
+  }, vscode);
+}
+
 const getLatestVersion = (vscode: IVSCodeObject, checkVersionPackageName: string, checkVersionPackageSource: string): Promise<any> => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_LATEST_VERSION, {
     module: EXTENSION_MODULES.DEPENDENCYCHECKER,
@@ -84,6 +92,83 @@ const getOutputPath = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
+const resetAllPages = (vscode: IVSCodeObject, internalName: string, pagesLength: number) => {
+  return postMessageAsync(EXTENSION_COMMANDS.RESET_PAGES, {
+    module: EXTENSION_MODULES.VSCODEUI,
+    command: EXTENSION_COMMANDS.RESET_PAGES,
+    track: true,
+    text: PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT,
+    payload: {
+      internalName: internalName,
+      pagesLength: pagesLength
+    }
+  }, vscode);
+}
+
+const azureLogout = (vscode: IVSCodeObject) => {
+  return postMessageAsync(EXTENSION_COMMANDS.AZURE_LOGOUT, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.AZURE_LOGOUT,
+    track: true
+  }, vscode);
+}
+
+const subscriptionDataCosmos = (vscode: IVSCodeObject, subscription: string, projectName: string ) => {
+  return postMessageAsync(EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
+    track: true,
+    subscription,
+    projectName
+  }, vscode);
+}
+
+const subscriptionDataAppService = (vscode: IVSCodeObject, subscription: string, projectName: string ) => {
+  return postMessageAsync(EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
+    track: true,
+    subscription,
+    projectName
+  }, vscode);
+}
+
+const nameCosmos = (vscode: IVSCodeObject, subscription: string, appName: string) =>{
+  return postMessageAsync(EXTENSION_COMMANDS.NAME_COSMOS, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.NAME_COSMOS,
+    track: false,
+    appName,
+    subscription
+  }, vscode);
+}
+
+const nameAppService = (vscode: IVSCodeObject, subscription: string, appName: string) =>{
+  return postMessageAsync(EXTENSION_COMMANDS.NAME_APP_SERVICE, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
+    track: false,
+    appName,
+    subscription
+  }, vscode);
+}
+
+const azureLogin = (vscode: IVSCodeObject)=>{
+  return postMessageAsync(EXTENSION_COMMANDS.AZURE_LOGIN, {
+    command: EXTENSION_COMMANDS.AZURE_LOGIN,
+    module: EXTENSION_MODULES.AZURE,
+    track: true
+  }, vscode);
+}
+
+const getUserStatus = (vscode: IVSCodeObject)=>{
+  return postMessageAsync(EXTENSION_COMMANDS.GET_USER_STATUS, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.GET_USER_STATUS,
+    track: true
+  }, vscode);
+}
+
 const sendTelemetry = (vscode: IVSCodeObject, command: string, payload?: any): void =>
 {
   vscode.postMessage({
@@ -100,5 +185,14 @@ export {
   getLatestVersion,
   getPages,
   getOutputPath,
-  sendTelemetry
+  sendTelemetry,
+  resetAllPages,
+  azureLogout,
+  subscriptionDataCosmos,
+  subscriptionDataAppService,
+  nameCosmos,
+  nameAppService,
+  azureLogin,
+  getUserStatus,
+  getTemplateInfo
 }
