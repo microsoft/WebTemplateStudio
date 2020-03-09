@@ -27,7 +27,7 @@ export const getIVSCodeApi = () => {
   return mockVSCode;
 };
 
-export const getInitialState = () => {
+export const getInitialState = (): AppState => {
   const initialState: AppState={
     vscode: {
       isVsCodeApiAcquired: true,
@@ -283,4 +283,8 @@ const loadPages = (frameWorkName: string): Array<any>=>{
 
 export const loadMasters = (store: any) =>{
   store.wizardContent.pageOptions = loadPages("React");
+}
+
+export const setBackendFramework = (store: any, internalName: string) => {
+  store.selection.backendFramework.internalName = internalName;
 }
