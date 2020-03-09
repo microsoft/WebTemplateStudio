@@ -17,7 +17,7 @@ const pagesReducer = (
       const newPages: ISelected[] = [...action.payload];
       return newPages;
     case WIZARD_SELECTION_TYPEKEYS.SELECT_PAGE:
-      let list = state.slice(0);
+      const list = state.slice(0);
       list.filter(page => page.id===action.payload.id)[0] = action.payload;
       return list;
     case WIZARD_SELECTION_TYPEKEYS.RESET_PAGES:
