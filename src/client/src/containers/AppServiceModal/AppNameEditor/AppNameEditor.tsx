@@ -3,6 +3,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "../styles.module.css";
 import classNames from "classnames";
 
+import { getProjectName } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
 import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
@@ -14,24 +15,23 @@ import { getAppServiceSelectionSelector } from "../../../selectors/appServiceSel
 import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { ISelectedAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
 
-interface IMapStateProps {
+interface IStateProps {
   vscode: IVSCodeObject;
   savedAppServiceSelection: ISelectedAppService | null;
-}
-interface IStateProps {
-  subscription: string;
   projectName: string;
-  onIsValidatingName(isValidating: boolean): void;
+}
+
+interface IProps {
+  subscription: string;
   onChangeAppName(newAppName: { isValid: boolean; value: string }): void;
 }
 
-type Props = IStateProps & IMapStateProps & InjectedIntlProps;
+type Props = IProps & IStateProps & InjectedIntlProps;
 
-const AppName = ({
+const AppNameEditor = ({
   intl,
   subscription,
   projectName,
-  onIsValidatingName,
   onChangeAppName,
   vscode,
   savedAppServiceSelection,
@@ -47,29 +47,34 @@ const AppName = ({
   }, []);
 
   React.useEffect(() => {
-    if (subscription !== "" && appName === "") {
+    if (isValidSubscription() && appName === "") {
       GetValidAppServiceName(projectName, vscode).then(event => setAppName(event.data.payload.validName));
     }
   }, [subscription]);
 
   React.useEffect(() => {
-    setIsValidatingName(true);
-    setTimeout(() => {
-      ValidateAppServiceName(subscription, appName, vscode).then(event => {
-        const message = event.data.payload.reason ? event.data.payload.reason : "";
-        setInvalidAppNameMessage(message);
-        onChangeAppName({ isValid: event.data.payload.isAvailable, value: appName });
-        setIsValidatingName(false);
-      });
-    }, 700);
+    onChangeAppName({ isValid: false, value: appName });
+    if(appName !== "") {
+      setIsValidatingName(true);
+      setTimeout(() => {
+        ValidateAppServiceName(subscription, appName, vscode).then(event => {
+          const message = event.data.payload.reason ? event.data.payload.reason : "";
+          setInvalidAppNameMessage(message);
+          onChangeAppName({ isValid: event.data.payload.isAvailable, value: appName });
+          setIsValidatingName(false);
+        });
+      }, 700);
+    }    
   }, [appName]);
 
-  React.useEffect(() => onIsValidatingName(isValidatingName), [isValidatingName]);
+  const isValidSubscription = (): boolean => {
+    return subscription !== "" && subscription !== "Select...";
+  };
 
   return (
     <div
       className={classNames(styles.selectionContainer, {
-        [styles.selectionContainerDisabled]: subscription === "",
+        [styles.selectionContainerDisabled]: !isValidSubscription(),
       })}
     >
       <div className={styles.selectionHeaderContainer}>
@@ -84,14 +89,14 @@ const AppName = ({
             className={styles.input}
             value={appName}
             onChange={e => setAppName(e.currentTarget.value)}
-            disabled={subscription === ""}
+            disabled={!isValidSubscription()}
           />
-          {subscription && invalidAppNameMessage.length === 0 && !isValidatingName && (
+          {appName !== "" && invalidAppNameMessage === "" && !isValidatingName && (
             <GreenCheck className={styles.validationIcon} />
           )}
-          {subscription && isValidatingName && <Spinner className={styles.spinner} />}
+          {isValidatingName && <Spinner className={styles.spinner} />}
         </div>
-        {!isValidatingName && appName && appName.length > 0 && invalidAppNameMessage && (
+        {appName !== "" && !isValidatingName && invalidAppNameMessage && (
           <div className={styles.errorMessage}>{invalidAppNameMessage}</div>
         )}
       </div>
@@ -99,9 +104,10 @@ const AppName = ({
   );
 };
 
-const mapStateToProps = (state: AppState): IMapStateProps => ({
+const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: getVSCodeApiSelector(state),
   savedAppServiceSelection: getAppServiceSelectionSelector(state),
+  projectName: getProjectName(state),
 });
 
-export default connect(mapStateToProps)(injectIntl(AppName));
+export default connect(mapStateToProps)(injectIntl(AppNameEditor));
