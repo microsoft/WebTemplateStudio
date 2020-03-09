@@ -6,7 +6,6 @@ import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { getAppServiceSelectionSelector } from "../../selectors/appServiceSelector";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
 import { getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import RuntimeStackInfo from "./RuntimeStackInfo/RuntimeStackInfo";
@@ -26,7 +25,6 @@ import classNames from "classnames";
 interface IStateProps {
   isModalOpen: boolean;
   subscriptions: [any];
-  savedAppServiceSelection: ISelectedAppService | null;
   projectName: string;
 }
 
@@ -38,17 +36,11 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const AppServiceModal = (props: Props) => {
-  const { intl, subscriptions, savedAppServiceSelection, saveAppService, closeModal, projectName } = props;
+  const { intl, subscriptions, saveAppService, closeModal, projectName } = props;
 
   const [subscription, setSubscription] = React.useState("");
   const [appName, setAppName] = React.useState({ isValid: false, value: "" });
   const [isValidatingName, setIsValidatingName] = React.useState(false);
-
-  React.useEffect(() => {
-    if (savedAppServiceSelection) {
-      setSubscription(savedAppServiceSelection.subscription);
-    }
-  }, []);
 
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
@@ -88,11 +80,7 @@ const AppServiceModal = (props: Props) => {
         <Cancel className={styles.icon} onClick={closeModal} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
       </div>
       <div className={styles.bodyContainer}>
-        <SubscriptionSelection
-          subscriptions={subscriptions}
-          onSubscriptionChange={setSubscription}
-          subscription={subscription}
-        />
+        <SubscriptionSelection onSubscriptionChange={setSubscription} />
         <AppName
           subscription={subscription}
           projectName={projectName}
@@ -112,7 +100,6 @@ const AppServiceModal = (props: Props) => {
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAppServiceModalOpenSelector(state),
   subscriptions: state.azureProfileData.profileData.subscriptions,
-  savedAppServiceSelection: getAppServiceSelectionSelector(state),
   projectName: getProjectName(state),
 });
 

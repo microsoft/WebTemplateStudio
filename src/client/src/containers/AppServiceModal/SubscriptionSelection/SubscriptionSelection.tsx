@@ -4,53 +4,64 @@ import styles from "../styles.module.css";
 import classNames from "classnames";
 import { azureMessages as messages } from "../../../mockData/azureServiceOptions";
 import Dropdown from "../../../components/Dropdown";
+import { getAppServiceSelectionSelector } from "../../../selectors/appServiceSelector";
+import { AppState } from "../../../reducers";
+import { ISelectedAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { connect } from "react-redux";
 
-const createSubscriptionLink =
-  "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade";
+const createSubscriptionLink = "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade";
 
-const DEFAULT_VALUE = {
+const DEFAULT_SUBSCRIPTION_VALUE = {
   value: "Select...",
-  label: "Select..."
+  label: "Select...",
 };
 
 interface IProps {
-  subscription: string;
-  subscriptions: [any];
   onSubscriptionChange(selectedSubscription: string): void;
 }
 
-type Props = IProps & InjectedIntlProps;
+interface IStateProps {
+  subscriptions: [any];
+  savedAppServiceSelection: ISelectedAppService | null;
+}
+
+type Props = IProps & IStateProps & InjectedIntlProps;
 
 const SubscriptionSelection = (props: Props) => {
-  const { intl, onSubscriptionChange, subscription, subscriptions } = props;
+  const { intl, onSubscriptionChange, subscriptions, savedAppServiceSelection } = props;
+  const [subscription, setSubscription] = React.useState(DEFAULT_SUBSCRIPTION_VALUE);
 
-  const selectedSubscription = subscriptions.find(
-    s => s.value === subscription
-  );
+  React.useEffect(() => {
+    if (savedAppServiceSelection) {
+      const selectedSubscription = subscriptions.find(s => s.value === savedAppServiceSelection.subscription);
+      setSubscription(selectedSubscription);
+    }
+  }, []);
+
+  React.useEffect(() => onSubscriptionChange(subscription.value), [subscription]);
 
   return (
     <div className={classNames([styles.selectionContainer])}>
       <div className={styles.selectionHeaderContainer}>
-        <div className={styles.leftHeader}>
-          {intl.formatMessage(messages.azureModalSubscriptionLabel)}
-        </div>
+        <div className={styles.leftHeader}>{intl.formatMessage(messages.azureModalSubscriptionLabel)}</div>
         <a className={styles.link} href={createSubscriptionLink}>
           {intl.formatMessage(messages.azureModalCreateNew)}
         </a>
       </div>
-      <div className={styles.subLabel}>
-        {intl.formatMessage(messages.azureModalSubscriptionSubLabel)}
-      </div>
+      <div className={styles.subLabel}>{intl.formatMessage(messages.azureModalSubscriptionSubLabel)}</div>
       <Dropdown
         ariaLabel={intl.formatMessage(messages.azureModalAriaSubscriptionLabel)}
         options={subscriptions}
-        handleChange={newSubscription => {
-          onSubscriptionChange(newSubscription.value);
-        }}
-        value={selectedSubscription ? selectedSubscription : DEFAULT_VALUE}
+        handleChange={newSubscription => setSubscription(newSubscription)}
+        value={subscription}
       />
     </div>
   );
 };
 
-export default injectIntl(SubscriptionSelection);
+const mapStateToProps = (state: AppState): IStateProps => ({
+  subscriptions: state.azureProfileData.profileData.subscriptions,
+  savedAppServiceSelection: getAppServiceSelectionSelector(state),
+});
+
+export default connect(mapStateToProps)(injectIntl(SubscriptionSelection));
