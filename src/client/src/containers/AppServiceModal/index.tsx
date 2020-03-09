@@ -19,16 +19,12 @@ import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
 import { AppState } from "../../reducers";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import RootAction from "../../actions/ActionType";
 import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import classNames from "classnames";
-import { GetValidAppServiceName, ValidateAppServiceName } from "../../utils/extensionService/extensionService";
 
 interface IStateProps {
   isModalOpen: boolean;
-  vscode: IVSCodeObject;
   subscriptions: [any];
   savedAppServiceSelection: ISelectedAppService | null;
   projectName: string;
@@ -36,58 +32,28 @@ interface IStateProps {
 
 interface IDispatchProps {
   closeModal: () => any;
-  saveAppServiceSettings: (appServiceSettings: ISelectedAppService) => any;
+  saveAppService: (appServiceSettings: ISelectedAppService) => any;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const AppServiceModal = (props: Props) => {
-  const {
-    intl,
-    vscode,
-    subscriptions,
-    savedAppServiceSelection,
-    saveAppServiceSettings,
-    closeModal,
-    projectName,
-  } = props;
+  const { intl, subscriptions, savedAppServiceSelection, saveAppService, closeModal, projectName } = props;
 
   const [subscription, setSubscription] = React.useState("");
-  const [appName, setAppName] = React.useState("");
+  const [appName, setAppName] = React.useState({ isValid: false, value: "" });
   const [isValidatingName, setIsValidatingName] = React.useState(false);
-  const [invalidAppNameMessage, setInvalidAppNameMessage] = React.useState("");
 
   React.useEffect(() => {
     if (savedAppServiceSelection) {
       setSubscription(savedAppServiceSelection.subscription);
-      setAppName(savedAppServiceSelection.siteName);
     }
   }, []);
 
-  React.useEffect(() => {
-    if (subscription !== "" && appName === "") {
-      GetValidAppServiceName(projectName, vscode)
-      .then(event => setAppName(event.data.payload.validName));
-    }
-  }, [subscription]);
-
-  React.useEffect(() => {
-    if (subscription !== "") {
-      setIsValidatingName(true);
-      setTimeout(() => {
-        ValidateAppServiceName(subscription, appName, vscode).then(event => {
-          const message = event.data.payload.isAvailable ? "" : event.data.payload.reason;
-          setInvalidAppNameMessage(message);
-          setIsValidatingName(false);
-        });
-      }, 700);
-    }
-  }, [appName]);
-
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
-    const isAppNameEmpty = appName === "";
-    const isAppNameAvailable = invalidAppNameMessage === "";
+    const isAppNameEmpty = appName.value === "";
+    const isAppNameAvailable = appName.isValid;
 
     return !(isSubscriptionEmpty || isAppNameEmpty || isValidatingName || !isAppNameAvailable);
   };
@@ -109,10 +75,10 @@ const AppServiceModal = (props: Props) => {
     const appServiceSelection: ISelectedAppService = {
       subscription,
       resourceGroup: "",
-      siteName: appName,
+      siteName: appName.value,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     };
-    saveAppServiceSettings(appServiceSelection);
+    saveAppService(appServiceSelection);
   };
 
   return (
@@ -129,10 +95,9 @@ const AppServiceModal = (props: Props) => {
         />
         <AppName
           subscription={subscription}
-          siteName={appName}
-          onAppNameChange={setAppName}
-          isValidatingName={isValidatingName}
-          invalidAppNameMessage={invalidAppNameMessage}
+          projectName={projectName}
+          onIsValidatingName={setIsValidatingName}
+          onChangeAppName={setAppName}
         />
         <AppServicePlanInfo subscriptions={subscriptions} subscription={subscription} />
         <RuntimeStackInfo />
@@ -146,7 +111,6 @@ const AppServiceModal = (props: Props) => {
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAppServiceModalOpenSelector(state),
-  vscode: getVSCodeApiSelector(state),
   subscriptions: state.azureProfileData.profileData.subscriptions,
   savedAppServiceSelection: getAppServiceSelectionSelector(state),
   projectName: getProjectName(state),
@@ -154,7 +118,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   closeModal: () => dispatch(closeModalAction()),
-  saveAppServiceSettings: (appServiceSettings: ISelectedAppService) =>
+  saveAppService: (appServiceSettings: ISelectedAppService) =>
     dispatch(saveAppServiceSettingsAction(appServiceSettings)),
 });
 
