@@ -4,13 +4,18 @@ import styles from "../styles.module.css";
 import classNames from "classnames";
 import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
+import { AppState } from "../../../reducers";
+import { connect } from "react-redux";
+
+interface IProps {
+  subscription: string;
+}
 
 interface IStateProps {
-  subscription: string;
   subscriptions: [any];
 }
 
-type Props = IStateProps & InjectedIntlProps;
+type Props = IProps & IStateProps & InjectedIntlProps;
 
 const AppServicePlanInfo = (props: Props) => {
   const { intl, subscription, subscriptions } = props;
@@ -42,4 +47,9 @@ const AppServicePlanInfo = (props: Props) => {
     </div>
   );
 };
-export default injectIntl(AppServicePlanInfo);
+
+const mapStateToProps = (state: AppState): IStateProps => ({
+  subscriptions: state.azureProfileData.profileData.subscriptions
+});
+
+export default connect(mapStateToProps)(injectIntl(AppServicePlanInfo));

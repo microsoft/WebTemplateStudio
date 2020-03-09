@@ -24,7 +24,6 @@ import classNames from "classnames";
 
 interface IStateProps {
   isModalOpen: boolean;
-  subscriptions: [any];
   projectName: string;
 }
 
@@ -36,7 +35,7 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const AppServiceModal = (props: Props) => {
-  const { intl, subscriptions, saveAppService, closeModal, projectName } = props;
+  const { intl, saveAppService, closeModal, projectName } = props;
 
   const [subscription, setSubscription] = React.useState("");
   const [appName, setAppName] = React.useState({ isValid: false, value: "" });
@@ -87,7 +86,7 @@ const AppServiceModal = (props: Props) => {
           onIsValidatingName={setIsValidatingName}
           onChangeAppName={setAppName}
         />
-        <AppServicePlanInfo subscriptions={subscriptions} subscription={subscription} />
+        <AppServicePlanInfo subscription={subscription} />
         <RuntimeStackInfo />
         <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
           {intl.formatMessage(azureModalMessages.azureModalSave)}
@@ -99,14 +98,13 @@ const AppServiceModal = (props: Props) => {
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAppServiceModalOpenSelector(state),
-  subscriptions: state.azureProfileData.profileData.subscriptions,
   projectName: getProjectName(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
   closeModal: () => dispatch(closeModalAction()),
   saveAppService: (appServiceSettings: ISelectedAppService) =>
-    dispatch(saveAppServiceSettingsAction(appServiceSettings)),
+  dispatch(saveAppServiceSettingsAction(appServiceSettings)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(asModal(injectIntl(AppServiceModal)));
