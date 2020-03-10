@@ -354,7 +354,6 @@ export enum ExtensionCommand {
   GetPort = "get-port",
   GetVersions = "get-versions",
   ResetPages = "reset-pages",
-  GetPreviewStatus = "get-preview",
   CheckDependency = "check-dependency"
 }
 export enum ExtensionModule {

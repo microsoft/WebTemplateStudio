@@ -164,9 +164,7 @@ export class Controller {
       );
       GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
-      Controller.loadUserSettings();
-
-      Controller.getTemplateInfoAndSendToClient(
+      Controller.getTemplateInfoAndStore(
         context,
         syncObject
       );
@@ -176,34 +174,21 @@ export class Controller {
     }
   }
 
-  private static getTemplateInfoAndSendToClient(
+  private static getTemplateInfoAndStore(
     ctx: vscode.ExtensionContext,
     syncObject: ISyncReturnType
   ): void {
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetTemplateInfo,
-      payload: {
-        templatesVersion:syncObject.templatesVersion,
-        wizardVersion: getExtensionVersionNumber(ctx),
-        itemNameValidationConfig: syncObject.itemNameValidationConfig,
-        projectNameValidationConfig: syncObject.projectNameValidationConfig,
-      }
-    });
-  }
-
-  private static loadUserSettings(): void {
     const preview = vscode.workspace
       .getConfiguration()
       .get<boolean>("wts.enablePreviewMode");
 
-    if (preview !== undefined) {
-      Controller.reactPanelContext.postMessageWebview({
-        command: ExtensionCommand.GetPreviewStatus,
-        payload: {
-          preview: preview
-        }
-      });
-    }
+    CoreTemplateStudio._templateConfig = {
+      templatesVersion:syncObject.templatesVersion,
+      wizardVersion: getExtensionVersionNumber(ctx),
+      itemNameValidationConfig: syncObject.itemNameValidationConfig,
+      projectNameValidationConfig: syncObject.projectNameValidationConfig,
+      preview
+    };
   }
 
   private static handleValidMessage(

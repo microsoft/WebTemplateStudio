@@ -208,8 +208,8 @@ const mockVsCodeApi = () => ({
                     platforms: ["Web"],
                     languages: ["Any"],
                     tags: {
-                      version: "0.14.2",
-                      latestVersion: "0.14.2",
+                      version: "0.14.3",
+                      latestVersion: "0.14.3",
                       preview: false
                     }
                   },
@@ -416,21 +416,6 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
-        case EXTENSION_COMMANDS.NAME_FUNCTIONS:
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                isAvailable: message.appName.length > 0
-              },
-              message: DEV_NO_ERROR_MSG,
-              errorType: DEV_NO_ERROR_TYPE
-            },
-            "*"
-          );
-          break;
         case EXTENSION_COMMANDS.NAME_COSMOS:
           window.postMessage(
             {
@@ -557,16 +542,6 @@ const mockVsCodeApi = () => ({
             },
             "*"
           );
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.GET_PREVIEW_STATUS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                preview: true
-              }
-            },
-            "*"
-          );
           break;
         case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
           // produces a mock login response from VSCode in development
@@ -576,7 +551,8 @@ const mockVsCodeApi = () => ({
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 wizardVersion: "1.x",
-                templatesVersion: "1.x"
+                templatesVersion: "1.x",
+                preview:false
               }
             },
             "*"

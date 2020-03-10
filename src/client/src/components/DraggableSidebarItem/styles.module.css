@@ -113,7 +113,7 @@
 .input {
   padding-left: 0.5em;
   width: 100%;
-  outline: none;
+  outline: none !important;
   font-size: 1em;
   box-sizing: border-box;
   background: var(--vscode-editorWidget-border);

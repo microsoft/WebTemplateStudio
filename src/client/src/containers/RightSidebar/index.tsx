@@ -16,7 +16,7 @@ import { setSelectedBackendFrameworkAction } from "../../actions/wizardSelection
 import { setSelectedFrontendFrameworkAction } from "../../actions/wizardSelectionActions/selectedFrontendFramework";
 import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectWebApp";
 import {
-  selectPagesAction
+  selectPagesAction, resetPagesAction
 } from "../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 
@@ -33,8 +33,8 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   KEY_EVENTS,
-  PAYLOAD_MESSAGES_TEXT,
-  WIZARD_CONTENT_INTERNAL_NAMES
+  WIZARD_CONTENT_INTERNAL_NAMES,
+  BOOTSTRAP_LICENSE
 } from "../../utils/constants";
 import messages from "./strings";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
@@ -52,6 +52,7 @@ import {
   getProjectName
 } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { ServiceState } from "../../reducers/wizardSelectionReducers/services";
+import { resetAllPages } from "../../utils/extensionService/extensionService";
 
 interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
@@ -59,6 +60,7 @@ interface IDispatchProps {
   selectProjectType: (projectType: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
   openViewLicensesModal: () => any;
+  resetPageSelection: () => any;
 }
 
 interface IRightSidebarProps {
@@ -135,16 +137,29 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
 
   public resetAllPages = () => {
     const { pages, frontendFramework } = this.props.selection;
-    const { vscode } = this.props;
-    vscode.postMessage({
-      module: EXTENSION_MODULES.VSCODEUI,
-      command: EXTENSION_COMMANDS.RESET_PAGES,
-      track: true,
-      text: PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT,
-      payload: {
-        internalName: frontendFramework.internalName,
-        pagesLength: pages.length
-      }
+    const { vscode, resetPageSelection, selectPages } = this.props;
+    resetAllPages(vscode, frontendFramework.internalName, pages.length).then(()=>{
+      //if (message.payload.resetPages) {
+        resetPageSelection();
+        // select default blank page
+        const PAGES_SELECTION: ISelected[] = [
+          {
+            title: "Blank",
+            internalName: `wts.Page.${frontendFramework.internalName}.Blank`,
+            id: "Blank",
+            defaultName: "Blank",
+            isValidTitle: true,
+            licenses: [
+              {
+                text: "Bootstrap",
+                url: BOOTSTRAP_LICENSE
+              }
+            ],
+            author: "Microsoft"
+          }
+        ];
+        selectPages(PAGES_SELECTION);
+      //}
     });
   };
 
@@ -432,7 +447,10 @@ const mapDispatchToProps = (
   },
   openViewLicensesModal: () => {
     dispatch(ModalActions.openViewLicensesModalAction());
-  }
+  },
+  resetPageSelection: () => {
+    dispatch(resetPagesAction());
+  },
 });
 
 export default withRouter(

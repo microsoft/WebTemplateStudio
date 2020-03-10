@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import * as getSvg from "../../../utils/getSvgUrl";
+import { getCancelSvg } from "../../../utils/getSvgUrl";
 
 import DraggableSidebarItem from "../../../components/DraggableSidebarItem";
 
@@ -77,7 +77,7 @@ const AppServiceSelection = ({
             customInputStyle={styles.input}
             key={appServiceSelection.selection.siteName}
             text={appServiceSelection.selection.siteName}
-            closeSvgUrl={getSvg.getCancelSvg()}
+            closeSvgUrl={getCancelSvg()}
             withIndent={true}
             handleCloseClick={removeAppServiceResource}
             idx={1}

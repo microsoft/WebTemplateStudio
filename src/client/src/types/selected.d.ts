@@ -13,4 +13,5 @@ export interface ISelected {
   originalTitle?: string;
   version?: string;
   ref?: any;
+  isDirty?: boolean = false;
 }

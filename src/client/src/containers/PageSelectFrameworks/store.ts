@@ -3,20 +3,15 @@ import { IStateProps, IDispatchProps } from "./interfaces";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { IOption } from "../../types/option";
-import { setFrontendFrameworksAction } from "../../actions/wizardContentActions/setFrontendFrameworks";
-import { setBackendFrameworksAction } from "../../actions/wizardContentActions/setBackendFrameworks";
+import { updateDependencyInfoAction, IDependencyInfo } from "../../actions/wizardInfoActions/updateDependencyInfo";
 
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  setBackendFrameworks: (frameworks: IOption[]) => {
-    dispatch(setBackendFrameworksAction(frameworks));
+  updateDependencyInfo: (dependencyInfo: IDependencyInfo) => {
+    dispatch(updateDependencyInfoAction(dependencyInfo));
   },
-  setFrontendFrameworks: (frameworks: IOption[]) => {
-    dispatch(setFrontendFrameworksAction(frameworks));
-  }
 });
 
 const mapStateToProps = (state: AppState): IStateProps => {

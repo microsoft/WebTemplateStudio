@@ -172,7 +172,6 @@ const EXTENSION_COMMANDS = {
   CLOSE_WIZARD: "close-wizard",
   GET_VERSIONS: "get-versions",
   RESET_PAGES: "reset-pages",
-  GET_PREVIEW_STATUS: "get-preview",
   GET_DEPENDENCY_INFO: "check-dependency",
   GET_FRAMEWORKS: "get-frameworks",
   GET_LATEST_VERSION:"get-latest-version",

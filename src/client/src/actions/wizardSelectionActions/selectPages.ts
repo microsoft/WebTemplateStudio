@@ -6,6 +6,11 @@ export interface ISelectPagesAction {
   payload: ISelected[];
 }
 
+export interface ISelectPageAction {
+  type: WIZARD_SELECTION_TYPEKEYS.SELECT_PAGE;
+  payload: ISelected;
+}
+
 export interface IResetPagesAction {
   type: WIZARD_SELECTION_TYPEKEYS.RESET_PAGES;
 }
@@ -15,8 +20,13 @@ const selectPagesAction = (pages: ISelected[]): ISelectPagesAction => ({
   payload: pages
 });
 
+const selectPageAction = (page: ISelected): ISelectPageAction => ({
+  type: WIZARD_SELECTION_TYPEKEYS.SELECT_PAGE,
+  payload: page
+});
+
 const resetPagesAction = (): IResetPagesAction => ({
   type: WIZARD_SELECTION_TYPEKEYS.RESET_PAGES
 });
 
-export { selectPagesAction, resetPagesAction };
+export { selectPagesAction, selectPageAction, resetPagesAction };

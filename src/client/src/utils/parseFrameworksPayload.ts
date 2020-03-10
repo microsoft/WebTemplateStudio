@@ -1,4 +1,3 @@
-import getSvgUrl from "./getSvgUrl";
 import { IMetadata } from "../types/metadata";
 import { IOption } from "../types/option";
 import { FRAMEWORK_TYPE } from "./constants";
@@ -45,7 +44,7 @@ function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
     longDescription: val.longDescription,
     position: val.position,
     selected: val.selected,
-    svgUrl: getSvgUrl(val.name),
+    svgUrl: "",
     title: val.displayName,
     version: val.tags!.version,
     latestVersion: val.tags!.latestVersion,

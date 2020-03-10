@@ -1,6 +1,5 @@
 import { IApiTemplateInfo } from "../../types/apiTemplateInfo";
 import { IOption } from "../../types/option";
-import getSvgUrl from "../../utils/getSvgUrl";
 import { WIZARD_CONTENT_TYPEKEYS } from "./typeKeys";
 
 export interface IPageOptionsActionType {
@@ -46,7 +45,7 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
     licenses: val.licenses,
     longDescription: val.longDescription,
     selected: val.selected,
-    svgUrl: getSvgUrl(val.name),
+    svgUrl: "",
     title: val.displayName,
     defaultName: val.defaultName,
     isValidTitle: true,
