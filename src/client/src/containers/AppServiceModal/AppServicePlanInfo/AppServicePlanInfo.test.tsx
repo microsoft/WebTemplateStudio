@@ -1,64 +1,70 @@
 import * as React from "react";
+import configureMockStore from "redux-mock-store";
 import { azureMessages } from "../../../mockData/azureServiceOptions";
 import AppServicePlanInfo from "./AppServicePlanInfo";
+import { Provider } from "react-redux";
+import { getInitialState, setSubscriptions } from "../../../mockData/mockStore";
+import { render, RenderResult } from "@testing-library/react";
+import { IntlProvider } from "react-intl";
 
 describe("AppServicePlanInfo", () => {
   let props: any;
+  let wrapper: RenderResult;
+  let store: any;
+  let initialState: any;
+  const mockStore = configureMockStore();
 
   beforeEach(() => {
+    initialState = getInitialState();
+      setSubscriptions(initialState);
+      store = mockStore(initialState);
     props = {
-      subscription: "",
-      subscriptions: [
-        {
-          label: "subscription 1 label",
-          value: "subscription 1 value",
-          isMicrosoftLearnSubscription: true
-        },
-        {
-          label: "subscription 2 label",
-          value: "subscription 2 value",
-          isMicrosoftLearnSubscription: false
-        }
-      ],
-      intl: global.intl
+      subscription: ""
     };
   });
 
   describe("When subscription is a Microsoft Learn Subscription", () => {
-    let wrapper: any;
 
     beforeEach(() => {
-      props.subscription = "subscription 1 value";
-      wrapper = mountWithIntl(<AppServicePlanInfo {...props} />);
+      props.subscription = "Microsoft Learn Subscription";
+      wrapper = render(
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <AppServicePlanInfo {...props} />
+          </Provider>
+        </IntlProvider>
+      );
     });
 
     it("renders without crashing", () => {
       expect(wrapper).toBeDefined();
     });
-
+ 
     it("should have a free subscription message", () => {
-      const intl = wrapper.props().intl;
-      const message = wrapper.find("#message").text();
-      expect(message).toBe(intl.formatMessage(azureMessages.appServiceFreeTierInfo));
+      const expectedText = intl.formatMessage(azureMessages.appServiceFreeTierInfo);
+      expect(wrapper.getByText(expectedText)).toBeDefined();
     });
   });
 
   describe("When subscription is not a Microsoft Learn Subscription", () => {
-    let wrapper: any;
-
     beforeEach(() => {      
-      props.subscription = "subscription 2 value";
-      wrapper = mountWithIntl(<AppServicePlanInfo {...props} />);
+      props.subscription = "subscription 1 value";
+      wrapper = render(
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <AppServicePlanInfo {...props} />
+          </Provider>
+        </IntlProvider>
+      );
     });
 
     it("renders without crashing", () => {
       expect(wrapper).toBeDefined();
     });
 
-    it("should have a basic subscription message", () => {
-      const intl = wrapper.props().intl;
-      const message = wrapper.find("#message").text();
-      expect(message).toBe(intl.formatMessage(azureMessages.appServiceBasicTierInfo));
+    it("should have a basic subscription message", () => {      
+      const expectedText = intl.formatMessage(azureMessages.appServiceBasicTierInfo);
+      expect(wrapper.getByText(expectedText)).toBeDefined();
     });
   });
 });

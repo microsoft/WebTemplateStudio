@@ -28,9 +28,6 @@ describe("RuntimeStackInfo", () => {
       store = mockStore(initialState);
 
       props = {
-        selectedBackend: {
-          internalName: "",
-        },
         intl: global.intl,
       };
 
