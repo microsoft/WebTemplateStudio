@@ -3,6 +3,7 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import DraggableSidebarItem from "../DraggableSidebarItem";
 import styles from "./styles.module.css";
 import { ISelected } from "../../types/selected";
+import { getSvg } from "../../utils/getSvgUrl";
 
 const SortableSidebarItem = SortableElement(
   ({
@@ -25,6 +26,7 @@ const SortableSidebarItem = SortableElement(
         maxInputLength={maxInputLength}
         idx={idx + 1}
         totalCount={totalPageCount}
+        pageSvgUrl={getSvg(page.internalName)}
       />
     );
   }
