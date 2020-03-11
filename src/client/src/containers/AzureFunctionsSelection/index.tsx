@@ -102,36 +102,7 @@ const AzureFunctionsSelection = ({
                   <EditIcon className={styles.editIcon} />
                 </div>
               </div>
-              <DraggableSidebarItem
-                customInputStyle={styles.input}
-                key={functionApp.appName.value + idx}
-                text={functionApp.appName.value}
-                closeSvgUrl={getCancelSvg()}
-                azureFunctions={true}
-                withIndent={true}
-                idx={idx + 1}
-                handleCloseClick={removeAzureFunctionApp}
-              />
-              {functionApp.functionNames &&
-                functionApp.functionNames.map(
-                  (functionName: IFunctionName, idx: number) => (
-                    <DraggableSidebarItem
-                      key={functionApp.appName.value + idx.toString()}
-                      closeSvgUrl={getCancelSvg()}
-                      withLargeIndent={true}
-                      azureFunctionName={functionName}
-                      isAzureFunction={true}
-                      handleInputChange={handleInputChange}
-                      idx={idx + 1}
-                      handleCloseClick={removeAzureFunction}
-                      totalCount={
-                        functionApp.functionNames
-                          ? functionApp.functionNames.length
-                          : 0
-                      }
-                    />
-                  )
-                )}
+              
             </React.Fragment>
           )
         )}

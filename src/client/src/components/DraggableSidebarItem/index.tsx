@@ -1,11 +1,7 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-
-import { ReactComponent as Reorder } from "../../assets/reorder.svg";
-import { ReactComponent as AzureFunctionsIcon } from "../../assets/azurefunctions.svg";
-import { ReactComponent as CosmosDBIcon } from "../../assets/cosmosdb.svg";
-import { ReactComponent as AppServiceIcon } from "../../assets/appservice.svg";
+import Loadable from "react-loadable";
 
 import { ReactComponent as CloseSVG } from "../../assets/cancel.svg";
 
@@ -28,6 +24,18 @@ import { validateItemName } from "../../utils/validations/itemName/itemName";
 import { getValidations } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 
+const CosmosDBIcon = Loadable({
+  loader: () => import(/* webpackChunkName: "CosmosdbIcon" */  "../../utils/svgComponents/CosmosdbIcon"),
+  loading:() => <div/>
+});
+const AppServiceIcon = Loadable({
+  loader: () => import(/* webpackChunkName: "AppServiceIcon" */  "../../utils/svgComponents/AppserviceIcon"),
+  loading:() => <div/>
+});
+const Reorder = Loadable({
+  loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../utils/svgComponents/ReorderIcon"),
+  loading:() => <div/>
+});
 /**
  * Takes in either a page (type ISelected) or text, but not both
  * If a page is given, then text prop will not be rendered
@@ -36,12 +44,10 @@ import { IValidations } from "../../reducers/wizardSelectionReducers/setValidati
 interface IStateProps {
   page: ISelected;
   text?: string;
-  azureFunctions?: boolean;
   cosmosDB?: boolean;
   appService?: boolean;
   reorderSvgUrl?: string;
   pageSvgUrl?: string;
-  closeSvgUrl: string;
   itemTitle?: string;
   handleInputChange?: (e: any, idx: number) => void;
   maxInputLength?: number;
@@ -70,7 +76,6 @@ type Props = IStateProps & ISortablePageListProps & InjectedIntlProps & ISortabl
 const DraggableSidebarItem = ({
   page,
   text,
-  azureFunctions,
   cosmosDB,
   appService,
   pageSvgUrl,
@@ -122,28 +127,13 @@ const DraggableSidebarItem = ({
 
   return (
     <div>
-      {itemTitle && (
-        <div className={styles.titleContainer}>
-          {withIndent ? (
-            <React.Fragment>
-              <div className={styles.iconContainer} />
-              <div className={styles.itemContainer}>
-                <div>{itemTitle}</div>
-              </div>
-            </React.Fragment>
-          ) : (
-            itemTitle
-          )}
-        </div>
-      )}
       <div className={styles.draggablePage}>
         <div className={styles.iconContainer}>
           {!(withIndent || withLargeIndent) && (
-            <Reorder className={styles.reorderIcon} />
+            <Reorder style={styles.reorderIcon} />
           )}
-          {azureFunctions && <AzureFunctionsIcon />}
-          {cosmosDB && <CosmosDBIcon />}
-          {appService && <AppServiceIcon />}
+          {cosmosDB && <CosmosDBIcon style={styles.reorderIcon}/>}
+          {appService && <AppServiceIcon style={styles.reorderIcon}/>}
         </div>
         <div className={styles.errorStack}>
           <div
@@ -154,11 +144,7 @@ const DraggableSidebarItem = ({
             })}
           >
             <div className={styles.inputContainer}>
-              {reorderSvgUrl &&
-                (getSvg(page!.internalName, styles.icon) || (
-                  <img className={styles.icon} src={pageSvgUrl} alt="" />
-                ))}
-              {handleInputChange && (page || isAzureFunction) && idx ? (
+              {page && idx ? (
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input, {

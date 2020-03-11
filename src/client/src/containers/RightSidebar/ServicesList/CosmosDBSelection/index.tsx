@@ -82,7 +82,6 @@ const CosmosDBSelection = ({
                 customInputStyle={styles.input}
                 key={`${accountName} ${idx + 1}`}
                 text={accountName}
-                closeSvgUrl={getCancelSvg()}
                 withIndent={true}
                 handleCloseClick={removeCosmosResource}
                 idx={idx + 1}

@@ -78,16 +78,6 @@ const SortablePageList = (props: Props) => {
       document.getElementById("dvRightSideBar")!.scrollTop= document.getElementById("dvSummaryContainer")!.offsetHeight;*/
   }, [selectedPages]);
 
-  const handleInputChange = async (newTitle: string, idx: number) => {
-    pages[idx].title = newTitle;
-    pages[idx].error = "";
-    const validationResult = await validateItemName(newTitle, validations.itemNameValidationConfig, selectedPages);
-    pages[idx].error = validationResult.error;
-    pages[idx].isValidTitle = validationResult.isValid;
-
-    props.updatePage(pages[idx]);
-  };
-
   const handleOpenAddPagesModal = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_ADD_PAGES_MODAL);
     openAddPagesModal();
@@ -154,7 +144,6 @@ const SortablePageList = (props: Props) => {
           maxInputLength={PAGE_NAME_CHARACTER_LIMIT}
           onSortEnd={onSortEnd}
           distance={DRAG_PIXEL_THRESHOLD}
-          handleInputChange={handleInputChange}
           handleCloseClick={handleCloseClick}
           lockToContainerEdges
           lockAxis='y'

@@ -77,7 +77,6 @@ const AppServiceSelection = ({
             customInputStyle={styles.input}
             key={appServiceSelection.selection.siteName}
             text={appServiceSelection.selection.siteName}
-            closeSvgUrl={getCancelSvg()}
             withIndent={true}
             handleCloseClick={removeAppServiceResource}
             idx={1}
