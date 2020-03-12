@@ -14,12 +14,11 @@ describe("SubscriptionSelection", () => {
   const mockStore = configureMockStore();
 
   beforeEach(() => {
-
     initialState = getInitialState();
-      setSubscriptions(initialState);
-      store = mockStore(initialState);
-    props = {      
-      onSubscriptionChange: jest.fn()
+    setSubscriptions(initialState);
+    store = mockStore(initialState);
+    props = {
+      onSubscriptionChange: jest.fn(),
     };
   });
 
@@ -50,7 +49,6 @@ describe("SubscriptionSelection", () => {
   );*/
 
   describe("When selected a subscription in a dropdown", () => {
-
     beforeEach(() => {
       wrapper = render(
         <IntlProvider locale="en">
@@ -68,14 +66,15 @@ describe("SubscriptionSelection", () => {
     //TODO: Fix this test
     xit("Contais all subscription", () => {
       const select = wrapper.getAllByRole("option");
-      expect(select).toEqual(props.subscriptions)});
+      expect(select).toEqual(props.subscriptions);
+    });
 
-      //TODO: Fix this test
+    //TODO: Fix this test
     xit(`should launch subscription change event function`, () => {
       const event = {
         label: "subscription 3 label",
         value: "subscription 3 value",
-        isMicrosoftLearnSubscription: false
+        isMicrosoftLearnSubscription: false,
       };
       const select = wrapper.getByRole("Select");
       select.props().onChange(event);

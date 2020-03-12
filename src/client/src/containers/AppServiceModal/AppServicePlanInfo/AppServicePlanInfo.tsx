@@ -6,22 +6,20 @@ import { azureMessages as azureModalMessages } from "../../../mockData/azureServ
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 import { AppState } from "../../../reducers";
 import { connect } from "react-redux";
-
-interface IProps {
-  subscription: string;
-}
+import { AppServiceContext } from "../AppServiceContext";
 
 interface IStateProps {
   subscriptions: [any];
 }
 
-type Props = IProps & IStateProps & InjectedIntlProps;
+type Props = IStateProps & InjectedIntlProps;
 
 const AppServicePlanInfo = (props: Props) => {
-  const { intl, subscription, subscriptions } = props;
+  const { intl, subscriptions } = props;
+  const { subscription } = React.useContext(AppServiceContext);
 
-  const isMicrosoftLearnSubscription = (subscription: string): boolean => {
-    const s = subscriptions.find(s => s.value === subscription);
+  const isMicrosoftLearnSubscription = (): boolean => {
+    const s = subscriptions.find(s => s.value === subscription.value);
     return s && s.isMicrosoftLearnSubscription;
   };
 
@@ -32,7 +30,7 @@ const AppServicePlanInfo = (props: Props) => {
       </div>
 
       <div>
-        {isMicrosoftLearnSubscription(subscription)
+        {isMicrosoftLearnSubscription()
           ? intl.formatMessage(azureModalMessages.appServiceFreeTierInfo)
           : intl.formatMessage(azureModalMessages.appServiceBasicTierInfo)}
       </div>
@@ -49,7 +47,7 @@ const AppServicePlanInfo = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  subscriptions: state.azureProfileData.profileData.subscriptions
+  subscriptions: state.azureProfileData.profileData.subscriptions,
 });
 
 export default connect(mapStateToProps)(injectIntl(AppServicePlanInfo));

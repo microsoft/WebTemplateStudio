@@ -14,6 +14,7 @@ import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { getAppServiceSelectionSelector } from "../../../selectors/appServiceSelector";
 import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { ISelectedAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { AppServiceContext } from "../AppServiceContext";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -21,22 +22,10 @@ interface IStateProps {
   projectName: string;
 }
 
-interface IProps {
-  subscription: string;
-  onChangeAppName(newAppName: { isValid: boolean; value: string }): void;
-}
+type Props = IStateProps & InjectedIntlProps;
 
-type Props = IProps & IStateProps & InjectedIntlProps;
-
-const AppNameEditor = ({
-  intl,
-  subscription,
-  projectName,
-  onChangeAppName,
-  vscode,
-  savedAppServiceSelection,
-}: Props) => {
-  const [appName, setAppName] = React.useState("");
+const AppNameEditor = ({ intl, projectName, vscode, savedAppServiceSelection }: Props) => {
+  const { subscription, appName, setAppName, setIsAvailableAppName } = React.useContext(AppServiceContext);
   const [invalidAppNameMessage, setInvalidAppNameMessage] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);
 
@@ -53,22 +42,23 @@ const AppNameEditor = ({
   }, [subscription]);
 
   React.useEffect(() => {
-    onChangeAppName({ isValid: false, value: appName });
-    if(appName !== "") {
+    setIsAvailableAppName(false);
+    if (appName !== "") {
       setIsValidatingName(true);
       setTimeout(() => {
-        ValidateAppServiceName(subscription, appName, vscode).then(event => {
+        ValidateAppServiceName(subscription.value, appName, vscode).then(event => {
+          const isAvailable = event.data.payload.isAvailable;
           const message = event.data.payload.reason ? event.data.payload.reason : "";
           setInvalidAppNameMessage(message);
-          onChangeAppName({ isValid: event.data.payload.isAvailable, value: appName });
+          setIsAvailableAppName(isAvailable);
           setIsValidatingName(false);
         });
       }, 700);
-    }    
+    }
   }, [appName]);
 
   const isValidSubscription = (): boolean => {
-    return subscription !== "" && subscription !== "Select...";
+    return subscription && subscription.value !== "" && subscription.value !== "Select...";
   };
 
   return (

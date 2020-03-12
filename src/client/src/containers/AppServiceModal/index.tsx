@@ -20,10 +20,16 @@ import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import classNames from "classnames";
+import { AppServiceContext } from "./AppServiceContext";
+import { useState } from "react";
 
 interface IStateProps {
   isModalOpen: boolean;
 }
+const DEFAULT_SUBSCRIPTION_VALUE = {
+  value: "Select...",
+  label: "Select...",
+};
 
 interface IDispatchProps {
   closeModal: () => any;
@@ -34,16 +40,15 @@ type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const AppServiceModal = (props: Props) => {
   const { intl, saveAppService, closeModal } = props;
-
-  const [subscription, setSubscription] = React.useState("");
-  const [appName, setAppName] = React.useState({ isValid: false, value: "" });
+  const [subscription, setSubscription] = useState(DEFAULT_SUBSCRIPTION_VALUE);
+  const [appName, setAppName] = useState("");
+  const [isAvailableAppName, setIsAvailableAppName] = useState(false);
 
   const isEnableSaveButton = (): boolean => {
-    const isSubscriptionEmpty = subscription === "";
-    const isAppNameEmpty = appName.value === "";
-    const isAppNameAvailable = appName.isValid;
+    const isSubscriptionEmpty = subscription.value === "";
+    const isAppNameEmpty = appName === "";
 
-    return !(isSubscriptionEmpty || isAppNameEmpty || !isAppNameAvailable);
+    return !(isSubscriptionEmpty || isAppNameEmpty || !isAvailableAppName);
   };
 
   const getButtonClassNames = () => {
@@ -61,30 +66,41 @@ const AppServiceModal = (props: Props) => {
 
   const saveAppServiceSelection = (): void => {
     const appServiceSelection: ISelectedAppService = {
-      subscription,
+      subscription: subscription.value,
       resourceGroup: "",
-      siteName: appName.value,
+      siteName: appName,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     };
     saveAppService(appServiceSelection);
   };
 
   return (
-    <React.Fragment>
-      <div className={styles.headerContainer}>
-        <div className={styles.modalTitle}>{intl.formatMessage(azureModalMessages.appServiceModalTitle)}</div>
-        <Cancel className={styles.icon} onClick={closeModal} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
-      </div>
-      <div className={styles.bodyContainer}>
-        <SubscriptionSelection onSubscriptionChange={setSubscription} />
-        <AppNameEditor subscription={subscription} onChangeAppName={setAppName} />
-        <AppServicePlanInfo subscription={subscription} />
-        <RuntimeStackInfo />
-        <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
-          {intl.formatMessage(azureModalMessages.azureModalSave)}
-        </button>
-      </div>
-    </React.Fragment>
+    <AppServiceContext.Provider
+      value={{
+        subscription,
+        setSubscription,
+        appName,
+        setAppName,
+        isAvailableAppName,
+        setIsAvailableAppName,
+      }}
+    >
+      <React.Fragment>
+        <div className={styles.headerContainer}>
+          <div className={styles.modalTitle}>{intl.formatMessage(azureModalMessages.appServiceModalTitle)}</div>
+          <Cancel className={styles.icon} onClick={closeModal} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
+        </div>
+        <div className={styles.bodyContainer}>
+          <SubscriptionSelection />
+          <AppNameEditor />
+          <AppServicePlanInfo />
+          <RuntimeStackInfo />
+          <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
+            {intl.formatMessage(azureModalMessages.azureModalSave)}
+          </button>
+        </div>
+      </React.Fragment>
+    </AppServiceContext.Provider>
   );
 };
 

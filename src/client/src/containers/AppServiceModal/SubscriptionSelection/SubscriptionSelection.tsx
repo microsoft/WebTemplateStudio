@@ -8,28 +8,20 @@ import { getAppServiceSelectionSelector } from "../../../selectors/appServiceSel
 import { AppState } from "../../../reducers";
 import { ISelectedAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { connect } from "react-redux";
+import { AppServiceContext } from "../AppServiceContext";
 
 const createSubscriptionLink = "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade";
-
-const DEFAULT_SUBSCRIPTION_VALUE = {
-  value: "Select...",
-  label: "Select...",
-};
-
-interface IProps {
-  onSubscriptionChange(selectedSubscription: string): void;
-}
 
 interface IStateProps {
   subscriptions: [any];
   savedAppServiceSelection: ISelectedAppService | null;
 }
 
-type Props = IProps & IStateProps & InjectedIntlProps;
+type Props = IStateProps & InjectedIntlProps;
 
 const SubscriptionSelection = (props: Props) => {
-  const { intl, onSubscriptionChange, subscriptions, savedAppServiceSelection } = props;
-  const [subscription, setSubscription] = React.useState(DEFAULT_SUBSCRIPTION_VALUE);
+  const { intl, subscriptions, savedAppServiceSelection } = props;
+  const { subscription, setSubscription } = React.useContext(AppServiceContext);
 
   React.useEffect(() => {
     if (savedAppServiceSelection) {
@@ -37,8 +29,6 @@ const SubscriptionSelection = (props: Props) => {
       setSubscription(selectedSubscription);
     }
   }, []);
-
-  React.useEffect(() => onSubscriptionChange(subscription.value), [subscription]);
 
   return (
     <div className={classNames([styles.selectionContainer])}>
