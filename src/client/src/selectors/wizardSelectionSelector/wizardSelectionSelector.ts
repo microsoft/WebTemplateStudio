@@ -119,7 +119,7 @@ const frameworksRowItems = (selection: SelectionState): RowType[] => {
 /**
  * Iterates through every service, and for every services, identifies each
  * resource that was created and adds it to a list that will be displayed on the
- * summary page. Currently supports Azure Functions and CosmosDB only. Information
+ * summary page. Currently supports Azure App Service and CosmosDB only. Information
  * provided is in line with props required by SummaryTile component.
  *
  * @param selection selection object created by the developer
@@ -127,19 +127,8 @@ const frameworksRowItems = (selection: SelectionState): RowType[] => {
 
 const getServices = (selection: SelectionState): RowType[] => {
   const { services } = selection;
-  const { azureFunctions, cosmosDB } = services;
+  const { cosmosDB } = services;
   const servicesRows = [];
-  if (!_.isEmpty(azureFunctions.selection)) {
-    servicesRows.push({
-      title: azureFunctions.selection[0].appName.value,
-      originalTitle: "Azure Functions",
-      company: "Microsoft",
-      svgUrl: "",
-      functionNames: azureFunctions.selection[0].functionNames,
-      internalName: azureFunctions.selection[0].internalName.value,
-      version: "1.0"
-    });
-  }
   if (!_.isEmpty(cosmosDB.selection)) {
     servicesRows.push({
       title: cosmosDB.selection[0].accountName,

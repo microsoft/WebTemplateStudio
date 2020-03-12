@@ -3,7 +3,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { ReactComponent as Reorder } from "../../assets/reorder.svg";
-import { ReactComponent as AzureFunctionsIcon } from "../../assets/azurefunctions.svg";
 import { ReactComponent as CosmosDBIcon } from "../../assets/cosmosdb.svg";
 import { ReactComponent as AppServiceIcon } from "../../assets/appservice.svg";
 
@@ -16,7 +15,6 @@ import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../utils/constants";
 
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
-import { IFunctionName } from "../../containers/AzureFunctionsSelection";
 
 import { AppState } from "../../reducers";
 
@@ -36,7 +34,6 @@ import { IValidations } from "../../reducers/wizardSelectionReducers/setValidati
 interface IStateProps {
   page: ISelected;
   text?: string;
-  azureFunctions?: boolean;
   cosmosDB?: boolean;
   appService?: boolean;
   reorderSvgUrl?: string;
@@ -46,13 +43,11 @@ interface IStateProps {
   handleInputChange?: (e: any, idx: number) => void;
   maxInputLength?: number;
   idx?: number;
-  azureFunctionName?: IFunctionName;
   withIndent?: boolean;
   withLargeIndent?: boolean;
   handleCloseClick?: (idx: number) => void;
   intl: InjectedIntl;
   customInputStyle?: string;
-  isAzureFunction?: boolean;
   totalCount?: number;
 }
 
@@ -70,7 +65,6 @@ type Props = IStateProps & ISortablePageListProps & InjectedIntlProps & ISortabl
 const DraggableSidebarItem = ({
   page,
   text,
-  azureFunctions,
   cosmosDB,
   appService,
   pageSvgUrl,
@@ -78,13 +72,11 @@ const DraggableSidebarItem = ({
   itemTitle,
   maxInputLength,
   idx,
-  azureFunctionName,
   withIndent,
   withLargeIndent,
   handleCloseClick,
   intl,
   customInputStyle,
-  isAzureFunction,
   totalCount,
   updatePage,
   validations,
@@ -141,7 +133,6 @@ const DraggableSidebarItem = ({
           {!(withIndent || withLargeIndent) && (
             <Reorder className={styles.reorderIcon} />
           )}
-          {azureFunctions && <AzureFunctionsIcon />}
           {cosmosDB && <CosmosDBIcon />}
           {appService && <AppServiceIcon />}
         </div>
@@ -158,14 +149,12 @@ const DraggableSidebarItem = ({
                 (getSvg(page!.internalName, styles.icon) || (
                   <img className={styles.icon} src={pageSvgUrl} alt="" />
                 ))}
-              {handleInputChange && (page || isAzureFunction) && idx ? (
+              {handleInputChange && page && idx ? (
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
-                  className={classnames(styles.input, {
-                    [styles.azureFunctionNameInput]: isAzureFunction
-                  })}
+                  className={styles.input}
                   maxLength={maxInputLength}
-                  value={page ? page.title : azureFunctionName!.title}
+                  value={page.title}
                   onChange={e => {
                     if (handleInputChange && idx) {
                       handleInputChange(e.target.value, idx - 1, true);

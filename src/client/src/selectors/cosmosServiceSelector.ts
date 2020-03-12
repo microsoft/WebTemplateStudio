@@ -10,7 +10,6 @@ interface ISelectedDropdowns {
   appName?: IDropDownOptionType;
   runtimeStack?: IDropDownOptionType;
   location?: IDropDownOptionType;
-  numFunctions?: IDropDownOptionType;
 }
 
 interface ISelectionInformation {
@@ -67,14 +66,8 @@ const getCosmosSelectionInDropdownForm = (services: any): any => {
   }
 };
 
-const getFunctionsSelection = createSelector(
-  getCosmosDbOptions,
-  getCosmosSelectionInDropdownForm
-);
-
 export {
   getCosmosDbSelectionSelector,
-  getFunctionsSelection,
   getCosmosSelectionInDropdownForm,
   isCosmosResourceCreatedSelector
 };

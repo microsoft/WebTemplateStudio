@@ -38,10 +38,10 @@ const RuntimeStackInfo = (props: Props) => {
                 styles.leftHeader
             )}
             >
-            {intl.formatMessage(azureModalMessages.runtimeStackLabel)}
+            {intl.formatMessage(azureModalMessages.appServiceRuntimeStackLabel)}
             </div>
             <div id="message">
-            {intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
+            {intl.formatMessage(azureModalMessages.appServiceRuntimeStackSubLabel, {
                 runtimeStack: backendFrameworkNameToAppServiceRuntimeStack.get(
                 selectedBackend.internalName
                 )
