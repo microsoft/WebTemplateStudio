@@ -265,8 +265,7 @@ export class AzureServices extends WizardServant {
               !invalidReason ||
               invalidReason === undefined ||
               invalidReason === "",
-            reason: invalidReason,
-            scope: message.payload.scope
+            reason: invalidReason
           }
         };
       })
