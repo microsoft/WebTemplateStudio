@@ -4,27 +4,13 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
 
 import RightSidebarDropdown from "../../components/RightSidebarDropdown";
 import ServicesList from "./ServicesList";
 import About from "./About";
 import SortablePageList from "./SortablePageList";
-
-import { setSelectedBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectedBackEndFramework";
-import { setSelectedFrontendFrameworkAction } from "../../actions/wizardSelectionActions/selectedFrontendFramework";
-import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectWebApp";
-import {
-  selectPagesAction, resetPagesAction
-} from "../../actions/wizardSelectionActions/selectPages";
-import * as ModalActions from "../../actions/modalActions/modalActions";
-
-import { getServicesSelector, hasServicesSelector } from "../../selectors/servicesSelector";
-import {
-  getIsVisitedRoutesSelector,
-  IVisitedPages
-} from "../../selectors/wizardNavigationSelector";
+import { IDispatchProps, IRightSidebarProps } from "./interfaces";
 
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
@@ -40,43 +26,9 @@ import messages from "./strings";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import { ISelected } from "../../types/selected";
-import { AppState } from "../../reducers";
-import { SelectionState } from "../../reducers/wizardSelectionReducers";
-import RootAction from "../../actions/ActionType";
-import { WizardContentType } from "../../reducers/wizardContentReducers";
 import { IOption } from "../../types/option";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import {
-  getOutputPath,
-  getProjectName
-} from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
-import { ServiceState } from "../../reducers/wizardSelectionReducers/services";
 import { resetAllPages } from "../../utils/extensionService/extensionService";
-
-interface IDispatchProps {
-  selectBackendFramework: (framework: ISelected) => void;
-  selectFrontendFramework: (framework: ISelected) => void;
-  selectProjectType: (projectType: ISelected) => void;
-  selectPages: (pages: ISelected[]) => void;
-  openViewLicensesModal: () => any;
-  resetPageSelection: () => any;
-}
-
-interface IRightSidebarProps {
-  outputPath: string;
-  projectName: string;
-  selection: SelectionState;
-  projectTypeDropdownItems: IDropDownOptionType[];
-  frontEndOptions: IOption[];
-  frontendDropdownItems: IDropDownOptionType[];
-  backendDropdownItems: IDropDownOptionType[];
-  services: ServiceState;
-  hasServices: boolean;
-  vscode: IVSCodeObject;
-  isRoutesVisited: IVisitedPages;
-  contentOptions: WizardContentType;
-}
+import { mapDispatchToProps, mapStateToProps } from "./store";
 
 interface IRightSidebarState {
   isSidebarOpen: boolean;
@@ -88,35 +40,47 @@ type Props = IRightSidebarProps &
   IDispatchProps &
   InjectedIntlProps;
 
-class RightSidebar extends React.Component<Props, IRightSidebarState> {
-  public static defaultProps = {
+const RightSidebar = (props:Props)=>{
+  const {
+    showFrameworks,
+    showPages
+  } = props.isRoutesVisited;
+  const { pathname } = props.location;
+  const {
+    intl,
+    contentOptions,
+    openViewLicensesModal,
+    outputPath,
+    projectName,
+    hasServices
+  } = props;
+  const { selectBackendFramework,
+    selectFrontendFramework,
+    selectPages,
+    selection,
+    vscode,
+    resetPageSelection,
+    backendDropdownItems
+  } = props;
+
+  const { formatMessage } = intl;
+  const { frontendOptions, backendOptions } = contentOptions;
+  const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
+  const [ isSidebarUserControlled, setIsSidebarUserControlled ] = React.useState(false);
+
+  /*public static defaultProps = {
     selectBackendFramework: () => void(0),
     selectFrontendFramework: () => void(0),
     selectWebApp: () => void(0),
     selectPages: () => void(0)
-  };
+  };*/
 
-  state: IRightSidebarState = {
+  /*state: IRightSidebarState = {
     isSidebarOpen: false,
     isSidebarUserControlled: false
-  };
+  };*/
 
-  static getDerivedStateFromProps(
-    nextProps: Props,
-    prevState: IRightSidebarState
-  ) {
-    if (!prevState.isSidebarUserControlled) {
-      return {
-        isSidebarOpen:
-          nextProps.selection.pages.length > 0 ||
-          nextProps.hasServices ||
-          prevState.isSidebarOpen
-      };
-    }
-    return null;
-  }
-
-  public handleChange = (
+  const handleChange = (
     e: IDropDownOptionType,
     selectOption: (item: ISelected) => void,
     optionsData: IOption[]
@@ -135,9 +99,8 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     });
   };
 
-  public resetAllPages = () => {
-    const { pages, frontendFramework } = this.props.selection;
-    const { vscode, resetPageSelection, selectPages } = this.props;
+  const resetAllPagesEvent = () => {
+    const { pages, frontendFramework } = selection;
     resetAllPages(vscode, frontendFramework.internalName, pages.length).then(()=>{
       //if (message.payload.resetPages) {
         resetPageSelection();
@@ -163,18 +126,18 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     });
   };
 
-  public handleFrameworkChange = (option: IDropDownOptionType) => {
+  const handleFrameworkChange = (option: IDropDownOptionType) => {
     const {
       frontendFramework,
       backendFramework,
       pages
-    } = this.props.selection;
+    } = selection;
     const {
       vscode,
       selectPages,
       frontEndOptions,
       selectFrontendFramework
-    } = this.props;
+    } = props;
     if (frontendFramework.internalName !== option.value) {
       vscode.postMessage({
         module: EXTENSION_MODULES.CORETS,
@@ -199,7 +162,7 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
         }
       });
 
-      const newPages: ISelected[] = pages.map(page => {
+      const newPages: ISelected[] = pages.map((page: ISelected) => {
         return {
           title: page.title,
           internalName: page.internalName.replace(
@@ -218,188 +181,137 @@ class RightSidebar extends React.Component<Props, IRightSidebarState> {
     }
   };
 
-  /**
-   * Changes the title of the page type that was chosen
-   * Saves changes into the redux
-   */
-  public handleInputChange = (newTitle: string, idx: number) => {
-    const { pages } = this.props.selection;
+  const handleInputChange = (newTitle: string, idx: number) => {
+    const { pages } = selection;
     pages[idx].title = newTitle;
-    this.props.selectPages(pages);
-  };
-  public convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
-    if (option.internalName && option.title) {
-      return {
-        value: option.internalName,
-        label: option.title
-      };
-    }
-    return {
-      value: "",
-      label: ""
-    };
-  }
-
-  sidebarToggleClickHandler = () => {
-    this.setState(prevState => {
-      return {
-        isSidebarOpen: !prevState.isSidebarOpen,
-        isSidebarUserControlled: true
-      };
-    });
+    selectPages(pages);
   };
 
-  cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
+  const sidebarToggleClickHandler = () => {
+    setIsSiderbarOpen(true);
+    setIsSidebarUserControlled(true);
+  };
+
+  const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      this.sidebarToggleClickHandler();
+      sidebarToggleClickHandler();
     }
   };
 
-  public render() {
-    const {
-      showFrameworks,
-      showPages
-    } = this.props.isRoutesVisited;
-    const { pathname } = this.props.location;
-    const {
-      intl,
-      contentOptions,
-      openViewLicensesModal,
-      outputPath,
-      projectName,
-      hasServices
-    } = this.props;
-    const { formatMessage } = intl;
-    const { frontendOptions, backendOptions } = contentOptions;
-    const { isSidebarOpen } = this.state;
-
-    return (
-        <div
-          className={
-            pathname === ROUTES.PAGE_DETAILS || pathname === ROUTES.NEW_PROJECT
-              ? styles.hide
-              : undefined
-          }
-        >
-          {!isSidebarOpen && (
-          <div className={styles.hamburgerContainer}>
-            <button
-              tabIndex={0}
-              className={styles.hamburgerButton}
-              onClick={this.sidebarToggleClickHandler}
-              aria-label={intl.formatMessage(messages.openSideBar)}
-            >
-              <div className={styles.hamburgerLine} />
-              <div className={styles.hamburgerLine} />
-              <div className={styles.hamburgerLine} />
-            </button>
-          </div>
-        )}
-        {(isSidebarOpen || pathname === ROUTES.REVIEW_AND_GENERATE) && (
-          <div
-            role="complementary" id="dvRightSideBar"
-            className={classNames(styles.container, styles.rightViewCropped, {
-              [styles.rightViewCroppedSummaryPage]:
-                pathname === ROUTES.REVIEW_AND_GENERATE
-            })}
+  return (
+      <div
+        className={
+          pathname === ROUTES.PAGE_DETAILS || pathname === ROUTES.NEW_PROJECT
+            ? styles.hide
+            : undefined
+        }
+      >
+        {!isSidebarOpen && (
+        <div className={styles.hamburgerContainer}>
+          <button
+            tabIndex={0}
+            className={styles.hamburgerButton}
+            onClick={sidebarToggleClickHandler}
+            aria-label={intl.formatMessage(messages.openSideBar)}
           >
-            <div className={styles.summaryContainer} id="dvSummaryContainer">
-              {pathname !== ROUTES.REVIEW_AND_GENERATE && (
-                <Cancel
-                  tabIndex={0}
-                  className={styles.icon}
-                  onClick={this.sidebarToggleClickHandler}
-                  onKeyDown={this.cancelKeyDownHandler}
-                  aria-label={intl.formatMessage(messages.closeSideBar)}
-                />
-              )}
+            <div className={styles.hamburgerLine} />
+            <div className={styles.hamburgerLine} />
+            <div className={styles.hamburgerLine} />
+          </button>
+        </div>
+      )}
+      {(isSidebarOpen || pathname === ROUTES.REVIEW_AND_GENERATE) && (
+        <div
+          role="complementary" id="dvRightSideBar"
+          className={classNames(styles.container, styles.rightViewCropped, {
+            [styles.rightViewCroppedSummaryPage]:
+              pathname === ROUTES.REVIEW_AND_GENERATE
+          })}
+        >
+          <div className={styles.summaryContainer} id="dvSummaryContainer">
+            {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+              <Cancel
+                tabIndex={0}
+                className={styles.icon}
+                onClick={sidebarToggleClickHandler}
+                onKeyDown={cancelKeyDownHandler}
+                aria-label={intl.formatMessage(messages.closeSideBar)}
+              />
+            )}
 
-              <div className={styles.title}>
-                {formatMessage(messages.yourProjectDetails)}
+            <div className={styles.title}>
+              {formatMessage(messages.yourProjectDetails)}
+            </div>
+            <div className={styles.statics}>
+              <div className={styles.projectStatic}>
+                {formatMessage(messages.projectName)}:
+                <span title={projectName} className={styles.value}>
+                  {projectName}
+                </span>
               </div>
-              <div className={styles.statics}>
-                <div className={styles.projectStatic}>
-                  {formatMessage(messages.projectName)}:
-                  <span title={projectName} className={styles.value}>
-                    {projectName}
-                  </span>
-                </div>
-                <div className={styles.projectStatic}>
-                  {formatMessage(messages.location)}:
-                  <span title={outputPath} className={styles.value}>
-                    {outputPath}
-                  </span>
-                </div>
-              </div>
-              <div className={styles.decoratedLine} />
-              <RightSidebarDropdown
-                options={this.props.frontendDropdownItems}
-                handleDropdownChange={
-                  (showPages && this.handleFrameworkChange) || this.handleChange
-                }
-                selectDropdownOption={this.props.selectFrontendFramework}
-                isVisible={showFrameworks}
-                title={formatMessage(messages.frontendFramework)}
-                value={this.convertOptionToDropdownItem(
-                  this.props.selection.frontendFramework
-                )}
-                optionsData={frontendOptions}
-              />
-              <RightSidebarDropdown
-                options={this.props.backendDropdownItems}
-                handleDropdownChange={this.handleChange}
-                selectDropdownOption={this.props.selectBackendFramework}
-                isVisible={showFrameworks}
-                title={formatMessage(messages.backendFramework)}
-                value={this.convertOptionToDropdownItem(
-                  this.props.selection.backendFramework
-                )}
-                optionsData={backendOptions}
-              />
-              <div className={styles.sortablePages}>
-                {showPages && (
-                  <SortablePageList
-                    handleResetPages={this.resetAllPages}
-                    isSummaryPage={pathname === ROUTES.REVIEW_AND_GENERATE}
-                  />
-                )}
-              </div>
-              {hasServices && <ServicesList />}
-              <div className={styles.container}>
-                {pathname !== ROUTES.REVIEW_AND_GENERATE && (
-                  <div className={styles.buttonContainer}>
-                    <button
-                      className={classnames(
-                        buttonStyles.buttonDark,
-                        styles.button,
-                        styles.leftButton
-                      )}
-                      onClick={openViewLicensesModal}
-                    >
-                      {formatMessage(messages.viewLicenses)}
-                    </button>
-                  </div>
-                )}
-                <About />
+              <div className={styles.projectStatic}>
+                {formatMessage(messages.location)}:
+                <span title={outputPath} className={styles.value}>
+                  {outputPath}
+                </span>
               </div>
             </div>
+            <div className={styles.decoratedLine} />
+            <RightSidebarDropdown
+              options={props.frontendDropdownItems}
+              handleDropdownChange={
+                (showPages && handleFrameworkChange) || handleChange
+              }
+              selectDropdownOption={selectFrontendFramework}
+              isVisible={showFrameworks}
+              title={formatMessage(messages.frontendFramework)}
+              value={convertOptionToDropdownItem(
+                selection.frontendFramework
+              )}
+              optionsData={frontendOptions}
+            />
+            <RightSidebarDropdown
+              options={backendDropdownItems}
+              handleDropdownChange={handleChange}
+              selectDropdownOption={selectBackendFramework}
+              isVisible={showFrameworks}
+              title={formatMessage(messages.backendFramework)}
+              value={convertOptionToDropdownItem(
+                selection.backendFramework
+              )}
+              optionsData={backendOptions}
+            />
+            <div className={styles.sortablePages}>
+              {showPages && (
+                <SortablePageList
+                  handleResetPages={resetAllPagesEvent}
+                  isSummaryPage={pathname === ROUTES.REVIEW_AND_GENERATE}
+                />
+              )}
+            </div>
+            {hasServices && <ServicesList />}
+            <div className={styles.container}>
+              {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+                <div className={styles.buttonContainer}>
+                  <button
+                    className={classnames(
+                      buttonStyles.buttonDark,
+                      styles.button,
+                      styles.leftButton
+                    )}
+                    onClick={openViewLicensesModal}
+                  >
+                    {formatMessage(messages.viewLicenses)}
+                  </button>
+                </div>
+              )}
+              <About />
+            </div>
           </div>
-        )}
-      </div>
-    );
-  }
-}
-
-function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
-  const dropDownItems = [];
-  for (const option of options) {
-    if (option.unselectable) {
-      continue;
-    }
-    const dropdownItem = convertOptionToDropdownItem(option);
-    dropDownItems.push(dropdownItem);
-  }
-  return dropDownItems;
+        </div>
+      )}
+    </div>
+  );
 }
 
 function convertOptionToDropdownItem(option: any): IDropDownOptionType {
@@ -408,50 +320,6 @@ function convertOptionToDropdownItem(option: any): IDropDownOptionType {
     label: option.title
   };
 }
-
-const mapStateToProps = (state: AppState): IRightSidebarProps => ({
-  outputPath: getOutputPath(state),
-  projectName: getProjectName(state),
-  selection: state.selection,
-  projectTypeDropdownItems: convertOptionsToDropdownItems(
-    state.wizardContent.projectTypes
-  ),
-  frontEndOptions: state.wizardContent.frontendOptions,
-  frontendDropdownItems: convertOptionsToDropdownItems(
-    state.wizardContent.frontendOptions
-  ),
-  backendDropdownItems: convertOptionsToDropdownItems(
-    state.wizardContent.backendOptions
-  ),
-  vscode: getVSCodeApiSelector(state),
-  services: getServicesSelector(state),
-  hasServices : hasServicesSelector(state),
-  isRoutesVisited: getIsVisitedRoutesSelector(state),
-  contentOptions: state.wizardContent
-});
-
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  selectBackendFramework: (framework: ISelected) => {
-    dispatch(setSelectedBackendFrameworkAction(framework));
-  },
-  selectFrontendFramework: (framework: ISelected) => {
-    dispatch(setSelectedFrontendFrameworkAction(framework));
-  },
-  selectProjectType: (projectType: ISelected) => {
-    dispatch(selectWebAppAction(projectType));
-  },
-  selectPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
-  },
-  openViewLicensesModal: () => {
-    dispatch(ModalActions.openViewLicensesModalAction());
-  },
-  resetPageSelection: () => {
-    dispatch(resetPagesAction());
-  },
-});
 
 export default withRouter(
   connect(

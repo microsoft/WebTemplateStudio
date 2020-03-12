@@ -23,11 +23,6 @@ import { AppState } from "../../../reducers";
 import RootAction from "../../../actions/ActionType";
 
 import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_COMMANDS } from "../../../utils/constants";
-import { validateItemName} from "../../../utils/validations/itemName/itemName";
-import { IValidations } from "../../../reducers/wizardSelectionReducers/setValidations";
-import {
-  getValidations
-} from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
 import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
@@ -40,9 +35,7 @@ interface ISortablePageListProps {
 
 interface IStateProps {
   isSummaryPage?: boolean;
-  selectionTitle?: string;
   handleResetPages: () => void;
-  validations: IValidations;
 }
 
 interface ISortableDispatchProps {
@@ -66,23 +59,19 @@ const SortablePageList = (props: Props) => {
     selectedPages,
     selectPages,
     isSummaryPage,
-    openAddPagesModal,
-    validations
+    openAddPagesModal
   } = props;
-  const [pages, setPages] = React.useState(selectedPages);
   const [isMinimized, setMinimized] = React.useState(false);
 
-  React.useEffect(() => {
-    setPages(selectedPages);
-    /*if (document.getElementById("dvRightSideBar") && document.getElementById("dvSummaryContainer")) 
-      document.getElementById("dvRightSideBar")!.scrollTop= document.getElementById("dvSummaryContainer")!.offsetHeight;*/
-  }, [selectedPages]);
+  const moveScroolDown = () =>{
+    if (document.getElementById("dvRightSideBar") && document.getElementById("dvSummaryContainer")) 
+    document.getElementById("dvRightSideBar")!.scrollTop= document.getElementById("dvSummaryContainer")!.offsetHeight;
+  }
 
   const handleOpenAddPagesModal = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_ADD_PAGES_MODAL);
     openAddPagesModal();
   }
-
   const onSortEnd = ({
     oldIndex,
     newIndex
@@ -90,23 +79,20 @@ const SortablePageList = (props: Props) => {
     oldIndex: number;
     newIndex: number;
   }) => {
-    selectPages(arrayMove(pages, oldIndex, newIndex));
+    selectPages(arrayMove(selectedPages, oldIndex, newIndex));
   };
-
   const handleCloseClick = (idx: number) => {
-    const pagesWithOmittedIdx: ISelected[] = [...pages];
+    const pagesWithOmittedIdx: ISelected[] = [...selectedPages];
     pagesWithOmittedIdx.splice(idx, 1);
     selectPages(pagesWithOmittedIdx);
   };
-
   const DRAG_PIXEL_THRESHOLD = 1;
-
   return (
     <div>
       <div className={classnames(styles.pageListContainer, styles.sidebarItem)}>
         <div className={styles.dropdownTitle}>
           {`${props.intl!.formatMessage(messages.pages)} (${
-            pages.length >= 0 ? pages.length : ""
+            selectedPages.length >= 0 ? selectedPages.length : ""
           })`}
         </div>
         <div className={styles.iconsContainer}>
@@ -150,14 +136,12 @@ const SortablePageList = (props: Props) => {
           lockOffset='25%'
         />
       )}
-      {/* Using a baseline of 1 for idx because !!0 === false */}
     </div>
   );
 };
 
 const mapStateToProps = (state: AppState) => ({
   selectedPages: state.selection.pages,
-  validations: getValidations(state),
   vscode: getVSCodeApiSelector(state),
 });
 
