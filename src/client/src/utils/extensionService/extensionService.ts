@@ -114,19 +114,9 @@ const azureLogout = (vscode: IVSCodeObject) => {
 }
 
 const subscriptionDataCosmos = (vscode: IVSCodeObject, subscription: string, projectName: string ) => {
-  return postMessageAsync(EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS, {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS, {
     module: EXTENSION_MODULES.AZURE,
-    command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
-    track: true,
-    subscription,
-    projectName
-  }, vscode);
-}
-
-const subscriptionDataAppService = (vscode: IVSCodeObject, subscription: string, projectName: string ) => {
-  return postMessageAsync(EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE, {
-    module: EXTENSION_MODULES.AZURE,
-    command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
+    command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
     track: true,
     subscription,
     projectName
@@ -137,16 +127,6 @@ const nameCosmos = (vscode: IVSCodeObject, subscription: string, appName: string
   return postMessageAsync(EXTENSION_COMMANDS.NAME_COSMOS, {
     module: EXTENSION_MODULES.AZURE,
     command: EXTENSION_COMMANDS.NAME_COSMOS,
-    track: false,
-    appName,
-    subscription
-  }, vscode);
-}
-
-const nameAppService = (vscode: IVSCodeObject, subscription: string, appName: string) =>{
-  return postMessageAsync(EXTENSION_COMMANDS.NAME_APP_SERVICE, {
-    module: EXTENSION_MODULES.AZURE,
-    command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
     track: false,
     appName,
     subscription
@@ -178,6 +158,36 @@ const sendTelemetry = (vscode: IVSCodeObject, command: string, payload?: any): v
   });
 }
 
+const GetSubscriptionDataForAppService = (subscription: string, projectName: string, vscode: IVSCodeObject): Promise<any> => {
+  return postMessageAsync(
+    EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE,
+    track: true,
+    subscription,
+    projectName
+  }, vscode);
+}
+
+const GetValidAppServiceName = (projectName: string, vscode: IVSCodeObject): Promise<any> => {
+  return postMessageAsync(
+    EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME,
+    projectName
+  }, vscode);
+}
+
+const ValidateAppServiceName = (subscription: string, appName: string, vscode: IVSCodeObject): Promise<any> => {
+  return postMessageAsync(
+    EXTENSION_COMMANDS.NAME_APP_SERVICE, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
+    subscription,
+    appName
+  }, vscode);
+}
+
 export {
   projectPathValidation,
   getValidationsConfig,
@@ -186,12 +196,13 @@ export {
   getPages,
   getOutputPath,
   sendTelemetry,
+  GetSubscriptionDataForAppService,
+  GetValidAppServiceName,
+  ValidateAppServiceName,
   resetAllPages,
   azureLogout,
   subscriptionDataCosmos,
-  subscriptionDataAppService,
   nameCosmos,
-  nameAppService,
   azureLogin,
   getUserStatus,
   getTemplateInfo

@@ -4,28 +4,33 @@ import styles from "../styles.module.css";
 import classNames from "classnames";
 import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
+import { AppState } from "../../../reducers";
+import { connect } from "react-redux";
+import { AppServiceContext } from "../AppServiceContext";
 
 interface IStateProps {
-  isMicrosoftLearnSubscription: boolean;
+  subscriptions: [any];
 }
 
 type Props = IStateProps & InjectedIntlProps;
 
 const AppServicePlanInfo = (props: Props) => {
-  const { intl, isMicrosoftLearnSubscription } = props;
+  const { intl, subscriptions } = props;
+  const { subscription } = React.useContext(AppServiceContext);
+
+  const isMicrosoftLearnSubscription = (): boolean => {
+    const s = subscriptions.find(s => s.value === subscription.value);
+    return s && s.isMicrosoftLearnSubscription;
+  };
+
   return (
     <div className={styles.aspInfoContainer}>
-      <div
-        className={classNames(
-          styles.selectionHeaderContainer,
-          styles.leftHeader
-        )}
-      >
+      <div className={classNames(styles.selectionHeaderContainer, styles.leftHeader)}>
         {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
       </div>
 
-      <div id="message">
-        {isMicrosoftLearnSubscription
+      <div>
+        {isMicrosoftLearnSubscription()
           ? intl.formatMessage(azureModalMessages.appServiceFreeTierInfo)
           : intl.formatMessage(azureModalMessages.appServiceBasicTierInfo)}
       </div>
@@ -40,4 +45,9 @@ const AppServicePlanInfo = (props: Props) => {
     </div>
   );
 };
-export default injectIntl(AppServicePlanInfo);
+
+const mapStateToProps = (state: AppState): IStateProps => ({
+  subscriptions: state.azureProfileData.profileData.subscriptions,
+});
+
+export default connect(mapStateToProps)(injectIntl(AppServicePlanInfo));

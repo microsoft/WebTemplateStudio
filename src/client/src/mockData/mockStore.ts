@@ -27,7 +27,7 @@ export const getIVSCodeApi = () => {
   return mockVSCode;
 };
 
-export const getInitialState = () => {
+export const getInitialState = (): AppState => {
   const initialState: AppState={
     vscode: {
       isVsCodeApiAcquired: true,
@@ -263,6 +263,34 @@ const loadPages = (frameWorkName: string): Array<any>=>{
   return pages;
 }
 
+const getSubscriptions = (): Array<any> => {
+  const subscriptions = Array.from(Array(2).keys()).map(
+    (item: number) => {
+      return {
+        label: `subscription ${item} label`,
+        value:  `subscription ${item} value`,
+        isMicrosoftLearnSubscription: false
+      };
+    }
+  );
+  
+  subscriptions.push({
+    label: "Microsoft Learn Subscription",
+        value: "Microsoft Learn Subscription",
+        isMicrosoftLearnSubscription: true
+  });
+
+  return subscriptions;
+}
+
 export const loadMasters = (store: any) =>{
   store.wizardContent.pageOptions = loadPages("React");
+}
+
+export const setSubscriptions = (store: any) => {
+  store.azureProfileData.profileData.subscriptions = getSubscriptions();
+}
+
+export const setBackendFramework = (store: any, internalName: string) => {
+  store.selection.backendFramework.internalName = internalName;
 }

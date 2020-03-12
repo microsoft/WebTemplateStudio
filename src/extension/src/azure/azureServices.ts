@@ -46,14 +46,10 @@ export class AzureServices extends WizardServant {
     [ExtensionCommand.Login, AzureServices.performLoginForSubscriptions],
     [ExtensionCommand.GetUserStatus, AzureServices.sendUserStatusIfLoggedIn],
     [ExtensionCommand.Logout, AzureServices.performLogout],
-    [
-      ExtensionCommand.SubscriptionDataForCosmos,
-      AzureServices.sendCosmosSubscriptionDataToClient
-    ],
-    [
-      ExtensionCommand.SubscriptionDataForAppService,
-      AzureServices.sendAppServiceSubscriptionDataToClient
-    ],
+    [ExtensionCommand.GetSubscriptionDataForCosmos, AzureServices.sendCosmosSubscriptionDataToClient],
+    [ExtensionCommand.GetSubscriptionDataForAppService, AzureServices.sendAppServiceSubscriptionDataToClient],
+    [ExtensionCommand.GetValidAppServiceName, AzureServices.GetValidAppServiceName],
+    [ExtensionCommand.GetValidCosmosName, AzureServices.GetValidCosmosName],
     [
       ExtensionCommand.NameCosmos,
       AzureServices.sendCosmosNameValidationStatusToClient
@@ -113,29 +109,27 @@ export class AzureServices extends WizardServant {
     return payloadResponse;
   }
 
-  public static async sendAppServiceSubscriptionDataToClient(
-    message: any
-  ): Promise<IPayloadResponse> {
-    const payload = await AzureServices.getSubscriptionData(
-      message.subscription,
-      AzureResourceType.AppService,
-      message.projectName
-    );
-    payload.scope = message.payload.scope;
-    return { payload };
+  public static async sendAppServiceSubscriptionDataToClient(message: any): Promise<IPayloadResponse> {
+    const data = await AzureServices.getSubscriptionData(message.subscription, AzureResourceType.AppService);
+    return {
+      payload: { 
+        ...data, 
+        scope: message.payload.scope
+       }
+    };
   }
 
-  public static async sendCosmosSubscriptionDataToClient(
-    message: any
-  ): Promise<IPayloadResponse> {
-    const payload = await AzureServices.getSubscriptionData(
-      message.subscription,
-      AzureResourceType.Cosmos,
-      message.projectName
-    );
-    payload.scope = message.payload.scope;
-
-    return { payload };
+  public static async sendCosmosSubscriptionDataToClient(message: any): Promise<IPayloadResponse> {
+    const data = await AzureServices.getSubscriptionData(message.subscription, AzureResourceType.Cosmos);
+    //TODO: Remove when CosmosDB modal refactor, and use GetValidCosmosName function to get valid name
+    const validName = await NameGenerator.generateValidAzureTypeName(message.projectName, AzureResourceType.Cosmos);
+    return {
+      payload: {
+        ...data,
+        validName,
+        scope: message.payload.scope
+      }
+    };
   }
 
   /**
@@ -143,18 +137,14 @@ export class AzureServices extends WizardServant {
    * @returns a Json object of Formatted Resource and Location strings
    *
    * */
-  private static async getSubscriptionData(
-    subscriptionLabel: string,
-    AzureType: AzureResourceType,
-    projectName: string
-  ): Promise<any> {
+  private static async getSubscriptionData(subscriptionLabel: string, AzureType: AzureResourceType): Promise<any> {
     const subscriptionItem = AzureServices.subscriptionItemList.find(
       subscriptionItem => subscriptionItem.label === subscriptionLabel
     );
     if (subscriptionItem === undefined) {
       throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
     }
-    const resourceGroupItems = AzureAuth.getAllResourceGroupItems(
+    const resourceGroupItems = await AzureAuth.getAllResourceGroupItems(
       subscriptionItem
     ).then(resourceGroups => {
       const formatResourceGroupList = [];
@@ -170,12 +160,6 @@ export class AzureServices extends WizardServant {
     });
 
     let locationItems: LocationItem[] = [];
-    const validName: string = await NameGenerator.generateValidAzureTypeName(
-      projectName,
-      subscriptionItem,
-      AzureType
-    );
-
     switch (AzureType) {
       case AzureResourceType.Cosmos:
         locationItems = await AzureAuth.getLocationsForCosmos(subscriptionItem);
@@ -196,9 +180,28 @@ export class AzureServices extends WizardServant {
     );
 
     return {
-      resourceGroups: await resourceGroupItems,
-      locations: locations,
-      validName: validName
+      resourceGroups: resourceGroupItems,
+      locations
+    };
+  }
+
+  public static async GetValidAppServiceName(message: any): Promise<IPayloadResponse> {
+    const validName = await NameGenerator.generateValidAzureTypeName(message.projectName, AzureResourceType.AppService);
+    return {
+      payload: {
+        validName,
+        scope: message.payload.scope
+      }
+    };
+  }
+
+  public static async GetValidCosmosName(message: any): Promise<IPayloadResponse> {
+    const validName = await NameGenerator.generateValidAzureTypeName(message.projectName, AzureResourceType.Cosmos);
+    return {
+      payload: {
+        validName,
+        scope: message.payload.scope
+      }
     };
   }
 
