@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { getCancelSvg } from "../../../../utils/getSvgUrl";
 
-import DraggableSidebarItem2 from "../../../../components/DraggableSidebarItem2";
+import DraggableSidebarItem2 from "../../SidebarItem";
 
 import { removeCosmosSelectionAction } from "../../../../actions/azureActions/saveCosmosDbSettings";
 import { ICosmosDB } from "../../../../reducers/wizardSelectionReducers/services/cosmosDbReducer";

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { getCancelSvg } from "../../../utils/getSvgUrl";
 
-import DraggableSidebarItem2 from "../../../components/DraggableSidebarItem2";
+import DraggableSidebarItem2 from "../SidebarItem";
 
 import { removeAppServiceSettingsAction } from "../../../actions/azureActions/appServiceActions";
 import { IAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
