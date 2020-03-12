@@ -14,7 +14,7 @@ import classnames from "classnames";
 import { FormattedMessage } from "react-intl";
 import keyUpHandler from "../../../utils/keyUpHandler";
 import messages from "./messages";
-import { KEY_EVENTS, } from "../../../utils/constants";
+import { KEY_EVENTS } from "../../../utils/constants";
 import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
 import CollapsibleInfoBox from "../../../components/CollapsibleInfoBox";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";

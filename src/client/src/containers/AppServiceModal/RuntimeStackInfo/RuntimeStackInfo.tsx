@@ -8,16 +8,10 @@ import { AppState } from "../../../reducers";
 import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 
-const backendFrameworkNameToAppServiceRuntimeStack: Map<
-  string,
-  string
-> = new Map([
+const backendFrameworkNameToAppServiceRuntimeStack: Map<string, string> = new Map([
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE, WIZARD_CONTENT_INTERNAL_NAMES.NODE],
-  [
-    WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER,
-    WIZARD_CONTENT_INTERNAL_NAMES.NODE
-  ],
-  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, WIZARD_CONTENT_INTERNAL_NAMES.PYTHON]
+  [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER, WIZARD_CONTENT_INTERNAL_NAMES.NODE],
+  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, WIZARD_CONTENT_INTERNAL_NAMES.PYTHON],
 ]);
 
 interface IStateProps {
@@ -27,32 +21,24 @@ interface IStateProps {
 type Props = IStateProps & InjectedIntlProps;
 
 const RuntimeStackInfo = (props: Props) => {
-  
-  const {intl, selectedBackend} = props;
+  const { intl, selectedBackend } = props;
 
-    return (
-        <div className={styles.selectionContainer}>
-            <div
-            className={classNames(
-                styles.selectionHeaderContainer,
-                styles.leftHeader
-            )}
-            >
-            {intl.formatMessage(azureModalMessages.runtimeStackLabel)}
-            </div>
-            <div id="message">
-            {intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
-                runtimeStack: backendFrameworkNameToAppServiceRuntimeStack.get(
-                selectedBackend.internalName
-                )
-            })}
-            </div>
-        </div>
-    );
-}
+  return (
+    <div className={styles.selectionContainer}>
+      <div className={classNames(styles.selectionHeaderContainer, styles.leftHeader)}>
+        {intl.formatMessage(azureModalMessages.runtimeStackLabel)}
+      </div>
+      <div>
+        {intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
+          runtimeStack: backendFrameworkNameToAppServiceRuntimeStack.get(selectedBackend.internalName),
+        })}
+      </div>
+    </div>
+  );
+};
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-    selectedBackend: state.selection.backendFramework
-  });
+  selectedBackend: state.selection.backendFramework,
+});
 
 export default connect(mapStateToProps)(injectIntl(RuntimeStackInfo));
