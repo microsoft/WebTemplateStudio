@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { getCancelSvg } from "../../../utils/getSvgUrl";
 
-import DraggableSidebarItem from "../../../components/DraggableSidebarItem";
+import DraggableSidebarItem2 from "../../../components/DraggableSidebarItem2";
 
 import { removeAppServiceSettingsAction } from "../../../actions/azureActions/appServiceActions";
 import { IAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
@@ -72,7 +72,7 @@ const AppServiceSelection = ({
               <EditIcon className={styles.editIcon} />
             </div>
           </div>
-          <DraggableSidebarItem
+          <DraggableSidebarItem2
             appService={true}
             customInputStyle={styles.input}
             key={appServiceSelection.selection.siteName}

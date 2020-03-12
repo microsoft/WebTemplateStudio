@@ -43,13 +43,23 @@ const Reorder = Loadable({
 
 interface IStateProps {
   page: ISelected;
+  text?: string;
+  cosmosDB?: boolean;
+  appService?: boolean;
+  reorderSvgUrl?: string;
   pageSvgUrl?: string;
+  itemTitle?: string;
+  handleInputChange?: (e: any, idx: number) => void;
   maxInputLength?: number;
   idx?: number;
+  azureFunctionName?: IFunctionName;
+  withIndent?: boolean;
+  withLargeIndent?: boolean;
   handleCloseClick?: (idx: number) => void;
-  totalCount?: number;
   intl: InjectedIntl;
   customInputStyle?: string;
+  isAzureFunction?: boolean;
+  totalCount?: number;
 }
 
 interface ISortablePageListProps {
@@ -65,16 +75,25 @@ type Props = IStateProps & ISortablePageListProps & InjectedIntlProps & ISortabl
 
 const DraggableSidebarItem = ({
   page,
+  text,
+  cosmosDB,
+  appService,
   pageSvgUrl,
+  reorderSvgUrl,
+  itemTitle,
   maxInputLength,
   idx,
-  totalCount,
+  azureFunctionName,
+  withIndent,
+  withLargeIndent,
   handleCloseClick,
   intl,
-  validations,
-  selectedPages,
+  customInputStyle,
+  isAzureFunction,
+  totalCount,
   updatePage,
-  customInputStyle
+  validations,
+  selectedPages
 }: Props) => {
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
@@ -110,15 +129,18 @@ const DraggableSidebarItem = ({
     <div>
       <div className={styles.draggablePage}>
         <div className={styles.iconContainer}>
-          <Reorder style={styles.reorderIcon} />
-          
+          {!(withIndent || withLargeIndent) && (
+            <Reorder style={styles.reorderIcon} />
+          )}
+          {cosmosDB && <CosmosDBIcon style={styles.reorderIcon}/>}
+          {appService && <AppServiceIcon style={styles.reorderIcon}/>}
         </div>
         <div className={styles.errorStack}>
           <div
             className={classnames(customInputStyle, {
-              [styles.pagesTextContainer]: true,
-              [styles.textContainer]: true,
-              [styles.largeIndentContainer]: false
+              [styles.pagesTextContainer]: pageSvgUrl!=="",
+              [styles.textContainer]: !withIndent,
+              [styles.largeIndentContainer]: withLargeIndent
             })}
           >
             <div className={styles.inputContainer}>
@@ -126,12 +148,14 @@ const DraggableSidebarItem = ({
                 (getSvg(page!.internalName, styles.icon) || (
                   <img className={styles.icon} src={pageSvgUrl} alt="" />
                 ))}
-              {page && idx && (
+              {page && idx ? (
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
-                  className={classnames(styles.inputº)}
+                  className={classnames(styles.input, {
+                    [styles.azureFunctionNameInput]: isAzureFunction
+                  })}
                   maxLength={maxInputLength}
-                  value={page.title}
+                  value={page ? page.title : azureFunctionName!.title}
                   onChange={e => {
                     if (handleInputChange && idx) {
                       handleInputChange(e.target.value, idx - 1, true);
@@ -148,6 +172,16 @@ const DraggableSidebarItem = ({
                   autoFocus={page.isDirty}
                   disabled={selectedPages.filter(selPage => selPage.title!==page.title && selPage.isValidTitle===false).length>0}
                   ref={inputRef}
+                />
+              ) : (
+                <input
+                  className={classnames(
+                    styles.disabledInput,
+                    styles.input,
+                    customInputStyle
+                  )}
+                  value={text}
+                  disabled={true}
                 />
               )}
             </div>
