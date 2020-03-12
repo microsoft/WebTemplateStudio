@@ -111,7 +111,6 @@ const DraggableSidebarItem = ({
       <div className={styles.draggablePage}>
         <div className={styles.iconContainer}>
           <Reorder style={styles.reorderIcon} />
-          
         </div>
         <div className={styles.errorStack}>
           <div
@@ -129,7 +128,7 @@ const DraggableSidebarItem = ({
               {page && idx && (
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}
-                  className={classnames(styles.inputº)}
+                  className={classnames(styles.input)}
                   maxLength={maxInputLength}
                   value={page.title}
                   onChange={e => {
