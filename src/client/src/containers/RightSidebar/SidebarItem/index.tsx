@@ -5,22 +5,17 @@ import Loadable from "react-loadable";
 
 import { ReactComponent as CloseSVG } from "../../../assets/cancel.svg";
 
-import { getSvg } from "../../../utils/getSvgUrl";
-
 import { ISelected } from "../../../types/selected";
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../../utils/constants";
 
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
-import { IFunctionName } from "../../AzureFunctionsSelection";
-
 import { AppState } from "../../../reducers";
 
 import messages from "./messages";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../../actions/ActionType";
 import { selectPageAction } from "../../../actions/wizardSelectionActions/selectPages";
-import { validateItemName } from "../../../utils/validations/itemName/itemName";
 import { getValidations } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../../reducers/wizardSelectionReducers/setValidations";
 
@@ -32,14 +27,6 @@ const AppServiceIcon = Loadable({
   loader: () => import(/* webpackChunkName: "AppServiceIcon" */  "../../../utils/svgComponents/AppserviceIcon"),
   loading:() => <div/>
 });
-const Reorder = Loadable({
-  loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../../utils/svgComponents/ReorderIcon"),
-  loading:() => <div/>
-});
-/**
- * Takes in either a page (type ISelected) or text, but not both
- * If a page is given, then text prop will not be rendered
- */
 
 interface IStateProps {
   text?: string;
@@ -57,24 +44,16 @@ interface ISortablePageListProps {
   validations: IValidations;
 }
 
-interface ISortableDispatchProps {
-  updatePage: (page: ISelected) => any;
-}
-
-type Props = IStateProps & ISortablePageListProps & InjectedIntlProps & ISortableDispatchProps;
+type Props = IStateProps & ISortablePageListProps & InjectedIntlProps;
 
 const DraggableSidebarItem = ({
   text,
   cosmosDB,
   appService,
   idx,
-  withIndent,
   handleCloseClick,
   intl,
-  customInputStyle,
-  updatePage,
-  validations,
-  selectedPages
+  customInputStyle
 }: Props) => {
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
@@ -132,15 +111,7 @@ const mapStateToProps = (state: AppState) => ({
   validations: getValidations(state)
 });
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): ISortableDispatchProps => ({
-  updatePage: (page: ISelected) => {
-    dispatch(selectPageAction(page));
-  }
-});
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(injectIntl(DraggableSidebarItem));

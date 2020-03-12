@@ -1,9 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { getCancelSvg } from "../../../utils/getSvgUrl";
-
-import DraggableSidebarItem2 from "../SidebarItem";
+import SidebarItem from "../SidebarItem";
 
 import { removeAppServiceSettingsAction } from "../../../actions/azureActions/appServiceActions";
 import { IAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
@@ -45,7 +43,6 @@ const AppServiceSelection = ({
   intl
 }: Props) => {
   const { serviceType } = appServiceSelection.wizardContent;
-  
   const openAppServiceModalAndSendTelemetry = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST)
     openAppServiceModalAction();
@@ -72,7 +69,7 @@ const AppServiceSelection = ({
               <EditIcon className={styles.editIcon} />
             </div>
           </div>
-          <DraggableSidebarItem2
+          <SidebarItem
             appService={true}
             customInputStyle={styles.input}
             key={appServiceSelection.selection.siteName}
