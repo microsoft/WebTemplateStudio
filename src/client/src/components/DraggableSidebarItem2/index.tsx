@@ -96,9 +96,7 @@ const DraggableSidebarItem = ({
         <div className={styles.errorStack}>
           <div
             className={classnames(customInputStyle, {
-              [styles.pagesTextContainer]: true,
-              [styles.textContainer]: true,
-              [styles.largeIndentContainer]: true
+              [styles.pagesTextContainer]: true
             })}
           >
             <div className={styles.inputContainer}>
