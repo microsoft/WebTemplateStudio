@@ -40,7 +40,7 @@ export const CONSTANTS = {
     ),
     APP_NAME_NOT_AVAILABLE: (appName: string, type: string): string => {
       return localize(
-        "error.functionAppNameNotAvailable",
+        "error.appNameNotAvailable",
         "{1} app name {0} is not available",
         appName,
         type
@@ -86,13 +86,9 @@ export const CONSTANTS = {
       "error.runtimeNotImplemented",
       "Runtime not implemented yet"
     ),
-    FUNCTIONS_NO_DUPLICATES: localize(
-      "error.functionsNoDuplicate",
-      "No duplicates allowed for function names"
-    ),
     APP_INVALID_NAME: (name: string): string => {
       return localize(
-        "error.functionInvalidName",
+        "error.appInvalidName",
         "Invalid name {0}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters",
         name
       );
@@ -171,7 +167,7 @@ export const CONSTANTS = {
     },
     APP_DEPLOYED: (appName: string): string => {
       return localize(
-        "info.functionAppDeployed",
+        "info.appDeployed",
         "{1} App {0} has been deployed and is ready to use!",
         appName
       );
@@ -325,10 +321,8 @@ export enum ExtensionCommand {
   Log = "log",
   Login = "login",
   Logout = "logout",
-  SubscriptionDataForFunctions = "subscription-data-for-functions",
   SubscriptionDataForCosmos = "subscription-data-for-cosmos",
   SubscriptionDataForAppService = "subscription-data-for-app-service",
-  NameFunctions = "name-functions",
   NameCosmos = "name-cosmos",
   NameAppService = "name-app-service",
   Generate = "generate",
@@ -438,13 +432,11 @@ export const PAYLOAD_MESSAGES_TEXT = {
 export enum AzureResourceType {
   AppService = "app-service",
   Cosmos = "cosmos",
-  Functions = "functions",
   AppServicePlan = "app-service-plan"
 }
 
 export enum AppType {
-  Web = "Web",
-  Function = "Function"
+  Web = "Web"
 }
 
 export enum OS {

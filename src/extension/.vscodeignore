@@ -11,5 +11,3 @@ vsc-extension-quickstart.md
 !src/corets-cli/**
 !src/azure/azure-app-service/arm-templates
 !src/azure/azure-cosmosDB/arm-templates
-!src/azure/azure-functions/arm-templates
-!src/azure/azure-functions/templates
