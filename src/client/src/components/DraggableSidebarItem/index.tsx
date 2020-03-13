@@ -19,7 +19,7 @@ import { AppState } from "../../reducers";
 import messages from "./messages";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { selectPageAction } from "../../actions/wizardSelectionActions/selectPages";
+import { selectPageAction, selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
 import { validateItemName } from "../../utils/validations/itemName/itemName";
 import { getValidations } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
@@ -46,7 +46,6 @@ interface IStateProps {
   pageSvgUrl?: string;
   maxInputLength?: number;
   idx?: number;
-  handleCloseClick?: (idx: number) => void;
   totalCount?: number;
   intl: InjectedIntl;
   customInputStyle?: string;
@@ -59,6 +58,7 @@ interface ISortablePageListProps {
 
 interface ISortableDispatchProps {
   updatePage: (page: ISelected) => any;
+  selectPages: (pages: ISelected[]) => any;
 }
 
 type Props = IStateProps & ISortablePageListProps & InjectedIntlProps & ISortableDispatchProps;
@@ -69,17 +69,23 @@ const DraggableSidebarItem = ({
   maxInputLength,
   idx,
   totalCount,
-  handleCloseClick,
   intl,
   validations,
   selectedPages,
   updatePage,
-  customInputStyle
+  customInputStyle,
+  selectPages
 }: Props) => {
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleCloseOnClick();
     }
+  };
+
+  const handleCloseClick = (idx: number) => {
+    const pagesWithOmittedIdx: ISelected[] = [...selectedPages];
+    pagesWithOmittedIdx.splice(idx, 1);
+    selectPages(pagesWithOmittedIdx);
   };
 
   const handleCloseOnClick = () => {
@@ -189,7 +195,10 @@ const mapDispatchToProps = (
 ): ISortableDispatchProps => ({
   updatePage: (page: ISelected) => {
     dispatch(selectPageAction(page));
-  }
+  },
+  selectPages: (pages: ISelected[]) => {
+    dispatch(selectPagesAction(pages));
+  },
 });
 
 export default connect(

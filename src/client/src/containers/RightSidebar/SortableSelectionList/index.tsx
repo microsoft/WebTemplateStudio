@@ -1,28 +1,25 @@
 import * as React from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
-import DraggableSidebarItem from "../DraggableSidebarItem";
+import DraggableSidebarItem from "../../../components/DraggableSidebarItem";
 import styles from "./styles.module.css";
-import { ISelected } from "../../types/selected";
-import { getSvg } from "../../utils/getSvgUrl";
+import { ISelected } from "../../../types/selected";
+import { getSvg } from "../../../utils/getSvgUrl";
 
 const SortableSidebarItem = SortableElement(
   ({
     page,
     idx,
-    handleCloseClick,
     totalPageCount,
     maxInputLength
   }: {
     page: any;
     idx: number;
     maxInputLength?: number;
-    handleCloseClick?: (idx: number) => void;
     totalPageCount: number;
   }) => {
     return (
       <DraggableSidebarItem
         page={page}
-        handleCloseClick={handleCloseClick}
         maxInputLength={maxInputLength}
         idx={idx + 1}
         totalCount={totalPageCount}
@@ -38,12 +35,10 @@ const SortableSidebarItem = SortableElement(
 const SortableList = SortableContainer(
   ({
     pages,
-    handleCloseClick,
     maxInputLength
   }: {
     pages: ISelected[];
     maxInputLength?: number;
-    handleCloseClick?: (idx: number) => void;
   }) => {
     const totalPageCount = pages.length;
     return (
@@ -55,7 +50,6 @@ const SortableList = SortableContainer(
               idx={idx}
               page={page}
               maxInputLength={maxInputLength}
-              handleCloseClick={handleCloseClick}
               totalPageCount={totalPageCount}
             />
           );

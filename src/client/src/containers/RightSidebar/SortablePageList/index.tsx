@@ -6,7 +6,7 @@ import { ThunkDispatch } from "redux-thunk";
 
 import { injectIntl, InjectedIntl } from "react-intl";
 
-import SortableList from "../../../components/SortableSelectionList";
+import SortableList from "../SortableSelectionList";
 
 import { selectPageAction, selectPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../../actions/modalActions/modalActions";
@@ -81,11 +81,6 @@ const SortablePageList = (props: Props) => {
   }) => {
     selectPages(arrayMove(selectedPages, oldIndex, newIndex));
   };
-  const handleCloseClick = (idx: number) => {
-    const pagesWithOmittedIdx: ISelected[] = [...selectedPages];
-    pagesWithOmittedIdx.splice(idx, 1);
-    selectPages(pagesWithOmittedIdx);
-  };
   const DRAG_PIXEL_THRESHOLD = 1;
   return (
     <div>
@@ -130,7 +125,6 @@ const SortablePageList = (props: Props) => {
           maxInputLength={PAGE_NAME_CHARACTER_LIMIT}
           onSortEnd={onSortEnd}
           distance={DRAG_PIXEL_THRESHOLD}
-          handleCloseClick={handleCloseClick}
           lockToContainerEdges
           lockAxis='y'
           lockOffset='25%'

@@ -68,7 +68,7 @@ const RightSidebar = (props:Props)=>{
   const { frontendOptions, backendOptions } = contentOptions;
   const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
   const [ isSidebarUserControlled, setIsSidebarUserControlled ] = React.useState(false);
-  
+
   React.useEffect(()=>{
     if ((wizardRoutes.isVisited["/SelectPages"]===true ||
     wizardRoutes.isVisited["/SelectPages"]===true ||
