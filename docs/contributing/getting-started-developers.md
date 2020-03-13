@@ -32,24 +32,31 @@ _Note: If using Windows, use Git Bash_.
 This folder contains the source code for the different components of Web Template Studio.
 
 - client: This folder contains the client or wizard code.
-
-[TODO] Client folder structure from https://github.com/microsoft/WebTemplateStudio/wiki/Developing-the-Frontend#folder-structure
+    - src:
+        - Actions: Actions for the Redux store
+        - Assets: Assets directory contains all the SVGs used for the front-end.
+        - Components: Components contains all React components that are not connected to the Redux store.
+        - Containers: Containers are React components that are connected to the Redux store. This is the only difference between components and containers.
+        - CSS: CSS contains styling that is global.
+        - Reducers: All reducers for the Redux store are defined here.
+        - Selectors: Selectors contain helper methods which takes the Redux store as an argument and returns a specific field.
 
 - extension: This folder contains the Visual Studio extensions code.
-
-[TODO] Extension folder structure
+    - src:
+        - Azure: contains all functionality related to azure services
+        - client-modules: contains the client-modules that allow client-extension communication
+        - telemetry: contains all functionality related to telemetry
+        - utils: contains helper functions as logger and validators
 
 - CoreTemplateStudio: This solution contains the Core Template Studio code.
 
-[TODO] Link to CoreTS
-
+For more information on internal structure, see [Core Template Studio docs](https://github.com/microsoft/CoreTemplateStudio/blob/dev/docs/getting-started-developers.md).
 
 ### _build folder
 This folder contains scripts for local development and usage from the build pipeline.
 
 ### templates folder
-This folder contains the templates that are used to generate the code. For more info on templates see 
-[Understanding the Templates](templates.md).
+This folder contains the templates that are used to generate the code. For more info on templates see [Understanding the Templates](templates.md).
 
 ## Core Template Studio Submodule
 Web Template Studio relies on Core Template Studio for template synchronization and template composition, generation and postaction. Core Template Studio has its own Github repository github.com/Microsoft/CoreTemplateStudio as it is shared with the sister project Windows Template Studio github.com/Microsoft/WindowsTemplateStudio.
@@ -72,11 +79,9 @@ Changes on Core Template Studio should be done on the Core Template Studio repos
 5. In the Command Palette, type `Web Template Studio: Launch` and press `Enter` to launch the extension. Make sure that you don't have the Web Template Studio from the marketplace installed, concurrent installation is nor yet supported.
 
 ## Developing the client
-As the client is embedded as a static web app in the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes, and for debugging since you can use Chrome extensions such as React and Redux developer tools. 
+As the client is injected as a static web app in the webview of the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes and for debugging since you can use Chrome extensions such as React and Redux developer tools.
 
-When running in the browser [TODO]
-
-Note that the behavior of on the browser may differ from the behavior in the extension so make sure to test out both.
+When running in the browser communication with the extension is done agains the mock mockVsCodeApi.ts in the mockData folder. Note that the behavior of on the browser may differ from the behavior in the extension so make sure to test out both.
 
 1. Run `./build-client.sh` from the _build folder.
 2. Open the `src/client` folder using `VSCode`.
@@ -84,8 +89,39 @@ Note that the behavior of on the browser may differ from the behavior in the ext
 
 ### To debug from Visual Studio Code:
 Install [Debugger for Chrome extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) in Visual Studio Code debug Wizard Client.
-After starting the client using `yarn start` in VSCode Debug View (Ctrl+Shift+D) select "Debug WebTS Client" and start debugging (F5) 
+After starting the client using `yarn start` in VSCode Debug View (Ctrl+Shift+D) select "Debug WebTS Client" and start debugging (F5)
 
-More info: 
+More info:
 - https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
 - https://code.visualstudio.com/docs/editor/debugging
+
+## Create VSIX Package
+Run `./createLocalVsix.sh` from the _build folder.
+
+The script will compile the client, CoreTS (in release mode) and the extension and package the extension into the root directory `/dist` folder. The vsix package can be distributed and installed by anyone who has VSCode using the command in the extension directory:
+
+```
+code --install-extension [extensionName].vsix
+```
+
+`webts-0.0.0-UNTRACKEDVERSION.vsix` is the default extensionName.
+
+Alternatively, copy the extension into your extensions directory. For _Windows_, it is
+`%USERPROFILE%\.vscode\extensions`. For _Mac/Linux_, it is `~/.vscode/extensions` (By Default).
+
+After installation, use `ctrl+shift+p (Windows)` or `cmd+shift+p (Mac)` to open the Extension Launcher and select `Web Template Studio: Launch` to run the extension.
+
+## Tests
+
+### Client Tests
+Currently, we use Jest for our unit tests which was set up by create-react-app.
+
+To run the client tests, go to src/client and run `yarn test` to run all the tests. Running this execute tests in files that end with *.{spec,test}.{js,jsx,ts,tsx}.
+
+
+### Template Tests
+Currently we use scripts to test the generated code. The scripts are located in the folder ..\src\extension\src\scripts.
+Ther genrate-tests script generates all the different permutations of a fullstack project (without azure services).
+Afterwards the run-tests script installes the dependencies for the generated project, runs yarn start, yarn lint and yarn test on all the generated projects.
+
+To run the template tests go to src/extension and run `yarn template-test` to run the tests.
