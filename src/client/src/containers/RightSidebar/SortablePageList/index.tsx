@@ -94,8 +94,7 @@ const SortablePageList = (props: Props) => {
           {isSummaryPage && (
             <button
               className={styles.addPagesButton}
-              onClick={handleOpenAddPagesModal}
-            >
+              onClick={handleOpenAddPagesModal}>
               <Plus className={styles.plusIcon} />
             </button>
           )}
@@ -111,10 +110,8 @@ const SortablePageList = (props: Props) => {
               setMinimized(!isMinimized);
             }}
           >
-            {isMinimized ? (
+            {isMinimized && (
               <ShowIcon className={styles.viewIcon} />
-            ) : (
-              <HideIcon className={styles.viewIcon} />
             )}
           </button>
         </div>

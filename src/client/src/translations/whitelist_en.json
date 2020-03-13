@@ -1,8 +1,5 @@
 [
   "card.details",
-  "draggableSidebarItem.changeItemName",
-  "draggableSidebarItem.pageNameMaxLength",
-  "draggableSidebarItem.deleteItem",
   "outputPath.outputPath",
   "outputPath.ariaOutputPath",
   "outputPath.browseButtonLabel",
@@ -91,6 +88,9 @@
   "about.visitRepo",
   "about.redirectLinkLabel",
   "rightSidebar.services",
+  "draggableSidebarItem.changeItemName",
+  "draggableSidebarItem.pageNameMaxLength",
+  "draggableSidebarItem.deleteItem",
   "sortablePageList.hide",
   "sortablePageList.show",
   "sortablePageList.pages",

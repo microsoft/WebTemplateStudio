@@ -2,9 +2,10 @@ interface IDispatchProps {
   selectBackendFramework: (framework: ISelected) => void;
   selectFrontendFramework: (framework: ISelected) => void;
   selectProjectType: (projectType: ISelected) => void;
-  selectPages: (pages: ISelected[]) => void;
   openViewLicensesModal: () => any;
   resetPageSelection: () => any;
+  setOptionPages: (pages: IOption[]) => any;
+  setSelectedPages: (pages: ISelected[]) => void;
 }
 
 interface IRightSidebarProps {

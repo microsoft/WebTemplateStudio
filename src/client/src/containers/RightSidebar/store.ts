@@ -12,6 +12,8 @@ import { setSelectedFrontendFrameworkAction } from "../../actions/wizardSelectio
 import { selectWebAppAction } from "../../actions/wizardSelectionActions/selectWebApp";
 import { selectPagesAction, resetPagesAction } from "../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../actions/modalActions/modalActions";
+import { getPagesOptionsAction } from "../../actions/wizardContentActions/getPagesOptions";
+import { IOption } from "../../types/option";
 
 
 function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
@@ -74,14 +76,17 @@ const mapDispatchToProps = (
   selectProjectType: (projectType: ISelected) => {
     dispatch(selectWebAppAction(projectType));
   },
-  selectPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
-  },
   openViewLicensesModal: () => {
     dispatch(ModalActions.openViewLicensesModalAction());
   },
   resetPageSelection: () => {
     dispatch(resetPagesAction());
+  },
+  setOptionPages: (pages: IOption[]) => {
+    dispatch(getPagesOptionsAction(pages));
+  },
+  setSelectedPages: (pages: ISelected[]) => {
+    dispatch(selectPagesAction(pages));
   },
 });
 

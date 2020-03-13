@@ -27,7 +27,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import { ISelected } from "../../types/selected";
 import { IOption } from "../../types/option";
-import { resetAllPages } from "../../utils/extensionService/extensionService";
+import { resetAllPages, getPages } from "../../utils/extensionService/extensionService";
 import { mapDispatchToProps, mapStateToProps } from "./store";
 
 interface IRightSidebarState {
@@ -56,7 +56,7 @@ const RightSidebar = (props:Props)=>{
   } = props;
   const { selectBackendFramework,
     selectFrontendFramework,
-    selectPages,
+    setSelectedPages,
     selection,
     vscode,
     resetPageSelection,
@@ -130,7 +130,7 @@ const RightSidebar = (props:Props)=>{
             author: "Microsoft"
           }
         ];
-        selectPages(PAGES_SELECTION);
+        setSelectedPages(PAGES_SELECTION);
       //}
     });
   };
@@ -143,20 +143,19 @@ const RightSidebar = (props:Props)=>{
     } = selection;
     const {
       vscode,
-      selectPages,
       frontEndOptions,
-      selectFrontendFramework
+      selectFrontendFramework,
+      setOptionPages
     } = props;
     if (frontendFramework.internalName !== option.value) {
-      vscode.postMessage({
-        module: EXTENSION_MODULES.CORETS,
-        command: EXTENSION_COMMANDS.GET_PAGES,
-        payload: {
-          projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
-          frontendFramework: option.value,
-          backendFramework: backendFramework.internalName
-        }
+      getPages(vscode, option.value, backendFramework.internalName).then((event)=>{
+        setOptionPages(event.data.payload.pages);
+        selection.selectedPages.map((selectedPage:ISelected)=>{
+          selectedPage.internalName = `wts.Page.${option.value}.${backendFramework.internalName}`;
+        });
+        setSelectedPages(selection.selectedPages);
       });
+
       let newFrontEndFramework;
       frontEndOptions.forEach(frontEnd => {
         if (frontEnd.internalName === option.value) {
@@ -185,7 +184,7 @@ const RightSidebar = (props:Props)=>{
           author: page.author
         };
       });
-      selectPages(newPages);
+      setSelectedPages(newPages);
       newFrontEndFramework && selectFrontendFramework(newFrontEndFramework);
     }
   };
@@ -193,7 +192,7 @@ const RightSidebar = (props:Props)=>{
   const handleInputChange = (newTitle: string, idx: number) => {
     const { pages } = selection;
     pages[idx].title = newTitle;
-    selectPages(pages);
+    setSelectedPages(pages);
   };
 
   const sidebarToggleClickHandler = () => {
