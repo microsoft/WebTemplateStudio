@@ -138,24 +138,13 @@ const RightSidebar = (props:Props)=>{
   const handleFrameworkChange = (option: IDropDownOptionType) => {
     const {
       frontendFramework,
-      backendFramework,
       pages
     } = selection;
     const {
-      vscode,
       frontEndOptions,
-      selectFrontendFramework,
-      setOptionPages
+      selectFrontendFramework
     } = props;
     if (frontendFramework.internalName !== option.value) {
-      getPages(vscode, option.value, backendFramework.internalName).then((event)=>{
-        setOptionPages(event.data.payload.pages);
-        selection.selectedPages.map((selectedPage:ISelected)=>{
-          selectedPage.internalName = `wts.Page.${option.value}.${backendFramework.internalName}`;
-        });
-        setSelectedPages(selection.selectedPages);
-      });
-
       let newFrontEndFramework;
       frontEndOptions.forEach(frontEnd => {
         if (frontEnd.internalName === option.value) {
