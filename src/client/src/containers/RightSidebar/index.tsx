@@ -60,13 +60,22 @@ const RightSidebar = (props:Props)=>{
     selection,
     vscode,
     resetPageSelection,
-    backendDropdownItems
+    backendDropdownItems,
+    wizardRoutes
   } = props;
 
   const { formatMessage } = intl;
   const { frontendOptions, backendOptions } = contentOptions;
   const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
   const [ isSidebarUserControlled, setIsSidebarUserControlled ] = React.useState(false);
+  
+  React.useEffect(()=>{
+    if ((wizardRoutes.isVisited["/SelectPages"]===true ||
+    wizardRoutes.isVisited["/SelectPages"]===true ||
+    wizardRoutes.isVisited["/SelectPages"]===true) &&
+    !isSidebarUserControlled)
+      setIsSiderbarOpen(true);
+  },[wizardRoutes]);
 
   /*public static defaultProps = {
     selectBackendFramework: () => void(0),
@@ -188,7 +197,7 @@ const RightSidebar = (props:Props)=>{
   };
 
   const sidebarToggleClickHandler = () => {
-    setIsSiderbarOpen(true);
+    setIsSiderbarOpen(!isSidebarOpen);
     setIsSidebarUserControlled(true);
   };
 

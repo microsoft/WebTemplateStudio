@@ -58,7 +58,8 @@ const mapStateToProps = (state: AppState): IRightSidebarProps => ({
   services: getServicesSelector(state),
   hasServices : hasServicesSelector(state),
   isRoutesVisited: getIsVisitedRoutesSelector(state),
-  contentOptions: state.wizardContent
+  contentOptions: state.wizardContent,
+  wizardRoutes: state.wizardRoutes
 });
 
 const mapDispatchToProps = (

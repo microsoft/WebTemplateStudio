@@ -20,6 +20,7 @@ interface IRightSidebarProps {
   vscode: IVSCodeObject;
   isRoutesVisited: IVisitedPages;
   contentOptions: WizardContentType;
+  wizardRoutes: WizardRoutes;
 }
 
 export { IDispatchProps, IRightSidebarProps };
