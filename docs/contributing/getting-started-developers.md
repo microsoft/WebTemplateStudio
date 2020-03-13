@@ -125,3 +125,13 @@ Ther genrate-tests script generates all the different permutations of a fullstac
 Afterwards the run-tests script installes the dependencies for the generated project, runs yarn start, yarn lint and yarn test on all the generated projects.
 
 To run the template tests go to src/extension and run `yarn template-test` to run the tests.
+
+
+## Under the Hood
+
+The following notes are inspired by the [vscode-webview-react](https://github.com/rebornix/vscode-webview-react)
+repository by [rebornix](https://github.com/rebornix):
+
+- We inline `index.html` content in `src/extension/src/extension.ts` when creating the webview
+- For all resources going to the webview, their scheme is `vscode-resource`
+- We add a baseUrl `<base href="${vscode.Uri.file(path.join(this._extensionPath, 'build')).with({ scheme: 'vscode-resource' })}/">` and then all relative paths work.
