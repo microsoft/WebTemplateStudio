@@ -87,7 +87,7 @@ const mapDispatchToProps = (
   },
   setSelectedPages: (pages: ISelected[]) => {
     dispatch(selectPagesAction(pages));
-  },
+  }
 });
 
 export {mapDispatchToProps, mapStateToProps}

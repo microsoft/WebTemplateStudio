@@ -52,15 +52,15 @@ const RightSidebar = (props:Props)=>{
     openViewLicensesModal,
     outputPath,
     projectName,
-    hasServices
-  } = props;
-  const { selectBackendFramework,
+    hasServices,
+    selectBackendFramework,
     selectFrontendFramework,
     setSelectedPages,
     selection,
     vscode,
     resetPageSelection,
     backendDropdownItems,
+    frontendDropdownItems,
     wizardRoutes
   } = props;
 
@@ -77,111 +77,45 @@ const RightSidebar = (props:Props)=>{
       setIsSiderbarOpen(true);
   },[wizardRoutes]);
 
-  /*public static defaultProps = {
-    selectBackendFramework: () => void(0),
-    selectFrontendFramework: () => void(0),
-    selectWebApp: () => void(0),
-    selectPages: () => void(0)
-  };*/
+  const handleBackEndFrameworkChange = (option: IDropDownOptionType) => {
+    const { title, internalName, version, author, licenses } = 
+      backendOptions.find((optionBack:any) => optionBack.internalName === option.value);
 
-  /*state: IRightSidebarState = {
-    isSidebarOpen: false,
-    isSidebarUserControlled: false
-  };*/
-
-  const handleChange = (
-    e: IDropDownOptionType,
-    selectOption: (item: ISelected) => void,
-    optionsData: IOption[]
-  ) => {
-    optionsData.map(option => {
-      if (option.internalName === e.value) {
-        const { title, internalName, version, author, licenses } = option;
-        selectOption({
-          title: title as string,
-          internalName,
-          version,
-          author,
-          licenses
-        });
-      }
-    });
+    const newBackEndFramework = { title: title as string, internalName, version, author, licenses };
+    selectBackendFramework(newBackEndFramework);
   };
 
   const resetAllPagesEvent = () => {
     const { pages, frontendFramework } = selection;
     resetAllPages(vscode, frontendFramework.internalName, pages.length).then(()=>{
-      //if (message.payload.resetPages) {
-        resetPageSelection();
-        // select default blank page
-        const PAGES_SELECTION: ISelected[] = [
-          {
-            title: "Blank",
-            internalName: `wts.Page.${frontendFramework.internalName}.Blank`,
-            id: "Blank",
-            defaultName: "Blank",
-            isValidTitle: true,
-            licenses: [
-              {
-                text: "Bootstrap",
-                url: BOOTSTRAP_LICENSE
-              }
-            ],
-            author: "Microsoft"
-          }
-        ];
-        setSelectedPages(PAGES_SELECTION);
-      //}
+      resetPageSelection();
+      const PAGES_SELECTION: ISelected[] = [
+        {
+          title: "Blank",
+          internalName: `wts.Page.${frontendFramework.internalName}.Blank`,
+          id: "Blank",
+          defaultName: "Blank",
+          isValidTitle: true,
+          licenses: [
+            {
+              text: "Bootstrap",
+              url: BOOTSTRAP_LICENSE
+            }
+          ],
+          author: "Microsoft"
+        }
+      ];
+      setSelectedPages(PAGES_SELECTION);
     });
   };
 
-  const handleFrameworkChange = (option: IDropDownOptionType) => {
-    const {
-      frontendFramework,
-      pages
-    } = selection;
-    const {
-      frontEndOptions,
-      selectFrontendFramework
-    } = props;
-    if (frontendFramework.internalName !== option.value) {
-      let newFrontEndFramework;
-      frontEndOptions.forEach(frontEnd => {
-        if (frontEnd.internalName === option.value) {
-          const { title, internalName, version, author, licenses } = frontEnd;
-          newFrontEndFramework = {
-            title: title as string,
-            internalName,
-            version,
-            author,
-            licenses
-          };
-        }
-      });
+  const handleFrontEndFrameworkChange = (option: IDropDownOptionType) => {
+    const {frontEndOptions} = props;
+    const { title, internalName, version, author, licenses } = 
+      frontEndOptions.find(optionFront => optionFront.internalName === option.value);
 
-      const newPages: ISelected[] = pages.map((page: ISelected) => {
-        return {
-          title: page.title,
-          internalName: page.internalName.replace(
-            frontendFramework.internalName,
-            option.value
-          ),
-          id: page.id,
-          defaultName: page.defaultName,
-          isValidTitle: page.isValidTitle,
-          licenses: page.licenses,
-          author: page.author
-        };
-      });
-      setSelectedPages(newPages);
-      newFrontEndFramework && selectFrontendFramework(newFrontEndFramework);
-    }
-  };
-
-  const handleInputChange = (newTitle: string, idx: number) => {
-    const { pages } = selection;
-    pages[idx].title = newTitle;
-    setSelectedPages(pages);
+    const newFrontEndFramework = { title: title as string, internalName, version, author, licenses };
+    selectFrontendFramework(newFrontEndFramework);
   };
 
   const sidebarToggleClickHandler = () => {
@@ -255,11 +189,9 @@ const RightSidebar = (props:Props)=>{
             </div>
             <div className={styles.decoratedLine} />
             <RightSidebarDropdown
-              options={props.frontendDropdownItems}
-              handleDropdownChange={
-                (showPages && handleFrameworkChange) || handleChange
-              }
-              selectDropdownOption={selectFrontendFramework}
+              options={frontendDropdownItems}
+              handleDropdownChange={handleFrontEndFrameworkChange}
+              selectDropdownOption={()=> {}}
               isVisible={showFrameworks}
               title={formatMessage(messages.frontendFramework)}
               value={convertOptionToDropdownItem(
@@ -269,8 +201,8 @@ const RightSidebar = (props:Props)=>{
             />
             <RightSidebarDropdown
               options={backendDropdownItems}
-              handleDropdownChange={handleChange}
-              selectDropdownOption={selectBackendFramework}
+              handleDropdownChange={handleBackEndFrameworkChange}
+              selectDropdownOption={()=>{}}
               isVisible={showFrameworks}
               title={formatMessage(messages.backendFramework)}
               value={convertOptionToDropdownItem(
