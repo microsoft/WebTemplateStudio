@@ -3,37 +3,28 @@ import * as React from "react";
 import { connect } from "react-redux";
 import Loadable from "react-loadable";
 
-import { ReactComponent as CloseSVG } from "../../assets/cancel.svg";
+import { ReactComponent as CloseSVG } from "../../../../../assets/cancel.svg";
 
-import { getSvg } from "../../utils/getSvgUrl";
+import { getSvg } from "../../../../../utils/getSvgUrl";
 
-import { ISelected } from "../../types/selected";
+import { ISelected } from "../../../../../types/selected";
 import styles from "./styles.module.css";
-import { KEY_EVENTS } from "../../utils/constants";
+import { KEY_EVENTS } from "../../../../../utils/constants";
 
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
-import { IFunctionName } from "../../containers/AzureFunctionsSelection";
 
-import { AppState } from "../../reducers";
+import { AppState } from "../../../../../reducers";
 
 import messages from "./messages";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../actions/ActionType";
-import { selectPageAction, selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
-import { validateItemName } from "../../utils/validations/itemName/itemName";
-import { getValidations } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
-import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
+import RootAction from "../../../../../actions/ActionType";
+import { selectPageAction, selectPagesAction } from "../../../../../actions/wizardSelectionActions/selectPages";
+import { validateItemName } from "../../../../../utils/validations/itemName/itemName";
+import { getValidations } from "../../../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { IValidations } from "../../../../../reducers/wizardSelectionReducers/setValidations";
 
-const CosmosDBIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "CosmosdbIcon" */  "../../utils/svgComponents/CosmosdbIcon"),
-  loading:() => <div/>
-});
-const AppServiceIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "AppServiceIcon" */  "../../utils/svgComponents/AppserviceIcon"),
-  loading:() => <div/>
-});
 const Reorder = Loadable({
-  loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../utils/svgComponents/ReorderIcon"),
+  loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../../../../utils/svgComponents/ReorderIcon"),
   loading:() => <div/>
 });
 /**

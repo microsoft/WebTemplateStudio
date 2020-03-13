@@ -6,7 +6,7 @@ import { ThunkDispatch } from "redux-thunk";
 
 import { injectIntl, InjectedIntl } from "react-intl";
 
-import SortableList from "../SortableSelectionList";
+import SortableContainerPage from "./SortableContainerAndElementPage";
 
 import { selectPageAction, selectPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../../actions/modalActions/modalActions";
@@ -120,7 +120,7 @@ const SortablePageList = (props: Props) => {
         </div>
       </div>
       {!isMinimized && (
-        <SortableList
+        <SortableContainerPage
           pages={selectedPages}
           maxInputLength={PAGE_NAME_CHARACTER_LIMIT}
           onSortEnd={onSortEnd}

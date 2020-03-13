@@ -2,7 +2,7 @@ import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import DraggableSidebarItem from "../../components/DraggableSidebarItem";
+import DraggableSidebarItem from "../RightSidebar/SortablePageList/SortableContainerAndElementPage/DraggableSidebarPage";
 
 import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalActions";
 
