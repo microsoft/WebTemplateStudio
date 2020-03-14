@@ -10,7 +10,7 @@ interface IIntlProps {
 }
 
 interface IProps {
-  isModal?: boolean;
+  isModal: boolean;
 }
 
 export { IIntlProps, IStoreProps, IProps };

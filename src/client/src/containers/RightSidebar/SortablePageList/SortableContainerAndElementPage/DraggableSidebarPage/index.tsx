@@ -34,7 +34,6 @@ const Reorder = Loadable({
 
 interface IStateProps {
   page: ISelected;
-  pageSvgUrl?: string;
   maxInputLength?: number;
   idx?: number;
   totalCount?: number;
@@ -56,7 +55,6 @@ type Props = IStateProps & ISortablePageListProps & InjectedIntlProps & ISortabl
 
 const DraggableSidebarItem = ({
   page,
-  pageSvgUrl,
   maxInputLength,
   idx,
   totalCount,
@@ -118,10 +116,7 @@ const DraggableSidebarItem = ({
             })}
           >
             <div className={styles.inputContainer}>
-              {pageSvgUrl &&
-                (getSvg(page!.internalName, styles.icon) || (
-                  <img className={styles.icon} src={pageSvgUrl} alt="" />
-                ))}
+              {(getSvg(page!.internalName, styles.icon))}
               {page && idx && (
                 <input
                   aria-label={intl.formatMessage(messages.changeItemName)}

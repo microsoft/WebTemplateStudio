@@ -23,7 +23,6 @@ const SortableSidebarItem = SortableElement(
         maxInputLength={maxInputLength}
         idx={idx + 1}
         totalCount={totalPageCount}
-        pageSvgUrl={getSvg(page.internalName)}
       />
     );
   }

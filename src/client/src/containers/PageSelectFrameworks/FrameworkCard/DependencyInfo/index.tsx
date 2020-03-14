@@ -15,6 +15,7 @@ import RootAction from "../../../../actions/ActionType";
 import { IRedirectModalData } from "../../../RedirectModal";
 import Notification from "../../../../components/Notification";
 import messages from "./messages";
+import { IStoreProps } from "../../../PageAddPages/interfaces";
 
 export interface IDependency {
   dependencyStoreKey: string;
@@ -57,17 +58,20 @@ const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
   [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER, dependencies.Node]
 ]);
 
-interface IDependencyInfoProps {
-  dependenciesStore: IDependenciesInstalled;
+interface IProps {
   frameworkName: string;
   intl: InjectedIntl;
 }
 
-interface IDispatchProps {
-  openRedirectModal: (dependency: IRedirectModalData | undefined) => any;
+interface IState {
+  dependenciesStore: IDependenciesInstalled;
 }
 
-type Props = IDependencyInfoProps & IDispatchProps;
+interface IDispatchProps {
+  openRedirectModal: (dependency: IRedirectModalData) => any;
+}
+
+type Props = IState & IProps & IDispatchProps;
 
 /*
  * Props:
@@ -118,7 +122,7 @@ class DependencyInfo extends React.Component<Props> {
 
     const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-        openRedirectModal(privacyModalData);
+        if (privacyModalData) openRedirectModal(privacyModalData);
       }
     };
 
@@ -128,7 +132,9 @@ class DependencyInfo extends React.Component<Props> {
           role="button"
           tabIndex={0}
           onKeyDown={keyDownHandler}
-          onClick={() => openRedirectModal(privacyModalData)}
+          onClick={() => {
+            if (privacyModalData) openRedirectModal(privacyModalData)
+          }}
           className={classnames(
             styles.dependencyContainer,
             styles.borderYellow
@@ -145,7 +151,7 @@ class DependencyInfo extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState): any => {
+const mapStateToProps = (state: AppState): IState => {
   return {
     dependenciesStore: state.dependencyInfo.dependencies
   };
