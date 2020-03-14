@@ -72,13 +72,11 @@ const RightSidebar = (props:Props)=>{
 
   const { formatMessage } = intl;
   const { backendOptions } = contentOptions;
-  
+
   const dispatch = useDispatch();
 
   React.useEffect(()=>{
-    if ((wizardRoutes.isVisited["/SelectPages"]===true ||
-    wizardRoutes.isVisited["/SelectPages"]===true ||
-    wizardRoutes.isVisited["/SelectPages"]===true) &&
+    if (wizardRoutes.isVisited["/SelectPages"]===true &&
     !isSidebarUserControlled)
       setIsSiderbarOpen(true);
   },[wizardRoutes]);
@@ -288,6 +286,4 @@ function convertOptionToDropdownItem(option: any): IDropDownOptionType {
   };
 }
 
-export default withRouter(
-  connect()(injectIntl(RightSidebar))
-);
+export default withRouter(injectIntl(RightSidebar));
