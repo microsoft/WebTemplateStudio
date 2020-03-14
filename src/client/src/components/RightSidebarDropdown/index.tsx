@@ -3,16 +3,12 @@ import * as React from "react";
 import Dropdown from "../../components/Dropdown";
 
 import styles from "./styles.module.css";
-import { ISelected } from "../../types/selected";
 import { IOption } from "../../types/option";
 
 interface IProps {
   handleDropdownChange: (
-    dropdownTitle: IDropDownOptionType,
-    selectDropdownOption: (dropDrownItem: ISelected) => void,
-    optionsData: IOption[]
+    dropdownTitle: IDropDownOptionType
   ) => void;
-  selectDropdownOption: (dropDrownItem: ISelected) => void;
   options: IDropDownOptionType[];
   title: string;
   isVisible: boolean;
@@ -29,11 +25,7 @@ const RightSidebarDropdown = (props: IProps) => {
           <div className={styles.dropdownTitle}>{props.title}</div>
           <Dropdown
             handleChange={dropDrownItem => {
-              props.handleDropdownChange(
-                dropDrownItem,
-                props.selectDropdownOption,
-                props.optionsData
-              );
+              props.handleDropdownChange(dropDrownItem);
             }}
             disabled={props.disabled}
             ariaLabel={props.title}

@@ -16,24 +16,15 @@ import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   ROUTES,
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
   KEY_EVENTS,
-  WIZARD_CONTENT_INTERNAL_NAMES,
   BOOTSTRAP_LICENSE
 } from "../../utils/constants";
 import messages from "./strings";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import { ISelected } from "../../types/selected";
-import { IOption } from "../../types/option";
 import { resetAllPages, getPages } from "../../utils/extensionService/extensionService";
 import { mapDispatchToProps, mapStateToProps } from "./store";
-
-interface IRightSidebarState {
-  isSidebarOpen: boolean;
-  isSidebarUserControlled: boolean;
-}
 
 type Props = IRightSidebarProps &
   RouteComponentProps &
@@ -191,7 +182,6 @@ const RightSidebar = (props:Props)=>{
             <RightSidebarDropdown
               options={frontendDropdownItems}
               handleDropdownChange={handleFrontEndFrameworkChange}
-              selectDropdownOption={()=> {}}
               isVisible={showFrameworks}
               title={formatMessage(messages.frontendFramework)}
               value={convertOptionToDropdownItem(
@@ -202,7 +192,6 @@ const RightSidebar = (props:Props)=>{
             <RightSidebarDropdown
               options={backendDropdownItems}
               handleDropdownChange={handleBackEndFrameworkChange}
-              selectDropdownOption={()=>{}}
               isVisible={showFrameworks}
               title={formatMessage(messages.backendFramework)}
               value={convertOptionToDropdownItem(
