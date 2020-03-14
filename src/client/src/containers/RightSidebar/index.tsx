@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 import { injectIntl, InjectedIntlProps } from "react-intl";
@@ -9,7 +9,6 @@ import classnames from "classnames";
 import ServicesList from "./ServicesList";
 import About from "./About";
 import SortablePageList from "./SortablePageList";
-import { IDispatchProps, IRightSidebarProps } from "./interfaces";
 
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
@@ -23,41 +22,58 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import { ISelected } from "../../types/selected";
 import { resetAllPages } from "../../utils/extensionService/extensionService";
-import { mapDispatchToProps, mapStateToProps } from "./store";
 import Dropdown from "../../components/Dropdown";
+import { getOutputPath, getProjectName, getServicesSelector } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { AppState } from "../../reducers";
+import { setSelectedBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectedBackEndFramework";
+import { setSelectedFrontendFrameworkAction } from "../../actions/wizardSelectionActions/selectedFrontendFramework";
+import * as ModalActions from "../../actions/modalActions/modalActions";
+import { resetPagesAction, selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
+import { SelectionState } from "../../reducers/wizardSelectionReducers";
+import { IOption } from "../../types/option";
+import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { ServiceState } from "../../reducers/wizardSelectionReducers/services";
+import { hasServicesSelector } from "../../selectors/servicesSelector";
+import { getIsVisitedRoutesSelector, IVisitedPages } from "../../selectors/wizardNavigationSelector";
+import { WizardContentType } from "../../reducers/wizardContentReducers";
 
-type Props = IRightSidebarProps &
-  RouteComponentProps &
-  IDispatchProps &
-  InjectedIntlProps;
+type Props = RouteComponentProps & InjectedIntlProps;
 
 const RightSidebar = (props:Props)=>{
+  
+  const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
+  const [ isSidebarUserControlled, setIsSidebarUserControlled ] = React.useState(false);
+
+  const outputPath:string = useSelector((state: AppState) => getOutputPath(state));
+  const projectName:string = useSelector((state: AppState) => getProjectName(state));
+  const selection:SelectionState = useSelector((state: AppState) => state.selection);
+  /*const projectTypeDropdownItems: IDropDownOptionType[] =
+    useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.projectTypes));*/
+  const frontEndOptions:IOption[] = useSelector((state: AppState) => state.wizardContent.frontendOptions);
+  const frontendDropdownItems:IDropDownOptionType[] =
+    useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.frontendOptions));
+  const backendDropdownItems:IDropDownOptionType[] =
+    useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.backendOptions));
+  const vscode:IVSCodeObject = useSelector((state: AppState) => getVSCodeApiSelector(state));
+  const services = useSelector((state: AppState) => getServicesSelector(state));
+  const hasServices:boolean = useSelector((state: AppState) => hasServicesSelector(state));
+  const isRoutesVisited: IVisitedPages = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
+  const contentOptions: WizardContentType = useSelector((state: AppState) => state.wizardContent);
+  const wizardRoutes = useSelector((state: AppState) => state.wizardRoutes);
+
   const {
     showPages
-  } = props.isRoutesVisited;
+  } = isRoutesVisited;
   const { pathname } = props.location;
   const {
-    intl,
-    contentOptions,
-    openViewLicensesModal,
-    outputPath,
-    projectName,
-    hasServices,
-    selectBackendFramework,
-    selectFrontendFramework,
-    setSelectedPages,
-    selection,
-    vscode,
-    resetPageSelection,
-    backendDropdownItems,
-    frontendDropdownItems,
-    wizardRoutes
+    intl
   } = props;
 
   const { formatMessage } = intl;
-  const { frontendOptions, backendOptions } = contentOptions;
-  const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
-  const [ isSidebarUserControlled, setIsSidebarUserControlled ] = React.useState(false);
+  const { backendOptions } = contentOptions;
+  
+  const dispatch = useDispatch();
 
   React.useEffect(()=>{
     if ((wizardRoutes.isVisited["/SelectPages"]===true ||
@@ -67,18 +83,45 @@ const RightSidebar = (props:Props)=>{
       setIsSiderbarOpen(true);
   },[wizardRoutes]);
 
-  const handleBackEndFrameworkChange = (option: IDropDownOptionType) => {
-    const { title, internalName, version, author, licenses } = 
-      backendOptions.find((optionBack:any) => optionBack.internalName === option.value);
+  function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
+    const dropDownItems = [];
+    for (const option of options) {
+      if (option.unselectable) {
+        continue;
+      }
+      const dropdownItem = convertOptionToDropdownItem(option);
+      dropDownItems.push(dropdownItem);
+    }
+    return dropDownItems;
+  }
 
-    const newBackEndFramework = { title: title as string, internalName, version, author, licenses };
-    selectBackendFramework(newBackEndFramework);
+  function convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
+    if (option.internalName && option.title) {
+      return {
+        value: option.internalName,
+        label: option.title
+      };
+    }
+    return {
+      value: "",
+      label: ""
+    };
+  }
+
+  const handleBackEndFrameworkChange = (option: IDropDownOptionType) => {
+    const optionBackEnd =
+      backendOptions.find((optionBack:IOption) => optionBack.internalName === option.value);
+    if (optionBackEnd){
+      const { title, internalName, version, author, licenses } = optionBackEnd;
+      const newBackEndFramework = { title: title as string, internalName, version, author, licenses };
+      dispatch(setSelectedBackendFrameworkAction(newBackEndFramework));
+    }
   };
 
   const resetAllPagesEvent = () => {
     const { pages, frontendFramework } = selection;
     resetAllPages(vscode, frontendFramework.internalName, pages.length).then(()=>{
-      resetPageSelection();
+      dispatch(resetPagesAction());
       const PAGES_SELECTION: ISelected[] = [
         {
           title: "Blank",
@@ -95,17 +138,18 @@ const RightSidebar = (props:Props)=>{
           author: "Microsoft"
         }
       ];
-      setSelectedPages(PAGES_SELECTION);
+      dispatch(selectPagesAction(PAGES_SELECTION));
     });
   };
 
   const handleFrontEndFrameworkChange = (option: IDropDownOptionType) => {
-    const {frontEndOptions} = props;
-    const { title, internalName, version, author, licenses } = 
-      frontEndOptions.find(optionFront => optionFront.internalName === option.value);
-
-    const newFrontEndFramework = { title: title as string, internalName, version, author, licenses };
-    selectFrontendFramework(newFrontEndFramework);
+    const optionFrontEnd =
+      frontEndOptions.find((optionFront:IOption) => optionFront.internalName === option.value);
+    if (optionFrontEnd){
+      const { title, internalName, version, author, licenses } = optionFrontEnd;
+      const newBackEndFramework = { title: title as string, internalName, version, author, licenses };
+      dispatch(setSelectedFrontendFrameworkAction(newBackEndFramework));
+    }
   };
 
   const sidebarToggleClickHandler = () => {
@@ -222,7 +266,7 @@ const RightSidebar = (props:Props)=>{
                       styles.button,
                       styles.leftButton
                     )}
-                    onClick={openViewLicensesModal}
+                    onClick={()=> dispatch(ModalActions.openViewLicensesModalAction())}
                   >
                     {formatMessage(messages.viewLicenses)}
                   </button>
@@ -245,8 +289,5 @@ function convertOptionToDropdownItem(option: any): IDropDownOptionType {
 }
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(injectIntl(RightSidebar))
+  connect()(injectIntl(RightSidebar))
 );
