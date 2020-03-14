@@ -6,7 +6,6 @@ import { withRouter } from "react-router-dom";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import classnames from "classnames";
 
-import RightSidebarDropdown from "../../components/RightSidebarDropdown";
 import ServicesList from "./ServicesList";
 import About from "./About";
 import SortablePageList from "./SortablePageList";
@@ -23,8 +22,9 @@ import messages from "./strings";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import { ISelected } from "../../types/selected";
-import { resetAllPages, getPages } from "../../utils/extensionService/extensionService";
+import { resetAllPages } from "../../utils/extensionService/extensionService";
 import { mapDispatchToProps, mapStateToProps } from "./store";
+import Dropdown from "../../components/Dropdown";
 
 type Props = IRightSidebarProps &
   RouteComponentProps &
@@ -33,7 +33,6 @@ type Props = IRightSidebarProps &
 
 const RightSidebar = (props:Props)=>{
   const {
-    showFrameworks,
     showPages
   } = props.isRoutesVisited;
   const { pathname } = props.location;
@@ -179,26 +178,32 @@ const RightSidebar = (props:Props)=>{
               </div>
             </div>
             <div className={styles.decoratedLine} />
-            <RightSidebarDropdown
-              options={frontendDropdownItems}
-              handleDropdownChange={handleFrontEndFrameworkChange}
-              isVisible={showFrameworks}
-              title={formatMessage(messages.frontendFramework)}
-              value={convertOptionToDropdownItem(
-                selection.frontendFramework
-              )}
-              optionsData={frontendOptions}
-            />
-            <RightSidebarDropdown
-              options={backendDropdownItems}
-              handleDropdownChange={handleBackEndFrameworkChange}
-              isVisible={showFrameworks}
-              title={formatMessage(messages.backendFramework)}
-              value={convertOptionToDropdownItem(
-                selection.backendFramework
-              )}
-              optionsData={backendOptions}
-            />
+            <div className={styles.sidebarItem}>
+              <div className={styles.dropdownTitle}>{formatMessage(messages.frontendFramework)}</div>
+              <Dropdown
+                handleChange={(dropDrownItem: IDropDownOptionType) => {
+                  handleFrontEndFrameworkChange(dropDrownItem);
+                }}
+                ariaLabel={formatMessage(messages.backendFramework)}
+                options={frontendDropdownItems}
+                value={convertOptionToDropdownItem(
+                  selection.frontendFramework
+                )}
+              />
+            </div>
+            <div className={styles.sidebarItem}>
+              <div className={styles.dropdownTitle}>{formatMessage(messages.backendFramework)}</div>
+              <Dropdown
+                handleChange={(dropDrownItem: IDropDownOptionType) => {
+                  handleBackEndFrameworkChange(dropDrownItem);
+                }}
+                ariaLabel={formatMessage(messages.backendFramework)}
+                options={backendDropdownItems}
+                value={convertOptionToDropdownItem(
+                  selection.backendFramework
+                )}
+              />
+            </div>
             <div className={styles.sortablePages}>
               {showPages && (
                 <SortablePageList

@@ -15,7 +15,6 @@ import RootAction from "../../../../actions/ActionType";
 import { IRedirectModalData } from "../../../RedirectModal";
 import Notification from "../../../../components/Notification";
 import messages from "./messages";
-import { IStoreProps } from "../../../PageAddPages/interfaces";
 
 export interface IDependency {
   dependencyStoreKey: string;
@@ -73,10 +72,6 @@ interface IDispatchProps {
 
 type Props = IState & IProps & IDispatchProps;
 
-/*
- * Props:
- * - frameworkName: string
- */
 class DependencyInfo extends React.Component<Props> {
   public render() {
     const {
