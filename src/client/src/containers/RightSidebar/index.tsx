@@ -1,10 +1,9 @@
-import classNames from "classnames";
+import classnames from "classnames";
 import * as React from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import classnames from "classnames";
 
 import ServicesList from "./ServicesList";
 import About from "./About";
@@ -22,44 +21,27 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import { ISelected } from "../../types/selected";
 import { resetAllPages } from "../../utils/extensionService/extensionService";
-import Dropdown from "../../components/Dropdown";
-import { getOutputPath, getProjectName, getServicesSelector } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../reducers";
-import { setSelectedBackendFrameworkAction } from "../../actions/wizardSelectionActions/selectedBackEndFramework";
-import { setSelectedFrontendFrameworkAction } from "../../actions/wizardSelectionActions/selectedFrontendFramework";
 import * as ModalActions from "../../actions/modalActions/modalActions";
 import { resetPagesAction, selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
-import { IOption } from "../../types/option";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { ServiceState } from "../../reducers/wizardSelectionReducers/services";
 import { hasServicesSelector } from "../../selectors/servicesSelector";
 import { getIsVisitedRoutesSelector, IVisitedPages } from "../../selectors/wizardNavigationSelector";
-import { WizardContentType } from "../../reducers/wizardContentReducers";
+import ProjectDetails from "./ProjectDetails";
+import SelectFrameworks from "./SelectFrameworks";
 
 type Props = RouteComponentProps & InjectedIntlProps;
 
 const RightSidebar = (props:Props)=>{
-  
   const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
   const [ isSidebarUserControlled, setIsSidebarUserControlled ] = React.useState(false);
 
-  const outputPath:string = useSelector((state: AppState) => getOutputPath(state));
-  const projectName:string = useSelector((state: AppState) => getProjectName(state));
   const selection:SelectionState = useSelector((state: AppState) => state.selection);
-  /*const projectTypeDropdownItems: IDropDownOptionType[] =
-    useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.projectTypes));*/
-  const frontEndOptions:IOption[] = useSelector((state: AppState) => state.wizardContent.frontendOptions);
-  const frontendDropdownItems:IDropDownOptionType[] =
-    useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.frontendOptions));
-  const backendDropdownItems:IDropDownOptionType[] =
-    useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.backendOptions));
   const vscode:IVSCodeObject = useSelector((state: AppState) => getVSCodeApiSelector(state));
-  const services = useSelector((state: AppState) => getServicesSelector(state));
   const hasServices:boolean = useSelector((state: AppState) => hasServicesSelector(state));
   const isRoutesVisited: IVisitedPages = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
-  const contentOptions: WizardContentType = useSelector((state: AppState) => state.wizardContent);
   const wizardRoutes = useSelector((state: AppState) => state.wizardRoutes);
 
   const {
@@ -71,7 +53,6 @@ const RightSidebar = (props:Props)=>{
   } = props;
 
   const { formatMessage } = intl;
-  const { backendOptions } = contentOptions;
 
   const dispatch = useDispatch();
 
@@ -80,41 +61,6 @@ const RightSidebar = (props:Props)=>{
     !isSidebarUserControlled)
       setIsSiderbarOpen(true);
   },[wizardRoutes]);
-
-  function convertOptionsToDropdownItems(options: any[]): IDropDownOptionType[] {
-    const dropDownItems = [];
-    for (const option of options) {
-      if (option.unselectable) {
-        continue;
-      }
-      const dropdownItem = convertOptionToDropdownItem(option);
-      dropDownItems.push(dropdownItem);
-    }
-    return dropDownItems;
-  }
-
-  function convertOptionToDropdownItem(option: ISelected): IDropDownOptionType {
-    if (option.internalName && option.title) {
-      return {
-        value: option.internalName,
-        label: option.title
-      };
-    }
-    return {
-      value: "",
-      label: ""
-    };
-  }
-
-  const handleBackEndFrameworkChange = (option: IDropDownOptionType) => {
-    const optionBackEnd =
-      backendOptions.find((optionBack:IOption) => optionBack.internalName === option.value);
-    if (optionBackEnd){
-      const { title, internalName, version, author, licenses } = optionBackEnd;
-      const newBackEndFramework = { title: title as string, internalName, version, author, licenses };
-      dispatch(setSelectedBackendFrameworkAction(newBackEndFramework));
-    }
-  };
 
   const resetAllPagesEvent = () => {
     const { pages, frontendFramework } = selection;
@@ -138,16 +84,6 @@ const RightSidebar = (props:Props)=>{
       ];
       dispatch(selectPagesAction(PAGES_SELECTION));
     });
-  };
-
-  const handleFrontEndFrameworkChange = (option: IDropDownOptionType) => {
-    const optionFrontEnd =
-      frontEndOptions.find((optionFront:IOption) => optionFront.internalName === option.value);
-    if (optionFrontEnd){
-      const { title, internalName, version, author, licenses } = optionFrontEnd;
-      const newBackEndFramework = { title: title as string, internalName, version, author, licenses };
-      dispatch(setSelectedFrontendFrameworkAction(newBackEndFramework));
-    }
   };
 
   const sidebarToggleClickHandler = () => {
@@ -186,7 +122,7 @@ const RightSidebar = (props:Props)=>{
       {(isSidebarOpen || pathname === ROUTES.REVIEW_AND_GENERATE) && (
         <div
           role="complementary" id="dvRightSideBar"
-          className={classNames(styles.container, styles.rightViewCropped, {
+          className={classnames(styles.container, styles.rightViewCropped, {
             [styles.rightViewCroppedSummaryPage]:
               pathname === ROUTES.REVIEW_AND_GENERATE
           })}
@@ -202,50 +138,8 @@ const RightSidebar = (props:Props)=>{
               />
             )}
 
-            <div className={styles.title}>
-              {formatMessage(messages.yourProjectDetails)}
-            </div>
-            <div className={styles.statics}>
-              <div className={styles.projectStatic}>
-                {formatMessage(messages.projectName)}:
-                <span title={projectName} className={styles.value}>
-                  {projectName}
-                </span>
-              </div>
-              <div className={styles.projectStatic}>
-                {formatMessage(messages.location)}:
-                <span title={outputPath} className={styles.value}>
-                  {outputPath}
-                </span>
-              </div>
-            </div>
-            <div className={styles.decoratedLine} />
-            <div className={styles.sidebarItem}>
-              <div className={styles.dropdownTitle}>{formatMessage(messages.frontendFramework)}</div>
-              <Dropdown
-                handleChange={(dropDrownItem: IDropDownOptionType) => {
-                  handleFrontEndFrameworkChange(dropDrownItem);
-                }}
-                ariaLabel={formatMessage(messages.backendFramework)}
-                options={frontendDropdownItems}
-                value={convertOptionToDropdownItem(
-                  selection.frontendFramework
-                )}
-              />
-            </div>
-            <div className={styles.sidebarItem}>
-              <div className={styles.dropdownTitle}>{formatMessage(messages.backendFramework)}</div>
-              <Dropdown
-                handleChange={(dropDrownItem: IDropDownOptionType) => {
-                  handleBackEndFrameworkChange(dropDrownItem);
-                }}
-                ariaLabel={formatMessage(messages.backendFramework)}
-                options={backendDropdownItems}
-                value={convertOptionToDropdownItem(
-                  selection.backendFramework
-                )}
-              />
-            </div>
+            <ProjectDetails/>
+            <SelectFrameworks/>
             <div className={styles.sortablePages}>
               {showPages && (
                 <SortablePageList
@@ -277,13 +171,6 @@ const RightSidebar = (props:Props)=>{
       )}
     </div>
   );
-}
-
-function convertOptionToDropdownItem(option: any): IDropDownOptionType {
-  return {
-    value: option.internalName,
-    label: option.title
-  };
 }
 
 export default withRouter(injectIntl(RightSidebar));
