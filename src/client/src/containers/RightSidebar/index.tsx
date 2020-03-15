@@ -7,7 +7,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import ServicesList from "./ServicesList";
 import About from "./About";
-import SortablePageList from "./SortablePageList";
+import SelectPages from "./SelectPages";
 
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
@@ -61,30 +61,6 @@ const RightSidebar = (props:Props)=>{
     !isSidebarUserControlled)
       setIsSiderbarOpen(true);
   },[wizardRoutes]);
-
-  const resetAllPagesEvent = () => {
-    const { pages, frontendFramework } = selection;
-    resetAllPages(vscode, frontendFramework.internalName, pages.length).then(()=>{
-      dispatch(resetPagesAction());
-      const PAGES_SELECTION: ISelected[] = [
-        {
-          title: "Blank",
-          internalName: `wts.Page.${frontendFramework.internalName}.Blank`,
-          id: "Blank",
-          defaultName: "Blank",
-          isValidTitle: true,
-          licenses: [
-            {
-              text: "Bootstrap",
-              url: BOOTSTRAP_LICENSE
-            }
-          ],
-          author: "Microsoft"
-        }
-      ];
-      dispatch(selectPagesAction(PAGES_SELECTION));
-    });
-  };
 
   const sidebarToggleClickHandler = () => {
     setIsSiderbarOpen(!isSidebarOpen);
@@ -142,8 +118,7 @@ const RightSidebar = (props:Props)=>{
             <SelectFrameworks/>
             <div className={styles.sortablePages}>
               {showPages && (
-                <SortablePageList
-                  handleResetPages={resetAllPagesEvent}
+                <SelectPages
                   isSummaryPage={pathname === ROUTES.REVIEW_AND_GENERATE}
                 />
               )}

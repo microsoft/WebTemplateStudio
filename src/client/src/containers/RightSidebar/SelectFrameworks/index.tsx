@@ -118,11 +118,4 @@ const SelectFrameworks = (props:Props)=>{
   );
 }
 
-function convertOptionToDropdownItem(option: any): IDropDownOptionType {
-  return {
-    value: option.internalName,
-    label: option.title
-  };
-}
-
 export default withRouter(injectIntl(SelectFrameworks));

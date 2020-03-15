@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
 import { ThunkDispatch } from "redux-thunk";
 
@@ -8,7 +8,7 @@ import { injectIntl, InjectedIntl } from "react-intl";
 
 import SortableContainerPage from "./SortableContainerAndElementPage";
 
-import { selectPageAction, selectPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
+import { selectPageAction, selectPagesAction, resetPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../../actions/modalActions/modalActions";
 
 import { ISelected } from "../../../types/selected";
@@ -22,11 +22,12 @@ import styles from "./styles.module.css";
 import { AppState } from "../../../reducers";
 import RootAction from "../../../actions/ActionType";
 
-import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_COMMANDS } from "../../../utils/constants";
+import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_COMMANDS, BOOTSTRAP_LICENSE } from "../../../utils/constants";
 import messages from "./messages";
 import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { sendTelemetry } from "../../../utils/extensionService/extensionService";
+import { sendTelemetry, resetAllPages } from "../../../utils/extensionService/extensionService";
+import { SelectionState } from "../../../reducers/wizardSelectionReducers";
 
 interface ISortablePageListProps {
   vscode: IVSCodeObject;
@@ -35,7 +36,6 @@ interface ISortablePageListProps {
 
 interface IStateProps {
   isSummaryPage?: boolean;
-  handleResetPages: () => void;
 }
 
 interface ISortableDispatchProps {
@@ -53,7 +53,7 @@ type Props = ISortablePageListProps &
   IStateProps &
   IIntlProps;
 
-const SortablePageList = (props: Props) => {
+const SelectPages = (props: Props) => {
   const {
     vscode,
     selectedPages,
@@ -63,15 +63,39 @@ const SortablePageList = (props: Props) => {
   } = props;
   const [isMinimized, setMinimized] = React.useState(false);
 
-  const moveScroolDown = () =>{
-    if (document.getElementById("dvRightSideBar") && document.getElementById("dvSummaryContainer")) 
-    document.getElementById("dvRightSideBar")!.scrollTop= document.getElementById("dvSummaryContainer")!.offsetHeight;
-  }
+  const selection:SelectionState = useSelector((state: AppState) => state.selection);
+  
+  const dispatch = useDispatch();
 
   const handleOpenAddPagesModal = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_ADD_PAGES_MODAL);
     openAddPagesModal();
   }
+
+  const resetAllPagesEvent = () => {
+    const { pages, frontendFramework } = selection;
+    resetAllPages(vscode, frontendFramework.internalName, pages.length).then(()=>{
+      dispatch(resetPagesAction());
+      const PAGES_SELECTION: ISelected[] = [
+        {
+          title: "Blank",
+          internalName: `wts.Page.${frontendFramework.internalName}.Blank`,
+          id: "Blank",
+          defaultName: "Blank",
+          isValidTitle: true,
+          licenses: [
+            {
+              text: "Bootstrap",
+              url: BOOTSTRAP_LICENSE
+            }
+          ],
+          author: "Microsoft"
+        }
+      ];
+      dispatch(selectPagesAction(PAGES_SELECTION));
+    });
+  };
+
   const onSortEnd = ({
     oldIndex,
     newIndex
@@ -100,7 +124,7 @@ const SortablePageList = (props: Props) => {
           )}
           <button
             className={styles.resetButton}
-            onClick={props.handleResetPages}
+            onClick={resetAllPagesEvent}
           >
             <ResetIcon className={styles.viewIcon} />
           </button>
@@ -153,4 +177,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(injectIntl(SortablePageList));
+)(injectIntl(SelectPages));
