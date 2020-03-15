@@ -22,7 +22,7 @@ import styles from "./styles.module.css";
 import { AppState } from "../../../reducers";
 import RootAction from "../../../actions/ActionType";
 
-import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_COMMANDS, BOOTSTRAP_LICENSE } from "../../../utils/constants";
+import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_COMMANDS, BOOTSTRAP_LICENSE, ROUTES } from "../../../utils/constants";
 import messages from "./messages";
 import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
@@ -35,7 +35,7 @@ interface ISortablePageListProps {
 }
 
 interface IStateProps {
-  isSummaryPage?: boolean;
+  pathname: string;
 }
 
 interface ISortableDispatchProps {
@@ -58,7 +58,7 @@ const SelectPages = (props: Props) => {
     vscode,
     selectedPages,
     selectPages,
-    isSummaryPage,
+    pathname,
     openAddPagesModal
   } = props;
   const [isMinimized, setMinimized] = React.useState(false);
@@ -96,6 +96,8 @@ const SelectPages = (props: Props) => {
     });
   };
 
+  const isSummaryPage= pathname === ROUTES.REVIEW_AND_GENERATE;
+
   const onSortEnd = ({
     oldIndex,
     newIndex
@@ -107,7 +109,8 @@ const SelectPages = (props: Props) => {
   };
   const DRAG_PIXEL_THRESHOLD = 1;
   return (
-    <div>
+    <div className={styles.sortablePages}>
+      <div>
       <div className={classnames(styles.pageListContainer, styles.sidebarItem)}>
         <div className={styles.dropdownTitle}>
           {`${props.intl!.formatMessage(messages.pages)} (${
@@ -151,6 +154,7 @@ const SelectPages = (props: Props) => {
           lockOffset='25%'
         />
       )}
+    </div>
     </div>
   );
 };

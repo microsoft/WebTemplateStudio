@@ -116,13 +116,7 @@ const RightSidebar = (props:Props)=>{
 
             <ProjectDetails/>
             <SelectFrameworks/>
-            <div className={styles.sortablePages}>
-              {showPages && (
-                <SelectPages
-                  isSummaryPage={pathname === ROUTES.REVIEW_AND_GENERATE}
-                />
-              )}
-            </div>
+            {showPages && (<SelectPages pathname={pathname}/>)}
             {hasServices && <ServicesList />}
             <div className={styles.container}>
               {pathname !== ROUTES.REVIEW_AND_GENERATE && (
