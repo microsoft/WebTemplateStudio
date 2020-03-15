@@ -13,20 +13,13 @@ import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import {
   ROUTES,
-  KEY_EVENTS,
-  BOOTSTRAP_LICENSE
+  KEY_EVENTS
 } from "../../utils/constants";
 import messages from "./strings";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
-import { ISelected } from "../../types/selected";
-import { resetAllPages } from "../../utils/extensionService/extensionService";
 import { AppState } from "../../reducers";
 import * as ModalActions from "../../actions/modalActions/modalActions";
-import { resetPagesAction, selectPagesAction } from "../../actions/wizardSelectionActions/selectPages";
-import { SelectionState } from "../../reducers/wizardSelectionReducers";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
 import { hasServicesSelector } from "../../selectors/servicesSelector";
 import { getIsVisitedRoutesSelector, IVisitedPages } from "../../selectors/wizardNavigationSelector";
 import ProjectDetails from "./ProjectDetails";
@@ -38,20 +31,13 @@ const RightSidebar = (props:Props)=>{
   const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
   const [ isSidebarUserControlled, setIsSidebarUserControlled ] = React.useState(false);
 
-  const selection:SelectionState = useSelector((state: AppState) => state.selection);
-  const vscode:IVSCodeObject = useSelector((state: AppState) => getVSCodeApiSelector(state));
   const hasServices:boolean = useSelector((state: AppState) => hasServicesSelector(state));
   const isRoutesVisited: IVisitedPages = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const wizardRoutes = useSelector((state: AppState) => state.wizardRoutes);
 
-  const {
-    showPages
-  } = isRoutesVisited;
+  const { showPages } = isRoutesVisited;
   const { pathname } = props.location;
-  const {
-    intl
-  } = props;
-
+  const { intl } = props;
   const { formatMessage } = intl;
 
   const dispatch = useDispatch();
@@ -74,71 +60,71 @@ const RightSidebar = (props:Props)=>{
   };
 
   return (
-      <div
-        className={
-          pathname === ROUTES.PAGE_DETAILS || pathname === ROUTES.NEW_PROJECT
-            ? styles.hide
-            : undefined
-        }
-      >
-        {!isSidebarOpen && (
-        <div className={styles.hamburgerContainer}>
-          <button
-            tabIndex={0}
-            className={styles.hamburgerButton}
-            onClick={sidebarToggleClickHandler}
-            aria-label={intl.formatMessage(messages.openSideBar)}
-          >
-            <div className={styles.hamburgerLine} />
-            <div className={styles.hamburgerLine} />
-            <div className={styles.hamburgerLine} />
-          </button>
-        </div>
+  <div
+    className={
+      pathname === ROUTES.PAGE_DETAILS || pathname === ROUTES.NEW_PROJECT
+        ? styles.hide
+        : undefined
+    }
+  >
+  {!isSidebarOpen && (
+  <div className={styles.hamburgerContainer}>
+    <button
+      tabIndex={0}
+      className={styles.hamburgerButton}
+      onClick={sidebarToggleClickHandler}
+      aria-label={intl.formatMessage(messages.openSideBar)}
+    >
+      <div className={styles.hamburgerLine} />
+      <div className={styles.hamburgerLine} />
+      <div className={styles.hamburgerLine} />
+    </button>
+  </div>
+  )}
+  {(isSidebarOpen || pathname === ROUTES.REVIEW_AND_GENERATE) && (
+  <div
+    role="complementary" id="dvRightSideBar"
+    className={classnames(styles.container, styles.rightViewCropped, {
+      [styles.rightViewCroppedSummaryPage]:
+        pathname === ROUTES.REVIEW_AND_GENERATE
+    })}
+  >
+    <div className={styles.summaryContainer} id="dvSummaryContainer">
+      {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+        <Cancel
+          tabIndex={0}
+          className={styles.icon}
+          onClick={sidebarToggleClickHandler}
+          onKeyDown={cancelKeyDownHandler}
+          aria-label={intl.formatMessage(messages.closeSideBar)}
+        />
       )}
-      {(isSidebarOpen || pathname === ROUTES.REVIEW_AND_GENERATE) && (
-        <div
-          role="complementary" id="dvRightSideBar"
-          className={classnames(styles.container, styles.rightViewCropped, {
-            [styles.rightViewCroppedSummaryPage]:
-              pathname === ROUTES.REVIEW_AND_GENERATE
-          })}
-        >
-          <div className={styles.summaryContainer} id="dvSummaryContainer">
-            {pathname !== ROUTES.REVIEW_AND_GENERATE && (
-              <Cancel
-                tabIndex={0}
-                className={styles.icon}
-                onClick={sidebarToggleClickHandler}
-                onKeyDown={cancelKeyDownHandler}
-                aria-label={intl.formatMessage(messages.closeSideBar)}
-              />
-            )}
 
-            <ProjectDetails/>
-            <SelectFrameworks/>
-            {showPages && (<SelectPages pathname={pathname}/>)}
-            {hasServices && <ServicesList />}
-            <div className={styles.container}>
-              {pathname !== ROUTES.REVIEW_AND_GENERATE && (
-                <div className={styles.buttonContainer}>
-                  <button
-                    className={classnames(
-                      buttonStyles.buttonDark,
-                      styles.button,
-                      styles.leftButton
-                    )}
-                    onClick={()=> dispatch(ModalActions.openViewLicensesModalAction())}
-                  >
-                    {formatMessage(messages.viewLicenses)}
-                  </button>
-                </div>
+      <ProjectDetails/>
+      <SelectFrameworks/>
+      {showPages && (<SelectPages pathname={pathname}/>)}
+      {hasServices && <ServicesList />}
+      <div className={styles.container}>
+        {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+          <div className={styles.buttonContainer}>
+            <button
+              className={classnames(
+                buttonStyles.buttonDark,
+                styles.button,
+                styles.leftButton
               )}
-              <About />
-            </div>
+              onClick={()=> dispatch(ModalActions.openViewLicensesModalAction())}
+            >
+              {formatMessage(messages.viewLicenses)}
+            </button>
           </div>
-        </div>
-      )}
+        )}
+        <About />
+      </div>
     </div>
+  </div>
+    )}
+  </div>
   );
 }
 

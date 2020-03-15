@@ -3,7 +3,6 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import DraggableSidebarItem from "./DraggableSidebarPage";
 import styles from "./styles.module.css";
 import { ISelected } from "../../../../types/selected";
-import { getSvg } from "../../../../utils/getSvgUrl";
 
 const SortableSidebarItem = SortableElement(
   ({
@@ -28,9 +27,6 @@ const SortableSidebarItem = SortableElement(
   }
 );
 
-/**
- * A component that produces sortable pages to be displayed on the sidebar or in the summary page.
- */
 const SortableContainerPage = SortableContainer(
   ({
     pages,
