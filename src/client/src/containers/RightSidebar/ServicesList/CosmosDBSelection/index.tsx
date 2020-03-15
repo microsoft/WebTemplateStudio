@@ -2,7 +2,7 @@ import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SidebarItem from "../../SidebarItem";
+import SidebarItem from "../SidebarItem";
 
 import { removeCosmosSelectionAction } from "../../../../actions/azureActions/saveCosmosDbSettings";
 import { ICosmosDB } from "../../../../reducers/wizardSelectionReducers/services/cosmosDbReducer";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import styles from "./styles.module.css";
 
 import * as ModalActions from "../../../actions/modalActions/modalActions";
@@ -14,53 +14,40 @@ import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../../actions/ActionType";
 import messages from "./messages";
 
-interface IStateProps {
-  versions: IVersions;
-}
+type Props = InjectedIntlProps;
 
-interface IDispatchProps {
-  openRedirectModal: (feedbackLinkData: IRedirectModalData | undefined) => any;
-}
-
-type Props = IStateProps & InjectedIntlProps & IDispatchProps;
-
-const About = ({ versions, intl, openRedirectModal }: Props) => {
+const About = ({ intl }: Props) => {
+  const versions: IVersions = useSelector((state: AppState) => getVersionsSelector(state));
   const { templatesVersion, wizardVersion } = versions;
   const { formatMessage } = intl;
+
+  const dispatch = useDispatch();
+
+  const openRedirectModal = (redirectLink: string) => {
+    const feedbackLinkData: IRedirectModalData = {
+      redirectLink,
+      redirectLinkLabel: intl.formatMessage(
+        messages.feedbackRedirectLinkLabel
+      ),
+      privacyStatementLink: "",
+      isThirdPartyLink: false
+    }
+    dispatch(ModalActions.openRedirectModalAction(feedbackLinkData));
+  }
 
   return (
     <div className={styles.container}>
       <div>
         <button
           className={styles.buttonToLink}
-          onClick={() =>
-            openRedirectModal({
-              redirectLink: WEB_TEMPLATE_STUDIO_LINKS.REPO,
-              redirectLinkLabel: intl.formatMessage(
-                messages.feedbackRedirectLinkLabel
-              ),
-              privacyStatementLink: "",
-              isThirdPartyLink: false
-            })
-          }
-        >
+          onClick={()=> openRedirectModal(WEB_TEMPLATE_STUDIO_LINKS.REPO)}>
           {formatMessage(messages.visitRepo)}
         </button>
       </div>
       <div>
         <button
           className={styles.buttonToLink}
-          onClick={() =>
-            openRedirectModal({
-              redirectLink: WEB_TEMPLATE_STUDIO_LINKS.ISSUES,
-              redirectLinkLabel: intl.formatMessage(
-                messages.feedbackRedirectLinkLabel
-              ),
-              privacyStatementLink: "",
-              isThirdPartyLink: false
-            })
-          }
-        >
+          onClick={()=> openRedirectModal(WEB_TEMPLATE_STUDIO_LINKS.ISSUES)}>
           {formatMessage(messages.reportIssue)}
         </button>
       </div>
@@ -75,19 +62,4 @@ const About = ({ versions, intl, openRedirectModal }: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState) => ({
-  versions: getVersionsSelector(state)
-});
-
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  openRedirectModal: (feedbackLinkData: IRedirectModalData | undefined) => {
-    dispatch(ModalActions.openRedirectModalAction(feedbackLinkData));
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(About));
+export default injectIntl(About);

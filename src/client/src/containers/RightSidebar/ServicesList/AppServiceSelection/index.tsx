@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import SidebarItem from "../../SidebarItem";
+import SidebarItem from "../SidebarItem";
 
 import { removeAppServiceSettingsAction } from "../../../../actions/azureActions/appServiceActions";
 import { IAppService } from "../../../../reducers/wizardSelectionReducers/services/appServiceReducer";
