@@ -8,19 +8,17 @@ import { injectIntl, InjectedIntl } from "react-intl";
 
 import SortableContainerPage from "./SortableContainerAndElementPage";
 
-import { selectPageAction, selectPagesAction, resetPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
+import { selectPagesAction, resetPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../../actions/modalActions/modalActions";
 
 import { ISelected } from "../../../types/selected";
 
 import { ReactComponent as ShowIcon } from "../../../assets/i-show.svg";
-import { ReactComponent as HideIcon } from "../../../assets/i-hide.svg";
 import { ReactComponent as ResetIcon } from "../../../assets/i-reset.svg";
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
 
 import styles from "./styles.module.css";
 import { AppState } from "../../../reducers";
-import RootAction from "../../../actions/ActionType";
 
 import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_COMMANDS, BOOTSTRAP_LICENSE, ROUTES } from "../../../utils/constants";
 import messages from "./messages";
@@ -29,47 +27,30 @@ import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { sendTelemetry, resetAllPages } from "../../../utils/extensionService/extensionService";
 import { SelectionState } from "../../../reducers/wizardSelectionReducers";
 
-interface ISortablePageListProps {
-  vscode: IVSCodeObject;
-  selectedPages: any[];
-}
-
 interface IStateProps {
   pathname: string;
-}
-
-interface ISortableDispatchProps {
-  updatePage: (page: ISelected) => any;
-  selectPages: (pages: ISelected[]) => any;
-  openAddPagesModal: () => any;
 }
 
 interface IIntlProps {
   intl?: InjectedIntl;
 }
 
-type Props = ISortablePageListProps &
-  ISortableDispatchProps &
-  IStateProps &
-  IIntlProps;
+type Props = IStateProps & IIntlProps;
 
 const SelectPages = (props: Props) => {
   const {
-    vscode,
-    selectedPages,
-    selectPages,
-    pathname,
-    openAddPagesModal
+    pathname
   } = props;
   const [isMinimized, setMinimized] = React.useState(false);
 
-  const selection:SelectionState = useSelector((state: AppState) => state.selection);
-  
+  const selection: SelectionState = useSelector((state: AppState) => state.selection);
+  const selectedPages: any[] = useSelector((state: AppState) => state.selection.pages);
+  const vscode: IVSCodeObject = useSelector((state: AppState) => getVSCodeApiSelector(state));
   const dispatch = useDispatch();
 
   const handleOpenAddPagesModal = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_ADD_PAGES_MODAL);
-    openAddPagesModal();
+    dispatch(ModalActions.openAddPagesModalAction());
   }
 
   const resetAllPagesEvent = () => {
@@ -105,7 +86,7 @@ const SelectPages = (props: Props) => {
     oldIndex: number;
     newIndex: number;
   }) => {
-    selectPages(arrayMove(selectedPages, oldIndex, newIndex));
+    dispatch(selectPagesAction(arrayMove(selectedPages, oldIndex, newIndex)));
   };
   const DRAG_PIXEL_THRESHOLD = 1;
   return (
@@ -159,26 +140,4 @@ const SelectPages = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState) => ({
-  selectedPages: state.selection.pages,
-  vscode: getVSCodeApiSelector(state),
-});
-
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): ISortableDispatchProps => ({
-  updatePage: (page: ISelected) => {
-    dispatch(selectPageAction(page));
-  },
-  selectPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
-  },
-  openAddPagesModal: () => {
-    dispatch(ModalActions.openAddPagesModalAction());
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(SelectPages));
+export default injectIntl(SelectPages);
