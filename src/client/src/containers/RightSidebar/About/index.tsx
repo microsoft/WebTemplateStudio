@@ -62,4 +62,4 @@ const About = ({ intl }: Props) => {
   );
 };
 
-export default injectIntl(About);
+export default injectIntl(React.memo(About));

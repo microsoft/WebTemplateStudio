@@ -1,8 +1,7 @@
 import classnames from "classnames";
 import * as React from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
-import { ThunkDispatch } from "redux-thunk";
 
 import { injectIntl, InjectedIntl } from "react-intl";
 
