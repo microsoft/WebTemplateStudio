@@ -1,10 +1,8 @@
-import { SubscriptionItem } from "../azure-auth/azureAuth";
 import { AzureResourceType, CONSTANTS } from "../../constants";
 
 export namespace NameGenerator {
   export async function generateValidAzureTypeName(
     projectName: string,
-    userSubscriptionItem: SubscriptionItem,
     azureType: AzureResourceType
   ): Promise<string> {
     // valid name can only have alphanumeric characters and dashes

@@ -432,13 +432,16 @@ const mockVsCodeApi = () => ({
           );
           break;
         case EXTENSION_COMMANDS.NAME_APP_SERVICE:
+          const isAvailable = message.appName.length > 3
+          const reason = isAvailable ? undefined : 'Invalid name';
           window.postMessage(
             {
               module: EXTENSION_MODULES.AZURE,
               command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                isAvailable: message.appName.length > 0
+                reason,
+                isAvailable
               },
               message: DEV_NO_ERROR_MSG,
               errorType: DEV_NO_ERROR_TYPE
@@ -446,12 +449,12 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
+        case EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS:
           // produces locations and resource groups in development
           window.postMessage(
             {
               module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
+              command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 locations: mockLocations,
@@ -462,16 +465,28 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE:
+        case EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE:
           // produces locations and resource groups in development
           window.postMessage(
             {
               module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
+              command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE,
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 locations: mockLocations,
                 resourceGroups: mockResourceGroups,
+              }
+            },
+            "*"
+          );
+          break;
+        case EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME:
+          window.postMessage(
+            {
+              module: EXTENSION_MODULES.AZURE,
+              command: EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME,
+              payload: {
+                scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 validName: mockAppServiceName
               }
             },
