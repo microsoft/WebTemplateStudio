@@ -48,6 +48,9 @@
     "typescript": "3.2.4",
     "typescript-react-intl": "^0.3.0"
   },
+  "resolutions": {
+    "acorn": "^7.1.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build-split": "react-scripts build",
