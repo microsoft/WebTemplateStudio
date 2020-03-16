@@ -2,7 +2,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 import App from "./App";
 
-describe("App", () => {
+xdescribe("App", () => {
   let props: any;
   let wrapper: any;
 
