@@ -26,7 +26,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
-  opacity: 50%;
+  opacity: 0.5;
   min-height: 38px;
   overflow: auto;
   box-sizing: border-box;
