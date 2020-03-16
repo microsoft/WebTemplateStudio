@@ -10,7 +10,6 @@ import {
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { VSCodeUI } from "./utils/vscodeUI";
-import { AzureServices } from "./azure/azureServices";
 import { TelemetryService, IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { Logger } from "./utils/logger";
 import { WizardServant } from "./wizardServant";
@@ -21,6 +20,7 @@ import { DependencyChecker } from "./utils/dependencyChecker";
 import { CoreTSModule } from "./coreTSModule";
 import { Defaults } from "./utils/defaults";
 import { Telemetry } from "./client-modules/telemetry";
+import { AzureModule } from "./client-modules/azureModule";
 import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
 import { ISyncReturnType } from "./types/syncReturnType";
 
@@ -34,7 +34,7 @@ export class Controller {
   public static TelemetryService: ITelemetryService;
   private vscodeUI: VSCodeUI;
   public static Logger: Logger;
-  private AzureService: AzureServices;
+  private AzureModule: AzureModule;
   private GenExperience: GenerationExperience;
   private Validator: Validator;
   private DependencyChecker: DependencyChecker;
@@ -51,7 +51,7 @@ export class Controller {
     Controller.extensionModuleMap = new Map([
       [ExtensionModule.Telemetry, this.Telemetry],
       [ExtensionModule.VSCodeUI, this.vscodeUI],
-      [ExtensionModule.Azure, this.AzureService],
+      [ExtensionModule.Azure, this.AzureModule],
       [ExtensionModule.Validator, this.Validator],
       [ExtensionModule.Generate, this.GenExperience],
       [ExtensionModule.Logger, Controller.Logger],
@@ -114,7 +114,7 @@ export class Controller {
 
     this.vscodeUI = new VSCodeUI();
     this.Validator = new Validator();
-    this.AzureService = new AzureServices();
+    this.AzureModule = new AzureModule();
     this.GenExperience = new GenerationExperience(Controller.TelemetryService);
     this.DependencyChecker = new DependencyChecker();
     this.CoreTSModule = new CoreTSModule();
