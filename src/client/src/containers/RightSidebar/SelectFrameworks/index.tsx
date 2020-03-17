@@ -14,7 +14,7 @@ import { IOption } from "../../../types/option";
 import { getIsVisitedRoutesSelector, IVisitedPages } from "../../../selectors/wizardNavigationSelector";
 import { WizardContentType } from "../../../reducers/wizardContentReducers";
 
-type Props = RouteComponentProps & InjectedIntlProps;
+type Props = InjectedIntlProps;
 
 const SelectFrameworks = (props:Props)=>{
 
@@ -24,17 +24,9 @@ const SelectFrameworks = (props:Props)=>{
     useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.frontendOptions));
   const backendDropdownItems:IDropDownOptionType[] =
     useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.backendOptions));
-  const isRoutesVisited: IVisitedPages = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const contentOptions: WizardContentType = useSelector((state: AppState) => state.wizardContent);
 
-  const {
-    showPages
-  } = isRoutesVisited;
-  const { pathname } = props.location;
-  const {
-    intl
-  } = props;
-
+  const { intl } = props;
   const { formatMessage } = intl;
   const { backendOptions } = contentOptions;
 

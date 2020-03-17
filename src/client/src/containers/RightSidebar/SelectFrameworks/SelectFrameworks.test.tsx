@@ -3,9 +3,11 @@ import configureMockStore from "redux-mock-store";
 import SelectFrameworks from "./index";
 import messages from "../strings";
 import * as ReactRedux from 'react-redux'
-import { getInitialState } from "../../../mockData/mockStore";
+import { getInitialState, addFrontEndFrameworksOptions, addBackEndFrameworksOptions, setFrontendFramework, setBackendFramework } from "../../../mockData/mockStore";
 import { render, RenderResult } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
+import { AppState } from "../../../reducers";
+import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedBackEndFramework";
 
 describe("SelectFrameworks", () => {
   let wrapper: RenderResult;
@@ -14,12 +16,17 @@ describe("SelectFrameworks", () => {
 
   describe("Tests", () => {
     beforeEach(() => {
-      store = mockStore(getInitialState());
-      let props: any = {location:{pathname:"/"}};
+      let initialState: AppState = getInitialState();
+      addFrontEndFrameworksOptions(initialState);
+      addBackEndFrameworksOptions(initialState);
+      setBackendFramework(initialState,"React");
+      setFrontendFramework(initialState,"Node");
+
+      store = mockStore(initialState);
       wrapper = render(
         <IntlProvider locale="en">
           <ReactRedux.Provider store={store}>
-            <SelectFrameworks {...props}/>
+            <SelectFrameworks/>
           </ReactRedux.Provider>
         </IntlProvider>
       );
@@ -35,5 +42,11 @@ describe("SelectFrameworks", () => {
       expect(wrapper.getByText(expectedTextFrontendFramework)).toBeDefined();
       expect(wrapper.getByText(expectedTextBackendFramework)).toBeDefined();
     });
+
+    xit("when change frontEnd framework", ()=>{
+      const { title, internalName, version, author, licenses } = store.getState().wizardContent.frontendOptions[1];
+      const newFrontEndFramework = { title: title as string, internalName, version, author, licenses };
+      store.dispatch(setSelectedBackendFrameworkAction(newFrontEndFramework));
+    })
   });
 });
