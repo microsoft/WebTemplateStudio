@@ -21,7 +21,12 @@ interface UserStatus {
   subscriptions: SubscriptionItem[];
 }
 
-export class AzureServices{
+interface ValidateResult {
+  isValid: boolean;
+  errorMessage: string;
+}
+
+export class AzureServices {
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static AzureAppServiceProvider = new AppServiceProvider();
   private static AzureResourceGroupProvider = new ResourceGroupDeploy();
@@ -58,16 +63,22 @@ export class AzureServices{
     return MICROSOFT_LEARN_TENANTS.includes(subscription.session.tenantId);
   }
 
-  public static async validateAppServiceName(name: string, subscription: string): Promise<string | undefined> {
+  public static async validateAppServiceName(name: string, subscription: string): Promise<ValidateResult> {
     const subscriptionItem = AzureServices.getSubscription(subscription);
-    const reason = await AzureServices.AzureAppServiceProvider.checkWebAppName(name, subscriptionItem);
-    return reason;
+    const message = await AzureServices.AzureAppServiceProvider.checkWebAppName(name, subscriptionItem);
+    return {
+      isValid: !message || message === "",
+      errorMessage: message ? message : "",
+    };
   }
 
-  public static async validateCosmosName(name: string, subscription: string): Promise<string | undefined> {
+  public static async validateCosmosName(name: string, subscription: string): Promise<ValidateResult> {
     const subscriptionItem = AzureServices.getSubscription(subscription);
-    const reason = await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(name, subscriptionItem);
-    return reason;
+    const message = await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(name, subscriptionItem);
+    return {
+      isValid: !message || message === "",
+      errorMessage: message ? message : "",
+    };
   }
 
   public static async generateDistinctResourceGroupSelections(payload: any): Promise<ResourceGroupSelection[]> {

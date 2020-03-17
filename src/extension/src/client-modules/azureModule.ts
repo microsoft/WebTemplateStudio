@@ -30,13 +30,13 @@ export class AzureModule extends WizardServant {
   clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
     [ExtensionCommand.Login, this.login],
     [ExtensionCommand.Logout, this.logout],
-    [ExtensionCommand.GetUserStatus, this.sendUserStatus],
-    [ExtensionCommand.GetSubscriptionDataForCosmos, this.sendCosmosSubscriptionDataToClient],
-    [ExtensionCommand.GetSubscriptionDataForAppService, this.sendAppServiceSubscriptionDataToClient],
+    [ExtensionCommand.GetUserStatus, this.getUserStatus],
+    [ExtensionCommand.GetSubscriptionDataForCosmos, this.getSubscriptionDataForCosmos],
+    [ExtensionCommand.GetSubscriptionDataForAppService, this.getSubscriptionDataForAppService],
     [ExtensionCommand.GetValidAppServiceName, this.GetValidAppServiceName],
     [ExtensionCommand.GetValidCosmosName, this.GetValidCosmosName],
-    [ExtensionCommand.NameCosmos, this.sendCosmosNameValidationStatusToClient],
-    [ExtensionCommand.NameAppService, this.sendAppServiceNameValidationStatusToClient],
+    [ExtensionCommand.ValidateCosmosName, this.validateCosmosName],
+    [ExtensionCommand.ValidateAppServiceName, this.validateAppServiceName],
   ]);
 
   public async login(message: any): Promise<IPayloadResponse> {
@@ -44,7 +44,7 @@ export class AzureModule extends WizardServant {
     const isLoggedIn = await AzureAuth.login();
     if (isLoggedIn) {
       Logger.appendLog("EXTENSION", "info", "User logged in");
-      return this.sendUserStatus(message);
+      return this.getUserStatus(message);
     }
     throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
   }
@@ -55,7 +55,7 @@ export class AzureModule extends WizardServant {
     return { payload };
   }
 
-  public async sendUserStatus(message: any): Promise<IPayloadResponse> {
+  public async getUserStatus(message: any): Promise<IPayloadResponse> {
     const userStatus = await AzureServices.getUserStatus();
     const subscriptions = this.getFormattedSubscriptions(userStatus.subscriptions);
     return {
@@ -67,7 +67,7 @@ export class AzureModule extends WizardServant {
     };
   }
 
-  public async sendCosmosSubscriptionDataToClient(message: any): Promise<IPayloadResponse> {
+  public async getSubscriptionDataForCosmos(message: any): Promise<IPayloadResponse> {
     const data = await this.getSubscriptionData(message.subscription, AzureResourceType.Cosmos);
     return {
       payload: {
@@ -77,7 +77,7 @@ export class AzureModule extends WizardServant {
     };
   }
 
-  public async sendAppServiceSubscriptionDataToClient(message: any): Promise<IPayloadResponse> {
+  public async getSubscriptionDataForAppService(message: any): Promise<IPayloadResponse> {
     const data = await this.getSubscriptionData(message.subscription, AzureResourceType.AppService);
     return {
       payload: {
@@ -107,24 +107,22 @@ export class AzureModule extends WizardServant {
     };
   }
 
-  public async sendAppServiceNameValidationStatusToClient(message: any): Promise<IPayloadResponse> {
-    const reason = await AzureServices.validateAppServiceName(message.appName, message.subscription);
+  public async validateAppServiceName(message: any): Promise<IPayloadResponse> {
+    const validateResult = await AzureServices.validateAppServiceName(message.appName, message.subscription);
     return {
       payload: {
         scope: message.payload.scope,
-        isAvailable: !reason || reason === "",
-        reason,
+        ...validateResult,
       },
     };
   }
 
-  public async sendCosmosNameValidationStatusToClient(message: any): Promise<IPayloadResponse> {
-    const reason = await AzureServices.validateCosmosName(message.appName, message.subscription);
+  public async validateCosmosName(message: any): Promise<IPayloadResponse> {
+    const validateResult = await AzureServices.validateCosmosName(message.appName, message.subscription);
     return {
       payload: {
         scope: message.payload.scope,
-        isAvailable: !reason || reason === "",
-        reason,
+        ...validateResult,
       },
     };
   }
