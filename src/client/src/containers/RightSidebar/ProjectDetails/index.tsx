@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router-dom";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "../styles.module.css";
@@ -8,7 +7,7 @@ import messages from "../strings";
 import { getOutputPath, getProjectName } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../../reducers";
 
-type Props = RouteComponentProps & InjectedIntlProps;
+type Props = InjectedIntlProps;
 
 const ProjectDetails = (props:Props)=>{
   const outputPath:string = useSelector((state: AppState) => getOutputPath(state));
@@ -43,4 +42,4 @@ const ProjectDetails = (props:Props)=>{
   );
 }
 
-export default withRouter(injectIntl(ProjectDetails));
+export default injectIntl(ProjectDetails);
