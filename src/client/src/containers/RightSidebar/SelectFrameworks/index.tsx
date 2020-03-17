@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RouteComponentProps } from "react-router";
-import { withRouter } from "react-router-dom";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "../styles.module.css";
 import messages from "../strings";
@@ -118,4 +117,4 @@ const SelectFrameworks = (props:Props)=>{
   );
 }
 
-export default withRouter(injectIntl(SelectFrameworks));
+export default injectIntl(SelectFrameworks);
