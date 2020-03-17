@@ -1,43 +1,9 @@
 import {
   EXTENSION_COMMANDS,
-  DEVELOPMENT,
-  EXTENSION_MODULES
+  DEVELOPMENT
 } from "../utils/constants";
 
-const WEST_US = "WEST US";
-const mockLocations = Array.from({ length: 12 }).fill({
-  label: WEST_US,
-  value: WEST_US
-});
-
-const RESOURCE_GROUP_MOCK = "resourceGroupMock";
-const mockResourceGroups = Array.from({ length: 12 }).fill({
-  label: RESOURCE_GROUP_MOCK,
-  value: RESOURCE_GROUP_MOCK
-});
-
-const SUBSCRIPTION_MOCK = "GIV.Hackathon";
-const mockSubscriptions = Array.from(Array(10).keys()).map(
-  (element: number) => {
-    return {
-      label: SUBSCRIPTION_MOCK + element,
-      value: SUBSCRIPTION_MOCK + element,
-      isMicrosoftLearnSubscription: false
-    };
-  }
-);
-
-mockSubscriptions.push({
-  label: "Microsoft Learn Mock Subscription",
-      value: "Microsoft Learn Mock Subscription",
-      isMicrosoftLearnSubscription: true
-});
-
-const DEV_NO_ERROR_MSG = "in development, no error message";
-const DEV_NO_ERROR_TYPE = "in development, no error type";
-
-const mockAppServiceName = "mockappservicename";
-const mockCosmosDBName = "mockcosmosdbname";
+import * as mockAzureModule from "./extensionModules/mockAzureModule";
 
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
@@ -416,82 +382,23 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
-        case EXTENSION_COMMANDS.NAME_COSMOS:
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.NAME_COSMOS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                isAvailable: message.appName.length > 0
-              },
-              message: DEV_NO_ERROR_MSG,
-              errorType: DEV_NO_ERROR_TYPE
-            },
-            "*"
-          );
+        case EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME:
+          mockAzureModule.validateCosmosName(message);
           break;
-        case EXTENSION_COMMANDS.NAME_APP_SERVICE:
-          const isAvailable = message.appName.length > 3
-          const reason = isAvailable ? undefined : 'Invalid name';
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                reason,
-                isAvailable
-              },
-              message: DEV_NO_ERROR_MSG,
-              errorType: DEV_NO_ERROR_TYPE
-            },
-            "*"
-          );
+        case EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME:
+          mockAzureModule.validateAppServiceName(message);
           break;
         case EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS:
-          // produces locations and resource groups in development
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                locations: mockLocations,
-                resourceGroups: mockResourceGroups,
-                validName: mockCosmosDBName
-              }
-            },
-            "*"
-          );
+          mockAzureModule.getSubscriptionDataForCosmos(message);
           break;
         case EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE:
-          // produces locations and resource groups in development
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                locations: mockLocations,
-                resourceGroups: mockResourceGroups,
-              }
-            },
-            "*"
-          );
+          mockAzureModule.getSubscriptionDataForAppService(message);
           break;
         case EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME:
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                validName: mockAppServiceName
-              }
-            },
-            "*"
-          );
+          mockAzureModule.getValidAppServiceName(message);
+          break;
+        case EXTENSION_COMMANDS.GET_VALID_COSMOS_NAME:
+          mockAzureModule.getValidCosmosName(message);
           break;
         case EXTENSION_COMMANDS.GENERATE:
           window.postMessage(
@@ -531,7 +438,6 @@ const mockVsCodeApi = () => ({
           );
           break;
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
-          // produces a mock login response from VSCode in development
           window.postMessage(
             {
               command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
@@ -544,7 +450,6 @@ const mockVsCodeApi = () => ({
           );
           break;
         case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
-          // produces a mock login response from VSCode in development
           window.postMessage(
             {
               command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
@@ -560,20 +465,12 @@ const mockVsCodeApi = () => ({
           break;
         case EXTENSION_COMMANDS.GEN_STATUS:
           break;
-        case EXTENSION_COMMANDS.AZURE_LOGIN:
-          // produces a mock login response from VSCode in development
-          window.postMessage(
-            {
-              command: "login",
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                email: "devEnvironment2@email.com",
-                subscriptions: mockSubscriptions
-              }
-            },
-            "*"
-          );
-          break;
+          case EXTENSION_COMMANDS.AZURE_LOGIN:
+            mockAzureModule.login(message);
+            break;
+            case EXTENSION_COMMANDS.AZURE_LOGOUT:
+              mockAzureModule.logout(message);
+              break;
         case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
           // produces a mock validation response from VSCode in development
           window.postMessage(

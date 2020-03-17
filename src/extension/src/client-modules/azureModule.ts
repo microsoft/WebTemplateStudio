@@ -33,8 +33,8 @@ export class AzureModule extends WizardServant {
     [ExtensionCommand.GetUserStatus, this.getUserStatus],
     [ExtensionCommand.GetSubscriptionDataForCosmos, this.getSubscriptionDataForCosmos],
     [ExtensionCommand.GetSubscriptionDataForAppService, this.getSubscriptionDataForAppService],
-    [ExtensionCommand.GetValidAppServiceName, this.GetValidAppServiceName],
-    [ExtensionCommand.GetValidCosmosName, this.GetValidCosmosName],
+    [ExtensionCommand.GetValidAppServiceName, this.getValidAppServiceName],
+    [ExtensionCommand.GetValidCosmosName, this.getValidCosmosName],
     [ExtensionCommand.ValidateCosmosName, this.validateCosmosName],
     [ExtensionCommand.ValidateAppServiceName, this.validateAppServiceName],
   ]);
@@ -87,7 +87,7 @@ export class AzureModule extends WizardServant {
     };
   }
 
-  public async GetValidAppServiceName(message: any): Promise<IPayloadResponse> {
+  public async getValidAppServiceName(message: any): Promise<IPayloadResponse> {
     const validName = await NameGenerator.generateValidAzureTypeName(message.projectName, AzureResourceType.AppService);
     return {
       payload: {
@@ -97,7 +97,7 @@ export class AzureModule extends WizardServant {
     };
   }
 
-  public async GetValidCosmosName(message: any): Promise<IPayloadResponse> {
+  public async getValidCosmosName(message: any): Promise<IPayloadResponse> {
     const validName = await NameGenerator.generateValidAzureTypeName(message.projectName, AzureResourceType.Cosmos);
     return {
       payload: {

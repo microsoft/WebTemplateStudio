@@ -124,9 +124,9 @@ const subscriptionDataCosmos = (vscode: IVSCodeObject, subscription: string, pro
 }
 
 const nameCosmos = (vscode: IVSCodeObject, subscription: string, appName: string) =>{
-  return postMessageAsync(EXTENSION_COMMANDS.NAME_COSMOS, {
+  return postMessageAsync(EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME, {
     module: EXTENSION_MODULES.AZURE,
-    command: EXTENSION_COMMANDS.NAME_COSMOS,
+    command: EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME,
     track: false,
     appName,
     subscription
@@ -180,9 +180,9 @@ const GetValidAppServiceName = (projectName: string, vscode: IVSCodeObject): Pro
 
 const ValidateAppServiceName = (subscription: string, appName: string, vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
-    EXTENSION_COMMANDS.NAME_APP_SERVICE, {
+    EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME, {
     module: EXTENSION_MODULES.AZURE,
-    command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
+    command: EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME,
     subscription,
     appName
   }, vscode);
