@@ -113,23 +113,13 @@ const azureLogout = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
-const subscriptionDataCosmos = (vscode: IVSCodeObject, subscription: string, projectName: string ) => {
+const getSubscriptionDataForCosmos = (vscode: IVSCodeObject, subscription: string, projectName: string ) => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS, {
     module: EXTENSION_MODULES.AZURE,
     command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
     track: true,
     subscription,
     projectName
-  }, vscode);
-}
-
-const nameCosmos = (vscode: IVSCodeObject, subscription: string, appName: string) =>{
-  return postMessageAsync(EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME, {
-    module: EXTENSION_MODULES.AZURE,
-    command: EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME,
-    track: false,
-    appName,
-    subscription
   }, vscode);
 }
 
@@ -178,6 +168,15 @@ const GetValidAppServiceName = (projectName: string, vscode: IVSCodeObject): Pro
   }, vscode);
 }
 
+const GetValidCosmosName = (projectName: string, vscode: IVSCodeObject): Promise<any> => {
+  return postMessageAsync(
+    EXTENSION_COMMANDS.GET_VALID_COSMOS_NAME, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.GET_VALID_COSMOS_NAME,
+    projectName
+  }, vscode);
+}
+
 const ValidateAppServiceName = (subscription: string, appName: string, vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME, {
@@ -185,6 +184,16 @@ const ValidateAppServiceName = (subscription: string, appName: string, vscode: I
     command: EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME,
     subscription,
     appName
+  }, vscode);
+}
+
+const ValidateCosmosName = (vscode: IVSCodeObject, subscription: string, appName: string) =>{
+  return postMessageAsync(EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME,
+    track: false,
+    appName,
+    subscription
   }, vscode);
 }
 
@@ -198,11 +207,12 @@ export {
   sendTelemetry,
   GetSubscriptionDataForAppService,
   GetValidAppServiceName,
+  GetValidCosmosName,
   ValidateAppServiceName,
   resetAllPages,
   azureLogout,
-  subscriptionDataCosmos,
-  nameCosmos,
+  getSubscriptionDataForCosmos,
+  ValidateCosmosName,
   azureLogin,
   getUserStatus,
   getTemplateInfo

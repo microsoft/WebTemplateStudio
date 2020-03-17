@@ -74,7 +74,7 @@ describe("SubscriptionSelection", () => {
       const event = {
         label: "subscription 3 label",
         value: "subscription 3 value",
-        isMicrosoftLearnSubscription: false,
+        isMicrosoftLearn: false,
       };
       const select = wrapper.getByRole("Select");
       select.props().onChange(event);

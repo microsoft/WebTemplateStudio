@@ -34,7 +34,7 @@ interface IDispatchProps {
   closeModal: () => any;
   openAppServiceModal: () => any;
   openCosmosDbModal: () => any;
-  logIntoAzure: (email: string, subscriptions: []) => void;
+  logIntoAzure: (loginData: AzureProfile) => void;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
@@ -54,10 +54,8 @@ const AzureLoginModal = (props: Props) => {
     azureLogin(props.vscode).then((event)=>{
       const message = event.data;
       if (message.payload !== null) {
-        logIntoAzure(
-          message.payload.email,
-          message.payload.subscriptions
-        );
+        const loginData = message.payload as AzureProfile;
+        logIntoAzure(loginData);
       }
     })
   };
@@ -190,8 +188,8 @@ const mapDispatchToProps = (
   openAppServiceModal: () => {
     dispatch(ModalActions.openAppServiceModalAction());
   },
-  logIntoAzure: (email: string, subscriptions: any[]) => {	
-    dispatch(logIntoAzureAction({ email, subscriptions }));	
+  logIntoAzure: (loginData: AzureProfile) => {	
+    dispatch(logIntoAzureAction(loginData));	
   },
 });
 

@@ -47,10 +47,8 @@ const AppNameEditor = ({ intl, projectName, vscode, savedAppServiceSelection }: 
       setIsValidatingName(true);
       setTimeout(() => {
         ValidateAppServiceName(subscription.value, appName, vscode).then(event => {
-          const isAvailable = event.data.payload.isAvailable;
-          const message = event.data.payload.reason ? event.data.payload.reason : "";
-          setInvalidAppNameMessage(message);
-          setIsAvailableAppName(isAvailable);
+          setInvalidAppNameMessage(event.data.payload.errorMessage);
+          setIsAvailableAppName(event.data.payload.isValid);
           setIsValidatingName(false);
         });
       }, 700);

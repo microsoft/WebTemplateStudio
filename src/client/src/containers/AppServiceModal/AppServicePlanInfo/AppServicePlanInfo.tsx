@@ -7,9 +7,10 @@ import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 import { AppState } from "../../../reducers";
 import { connect } from "react-redux";
 import { AppServiceContext } from "../AppServiceContext";
+import { getSubscriptions } from "../../../selectors/subscriptionSelector";
 
 interface IStateProps {
-  subscriptions: [any];
+  subscriptions: Subscription[];
 }
 
 type Props = IStateProps & InjectedIntlProps;
@@ -19,8 +20,8 @@ const AppServicePlanInfo = (props: Props) => {
   const { subscription } = React.useContext(AppServiceContext);
 
   const isMicrosoftLearnSubscription = (): boolean => {
-    const s = subscriptions.find(s => s.value === subscription.value);
-    return s && s.isMicrosoftLearnSubscription;
+    const s = subscriptions.find(s => s.name === subscription.value);
+    return s !== undefined && s.isMicrosoftLearn;
   };
 
   return (
@@ -47,7 +48,7 @@ const AppServicePlanInfo = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  subscriptions: state.azureProfileData.profileData.subscriptions,
+  subscriptions: getSubscriptions(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(AppServicePlanInfo));

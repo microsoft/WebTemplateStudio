@@ -1,24 +1,29 @@
 const appServiceName = "mockappservicename";
 const cosmosDBName = "mockcosmosdbname";
 
-const locations = Array.from({ length: 12 }).fill({
-  name: "WEST US",
+const locations: AzureLocation[] = Array.from(Array(5).keys()).map(() => {
+  return {
+    name: "WEST US",
+  };
 });
 
-const resourceGroups = Array.from({ length: 12 }).fill({
-  name: "resourceGroupMock",
+const resourceGroups: ResourceGroup[] = Array.from(Array(5).keys()).map(() => {
+
+  return {
+    name: "resourceGroupMock",
+  };
 });
 
-const subscriptions = Array.from(Array(5).keys()).map((element: number) => {
+const subscriptions: Subscription[] = Array.from(Array(5).keys()).map((element: number) => {
   return {
     name: "GIV.Hackathon" + element,
-    isMicrosoftLearnSubscription: false,
+    isMicrosoftLearn: false,
   };
 });
 
 subscriptions.push({
   name: "Microsoft Learn Mock Subscription",
-  isMicrosoftLearnSubscription: true,
+  isMicrosoftLearn: true,
 });
 
 export { appServiceName, cosmosDBName, locations, resourceGroups, subscriptions };

@@ -150,13 +150,12 @@ export const getInitialState = (): AppState => {
     azureProfileData: {
       isLoggedIn: false,
       profileData: {
-        subscriptions: {},
+        subscriptions: [],
         email:''
       },
       subscriptionData: {
         locations: [],
-        resourceGroups: [],
-        validName: ''
+        resourceGroups: []
       }
     },
     modals: {
@@ -281,21 +280,19 @@ const loadPages = (frameWorkName: string): Array<any>=>{
   return pages;
 }
 
-const getSubscriptions = (): Array<any> => {
+const getSubscriptions = (): Array<Subscription> => {
   const subscriptions = Array.from(Array(2).keys()).map(
     (item: number) => {
       return {
-        label: `subscription ${item} label`,
-        value:  `subscription ${item} value`,
-        isMicrosoftLearnSubscription: false
+        name: `subscription ${item} label`,
+        isMicrosoftLearn: false
       };
     }
   );
   
   subscriptions.push({
-    label: "Microsoft Learn Subscription",
-        value: "Microsoft Learn Subscription",
-        isMicrosoftLearnSubscription: true
+    name: "Microsoft Learn Subscription",
+    isMicrosoftLearn: true
   });
 
   return subscriptions;

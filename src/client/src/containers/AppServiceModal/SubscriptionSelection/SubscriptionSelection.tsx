@@ -9,11 +9,12 @@ import { AppState } from "../../../reducers";
 import { ISelectedAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { connect } from "react-redux";
 import { AppServiceContext } from "../AppServiceContext";
+import { getDropdownSubscriptions } from "../../../selectors/subscriptionSelector";
 
 const createSubscriptionLink = "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade";
 
 interface IStateProps {
-  subscriptions: [any];
+  subscriptions: IDropDownOptionType[];
   savedAppServiceSelection: ISelectedAppService | null;
 }
 
@@ -26,7 +27,9 @@ const SubscriptionSelection = (props: Props) => {
   React.useEffect(() => {
     if (savedAppServiceSelection) {
       const selectedSubscription = subscriptions.find(s => s.value === savedAppServiceSelection.subscription);
-      setSubscription(selectedSubscription);
+      if(selectedSubscription) {
+        setSubscription(selectedSubscription);
+      }
     }
   }, []);
 
@@ -50,7 +53,7 @@ const SubscriptionSelection = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  subscriptions: state.azureProfileData.profileData.subscriptions,
+  subscriptions: getDropdownSubscriptions(state),
   savedAppServiceSelection: getAppServiceSelectionSelector(state),
 });
 

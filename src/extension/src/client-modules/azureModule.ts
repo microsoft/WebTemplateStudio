@@ -15,14 +15,14 @@ interface Subscription {
 
 interface SubscriptionData {
   resourceGroups: ResourceGroup[];
-  locations: Location[];
+  locations: AzureLocation[];
 }
 
 interface ResourceGroup {
   name: string;
 }
 
-interface Location {
+interface AzureLocation {
   name: string;
 }
 
@@ -154,7 +154,7 @@ export class AzureModule extends WizardServant {
     return resources;
   }
 
-  private async getLocations(subscription: SubscriptionItem, AzureType: AzureResourceType): Promise<Location[]> {
+  private async getLocations(subscription: SubscriptionItem, AzureType: AzureResourceType): Promise<AzureLocation[]> {
     let items: LocationItem[] = [];
     switch (AzureType) {
       case AzureResourceType.Cosmos:
@@ -164,7 +164,7 @@ export class AzureModule extends WizardServant {
         items = await AzureAuth.getLocationsForApp(subscription);
         break;
     }
-    const locations: Location[] = [];
+    const locations: AzureLocation[] = [];
     items.map(item => locations.push({ name: item.locationDisplayName }));
     return locations;
   }

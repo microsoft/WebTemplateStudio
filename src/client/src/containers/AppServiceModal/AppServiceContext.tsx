@@ -1,15 +1,10 @@
 import React from "react";
 
-interface ISubscription {
-  value: string;
-  label: string;
-}
-
 interface IAppServiceContext {
-  subscription: ISubscription;
+  subscription: IDropDownOptionType;
   appName: string;
   isAvailableAppName: boolean;
-  setSubscription(subscription: ISubscription): void;
+  setSubscription(subscription: IDropDownOptionType): void;
   setAppName(appName: string): void;
   setIsAvailableAppName(isAvailableAppName: boolean): void;
 }

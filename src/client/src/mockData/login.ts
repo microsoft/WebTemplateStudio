@@ -1,14 +1,7 @@
-interface IProfileInfo {
-  name: string;
-  email: string;
-  subscriptions: Array<any>;
-}
-
-const loginToAzure = (): Promise<IProfileInfo> => {
+const loginToAzure = (): Promise<AzureProfile> => {
   return Promise.resolve({
-    name: "Kelly Ng",
     email: "t-keng@microsoft.com",
-    subscriptions: [{ name: "subscription1", isMicrosoftLearnSubscription: false }]
+    subscriptions: [{ name: "subscription1", isMicrosoftLearn: false }]
   });
 };
 

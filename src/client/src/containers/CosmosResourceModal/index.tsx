@@ -42,8 +42,9 @@ import RootAction from "../../actions/ActionType";
 import messages from "./messages";
 import classNames from "classnames";
 import keyUpHandler from "../../utils/keyUpHandler";
-import { subscriptionDataCosmos, nameCosmos } from "../../utils/extensionService/extensionService";
+import { getSubscriptionDataForCosmos, ValidateCosmosName } from "../../utils/extensionService/extensionService";
 import { getSubscriptionData } from "../../actions/azureActions/subscriptionData";
+import { getSubscriptions } from "../../selectors/subscriptionSelector";
 
 const DEFAULT_VALUE = {
   value: "Select...",
@@ -55,15 +56,15 @@ interface IDispatchProps {
   saveCosmosOptions: (cosmosOptions: any) => any;
   setValidationStatus: (status: boolean) => any;
   setCosmosResourceAccountNameAvailability: (isAvailableObject: any) => any;
-  saveSubscriptionData: (subscriptionData: any) => void;
+  saveSubscriptionData: (subscriptionData: SubscriptionData) => void;
   setAzureValidationStatus: (status: boolean) => void;
 }
 
 interface IStateProps {
   isModalOpen: boolean;
   vscode: any;
-  subscriptionData: any;
-  subscriptions: [];
+  subscriptionData: SubscriptionData;
+  subscriptions: Subscription[];
   isValidatingName: boolean;
   accountNameAvailability: any;
   selection: any;
@@ -139,6 +140,8 @@ const CosmosResourceModal = (props: Props) => {
 
   // The data we are presenting to the user (available resource groups, locations, api's)
   const [cosmosData, setData] = React.useState(cosmosInitialState);
+  const [validName, setValidName] = React.useState("");
+
 
   // Hardcoding database options until data can be loaded dynamically
   // Updates the data we are presenting to the user when the subscription changes
@@ -195,14 +198,11 @@ const CosmosResourceModal = (props: Props) => {
       setData({ ...cosmosData, resourceGroup: [] });
       props.setValidationStatus(true);
 
-      subscriptionDataCosmos(props.vscode, value, props.projectName).then((event)=>{
+      getSubscriptionDataForCosmos(props.vscode, value, props.projectName).then((event)=>{
         const message = event.data;
         if (message.payload !== null) {
-          props.saveSubscriptionData({
-            locations: message.payload.locations,
-            resourceGroups: message.payload.resourceGroups,
-            validName: message.payload.validName
-          });
+          const subscriptionData = message.payload as SubscriptionData;
+          props.saveSubscriptionData(subscriptionData);
         }
       });
       updatedForm = {
@@ -238,11 +238,11 @@ const CosmosResourceModal = (props: Props) => {
       }
       timeout = setTimeout(() => {
         timeout = undefined;
-        nameCosmos(props.vscode, cosmosFormData.subscription.value, cosmosFormData.accountName.value).then((event)=>{
+        ValidateCosmosName(props.vscode, cosmosFormData.subscription.value, cosmosFormData.accountName.value).then((event)=>{
           const message = event.data;
           props.setCosmosResourceAccountNameAvailability({
-            isAvailable: message.payload.isAvailable,
-            message: message.payload.reason
+            isAvailable: message.payload.isValid,
+            message: message.payload.errorMessage
           });
           props.setAzureValidationStatus(false);
         });
@@ -273,7 +273,7 @@ const CosmosResourceModal = (props: Props) => {
    * extension when a subscription is selected or changed
    */
   React.useEffect(() => {
-    if (props.subscriptionData.validName === "") return;
+    if (validName === "") return;
 
     // if a selection exists (i.e. user has saved form data),
     // this effect should only be run after selection has been loaded (i.e. subscription value is not empty)
@@ -283,8 +283,8 @@ const CosmosResourceModal = (props: Props) => {
       updateForm({
         ...cosmosFormData,
         accountName: {
-          value: props.subscriptionData.validName,
-          label: props.subscriptionData.validName
+          value: validName,
+          label: validName
         }
       });
       // programatically updating <input>'s value field doesn't dispatch an event to handleInput
@@ -293,12 +293,12 @@ const CosmosResourceModal = (props: Props) => {
       handleChange({
         ...cosmosFormData,
         accountName: {
-          value: props.subscriptionData.validName,
-          label: props.subscriptionData.validName
+          value: validName,
+          label: validName
         }
       });
     }
-  }, [props.subscriptionData.validName]);
+  }, [validName]);
 
   /**
    * To obtain the input value, must cast as HTMLInputElement
@@ -493,7 +493,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isValidatingName: state.selection.isValidatingName,
   selection: getCosmosSelectionInDropdownForm(state),
   subscriptionData: state.azureProfileData.subscriptionData,
-  subscriptions: state.azureProfileData.profileData.subscriptions,
+  subscriptions: getSubscriptions(state),
   vscode: state.vscode.vscodeObject,
   projectName: getProjectName(state)
 });
@@ -507,7 +507,7 @@ const mapDispatchToProps = (
   saveCosmosOptions: (cosmosOptions: any) => {
     dispatch(saveCosmosDbSettingsAction(cosmosOptions));
   },
-  saveSubscriptionData: (subscriptionData: any) => {
+  saveSubscriptionData: (subscriptionData: SubscriptionData) => {
     dispatch(getSubscriptionData(subscriptionData));
   },
   setAzureValidationStatus: (status: boolean) => {
