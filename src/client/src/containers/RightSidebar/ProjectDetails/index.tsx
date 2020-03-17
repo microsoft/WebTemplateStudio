@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "../styles.module.css";
 import messages from "../strings";

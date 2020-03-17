@@ -9,6 +9,16 @@ import { IntlProvider } from "react-intl";
 import { AppState } from "../../../reducers";
 import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedBackEndFramework";
 import { IDropdownProps } from "../../../components/Dropdown";
+jest.mock('../../../components/Dropdown',()=>{
+  return {
+    __esModule: true,
+    default: (props: IDropdownProps) => {
+      const drop: IDropDownOptionType = {label: "Angular", value: "Angular"};
+      if (props.handleChange) props.handleChange(drop);
+      return <div></div>;
+    },
+  };
+});
 
 describe("SelectFrameworks", () => {
   let wrapper: RenderResult;
@@ -16,7 +26,10 @@ describe("SelectFrameworks", () => {
   const mockStore = configureMockStore();
 
   describe("Tests", () => {
+    const mockDispatch = jest.fn()
     beforeEach(() => {
+      jest.spyOn(ReactRedux, 'useDispatch').mockReturnValue(mockDispatch)
+
       let initialState: AppState = getInitialState();
       addFrontEndFrameworksOptions(initialState);
       addBackEndFrameworksOptions(initialState);
@@ -37,11 +50,8 @@ describe("SelectFrameworks", () => {
       expect(wrapper).toBeDefined();
     });
 
-    it("should have messages", () => {
-      const expectedTextFrontendFramework = intl.formatMessage(messages.frontendFramework);
-      const expectedTextBackendFramework = intl.formatMessage(messages.backendFramework);
-      expect(wrapper.getByText(expectedTextFrontendFramework)).toBeDefined();
-      expect(wrapper.getByText(expectedTextBackendFramework)).toBeDefined();
+    it("should change front end framework", () => {
+      expect(mockDispatch).toBeCalled();
     });
   });
 });
