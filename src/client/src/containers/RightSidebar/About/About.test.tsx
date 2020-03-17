@@ -17,7 +17,6 @@ import { IRedirectModalData } from "../../RedirectModal";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 
 describe("About", () => {
-  let props: any;
   let wrapper: RenderResult;
   let store: any;
   const mockStore = configureMockStore();
