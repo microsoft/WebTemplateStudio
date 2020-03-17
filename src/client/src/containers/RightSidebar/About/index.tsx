@@ -1,17 +1,13 @@
 import * as React from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles.module.css";
-
 import * as ModalActions from "../../../actions/modalActions/modalActions";
-
 import { getVersionsSelector } from "../../../selectors/vscodeApiSelector";
 import { IVersions } from "../../../types/version";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../../reducers";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 import { IRedirectModalData } from "../../RedirectModal";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../../actions/ActionType";
 import messages from "./messages";
 
 type Props = InjectedIntlProps;
@@ -39,6 +35,7 @@ const About = ({ intl }: Props) => {
     <div className={styles.container}>
       <div>
         <button
+          data-testid="linkRepo"
           className={styles.buttonToLink}
           onClick={()=> openRedirectModal(WEB_TEMPLATE_STUDIO_LINKS.REPO)}>
           {formatMessage(messages.visitRepo)}
@@ -46,6 +43,7 @@ const About = ({ intl }: Props) => {
       </div>
       <div>
         <button
+          data-testid="linkIssues"
           className={styles.buttonToLink}
           onClick={()=> openRedirectModal(WEB_TEMPLATE_STUDIO_LINKS.ISSUES)}>
           {formatMessage(messages.reportIssue)}
