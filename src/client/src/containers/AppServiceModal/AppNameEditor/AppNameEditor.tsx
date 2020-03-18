@@ -11,48 +11,49 @@ import { ValidateAppServiceName, GetValidAppServiceName } from "../../../utils/e
 import { connect } from "react-redux";
 import { AppState } from "../../../reducers";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { getAppServiceSelectionSelector } from "../../../selectors/appServiceSelector";
 import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
-import { ISelectedAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
-import { AppServiceContext } from "../AppServiceContext";
 
 interface IProps {
   subscription: string;
+  appName: string;
+  onAppNameChange(newAppName: string): void;
+  onIsAvailableAppNameChange(isAvailable: boolean): void;
 }
 
 interface IStateProps {
   vscode: IVSCodeObject;
-  savedAppServiceSelection: ISelectedAppService | null;
   projectName: string;
 }
 
 type Props = IProps & IStateProps & InjectedIntlProps;
 
-const AppNameEditor = ({ intl, projectName, vscode, savedAppServiceSelection, subscription }: Props) => {
-  const { appName, setAppName, setIsAvailableAppName } = React.useContext(AppServiceContext);
+const AppNameEditor = ({
+  intl,
+  projectName,
+  vscode,
+  subscription,
+  appName,
+  onAppNameChange,
+  onIsAvailableAppNameChange,
+}: Props) => {
   const [invalidAppNameMessage, setInvalidAppNameMessage] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);
 
   React.useEffect(() => {
-    if (savedAppServiceSelection) {
-      setAppName(savedAppServiceSelection.siteName);
-    }
-  }, []);
-
-  React.useEffect(() => {
     if (isValidSubscription() && appName === "") {
-      GetValidAppServiceName(projectName, vscode).then(event => setAppName(event.data.payload.validName));
+      GetValidAppServiceName(projectName, vscode)
+      .then(event => onAppNameChange(event.data.payload.validName));
     }
   }, [subscription]);
 
   React.useEffect(() => {
-    setIsAvailableAppName(false);
+    onIsAvailableAppNameChange(false);
     if (appName !== "") {
       setIsValidatingName(true);
       setTimeout(() => {
         ValidateAppServiceName(subscription, appName, vscode).then(event => {
           setInvalidAppNameMessage(event.data.payload.errorMessage);
-          setIsAvailableAppName(event.data.payload.isValid);
+          onIsAvailableAppNameChange(event.data.payload.isValid);
           setIsValidatingName(false);
         });
       }, 700);
@@ -80,7 +81,7 @@ const AppNameEditor = ({ intl, projectName, vscode, savedAppServiceSelection, su
             placeholder={intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
             className={styles.input}
             value={appName}
-            onChange={e => setAppName(e.currentTarget.value)}
+            onChange={e => onAppNameChange(e.currentTarget.value)}
             disabled={!isValidSubscription()}
           />
           {appName !== "" && invalidAppNameMessage === "" && !isValidatingName && (
@@ -98,7 +99,6 @@ const AppNameEditor = ({ intl, projectName, vscode, savedAppServiceSelection, su
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   vscode: getVSCodeApiSelector(state),
-  savedAppServiceSelection: getAppServiceSelectionSelector(state),
   projectName: getProjectName(state),
 });
 

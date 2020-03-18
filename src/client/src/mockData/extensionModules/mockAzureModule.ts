@@ -109,7 +109,7 @@ const getValidCosmosName = (message: any) => {
 
 const validateCosmosName = (message: any) => {
   const isValid = message.appName.length > 3;
-  const errorMessage = isValid ? undefined : "Invalid name";
+  const errorMessage = isValid ? "" : "Invalid name";
 
   window.postMessage(
     {
@@ -129,7 +129,7 @@ const validateCosmosName = (message: any) => {
 
 const validateAppServiceName = (message: any) => {
   const isValid = message.appName.length > 3;
-  const errorMessage = isValid ? undefined : "Invalid name";
+  const errorMessage = isValid ? "" : "Invalid name";
   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,

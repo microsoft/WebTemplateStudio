@@ -15,6 +15,7 @@ interface IProps {
   initialSubscription: string;
   onChangeSubscription(selectedSubscription: string): void;
 }
+
 interface IStateProps {
   subscriptions: IDropDownOptionType[];
 }
