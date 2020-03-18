@@ -1,12 +1,7 @@
 import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
-
-import DraggableSidebarItem from "../RightSidebar/SelectPages/SortableContainerAndElementPage/DraggableSidebarPage";
-
 import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalActions";
-
-import { getCancelSvg } from "../../utils/getSvgUrl";
 import { ReactComponent as EditIcon } from "../../assets/edit.svg";
 
 import styles from "./styles.module.css";
@@ -61,24 +56,12 @@ type Props = IProps & IDispatchProps & InjectedIntlProps;
  */
 const AzureFunctionsSelection = ({
   functionApps,
-  updateFunctionNames,
-  removeAzureFunctionApp,
-  removeAzureFunction,
   openAzureFunctionsModal,
   intl
 }: Props) => {
   const { selection } = functionApps;
   const { serviceType } = functionApps.wizardContent;
-  const handleInputChange = (newTitle: string, idx: number) => {
-    const { functionNames } = functionApps.selection[0];
-    if (functionNames) {
-      functionNames[idx].title = newTitle;
-      updateFunctionNames({
-        appIndex: 0,
-        functionNames
-      });
-    }
-  };
+  
   const onEditKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       openAzureFunctionsModal();

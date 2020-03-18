@@ -1,13 +1,11 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import SelectFrameworks from "./index";
-import messages from "../strings";
 import * as ReactRedux from 'react-redux'
 import { getInitialState, addFrontEndFrameworksOptions, addBackEndFrameworksOptions, setFrontendFramework, setBackendFramework } from "../../../mockData/mockStore";
 import { render, RenderResult } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { AppState } from "../../../reducers";
-import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedBackEndFramework";
 import { IDropdownProps } from "../../../components/Dropdown";
 jest.mock('../../../components/Dropdown',()=>{
   return {

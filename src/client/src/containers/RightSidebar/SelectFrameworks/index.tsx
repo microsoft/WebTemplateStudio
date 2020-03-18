@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RouteComponentProps } from "react-router";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "../styles.module.css";
 import messages from "../strings";
@@ -11,7 +10,6 @@ import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelect
 import { setSelectedFrontendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedFrontendFramework";
 import { SelectionState } from "../../../reducers/wizardSelectionReducers";
 import { IOption } from "../../../types/option";
-import { getIsVisitedRoutesSelector, IVisitedPages } from "../../../selectors/wizardNavigationSelector";
 import { WizardContentType } from "../../../reducers/wizardContentReducers";
 
 type Props = InjectedIntlProps;

@@ -41,6 +41,7 @@ const SortableContainerPage = SortableContainer(
         {pages.map((page: ISelected, idx: number) => {
           return (
             <SortableSidebarItem
+              key={idx}
               index={idx}
               idx={idx}
               page={page}

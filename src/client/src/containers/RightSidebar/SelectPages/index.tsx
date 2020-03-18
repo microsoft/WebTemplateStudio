@@ -76,10 +76,6 @@ const SelectPages = (props: Props) => {
     });
   };
 
-  const resetAllPagesCallback = () => {
-    
-  }
-
   const isSummaryPage= pathname === ROUTES.REVIEW_AND_GENERATE;
 
   const onSortEnd = ({
