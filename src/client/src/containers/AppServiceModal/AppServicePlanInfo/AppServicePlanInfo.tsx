@@ -6,21 +6,23 @@ import { azureMessages as azureModalMessages } from "../../../mockData/azureServ
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 import { AppState } from "../../../reducers";
 import { connect } from "react-redux";
-import { AppServiceContext } from "../AppServiceContext";
 import { getSubscriptions } from "../../../selectors/subscriptionSelector";
+
+interface IProps {
+  subscription: string;
+}
 
 interface IStateProps {
   subscriptions: Subscription[];
 }
 
-type Props = IStateProps & InjectedIntlProps;
+type Props = IProps & IStateProps & InjectedIntlProps;
 
 const AppServicePlanInfo = (props: Props) => {
-  const { intl, subscriptions } = props;
-  const { subscription } = React.useContext(AppServiceContext);
+  const { intl, subscription, subscriptions } = props;
 
   const isMicrosoftLearnSubscription = (): boolean => {
-    const s = subscriptions.find(s => s.name === subscription.value);
+    const s = subscriptions.find(s => s.name === subscription);
     return s !== undefined && s.isMicrosoftLearn;
   };
 

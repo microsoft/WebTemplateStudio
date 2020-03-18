@@ -4,34 +4,35 @@ import styles from "../styles.module.css";
 import classNames from "classnames";
 import { azureMessages as messages } from "../../../mockData/azureServiceOptions";
 import Dropdown from "../../../components/Dropdown";
-import { getAppServiceSelectionSelector } from "../../../selectors/appServiceSelector";
 import { AppState } from "../../../reducers";
-import { ISelectedAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { connect } from "react-redux";
-import { AppServiceContext } from "../AppServiceContext";
 import { getDropdownSubscriptions } from "../../../selectors/subscriptionSelector";
+import { useState } from "react";
 
 const createSubscriptionLink = "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade";
 
+interface IProps {
+  initialSubscription: string;
+  onChangeSubscription(selectedSubscription: string): void;
+}
 interface IStateProps {
   subscriptions: IDropDownOptionType[];
-  savedAppServiceSelection: ISelectedAppService | null;
 }
 
-type Props = IStateProps & InjectedIntlProps;
+type Props = IProps & IStateProps & InjectedIntlProps;
 
 const SubscriptionSelection = (props: Props) => {
-  const { intl, subscriptions, savedAppServiceSelection } = props;
-  const { subscription, setSubscription } = React.useContext(AppServiceContext);
+  const { intl, subscriptions, initialSubscription, onChangeSubscription } = props;
+  const [selectedSubscription, setSelectedSubscription] = useState(subscriptions[0]);
 
   React.useEffect(() => {
-    if (savedAppServiceSelection) {
-      const selectedSubscription = subscriptions.find(s => s.value === savedAppServiceSelection.subscription);
-      if(selectedSubscription) {
-        setSubscription(selectedSubscription);
-      }
+    const subscription = subscriptions.find(s => s.value === initialSubscription);
+    if (subscription) {
+      setSelectedSubscription(subscription);
     }
   }, []);
+
+  React.useEffect(() => onChangeSubscription(selectedSubscription.value), [selectedSubscription]);
 
   return (
     <div className={classNames([styles.selectionContainer])}>
@@ -45,8 +46,8 @@ const SubscriptionSelection = (props: Props) => {
       <Dropdown
         ariaLabel={intl.formatMessage(messages.azureModalAriaSubscriptionLabel)}
         options={subscriptions}
-        handleChange={newSubscription => setSubscription(newSubscription)}
-        value={subscription}
+        handleChange={setSelectedSubscription}
+        value={selectedSubscription}
       />
     </div>
   );
@@ -54,7 +55,6 @@ const SubscriptionSelection = (props: Props) => {
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   subscriptions: getDropdownSubscriptions(state),
-  savedAppServiceSelection: getAppServiceSelectionSelector(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(SubscriptionSelection));

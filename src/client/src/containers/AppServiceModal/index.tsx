@@ -19,17 +19,15 @@ import { Dispatch } from "redux";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
 import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { getAppServiceSelectionSelector } from "../../selectors/appServiceSelector";
 import classNames from "classnames";
 import { AppServiceContext } from "./AppServiceContext";
 import { useState } from "react";
 
 interface IStateProps {
   isModalOpen: boolean;
+  appServiceInStore: ISelectedAppService | null;
 }
-const DEFAULT_SUBSCRIPTION_VALUE = {
-  value: "Select...",
-  label: "Select...",
-};
 
 interface IDispatchProps {
   closeModal: () => any;
@@ -39,13 +37,15 @@ interface IDispatchProps {
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const AppServiceModal = (props: Props) => {
-  const { intl, saveAppService, closeModal } = props;
-  const [subscription, setSubscription] = useState(DEFAULT_SUBSCRIPTION_VALUE);
+  const { intl, saveAppService, closeModal, appServiceInStore } = props;
+  const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
+
+  const [subscription, setSubscription] = useState(initialSubscription);
   const [appName, setAppName] = useState("");
   const [isAvailableAppName, setIsAvailableAppName] = useState(false);
 
   const isEnableSaveButton = (): boolean => {
-    const isSubscriptionEmpty = subscription.value === "";
+    const isSubscriptionEmpty = subscription === "";
     const isAppNameEmpty = appName === "";
 
     return !(isSubscriptionEmpty || isAppNameEmpty || !isAvailableAppName);
@@ -66,7 +66,7 @@ const AppServiceModal = (props: Props) => {
 
   const saveAppServiceSelection = (): void => {
     const appServiceSelection: ISelectedAppService = {
-      subscription: subscription.value,
+      subscription,
       resourceGroup: "",
       siteName: appName,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
@@ -77,8 +77,6 @@ const AppServiceModal = (props: Props) => {
   return (
     <AppServiceContext.Provider
       value={{
-        subscription,
-        setSubscription,
         appName,
         setAppName,
         isAvailableAppName,
@@ -91,9 +89,12 @@ const AppServiceModal = (props: Props) => {
           <Cancel className={styles.icon} onClick={closeModal} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
         </div>
         <div className={styles.bodyContainer}>
-          <SubscriptionSelection />
-          <AppNameEditor />
-          <AppServicePlanInfo />
+          <SubscriptionSelection
+            initialSubscription={subscription}
+            onChangeSubscription={(newSubscription: string) => setSubscription(newSubscription)}
+          />
+          <AppNameEditor subscription={subscription} />
+          <AppServicePlanInfo subscription={subscription} />
           <RuntimeStackInfo />
           <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
             {intl.formatMessage(azureModalMessages.azureModalSave)}
@@ -106,6 +107,7 @@ const AppServiceModal = (props: Props) => {
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAppServiceModalOpenSelector(state),
+  appServiceInStore: getAppServiceSelectionSelector(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({

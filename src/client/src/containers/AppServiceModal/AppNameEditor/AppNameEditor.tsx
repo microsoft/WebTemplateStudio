@@ -16,16 +16,20 @@ import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { ISelectedAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { AppServiceContext } from "../AppServiceContext";
 
+interface IProps {
+  subscription: string;
+}
+
 interface IStateProps {
   vscode: IVSCodeObject;
   savedAppServiceSelection: ISelectedAppService | null;
   projectName: string;
 }
 
-type Props = IStateProps & InjectedIntlProps;
+type Props = IProps & IStateProps & InjectedIntlProps;
 
-const AppNameEditor = ({ intl, projectName, vscode, savedAppServiceSelection }: Props) => {
-  const { subscription, appName, setAppName, setIsAvailableAppName } = React.useContext(AppServiceContext);
+const AppNameEditor = ({ intl, projectName, vscode, savedAppServiceSelection, subscription }: Props) => {
+  const { appName, setAppName, setIsAvailableAppName } = React.useContext(AppServiceContext);
   const [invalidAppNameMessage, setInvalidAppNameMessage] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);
 
@@ -46,7 +50,7 @@ const AppNameEditor = ({ intl, projectName, vscode, savedAppServiceSelection }: 
     if (appName !== "") {
       setIsValidatingName(true);
       setTimeout(() => {
-        ValidateAppServiceName(subscription.value, appName, vscode).then(event => {
+        ValidateAppServiceName(subscription, appName, vscode).then(event => {
           setInvalidAppNameMessage(event.data.payload.errorMessage);
           setIsAvailableAppName(event.data.payload.isValid);
           setIsValidatingName(false);
@@ -56,7 +60,7 @@ const AppNameEditor = ({ intl, projectName, vscode, savedAppServiceSelection }: 
   }, [appName]);
 
   const isValidSubscription = (): boolean => {
-    return subscription && subscription.value !== "" && subscription.value !== "Select...";
+    return subscription !== "" && subscription !== "Select...";
   };
 
   return (
