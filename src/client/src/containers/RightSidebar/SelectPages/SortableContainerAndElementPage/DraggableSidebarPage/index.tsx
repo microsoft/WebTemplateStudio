@@ -27,10 +27,6 @@ const Reorder = Loadable({
   loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../../../../utils/svgComponents/ReorderIcon"),
   loading:() => <div/>
 });
-/**
- * Takes in either a page (type ISelected) or text, but not both
- * If a page is given, then text prop will not be rendered
- */
 
 interface IStateProps {
   page: ISelected;
@@ -83,14 +79,6 @@ const DraggableSidebarItem = ({
 
   const [validValue, setValidValue] = React.useState<string>(page ? page.title:"");
   const inputRef = React.createRef<HTMLInputElement>();
-  /*const setFocus = () =>{
-      const node = inputRef.current!
-      node.focus();
-  }
-  const setSelect = () =>{
-    const node = inputRef.current!
-    node.select();
-  }*/
 
   const handleInputChange = async (newTitle: string, idx: number, isDirty: boolean) => {
     page.title = newTitle;
