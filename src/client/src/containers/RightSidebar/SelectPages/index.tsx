@@ -76,6 +76,10 @@ const SelectPages = (props: Props) => {
     });
   };
 
+  const resetAllPagesCallback = () => {
+    
+  }
+
   const isSummaryPage= pathname === ROUTES.REVIEW_AND_GENERATE;
 
   const onSortEnd = ({
@@ -106,6 +110,7 @@ const SelectPages = (props: Props) => {
             </button>
           )}
           <button
+            data-testid="btnResetPages"
             className={styles.resetButton}
             onClick={resetAllPagesEvent}
           >

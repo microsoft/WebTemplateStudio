@@ -7,8 +7,6 @@ import { getInitialState, addFrontEndFrameworksOptions, addBackEndFrameworksOpti
 import { render, RenderResult } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { AppState } from "../../../reducers";
-import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedBackEndFramework";
-import { IDropdownProps } from "../../../components/Dropdown";
 
 describe("SelectFrameworks", () => {
   let wrapper: RenderResult;
