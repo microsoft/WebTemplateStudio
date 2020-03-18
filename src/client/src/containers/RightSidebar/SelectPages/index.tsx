@@ -2,14 +2,11 @@ import classnames from "classnames";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
-
 import { injectIntl, InjectedIntl } from "react-intl";
-
 import SortableContainerPage from "./SortableContainerAndElementPage";
 
 import { selectPagesAction, resetPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../../actions/modalActions/modalActions";
-
 import { ISelected } from "../../../types/selected";
 
 import { ReactComponent as ShowIcon } from "../../../assets/i-show.svg";

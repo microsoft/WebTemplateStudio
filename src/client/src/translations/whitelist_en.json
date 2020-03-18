@@ -93,6 +93,7 @@
   "draggableSidebarItem.changeItemName",
   "draggableSidebarItem.pageNameMaxLength",
   "draggableSidebarItem.deleteItem",
+  "servicesList.SidebarItem.deleteItem",
   "rightSidebar.services",
   "rightSidebar.yourProjectDetails",
   "rightSidebar.projectName",

@@ -61,6 +61,29 @@ const DraggableSidebarItem = ({
   customInputStyle,
   selectPages
 }: Props) => {
+  React.useEffect(()=>{
+    const hasFocusOnLasPage = selectedPages.length>1 && !page.isDirty && selectedPages.length === idx;
+    if (hasFocusOnLasPage){
+      setFocus();
+      setSelect();
+      moveDownScroll();
+      page.isDirty = true;
+    }
+  },[selectedPages]);
+
+  const moveDownScroll = () =>{
+     if (document.getElementById("dvRightSideBar") && document.getElementById("dvSummaryContainer")) 
+      document.getElementById("dvRightSideBar")!.scrollTop= document.getElementById("dvSummaryContainer")!.offsetHeight;
+  }
+  const setFocus = () =>{
+    const node = inputRef.current!
+    node.focus();
+  }
+  const setSelect = () =>{
+    const node = inputRef.current!
+    node.select();
+  }
+
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       handleCloseOnClick();
@@ -80,12 +103,11 @@ const DraggableSidebarItem = ({
   const [validValue, setValidValue] = React.useState<string>(page ? page.title:"");
   const inputRef = React.createRef<HTMLInputElement>();
 
-  const handleInputChange = async (newTitle: string, idx: number, isDirty: boolean) => {
+  const handleInputChange = async (newTitle: string) => {
     page.title = newTitle;
     const validationResult = await validateItemName(newTitle, validations.itemNameValidationConfig, selectedPages);
     page.error = validationResult.error;
     page.isValidTitle = validationResult.isValid;
-    page.isDirty=isDirty
     updatePage(page);
   };
 
@@ -113,14 +135,15 @@ const DraggableSidebarItem = ({
                   value={page.title}
                   onChange={e => {
                     if (handleInputChange && idx) {
-                      handleInputChange(e.target.value, idx - 1, true);
+                      page.isDirty=true;
+                      handleInputChange(e.target.value);
                     }
                   }}
                   onBlur={e => {
                     if (handleInputChange && idx && page && page.isValidTitle===false) {
-                      handleInputChange(validValue, idx - 1, false);
+                      handleInputChange(validValue);
                     }else{
-                      handleInputChange(e.target.value, idx - 1, false);
+                      handleInputChange(e.target.value);
                     }
                     if (page.isValidTitle) setValidValue(page.title);
                   }}
