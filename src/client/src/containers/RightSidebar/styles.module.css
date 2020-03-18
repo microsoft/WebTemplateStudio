@@ -1,3 +1,10 @@
+.title {
+  font-size: 1.6em;
+  text-align: left;
+  margin: 15px;
+  margin-bottom: 20px;
+}
+
 .container {
   padding-bottom: 6vh;
   padding-top: 1vh;
