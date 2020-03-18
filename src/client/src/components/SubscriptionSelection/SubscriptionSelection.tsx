@@ -1,12 +1,11 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "../styles.module.css";
-import classNames from "classnames";
-import { azureMessages as messages } from "../../../mockData/azureServiceOptions";
-import Dropdown from "../../../components/Dropdown";
-import { AppState } from "../../../reducers";
+import styles from "./styles.module.css";
+import { azureMessages as messages } from "../../mockData/azureServiceOptions";
+import Dropdown from "../Dropdown";
+import { AppState } from "../../reducers";
 import { connect } from "react-redux";
-import { getDropdownSubscriptions } from "../../../selectors/subscriptionSelector";
+import { getDropdownSubscriptions } from "../../selectors/subscriptionSelector";
 import { useState } from "react";
 
 const createSubscriptionLink = "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade";
@@ -36,14 +35,14 @@ const SubscriptionSelection = (props: Props) => {
   React.useEffect(() => onChangeSubscription(selectedSubscription.value), [selectedSubscription]);
 
   return (
-    <div className={classNames([styles.selectionContainer])}>
-      <div className={styles.selectionHeaderContainer}>
-        <div className={styles.leftHeader}>{intl.formatMessage(messages.azureModalSubscriptionLabel)}</div>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <div className={styles.title}>{intl.formatMessage(messages.azureModalSubscriptionLabel)}</div>
         <a className={styles.link} href={createSubscriptionLink}>
           {intl.formatMessage(messages.azureModalCreateNew)}
         </a>
       </div>
-      <div className={styles.subLabel}>{intl.formatMessage(messages.azureModalSubscriptionSubLabel)}</div>
+      <div className={styles.subtitle}>{intl.formatMessage(messages.azureModalSubscriptionSubLabel)}</div>
       <Dropdown
         ariaLabel={intl.formatMessage(messages.azureModalAriaSubscriptionLabel)}
         options={subscriptions}
