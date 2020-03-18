@@ -8,9 +8,9 @@ import { AppState } from "../../../reducers";
 
 type Props = InjectedIntlProps;
 
-const ProjectDetails = (props:Props)=>{
-  const outputPath:string = useSelector((state: AppState) => getOutputPath(state));
-  const projectName:string = useSelector((state: AppState) => getProjectName(state));
+const ProjectDetails = (props: Props)=>{
+  const outputPath: string = useSelector((state: AppState) => getOutputPath(state));
+  const projectName: string = useSelector((state: AppState) => getProjectName(state));
 
   const {
     intl

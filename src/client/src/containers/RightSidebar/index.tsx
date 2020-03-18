@@ -27,11 +27,11 @@ import SelectFrameworks from "./SelectFrameworks";
 
 type Props = RouteComponentProps & InjectedIntlProps;
 
-const RightSidebar = (props:Props)=>{
+const RightSidebar = (props: Props)=>{
   const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
   const [ isSidebarUserControlled, setIsSidebarUserControlled ] = React.useState(false);
 
-  const hasServices:boolean = useSelector((state: AppState) => hasServicesSelector(state));
+  const hasServices: boolean = useSelector((state: AppState) => hasServicesSelector(state));
   const isRoutesVisited: IVisitedPages = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const wizardRoutes = useSelector((state: AppState) => state.wizardRoutes);
 

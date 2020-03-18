@@ -11,7 +11,7 @@ describe("About", () => {
   let wrapper: RenderResult;
   let store: any;
   const mockStore = configureMockStore();
-  const props:any = {pathname:"/"};
+  const props: any = {pathname:"/"};
 
   describe("Tests", () => {
     //const mockDispatch = jest.fn()

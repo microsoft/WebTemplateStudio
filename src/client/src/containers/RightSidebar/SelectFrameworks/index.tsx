@@ -16,13 +16,13 @@ import { WizardContentType } from "../../../reducers/wizardContentReducers";
 
 type Props = InjectedIntlProps;
 
-const SelectFrameworks = (props:Props)=>{
+const SelectFrameworks = (props: Props)=>{
 
-  const selection:SelectionState = useSelector((state: AppState) => state.selection);
-  const frontEndOptions:IOption[] = useSelector((state: AppState) => state.wizardContent.frontendOptions);
-  const frontendDropdownItems:IDropDownOptionType[] =
+  const selection: SelectionState = useSelector((state: AppState) => state.selection);
+  const frontEndOptions: IOption[] = useSelector((state: AppState) => state.wizardContent.frontendOptions);
+  const frontendDropdownItems: IDropDownOptionType[] =
     useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.frontendOptions));
-  const backendDropdownItems:IDropDownOptionType[] =
+  const backendDropdownItems: IDropDownOptionType[] =
     useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.backendOptions));
   const contentOptions: WizardContentType = useSelector((state: AppState) => state.wizardContent);
 
@@ -59,7 +59,7 @@ const SelectFrameworks = (props:Props)=>{
 
   const handleBackEndFrameworkChange = (option: IDropDownOptionType) => {
     const optionBackEnd =
-      backendOptions.find((optionBack:IOption) => optionBack.internalName === option.value);
+      backendOptions.find((optionBack: IOption) => optionBack.internalName === option.value);
     if (optionBackEnd){
       const { title, internalName, version, author, licenses } = optionBackEnd;
       const newBackEndFramework = { title: title as string, internalName, version, author, licenses };
@@ -69,7 +69,7 @@ const SelectFrameworks = (props:Props)=>{
 
   const handleFrontEndFrameworkChange = (option: IDropDownOptionType) => {
     const optionFrontEnd =
-      frontEndOptions.find((optionFront:IOption) => optionFront.internalName === option.value);
+      frontEndOptions.find((optionFront: IOption) => optionFront.internalName === option.value);
     if (optionFrontEnd){
       const { title, internalName, version, author, licenses } = optionFrontEnd;
       const newBackEndFramework = { title: title as string, internalName, version, author, licenses };

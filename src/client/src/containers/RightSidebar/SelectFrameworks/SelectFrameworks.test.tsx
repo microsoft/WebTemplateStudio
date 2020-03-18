@@ -15,7 +15,7 @@ describe("SelectFrameworks", () => {
 
   describe("Tests", () => {
     beforeEach(() => {
-      let initialState: AppState = getInitialState();
+      const initialState: AppState = getInitialState();
       addFrontEndFrameworksOptions(initialState);
       addBackEndFrameworksOptions(initialState);
       setBackendFramework(initialState,"React");
