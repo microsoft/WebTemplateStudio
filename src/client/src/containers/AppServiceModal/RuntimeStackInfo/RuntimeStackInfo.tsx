@@ -2,8 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ISelected } from "../../../types/selected";
-import styles from "../styles.module.css";
-import classNames from "classnames";
+import styles from "./styles.module.css";
 import { AppState } from "../../../reducers";
 import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
@@ -24,15 +23,13 @@ const RuntimeStackInfo = (props: Props) => {
   const { intl, selectedBackend } = props;
 
   return (
-    <div className={styles.selectionContainer}>
-      <div className={classNames(styles.selectionHeaderContainer, styles.leftHeader)}>
+    <div className={styles.container}>
+      <div className={styles.title}>
         {intl.formatMessage(azureModalMessages.runtimeStackLabel)}
       </div>
-      <div>
-        {intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
-          runtimeStack: backendFrameworkNameToAppServiceRuntimeStack.get(selectedBackend.internalName),
-        })}
-      </div>
+      {intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
+        runtimeStack: backendFrameworkNameToAppServiceRuntimeStack.get(selectedBackend.internalName),
+      })}
     </div>
   );
 };

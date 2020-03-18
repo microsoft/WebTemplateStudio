@@ -1,6 +1,6 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "../styles.module.css";
+import styles from "./styles.module.css";
 import classNames from "classnames";
 
 import { getProjectName } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
@@ -66,15 +66,14 @@ const AppNameEditor = ({
 
   return (
     <div
-      className={classNames(styles.selectionContainer, {
-        [styles.selectionContainerDisabled]: !isValidSubscription(),
+      className={classNames(styles.container, {
+        [styles.containerDisabled]: !isValidSubscription(),
       })}
     >
-      <div className={styles.selectionHeaderContainer}>
-        <div className={styles.leftHeader}>{intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}</div>
+      <div className={styles.title}>
+        {intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
       </div>
-      <div className={styles.subLabel}>{intl.formatMessage(azureModalMessages.appServiceAppNameSubLabel)}</div>
-      <div className={styles.errorStack}>
+      <div className={styles.subtitle}>{intl.formatMessage(azureModalMessages.appServiceAppNameSubLabel)}</div>
         <div className={styles.inputContainer}>
           <input
             aria-label={intl.formatMessage(azureModalMessages.appServiceAriaAppNameLabel)}
@@ -92,7 +91,6 @@ const AppNameEditor = ({
         {appName !== "" && !isValidatingName && invalidAppNameMessage && (
           <div className={styles.errorMessage}>{invalidAppNameMessage}</div>
         )}
-      </div>
     </div>
   );
 };

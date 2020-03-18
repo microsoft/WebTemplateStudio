@@ -1,7 +1,6 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import styles from "../styles.module.css";
-import classNames from "classnames";
+import styles from "./styles.module.css";
 import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 import { AppState } from "../../../reducers";
@@ -27,11 +26,10 @@ const AppServicePlanInfo = (props: Props) => {
   };
 
   return (
-    <div className={styles.aspInfoContainer}>
-      <div className={classNames(styles.selectionHeaderContainer, styles.leftHeader)}>
+    <div className={styles.container}>
+      <div className={styles.title}>
         {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
       </div>
-
       <div>
         {isMicrosoftLearnSubscription()
           ? intl.formatMessage(azureModalMessages.appServiceFreeTierInfo)

@@ -76,9 +76,9 @@ const AppServiceModal = (props: Props) => {
 
   return (
     <React.Fragment>
-      <div className={styles.headerContainer}>
-        <div className={styles.modalTitle}>{intl.formatMessage(azureModalMessages.appServiceModalTitle)}</div>
-        <Cancel className={styles.icon} onClick={closeModal} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
+      <div className={styles.header}>
+        <div className={styles.title}>{intl.formatMessage(azureModalMessages.appServiceModalTitle)}</div>
+        <Cancel className={styles.closeIcon} onClick={closeModal} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
       </div>
       <div className={styles.bodyContainer}>
         <SubscriptionSelection
