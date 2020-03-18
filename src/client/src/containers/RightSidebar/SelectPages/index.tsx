@@ -13,6 +13,7 @@ import * as ModalActions from "../../../actions/modalActions/modalActions";
 import { ISelected } from "../../../types/selected";
 
 import { ReactComponent as ShowIcon } from "../../../assets/i-show.svg";
+import { ReactComponent as HideIcon } from "../../../assets/i-hide.svg";
 import { ReactComponent as ResetIcon } from "../../../assets/i-reset.svg";
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
 
@@ -118,8 +119,10 @@ const SelectPages = (props: Props) => {
               setMinimized(!isMinimized);
             }}
           >
-            {isMinimized && (
+             {isMinimized ? (
               <ShowIcon className={styles.viewIcon} />
+            ) : (
+              <HideIcon className={styles.viewIcon} />
             )}
           </button>
         </div>
