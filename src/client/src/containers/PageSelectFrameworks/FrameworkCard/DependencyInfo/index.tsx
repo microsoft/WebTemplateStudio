@@ -4,14 +4,10 @@ import styles from "./styles.module.css";
 import classnames from "classnames";
 import { injectIntl, InjectedIntl } from "react-intl";
 import {
-  WIZARD_CONTENT_INTERNAL_NAMES,
-  KEY_EVENTS
+  WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../../../utils/constants";
 import { AppState } from "../../../../reducers";
 import { IDependenciesInstalled } from "../../../../reducers/dependencyInfoReducers";
-import * as ModalActions from "../../../../actions/modalActions/modalActions";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../../../actions/ActionType";
 import { IRedirectModalData } from "../../../RedirectModal";
 import Notification from "../../../../components/Notification";
 import messages from "./messages";
@@ -69,17 +65,12 @@ interface IDispatchProps {
 
 type Props = IDependencyInfoProps & IDispatchProps;
 
-/*
- * Props:
- * - frameworkName: string
- */
 class DependencyInfo extends React.Component<Props> {
   public render() {
     const {
       frameworkName,
       intl,
-      dependenciesStore,
-      openRedirectModal
+      dependenciesStore
     } = this.props;
     const dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
       frameworkName
@@ -107,39 +98,24 @@ class DependencyInfo extends React.Component<Props> {
           minimumVersion: dependencyMinimumVersion
         });
 
-    const privacyModalData = dependency
-      ? {
-          redirectLink: dependency.downloadLink,
-          redirectLinkLabel: dependency.downloadLinkLabel,
-          privacyStatementLink: dependency.privacyStatementLink,
-          isThirdPartyLink: true
-        }
-      : undefined;
-
-    const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-        openRedirectModal(privacyModalData);
-      }
-    };
 
     return (
       !installed && (
-        <div
-          role="button"
-          tabIndex={0}
-          onKeyDown={keyDownHandler}
-          onClick={() => openRedirectModal(privacyModalData)}
+        <a
+          href={dependency.downloadLink}
           className={classnames(
             styles.dependencyContainer,
             styles.borderYellow
           )}
+          target={"_blank"}
+          rel="noreferrer noopener"
         >
           <Notification
             showWarning={true}
             text={dependencyMessage}
             altMessage={intl.formatMessage(messages.iconAltMessage)}
           />
-        </div>
+        </a>
       )
     );
   }
@@ -151,15 +127,6 @@ const mapStateToProps = (state: AppState): any => {
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  openRedirectModal: (dependency: IRedirectModalData | undefined) => {
-    dispatch(ModalActions.openRedirectModalAction(dependency));
-  }
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(injectIntl(DependencyInfo));
