@@ -6,7 +6,7 @@ import dropdownstyles from "./dropdownstyles";
 
 import styles from "./styles.module.css";
 
-interface IDropdownProps {
+export interface IDropdownProps {
   options: IDropDownOptionType[];
   disabled?: boolean;
   defaultValue?: IDropDownOptionType;

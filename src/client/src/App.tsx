@@ -50,6 +50,8 @@ import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 import Loadable from "react-loadable";
 import PageDetails from "./containers/PageDetails";
 import { MODAL_TYPES } from "./actions/modalActions/typeKeys";
+import RightSidebar from "./containers/RightSidebar";
+import TopNavBar from "./components/TopNavBar";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -134,14 +136,7 @@ const App = (props: Props) => {
     loader: () => addToPromisesList(import(/* webpackChunkName: "Header" */  "./containers/Header")),
     loading:() => <div/>
   });
-  const TopNavBar = Loadable({
-    loader: () => addToPromisesList(import(/* webpackChunkName: "TopNavBar" */  "./components/TopNavBar")),
-    loading:() => <div/>
-  });
-  const RightSidebar = Loadable({
-    loader: () => addToPromisesList(import(/* webpackChunkName: "RightSidebar" */  "./containers/RightSidebar")),
-    loading:() => <div/>
-  });
+  
   const Footer = Loadable({
     loader: () => addToPromisesList(import(/* webpackChunkName: "Footer" */  "./containers/Footer")),
     loading:() => <div/>

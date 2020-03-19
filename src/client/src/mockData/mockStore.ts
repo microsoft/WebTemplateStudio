@@ -197,8 +197,8 @@ export const getInitialState = (): AppState => {
       }
     },
     versions: {
-      templatesVersion: '',
-      wizardVersion: ''
+      templatesVersion: '0.0.1',
+      wizardVersion: '0.0.2'
     },
     dependencyInfo: {
       dependencies: {}
@@ -301,14 +301,100 @@ const getSubscriptions = (): Array<any> => {
   return subscriptions;
 }
 
-export const loadMasters = (store: any) =>{
+export const addFrontEndFrameworksOptions = (store: AppState)=>{
+  store.wizardContent.frontendOptions = [
+    {
+      author: 'Facebook',
+      body: 'JavaScript framework',
+      internalName: 'React',
+      licenses: ['[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)'],
+      longDescription: 'React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'React',
+      version: '16.8.4',
+      latestVersion: "0.0.1",
+      latestVersionLoaded: true
+    },
+    {
+      author: 'Google',
+      body: 'JavaScript framework',
+      internalName: 'Angular',
+      licenses: ['[Angular](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)'],
+      longDescription: 'Angular is a platform that makes it easy to build applications with the web. Angular combines declarative templates, dependency injection, end to end tooling, and integrated best practices to solve development challenges. Angular empowers developers to build applications that live on the web, mobile, or the desktop.\r\n\r\nMore information about Angular can be found [here](https://angular.io).\r\n',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'Angular',
+      version: '7.2.0',
+      latestVersion: "0.0.1",
+      latestVersionLoaded: true
+    },
+    {
+      author: 'Evan You',
+      body: 'JavaScript framework',
+      internalName: 'Vue',
+      licenses: ['Vue](https://github.com/vuejs/vue/blob/dev/LICENSE)  \n[Vue CLI](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)'],
+      longDescription: 'Vue is a lightweight, progressive JavaScript framework for building user interfaces. Vue is heavily focused on the view layer, and is designed to be simple and flexible.\r\n\r\nMore information about Vue can be found [here](https://vuejs.org/).\r\n',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'Vue.js',
+      version: '2.6.6',
+      latestVersion: "0.0.1",
+      latestVersionLoaded: true
+    }
+  ];
+  return store;
+}
+
+export const addBackEndFrameworksOptions = (store: AppState)=>{
+  store.wizardContent.backendOptions = [
+    {
+      author: 'Various',
+      body: 'JavaScript framework',
+      internalName: 'Node',
+      licenses: ['[Node](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)'],
+      longDescription: 'Node.js is an open source server environment based on JavaScript that helps you build fast and scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. Node.js runs across various platforms like Windows, Linux, Unix, and Mac OS X.\r\n\r\nMore information about Node.js can be found [here](https://nodejs.org).\r\n',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'Node.js/Express',
+      version: '10.15.0',
+      latestVersion: "0.0.1",
+      latestVersionLoaded: true
+    },
+    {
+      author: 'Various',
+      body: 'Python framework',
+      internalName: 'Flask',
+      licenses: ['[Flask](https://github.com/pallets/flask/blob/master/LICENSE)'],
+      longDescription: 'Flask is a python microframework with a small core for building web applications. It is based on [Werkzeug](https://www.palletsprojects.com/p/werkzeug/) and [Jinja](https://www.palletsprojects.com/p/jinja/). It is licensed under [BSD](https://github.com/pallets/flask/blob/master/LICENSE) license.\r\nIt is developed and supported by Pallets organization.\r\n\r\nMore information on Flask can be found [here](http://flask.pocoo.org/)\r\n',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'Flask',
+      version: '1.0.3',
+      latestVersion: "0.0.1",
+      latestVersionLoaded: true
+    }
+  ];
+  return store;
+}
+
+export const loadMasters = (store: AppState) =>{
   store.wizardContent.pageOptions = loadPages("React");
 }
 
-export const setSubscriptions = (store: any) => {
+export const setSubscriptions = (store: AppState) => {
   store.azureProfileData.profileData.subscriptions = getSubscriptions();
 }
 
-export const setBackendFramework = (store: any, internalName: string) => {
+export const setBackendFramework = (store: AppState, internalName: string) => {
+  store.selection.backendFramework.internalName = internalName;
+}
+
+export const setFrontendFramework = (store: AppState, internalName: string) => {
   store.selection.backendFramework.internalName = internalName;
 }
