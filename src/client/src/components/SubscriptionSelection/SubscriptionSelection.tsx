@@ -24,7 +24,7 @@ type Props = IProps & IStateProps & InjectedIntlProps;
 const SubscriptionSelection = (props: Props) => {
   const { formatMessage } = props.intl;
   const { subscriptions, initialSubscription, onChangeSubscription } = props;
-  const [selectedSubscription, setSelectedSubscription] = useState(subscriptions[0]);
+  const [selectedSubscription, setSelectedSubscription] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
     const subscription = subscriptions.find(s => s.value === initialSubscription);
@@ -34,22 +34,20 @@ const SubscriptionSelection = (props: Props) => {
   }, []);
 
   React.useEffect(() => {
-    onChangeSubscription(selectedSubscription.value);
+    if (selectedSubscription) {
+      onChangeSubscription(selectedSubscription.value);
+    }
   }, [selectedSubscription]);
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.title}>
-          {formatMessage(messages.title)}
-        </div>
+        <div className={styles.title}>{formatMessage(messages.title)}</div>
         <a className={styles.link} href={createSubscriptionLink}>
           {formatMessage(messages.newSubscriptionLink)}
         </a>
       </div>
-      <div className={styles.subtitle}>
-        {formatMessage(messages.subtitle)}
-      </div>
+      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <Dropdown
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={subscriptions}

@@ -39,7 +39,7 @@ const AppNameEditor = ({
   const [isValidatingName, setIsValidatingName] = React.useState(false);
 
   React.useEffect(() => {
-    if (isValidSubscription() && appName === "") {
+    if (subscription !== "" && appName === "") {
       GetValidAppServiceName(projectName, vscode)
       .then(event => onAppNameChange(event.data.payload.validName));
     }
@@ -59,14 +59,10 @@ const AppNameEditor = ({
     }
   }, [appName]);
 
-  const isValidSubscription = (): boolean => {
-    return subscription !== "" && subscription !== "Select...";
-  };
-
   return (
     <div
       className={classNames(styles.container, {
-        [styles.containerDisabled]: !isValidSubscription(),
+        [styles.containerDisabled]: subscription === "",
       })}
     >
       <div className={styles.title}>
@@ -82,7 +78,7 @@ const AppNameEditor = ({
             className={styles.input}
             value={appName}
             onChange={e => onAppNameChange(e.currentTarget.value)}
-            disabled={!isValidSubscription()}
+            disabled={subscription === ""}
           />
           {appName !== "" && invalidAppNameMessage === "" && !isValidatingName && (
             <GreenCheck className={styles.validationIcon} />

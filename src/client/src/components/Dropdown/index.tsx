@@ -16,6 +16,11 @@ interface IDropdownProps {
   openDropdownUpwards?: boolean;
 }
 
+const DEFAULT_VALUE = {
+  value: "Select...",
+  label: "Select...",
+};
+
 const DropdownIndicator = (props: any) => {
   return (
     components.DropdownIndicator && (
@@ -43,7 +48,7 @@ const Dropdown = ({
       onChange={handleChange}
       styles={dropdownstyles}
       isSearchable={true}
-      defaultValue={defaultValue}
+      defaultValue={defaultValue || DEFAULT_VALUE}
       options={options}
       menuPlacement={openDropdownUpwards ? "top" : "auto"}
       isDisabled={disabled}
