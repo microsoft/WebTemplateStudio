@@ -1,7 +1,6 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { ISelected } from "../../../types/selected";
 import styles from "./styles.module.css";
 import { AppState } from "../../../reducers";
 import messages from "./messages";
@@ -13,29 +12,17 @@ const backendFrameworkNameToAppServiceRuntimeStack: Map<string, string> = new Ma
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, WIZARD_CONTENT_INTERNAL_NAMES.PYTHON],
 ]);
 
-interface IStateProps {
-  selectedBackend: ISelected;
-}
-
-type Props = IStateProps & InjectedIntlProps;
-
-const RuntimeStackInfo = (props: Props) => {
-  const { intl, selectedBackend } = props;
-
+const RuntimeStackInfo = ({ intl }: InjectedIntlProps) => {
+  const { formatMessage } = intl;
+  const selectedBackend = useSelector((state: AppState) => state.selection.backendFramework);
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        {intl.formatMessage(messages.title)}
-      </div>
-      {intl.formatMessage(messages.runtimeStack, {
+      <div className={styles.title}>{formatMessage(messages.title)}</div>
+      {formatMessage(messages.runtimeStack, {
         runtimeStack: backendFrameworkNameToAppServiceRuntimeStack.get(selectedBackend.internalName),
       })}
     </div>
   );
 };
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  selectedBackend: state.selection.backendFramework,
-});
-
-export default connect(mapStateToProps)(injectIntl(RuntimeStackInfo));
+export default injectIntl(RuntimeStackInfo);

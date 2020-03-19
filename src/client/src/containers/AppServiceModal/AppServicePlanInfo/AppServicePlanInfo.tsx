@@ -4,21 +4,19 @@ import styles from "./styles.module.css";
 import messages from "./messages";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 import { AppState } from "../../../reducers";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { getSubscriptions } from "../../../selectors/subscriptionSelector";
 
 interface IProps {
   subscription: string;
 }
 
-interface IStateProps {
-  subscriptions: Subscription[];
-}
-
-type Props = IProps & IStateProps & InjectedIntlProps;
+type Props = IProps & InjectedIntlProps;
 
 const AppServicePlanInfo = (props: Props) => {
-  const { intl, subscription, subscriptions } = props;
+  const { intl, subscription } = props;
+  const { formatMessage } = intl;
+  const subscriptions = useSelector((state: AppState) => getSubscriptions(state));
 
   const isMicrosoftLearnSubscription = (): boolean => {
     const s = subscriptions.find(s => s.name === subscription);
@@ -27,13 +25,11 @@ const AppServicePlanInfo = (props: Props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        {intl.formatMessage(messages.title)}
-      </div>
+      <div className={styles.title}>{formatMessage(messages.title)}</div>
       <div>
         {isMicrosoftLearnSubscription()
-          ? intl.formatMessage(messages.basicTierMessage)
-          : intl.formatMessage(messages.freeTierMessage)}
+          ? formatMessage(messages.basicTierMessage)
+          : formatMessage(messages.freeTierMessage)}
       </div>
       <a
         className={styles.link}
@@ -41,14 +37,10 @@ const AppServicePlanInfo = (props: Props) => {
         rel="noreferrer noopener"
         href={WEB_TEMPLATE_STUDIO_LINKS.APP_SERVICE_PLAN}
       >
-        {intl.formatMessage(messages.learnMore)}
+        {formatMessage(messages.learnMore)}
       </a>
     </div>
   );
 };
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  subscriptions: getSubscriptions(state),
-});
-
-export default connect(mapStateToProps)(injectIntl(AppServicePlanInfo));
+export default injectIntl(AppServicePlanInfo);

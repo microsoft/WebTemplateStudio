@@ -3,10 +3,10 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import Dropdown from "../Dropdown";
-import { AppState } from "../../reducers";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { getDropdownSubscriptions } from "../../selectors/subscriptionSelector";
 import { useState } from "react";
+import { AppState } from "../../reducers";
 
 const createSubscriptionLink = "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade";
 
@@ -15,15 +15,12 @@ interface IProps {
   onChangeSubscription(selectedSubscription: string): void;
 }
 
-interface IStateProps {
-  subscriptions: IDropDownOptionType[];
-}
-
-type Props = IProps & IStateProps & InjectedIntlProps;
+type Props = IProps & InjectedIntlProps;
 
 const SubscriptionSelection = (props: Props) => {
   const { formatMessage } = props.intl;
-  const { subscriptions, initialSubscription, onChangeSubscription } = props;
+  const { initialSubscription, onChangeSubscription } = props;
+  const subscriptions = useSelector((state: AppState) => getDropdownSubscriptions(state));
   const [selectedSubscription, setSelectedSubscription] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
@@ -58,8 +55,4 @@ const SubscriptionSelection = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  subscriptions: getDropdownSubscriptions(state),
-});
-
-export default connect(mapStateToProps)(injectIntl(SubscriptionSelection));
+export default injectIntl(SubscriptionSelection);

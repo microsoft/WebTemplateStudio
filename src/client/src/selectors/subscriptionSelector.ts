@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
+import { AppState } from "../reducers";
 
-const getSubscriptions = (state: any): Subscription[] => state.azureProfileData.profileData.subscriptions;
+const getSubscriptions = (state: AppState): Subscription[] => state.azureProfileData.profileData.subscriptions;
 
 const getDropdownSubscriptions = createSelector([getSubscriptions], subscriptions => {
   return subscriptions.map(subscription => {

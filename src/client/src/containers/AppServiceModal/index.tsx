@@ -1,5 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import asModal from "../../components/Modal";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
@@ -14,9 +14,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
 import styles from "./styles.module.css";
-import { Dispatch } from "redux";
 import { AppState } from "../../reducers";
-import RootAction from "../../actions/ActionType";
 import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { getAppServiceSelectionSelector } from "../../selectors/appServiceSelector";
 import classNames from "classnames";
@@ -24,18 +22,14 @@ import { useState } from "react";
 
 interface IStateProps {
   isModalOpen: boolean;
-  appServiceInStore: ISelectedAppService | null;
 }
 
-interface IDispatchProps {
-  closeModal: () => any;
-  saveAppService: (appServiceSettings: ISelectedAppService) => any;
-}
+type Props = IStateProps & InjectedIntlProps;
 
-type Props = IStateProps & IDispatchProps & InjectedIntlProps;
-
-const AppServiceModal = (props: Props) => {
-  const { intl, saveAppService, closeModal, appServiceInStore } = props;
+const AppServiceModal = ({ intl }: Props) => {
+  const { formatMessage } = intl;
+  const dispatch = useDispatch();
+  const appServiceInStore = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
 
@@ -59,7 +53,7 @@ const AppServiceModal = (props: Props) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
-      closeModal();
+      dispatch(closeModalAction());
     }
   };
 
@@ -70,14 +64,14 @@ const AppServiceModal = (props: Props) => {
       siteName: appName,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     };
-    saveAppService(appServiceSelection);
+    dispatch(saveAppServiceSettingsAction(appServiceSelection));
   };
 
   return (
     <React.Fragment>
       <div className={styles.header}>
-        <div className={styles.title}>{intl.formatMessage(messages.title)}</div>
-        <Cancel className={styles.closeIcon} onClick={closeModal} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
+        <div className={styles.title}>{formatMessage(messages.title)}</div>
+        <Cancel className={styles.closeIcon} onClick={() => dispatch(closeModalAction())} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
       </div>
       <div className={styles.bodyContainer}>
         <SubscriptionSelection
@@ -96,7 +90,7 @@ const AppServiceModal = (props: Props) => {
         <RuntimeStackInfo />
 
         <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
-          {intl.formatMessage(messages.save)}
+          {formatMessage(messages.save)}
         </button>
       </div>
     </React.Fragment>
@@ -104,14 +98,7 @@ const AppServiceModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  isModalOpen: isAppServiceModalOpenSelector(state),
-  appServiceInStore: getAppServiceSelectionSelector(state),
+  isModalOpen: isAppServiceModalOpenSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RootAction>): IDispatchProps => ({
-  closeModal: () => dispatch(closeModalAction()),
-  saveAppService: (appServiceSettings: ISelectedAppService) =>
-    dispatch(saveAppServiceSettingsAction(appServiceSettings)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(asModal(injectIntl(AppServiceModal)));
+export default connect(mapStateToProps)(asModal(injectIntl(AppServiceModal)));

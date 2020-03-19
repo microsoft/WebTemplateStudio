@@ -7,10 +7,9 @@ import { getProjectName } from "../../../selectors/wizardSelectionSelector/wizar
 import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
 import { ValidateCosmosAccountName, GetValidCosmosAccountName } from "../../../utils/extensionService/extensionService";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { AppState } from "../../../reducers";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 
 interface IProps {
   subscription: string;
@@ -19,29 +18,24 @@ interface IProps {
   onIsAvailableAccountNameChange(isAvailable: boolean): void;
 }
 
-interface IStateProps {
-  vscode: IVSCodeObject;
-  projectName: string;
-}
-
-type Props = IProps & IStateProps & InjectedIntlProps;
+type Props = IProps & InjectedIntlProps;
 
 const AccountNameEditor = ({
   intl,
-  projectName,
-  vscode,
   subscription,
   accountName,
   onAccountNameChange,
   onIsAvailableAccountNameChange,
 }: Props) => {
+  const { formatMessage } = intl;
+  const vscode = useSelector((state: AppState) => getVSCodeApiSelector(state));
+  const projectName = useSelector((state: AppState) => getProjectName(state));
   const [invalidAccountNameMessage, setInvalidAccountNameMessage] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);
 
   React.useEffect(() => {
     if (isValidSubscription() && accountName === "") {
-      GetValidCosmosAccountName(projectName, vscode)
-      .then(event => onAccountNameChange(event.data.payload.validName));
+      GetValidCosmosAccountName(projectName, vscode).then(event => onAccountNameChange(event.data.payload.validName));
     }
   }, [subscription]);
 
@@ -69,36 +63,27 @@ const AccountNameEditor = ({
         [styles.containerDisabled]: !isValidSubscription(),
       })}
     >
-      <div className={styles.title}>
-        {intl.formatMessage(messages.title)}
-      </div>
-      <div className={styles.subtitle}>
-        {intl.formatMessage(messages.subtitle)}
-      </div>
-        <div className={styles.inputContainer}>
-          <input
-            aria-label={intl.formatMessage(messages.ariaInputLabel)}
-            placeholder={intl.formatMessage(messages.inputPlaceholderMessage)}
-            className={styles.input}
-            value={accountName}
-            onChange={e => onAccountNameChange(e.currentTarget.value)}
-            disabled={!isValidSubscription()}
-          />
-          {accountName !== "" && invalidAccountNameMessage === "" && !isValidatingName && (
-            <GreenCheck className={styles.validationIcon} />
-          )}
-          {isValidatingName && <Spinner className={styles.spinner} />}
-        </div>
-        {accountName !== "" && !isValidatingName && invalidAccountNameMessage && (
-          <div className={styles.errorMessage}>{invalidAccountNameMessage}</div>
+      <div className={styles.title}>{formatMessage(messages.title)}</div>
+      <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
+      <div className={styles.inputContainer}>
+        <input
+          aria-label={formatMessage(messages.ariaInputLabel)}
+          placeholder={formatMessage(messages.inputPlaceholderMessage)}
+          className={styles.input}
+          value={accountName}
+          onChange={e => onAccountNameChange(e.currentTarget.value)}
+          disabled={!isValidSubscription()}
+        />
+        {accountName !== "" && invalidAccountNameMessage === "" && !isValidatingName && (
+          <GreenCheck className={styles.validationIcon} />
         )}
+        {isValidatingName && <Spinner className={styles.spinner} />}
+      </div>
+      {accountName !== "" && !isValidatingName && invalidAccountNameMessage && (
+        <div className={styles.errorMessage}>{invalidAccountNameMessage}</div>
+      )}
     </div>
   );
 };
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  vscode: getVSCodeApiSelector(state),
-  projectName: getProjectName(state),
-});
-
-export default connect(mapStateToProps)(injectIntl(AccountNameEditor));
+export default injectIntl(AccountNameEditor);

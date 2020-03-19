@@ -7,10 +7,9 @@ import { getProjectName } from "../../../selectors/wizardSelectionSelector/wizar
 import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
 import { ValidateAppServiceName, GetValidAppServiceName } from "../../../utils/extensionService/extensionService";
-import { connect } from "react-redux";
-import { AppState } from "../../../reducers";
+import { useSelector } from "react-redux";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+import { AppState } from "../../../reducers";
 
 interface IProps {
   subscription: string;
@@ -19,22 +18,18 @@ interface IProps {
   onIsAvailableAppNameChange(isAvailable: boolean): void;
 }
 
-interface IStateProps {
-  vscode: IVSCodeObject;
-  projectName: string;
-}
-
-type Props = IProps & IStateProps & InjectedIntlProps;
+type Props = IProps & InjectedIntlProps;
 
 const AppNameEditor = ({
   intl,
-  projectName,
-  vscode,
   subscription,
   appName,
   onAppNameChange,
   onIsAvailableAppNameChange,
 }: Props) => {
+  const {formatMessage} = intl;
+  const vscode = useSelector((state: AppState) => getVSCodeApiSelector(state));
+  const projectName = useSelector((state: AppState) => getProjectName(state));
   const [invalidAppNameMessage, setInvalidAppNameMessage] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);
 
@@ -66,15 +61,15 @@ const AppNameEditor = ({
       })}
     >
       <div className={styles.title}>
-        {intl.formatMessage(messages.title)}
+        {formatMessage(messages.title)}
       </div>
       <div className={styles.subtitle}>
-        {intl.formatMessage(messages.subtitle)}
+        {formatMessage(messages.subtitle)}
       </div>
         <div className={styles.inputContainer}>
           <input
-            aria-label={intl.formatMessage(messages.ariaInputLabel)}
-            placeholder={intl.formatMessage(messages.inputPlaceholderMessage)}
+            aria-label={formatMessage(messages.ariaInputLabel)}
+            placeholder={formatMessage(messages.inputPlaceholderMessage)}
             className={styles.input}
             value={appName}
             onChange={e => onAppNameChange(e.currentTarget.value)}
@@ -92,9 +87,4 @@ const AppNameEditor = ({
   );
 };
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  vscode: getVSCodeApiSelector(state),
-  projectName: getProjectName(state),
-});
-
-export default connect(mapStateToProps)(injectIntl(AppNameEditor));
+export default injectIntl(AppNameEditor);
