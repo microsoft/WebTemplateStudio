@@ -52,13 +52,16 @@ const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
   [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER, dependencies.Node]
 ]);
 
-interface IDependencyInfoProps {
-  dependenciesStore: IDependenciesInstalled;
+interface IProps {
   frameworkName: string;
   intl: InjectedIntl;
 }
 
-type Props = IDependencyInfoProps;
+interface IState {
+  dependenciesStore: IDependenciesInstalled;
+}
+
+type Props = IState & IProps;
 
 class DependencyInfo extends React.Component<Props> {
   public render() {
@@ -116,7 +119,7 @@ class DependencyInfo extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState): any => {
+const mapStateToProps = (state: AppState): IState => {
   return {
     dependenciesStore: state.dependencyInfo.dependencies
   };

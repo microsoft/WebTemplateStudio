@@ -136,7 +136,7 @@ input::placeholder {
   align-items: center;
   padding: 0px 10px;
   font-size: 90%;
-  opacity: 50%;
+  opacity: 0.5;
   box-sizing: border-box;
   position: absolute;
   width: 100%;

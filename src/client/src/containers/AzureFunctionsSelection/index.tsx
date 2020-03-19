@@ -1,12 +1,7 @@
 import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
-
-import DraggableSidebarItem from "../../components/DraggableSidebarItem";
-
 import { openAzureFunctionsModalAction } from "../../actions/modalActions/modalActions";
-
-import { getCancelSvg } from "../../utils/getSvgUrl";
 import { ReactComponent as EditIcon } from "../../assets/edit.svg";
 
 import styles from "./styles.module.css";
@@ -61,24 +56,12 @@ type Props = IProps & IDispatchProps & InjectedIntlProps;
  */
 const AzureFunctionsSelection = ({
   functionApps,
-  updateFunctionNames,
-  removeAzureFunctionApp,
-  removeAzureFunction,
   openAzureFunctionsModal,
   intl
 }: Props) => {
   const { selection } = functionApps;
   const { serviceType } = functionApps.wizardContent;
-  const handleInputChange = (newTitle: string, idx: number) => {
-    const { functionNames } = functionApps.selection[0];
-    if (functionNames) {
-      functionNames[idx].title = newTitle;
-      updateFunctionNames({
-        appIndex: 0,
-        functionNames
-      });
-    }
-  };
+  
   const onEditKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       openAzureFunctionsModal();
@@ -102,36 +85,7 @@ const AzureFunctionsSelection = ({
                   <EditIcon className={styles.editIcon} />
                 </div>
               </div>
-              <DraggableSidebarItem
-                customInputStyle={styles.input}
-                key={functionApp.appName.value + idx}
-                text={functionApp.appName.value}
-                closeSvgUrl={getCancelSvg()}
-                azureFunctions={true}
-                withIndent={true}
-                idx={idx + 1}
-                handleCloseClick={removeAzureFunctionApp}
-              />
-              {functionApp.functionNames &&
-                functionApp.functionNames.map(
-                  (functionName: IFunctionName, idx: number) => (
-                    <DraggableSidebarItem
-                      key={functionApp.appName.value + idx.toString()}
-                      closeSvgUrl={getCancelSvg()}
-                      withLargeIndent={true}
-                      azureFunctionName={functionName}
-                      isAzureFunction={true}
-                      handleInputChange={handleInputChange}
-                      idx={idx + 1}
-                      handleCloseClick={removeAzureFunction}
-                      totalCount={
-                        functionApp.functionNames
-                          ? functionApp.functionNames.length
-                          : 0
-                      }
-                    />
-                  )
-                )}
+              
             </React.Fragment>
           )
         )}

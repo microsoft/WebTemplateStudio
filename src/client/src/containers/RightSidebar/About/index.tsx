@@ -1,5 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import styles from "./styles.module.css";
 import { getVersionsSelector } from "../../../selectors/vscodeApiSelector";
 import { IVersions } from "../../../types/version";
@@ -8,16 +8,12 @@ import { AppState } from "../../../reducers";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 import messages from "./messages";
 
-interface IStateProps {
-  versions: IVersions;
-}
+type Props = InjectedIntlProps;
 
-type Props = IStateProps & InjectedIntlProps;
-
-const About = ({ versions, intl }: Props) => {
+const About = ({ intl }: Props) => {
+  const versions: IVersions = useSelector((state: AppState) => getVersionsSelector(state));
   const { templatesVersion, wizardVersion } = versions;
   const { formatMessage } = intl;
-
   return (
     <div className={styles.container}>
       <div>
@@ -51,10 +47,4 @@ const About = ({ versions, intl }: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState) => ({
-  versions: getVersionsSelector(state)
-});
-
-export default connect(
-  mapStateToProps
-)(injectIntl(About));
+export default injectIntl(About);

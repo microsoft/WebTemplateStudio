@@ -1,26 +1,24 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { getCancelSvg } from "../../../utils/getSvgUrl";
+import SidebarItem from "../SidebarItem";
 
-import DraggableSidebarItem from "../../../components/DraggableSidebarItem";
+import { removeAppServiceSettingsAction } from "../../../../actions/azureActions/appServiceActions";
+import { IAppService } from "../../../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
-import { removeAppServiceSettingsAction } from "../../../actions/azureActions/appServiceActions";
-import { IAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
-import { ReactComponent as EditIcon } from "../../../assets/edit.svg";
-
-import { openAppServiceModalAction } from "../../../actions/modalActions/modalActions";
+import { openAppServiceModalAction } from "../../../../actions/modalActions/modalActions";
 
 import styles from "./styles.module.css";
-import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../utils/constants";
+import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../../reducers";
-import RootAction from "../../../actions/ActionType";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { sendTelemetry } from "../../../utils/extensionService/extensionService";
+import { AppState } from "../../../../reducers";
+import RootAction from "../../../../actions/ActionType";
+import { IVSCodeObject } from "../../../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../../../selectors/vscodeApiSelector";
+import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 
 interface IProps {
   appServiceSelection: IAppService;
@@ -45,7 +43,6 @@ const AppServiceSelection = ({
   intl
 }: Props) => {
   const { serviceType } = appServiceSelection.wizardContent;
-  
   const openAppServiceModalAndSendTelemetry = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST)
     openAppServiceModalAction();
@@ -72,12 +69,11 @@ const AppServiceSelection = ({
               <EditIcon className={styles.editIcon} />
             </div>
           </div>
-          <DraggableSidebarItem
+          <SidebarItem
             appService={true}
             customInputStyle={styles.input}
             key={appServiceSelection.selection.siteName}
             text={appServiceSelection.selection.siteName}
-            closeSvgUrl={getCancelSvg()}
             withIndent={true}
             handleCloseClick={removeAppServiceResource}
             idx={1}
