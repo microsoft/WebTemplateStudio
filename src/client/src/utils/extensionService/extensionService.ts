@@ -168,7 +168,7 @@ const GetValidAppServiceName = (projectName: string, vscode: IVSCodeObject): Pro
   }, vscode);
 }
 
-const GetValidCosmosName = (projectName: string, vscode: IVSCodeObject): Promise<any> => {
+const GetValidCosmosAccountName = (projectName: string, vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_VALID_COSMOS_NAME, {
     module: EXTENSION_MODULES.AZURE,
@@ -187,7 +187,7 @@ const ValidateAppServiceName = (subscription: string, appName: string, vscode: I
   }, vscode);
 }
 
-const ValidateCosmosName = (subscription: string, appName: string, vscode: IVSCodeObject) =>{
+const ValidateCosmosAccountName = (subscription: string, appName: string, vscode: IVSCodeObject) =>{
   return postMessageAsync(EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME, {
     module: EXTENSION_MODULES.AZURE,
     command: EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME,
@@ -207,12 +207,12 @@ export {
   sendTelemetry,
   GetSubscriptionDataForAppService,
   GetValidAppServiceName,
-  GetValidCosmosName,
+  GetValidCosmosAccountName,
   ValidateAppServiceName,
   resetAllPages,
   azureLogout,
   getSubscriptionDataForCosmos,
-  ValidateCosmosName,
+  ValidateCosmosAccountName,
   azureLogin,
   getUserStatus,
   getTemplateInfo

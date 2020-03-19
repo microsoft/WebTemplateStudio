@@ -2,19 +2,19 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   title: {
-    id: "CosmosNameEditor.title",
+    id: "AccountNameEditor.title",
     defaultMessage: "Account Name",
   },
   subtitle: {
-    id: "CosmosNameEditor.subtitle",
+    id: "AccountNameEditor.subtitle",
     defaultMessage: "We have created a unique account name that you can edit",
   },
   inputPlaceholderMessage: {
-    id: "CosmosNameEditor.inputPlaceholderMessage",
+    id: "AccountNameEditor.inputPlaceholderMessage",
     defaultMessage: "Account Name",
   },
   ariaInputLabel: {
-    id: "CosmosNameEditor.ariaInputLabel",
+    id: "AccountNameEditor.ariaInputLabel",
     defaultMessage: "Account Name Input",
   },
 });

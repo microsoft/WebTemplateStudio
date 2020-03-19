@@ -6,7 +6,7 @@ import messages from "./messages";
 import { getProjectName } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
-import { ValidateCosmosName, GetValidCosmosName } from "../../../utils/extensionService/extensionService";
+import { ValidateCosmosAccountName, GetValidCosmosAccountName } from "../../../utils/extensionService/extensionService";
 import { connect } from "react-redux";
 import { AppState } from "../../../reducers";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
@@ -14,9 +14,9 @@ import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 
 interface IProps {
   subscription: string;
-  cosmosName: string;
-  onCosmosNameChange(newCosmosName: string): void;
-  onIsAvailableCosmosNameChange(isAvailable: boolean): void;
+  accountName: string;
+  onAccountNameChange(newAccountName: string): void;
+  onIsAvailableAccountNameChange(isAvailable: boolean): void;
 }
 
 interface IStateProps {
@@ -26,38 +26,38 @@ interface IStateProps {
 
 type Props = IProps & IStateProps & InjectedIntlProps;
 
-const CosmosNameEditor = ({
+const AccountNameEditor = ({
   intl,
   projectName,
   vscode,
   subscription,
-  cosmosName,
-  onCosmosNameChange,
-  onIsAvailableCosmosNameChange,
+  accountName,
+  onAccountNameChange,
+  onIsAvailableAccountNameChange,
 }: Props) => {
-  const [invalidCosmosNameMessage, setInvalidCosmosNameMessage] = React.useState("");
+  const [invalidAccountNameMessage, setInvalidAccountNameMessage] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);
 
   React.useEffect(() => {
-    if (isValidSubscription() && cosmosName === "") {
-      GetValidCosmosName(projectName, vscode)
-      .then(event => onCosmosNameChange(event.data.payload.validName));
+    if (isValidSubscription() && accountName === "") {
+      GetValidCosmosAccountName(projectName, vscode)
+      .then(event => onAccountNameChange(event.data.payload.validName));
     }
   }, [subscription]);
 
   React.useEffect(() => {
-    onIsAvailableCosmosNameChange(false);
-    if (cosmosName !== "") {
+    onIsAvailableAccountNameChange(false);
+    if (accountName !== "") {
       setIsValidatingName(true);
       setTimeout(() => {
-        ValidateCosmosName(subscription, cosmosName, vscode).then(event => {
-          setInvalidCosmosNameMessage(event.data.payload.errorMessage);
-          onIsAvailableCosmosNameChange(event.data.payload.isValid);
+        ValidateCosmosAccountName(subscription, accountName, vscode).then(event => {
+          setInvalidAccountNameMessage(event.data.payload.errorMessage);
+          onIsAvailableAccountNameChange(event.data.payload.isValid);
           setIsValidatingName(false);
         });
       }, 700);
     }
-  }, [cosmosName]);
+  }, [accountName]);
 
   const isValidSubscription = (): boolean => {
     return subscription !== "" && subscription !== "Select...";
@@ -80,17 +80,17 @@ const CosmosNameEditor = ({
             aria-label={intl.formatMessage(messages.ariaInputLabel)}
             placeholder={intl.formatMessage(messages.inputPlaceholderMessage)}
             className={styles.input}
-            value={cosmosName}
-            onChange={e => onCosmosNameChange(e.currentTarget.value)}
+            value={accountName}
+            onChange={e => onAccountNameChange(e.currentTarget.value)}
             disabled={!isValidSubscription()}
           />
-          {cosmosName !== "" && invalidCosmosNameMessage === "" && !isValidatingName && (
+          {accountName !== "" && invalidAccountNameMessage === "" && !isValidatingName && (
             <GreenCheck className={styles.validationIcon} />
           )}
           {isValidatingName && <Spinner className={styles.spinner} />}
         </div>
-        {cosmosName !== "" && !isValidatingName && invalidCosmosNameMessage && (
-          <div className={styles.errorMessage}>{invalidCosmosNameMessage}</div>
+        {accountName !== "" && !isValidatingName && invalidAccountNameMessage && (
+          <div className={styles.errorMessage}>{invalidAccountNameMessage}</div>
         )}
     </div>
   );
@@ -101,4 +101,4 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   projectName: getProjectName(state),
 });
 
-export default connect(mapStateToProps)(injectIntl(CosmosNameEditor));
+export default connect(mapStateToProps)(injectIntl(AccountNameEditor));
