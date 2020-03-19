@@ -26,8 +26,7 @@ type Props = IStateProps & InjectedIntlProps;
 const Licenses = ({
   frameworkLicenses,
   pageLicenses,
-  isVisited,
-  intl
+  isVisited
 }: Props) => {
   const LinkRenderer = (props: any) => {
     return (

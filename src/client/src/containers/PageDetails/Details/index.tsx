@@ -1,15 +1,12 @@
 import classnames from "classnames";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
-
 import { ReactComponent as BackArrow } from "../../../assets/backarrow.svg";
 import { getSvg } from "../../../utils/getSvgUrl";
-
 import styles from "./styles.module.css";
 import grid from "../../../css/grid.module.css";
 import backArrow from "../../../assets/backarrow.svg";
 import { KEY_EVENTS } from "../../../utils/constants";
-
 import { IOption } from "../../../types/option";
 import { ILicenseObject, License } from "../../../types/license";
 
@@ -36,13 +33,7 @@ const Details = ({
   intl
 }: Props) => {
   const LinkRenderer = (props: any) => {
-    const genericRedirect: string = intl.formatMessage(
-      messages.genericRedirect
-    );
-    const redirectLinkLabel =
-      props.children[0].props.value === genericRedirect
-        ? props.href
-        : `${props.children[0].props.value} license link`;
+
     return (
       <a
         className={styles.licenseButton}

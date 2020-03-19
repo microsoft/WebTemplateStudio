@@ -1,9 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import styles from "./styles.module.css";
-
-import * as ModalActions from "../../../actions/modalActions/modalActions";
-
 import { getVersionsSelector } from "../../../selectors/vscodeApiSelector";
 import { IVersions } from "../../../types/version";
 import { InjectedIntlProps, injectIntl } from "react-intl";
