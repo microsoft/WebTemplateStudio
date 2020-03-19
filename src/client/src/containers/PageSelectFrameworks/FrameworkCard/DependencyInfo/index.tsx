@@ -8,7 +8,6 @@ import {
 } from "../../../../utils/constants";
 import { AppState } from "../../../../reducers";
 import { IDependenciesInstalled } from "../../../../reducers/dependencyInfoReducers";
-import { IRedirectModalData } from "../../../RedirectModal";
 import Notification from "../../../../components/Notification";
 import messages from "./messages";
 
@@ -59,11 +58,7 @@ interface IDependencyInfoProps {
   intl: InjectedIntl;
 }
 
-interface IDispatchProps {
-  openRedirectModal: (dependency: IRedirectModalData | undefined) => any;
-}
-
-type Props = IDependencyInfoProps & IDispatchProps;
+type Props = IDependencyInfoProps;
 
 class DependencyInfo extends React.Component<Props> {
   public render() {
