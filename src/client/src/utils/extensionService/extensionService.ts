@@ -187,7 +187,7 @@ const ValidateAppServiceName = (subscription: string, appName: string, vscode: I
   }, vscode);
 }
 
-const ValidateCosmosName = (vscode: IVSCodeObject, subscription: string, appName: string) =>{
+const ValidateCosmosName = (subscription: string, appName: string, vscode: IVSCodeObject) =>{
   return postMessageAsync(EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME, {
     module: EXTENSION_MODULES.AZURE,
     command: EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME,
