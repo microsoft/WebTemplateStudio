@@ -143,7 +143,6 @@
     "ms-rest-azure": "^2.6.0",
     "node-fetch": "^2.3.0",
     "opn": "^5.5.0",
-    "portfinder": "^1.0.20",
     "rimraf": "^2.6.3",
     "url-parse": "^1.4.4",
     "vsce": "^1.57.1",
