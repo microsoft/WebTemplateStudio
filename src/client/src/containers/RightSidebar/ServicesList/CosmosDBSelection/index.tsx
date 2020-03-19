@@ -2,9 +2,7 @@ import _ from "lodash";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { getCancelSvg } from "../../../../utils/getSvgUrl";
-
-import DraggableSidebarItem from "../../../../components/DraggableSidebarItem";
+import SidebarItem from "../SidebarItem";
 
 import { removeCosmosSelectionAction } from "../../../../actions/azureActions/saveCosmosDbSettings";
 import { ICosmosDB } from "../../../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
@@ -77,12 +75,11 @@ const CosmosDBSelection = ({
           {cosmosSelection.selection.map((resource: any, idx: number) => {
             const { accountName } = resource;
             return (
-              <DraggableSidebarItem
+              <SidebarItem
                 cosmosDB={true}
                 customInputStyle={styles.input}
                 key={`${accountName} ${idx + 1}`}
                 text={accountName}
-                closeSvgUrl={getCancelSvg()}
                 withIndent={true}
                 handleCloseClick={removeCosmosResource}
                 idx={idx + 1}

@@ -325,7 +325,6 @@ export enum ExtensionCommand {
   GetSubscriptionDataForAppService = "get-subscription-data-for-app-service",
   GetValidAppServiceName = "get-valid-app-service-name",
   GetValidCosmosName = "get-valid-cosmos-name",
-  NameFunctions = "name-functions",
   NameCosmos = "name-cosmos",
   NameAppService = "name-app-service",
   Generate = "generate",

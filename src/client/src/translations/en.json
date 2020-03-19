@@ -165,6 +165,7 @@
   "rightSidebar.services": "Services",
   "rightSidebar.viewLicenses": "View Licenses",
   "rightSidebar.yourProjectDetails": "Your Project Details",
+  "servicesList.SidebarItem.deleteItem": "Delete item",
   "sortablePageList.duplicateName": "page name has to be unique",
   "sortablePageList.hide": "Hide",
   "sortablePageList.pages": "Pages",
