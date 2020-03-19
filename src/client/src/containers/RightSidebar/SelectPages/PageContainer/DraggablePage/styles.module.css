@@ -4,10 +4,6 @@
   margin-bottom: 10px;
 }
 
-.titleContainer {
-  display: flex;
-}
-
 .errorStack {
   width: 100%;
   display: block;
@@ -36,7 +32,7 @@
   align-items: center;
   padding: 0px 10px;
   font-size: 90%;
-  opacity: 50%;
+  opacity: 0.5;
   box-sizing: border-box;
   position: absolute;
   width: calc(100 - 8px);
@@ -50,15 +46,6 @@
 
 .errorTextContainer {
   margin-left: 10px;
-}
-
-.itemContainer {
-  width: 100%;
-  height: 1em;
-  margin-left: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .largeIndentContainer {
@@ -103,13 +90,6 @@
   fill: var(--vscode-editor-foreground);
 }
 
-.inputContainer {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.azureFunctionNameInput,
 .input {
   padding-left: 0.5em;
   width: 100%;
@@ -121,12 +101,10 @@
   border: none;
 }
 
-.disabledInput {
-  padding-left: 0px;
-}
-
-.azureFunctionNameInput {
-  padding-left: 0;
+.inputContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .iconContainer {

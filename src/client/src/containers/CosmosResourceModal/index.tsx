@@ -42,7 +42,7 @@ import RootAction from "../../actions/ActionType";
 import messages from "./messages";
 import classNames from "classnames";
 import keyUpHandler from "../../utils/keyUpHandler";
-import { getSubscriptionDataForCosmos, ValidateCosmosName } from "../../utils/extensionService/extensionService";
+import { getSubscriptionDataForCosmos, ValidateCosmosAccountName } from "../../utils/extensionService/extensionService";
 import { getSubscriptionData } from "../../actions/azureActions/subscriptionData";
 import { getSubscriptions } from "../../selectors/subscriptionSelector";
 
@@ -238,7 +238,7 @@ const CosmosResourceModal = (props: Props) => {
       }
       timeout = setTimeout(() => {
         timeout = undefined;
-        ValidateCosmosName(props.vscode, cosmosFormData.subscription.value, cosmosFormData.accountName.value).then((event)=>{
+        ValidateCosmosAccountName(cosmosFormData.subscription.value, cosmosFormData.accountName.value, props.vscode).then((event)=>{
           const message = event.data;
           props.setCosmosResourceAccountNameAvailability({
             isAvailable: message.payload.isValid,
