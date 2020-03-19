@@ -3,7 +3,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
 import { injectIntl, InjectedIntl } from "react-intl";
-import SortableContainerPage from "./SortableContainerAndElementPage";
+import PageContainer from "./PageContainer";
 
 import { selectPagesAction, resetPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../../actions/modalActions/modalActions";
@@ -125,7 +125,7 @@ const SelectPages = (props: Props) => {
         </div>
       </div>
       {!isMinimized && (
-        <SortableContainerPage
+        <PageContainer
           pages={selectedPages}
           maxInputLength={PAGE_NAME_CHARACTER_LIMIT}
           onSortEnd={onSortEnd}

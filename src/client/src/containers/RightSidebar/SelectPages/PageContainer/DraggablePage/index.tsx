@@ -2,17 +2,12 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 import Loadable from "react-loadable";
-
 import { ReactComponent as CloseSVG } from "../../../../../assets/cancel.svg";
-
 import { getSvg } from "../../../../../utils/getSvgUrl";
-
 import { ISelected } from "../../../../../types/selected";
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../../../../utils/constants";
-
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
-
 import { AppState } from "../../../../../reducers";
 
 import messages from "./messages";
@@ -49,7 +44,7 @@ interface ISortableDispatchProps {
 
 type Props = IStateProps & ISortablePageListProps & InjectedIntlProps & ISortableDispatchProps;
 
-const DraggableSidebarItem = ({
+const DraggablePage = ({
   page,
   maxInputLength,
   idx,
@@ -201,4 +196,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(injectIntl(DraggableSidebarItem));
+)(injectIntl(DraggablePage));

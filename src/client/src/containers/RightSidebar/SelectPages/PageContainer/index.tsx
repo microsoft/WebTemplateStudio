@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
-import DraggableSidebarItem from "./DraggableSidebarPage";
+import DraggablePage from "./DraggablePage";
 import styles from "./styles.module.css";
 import { ISelected } from "../../../../types/selected";
 
@@ -17,7 +17,7 @@ const SortableSidebarItem = SortableElement(
     totalPageCount: number;
   }) => {
     return (
-      <DraggableSidebarItem
+      <DraggablePage
         page={page}
         maxInputLength={maxInputLength}
         idx={idx + 1}
@@ -27,7 +27,7 @@ const SortableSidebarItem = SortableElement(
   }
 );
 
-const SortableContainerPage = SortableContainer(
+const PageContainer = SortableContainer(
   ({
     pages,
     maxInputLength
@@ -56,4 +56,4 @@ const SortableContainerPage = SortableContainer(
   }
 );
 
-export default SortableContainerPage;
+export default PageContainer;
