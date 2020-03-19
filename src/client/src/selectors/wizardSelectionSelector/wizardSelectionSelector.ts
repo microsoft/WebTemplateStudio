@@ -17,7 +17,7 @@ const getProjectNameValidation = (state: AppState): IValidation =>
   state.selection.projectNameObject.validation;
 const getValidations = (state: AppState): IValidations => {
   let validations: IValidations;
-  if (state.selection.validations.projectNameValidationConfig){
+  if (state.selection.validations && state.selection.validations.projectNameValidationConfig){
     validations = state.selection.validations;
   }else{
     validations = {
