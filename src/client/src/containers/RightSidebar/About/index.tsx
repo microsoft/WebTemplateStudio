@@ -9,60 +9,39 @@ import { IVersions } from "../../../types/version";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../../reducers";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
-import { IRedirectModalData } from "../../RedirectModal";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../../actions/ActionType";
 import messages from "./messages";
 
 interface IStateProps {
   versions: IVersions;
 }
 
-interface IDispatchProps {
-  openRedirectModal: (feedbackLinkData: IRedirectModalData | undefined) => any;
-}
+type Props = IStateProps & InjectedIntlProps;
 
-type Props = IStateProps & InjectedIntlProps & IDispatchProps;
-
-const About = ({ versions, intl, openRedirectModal }: Props) => {
+const About = ({ versions, intl }: Props) => {
   const { templatesVersion, wizardVersion } = versions;
   const { formatMessage } = intl;
 
   return (
     <div className={styles.container}>
       <div>
-        <button
+        <a
           className={styles.buttonToLink}
-          onClick={() =>
-            openRedirectModal({
-              redirectLink: WEB_TEMPLATE_STUDIO_LINKS.REPO,
-              redirectLinkLabel: intl.formatMessage(
-                messages.feedbackRedirectLinkLabel
-              ),
-              privacyStatementLink: "",
-              isThirdPartyLink: false
-            })
-          }
+          href={WEB_TEMPLATE_STUDIO_LINKS.REPO}
+          target={"_blank"}
+          rel="noreferrer noopener"
         >
           {formatMessage(messages.visitRepo)}
-        </button>
+        </a>
       </div>
       <div>
-        <button
+        <a
+          target={"_blank"}
+          rel="noreferrer noopener"
           className={styles.buttonToLink}
-          onClick={() =>
-            openRedirectModal({
-              redirectLink: WEB_TEMPLATE_STUDIO_LINKS.ISSUES,
-              redirectLinkLabel: intl.formatMessage(
-                messages.feedbackRedirectLinkLabel
-              ),
-              privacyStatementLink: "",
-              isThirdPartyLink: false
-            })
-          }
+          href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
         >
           {formatMessage(messages.reportIssue)}
-        </button>
+        </a>
       </div>
 
       <div className={styles.wizardInfo}>
@@ -79,15 +58,6 @@ const mapStateToProps = (state: AppState) => ({
   versions: getVersionsSelector(state)
 });
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  openRedirectModal: (feedbackLinkData: IRedirectModalData | undefined) => {
-    dispatch(ModalActions.openRedirectModalAction(feedbackLinkData));
-  }
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(injectIntl(About));
