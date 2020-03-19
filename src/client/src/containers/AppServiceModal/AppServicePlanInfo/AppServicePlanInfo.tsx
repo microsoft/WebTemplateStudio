@@ -1,7 +1,7 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
-import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
+import messages from "./messages";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 import { AppState } from "../../../reducers";
 import { connect } from "react-redux";
@@ -28,12 +28,12 @@ const AppServicePlanInfo = (props: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>
-        {intl.formatMessage(azureModalMessages.appServicePlanLabel)}
+        {intl.formatMessage(messages.title)}
       </div>
       <div>
         {isMicrosoftLearnSubscription()
-          ? intl.formatMessage(azureModalMessages.appServiceFreeTierInfo)
-          : intl.formatMessage(azureModalMessages.appServiceBasicTierInfo)}
+          ? intl.formatMessage(messages.basicTierMessage)
+          : intl.formatMessage(messages.freeTierMessage)}
       </div>
       <a
         className={styles.link}
@@ -41,7 +41,7 @@ const AppServicePlanInfo = (props: Props) => {
         rel="noreferrer noopener"
         href={WEB_TEMPLATE_STUDIO_LINKS.APP_SERVICE_PLAN}
       >
-        {intl.formatMessage(azureModalMessages.appServiceLearnMore)}
+        {intl.formatMessage(messages.learnMore)}
       </a>
     </div>
   );

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
-import { azureMessages as messages } from "../../mockData/azureServiceOptions";
+import messages from "./messages";
 import Dropdown from "../Dropdown";
 import { AppState } from "../../reducers";
 import { connect } from "react-redux";
@@ -22,7 +22,8 @@ interface IStateProps {
 type Props = IProps & IStateProps & InjectedIntlProps;
 
 const SubscriptionSelection = (props: Props) => {
-  const { intl, subscriptions, initialSubscription, onChangeSubscription } = props;
+  const { formatMessage } = props.intl;
+  const { subscriptions, initialSubscription, onChangeSubscription } = props;
   const [selectedSubscription, setSelectedSubscription] = useState(subscriptions[0]);
 
   React.useEffect(() => {
@@ -32,19 +33,25 @@ const SubscriptionSelection = (props: Props) => {
     }
   }, []);
 
-  React.useEffect(() => onChangeSubscription(selectedSubscription.value), [selectedSubscription]);
+  React.useEffect(() => {
+    onChangeSubscription(selectedSubscription.value);
+  }, [selectedSubscription]);
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.title}>{intl.formatMessage(messages.azureModalSubscriptionLabel)}</div>
+        <div className={styles.title}>
+          {formatMessage(messages.title)}
+        </div>
         <a className={styles.link} href={createSubscriptionLink}>
-          {intl.formatMessage(messages.azureModalCreateNew)}
+          {formatMessage(messages.newSubscriptionLink)}
         </a>
       </div>
-      <div className={styles.subtitle}>{intl.formatMessage(messages.azureModalSubscriptionSubLabel)}</div>
+      <div className={styles.subtitle}>
+        {formatMessage(messages.subtitle)}
+      </div>
       <Dropdown
-        ariaLabel={intl.formatMessage(messages.azureModalAriaSubscriptionLabel)}
+        ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={subscriptions}
         handleChange={setSelectedSubscription}
         value={selectedSubscription}

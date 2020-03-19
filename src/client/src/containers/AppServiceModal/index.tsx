@@ -1,10 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import asModal from "../../components/Modal";
-
 import { closeModalAction } from "../../actions/modalActions/modalActions";
 import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
-import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
+import messages from "./messages";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
 import RuntimeStackInfo from "./RuntimeStackInfo/RuntimeStackInfo";
@@ -77,7 +76,7 @@ const AppServiceModal = (props: Props) => {
   return (
     <React.Fragment>
       <div className={styles.header}>
-        <div className={styles.title}>{intl.formatMessage(azureModalMessages.appServiceModalTitle)}</div>
+        <div className={styles.title}>{intl.formatMessage(messages.title)}</div>
         <Cancel className={styles.closeIcon} onClick={closeModal} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
       </div>
       <div className={styles.bodyContainer}>
@@ -97,7 +96,7 @@ const AppServiceModal = (props: Props) => {
         <RuntimeStackInfo />
 
         <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
-          {intl.formatMessage(azureModalMessages.azureModalSave)}
+          {intl.formatMessage(messages.save)}
         </button>
       </div>
     </React.Fragment>

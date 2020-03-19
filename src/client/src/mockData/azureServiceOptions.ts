@@ -116,10 +116,6 @@ export const azureMessages = defineMessages({
     defaultMessage:
       "A resource group is a container that holds related resources for an Azure solution"
   },
-  appServiceModalTitle: {
-    id: "appService.modalTitle",
-    defaultMessage: "Create App Service"
-  },
   appServiceTitle: {
     id: "appService.title",
     defaultMessage: "App Service"
@@ -134,28 +130,6 @@ export const azureMessages = defineMessages({
     defaultMessage:
       "Quickly build, deploy, and scale your web apps with confidence."
   },
-  runtimeStackLabel: {
-    id: "azureFunctionsModal.runtimeStackLabel",
-    defaultMessage: "Runtime Stack"
-  },
-  runtimeStackSubLabel: {
-    id: "azureFunctionsModal.runtimeStackSubLabel",
-    defaultMessage: "Your runtime stack is {runtimeStack}"
-  },
-  appServiceBasicTierInfo: {
-    id: "appService.appServiceBasicTierInfo",
-    defaultMessage:
-      "A free BASIC tier 30 day trial app service plan will be created for you."
-  },
-  appServiceFreeTierInfo: {
-    id: "appService.appServiceFreeTierInfo",
-    defaultMessage:
-      "A FREE tier app service plan will be created for you."
-  },
-  appServiceLearnMore: {
-    id: "appService.learnMore",
-    defaultMessage: "Learn More"
-  },
   appServicePriceExpectation: {
     id: "appService.priceExpectation",
     defaultMessage: "Free 30 Day Trial"
@@ -164,25 +138,9 @@ export const azureMessages = defineMessages({
     id: "appService.timeExpectation",
     defaultMessage: "3 - 5 minute set-up time"
   },
-  appServiceAppNameLabel: {
-    id: "appService.appNameLabel",
-    defaultMessage: "Web App Name"
-  },
-  appServiceAriaAppNameLabel: {
-    id: "appService.ariaAppNameLabel",
-    defaultMessage: "Web App Name Dropdown"
-  },
-  appServiceAppNameSubLabel: {
-    id: "appService.appNameSubLabel",
-    defaultMessage: "We have created a unique web app name that you can edit"
-  },
   azureModalSave: {
     id: "azureModal.save",
     defaultMessage: "Save"
-  },
-  appServicePlanLabel: {
-    id: "azureModal.appServicePlanLabel",
-    defaultMessage: "App Service Plan"
   }
 });
 

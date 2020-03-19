@@ -2,11 +2,10 @@ import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-
+import messages from "./messages";
 import { getProjectName } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
-import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
 import { ValidateAppServiceName, GetValidAppServiceName } from "../../../utils/extensionService/extensionService";
 import { connect } from "react-redux";
 import { AppState } from "../../../reducers";
@@ -71,13 +70,15 @@ const AppNameEditor = ({
       })}
     >
       <div className={styles.title}>
-        {intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
+        {intl.formatMessage(messages.title)}
       </div>
-      <div className={styles.subtitle}>{intl.formatMessage(azureModalMessages.appServiceAppNameSubLabel)}</div>
+      <div className={styles.subtitle}>
+        {intl.formatMessage(messages.subtitle)}
+      </div>
         <div className={styles.inputContainer}>
           <input
-            aria-label={intl.formatMessage(azureModalMessages.appServiceAriaAppNameLabel)}
-            placeholder={intl.formatMessage(azureModalMessages.appServiceAppNameLabel)}
+            aria-label={intl.formatMessage(messages.ariaInputLabel)}
+            placeholder={intl.formatMessage(messages.inputPlaceholderMessage)}
             className={styles.input}
             value={appName}
             onChange={e => onAppNameChange(e.currentTarget.value)}

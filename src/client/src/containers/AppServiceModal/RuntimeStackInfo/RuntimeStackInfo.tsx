@@ -4,7 +4,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ISelected } from "../../../types/selected";
 import styles from "./styles.module.css";
 import { AppState } from "../../../reducers";
-import { azureMessages as azureModalMessages } from "../../../mockData/azureServiceOptions";
+import messages from "./messages";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 
 const backendFrameworkNameToAppServiceRuntimeStack: Map<string, string> = new Map([
@@ -25,9 +25,9 @@ const RuntimeStackInfo = (props: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>
-        {intl.formatMessage(azureModalMessages.runtimeStackLabel)}
+        {intl.formatMessage(messages.title)}
       </div>
-      {intl.formatMessage(azureModalMessages.runtimeStackSubLabel, {
+      {intl.formatMessage(messages.runtimeStack, {
         runtimeStack: backendFrameworkNameToAppServiceRuntimeStack.get(selectedBackend.internalName),
       })}
     </div>
