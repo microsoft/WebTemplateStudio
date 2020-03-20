@@ -1,6 +1,6 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import SubscriptionSelection from "./SubscriptionSelection";
+import SubscriptionSelection from ".";
 import { Provider } from "react-redux";
 import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
 import { render, RenderResult } from "@testing-library/react";

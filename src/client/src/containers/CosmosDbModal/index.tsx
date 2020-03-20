@@ -8,7 +8,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
 import AccountNameEditor from "./AccountNameEditor/index";
 import ApiSelection from "./APISelection/index";
-import SubscriptionSelection from "../../components/SubscriptionSelection/SubscriptionSelection";
+import SubscriptionSelection from "../../components/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";

@@ -1,7 +1,7 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { azureMessages } from "../../../mockData/azureServiceOptions";
-import AppServicePlanInfo from "./AppServicePlanInfo";
+import AppServicePlanInfo from ".";
 import { Provider } from "react-redux";
 import { getInitialState, setSubscriptions } from "../../../mockData/mockStore";
 import { render, RenderResult } from "@testing-library/react";

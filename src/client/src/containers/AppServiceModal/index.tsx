@@ -6,10 +6,10 @@ import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServ
 import messages from "./messages";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
-import RuntimeStackInfo from "./RuntimeStackInfo/RuntimeStackInfo";
-import AppServicePlanInfo from "./AppServicePlanInfo/AppServicePlanInfo";
-import AppNameEditor from "./AppNameEditor/AppNameEditor";
-import SubscriptionSelection from "../../components/SubscriptionSelection/SubscriptionSelection";
+import RuntimeStackInfo from "./RuntimeStackInfo";
+import AppServicePlanInfo from "./AppServicePlanInfo";
+import AppNameEditor from "./AppNameEditor";
+import SubscriptionSelection from "../../components/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
