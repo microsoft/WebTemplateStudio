@@ -28,8 +28,8 @@ const AppServicePlanInfo = (props: Props) => {
       <div className={styles.title}>{formatMessage(messages.title)}</div>
       <div>
         {isMicrosoftLearnSubscription()
-          ? formatMessage(messages.basicTierMessage)
-          : formatMessage(messages.freeTierMessage)}
+          ? formatMessage(messages.freeTierMessage)
+          : formatMessage(messages.basicTierMessage)}
       </div>
       <a
         className={styles.link}
