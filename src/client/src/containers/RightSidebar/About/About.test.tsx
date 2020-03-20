@@ -1,9 +1,3 @@
-jest.mock('../../../actions/modalActions/modalActions',()=>{
-  return {
-    openRedirectModalAction:jest.fn()
-  }
-});
-
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import About from "./index";
@@ -12,8 +6,6 @@ import * as ReactRedux from 'react-redux'
 import { getInitialState } from "../../../mockData/mockStore";
 import { render, RenderResult, fireEvent } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import {openRedirectModalAction} from "../../../actions/modalActions/modalActions";
-import { IRedirectModalData } from "../../RedirectModal";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 
 describe("About", () => {
@@ -49,34 +41,6 @@ describe("About", () => {
       expect(wrapper.getByText(expectedTextReportIssue)).toBeDefined();
       expect(wrapper.getByText(expectedTextTemplatesVersion + " " + store.getState().versions.templatesVersion)).toBeDefined();
       expect(wrapper.getByText(expectedTextWizardVersion + " " + store.getState().versions.wizardVersion)).toBeDefined();
-    });
-
-    it(`check link repo`, () => {
-      fireEvent.click(wrapper.getByTestId('linkRepo'));
-      expect(mockDispatch).toBeCalled();
-      const feedbackLinkData: IRedirectModalData = {
-        redirectLink:WEB_TEMPLATE_STUDIO_LINKS.REPO,
-        redirectLinkLabel: intl.formatMessage(
-          messages.feedbackRedirectLinkLabel
-        ),
-        privacyStatementLink: "",
-        isThirdPartyLink: false
-      }
-      expect(openRedirectModalAction).toBeCalledWith(feedbackLinkData);
-    });
-
-    it(`check link issue`, () => {
-      fireEvent.click(wrapper.getByTestId('linkIssues'));
-      expect(mockDispatch).toBeCalled();
-      const feedbackLinkData: IRedirectModalData = {
-        redirectLink:WEB_TEMPLATE_STUDIO_LINKS.ISSUES,
-        redirectLinkLabel: intl.formatMessage(
-          messages.feedbackRedirectLinkLabel
-        ),
-        privacyStatementLink: "",
-        isThirdPartyLink: false
-      }
-      expect(openRedirectModalAction).toBeCalledWith(feedbackLinkData);
     });
   });
 });

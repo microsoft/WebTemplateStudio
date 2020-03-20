@@ -53,17 +53,6 @@ const openPostGenModalAction = () => {
   };
 };
 
-const openRedirectModalAction = (data: any) => {
-  return (dispatch: Dispatch<ModalActionType>) => {
-    dispatch(
-      openModalAction({
-        modalType: MODAL_TYPES.PRIVACY_MODAL,
-        modalData: data
-      })
-    );
-  };
-};
-
 const openViewLicensesModalAction = () => {
   return (dispatch: Dispatch<ModalActionType>) => {
     dispatch(
@@ -102,7 +91,6 @@ export {
   openAzureLoginModalAction,
   openCosmosDbModalAction,
   openPostGenModalAction,
-  openRedirectModalAction,
   openViewLicensesModalAction,
   openAppServiceModalAction,
   openAddPagesModalAction

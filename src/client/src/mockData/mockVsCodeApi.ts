@@ -453,6 +453,33 @@ const mockVsCodeApi = () => ({
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 wizardVersion: "1.x",
                 templatesVersion: "1.x",
+                itemNameValidationConfig:{
+                  regexs:[{
+                    "name":"nameStartLetter",
+                    "pattern" : "^[A-Za-z]"
+                  },
+                  {
+                    "name":"nameContainLettersNumbersDashes",
+                    "pattern" : "^((?!\\d)[a-zA-Z0-9\\s_-]+)$"
+                  }],
+                  reservedNames:[],
+                  validateDefaultNames:false,
+                  validateEmptyNames:true,
+                  validateExistingNames:true
+                },
+                projectNameValidationConfig:{
+                  regexs:[{
+                    "name":"nameStartLetter",
+                    "pattern" : "^[A-Za-z]"
+                  },
+                  {
+                    "name":"nameContainLettersNumbersDashes",
+                    "pattern" : "^((?!\\d)[a-zA-Z0-9_-]+)$"
+                  }],
+                  reservedNames:[],
+                  validateEmptyNames:true,
+                  validateExistingNames:false
+                },
                 preview:false
               }
             },
