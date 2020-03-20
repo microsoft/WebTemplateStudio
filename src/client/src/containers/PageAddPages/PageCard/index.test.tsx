@@ -1,4 +1,4 @@
-jest.mock('../../../actions/wizardSelectionActions/selectPages',()=>{
+jest.mock('../../../store/selection/pages/action',()=>{
   const selectPagesAction = jest.fn((pages: ISelected[]) => ({
     type: "WIZARD_SELECTION_TYPEKEYS.SELECT_PAGES",
     payload: pages
@@ -21,7 +21,7 @@ import { getInitialState, loadMasters } from "../../../mockData/mockStore";
 import { render, fireEvent } from "@testing-library/react";
 import {IntlProvider} from 'react-intl';
 import { ISelected } from "../../../types/selected";
-import { selectPagesAction} from "../../../actions/wizardSelectionActions/selectPages";
+import { selectPagesAction } from "../../../store/selection/pages/action";
 
 describe("PageCard", () => {
   let props: any;

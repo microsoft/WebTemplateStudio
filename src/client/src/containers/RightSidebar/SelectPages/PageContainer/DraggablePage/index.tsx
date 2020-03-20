@@ -13,10 +13,10 @@ import { AppState } from "../../../../../reducers";
 import messages from "./messages";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../../../../actions/ActionType";
-import { selectPageAction, selectPagesAction } from "../../../../../actions/wizardSelectionActions/selectPages";
 import { validateItemName } from "../../../../../utils/validations/itemName/itemName";
 import { getValidations } from "../../../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../../../../reducers/wizardSelectionReducers/setValidations";
+import { selectPageAction, selectPagesAction } from "../../../../../store/selection/pages/action";
 
 const Reorder = Loadable({
   loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../../../../utils/svgComponents/ReorderIcon"),

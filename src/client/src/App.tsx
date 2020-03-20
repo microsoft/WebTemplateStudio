@@ -24,9 +24,6 @@ import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
 } from "./actions/wizardInfoActions/updateGenStatusActions";
-import {
-  selectPagesAction
-} from "./actions/wizardSelectionActions/selectPages";
 import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
 
 import appStyles from "./appStyles.module.css";
@@ -52,6 +49,7 @@ import PageDetails from "./containers/PageDetails";
 import { MODAL_TYPES } from "./actions/modalActions/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
+import { selectPagesAction } from "./store/selection/pages/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),

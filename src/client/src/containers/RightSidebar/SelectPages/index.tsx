@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
 import { injectIntl, InjectedIntl } from "react-intl";
 import PageContainer from "./PageContainer";
-
-import { selectPagesAction, resetPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
 import * as ModalActions from "../../../actions/modalActions/modalActions";
 import { ISelected } from "../../../types/selected";
 
@@ -23,6 +21,7 @@ import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { sendTelemetry, resetAllPages } from "../../../utils/extensionService/extensionService";
 import { SelectionState } from "../../../reducers/wizardSelectionReducers";
+import { resetPagesAction, selectPagesAction } from "../../../store/selection/pages/action";
 
 interface IStateProps {
   pathname: string;

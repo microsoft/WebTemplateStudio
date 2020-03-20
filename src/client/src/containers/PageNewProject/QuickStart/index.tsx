@@ -5,10 +5,6 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { FormattedMessage } from "react-intl";
 
 import RootAction from "../../../actions/ActionType";
-
-import {
-  selectPagesAction
-} from "../../../actions/wizardSelectionActions/selectPages";
 import { setVisitedWizardPageAction } from "../../../actions/wizardInfoActions/setVisitedWizardPage";
 import { enableQuickStartAction } from "../../../actions/wizardInfoActions/enableQuickStartAction";
 
@@ -34,6 +30,7 @@ import { ROUTES, ROUTES_ARRAY, EXTENSION_COMMANDS } from "../../../utils/constan
 import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
+import { selectPagesAction } from "../../../store/selection/pages/action";
 
 interface IStateProps {
   vscode: IVSCodeObject;
