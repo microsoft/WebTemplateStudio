@@ -82,7 +82,6 @@ const ROUTES_ARRAY = [
 
 const SERVICE_KEYS = {
   COSMOS_DB: "cosmosDB",
-  AZURE_FUNCTIONS: "azureFunctions",
   APP_SERVICE: "appService"
 };
 
@@ -106,7 +105,6 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   ANGULAR: "Angular",
   APP_SERVICE: "AppService",
   AZURE: "wts.Feature.Azure",
-  AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
   REACT_CONTENT_GRID: "wts.Page.React.Grid",
   REACT_MASTER_DETAIL: "wts.Page.React.MasterDetail",
@@ -152,7 +150,6 @@ const EXTENSION_COMMANDS = {
   GET_PROJECT_NAME: "get-project-name",
   GET_USER_STATUS: "get-user-status",
   NAME_COSMOS: "name-cosmos",
-  NAME_FUNCTIONS: "name-functions",
   NAME_APP_SERVICE: "name-app-service",
   PROJECT_PATH_VALIDATION: "project-path-validation",
   GET_SUBSCRIPTION_DATA_FOR_COSMOS: "get-subscription-data-for-cosmos",

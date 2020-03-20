@@ -1,9 +1,3 @@
-import {
-  IUpdateFunctionNamesAction,
-  ISaveAzureFunctionsSettings,
-  IRemoveAzureFunction,
-  IRemoveAzureFunctionApp
-} from "./azureFunctionActions";
 import { IsLoggedIntoAzure, ILoginToAzure } from "./logIntoAzure";
 import { ILogout } from "./logOutAzure";
 import {
@@ -16,17 +10,12 @@ import {
 } from "./saveCosmosDbSettings";
 import {
   ISetCosmosAccountNameAvailability,
-  ISetAzureFunctionsAppNameAvailability,
   ISetAppServiceSiteNameAvailability
 } from "./setAccountAvailability";
 import { IAzureValidationStatus } from "./setAzureValidationStatusAction";
 import { IGetSubscription } from "./subscriptionData";
 
 type AzureActionType =
-  | IUpdateFunctionNamesAction
-  | ISaveAzureFunctionsSettings
-  | IRemoveAzureFunction
-  | IRemoveAzureFunctionApp
   | IsLoggedIntoAzure
   | ILoginToAzure
   | ILogout
@@ -35,7 +24,6 @@ type AzureActionType =
   | ISaveAppServiceSettings
   | IRemoveAppServiceSettings
   | ISetCosmosAccountNameAvailability
-  | ISetAzureFunctionsAppNameAvailability
   | ISetAppServiceSiteNameAvailability
   | IAzureValidationStatus
   | IGetSubscription;

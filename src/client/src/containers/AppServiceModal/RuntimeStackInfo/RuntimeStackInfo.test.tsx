@@ -42,7 +42,7 @@ describe("RuntimeStackInfo", () => {
       //renders without crashing
       expect(wrapper).toBeDefined();
 
-      const expectedText = intl.formatMessage(azureMessages.runtimeStackSubLabel, {
+      const expectedText = intl.formatMessage(azureMessages.appServiceRuntimeStackSubLabel, {
         runtimeStack: runtimeStackName,
       });
 
