@@ -552,6 +552,19 @@ const mockVsCodeApi = () => ({
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 wizardVersion: "1.x",
                 templatesVersion: "1.x",
+                itemNameValidationConfig:{
+                  regexs:[],
+                  reservedNames:[],
+                  validateDefaultNames:false,
+                  validateEmptyNames:true,
+                  validateExistingNames:true
+                },
+                projectNameValidationConfig:{
+                  regexs:[],
+                  reservedNames:[],
+                  validateEmptyNames:true,
+                  validateExistingNames:false
+                },
                 preview:false
               }
             },

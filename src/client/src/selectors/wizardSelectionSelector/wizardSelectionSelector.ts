@@ -7,7 +7,6 @@ import { IValidations } from "../../reducers/wizardSelectionReducers/setValidati
 import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
 import { ROUTES } from "../../utils/constants";
-import { getProjectConfigurationValidations, getItemConfigurationValidations } from "../../mockData/configurationValidations";
 
 const getWizardSelectionsSelector = (state: AppState): SelectionState =>
   state.selection;
@@ -15,20 +14,8 @@ const getProjectName = (state: AppState): string =>
   state.selection.projectNameObject.projectName;
 const getProjectNameValidation = (state: AppState): IValidation =>
   state.selection.projectNameObject.validation;
-const getValidations = (state: AppState): IValidations => {
-  let validations: IValidations;
-  if (state.selection.validations && state.selection.validations.projectNameValidationConfig){
-    validations = state.selection.validations;
-  }else{
-    validations = {
-      projectNameValidationConfig:getProjectConfigurationValidations(),
-      itemNameValidationConfig:getItemConfigurationValidations()
-    };
-  }
-
-  return validations;
-}
-  
+const getValidations = (state: AppState): IValidations =>
+  state.selection.validations;
 const getSelectedPages = (state: AppState): Array<ISelected> =>
   state.selection.pages;
 const getOutputPath = (state: AppState): string =>
