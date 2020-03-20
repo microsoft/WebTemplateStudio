@@ -1,5 +1,5 @@
 jest.mock('../../../store/selection/pages/action',()=>{
-  const selectPagesAction = jest.fn((pages: ISelected[]) => ({
+  const setPagesAction = jest.fn((pages: ISelected[]) => ({
     type: "WIZARD_SELECTION_TYPEKEYS.SELECT_PAGES",
     payload: pages
   }));
@@ -8,7 +8,7 @@ jest.mock('../../../store/selection/pages/action',()=>{
   }));
 
   return {
-    selectPagesAction,
+    setPagesAction,
     resetPagesAction
   }
 });
@@ -21,7 +21,7 @@ import { getInitialState, loadMasters } from "../../../mockData/mockStore";
 import { render, fireEvent } from "@testing-library/react";
 import {IntlProvider} from 'react-intl';
 import { ISelected } from "../../../types/selected";
-import { selectPagesAction } from "../../../store/selection/pages/action";
+import { setPagesAction } from "../../../store/selection/pages/action";
 
 describe("PageCard", () => {
   let props: any;
@@ -70,6 +70,6 @@ describe("PageCard", () => {
 
   it("add page", ()=>{
     fireEvent.click(wrapper.getByRole("button"));
-    expect(selectPagesAction).toBeCalled();
+    expect(setPagesAction).toBeCalled();
   });
 });

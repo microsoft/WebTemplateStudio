@@ -49,7 +49,7 @@ import PageDetails from "./containers/PageDetails";
 import { MODAL_TYPES } from "./actions/modalActions/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
-import { selectPagesAction } from "./store/selection/pages/action";
+import { setPagesAction } from "./store/selection/pages/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -329,7 +329,7 @@ const mapDispatchToProps = (
     dispatch(setPreviewStatusAction(isPreview));
   },
   setPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
+    dispatch(setPagesAction(pages));
   },
   setBackendFrameworks: (frameworks: IOption[]) => {
     dispatch(setBackendFrameworksAction(frameworks));

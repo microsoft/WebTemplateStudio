@@ -21,7 +21,7 @@ import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { sendTelemetry, resetAllPages } from "../../../utils/extensionService/extensionService";
 import { SelectionState } from "../../../reducers/wizardSelectionReducers";
-import { resetPagesAction, selectPagesAction } from "../../../store/selection/pages/action";
+import { resetPagesAction, setPagesAction } from "../../../store/selection/pages/action";
 
 interface IStateProps {
   pathname: string;
@@ -69,7 +69,7 @@ const SelectPages = (props: Props) => {
           author: "Microsoft"
         }
       ];
-      dispatch(selectPagesAction(PAGES_SELECTION));
+      dispatch(setPagesAction(PAGES_SELECTION));
     });
   };
 
@@ -82,7 +82,7 @@ const SelectPages = (props: Props) => {
     oldIndex: number;
     newIndex: number;
   }) => {
-    dispatch(selectPagesAction(arrayMove(selectedPages, oldIndex, newIndex)));
+    dispatch(setPagesAction(arrayMove(selectedPages, oldIndex, newIndex)));
   };
   const DRAG_PIXEL_THRESHOLD = 1;
   return (

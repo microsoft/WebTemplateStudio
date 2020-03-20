@@ -16,7 +16,7 @@ import RootAction from "../../../../../actions/ActionType";
 import { validateItemName } from "../../../../../utils/validations/itemName/itemName";
 import { getValidations } from "../../../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../../../../reducers/wizardSelectionReducers/setValidations";
-import { selectPageAction, selectPagesAction } from "../../../../../store/selection/pages/action";
+import { setPageAction, setPagesAction } from "../../../../../store/selection/pages/action";
 
 const Reorder = Loadable({
   loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../../../../utils/svgComponents/ReorderIcon"),
@@ -186,10 +186,10 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): ISortableDispatchProps => ({
   updatePage: (page: ISelected) => {
-    dispatch(selectPageAction(page));
+    dispatch(setPageAction(page));
   },
   selectPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
+    dispatch(setPagesAction(pages));
   },
 });
 

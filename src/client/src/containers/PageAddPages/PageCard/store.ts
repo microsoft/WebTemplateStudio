@@ -6,13 +6,13 @@ import { IDispatchProps, IStateProps } from "./interfaces";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { ISelected } from "../../../types/selected";
 import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
-import { selectPagesAction } from "../../../store/selection/pages/action";
+import { setPagesAction } from "../../../store/selection/pages/action";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   setPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
+    dispatch(setPagesAction(pages));
   },
   setDetailPage: (detailPageInfo: IOption) => {
     dispatch(setDetailPageAction(detailPageInfo));

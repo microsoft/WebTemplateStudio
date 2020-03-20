@@ -30,7 +30,7 @@ import { ROUTES, ROUTES_ARRAY, EXTENSION_COMMANDS } from "../../../utils/constan
 import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
-import { selectPagesAction } from "../../../store/selection/pages/action";
+import { setPagesAction } from "../../../store/selection/pages/action";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -128,7 +128,7 @@ const mapDispatchToProps = (
     dispatch(setSelectedBackendFrameworkAction(backendFramework));
   },
   selectPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
+    dispatch(setPagesAction(pages));
   },
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));

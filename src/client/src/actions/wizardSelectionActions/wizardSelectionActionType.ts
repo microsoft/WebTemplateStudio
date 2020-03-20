@@ -8,13 +8,13 @@ import {
   IUpdateProjectPathActionType
 } from "./updateProjectNameAndPath";
 import { ISelectFrontendAction, ISelectBackendAction } from "../../store/selection/frameworks/model";
-import { ISelectPagesAction, ISelectPageAction, IResetPagesAction } from "../../store/selection/pages/model";
+import { IsetPagesAction, ISetPageAction, IResetPagesAction } from "../../store/selection/pages/model";
 
 type WizardSelectionActionType =
   | ISelectBackendAction
   | ISelectFrontendAction
-  | ISelectPagesAction
-  | ISelectPageAction
+  | IsetPagesAction
+  | ISetPageAction
   | ISelectProjectTypeAction
   | IProjectPathValidationAction
   | IValidationsAction
