@@ -1,0 +1,52 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5em;
+}
+
+.title {
+  font-size: 1.8em;
+}
+
+/* scrollable part of the form */
+.bodyContainer {
+  padding-right: 20px;
+  max-height: calc(80vh - 200px);
+  overflow-y: auto;
+  margin-bottom: 5px;
+}
+
+.button {
+  float: right;
+  padding: 0.6em 3.5em;
+  margin: 0.5em 0;
+  font-size: 1.3em;
+}
+
+.button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  outline: none;
+  background-color: var(--vscode-badge-background);
+  cursor: default;
+}
+
+.closeIcon {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  padding: 1px;
+  margin-right: 2px;
+}
+
+.closeIcon path {
+  fill: var(--vscode-editor-foreground);
+}
+
+.closeIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}

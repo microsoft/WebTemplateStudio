@@ -73,8 +73,8 @@ const PostGenerationModal = Loadable({
   loader: () => import(/* webpackChunkName: "PostGenerationModal" */  "./containers/PostGenerationModal"),
   loading:() => <div/>
 });
-const CosmosResourceModal = Loadable({
-  loader: () => import(/* webpackChunkName: "CosmosResourceModal" */  "./containers/CosmosResourceModal"),
+const CosmosDbModal = Loadable({
+  loader: () => import(/* webpackChunkName: "CosmosDbModal" */  "./containers/CosmosDbModal"),
   loading:() => <div/>
 });
 const AppServiceModal = Loadable({
@@ -248,7 +248,7 @@ const App = (props: Props) => {
         {(modalState.modalType === MODAL_TYPES.PRIVACY_MODAL) && (<RedirectModal />)}
         {(modalState.modalType === MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType === MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
-        {(modalState.modalType === MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosResourceModal/>)}
+        {(modalState.modalType === MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
         {(modalState.modalType === MODAL_TYPES.POST_GEN_MODAL) && (<PostGenerationModal/>)}
 
         <main
