@@ -6,7 +6,6 @@ import { FormattedMessage } from "react-intl";
 
 import RootAction from "../../../actions/ActionType";
 
-import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedBackEndFramework";
 import {
   selectPagesAction
 } from "../../../actions/wizardSelectionActions/selectPages";
@@ -34,7 +33,7 @@ import { ROUTES, ROUTES_ARRAY, EXTENSION_COMMANDS } from "../../../utils/constan
 
 import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";
-import { setSelectedFrontendFrameworkAction } from "../../../store/selection/frameworks/action";
+import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
 
 interface IStateProps {
   vscode: IVSCodeObject;

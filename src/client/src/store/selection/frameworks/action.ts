@@ -1,12 +1,17 @@
 import { ISelected } from "../../../types/selected";
 import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
-import { ISelectFrontendAction } from "./model";
+import { ISelectFrontendAction, ISelectBackendAction } from "./model";
 
-const setSelectedFrontendFrameworkAction = (
+export const setSelectedFrontendFrameworkAction = (
   frontendFramework: ISelected
 ): ISelectFrontendAction => ({
   type: WIZARD_SELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK,
   payload: frontendFramework
 });
 
-export { setSelectedFrontendFrameworkAction };
+export const setSelectedBackendFrameworkAction = (
+  backendFramework: ISelected
+): ISelectBackendAction => ({
+  type: WIZARD_SELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK,
+  payload: backendFramework
+});
