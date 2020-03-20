@@ -30,7 +30,6 @@ const subscriptionData = (
   action: AzureActionType | ICloseModal
 ) => {
   switch (action.type) {
-    case AZURE_TYPEKEYS.SAVE_AZURE_FUNCTIONS_SETTINGS:
     case AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
     case AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS:
     case MODAL_TYPEKEYS.CLOSE_MODALS:

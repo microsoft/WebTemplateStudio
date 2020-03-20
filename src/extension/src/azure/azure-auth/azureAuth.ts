@@ -235,7 +235,7 @@ export abstract class AzureAuth {
     return this.locationItemIntersect(cosmosLocations, this.locationsCache!);
   }
 
-  // To get locations for Function App and Web App
+  // To get locations for Web App
   public static async getLocationsForApp(
     subscriptionItem: SubscriptionItem
   ): Promise<LocationItem[]> {
@@ -248,7 +248,7 @@ export abstract class AzureAuth {
       subscriptionItem.session.credentials,
       subscriptionItem.subscription.subscriptionId!
     );
-    const functionsLocations: LocationItem[] = [];
+    const locations: LocationItem[] = [];
     const webProvider = await azureResourceClient.providers.get(
       MICROSOFT_WEB_PROVIDER
     );
@@ -258,14 +258,14 @@ export abstract class AzureAuth {
     });
 
     sites!.locations!.forEach(element => {
-      functionsLocations.push({ locationDisplayName: element });
+      locations.push({ locationDisplayName: element });
     });
 
-    functionsLocations.sort((l1, l2) =>
+    locations.sort((l1, l2) =>
       l1.locationDisplayName!.localeCompare(l2.locationDisplayName!)
     );
 
-    return this.locationItemIntersect(functionsLocations, this.locationsCache!);
+    return this.locationItemIntersect(locations, this.locationsCache!);
   }
 
   private static async initializeLocations(

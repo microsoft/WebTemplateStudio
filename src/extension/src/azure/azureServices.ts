@@ -12,10 +12,6 @@ import {
   DatabaseObject
 } from "./azure-cosmosDB/cosmosDbModule";
 import {
-  FunctionProvider,
-  FunctionSelections
-} from "./azure-functions/functionProvider";
-import {
   CONSTANTS,
   AzureResourceType,
   DialogMessages,
@@ -29,7 +25,6 @@ import {
   ValidationError
 } from "../errors";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import { AppNameValidationResult, NameValidator } from "./utils/nameValidator";
 import { Logger } from "../utils/logger";
 import {
   ResourceGroupDeploy,
@@ -56,10 +51,6 @@ export class AzureServices extends WizardServant {
     [ExtensionCommand.GetValidAppServiceName, AzureServices.GetValidAppServiceName],
     [ExtensionCommand.GetValidCosmosName, AzureServices.GetValidCosmosName],
     [
-      ExtensionCommand.NameFunctions,
-      AzureServices.sendFunctionNameValidationStatusToClient
-    ],
-    [
       ExtensionCommand.NameCosmos,
       AzureServices.sendCosmosNameValidationStatusToClient
     ],
@@ -69,14 +60,11 @@ export class AzureServices extends WizardServant {
     ]
   ]);
 
-  private static AzureFunctionProvider = new FunctionProvider();
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static AzureAppServiceProvider = new AppServiceProvider();
   private static AzureResourceGroupProvider = new ResourceGroupDeploy();
 
   private static subscriptionItemList: SubscriptionItem[] = [];
-
-  private static usersFunctionSubscriptionItemCache: SubscriptionItem;
   private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
   private static usersAppServiceSubscriptionItemCache: SubscriptionItem;
 
@@ -176,7 +164,6 @@ export class AzureServices extends WizardServant {
       case AzureResourceType.Cosmos:
         locationItems = await AzureAuth.getLocationsForCosmos(subscriptionItem);
         break;
-      case AzureResourceType.Functions:
       case AzureResourceType.AppService:
         locationItems = await AzureAuth.getLocationsForApp(subscriptionItem);
         break;
@@ -233,12 +220,6 @@ export class AzureServices extends WizardServant {
         break;
       case AzureResourceType.Cosmos:
         validationResult = await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(
-          projectName,
-          userSubscriptionItem
-        );
-        break;
-      case AzureResourceType.Functions:
-        validationResult = await AzureServices.AzureFunctionProvider.checkFunctionAppName(
           projectName,
           userSubscriptionItem
         );
@@ -302,32 +283,6 @@ export class AzureServices extends WizardServant {
       });
   }
 
-  public static async sendFunctionNameValidationStatusToClient(
-    message: any
-  ): Promise<IPayloadResponse> {
-    await AzureServices.updateFunctionSubscriptionItemCache(
-      message.subscription
-    );
-    return AzureServices.AzureFunctionProvider.checkFunctionAppName(
-      message.appName,
-      AzureServices.usersFunctionSubscriptionItemCache
-    )
-      .then((invalidReason: string | undefined) => {
-        return {
-          payload: {
-            isAvailable:
-              !invalidReason ||
-              invalidReason === undefined ||
-              invalidReason === "",
-            reason: invalidReason
-          }
-        };
-      })
-      .catch((error: Error) => {
-        throw error; //to log in telemetry
-      });
-  }
-
   /*
    * Caching is used for performance; when displaying live check on keystroke to wizard
    */
@@ -370,37 +325,12 @@ export class AzureServices extends WizardServant {
     }
   }
 
-  private static async updateFunctionSubscriptionItemCache(
-    subscriptionLabel: string
-  ): Promise<void> {
-    if (
-      AzureServices.usersFunctionSubscriptionItemCache === undefined ||
-      subscriptionLabel !==
-        AzureServices.usersFunctionSubscriptionItemCache.label
-    ) {
-      const subscriptionItem = AzureServices.subscriptionItemList.find(
-        subscriptionItem => subscriptionItem.label === subscriptionLabel
-      );
-      if (subscriptionItem) {
-        AzureServices.usersFunctionSubscriptionItemCache = subscriptionItem;
-      } else {
-        throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
-      }
-    }
-  }
-
   public static async generateDistinctResourceGroupSelections(
     payload: any
   ): Promise<ResourceGroupSelection[]> {
     const projectName = payload.engine.projectName;
     const allSubscriptions: SubscriptionItem[] = [];
 
-    if (payload.selectedFunctions) {
-      await AzureServices.updateFunctionSubscriptionItemCache(
-        payload.functions.subscription
-      );
-      allSubscriptions.push(AzureServices.usersFunctionSubscriptionItemCache);
-    }
     if (payload.selectedCosmos) {
       await AzureServices.updateCosmosDBSubscriptionItemCache(
         payload.cosmos.subscription
@@ -516,52 +446,6 @@ export class AzureServices extends WizardServant {
     return rawId
       .replace(MS_RESOURCE_DEPLOYMENT, MS_WEB_SITE)
       .replace("-" + AzureResourceType.AppService, "");
-  }
-
-  public static async deployFunctionApp(
-    selections: any,
-    appPath: string
-  ): Promise<void> {
-    await AzureServices.updateFunctionSubscriptionItemCache(
-      selections.subscription
-    );
-
-    const userFunctionsSelections: FunctionSelections = {
-      functionAppName: selections.appName,
-      subscriptionItem: AzureServices.usersFunctionSubscriptionItemCache,
-      resourceGroupItem: await AzureAuth.getResourceGroupItem(
-        selections.resourceGroup,
-        AzureServices.usersFunctionSubscriptionItemCache
-      ),
-      location: selections.location,
-      runtime: selections.runtimeStack,
-      functionNames: selections.functionNames
-    };
-
-    const functionNamesValidation: AppNameValidationResult = NameValidator.validateFunctionNames(
-      userFunctionsSelections.functionNames
-    );
-    if (!functionNamesValidation.isValid) {
-      throw new ValidationError(functionNamesValidation.message);
-    }
-
-    await AzureServices.AzureFunctionProvider.checkFunctionAppName(
-      userFunctionsSelections.functionAppName,
-      userFunctionsSelections.subscriptionItem
-    )
-      .then(invalidReason => {
-        if (invalidReason !== undefined && invalidReason === "") {
-          throw new ValidationError(invalidReason);
-        }
-      })
-      .catch((error: Error) => {
-        throw error; //to log in telemetry
-      });
-
-    return await AzureServices.AzureFunctionProvider.createFunctionApp(
-      userFunctionsSelections,
-      appPath
-    );
   }
 
   public static async deployCosmosResource(

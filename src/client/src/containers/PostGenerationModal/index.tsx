@@ -39,8 +39,6 @@ interface LinksDict {
   [serviceId: string]: string;
 }
 const links: LinksDict = {
-  "Azure Functions":
-    "[View](https://portal.azure.com/#blade/WebsitesExtension/FunctionsIFrameBladeMain)",
   "Cosmos DB":
     "[View](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts)",
   "App Service":
