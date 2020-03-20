@@ -42,17 +42,6 @@ const openCosmosDbModalAction = () => {
   };
 };
 
-const openAzureFunctionsModalAction = () => {
-  return (dispatch: Dispatch<ModalActionType>) => {
-    dispatch(
-      openModalAction({
-        modalType: MODAL_TYPES.AZURE_FUNCTIONS_MODAL,
-        modalData: null
-      })
-    );
-  };
-};
-
 const openPostGenModalAction = () => {
   return (dispatch: Dispatch<ModalActionType>) => {
     dispatch(
@@ -111,7 +100,6 @@ const openAddPagesModalAction = () => {
 export {
   closeModalAction,
   openAzureLoginModalAction,
-  openAzureFunctionsModalAction,
   openCosmosDbModalAction,
   openPostGenModalAction,
   openRedirectModalAction,

@@ -78,20 +78,6 @@ export const getInitialState = (): AppState => {
       },
       pages: [],
       services: {
-        azureFunctions: {
-          appNameAvailability: {
-            isAppNameAvailable: false,
-            message: 'App name unavailable'
-          },
-          selection: [],
-          wizardContent: {
-            serviceType: {
-              id: 'azureFunctions.originalTitle',
-              defaultMessage: 'Azure Functions'
-            }
-          },
-          chooseExistingRadioButtonSelected: false
-        },
         cosmosDB: {
           accountNameAvailability: {
             isAccountNameAvailable: false,
@@ -182,10 +168,6 @@ export const getInitialState = (): AppState => {
           failure: false
         },
         cosmos: {
-          success: false,
-          failure: false
-        },
-        azureFunctions: {
           success: false,
           failure: false
         },

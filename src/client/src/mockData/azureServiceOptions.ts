@@ -15,7 +15,7 @@ export const azureMessages = defineMessages({
   azureCardBody: {
     id: "azureLogin.azureCardBody",
     defaultMessage:
-      "Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. Sign in or create an account to get access to CosmosDB and Azure Functions from this extension"
+      "Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. Sign in or create an account to get access to CosmosDB and App Service from this extension"
   },
   azureLongDescription: {
     id: "azureLogin.longDescription",
@@ -29,20 +29,6 @@ export const azureMessages = defineMessages({
   azureLoginInfo: {
     id: "azureLogin.azureLoginInfo",
     defaultMessage: "Sign in to add these services to your web app project"
-  },
-  azureFunctionsTitle: {
-    id: "azureFunctions.Title",
-    defaultMessage: "Azure Functions"
-  },
-  azureFunctionsLongDescription: {
-    id: "azureFunctions.longDescription",
-    defaultMessage:
-      "Deploy serverless web applications using an event-driven platform."
-  },
-  azureFunctionsCardBody: {
-    id: "azureFunctions.cardBody",
-    defaultMessage:
-      "Deploy serverless web applications using an event-driven platform."
   },
   cosmosTitle: {
     id: "cosmosDb.title",

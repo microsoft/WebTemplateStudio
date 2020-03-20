@@ -34,7 +34,6 @@ export class GenerationExperience extends WizardServant {
     GenerationExperience.reactPanelContext = reactPanelContext;
   }
 
-  ////TODO: MAKE GEN CALL CLIENTCOMMANDMAP FUNCTIONS VIA TO WRAP TELEMETRY AUTOMATICALLY
   public async handleGeneratePayloadFromClient(
     message: any
   ): Promise<IPayloadResponse> {
