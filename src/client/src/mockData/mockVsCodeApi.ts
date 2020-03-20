@@ -549,14 +549,28 @@ const mockVsCodeApi = () => ({
                 wizardVersion: "1.x",
                 templatesVersion: "1.x",
                 itemNameValidationConfig:{
-                  regexs:[],
+                  regexs:[{
+                    "name":"nameStartLetter",
+                    "pattern" : "^[A-Za-z]"
+                  },
+                  {
+                    "name":"nameContainLettersNumbersDashes",
+                    "pattern" : "^((?!\\d)[a-zA-Z0-9\\s_-]+)$"
+                  }],
                   reservedNames:[],
                   validateDefaultNames:false,
                   validateEmptyNames:true,
                   validateExistingNames:true
                 },
                 projectNameValidationConfig:{
-                  regexs:[],
+                  regexs:[{
+                    "name":"nameStartLetter",
+                    "pattern" : "^[A-Za-z]"
+                  },
+                  {
+                    "name":"nameContainLettersNumbersDashes",
+                    "pattern" : "^((?!\\d)[a-zA-Z0-9_-]+)$"
+                  }],
                   reservedNames:[],
                   validateEmptyNames:true,
                   validateExistingNames:false
