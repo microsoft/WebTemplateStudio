@@ -43,10 +43,14 @@ export class AzureServices {
   }
 
   public static async getSubscriptions(): Promise<SubscriptionItem[]> {
-    if (!AzureServices.subscriptionsCache) {
+    if (AzureServices.subscriptionsCache.length === 0) {
       AzureServices.subscriptionsCache = await AzureAuth.getSubscriptions();
     }
     return AzureServices.subscriptionsCache;
+  }
+
+  public static CleanSubscriptionCache(): void {
+    AzureServices.subscriptionsCache.length = 0;
   }
 
   public static getSubscription(name: string): SubscriptionItem {

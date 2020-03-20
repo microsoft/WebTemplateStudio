@@ -51,6 +51,7 @@ export class AzureModule extends WizardServant {
 
   public async logout(message: any): Promise<IPayloadResponse> {
     const success = await AzureAuth.logout();
+    AzureServices.CleanSubscriptionCache();
     const payload = { scope: message.payload.scope, success };
     return { payload };
   }
