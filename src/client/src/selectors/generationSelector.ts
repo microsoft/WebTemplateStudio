@@ -47,22 +47,6 @@ const getServices = (selection: SelectionState): ITemplateInfo[] => {
         DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.selection[0].api]
     });
   }
-
-  if (
-    _.has(services, SERVICE_KEYS.AZURE_FUNCTIONS) &&
-    services.azureFunctions.selection.length > 0
-  ) {
-    const { functionNames } = services.azureFunctions.selection[0];
-    if (functionNames) {
-      for (const funcName of functionNames) {
-        servicesInfo.push({
-          name: funcName.title,
-          identity: services.azureFunctions.selection[0].internalName.value
-        });
-      }
-    }
-  }
-
   return servicesInfo;
 };
 

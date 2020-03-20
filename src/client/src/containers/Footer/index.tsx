@@ -23,11 +23,6 @@ import {
   isCosmosResourceCreatedSelector
 } from "../../selectors/cosmosServiceSelector";
 import {
-  getAzureFunctionsOptionsSelector,
-  isAzureFunctionsSelectedSelector,
-  getAzureFunctionsNamesSelector
-} from "../../selectors/azureFunctionsServiceSelector";
-import {
   isAppServiceSelectedSelector,
   getAppServiceSelectionSelector
 } from "../../selectors/appServiceSelector";
@@ -52,7 +47,6 @@ import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizard
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
-import { IFunctionName } from "../AzureFunctionsSelection";
 
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
@@ -72,13 +66,10 @@ interface IStateProps {
   engine: any;
   selectedCosmos: boolean;
   cosmos: any;
-  selectedFunctions: boolean;
-  functions: any;
   selectedAppService: boolean;
   appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
   isEnableNextPage: boolean;
-  functionNames?: IFunctionName[];
   enableCreateProjectButton: boolean;
 }
 
@@ -106,8 +97,6 @@ class Footer extends React.Component<Props> {
       engine,
       selectedCosmos,
       cosmos,
-      selectedFunctions,
-      functions,
       selectedAppService,
       appService,
       vscode,
@@ -123,8 +112,6 @@ class Footer extends React.Component<Props> {
         engine,
         selectedCosmos,
         cosmos,
-        selectedFunctions,
-        functions,
         selectedAppService,
         appService
       }
@@ -305,11 +292,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   engine: rootSelector(state),
   selectedCosmos: isCosmosResourceCreatedSelector(state),
   cosmos: getCosmosDbSelectionSelector(state),
-  selectedFunctions: isAzureFunctionsSelectedSelector(state),
-  functionNames: getAzureFunctionsNamesSelector(state),
   selectedAppService: isAppServiceSelectedSelector(state),
   appService: getAppServiceSelectionSelector(state),
-  functions: getAzureFunctionsOptionsSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   isEnableNextPage: isEnableNextPage(state),
   enableCreateProjectButton: state.wizardContent.createProjectButton

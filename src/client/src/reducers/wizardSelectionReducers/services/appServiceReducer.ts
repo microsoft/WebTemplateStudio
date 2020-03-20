@@ -43,7 +43,7 @@ const appService = (
   action: AzureActionType | WizardInfoType
 ) => {
   switch (action.type) {
-    case AZURE_TYPEKEYS.SET_SITE_NAME_AVAILABILITY:
+    case AZURE_TYPEKEYS.SET_APP_NAME_AVAILABILITY:
       const newAvailabilityState = {
         ...state,
         siteNameAvailability: {
