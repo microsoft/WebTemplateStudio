@@ -2,11 +2,11 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   title: {
-    id: "RuntimeStackInfo.title",
+    id: "AppServiceModal.RuntimeStackInfo.title",
     defaultMessage: "Runtime Stack",
   },
   runtimeStack: {
-    id: "RuntimeStackInfo.runtimeStack",
+    id: "AppServiceModal.RuntimeStackInfo.runtimeStack",
     defaultMessage: "Your runtime stack is {runtimeStack}",
   }
 });
