@@ -5,11 +5,11 @@ import { AppState } from "../../../reducers";
 import RootAction from "../../../actions/ActionType";
 import { IDispatchProps, IStateProps } from "./interfaces";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { setSelectedFrontendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedFrontendFramework";
 import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedBackEndFramework";
 import { ISelected } from "../../../types/selected";
 import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
 import { updateFrameworks } from "../../../actions/wizardContentActions/updateFrameworks";
+import { setSelectedFrontendFrameworkAction } from "../../../store/selection/frameworks/action";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>

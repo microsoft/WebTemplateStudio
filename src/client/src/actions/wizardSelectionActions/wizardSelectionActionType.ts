@@ -1,5 +1,4 @@
 import { ISelectBackendAction } from "./selectedBackEndFramework";
-import { ISelectFrontendAction } from "./selectedFrontendFramework";
 import {
   ISelectPagesAction,
   IResetPagesAction,
@@ -12,6 +11,7 @@ import {
   IUpdateProjectNameActionType,
   IUpdateProjectPathActionType
 } from "./updateProjectNameAndPath";
+import { ISelectFrontendAction } from "../../store/selection/frameworks/model";
 
 type WizardSelectionActionType =
   | ISelectBackendAction
