@@ -1,7 +1,6 @@
 
 
 import { ISelectProjectTypeAction } from "./selectWebApp";
-import { IProjectPathValidationAction } from "./setProjectPathValidation";
 import { IValidationsAction } from "./setValidations";
 import {
   IUpdateProjectNameActionType,
@@ -9,6 +8,7 @@ import {
 } from "./updateProjectNameAndPath";
 import { ISelectFrontendAction, ISelectBackendAction } from "../../store/selection/frameworks/model";
 import { IsetPagesAction, ISetPageAction, IResetPagesAction } from "../../store/selection/pages/model";
+import { IProjectPathValidationAction } from "../../store/selection/validations/model";
 
 type WizardSelectionActionType =
   | ISelectBackendAction

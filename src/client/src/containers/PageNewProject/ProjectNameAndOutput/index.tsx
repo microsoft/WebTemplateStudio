@@ -39,9 +39,9 @@ import RootAction from "../../../actions/ActionType";
 import { validateProjectName} from "../../../utils/validations/projectName/projectName";
 import { IValidation} from "../../../utils/validations/validations";
 import { inferProjectName} from "../../../utils/infer/projectName";
-import { setProjectPathValidation } from "../../../actions/wizardSelectionActions/setProjectPathValidation";
 import messages from "./messages";
 import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
+import { setProjectPathValidation } from "../../../store/selection/validations/action";
 
 interface IStateProps {
   vscode: IVSCodeObject;
