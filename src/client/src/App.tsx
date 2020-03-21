@@ -83,11 +83,6 @@ const ViewLicensesModal = Loadable({
   loader: () => import(/* webpackChunkName: "ViewLicensesModal" */  "./containers/ViewLicensesModal"),
   loading:() => <div/>
 });
-const RedirectModal = Loadable({
-  loader: () => import(/* webpackChunkName: "RedirectModal" */  "./containers/RedirectModal"),
-  loading:() => <div/>
-});
-//import RedirectModal from "./containers/RedirectModal";
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -245,7 +240,6 @@ const App = (props: Props) => {
       {isLoaded && (<TopNavBar />)}
 
       {isLoaded && (<div className={appStyles.container}>
-        {(modalState.modalType === MODAL_TYPES.PRIVACY_MODAL) && (<RedirectModal />)}
         {(modalState.modalType === MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType === MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
         {(modalState.modalType === MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosResourceModal/>)}
