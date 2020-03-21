@@ -18,8 +18,6 @@ import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
 import {
   updateOutputPathAction
 } from "./actions/wizardSelectionActions/updateProjectNameAndPath";
-
-import { setValidations } from "./actions/wizardSelectionActions/setValidations";
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
@@ -50,6 +48,7 @@ import { MODAL_TYPES } from "./actions/modalActions/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setPagesAction } from "./store/selection/pages/action";
+import { setValidations } from "./store/selection/validations/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),

@@ -1,14 +1,13 @@
 
 
 import { ISelectProjectTypeAction } from "./selectWebApp";
-import { IValidationsAction } from "./setValidations";
 import {
   IUpdateProjectNameActionType,
   IUpdateProjectPathActionType
 } from "./updateProjectNameAndPath";
 import { ISelectFrontendAction, ISelectBackendAction } from "../../store/selection/frameworks/model";
 import { IsetPagesAction, ISetPageAction, IResetPagesAction } from "../../store/selection/pages/model";
-import { IProjectPathValidationAction } from "../../store/selection/validations/model";
+import { IProjectPathValidationAction, IValidationsAction } from "../../store/selection/validations/model";
 
 type WizardSelectionActionType =
   | ISelectBackendAction
