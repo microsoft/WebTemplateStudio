@@ -2,7 +2,7 @@ import AzureActionType from "./azureActions/azureActionType";
 import ModalActionType from "./modalActions/modalActionType";
 import VSCodeActionTypes from "./vscodeApiActions/VSCodeActionType";
 import WizardContentActionType from "./wizardContentActions/wizardContentActionType";
-import WizardSelectionActionType from "./wizardSelectionActions/wizardSelectionActionType";
+import WizardSelectionActionType from "../store/selection/selectionActionType";
 import WizardInfoActionType from "./wizardInfoActions/wizardInfoActionType";
 
 type RootAction =

@@ -1,4 +1,4 @@
-import { WIZARD_SELECTION_TYPEKEYS } from "../../../actions/wizardSelectionActions/typeKeys";
+import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 import { ISelected } from "../../../types/selected";
 
 export interface ISelectFrontendAction {
