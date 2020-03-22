@@ -1,20 +1,20 @@
-import { IUpdateProjectNameActionType } from "./model";
+import { ISetProjectNameActionType } from "./model";
 import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 
-export const updateProjectNameAction = (
+export const setProjectNameAction = (
   projectName: string, validation: any
-): IUpdateProjectNameActionType => {
+): ISetProjectNameActionType => {
   const projectNameObject = {
     projectName,
     validation
   };
   return {
-    type: WIZARD_SELECTION_TYPEKEYS.UPDATE_PROJECT_NAME,
+    type: WIZARD_SELECTION_TYPEKEYS.SET_PROJECT_NAME,
     payload: projectNameObject
   };
 };
 
-export const updateOutputPathAction = (outputPath: string): any => ({
-  type: WIZARD_SELECTION_TYPEKEYS.UPDATE_OUTPUT_PATH,
+export const setOutputPathAction = (outputPath: string): any => ({
+  type: WIZARD_SELECTION_TYPEKEYS.SET_OUTPUT_PATH,
   payload: outputPath
 });

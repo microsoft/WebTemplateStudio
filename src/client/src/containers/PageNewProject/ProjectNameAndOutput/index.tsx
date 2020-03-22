@@ -37,7 +37,7 @@ import { inferProjectName} from "../../../utils/infer/projectName";
 import messages from "./messages";
 import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
 import { setProjectPathValidation } from "../../../store/selection/validations/action";
-import { updateProjectNameAction, updateOutputPathAction } from "../../../store/selection/app/action";
+import { setProjectNameAction, setOutputPathAction } from "../../../store/selection/app/action";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -163,10 +163,10 @@ const mapDispatchToProps = (
   dispatch: Dispatch<RootAction>
 ): IDispatchProps => ({
   updateProjectName: (projectName: string, validate: any) => {
-    dispatch(updateProjectNameAction(projectName, validate));
+    dispatch(setProjectNameAction(projectName, validate));
   },
   updateOutputPath: (outputPath: string) => {
-    dispatch(updateOutputPathAction(outputPath));
+    dispatch(setOutputPathAction(outputPath));
   },
   setProjectPathValidation: (validation: any) => {
     dispatch(setProjectPathValidation(validation));

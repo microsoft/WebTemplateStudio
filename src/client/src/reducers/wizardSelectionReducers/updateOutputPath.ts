@@ -17,7 +17,7 @@ const outputPathReducer = (
   action: WizardSelectionActionType
 ) => {
   switch (action.type) {
-    case WIZARD_SELECTION_TYPEKEYS.UPDATE_OUTPUT_PATH:
+    case WIZARD_SELECTION_TYPEKEYS.SET_OUTPUT_PATH:
       return {
         ...state,
         outputPath: action.payload

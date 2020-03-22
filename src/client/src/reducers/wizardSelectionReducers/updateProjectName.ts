@@ -22,7 +22,7 @@ const projectNameReducer = (
   action: WizardSelectionActionType
 ) => {
   switch (action.type) {
-    case WIZARD_SELECTION_TYPEKEYS.UPDATE_PROJECT_NAME:
+    case WIZARD_SELECTION_TYPEKEYS.SET_PROJECT_NAME:
       return action.payload;
     default:
       return state;

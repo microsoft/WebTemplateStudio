@@ -47,7 +47,7 @@ import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setPagesAction } from "./store/selection/pages/action";
 import { setValidations } from "./store/selection/validations/action";
-import { updateOutputPathAction } from "./store/selection/app/action";
+import { setOutputPathAction } from "./store/selection/app/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -300,7 +300,7 @@ const mapDispatchToProps = (
     dispatch(logIntoAzureAction({ email, subscriptions }));
   },
   updateOutputPath: (outputPath: string) => {
-    dispatch(updateOutputPathAction(outputPath));
+    dispatch(setOutputPathAction(outputPath));
   },
   setValidations: (validations: any) => {
     dispatch(setValidations(validations));

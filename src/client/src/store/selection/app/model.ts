@@ -7,13 +7,13 @@ export interface ISelectProjectTypeAction {
   payload: ISelected;
 }
 
-export interface IUpdateProjectNameActionType {
-    type: WIZARD_SELECTION_TYPEKEYS.UPDATE_PROJECT_NAME;
+export interface ISetProjectNameActionType {
+    type: WIZARD_SELECTION_TYPEKEYS.SET_PROJECT_NAME;
     payload: IProjectName;
 }
 
 export interface IUpdateProjectPathActionType {
-    type: WIZARD_SELECTION_TYPEKEYS.UPDATE_OUTPUT_PATH;
+    type: WIZARD_SELECTION_TYPEKEYS.SET_OUTPUT_PATH;
     payload: string;
 }
   
