@@ -15,9 +15,7 @@ import {
 
 import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
 import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
-import {
-  updateOutputPathAction
-} from "./actions/wizardSelectionActions/updateProjectNameAndPath";
+
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
@@ -49,6 +47,7 @@ import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setPagesAction } from "./store/selection/pages/action";
 import { setValidations } from "./store/selection/validations/action";
+import { updateOutputPathAction } from "./store/selection/app/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),

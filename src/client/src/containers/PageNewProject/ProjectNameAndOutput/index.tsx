@@ -5,11 +5,6 @@ import Input from "../../../components/Input";
 import OutputPath from "../../../components/OutputPath";
 
 import {
-  updateOutputPathAction,
-  updateProjectNameAction
-} from "../../../actions/wizardSelectionActions/updateProjectNameAndPath";
-
-import {
   getOutputPath,
   getProjectName,
   getProjectNameValidation,
@@ -42,6 +37,7 @@ import { inferProjectName} from "../../../utils/infer/projectName";
 import messages from "./messages";
 import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
 import { setProjectPathValidation } from "../../../store/selection/validations/action";
+import { updateProjectNameAction, updateOutputPathAction } from "../../../store/selection/app/action";
 
 interface IStateProps {
   vscode: IVSCodeObject;
