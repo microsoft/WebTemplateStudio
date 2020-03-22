@@ -8,7 +8,6 @@ import {
 } from "./updateGenStatusActions";
 import { IResetWizard } from "./resetWizardAction";
 import { IUpdateDependencyInfo } from "./updateDependencyInfo";
-import { IEnableQuickStart } from "./enableQuickStartAction";
 
 type WizardInfoType =
   | IVersionData
@@ -19,7 +18,6 @@ type WizardInfoType =
   | IUpdateGenStatus
   | IResetWizard
   | IUpdateGenStatusMessage
-  | IUpdateDependencyInfo
-  | IEnableQuickStart;
+  | IUpdateDependencyInfo;
 
 export default WizardInfoType;

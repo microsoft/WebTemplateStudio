@@ -6,7 +6,6 @@ import projectTypes from "./projectTypeReducer";
 import detailsPage from "./detailsPageReducer";
 import previewStatus from "./previewReducer";
 import serverPort from "./portReducer";
-import enableQuickStart from "./enableQuickStartReducer";
 
 const wizardContentReducer = combineReducers({
   backendOptions,
@@ -15,8 +14,7 @@ const wizardContentReducer = combineReducers({
   projectTypes,
   detailsPage,
   serverPort,
-  previewStatus,
-  enableQuickStart
+  previewStatus
 });
 
 export default wizardContentReducer;

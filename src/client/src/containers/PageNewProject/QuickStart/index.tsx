@@ -6,7 +6,6 @@ import { FormattedMessage } from "react-intl";
 
 import RootAction from "../../../actions/ActionType";
 import { setVisitedWizardPageAction } from "../../../actions/wizardInfoActions/setVisitedWizardPage";
-import { enableQuickStartAction } from "../../../actions/wizardInfoActions/enableQuickStartAction";
 
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { isEnableNextPage } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
@@ -43,7 +42,6 @@ interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
   setRouteVisited: (route: string) => void;
-  enableQuickStart: () => void;
 }
 
 type Props = IStateProps & IDispatchProps & RouteComponentProps;
@@ -57,12 +55,10 @@ class QuickStart extends Component<Props> {
       selectBackendFramework,
       selectPages,
       history,
-      setRouteVisited,
-      enableQuickStart
+      setRouteVisited
     } = this.props;
 
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART);
-    enableQuickStart();
     getAllFrameworks(vscode, isPreview);
     getAllPages(vscode);
     selectFrontendFramework(FRONT_END_SELECTION);
@@ -132,9 +128,6 @@ const mapDispatchToProps = (
   },
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
-  },
-  enableQuickStart: () => {
-    dispatch(enableQuickStartAction());
   }
 });
 
