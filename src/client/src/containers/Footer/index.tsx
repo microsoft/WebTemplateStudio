@@ -29,7 +29,6 @@ import {
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
-import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
 import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
@@ -58,7 +57,6 @@ interface IDispatchProps {
   setRouteVisited: (route: string) => void;
   setPage: (route: string) => void;
   openPostGenModal: () => any;
-  updateCreateProjectButton: (enable: boolean) => any;
 }
 
 interface IStateProps {
@@ -70,7 +68,6 @@ interface IStateProps {
   appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
   isEnableNextPage: boolean;
-  enableCreateProjectButton: boolean;
 }
 
 type Props = RouteComponentProps &
@@ -120,8 +117,8 @@ class Footer extends React.Component<Props> {
     this.trackPageForTelemetry(pathname);
     openPostGenModal();
   };
-  public isReviewAndGenerate = (): boolean => {
-    return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
+  public canGenerate = (): boolean => {
+    return this.props.isVisited.showReviewAndGenerate;
   };
   public findPageID = (pathname: string): number => {
     switch (pathname) {
@@ -191,15 +188,10 @@ class Footer extends React.Component<Props> {
       isEnableNextPage,
       location,
       isVisited,
-      intl,
-      updateCreateProjectButton,
-      enableCreateProjectButton
+      intl
     } = this.props;
     const { pathname } = location;
     const { showFrameworks } = isVisited;
-    if (this.isReviewAndGenerate()) {
-      updateCreateProjectButton(true);
-    }
     return (
       <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
         {pathname !== ROUTES.PAGE_DETAILS && (
@@ -263,7 +255,7 @@ class Footer extends React.Component<Props> {
                   )}
                 </Link>
               )}
-              {enableCreateProjectButton && (
+              {this.canGenerate() && (
                 <button
                   disabled={!isEnableNextPage}
                   className={classnames(styles.button, {
@@ -295,9 +287,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selectedAppService: isAppServiceSelectedSelector(state),
   appService: getAppServiceSelectionSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
-  isEnableNextPage: isEnableNextPage(state),
-  enableCreateProjectButton: state.wizardContent.createProjectButton
-}); 
+  isEnableNextPage: isEnableNextPage(state)
+});
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
@@ -310,9 +301,6 @@ const mapDispatchToProps = (
   },
   openPostGenModal: () => {
     dispatch(openPostGenModalAction());
-  },
-  updateCreateProjectButton: (enable: boolean) => {
-    dispatch(updateCreateProjectButtonAction(enable));
   }
 });
 
