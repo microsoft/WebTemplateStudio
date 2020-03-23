@@ -80,7 +80,7 @@ const AppNameEditor = ({
           )}
           {isValidatingName && <Spinner className={styles.spinner} />}
         </div>
-        {appName !== "" && !isValidatingName && invalidAppNameMessage && (
+        {appName !== "" && !isValidatingName && invalidAppNameMessage !== "" && (
           <div className={styles.errorMessage}>{invalidAppNameMessage}</div>
         )}
     </div>

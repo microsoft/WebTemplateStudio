@@ -79,7 +79,7 @@ const AccountNameEditor = ({
         )}
         {isValidatingName && <Spinner className={styles.spinner} />}
       </div>
-      {accountName !== "" && !isValidatingName && invalidAccountNameMessage && (
+      {accountName !== "" && !isValidatingName && invalidAccountNameMessage !== "" && (
         <div className={styles.errorMessage}>{invalidAccountNameMessage}</div>
       )}
     </div>
