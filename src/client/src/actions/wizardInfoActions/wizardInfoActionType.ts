@@ -1,4 +1,4 @@
-import { IVersionData } from "./getVersionData";
+import { IVersionData } from "../../store/versions/model";
 import { ISetDetails } from "./setDetailsPage";
 import { ISetVisitedPage, IResetVisitedPage } from "./setVisitedWizardPage";
 import { ISetPage } from "./setPageWizardPage";

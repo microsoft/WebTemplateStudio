@@ -20,7 +20,7 @@ import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
 } from "./actions/wizardInfoActions/updateGenStatusActions";
-import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
+import { getVersionsDataAction } from "./store/versions/action";
 
 import appStyles from "./appStyles.module.css";
 import { IVersions } from "./types/version";
