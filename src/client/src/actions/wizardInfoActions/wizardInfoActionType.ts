@@ -5,7 +5,7 @@ import { ISetPage } from "./setPageWizardPage";
 import {
   IUpdateGenStatusMessage,
   IUpdateGenStatus
-} from "./updateGenStatusActions";
+} from "../../store/generationStatus/model";
 import { IResetWizard } from "./resetWizardAction";
 import { IUpdateDependencyInfo } from "./updateDependencyInfo";
 

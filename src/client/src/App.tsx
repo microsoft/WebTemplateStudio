@@ -19,7 +19,7 @@ import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
-} from "./actions/wizardInfoActions/updateGenStatusActions";
+} from "./store/generationStatus/action";
 import { getVersionsDataAction } from "./store/versions/action";
 
 import appStyles from "./appStyles.module.css";
