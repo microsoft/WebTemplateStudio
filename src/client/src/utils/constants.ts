@@ -20,6 +20,10 @@ const WEB_TEMPLATE_STUDIO_LINKS = {
     "https://azure.microsoft.com/en-us/pricing/details/app-service/plans/"
 };
 
+const AZURE_LINKS = {
+  CREATE_NEW_SUBSCRIPTION: "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade"
+};
+
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
 
@@ -197,6 +201,7 @@ export {
   PAGE_NAME_CHARACTER_LIMIT,
   MAX_PAGES_ALLOWED,
   WEB_TEMPLATE_STUDIO_LINKS,
+  AZURE_LINKS,
   FRAMEWORK_TYPE,
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,

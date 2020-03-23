@@ -79,7 +79,7 @@ const CosmosModal = ({ intl }: Props) => {
       <div className={styles.bodyContainer}>
         <SubscriptionSelection
           initialSubscription={subscription}
-          onChangeSubscription={setSubscription} />
+          onSubscriptionChange={setSubscription} />
 
         <AccountNameEditor
           subscription={subscription}

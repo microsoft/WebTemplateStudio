@@ -7,19 +7,18 @@ import { useSelector } from "react-redux";
 import { getDropdownSubscriptions } from "../../selectors/subscriptionSelector";
 import { useState } from "react";
 import { AppState } from "../../reducers";
-
-const createSubscriptionLink = "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade";
+import { AZURE_LINKS } from "../../utils/constants";
 
 interface IProps {
   initialSubscription: string;
-  onChangeSubscription(selectedSubscription: string): void;
+  onSubscriptionChange(selectedSubscription: string): void;
 }
 
 type Props = IProps & InjectedIntlProps;
 
 const SubscriptionSelection = (props: Props) => {
   const { formatMessage } = props.intl;
-  const { initialSubscription, onChangeSubscription } = props;
+  const { initialSubscription, onSubscriptionChange } = props;
   const subscriptions = useSelector((state: AppState) => getDropdownSubscriptions(state));
   const [selectedSubscription, setSelectedSubscription] = useState<IDropDownOptionType | undefined>(undefined);
 
@@ -32,7 +31,7 @@ const SubscriptionSelection = (props: Props) => {
 
   React.useEffect(() => {
     if (selectedSubscription) {
-      onChangeSubscription(selectedSubscription.value);
+      onSubscriptionChange(selectedSubscription.value);
     }
   }, [selectedSubscription]);
 
@@ -40,7 +39,7 @@ const SubscriptionSelection = (props: Props) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
-        <a className={styles.link} href={createSubscriptionLink}>
+        <a className={styles.link} href={AZURE_LINKS.CREATE_NEW_SUBSCRIPTION}>
           {formatMessage(messages.newSubscriptionLink)}
         </a>
       </div>
