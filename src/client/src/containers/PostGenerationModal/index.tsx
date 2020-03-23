@@ -30,7 +30,7 @@ import { AppState } from "../../reducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getOutputPath, getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
-import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
+import { MODAL_TYPES } from "../../store/modal/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
 import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";

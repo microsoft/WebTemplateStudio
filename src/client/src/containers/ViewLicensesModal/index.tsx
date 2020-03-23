@@ -7,11 +7,11 @@ import { AppState } from "../../reducers";
 import styles from "./styles.module.css";
 import asModal from "../../components/Modal";
 import RootAction from "../../actions/ActionType";
-import { closeModalAction } from "../../actions/modalActions/modalActions";
+import { closeModalAction } from "../../store/modal/action";
 import Licenses from "./Licenses";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isViewLicensesModalOpenSelector } from "../../selectors/modalSelector";
-import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
+import { MODAL_TYPES } from "../../store/modal/typeKeys";
 import { KEY_EVENTS } from "../../utils/constants";
 import messages from "./messages";
 

@@ -1,4 +1,4 @@
-import { ICloseModal, IOpenModal } from "./modalActions";
+import { ICloseModal, IOpenModal } from "./model";
 
 type ModalActionType = ICloseModal | IOpenModal;
 

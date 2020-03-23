@@ -1,5 +1,5 @@
 import AzureActionType from "./azureActions/azureActionType";
-import ModalActionType from "./modalActions/modalActionType";
+import ModalActionType from "../store/modal/modalActionType";
 import VSCodeActionTypes from "./vscodeApiActions/VSCodeActionType";
 import WizardContentActionType from "./wizardContentActions/wizardContentActionType";
 import WizardSelectionActionType from "../store/selection/selectionActionType";

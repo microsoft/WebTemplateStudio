@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import asModal from "../../components/Modal";
 
-import { closeModalAction } from "../../actions/modalActions/modalActions";
+import { closeModalAction } from "../../store/modal/action";
 import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";

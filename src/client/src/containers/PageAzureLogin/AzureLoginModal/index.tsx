@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import asModal from "../../../components/Modal";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { closeModalAction } from "../../../actions/modalActions/modalActions";
+import { closeModalAction } from "../../../store/modal/action";
 import { AppState } from "../../../reducers";
 import RootAction from "../../../actions/ActionType";
 import { isAzureLoginModalOpenSelector } from "../../../selectors/modalSelector";
@@ -18,7 +18,7 @@ import { KEY_EVENTS } from "../../../utils/constants";
 import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
 import CollapsibleInfoBox from "../../../components/CollapsibleInfoBox";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
-import * as ModalActions from "../../../actions/modalActions/modalActions";
+import * as ModalActions from "../../../store/modal/action";
 import { ThunkDispatch } from "redux-thunk";
 import { azureLogin } from "../../../utils/extensionService/extensionService";
 import { logIntoAzureAction } from "../../../actions/azureActions/logIntoAzure";

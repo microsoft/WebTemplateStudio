@@ -8,7 +8,7 @@ import { removeCosmosSelectionAction } from "../../../../actions/azureActions/sa
 import { ICosmosDB } from "../../../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
-import { openCosmosDbModalAction } from "../../../../actions/modalActions/modalActions";
+import { openCosmosDbModalAction } from "../../../../store/modal/action";
 
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";

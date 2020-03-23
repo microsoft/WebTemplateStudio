@@ -7,7 +7,7 @@ import { removeAppServiceSettingsAction } from "../../../../actions/azureActions
 import { IAppService } from "../../../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
-import { openAppServiceModalAction } from "../../../../actions/modalActions/modalActions";
+import { openAppServiceModalAction } from "../../../../store/modal/action";
 
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";

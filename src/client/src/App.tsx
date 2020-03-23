@@ -42,7 +42,7 @@ import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 
 import Loadable from "react-loadable";
 import PageDetails from "./containers/PageDetails";
-import { MODAL_TYPES } from "./actions/modalActions/typeKeys";
+import { MODAL_TYPES } from "./store/modal/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setPagesAction } from "./store/selection/pages/action";
