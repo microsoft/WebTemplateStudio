@@ -5,7 +5,6 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { FormattedMessage } from "react-intl";
 
 import RootAction from "../../../actions/ActionType";
-import { setVisitedWizardPageAction } from "../../../actions/wizardInfoActions/setVisitedWizardPage";
 
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { isEnableNextPage } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
@@ -30,6 +29,7 @@ import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
 import { setPagesAction } from "../../../store/selection/pages/action";
+import { setVisitedWizardPageAction } from "../../../store/wizardContent/pages/action";
 
 interface IStateProps {
   vscode: IVSCodeObject;

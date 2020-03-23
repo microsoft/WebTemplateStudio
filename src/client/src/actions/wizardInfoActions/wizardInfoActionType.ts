@@ -1,6 +1,5 @@
 import { IVersionData } from "../../store/versions/model";
 import { ISetDetails } from "./setDetailsPage";
-import { ISetVisitedPage, IResetVisitedPage } from "./setVisitedWizardPage";
 import { ISetPage } from "./setPageWizardPage";
 import {
   IUpdateGenStatusMessage,
@@ -8,6 +7,7 @@ import {
 } from "../../store/generationStatus/model";
 import { IResetWizard } from "./resetWizardAction";
 import { IUpdateDependencyInfo } from "./updateDependencyInfo";
+import { ISetVisitedPage, IResetVisitedPage } from "../../store/wizardContent/pages/model";
 
 type WizardInfoType =
   | IVersionData
