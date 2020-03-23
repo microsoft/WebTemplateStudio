@@ -8,3 +8,8 @@ export interface ISetVisitedPage {
 export interface IResetVisitedPage {
   type: WIZARD_INFO_TYPEKEYS.RESET_VISITED_WIZARD_PAGE;
 }
+
+export interface ISetPage {
+  type: WIZARD_INFO_TYPEKEYS.SET_PAGE_WIZARD_PAGE;
+  payload: string;
+}

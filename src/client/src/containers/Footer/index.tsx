@@ -27,7 +27,6 @@ import {
   getAppServiceSelectionSelector
 } from "../../selectors/appServiceSelector";
 
-import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
 import { openPostGenModalAction } from "../../store/modals/action";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
@@ -51,7 +50,7 @@ import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
 import messages from "./messages";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import { setVisitedWizardPageAction } from "../../store/wizardContent/pages/action";
+import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;

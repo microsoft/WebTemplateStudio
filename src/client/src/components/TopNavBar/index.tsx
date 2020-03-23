@@ -15,8 +15,8 @@ import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizard
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
 import RootAction from "../../actions/ActionType";
-import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
 import messages from "./messages";
+import { setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 
 interface IStateProps {
   isVisited: IRoutes;
@@ -114,7 +114,7 @@ const mapStateToProps = (state: any): IStateProps => ({
   isEnableNextPage: isEnableNextPage(state),
   isVisited: state.wizardRoutes.isVisited
 });
- 
+
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
