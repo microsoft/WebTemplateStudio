@@ -33,8 +33,8 @@ import { strings as messages } from "./strings";
 import { MODAL_TYPES } from "../../store/modals/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
-import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
+import { resetWizardAction } from "../../store/wizardContent/wizard/action";
 interface LinksDict {
   [serviceId: string]: string;
 }

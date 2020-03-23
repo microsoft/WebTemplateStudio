@@ -3,9 +3,9 @@ import {
   IUpdateGenStatusMessage,
   IUpdateGenStatus
 } from "../../store/generationStatus/model";
-import { IResetWizard } from "./resetWizardAction";
 import { IUpdateDependencyInfo } from "./updateDependencyInfo";
 import { ISetVisitedPage, IResetVisitedPage, ISetPage, ISetDetails } from "../../store/wizardContent/pages/model";
+import { IResetWizard } from "../../store/wizardContent/wizard/model";
 
 type WizardInfoType =
   | IVersionData
