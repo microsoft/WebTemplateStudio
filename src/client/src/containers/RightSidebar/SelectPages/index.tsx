@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
 import { injectIntl, InjectedIntl } from "react-intl";
 import PageContainer from "./PageContainer";
-import * as ModalActions from "../../../store/modal/action";
+import * as ModalActions from "../../../store/modals/action";
 import { ISelected } from "../../../types/selected";
 
 import { ReactComponent as ShowIcon } from "../../../assets/i-show.svg";

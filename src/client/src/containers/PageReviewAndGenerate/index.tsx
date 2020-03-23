@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import classnames from "classnames";
 
-import * as ModalActions from "../../store/modal/action";
+import * as ModalActions from "../../store/modals/action";
 
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";

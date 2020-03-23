@@ -19,7 +19,7 @@ import messages from "./strings";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import { AppState } from "../../reducers";
-import * as ModalActions from "../../store/modal/action";
+import * as ModalActions from "../../store/modals/action";
 import { hasServicesSelector } from "../../selectors/servicesSelector";
 import { getIsVisitedRoutesSelector, IVisitedPages } from "../../selectors/wizardNavigationSelector";
 import ProjectDetails from "./ProjectDetails";

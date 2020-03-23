@@ -29,7 +29,7 @@ import {
 
 import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
 import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
-import { openPostGenModalAction } from "../../store/modal/action";
+import { openPostGenModalAction } from "../../store/modals/action";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import {

@@ -1,7 +1,7 @@
 import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
 import AzureActionType from "../../actions/azureActions/azureActionType";
-import { MODAL_TYPEKEYS } from "../../store/modal/typeKeys";
-import { ICloseModal } from "../../store/modal/action";
+import { MODAL_TYPEKEYS } from "../../store/modals/typeKeys";
+import { ICloseModal } from "../../store/modals/action";
 
 /* State Shape
 {

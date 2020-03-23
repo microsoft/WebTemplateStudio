@@ -6,10 +6,10 @@ import { AppState } from "../../../reducers";
 import styles from "./styles.module.css";
 import asModal from "../../../components/Modal";
 import RootAction from "../../../actions/ActionType";
-import { closeModalAction } from "../../../store/modal/action";
+import { closeModalAction } from "../../../store/modals/action";
 import PageAddPages from "../../PageAddPages";
 import { isAddPagesModalOpenSelector } from "../../../selectors/modalSelector";
-import { MODAL_TYPES } from "../../../store/modal/typeKeys";
+import { MODAL_TYPES } from "../../../store/modals/typeKeys";
 import { KEY_EVENTS } from "../../../utils/constants";
 
 import { ReactComponent as Cancel } from "../../../assets/cancel.svg";

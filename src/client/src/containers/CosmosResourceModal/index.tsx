@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
-import { closeModalAction } from "../../store/modal/action";
+import { closeModalAction } from "../../store/modals/action";
 import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import { azureModalInitialState as cosmosInitialState } from "../../mockData/azureModalInitialStateData";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
