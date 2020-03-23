@@ -35,8 +35,6 @@ import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
 import { getPages, getFrameworks, getUserStatus, getTemplateInfo } from "./utils/extensionService/extensionService";
-
-import { setBackendFrameworksAction } from "./actions/wizardContentActions/setBackendFrameworks";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 
 import Loadable from "react-loadable";
@@ -47,7 +45,7 @@ import TopNavBar from "./components/TopNavBar";
 import { setPagesAction } from "./store/selection/pages/action";
 import { setValidations } from "./store/selection/validations/action";
 import { setOutputPathAction } from "./store/selection/app/action";
-import { setFrontendFrameworksAction } from "./store/wizardContent/frameworks/action";
+import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/wizardContent/frameworks/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),

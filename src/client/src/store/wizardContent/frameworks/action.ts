@@ -1,5 +1,5 @@
 import { IOption } from "../../../types/option";
-import { IUpdateFrameworkActionType, IFrontendFrameworksActionType } from "./model";
+import { IUpdateFrameworkActionType, IFrontendFrameworksActionType, IBackendFrameworksSuccessActionType } from "./model";
 import { WIZARD_CONTENT_TYPEKEYS } from "../../../actions/wizardContentActions/typeKeys";
 
 export const updateFrameworksAction = (
@@ -13,5 +13,12 @@ export const setFrontendFrameworksAction = (
   frameworks: IOption[]
 ): IFrontendFrameworksActionType => ({
   type: WIZARD_CONTENT_TYPEKEYS.SET_FRONTEND_FRAMEWORKS,
+  payload: frameworks
+});
+
+export const setBackendFrameworksAction = (
+  frameworks: IOption[]
+): IBackendFrameworksSuccessActionType => ({
+  type: WIZARD_CONTENT_TYPEKEYS.SET_BACKEND_FRAMEWORKS,
   payload: frameworks
 });
