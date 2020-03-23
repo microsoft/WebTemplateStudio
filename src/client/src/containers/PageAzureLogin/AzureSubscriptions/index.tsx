@@ -14,7 +14,6 @@ import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 import azureServiceOptions from "../../../mockData/azureServiceOptions";
 import { servicesEnum } from "../../../mockData/azureServiceOptions";
 import { IOption } from "../../../types/option";
-import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
 
 import {
   InjectedIntlProps,
@@ -26,6 +25,7 @@ import RootAction from "../../../actions/ActionType";
 
 import { isAppServiceSelectedSelector } from "../../../selectors/appServiceSelector";
 import messages from "./messages";
+import { setDetailPageAction } from "../../../store/wizardContent/pages/action";
 
 interface IDispatchProps {
   startLogOutToAzure: () => any;

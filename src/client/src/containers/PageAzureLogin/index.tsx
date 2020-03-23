@@ -11,7 +11,6 @@ import {
   ROUTES
 } from "../../utils/constants";
 
-import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 import { IOption } from "../../types/option";
 import { azureMessages } from "../../mockData/azureServiceOptions";
 import { AppState } from "../../reducers";
@@ -23,6 +22,7 @@ import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
 import { startLogOutAzure } from "../../actions/azureActions/logOutAzure";
+import { setDetailPageAction } from "../../store/wizardContent/pages/action";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;

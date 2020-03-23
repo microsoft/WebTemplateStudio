@@ -1,15 +1,6 @@
 import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
 import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType";
-import { IDetail } from "../../actions/wizardInfoActions/setDetailsPage";
-
-/* State Shape
-{
-    details: {
-      data: IOption,
-      isIntlFormatted: boolean
-    }
-}
-*/
+import { IDetail } from "../../store/wizardContent/pages/model";
 
 const initialState = {
   isIntlFormatted: false,

@@ -5,8 +5,8 @@ import RootAction from "../../../actions/ActionType";
 import { IDispatchProps, IStateProps } from "./interfaces";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { ISelected } from "../../../types/selected";
-import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
 import { setPagesAction } from "../../../store/selection/pages/action";
+import { setDetailPageAction } from "../../../store/wizardContent/pages/action";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
