@@ -1,5 +1,6 @@
 import { WIZARD_INFO_TYPEKEYS } from "../typeKeys";
 import { IOption } from "../../../types/option";
+import { WIZARD_CONTENT_TYPEKEYS } from "../../../actions/wizardContentActions/typeKeys";
 
 export interface ISetVisitedPage {
   type: WIZARD_INFO_TYPEKEYS.SET_VISITED_WIZARD_PAGE;
@@ -23,4 +24,9 @@ export interface IDetail {
 export interface ISetDetails {
   type: WIZARD_INFO_TYPEKEYS.SET_DETAILS_PAGE_INFO;
   payload: IDetail;
+}
+
+export interface IPageOptionsActionType {
+  type: WIZARD_CONTENT_TYPEKEYS.GET_PAGES_OPTIONS_SUCCESS;
+  payload: IOption[];
 }
