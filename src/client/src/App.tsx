@@ -13,7 +13,7 @@ import {
   FRAMEWORK_TYPE
 } from "./utils/constants";
 
-import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
+import { getVSCodeApi } from "./store/vscode/action";
 import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
 
 import {

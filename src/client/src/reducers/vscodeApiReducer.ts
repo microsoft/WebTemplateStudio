@@ -1,7 +1,7 @@
-import { VSCODE_TYPEKEYS } from "../actions/vscodeApiActions/typeKeys";
+import { VSCODE_TYPEKEYS } from "../store/vscode/typeKeys";
 import { PRODUCTION } from "../utils/constants";
 import mockVsCodeApi from "../mockData/mockVsCodeApi";
-import { IVSCodeAPIActionType } from "../actions/vscodeApiActions/getVSCodeApi";
+import { IVSCodeAPIActionType } from "../store/vscode/model";
 
 /* State Shape
 {

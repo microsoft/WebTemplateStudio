@@ -1,4 +1,4 @@
-import { IVSCodeAPIActionType } from "./getVSCodeApi";
+import { IVSCodeAPIActionType } from "./model";
 
 type VSCodeActionTypes = IVSCodeAPIActionType;
 
