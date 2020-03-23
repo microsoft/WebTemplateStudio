@@ -5,3 +5,8 @@ export interface IUpdateFrameworkActionType {
   type: WIZARD_CONTENT_TYPEKEYS.UPDATE_FRAMEWORK;
   payload: IOption[];
 }
+
+export interface IFrontendFrameworksActionType {
+  type: WIZARD_CONTENT_TYPEKEYS.SET_FRONTEND_FRAMEWORKS;
+  payload: IOption[];
+}
