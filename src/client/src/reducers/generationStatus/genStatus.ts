@@ -1,4 +1,4 @@
-import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
+import { WIZARD_INFO_TYPEKEYS } from "../../store/wizardContent/typeKeys";
 import RootAction from "../../actions/ActionType";
 
 export interface IStatus {

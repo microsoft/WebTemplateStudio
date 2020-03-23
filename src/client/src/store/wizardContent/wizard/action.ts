@@ -1,8 +1,13 @@
-import { IResetWizard } from "./model";
-import { WIZARD_INFO_TYPEKEYS } from "../../../actions/wizardInfoActions/typeKeys";
+import { IResetWizard, IDependencyInfo, IUpdateDependencyInfo } from "./model";
+import { WIZARD_INFO_TYPEKEYS } from "../typeKeys";
 
-const resetWizardAction = (): IResetWizard => ({
+export const resetWizardAction = (): IResetWizard => ({
   type: WIZARD_INFO_TYPEKEYS.RESET_WIZARD
 });
 
-export { resetWizardAction };
+export const updateDependencyInfoAction = (
+  dependencyInfo: IDependencyInfo
+): IUpdateDependencyInfo => ({
+  type: WIZARD_INFO_TYPEKEYS.UPDATE_DEPENDENCY_INFO,
+  payload: dependencyInfo
+});

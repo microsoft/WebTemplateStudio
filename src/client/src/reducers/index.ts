@@ -9,7 +9,7 @@ import vscodeApi from "./vscodeApiReducer";
 import selection from "./wizardSelectionReducers";
 import versions from "./versionsReducer";
 import RootAction from "../actions/ActionType";
-import { WIZARD_INFO_TYPEKEYS } from "../actions/wizardInfoActions/typeKeys";
+import { WIZARD_INFO_TYPEKEYS } from "../store/wizardContent/typeKeys";
 
 const appReducer = combineReducers({
   vscode: vscodeApi,

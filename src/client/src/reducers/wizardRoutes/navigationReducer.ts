@@ -1,6 +1,6 @@
 import { ROUTES } from "../../utils/constants";
-import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
-import WizardInfoType from "../../actions/wizardInfoActions/wizardInfoActionType";
+import { WIZARD_INFO_TYPEKEYS } from "../../store/wizardContent/typeKeys";
+import WizardInfoType from "../../store/wizardContent/wizardInfoActionType";
 
 export interface IRoutes {
   [key: string]: boolean;

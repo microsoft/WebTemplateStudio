@@ -1,4 +1,4 @@
-import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
+import { WIZARD_INFO_TYPEKEYS } from "../wizardContent/typeKeys";
 import { IServiceStatus } from "../../reducers/generationStatus/genStatus";
 import { IUpdateGenStatusMessage, IUpdateGenStatus } from "./model";
 

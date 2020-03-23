@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { WIZARD_INFO_TYPEKEYS } from "../../actions/wizardInfoActions/typeKeys";
-import { IUpdateDependencyInfo } from "../../actions/wizardInfoActions/updateDependencyInfo";
+import { WIZARD_INFO_TYPEKEYS } from "../../store/wizardContent/typeKeys";
+import { IUpdateDependencyInfo } from "../../store/wizardContent/wizard/model";
 
 interface IDependencyInstalled {
   installed: boolean;

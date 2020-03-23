@@ -2,8 +2,8 @@ import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
 import messages from "../../../selectors/wizardSelectionSelector/messages";
 import { FormattedMessage } from "react-intl";
 import AzureActionType from "../../../actions/azureActions/azureActionType";
-import { WIZARD_INFO_TYPEKEYS } from "../../../actions/wizardInfoActions/typeKeys";
-import WizardInfoType from "../../../actions/wizardInfoActions/wizardInfoActionType";
+import { WIZARD_INFO_TYPEKEYS } from "../../../store/wizardContent/typeKeys";
+import WizardInfoType from "../../../store/wizardContent/wizardInfoActionType";
 
 export interface IAvailability {
   isSiteNameAvailable: boolean;
