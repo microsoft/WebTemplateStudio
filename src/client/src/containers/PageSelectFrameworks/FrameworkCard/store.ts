@@ -8,8 +8,8 @@ import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 
 import { ISelected } from "../../../types/selected";
 import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
-import { updateFrameworks } from "../../../actions/wizardContentActions/updateFrameworks";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
+import { updateFrameworksAction } from "../../../store/wizardContent/frameworks/action";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
@@ -24,7 +24,7 @@ const mapDispatchToProps = (
     dispatch(setDetailPageAction(detailPageInfo));
   },
   updateFrameworks: (frameworks: IOption[]) => {
-    dispatch(updateFrameworks(frameworks));
+    dispatch(updateFrameworksAction(frameworks));
   }
 });
 

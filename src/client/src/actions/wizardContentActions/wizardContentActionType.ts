@@ -1,10 +1,9 @@
 import { IBackendFrameworksSuccessActionType } from "./setBackendFrameworks";
 import { IFrontendFrameworksActionType } from "./setFrontendFrameworks";
-import { IUpdateFrameworkActionType } from "./updateFrameworks";
 import { IPageOptionsActionType } from "./getPagesOptions";
 import { IProjectTypesActionType } from "./getProjectTypes";
 import { IPreviewStatusActionType } from "./setPreviewStatus";
-import { ISetPortActionType } from "./setPort";
+import { IUpdateFrameworkActionType } from "../../store/wizardContent/frameworks/model";
 
 type WizardContentActionType =
   | IBackendFrameworksSuccessActionType
@@ -12,7 +11,6 @@ type WizardContentActionType =
   | IUpdateFrameworkActionType
   | IPageOptionsActionType
   | IProjectTypesActionType
-  | IPreviewStatusActionType
-  | ISetPortActionType;
+  | IPreviewStatusActionType;
 
 export default WizardContentActionType;
