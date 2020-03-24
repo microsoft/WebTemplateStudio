@@ -1,5 +1,6 @@
-import { ISaveCosmosDbSettings, IRemoveCosmosDbSettings } from "./model";
+import { ISaveCosmosDbSettings, IRemoveCosmosDbSettings, ISetCosmosAccountNameAvailability } from "./model";
 import { AZURE_TYPEKEYS } from "../typeKeys";
+import { IAvailabilityFromExtension } from "../azure/model";
 
 export const saveCosmosDbSettingsAction = (
   cosmosDbSettings: any
@@ -13,4 +14,11 @@ export const removeCosmosSelectionAction = (
 ): IRemoveCosmosDbSettings => ({
   type: AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE,
   payload: selectionIndex
+});
+
+export const setAccountAvailability = (
+  isAccountAvailableObject: IAvailabilityFromExtension
+): ISetCosmosAccountNameAvailability => ({
+  type: AZURE_TYPEKEYS.SET_ACCOUNT_AVAILABILITY,
+  payload: isAccountAvailableObject
 });

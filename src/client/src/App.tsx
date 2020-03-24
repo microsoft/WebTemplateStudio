@@ -14,8 +14,6 @@ import {
 } from "./utils/constants";
 
 import { getVSCodeApi } from "./store/vscode/action";
-import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
-
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
@@ -46,6 +44,7 @@ import { setOutputPathAction } from "./store/selection/app/action";
 import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/wizardContent/frameworks/action";
 import { getPagesOptionsAction } from "./store/wizardContent/pages/action";
 import { setPreviewStatusAction } from "./store/wizardContent/wizard/action";
+import { logIntoAzureAction } from "./store/azure/login/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),

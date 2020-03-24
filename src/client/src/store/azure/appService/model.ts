@@ -1,6 +1,6 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
 import { ISelectedAppService } from "../../../reducers/wizardSelectionReducers/services/appServiceReducer";
-import { IAvailabilityFromExtension } from "../../../actions/azureActions/setAccountAvailability";
+import { IAvailabilityFromExtension } from "../azure/model";
 
 export interface ISaveAppServiceSettings {
   type: AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS;

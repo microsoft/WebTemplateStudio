@@ -31,10 +31,6 @@ import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceS
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
-import {
-  setAccountAvailability,
-  IAvailabilityFromExtension
-} from "../../actions/azureActions/setAccountAvailability";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
@@ -43,7 +39,8 @@ import classNames from "classnames";
 import keyUpHandler from "../../utils/keyUpHandler";
 import { subscriptionDataCosmos, nameCosmos } from "../../utils/extensionService/extensionService";
 import { getSubscriptionData } from "../../actions/azureActions/subscriptionData";
-import { saveCosmosDbSettingsAction } from "../../store/azure/cosmosDb/action";
+import { saveCosmosDbSettingsAction, setAccountAvailability } from "../../store/azure/cosmosDb/action";
+import { IAvailabilityFromExtension } from "../../store/azure/azure/model";
 
 const DEFAULT_VALUE = {
   value: "Select...",
