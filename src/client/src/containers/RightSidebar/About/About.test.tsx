@@ -4,9 +4,8 @@ import About from "./index";
 import messages from "./messages";
 import * as ReactRedux from 'react-redux'
 import { getInitialState } from "../../../mockData/mockStore";
-import { render, RenderResult, fireEvent } from "@testing-library/react";
+import { render, RenderResult } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 
 describe("About", () => {
   let wrapper: RenderResult;

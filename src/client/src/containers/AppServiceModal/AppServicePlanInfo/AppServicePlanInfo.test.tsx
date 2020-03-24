@@ -12,7 +12,6 @@ xdescribe("AppServicePlanInfo", () => {
   let wrapper: RenderResult;
   let store: any;
   let initialState: any;
-  const setSubscription = () => jest.fn();
   const mockStore = configureMockStore();
 
   beforeEach(() => {
@@ -24,7 +23,7 @@ xdescribe("AppServicePlanInfo", () => {
 
   describe("When subscription is a Microsoft Learn Subscription", () => {
     beforeEach(() => {
-      const subscription = { label: "Microsoft Learn Subscription", value: "Microsoft Learn Subscription" };
+      props.subscription = { label: "Microsoft Learn Subscription", value: "Microsoft Learn Subscription" };
       wrapper = render(
         <IntlProvider locale="en">
           <Provider store={store}>
@@ -46,7 +45,7 @@ xdescribe("AppServicePlanInfo", () => {
 
   describe("When subscription is not a Microsoft Learn Subscription", () => {
     beforeEach(() => {
-      const subscription = { label: "subscription 1 value", value: "subscription 1 value" };
+      props.subscription = { label: "subscription 1 value", value: "subscription 1 value" };
       wrapper = render(
         <IntlProvider locale="en">
           <Provider store={store}>
