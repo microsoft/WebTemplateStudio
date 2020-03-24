@@ -1,4 +1,4 @@
-import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
+import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
 import {
   MODAL_TYPEKEYS,
   ModalState

@@ -1,5 +1,5 @@
-import { AZURE_TYPEKEYS } from "../../actions/azureActions/typeKeys";
-import AzureActionType from "../../actions/azureActions/azureActionType";
+import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
+import AzureActionType from "../../store/azure/azureActionType";
 import { MODAL_TYPEKEYS } from "../../store/modals/typeKeys";
 import { ICloseModal } from "../../store/modals/model";
 

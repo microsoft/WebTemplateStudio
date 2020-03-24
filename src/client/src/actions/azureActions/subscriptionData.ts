@@ -1,4 +1,4 @@
-import { AZURE_TYPEKEYS } from "./typeKeys";
+import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
 
 export interface IGetSubscription {
   type: AZURE_TYPEKEYS.GET_SUBSCRIPTION_DATA;

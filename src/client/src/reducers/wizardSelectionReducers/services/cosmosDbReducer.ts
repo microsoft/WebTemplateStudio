@@ -1,7 +1,7 @@
-import { AZURE_TYPEKEYS } from "../../../actions/azureActions/typeKeys";
+import { AZURE_TYPEKEYS } from "../../../store/azure/typeKeys";
 import { FormattedMessage } from "react-intl";
 import messages from "../../../selectors/wizardSelectionSelector/messages";
-import AzureActionType from "../../../actions/azureActions/azureActionType";
+import AzureActionType from "../../../store/azure/azureActionType";
 
 export interface IAvailability {
   isAccountNameAvailable: boolean;

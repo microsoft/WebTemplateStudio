@@ -1,4 +1,4 @@
-import { AZURE_TYPEKEYS } from "./typeKeys";
+import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
 
 export interface IAvailabilityFromExtension {
   isAvailable: boolean;
@@ -10,10 +10,6 @@ export interface ISetCosmosAccountNameAvailability {
   payload: IAvailabilityFromExtension;
 }
 
-export interface ISetAppServiceSiteNameAvailability {
-  type: AZURE_TYPEKEYS.SET_APP_NAME_AVAILABILITY;
-  payload: IAvailabilityFromExtension;
-}
 
 export const setAccountAvailability = (
   isAccountAvailableObject: IAvailabilityFromExtension
@@ -22,9 +18,3 @@ export const setAccountAvailability = (
   payload: isAccountAvailableObject
 });
 
-export const setSiteNameAvailabilityAction = (
-  isSiteNameAvailableObject: IAvailabilityFromExtension
-): ISetAppServiceSiteNameAvailability => ({
-  type: AZURE_TYPEKEYS.SET_APP_NAME_AVAILABILITY,
-  payload: isSiteNameAvailableObject
-});

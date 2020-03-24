@@ -1,4 +1,4 @@
-import { AZURE_TYPEKEYS } from "./typeKeys";
+import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
 import login from "../../mockData/login";
 import { Dispatch } from "react";
 

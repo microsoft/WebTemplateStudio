@@ -1,4 +1,4 @@
-import { AZURE_TYPEKEYS } from "./typeKeys";
+import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
 
 export interface ISaveCosmosDbSettings {
   type: AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS;

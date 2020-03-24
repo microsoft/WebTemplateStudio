@@ -1,4 +1,4 @@
-import AzureActionType from "./azureActions/azureActionType";
+import AzureActionType from "../store/azure/azureActionType";
 import ModalActionType from "../store/modals/modalActionType";
 import VSCodeActionTypes from "../store/vscode/VSCodeActionType";
 import WizardContentActionType from "../store/wizardContent/wizardContentActionType";
