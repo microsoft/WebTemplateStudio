@@ -12,6 +12,7 @@ import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { AppState } from "../../../reducers";
 
 let timeout: NodeJS.Timeout | undefined;
+let validationAppServiceNameScopeId = 0;
 
 interface IProps {
   subscription: string;
@@ -46,12 +47,17 @@ const AppNameEditor = ({
     onIsAvailableAppNameChange(false);
     if (appName !== "") {
       setIsValidatingName(true);
-      delayValidation(() => 
-        ValidateAppServiceName(subscription, appName, vscode).then(event => {
+      delayValidation(() => {
+        validationAppServiceNameScopeId++;
+        ValidateAppServiceName(subscription, appName, validationAppServiceNameScopeId, vscode).then(event => {
+         if(validationAppServiceNameScopeId === event.data.payload.scope)
+         {
           setInvalidAppNameMessage(event.data.payload.errorMessage);
           onIsAvailableAppNameChange(event.data.payload.isValid);
           setIsValidatingName(false);
-      }));
+         }
+      });
+    });
     }
   }, [appName]);
 

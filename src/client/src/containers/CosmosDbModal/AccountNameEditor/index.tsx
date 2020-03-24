@@ -12,6 +12,7 @@ import { AppState } from "../../../reducers";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 
 let timeout: NodeJS.Timeout | undefined;
+let validationCosmosDbAccountNameScopeId = 0;
 
 interface IProps {
   subscription: string;
@@ -45,13 +46,17 @@ const AccountNameEditor = ({
     onIsAvailableAccountNameChange(false);
     if (accountName !== "") {
       setIsValidatingName(true);
-      delayValidation(() =>
-        ValidateCosmosAccountName(subscription, accountName, vscode).then(event => {
-          setInvalidAccountNameMessage(event.data.payload.errorMessage);
-          onIsAvailableAccountNameChange(event.data.payload.isValid);
-          setIsValidatingName(false);
-        })
-      );
+      delayValidation(() =>{
+        validationCosmosDbAccountNameScopeId++;
+        ValidateCosmosAccountName(subscription, accountName, validationCosmosDbAccountNameScopeId, vscode).then(event => {
+          if(validationCosmosDbAccountNameScopeId === event.data.payload.scope)
+          {
+            setInvalidAccountNameMessage(event.data.payload.errorMessage);
+            onIsAvailableAccountNameChange(event.data.payload.isValid);
+            setIsValidatingName(false);
+          }
+        });
+      });
     }
   }, [accountName]);
 
