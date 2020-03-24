@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../../reducers";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 
+let timeout: NodeJS.Timeout | undefined;
+
 interface IProps {
   subscription: string;
   accountName: string;
@@ -43,15 +45,25 @@ const AccountNameEditor = ({
     onIsAvailableAccountNameChange(false);
     if (accountName !== "") {
       setIsValidatingName(true);
-      setTimeout(() => {
+      delayValidation(() =>
         ValidateCosmosAccountName(subscription, accountName, vscode).then(event => {
           setInvalidAccountNameMessage(event.data.payload.errorMessage);
           onIsAvailableAccountNameChange(event.data.payload.isValid);
           setIsValidatingName(false);
-        });
-      }, 700);
+        })
+      );
     }
   }, [accountName]);
+
+  const delayValidation = (validation: () => void) => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(() => {
+      timeout = undefined;
+      validation();
+    }, 700);
+  }
 
   const isValidSubscription = (): boolean => {
     return subscription !== "" && subscription !== "Select...";

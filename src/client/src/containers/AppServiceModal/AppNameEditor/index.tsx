@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { AppState } from "../../../reducers";
 
+let timeout: NodeJS.Timeout | undefined;
+
 interface IProps {
   subscription: string;
   appName: string;
@@ -44,15 +46,24 @@ const AppNameEditor = ({
     onIsAvailableAppNameChange(false);
     if (appName !== "") {
       setIsValidatingName(true);
-      setTimeout(() => {
+      delayValidation(() => 
         ValidateAppServiceName(subscription, appName, vscode).then(event => {
           setInvalidAppNameMessage(event.data.payload.errorMessage);
           onIsAvailableAppNameChange(event.data.payload.isValid);
           setIsValidatingName(false);
-        });
-      }, 700);
+      }));
     }
   }, [appName]);
+
+  const delayValidation = (validation: () => void) => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(() => {
+      timeout = undefined;
+      validation();
+    }, 700);
+  }
 
   return (
     <div
