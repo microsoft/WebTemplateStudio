@@ -1,6 +1,5 @@
-import { WIZARD_INFO_TYPEKEYS } from "../typeKeys";
+import { WIZARD_INFO_TYPEKEYS, WIZARD_CONTENT_TYPEKEYS } from "../typeKeys";
 import { IOption } from "../../../types/option";
-import { WIZARD_CONTENT_TYPEKEYS } from "../../../actions/wizardContentActions/typeKeys";
 
 export interface ISetVisitedPage {
   type: WIZARD_INFO_TYPEKEYS.SET_VISITED_WIZARD_PAGE;

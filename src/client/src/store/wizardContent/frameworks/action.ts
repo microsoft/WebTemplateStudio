@@ -1,6 +1,6 @@
 import { IOption } from "../../../types/option";
 import { IUpdateFrameworkActionType, IFrontendFrameworksActionType, IBackendFrameworksSuccessActionType } from "./model";
-import { WIZARD_CONTENT_TYPEKEYS } from "../../../actions/wizardContentActions/typeKeys";
+import { WIZARD_CONTENT_TYPEKEYS } from "../typeKeys";
 
 export const updateFrameworksAction = (
   frameworks: IOption[]

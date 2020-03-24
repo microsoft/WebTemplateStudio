@@ -1,8 +1,7 @@
 import { ISetVisitedPage, IResetVisitedPage, ISetPage, ISetDetails, IPageOptionsActionType } from "./model";
-import { WIZARD_INFO_TYPEKEYS } from "../typeKeys";
+import { WIZARD_INFO_TYPEKEYS, WIZARD_CONTENT_TYPEKEYS } from "../typeKeys";
 import { IOption } from "../../../types/option";
 import { IApiTemplateInfo } from "../../../types/apiTemplateInfo";
-import { WIZARD_CONTENT_TYPEKEYS } from "../../../actions/wizardContentActions/typeKeys";
 
 const setVisitedWizardPageAction = (route: string): ISetVisitedPage => ({
   type: WIZARD_INFO_TYPEKEYS.SET_VISITED_WIZARD_PAGE,

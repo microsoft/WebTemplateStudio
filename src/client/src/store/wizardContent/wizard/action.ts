@@ -1,6 +1,5 @@
 import { IResetWizard, IDependencyInfo, IUpdateDependencyInfo, IPreviewStatusActionType } from "./model";
-import { WIZARD_INFO_TYPEKEYS } from "../typeKeys";
-import { WIZARD_CONTENT_TYPEKEYS } from "../../../actions/wizardContentActions/typeKeys";
+import { WIZARD_INFO_TYPEKEYS, WIZARD_CONTENT_TYPEKEYS } from "../typeKeys";
 
 export const resetWizardAction = (): IResetWizard => ({
   type: WIZARD_INFO_TYPEKEYS.RESET_WIZARD

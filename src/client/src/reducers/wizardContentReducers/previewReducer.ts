@@ -1,11 +1,5 @@
-import { WIZARD_CONTENT_TYPEKEYS } from "../../actions/wizardContentActions/typeKeys";
-import WizardContentActionType from "../../actions/wizardContentActions/wizardContentActionType";
-
-/* State Shape
-{
-    previewStatus: boolean
-}
-*/
+import WizardContentActionType from "../../store/wizardContent/wizardContentActionType";
+import { WIZARD_CONTENT_TYPEKEYS } from "../../store/wizardContent/typeKeys";
 
 const previewStatus = (
   state = false,
