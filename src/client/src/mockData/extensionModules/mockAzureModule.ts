@@ -108,7 +108,7 @@ const getValidCosmosName = (message: any) => {
 };
 
 const validateCosmosName = (message: any) => {
-  const isValid = message.appName.length > 3;
+  const isValid = message.appName.length > 3 && !message.appName.includes(" ");
   const errorMessage = isValid ? "" : "Invalid name";
 
   window.postMessage(
@@ -128,7 +128,7 @@ const validateCosmosName = (message: any) => {
 };
 
 const validateAppServiceName = (message: any) => {
-  const isValid = message.appName.length > 3;
+  const isValid = message.appName.length > 3 && !message.appName.includes(" ");
   const errorMessage = isValid ? "" : "Invalid name";
   window.postMessage(
     {
