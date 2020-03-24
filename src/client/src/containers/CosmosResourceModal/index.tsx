@@ -10,7 +10,6 @@ import Dropdown from "../../components/Dropdown";
 import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../store/modals/action";
-import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import { azureModalInitialState as cosmosInitialState } from "../../mockData/azureModalInitialStateData";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Spinner } from "../../assets/spinner.svg";
@@ -44,6 +43,7 @@ import classNames from "classnames";
 import keyUpHandler from "../../utils/keyUpHandler";
 import { subscriptionDataCosmos, nameCosmos } from "../../utils/extensionService/extensionService";
 import { getSubscriptionData } from "../../actions/azureActions/subscriptionData";
+import { saveCosmosDbSettingsAction } from "../../store/azure/cosmosDb/action";
 
 const DEFAULT_VALUE = {
   value: "Select...",
