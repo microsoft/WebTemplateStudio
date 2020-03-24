@@ -1,4 +1,5 @@
 import { configure, shallow, mount } from "enzyme";
+import '@testing-library/jest-dom';
 import Adapter from "enzyme-adapter-react-16";
 import { IntlProvider, intlShape } from "react-intl";
 import React from "react";

@@ -2,21 +2,20 @@ import * as React from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import asModal from "../../components/Modal";
 import { closeModalAction } from "../../actions/modalActions/modalActions";
-import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
+import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import messages from "./messages";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
-import RuntimeStackInfo from "./RuntimeStackInfo";
-import AppServicePlanInfo from "./AppServicePlanInfo";
-import AppNameEditor from "./AppNameEditor";
+import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
+import AccountNameEditor from "./AccountNameEditor/index";
+import ApiSelection from "./APISelection/index";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
-import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
-import { getAppServiceSelectionSelector } from "../../selectors/appServiceSelector";
+import { ISelectedCosmosService } from "../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
+import { getCosmosDbSelectionSelector } from "../../selectors/cosmosServiceSelector";
 import classNames from "classnames";
 import { useState } from "react";
 
@@ -26,22 +25,25 @@ interface IStateProps {
 
 type Props = IStateProps & InjectedIntlProps;
 
-const AppServiceModal = ({ intl }: Props) => {
+const CosmosModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
-  const appServiceInStore = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
-  const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
-  const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
+  const cosmosInStore = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
+  const initialSubscription = cosmosInStore ? cosmosInStore.subscription : "";
+  const initialAccountName = cosmosInStore ? cosmosInStore.accountName : "";
+  const initialApi = cosmosInStore ? cosmosInStore.api : "";
 
   const [subscription, setSubscription] = useState(initialSubscription);
-  const [appName, setAppName] = useState(initialAppServiceName);
-  const [isAvailableAppName, setIsAvailableAppName] = useState(false);
+  const [accountName, setAccountName] = useState(initialAccountName);
+  const [api, setApi] = useState(initialApi);
+  const [isAvailableAccountName, setIsAvailableAccountName] = useState(false);
 
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
-    const isAppNameEmpty = appName === "";
+    const isAccountNameEmpty = accountName === "";
+    const isApiEmpty = api === "";
 
-    return !(isSubscriptionEmpty || isAppNameEmpty || !isAvailableAppName);
+    return !(isSubscriptionEmpty || isAccountNameEmpty || isApiEmpty || !isAvailableAccountName);
   };
 
   const getButtonClassNames = () => {
@@ -57,14 +59,15 @@ const AppServiceModal = ({ intl }: Props) => {
     }
   };
 
-  const saveAppServiceSelection = (): void => {
-    const appServiceSelection: ISelectedAppService = {
+  const saveCosmosSelection = () => {
+    const cosmosSelection: ISelectedCosmosService = {
       subscription,
+      accountName,
       resourceGroup: "",
-      siteName: appName,
-      internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
+      api,
+      internalName:  WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
     };
-    dispatch(saveAppServiceSettingsAction(appServiceSelection));
+    dispatch(saveCosmosDbSettingsAction(cosmosSelection));
   };
 
   return (
@@ -78,18 +81,17 @@ const AppServiceModal = ({ intl }: Props) => {
           initialSubscription={subscription}
           onSubscriptionChange={setSubscription} />
 
-        <AppNameEditor
+        <AccountNameEditor
           subscription={subscription}
-          appName={appName}
-          onAppNameChange={setAppName}
-          onIsAvailableAppNameChange={setIsAvailableAppName}
+          accountName={accountName}
+          onAccountNameChange={setAccountName}
+          onIsAvailableAccountNameChange={setIsAvailableAccountName}
         />
+        <ApiSelection
+          initialApi={api}
+          onApiChange={setApi} />
 
-        <AppServicePlanInfo subscription={subscription} />
-
-        <RuntimeStackInfo />
-
-        <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
+        <button className={getButtonClassNames()} onClick={saveCosmosSelection} disabled={!isEnableSaveButton()}>
           {formatMessage(messages.save)}
         </button>
       </div>
@@ -98,7 +100,7 @@ const AppServiceModal = ({ intl }: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  isModalOpen: isAppServiceModalOpenSelector(state)
+  isModalOpen: isCosmosDbModalOpenSelector(state)
 });
 
-export default connect(mapStateToProps)(asModal(injectIntl(AppServiceModal)));
+export default connect(mapStateToProps)(asModal(injectIntl(CosmosModal)));

@@ -73,8 +73,8 @@ const PostGenerationModal = Loadable({
   loader: () => import(/* webpackChunkName: "PostGenerationModal" */  "./containers/PostGenerationModal"),
   loading:() => <div/>
 });
-const CosmosResourceModal = Loadable({
-  loader: () => import(/* webpackChunkName: "CosmosResourceModal" */  "./containers/CosmosResourceModal"),
+const CosmosDbModal = Loadable({
+  loader: () => import(/* webpackChunkName: "CosmosDbModal" */  "./containers/CosmosDbModal"),
   loading:() => <div/>
 });
 const AppServiceModal = Loadable({
@@ -93,7 +93,7 @@ if (process.env.NODE_ENV === DEVELOPMENT) {
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;
-  logIntoAzure: (email: string, subscriptions: []) => void;
+  logIntoAzure: (azureProfile: AzureProfile) => void;
   setValidations: (validations: any) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
@@ -158,10 +158,8 @@ const App = (props: Props) => {
     getUserStatus(vscode).then((event)=>{
       const message = event.data;
       if (message.payload !== null) {
-        logIntoAzure(
-          message.payload.email,
-          message.payload.subscriptions
-        );
+        const azureProfile = message.payload as AzureProfile;
+        logIntoAzure(azureProfile);
       }
     });
 
@@ -244,7 +242,7 @@ const App = (props: Props) => {
       {isLoaded && (<div className={appStyles.container}>
         {(modalState.modalType === MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType === MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
-        {(modalState.modalType === MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosResourceModal/>)}
+        {(modalState.modalType === MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
         {(modalState.modalType === MODAL_TYPES.POST_GEN_MODAL) && (<PostGenerationModal/>)}
 
         <main
@@ -300,8 +298,8 @@ const mapDispatchToProps = (
   getVSCodeApi: () => {
     dispatch(getVSCodeApi());
   },
-  logIntoAzure: (email: string, subscriptions: any[]) => {
-    dispatch(logIntoAzureAction({ email, subscriptions }));
+  logIntoAzure: (azureProfile: AzureProfile) => {
+    dispatch(logIntoAzureAction(azureProfile));
   },
   updateOutputPath: (outputPath: string) => {
     dispatch(updateOutputPathAction(outputPath));

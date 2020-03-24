@@ -20,6 +20,10 @@ const WEB_TEMPLATE_STUDIO_LINKS = {
     "https://azure.microsoft.com/en-us/pricing/details/app-service/plans/"
 };
 
+const AZURE_LINKS = {
+  CREATE_NEW_SUBSCRIPTION: "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade"
+};
+
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
 
@@ -149,8 +153,8 @@ const EXTENSION_COMMANDS = {
   GET_OUTPUT_PATH: "get-output-path",
   GET_PROJECT_NAME: "get-project-name",
   GET_USER_STATUS: "get-user-status",
-  NAME_COSMOS: "name-cosmos",
-  NAME_APP_SERVICE: "name-app-service",
+  VALIDATE_COSMOS_NAME: "validate-cosmos-name",
+  VALIDATE_APPSERVICE_NAME: "validate-appservice-name",
   PROJECT_PATH_VALIDATION: "project-path-validation",
   GET_SUBSCRIPTION_DATA_FOR_COSMOS: "get-subscription-data-for-cosmos",
   GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE: "get-subscription-data-for-app-service",
@@ -197,6 +201,7 @@ export {
   PAGE_NAME_CHARACTER_LIMIT,
   MAX_PAGES_ALLOWED,
   WEB_TEMPLATE_STUDIO_LINKS,
+  AZURE_LINKS,
   FRAMEWORK_TYPE,
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,

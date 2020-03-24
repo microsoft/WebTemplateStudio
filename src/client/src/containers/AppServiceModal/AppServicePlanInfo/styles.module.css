@@ -1,0 +1,18 @@
+.container {
+  margin-bottom: 35px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 1.2em;
+  margin-bottom: 3px;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--vscode-textLink-foreground);
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}

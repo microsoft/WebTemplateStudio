@@ -8,14 +8,14 @@ export interface IsLoggedIntoAzure {
 
 export interface ILoginToAzure {
   type: AZURE_TYPEKEYS.LOG_IN_TO_AZURE;
-  payload: any;
+  payload: AzureProfile;
 }
 
 const isLoggedIntoAzureAction = (): IsLoggedIntoAzure => ({
   type: AZURE_TYPEKEYS.IS_LOGGED_IN_TO_AZURE
 });
 
-const logIntoAzureAction = (loginData: any): ILoginToAzure => ({
+const logIntoAzureAction = (loginData: AzureProfile): ILoginToAzure => ({
   type: AZURE_TYPEKEYS.LOG_IN_TO_AZURE,
   payload: loginData
 });

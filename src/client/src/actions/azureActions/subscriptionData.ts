@@ -2,10 +2,10 @@ import { AZURE_TYPEKEYS } from "./typeKeys";
 
 export interface IGetSubscription {
   type: AZURE_TYPEKEYS.GET_SUBSCRIPTION_DATA;
-  payload: any;
+  payload: SubscriptionData;
 }
 
-export const getSubscriptionData = (subscriptionData: any): IGetSubscription => ({
+export const getSubscriptionData = (subscriptionData: SubscriptionData): IGetSubscription => ({
   type: AZURE_TYPEKEYS.GET_SUBSCRIPTION_DATA,
   payload: subscriptionData
 });
