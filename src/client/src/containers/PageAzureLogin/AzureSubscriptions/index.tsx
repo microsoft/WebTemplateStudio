@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Card from "../../../components/Card";
 
 import styles from "./styles.module.css";
-import * as AzureActions from "../../../actions/azureActions/logOutAzure";
+import {startLogOutAzure} from "../../../store/azure/login/action";
 import * as ModalActions from "../../../store/modals/action";
 import { isCosmosDbModalOpenSelector } from "../../../selectors/modalSelector";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
@@ -198,7 +198,7 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   startLogOutToAzure: () => {
-    dispatch(AzureActions.startLogOutAzure());
+    dispatch(startLogOutAzure());
   },
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;

@@ -21,8 +21,8 @@ import RootAction from "../../actions/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
-import { startLogOutAzure } from "../../actions/azureActions/logOutAzure";
 import { setDetailPageAction } from "../../store/wizardContent/pages/action";
+import { startLogOutAzure } from "../../store/azure/login/action";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
