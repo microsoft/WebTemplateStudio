@@ -37,10 +37,9 @@ import messages from "./messages";
 import classNames from "classnames";
 import keyUpHandler from "../../utils/keyUpHandler";
 import { subscriptionDataCosmos, nameCosmos } from "../../utils/extensionService/extensionService";
-import { getSubscriptionData } from "../../actions/azureActions/subscriptionData";
 import { saveCosmosDbSettingsAction, setAccountAvailability } from "../../store/azure/cosmosDb/action";
 import { IAvailabilityFromExtension } from "../../store/azure/azure/model";
-import { setAzureValidationStatusAction } from "../../store/azure/azure/action";
+import { setAzureValidationStatusAction, getSubscriptionData } from "../../store/azure/azure/action";
 
 const DEFAULT_VALUE = {
   value: "Select...",
