@@ -4,7 +4,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { RouteComponentProps, withRouter } from "react-router";
 import { FormattedMessage } from "react-intl";
 
-import RootAction from "../../../actions/ActionType";
+import RootAction from "../../../store/ActionType";
 
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { isEnableNextPage } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";

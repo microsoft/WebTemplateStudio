@@ -8,7 +8,7 @@ import wizardRoutes from "./wizardRoutes";
 import vscodeApi from "./vscodeApiReducer";
 import selection from "./wizardSelectionReducers";
 import versions from "./versionsReducer";
-import RootAction from "../actions/ActionType";
+import RootAction from "../store/ActionType";
 import { WIZARD_INFO_TYPEKEYS } from "../store/wizardContent/typeKeys";
 
 const appReducer = combineReducers({

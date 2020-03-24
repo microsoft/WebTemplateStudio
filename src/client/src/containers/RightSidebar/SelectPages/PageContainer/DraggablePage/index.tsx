@@ -12,7 +12,7 @@ import { AppState } from "../../../../../reducers";
 
 import messages from "./messages";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../../../../actions/ActionType";
+import RootAction from "../../../../../store/ActionType";
 import { validateItemName } from "../../../../../utils/validations/itemName/itemName";
 import { getValidations } from "../../../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../../../../reducers/wizardSelectionReducers/setValidations";

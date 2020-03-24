@@ -21,7 +21,7 @@ import {
 } from "react-intl";
 import { AppState } from "../../../reducers";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../../actions/ActionType";
+import RootAction from "../../../store/ActionType";
 
 import { isAppServiceSelectedSelector } from "../../../selectors/appServiceSelector";
 import messages from "./messages";

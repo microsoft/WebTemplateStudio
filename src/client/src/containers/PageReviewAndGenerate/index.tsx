@@ -10,7 +10,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";
-import RootAction from "../../actions/ActionType";
+import RootAction from "../../store/ActionType";
 import messages from "./messages";
 import AddPagesModal from "./AddPagesModal";
 

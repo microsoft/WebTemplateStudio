@@ -3,7 +3,7 @@ import {
   MODAL_TYPEKEYS,
   ModalState
 } from "../../store/modals/typeKeys";
-import RootAction from "../../actions/ActionType";
+import RootAction from "../../store/ActionType";
 
 const initialState: ModalState = {
   modalType: null,

@@ -14,7 +14,7 @@ import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../../../reducers";
-import RootAction from "../../../../actions/ActionType";
+import RootAction from "../../../../store/ActionType";
 import { IVSCodeObject } from "../../../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../../../selectors/vscodeApiSelector";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";

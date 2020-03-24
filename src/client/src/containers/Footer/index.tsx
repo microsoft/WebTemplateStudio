@@ -43,7 +43,7 @@ import {
 import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../actions/ActionType";
+import RootAction from "../../store/ActionType";
 
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";

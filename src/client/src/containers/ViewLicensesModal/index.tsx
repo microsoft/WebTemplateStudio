@@ -6,7 +6,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../reducers";
 import styles from "./styles.module.css";
 import asModal from "../../components/Modal";
-import RootAction from "../../actions/ActionType";
+import RootAction from "../../store/ActionType";
 import { closeModalAction } from "../../store/modals/action";
 import Licenses from "./Licenses";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";

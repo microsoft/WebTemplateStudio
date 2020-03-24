@@ -6,7 +6,7 @@ import asModal from "../../../components/Modal";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { closeModalAction } from "../../../store/modals/action";
 import { AppState } from "../../../reducers";
-import RootAction from "../../../actions/ActionType";
+import RootAction from "../../../store/ActionType";
 import { isAzureLoginModalOpenSelector } from "../../../selectors/modalSelector";
 import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";

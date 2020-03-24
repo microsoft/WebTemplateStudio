@@ -30,7 +30,7 @@ import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { IValidations } from "../../../reducers/wizardSelectionReducers/setValidations";
 import { AppState } from "../../../reducers";
 import { Dispatch } from "redux";
-import RootAction from "../../../actions/ActionType";
+import RootAction from "../../../store/ActionType";
 import { validateProjectName} from "../../../utils/validations/projectName/projectName";
 import { IValidation} from "../../../utils/validations/validations";
 import { inferProjectName} from "../../../utils/infer/projectName";

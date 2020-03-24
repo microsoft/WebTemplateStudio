@@ -16,7 +16,7 @@ import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants
 import styles from "./styles.module.css";
 import { Dispatch } from "redux";
 import { AppState } from "../../reducers";
-import RootAction from "../../actions/ActionType";
+import RootAction from "../../store/ActionType";
 import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import classNames from "classnames";
 import { AppServiceContext } from "./AppServiceContext";

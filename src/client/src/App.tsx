@@ -29,7 +29,7 @@ import { ISelected } from "./types/selected";
 import { AppState } from "./reducers";
 import { IOption } from "./types/option";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "./actions/ActionType";
+import RootAction from "./store/ActionType";
 import { getPages, getFrameworks, getUserStatus, getTemplateInfo } from "./utils/extensionService/extensionService";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 

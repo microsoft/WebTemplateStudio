@@ -32,7 +32,7 @@ import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceS
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../actions/ActionType";
+import RootAction from "../../store/ActionType";
 import messages from "./messages";
 import classNames from "classnames";
 import keyUpHandler from "../../utils/keyUpHandler";

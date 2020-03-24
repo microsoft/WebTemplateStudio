@@ -17,7 +17,7 @@ import { AppState } from "../../reducers";
 import AzureSubscriptions from "./AzureSubscriptions";
 import AzureStudent from "./AzureStudent";
 import Title from "../../components/Title";
-import RootAction from "../../actions/ActionType";
+import RootAction from "../../store/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
