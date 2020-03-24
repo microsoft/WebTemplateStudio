@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import SidebarItem from "../SidebarItem";
 
-import { removeAppServiceSettingsAction } from "../../../../actions/azureActions/appServiceActions";
 import { IAppService } from "../../../../reducers/wizardSelectionReducers/services/appServiceReducer";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
@@ -19,6 +18,7 @@ import RootAction from "../../../../actions/ActionType";
 import { IVSCodeObject } from "../../../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../../../selectors/vscodeApiSelector";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
+import { removeAppServiceSettingsAction } from "../../../../store/azure/appService/action";
 
 interface IProps {
   appServiceSelection: IAppService;

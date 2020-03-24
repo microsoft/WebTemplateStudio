@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import asModal from "../../components/Modal";
 
 import { closeModalAction } from "../../store/modals/action";
-import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
 import { azureMessages as azureModalMessages } from "../../mockData/azureServiceOptions";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
@@ -22,6 +21,7 @@ import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/serv
 import classNames from "classnames";
 import { AppServiceContext } from "./AppServiceContext";
 import { useState } from "react";
+import { saveAppServiceSettingsAction } from "../../store/azure/appService/action";
 
 interface IStateProps {
   isModalOpen: boolean;

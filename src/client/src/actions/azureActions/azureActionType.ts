@@ -1,10 +1,6 @@
 import { IsLoggedIntoAzure, ILoginToAzure } from "./logIntoAzure";
 import { ILogout } from "./logOutAzure";
 import {
-  ISaveAppServiceSettings,
-  IRemoveAppServiceSettings
-} from "./appServiceActions";
-import {
   ISaveCosmosDbSettings,
   IRemoveCosmosDbSettings
 } from "./saveCosmosDbSettings";
@@ -14,6 +10,7 @@ import {
 } from "./setAccountAvailability";
 import { IAzureValidationStatus } from "./setAzureValidationStatusAction";
 import { IGetSubscription } from "./subscriptionData";
+import { ISaveAppServiceSettings, IRemoveAppServiceSettings } from "../../store/azure/appService/model";
 
 type AzureActionType =
   | IsLoggedIntoAzure
