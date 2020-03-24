@@ -1,10 +1,20 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import SubscriptionSelection from ".";
+import messages from "./messages";
 import { Provider } from "react-redux";
 import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
 import { render, RenderResult } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
+import { AZURE_LINKS } from "../../utils/constants";
+
+const renderWithIntl = (component: any) => {
+  return render(<IntlProvider locale="en">{component}</IntlProvider>)
+}
+
+const renderWithStore = (component: any, store: any) => {
+  return renderWithIntl(<Provider store={store}>{component}</Provider>)
+}
 
 describe("SubscriptionSelection", () => {
   let props: any;
@@ -18,6 +28,7 @@ describe("SubscriptionSelection", () => {
     setSubscriptions(initialState);
     store = mockStore(initialState);
     props = {
+      initialSubscription: "",
       onSubscriptionChange: jest.fn(),
     };
   });
@@ -48,15 +59,20 @@ describe("SubscriptionSelection", () => {
     }
   );*/
 
+  it("Has a create new subscription link", () => {
+    const {getByText} = renderWithStore(<SubscriptionSelection {...props} />, store);
+    const linkText = intl.formatMessage(messages.newSubscriptionLink);
+      const newSubscriptionLink = getByText(linkText);
+      expect(newSubscriptionLink).toBeInTheDocument();
+      expect(newSubscriptionLink).toHaveAttribute('href', AZURE_LINKS.CREATE_NEW_SUBSCRIPTION);
+  });
+
+
+
+
   describe("When selected a subscription in a dropdown", () => {
-    beforeEach(() => {
-      wrapper = render(
-        <IntlProvider locale="en">
-          <Provider store={store}>
-            <SubscriptionSelection {...props} />
-          </Provider>
-        </IntlProvider>
-      );
+    beforeEach(() => {      
+      wrapper = renderWithStore(<SubscriptionSelection {...props} />, store);
     });
 
     it("renders without crashing", () => {
