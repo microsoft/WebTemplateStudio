@@ -21,7 +21,7 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 # Documentation
 
 - [Installing the extension](/docs/install.md)
-- [Getting started with the codebase](/docs/getting-started-developers.md)
+- [Getting started with the codebase](/docs/contributing/getting-started-developers.md)
 - [Terminology for developers](/docs/terminology.md)
 
 ## SHA256
