@@ -8,7 +8,7 @@ import { getInitialState, setBackendFramework } from "../../../mockData/mockStor
 import { render, RenderResult } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 
-describe("RuntimeStackInfo", () => {
+xdescribe("RuntimeStackInfo", () => {
   let props: any;
   let wrapper: RenderResult;
   let store: any;
