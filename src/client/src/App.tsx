@@ -43,7 +43,7 @@ import { setValidations } from "./store/selection/validations/action";
 import { setOutputPathAction } from "./store/selection/app/action";
 import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/wizardContent/frameworks/action";
 import { getPagesOptionsAction } from "./store/wizardContent/pages/action";
-import { setPreviewStatusAction } from "./store/wizardContent/wizard/action";
+import { setPreviewStatusAction } from "./store/wizardContent/wizardContent/action";
 import { logIntoAzureAction } from "./store/azure/login/action";
 
 const PageSelectFrameworks = Loadable({

@@ -5,7 +5,7 @@ import {
 } from "../generationStatus/model";
 
 import { ISetVisitedPage, IResetVisitedPage, ISetPage, ISetDetails } from "./pages/model";
-import { IResetWizard, IUpdateDependencyInfo } from "./wizard/model";
+import { IResetWizard, IUpdateDependencyInfo } from "./wizardContent/model";
 
 type WizardInfoType =
   | IVersionData

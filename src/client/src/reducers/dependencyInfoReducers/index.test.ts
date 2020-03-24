@@ -1,5 +1,5 @@
 import { updateDependencyInfo as dependencyInfo, initialState } from "./index";
-import { updateDependencyInfoAction } from "../../store/wizardContent/wizard/action";
+import { updateDependencyInfoAction } from "../../store/wizardContent/wizardContent/action";
 
 
 describe("dependencyInfo reducer", () => {

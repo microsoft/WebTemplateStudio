@@ -3,8 +3,8 @@ import { IStateProps, IDispatchProps } from "./interfaces";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../store/ActionType";
-import { IDependencyInfo } from "../../store/wizardContent/wizard/model";
-import { updateDependencyInfoAction } from "../../store/wizardContent/wizard/action";
+import { IDependencyInfo } from "../../store/wizardContent/wizardContent/model";
+import { updateDependencyInfoAction } from "../../store/wizardContent/wizardContent/action";
 
 
 const mapDispatchToProps = (
