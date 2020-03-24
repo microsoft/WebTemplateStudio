@@ -30,7 +30,6 @@ import { IServiceStatus } from "./reducers/generationStatus/genStatus";
 import { ISelected } from "./types/selected";
 import { AppState } from "./reducers";
 import { IOption } from "./types/option";
-import { setPreviewStatusAction } from "./actions/wizardContentActions/setPreviewStatus";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "./actions/ActionType";
 import { getPages, getFrameworks, getUserStatus, getTemplateInfo } from "./utils/extensionService/extensionService";
@@ -46,6 +45,7 @@ import { setValidations } from "./store/selection/validations/action";
 import { setOutputPathAction } from "./store/selection/app/action";
 import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/wizardContent/frameworks/action";
 import { getPagesOptionsAction } from "./store/wizardContent/pages/action";
+import { setPreviewStatusAction } from "./store/wizardContent/wizard/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
