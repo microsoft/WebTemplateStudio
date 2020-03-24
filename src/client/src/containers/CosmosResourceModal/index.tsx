@@ -30,7 +30,6 @@ import styles from "./styles.module.css";
 import { getCosmosSelectionInDropdownForm } from "../../selectors/cosmosServiceSelector";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { setAzureValidationStatusAction } from "../../actions/azureActions/setAzureValidationStatusAction";
 import { AppState } from "../../reducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../actions/ActionType";
@@ -41,6 +40,7 @@ import { subscriptionDataCosmos, nameCosmos } from "../../utils/extensionService
 import { getSubscriptionData } from "../../actions/azureActions/subscriptionData";
 import { saveCosmosDbSettingsAction, setAccountAvailability } from "../../store/azure/cosmosDb/action";
 import { IAvailabilityFromExtension } from "../../store/azure/azure/model";
+import { setAzureValidationStatusAction } from "../../store/azure/azure/action";
 
 const DEFAULT_VALUE = {
   value: "Select...",

@@ -1,8 +1,8 @@
-import { IAzureValidationStatus } from "../../actions/azureActions/setAzureValidationStatusAction";
 import { IGetSubscription } from "../../actions/azureActions/subscriptionData";
 import { ISaveAppServiceSettings, IRemoveAppServiceSettings, ISetAppServiceSiteNameAvailability } from "./appService/model";
 import { ISaveCosmosDbSettings, IRemoveCosmosDbSettings, ISetCosmosAccountNameAvailability } from "./cosmosDb/model";
 import { IsLoggedIntoAzure, ILoginToAzure, ILogout } from "./login/model";
+import { IAzureValidationStatus } from "./azure/model";
 
 type AzureActionType =
   | IsLoggedIntoAzure
