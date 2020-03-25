@@ -1,13 +1,12 @@
-import AzureActionType from "../../store/azure/azureActionType";
-import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
-
+import { AZURE_TYPEKEYS } from "../typeKeys";
+import AzureActionType from "../azureActionType";
 
 const initialState: SubscriptionData = {
   locations: [],
   resourceGroups: []
 };
 
-const subscriptionData = (
+export const subscriptionData = (
   state = initialState,
   action: AzureActionType
 ) => {
@@ -18,5 +17,3 @@ const subscriptionData = (
       return state;
   }
 };
-
-export default subscriptionData;
