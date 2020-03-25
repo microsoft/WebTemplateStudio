@@ -6,7 +6,7 @@ export interface IsLoggedIntoAzure {
 
 export interface ILoginToAzure {
   type: AZURE_TYPEKEYS.LOG_IN_TO_AZURE;
-  payload: any;
+  payload: AzureProfile;
 }
 
 export interface ILogout {

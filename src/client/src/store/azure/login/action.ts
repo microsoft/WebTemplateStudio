@@ -8,7 +8,7 @@ export const isLoggedIntoAzureAction = (): IsLoggedIntoAzure => ({
   type: AZURE_TYPEKEYS.IS_LOGGED_IN_TO_AZURE
 });
 
-export const logIntoAzureAction = (loginData: any): ILoginToAzure => ({
+export const logIntoAzureAction = (loginData: AzureProfile): ILoginToAzure => ({
   type: AZURE_TYPEKEYS.LOG_IN_TO_AZURE,
   payload: loginData
 });

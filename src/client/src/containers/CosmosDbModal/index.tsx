@@ -1,8 +1,6 @@
 import * as React from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import asModal from "../../components/Modal";
-import { closeModalAction } from "../../actions/modalActions/modalActions";
-import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import messages from "./messages";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
@@ -18,6 +16,8 @@ import { ISelectedCosmosService } from "../../reducers/wizardSelectionReducers/s
 import { getCosmosDbSelectionSelector } from "../../selectors/cosmosServiceSelector";
 import classNames from "classnames";
 import { useState } from "react";
+import { closeModalAction } from "../../store/modals/action";
+import { saveCosmosDbSettingsAction } from "../../store/azure/cosmosDb/action";
 
 interface IStateProps {
   isModalOpen: boolean;

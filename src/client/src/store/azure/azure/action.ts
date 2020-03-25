@@ -8,7 +8,7 @@ export const setAzureValidationStatusAction = (
     type: AZURE_TYPEKEYS.SET_VALIDATION_STATUS
   });
 
-export const getSubscriptionData = (subscriptionData: any): IGetSubscription => ({
-  type: AZURE_TYPEKEYS.GET_SUBSCRIPTION_DATA,
-  payload: subscriptionData
-});
+  export const getSubscriptionData = (subscriptionData: SubscriptionData): IGetSubscription => ({
+    type: AZURE_TYPEKEYS.GET_SUBSCRIPTION_DATA,
+    payload: subscriptionData
+  });

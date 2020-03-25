@@ -12,5 +12,5 @@ export interface IAzureValidationStatus {
 
 export interface IGetSubscription {
   type: AZURE_TYPEKEYS.GET_SUBSCRIPTION_DATA;
-  payload: any;
+  payload: SubscriptionData;
 }
