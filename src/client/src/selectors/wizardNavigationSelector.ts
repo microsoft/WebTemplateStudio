@@ -1,7 +1,7 @@
 import { ROUTES } from "../utils/constants";
 import { createSelector } from "reselect";
 import { AppState } from "../reducers";
-import { IRoutes } from "../reducers/wizardRoutes/navigationReducer";
+import { IRoutes } from "../store/selection/pages/reducer";
 
 export interface IVisitedPages {
   showFrameworks: boolean;

@@ -4,7 +4,7 @@ import dependencyInfo from "./dependencyInfoReducers";
 import generationStatus from "./generationStatus";
 import modals from "../store/modals/combineReducers";
 import wizardContent from "./wizardContentReducers";
-import wizardRoutes from "./wizardRoutes";
+import wizardRoutes from "../store/selection/selectionPagesReducer";
 import vscodeApi from "./vscodeApiReducer";
 import selection from "./wizardSelectionReducers";
 import versions from "./versionsReducer";

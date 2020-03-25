@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
-import isVisited from "./navigationReducer";
-import selected from "./selectedReducer";
+import {isVisited, selected} from "./pages/reducer";
 
 export default combineReducers({
   isVisited, selected

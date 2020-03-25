@@ -10,7 +10,7 @@ import TopNavBarLink from "../TopNavBarLink";
 import styles from "./styles.module.css";
 
 import { ROUTES_ARRAY } from "../../utils/constants";
-import { IRoutes } from "../../reducers/wizardRoutes/navigationReducer";
+import { IRoutes } from "../../store/selection/pages/reducer";
 import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../reducers";

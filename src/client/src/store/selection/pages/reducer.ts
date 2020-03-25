@@ -1,6 +1,6 @@
-import { ROUTES } from "../../utils/constants";
-import { WIZARD_INFO_TYPEKEYS } from "../../store/wizardContent/typeKeys";
-import WizardInfoType from "../../store/wizardContent/wizardInfoActionType";
+import { ROUTES } from "../../../utils/constants";
+import { WIZARD_INFO_TYPEKEYS } from "../../wizardContent/typeKeys";
+import WizardInfoType from "../../wizardContent/wizardInfoActionType";
 
 export interface IRoutes {
   [key: string]: boolean;
@@ -14,7 +14,7 @@ const initialState = {
   [ROUTES.REVIEW_AND_GENERATE]: false
 };
 
-const wizardNavigation = (
+export const isVisited = (
   state: IRoutes = initialState,
   action: WizardInfoType
 ) => {
@@ -32,4 +32,14 @@ const wizardNavigation = (
   }
 };
 
-export default wizardNavigation;
+export const selected = (
+  state = "/",
+  action: WizardInfoType
+) => {
+  switch (action.type) {
+    case WIZARD_INFO_TYPEKEYS.SET_PAGE_WIZARD_PAGE:
+      return action.payload;
+    default:
+      return state;
+  }
+};
