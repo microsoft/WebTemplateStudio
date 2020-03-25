@@ -266,7 +266,7 @@ const getSubscriptions = (): Array<Subscription> => {
   const subscriptions = Array.from(Array(2).keys()).map(
     (item: number) => {
       return {
-        name: `subscription ${item} label`,
+        name: `subscription ${item}`,
         isMicrosoftLearn: false
       };
     }

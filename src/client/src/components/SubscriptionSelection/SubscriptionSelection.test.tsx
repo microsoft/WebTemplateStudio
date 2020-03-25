@@ -1,20 +1,37 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import SubscriptionSelection from ".";
-import messages from "./messages";
 import { Provider } from "react-redux";
 import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
-import { render, RenderResult } from "@testing-library/react";
+import { render, RenderResult, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
 import { IntlProvider } from "react-intl";
-import { AZURE_LINKS } from "../../utils/constants";
+import { IDropdownProps } from "../Dropdown";
+jest.mock("../Dropdown", () => ({ options, value, handleChange }: IDropdownProps) => {
+  const handleInputChange = (event: any) => {
+    if (handleChange) {
+      handleChange(event.currentTarget);
+    }
+  };
+  const newValue = value ? value.label : undefined;
+  return (
+    <select data-testid="dropdown" value={newValue} onChange={handleInputChange}>
+      {options.map(({ label, value }: any) => (
+        <option key={value} value={value}>
+          {label}
+        </option>
+      ))}
+    </select>
+  );
+});
 
 const renderWithIntl = (component: any) => {
-  return render(<IntlProvider locale="en">{component}</IntlProvider>)
-}
+  return render(<IntlProvider locale="en">{component}</IntlProvider>);
+};
 
 const renderWithStore = (component: any, store: any) => {
-  return renderWithIntl(<Provider store={store}>{component}</Provider>)
-}
+  return renderWithIntl(<Provider store={store}>{component}</Provider>);
+};
 
 describe("SubscriptionSelection", () => {
   let props: any;
@@ -33,68 +50,23 @@ describe("SubscriptionSelection", () => {
     };
   });
 
-  /*
-  const subscriptionCases = [
-    [null, "Select..."],
-    [undefined, "Select..."],
-    ["invalid subscription", "Select..."],
-    ["subscription 2 value", "subscription 2 value"]
-  ];
-
-  test.each(subscriptionCases)(
-    `when subscription is %p, should have %p value in a dropdown selected value`,
-    (subscription, result) => {
-      props.subscription = subscription;
-      wrapper = render(
-        <IntlProvider locale="en">
-          <Provider store={store}>
-            <SubscriptionSelection {...props} />
-          </Provider>
-        </IntlProvider>
-
-      expect(wrapper).toBeDefined();
-      const dropdown = wrapper.find("Dropdown");
-      const dropdownValue = dropdown.prop("value").value;
-      expect(dropdownValue).toEqual(result);
-    }
-  );*/
-
-  it("Has a create new subscription link", () => {
-    const {getByText} = renderWithStore(<SubscriptionSelection {...props} />, store);
-    const linkText = intl.formatMessage(messages.newSubscriptionLink);
-      const newSubscriptionLink = getByText(linkText);
-      expect(newSubscriptionLink).toBeInTheDocument();
-      expect(newSubscriptionLink).toHaveAttribute('href', AZURE_LINKS.CREATE_NEW_SUBSCRIPTION);
+  it("renders without crashing", () => {
+    wrapper = renderWithStore(<SubscriptionSelection {...props} />, store);
+    expect(wrapper).toBeDefined();
   });
 
+  it("If has initial subscription, onSubscriptionChange notify selected subscription", () => {
+    props.initialSubscription = "subscription 1";
+    wrapper = renderWithStore(<SubscriptionSelection {...props} />, store);
+    expect(props.onSubscriptionChange).toHaveBeenCalledTimes(1);
+    expect(props.onSubscriptionChange).toHaveBeenCalledWith("subscription 1");
+  });
 
-
-
-  describe("When selected a subscription in a dropdown", () => {
-    beforeEach(() => {      
-      wrapper = renderWithStore(<SubscriptionSelection {...props} />, store);
-    });
-
-    it("renders without crashing", () => {
-      expect(wrapper).toBeDefined();
-    });
-
-    //TODO: Fix this test
-    xit("Contais all subscription", () => {
-      const select = wrapper.getAllByRole("option");
-      expect(select).toEqual(props.subscriptions);
-    });
-
-    //TODO: Fix this test
-    xit(`should launch subscription change event function`, () => {
-      const event = {
-        label: "subscription 3 label",
-        value: "subscription 3 value",
-        isMicrosoftLearn: false,
-      };
-      const select = wrapper.getByRole("Select");
-      select.props().onChange(event);
-      expect(props.onSubscriptionChange).toHaveBeenCalledWith(event.value);
-    });
+  it("When selected a subscription in a dropdown, onSubscriptionChange notify selected subscription", () => {
+    wrapper = renderWithStore(<SubscriptionSelection {...props} />, store);
+    const dropdown = wrapper.getByTestId("dropdown");
+    fireEvent.change(dropdown, { target: { label:"subscription 1", value:"subscription 1"}});
+    expect(props.onSubscriptionChange).toHaveBeenCalledTimes(1);
+    expect(props.onSubscriptionChange).toHaveBeenCalledWith("subscription 1");
   });
 });
