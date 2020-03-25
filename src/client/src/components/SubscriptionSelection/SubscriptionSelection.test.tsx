@@ -1,12 +1,15 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
+import '@testing-library/jest-dom';
 import SubscriptionSelection from ".";
-import { Provider } from "react-redux";
 import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
-import { render, RenderResult, fireEvent } from "@testing-library/react";
+import { RenderResult, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import { IntlProvider } from "react-intl";
 import { IDropdownProps } from "../Dropdown";
+import { renderWithStore } from "../../testUtils";
+import { AZURE_LINKS } from "../../utils/constants";
+import messages from "./messages";
+
 jest.mock("../Dropdown", () => ({ options, value, handleChange }: IDropdownProps) => {
   const handleInputChange = (event: any) => {
     if (handleChange) {
@@ -24,14 +27,6 @@ jest.mock("../Dropdown", () => ({ options, value, handleChange }: IDropdownProps
     </select>
   );
 });
-
-const renderWithIntl = (component: any) => {
-  return render(<IntlProvider locale="en">{component}</IntlProvider>);
-};
-
-const renderWithStore = (component: any, store: any) => {
-  return renderWithIntl(<Provider store={store}>{component}</Provider>);
-};
 
 describe("SubscriptionSelection", () => {
   let props: any;
@@ -53,6 +48,12 @@ describe("SubscriptionSelection", () => {
   it("renders without crashing", () => {
     wrapper = renderWithStore(<SubscriptionSelection {...props} />, store);
     expect(wrapper).toBeDefined();
+  }); 
+
+  it("Has a create new subscription link", () => {
+    wrapper = renderWithStore(<SubscriptionSelection {...props} />, store);
+    const link = wrapper.getByText(intl.formatMessage(messages.newSubscriptionLink))
+    expect(link).toHaveAttribute("href", AZURE_LINKS.CREATE_NEW_SUBSCRIPTION);
   });
 
   it("If has initial subscription, onSubscriptionChange notify selected subscription", () => {
