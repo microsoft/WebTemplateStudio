@@ -1,9 +1,9 @@
-import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
+import { AZURE_TYPEKEYS } from "../azure/typeKeys";
 import {
   MODAL_TYPEKEYS,
   ModalState
-} from "../../store/modals/typeKeys";
-import RootAction from "../../store/ActionType";
+} from "./typeKeys";
+import RootAction from "../ActionType";
 
 const initialState: ModalState = {
   modalType: null,

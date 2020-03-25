@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import azureProfileData from "../store/azure/azureReducer";
 import dependencyInfo from "./dependencyInfoReducers";
 import generationStatus from "./generationStatus";
-import modals from "./modalReducers";
+import modals from "../store/modals/combineReducers";
 import wizardContent from "./wizardContentReducers";
 import wizardRoutes from "./wizardRoutes";
 import vscodeApi from "./vscodeApiReducer";
