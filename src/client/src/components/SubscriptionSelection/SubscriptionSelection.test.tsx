@@ -5,28 +5,11 @@ import SubscriptionSelection from ".";
 import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
 import { RenderResult, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import { IDropdownProps } from "../Dropdown";
 import { renderWithStore } from "../../testUtils";
 import { AZURE_LINKS } from "../../utils/constants";
 import messages from "./messages";
 
-jest.mock("../Dropdown", () => ({ options, value, handleChange }: IDropdownProps) => {
-  const handleInputChange = (event: any) => {
-    if (handleChange) {
-      handleChange(event.currentTarget);
-    }
-  };
-  const newValue = value ? value.label : undefined;
-  return (
-    <select data-testid="dropdown" value={newValue} onChange={handleInputChange}>
-      {options.map(({ label, value }: any) => (
-        <option key={value} value={value}>
-          {label}
-        </option>
-      ))}
-    </select>
-  );
-});
+jest.mock("../Dropdown", () => require('../../testUtils').dropdownMock);
 
 describe("SubscriptionSelection", () => {
   let props: any;
