@@ -5,6 +5,7 @@ import { getInitialState, setSubscriptions } from "../../../mockData/mockStore";
 import { RenderResult } from "@testing-library/react";
 import { renderWithStore } from "../../../testUtils";
 import messages from "./messages";
+import { AZURE_LINKS } from "../../../utils/constants";
 
 describe("AppServicePlanInfo", () => {
   let props: any;
@@ -37,5 +38,11 @@ describe("AppServicePlanInfo", () => {
     wrapper = renderWithStore(<AppServicePlanInfo {...props} />, store);
     const expectedText = intl.formatMessage(messages.basicTierMessage);
     expect(wrapper.getByText(expectedText)).toBeDefined();
+  });
+
+  it("Has a app service plans link", () => {
+    wrapper = renderWithStore(<AppServicePlanInfo {...props} />, store);
+    const link = wrapper.getByText(intl.formatMessage(messages.learnMore))
+    expect(link).toHaveAttribute("href", AZURE_LINKS.APP_SERVICE_PLAN);
   });
 });

@@ -2,7 +2,7 @@ import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import messages from "./messages";
-import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
+import { AZURE_LINKS } from "../../../utils/constants";
 import { AppState } from "../../../reducers";
 import { useSelector } from "react-redux";
 import { getSubscriptions } from "../../../selectors/subscriptionSelector";
@@ -35,7 +35,7 @@ const AppServicePlanInfo = (props: Props) => {
         className={styles.link}
         target={"_blank"}
         rel="noreferrer noopener"
-        href={WEB_TEMPLATE_STUDIO_LINKS.APP_SERVICE_PLAN}
+        href={AZURE_LINKS.APP_SERVICE_PLAN}
       >
         {formatMessage(messages.learnMore)}
       </a>
