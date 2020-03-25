@@ -21,14 +21,16 @@ const FrameworkCard = (props: Props) => {
     setBackendSelect, backEndSelect, isFrontEnd, intl, setDetailPage, vscode, updateFrameworks } = props;
 
   const [selected, setSelected] = React.useState(false);
+  const [latestVersion, setLatestVersion] = React.useState(false);
 
   React.useEffect(()=>{
     selectWhenLoadWithoutSelection();
     if (!framework.latestVersionLoaded){
-      getLatestVersion(vscode, framework.checkVersionPackageName, framework.checkVersionPackageSource).then((latestVersion: boolean)=>{
-        framework.latestVersion = latestVersion;
+      getLatestVersion(vscode, framework.checkVersionPackageName, framework.checkVersionPackageSource).then((latestVersionValidation: boolean)=>{
+        framework.latestVersion = latestVersionValidation;
         framework.latestVersionLoaded = true;
         updateFrameworks([framework]);
+        setLatestVersion(latestVersionValidation);
       });
     }
   },[]);
@@ -115,7 +117,7 @@ const FrameworkCard = (props: Props) => {
 
       <div className={styles.gridLayoutVersion}>
         <div className={styles.version}>v{framework.version}</div>
-        {framework.latestVersion === framework.version &&
+        {latestVersion === framework.version &&
           (<div className={styles.latestVersion}>(Latest)</div>)
         }
       </div>

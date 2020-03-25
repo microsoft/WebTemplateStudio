@@ -216,9 +216,7 @@ const mockVsCodeApi = () => ({
           );
           break;
         case EXTENSION_COMMANDS.GET_LATEST_VERSION:
-            const min=1;
-            const max=8;
-            const latestVersion = (Math.floor(Math.random() * (+max - +min)) + +min) % 2 === 0;
+            const latestVersion = true;
             window.postMessage(
               {
                 command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
