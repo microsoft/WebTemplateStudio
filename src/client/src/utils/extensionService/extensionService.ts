@@ -3,16 +3,13 @@ import {
   EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES, PAYLOAD_MESSAGES_TEXT
 } from "../constants";
 
-const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject)=>{
-
+const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject, scopeId: number = Math.random())=>{
   const promise = new Promise<any>((resolve) => {
-    const scope = Math.random();
-
     paramsMessage.payload = paramsMessage.payload || {};
-    paramsMessage.payload.scope = scope;
+    paramsMessage.payload.scope = scopeId;
     const callbackVsCode = (event: any) =>{
       if (event.data.command === command){
-        if (event.data.payload && event.data.payload.scope === scope){
+        if (event.data.payload && event.data.payload.scope === scopeId){
           resolve(event);
           window.removeEventListener("message",callbackVsCode);
         }
@@ -113,23 +110,13 @@ const azureLogout = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
-const subscriptionDataCosmos = (vscode: IVSCodeObject, subscription: string, projectName: string ) => {
+const getSubscriptionDataForCosmos = (vscode: IVSCodeObject, subscription: string, projectName: string ) => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS, {
     module: EXTENSION_MODULES.AZURE,
     command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
     track: true,
     subscription,
     projectName
-  }, vscode);
-}
-
-const nameCosmos = (vscode: IVSCodeObject, subscription: string, appName: string) =>{
-  return postMessageAsync(EXTENSION_COMMANDS.NAME_COSMOS, {
-    module: EXTENSION_MODULES.AZURE,
-    command: EXTENSION_COMMANDS.NAME_COSMOS,
-    track: false,
-    appName,
-    subscription
   }, vscode);
 }
 
@@ -178,14 +165,33 @@ const GetValidAppServiceName = (projectName: string, vscode: IVSCodeObject): Pro
   }, vscode);
 }
 
-const ValidateAppServiceName = (subscription: string, appName: string, vscode: IVSCodeObject): Promise<any> => {
+const GetValidCosmosAccountName = (projectName: string, vscode: IVSCodeObject): Promise<any> => {
   return postMessageAsync(
-    EXTENSION_COMMANDS.NAME_APP_SERVICE, {
+    EXTENSION_COMMANDS.GET_VALID_COSMOS_NAME, {
     module: EXTENSION_MODULES.AZURE,
-    command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
+    command: EXTENSION_COMMANDS.GET_VALID_COSMOS_NAME,
+    projectName
+  }, vscode);
+}
+
+const ValidateAppServiceName = (subscription: string, appName: string, scopeId: number, vscode: IVSCodeObject): Promise<any> => {
+  return postMessageAsync(
+    EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME,
     subscription,
     appName
-  }, vscode);
+  }, vscode, scopeId);
+}
+
+const ValidateCosmosAccountName = (subscription: string, appName: string, scopeId: number, vscode: IVSCodeObject) =>{
+  return postMessageAsync(EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME,
+    track: false,
+    appName,
+    subscription
+  }, vscode, scopeId);
 }
 
 export {
@@ -198,11 +204,12 @@ export {
   sendTelemetry,
   GetSubscriptionDataForAppService,
   GetValidAppServiceName,
+  GetValidCosmosAccountName,
   ValidateAppServiceName,
   resetAllPages,
   azureLogout,
-  subscriptionDataCosmos,
-  nameCosmos,
+  getSubscriptionDataForCosmos,
+  ValidateCosmosAccountName,
   azureLogin,
   getUserStatus,
   getTemplateInfo

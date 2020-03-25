@@ -1,29 +1,17 @@
-import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
 import AzureActionType from "../../store/azure/azureActionType";
-import { MODAL_TYPEKEYS } from "../../store/modals/typeKeys";
-import { ICloseModal } from "../../store/modals/model";
+import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
 
-export interface ISubscriptionData {
-  locations: any[];
-  resourceGroups: any[];
-  validName: string;
-}
 
-const initialState = {
+const initialState: SubscriptionData = {
   locations: [],
-  resourceGroups: [],
-  validName: ""
+  resourceGroups: []
 };
 
 const subscriptionData = (
-  state: ISubscriptionData = initialState,
-  action: AzureActionType | ICloseModal
+  state = initialState,
+  action: AzureActionType
 ) => {
   switch (action.type) {
-    case AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
-    case AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS:
-    case MODAL_TYPEKEYS.CLOSE_MODALS:
-      return { ...state, validName: "" };
     case AZURE_TYPEKEYS.GET_SUBSCRIPTION_DATA:
       return action.payload;
     default:

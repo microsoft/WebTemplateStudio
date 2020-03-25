@@ -1,0 +1,29 @@
+.container {
+  margin-bottom: 35px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--vscode-textLink-foreground);
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.subtitle {
+  margin-bottom: 1em;
+  font-size: 90%;
+  opacity: 0.8;
+}

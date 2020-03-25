@@ -1,24 +1,13 @@
 import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
 import AzureActionType from "../../store/azure/azureActionType";
 
-/* State Shape
-{
-    profileData: {}
-}
-*/
-
-interface IAzureProfile {
-  email: string | undefined;
-  subscriptions: any;
-}
-
-const initialState = {
-  email: undefined,
-  subscriptions: {}
+const initialState: AzureProfile = {
+  email: "",
+  subscriptions: []
 };
 
 const profileData = (
-  state: IAzureProfile = initialState,
+  state = initialState,
   action: AzureActionType
 ) => {
   switch (action.type) {
@@ -26,7 +15,6 @@ const profileData = (
       return initialState;
     case AZURE_TYPEKEYS.LOG_IN_TO_AZURE:
       const newState = {
-        ...state,
         email: action.payload.email,
         subscriptions: action.payload.subscriptions
       };

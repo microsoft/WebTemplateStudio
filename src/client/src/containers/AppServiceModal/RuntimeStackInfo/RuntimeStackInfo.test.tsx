@@ -1,14 +1,14 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { azureMessages } from "../../../mockData/azureServiceOptions";
-import RuntimeStackInfo from "./RuntimeStackInfo";
+import RuntimeStackInfo from ".";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 import { Provider } from "react-redux";
 import { getInitialState, setBackendFramework } from "../../../mockData/mockStore";
 import { render, RenderResult } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 
-describe("RuntimeStackInfo", () => {
+xdescribe("RuntimeStackInfo", () => {
   let props: any;
   let wrapper: RenderResult;
   let store: any;

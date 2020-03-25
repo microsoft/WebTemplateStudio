@@ -53,11 +53,11 @@ const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
         ...state,
         selection: [
           {
-            subscription: action.payload.subscription.value,
-            resourceGroup: action.payload.resourceGroup.value,
-            api: action.payload.api.value,
-            accountName: action.payload.accountName.value,
-            internalName: action.payload.internalName.value
+            subscription: action.payload.subscription,
+            resourceGroup: action.payload.resourceGroup,
+            api: action.payload.api,
+            accountName: action.payload.accountName,
+            internalName: action.payload.internalName
           }
         ]
       };
