@@ -1,5 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import classnames from "classnames";
 
 import * as ModalActions from "../../store/modals/action";
@@ -8,9 +8,6 @@ import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../reducers";
-import RootAction from "../../store/ActionType";
 import messages from "./messages";
 import AddPagesModal from "./AddPagesModal";
 
@@ -20,10 +17,10 @@ interface IDispatchProps {
 
 type Props = IDispatchProps & InjectedIntlProps;
 
-const ReviewAndGenerate = (props: Props) => {
-  const { intl, openViewLicensesModal } = props;
+const ReviewAndGenerate = ({ intl }: Props) => {
   const { formatMessage } = intl;
-
+  const dispatch = useDispatch();
+  
   return (
     <div className={styles.container}>
       <AddPagesModal/>
@@ -35,7 +32,7 @@ const ReviewAndGenerate = (props: Props) => {
         <div className={styles.buttonContainer}>
           <button
             className={classnames(buttonStyles.buttonDark, styles.button)}
-            onClick={openViewLicensesModal}
+            onClick={()=> dispatch(ModalActions.openViewLicensesModalAction())}
           >
             {formatMessage(messages.viewLicenses)}
           </button>
@@ -45,14 +42,4 @@ const ReviewAndGenerate = (props: Props) => {
   );
 };
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  openViewLicensesModal: () => {
-    dispatch(ModalActions.openViewLicensesModalAction());
-  }
-});
-
-export default connect(
-  mapDispatchToProps
-)(injectIntl(ReviewAndGenerate));
+export default injectIntl(ReviewAndGenerate);
