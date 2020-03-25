@@ -1,5 +1,5 @@
-import { WIZARD_SELECTION_TYPEKEYS } from "../../store/selection/typeKeys";
-import WizardSelectionActionType from "../../store/selection/selectionActionType";
+import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
+import WizardSelectionActionType from "../selectionActionType";
 
 /* State Shape
 {

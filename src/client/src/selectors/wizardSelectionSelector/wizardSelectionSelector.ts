@@ -3,10 +3,10 @@ import { createSelector } from "reselect";
 import { RowType } from "../../types/rowType";
 import { ISelected } from "../../types/selected";
 import { IValidation } from "../../utils/validations/validations";
-import { IValidations } from "../../reducers/wizardSelectionReducers/setValidations";
 import { AppState } from "../../reducers";
 import { SelectionState } from "../../reducers/wizardSelectionReducers";
 import { ROUTES } from "../../utils/constants";
+import { IValidations } from "../../store/selection/validations/setValidations";
 
 const getWizardSelectionsSelector = (state: AppState): SelectionState =>
   state.selection;

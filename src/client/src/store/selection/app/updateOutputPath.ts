@@ -1,6 +1,6 @@
-import { WIZARD_SELECTION_TYPEKEYS } from "../../store/selection/typeKeys";
-import WizardSelectionActionType from "../../store/selection/selectionActionType";
-import {IValidation} from "../../utils/validations/validations";
+import { IValidation } from "../../../utils/validations/validations";
+import WizardSelectionActionType from "../selectionActionType";
+import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 
 export interface IOutputPath {
   outputPath: string;

@@ -1,10 +1,10 @@
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { IRegex } from "../../reducers/wizardSelectionReducers/setValidations";
 import { ISelected } from "../../types/selected";
 import { FormattedMessage } from "react-intl";
 import { validationMessages } from './messages';
 
 import {projectPathValidation} from "../extensionService/extensionService";
+import { IRegex } from "../../store/selection/validations/setValidations";
 
 export interface IValidation {
   isValid: boolean;

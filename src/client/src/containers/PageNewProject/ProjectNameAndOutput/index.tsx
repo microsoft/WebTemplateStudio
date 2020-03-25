@@ -27,7 +27,6 @@ import {
 } from "react-intl";
 
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { IValidations } from "../../../reducers/wizardSelectionReducers/setValidations";
 import { AppState } from "../../../reducers";
 import { Dispatch } from "redux";
 import RootAction from "../../../store/ActionType";
@@ -38,6 +37,7 @@ import messages from "./messages";
 import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
 import { setProjectPathValidation } from "../../../store/selection/validations/action";
 import { setProjectNameAction, setOutputPathAction } from "../../../store/selection/app/action";
+import { IValidations } from "../../../store/selection/validations/setValidations";
 
 interface IStateProps {
   vscode: IVSCodeObject;

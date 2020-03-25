@@ -1,6 +1,6 @@
 import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 import { ISelected } from "../../../types/selected";
-import { IProjectName } from "../../../reducers/wizardSelectionReducers/updateProjectName";
+import { IProjectName } from "./updateProjectName";
 
 export interface ISelectProjectTypeAction {
   type: WIZARD_SELECTION_TYPEKEYS.SELECT_WEB_APP;
@@ -16,4 +16,3 @@ export interface IUpdateProjectPathActionType {
     type: WIZARD_SELECTION_TYPEKEYS.SET_OUTPUT_PATH;
     payload: string;
 }
-  

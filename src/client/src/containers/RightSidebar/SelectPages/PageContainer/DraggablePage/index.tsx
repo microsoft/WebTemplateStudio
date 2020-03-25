@@ -15,8 +15,8 @@ import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../../../../store/ActionType";
 import { validateItemName } from "../../../../../utils/validations/itemName/itemName";
 import { getValidations } from "../../../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
-import { IValidations } from "../../../../../reducers/wizardSelectionReducers/setValidations";
 import { setPageAction, setPagesAction } from "../../../../../store/selection/pages/action";
+import { IValidations } from "../../../../../store/selection/validations/setValidations";
 
 const Reorder = Loadable({
   loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../../../../utils/svgComponents/ReorderIcon"),

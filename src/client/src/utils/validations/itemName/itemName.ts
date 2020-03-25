@@ -1,9 +1,9 @@
-import { IitemNameValidationConfig } from "../../../reducers/wizardSelectionReducers/setValidations";
 import { addExistingItemNameValidate, addRegexValidate, addRequiredValidate, addReservedNameValidate, IValidation} from '../validations';
 import { validationMessages } from '../messages';
 import { ISelected } from "../../../types/selected";
+import { IitemNameValidationConfig } from '../../../store/selection/validations/setValidations';
 
-export const validateItemName = async (itemName: string, 
+export const validateItemName = async (itemName: string,
   validations: IitemNameValidationConfig,
   selectedPages: Array<ISelected>) => {
 

@@ -1,7 +1,7 @@
-import { WIZARD_SELECTION_TYPEKEYS } from "../../store/selection/typeKeys";
-import { IValidation } from "../../utils/validations/validations";
-import { validationMessages } from "../../utils/validations/messages";
-import WizardSelectionActionType from "../../store/selection/selectionActionType";
+import { IValidation } from "../../../utils/validations/validations";
+import { validationMessages } from "../../../utils/validations/messages";
+import WizardSelectionActionType from "../selectionActionType";
+import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 
 export interface IProjectName {
   projectName: string;

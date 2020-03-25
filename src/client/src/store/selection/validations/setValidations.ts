@@ -1,5 +1,5 @@
-import { WIZARD_SELECTION_TYPEKEYS } from "../../store/selection/typeKeys";
-import WizardSelectionActionType from "../../store/selection/selectionActionType";
+import WizardSelectionActionType from "../selectionActionType";
+import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 
 export interface IRegex {
   name: string;

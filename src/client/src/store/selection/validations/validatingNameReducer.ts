@@ -1,5 +1,5 @@
-import { AZURE_TYPEKEYS } from "../../store/azure/typeKeys";
-import AzureActionType from "../../store/azure/azureActionType";
+import { AZURE_TYPEKEYS } from "../../azure/typeKeys";
+import AzureActionType from "../../azure/azureActionType";
 
 const setValidationStatus = (state = false, action: AzureActionType) => {
   switch (action.type) {

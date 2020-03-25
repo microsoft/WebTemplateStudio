@@ -1,14 +1,14 @@
 import { combineReducers } from "redux";
 
-import backendFramework from "./selectBackendFrameworkReducer";
-import frontendFramework from "./selectFrontendFrameworkReducer";
-import pages from "./selectPagesReducer";
-import appType from "./selectWebAppReducer";
-import projectNameObject from "./updateProjectName";
-import validations from "./setValidations";
-import outputPathObject from "./updateOutputPath";
+import backendFramework from "../../store/selection/frameworks/selectBackendFrameworkReducer";
+import frontendFramework from "../../store/selection/frameworks/selectFrontendFrameworkReducer";
+import pages from "../../store/selection/pages/selectPagesReducer";
+import appType from "../../store/selection/app/selectWebAppReducer";
+import projectNameObject from "../../store/selection/app/updateProjectName";
+import validations from "../../store/selection/validations/setValidations";
+import outputPathObject from "../../store/selection/app/updateOutputPath";
 import services from "./services";
-import isValidatingName from "./validatingNameReducer";
+import isValidatingName from "../../store/selection/validations/validatingNameReducer";
 
 const selectionStateReducer = combineReducers({
   appType,
