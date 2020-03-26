@@ -3,6 +3,7 @@ import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../reducers/vscodeApiReducer
 import mockVsCodeApi from "./mockVsCodeApi";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../reducers";
+import { ModalType } from "../actions/modalActions/typeKeys";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -376,4 +377,8 @@ export const setBackendFramework = (store: AppState, internalName: string) => {
 
 export const setFrontendFramework = (store: AppState, internalName: string) => {
   store.selection.backendFramework.internalName = internalName;
+}
+
+export const setOpenModal = (store: AppState, modalType: ModalType) => {
+  store.modals.openModal.modalType = modalType;
 }
