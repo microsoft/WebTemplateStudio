@@ -1,16 +1,16 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
 
-export interface IAvailabilityFromExtension {
+export interface IAvailabilityFromExtensionAction {
   isAvailable: boolean;
   message: string;
 }
 
-export interface IAzureValidationStatus {
+export interface IAzureValidationStatusAction {
   type: AZURE_TYPEKEYS.SET_VALIDATION_STATUS;
   payload: boolean;
 }
 
-export interface IGetSubscription {
+export interface IGetSubscriptionAction {
   type: AZURE_TYPEKEYS.GET_SUBSCRIPTION_DATA;
   payload: SubscriptionData;
 }

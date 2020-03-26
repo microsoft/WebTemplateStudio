@@ -13,18 +13,6 @@ export const logIntoAzureAction = (loginData: AzureProfile): ILoginToAzure => ({
   payload: loginData
 });
 
-export const startLoginToAzure = () => {
-  return async (dispatch: Dispatch<ILoginToAzure>) => {
-    // Can dispatch a spinner here until login completes
-    try {
-      const loginData = await login();
-      dispatch(logIntoAzureAction(loginData));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
-
 export const logOutAzureAction = (): ILogout => ({
   type: AZURE_TYPEKEYS.LOG_OUT_OF_AZURE
 });

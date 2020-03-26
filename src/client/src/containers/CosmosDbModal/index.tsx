@@ -13,7 +13,7 @@ import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { ISelectedCosmosServiceReducer } from "../../store/azureProfileData/cosmosDb/model";
-import { getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/cosmosServiceSelector";
+import { getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
 import classNames from "classnames";
 import { useState } from "react";
 import { closeModalAction } from "../../store/modals/action";

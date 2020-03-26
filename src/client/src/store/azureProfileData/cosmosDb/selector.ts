@@ -1,25 +1,12 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { ISelectedCosmosServiceReducer } from "./model";
 import { ServiceState } from "..";
 import { AppState } from "../../combineReducers";
-
-interface ISelectedDropdowns {
-  subscription?: IDropDownOptionType;
-  resourceGroup?: IDropDownOptionType;
-  appName?: IDropDownOptionType;
-  runtimeStack?: IDropDownOptionType;
-  location?: IDropDownOptionType;
-}
-
-interface ISelectionInformation {
-  dropdownSelection: ISelectedDropdowns;
-  previousFormData: ISelectedCosmosServiceReducer;
-}
+import { ISelectionInformationSelector } from "./model";
 
 const getServices = (state: AppState): ServiceState =>
   state.selection.services;
-  
+
 const isCosmosDbSelected = (services: any): boolean => {
   return !_.isEmpty(services.cosmosDB.selection);
 };
@@ -41,7 +28,7 @@ const getCosmosDbSelectionSelector = createSelector(
 const getCosmosSelectionInDropdownForm = (services: any): any => {
   const { selection } = services.selection.services.cosmosDB;
   if (!_.isEmpty(selection)) {
-    const selectionInformation: ISelectionInformation = {
+    const selectionInformation: ISelectionInformationSelector = {
       dropdownSelection: {},
       previousFormData: selection[0]
     };

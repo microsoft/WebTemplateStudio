@@ -1,20 +1,20 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
-import { IAvailabilityFromExtension } from "../azure/model";
+import { IAvailabilityFromExtensionAction } from "../azure/model";
 import { FormattedMessage } from "react-intl";
 
-export interface ISaveCosmosDbSettings {
+export interface ISaveCosmosDbSettingsAction {
   type: AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS;
   payload: any;
 }
 
-export interface IRemoveCosmosDbSettings {
+export interface IRemoveCosmosDbSettingsAction {
   type: AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE;
   payload: number;
 }
 
-export interface ISetCosmosAccountNameAvailability {
+export interface ISetCosmosAccountNameAvailabilityAction {
   type: AZURE_TYPEKEYS.SET_ACCOUNT_AVAILABILITY;
-  payload: IAvailabilityFromExtension;
+  payload: IAvailabilityFromExtensionAction;
 }
 
 export interface IAvailabilityCosmosDbReducer {
@@ -22,7 +22,7 @@ export interface IAvailabilityCosmosDbReducer {
   message: string;
 }
 
-export interface IServiceContent {
+interface IServiceContentReducer {
   serviceType: FormattedMessage.MessageDescriptor;
 }
 
@@ -37,5 +37,18 @@ export interface ISelectedCosmosServiceReducer {
 export interface ICosmosDBReducer {
   accountNameAvailability: IAvailabilityCosmosDbReducer;
   selection: ISelectedCosmosServiceReducer[];
-  wizardContent: IServiceContent;
+  wizardContent: IServiceContentReducer;
+}
+
+export interface ISelectedDropdownsSelector {
+  subscription?: IDropDownOptionType;
+  resourceGroup?: IDropDownOptionType;
+  appName?: IDropDownOptionType;
+  runtimeStack?: IDropDownOptionType;
+  location?: IDropDownOptionType;
+}
+
+export interface ISelectionInformationSelector {
+  dropdownSelection: ISelectedDropdownsSelector;
+  previousFormData: ISelectedCosmosServiceReducer;
 }

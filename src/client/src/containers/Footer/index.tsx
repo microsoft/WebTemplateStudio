@@ -21,7 +21,7 @@ import { rootSelector } from "../../store/selection/app/generationSelector";
 import {
   getCosmosDbSelectionSelector,
   isCosmosResourceCreatedSelector
-} from "../../store/azureProfileData/cosmosDb/cosmosServiceSelector";
+} from "../../store/azureProfileData/cosmosDb/selector";
 import {
   isAppServiceSelectedSelector,
   getAppServiceSelectionSelector
