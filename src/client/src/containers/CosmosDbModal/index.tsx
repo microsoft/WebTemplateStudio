@@ -74,7 +74,7 @@ const CosmosModal = ({ intl }: Props) => {
     <React.Fragment>
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
-        <Cancel className={styles.closeIcon} onClick={() => dispatch(closeModalAction())} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
+        <Cancel data-testid="close-button" className={styles.closeIcon} onClick={() => dispatch(closeModalAction())} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
       </div>
       <div className={styles.bodyContainer}>
         <SubscriptionSelection
