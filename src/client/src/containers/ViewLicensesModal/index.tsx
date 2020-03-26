@@ -10,7 +10,7 @@ import RootAction from "../../store/ActionType";
 import { closeModalAction } from "../../store/modals/action";
 import Licenses from "./Licenses";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isViewLicensesModalOpenSelector } from "../../selectors/modalSelector";
+import { isViewLicensesModalOpenSelector } from "../../store/modals/selector";
 import { MODAL_TYPES } from "../../store/modals/typeKeys";
 import { KEY_EVENTS } from "../../utils/constants";
 import messages from "./messages";

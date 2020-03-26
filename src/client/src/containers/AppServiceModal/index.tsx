@@ -3,7 +3,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import asModal from "../../components/Modal";
 import messages from "./messages";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
+import { isAppServiceModalOpenSelector } from "../../store/modals/selector";
 import RuntimeStackInfo from "./RuntimeStackInfo";
 import AppServicePlanInfo from "./AppServicePlanInfo";
 import AppNameEditor from "./AppNameEditor";

@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { ISelectedCosmosService } from "../store/selection/services/cosmosDbReducer";
-import { AppState } from "../store/combineReducers";
-import { ServiceState } from "../store/selection/services";
+import { ISelectedCosmosService } from "../selection/services/cosmosDbReducer";
+import { ServiceState } from "../selection/services";
+import { AppState } from "../combineReducers";
 
 interface ISelectedDropdowns {
   subscription?: IDropDownOptionType;
@@ -37,14 +37,7 @@ const getCosmosDbSelectionSelector = createSelector(
   isCosmosResourceCreatedSelector,
   getCosmosDbOptions
 );
-/**
- * Returns the CosmosDB selection made by a developer.
- * Returns undefined if a selection was not made.
- * Currently, only one Cosmos Resource can be added, hence
- * the hardcoded value of 0 index.
- *
- * @param services An object of all the services available in Web Template Studio
- */
+
 const getCosmosSelectionInDropdownForm = (services: any): any => {
   const { selection } = services.selection.services.cosmosDB;
   if (!_.isEmpty(selection)) {

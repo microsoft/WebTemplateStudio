@@ -3,7 +3,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import asModal from "../../components/Modal";
 import messages from "./messages";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
+import { isCosmosDbModalOpenSelector } from "../../store/modals/selector";
 import AccountNameEditor from "./AccountNameEditor/index";
 import ApiSelection from "./APISelection/index";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
@@ -13,7 +13,7 @@ import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { ISelectedCosmosService } from "../../store/selection/services/cosmosDbReducer";
-import { getCosmosDbSelectionSelector } from "../../selectors/cosmosServiceSelector";
+import { getCosmosDbSelectionSelector } from "../../store/azure/cosmosServiceSelector";
 import classNames from "classnames";
 import { useState } from "react";
 import { closeModalAction } from "../../store/modals/action";

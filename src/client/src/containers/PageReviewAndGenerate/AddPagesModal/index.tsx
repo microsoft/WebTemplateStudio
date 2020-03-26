@@ -8,7 +8,7 @@ import asModal from "../../../components/Modal";
 import RootAction from "../../../store/ActionType";
 import { closeModalAction } from "../../../store/modals/action";
 import PageAddPages from "../../PageAddPages";
-import { isAddPagesModalOpenSelector } from "../../../selectors/modalSelector";
+import { isAddPagesModalOpenSelector } from "../../../store/modals/selector";
 import { MODAL_TYPES } from "../../../store/modals/typeKeys";
 import { KEY_EVENTS } from "../../../utils/constants";
 

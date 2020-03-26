@@ -8,7 +8,7 @@ import Card from "../../../components/Card";
 import styles from "./styles.module.css";
 import {startLogOutAzure} from "../../../store/azure/login/action";
 import * as ModalActions from "../../../store/modals/action";
-import { isCosmosDbModalOpenSelector } from "../../../selectors/modalSelector";
+import { isCosmosDbModalOpenSelector } from "../../../store/modals/selector";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 
 import azureServiceOptions from "../../../mockData/azureServiceOptions";

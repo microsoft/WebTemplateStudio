@@ -14,7 +14,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
 import * as PostGenSelectors from "../../selectors/postGenerationSelector";
-import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
+import { isPostGenModalOpenSelector } from "../../store/modals/selector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
