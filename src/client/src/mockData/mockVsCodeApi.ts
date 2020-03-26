@@ -1,6 +1,7 @@
 import {
   EXTENSION_COMMANDS,
-  DEVELOPMENT
+  DEVELOPMENT,
+  TEST
 } from "../utils/constants";
 
 import * as mockAzureModule from "./extensionModules/mockAzureModule";
@@ -14,7 +15,7 @@ import * as mockAzureModule from "./extensionModules/mockAzureModule";
  */
 const mockVsCodeApi = () => ({
   postMessage: (message: any) => {
-    if (process.env.NODE_ENV === DEVELOPMENT) {
+    if (process.env.NODE_ENV === DEVELOPMENT || process.env.NODE_ENV === TEST) {
       switch (message.command) {
         case "alert":
           console.log("Command: ", message.alert);

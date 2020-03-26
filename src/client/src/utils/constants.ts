@@ -25,6 +25,7 @@ const AZURE_LINKS = {
 
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
+const TEST = "test";
 
 const INTL_MESSAGES = defineMessages({
   EMPTY_FIELD: {
@@ -196,6 +197,7 @@ export {
   ARIA_LABELS_NAVIGATION,
   COSMOS_APIS,
   DEVELOPMENT,
+  TEST,
   PROJECT_NAME_CHARACTER_LIMIT,
   PAGE_NAME_CHARACTER_LIMIT,
   MAX_PAGES_ALLOWED,
