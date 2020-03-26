@@ -17,7 +17,7 @@ import {
 import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
 import { ISelectedAppService } from "../../store/selection/services/appServiceReducer";
 
-import { rootSelector } from "../../selectors/generationSelector";
+import { rootSelector } from "../../store/selection/app/generationSelector";
 import {
   getCosmosDbSelectionSelector,
   isCosmosResourceCreatedSelector
@@ -40,7 +40,7 @@ import {
   getIsVisitedRoutesSelector,
   IVisitedPages
 } from "../../store/wizardContent/wizardContent/wizardNavigationSelector";
-import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPage } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../store/ActionType";

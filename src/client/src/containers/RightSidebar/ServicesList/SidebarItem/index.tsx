@@ -9,7 +9,7 @@ import { KEY_EVENTS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../../../store/combineReducers";
 import messages from "./messages";
-import { getValidations } from "../../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { getValidations } from "../../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../../../store/selection/validations/setValidations";
 
 const CosmosDBIcon = Loadable({

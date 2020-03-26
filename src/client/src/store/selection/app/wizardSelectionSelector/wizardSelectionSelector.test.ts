@@ -1,6 +1,6 @@
 import configureMockStore from "redux-mock-store";
 import { isEnableNextPage} from "./wizardSelectionSelector";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES } from "../../../../utils/constants";
 
 
 describe("wizardSelectionSelector", () => {

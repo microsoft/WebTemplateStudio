@@ -11,7 +11,7 @@ import styles from "./styles.module.css";
 
 import { ROUTES_ARRAY } from "../../utils/constants";
 import { IRoutes } from "../../store/selection/pages/reducer";
-import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPage } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../store/combineReducers";
 import RootAction from "../../store/ActionType";

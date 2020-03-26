@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import RootAction from "../../../store/ActionType";
 
 import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
-import { isEnableNextPage } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPage } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 import { AppState } from "../../../store/combineReducers";
 import { IVSCodeObject } from "../../../store/vscode/vscodeApiReducer";

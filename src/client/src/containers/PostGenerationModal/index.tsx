@@ -28,7 +28,7 @@ import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
 
 import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getOutputPath, getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { getOutputPath, getProjectName } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { MODAL_TYPES } from "../../store/modals/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";

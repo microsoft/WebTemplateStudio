@@ -1,6 +1,6 @@
 import { AZURE_TYPEKEYS } from "../../azureProfileData/typeKeys";
 import { FormattedMessage } from "react-intl";
-import messages from "../../../selectors/wizardSelectionSelector/messages";
+import messages from "../app/wizardSelectionSelector/messages";
 import AzureActionType from "../../azureProfileData/azureActionType";
 
 export interface IAvailability {

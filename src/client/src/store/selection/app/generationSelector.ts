@@ -1,15 +1,15 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { ISelected } from "../types/selected";
-import { ITemplateInfo } from "../types/templateInfo";
+import { ISelected } from "../../../types/selected";
+import { ITemplateInfo } from "../../../types/templateInfo";
 import { getOutputPath, getProjectName } from "./wizardSelectionSelector/wizardSelectionSelector";
 import {
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
   COSMOS_APIS
-} from "../utils/constants";
-import { AppState } from "../store/combineReducers";
-import { SelectionState } from "../store/selection/reducer";
+} from "../../../utils/constants";
+import { AppState } from "../../combineReducers";
+import { SelectionState } from "../reducer";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {
   [COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
