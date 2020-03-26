@@ -8,7 +8,7 @@ import Dropdown from "../../../components/Dropdown";
 import { AppState } from "../../../reducers";
 import { SelectionState } from "../../../store/selection/reducer";
 import { IOption } from "../../../types/option";
-import { WizardContentType } from "../../../reducers/wizardContentReducers";
+import { WizardContentType } from "../../../store/wizardContent/wizardContent/combineReducers";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
 
 type Props = InjectedIntlProps;

@@ -1,5 +1,5 @@
-import WizardContentActionType from "../../store/wizardContent/wizardContentActionType";
-import { WIZARD_CONTENT_TYPEKEYS } from "../../store/wizardContent/typeKeys";
+import WizardContentActionType from "../wizardContentActionType";
+import { WIZARD_CONTENT_TYPEKEYS } from "../typeKeys";
 
 const previewStatus = (
   state = false,

@@ -1,13 +1,13 @@
-import WizardContentActionType from "../../store/wizardContent/wizardContentActionType";
-import { IOption } from "../../types/option";
-import { WIZARD_CONTENT_TYPEKEYS } from "../../store/wizardContent/typeKeys";
+import WizardContentActionType from "../wizardContentActionType";
+import { IOption } from "../../../types/option";
+import { WIZARD_CONTENT_TYPEKEYS } from "../typeKeys";
 
-const backendFrameworkOptions = (
+const frontendFrameworkOptions = (
   state: IOption[] = [],
   action: WizardContentActionType
 ) => {
   switch (action.type) {
-    case WIZARD_CONTENT_TYPEKEYS.SET_BACKEND_FRAMEWORKS:
+    case WIZARD_CONTENT_TYPEKEYS.SET_FRONTEND_FRAMEWORKS:
       const newState = [...state];
       for (const frameworkToAdd of action.payload) {
         let found = false;
@@ -32,4 +32,4 @@ const backendFrameworkOptions = (
   }
 };
 
-export default backendFrameworkOptions;
+export default frontendFrameworkOptions;

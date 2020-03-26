@@ -3,7 +3,7 @@ import azureProfileData from "../store/azure/azureReducer";
 import dependencyInfo from "../store/dependencyInfo";
 import generationStatus from "../store/generationStatus/combineReducers";
 import modals from "../store/modals/combineReducers";
-import wizardContent from "./wizardContentReducers";
+import wizardContent from "../store/wizardContent/wizardContent/combineReducers";
 import wizardRoutes from "../store/selection/pages/selectionPagesReducer";
 import vscodeApi from "./vscodeApiReducer";
 import selection from "../store/selection/reducer";

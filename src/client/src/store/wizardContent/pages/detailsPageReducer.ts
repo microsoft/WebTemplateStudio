@@ -1,6 +1,6 @@
-import { WIZARD_INFO_TYPEKEYS } from "../../store/wizardContent/typeKeys";
-import WizardInfoType from "../../store/wizardContent/wizardInfoActionType";
-import { IDetail } from "../../store/wizardContent/pages/model";
+import { WIZARD_INFO_TYPEKEYS } from "../typeKeys";
+import WizardInfoType from "../wizardInfoActionType";
+import { IDetail } from "./model";
 
 const initialState = {
   isIntlFormatted: false,

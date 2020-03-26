@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import backendOptions from "./backendFrameworkReducer";
-import frontendOptions from "./frontendFrameworkReducer";
-import pageOptions from "./pagesOptionsReducer";
-import detailsPage from "./detailsPageReducer";
+import backendOptions from "../frameworks/backendFrameworkReducer";
+import frontendOptions from "../frameworks/frontendFrameworkReducer";
+import pageOptions from "../pages/pagesOptionsReducer";
+import detailsPage from "../pages/detailsPageReducer";
 import previewStatus from "./previewReducer";
 
 const wizardContentReducer = combineReducers({
