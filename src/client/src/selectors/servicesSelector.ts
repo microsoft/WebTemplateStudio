@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { AppState } from "../reducers";
+import { AppState } from "../store/combineReducers";
 import { ServiceState } from "../store/selection/services";
 import { isAppServiceSelectedSelector } from "./appServiceSelector";
 import { isCosmosResourceCreatedSelector } from "./cosmosServiceSelector";

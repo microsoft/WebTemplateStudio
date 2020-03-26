@@ -13,7 +13,7 @@ import {
 
 import { IOption } from "../../types/option";
 import { azureMessages } from "../../mockData/azureServiceOptions";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import AzureSubscriptions from "./AzureSubscriptions";
 import AzureStudent from "./AzureStudent";
 import Title from "../../components/Title";

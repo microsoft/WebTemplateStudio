@@ -19,7 +19,7 @@ import {
   InjectedIntlProps,
   injectIntl
 } from "react-intl";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../../store/ActionType";
 

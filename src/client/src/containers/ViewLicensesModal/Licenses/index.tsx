@@ -13,7 +13,7 @@ import {
   getIsVisitedRoutesSelector,
   IVisitedPages
 } from "../../../selectors/wizardNavigationSelector";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 
 interface IStateProps {
   frameworkLicenses: string[];

@@ -3,7 +3,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 import { useSelector } from "react-redux";
 import { getSubscriptions } from "../../../selectors/subscriptionSelector";
 

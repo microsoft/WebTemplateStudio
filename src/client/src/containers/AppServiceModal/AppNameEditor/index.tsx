@@ -9,7 +9,7 @@ import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
 import { ValidateAppServiceName, GetValidAppServiceName } from "../../../utils/extensionService/extensionService";
 import { useSelector } from "react-redux";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 
 let timeout: NodeJS.Timeout | undefined;
 let validationAppServiceNameScopeId = 0;

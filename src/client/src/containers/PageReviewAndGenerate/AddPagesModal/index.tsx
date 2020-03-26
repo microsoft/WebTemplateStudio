@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 import styles from "./styles.module.css";
 import asModal from "../../../components/Modal";
 import RootAction from "../../../store/ActionType";

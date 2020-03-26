@@ -14,7 +14,7 @@ import {
   PAGEID
 } from "../../utils/constants";
 
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
 import { ISelectedAppService } from "../../store/selection/services/appServiceReducer";
 
 import { rootSelector } from "../../selectors/generationSelector";
@@ -41,7 +41,7 @@ import {
   IVisitedPages
 } from "../../selectors/wizardNavigationSelector";
 import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../store/ActionType";
 

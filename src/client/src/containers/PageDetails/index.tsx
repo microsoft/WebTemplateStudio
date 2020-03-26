@@ -5,7 +5,7 @@ import Details from "./Details";
 import { IOption } from "../../types/option";
 import { getScreenShot } from "../../utils/getSvgUrl";
 import styles from "./styles.module.css";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 
 interface IPageDetailsProps {
   detailsPageInfo: IOption;

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import styles from "./styles.module.css";
 import asModal from "../../components/Modal";
 import RootAction from "../../store/ActionType";

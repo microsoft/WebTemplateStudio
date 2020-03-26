@@ -1,4 +1,4 @@
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
 import { ISelected } from "../../types/selected";
 import { FormattedMessage } from "react-intl";
 import { validationMessages } from './messages';

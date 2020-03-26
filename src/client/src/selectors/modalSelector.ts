@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { AppState } from "../reducers";
+import { AppState } from "../store/combineReducers";
 import { ModalType, MODAL_TYPES } from "../store/modals/typeKeys";
 
 const getOpenModal = (state: AppState): ModalType =>

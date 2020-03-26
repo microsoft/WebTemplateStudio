@@ -8,7 +8,7 @@ import { ISelected } from "../../../../../types/selected";
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../../../../utils/constants";
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
-import { AppState } from "../../../../../reducers";
+import { AppState } from "../../../../../store/combineReducers";
 
 import messages from "./messages";
 import { ThunkDispatch } from "redux-thunk";

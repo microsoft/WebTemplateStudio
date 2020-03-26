@@ -1,8 +1,8 @@
 import { ISelected } from "../types/selected";
-import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../reducers/vscodeApiReducer";
+import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../store/vscode/vscodeApiReducer";
 import mockVsCodeApi from "./mockVsCodeApi";
 import { FormattedMessage } from "react-intl";
-import { AppState } from "../reducers";
+import { AppState } from "../store/combineReducers";
 
 export const getISelected = () => {
   const selected: ISelected = {

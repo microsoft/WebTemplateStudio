@@ -3,7 +3,7 @@ import { createSelector } from "reselect";
 import { RowType } from "../../types/rowType";
 import { ISelected } from "../../types/selected";
 import { IValidation } from "../../utils/validations/validations";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import { SelectionState } from "../../store/selection/reducer";
 import { ROUTES } from "../../utils/constants";
 import { IValidations } from "../../store/selection/validations/setValidations";

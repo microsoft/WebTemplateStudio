@@ -7,7 +7,7 @@ import thunk from "redux-thunk";
 import App from "./App";
 import "focus-visible";
 import "./index.css";
-import reducers from "./reducers";
+import reducers from "./store/combineReducers";
 
 import { IntlProvider } from "react-intl";
 

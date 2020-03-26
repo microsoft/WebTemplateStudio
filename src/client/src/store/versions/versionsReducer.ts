@@ -1,5 +1,5 @@
-import { IVersions } from "../types/version";
-import { WIZARD_INFO_TYPEKEYS } from "../store/wizardContent/typeKeys";
+import { IVersions } from "../../types/version";
+import { WIZARD_INFO_TYPEKEYS } from "../wizardContent/typeKeys";
 
 /* State Shape
 {

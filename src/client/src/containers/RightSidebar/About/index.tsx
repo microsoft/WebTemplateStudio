@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { getVersionsSelector } from "../../../selectors/vscodeApiSelector";
 import { IVersions } from "../../../types/version";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 import { WEB_TEMPLATE_STUDIO_LINKS } from "../../../utils/constants";
 import messages from "./messages";
 

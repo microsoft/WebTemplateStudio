@@ -12,7 +12,7 @@ import {
   getValidations
 } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../../store/vscode/vscodeApiReducer";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
@@ -27,7 +27,7 @@ import {
 } from "react-intl";
 
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 import { Dispatch } from "redux";
 import RootAction from "../../../store/ActionType";
 import { validateProjectName} from "../../../utils/validations/projectName/projectName";

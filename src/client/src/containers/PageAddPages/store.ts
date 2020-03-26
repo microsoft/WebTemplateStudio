@@ -1,4 +1,4 @@
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 
 import { IStoreProps } from "./interfaces";
 

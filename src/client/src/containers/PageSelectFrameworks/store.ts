@@ -1,4 +1,4 @@
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import { IStateProps, IDispatchProps } from "./interfaces";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 import { ThunkDispatch } from "redux-thunk";

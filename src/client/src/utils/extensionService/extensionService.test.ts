@@ -1,7 +1,7 @@
 
 import { projectPathValidation } from "./extensionService";
 
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
 
 import {
   EXTENSION_COMMANDS

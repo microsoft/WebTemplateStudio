@@ -1,15 +1,15 @@
 import { combineReducers } from "redux";
-import azureProfileData from "../store/azure/azureReducer";
-import dependencyInfo from "../store/dependencyInfo";
-import generationStatus from "../store/generationStatus/combineReducers";
-import modals from "../store/modals/combineReducers";
-import wizardContent from "../store/wizardContent/wizardContent/combineReducers";
-import wizardRoutes from "../store/selection/pages/selectionPagesReducer";
-import vscodeApi from "./vscodeApiReducer";
-import selection from "../store/selection/reducer";
-import versions from "./versionsReducer";
-import RootAction from "../store/ActionType";
-import { WIZARD_INFO_TYPEKEYS } from "../store/wizardContent/typeKeys";
+import azureProfileData from "./azure/azureReducer";
+import dependencyInfo from "./dependencyInfo";
+import generationStatus from "./generationStatus/combineReducers";
+import modals from "./modals/combineReducers";
+import wizardContent from "./wizardContent/wizardContent/combineReducers";
+import wizardRoutes from "./selection/pages/selectionPagesReducer";
+import vscodeApi from "./vscode/vscodeApiReducer";
+import selection from "./selection/reducer";
+import versions from "./versions/versionsReducer";
+import RootAction from "./ActionType";
+import { WIZARD_INFO_TYPEKEYS } from "./wizardContent/typeKeys";
 
 const appReducer = combineReducers({
   vscode: vscodeApi,

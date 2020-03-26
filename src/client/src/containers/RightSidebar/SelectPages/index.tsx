@@ -13,11 +13,11 @@ import { ReactComponent as ResetIcon } from "../../../assets/i-reset.svg";
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
 
 import styles from "./styles.module.css";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 
 import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_COMMANDS, BOOTSTRAP_LICENSE, ROUTES } from "../../../utils/constants";
 import messages from "./messages";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../../store/vscode/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { sendTelemetry, resetAllPages } from "../../../utils/extensionService/extensionService";
 import { SelectionState } from "../../../store/selection/reducer";

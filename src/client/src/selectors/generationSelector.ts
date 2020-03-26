@@ -8,7 +8,7 @@ import {
   WIZARD_CONTENT_INTERNAL_NAMES,
   COSMOS_APIS
 } from "../utils/constants";
-import { AppState } from "../reducers";
+import { AppState } from "../store/combineReducers";
 import { SelectionState } from "../store/selection/reducer";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {

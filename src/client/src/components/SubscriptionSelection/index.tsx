@@ -6,7 +6,7 @@ import Dropdown from "../Dropdown";
 import { useSelector } from "react-redux";
 import { getDropdownSubscriptions } from "../../selectors/subscriptionSelector";
 import { useState } from "react";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import { AZURE_LINKS } from "../../utils/constants";
 
 interface IProps {

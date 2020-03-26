@@ -24,9 +24,9 @@ import {
   TELEMETRY
 } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
 
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getOutputPath, getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";

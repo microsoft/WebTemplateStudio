@@ -1,6 +1,6 @@
 import { ROUTES } from "../utils/constants";
 import { createSelector } from "reselect";
-import { AppState } from "../reducers";
+import { AppState } from "../store/combineReducers";
 import { IRoutes } from "../store/selection/pages/reducer";
 
 export interface IVisitedPages {

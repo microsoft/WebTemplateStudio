@@ -9,8 +9,8 @@ import RootAction from "../../../store/ActionType";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { isEnableNextPage } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 
-import { AppState } from "../../../reducers";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+import { AppState } from "../../../store/combineReducers";
+import { IVSCodeObject } from "../../../store/vscode/vscodeApiReducer";
 import { ISelected } from "../../../types/selected";
 
 import { ReactComponent as QuickStartWand } from "../../../assets/quickStartWand.svg";

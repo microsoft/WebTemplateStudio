@@ -12,7 +12,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
 import styles from "./styles.module.css";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import { ISelectedAppService } from "../../store/selection/services/appServiceReducer";
 import { getAppServiceSelectionSelector } from "../../selectors/appServiceSelector";
 import classNames from "classnames";

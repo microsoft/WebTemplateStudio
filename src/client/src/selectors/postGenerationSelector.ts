@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { IServiceStatus } from "../store/generationStatus/statusReducer";
 import { isCosmosResourceCreatedSelector } from "./cosmosServiceSelector";
 import { isAppServiceSelectedSelector } from "./appServiceSelector";
-import { AppState } from "../reducers";
+import { AppState } from "../store/combineReducers";
 import { azureMessages } from "../mockData/azureServiceOptions";
 
 const getGenerationStatusSelector = (state: AppState) =>

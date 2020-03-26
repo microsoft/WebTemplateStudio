@@ -14,7 +14,7 @@ jest.mock('../validations',()=>{return {
 }});
 import { validateProjectName } from "./projectName";
 import { IprojectNameValidationConfig } from "../../../reducers/wizardSelectionReducers/setValidations";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../../store/vscode/vscodeApiReducer";
 import { addRequiredValidate, addExistingProjectNameValidate, addRegexValidate,
   addReservedNameValidate } from '../validations';
 

@@ -5,7 +5,7 @@ import styles from "../styles.module.css";
 import messages from "../strings";
 import { ISelected } from "../../../types/selected";
 import Dropdown from "../../../components/Dropdown";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 import { SelectionState } from "../../../store/selection/reducer";
 import { IOption } from "../../../types/option";
 import { WizardContentType } from "../../../store/wizardContent/wizardContent/combineReducers";

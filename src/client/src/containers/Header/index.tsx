@@ -2,11 +2,11 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import styles from "./styles.module.css";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
 
 import { injectIntl } from "react-intl";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 
 interface IHeaderProps {
   vscode: IVSCodeObject;

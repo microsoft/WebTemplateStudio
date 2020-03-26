@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { AppState } from "../reducers";
+import { AppState } from "../store/combineReducers";
 
 const getSubscriptions = (state: AppState): Subscription[] => state.azureProfileData.profileData.subscriptions;
 

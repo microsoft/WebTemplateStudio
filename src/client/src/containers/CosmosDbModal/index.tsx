@@ -11,7 +11,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
 import styles from "./styles.module.css";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import { ISelectedCosmosService } from "../../store/selection/services/cosmosDbReducer";
 import { getCosmosDbSelectionSelector } from "../../selectors/cosmosServiceSelector";
 import classNames from "classnames";

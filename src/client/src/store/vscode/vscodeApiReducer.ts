@@ -1,16 +1,7 @@
-import { VSCODE_TYPEKEYS } from "../store/vscode/typeKeys";
-import { PRODUCTION } from "../utils/constants";
-import mockVsCodeApi from "../mockData/mockVsCodeApi";
-import { IVSCodeAPIActionType } from "../store/vscode/model";
-
-/* State Shape
-{
-    vscode: {
-      isVsCodeApiAcquired: boolean,
-      vscode: any
-    }
-}
-*/
+import { VSCODE_TYPEKEYS } from "./typeKeys";
+import { PRODUCTION } from "../../utils/constants";
+import mockVsCodeApi from "../../mockData/mockVsCodeApi";
+import { IVSCodeAPIActionType } from "./model";
 
 export interface IVSCode {
   vscode: IVSCodeAPI;

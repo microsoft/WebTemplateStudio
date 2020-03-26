@@ -8,7 +8,7 @@ import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
 import { ValidateCosmosAccountName, GetValidCosmosAccountName } from "../../../utils/extensionService/extensionService";
 import { useSelector } from "react-redux";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 
 let timeout: NodeJS.Timeout | undefined;

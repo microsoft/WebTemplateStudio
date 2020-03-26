@@ -4,7 +4,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "../styles.module.css";
 import messages from "../strings";
 import { getOutputPath, getProjectName } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 
 type Props = InjectedIntlProps;
 
