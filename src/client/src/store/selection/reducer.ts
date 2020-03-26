@@ -7,7 +7,7 @@ import appType from "./app/selectWebAppReducer";
 import projectNameObject from "./app/updateProjectName";
 import validations from "./validations/setValidations";
 import outputPathObject from "./app/updateOutputPath";
-import services from "./services";
+import services from "../azureProfileData";
 import isValidatingName from "./validations/validatingNameReducer";
 
 const selectionStateReducer = combineReducers({

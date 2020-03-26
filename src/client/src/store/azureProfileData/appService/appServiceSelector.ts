@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { ISelectedAppService } from "../store/selection/services/appServiceReducer";
-import { AppState } from "../store/combineReducers";
-import { ServiceState } from "../store/selection/services";
+import { ISelectedAppService } from "./appServiceReducer";
+import { AppState } from "../../combineReducers";
+import { ServiceState } from "..";
 
 const getServices = (state: AppState): ServiceState =>
   state.selection.services;

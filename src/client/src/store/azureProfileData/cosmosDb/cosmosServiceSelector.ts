@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { ISelectedCosmosService } from "../selection/services/cosmosDbReducer";
-import { ServiceState } from "../selection/services";
-import { AppState } from "../combineReducers";
+import { ISelectedCosmosService } from "./cosmosDbReducer";
+import { ServiceState } from "..";
+import { AppState } from "../../combineReducers";
 
 interface ISelectedDropdowns {
   subscription?: IDropDownOptionType;

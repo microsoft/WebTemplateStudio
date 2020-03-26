@@ -1,4 +1,4 @@
-import { ISelectedAppService } from "../../selection/services/appServiceReducer";
+import { ISelectedAppService } from "./appServiceReducer";
 import { ISaveAppServiceSettings, IRemoveAppServiceSettings } from "./model";
 import { AZURE_TYPEKEYS } from "../typeKeys";
 

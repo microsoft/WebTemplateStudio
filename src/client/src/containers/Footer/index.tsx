@@ -15,17 +15,17 @@ import {
 } from "../../utils/constants";
 
 import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
-import { ISelectedAppService } from "../../store/selection/services/appServiceReducer";
+import { ISelectedAppService } from "../../store/azureProfileData/appService/appServiceReducer";
 
 import { rootSelector } from "../../store/selection/app/generationSelector";
 import {
   getCosmosDbSelectionSelector,
   isCosmosResourceCreatedSelector
-} from "../../store/azureProfileData/cosmosServiceSelector";
+} from "../../store/azureProfileData/cosmosDb/cosmosServiceSelector";
 import {
   isAppServiceSelectedSelector,
   getAppServiceSelectionSelector
-} from "../../selectors/appServiceSelector";
+} from "../../store/azureProfileData/appService/appServiceSelector";
 
 import { openPostGenModalAction } from "../../store/modals/action";
 import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";

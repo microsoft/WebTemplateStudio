@@ -7,7 +7,7 @@ import messages from "./strings";
 import styles from "./styles.module.css";
 import CosmosDBSelection from "./CosmosDBSelection";
 import AppServiceSelection from "./AppServiceSelection";
-import { ServiceState } from "../../../store/selection/services";
+import { ServiceState } from "../../../store/azureProfileData";
 import _ from "lodash";
 
 interface IProps {

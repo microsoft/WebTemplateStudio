@@ -1,5 +1,5 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
-import { ISelectedAppService } from "../../selection/services/appServiceReducer";
+import { ISelectedAppService } from "./appServiceReducer";
 import { IAvailabilityFromExtension } from "../azure/model";
 
 export interface ISaveAppServiceSettings {
