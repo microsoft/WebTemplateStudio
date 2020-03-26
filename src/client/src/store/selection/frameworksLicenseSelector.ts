@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { ILicenseObject } from "../types/license";
+import { ILicenseObject } from "../../types/license";
 
 const getSelection = (state: any) => state.selection;
 const getFrameworkLicenses = (selection: any): string[] => {
