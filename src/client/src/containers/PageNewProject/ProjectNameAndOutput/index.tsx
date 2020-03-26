@@ -26,7 +26,7 @@ import {
   InjectedIntlProps
 } from "react-intl";
 
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
 import { AppState } from "../../../store/combineReducers";
 import { Dispatch } from "redux";
 import RootAction from "../../../store/ActionType";

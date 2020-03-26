@@ -8,7 +8,7 @@ import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
 import { ValidateAppServiceName, GetValidAppServiceName } from "../../../utils/extensionService/extensionService";
 import { useSelector } from "react-redux";
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
 import { AppState } from "../../../store/combineReducers";
 
 let timeout: NodeJS.Timeout | undefined;

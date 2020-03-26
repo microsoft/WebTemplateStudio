@@ -3,7 +3,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../../store/combineReducers";
 import RootAction from "../../../store/ActionType";
 import { IDispatchProps, IStateProps } from "./interfaces";
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
 import { ISelected } from "../../../types/selected";
 import { setPagesAction } from "../../../store/selection/pages/action";
 import { setDetailPageAction } from "../../../store/wizardContent/pages/action";

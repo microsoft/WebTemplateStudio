@@ -12,7 +12,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
-} from "../../../selectors/wizardNavigationSelector";
+} from "../../../store/wizardContent/wizardContent/wizardNavigationSelector";
 import { AppState } from "../../../store/combineReducers";
 
 interface IStateProps {

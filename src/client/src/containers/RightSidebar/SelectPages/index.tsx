@@ -18,7 +18,7 @@ import { AppState } from "../../../store/combineReducers";
 import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_COMMANDS, BOOTSTRAP_LICENSE, ROUTES } from "../../../utils/constants";
 import messages from "./messages";
 import { IVSCodeObject } from "../../../store/vscode/vscodeApiReducer";
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
 import { sendTelemetry, resetAllPages } from "../../../utils/extensionService/extensionService";
 import { SelectionState } from "../../../store/selection/reducer";
 import { resetPagesAction, setPagesAction } from "../../../store/selection/pages/action";

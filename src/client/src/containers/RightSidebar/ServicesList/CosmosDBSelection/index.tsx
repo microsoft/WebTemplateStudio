@@ -17,7 +17,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../../../store/combineReducers";
 import RootAction from "../../../../store/ActionType";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { getVSCodeApiSelector } from "../../../../selectors/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../../../store/vscode/vscodeApiSelector";
 import { IVSCodeObject } from "../../../../store/vscode/vscodeApiReducer";
 import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
 

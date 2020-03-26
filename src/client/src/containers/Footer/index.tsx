@@ -28,7 +28,7 @@ import {
 } from "../../selectors/appServiceSelector";
 
 import { openPostGenModalAction } from "../../store/modals/action";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
 
 import {
   FormattedMessage,
@@ -39,7 +39,7 @@ import {
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
-} from "../../selectors/wizardNavigationSelector";
+} from "../../store/wizardContent/wizardContent/wizardNavigationSelector";
 import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
 import { ThunkDispatch } from "redux-thunk";

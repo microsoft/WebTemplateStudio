@@ -9,7 +9,7 @@ import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
 import { ValidateCosmosAccountName, GetValidCosmosAccountName } from "../../../utils/extensionService/extensionService";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../store/combineReducers";
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
 
 let timeout: NodeJS.Timeout | undefined;
 let validationCosmosDbAccountNameScopeId = 0;

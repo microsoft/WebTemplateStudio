@@ -1,6 +1,6 @@
-import { IVSCodeObject } from "../store/vscode/vscodeApiReducer";
-import { IVersions } from "../types/version";
-import { AppState } from "../store/combineReducers";
+import { IVSCodeObject } from "./vscodeApiReducer";
+import { IVersions } from "../../types/version";
+import { AppState } from "../combineReducers";
 
 const getVSCodeApiSelector = (state: AppState): IVSCodeObject =>
   state.vscode.vscodeObject;

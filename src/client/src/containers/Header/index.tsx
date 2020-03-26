@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import styles from "./styles.module.css";
 import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
 
 import { injectIntl } from "react-intl";
 import { AppState } from "../../store/combineReducers";
