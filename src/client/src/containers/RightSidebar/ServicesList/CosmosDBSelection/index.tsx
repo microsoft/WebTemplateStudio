@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import SidebarItem from "../SidebarItem";
 
-import { ICosmosDB } from "../../../../store/azureProfileData/cosmosDb/cosmosDbReducer";
+import { ICosmosDBReducer } from "../../../../store/azureProfileData/cosmosDb/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
 import { openCosmosDbModalAction } from "../../../../store/modals/action";
@@ -22,7 +22,7 @@ import { IVSCodeObject } from "../../../../store/vscode/vscodeApiReducer";
 import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
 
 interface IProps {
-  cosmosSelection: ICosmosDB;
+  cosmosSelection: ICosmosDBReducer;
 }
 
 interface IStateProps {

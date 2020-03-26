@@ -1,30 +1,7 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
-import { FormattedMessage } from "react-intl";
 import messages from "../../selection/app/wizardSelectionSelector/messages";
 import AzureActionType from "../azureActionType";
-
-export interface IAvailabilityReducer {
-  isAccountNameAvailable: boolean;
-  message: string;
-}
-
-export interface ISelectedCosmosService {
-  subscription: string;
-  resourceGroup: string;
-  accountName: string;
-  api: string;
-  internalName: string;
-}
-
-interface IServiceContent {
-  serviceType: FormattedMessage.MessageDescriptor;
-}
-
-export interface ICosmosDB {
-  accountNameAvailability: IAvailabilityReducer;
-  selection: ISelectedCosmosService[];
-  wizardContent: IServiceContent;
-}
+import { ICosmosDBReducer } from "./model";
 
 const initialState = {
   accountNameAvailability: {
@@ -37,7 +14,7 @@ const initialState = {
   }
 };
 
-const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
+const services = (state: ICosmosDBReducer = initialState, action: AzureActionType) => {
   switch (action.type) {
     case AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE:
       const cosmosSelections = [...state.selection];

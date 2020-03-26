@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { ISelectedCosmosService } from "./cosmosDbReducer";
+import { ISelectedCosmosServiceReducer } from "./model";
 import { ServiceState } from "..";
 import { AppState } from "../../combineReducers";
 
@@ -14,7 +14,7 @@ interface ISelectedDropdowns {
 
 interface ISelectionInformation {
   dropdownSelection: ISelectedDropdowns;
-  previousFormData: ISelectedCosmosService;
+  previousFormData: ISelectedCosmosServiceReducer;
 }
 
 const getServices = (state: AppState): ServiceState =>

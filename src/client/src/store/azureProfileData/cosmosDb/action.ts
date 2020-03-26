@@ -15,10 +15,3 @@ export const removeCosmosSelectionAction = (
   type: AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE,
   payload: selectionIndex
 });
-
-export const setAccountAvailability = (
-  isAccountAvailableObject: IAvailabilityFromExtension
-): ISetCosmosAccountNameAvailability => ({
-  type: AZURE_TYPEKEYS.SET_ACCOUNT_AVAILABILITY,
-  payload: isAccountAvailableObject
-});
