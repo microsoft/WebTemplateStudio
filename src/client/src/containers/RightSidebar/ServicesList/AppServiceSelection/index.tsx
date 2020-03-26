@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import SidebarItem from "../SidebarItem";
 
-import { IAppService } from "../../../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { IAppService } from "../../../../store/selection/services/appServiceReducer";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
 import { openAppServiceModalAction } from "../../../../store/modals/action";

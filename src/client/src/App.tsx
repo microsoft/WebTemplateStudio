@@ -24,7 +24,7 @@ import appStyles from "./appStyles.module.css";
 import { IVersions } from "./types/version";
 import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
 import { IVSCodeObject } from "./reducers/vscodeApiReducer";
-import { IServiceStatus } from "./reducers/generationStatus/genStatus";
+import { IServiceStatus } from "./store/generationStatus/statusReducer";
 import { ISelected } from "./types/selected";
 import { AppState } from "./reducers";
 import { IOption } from "./types/option";

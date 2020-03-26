@@ -1,5 +1,5 @@
 import { WIZARD_INFO_TYPEKEYS } from "../wizardContent/typeKeys";
-import { IServiceStatus } from "../../reducers/generationStatus/genStatus";
+import { IServiceStatus } from "./statusReducer";
 
 export interface IUpdateGenStatusMessage {
   type: WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS_MESSAGE;

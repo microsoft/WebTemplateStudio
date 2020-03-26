@@ -15,7 +15,7 @@ import {
 } from "../../utils/constants";
 
 import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { ISelectedAppService } from "../../store/selection/services/appServiceReducer";
 
 import { rootSelector } from "../../selectors/generationSelector";
 import {

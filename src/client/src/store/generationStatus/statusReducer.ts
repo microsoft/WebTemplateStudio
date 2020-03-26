@@ -1,5 +1,5 @@
-import { WIZARD_INFO_TYPEKEYS } from "../../store/wizardContent/typeKeys";
-import RootAction from "../../store/ActionType";
+import { WIZARD_INFO_TYPEKEYS } from "../wizardContent/typeKeys";
+import RootAction from "../ActionType";
 
 export interface IStatus {
   success: boolean;

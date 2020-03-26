@@ -4,7 +4,7 @@ import { RowType } from "../../types/rowType";
 import { ISelected } from "../../types/selected";
 import { IValidation } from "../../utils/validations/validations";
 import { AppState } from "../../reducers";
-import { SelectionState } from "../../reducers/wizardSelectionReducers";
+import { SelectionState } from "../../store/selection/reducer";
 import { ROUTES } from "../../utils/constants";
 import { IValidations } from "../../store/selection/validations/setValidations";
 

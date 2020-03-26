@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import SidebarItem from "../SidebarItem";
 
-import { ICosmosDB } from "../../../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
+import { ICosmosDB } from "../../../../store/selection/services/cosmosDbReducer";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
 import { openCosmosDbModalAction } from "../../../../store/modals/action";

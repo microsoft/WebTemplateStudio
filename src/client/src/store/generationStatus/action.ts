@@ -1,5 +1,5 @@
 import { WIZARD_INFO_TYPEKEYS } from "../wizardContent/typeKeys";
-import { IServiceStatus } from "../../reducers/generationStatus/genStatus";
+import { IServiceStatus } from "./statusReducer";
 import { IUpdateGenStatusMessage, IUpdateGenStatus } from "./model";
 
 const updateTemplateGenerationStatusMessageAction = (status: string): IUpdateGenStatusMessage => ({

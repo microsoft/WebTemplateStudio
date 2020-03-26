@@ -13,7 +13,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../reducers";
-import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { ISelectedAppService } from "../../store/selection/services/appServiceReducer";
 import { getAppServiceSelectionSelector } from "../../selectors/appServiceSelector";
 import classNames from "classnames";
 import { useState } from "react";

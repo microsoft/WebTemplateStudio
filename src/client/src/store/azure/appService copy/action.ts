@@ -1,5 +1,5 @@
 import { ISelectedAppService } from "../../selection/services/appServiceReducer";
-import { ISaveAppServiceSettings, IRemoveAppServiceSettings } from "./model";
+import { ISaveAppServiceSettings, IRemoveAppServiceSettings, ISetAppServiceSiteNameAvailability } from "./model";
 import { AZURE_TYPEKEYS } from "../typeKeys";
 
 export const saveAppServiceSettingsAction = (

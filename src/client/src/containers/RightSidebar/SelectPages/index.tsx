@@ -20,7 +20,7 @@ import messages from "./messages";
 import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
 import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
 import { sendTelemetry, resetAllPages } from "../../../utils/extensionService/extensionService";
-import { SelectionState } from "../../../reducers/wizardSelectionReducers";
+import { SelectionState } from "../../../store/selection/reducer";
 import { resetPagesAction, setPagesAction } from "../../../store/selection/pages/action";
 
 interface IStateProps {

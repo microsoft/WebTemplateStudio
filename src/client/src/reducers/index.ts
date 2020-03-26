@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import azureProfileData from "../store/azure/azureReducer";
-import dependencyInfo from "./dependencyInfoReducers";
-import generationStatus from "./generationStatus";
+import dependencyInfo from "../store/dependencyInfo";
+import generationStatus from "../store/generationStatus/combineReducers";
 import modals from "../store/modals/combineReducers";
 import wizardContent from "./wizardContentReducers";
-import wizardRoutes from "../store/selection/selectionPagesReducer";
+import wizardRoutes from "../store/selection/pages/selectionPagesReducer";
 import vscodeApi from "./vscodeApiReducer";
-import selection from "./wizardSelectionReducers";
+import selection from "../store/selection/reducer";
 import versions from "./versionsReducer";
 import RootAction from "../store/ActionType";
 import { WIZARD_INFO_TYPEKEYS } from "../store/wizardContent/typeKeys";

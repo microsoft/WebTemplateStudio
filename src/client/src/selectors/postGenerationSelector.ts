@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { FormattedMessage } from "react-intl";
 
-import { IServiceStatus } from "../reducers/generationStatus/genStatus";
+import { IServiceStatus } from "../store/generationStatus/statusReducer";
 import { isCosmosResourceCreatedSelector } from "./cosmosServiceSelector";
 import { isAppServiceSelectedSelector } from "./appServiceSelector";
 import { AppState } from "../reducers";

@@ -7,7 +7,7 @@ import {
   WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../../../utils/constants";
 import { AppState } from "../../../../reducers";
-import { IDependenciesInstalled } from "../../../../reducers/dependencyInfoReducers";
+import { IDependenciesInstalled } from "../../../../store/dependencyInfo";
 import Notification from "../../../../components/Notification";
 import messages from "./messages";
 
