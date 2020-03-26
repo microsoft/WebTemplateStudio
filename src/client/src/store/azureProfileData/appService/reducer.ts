@@ -1,33 +1,11 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
 import messages from "../../selection/app/wizardSelectionSelector/messages";
-import { FormattedMessage } from "react-intl";
 import AzureActionType from "../azureActionType";
 import { WIZARD_INFO_TYPEKEYS } from "../../wizardContent/typeKeys";
 import WizardInfoType from "../../wizardContent/wizardInfoActionType";
+import { IAppServiceReducer } from "./model";
 
-export interface IAvailability {
-  isSiteNameAvailable: boolean;
-  message: string;
-}
-
-export interface ISelectedAppService {
-  subscription: string;
-  resourceGroup: string;
-  siteName: string;
-  internalName: string;
-}
-
-interface IServiceContent {
-  serviceType: FormattedMessage.MessageDescriptor;
-}
-
-export interface IAppService {
-  siteNameAvailability: IAvailability;
-  selection: ISelectedAppService | null;
-  wizardContent: IServiceContent;
-}
-
-const initialState: IAppService = {
+const initialState: IAppServiceReducer = {
   siteNameAvailability: {
     isSiteNameAvailable: false,
     message: "App name unavailable"
@@ -38,8 +16,8 @@ const initialState: IAppService = {
   }
 };
 
-const appService = (
-  state: IAppService = initialState,
+const appServiceReducer = (
+  state: IAppServiceReducer = initialState,
   action: AzureActionType | WizardInfoType
 ) => {
   switch (action.type) {
@@ -72,4 +50,4 @@ const appService = (
   }
 };
 
-export default appService;
+export default appServiceReducer;

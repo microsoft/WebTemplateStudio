@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 
 import { IServiceStatus } from "./statusReducer";
 import { isCosmosResourceCreatedSelector } from "../azureProfileData/cosmosDb/cosmosServiceSelector";
-import { isAppServiceSelectedSelector } from "../azureProfileData/appService/appServiceSelector";
+import { isAppServiceSelectedSelector } from "../azureProfileData/appService/selector";
 import { AppState } from "../combineReducers";
 import { azureMessages } from "../../mockData/azureServiceOptions";
 

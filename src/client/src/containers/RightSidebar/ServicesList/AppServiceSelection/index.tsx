@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import SidebarItem from "../SidebarItem";
 
-import { IAppService } from "../../../../store/azureProfileData/appService/appServiceReducer";
+import { IAppServiceReducer } from "../../../../store/azureProfileData/appService/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
 import { openAppServiceModalAction } from "../../../../store/modals/action";
@@ -21,7 +21,7 @@ import { sendTelemetry } from "../../../../utils/extensionService/extensionServi
 import { removeAppServiceSettingsAction } from "../../../../store/azureProfileData/appService/action";
 
 interface IProps {
-  appServiceSelection: IAppService;
+  appServiceSelection: IAppServiceReducer;
 }
 
 interface IStateProps {

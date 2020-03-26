@@ -262,7 +262,7 @@ const loadPages = (frameWorkName: string): Array<any>=>{
   return pages;
 }
 
-const getSubscriptions = (): Array<Subscription> => {
+const getSubscriptionsSelector = (): Array<Subscription> => {
   const subscriptions = Array.from(Array(2).keys()).map(
     (item: number) => {
       return {
@@ -367,7 +367,7 @@ export const loadMasters = (store: AppState) =>{
 }
 
 export const setSubscriptions = (store: AppState) => {
-  store.azureProfileData.profileData.subscriptions = getSubscriptions();
+  store.azureProfileData.profileData.subscriptions = getSubscriptionsSelector();
 }
 
 export const setBackendFramework = (store: AppState, internalName: string) => {

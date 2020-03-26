@@ -15,7 +15,7 @@ import {
 } from "../../utils/constants";
 
 import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
-import { ISelectedAppService } from "../../store/azureProfileData/appService/appServiceReducer";
+import { ISelectedAppServiceReducer } from "../../store/azureProfileData/appService/model";
 
 import { rootSelector } from "../../store/selection/app/generationSelector";
 import {
@@ -25,7 +25,7 @@ import {
 import {
   isAppServiceSelectedSelector,
   getAppServiceSelectionSelector
-} from "../../store/azureProfileData/appService/appServiceSelector";
+} from "../../store/azureProfileData/appService/selector";
 
 import { openPostGenModalAction } from "../../store/modals/action";
 import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
@@ -64,7 +64,7 @@ interface IStateProps {
   selectedCosmos: boolean;
   cosmos: any;
   selectedAppService: boolean;
-  appService: ISelectedAppService | null;
+  appService: ISelectedAppServiceReducer | null;
   isVisited: IVisitedPages;
   isEnableNextPage: boolean;
 }

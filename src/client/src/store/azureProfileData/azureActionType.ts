@@ -1,4 +1,4 @@
-import { ISaveAppServiceSettings, IRemoveAppServiceSettings, ISetAppServiceSiteNameAvailability } from "./appService/model";
+import { ISaveAppServiceSettingsAction, IRemoveAppServiceSettingsAction, ISetAppServiceSiteNameAvailabilityAction } from "./appService/model";
 import { ISaveCosmosDbSettings, IRemoveCosmosDbSettings, ISetCosmosAccountNameAvailability } from "./cosmosDb/model";
 import { IsLoggedIntoAzure, ILoginToAzure, ILogout } from "./login/model";
 import { IAzureValidationStatus, IGetSubscription } from "./azure/model";
@@ -9,10 +9,10 @@ type AzureActionType =
   | ILogout
   | ISaveCosmosDbSettings
   | IRemoveCosmosDbSettings
-  | ISaveAppServiceSettings
-  | IRemoveAppServiceSettings
+  | ISaveAppServiceSettingsAction
+  | IRemoveAppServiceSettingsAction
   | ISetCosmosAccountNameAvailability
-  | ISetAppServiceSiteNameAvailability
+  | ISetAppServiceSiteNameAvailabilityAction
   | IAzureValidationStatus
   | IGetSubscription;
 

@@ -23,7 +23,7 @@ import { AppState } from "../../../store/combineReducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../../store/ActionType";
 
-import { isAppServiceSelectedSelector } from "../../../store/azureProfileData/appService/appServiceSelector";
+import { isAppServiceSelectedSelector } from "../../../store/azureProfileData/appService/selector";
 import messages from "./messages";
 import { setDetailPageAction } from "../../../store/wizardContent/pages/action";
 

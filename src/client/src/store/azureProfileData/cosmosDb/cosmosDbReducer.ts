@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import messages from "../../selection/app/wizardSelectionSelector/messages";
 import AzureActionType from "../azureActionType";
 
-export interface IAvailability {
+export interface IAvailabilityReducer {
   isAccountNameAvailable: boolean;
   message: string;
 }
@@ -21,7 +21,7 @@ interface IServiceContent {
 }
 
 export interface ICosmosDB {
-  accountNameAvailability: IAvailability;
+  accountNameAvailability: IAvailabilityReducer;
   selection: ISelectedCosmosService[];
   wizardContent: IServiceContent;
 }

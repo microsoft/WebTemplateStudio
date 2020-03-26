@@ -1,17 +1,39 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
-import { ISelectedAppService } from "./appServiceReducer";
 import { IAvailabilityFromExtension } from "../azure/model";
+import { FormattedMessage } from "react-intl";
 
-export interface ISaveAppServiceSettings {
+export interface ISaveAppServiceSettingsAction {
   type: AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS;
-  payload: ISelectedAppService;
+  payload: ISelectedAppServiceReducer;
 }
 
-export interface IRemoveAppServiceSettings {
+export interface IRemoveAppServiceSettingsAction {
   type: AZURE_TYPEKEYS.REMOVE_APP_SERVICE_SETTINGS;
 }
 
-export interface ISetAppServiceSiteNameAvailability {
+export interface ISetAppServiceSiteNameAvailabilityAction {
   type: AZURE_TYPEKEYS.SET_APP_NAME_AVAILABILITY;
   payload: IAvailabilityFromExtension;
+}
+
+export interface IAvailabilityReducer {
+  isSiteNameAvailable: boolean;
+  message: string;
+}
+
+export interface ISelectedAppServiceReducer {
+  subscription: string;
+  resourceGroup: string;
+  siteName: string;
+  internalName: string;
+}
+
+interface IServiceContentReducer {
+  serviceType: FormattedMessage.MessageDescriptor;
+}
+
+export interface IAppServiceReducer {
+  siteNameAvailability: IAvailabilityReducer;
+  selection: ISelectedAppServiceReducer | null;
+  wizardContent: IServiceContentReducer;
 }
