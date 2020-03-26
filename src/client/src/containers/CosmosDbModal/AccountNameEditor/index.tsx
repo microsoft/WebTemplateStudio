@@ -97,7 +97,7 @@ const AccountNameEditor = ({
         {isValidatingName && <Spinner data-testid="spinner" className={styles.spinner} />}
       </div>
       {accountName !== "" && !isValidatingName && invalidAccountNameMessage !== "" && (
-        <div className={styles.errorMessage}>{invalidAccountNameMessage}</div>
+        <div data-testid="error-message" className={styles.errorMessage}>{invalidAccountNameMessage}</div>
       )}
     </div>
   );
