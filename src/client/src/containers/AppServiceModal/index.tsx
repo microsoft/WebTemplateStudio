@@ -17,7 +17,7 @@ import { ISelectedAppService } from "../../store/selection/services/appServiceRe
 import { getAppServiceSelectionSelector } from "../../selectors/appServiceSelector";
 import classNames from "classnames";
 import { useState } from "react";
-import { saveAppServiceSettingsAction } from "../../store/azure/appService/action";
+import { saveAppServiceSettingsAction } from "../../store/azureProfileData/appService/action";
 import { closeModalAction } from "../../store/modals/action";
 
 interface IStateProps {

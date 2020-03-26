@@ -22,7 +22,7 @@ import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
 import { setDetailPageAction } from "../../store/wizardContent/pages/action";
-import { startLogOutAzure } from "../../store/azure/login/action";
+import { startLogOutAzure } from "../../store/azureProfileData/login/action";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;

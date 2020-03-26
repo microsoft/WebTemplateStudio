@@ -19,7 +19,7 @@ import RootAction from "../../../../store/ActionType";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { getVSCodeApiSelector } from "../../../../selectors/vscodeApiSelector";
 import { IVSCodeObject } from "../../../../store/vscode/vscodeApiReducer";
-import { removeCosmosSelectionAction } from "../../../../store/azure/cosmosDb/action";
+import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
 
 interface IProps {
   cosmosSelection: ICosmosDB;

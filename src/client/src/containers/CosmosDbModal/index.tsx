@@ -13,11 +13,11 @@ import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { ISelectedCosmosService } from "../../store/selection/services/cosmosDbReducer";
-import { getCosmosDbSelectionSelector } from "../../store/azure/cosmosServiceSelector";
+import { getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosServiceSelector";
 import classNames from "classnames";
 import { useState } from "react";
 import { closeModalAction } from "../../store/modals/action";
-import { saveCosmosDbSettingsAction } from "../../store/azure/cosmosDb/action";
+import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
 
 interface IStateProps {
   isModalOpen: boolean;

@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import { AppState } from "../store/combineReducers";
 import { ServiceState } from "../store/selection/services";
 import { isAppServiceSelectedSelector } from "./appServiceSelector";
-import { isCosmosResourceCreatedSelector } from "../store/azure/cosmosServiceSelector";
+import { isCosmosResourceCreatedSelector } from "../store/azureProfileData/cosmosServiceSelector";
 
 const getState = (state: AppState): AppState => state;
 

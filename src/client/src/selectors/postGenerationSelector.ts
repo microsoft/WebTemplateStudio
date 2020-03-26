@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import { FormattedMessage } from "react-intl";
 
 import { IServiceStatus } from "../store/generationStatus/statusReducer";
-import { isCosmosResourceCreatedSelector } from "../store/azure/cosmosServiceSelector";
+import { isCosmosResourceCreatedSelector } from "../store/azureProfileData/cosmosServiceSelector";
 import { isAppServiceSelectedSelector } from "./appServiceSelector";
 import { AppState } from "../store/combineReducers";
 import { azureMessages } from "../mockData/azureServiceOptions";
