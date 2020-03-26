@@ -1,11 +1,11 @@
 import { createSelector } from "reselect";
 import { FormattedMessage } from "react-intl";
 
-import { IServiceStatus } from "../store/generationStatus/statusReducer";
-import { isCosmosResourceCreatedSelector } from "../store/azureProfileData/cosmosDb/cosmosServiceSelector";
-import { isAppServiceSelectedSelector } from "../store/azureProfileData/appService/appServiceSelector";
-import { AppState } from "../store/combineReducers";
-import { azureMessages } from "../mockData/azureServiceOptions";
+import { IServiceStatus } from "./statusReducer";
+import { isCosmosResourceCreatedSelector } from "../azureProfileData/cosmosDb/cosmosServiceSelector";
+import { isAppServiceSelectedSelector } from "../azureProfileData/appService/appServiceSelector";
+import { AppState } from "../combineReducers";
+import { azureMessages } from "../../mockData/azureServiceOptions";
 
 const getGenerationStatusSelector = (state: AppState) =>
   state.generationStatus.genStatus;
