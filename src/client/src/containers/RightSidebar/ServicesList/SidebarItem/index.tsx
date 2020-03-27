@@ -10,7 +10,7 @@ import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../../../store/combineReducers";
 import messages from "./messages";
 import { getValidations } from "../../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
-import { IValidations } from "../../../../store/selection/validations/setValidationsReducer";
+import { IValidations } from "../../../../store/selection/validations/model";
 
 const CosmosDBIcon = Loadable({
   loader: () => import(/* webpackChunkName: "CosmosdbIcon" */  "../../../../utils/svgComponents/CosmosdbIcon"),

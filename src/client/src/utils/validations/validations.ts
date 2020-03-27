@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { validationMessages } from './messages';
 
 import {projectPathValidation} from "../extensionService/extensionService";
-import { IRegex } from "../../store/selection/validations/setValidationsReducer";
+import { IRegex } from "../../store/selection/validations/model";
 
 export interface IValidation {
   isValid: boolean;

@@ -1,7 +1,7 @@
 import { ROUTES } from "../../../utils/constants";
 import { createSelector } from "reselect";
 import { AppState } from "../../combineReducers";
-import { IRoutes } from "../../selection/pages/visitedAndSetPageReducer";
+import { IRoutes } from "../../selection/pages/model";
 
 export interface IVisitedPages {
   showFrameworks: boolean;

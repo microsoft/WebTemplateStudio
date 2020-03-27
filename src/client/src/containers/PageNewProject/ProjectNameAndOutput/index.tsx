@@ -37,7 +37,7 @@ import messages from "./messages";
 import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
 import { setProjectPathValidationAction } from "../../../store/selection/validations/action";
 import { setProjectNameAction, setOutputPathAction } from "../../../store/selection/app/action";
-import { IValidations } from "../../../store/selection/validations/setValidationsReducer";
+import { IValidations } from "../../../store/selection/validations/model";
 
 interface IStateProps {
   vscode: IVSCodeObject;
