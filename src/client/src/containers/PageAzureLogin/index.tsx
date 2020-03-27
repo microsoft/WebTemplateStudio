@@ -11,18 +11,18 @@ import {
   ROUTES
 } from "../../utils/constants";
 
-import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
 import { IOption } from "../../types/option";
 import { azureMessages } from "../../mockData/azureServiceOptions";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import AzureSubscriptions from "./AzureSubscriptions";
 import AzureStudent from "./AzureStudent";
 import Title from "../../components/Title";
-import RootAction from "../../actions/ActionType";
+import RootAction from "../../store/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
-import { startLogOutAzure } from "../../actions/azureActions/logOutAzure";
+import { setDetailPageAction } from "../../store/wizardContent/pages/action";
+import { startLogOutAzureAction } from "../../store/azureProfileData/login/action";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
@@ -121,7 +121,7 @@ const mapDispatchToProps = (
     dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));
   },
   startLogOutToAzure: () => {
-    dispatch(startLogOutAzure());
+    dispatch(startLogOutAzureAction());
   },
 });
 

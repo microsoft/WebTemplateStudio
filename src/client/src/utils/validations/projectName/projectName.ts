@@ -1,8 +1,8 @@
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
-import { IprojectNameValidationConfig } from "../../../reducers/wizardSelectionReducers/setValidations";
-import { addExistingProjectNameValidate, addRegexValidate, addRequiredValidate, 
+import { IVSCodeObject } from "../../../store/vscode/model";
+import { addExistingProjectNameValidate, addRegexValidate, addRequiredValidate,
   addReservedNameValidate, IValidation} from '../validations';
 import { validationMessages } from '../messages';
+import { IprojectNameValidationConfig } from "../../../store/selection/validations/model";
 
 
 export const validateProjectName = async (projectName: string, outputPath: string,

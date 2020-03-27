@@ -4,22 +4,22 @@ import { connect } from "react-redux";
 
 import SidebarItem from "../SidebarItem";
 
-import { removeCosmosSelectionAction } from "../../../../actions/azureActions/saveCosmosDbSettings";
-import { ICosmosDB } from "../../../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
+import { ICosmosDB } from "../../../../store/azureProfileData/cosmosDb/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
-import { openCosmosDbModalAction } from "../../../../actions/modalActions/modalActions";
+import { openCosmosDbModalAction } from "../../../../store/modals/action";
 
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../../../reducers";
-import RootAction from "../../../../actions/ActionType";
+import { AppState } from "../../../../store/combineReducers";
+import RootAction from "../../../../store/ActionType";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { getVSCodeApiSelector } from "../../../../selectors/vscodeApiSelector";
-import { IVSCodeObject } from "../../../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../../../store/vscode/vscodeApiSelector";
+import { IVSCodeObject } from "../../../../store/vscode/model";
+import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
 
 interface IProps {
   cosmosSelection: ICosmosDB;

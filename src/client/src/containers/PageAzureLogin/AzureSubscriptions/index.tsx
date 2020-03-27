@@ -6,26 +6,26 @@ import { connect } from "react-redux";
 import Card from "../../../components/Card";
 
 import styles from "./styles.module.css";
-import * as AzureActions from "../../../actions/azureActions/logOutAzure";
-import * as ModalActions from "../../../actions/modalActions/modalActions";
-import { isCosmosDbModalOpenSelector } from "../../../selectors/modalSelector";
+import {startLogOutAzureAction} from "../../../store/azureProfileData/login/action";
+import * as ModalActions from "../../../store/modals/action";
+import { isCosmosDbModalOpenSelector } from "../../../store/modals/selector";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 
 import azureServiceOptions from "../../../mockData/azureServiceOptions";
 import { servicesEnum } from "../../../mockData/azureServiceOptions";
 import { IOption } from "../../../types/option";
-import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
 
 import {
   InjectedIntlProps,
   injectIntl
 } from "react-intl";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../../actions/ActionType";
+import RootAction from "../../../store/ActionType";
 
-import { isAppServiceSelectedSelector } from "../../../selectors/appServiceSelector";
+import { isAppServiceSelectedSelector } from "../../../store/azureProfileData/appService/selector";
 import messages from "./messages";
+import { setDetailPageAction } from "../../../store/wizardContent/pages/action";
 
 interface IDispatchProps {
   startLogOutToAzure: () => any;
@@ -198,7 +198,7 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   startLogOutToAzure: () => {
-    dispatch(AzureActions.startLogOutAzure());
+    dispatch(startLogOutAzureAction());
   },
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;

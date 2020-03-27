@@ -13,45 +13,38 @@ import {
   FRAMEWORK_TYPE
 } from "./utils/constants";
 
-import { getVSCodeApi } from "./actions/vscodeApiActions/getVSCodeApi";
-import { logIntoAzureAction } from "./actions/azureActions/logIntoAzure";
-import {
-  updateOutputPathAction
-} from "./actions/wizardSelectionActions/updateProjectNameAndPath";
-
-import { setValidations } from "./actions/wizardSelectionActions/setValidations";
+import { getVSCodeApi } from "./store/vscode/action";
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
-} from "./actions/wizardInfoActions/updateGenStatusActions";
-import {
-  selectPagesAction
-} from "./actions/wizardSelectionActions/selectPages";
-import { getVersionsDataAction } from "./actions/wizardInfoActions/getVersionData";
+} from "./store/generationStatus/action";
+import { getVersionsDataAction } from "./store/versions/action";
 
 import appStyles from "./appStyles.module.css";
 import { IVersions } from "./types/version";
-import { getVSCodeApiSelector } from "./selectors/vscodeApiSelector";
-import { IVSCodeObject } from "./reducers/vscodeApiReducer";
-import { IServiceStatus } from "./reducers/generationStatus/genStatus";
+import { getVSCodeApiSelector } from "./store/vscode/vscodeApiSelector";
+import { IVSCodeObject } from "./store/vscode/model";
+import { IServiceStatus } from "./store/generationStatus/model";
 import { ISelected } from "./types/selected";
-import { AppState } from "./reducers";
+import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
-import { setPreviewStatusAction } from "./actions/wizardContentActions/setPreviewStatus";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "./actions/ActionType";
-import { getPagesOptionsAction } from "./actions/wizardContentActions/getPagesOptions";
+import RootAction from "./store/ActionType";
 import { getPages, getFrameworks, getUserStatus, getTemplateInfo } from "./utils/extensionService/extensionService";
-
-import { setBackendFrameworksAction } from "./actions/wizardContentActions/setBackendFrameworks";
-import { setFrontendFrameworksAction } from "./actions/wizardContentActions/setFrontendFrameworks";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 
 import Loadable from "react-loadable";
 import PageDetails from "./containers/PageDetails";
-import { MODAL_TYPES } from "./actions/modalActions/typeKeys";
+import { MODAL_TYPES } from "./store/modals/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
+import { setPagesAction } from "./store/selection/pages/action";
+import { setValidationsAction } from "./store/selection/validations/action";
+import { setOutputPathAction } from "./store/selection/app/action";
+import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/wizardContent/frameworks/action";
+import { getPagesOptionsAction } from "./store/wizardContent/pages/action";
+import { setPreviewStatusAction } from "./store/wizardContent/wizardContent/action";
+import { logIntoAzureActionAction } from "./store/azureProfileData/login/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -94,7 +87,7 @@ interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;
   logIntoAzure: (azureProfile: AzureProfile) => void;
-  setValidations: (validations: any) => void;
+  setValidationsAction: (validations: any) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
@@ -170,7 +163,7 @@ const App = (props: Props) => {
         wizardVersion: message.payload.wizardVersion
       };
       props.getVersionsData(versionData);
-      props.setValidations({
+      props.setValidationsAction({
         itemNameValidationConfig:message.payload.itemNameValidationConfig,
         projectNameValidationConfig:message.payload.projectNameValidationConfig
       });
@@ -299,13 +292,13 @@ const mapDispatchToProps = (
     dispatch(getVSCodeApi());
   },
   logIntoAzure: (azureProfile: AzureProfile) => {
-    dispatch(logIntoAzureAction(azureProfile));
+    dispatch(logIntoAzureActionAction(azureProfile));
   },
   updateOutputPath: (outputPath: string) => {
-    dispatch(updateOutputPathAction(outputPath));
+    dispatch(setOutputPathAction(outputPath));
   },
-  setValidations: (validations: any) => {
-    dispatch(setValidations(validations));
+  setValidationsAction: (validations: any) => {
+    dispatch(setValidationsAction(validations));
   },
   updateTemplateGenStatusMessage: (status: string) => {
     dispatch(updateTemplateGenerationStatusMessageAction(status));
@@ -323,7 +316,7 @@ const mapDispatchToProps = (
     dispatch(setPreviewStatusAction(isPreview));
   },
   setPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
+    dispatch(setPagesAction(pages));
   },
   setBackendFrameworks: (frameworks: IOption[]) => {
     dispatch(setBackendFrameworksAction(frameworks));
