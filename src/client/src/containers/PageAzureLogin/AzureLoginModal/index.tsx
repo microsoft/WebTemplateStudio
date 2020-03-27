@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import asModal from "../../../components/Modal";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { closeModalAction } from "../../../actions/modalActions/modalActions";
-import { AppState } from "../../../reducers";
-import RootAction from "../../../actions/ActionType";
-import { isAzureLoginModalOpenSelector } from "../../../selectors/modalSelector";
+import { closeModalAction } from "../../../store/modals/action";
+import { AppState } from "../../../store/combineReducers";
+import RootAction from "../../../store/ActionType";
+import { isAzureLoginModalOpenSelector } from "../../../store/modals/selector";
 import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import classnames from "classnames";
@@ -18,10 +18,10 @@ import { KEY_EVENTS } from "../../../utils/constants";
 import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
 import CollapsibleInfoBox from "../../../components/CollapsibleInfoBox";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
-import * as ModalActions from "../../../actions/modalActions/modalActions";
+import * as ModalActions from "../../../store/modals/action";
 import { ThunkDispatch } from "redux-thunk";
 import { azureLogin } from "../../../utils/extensionService/extensionService";
-import { logIntoAzureAction } from "../../../actions/azureActions/logIntoAzure";
+import { logIntoAzureActionAction } from "../../../store/azureProfileData/login/action";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -189,7 +189,7 @@ const mapDispatchToProps = (
     dispatch(ModalActions.openAppServiceModalAction());
   },
   logIntoAzure: (loginData: AzureProfile) => {	
-    dispatch(logIntoAzureAction(loginData));	
+    dispatch(logIntoAzureActionAction(loginData));	
   },
 });
 

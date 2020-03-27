@@ -1,15 +1,15 @@
 import { IOption } from "../../../types/option";
 
 import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../../reducers";
-import RootAction from "../../../actions/ActionType";
+import { AppState } from "../../../store/combineReducers";
+import RootAction from "../../../store/ActionType";
 import { IDispatchProps, IStateProps } from "./interfaces";
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { setSelectedFrontendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedFrontendFramework";
-import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedBackEndFramework";
+import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
+
 import { ISelected } from "../../../types/selected";
-import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
-import { updateFrameworks } from "../../../actions/wizardContentActions/updateFrameworks";
+import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
+import { updateFrameworksAction } from "../../../store/wizardContent/frameworks/action";
+import { setDetailPageAction } from "../../../store/wizardContent/pages/action";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
@@ -24,7 +24,7 @@ const mapDispatchToProps = (
     dispatch(setDetailPageAction(detailPageInfo));
   },
   updateFrameworks: (frameworks: IOption[]) => {
-    dispatch(updateFrameworks(frameworks));
+    dispatch(updateFrameworksAction(frameworks));
   }
 });
 

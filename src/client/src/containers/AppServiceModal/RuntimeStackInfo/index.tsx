@@ -2,7 +2,7 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 import messages from "./messages";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 

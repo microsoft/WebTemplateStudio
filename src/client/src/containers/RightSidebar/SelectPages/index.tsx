@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
 import { injectIntl, InjectedIntl } from "react-intl";
 import PageContainer from "./PageContainer";
-
-import { selectPagesAction, resetPagesAction } from "../../../actions/wizardSelectionActions/selectPages";
-import * as ModalActions from "../../../actions/modalActions/modalActions";
+import * as ModalActions from "../../../store/modals/action";
 import { ISelected } from "../../../types/selected";
 
 import { ReactComponent as ShowIcon } from "../../../assets/i-show.svg";
@@ -15,14 +13,15 @@ import { ReactComponent as ResetIcon } from "../../../assets/i-reset.svg";
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
 
 import styles from "./styles.module.css";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 
 import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_COMMANDS, BOOTSTRAP_LICENSE, ROUTES } from "../../../utils/constants";
 import messages from "./messages";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
+import { IVSCodeObject } from "../../../store/vscode/model";
+import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
 import { sendTelemetry, resetAllPages } from "../../../utils/extensionService/extensionService";
-import { SelectionState } from "../../../reducers/wizardSelectionReducers";
+import { SelectionState } from "../../../store/selection/combineReducers";
+import { resetPagesAction, setPagesAction } from "../../../store/selection/pages/action";
 
 interface IStateProps {
   pathname: string;
@@ -70,7 +69,7 @@ const SelectPages = (props: Props) => {
           author: "Microsoft"
         }
       ];
-      dispatch(selectPagesAction(PAGES_SELECTION));
+      dispatch(setPagesAction(PAGES_SELECTION));
     });
   };
 
@@ -83,7 +82,7 @@ const SelectPages = (props: Props) => {
     oldIndex: number;
     newIndex: number;
   }) => {
-    dispatch(selectPagesAction(arrayMove(selectedPages, oldIndex, newIndex)));
+    dispatch(setPagesAction(arrayMove(selectedPages, oldIndex, newIndex)));
   };
   const DRAG_PIXEL_THRESHOLD = 1;
   return (

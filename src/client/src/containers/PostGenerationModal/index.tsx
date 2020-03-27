@@ -13,8 +13,9 @@ import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import * as PostGenSelectors from "../../selectors/postGenerationSelector";
-import { isPostGenModalOpenSelector } from "../../selectors/modalSelector";
+import * as PostGenSelectors from "../../store/generationStatus/selector";
+import {IAzureServiceStatus} from "../../store/generationStatus/model";
+import { isPostGenModalOpenSelector } from "../../store/modals/selector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
@@ -23,18 +24,18 @@ import {
   WEB_TEMPLATE_STUDIO_LINKS,
   TELEMETRY
 } from "../../utils/constants";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
+import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
+import { IVSCodeObject } from "../../store/vscode/model";
 
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getOutputPath, getProjectName } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { getOutputPath, getProjectName } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
-import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
+import { MODAL_TYPES } from "../../store/modals/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
-import { resetWizardAction } from "../../actions/wizardInfoActions/resetWizardAction";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
+import { resetWizardAction } from "../../store/wizardContent/wizardContent/action";
 interface LinksDict {
   [serviceId: string]: string;
 }
@@ -51,7 +52,7 @@ interface IStateProps {
   isServicesDeployed: boolean;
   templateGenStatus: string;
   isModalOpen: boolean;
-  serviceStatus: PostGenSelectors.IAzureServiceStatus;
+  serviceStatus: IAzureServiceStatus;
   isServicesSelected: boolean;
   vscode: IVSCodeObject;
   outputPath: string;

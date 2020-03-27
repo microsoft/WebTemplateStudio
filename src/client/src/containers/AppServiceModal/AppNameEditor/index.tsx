@@ -3,13 +3,13 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import messages from "./messages";
-import { getProjectName } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { getProjectName } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
 import { ValidateAppServiceName, GetValidAppServiceName } from "../../../utils/extensionService/extensionService";
 import { useSelector } from "react-redux";
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { AppState } from "../../../reducers";
+import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
+import { AppState } from "../../../store/combineReducers";
 
 let timeout: NodeJS.Timeout | undefined;
 let validationAppServiceNameScopeId = 0;
