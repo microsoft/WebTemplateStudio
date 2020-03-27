@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import styles from "./styles.module.css";
-import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
+import { IVSCodeObject } from "../../store/vscode/model";
 import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
 
 import { injectIntl } from "react-intl";

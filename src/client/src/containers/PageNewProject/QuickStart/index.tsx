@@ -10,7 +10,7 @@ import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
 import { isEnableNextPage } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 import { AppState } from "../../../store/combineReducers";
-import { IVSCodeObject } from "../../../store/vscode/vscodeApiReducer";
+import { IVSCodeObject } from "../../../store/vscode/model";
 import { ISelected } from "../../../types/selected";
 
 import { ReactComponent as QuickStartWand } from "../../../assets/quickStartWand.svg";

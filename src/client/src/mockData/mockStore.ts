@@ -1,5 +1,5 @@
 import { ISelected } from "../types/selected";
-import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../store/vscode/vscodeApiReducer";
+import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../store/vscode/model";
 import mockVsCodeApi from "./mockVsCodeApi";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";

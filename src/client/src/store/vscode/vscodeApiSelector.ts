@@ -1,4 +1,4 @@
-import { IVSCodeObject } from "./vscodeApiReducer";
+import { IVSCodeObject } from "./model";
 import { IVersions } from "../../types/version";
 import { AppState } from "../combineReducers";
 

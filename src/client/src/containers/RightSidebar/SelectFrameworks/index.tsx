@@ -6,7 +6,7 @@ import messages from "../strings";
 import { ISelected } from "../../../types/selected";
 import Dropdown from "../../../components/Dropdown";
 import { AppState } from "../../../store/combineReducers";
-import { SelectionState } from "../../../store/selection/reducer";
+import { SelectionState } from "../../../store/selection/combineReducers";
 import { IOption } from "../../../types/option";
 import { WizardContentType } from "../../../store/wizardContent/wizardContent/combineReducers";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";

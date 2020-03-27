@@ -25,7 +25,7 @@ import {
   TELEMETRY
 } from "../../utils/constants";
 import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
-import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
+import { IVSCodeObject } from "../../store/vscode/model";
 
 import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";

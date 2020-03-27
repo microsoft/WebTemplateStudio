@@ -15,7 +15,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../../../store/combineReducers";
 import RootAction from "../../../../store/ActionType";
-import { IVSCodeObject } from "../../../../store/vscode/vscodeApiReducer";
+import { IVSCodeObject } from "../../../../store/vscode/model";
 import { getVSCodeApiSelector } from "../../../../store/vscode/vscodeApiSelector";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { removeAppServiceSettingsAction } from "../../../../store/azureProfileData/appService/action";

@@ -9,7 +9,7 @@ import {
   COSMOS_APIS
 } from "../../../utils/constants";
 import { AppState } from "../../combineReducers";
-import { SelectionState } from "../reducer";
+import { SelectionState } from "../combineReducers";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {
   [COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,

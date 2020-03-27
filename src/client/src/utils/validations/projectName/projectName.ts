@@ -1,5 +1,5 @@
-import { IVSCodeObject } from "../../../store/vscode/vscodeApiReducer";
-import { addExistingProjectNameValidate, addRegexValidate, addRequiredValidate, 
+import { IVSCodeObject } from "../../../store/vscode/model";
+import { addExistingProjectNameValidate, addRegexValidate, addRequiredValidate,
   addReservedNameValidate, IValidation} from '../validations';
 import { validationMessages } from '../messages';
 import { IprojectNameValidationConfig } from "../../../store/selection/validations/model";

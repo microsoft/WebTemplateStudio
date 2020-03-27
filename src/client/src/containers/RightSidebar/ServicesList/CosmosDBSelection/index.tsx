@@ -18,7 +18,7 @@ import { AppState } from "../../../../store/combineReducers";
 import RootAction from "../../../../store/ActionType";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { getVSCodeApiSelector } from "../../../../store/vscode/vscodeApiSelector";
-import { IVSCodeObject } from "../../../../store/vscode/vscodeApiReducer";
+import { IVSCodeObject } from "../../../../store/vscode/model";
 import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
 
 interface IProps {

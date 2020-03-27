@@ -1,5 +1,5 @@
 import { IOption } from "../../types/option";
-import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
+import { IVSCodeObject } from "../../store/vscode/model";
 
 interface IDispatchProps {
   updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;

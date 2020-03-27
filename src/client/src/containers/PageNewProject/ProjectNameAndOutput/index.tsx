@@ -12,7 +12,7 @@ import {
   getValidations
 } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 
-import { IVSCodeObject } from "../../../store/vscode/vscodeApiReducer";
+import { IVSCodeObject } from "../../../store/vscode/model";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,

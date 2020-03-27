@@ -1,20 +1,7 @@
 import { VSCODE_TYPEKEYS } from "./typeKeys";
 import { PRODUCTION } from "../../utils/constants";
 import mockVsCodeApi from "../../mockData/mockVsCodeApi";
-import { IVSCodeAPIActionType } from "./model";
-
-export interface IVSCode {
-  vscode: IVSCodeAPI;
-}
-
-export interface IVSCodeObject {
-  postMessage: (message: any) => void;
-}
-
-export interface IVSCodeAPI {
-  isVsCodeApiAcquired: boolean;
-  vscodeObject: IVSCodeObject;
-}
+import { IVSCodeAPIActionType, IVSCodeAPI } from "./model";
 
 function vscodeApi(
   state: IVSCodeAPI = {

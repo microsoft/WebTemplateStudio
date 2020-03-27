@@ -1,15 +1,6 @@
 import { IVersions } from "../../types/version";
 import { WIZARD_INFO_TYPEKEYS } from "../wizardContent/typeKeys";
 
-/* State Shape
-{
-    {
-        templatesVersion: string,
-        wizardVersion: string
-    }
-}
-*/
-
 const initialState = {
   templatesVersion: "",
   wizardVersion: ""

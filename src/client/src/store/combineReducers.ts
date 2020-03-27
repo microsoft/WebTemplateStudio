@@ -6,8 +6,8 @@ import modals from "./modals/combineReducers";
 import wizardContent from "./wizardContent/wizardContent/combineReducers";
 import wizardRoutes from "./selection/pages/combineReducers";
 import vscodeApi from "./vscode/vscodeApiReducer";
-import selection from "./selection/reducer";
-import versions from "./versions/versionsReducer";
+import selection from "./selection/combineReducers";
+import versions from "./versions/reducer";
 import RootAction from "./ActionType";
 import { WIZARD_INFO_TYPEKEYS } from "./wizardContent/typeKeys";
 
