@@ -2,12 +2,6 @@ import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 import { ISelected } from "../../../types/selected";
 import WizardSelectionActionType from "../selectionActionType";
 
-/* State Shape
-{
-    backendFramework: ISelected
-}
-*/
-
 const initialState = {
   title: "",
   internalName: "",

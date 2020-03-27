@@ -1,11 +1,6 @@
-import { IValidation } from "../../../utils/validations/validations";
 import WizardSelectionActionType from "../selectionActionType";
 import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
-
-export interface IOutputPath {
-  outputPath: string;
-  validation?: IValidation;
-}
+import { IOutputPath } from "./model";
 
 const initialState = {
   outputPath: "",

@@ -26,3 +26,8 @@ export interface IProjectName {
   projectName: string;
   validation: IValidation;
 }
+
+export interface IOutputPath {
+  outputPath: string;
+  validation?: IValidation;
+}

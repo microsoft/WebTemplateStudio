@@ -2,12 +2,6 @@ import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 import { ISelected } from "../../../types/selected";
 import WizardSelectionActionType from "../selectionActionType";
 
-/* State Shape
-{
-    frontendFramework: ""
-}
-*/
-
 const initialState = {
   title: "",
   internalName: "",
@@ -15,7 +9,6 @@ const initialState = {
   author: ""
 };
 
-// TODO: Default state to remove once API is hooked up
 const frontendFramework = (
   state: ISelected = initialState,
   action: WizardSelectionActionType

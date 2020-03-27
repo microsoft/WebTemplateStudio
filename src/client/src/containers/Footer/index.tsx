@@ -17,7 +17,7 @@ import {
 import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
 import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
 
-import { rootSelector } from "../../store/selection/app/generationSelector";
+import { rootSelector } from "../../store/selection/app/selector";
 import {
   getCosmosDbSelectionSelector,
   isCosmosResourceCreatedSelector
