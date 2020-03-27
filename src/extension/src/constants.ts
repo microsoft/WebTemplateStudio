@@ -445,9 +445,3 @@ export enum OS {
   Linux = "linux",
   Windows = "windows"
 }
-
-export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
-  Node: "node|10.14",
-  Flask: "python|3.7",
-  Moleculer: "node|10.14"
-};

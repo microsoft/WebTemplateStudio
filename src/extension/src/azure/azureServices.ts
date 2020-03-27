@@ -8,7 +8,6 @@ import {
   AzureResourceType,
   DialogMessages,
   DialogResponses,
-  BackendFrameworkLinuxVersion,
 } from "../constants";
 import { SubscriptionError, ValidationError } from "../errors";
 import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-group/resourceGroupModule";
@@ -143,7 +142,7 @@ export class AzureServices {
       appServicePlanName: aspName,
       tier: appServicePlan.tier,
       sku: appServicePlan.name,
-      linuxFxVersion: BackendFrameworkLinuxVersion[payload.engine.backendFramework],
+      linuxFxVersion: payload.engine.backendFrameworkLinuxVersion,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
     };
 
