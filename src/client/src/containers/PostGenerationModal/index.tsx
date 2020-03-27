@@ -14,6 +14,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
 import * as PostGenSelectors from "../../store/generationStatus/selector";
+import {IAzureServiceStatus} from "../../store/generationStatus/model";
 import { isPostGenModalOpenSelector } from "../../store/modals/selector";
 import {
   EXTENSION_COMMANDS,
@@ -51,7 +52,7 @@ interface IStateProps {
   isServicesDeployed: boolean;
   templateGenStatus: string;
   isModalOpen: boolean;
-  serviceStatus: PostGenSelectors.IAzureServiceStatus;
+  serviceStatus: IAzureServiceStatus;
   isServicesSelected: boolean;
   vscode: IVSCodeObject;
   outputPath: string;

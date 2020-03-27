@@ -1,4 +1,5 @@
 import { WIZARD_INFO_TYPEKEYS } from "../wizardContent/typeKeys";
+import { FormattedMessage } from "react-intl";
 
 export interface IUpdateGenStatusMessageAction {
   type: WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS_MESSAGE;
@@ -17,4 +18,17 @@ export interface IStatus {
 
 export interface IServiceStatus {
   [key: string]: IStatus;
+}
+
+export interface IDeployStatus {
+  title: FormattedMessage.MessageDescriptor;
+  isSelected: boolean;
+  isDeployed: boolean;
+  isFailed: boolean;
+}
+
+export interface IAzureServiceStatus {
+  [key: string]: IDeployStatus;
+  cosmosdb: IDeployStatus;
+  appService: IDeployStatus;
 }

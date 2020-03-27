@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { FormattedMessage } from "react-intl";
 
-import { IServiceStatus } from "./model";
+import { IServiceStatus, IAzureServiceStatus } from "./model";
 import { isCosmosResourceCreatedSelector } from "../azureProfileData/cosmosDb/selector";
 import { isAppServiceSelectedSelector } from "../azureProfileData/appService/selector";
 import { AppState } from "../combineReducers";
@@ -55,19 +55,6 @@ const isTemplatesFailedSelector = createSelector(
   getGenerationStatusSelector,
   isTemplatesFailed
 );
-
-export interface IDeployStatus {
-  title: FormattedMessage.MessageDescriptor;
-  isSelected: boolean;
-  isDeployed: boolean;
-  isFailed: boolean;
-}
-
-export interface IAzureServiceStatus {
-  [key: string]: IDeployStatus;
-  cosmosdb: IDeployStatus;
-  appService: IDeployStatus;
-}
 
 const servicesToDeploy = (
   isCosmosSelected: boolean,
