@@ -39,7 +39,7 @@ import { MODAL_TYPES } from "./store/modals/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setPagesAction } from "./store/selection/pages/action";
-import { setValidations } from "./store/selection/validations/action";
+import { setValidationsAction } from "./store/selection/validations/action";
 import { setOutputPathAction } from "./store/selection/app/action";
 import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/wizardContent/frameworks/action";
 import { getPagesOptionsAction } from "./store/wizardContent/pages/action";
@@ -87,7 +87,7 @@ interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
   getVSCodeApi: () => void;
   logIntoAzure: (azureProfile: AzureProfile) => void;
-  setValidations: (validations: any) => void;
+  setValidationsAction: (validations: any) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
   updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
@@ -163,7 +163,7 @@ const App = (props: Props) => {
         wizardVersion: message.payload.wizardVersion
       };
       props.getVersionsData(versionData);
-      props.setValidations({
+      props.setValidationsAction({
         itemNameValidationConfig:message.payload.itemNameValidationConfig,
         projectNameValidationConfig:message.payload.projectNameValidationConfig
       });
@@ -297,8 +297,8 @@ const mapDispatchToProps = (
   updateOutputPath: (outputPath: string) => {
     dispatch(setOutputPathAction(outputPath));
   },
-  setValidations: (validations: any) => {
-    dispatch(setValidations(validations));
+  setValidationsAction: (validations: any) => {
+    dispatch(setValidationsAction(validations));
   },
   updateTemplateGenStatusMessage: (status: string) => {
     dispatch(updateTemplateGenerationStatusMessageAction(status));

@@ -35,7 +35,7 @@ import { IValidation} from "../../../utils/validations/validations";
 import { inferProjectName} from "../../../utils/infer/projectName";
 import messages from "./messages";
 import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
-import { setProjectPathValidation } from "../../../store/selection/validations/action";
+import { setProjectPathValidationAction } from "../../../store/selection/validations/action";
 import { setProjectNameAction, setOutputPathAction } from "../../../store/selection/app/action";
 import { IValidations } from "../../../store/selection/validations/setValidations";
 
@@ -51,7 +51,7 @@ interface IStateProps {
 interface IDispatchProps {
   updateProjectName: (projectName: string, validation: any) => any;
   updateOutputPath: (outputPath: string) => any;
-  setProjectPathValidation: (validation: any) => void;
+  setProjectPathValidationAction: (validation: any) => void;
 }
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
@@ -65,7 +65,7 @@ const ProjectNameAndOutput = (props: Props) => {
     validations,
     updateProjectName,
     updateOutputPath,
-    setProjectPathValidation,
+    setProjectPathValidationAction,
     projectNameValidation
   } = props;
 
@@ -95,7 +95,7 @@ const ProjectNameAndOutput = (props: Props) => {
     });
 
     if (projectNameToSet!==""){
-      setProjectPathValidation({isValid: true});
+      setProjectPathValidationAction({isValid: true});
     }
   }
   const handleProjectNameChange = (
@@ -168,8 +168,8 @@ const mapDispatchToProps = (
   updateOutputPath: (outputPath: string) => {
     dispatch(setOutputPathAction(outputPath));
   },
-  setProjectPathValidation: (validation: any) => {
-    dispatch(setProjectPathValidation(validation));
+  setProjectPathValidationAction: (validation: any) => {
+    dispatch(setProjectPathValidationAction(validation));
   }
 });
 
