@@ -6,7 +6,7 @@ import { IValidation } from "../../../../utils/validations/validations";
 import { AppState } from "../../../combineReducers";
 import { SelectionState } from "../../reducer";
 import { ROUTES } from "../../../../utils/constants";
-import { IValidations } from "../../validations/setValidations";
+import { IValidations } from "../../validations/setValidationsReducer";
 
 const getWizardSelectionsSelector = (state: AppState): SelectionState =>
   state.selection;

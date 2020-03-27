@@ -14,3 +14,7 @@ export interface IsetPagesAction {
   export interface IResetPagesAction {
     type: WIZARD_SELECTION_TYPEKEYS.RESET_PAGES;
   }
+
+  export interface IRoutes {
+    [key: string]: boolean;
+  }

@@ -2,12 +2,6 @@ import WizardSelectionActionType from "../selectionActionType";
 import { ISelected } from "../../../types/selected";
 import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 
-/* State Shape
-{
-    pages: ISelected[]
-}
-*/
-
 const pagesReducer = (
   state: ISelected[] = [],
   action: WizardSelectionActionType

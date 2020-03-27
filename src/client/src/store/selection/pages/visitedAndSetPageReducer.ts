@@ -1,10 +1,7 @@
 import { ROUTES } from "../../../utils/constants";
 import { WIZARD_INFO_TYPEKEYS } from "../../wizardContent/typeKeys";
 import WizardInfoType from "../../wizardContent/wizardInfoActionType";
-
-export interface IRoutes {
-  [key: string]: boolean;
-}
+import { IRoutes } from "./model";
 
 const initialState = {
   [ROUTES.NEW_PROJECT]: true,

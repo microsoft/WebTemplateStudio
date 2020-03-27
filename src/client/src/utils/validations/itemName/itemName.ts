@@ -1,7 +1,7 @@
 import { addExistingItemNameValidate, addRegexValidate, addRequiredValidate, addReservedNameValidate, IValidation} from '../validations';
 import { validationMessages } from '../messages';
 import { ISelected } from "../../../types/selected";
-import { IitemNameValidationConfig } from '../../../store/selection/validations/setValidations';
+import { IitemNameValidationConfig } from '../../../store/selection/validations/setValidationsReducer';
 
 export const validateItemName = async (itemName: string,
   validations: IitemNameValidationConfig,
