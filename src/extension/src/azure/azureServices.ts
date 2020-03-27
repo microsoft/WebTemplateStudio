@@ -86,11 +86,15 @@ export class AzureServices {
 
   public static async generateDistinctResourceGroupSelections(payload: any): Promise<ResourceGroupSelection[]> {
     const projectName = payload.engine.projectName;
-    const allSubscriptions: SubscriptionItem[] = [];
-
-    const cosmosSubscription = AzureServices.getSubscription(payload.cosmos.subscription);
-    const appserviceSubscription = AzureServices.getSubscription(payload.appService.subscription);
-    allSubscriptions.push(cosmosSubscription, appserviceSubscription);
+    const allSubscriptions: SubscriptionItem[] = [];    
+    if (payload.selectedCosmos) {
+      const cosmosSubscription = AzureServices.getSubscription(payload.cosmos.subscription);    
+      allSubscriptions.push(cosmosSubscription);
+    }
+    if (payload.selectedAppService) {
+      const appserviceSubscription = AzureServices.getSubscription(payload.appService.subscription);
+      allSubscriptions.push(appserviceSubscription);
+    }
     const allDistinctSubscriptions: SubscriptionItem[] = [...new Set(allSubscriptions)];
 
     const generatedName: string = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
