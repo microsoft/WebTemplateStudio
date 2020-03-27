@@ -44,7 +44,7 @@ import { setOutputPathAction } from "./store/selection/app/action";
 import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/wizardContent/frameworks/action";
 import { getPagesOptionsAction } from "./store/wizardContent/pages/action";
 import { setPreviewStatusAction } from "./store/wizardContent/wizardContent/action";
-import { logIntoAzureAction } from "./store/azureProfileData/login/action";
+import { logIntoAzureActionAction } from "./store/azureProfileData/login/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -292,7 +292,7 @@ const mapDispatchToProps = (
     dispatch(getVSCodeApi());
   },
   logIntoAzure: (azureProfile: AzureProfile) => {
-    dispatch(logIntoAzureAction(azureProfile));
+    dispatch(logIntoAzureActionAction(azureProfile));
   },
   updateOutputPath: (outputPath: string) => {
     dispatch(setOutputPathAction(outputPath));

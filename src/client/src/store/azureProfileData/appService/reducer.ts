@@ -3,9 +3,9 @@ import messages from "../../selection/app/wizardSelectionSelector/messages";
 import AzureActionType from "../azureActionType";
 import { WIZARD_INFO_TYPEKEYS } from "../../wizardContent/typeKeys";
 import WizardInfoType from "../../wizardContent/wizardInfoActionType";
-import { IAppServiceReducer } from "./model";
+import { IAppService } from "./model";
 
-const initialState: IAppServiceReducer = {
+const initialState: IAppService = {
   siteNameAvailability: {
     isSiteNameAvailable: false,
     message: "App name unavailable"
@@ -17,7 +17,7 @@ const initialState: IAppServiceReducer = {
 };
 
 const appServiceReducer = (
-  state: IAppServiceReducer = initialState,
+  state: IAppService = initialState,
   action: AzureActionType | WizardInfoType
 ) => {
   switch (action.type) {

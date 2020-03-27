@@ -21,7 +21,7 @@ import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 import * as ModalActions from "../../../store/modals/action";
 import { ThunkDispatch } from "redux-thunk";
 import { azureLogin } from "../../../utils/extensionService/extensionService";
-import { logIntoAzureAction } from "../../../store/azureProfileData/login/action";
+import { logIntoAzureActionAction } from "../../../store/azureProfileData/login/action";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -189,7 +189,7 @@ const mapDispatchToProps = (
     dispatch(ModalActions.openAppServiceModalAction());
   },
   logIntoAzure: (loginData: AzureProfile) => {	
-    dispatch(logIntoAzureAction(loginData));	
+    dispatch(logIntoAzureActionAction(loginData));	
   },
 });
 

@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 export interface ISaveAppServiceSettingsAction {
   type: AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS;
-  payload: ISelectedAppServiceReducer;
+  payload: ISelectedAppService;
 }
 
 export interface IRemoveAppServiceSettingsAction {
@@ -16,24 +16,24 @@ export interface ISetAppServiceSiteNameAvailabilityAction {
   payload: IAvailabilityFromExtensionAction;
 }
 
-export interface IAvailabilityReducer {
+export interface IAvailability {
   isSiteNameAvailable: boolean;
   message: string;
 }
 
-export interface ISelectedAppServiceReducer {
+export interface ISelectedAppService {
   subscription: string;
   resourceGroup: string;
   siteName: string;
   internalName: string;
 }
 
-interface IServiceContentReducer {
+interface IServiceContent {
   serviceType: FormattedMessage.MessageDescriptor;
 }
 
-export interface IAppServiceReducer {
-  siteNameAvailability: IAvailabilityReducer;
-  selection: ISelectedAppServiceReducer | null;
-  wizardContent: IServiceContentReducer;
+export interface IAppService {
+  siteNameAvailability: IAvailability;
+  selection: ISelectedAppService | null;
+  wizardContent: IServiceContent;
 }

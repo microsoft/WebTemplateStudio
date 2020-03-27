@@ -13,7 +13,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
-import { ISelectedAppServiceReducer } from "../../store/azureProfileData/appService/model";
+import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
 import { getAppServiceSelectionSelector } from "../../store/azureProfileData/appService/selector";
 import classNames from "classnames";
 import { useState } from "react";
@@ -58,7 +58,7 @@ const AppServiceModal = ({ intl }: Props) => {
   };
 
   const saveAppServiceSelection = (): void => {
-    const appServiceSelection: ISelectedAppServiceReducer = {
+    const appServiceSelection: ISelectedAppService = {
       subscription,
       resourceGroup: "",
       siteName: appName,

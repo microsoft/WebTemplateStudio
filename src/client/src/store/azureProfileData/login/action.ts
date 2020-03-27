@@ -1,24 +1,23 @@
-import { IsLoggedIntoAzure, ILoginToAzure, ILogout } from "./model";
+import { IsLoggedIntoAzureAction, ILoginToAzure, ILogoutAction } from "./model";
 import { AZURE_TYPEKEYS } from "../typeKeys";
 import { Dispatch } from "react";
-import login from "../../../mockData/login";
 import logout from "../../../mockData/logout";
 
-export const isLoggedIntoAzureAction = (): IsLoggedIntoAzure => ({
+export const IsLoggedIntoAzureActionAction = (): IsLoggedIntoAzureAction => ({
   type: AZURE_TYPEKEYS.IS_LOGGED_IN_TO_AZURE
 });
 
-export const logIntoAzureAction = (loginData: AzureProfile): ILoginToAzure => ({
+export const logIntoAzureActionAction = (loginData: AzureProfile): ILoginToAzure => ({
   type: AZURE_TYPEKEYS.LOG_IN_TO_AZURE,
   payload: loginData
 });
 
-export const logOutAzureAction = (): ILogout => ({
+export const logOutAzureAction = (): ILogoutAction => ({
   type: AZURE_TYPEKEYS.LOG_OUT_OF_AZURE
 });
 
 export const startLogOutAzure = () => {
-  return async (dispatch: Dispatch<ILogout>) => {
+  return async (dispatch: Dispatch<ILogoutAction>) => {
     // Can dispatch a spinner here until login completes
     try {
       const loginData = await logout();

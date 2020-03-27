@@ -2,7 +2,7 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { AppState } from "../../combineReducers";
 import { ServiceState } from "..";
-import { ISelectedAppServiceReducer } from "./model";
+import { ISelectedAppService } from "./model";
 
 const getServices = (state: AppState): ServiceState =>
   state.selection.services;
@@ -19,7 +19,7 @@ const isAppServiceSelectedSelector = createSelector(
 const getAppServiceOptions = (
   services: ServiceState,
   isAppServiceSelected: boolean
-): ISelectedAppServiceReducer | null => {
+): ISelectedAppService | null => {
   if (isAppServiceSelected) {
     return services.appService.selection;
   } else {

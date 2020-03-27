@@ -15,7 +15,7 @@ import {
 } from "../../utils/constants";
 
 import { IVSCodeObject } from "../../store/vscode/vscodeApiReducer";
-import { ISelectedAppServiceReducer } from "../../store/azureProfileData/appService/model";
+import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
 
 import { rootSelector } from "../../store/selection/app/generationSelector";
 import {
@@ -64,7 +64,7 @@ interface IStateProps {
   selectedCosmos: boolean;
   cosmos: any;
   selectedAppService: boolean;
-  appService: ISelectedAppServiceReducer | null;
+  appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
   isEnableNextPage: boolean;
 }

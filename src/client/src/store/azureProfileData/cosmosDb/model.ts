@@ -17,16 +17,16 @@ export interface ISetCosmosAccountNameAvailabilityAction {
   payload: IAvailabilityFromExtensionAction;
 }
 
-export interface IAvailabilityCosmosDbReducer {
+interface IAvailabilityCosmosDb {
   isAccountNameAvailable: boolean;
   message: string;
 }
 
-interface IServiceContentReducer {
+interface IServiceContent {
   serviceType: FormattedMessage.MessageDescriptor;
 }
 
-export interface ISelectedCosmosServiceReducer {
+export interface ISelectedCosmosService {
   subscription: string;
   resourceGroup: string;
   accountName: string;
@@ -34,10 +34,10 @@ export interface ISelectedCosmosServiceReducer {
   internalName: string;
 }
 
-export interface ICosmosDBReducer {
-  accountNameAvailability: IAvailabilityCosmosDbReducer;
-  selection: ISelectedCosmosServiceReducer[];
-  wizardContent: IServiceContentReducer;
+export interface ICosmosDB {
+  accountNameAvailability: IAvailabilityCosmosDb;
+  selection: ISelectedCosmosService[];
+  wizardContent: IServiceContent;
 }
 
 export interface ISelectedDropdownsSelector {
@@ -50,5 +50,5 @@ export interface ISelectedDropdownsSelector {
 
 export interface ISelectionInformationSelector {
   dropdownSelection: ISelectedDropdownsSelector;
-  previousFormData: ISelectedCosmosServiceReducer;
+  previousFormData: ISelectedCosmosService;
 }

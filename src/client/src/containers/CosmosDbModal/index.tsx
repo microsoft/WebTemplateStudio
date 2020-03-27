@@ -12,7 +12,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
-import { ISelectedCosmosServiceReducer } from "../../store/azureProfileData/cosmosDb/model";
+import { ISelectedCosmosService } from "../../store/azureProfileData/cosmosDb/model";
 import { getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
 import classNames from "classnames";
 import { useState } from "react";
@@ -60,7 +60,7 @@ const CosmosModal = ({ intl }: Props) => {
   };
 
   const saveCosmosSelection = () => {
-    const cosmosSelection: ISelectedCosmosServiceReducer = {
+    const cosmosSelection: ISelectedCosmosService = {
       subscription,
       accountName,
       resourceGroup: "",

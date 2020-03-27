@@ -1,7 +1,7 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
 import messages from "../../selection/app/wizardSelectionSelector/messages";
 import AzureActionType from "../azureActionType";
-import { ICosmosDBReducer } from "./model";
+import { ICosmosDB } from "./model";
 
 const initialState = {
   accountNameAvailability: {
@@ -14,7 +14,7 @@ const initialState = {
   }
 };
 
-const services = (state: ICosmosDBReducer = initialState, action: AzureActionType) => {
+const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
   switch (action.type) {
     case AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE:
       const cosmosSelections = [...state.selection];

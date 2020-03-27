@@ -1,6 +1,6 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
 
-export interface IsLoggedIntoAzure {
+export interface IsLoggedIntoAzureAction {
   type: AZURE_TYPEKEYS.IS_LOGGED_IN_TO_AZURE;
 }
 
@@ -9,6 +9,6 @@ export interface ILoginToAzure {
   payload: AzureProfile;
 }
 
-export interface ILogout {
+export interface ILogoutAction {
   type: AZURE_TYPEKEYS.LOG_OUT_OF_AZURE;
 }
