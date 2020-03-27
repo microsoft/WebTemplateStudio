@@ -1,5 +1,5 @@
-import { ICloseModal, IOpenModal } from "./model";
+import { ICloseModalAction, IOpenModalAction } from "./model";
 
-type ModalActionType = ICloseModal | IOpenModal;
+type ModalActionType = ICloseModalAction | IOpenModalAction;
 
 export default ModalActionType;

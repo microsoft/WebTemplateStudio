@@ -1,19 +1,6 @@
 import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 import WizardSelectionActionType from "../selectionActionType";
-
-/* State Shape
-{
-    projectPathValidation: {
-        isInvalidProjectPath: boolean,
-        projectPathError: string
-    }
-}
-*/
-
-interface IProjectPathValidation {
-  isInvalidProjectPath?: boolean;
-  projectPathError?: string;
-}
+import { IProjectPathValidation } from "./model";
 
 const initialState = {};
 

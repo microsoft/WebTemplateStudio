@@ -1,14 +1,14 @@
 import { MODAL_TYPEKEYS, MODAL_TYPES, ModalState } from "./typeKeys";
 import { Dispatch } from "react";
 import ModalActionType from "./modalActionType";
-import { IOpenModal, ICloseModal } from "./model";
+import { IOpenModalAction, ICloseModalAction } from "./model";
 
-const openModalAction = (modal: ModalState): IOpenModal => ({
+const openModalAction = (modal: ModalState): IOpenModalAction => ({
   type: MODAL_TYPEKEYS.OPEN_MODAL,
   payload: modal
 });
 
-const closeModalAction = (): ICloseModal => ({
+const closeModalAction = (): ICloseModalAction => ({
   type: MODAL_TYPEKEYS.CLOSE_MODALS
 });
 
