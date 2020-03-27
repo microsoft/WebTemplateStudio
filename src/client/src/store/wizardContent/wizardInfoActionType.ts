@@ -4,15 +4,15 @@ import {
   IUpdateGenStatusAction
 } from "../generationStatus/model";
 
-import { ISetVisitedPage, IResetVisitedPage, ISetPage, ISetDetails } from "./pages/model";
+import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction, ISetDetails } from "./pages/model";
 import { IResetWizard, IUpdateDependencyInfo } from "./wizardContent/model";
 
 type WizardInfoType =
   | IVersionData
   | ISetDetails
-  | ISetVisitedPage
-  | IResetVisitedPage
-  | ISetPage
+  | ISetVisitedPageAction
+  | IResetVisitedPageAction
+  | ISetPageAction
   | IUpdateGenStatusAction
   | IResetWizard
   | IUpdateGenStatusMessageAction

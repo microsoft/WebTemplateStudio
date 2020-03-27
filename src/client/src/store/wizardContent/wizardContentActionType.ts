@@ -1,11 +1,11 @@
-import { IUpdateFrameworkActionType, IFrontendFrameworksActionType, IBackendFrameworksSuccessActionType } from "./frameworks/model";
+import { IUpdateFrameworkActionTypeAction, IFrontendFrameworksActionTypeAction, IBackendFrameworksSuccessActionTypeAction } from "./frameworks/model";
 import { IPageOptionsActionType } from "./pages/model";
 import { IPreviewStatusActionType } from "./wizardContent/model";
 
 type WizardContentActionType =
-  | IBackendFrameworksSuccessActionType
-  | IFrontendFrameworksActionType
-  | IUpdateFrameworkActionType
+  | IBackendFrameworksSuccessActionTypeAction
+  | IFrontendFrameworksActionTypeAction
+  | IUpdateFrameworkActionTypeAction
   | IPageOptionsActionType
   | IPreviewStatusActionType;
 

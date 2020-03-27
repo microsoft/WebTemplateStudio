@@ -1,12 +1,9 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { connect, useDispatch } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-
 import { AppState } from "../../store/combineReducers";
 import styles from "./styles.module.css";
 import asModal from "../../components/Modal";
-import RootAction from "../../store/ActionType";
 import { closeModalAction } from "../../store/modals/action";
 import Licenses from "./Licenses";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
@@ -19,19 +16,15 @@ interface IStateProps {
   isModalOpen: boolean;
 }
 
-interface IDispatchProps {
-  closeModal: () => any;
-}
+type Props = IStateProps & InjectedIntlProps;
 
-type Props = IStateProps & InjectedIntlProps & IDispatchProps;
-
-const ViewLicensesModal = ({ intl, closeModal }: Props) => {
-
+const ViewLicensesModal = ({ intl }: Props) => {
+  const dispatch = useDispatch();
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
-      closeModal();
+      dispatch(closeModalAction());
     }
   };
 
@@ -44,7 +37,7 @@ const ViewLicensesModal = ({ intl, closeModal }: Props) => {
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}
-          onClick={closeModal}
+          onClick={()=> dispatch(closeModalAction())}
           onKeyDown={cancelKeyDownHandler}
         />
       </div>
@@ -57,15 +50,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isViewLicensesModalOpenSelector(state)
 });
 
-const mapDispatchToProps = (
-  dispatch: Dispatch<RootAction>
-): IDispatchProps => ({
-  closeModal: () => {
-    dispatch(closeModalAction());
-  }
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(asModal(injectIntl(ViewLicensesModal), MODAL_TYPES.VIEW_LICENSES_MODAL));
