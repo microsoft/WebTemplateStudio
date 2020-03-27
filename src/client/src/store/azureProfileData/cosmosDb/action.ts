@@ -1,6 +1,5 @@
-import { ISaveCosmosDbSettingsAction, IRemoveCosmosDbSettingsAction, ISetCosmosAccountNameAvailabilityAction } from "./model";
+import { ISaveCosmosDbSettingsAction, IRemoveCosmosDbSettingsAction } from "./model";
 import { AZURE_TYPEKEYS } from "../typeKeys";
-import { IAvailabilityFromExtensionAction } from "../azure/model";
 
 export const saveCosmosDbSettingsAction = (
   cosmosDbSettings: any

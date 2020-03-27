@@ -1,14 +1,7 @@
 import { WIZARD_INFO_TYPEKEYS } from "../wizardContent/typeKeys";
 import RootAction from "../ActionType";
+import { IServiceStatus } from "./model";
 
-export interface IStatus {
-  success: boolean;
-  failure: boolean;
-}
-
-export interface IServiceStatus {
-  [key: string]: IStatus;
-}
 
 const initialState = {
   templates: {

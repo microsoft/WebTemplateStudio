@@ -13,7 +13,7 @@ import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import * as PostGenSelectors from "../../store/generationStatus/postGenerationSelector";
+import * as PostGenSelectors from "../../store/generationStatus/selector";
 import { isPostGenModalOpenSelector } from "../../store/modals/selector";
 import {
   EXTENSION_COMMANDS,

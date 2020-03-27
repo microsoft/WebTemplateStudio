@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import azureProfileData from "./azureProfileData/azureReducer";
+import azureProfileData from "./azureProfileData/combineReducers";
 import dependencyInfo from "./dependencyInfo";
 import generationStatus from "./generationStatus/combineReducers";
 import modals from "./modals/combineReducers";

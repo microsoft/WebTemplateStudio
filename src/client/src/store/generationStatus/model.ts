@@ -1,12 +1,20 @@
 import { WIZARD_INFO_TYPEKEYS } from "../wizardContent/typeKeys";
-import { IServiceStatus } from "./statusReducer";
 
-export interface IUpdateGenStatusMessage {
+export interface IUpdateGenStatusMessageAction {
   type: WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS_MESSAGE;
   payload: string;
 }
 
-export interface IUpdateGenStatus {
+export interface IUpdateGenStatusAction {
   type: WIZARD_INFO_TYPEKEYS.UPDATE_TEMPLATE_GENERATION_STATUS;
   payload: IServiceStatus;
+}
+
+export interface IStatus {
+  success: boolean;
+  failure: boolean;
+}
+
+export interface IServiceStatus {
+  [key: string]: IStatus;
 }

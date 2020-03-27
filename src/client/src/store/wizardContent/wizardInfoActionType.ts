@@ -1,7 +1,7 @@
 import { IVersionData } from "../versions/model";
 import {
-  IUpdateGenStatusMessage,
-  IUpdateGenStatus
+  IUpdateGenStatusMessageAction,
+  IUpdateGenStatusAction
 } from "../generationStatus/model";
 
 import { ISetVisitedPage, IResetVisitedPage, ISetPage, ISetDetails } from "./pages/model";
@@ -13,9 +13,9 @@ type WizardInfoType =
   | ISetVisitedPage
   | IResetVisitedPage
   | ISetPage
-  | IUpdateGenStatus
+  | IUpdateGenStatusAction
   | IResetWizard
-  | IUpdateGenStatusMessage
+  | IUpdateGenStatusMessageAction
   | IUpdateDependencyInfo;
 
 export default WizardInfoType;
