@@ -2,7 +2,7 @@ import { IOption } from "../../types/option";
 import { IVSCodeObject } from "../../store/vscode/model";
 
 interface IDispatchProps {
-  updateDependencyInfo: (dependencyInfo: IDependencyInfo) => any;
+  updateDependencyInfo: (dependencyInfo: IDependencyInfoAction) => any;
 }
 
 interface IStateProps {

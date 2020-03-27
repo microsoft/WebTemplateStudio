@@ -3,14 +3,14 @@ import { IStateProps, IDispatchProps } from "./interfaces";
 import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../store/ActionType";
-import { IDependencyInfo } from "../../store/wizardContent/wizardContent/model";
+import { IDependencyInfoAction } from "../../store/wizardContent/wizardContent/model";
 import { updateDependencyInfoAction } from "../../store/wizardContent/wizardContent/action";
 
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  updateDependencyInfo: (dependencyInfo: IDependencyInfo) => {
+  updateDependencyInfo: (dependencyInfo: IDependencyInfoAction) => {
     dispatch(updateDependencyInfoAction(dependencyInfo));
   },
 });

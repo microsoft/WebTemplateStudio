@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { WIZARD_INFO_TYPEKEYS } from "../wizardContent/typeKeys";
-import { IUpdateDependencyInfo } from "../wizardContent/wizardContent/model";
+import { IUpdateDependencyInfoAction } from "../wizardContent/wizardContent/model";
 
 interface IDependencyInstalled {
   installed: boolean;
@@ -14,7 +14,7 @@ export const initialState = {};
 
 export const updateDependencyInfo = (
   state: IDependenciesInstalled = initialState,
-  action: IUpdateDependencyInfo
+  action: IUpdateDependencyInfoAction
 ) => {
   switch (action.type) {
     case WIZARD_INFO_TYPEKEYS.UPDATE_DEPENDENCY_INFO:
