@@ -341,6 +341,7 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       svgUrl: '',
       title: 'Node.js/Express',
       version: '10.15.0',
+      linuxVersion: "node|10.14",
       latestVersion: "0.0.1",
       latestVersionLoaded: true
     },
@@ -355,6 +356,7 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       svgUrl: '',
       title: 'Flask',
       version: '1.0.3',
+      linuxVersion: "python|3.7",
       latestVersion: "0.0.1",
       latestVersionLoaded: true
     }

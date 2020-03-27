@@ -14,6 +14,7 @@ export interface IOption {
   selected?: boolean;
   author?: string;
   version?: string;
+  linuxVersion?: string;
   latestVersion?: string="";
   latestVersionLoaded?: boolean=false;
   checkVersionPackageName?: string="";
