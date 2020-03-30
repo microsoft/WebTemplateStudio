@@ -9,6 +9,14 @@ const messages = defineMessages({
     id: "AppServiceModal.saveMessage",
     defaultMessage: "Save",
   },
+  showAdvancedMode:{
+    id: "AppServiceModal.showAdvancedMode",
+    defaultMessage: "Advanced mode",
+  },
+  hideAdvancedMode:{
+    id: "AppServiceModal.hideAdvancedMode",
+    defaultMessage: "Hide advanced mode",
+  },
 });
 
 export default messages;

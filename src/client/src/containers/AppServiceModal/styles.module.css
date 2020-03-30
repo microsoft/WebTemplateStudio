@@ -17,6 +17,12 @@
   margin-bottom: 5px;
 }
 
+.bottomContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
 .button {
   float: right;
   padding: 0.6em 3.5em;
@@ -49,4 +55,12 @@
 
 .closeIcon:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.showAdvancedModeLink {
+  margin: 0.5em 0;
+}
+
+.hide {
+  display: none;
 }

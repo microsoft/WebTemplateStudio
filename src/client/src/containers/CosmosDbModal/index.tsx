@@ -32,6 +32,7 @@ const CosmosModal = ({ intl }: Props) => {
   const initialSubscription = cosmosInStore ? cosmosInStore.subscription : "";
   const initialAccountName = cosmosInStore ? cosmosInStore.accountName : "";
   const initialApi = cosmosInStore ? cosmosInStore.api : "";
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const [subscription, setSubscription] = useState(initialSubscription);
   const [accountName, setAccountName] = useState(initialAccountName);
@@ -65,7 +66,7 @@ const CosmosModal = ({ intl }: Props) => {
       accountName,
       resourceGroup: "",
       api,
-      internalName:  WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
+      internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     };
     dispatch(saveCosmosDbSettingsAction(cosmosSelection));
   };
@@ -74,7 +75,11 @@ const CosmosModal = ({ intl }: Props) => {
     <React.Fragment>
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
-        <Cancel className={styles.closeIcon} onClick={() => dispatch(closeModalAction())} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
+        <Cancel
+          className={styles.closeIcon}
+          onClick={() => dispatch(closeModalAction())}
+          onKeyDown={closeModalIfPressEnterOrSpaceKey}
+        />
       </div>
       <div className={styles.bodyContainer}>
         <SubscriptionSelection
@@ -87,20 +92,29 @@ const CosmosModal = ({ intl }: Props) => {
           onAccountNameChange={setAccountName}
           onIsAvailableAccountNameChange={setIsAvailableAccountName}
         />
-        <ApiSelection
-          initialApi={api}
-          onApiChange={setApi} />
+        <div className={classNames({ [styles.hide]: !showAdvanced })}>
+          {/* Advanced mode */}
+        </div>
 
-        <button className={getButtonClassNames()} onClick={saveCosmosSelection} disabled={!isEnableSaveButton()}>
-          {formatMessage(messages.save)}
-        </button>
+        <ApiSelection initialApi={api} onApiChange={setApi} />
+        <div className={styles.bottomContainer}>
+          <button
+            className={classNames(buttonStyles.buttonLink, styles.showAdvancedLink)}
+            onClick={() => setShowAdvanced(!showAdvanced)}
+          >
+            {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
+          </button>
+          <button className={getButtonClassNames()} onClick={saveCosmosSelection} disabled={!isEnableSaveButton()}>
+            {formatMessage(messages.save)}
+          </button>
+        </div>
       </div>
     </React.Fragment>
   );
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  isModalOpen: isCosmosDbModalOpenSelector(state)
+  isModalOpen: isCosmosDbModalOpenSelector(state),
 });
 
 export default connect(mapStateToProps)(asModal(injectIntl(CosmosModal)));

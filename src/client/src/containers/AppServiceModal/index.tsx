@@ -36,6 +36,7 @@ const AppServiceModal = ({ intl }: Props) => {
   const [subscription, setSubscription] = useState(initialSubscription);
   const [appName, setAppName] = useState(initialAppServiceName);
   const [isAvailableAppName, setIsAvailableAppName] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
@@ -71,7 +72,11 @@ const AppServiceModal = ({ intl }: Props) => {
     <React.Fragment>
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
-        <Cancel className={styles.closeIcon} onClick={() => dispatch(closeModalAction())} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
+        <Cancel
+          className={styles.closeIcon}
+          onClick={() => dispatch(closeModalAction())}
+          onKeyDown={closeModalIfPressEnterOrSpaceKey}
+        />
       </div>
       <div className={styles.bodyContainer}>
         <SubscriptionSelection
@@ -85,20 +90,33 @@ const AppServiceModal = ({ intl }: Props) => {
           onIsAvailableAppNameChange={setIsAvailableAppName}
         />
 
+        <div className={classNames({ [styles.hide]: !showAdvanced })}>
+          {/* Advanced mode */}
+        </div>
+
         <AppServicePlanInfo subscription={subscription} />
 
         <RuntimeStackInfo />
 
-        <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
-          {formatMessage(messages.save)}
-        </button>
+        <div className={styles.bottomContainer}>
+          <button
+            className={classNames(buttonStyles.buttonLink, styles.showAdvancedLink)}
+            onClick={() => setShowAdvanced(!showAdvanced)}
+          >
+            {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
+          </button>
+
+          <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
+            {formatMessage(messages.save)}
+          </button>
+        </div>
       </div>
     </React.Fragment>
   );
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  isModalOpen: isAppServiceModalOpenSelector(state)
+  isModalOpen: isAppServiceModalOpenSelector(state),
 });
 
 export default connect(mapStateToProps)(asModal(injectIntl(AppServiceModal)));
