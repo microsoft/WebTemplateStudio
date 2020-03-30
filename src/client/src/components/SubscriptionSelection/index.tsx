@@ -4,9 +4,9 @@ import styles from "./styles.module.css";
 import messages from "./messages";
 import Dropdown from "../Dropdown";
 import { useSelector } from "react-redux";
-import { getDropdownSubscriptions } from "../../selectors/subscriptionSelector";
+import { getDropdownSubscriptionsSelector } from "../../store/azureProfileData/azure/selector";
 import { useState } from "react";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import { AZURE_LINKS } from "../../utils/constants";
 
 interface IProps {
@@ -19,7 +19,7 @@ type Props = IProps & InjectedIntlProps;
 const SubscriptionSelection = (props: Props) => {
   const { formatMessage } = props.intl;
   const { initialSubscription, onSubscriptionChange } = props;
-  const subscriptions = useSelector((state: AppState) => getDropdownSubscriptions(state));
+  const subscriptions = useSelector((state: AppState) => getDropdownSubscriptionsSelector(state));
   const [selectedSubscription, setSelectedSubscription] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {

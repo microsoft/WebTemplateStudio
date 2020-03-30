@@ -3,22 +3,22 @@ import { connect } from "react-redux";
 
 import SidebarItem from "../SidebarItem";
 
-import { removeAppServiceSettingsAction } from "../../../../actions/azureActions/appServiceActions";
-import { IAppService } from "../../../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { IAppService } from "../../../../store/azureProfileData/appService/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
-import { openAppServiceModalAction } from "../../../../actions/modalActions/modalActions";
+import { openAppServiceModalAction } from "../../../../store/modals/action";
 
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../../../reducers";
-import RootAction from "../../../../actions/ActionType";
-import { IVSCodeObject } from "../../../../reducers/vscodeApiReducer";
-import { getVSCodeApiSelector } from "../../../../selectors/vscodeApiSelector";
+import { AppState } from "../../../../store/combineReducers";
+import RootAction from "../../../../store/ActionType";
+import { IVSCodeObject } from "../../../../store/vscode/model";
+import { getVSCodeApiSelector } from "../../../../store/vscode/vscodeApiSelector";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
+import { removeAppServiceSettingsAction } from "../../../../store/azureProfileData/appService/action";
 
 interface IProps {
   appServiceSelection: IAppService;

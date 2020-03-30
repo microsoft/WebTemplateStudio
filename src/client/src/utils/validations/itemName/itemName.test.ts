@@ -13,7 +13,7 @@ jest.mock('../validations',()=>{return {
   })
 }});
 import { validateItemName } from "./itemName";
-import { IitemNameValidationConfig } from "../../../reducers/wizardSelectionReducers/setValidations";
+import { IitemNameValidationConfig } from "../../../reducers/wizardSelectionReducers/setValidationsAction";
 import { addRequiredValidate, addExistingItemNameValidate, addRegexValidate,
   addReservedNameValidate } from '../validations';
 

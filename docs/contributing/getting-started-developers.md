@@ -33,13 +33,16 @@ This folder contains the source code for the different components of Web Templat
 
 - client: This folder contains the client or wizard code.
     - src:
-        - Actions: Actions for the Redux store
         - Assets: Assets directory contains all the SVGs used for the front-end.
         - Components: Components contains all React components that are not connected to the Redux store.
         - Containers: Containers are React components that are connected to the Redux store. This is the only difference between components and containers.
         - CSS: CSS contains styling that is global.
-        - Reducers: All reducers for the Redux store are defined here.
-        - Selectors: Selectors contain helper methods which takes the Redux store as an argument and returns a specific field.
+        - Store: Store contains the folder structure of the final store, each folder contains the next files
+            - Reducer: Reducers for the Redux store are defined here.
+            - Selector: Selectors contain helper methods which takes the Redux store as an argument and returns a specific field.
+            - Action: Actions for the Redux store
+            - Model: Interfaces for actions, reducers and selectors.
+           
 
 - extension: This folder contains the Visual Studio extensions code.
     - src:

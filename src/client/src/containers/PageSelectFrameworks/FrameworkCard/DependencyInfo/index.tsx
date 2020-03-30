@@ -6,8 +6,8 @@ import { injectIntl, InjectedIntl } from "react-intl";
 import {
   WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../../../utils/constants";
-import { AppState } from "../../../../reducers";
-import { IDependenciesInstalled } from "../../../../reducers/dependencyInfoReducers";
+import { AppState } from "../../../../store/combineReducers";
+import { IDependenciesInstalled } from "../../../../store/dependencyInfo";
 import Notification from "../../../../components/Notification";
 import messages from "./messages";
 

@@ -3,9 +3,9 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import messages from "./messages";
 import { AZURE_LINKS } from "../../../utils/constants";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 import { useSelector } from "react-redux";
-import { getSubscriptions } from "../../../selectors/subscriptionSelector";
+import { getSubscriptionsSelector } from "../../../store/azureProfileData/azure/selector";
 
 interface IProps {
   subscription: string;
@@ -16,7 +16,7 @@ type Props = IProps & InjectedIntlProps;
 const AppServicePlanInfo = (props: Props) => {
   const { intl, subscription } = props;
   const { formatMessage } = intl;
-  const subscriptions = useSelector((state: AppState) => getSubscriptions(state));
+  const subscriptions = useSelector((state: AppState) => getSubscriptionsSelector(state));
 
   const isMicrosoftLearnSubscription = (): boolean => {
     const s = subscriptions.find(s => s.name === subscription);

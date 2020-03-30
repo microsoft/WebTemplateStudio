@@ -7,11 +7,11 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
-import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
+import { MODAL_TYPES } from "../../store/modals/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
-import { closeModalAction } from "../../actions/modalActions/modalActions";
-import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
-import { ISelectedCosmosService } from "../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
+import { closeModalAction } from "../../store/modals/action";
+import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
+import { ISelectedCosmosService } from "../../store/azureProfileData/cosmosDb/model";
 
 jest.mock("../../components/SubscriptionSelection", () => {
   return (props: any) => {
@@ -51,14 +51,14 @@ jest.mock("./APISelection", () => {
   };
 });
 
-jest.mock("../../actions/modalActions/modalActions", () => {
+jest.mock("../../store/modals/action", () => {
   const closeModalAction = jest.fn(() => ({
     type: "WTS/modals/CLOSE_MODALS",
   }));
   return { closeModalAction };
 });
 
-jest.mock("../../actions/azureActions/saveCosmosDbSettings", () => {
+jest.mock("../../store/azureProfileData/cosmosDb/action", () => {
   const saveCosmosDbSettingsAction = jest.fn((cosmosDbSettings: ISelectedCosmosService) => ({
     type: "WTS/azure/SAVE_COSMOS_DB_RESOURCE_SETTINGS",
     payload: cosmosDbSettings,

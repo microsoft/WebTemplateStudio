@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import Modal from "react-modal";
-import { MODAL_TYPES, ModalType } from "../../actions/modalActions/typeKeys";
+import { MODAL_TYPES, ModalType } from "../../store/modals/typeKeys";
 
 /**
  * A Higher-Order Component that creates a modal from a normal React component

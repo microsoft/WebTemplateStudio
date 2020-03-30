@@ -5,12 +5,11 @@ import styles from "../styles.module.css";
 import messages from "../strings";
 import { ISelected } from "../../../types/selected";
 import Dropdown from "../../../components/Dropdown";
-import { AppState } from "../../../reducers";
-import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedBackEndFramework";
-import { setSelectedFrontendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedFrontendFramework";
-import { SelectionState } from "../../../reducers/wizardSelectionReducers";
+import { AppState } from "../../../store/combineReducers";
+import { SelectionState } from "../../../store/selection/combineReducers";
 import { IOption } from "../../../types/option";
-import { WizardContentType } from "../../../reducers/wizardContentReducers";
+import { WizardContentType } from "../../../store/wizardContent/wizardContent/combineReducers";
+import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
 
 type Props = InjectedIntlProps;
 

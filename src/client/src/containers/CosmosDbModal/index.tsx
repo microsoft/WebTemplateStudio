@@ -1,11 +1,9 @@
 import * as React from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import asModal from "../../components/Modal";
-import { closeModalAction } from "../../actions/modalActions/modalActions";
-import { saveCosmosDbSettingsAction } from "../../actions/azureActions/saveCosmosDbSettings";
 import messages from "./messages";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isCosmosDbModalOpenSelector } from "../../selectors/modalSelector";
+import { isCosmosDbModalOpenSelector } from "../../store/modals/selector";
 import AccountNameEditor from "./AccountNameEditor/index";
 import ApiSelection from "./APISelection/index";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
@@ -13,11 +11,13 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
 import styles from "./styles.module.css";
-import { AppState } from "../../reducers";
-import { ISelectedCosmosService } from "../../reducers/wizardSelectionReducers/services/cosmosDbReducer";
-import { getCosmosDbSelectionSelector } from "../../selectors/cosmosServiceSelector";
+import { AppState } from "../../store/combineReducers";
+import { ISelectedCosmosService } from "../../store/azureProfileData/cosmosDb/model";
+import { getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
 import classNames from "classnames";
 import { useState } from "react";
+import { closeModalAction } from "../../store/modals/action";
+import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
 
 interface IStateProps {
   isModalOpen: boolean;

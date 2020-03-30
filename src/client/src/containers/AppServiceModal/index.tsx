@@ -1,11 +1,9 @@
 import * as React from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import asModal from "../../components/Modal";
-import { closeModalAction } from "../../actions/modalActions/modalActions";
-import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
 import messages from "./messages";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isAppServiceModalOpenSelector } from "../../selectors/modalSelector";
+import { isAppServiceModalOpenSelector } from "../../store/modals/selector";
 import RuntimeStackInfo from "./RuntimeStackInfo";
 import AppServicePlanInfo from "./AppServicePlanInfo";
 import AppNameEditor from "./AppNameEditor";
@@ -14,11 +12,13 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
 import styles from "./styles.module.css";
-import { AppState } from "../../reducers";
-import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
-import { getAppServiceSelectionSelector } from "../../selectors/appServiceSelector";
+import { AppState } from "../../store/combineReducers";
+import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
+import { getAppServiceSelectionSelector } from "../../store/azureProfileData/appService/selector";
 import classNames from "classnames";
 import { useState } from "react";
+import { saveAppServiceSettingsAction } from "../../store/azureProfileData/appService/action";
+import { closeModalAction } from "../../store/modals/action";
 
 interface IStateProps {
   isModalOpen: boolean;

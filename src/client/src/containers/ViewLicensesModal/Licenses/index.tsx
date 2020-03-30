@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   getFrameworkLicensesSelector,
   getPageLicencesSelector
-} from "../../../selectors/licenseSelector";
+} from "../../../store/selection/frameworksLicenseSelector";
 import { ILicenseObject } from "../../../types/license";
 
 import styles from "./styles.module.css";
@@ -12,8 +12,8 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
-} from "../../../selectors/wizardNavigationSelector";
-import { AppState } from "../../../reducers";
+} from "../../../store/wizardContent/wizardContent/wizardNavigationSelector";
+import { AppState } from "../../../store/combineReducers";
 
 interface IStateProps {
   frameworkLicenses: string[];

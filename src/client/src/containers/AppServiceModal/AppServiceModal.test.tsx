@@ -7,11 +7,11 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
-import { MODAL_TYPES } from "../../actions/modalActions/typeKeys";
+import { MODAL_TYPES } from "../../store/modals/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
-import { closeModalAction } from "../../actions/modalActions/modalActions";
-import { saveAppServiceSettingsAction } from "../../actions/azureActions/appServiceActions";
-import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { closeModalAction } from "../../store/modals/action";
+import { saveAppServiceSettingsAction } from "../../store/azureProfileData/appService/action";
+import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
 
 jest.mock("../../components/SubscriptionSelection", () => {
   return (props: any) => {
@@ -45,14 +45,14 @@ jest.mock("./AppNameEditor", () => {
   };
 });
 
-jest.mock("../../actions/modalActions/modalActions", () => {
+jest.mock("../../store/modals/action", () => {
   const closeModalAction = jest.fn(() => ({
     type: "WTS/modals/CLOSE_MODALS",
   }));
   return { closeModalAction };
 });
 
-jest.mock("../../actions/azureActions/appServiceActions", () => {
+jest.mock("../../store/azureProfileData/appService/action", () => {
   const saveAppServiceSettingsAction = jest.fn((appServiceSettings: ISelectedAppService) => ({
     type: "WTS/modals/CLOSE_MODALS",
     payload: appServiceSettings,
