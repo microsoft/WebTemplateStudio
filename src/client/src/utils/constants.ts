@@ -124,7 +124,6 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   NODE: "Node",
   MOLECULER: "Moleculer",
   FLASK: "Flask",
-  PYTHON: "Python",
   REACT: "React",
   REST_API: "RestAPI",
   VUE: "Vue",

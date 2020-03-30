@@ -1,8 +1,7 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { azureMessages } from "../../../mockData/azureServiceOptions";
+import messages from "./messages";
 import RuntimeStackInfo from ".";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 import { Provider } from "react-redux";
 import { getInitialState, setBackendFramework } from "../../../mockData/mockStore";
 import { render, RenderResult } from "@testing-library/react";
@@ -15,9 +14,9 @@ xdescribe("RuntimeStackInfo", () => {
   let initialState: any;
   const mockStore = configureMockStore();
   const cases = [
-    [WIZARD_CONTENT_INTERNAL_NAMES.NODE, WIZARD_CONTENT_INTERNAL_NAMES.NODE],
-    [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER, WIZARD_CONTENT_INTERNAL_NAMES.NODE],
-    [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, WIZARD_CONTENT_INTERNAL_NAMES.PYTHON],
+    ["Node", "node"],
+    ["Moleculer", "node"],
+    ["Flask", "python"],
   ];
 
   test.each(cases)(
@@ -42,7 +41,7 @@ xdescribe("RuntimeStackInfo", () => {
       //renders without crashing
       expect(wrapper).toBeDefined();
 
-      const expectedText = intl.formatMessage(azureMessages.appServiceRuntimeStackSubLabel, {
+      const expectedText = intl.formatMessage(messages.runtimeStack, {
         runtimeStack: runtimeStackName,
       });
 

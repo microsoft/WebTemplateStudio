@@ -104,6 +104,11 @@ const getLinuxVersionSelector = createSelector(
   getLinuxVersionFromBackendFrameworkSelector
 )
 
+const getRuntimeStackSelector = createSelector(
+  getLinuxVersionSelector,
+  (version) => version === "" ? "" : version.split("|")[0]
+)
+
 const rootSelector = createSelector(
   getProjectName,
   getOutputPath,
@@ -136,4 +141,4 @@ const rootSelector = createSelector(
   }
 );
 
-export { rootSelector };
+export { rootSelector, getRuntimeStackSelector };
