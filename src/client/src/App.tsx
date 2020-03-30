@@ -259,7 +259,7 @@ const App = (props: Props) => {
             />
           ) : null}
 
-          {/*(selectedRoute === ROUTES.PAGE_DETAILS) && (<PageDetails/>)*/}
+          {(selectedRoute === ROUTES.PAGE_DETAILS) && (<PageDetails />)}
           {(selectedRoute === ROUTES.AZURE_LOGIN) && (<PageAzureLogin/>)}
           {(selectedRoute === ROUTES.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
           {(selectedRoute === ROUTES.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
@@ -328,7 +328,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selectedRoute : state.wizardRoutes.selected,
 });
 
-export default 
+export default
   connect(
     mapStateToProps,
     mapDispatchToProps
