@@ -1,6 +1,5 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { withRouter, RouteComponentProps } from "react-router";
 import Details from "./Details";
 import { IOption } from "../../types/option";
 import { getScreenShot } from "../../utils/getSvgUrl";
@@ -12,17 +11,13 @@ interface IPageDetailsProps {
   isIntlFormatted: boolean;
 }
 
-type Props = IPageDetailsProps & RouteComponentProps;
+type Props = IPageDetailsProps;
 
 const PageDetails = (props: Props) => {
-  const { history, detailsPageInfo, isIntlFormatted } = props;
+  const { detailsPageInfo, isIntlFormatted } = props;
   return (
     <div className={styles.detailsContainer}>
-      <Details
-        handleBackClick={history.goBack}
-        detailInfo={detailsPageInfo}
-        formatteDetailInfo={isIntlFormatted ? detailsPageInfo : undefined}
-      />
+     
       <div className={styles.screenShotContainer}>
       {getScreenShot(detailsPageInfo.internalName, styles.screenshot)}
       </div>
@@ -37,9 +32,8 @@ const mapStateToProps = (state: AppState): IPageDetailsProps => {
   };
 };
 
-export default withRouter(
+export default 
   connect(
     mapStateToProps,
     null
-  )(PageDetails)
-);
+  )(PageDetails);

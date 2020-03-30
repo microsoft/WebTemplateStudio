@@ -1,8 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RouteComponentProps } from "react-router";
-import { withRouter } from "react-router-dom";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import ServicesList from "./ServicesList";
@@ -24,8 +22,9 @@ import { hasServicesSelector } from "../../store/azureProfileData/servicesSelect
 import { getIsVisitedRoutesSelector, IVisitedPages } from "../../store/wizardContent/wizardContent/wizardNavigationSelector";
 import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
+import { StateManager } from "react-select/lib/stateManager";
 
-type Props = RouteComponentProps & InjectedIntlProps;
+type Props = InjectedIntlProps;
 
 const RightSidebar = (props: Props)=>{
   const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
@@ -34,9 +33,9 @@ const RightSidebar = (props: Props)=>{
   const hasServices: boolean = useSelector((state: AppState) => hasServicesSelector(state));
   const isRoutesVisited: IVisitedPages = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const wizardRoutes = useSelector((state: AppState) => state.wizardRoutes);
+  const selectedRoute = useSelector((state: AppState) => state.wizardRoutes.selected);
 
   const { showPages } = isRoutesVisited;
-  const { pathname } = props.location;
   const { intl } = props;
   const { formatMessage } = intl;
 
@@ -62,7 +61,7 @@ const RightSidebar = (props: Props)=>{
   return (
     <div
       className={
-        pathname === ROUTES.PAGE_DETAILS || pathname === ROUTES.NEW_PROJECT
+        selectedRoute === ROUTES.PAGE_DETAILS || selectedRoute === ROUTES.NEW_PROJECT
           ? styles.hide
           : undefined
       }
@@ -81,16 +80,16 @@ const RightSidebar = (props: Props)=>{
       </button>
     </div>
     )}
-    {(isSidebarOpen || pathname === ROUTES.REVIEW_AND_GENERATE) && (
+    {(isSidebarOpen || selectedRoute === ROUTES.REVIEW_AND_GENERATE) && (
       <div
         role="complementary" id="dvRightSideBar"
         className={classnames(styles.container, styles.rightViewCropped, {
           [styles.rightViewCroppedSummaryPage]:
-            pathname === ROUTES.REVIEW_AND_GENERATE
+          selectedRoute === ROUTES.REVIEW_AND_GENERATE
         })}
       >
       <div className={styles.summaryContainer} id="dvSummaryContainer">
-        {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+        {selectedRoute !== ROUTES.REVIEW_AND_GENERATE && (
           <Cancel
             tabIndex={0}
             className={styles.icon}
@@ -102,10 +101,10 @@ const RightSidebar = (props: Props)=>{
 
         <ProjectDetails/>
         <SelectFrameworks/>
-        {showPages && (<SelectPages pathname={pathname}/>)}
+        {showPages && (<SelectPages pathname={selectedRoute}/>)}
         {hasServices && <ServicesList />}
         <div className={styles.container}>
-          {pathname !== ROUTES.REVIEW_AND_GENERATE && (
+          {selectedRoute !== ROUTES.REVIEW_AND_GENERATE && (
             <div className={styles.buttonContainer}>
               <button
                 className={classnames(
@@ -128,4 +127,4 @@ const RightSidebar = (props: Props)=>{
   );
 }
 
-export default withRouter(injectIntl(RightSidebar));
+export default injectIntl(RightSidebar);

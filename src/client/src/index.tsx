@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { HashRouter as Router } from "react-router-dom";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import App from "./App";
@@ -22,9 +21,7 @@ const store = createStoreWithMiddleware(
 ReactDOM.render(
   <IntlProvider textComponent={React.Fragment}>
     <Provider store={store}>
-      <Router>
         <App />
-      </Router>
     </Provider>
   </IntlProvider>,
   document.getElementById("root") as HTMLElement

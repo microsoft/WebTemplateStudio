@@ -26,7 +26,7 @@ const NewProject = () => {
           <ProjectNameAndOutput />
         </div>
         <div className={styles.quickStartContainer}>
-          <QuickStart />
+          {/*<QuickStart />*/}
         </div>
       </div>
     </div>

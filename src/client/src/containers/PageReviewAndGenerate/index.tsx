@@ -12,7 +12,6 @@ import messages from "./messages";
 import AddPagesModal from "./AddPagesModal";
 
 interface IDispatchProps {
-  openViewLicensesModal: () => any;
 }
 
 type Props = IDispatchProps & InjectedIntlProps;

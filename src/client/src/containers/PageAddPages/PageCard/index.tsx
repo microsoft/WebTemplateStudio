@@ -7,7 +7,6 @@ import {mapDispatchToProps, mapStateToProps} from "./store";
 import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
 import messages from "./messages";
-import { Link } from "react-router-dom";
 import { ROUTES, KEY_EVENTS } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
@@ -103,13 +102,13 @@ const PageCard = (props: Props) => {
       <div className={styles.gridLayoutCardFooter}>
       <div>
           {!isModal && (
-            <Link
+            <a
             onClick={showMoreInfo}
             onKeyDown={showDetailIfPressEnterKey}
             className={styles.link}
-            to={ROUTES.PAGE_DETAILS}>
+            >
             {intl.formatMessage(messages.Preview)}
-          </Link>
+          </a>
           )}
         </div>
         <div className={styles.pageCounter}>

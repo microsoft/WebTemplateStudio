@@ -1,7 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router";
 import ReactMarkdown from "react-markdown";
 import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
 import { ReactComponent as ErrorRed } from "../../assets/errorred.svg";
@@ -65,8 +64,7 @@ interface IDispatchProps {
 
 type Props = IStateProps &
   InjectedIntlProps &
-  IDispatchProps &
-  RouteComponentProps;
+  IDispatchProps;
 
 const PostGenerationModal = ({
   serviceStatus,
@@ -78,8 +76,7 @@ const PostGenerationModal = ({
   intl,
   isTemplatesFailed,
   isServicesSelected,
-  resetWizard,
-  history
+  resetWizard
 }: Props) => {
   const { formatMessage } = intl;
   let serviceFailed = false;
@@ -96,7 +93,6 @@ const PostGenerationModal = ({
   const handleOpenProjectOrRestartWizard = () => {
     if (isTemplatesFailed) {
       resetWizard();
-      history.push(ROUTES.NEW_PROJECT);
       return;
     }
     if (isTemplateGenerated) {
@@ -122,8 +118,6 @@ const PostGenerationModal = ({
   const closeModalAndCreateAnotherProject = (param: any) => {
     trackCreateNewProjectTelemetry(param);
     resetWizard();
-    history.push(ROUTES.NEW_PROJECT);
-
   };
 
   const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -394,9 +388,8 @@ const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
   }
 });
 
-export default withRouter(
+export default 
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(asModal(injectIntl(PostGenerationModal), MODAL_TYPES.POST_GEN_MODAL))
-);
+  )(asModal(injectIntl(PostGenerationModal), MODAL_TYPES.POST_GEN_MODAL));

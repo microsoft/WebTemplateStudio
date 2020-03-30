@@ -1,5 +1,4 @@
 import * as React from "react";
-import { withRouter, RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
@@ -37,8 +36,7 @@ interface IAzureLoginProps {
 
 type Props = IDispatchProps &
   IAzureLoginProps &
-  InjectedIntlProps &
-  RouteComponentProps;
+  InjectedIntlProps;
 
 class AzureLogin extends React.Component<Props> {
   signOutClick = () => {
@@ -61,14 +59,13 @@ class AzureLogin extends React.Component<Props> {
     return (
       <div className={styles.centerViewAzure}>
         <AzureLoginModal/>
-        <Link
+        <a
           tabIndex={0}
-          to={ROUTES.REVIEW_AND_GENERATE}
           className={styles.optionalFlag}
           onKeyUp={keyUpHandler}
         >
           {azureMessages.azureSkipButton.defaultMessage}
-        </Link>
+        </a>
         <div
           className={classnames(styles.container, {
             [styles.signedIn]: isLoggedIn
@@ -125,9 +122,8 @@ const mapDispatchToProps = (
   },
 });
 
-export default withRouter(
+export default 
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(injectIntl(AzureLogin))
-);
+  )(injectIntl(AzureLogin));

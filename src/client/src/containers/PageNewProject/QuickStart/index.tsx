@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
-import { RouteComponentProps, withRouter } from "react-router";
 import { FormattedMessage } from "react-intl";
 
 import RootAction from "../../../store/ActionType";
@@ -44,7 +43,7 @@ interface IDispatchProps {
   setRouteVisited: (route: string) => void;
 }
 
-type Props = IStateProps & IDispatchProps & RouteComponentProps;
+type Props = IStateProps & IDispatchProps;
 
 class QuickStart extends Component<Props> {
   handleClick = () => {
@@ -54,7 +53,6 @@ class QuickStart extends Component<Props> {
       selectFrontendFramework,
       selectBackendFramework,
       selectPages,
-      history,
       setRouteVisited
     } = this.props;
 
@@ -65,7 +63,7 @@ class QuickStart extends Component<Props> {
     selectBackendFramework(BACK_END_SELECTION);
     selectPages(PAGES_SELECTION);
     ROUTES_ARRAY.forEach(route => setRouteVisited(route));
-    history.push(ROUTES.REVIEW_AND_GENERATE);
+   
   };
 
   render() {
@@ -131,9 +129,8 @@ const mapDispatchToProps = (
   }
 });
 
-export default withRouter(
+export default 
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(QuickStart)
-);
+  )(QuickStart);

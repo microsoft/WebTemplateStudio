@@ -1,8 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import { Route, RouteComponentProps } from "react-router-dom";
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 
@@ -106,13 +104,14 @@ interface IStateProps {
   selectedPages: ISelected[];
   isPreview: boolean;
   modalState: any;
+  selectedRoute : string;
 }
 
-type Props = IDispatchProps & IStateProps & RouteComponentProps;
+type Props = IDispatchProps & IStateProps;
 
 const App = (props: Props) => {
   const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,
-    isPreview, setFrontendFrameworks, setBackendFrameworks, modalState, logIntoAzure } = props;
+    isPreview, setFrontendFrameworks, setBackendFrameworks, modalState, logIntoAzure, selectedRoute } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading: Array<any> = new Array<any>();
 
@@ -128,7 +127,7 @@ const App = (props: Props) => {
   const Footer = Loadable({
     loader: () => addToPromisesList(import(/* webpackChunkName: "Footer" */  "./containers/Footer")),
     loading:() => <div/>
-  });
+   });
   const PageNewProject = Loadable({
     loader: () => addToPromisesList(import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject")),
     loading:() => <div/>
@@ -226,11 +225,10 @@ const App = (props: Props) => {
     });
   }
 
-  const { pathname } = props.location;
   return (
     <React.Fragment>
       {isLoaded && (<Header />)}
-      {isLoaded && (<TopNavBar />)}
+      {isLoaded && (<TopNavBar  />)}
 
       {isLoaded && (<div className={appStyles.container}>
         {(modalState.modalType === MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
@@ -241,18 +239,18 @@ const App = (props: Props) => {
         <main
           className={classnames(appStyles.centerView, {
             [appStyles.centerViewNewProjectPage]:
-              pathname === ROUTES.NEW_PROJECT,
-            [appStyles.centerViewMaxHeight]: pathname === ROUTES.PAGE_DETAILS,
-            [appStyles.centerViewAzurePage]: pathname === ROUTES.AZURE_LOGIN
+              selectedRoute === ROUTES.NEW_PROJECT,
+            [appStyles.centerViewMaxHeight]: selectedRoute === ROUTES.PAGE_DETAILS,
+            [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.AZURE_LOGIN
           })}
         >
-          {pathname === ROUTES.NEW_PROJECT ? (
+          {selectedRoute === ROUTES.NEW_PROJECT ? (
             <HomeSplashSVG
              className={classnames(appStyles.splash, appStyles.homeSplash)}
             />
           ) : null}
 
-          {pathname === ROUTES.REVIEW_AND_GENERATE ? (
+          {selectedRoute === ROUTES.REVIEW_AND_GENERATE ? (
             <SummarySplashSVG
               className={classnames(
                 appStyles.splash,
@@ -260,24 +258,17 @@ const App = (props: Props) => {
               )}
             />
           ) : null}
-          <Route path={ROUTES.PAGE_DETAILS} component={PageDetails} />
-          <Route path={ROUTES.AZURE_LOGIN} component={PageAzureLogin} />
-          <Route
-            path={ROUTES.REVIEW_AND_GENERATE}
-            component={PageReviewAndGenerate}
-          />
-          <Route
-            path={ROUTES.SELECT_FRAMEWORKS}
-            component={PageSelectFrameworks}
-          />
-          <Route path={ROUTES.SELECT_PAGES} component={PageAddPages} />
-          <Route
-            exact={true}
-            path={ROUTES.NEW_PROJECT}
-            component={PageNewProject}
-          />
+
+          {/*(selectedRoute === ROUTES.PAGE_DETAILS) && (<PageDetails/>)*/}
+          {(selectedRoute === ROUTES.AZURE_LOGIN) && (<PageAzureLogin/>)}
+          {(selectedRoute === ROUTES.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
+          {(selectedRoute === ROUTES.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
+
+          {(selectedRoute === ROUTES.SELECT_PAGES) && (<PageAddPages isModal={false}/>)}
+          {(selectedRoute === ROUTES.NEW_PROJECT) && (<PageNewProject/>)}
+
         </main>
-        <RightSidebar />
+        {<RightSidebar />}
       </div>)}
       {isLoaded && (<Footer />)}
       {!isLoaded && (<div className={appStyles.spinnerContainer}></div>)}
@@ -333,12 +324,12 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   frontendOptions: state.wizardContent.frontendOptions,
   selectedPages: state.selection.pages,
   isPreview:  state.wizardContent.previewStatus,
-  modalState: state.modals.openModal
+  modalState: state.modals.openModal,
+  selectedRoute : state.wizardRoutes.selected,
 });
 
-export default withRouter(
+export default 
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(App)
-);
+  )(App);

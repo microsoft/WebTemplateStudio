@@ -8,7 +8,6 @@ import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
-import { Link } from "react-router-dom";
 import { ROUTES, KEY_EVENTS } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
@@ -129,13 +128,13 @@ const FrameworkCard = (props: Props) => {
       </div>
       <div className={styles.gridLayoutCardFooter}>
         <div>
-          <Link
+          <a
             onClick={detailsClickWrapper}
             onKeyDown={showDetailIfPressEnterKey}
             className={styles.link}
-            to={ROUTES.PAGE_DETAILS}>
+            >
             {intl.formatMessage(messages.learnMore)}
-          </Link>
+          </a>
         </div>
         {selected && (<Check role="figure" className={styles.iconCheckMark} />)}
       </div>

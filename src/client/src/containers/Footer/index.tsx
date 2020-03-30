@@ -1,9 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps } from "react-router";
-import { Link, withRouter } from "react-router-dom";
-
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import {
@@ -67,10 +64,10 @@ interface IStateProps {
   appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
   isEnableNextPage: boolean;
+  selectedRoute : string;
 }
 
-type Props = RouteComponentProps &
-  IStateProps &
+type Props = IStateProps &
   IDispatchProps &
   InjectedIntlProps;
 
@@ -96,7 +93,8 @@ class Footer extends React.Component<Props> {
       selectedAppService,
       appService,
       vscode,
-      openPostGenModal
+      openPostGenModal,
+      selectedRoute
     } = this.props;
     e.preventDefault();
     vscode.postMessage({
@@ -112,8 +110,7 @@ class Footer extends React.Component<Props> {
         appService
       }
     });
-    const { pathname } = this.props.location;
-    this.trackPageForTelemetry(pathname);
+    this.trackPageForTelemetry(selectedRoute);
     openPostGenModal();
   };
   public canGenerate = (): boolean => {
@@ -185,15 +182,14 @@ class Footer extends React.Component<Props> {
 
     const {
       isEnableNextPage,
-      location,
       isVisited,
-      intl
+      intl,
+      selectedRoute
     } = this.props;
-    const { pathname } = location;
     const { showFrameworks } = isVisited;
     return (
       <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
-        {pathname !== ROUTES.PAGE_DETAILS && (
+        {selectedRoute !== ROUTES.PAGE_DETAILS && (
           <div className={styles.footer}>
             <div>
               {showFrameworks && (
@@ -205,8 +201,8 @@ class Footer extends React.Component<Props> {
               )}
             </div>
             <div className={styles.buttonContainer}>
-              {pathname !== ROUTES.NEW_PROJECT && (
-                <Link
+              {selectedRoute !== ROUTES.NEW_PROJECT && (
+                <a
                   tabIndex={0}
                   className={classnames(
                     buttonStyles.buttonDark,
@@ -214,20 +210,16 @@ class Footer extends React.Component<Props> {
                     styles.buttonBack
                   )}
                   onClick={event => {
-                    this.handleLinkBackClick(event, pathname);
+                    this.handleLinkBackClick(event, selectedRoute);
                   }}
                   onKeyUp={keyUpHandler}
-                  to={
-                    pathsBack[pathname] === undefined
-                      ? ROUTES.NEW_PROJECT
-                      : pathsBack[pathname]
-                  }
+                 
                 >
                   <FormattedMessage id="footer.back" defaultMessage="Back" />
-                </Link>
+                </a>
               )}
-              {pathname !== ROUTES.REVIEW_AND_GENERATE && (
-                <Link
+              {selectedRoute !== ROUTES.REVIEW_AND_GENERATE && (
+                <a
                   tabIndex={isEnableNextPage ? 0 : -1}
                   className={classnames(
                     styles.button,
@@ -239,10 +231,10 @@ class Footer extends React.Component<Props> {
                     }
                   )}
                   onClick={event => {
-                    this.handleLinkClick(event, pathname);
+                    this.handleLinkClick(event, selectedRoute);
                   }}
                   onKeyUp={keyUpHandler}
-                  to={pathsNext[pathname]}
+                  
                 >
                   <FormattedMessage id="footer.next" defaultMessage="Next" />
                   {nextArrow && (
@@ -252,7 +244,7 @@ class Footer extends React.Component<Props> {
                       })}
                     />
                   )}
-                </Link>
+                </a>
               )}
               {this.canGenerate() && (
                 <button
@@ -286,7 +278,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selectedAppService: isAppServiceSelectedSelector(state),
   appService: getAppServiceSelectionSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
-  isEnableNextPage: isEnableNextPage(state)
+  isEnableNextPage: isEnableNextPage(state),
+  selectedRoute : state.wizardRoutes.selected
 });
 
 const mapDispatchToProps = (
@@ -303,9 +296,8 @@ const mapDispatchToProps = (
   }
 });
 
-export default withRouter(
+export default 
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(injectIntl(Footer))
-);
+  )(injectIntl(Footer));
