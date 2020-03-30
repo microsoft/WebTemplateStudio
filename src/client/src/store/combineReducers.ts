@@ -5,7 +5,7 @@ import generationStatus from "./generationStatus/combineReducers";
 import modals from "./modals/combineReducers";
 import wizardContent from "./wizardContent/wizardContent/combineReducers";
 import wizardRoutes from "./selection/pages/combineReducers";
-import vscodeApi from "./vscode/vscodeApiReducer";
+import vscodeApi from "./vscode/reducer";
 import selection from "./selection/combineReducers";
 import versions from "./versions/reducer";
 import RootAction from "./ActionType";

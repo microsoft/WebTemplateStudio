@@ -28,7 +28,7 @@ import {
 } from "../../store/azureProfileData/appService/selector";
 
 import { openPostGenModalAction } from "../../store/modals/action";
-import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../store/vscode/selector";
 
 import {
   FormattedMessage,

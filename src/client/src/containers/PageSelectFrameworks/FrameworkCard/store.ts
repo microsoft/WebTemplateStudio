@@ -4,7 +4,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../../store/combineReducers";
 import RootAction from "../../../store/ActionType";
 import { IDispatchProps, IStateProps } from "./interfaces";
-import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../../store/vscode/selector";
 
 import { ISelected } from "../../../types/selected";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";

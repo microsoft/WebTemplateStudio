@@ -25,7 +25,7 @@ import {
   InjectedIntlProps
 } from "react-intl";
 
-import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../../store/vscode/selector";
 import { AppState } from "../../../store/combineReducers";
 import { validateProjectName} from "../../../utils/validations/projectName/projectName";
 import { IValidation} from "../../../utils/validations/validations";

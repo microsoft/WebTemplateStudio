@@ -22,7 +22,7 @@ import { getVersionsDataAction } from "./store/versions/action";
 
 import appStyles from "./appStyles.module.css";
 import { IVersions } from "./types/version";
-import { getVSCodeApiSelector } from "./store/vscode/vscodeApiSelector";
+import { getVSCodeApiSelector } from "./store/vscode/selector";
 import { IVSCodeObject } from "./store/vscode/model";
 import { IServiceStatus } from "./store/generationStatus/model";
 import { ISelected } from "./types/selected";

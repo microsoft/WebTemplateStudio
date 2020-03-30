@@ -16,7 +16,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../../../store/combineReducers";
 import RootAction from "../../../../store/ActionType";
 import { IVSCodeObject } from "../../../../store/vscode/model";
-import { getVSCodeApiSelector } from "../../../../store/vscode/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../../../store/vscode/selector";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { removeAppServiceSettingsAction } from "../../../../store/azureProfileData/appService/action";
 

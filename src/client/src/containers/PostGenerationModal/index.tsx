@@ -24,7 +24,7 @@ import {
   WEB_TEMPLATE_STUDIO_LINKS,
   TELEMETRY
 } from "../../utils/constants";
-import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../store/vscode/selector";
 import { IVSCodeObject } from "../../store/vscode/model";
 
 import { AppState } from "../../store/combineReducers";

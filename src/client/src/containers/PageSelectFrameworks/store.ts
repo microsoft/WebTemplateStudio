@@ -1,6 +1,6 @@
 import { AppState } from "../../store/combineReducers";
 import { IStateProps, IDispatchProps } from "./interfaces";
-import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../store/vscode/selector";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../store/ActionType";
 import { IDependencyInfoAction } from "../../store/wizardContent/wizardContent/model";

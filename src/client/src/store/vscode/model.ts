@@ -12,6 +12,8 @@ export interface IVSCodeObject {
   postMessage: (message: any) => void;
 }
 
+export type VSCodeActionTypes = IVSCodeAPIActionType;
+
 export interface IVSCodeAPI {
   isVsCodeApiAcquired: boolean;
   vscodeObject: IVSCodeObject;
