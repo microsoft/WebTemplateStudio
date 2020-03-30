@@ -3,6 +3,7 @@ import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../store/vscode/model";
 import mockVsCodeApi from "./mockVsCodeApi";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
+import { ModalType } from "../store/modals/typeKeys";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -37,7 +38,6 @@ export const getInitialState = (): AppState => {
       backendOptions: [],
       frontendOptions: [],
       pageOptions: [],
-      projectTypes: [],
       detailsPage: {
         isIntlFormatted: false,
         data: {
@@ -52,10 +52,7 @@ export const getInitialState = (): AppState => {
           svgUrl:''
         }
       },
-      serverPort: 9502,
-      previewStatus: false,
-      createProjectButton: false,
-      enableQuickStart: false,
+      previewStatus: false
     },
     selection: {
       appType: {
@@ -266,7 +263,7 @@ const getSubscriptionsSelector = (): Array<Subscription> => {
   const subscriptions = Array.from(Array(2).keys()).map(
     (item: number) => {
       return {
-        name: `subscription ${item} label`,
+        name: `subscription ${item}`,
         isMicrosoftLearn: false
       };
     }
@@ -334,15 +331,26 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       author: 'Various',
       body: 'JavaScript framework',
       internalName: 'Node',
-      licenses: ['[Node](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)'],
+      licenses: ['[Node](https://github.com/nodejs/node/blob/master/LICENSE)','[Express](https://github.com/expressjs/express/blob/master/LICENSE)','[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)'],
       longDescription: 'Node.js is an open source server environment based on JavaScript that helps you build fast and scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. Node.js runs across various platforms like Windows, Linux, Unix, and Mac OS X.\r\n\r\nMore information about Node.js can be found [here](https://nodejs.org).\r\n',
       position: 1,
       selected: false,
       svgUrl: '',
       title: 'Node.js/Express',
       version: '10.15.0',
-      linuxVersion: "node|10.14",
-      latestVersion: "0.0.1",
+      linuxVersion: 'node|10.14',
+      latestVersionLoaded: true
+    },
+    {
+      author: 'Various',
+      body: 'JavaScript framework',
+      internalName: 'Moleculer',
+      licenses: ['[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)'],
+      selected: false,
+      svgUrl: '',
+      title: 'Moleculer',
+      version: '0.14.3',
+      linuxVersion: 'node|10.14',
       latestVersionLoaded: true
     },
     {
@@ -356,10 +364,11 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       svgUrl: '',
       title: 'Flask',
       version: '1.0.3',
-      linuxVersion: "python|3.7",
-      latestVersion: "0.0.1",
+      linuxVersion: 'python|3.7',
       latestVersionLoaded: true
     }
+
+
   ];
   return store;
 }
@@ -378,4 +387,8 @@ export const setBackendFramework = (store: AppState, internalName: string) => {
 
 export const setFrontendFramework = (store: AppState, internalName: string) => {
   store.selection.backendFramework.internalName = internalName;
+}
+
+export const setOpenModal = (store: AppState, modalType: ModalType) => {
+  store.modals.openModal.modalType = modalType;
 }
