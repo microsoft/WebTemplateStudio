@@ -10,13 +10,13 @@ import TopNavBarLink from "../TopNavBarLink";
 import styles from "./styles.module.css";
 
 import { ROUTES_ARRAY } from "../../utils/constants";
-import { IRoutes } from "../../reducers/wizardRoutes/navigationReducer";
-import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { IRoutes } from "../../store/selection/pages/model";
+import { isEnableNextPage } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../reducers";
-import RootAction from "../../actions/ActionType";
-import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
+import { AppState } from "../../store/combineReducers";
+import RootAction from "../../store/ActionType";
 import messages from "./messages";
+import { setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 
 interface IStateProps {
   isVisited: IRoutes;
@@ -114,7 +114,7 @@ const mapStateToProps = (state: any): IStateProps => ({
   isEnableNextPage: isEnableNextPage(state),
   isVisited: state.wizardRoutes.isVisited
 });
- 
+
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({

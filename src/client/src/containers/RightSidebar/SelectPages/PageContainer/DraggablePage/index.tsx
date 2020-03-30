@@ -8,15 +8,15 @@ import { ISelected } from "../../../../../types/selected";
 import styles from "./styles.module.css";
 import { KEY_EVENTS } from "../../../../../utils/constants";
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
-import { AppState } from "../../../../../reducers";
+import { AppState } from "../../../../../store/combineReducers";
 
 import messages from "./messages";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../../../../actions/ActionType";
-import { selectPageAction, selectPagesAction } from "../../../../../actions/wizardSelectionActions/selectPages";
+import RootAction from "../../../../../store/ActionType";
 import { validateItemName } from "../../../../../utils/validations/itemName/itemName";
-import { getValidations } from "../../../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
-import { IValidations } from "../../../../../reducers/wizardSelectionReducers/setValidations";
+import { getValidations } from "../../../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { setPageAction, setPagesAction } from "../../../../../store/selection/pages/action";
+import { IValidations } from "../../../../../store/selection/validations/model";
 
 const Reorder = Loadable({
   loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../../../../utils/svgComponents/ReorderIcon"),
@@ -186,10 +186,10 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): ISortableDispatchProps => ({
   updatePage: (page: ISelected) => {
-    dispatch(selectPageAction(page));
+    dispatch(setPageAction(page));
   },
   selectPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
+    dispatch(setPagesAction(pages));
   },
 });
 

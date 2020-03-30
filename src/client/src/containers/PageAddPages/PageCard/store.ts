@@ -1,20 +1,18 @@
 import { IOption } from "../../../types/option";
 import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../../reducers";
-import RootAction from "../../../actions/ActionType";
+import { AppState } from "../../../store/combineReducers";
+import RootAction from "../../../store/ActionType";
 import { IDispatchProps, IStateProps } from "./interfaces";
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
+import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
 import { ISelected } from "../../../types/selected";
-import { setDetailPageAction } from "../../../actions/wizardInfoActions/setDetailsPage";
-import {
-  selectPagesAction
-} from "../../../actions/wizardSelectionActions/selectPages";
+import { setPagesAction } from "../../../store/selection/pages/action";
+import { setDetailPageAction } from "../../../store/wizardContent/pages/action";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
   setPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
+    dispatch(setPagesAction(pages));
   },
   setDetailPage: (detailPageInfo: IOption) => {
     dispatch(setDetailPageAction(detailPageInfo));

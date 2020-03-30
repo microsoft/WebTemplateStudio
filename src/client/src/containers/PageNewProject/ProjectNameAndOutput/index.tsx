@@ -1,13 +1,7 @@
 import * as React from "react";
-import { connect } from "react-redux";
-
+import { connect, useDispatch } from "react-redux";
 import Input from "../../../components/Input";
 import OutputPath from "../../../components/OutputPath";
-
-import {
-  updateOutputPathAction,
-  updateProjectNameAction
-} from "../../../actions/wizardSelectionActions/updateProjectNameAndPath";
 
 import {
   getOutputPath,
@@ -15,9 +9,9 @@ import {
   getProjectNameValidation,
   getOutputPathValidation,
   getValidations
-} from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+} from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+import { IVSCodeObject } from "../../../store/vscode/model";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
@@ -31,17 +25,16 @@ import {
   InjectedIntlProps
 } from "react-intl";
 
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { IValidations } from "../../../reducers/wizardSelectionReducers/setValidations";
-import { AppState } from "../../../reducers";
-import { Dispatch } from "redux";
-import RootAction from "../../../actions/ActionType";
+import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
+import { AppState } from "../../../store/combineReducers";
 import { validateProjectName} from "../../../utils/validations/projectName/projectName";
 import { IValidation} from "../../../utils/validations/validations";
 import { inferProjectName} from "../../../utils/infer/projectName";
-import { setProjectPathValidation } from "../../../actions/wizardSelectionActions/setProjectPathValidation";
 import messages from "./messages";
 import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
+import { setProjectPathValidationAction } from "../../../store/selection/validations/action";
+import { setProjectNameAction, setOutputPathAction } from "../../../store/selection/app/action";
+import { IValidations } from "../../../store/selection/validations/model";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -52,13 +45,7 @@ interface IStateProps {
   validations: IValidations;
 }
 
-interface IDispatchProps {
-  updateProjectName: (projectName: string, validation: any) => any;
-  updateOutputPath: (outputPath: string) => any;
-  setProjectPathValidation: (validation: any) => void;
-}
-
-type Props = IStateProps & IDispatchProps & InjectedIntlProps;
+type Props = IStateProps & InjectedIntlProps;
 
 const ProjectNameAndOutput = (props: Props) => {
   const {
@@ -67,16 +54,15 @@ const ProjectNameAndOutput = (props: Props) => {
     projectPathValidation,
     projectName,
     validations,
-    updateProjectName,
-    updateOutputPath,
-    setProjectPathValidation,
     projectNameValidation
   } = props;
+
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     if (projectName==="" && outputPath!=="" && projectNameValidation.isDirty===false){
       inferProjectName(outputPath,vscode).then(suggestedProjectName => {
-        updateProjectName(suggestedProjectName, {isValid:true, error:"", isDirty:true});
+        dispatch(setProjectNameAction(suggestedProjectName, {isValid:true, error:"", isDirty:true}));
       });
     }
   },[projectName, outputPath]);
@@ -86,7 +72,7 @@ const ProjectNameAndOutput = (props: Props) => {
       getOutputPathFromExtension(vscode).then((event)=>{
         const message = event.data;
         if (message.payload !== null && message.payload.outputPath !== null) {
-          updateOutputPath(message.payload.outputPath);
+          dispatch(setOutputPathAction(message.payload.outputPath));
         }
       })
     }
@@ -95,11 +81,11 @@ const ProjectNameAndOutput = (props: Props) => {
   const validateSetProjectValueAndSetDirty = (projectNameToSet: string) =>{
     validateProjectName(projectNameToSet, outputPath, validations.projectNameValidationConfig, vscode).then((validateState: IValidation)=>{
       validateState.isDirty = projectNameValidation.isDirty;
-      updateProjectName(projectNameToSet, validateState);
+      dispatch(setProjectNameAction(projectNameToSet, validateState));
     });
 
     if (projectNameToSet!==""){
-      setProjectPathValidation({isValid: true});
+      dispatch(setProjectPathValidationAction({isValid: true}));
     }
   }
   const handleProjectNameChange = (
@@ -163,21 +149,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   projectNameValidation: getProjectNameValidation(state)
 });
 
-const mapDispatchToProps = (
-  dispatch: Dispatch<RootAction>
-): IDispatchProps => ({
-  updateProjectName: (projectName: string, validate: any) => {
-    dispatch(updateProjectNameAction(projectName, validate));
-  },
-  updateOutputPath: (outputPath: string) => {
-    dispatch(updateOutputPathAction(outputPath));
-  },
-  setProjectPathValidation: (validation: any) => {
-    dispatch(setProjectPathValidation(validation));
-  }
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(injectIntl(ProjectNameAndOutput));

@@ -14,24 +14,21 @@ import {
   PAGEID
 } from "../../utils/constants";
 
-import { IVSCodeObject } from "../../reducers/vscodeApiReducer";
-import { ISelectedAppService } from "../../reducers/wizardSelectionReducers/services/appServiceReducer";
+import { IVSCodeObject } from "../../store/vscode/model";
+import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
 
-import { rootSelector } from "../../selectors/generationSelector";
+import { rootSelector } from "../../store/selection/app/selector";
 import {
   getCosmosDbSelectionSelector,
   isCosmosResourceCreatedSelector
-} from "../../selectors/cosmosServiceSelector";
+} from "../../store/azureProfileData/cosmosDb/selector";
 import {
   isAppServiceSelectedSelector,
   getAppServiceSelectionSelector
-} from "../../selectors/appServiceSelector";
+} from "../../store/azureProfileData/appService/selector";
 
-import { setVisitedWizardPageAction } from "../../actions/wizardInfoActions/setVisitedWizardPage";
-import { setPageWizardPageAction } from "../../actions/wizardInfoActions/setPageWizardPage";
-import { updateCreateProjectButtonAction } from "../../actions/wizardInfoActions/updateCreateProjectButton";
-import { openPostGenModalAction } from "../../actions/modalActions/modalActions";
-import { getVSCodeApiSelector } from "../../selectors/vscodeApiSelector";
+import { openPostGenModalAction } from "../../store/modals/action";
+import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
 
 import {
   FormattedMessage,
@@ -42,23 +39,23 @@ import {
 import {
   getIsVisitedRoutesSelector,
   IVisitedPages
-} from "../../selectors/wizardNavigationSelector";
-import { isEnableNextPage } from "../../selectors/wizardSelectionSelector/wizardSelectionSelector";
-import { AppState } from "../../reducers";
+} from "../../store/wizardContent/wizardContent/wizardNavigationSelector";
+import { isEnableNextPage } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { AppState } from "../../store/combineReducers";
 import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../actions/ActionType";
+import RootAction from "../../store/ActionType";
 
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
 import messages from "./messages";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
+import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
   setPage: (route: string) => void;
   openPostGenModal: () => any;
-  updateCreateProjectButton: (enable: boolean) => any;
 }
 
 interface IStateProps {
@@ -70,7 +67,6 @@ interface IStateProps {
   appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
   isEnableNextPage: boolean;
-  enableCreateProjectButton: boolean;
 }
 
 type Props = RouteComponentProps &
@@ -120,8 +116,8 @@ class Footer extends React.Component<Props> {
     this.trackPageForTelemetry(pathname);
     openPostGenModal();
   };
-  public isReviewAndGenerate = (): boolean => {
-    return this.props.location.pathname === ROUTES.REVIEW_AND_GENERATE;
+  public canGenerate = (): boolean => {
+    return this.props.isVisited.showReviewAndGenerate;
   };
   public findPageID = (pathname: string): number => {
     switch (pathname) {
@@ -191,15 +187,10 @@ class Footer extends React.Component<Props> {
       isEnableNextPage,
       location,
       isVisited,
-      intl,
-      updateCreateProjectButton,
-      enableCreateProjectButton
+      intl
     } = this.props;
     const { pathname } = location;
     const { showFrameworks } = isVisited;
-    if (this.isReviewAndGenerate()) {
-      updateCreateProjectButton(true);
-    }
     return (
       <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
         {pathname !== ROUTES.PAGE_DETAILS && (
@@ -263,7 +254,7 @@ class Footer extends React.Component<Props> {
                   )}
                 </Link>
               )}
-              {enableCreateProjectButton && (
+              {this.canGenerate() && (
                 <button
                   disabled={!isEnableNextPage}
                   className={classnames(styles.button, {
@@ -295,9 +286,8 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selectedAppService: isAppServiceSelectedSelector(state),
   appService: getAppServiceSelectionSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
-  isEnableNextPage: isEnableNextPage(state),
-  enableCreateProjectButton: state.wizardContent.createProjectButton
-}); 
+  isEnableNextPage: isEnableNextPage(state)
+});
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
@@ -310,9 +300,6 @@ const mapDispatchToProps = (
   },
   openPostGenModal: () => {
     dispatch(openPostGenModalAction());
-  },
-  updateCreateProjectButton: (enable: boolean) => {
-    dispatch(updateCreateProjectButtonAction(enable));
   }
 });
 

@@ -1,8 +1,8 @@
 import { ISelected } from "../types/selected";
-import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../reducers/vscodeApiReducer";
+import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../store/vscode/model";
 import mockVsCodeApi from "./mockVsCodeApi";
 import { FormattedMessage } from "react-intl";
-import { AppState } from "../reducers";
+import { AppState } from "../store/combineReducers";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -262,7 +262,7 @@ const loadPages = (frameWorkName: string): Array<any>=>{
   return pages;
 }
 
-const getSubscriptions = (): Array<Subscription> => {
+const getSubscriptionsSelector = (): Array<Subscription> => {
   const subscriptions = Array.from(Array(2).keys()).map(
     (item: number) => {
       return {
@@ -369,7 +369,7 @@ export const loadMasters = (store: AppState) =>{
 }
 
 export const setSubscriptions = (store: AppState) => {
-  store.azureProfileData.profileData.subscriptions = getSubscriptions();
+  store.azureProfileData.profileData.subscriptions = getSubscriptionsSelector();
 }
 
 export const setBackendFramework = (store: AppState, internalName: string) => {

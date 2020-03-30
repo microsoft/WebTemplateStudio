@@ -4,20 +4,13 @@ import { ThunkDispatch } from "redux-thunk";
 import { RouteComponentProps, withRouter } from "react-router";
 import { FormattedMessage } from "react-intl";
 
-import RootAction from "../../../actions/ActionType";
-import { setSelectedFrontendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedFrontendFramework";
-import { setSelectedBackendFrameworkAction } from "../../../actions/wizardSelectionActions/selectedBackEndFramework";
-import {
-  selectPagesAction
-} from "../../../actions/wizardSelectionActions/selectPages";
-import { setVisitedWizardPageAction } from "../../../actions/wizardInfoActions/setVisitedWizardPage";
-import { enableQuickStartAction } from "../../../actions/wizardInfoActions/enableQuickStartAction";
+import RootAction from "../../../store/ActionType";
 
-import { getVSCodeApiSelector } from "../../../selectors/vscodeApiSelector";
-import { isEnableNextPage } from "../../../selectors/wizardSelectionSelector/wizardSelectionSelector";
+import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
+import { isEnableNextPage } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 
-import { AppState } from "../../../reducers";
-import { IVSCodeObject } from "../../../reducers/vscodeApiReducer";
+import { AppState } from "../../../store/combineReducers";
+import { IVSCodeObject } from "../../../store/vscode/model";
 import { ISelected } from "../../../types/selected";
 
 import { ReactComponent as QuickStartWand } from "../../../assets/quickStartWand.svg";
@@ -34,6 +27,9 @@ import { ROUTES, ROUTES_ARRAY, EXTENSION_COMMANDS } from "../../../utils/constan
 
 import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";
+import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
+import { setPagesAction } from "../../../store/selection/pages/action";
+import { setVisitedWizardPageAction } from "../../../store/wizardContent/pages/action";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -46,7 +42,6 @@ interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
   setRouteVisited: (route: string) => void;
-  enableQuickStart: () => void;
 }
 
 type Props = IStateProps & IDispatchProps & RouteComponentProps;
@@ -60,12 +55,10 @@ class QuickStart extends Component<Props> {
       selectBackendFramework,
       selectPages,
       history,
-      setRouteVisited,
-      enableQuickStart
+      setRouteVisited
     } = this.props;
 
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART);
-    enableQuickStart();
     getAllFrameworks(vscode, isPreview);
     getAllPages(vscode);
     selectFrontendFramework(FRONT_END_SELECTION);
@@ -131,13 +124,10 @@ const mapDispatchToProps = (
     dispatch(setSelectedBackendFrameworkAction(backendFramework));
   },
   selectPages: (pages: ISelected[]) => {
-    dispatch(selectPagesAction(pages));
+    dispatch(setPagesAction(pages));
   },
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
-  },
-  enableQuickStart: () => {
-    dispatch(enableQuickStartAction());
   }
 });
 

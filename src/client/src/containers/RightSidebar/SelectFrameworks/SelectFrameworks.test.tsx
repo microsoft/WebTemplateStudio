@@ -6,7 +6,7 @@ import * as ReactRedux from 'react-redux'
 import { getInitialState, addFrontEndFrameworksOptions, addBackEndFrameworksOptions, setFrontendFramework, setBackendFramework } from "../../../mockData/mockStore";
 import { render, RenderResult } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { AppState } from "../../../reducers";
+import { AppState } from "../../../store/combineReducers";
 
 describe("SelectFrameworks", () => {
   let wrapper: RenderResult;
