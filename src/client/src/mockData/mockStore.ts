@@ -3,6 +3,7 @@ import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../store/vscode/model";
 import mockVsCodeApi from "./mockVsCodeApi";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
+import { ModalType } from "../store/modals/typeKeys";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -37,7 +38,6 @@ export const getInitialState = (): AppState => {
       backendOptions: [],
       frontendOptions: [],
       pageOptions: [],
-      projectTypes: [],
       detailsPage: {
         isIntlFormatted: false,
         data: {
@@ -52,10 +52,7 @@ export const getInitialState = (): AppState => {
           svgUrl:''
         }
       },
-      serverPort: 9502,
-      previewStatus: false,
-      createProjectButton: false,
-      enableQuickStart: false,
+      previewStatus: false
     },
     selection: {
       appType: {
@@ -266,7 +263,7 @@ const getSubscriptionsSelector = (): Array<Subscription> => {
   const subscriptions = Array.from(Array(2).keys()).map(
     (item: number) => {
       return {
-        name: `subscription ${item} label`,
+        name: `subscription ${item}`,
         isMicrosoftLearn: false
       };
     }
@@ -376,4 +373,8 @@ export const setBackendFramework = (store: AppState, internalName: string) => {
 
 export const setFrontendFramework = (store: AppState, internalName: string) => {
   store.selection.backendFramework.internalName = internalName;
+}
+
+export const setOpenModal = (store: AppState, modalType: ModalType) => {
+  store.modals.openModal.modalType = modalType;
 }
