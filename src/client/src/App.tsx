@@ -123,7 +123,7 @@ const App = (props: Props) => {
     loader: () => addToPromisesList(import(/* webpackChunkName: "Header" */  "./containers/Header")),
     loading:() => <div/>
   });
-  
+
   const Footer = Loadable({
     loader: () => addToPromisesList(import(/* webpackChunkName: "Footer" */  "./containers/Footer")),
     loading:() => <div/>

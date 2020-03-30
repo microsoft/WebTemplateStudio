@@ -1,11 +1,6 @@
 import { defineMessages } from "react-intl";
 
-const PAGE_DETAILS = "/PageDetail";
-const SELECT_FRAMEWORKS = "/SelectFrameworks";
-const SELECT_PAGES = "/SelectPages";
-const AZURE_LOGIN = "/AzureLogin";
-const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
-const NEW_PROJECT = "/";
+
 
 const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
@@ -67,21 +62,22 @@ const PAYLOAD_MESSAGES_TEXT = {
 };
 
 const ROUTES = {
-  PAGE_DETAILS,
-  SELECT_FRAMEWORKS,
-  SELECT_PAGES,
-  AZURE_LOGIN,
-  REVIEW_AND_GENERATE,
-  NEW_PROJECT
+  PAGE_DETAILS: "/PageDetail",
+  SELECT_FRAMEWORKS:  "/SelectFrameworks",
+  SELECT_PAGES: "/SelectPages",
+  AZURE_LOGIN: "/AzureLogin",
+  REVIEW_AND_GENERATE :"/ReviewAndGenerate",
+  NEW_PROJECT: "/"
 };
+
 
 // Presents the routes in the order of the wizard
 const ROUTES_ARRAY = [
-  NEW_PROJECT,
-  SELECT_FRAMEWORKS,
-  SELECT_PAGES,
-  AZURE_LOGIN,
-  REVIEW_AND_GENERATE
+  ROUTES.NEW_PROJECT,
+  ROUTES.SELECT_FRAMEWORKS,
+  ROUTES.SELECT_PAGES,
+  ROUTES.AZURE_LOGIN,
+  ROUTES.REVIEW_AND_GENERATE
 ];
 
 const SERVICE_KEYS = {
