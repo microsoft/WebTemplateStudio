@@ -50,17 +50,16 @@ interface IState {
 
 type Props = IAzureLoginProps & IDispatchProps & InjectedIntlProps;
 
-const AzureSubscriptions = (props:Props) => {
+const AzureSubscriptions = (props: Props) => {
   const {
-    cosmosDbSelection, 
-    appServiceSelection, 
+    cosmosDbSelection,
+    appServiceSelection,
     intl,
     openCosmosDbModal,
     openAppServiceModal,
-    isAppServiceSelected,
     openAzureLoginModal,
-    isLoggedIn, 
-    setDetailPage, 
+    isLoggedIn,
+    setDetailPage,
     isPreview
   } = props;
   const { formatMessage } = intl;
@@ -96,14 +95,6 @@ const AzureSubscriptions = (props:Props) => {
       return modalOpeners[internalName];
     }
     return () => void(0);
-  }
-
-  const getCreatedHostingService = (): string | null => {
-    if (isAppServiceSelected) {
-      return WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE;
-    } else {
-      return null;
-    }
   }
 
   const getServicesOrganizer = (

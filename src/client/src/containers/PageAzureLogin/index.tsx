@@ -41,7 +41,7 @@ type Props = IDispatchProps &
   InjectedIntlProps &
   RouteComponentProps;
 
-const AzureLogin = (props:Props)=> {
+const AzureLogin = (props: Props)=> {
   const {
     startLogOutToAzure,
     isLoggedIn, intl, email

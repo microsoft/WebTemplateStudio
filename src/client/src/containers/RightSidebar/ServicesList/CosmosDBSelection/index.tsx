@@ -1,21 +1,13 @@
 import _ from "lodash";
 import * as React from "react";
-import { connect, useDispatch } from "react-redux";
-
+import { useDispatch } from "react-redux";
 import SidebarItem from "../SidebarItem";
-
 import { ICosmosDB } from "../../../../store/azureProfileData/cosmosDb/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
-
 import { openCosmosDbModalAction } from "../../../../store/modals/action";
-
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
-
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../../../store/combineReducers";
-import RootAction from "../../../../store/ActionType";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { IVSCodeObject } from "../../../../store/vscode/model";
 import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
@@ -27,7 +19,6 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-// This component lives in "containers" because the accountName can change via redux in the future
 const CosmosDBSelection = ({
   cosmosSelection,
   intl

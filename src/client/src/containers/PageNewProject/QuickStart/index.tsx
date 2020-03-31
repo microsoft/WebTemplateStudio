@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { RouteComponentProps, withRouter } from "react-router";
@@ -45,7 +45,7 @@ interface IDispatchProps {
 
 type Props = IStateProps & IDispatchProps & RouteComponentProps;
 
-const QuickStart = (props:Props) => {
+const QuickStart = (props: Props) => {
   const {
     isPreview,
     selectFrontendFramework,
