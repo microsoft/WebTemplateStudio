@@ -14,7 +14,7 @@ type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const SelectFrameworks = (props: Props) => {
   const { frontendOptions, backendOptions, intl } = props;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
 
   React.useEffect(()=>{
     getDependencyInfoAndSetToStore();

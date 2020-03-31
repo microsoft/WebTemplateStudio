@@ -24,7 +24,7 @@ const FrameworkCard = (props: Props) => {
 
   const [selected, setSelected] = React.useState(false);
   const [latestVersion, setLatestVersion] = React.useState(framework.latestVersion);
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
 
   React.useEffect(()=>{
     selectWhenLoadWithoutSelection();

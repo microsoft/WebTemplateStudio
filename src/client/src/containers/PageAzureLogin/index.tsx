@@ -46,7 +46,7 @@ const AzureLogin = (props: Props)=> {
     startLogOutToAzure,
     isLoggedIn, intl, email
   } = props;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
 
   const signOutClick = () => {
     azureLogout(vscode).then((event)=>{

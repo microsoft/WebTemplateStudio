@@ -50,7 +50,7 @@ const AzureLoginModal = (props: Props) => {
     openCosmosDbModal,
     logIntoAzure
   } = props;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
 
   const handleSignInClick = () => {
     azureLogin(vscode).then((event)=>{

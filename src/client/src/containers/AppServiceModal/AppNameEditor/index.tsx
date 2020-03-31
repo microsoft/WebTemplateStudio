@@ -32,7 +32,7 @@ const AppNameEditor = ({
   onIsAvailableAppNameChange,
 }: Props) => {
   const {formatMessage} = intl;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const {vscode} = React.useContext(AppContext);
   const projectName = useSelector((state: AppState) => getProjectName(state));
   const [invalidAppNameMessage, setInvalidAppNameMessage] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);

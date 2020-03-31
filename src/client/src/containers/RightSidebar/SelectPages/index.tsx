@@ -41,7 +41,7 @@ const SelectPages = (props: Props) => {
 
   const selection: SelectionState = useSelector((state: AppState) => state.selection);
   const selectedPages: any[] = useSelector((state: AppState) => state.selection.pages);
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 
   const handleOpenAddPagesModal = () => {

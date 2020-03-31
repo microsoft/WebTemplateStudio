@@ -55,7 +55,7 @@ const QuickStart = (props: Props) => {
     setRouteVisited,
     isEnableNextPage
   } = props;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
   
   const handleClick = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART);

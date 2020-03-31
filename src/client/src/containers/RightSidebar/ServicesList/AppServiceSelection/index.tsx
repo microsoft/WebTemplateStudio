@@ -27,7 +27,7 @@ const AppServiceSelection = ({
   intl
 }: Props) => {
   const { serviceType } = appServiceSelection.wizardContent;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 
   const openAppServiceModalAndSendTelemetry = () => {

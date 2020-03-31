@@ -13,16 +13,10 @@ import {
   FRAMEWORK_TYPE
 } from "./utils/constants";
 
-import {
-  updateTemplateGenerationStatusMessageAction,
-  updateTemplateGenerationStatusAction
-} from "./store/generationStatus/action";
 import { getVersionsDataAction } from "./store/versions/action";
 
 import appStyles from "./appStyles.module.css";
 import { IVersions } from "./types/version";
-import { IVSCodeObject } from "./types/vscode";
-import { IServiceStatus } from "./store/generationStatus/model";
 import { ISelected } from "./types/selected";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
@@ -86,8 +80,6 @@ interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
   logIntoAzure: (azureProfile: AzureProfile) => void;
   setValidationsAction: (validations: any) => void;
-  updateTemplateGenStatusMessage: (status: string) => any;
-  updateTemplateGenStatus: (isGenerated: IServiceStatus) => any;
   getVersionsData: (versions: IVersions) => any;
   getPages: (pages: IOption[]) => any;
   setPreviewStatus: (isPreview: boolean) => void;
@@ -112,7 +104,7 @@ const App = (props: Props) => {
     isPreview, setFrontendFrameworks, setBackendFrameworks, modalState, logIntoAzure } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading: Array<any> = new Array<any>();
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const {vscode} = React.useContext(AppContext);
 
   const addToPromisesList = (promise: Promise<any>)=>{
     promisesLoading.push(promise);
@@ -210,12 +202,6 @@ const App = (props: Props) => {
             props.updateOutputPath(message.payload.outputPath);
           }
           break;
-        case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
-          props.updateTemplateGenStatusMessage(message.payload.status);
-          break;
-        case EXTENSION_COMMANDS.GEN_STATUS:
-          props.updateTemplateGenStatus(message.payload);
-          break;
       }
     });
   }
@@ -290,12 +276,6 @@ const mapDispatchToProps = (
   },
   setValidationsAction: (validations: any) => {
     dispatch(setValidationsAction(validations));
-  },
-  updateTemplateGenStatusMessage: (status: string) => {
-    dispatch(updateTemplateGenerationStatusMessageAction(status));
-  },
-  updateTemplateGenStatus: (isGenerated: IServiceStatus) => {
-    dispatch(updateTemplateGenerationStatusAction(isGenerated));
   },
   getPages: (pages: IOption[]) => {
     dispatch(getPagesOptionsAction(pages));

@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import ReactMarkdown from "react-markdown";
 import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
@@ -39,6 +39,7 @@ import { AppContext } from "../../AppContext";
 import { rootSelector } from "../../store/selection/app/selector";
 import { isCosmosResourceCreatedSelector, getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
 import { isAppServiceSelectedSelector, getAppServiceSelectionSelector } from "../../store/azureProfileData/appService/selector";
+import { updateTemplateGenerationStatusMessageAction, updateTemplateGenerationStatusAction } from "../../store/generationStatus/action";
 interface LinksDict {
   [serviceId: string]: string;
 }
@@ -87,13 +88,14 @@ const GenerationModal = ({
   const templateGenerated = isTemplateGenerated && !isTemplatesFailed;
   const templateGenerationInProgress =
     !isTemplateGenerated && !isTemplatesFailed;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
 
   const engine = useSelector((state: AppState) => rootSelector(state));
   const isCosmosSelected = useSelector((state: AppState) => isCosmosResourceCreatedSelector(state));
   const cosmos = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
   const isAppServiceSelected = useSelector((state: AppState) => isAppServiceSelectedSelector(state));
   const appService = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
+  const dispatch = useDispatch();
 
   React.useEffect(()=>{
     generateProject(engine,
@@ -102,7 +104,23 @@ const GenerationModal = ({
       isAppServiceSelected,
       appService,
       vscode);
+      messageEventsFromExtension();
   },[]);
+
+  function messageEventsFromExtension(){
+    window.addEventListener("message", event => {
+      const message = event.data;
+      switch (message.command) {
+        case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
+          dispatch(updateTemplateGenerationStatusMessageAction(message.payload.status));
+          break;
+        case EXTENSION_COMMANDS.GEN_STATUS:
+          dispatch(updateTemplateGenerationStatusAction(message.payload));
+          break;
+      }
+    });
+  }
+
   const LinkRenderer = (props: any) => (
     <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
       {props.children}
@@ -139,7 +157,6 @@ const GenerationModal = ({
     trackCreateNewProjectTelemetry(param);
     resetWizard();
     history.push(ROUTES.NEW_PROJECT);
-
   };
 
   const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -391,9 +408,7 @@ const GenerationModal = ({
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
-  isServicesDeployed: PostGenSelectors.isServicesDeployedOrFinishedSelector(
-    state
-  ),
+  isServicesDeployed: PostGenSelectors.isServicesDeployedOrFinishedSelector(state),
   isServicesSelected: PostGenSelectors.isServicesSelectedSelector(state),
   isTemplateGenerated: PostGenSelectors.isTemplateGeneratedSelector(state),
   isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),

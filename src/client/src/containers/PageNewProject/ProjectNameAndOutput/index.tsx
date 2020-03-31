@@ -56,7 +56,7 @@ const ProjectNameAndOutput = (props: Props) => {
   } = props;
 
   const dispatch = useDispatch();
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
   
   React.useEffect(() => {
     if (projectName==="" && outputPath!=="" && projectNameValidation.isDirty===false){

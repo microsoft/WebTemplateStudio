@@ -32,7 +32,7 @@ const AccountNameEditor = ({
   onIsAvailableAccountNameChange,
 }: Props) => {
   const { formatMessage } = intl;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
   const projectName = useSelector((state: AppState) => getProjectName(state));
   const [invalidAccountNameMessage, setInvalidAccountNameMessage] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);

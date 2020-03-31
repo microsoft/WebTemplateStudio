@@ -91,7 +91,7 @@ const Footer = (props: Props) => {
   } = props;
   const { pathname } = location;
   const { showFrameworks } = isVisited;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
 
   const showModalGenerateProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

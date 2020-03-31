@@ -24,7 +24,7 @@ const CosmosDBSelection = ({
   intl
 }: Props) => {
   const { serviceType } = cosmosSelection.wizardContent;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 
   const openCosmosDbModalAndSendTelemetry = () => {
