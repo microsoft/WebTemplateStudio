@@ -22,6 +22,7 @@ import { getVSCodeApiSelector } from "../../../store/vscode/selector";
 import { sendTelemetry, resetAllPages } from "../../../utils/extensionService/extensionService";
 import { SelectionState } from "../../../store/selection/combineReducers";
 import { resetPagesAction, setPagesAction } from "../../../store/selection/pages/action";
+import { AppContext } from "../../../AppContext";
 
 interface IStateProps {
   pathname: string;
@@ -41,7 +42,7 @@ const SelectPages = (props: Props) => {
 
   const selection: SelectionState = useSelector((state: AppState) => state.selection);
   const selectedPages: any[] = useSelector((state: AppState) => state.selection.pages);
-  const vscode: IVSCodeObject = useSelector((state: AppState) => getVSCodeApiSelector(state));
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
   const dispatch = useDispatch();
 
   const handleOpenAddPagesModal = () => {

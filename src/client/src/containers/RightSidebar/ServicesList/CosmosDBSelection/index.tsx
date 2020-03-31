@@ -20,13 +20,10 @@ import { sendTelemetry } from "../../../../utils/extensionService/extensionServi
 import { getVSCodeApiSelector } from "../../../../store/vscode/selector";
 import { IVSCodeObject } from "../../../../store/vscode/model";
 import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
+import { AppContext } from "../../../../AppContext";
 
 interface IProps {
   cosmosSelection: ICosmosDB;
-}
-
-interface IStateProps {
-  vscode: IVSCodeObject;
 }
 
 interface IDispatchProps {
@@ -34,17 +31,17 @@ interface IDispatchProps {
   openCosmosDbModal: () => any;
 }
 
-type Props = IProps & IStateProps & IDispatchProps & InjectedIntlProps;
+type Props = IProps & IDispatchProps & InjectedIntlProps;
 
 // This component lives in "containers" because the accountName can change via redux in the future
 const CosmosDBSelection = ({
   cosmosSelection,
   removeCosmosResource,
   openCosmosDbModal,
-  vscode,
   intl
 }: Props) => {
   const { serviceType } = cosmosSelection.wizardContent;
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
   const openCosmosDbModalAndSendTelemetry = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST)
@@ -92,10 +89,6 @@ const CosmosDBSelection = ({
   );
 };
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  vscode: getVSCodeApiSelector(state)
-});
-
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ) => ({
@@ -108,6 +101,5 @@ const mapDispatchToProps = (
 });
 
 export default connect(
-  mapStateToProps,
   mapDispatchToProps
 )(injectIntl(CosmosDBSelection));
