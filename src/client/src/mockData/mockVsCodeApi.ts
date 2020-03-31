@@ -1,6 +1,7 @@
 import {
   EXTENSION_COMMANDS,
-  DEVELOPMENT
+  DEVELOPMENT,
+  TEST
 } from "../utils/constants";
 
 import * as mockAzureModule from "./extensionModules/mockAzureModule";
@@ -14,7 +15,7 @@ import * as mockAzureModule from "./extensionModules/mockAzureModule";
  */
 const mockVsCodeApi = () => ({
   postMessage: (message: any) => {
-    if (process.env.NODE_ENV === DEVELOPMENT) {
+    if (process.env.NODE_ENV === DEVELOPMENT || process.env.NODE_ENV === TEST) {
       switch (message.command) {
         case "alert":
           console.log("Command: ", message.alert);
@@ -160,7 +161,8 @@ const mockVsCodeApi = () => ({
                       latestVersion: "10.15.0",
                       preview: false,
                       enabled: true,
-                      type: "backend"
+                      type: "backend",
+                      linuxVersion: "node|10.14"
                     }
                   },
                   {
@@ -176,7 +178,9 @@ const mockVsCodeApi = () => ({
                     tags: {
                       version: "0.14.3",
                       latestVersion: "0.14.3",
-                      preview: false
+                      preview: false,
+                      type: "backend",
+                      linuxVersion: "node|10.14"
                     }
                   },
                   {
@@ -204,7 +208,8 @@ const mockVsCodeApi = () => ({
                       latestVersion: "1.0.6",
                       preview: false,
                       enabled: true,
-                      type: "backend"
+                      type: "backend",
+                      linuxVersion: "python|3.7"
                     }
                   }
                 ],
