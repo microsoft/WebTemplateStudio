@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { MICROSOFT_LEARN_TENANTS } from "./../configuration.json";
 
-import { AzureAuth, SubscriptionItem } from "./azure-auth/azureAuth";
+import { AzureAuth, SubscriptionItem, LocationItem } from "./azure-auth/azureAuth";
 import { CosmosDBDeploy, CosmosDBSelections, DatabaseObject } from "./azure-cosmosDB/cosmosDbModule";
 import {
   CONSTANTS,
@@ -25,11 +25,34 @@ interface ValidateResult {
   errorMessage: string;
 }
 
+interface SubscriptionData {
+  resourceGroups: ResourceGroup[];
+  locations: AzureLocation[];
+}
+
+interface ResourceGroup {
+  name: string;
+}
+
+interface AzureLocation {
+  name: string;
+}
+
 export class AzureServices {
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static AzureAppServiceProvider = new AppServiceProvider();
   private static AzureResourceGroupProvider = new ResourceGroupDeploy();
   private static subscriptionsCache: SubscriptionItem[] = [];
+
+  public static async Login(): Promise<boolean>{
+    return await AzureAuth.login();
+  }
+
+  public static async Logout(): Promise<boolean>{
+    const success = await AzureAuth.logout();
+    AzureServices.CleanSubscriptionCache();
+    return success;
+  }
 
   public static async getUserStatus(): Promise<UserStatus> {
     const email = AzureAuth.getEmail();
@@ -48,7 +71,7 @@ export class AzureServices {
     return AzureServices.subscriptionsCache;
   }
 
-  public static CleanSubscriptionCache(): void {
+  private static CleanSubscriptionCache(): void {
     AzureServices.subscriptionsCache.length = 0;
   }
 
@@ -64,6 +87,38 @@ export class AzureServices {
 
   public static IsMicrosoftLearnSubscription(subscription: SubscriptionItem): boolean {
     return MICROSOFT_LEARN_TENANTS.includes(subscription.session.tenantId);
+  }
+
+  public static async getSubscriptionData(subscriptionName: string, AzureType: AzureResourceType): Promise<SubscriptionData> {
+    const subscription = AzureServices.getSubscription(subscriptionName);
+    const resourceGroups = await AzureServices.getResourceGroups(subscription);
+    const locations = await AzureServices.getLocations(subscription, AzureType);
+    return {
+      resourceGroups,
+      locations,
+    };
+  }
+
+  private static async getResourceGroups(subscription: SubscriptionItem): Promise<ResourceGroup[]> {
+    const items = await AzureAuth.getAllResourceGroupItems(subscription);
+    const resources: ResourceGroup[] = [];
+    items.map(item => resources.push({ name: item.name }));
+    return resources;
+  }
+
+  private static async getLocations(subscription: SubscriptionItem, AzureType: AzureResourceType): Promise<AzureLocation[]> {
+    let items: LocationItem[] = [];
+    switch (AzureType) {
+      case AzureResourceType.Cosmos:
+        items = await AzureAuth.getLocationsForCosmos(subscription);
+        break;
+      case AzureResourceType.AppService:
+        items = await AzureAuth.getLocationsForApp(subscription);
+        break;
+    }
+    const locations: AzureLocation[] = [];
+    items.map(item => locations.push({ name: item.locationDisplayName }));
+    return locations;
   }
 
   public static async validateAppServiceName(name: string, subscription: string): Promise<ValidateResult> {

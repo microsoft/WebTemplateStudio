@@ -110,6 +110,8 @@ const CosmosModal = ({ intl }: Props) => {
           onAccountNameChange={setAccountName}
           onIsAvailableAccountNameChange={setIsAvailableAccountName}
         />
+
+        {/* Advanced Mode */}
         <div className={classNames({ [styles.hide]: !showAdvanced })}>
         <LocationSelection
             initialLocations={subscriptionData.locations}
