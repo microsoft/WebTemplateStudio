@@ -1,3 +1,0 @@
-export enum VSCODE_TYPEKEYS {
-  GET_VSCODE_API = "WTS/vscode/GET_VSCODE_API"
-}

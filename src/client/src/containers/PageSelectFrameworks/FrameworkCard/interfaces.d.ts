@@ -15,7 +15,6 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  vscode: IVSCodeObject;
   isPreview: boolean;
   frontEndSelect: ISelected;
   backEndSelect: ISelected;

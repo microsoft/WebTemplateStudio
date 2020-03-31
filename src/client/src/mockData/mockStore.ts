@@ -12,32 +12,12 @@ export const getISelected = () => {
   return selected;
 };
 
-
-export const getIVSCodeApi = () => {
-  const isVsCodeApiAcquired = false;
-  const vscodeObject: IVSCodeObject = mockVsCodeApi();
-
-  const vscode: IVSCodeAPI = {
-    isVsCodeApiAcquired,
-    vscodeObject
-  };
-  const mockVSCode: IVSCode = {
-    vscode
-  };
-  return mockVSCode;
-};
-
 export const getInitialState = (): AppState => {
   const initialState: AppState={
-    vscode: {
-      isVsCodeApiAcquired: true,
-      vscodeObject: getIVSCodeApi().vscode.vscodeObject
-    },
     wizardContent: {
       backendOptions: [],
       frontendOptions: [],
       pageOptions: [],
-      projectTypes: [],
       detailsPage: {
         isIntlFormatted: false,
         data: {
@@ -52,10 +32,7 @@ export const getInitialState = (): AppState => {
           svgUrl:''
         }
       },
-      serverPort: 9502,
       previewStatus: false,
-      createProjectButton: false,
-      enableQuickStart: false,
     },
     selection: {
       appType: {

@@ -6,7 +6,6 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  vscode: IVSCodeObject;
   frontendOptions: IOption[];
   backendOptions: IOption[];
 }

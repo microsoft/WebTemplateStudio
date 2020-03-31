@@ -24,7 +24,6 @@ import {
   WEB_TEMPLATE_STUDIO_LINKS,
   TELEMETRY
 } from "../../utils/constants";
-import { getVSCodeApiSelector } from "../../store/vscode/selector";
 import { IVSCodeObject } from "../../store/vscode/model";
 
 import { AppState } from "../../store/combineReducers";
@@ -36,6 +35,7 @@ import keyUpHandler from "../../utils/keyUpHandler";
 
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { resetWizardAction } from "../../store/wizardContent/wizardContent/action";
+import { AppContext } from "../../AppContext";
 interface LinksDict {
   [serviceId: string]: string;
 }
@@ -54,7 +54,6 @@ interface IStateProps {
   isModalOpen: boolean;
   serviceStatus: IAzureServiceStatus;
   isServicesSelected: boolean;
-  vscode: IVSCodeObject;
   outputPath: string;
   projectName: string;
 }
@@ -74,7 +73,6 @@ const PostGenerationModal = ({
   isServicesDeployed,
   templateGenStatus,
   outputPath,
-  vscode,
   intl,
   isTemplatesFailed,
   isServicesSelected,
@@ -86,6 +84,7 @@ const PostGenerationModal = ({
   const templateGenerated = isTemplateGenerated && !isTemplatesFailed;
   const templateGenerationInProgress =
     !isTemplateGenerated && !isTemplatesFailed;
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
   const LinkRenderer = (props: any) => (
     <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
@@ -384,7 +383,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   outputPath: getOutputPath(state),
   serviceStatus: PostGenSelectors.servicesToDeploySelector(state),
   templateGenStatus: PostGenSelectors.getSyncStatusSelector(state),
-  vscode: getVSCodeApiSelector(state),
   projectName: getProjectName(state)
 });
 

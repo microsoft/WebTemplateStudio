@@ -13,7 +13,6 @@ import {
   FRAMEWORK_TYPE
 } from "./utils/constants";
 
-import { getVSCodeApi } from "./store/vscode/action";
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
@@ -85,7 +84,6 @@ if (process.env.NODE_ENV === DEVELOPMENT) {
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
-  getVSCodeApi: () => void;
   logIntoAzure: (azureProfile: AzureProfile) => void;
   setValidationsAction: (validations: any) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
@@ -142,10 +140,6 @@ const App = (props: Props) => {
   Promise.all(promisesLoading).then(()=>{
     setIsLoaded(true);
   })
-
-  React.useEffect(()=>{
-    props.getVSCodeApi();
-  },[]);
 
   React.useEffect(()=>{
     getUserStatus(vscode).then((event)=>{
@@ -288,9 +282,6 @@ const App = (props: Props) => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  getVSCodeApi: () => {
-    dispatch(getVSCodeApi());
-  },
   logIntoAzure: (azureProfile: AzureProfile) => {
     dispatch(logIntoAzureActionAction(azureProfile));
   },

@@ -9,7 +9,8 @@ import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
 import { ValidateCosmosAccountName, GetValidCosmosAccountName } from "../../../utils/extensionService/extensionService";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../store/combineReducers";
-import { getVSCodeApiSelector } from "../../../store/vscode/selector";
+import { AppContext } from "../../../AppContext";
+import { IVSCodeObject } from "../../../store/vscode/model";
 
 let timeout: NodeJS.Timeout | undefined;
 let validationCosmosDbAccountNameScopeId = 0;
@@ -31,7 +32,7 @@ const AccountNameEditor = ({
   onIsAvailableAccountNameChange,
 }: Props) => {
   const { formatMessage } = intl;
-  const vscode = useSelector((state: AppState) => getVSCodeApiSelector(state));
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
   const projectName = useSelector((state: AppState) => getProjectName(state));
   const [invalidAccountNameMessage, setInvalidAccountNameMessage] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);

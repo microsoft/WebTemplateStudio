@@ -1,51 +1,38 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import SidebarItem from "../SidebarItem";
 
 import { IAppService } from "../../../../store/azureProfileData/appService/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 
-import { openAppServiceModalAction } from "../../../../store/modals/action";
-
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../../../store/combineReducers";
-import RootAction from "../../../../store/ActionType";
 import { IVSCodeObject } from "../../../../store/vscode/model";
-import { getVSCodeApiSelector } from "../../../../store/vscode/selector";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { removeAppServiceSettingsAction } from "../../../../store/azureProfileData/appService/action";
+import { AppContext } from "../../../../AppContext";
+import { openAppServiceModalAction } from "../../../../store/modals/action";
 
 interface IProps {
   appServiceSelection: IAppService;
 }
 
-interface IStateProps {
-  vscode: IVSCodeObject;
-}
-
-interface IDispatchProps {
-  removeAppServiceResource: () => any;
-  openAppServiceModalAction: () => any;
-}
-
-type Props = IProps & IStateProps & IDispatchProps & InjectedIntlProps;
+type Props = IProps & InjectedIntlProps;
 
 const AppServiceSelection = ({
   appServiceSelection,
-  removeAppServiceResource,
-  openAppServiceModalAction,
-  vscode,
   intl
 }: Props) => {
   const { serviceType } = appServiceSelection.wizardContent;
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const dispatch = useDispatch();
+
   const openAppServiceModalAndSendTelemetry = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST)
-    openAppServiceModalAction();
+    dispatch(openAppServiceModalAction());
   }
 
   const onEditKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -75,7 +62,7 @@ const AppServiceSelection = ({
             key={appServiceSelection.selection.siteName}
             text={appServiceSelection.selection.siteName}
             withIndent={true}
-            handleCloseClick={removeAppServiceResource}
+            handleCloseClick={()=> dispatch(removeAppServiceSettingsAction())}
             idx={1}
           />
         </React.Fragment>
@@ -84,22 +71,4 @@ const AppServiceSelection = ({
   );
 };
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  vscode: getVSCodeApiSelector(state)
-});
-
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-) => ({
-  removeAppServiceResource: () => {
-    dispatch(removeAppServiceSettingsAction());
-  },
-  openAppServiceModalAction: () => {
-    dispatch(openAppServiceModalAction());
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(AppServiceSelection));
+export default injectIntl(AppServiceSelection);

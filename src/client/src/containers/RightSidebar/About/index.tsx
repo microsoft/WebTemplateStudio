@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import styles from "./styles.module.css";
-import { getVersionsSelector } from "../../../store/vscode/selector";
 import { IVersions } from "../../../types/version";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../../store/combineReducers";
@@ -11,7 +10,7 @@ import messages from "./messages";
 type Props = InjectedIntlProps;
 
 const About = ({ intl }: Props) => {
-  const versions: IVersions = useSelector((state: AppState) => getVersionsSelector(state));
+  const versions: IVersions = useSelector((state: AppState) => state.versions);
   const { templatesVersion, wizardVersion } = versions;
   const { formatMessage } = intl;
   return (
