@@ -213,7 +213,6 @@ class Footer extends React.Component<Props> {
                     this.handleLinkBackClick(event, selectedRoute);
                   }}
                   onKeyUp={keyUpHandler}
-                 
                 >
                   <FormattedMessage id="footer.back" defaultMessage="Back" />
                 </a>
@@ -234,7 +233,6 @@ class Footer extends React.Component<Props> {
                     this.handleLinkClick(event, selectedRoute);
                   }}
                   onKeyUp={keyUpHandler}
-                  
                 >
                   <FormattedMessage id="footer.next" defaultMessage="Next" />
                   {nextArrow && (
@@ -296,7 +294,7 @@ const mapDispatchToProps = (
   }
 });
 
-export default 
+export default
   connect(
     mapStateToProps,
     mapDispatchToProps

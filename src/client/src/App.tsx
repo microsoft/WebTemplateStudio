@@ -268,7 +268,7 @@ const App = (props: Props) => {
           {(selectedRoute === ROUTES.NEW_PROJECT) && (<PageNewProject/>)}
 
         </main>
-        {<RightSidebar />}
+        <RightSidebar />
       </div>)}
       {isLoaded && (<Footer />)}
       {!isLoaded && (<div className={appStyles.spinnerContainer}></div>)}
