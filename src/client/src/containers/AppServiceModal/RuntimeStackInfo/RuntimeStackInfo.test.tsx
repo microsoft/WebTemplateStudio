@@ -1,8 +1,7 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import RuntimeStackInfo from ".";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
-import { getInitialState, setBackendFramework } from "../../../mockData/mockStore";
+import { getInitialState, setBackendFramework, addBackEndFrameworksOptions } from "../../../mockData/mockStore";
 import { RenderResult } from "@testing-library/react";
 import { renderWithStore } from "../../../testUtils";
 import messages from "./messages";
@@ -14,22 +13,23 @@ describe("RuntimeStackInfo", () => {
   let initialState: any;
   const mockStore = configureMockStore();
   const cases = [
-    [WIZARD_CONTENT_INTERNAL_NAMES.NODE, WIZARD_CONTENT_INTERNAL_NAMES.NODE],
-    [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER, WIZARD_CONTENT_INTERNAL_NAMES.NODE],
-    [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, WIZARD_CONTENT_INTERNAL_NAMES.PYTHON],
+    ["Node", "node"],
+    ["Moleculer", "node"],
+    ["Flask", "python"],
   ];
 
   test.each(cases)(
     "when selected backend framework is %p, runtime stack is %p",
     (backendFramework, runtimeStack) => {
       initialState = getInitialState();
+      addBackEndFrameworksOptions(initialState);
       setBackendFramework(initialState, backendFramework);
       store = mockStore(initialState);
       props = {};
 
       wrapper = renderWithStore(<RuntimeStackInfo {...props} />, store);
       expect(wrapper).toBeDefined();
-      const expectedText = intl.formatMessage(messages.runtimeStack, {runtimeStack});
+      const expectedText = intl.formatMessage(messages.runtimeStack, { runtimeStack });
       expect(wrapper.getByText(expectedText)).toBeDefined();
     }
   );
