@@ -110,13 +110,12 @@ const azureLogout = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
-const getSubscriptionDataForCosmos = (vscode: IVSCodeObject, subscription: string, projectName: string ) => {
+const getSubscriptionDataForCosmos = (vscode: IVSCodeObject, subscription: string) => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS, {
     module: EXTENSION_MODULES.AZURE,
     command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
     track: true,
-    subscription,
-    projectName
+    subscription
   }, vscode);
 }
 
@@ -145,14 +144,13 @@ const sendTelemetry = (vscode: IVSCodeObject, command: string, payload?: any): v
   });
 }
 
-const GetSubscriptionDataForAppService = (subscription: string, projectName: string, vscode: IVSCodeObject): Promise<any> => {
+const GetSubscriptionDataForAppService = (vscode: IVSCodeObject, subscription: string): Promise<any> => {
   return postMessageAsync(
     EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE, {
     module: EXTENSION_MODULES.AZURE,
     command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE,
     track: true,
-    subscription,
-    projectName
+    subscription
   }, vscode);
 }
 

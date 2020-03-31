@@ -18,6 +18,9 @@ import classNames from "classnames";
 import { useState } from "react";
 import { closeModalAction } from "../../store/modals/action";
 import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
+import { getSubscriptionDataForCosmos } from "../../utils/extensionService/extensionService";
+import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
+import LocationSelection from "../../components/LocationSelection";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -28,16 +31,28 @@ type Props = IStateProps & InjectedIntlProps;
 const CosmosModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
+  const vscode = useSelector((state: AppState) => getVSCodeApiSelector(state));
   const cosmosInStore = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
   const initialSubscription = cosmosInStore ? cosmosInStore.subscription : "";
   const initialAccountName = cosmosInStore ? cosmosInStore.accountName : "";
   const initialApi = cosmosInStore ? cosmosInStore.api : "";
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const initialSubscriptionData: SubscriptionData = { locations: [], resourceGroups:[] };
 
   const [subscription, setSubscription] = useState(initialSubscription);
+  const [subscriptionData, setSubscriptionData] = useState(initialSubscriptionData);
   const [accountName, setAccountName] = useState(initialAccountName);
   const [api, setApi] = useState(initialApi);
+  const [location, setLocation] = useState("");
   const [isAvailableAccountName, setIsAvailableAccountName] = useState(false);
+  
+  React.useEffect(() => {
+    if(subscription) {
+      getSubscriptionDataForCosmos(vscode, subscription).then(event => {
+        setSubscriptionData(event.data.payload);
+      });
+    }
+  }, [subscription]);
 
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
@@ -64,6 +79,7 @@ const CosmosModal = ({ intl }: Props) => {
     const cosmosSelection: ISelectedCosmosService = {
       subscription,
       accountName,
+      //location,
       resourceGroup: "",
       api,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
@@ -76,6 +92,7 @@ const CosmosModal = ({ intl }: Props) => {
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
         <Cancel
+          data-testid="close-button"
           className={styles.closeIcon}
           onClick={() => dispatch(closeModalAction())}
           onKeyDown={closeModalIfPressEnterOrSpaceKey}
@@ -93,7 +110,9 @@ const CosmosModal = ({ intl }: Props) => {
           onIsAvailableAccountNameChange={setIsAvailableAccountName}
         />
         <div className={classNames({ [styles.hide]: !showAdvanced })}>
-          {/* Advanced mode */}
+        <LocationSelection
+            initialLocations={subscriptionData.locations}
+            onLocationChange={setLocation} />
         </div>
 
         <ApiSelection initialApi={api} onApiChange={setApi} />

@@ -19,6 +19,9 @@ import classNames from "classnames";
 import { useState } from "react";
 import { saveAppServiceSettingsAction } from "../../store/azureProfileData/appService/action";
 import { closeModalAction } from "../../store/modals/action";
+import { GetSubscriptionDataForAppService } from "../../utils/extensionService/extensionService";
+import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
+import LocationSelection from "../../components/LocationSelection";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -29,14 +32,26 @@ type Props = IStateProps & InjectedIntlProps;
 const AppServiceModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
+  const vscode = useSelector((state: AppState) => getVSCodeApiSelector(state));
   const appServiceInStore = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
+  const initialSubscriptionData: SubscriptionData = { locations: [], resourceGroups:[] };
 
   const [subscription, setSubscription] = useState(initialSubscription);
+  const [subscriptionData, setSubscriptionData] = useState(initialSubscriptionData);
   const [appName, setAppName] = useState(initialAppServiceName);
+  const [location, setLocation] = useState("");
   const [isAvailableAppName, setIsAvailableAppName] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
+  
+  React.useEffect(() => {
+    if(subscription) {
+      GetSubscriptionDataForAppService(vscode, subscription).then(event => {
+        setSubscriptionData(event.data.payload);
+      });
+    }
+  }, [subscription]);
 
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
@@ -62,6 +77,7 @@ const AppServiceModal = ({ intl }: Props) => {
     const appServiceSelection: ISelectedAppService = {
       subscription,
       resourceGroup: "",
+      //location,
       siteName: appName,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     };
@@ -73,6 +89,7 @@ const AppServiceModal = ({ intl }: Props) => {
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
         <Cancel
+          data-testid="close-button"
           className={styles.closeIcon}
           onClick={() => dispatch(closeModalAction())}
           onKeyDown={closeModalIfPressEnterOrSpaceKey}
@@ -90,8 +107,11 @@ const AppServiceModal = ({ intl }: Props) => {
           onIsAvailableAppNameChange={setIsAvailableAppName}
         />
 
-        <div className={classNames({ [styles.hide]: !showAdvanced })}>
-          {/* Advanced mode */}
+        {/* Advanced Mode */}
+        <div className={classNames({ [styles.hide]: !showAdvanced })}>          
+          <LocationSelection
+            initialLocations={subscriptionData.locations}
+            onLocationChange={setLocation} />
         </div>
 
         <AppServicePlanInfo subscription={subscription} />
