@@ -1,54 +1,35 @@
 import _ from "lodash";
 import * as React from "react";
-import { connect } from "react-redux";
-
+import { useDispatch } from "react-redux";
 import SidebarItem from "../SidebarItem";
-
 import { ICosmosDB } from "../../../../store/azureProfileData/cosmosDb/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
-
 import { openCosmosDbModalAction } from "../../../../store/modals/action";
-
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
-
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../../../store/combineReducers";
-import RootAction from "../../../../store/ActionType";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { getVSCodeApiSelector } from "../../../../store/vscode/vscodeApiSelector";
-import { IVSCodeObject } from "../../../../store/vscode/model";
+import { IVSCodeObject } from "../../../../types/vscode";
 import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
+import { AppContext } from "../../../../AppContext";
 
 interface IProps {
   cosmosSelection: ICosmosDB;
 }
 
-interface IStateProps {
-  vscode: IVSCodeObject;
-}
+type Props = IProps & InjectedIntlProps;
 
-interface IDispatchProps {
-  removeCosmosResource: (selectionIndex: number) => any;
-  openCosmosDbModal: () => any;
-}
-
-type Props = IProps & IStateProps & IDispatchProps & InjectedIntlProps;
-
-// This component lives in "containers" because the accountName can change via redux in the future
 const CosmosDBSelection = ({
   cosmosSelection,
-  removeCosmosResource,
-  openCosmosDbModal,
-  vscode,
   intl
 }: Props) => {
   const { serviceType } = cosmosSelection.wizardContent;
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const dispatch = useDispatch();
 
   const openCosmosDbModalAndSendTelemetry = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST)
-    openCosmosDbModal();
+    dispatch(openCosmosDbModalAction());
   }
 
   const onEditKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -81,7 +62,7 @@ const CosmosDBSelection = ({
                 key={`${accountName} ${idx + 1}`}
                 text={accountName}
                 withIndent={true}
-                handleCloseClick={removeCosmosResource}
+                handleCloseClick={(selectionIndex: number)=> dispatch(removeCosmosSelectionAction(selectionIndex))}
                 idx={idx + 1}
               />
             );
@@ -92,22 +73,4 @@ const CosmosDBSelection = ({
   );
 };
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  vscode: getVSCodeApiSelector(state)
-});
-
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-) => ({
-  removeCosmosResource: (selectionIndex: number) => {
-    dispatch(removeCosmosSelectionAction(selectionIndex));
-  },
-  openCosmosDbModal: () => {
-    dispatch(openCosmosDbModalAction());
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(CosmosDBSelection));
+export default injectIntl(CosmosDBSelection);

@@ -5,14 +5,12 @@ import generationStatus from "./generationStatus/combineReducers";
 import modals from "./modals/combineReducers";
 import wizardContent from "./wizardContent/wizardContent/combineReducers";
 import wizardRoutes from "./selection/pages/combineReducers";
-import vscodeApi from "./vscode/vscodeApiReducer";
 import selection from "./selection/combineReducers";
 import versions from "./versions/reducer";
 import RootAction from "./ActionType";
 import { WIZARD_INFO_TYPEKEYS } from "./wizardContent/typeKeys";
 
 const appReducer = combineReducers({
-  vscode: vscodeApi,
   wizardContent,
   selection,
   azureProfileData,
@@ -54,7 +52,6 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
         backendFramework:backendOptions.filter((frame)=>frame.internalName==="Node")[0]
       },
       versions: state!.versions,
-      vscode: state!.vscode,
       wizardContent: { previewStatus,backendOptions, frontendOptions, pageOptions },
       wizardRoutes: undefined,
     };

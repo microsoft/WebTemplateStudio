@@ -1,5 +1,4 @@
 import { IOption } from "../../types/option";
-import { IVSCodeObject } from "../../reducers/model";
 import { ISelected } from "../../../types/selected";
 
 interface ISelectProps {
@@ -15,7 +14,6 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  vscode: IVSCodeObject;
   isPreview: boolean;
   frontEndSelect: ISelected;
   backEndSelect: ISelected;

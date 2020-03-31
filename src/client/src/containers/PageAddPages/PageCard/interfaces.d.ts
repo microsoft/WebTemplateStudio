@@ -1,5 +1,4 @@
 import { IOption } from "../../types/option";
-import { IVSCodeObject } from "../../reducers/model";
 import { ISelected } from "../../../types/selected";
 
 interface IProps {
@@ -13,7 +12,6 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  vscode: IVSCodeObject;
   selectedPages: ISelected[];
   selectedFrontend: ISelected;
   pageOutOfBounds: boolean;

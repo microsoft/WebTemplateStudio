@@ -13,7 +13,6 @@ import {
   FRAMEWORK_TYPE
 } from "./utils/constants";
 
-import { getVSCodeApi } from "./store/vscode/action";
 import {
   updateTemplateGenerationStatusMessageAction,
   updateTemplateGenerationStatusAction
@@ -22,8 +21,7 @@ import { getVersionsDataAction } from "./store/versions/action";
 
 import appStyles from "./appStyles.module.css";
 import { IVersions } from "./types/version";
-import { getVSCodeApiSelector } from "./store/vscode/vscodeApiSelector";
-import { IVSCodeObject } from "./store/vscode/model";
+import { IVSCodeObject } from "./types/vscode";
 import { IServiceStatus } from "./store/generationStatus/model";
 import { ISelected } from "./types/selected";
 import { AppState } from "./store/combineReducers";
@@ -45,6 +43,7 @@ import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store
 import { getPagesOptionsAction } from "./store/wizardContent/pages/action";
 import { setPreviewStatusAction } from "./store/wizardContent/wizardContent/action";
 import { logIntoAzureActionAction } from "./store/azureProfileData/login/action";
+import { AppContext } from "./AppContext";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -85,7 +84,6 @@ if (process.env.NODE_ENV === DEVELOPMENT) {
 
 interface IDispatchProps {
   updateOutputPath: (outputPath: string) => any;
-  getVSCodeApi: () => void;
   logIntoAzure: (azureProfile: AzureProfile) => void;
   setValidationsAction: (validations: any) => void;
   updateTemplateGenStatusMessage: (status: string) => any;
@@ -99,7 +97,6 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  vscode: IVSCodeObject;
   frontendOptions: IOption[];
   selectedFrontend: ISelected;
   selectedBackend: ISelected;
@@ -111,10 +108,11 @@ interface IStateProps {
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
 
 const App = (props: Props) => {
-  const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,
+  const { selectedFrontend, selectedBackend, selectedPages, setPages, frontendOptions,
     isPreview, setFrontendFrameworks, setBackendFrameworks, modalState, logIntoAzure } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading: Array<any> = new Array<any>();
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
   const addToPromisesList = (promise: Promise<any>)=>{
     promisesLoading.push(promise);
@@ -144,10 +142,6 @@ const App = (props: Props) => {
   })
 
   React.useEffect(()=>{
-    props.getVSCodeApi();
-  },[]);
-
-  React.useEffect(()=>{
     getUserStatus(vscode).then((event)=>{
       const message = event.data;
       if (message.payload !== null) {
@@ -169,10 +163,10 @@ const App = (props: Props) => {
       });
       props.setPreviewStatus(message.payload.preview);
     });
-  },[props.vscode]);
+  },[vscode]);
 
   React.useEffect(()=>{
-    loadPages();
+    if (selectedFrontend.internalName!="" && selectedBackend.internalName!="") loadPages();
   },[selectedFrontend, selectedBackend]);
 
   function getFrameworksListAndSetToStore(){
@@ -288,9 +282,6 @@ const App = (props: Props) => {
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
 ): IDispatchProps => ({
-  getVSCodeApi: () => {
-    dispatch(getVSCodeApi());
-  },
   logIntoAzure: (azureProfile: AzureProfile) => {
     dispatch(logIntoAzureActionAction(azureProfile));
   },
@@ -327,7 +318,6 @@ const mapDispatchToProps = (
 });
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  vscode: getVSCodeApiSelector(state),
   selectedFrontend: state.selection.frontendFramework,
   selectedBackend: state.selection.backendFramework,
   frontendOptions: state.wizardContent.frontendOptions,

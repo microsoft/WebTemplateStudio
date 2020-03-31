@@ -1,6 +1,4 @@
 import { ISelected } from "../types/selected";
-import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../store/vscode/model";
-import mockVsCodeApi from "./mockVsCodeApi";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
 import { ModalType } from "../store/modals/typeKeys";
@@ -13,27 +11,8 @@ export const getISelected = () => {
   return selected;
 };
 
-
-export const getIVSCodeApi = () => {
-  const isVsCodeApiAcquired = false;
-  const vscodeObject: IVSCodeObject = mockVsCodeApi();
-
-  const vscode: IVSCodeAPI = {
-    isVsCodeApiAcquired,
-    vscodeObject
-  };
-  const mockVSCode: IVSCode = {
-    vscode
-  };
-  return mockVSCode;
-};
-
 export const getInitialState = (): AppState => {
   const initialState: AppState={
-    vscode: {
-      isVsCodeApiAcquired: true,
-      vscodeObject: getIVSCodeApi().vscode.vscodeObject
-    },
     wizardContent: {
       backendOptions: [],
       frontendOptions: [],
