@@ -10,14 +10,15 @@ import {
 } from "../../../utils/constants";
 import { AppState } from "../../combineReducers";
 import { SelectionState } from "../combineReducers";
+import { IOption } from "../../../types/option";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {
   [COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
   [COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
 };
 
-const getWizardSelectionsSelector = (state: AppState): SelectionState =>
-  state.selection;
+const getWizardSelectionsSelector = (state: AppState): SelectionState => state.selection;
+const getBackendOptionsSelector = (state: AppState): IOption[] => state.wizardContent.backendOptions;
 
 const getProjectType = (selection: SelectionState): string => {
   const projectType = selection.appType as ISelected;
@@ -87,12 +88,34 @@ const getServicesSelector = createSelector(
   getServices
 );
 
+const getLinuxVersionFromBackendFrameworkSelector = (
+  backendFrameworks: IOption[],
+  backendFramework: string
+): string => {
+  const selectedBackendFramework = backendFrameworks.find(b => b.internalName === backendFramework);
+  return selectedBackendFramework && selectedBackendFramework.linuxVersion 
+  ? selectedBackendFramework.linuxVersion 
+  : "";
+};
+
+const getLinuxVersionSelector = createSelector(
+  getBackendOptionsSelector,
+  getBackendFrameworkSelector,
+  getLinuxVersionFromBackendFrameworkSelector
+)
+
+const getRuntimeStackSelector = createSelector(
+  getLinuxVersionSelector,
+  (version) => version === "" ? "" : version.split("|")[0]
+)
+
 const rootSelector = createSelector(
   getProjectName,
   getOutputPath,
   getProjectTypeSelector,
   getFrontendFrameworkSelector,
   getBackendFrameworkSelector,
+  getLinuxVersionSelector,
   getPagesSelector,
   getServicesSelector,
   (
@@ -101,6 +124,7 @@ const rootSelector = createSelector(
     projectType,
     frontendFramework,
     backendFramework,
+    backendFrameworkLinuxVersion,
     pages,
     services
   ) => {
@@ -110,10 +134,11 @@ const rootSelector = createSelector(
       projectType,
       frontendFramework,
       backendFramework,
+      backendFrameworkLinuxVersion,
       pages,
       services
     };
   }
 );
 
-export { rootSelector };
+export { rootSelector, getRuntimeStackSelector };

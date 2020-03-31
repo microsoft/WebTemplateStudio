@@ -331,14 +331,26 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       author: 'Various',
       body: 'JavaScript framework',
       internalName: 'Node',
-      licenses: ['[Node](https://github.com/nodejs/node/blob/master/LICENSE)  \n[Express](https://github.com/expressjs/express/blob/master/LICENSE)  \n[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)'],
+      licenses: ['[Node](https://github.com/nodejs/node/blob/master/LICENSE)','[Express](https://github.com/expressjs/express/blob/master/LICENSE)','[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)'],
       longDescription: 'Node.js is an open source server environment based on JavaScript that helps you build fast and scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. Node.js runs across various platforms like Windows, Linux, Unix, and Mac OS X.\r\n\r\nMore information about Node.js can be found [here](https://nodejs.org).\r\n',
       position: 1,
       selected: false,
       svgUrl: '',
       title: 'Node.js/Express',
       version: '10.15.0',
-      latestVersion: "0.0.1",
+      linuxVersion: 'node|10.14',
+      latestVersionLoaded: true
+    },
+    {
+      author: 'Various',
+      body: 'JavaScript framework',
+      internalName: 'Moleculer',
+      licenses: ['[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)'],
+      selected: false,
+      svgUrl: '',
+      title: 'Moleculer',
+      version: '0.14.3',
+      linuxVersion: 'node|10.14',
       latestVersionLoaded: true
     },
     {
@@ -352,9 +364,11 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       svgUrl: '',
       title: 'Flask',
       version: '1.0.3',
-      latestVersion: "0.0.1",
+      linuxVersion: 'python|3.7',
       latestVersionLoaded: true
     }
+
+
   ];
   return store;
 }

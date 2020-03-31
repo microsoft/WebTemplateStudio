@@ -47,6 +47,7 @@ function getOptionalFromMetadata(items: IMetadata[]): IOption[] {
     svgUrl: "",
     title: val.displayName,
     version: val.tags!.version,
+    linuxVersion: val.tags!.linuxVersion,
     latestVersion: val.tags!.latestVersion,
     checkVersionPackageName: val.tags!.checkVersionPackageName,
     checkVersionPackageSource: val.tags!.checkVersionPackageSource,
