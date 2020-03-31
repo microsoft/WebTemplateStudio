@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import ReactMarkdown from "react-markdown";
 import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
@@ -33,9 +33,12 @@ import { strings as messages } from "./strings";
 import { MODAL_TYPES } from "../../store/modals/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
-import { sendTelemetry } from "../../utils/extensionService/extensionService";
+import { sendTelemetry, generateProject } from "../../utils/extensionService/extensionService";
 import { resetWizardAction } from "../../store/wizardContent/wizardContent/action";
 import { AppContext } from "../../AppContext";
+import { rootSelector } from "../../store/selection/app/selector";
+import { isCosmosResourceCreatedSelector, getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
+import { isAppServiceSelectedSelector, getAppServiceSelectionSelector } from "../../store/azureProfileData/appService/selector";
 interface LinksDict {
   [serviceId: string]: string;
 }
@@ -67,7 +70,7 @@ type Props = IStateProps &
   IDispatchProps &
   RouteComponentProps;
 
-const PostGenerationModal = ({
+const GenerationModal = ({
   serviceStatus,
   isTemplateGenerated,
   isServicesDeployed,
@@ -86,6 +89,20 @@ const PostGenerationModal = ({
     !isTemplateGenerated && !isTemplatesFailed;
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
+  const engine = useSelector((state: AppState) => rootSelector(state));
+  const isCosmosSelected = useSelector((state: AppState) => isCosmosResourceCreatedSelector(state));
+  const cosmos = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
+  const isAppServiceSelected = useSelector((state: AppState) => isAppServiceSelectedSelector(state));
+  const appService = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
+
+  React.useEffect(()=>{
+    generateProject(engine,
+      isCosmosSelected,
+      cosmos,
+      isAppServiceSelected,
+      appService,
+      vscode);
+  },[]);
   const LinkRenderer = (props: any) => (
     <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
       {props.children}
@@ -396,5 +413,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(asModal(injectIntl(PostGenerationModal), MODAL_TYPES.POST_GEN_MODAL))
+  )(asModal(injectIntl(GenerationModal), MODAL_TYPES.POST_GEN_MODAL))
 );

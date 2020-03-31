@@ -48,7 +48,7 @@ import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
 import messages from "./messages";
-import { sendTelemetry, generateProject } from "../../utils/extensionService/extensionService";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 import { AppContext } from "../../AppContext";
 
@@ -59,11 +59,6 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  engine: any;
-  selectedCosmos: boolean;
-  cosmos: any;
-  selectedAppService: boolean;
-  appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
   isEnableNextPage: boolean;
 }
@@ -88,11 +83,6 @@ const pathsBack: any = {
 
 const Footer = (props: Props) => {
   const {
-    engine,
-    selectedCosmos,
-    cosmos,
-    selectedAppService,
-    appService,
     openPostGenModal,
     isEnableNextPage,
     location,
@@ -103,23 +93,8 @@ const Footer = (props: Props) => {
   const { showFrameworks } = isVisited;
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
-  React.useEffect(()=>{
-    const pageNames = new Set();
-    for (const page of engine.pages) {
-      const pageName = page.name;
-      pageNames.add(pageName);
-    }
-  },[])
-
   const showModalGenerateProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    generateProject(engine,
-      selectedCosmos,
-      cosmos,
-      selectedAppService,
-      appService, 
-      vscode);
-      
     const { pathname } = location;
     trackPageForTelemetry(pathname);
     openPostGenModal();
@@ -272,11 +247,6 @@ const Footer = (props: Props) => {
 }
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  engine: rootSelector(state),
-  selectedCosmos: isCosmosResourceCreatedSelector(state),
-  cosmos: getCosmosDbSelectionSelector(state),
-  selectedAppService: isAppServiceSelectedSelector(state),
-  appService: getAppServiceSelectionSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   isEnableNextPage: isEnableNextPage(state)
 });
