@@ -58,9 +58,25 @@
 }
 
 .showAdvancedModeLink {
-  margin: 0.5em 0;
+  padding: 0.5em;
 }
 
 .hide {
   display: none;
+}
+
+
+.advancedModeIcon {
+  height: 13px;
+  margin-left: 10px;
+  margin-bottom: -2px;
+}
+
+.rotateAdvancedModeIcon {  
+  transform: rotate(180deg);
+}
+
+
+.advancedModeIcon path {
+  fill: var(--vscode-editor-foreground);
 }

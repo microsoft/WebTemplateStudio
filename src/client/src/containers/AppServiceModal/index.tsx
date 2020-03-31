@@ -22,6 +22,7 @@ import { closeModalAction } from "../../store/modals/action";
 import { GetSubscriptionDataForAppService } from "../../utils/extensionService/extensionService";
 import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
 import LocationSelection from "../../components/LocationSelection";
+import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -120,10 +121,10 @@ const AppServiceModal = ({ intl }: Props) => {
 
         <div className={styles.bottomContainer}>
           <button
-            className={classNames(buttonStyles.buttonLink, styles.showAdvancedLink)}
-            onClick={() => setShowAdvanced(!showAdvanced)}
-          >
-            {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
+            className={classNames(buttonStyles.buttonLink, styles.showAdvancedModeLink)}
+            onClick={() => setShowAdvanced(!showAdvanced)}>
+              {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
+              <ArrowDown className={classNames(styles.advancedModeIcon, {[styles.rotateAdvancedModeIcon]: !showAdvanced})} />
           </button>
 
           <button className={getButtonClassNames()} onClick={saveAppServiceSelection} disabled={!isEnableSaveButton()}>
