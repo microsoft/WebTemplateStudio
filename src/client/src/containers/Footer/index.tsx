@@ -48,7 +48,7 @@ import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
 import messages from "./messages";
-import { sendTelemetry } from "../../utils/extensionService/extensionService";
+import { sendTelemetry, generateProject } from "../../utils/extensionService/extensionService";
 import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 import { AppContext } from "../../AppContext";
 
@@ -111,25 +111,20 @@ const Footer = (props: Props) => {
     }
   },[])
 
-  const logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const showModalGenerateProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    vscode.postMessage({
-      module: EXTENSION_MODULES.GENERATE,
-      command: EXTENSION_COMMANDS.GENERATE,
-      track: false,
-      text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
-      payload: {
-        engine,
-        selectedCosmos,
-        cosmos,
-        selectedAppService,
-        appService
-      }
-    });
+    generateProject(engine,
+      selectedCosmos,
+      cosmos,
+      selectedAppService,
+      appService, 
+      vscode);
+      
     const { pathname } = location;
     trackPageForTelemetry(pathname);
     openPostGenModal();
   };
+
   const canGenerate = (): boolean => {
     return isVisited.showReviewAndGenerate;
   };
@@ -261,7 +256,7 @@ const Footer = (props: Props) => {
                     [buttonStyles.buttonHighlighted]: isEnableNextPage,
                     [styles.disabledOverlay]:!isEnableNextPage
                   })}
-                  onClick={logMessageToVsCode}
+                  onClick={showModalGenerateProject}
                 >
                   <FormattedMessage
                     id="footer.generate"
