@@ -22,13 +22,13 @@ import {
 } from "./defaultSelection";
 
 import { getAllFrameworks, getAllPages } from "./loadWizardContent";
-import { ROUTES_ARRAY, EXTENSION_COMMANDS } from "../../../utils/constants";
+import { ROUTES_ARRAY, EXTENSION_COMMANDS, ROUTES } from "../../../utils/constants";
 
 import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
 import { setPagesAction } from "../../../store/selection/pages/action";
-import { setVisitedWizardPageAction } from "../../../store/wizardContent/pages/action";
+import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../../store/wizardContent/pages/action";
 
 interface IStateProps {
   vscode: IVSCodeObject;
@@ -41,6 +41,7 @@ interface IDispatchProps {
   selectBackendFramework: (backendFramework: ISelected) => void;
   selectPages: (pages: ISelected[]) => void;
   setRouteVisited: (route: string) => void;
+  setPage: (route: string) => void;
 }
 
 type Props = IStateProps & IDispatchProps;
@@ -53,7 +54,8 @@ class QuickStart extends Component<Props> {
       selectFrontendFramework,
       selectBackendFramework,
       selectPages,
-      setRouteVisited
+      setRouteVisited,
+      setPage
     } = this.props;
 
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART);
@@ -63,7 +65,7 @@ class QuickStart extends Component<Props> {
     selectBackendFramework(BACK_END_SELECTION);
     selectPages(PAGES_SELECTION);
     ROUTES_ARRAY.forEach(route => setRouteVisited(route));
-   
+    setPage(ROUTES.REVIEW_AND_GENERATE);
   };
 
   render() {
@@ -126,7 +128,10 @@ const mapDispatchToProps = (
   },
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
-  }
+  },
+  setPage: (route: string) => {
+    dispatch(setPageWizardPageAction(route));
+  },
 });
 
 export default 
