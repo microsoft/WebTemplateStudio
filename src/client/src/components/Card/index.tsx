@@ -8,7 +8,6 @@ import CardBody from "../CardBody";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import { IOption } from "../../types/option";
-import { ROUTES } from "../../utils/constants";
 import keyUpHandler from "../../utils/keyUpHandler";
 import { getSvg } from "../../utils/getSvgUrl";
 

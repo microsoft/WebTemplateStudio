@@ -37,7 +37,6 @@ export const getInitialState = (): AppState => {
       backendOptions: [],
       frontendOptions: [],
       pageOptions: [],
-      projectTypes: [],
       detailsPage: {
         isIntlFormatted: false,
         data: {
@@ -50,12 +49,10 @@ export const getInitialState = (): AppState => {
           selected: false,
           author: '',
           svgUrl:''
-        }
+        },
+        originRoute:''
       },
-      serverPort: 9502,
       previewStatus: false,
-      createProjectButton: false,
-      enableQuickStart: false,
     },
     selection: {
       appType: {

@@ -16,6 +16,7 @@ export interface ISetPageAction {
 }
 
 export interface IDetail {
+  originRoute : string;
   data: IOption;
   isIntlFormatted: boolean;
 }

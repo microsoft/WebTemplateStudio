@@ -20,7 +20,7 @@ import RootAction from "../../store/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
-import { setDetailPageAction } from "../../store/wizardContent/pages/action";
+import { setDetailPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 import { startLogOutAzureAction } from "../../store/azureProfileData/login/action";
 
 interface IDispatchProps {
@@ -115,7 +115,8 @@ const mapDispatchToProps = (
 ): IDispatchProps => ({
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
-    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));
+    dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
+    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted, ROUTES.AZURE_LOGIN));
   },
   startLogOutToAzure: () => {
     dispatch(startLogOutAzureAction());

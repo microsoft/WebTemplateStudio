@@ -22,7 +22,7 @@ import {
 } from "./defaultSelection";
 
 import { getAllFrameworks, getAllPages } from "./loadWizardContent";
-import { ROUTES, ROUTES_ARRAY, EXTENSION_COMMANDS } from "../../../utils/constants";
+import { ROUTES_ARRAY, EXTENSION_COMMANDS } from "../../../utils/constants";
 
 import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";

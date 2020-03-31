@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
-import { ROUTES, KEY_EVENTS } from "../../../utils/constants";
+import { KEY_EVENTS } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import { getLatestVersion } from "../../../utils/extensionService/extensionService";
