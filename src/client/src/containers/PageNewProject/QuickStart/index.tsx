@@ -1,15 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { FormattedMessage } from "react-intl";
 
 import RootAction from "../../../store/ActionType";
 
-import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
 import { isEnableNextPage } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 import { AppState } from "../../../store/combineReducers";
-import { IVSCodeObject } from "../../../store/vscode/model";
+import { IVSCodeObject } from "../../../types/vscode";
 import { ISelected } from "../../../types/selected";
 
 import { ReactComponent as QuickStartWand } from "../../../assets/quickStartWand.svg";
@@ -29,9 +28,9 @@ import { sendTelemetry } from "../../../utils/extensionService/extensionService"
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
 import { setPagesAction } from "../../../store/selection/pages/action";
 import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../../store/wizardContent/pages/action";
+import { AppContext } from "../../../AppContext";
 
 interface IStateProps {
-  vscode: IVSCodeObject;
   isPreview: boolean;
   isEnableNextPage: boolean;
 }
@@ -46,18 +45,19 @@ interface IDispatchProps {
 
 type Props = IStateProps & IDispatchProps;
 
-class QuickStart extends Component<Props> {
-  handleClick = () => {
-    const {
-      vscode,
-      isPreview,
-      selectFrontendFramework,
-      selectBackendFramework,
-      selectPages,
-      setRouteVisited,
-      setPage
-    } = this.props;
+const QuickStart = (props: Props) => {
+  const {
+    isPreview,
+    selectFrontendFramework,
+    selectBackendFramework,
+    selectPages,
+    setRouteVisited,
+    isEnableNextPage,
+    setPage
+  } = props;
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
+  const handleClick = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART);
     getAllFrameworks(vscode, isPreview);
     getAllPages(vscode);
@@ -68,48 +68,44 @@ class QuickStart extends Component<Props> {
     setPage(ROUTES.REVIEW_AND_GENERATE);
   };
 
-  render() {
-    const { isEnableNextPage } = this.props;
-    return (
-      <div>
-        <p className={styles.description}>
+  return (
+    <div>
+      <p className={styles.description}>
+        <FormattedMessage
+          id="quickStart.optional"
+          defaultMessage="OPTIONAL"
+        />
+      </p>
+      <p className={styles.description}>
+        <FormattedMessage
+          id="quickStart.description"
+          defaultMessage='Get started quickly with any frameworks and a blank page by selecting "Quick Start" or click "Next" to go through the entire wizard.'
+        />
+      </p>
+      <button
+        tabIndex={0}
+        className={styles.quickStart}
+        onClick={handleClick}
+        disabled={!isEnableNextPage}
+      >
+        <div>
+          {quickStartWand && <QuickStartWand className={styles.wand} />}
+        </div>
+        <div>
           <FormattedMessage
-            id="quickStart.optional"
-            defaultMessage="OPTIONAL"
+            id="quickStart.button"
+            defaultMessage="Quick Start"
           />
-        </p>
-        <p className={styles.description}>
-          <FormattedMessage
-            id="quickStart.description"
-            defaultMessage='Get started quickly with any frameworks and a blank page by selecting "Quick Start" or click "Next" to go through the entire wizard.'
-          />
-        </p>
-        <button
-          tabIndex={0}
-          className={styles.quickStart}
-          onClick={this.handleClick}
-          disabled={!isEnableNextPage}
-        >
-          <div>
-            {quickStartWand && <QuickStartWand className={styles.wand} />}
-          </div>
-          <div>
-            <FormattedMessage
-              id="quickStart.button"
-              defaultMessage="Quick Start"
-            />
-          </div>
-        </button>
-      </div>
-    );
+        </div>
+      </button>
+    </div>
+  );
   }
-}
 
 const mapStateToProps = (state: AppState): IStateProps => {
   const { previewStatus } = state.wizardContent;
   return {
     isPreview: previewStatus,
-    vscode: getVSCodeApiSelector(state),
     isEnableNextPage: isEnableNextPage(state)
   };
 };

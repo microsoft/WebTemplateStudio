@@ -2,7 +2,7 @@
 import { addRequiredValidate, IValidation, addExistingItemNameValidate, 
   addExistingProjectNameValidate, addReservedNameValidate, addRegexValidate } from "./validations";
 import { ISelected } from "../../types/selected";
-import { IVSCodeObject } from "../../store/vscode/model";
+import { IVSCodeObject } from "../../types/vscode";
 
 describe("validations", () => {
   describe("require", () => {

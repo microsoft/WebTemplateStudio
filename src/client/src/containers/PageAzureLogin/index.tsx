@@ -22,6 +22,8 @@ import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
 import { setDetailPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 import { startLogOutAzureAction } from "../../store/azureProfileData/login/action";
+import { IVSCodeObject } from "../../types/vscode";
+import { AppContext } from "../../AppContext";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;
@@ -30,7 +32,6 @@ interface IDispatchProps {
 
 interface IAzureLoginProps {
   isLoggedIn: boolean;
-  vscode: any;
   email: string;
 }
 
@@ -38,25 +39,29 @@ type Props = IDispatchProps &
   IAzureLoginProps &
   InjectedIntlProps;
 
-class AzureLogin extends React.Component<Props> {
-  signOutClick = () => {
-    azureLogout(this.props.vscode).then((event)=>{
+const AzureLogin = (props: Props)=> {
+  const {
+    startLogOutToAzure,
+    isLoggedIn, intl, email
+  } = props;
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+
+  const signOutClick = () => {
+    azureLogout(vscode).then((event)=>{
       const message = event.data;
       if (message.payload.success) {
-        this.props.startLogOutToAzure();
+        startLogOutToAzure();
       }
     });
   };
-  signOutkeyDownHandler = (event: React.KeyboardEvent) => {
+
+  const signOutkeyDownHandler = (event: React.KeyboardEvent) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      this.signOutClick();
+      signOutClick();
     }
   };
 
-  public render() {
-    const { isLoggedIn, intl, email } = this.props;
-
-    return (
+  return (
       <div className={styles.centerViewAzure}>
         <AzureLoginModal/>
         <a
@@ -80,8 +85,8 @@ class AzureLogin extends React.Component<Props> {
                   role="button"
                   tabIndex={0}
                   className={classnames(styles.button, styles.signOutButton)}
-                  onClick={this.signOutClick}
-                  onKeyDown={this.signOutkeyDownHandler}
+                  onClick={signOutClick}
+                  onKeyDown={signOutkeyDownHandler}
                 >
                   <FormattedMessage
                     id="header.signOut"
@@ -97,15 +102,12 @@ class AzureLogin extends React.Component<Props> {
       </div>
     );
   }
-}
 
 const mapStateToProps = (state: AppState): IAzureLoginProps => {
   const { isLoggedIn } = state.azureProfileData;
-  const { vscodeObject } = state.vscode;
   const { email } = state.azureProfileData.profileData;
   return {
     isLoggedIn,
-    vscode: vscodeObject,
     email
   };
 };

@@ -3,7 +3,6 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../../store/combineReducers";
 import RootAction from "../../../store/ActionType";
 import { IDispatchProps, IStateProps } from "./interfaces";
-import { getVSCodeApiSelector } from "../../../store/vscode/vscodeApiSelector";
 import { ISelected } from "../../../types/selected";
 import { setPagesAction } from "../../../store/selection/pages/action";
 import { setDetailPageAction, setPageWizardPageAction } from "../../../store/wizardContent/pages/action";
@@ -24,7 +23,6 @@ const mapDispatchToProps = (
 const mapStateToProps = (state: AppState): IStateProps => {
   //const { frontendFramework, backendFramework } = state.selection;
   return {
-    vscode: getVSCodeApiSelector(state),
     selectedPages: state.selection.pages,
     selectedFrontend: state.selection.frontendFramework,
     pageOutOfBounds: state.selection.pages.length>=20
