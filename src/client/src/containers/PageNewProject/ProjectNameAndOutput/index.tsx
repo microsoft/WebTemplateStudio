@@ -11,7 +11,6 @@ import {
   getValidations
 } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 
-import { IVSCodeObject } from "../../../store/vscode/model";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
@@ -25,7 +24,6 @@ import {
   InjectedIntlProps
 } from "react-intl";
 
-import { getVSCodeApiSelector } from "../../../store/vscode/selector";
 import { AppState } from "../../../store/combineReducers";
 import { validateProjectName} from "../../../utils/validations/projectName/projectName";
 import { IValidation} from "../../../utils/validations/validations";
@@ -35,9 +33,10 @@ import { getOutputPath as getOutputPathFromExtension } from "../../../utils/exte
 import { setProjectPathValidationAction } from "../../../store/selection/validations/action";
 import { setProjectNameAction, setOutputPathAction } from "../../../store/selection/app/action";
 import { IValidations } from "../../../store/selection/validations/model";
+import { AppContext } from "../../../AppContext";
+import { IVSCodeObject } from "../../../store/vscode/model";
 
 interface IStateProps {
-  vscode: IVSCodeObject;
   outputPath: string;
   projectName: string;
   projectPathValidation: IValidation;
@@ -49,7 +48,6 @@ type Props = IStateProps & InjectedIntlProps;
 
 const ProjectNameAndOutput = (props: Props) => {
   const {
-    vscode,
     outputPath,
     projectPathValidation,
     projectName,
@@ -58,10 +56,11 @@ const ProjectNameAndOutput = (props: Props) => {
   } = props;
 
   const dispatch = useDispatch();
-
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  
   React.useEffect(() => {
     if (projectName==="" && outputPath!=="" && projectNameValidation.isDirty===false){
-      inferProjectName(outputPath,vscode).then(suggestedProjectName => {
+      inferProjectName(outputPath, vscode).then(suggestedProjectName => {
         dispatch(setProjectNameAction(suggestedProjectName, {isValid:true, error:"", isDirty:true}));
       });
     }
@@ -141,7 +140,6 @@ const ProjectNameAndOutput = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  vscode: getVSCodeApiSelector(state),
   outputPath: getOutputPath(state),
   projectName: getProjectName(state),
   validations: getValidations(state),

@@ -22,7 +22,6 @@ import { getVersionsDataAction } from "./store/versions/action";
 
 import appStyles from "./appStyles.module.css";
 import { IVersions } from "./types/version";
-import { getVSCodeApiSelector } from "./store/vscode/selector";
 import { IVSCodeObject } from "./store/vscode/model";
 import { IServiceStatus } from "./store/generationStatus/model";
 import { ISelected } from "./types/selected";
@@ -45,6 +44,7 @@ import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store
 import { getPagesOptionsAction } from "./store/wizardContent/pages/action";
 import { setPreviewStatusAction } from "./store/wizardContent/wizardContent/action";
 import { logIntoAzureActionAction } from "./store/azureProfileData/login/action";
+import { AppContext } from "./AppContext";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -99,7 +99,6 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  vscode: IVSCodeObject;
   frontendOptions: IOption[];
   selectedFrontend: ISelected;
   selectedBackend: ISelected;
@@ -111,10 +110,11 @@ interface IStateProps {
 type Props = IDispatchProps & IStateProps & RouteComponentProps;
 
 const App = (props: Props) => {
-  const { selectedFrontend, selectedBackend, vscode, selectedPages, setPages, frontendOptions,
+  const { selectedFrontend, selectedBackend, selectedPages, setPages, frontendOptions,
     isPreview, setFrontendFrameworks, setBackendFrameworks, modalState, logIntoAzure } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading: Array<any> = new Array<any>();
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
   const addToPromisesList = (promise: Promise<any>)=>{
     promisesLoading.push(promise);
@@ -169,7 +169,7 @@ const App = (props: Props) => {
       });
       props.setPreviewStatus(message.payload.preview);
     });
-  },[props.vscode]);
+  },[vscode]);
 
   React.useEffect(()=>{
     loadPages();
@@ -327,7 +327,6 @@ const mapDispatchToProps = (
 });
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  vscode: getVSCodeApiSelector(state),
   selectedFrontend: state.selection.frontendFramework,
   selectedBackend: state.selection.backendFramework,
   frontendOptions: state.wizardContent.frontendOptions,
