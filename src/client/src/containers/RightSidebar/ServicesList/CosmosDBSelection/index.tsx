@@ -1,6 +1,6 @@
 import _ from "lodash";
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 import SidebarItem from "../SidebarItem";
 
@@ -25,26 +25,20 @@ interface IProps {
   cosmosSelection: ICosmosDB;
 }
 
-interface IDispatchProps {
-  removeCosmosResource: (selectionIndex: number) => any;
-  openCosmosDbModal: () => any;
-}
-
-type Props = IProps & IDispatchProps & InjectedIntlProps;
+type Props = IProps & InjectedIntlProps;
 
 // This component lives in "containers" because the accountName can change via redux in the future
 const CosmosDBSelection = ({
   cosmosSelection,
-  removeCosmosResource,
-  openCosmosDbModal,
   intl
 }: Props) => {
   const { serviceType } = cosmosSelection.wizardContent;
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const dispatch = useDispatch();
 
   const openCosmosDbModalAndSendTelemetry = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST)
-    openCosmosDbModal();
+    dispatch(openCosmosDbModalAction());
   }
 
   const onEditKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -77,7 +71,7 @@ const CosmosDBSelection = ({
                 key={`${accountName} ${idx + 1}`}
                 text={accountName}
                 withIndent={true}
-                handleCloseClick={removeCosmosResource}
+                handleCloseClick={(selectionIndex: number)=> dispatch(removeCosmosSelectionAction(selectionIndex))}
                 idx={idx + 1}
               />
             );
@@ -88,17 +82,4 @@ const CosmosDBSelection = ({
   );
 };
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-) => ({
-  removeCosmosResource: (selectionIndex: number) => {
-    dispatch(removeCosmosSelectionAction(selectionIndex));
-  },
-  openCosmosDbModal: () => {
-    dispatch(openCosmosDbModalAction());
-  }
-});
-
-export default connect(
-  mapDispatchToProps
-)(injectIntl(CosmosDBSelection));
+export default injectIntl(CosmosDBSelection);
