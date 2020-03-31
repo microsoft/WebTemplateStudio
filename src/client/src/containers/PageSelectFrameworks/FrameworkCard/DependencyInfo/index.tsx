@@ -1,8 +1,8 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import styles from "./styles.module.css";
 import classnames from "classnames";
-import { injectIntl, InjectedIntl } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import {
   WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../../../utils/constants";
@@ -54,77 +54,62 @@ const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
 
 interface IProps {
   frameworkName: string;
-  intl: InjectedIntl;
 }
 
-interface IState {
-  dependenciesStore: IDependenciesInstalled;
-}
+type Props = IProps & InjectedIntlProps;
 
-type Props = IState & IProps;
+const DependencyInfo = (props: Props) => {
+  const {
+    frameworkName,
+    intl
+  } = props;
 
-class DependencyInfo extends React.Component<Props> {
-  public render() {
-    const {
-      frameworkName,
-      intl,
-      dependenciesStore
-    } = this.props;
-    const dependency: IDependency | undefined = frameworkNameToDependencyMap.get(
-      frameworkName
-    );
+  const [installed, setInstalled] = React.useState(false);
+  const [dependency, setDependency] = React.useState<IDependency | undefined>();
+  const [dependencyMessage, setDependencyMessage] = React.useState("");
+  const dependenciesStore = useSelector((state: AppState) => state.dependencyInfo.dependencies);
 
-    if (dependency === undefined) {
-      return null; // don't render anything
+  React.useEffect(()=>{
+    setDependency(frameworkNameToDependencyMap.get(frameworkName));
+
+    if (dependency){
+      const {
+        dependencyName,
+        dependencyStoreKey,
+        dependencyMinimumVersion
+      } = dependency;
+      if (dependenciesStore[dependencyStoreKey]){
+        setInstalled(dependenciesStore[dependencyStoreKey].installed);
+        setDependencyMessage(installed
+          ? ""
+          : intl.formatMessage(messages.notInstalled, {
+              dependencyName: dependencyName,
+              minimumVersion: dependencyMinimumVersion
+            }));
+      }
     }
+  },[]);
 
-    const {
-      dependencyName,
-      dependencyStoreKey,
-      dependencyMinimumVersion
-    } = dependency;
-
-    if (dependenciesStore[dependencyStoreKey] === undefined) {
-      return null;
-    }
-    const installed: boolean = dependenciesStore[dependencyStoreKey].installed;
-
-    const dependencyMessage: string = installed
-      ? ""
-      : intl.formatMessage(messages.notInstalled, {
-          dependencyName: dependencyName,
-          minimumVersion: dependencyMinimumVersion
-        });
-
-
-    return (
-      !installed && (
-        <a
-          href={dependency.downloadLink}
-          className={classnames(
-            styles.dependencyContainer,
-            styles.borderYellow
-          )}
-          target={"_blank"}
-          rel="noreferrer noopener"
-        >
-          <Notification
-            showWarning={true}
-            text={dependencyMessage}
-            altMessage={intl.formatMessage(messages.iconAltMessage)}
-          />
-        </a>
-      )
-    );
-  }
+  return (
+    <div>
+      {!installed && dependency && dependencyMessage && (
+      <a
+        href={dependency.downloadLink}
+        className={classnames(
+          styles.dependencyContainer,
+          styles.borderYellow
+        )}
+        target={"_blank"}
+        rel="noreferrer noopener"
+      >
+        <Notification
+          showWarning={true}
+          text={dependencyMessage}
+          altMessage={intl.formatMessage(messages.iconAltMessage)}
+        />
+      </a>
+    )
+    }</div>);
 }
 
-const mapStateToProps = (state: AppState): IState => {
-  return {
-    dependenciesStore: state.dependencyInfo.dependencies
-  };
-};
-
-export default connect(
-  mapStateToProps
-)(injectIntl(DependencyInfo));
+export default injectIntl(DependencyInfo);
