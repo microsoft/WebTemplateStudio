@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 import messages from "./messages";
 import Dropdown from "../Dropdown";
 import classNames from "classnames";
+const DEFAULT_LOCATION = "Central US";
 
 interface IProps {
   initialLocations: AzureLocation[];
@@ -28,6 +29,14 @@ const LocationSelection = (props: Props) => {
       setLocations(dropDownLocations);
     }
   }, [initialLocations]);
+
+  
+  React.useEffect(() => {
+    if (!selectedLocation) {
+      const location = locations.find(s => s.value === DEFAULT_LOCATION);
+      setSelectedLocation(location);
+    }
+  }, [locations]);
 
   React.useEffect(() => {
     if (selectedLocation) {

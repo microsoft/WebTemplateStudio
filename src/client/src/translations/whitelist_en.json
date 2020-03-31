@@ -23,7 +23,6 @@
   "AppServiceModal.title",
   "AppServiceModal.saveMessage",
   "AppServiceModal.RuntimeStackInfo.title",
-  "AppServiceModal.RuntimeStackInfo.runtimeStack",
   "CosmosModal.AccountNameEditor.title",
   "CosmosModal.AccountNameEditor.subtitle",
   "CosmosModal.AccountNameEditor.inputPlaceholderMessage",
