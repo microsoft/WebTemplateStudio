@@ -53,7 +53,7 @@ const LocationSelection = (props: Props) => {
       <Dropdown
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={locations}
-        handleChange={setSelectedLocation}
+        handleChange={location => setSelectedLocation(location)}
         value={selectedLocation}
         disabled={locations.length === 0}
       />

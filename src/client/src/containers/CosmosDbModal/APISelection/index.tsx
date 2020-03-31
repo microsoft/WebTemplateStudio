@@ -50,8 +50,8 @@ const ApiSelection = (props: Props) => {
       <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <Dropdown
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
-        options={ApiValues}
-        handleChange={setSelectedApi}
+        options={ApiValues}        
+        handleChange={api => setSelectedApi(api)}
         value={selectedApi}
       />
     </div>
