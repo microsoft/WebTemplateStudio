@@ -69,14 +69,15 @@ const DependencyInfo = (props: Props) => {
   const dependenciesStore = useSelector((state: AppState) => state.dependencyInfo.dependencies);
 
   React.useEffect(()=>{
-    setDependency(frameworkNameToDependencyMap.get(frameworkName));
+    const localDepency = frameworkNameToDependencyMap.get(frameworkName);
+    setDependency(localDepency);
 
-    if (dependency){
+    if (localDepency){
       const {
         dependencyName,
         dependencyStoreKey,
         dependencyMinimumVersion
-      } = dependency;
+      } = localDepency;
       if (dependenciesStore[dependencyStoreKey]){
         setInstalled(dependenciesStore[dependencyStoreKey].installed);
         setDependencyMessage(installed
