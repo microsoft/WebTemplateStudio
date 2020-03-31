@@ -1,7 +1,7 @@
 
 import { projectPathValidation } from "./extensionService";
 
-import { IVSCodeObject } from "../../store/vscode/model";
+import { IVSCodeObject } from "../../types/vscode";
 
 import {
   EXTENSION_COMMANDS

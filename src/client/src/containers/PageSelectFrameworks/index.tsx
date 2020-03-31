@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
-import { IVSCodeObject } from "../../store/vscode/model";
+import { IVSCodeObject } from "../../types/vscode";
 import { AppContext } from "../../AppContext";
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;

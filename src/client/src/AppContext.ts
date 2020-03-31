@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IVSCodeObject } from "./store/vscode/model";
+import { IVSCodeObject } from "./types/vscode";
 import mockVsCodeApi from "./mockData/mockVsCodeApi";
 
 interface IAppContext {

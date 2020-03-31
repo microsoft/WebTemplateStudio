@@ -14,7 +14,7 @@ import {
   PAGEID
 } from "../../utils/constants";
 
-import { IVSCodeObject } from "../../store/vscode/model";
+import { IVSCodeObject } from "../../types/vscode";
 import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
 
 import { rootSelector } from "../../store/selection/app/selector";

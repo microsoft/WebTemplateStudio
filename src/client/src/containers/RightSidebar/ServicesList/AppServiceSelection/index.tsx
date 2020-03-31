@@ -10,7 +10,7 @@ import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { IVSCodeObject } from "../../../../store/vscode/model";
+import { IVSCodeObject } from "../../../../types/vscode";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { removeAppServiceSettingsAction } from "../../../../store/azureProfileData/appService/action";
 import { AppContext } from "../../../../AppContext";

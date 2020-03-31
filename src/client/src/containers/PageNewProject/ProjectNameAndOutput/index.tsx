@@ -34,7 +34,7 @@ import { setProjectPathValidationAction } from "../../../store/selection/validat
 import { setProjectNameAction, setOutputPathAction } from "../../../store/selection/app/action";
 import { IValidations } from "../../../store/selection/validations/model";
 import { AppContext } from "../../../AppContext";
-import { IVSCodeObject } from "../../../store/vscode/model";
+import { IVSCodeObject } from "../../../types/vscode";
 
 interface IStateProps {
   outputPath: string;

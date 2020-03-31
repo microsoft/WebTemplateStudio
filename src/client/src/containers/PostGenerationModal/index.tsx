@@ -24,7 +24,7 @@ import {
   WEB_TEMPLATE_STUDIO_LINKS,
   TELEMETRY
 } from "../../utils/constants";
-import { IVSCodeObject } from "../../store/vscode/model";
+import { IVSCodeObject } from "../../types/vscode";
 
 import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";

@@ -22,7 +22,7 @@ import * as ModalActions from "../../../store/modals/action";
 import { ThunkDispatch } from "redux-thunk";
 import { azureLogin } from "../../../utils/extensionService/extensionService";
 import { logIntoAzureActionAction } from "../../../store/azureProfileData/login/action";
-import { IVSCodeObject } from "../../../store/vscode/model";
+import { IVSCodeObject } from "../../../types/vscode";
 import { AppContext } from "../../../AppContext";
 
 interface IStateProps {

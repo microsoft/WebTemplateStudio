@@ -23,7 +23,7 @@ import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
 import { setDetailPageAction } from "../../store/wizardContent/pages/action";
 import { startLogOutAzureAction } from "../../store/azureProfileData/login/action";
-import { IVSCodeObject } from "../../store/vscode/model";
+import { IVSCodeObject } from "../../types/vscode";
 import { AppContext } from "../../AppContext";
 
 interface IDispatchProps {

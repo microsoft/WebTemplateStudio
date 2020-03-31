@@ -1,4 +1,4 @@
-import { IVSCodeObject } from "../../../store/vscode/model";
+import { IVSCodeObject } from "../../../types/vscode";
 
 import { FRONT_END_SELECTION, BACK_END_SELECTION } from "./defaultSelection";
 import {
