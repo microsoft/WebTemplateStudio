@@ -8,7 +8,6 @@ import {
   AzureResourceType,
   DialogMessages,
   DialogResponses,
-  BackendFrameworkLinuxVersion,
 } from "../constants";
 import { SubscriptionError, ValidationError } from "../errors";
 import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-group/resourceGroupModule";
@@ -87,11 +86,15 @@ export class AzureServices {
 
   public static async generateDistinctResourceGroupSelections(payload: any): Promise<ResourceGroupSelection[]> {
     const projectName = payload.engine.projectName;
-    const allSubscriptions: SubscriptionItem[] = [];
-
-    const cosmosSubscription = AzureServices.getSubscription(payload.cosmos.subscription);
-    const appserviceSubscription = AzureServices.getSubscription(payload.appService.subscription);
-    allSubscriptions.push(cosmosSubscription, appserviceSubscription);
+    const allSubscriptions: SubscriptionItem[] = [];    
+    if (payload.selectedCosmos) {
+      const cosmosSubscription = AzureServices.getSubscription(payload.cosmos.subscription);    
+      allSubscriptions.push(cosmosSubscription);
+    }
+    if (payload.selectedAppService) {
+      const appserviceSubscription = AzureServices.getSubscription(payload.appService.subscription);
+      allSubscriptions.push(appserviceSubscription);
+    }
     const allDistinctSubscriptions: SubscriptionItem[] = [...new Set(allSubscriptions)];
 
     const generatedName: string = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
@@ -143,7 +146,7 @@ export class AzureServices {
       appServicePlanName: aspName,
       tier: appServicePlan.tier,
       sku: appServicePlan.name,
-      linuxFxVersion: BackendFrameworkLinuxVersion[payload.engine.backendFramework],
+      linuxFxVersion: payload.engine.backendFrameworkLinuxVersion,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
     };
 

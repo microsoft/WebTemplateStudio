@@ -94,12 +94,12 @@ const AppNameEditor = ({
             disabled={subscription === ""}
           />
           {appName !== "" && invalidAppNameMessage === "" && !isValidatingName && (
-            <GreenCheck className={styles.validationIcon} />
+            <GreenCheck data-testid="green-check" className={styles.validationIcon} />
           )}
-          {isValidatingName && <Spinner className={styles.spinner} />}
+          {isValidatingName && <Spinner data-testid="spinner" className={styles.spinner} />}
         </div>
         {appName !== "" && !isValidatingName && invalidAppNameMessage !== "" && (
-          <div className={styles.errorMessage}>{invalidAppNameMessage}</div>
+          <div data-testid="error-message" className={styles.errorMessage}>{invalidAppNameMessage}</div>
         )}
     </div>
   );

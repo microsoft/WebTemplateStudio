@@ -93,12 +93,12 @@ const AccountNameEditor = ({
           disabled={!isValidSubscription()}
         />
         {accountName !== "" && invalidAccountNameMessage === "" && !isValidatingName && (
-          <GreenCheck className={styles.validationIcon} />
+          <GreenCheck data-testid="green-check" className={styles.validationIcon} />
         )}
-        {isValidatingName && <Spinner className={styles.spinner} />}
+        {isValidatingName && <Spinner data-testid="spinner" className={styles.spinner} />}
       </div>
       {accountName !== "" && !isValidatingName && invalidAccountNameMessage !== "" && (
-        <div className={styles.errorMessage}>{invalidAccountNameMessage}</div>
+        <div data-testid="error-message" className={styles.errorMessage}>{invalidAccountNameMessage}</div>
       )}
     </div>
   );
