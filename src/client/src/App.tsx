@@ -62,7 +62,7 @@ const PageAzureLogin = Loadable({
   loading:() => <div/>
 });
 const PostGenerationModal = Loadable({
-  loader: () => import(/* webpackChunkName: "PostGenerationModal" */  "./containers/PostGenerationModal"),
+  loader: () => import(/* webpackChunkName: "PostGenerationModal" */  "./containers/GenerationModal"),
   loading:() => <div/>
 });
 const CosmosDbModal = Loadable({
