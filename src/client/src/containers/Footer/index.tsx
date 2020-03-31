@@ -14,7 +14,7 @@ import {
   PAGEID
 } from "../../utils/constants";
 
-import { IVSCodeObject } from "../../store/vscode/model";
+import { IVSCodeObject } from "../../types/vscode";
 import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
 
 import { rootSelector } from "../../store/selection/app/selector";
@@ -28,7 +28,6 @@ import {
 } from "../../store/azureProfileData/appService/selector";
 
 import { openPostGenModalAction } from "../../store/modals/action";
-import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
 
 import {
   FormattedMessage,
@@ -51,6 +50,7 @@ import keyUpHandler from "../../utils/keyUpHandler";
 import messages from "./messages";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
+import { AppContext } from "../../AppContext";
 
 interface IDispatchProps {
   setRouteVisited: (route: string) => void;
@@ -59,7 +59,6 @@ interface IDispatchProps {
 }
 
 interface IStateProps {
-  vscode: IVSCodeObject;
   engine: any;
   selectedCosmos: boolean;
   cosmos: any;
@@ -87,17 +86,32 @@ const pathsBack: any = {
   [ROUTES.REVIEW_AND_GENERATE]: ROUTES.AZURE_LOGIN
 };
 
-class Footer extends React.Component<Props> {
-  public logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const {
-      engine,
-      selectedCosmos,
-      cosmos,
-      selectedAppService,
-      appService,
-      vscode,
-      openPostGenModal
-    } = this.props;
+const Footer = (props: Props) => {
+  const {
+    engine,
+    selectedCosmos,
+    cosmos,
+    selectedAppService,
+    appService,
+    openPostGenModal,
+    isEnableNextPage,
+    location,
+    isVisited,
+    intl
+  } = props;
+  const { pathname } = location;
+  const { showFrameworks } = isVisited;
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+
+  React.useEffect(()=>{
+    const pageNames = new Set();
+    for (const page of engine.pages) {
+      const pageName = page.name;
+      pageNames.add(pageName);
+    }
+  },[])
+
+  const logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     vscode.postMessage({
       module: EXTENSION_MODULES.GENERATE,
@@ -112,14 +126,14 @@ class Footer extends React.Component<Props> {
         appService
       }
     });
-    const { pathname } = this.props.location;
-    this.trackPageForTelemetry(pathname);
+    const { pathname } = location;
+    trackPageForTelemetry(pathname);
     openPostGenModal();
   };
-  public canGenerate = (): boolean => {
-    return this.props.isVisited.showReviewAndGenerate;
+  const canGenerate = (): boolean => {
+    return isVisited.showReviewAndGenerate;
   };
-  public findPageID = (pathname: string): number => {
+  const findPageID = (pathname: string): number => {
     switch (pathname) {
       case ROUTES.NEW_PROJECT:
         return PAGEID.NEW_PROJECT;
@@ -133,9 +147,9 @@ class Footer extends React.Component<Props> {
         return PAGEID.REVIEW_AND_GENERATE;
     }
   };
-  public handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
-    const { isEnableNextPage, setRouteVisited, setPage } = this.props;
-    this.trackPageForTelemetry(pathname);
+  const handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
+    const { isEnableNextPage, setRouteVisited, setPage } = props;
+    trackPageForTelemetry(pathname);
     if (!isEnableNextPage) {
       event.preventDefault();
       return;
@@ -145,53 +159,38 @@ class Footer extends React.Component<Props> {
     }
     setPage(pathsNext[pathname]);
     const pageNavLink = document.getElementById(
-      "page" + this.findPageID(pathsNext[pathname])
+      "page" + findPageID(pathsNext[pathname])
     );
     if (pageNavLink) {
       pageNavLink.focus();
     }
   };
 
-  public handleLinkBackClick = (
+  const handleLinkBackClick = (
     event: React.SyntheticEvent,
     pathname: string
   ) => {
-    const { setRouteVisited, setPage } = this.props;
-    this.trackPageForTelemetry(pathname);
+    const { setRouteVisited, setPage } = props;
+    trackPageForTelemetry(pathname);
     if (pathname !== ROUTES.NEW_PROJECT) {
       setRouteVisited(pathname);
     }
     setPage(pathsBack[pathname]);
     const pageNavLink = document.getElementById(
-      "page" + this.findPageID(pathsBack[pathname])
+      "page" + findPageID(pathsBack[pathname])
     );
     if (pageNavLink) {
       pageNavLink.focus();
     }
   };
 
-  public trackPageForTelemetry = (pathname: string) => {
-    sendTelemetry(this.props.vscode, EXTENSION_COMMANDS.TRACK_PAGE_SWITCH, {
+  const trackPageForTelemetry = (pathname: string) => {
+    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PAGE_SWITCH, {
       pageName: pathname
     });
   };
-  public render() {
-    // Validate the page names and do not generate if they are invalid or if there are duplicates
-    const pageNames = new Set();
-    for (const page of this.props.engine.pages) {
-      const pageName = page.name;
-      pageNames.add(pageName); 
-    }
 
-    const {
-      isEnableNextPage,
-      location,
-      isVisited,
-      intl
-    } = this.props;
-    const { pathname } = location;
-    const { showFrameworks } = isVisited;
-    return (
+  return (
       <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
         {pathname !== ROUTES.PAGE_DETAILS && (
           <div className={styles.footer}>
@@ -214,7 +213,7 @@ class Footer extends React.Component<Props> {
                     styles.buttonBack
                   )}
                   onClick={event => {
-                    this.handleLinkBackClick(event, pathname);
+                    handleLinkBackClick(event, pathname);
                   }}
                   onKeyUp={keyUpHandler}
                   to={
@@ -239,7 +238,7 @@ class Footer extends React.Component<Props> {
                     }
                   )}
                   onClick={event => {
-                    this.handleLinkClick(event, pathname);
+                    handleLinkClick(event, pathname);
                   }}
                   onKeyUp={keyUpHandler}
                   to={pathsNext[pathname]}
@@ -254,7 +253,7 @@ class Footer extends React.Component<Props> {
                   )}
                 </Link>
               )}
-              {this.canGenerate() && (
+              {canGenerate() && (
                 <button
                   disabled={!isEnableNextPage}
                   className={classnames(styles.button, {
@@ -262,7 +261,7 @@ class Footer extends React.Component<Props> {
                     [buttonStyles.buttonHighlighted]: isEnableNextPage,
                     [styles.disabledOverlay]:!isEnableNextPage
                   })}
-                  onClick={this.logMessageToVsCode}
+                  onClick={logMessageToVsCode}
                 >
                   <FormattedMessage
                     id="footer.generate"
@@ -275,11 +274,9 @@ class Footer extends React.Component<Props> {
         )}
       </nav>
     );
-  }
 }
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  vscode: getVSCodeApiSelector(state),
   engine: rootSelector(state),
   selectedCosmos: isCosmosResourceCreatedSelector(state),
   cosmos: getCosmosDbSelectionSelector(state),

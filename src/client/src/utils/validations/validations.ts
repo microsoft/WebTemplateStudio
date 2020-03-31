@@ -1,4 +1,4 @@
-import { IVSCodeObject } from "../../store/vscode/model";
+import { IVSCodeObject } from "../../types/vscode";
 import { ISelected } from "../../types/selected";
 import { FormattedMessage } from "react-intl";
 import { validationMessages } from './messages';

@@ -7,17 +7,21 @@ import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
+import { IVSCodeObject } from "../../types/vscode";
+import { AppContext } from "../../AppContext";
 
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const SelectFrameworks = (props: Props) => {
   const { frontendOptions, backendOptions, intl } = props;
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+
   React.useEffect(()=>{
     getDependencyInfoAndSetToStore();
   },[]);
 
   const getDependencyInfoAndSetToStore = () =>{
-    const { vscode, updateDependencyInfo } = props;
+    const { updateDependencyInfo } = props;
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {

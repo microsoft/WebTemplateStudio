@@ -22,10 +22,11 @@ import * as ModalActions from "../../../store/modals/action";
 import { ThunkDispatch } from "redux-thunk";
 import { azureLogin } from "../../../utils/extensionService/extensionService";
 import { logIntoAzureActionAction } from "../../../store/azureProfileData/login/action";
+import { IVSCodeObject } from "../../../types/vscode";
+import { AppContext } from "../../../AppContext";
 
 interface IStateProps {
   isModalOpen: boolean;
-  vscode: any;
   isLoggedIn: boolean;
   selectedAzureServiceName: string;
 }
@@ -49,9 +50,10 @@ const AzureLoginModal = (props: Props) => {
     openCosmosDbModal,
     logIntoAzure
   } = props;
+  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
   const handleSignInClick = () => {
-    azureLogin(props.vscode).then((event)=>{
+    azureLogin(vscode).then((event)=>{
       const message = event.data;
       if (message.payload !== null) {
         const loginData = message.payload as AzureProfile;
@@ -167,11 +169,9 @@ const AzureLoginModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => {
-  const { vscodeObject } = state.vscode;
   const { isLoggedIn } = state.azureProfileData;
   return {
     isModalOpen: isAzureLoginModalOpenSelector(state),
-    vscode: vscodeObject,
     isLoggedIn,
     selectedAzureServiceName: state.modals.openModal.modalData
   };
@@ -188,8 +188,8 @@ const mapDispatchToProps = (
   openAppServiceModal: () => {
     dispatch(ModalActions.openAppServiceModalAction());
   },
-  logIntoAzure: (loginData: AzureProfile) => {	
-    dispatch(logIntoAzureActionAction(loginData));	
+  logIntoAzure: (loginData: AzureProfile) => {
+    dispatch(logIntoAzureActionAction(loginData));
   },
 });
 

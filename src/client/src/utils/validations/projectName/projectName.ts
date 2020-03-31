@@ -1,4 +1,4 @@
-import { IVSCodeObject } from "../../../store/vscode/model";
+import { IVSCodeObject } from "../../../types/vscode";
 import { addExistingProjectNameValidate, addRegexValidate, addRequiredValidate,
   addReservedNameValidate, IValidation} from '../validations';
 import { validationMessages } from '../messages';

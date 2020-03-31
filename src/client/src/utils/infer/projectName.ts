@@ -1,4 +1,4 @@
-import { IVSCodeObject } from "../../store/vscode/model";
+import { IVSCodeObject } from "../../types/vscode";
 import { addExistingProjectNameValidate, IValidation} from '../validations/validations';
 
 export const inferProjectName = async (outputPath: string, vscode: IVSCodeObject) => {

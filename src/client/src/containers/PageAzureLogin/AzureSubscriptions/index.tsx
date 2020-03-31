@@ -50,33 +50,46 @@ interface IState {
 
 type Props = IAzureLoginProps & IDispatchProps & InjectedIntlProps;
 
-class AzureSubscriptions extends React.Component<Props, IState> {
-  public isSelectionCreated = (internalName: string): boolean => {
+const AzureSubscriptions = (props: Props) => {
+  const {
+    cosmosDbSelection,
+    appServiceSelection,
+    intl,
+    openCosmosDbModal,
+    openAppServiceModal,
+    openAzureLoginModal,
+    isLoggedIn,
+    setDetailPage,
+    isPreview
+  } = props;
+  const { formatMessage } = intl;
+  const [uniqueServiceTypes, setUniqueServiceTypes] = React.useState<(string | undefined)[]>([]);
+
+  React.useEffect(()=>{
+    const serviceTypes = azureServiceOptions.map(option => option.type);
+    setUniqueServiceTypes([...new Set(serviceTypes)]);
+  },[]);
+
+  const isSelectionCreated = (internalName: string): boolean => {
     if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB) {
-      return !_.isEmpty(this.props.cosmosDbSelection);
+      return !_.isEmpty(cosmosDbSelection);
     } else if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE) {
-      return !_.isEmpty(this.props.appServiceSelection);
+      return !_.isEmpty(appServiceSelection);
     }
     return false;
   };
 
-  public addOrEditResourceText = (internalName: string): string => {
-    const { formatMessage } = this.props.intl;
-    if (this.isSelectionCreated(internalName)) {
+  const addOrEditResourceText = (internalName: string): string => {
+    if (isSelectionCreated(internalName)) {
       return formatMessage(messages.editResource);
     }
     return formatMessage(messages.addResource);
   };
 
-  /**
-   * Returns a function that opens a modal for a specific internalName
-   * @param internalName internal name of service within Core Engine
-   */
-  public getServicesModalOpener(internalName: string): () => void {
+  const getServicesModalOpener = (internalName: string) => {
     const modalOpeners = {
-      [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: this.props.openCosmosDbModal,
-      [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: this.props
-        .openAppServiceModal
+      [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: openCosmosDbModal,
+      [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: openAppServiceModal
     };
     if (modalOpeners.hasOwnProperty(internalName)) {
       return modalOpeners[internalName];
@@ -84,29 +97,13 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     return () => void(0);
   }
 
-  /**
-   * Returns internal name of Azure cloud hosting service that has been created
-   * If no service has been created yet, returns null
-   */
-  public getCreatedHostingService(): string | null {
-    const { isAppServiceSelected } = this.props;
-    if (isAppServiceSelected) {
-      return WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE;
-    } else {
-      return null;
-    }
-  }
-
-  public getServicesOrganizer(
+  const getServicesOrganizer = (
     type: string | undefined,
     isLoggedIn: boolean,
     setDetailPage: any,
     title: any,
     isPreview: boolean
-  ) {
-    const { formatMessage } = this.props.intl;
-    const { openAzureLoginModal } = this.props;
-
+  ) => {
     return (
       <div key={type}
         className={classnames(styles.servicesContainer, {
@@ -120,7 +117,6 @@ class AzureSubscriptions extends React.Component<Props, IState> {
           </div>
           <div className={styles.servicesCategoryContainer}>
             {azureServiceOptions.map(option => {
-              // show cards with preview flag only if wizard is also in preview
               const shouldShowCard = isPreview || !option.isPreview;
               if (shouldShowCard && option.type === type) {
                 return (
@@ -132,12 +128,12 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                   >
                     <Card
                       option={option}
-                      buttonText={this.addOrEditResourceText(
+                      buttonText={addOrEditResourceText(
                         option.internalName
                       )}
                       handleButtonClick={
                         isLoggedIn
-                          ? this.getServicesModalOpener(option.internalName)
+                          ? getServicesModalOpener(option.internalName)
                           : () => openAzureLoginModal(option.internalName)
                       }
                       handleDetailsClick={setDetailPage}
@@ -152,34 +148,28 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     );
   }
 
-  public render() {
-    const { isLoggedIn, setDetailPage, isPreview } = this.props;
-    const serviceTypes = azureServiceOptions.map(option => option.type);
-    const uniqueServiceTypes = [...new Set(serviceTypes)];
-
-    return (
-      <div className={styles.container}>
-        {uniqueServiceTypes.map((serviceType: any) => {
-          let categoryTitle;
-          switch (serviceType) {
-            case servicesEnum.HOSTING:
-              categoryTitle = messages.hostingTitle;
-              break;
-            case servicesEnum.DATABASE:
-              categoryTitle = messages.storageTitle;
-              break;
-          }
-          return this.getServicesOrganizer(
-            serviceType,
-            isLoggedIn,
-            setDetailPage,
-            categoryTitle,
-            isPreview
-          );
-        })}
-      </div>
-    );
-  }
+  return (
+    <div className={styles.container}>
+      {uniqueServiceTypes.map((serviceType: any) => {
+        let categoryTitle;
+        switch (serviceType) {
+          case servicesEnum.HOSTING:
+            categoryTitle = messages.hostingTitle;
+            break;
+          case servicesEnum.DATABASE:
+            categoryTitle = messages.storageTitle;
+            break;
+        }
+        return getServicesOrganizer(
+          serviceType,
+          isLoggedIn,
+          setDetailPage,
+          categoryTitle,
+          isPreview
+        );
+      })}
+    </div>
+  );
 }
 
 const mapStateToProps = (state: AppState): IAzureLoginProps => {
