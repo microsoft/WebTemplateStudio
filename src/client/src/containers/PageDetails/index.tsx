@@ -10,7 +10,7 @@ import RootAction from "../../store/ActionType";
 import { setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 
 interface IPageDetailsProps {
-  originRoute : string;
+  originRoute: string;
   detailsPageInfo: IOption;
   isIntlFormatted: boolean;
 }

@@ -19,7 +19,7 @@ import { setPageWizardPageAction } from "../../store/wizardContent/pages/action"
 interface IStateProps {
   isVisited: IRoutes;
   isEnableNextPage: boolean;
-  selectedRoute : string;
+  selectedRoute: string;
 }
 
 interface IDispatchProps {
@@ -52,7 +52,7 @@ const TopNavBar = (props: Props) => {
   };
 
   React.useEffect(() => {
-    var index = ROUTES_ARRAY.indexOf(selectedRoute);
+    const index = ROUTES_ARRAY.indexOf(selectedRoute);
     setPathIndex(index);
     const page = document.getElementById('page' + (index + 1));
     if (page)

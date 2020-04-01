@@ -22,7 +22,6 @@ import { hasServicesSelector } from "../../store/azureProfileData/servicesSelect
 import { getIsVisitedRoutesSelector, IVisitedPages } from "../../store/wizardContent/wizardContent/wizardNavigationSelector";
 import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
-import { StateManager } from "react-select/lib/stateManager";
 
 type Props = InjectedIntlProps;
 
