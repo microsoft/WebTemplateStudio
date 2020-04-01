@@ -72,31 +72,81 @@ type Props = IStateProps &
   RouteComponentProps;
 
 const GenerationModal = ({
-  serviceStatus,
-  isTemplateGenerated,
-  isServicesDeployed,
-  templateGenStatus,
   outputPath,
   intl,
-  isTemplatesFailed,
   isServicesSelected,
   resetWizard,
   history
 }: Props) => {
   const { formatMessage } = intl;
   let serviceFailed = false;
+  const [templateGenStatus, setTemplateGenStatus] = React.useState("");
+  const [generationStatus, setGenerationStatus] = React.useState<any>({});
+
+  const isTemplateGenerated = generationStatus.templates && generationStatus.templates.success;
+  const isTemplatesFailed = generationStatus.templates && generationStatus.templates.failure;
   const templateGenerated = isTemplateGenerated && !isTemplatesFailed;
   const templateGenerationInProgress =
     !isTemplateGenerated && !isTemplatesFailed;
   const { vscode } = React.useContext(AppContext);
+  const [isServicesDeployed, setIsServicesDeployed] = React.useState(false);
 
   const engine = useSelector((state: AppState) => rootSelector(state));
   const isCosmosSelected = useSelector((state: AppState) => isCosmosResourceCreatedSelector(state));
   const cosmos = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
   const isAppServiceSelected = useSelector((state: AppState) => isAppServiceSelectedSelector(state));
   const appService = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
-  const dispatch = useDispatch();
+  const [serviceStatus, setServiceStatus] = React.useState<IAzureServiceStatus>({
+    "cosmosdb":{
+      "title":{"id":"cosmosDb.title","defaultMessage":"Cosmos DB"},
+		  "isSelected":isCosmosSelected,
+		  "isDeployed":false,
+		  "isFailed":false
+	  },
+	  "appService":
+		  {"title":{"id":"appService.title","defaultMessage":"App Service"},
+		  "isSelected":isAppServiceSelected,
+		  "isDeployed":false,
+		  "isFailed":false
+	  }
+  });
 
+  React.useEffect(()=>{
+    let mm = {
+      "cosmosdb":{
+        "title":{"id":"cosmosDb.title","defaultMessage":"Cosmos DB"},
+        "isSelected":isCosmosSelected,
+        "isDeployed":false,
+        "isFailed":false
+      },
+      "appService":
+        {"title":{"id":"appService.title","defaultMessage":"App Service"},
+        "isSelected":isAppServiceSelected,
+        "isDeployed":false,
+        "isFailed":false
+      }
+    };
+    if (generationStatus.templates){
+      if (isCosmosSelected && generationStatus.cosmo.success!=undefined){
+        mm.cosmosdb.isDeployed = generationStatus.cosmo.success;
+        mm.cosmosdb.isFailed = generationStatus.cosmo.failure;
+      }
+
+      if (isAppServiceSelected && generationStatus.appService.success!=undefined){
+        mm.appService.isDeployed = generationStatus.appService.success;
+        mm.appService.isFailed = generationStatus.appService.failure;
+      }
+      debugger;
+      if (isCosmosSelected && !isAppServiceSelected && mm.cosmosdb.isDeployed) setIsServicesDeployed(true);
+      if (!isCosmosSelected && isAppServiceSelected && mm.appService.isDeployed) setIsServicesDeployed(true);
+      if (!isCosmosSelected && !isAppServiceSelected) setIsServicesDeployed(true);
+      if (!isCosmosSelected && isAppServiceSelected && mm.appService.isDeployed && mm.cosmosdb.isDeployed) setIsServicesDeployed(true);
+      setServiceStatus(mm);
+    }
+  },[generationStatus]);
+
+  const dispatch = useDispatch();
+  
   React.useEffect(()=>{
     generateProject(engine,
       isCosmosSelected,
@@ -112,10 +162,10 @@ const GenerationModal = ({
       const message = event.data;
       switch (message.command) {
         case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
-          dispatch(updateTemplateGenerationStatusMessageAction(message.payload.status));
+          setTemplateGenStatus(message.payload.status);
           break;
         case EXTENSION_COMMANDS.GEN_STATUS:
-          dispatch(updateTemplateGenerationStatusAction(message.payload));
+          setGenerationStatus(message.payload);
           break;
       }
     });
@@ -346,7 +396,7 @@ const GenerationModal = ({
       <div className={styles.headerContainer}>
         <div className={styles.title}>
           {formatMessage(messages.creatingYourProject)}
-        </div>      
+        </div>
         <Close
             tabIndex={0}
             className={styles.closeIcon}
@@ -357,7 +407,8 @@ const GenerationModal = ({
 
       <div className={styles.section}>
         {templateGenerationInProgress && (
-          <div className={styles.sectionLine}>{templateGenStatus}</div>
+          <div className={styles.sectionLine}>
+            {templateGenStatus}</div>
         )}
         {templateGenerated && postGenMessage()}
         {isTemplatesFailed && renderTemplatesError()}
