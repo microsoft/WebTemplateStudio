@@ -12,7 +12,6 @@ import {
 } from "../../utils/constants";
 
 import { IVSCodeObject } from "../../types/vscode";
-import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
 
 import { rootSelector } from "../../store/selection/app/selector";
 import {
@@ -28,14 +27,9 @@ import { openPostGenModalAction } from "../../store/modals/action";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
-import {
-  getIsVisitedRoutesSelector,
-  IVisitedPages,
-} from "../../store/wizardContent/wizardContent/wizardNavigationSelector";
-import { isEnableNextPage } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { getIsVisitedRoutesSelector } from "../../store/wizardContent/wizardContent/wizardNavigationSelector";
+import { isEnableNextPageSelector } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../store/ActionType";
 
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
 import nextArrow from "../../assets/nextarrow.svg";
@@ -44,25 +38,9 @@ import messages from "./messages";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 import { AppContext } from "../../AppContext";
+import { useSelector, useDispatch } from "react-redux";
 
-interface IDispatchProps {
-  setRouteVisited: (route: string) => void;
-  setPage: (route: string) => void;
-  openPostGenModal: () => any;
-}
-
-interface IStateProps {
-  engine: any;
-  selectedCosmos: boolean;
-  cosmos: any;
-  selectedAppService: boolean;
-  appService: ISelectedAppService | null;
-  isVisited: IVisitedPages;
-  isEnableNextPage: boolean;
-  selectedRoute: string;
-}
-
-type Props = IStateProps & IDispatchProps & InjectedIntlProps;
+type Props = InjectedIntlProps;
 
 const pathsNext: any = {
   [ROUTES.NEW_PROJECT]: ROUTES.SELECT_FRAMEWORKS,
@@ -78,21 +56,19 @@ const pathsBack: any = {
 };
 
 const Footer = (props: Props) => {
-  const {
-    engine,
-    selectedCosmos,
-    cosmos,
-    selectedAppService,
-    appService,
-    openPostGenModal,
-    isEnableNextPage,
-    selectedRoute,
-    isVisited,
-    intl,
-  } = props;
+  const { formatMessage } = props.intl;
 
-  const { showFrameworks } = isVisited;
+  const engine = useSelector((state: AppState) => rootSelector(state));
+  const selectedCosmos = useSelector((state: AppState) => isCosmosResourceCreatedSelector(state));
+  const cosmos = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
+  const selectedAppService = useSelector((state: AppState) => isAppServiceSelectedSelector(state));
+  const appService = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
+  const visitedRoutes = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
+  const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
+  const currentRoute = useSelector((state: AppState) => state.wizardRoutes.selected);
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+
+  const dispatch = useDispatch();
 
   const trackPageForTelemetry = (pathname: string) => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PAGE_SWITCH, {
@@ -115,25 +91,21 @@ const Footer = (props: Props) => {
         appService,
       },
     });
-    trackPageForTelemetry(selectedRoute);
-    openPostGenModal();
+    trackPageForTelemetry(currentRoute);
+    dispatch(openPostGenModalAction());
   };
 
   const navigateBack = () => {
-    const { setPage, selectedRoute } = props;
-
-    trackPageForTelemetry(selectedRoute);
-    setPage(pathsBack[selectedRoute]);
+    trackPageForTelemetry(currentRoute);
+    dispatch(setPageWizardPageAction(pathsBack[currentRoute]));
   };
 
   const navigateForward = () => {
-    const { setRouteVisited, setPage, selectedRoute } = props;
-
-    trackPageForTelemetry(selectedRoute);
-    if (selectedRoute !== ROUTES.REVIEW_AND_GENERATE) {
-      setRouteVisited(pathsNext[selectedRoute]);
+    trackPageForTelemetry(currentRoute);
+    if (currentRoute !== ROUTES.REVIEW_AND_GENERATE) {
+      dispatch(setVisitedWizardPageAction(pathsNext[currentRoute]));
     }
-    setPage(pathsNext[selectedRoute]);
+    dispatch(setPageWizardPageAction(pathsNext[currentRoute]));
   };
 
   const navigateForwardOnKeyPress = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
@@ -151,16 +123,20 @@ const Footer = (props: Props) => {
   };
 
   const canGenerate = (): boolean => {
-    return isVisited.showReviewAndGenerate;
+    return visitedRoutes.showReviewAndGenerate;
+  };
+
+  const showLicenses = (): boolean => {
+    return visitedRoutes.showFrameworks;
   };
 
   return (
-    <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
-      {selectedRoute !== ROUTES.PAGE_DETAILS && (
+    <nav aria-label={formatMessage(messages.navAriaLabel)}>
+      {currentRoute !== ROUTES.PAGE_DETAILS && (
         <div className={styles.footer}>
-          <div>{showFrameworks && intl.formatMessage(messages.license)}</div>
+          <div>{showLicenses() && formatMessage(messages.license)}</div>
           <div className={styles.buttonContainer}>
-            {selectedRoute !== ROUTES.NEW_PROJECT && (
+            {currentRoute !== ROUTES.NEW_PROJECT && (
               <a
                 tabIndex={0}
                 className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack)}
@@ -168,10 +144,10 @@ const Footer = (props: Props) => {
                 onKeyPress={navigateBackOnKeyPress}
                 onKeyUp={keyUpHandler}
               >
-                {intl.formatMessage(messages.back)}
+                {formatMessage(messages.back)}
               </a>
             )}
-            {selectedRoute !== ROUTES.REVIEW_AND_GENERATE && (
+            {currentRoute !== ROUTES.REVIEW_AND_GENERATE && (
               <a
                 tabIndex={isEnableNextPage ? 0 : -1}
                 className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
@@ -182,7 +158,7 @@ const Footer = (props: Props) => {
                 onKeyPress={navigateForwardOnKeyPress}
                 onKeyUp={keyUpHandler}
               >
-                {intl.formatMessage(messages.next)}
+                {formatMessage(messages.next)}
                 {nextArrow && (
                   <NextArrow
                     className={classnames(styles.nextIcon, {
@@ -202,7 +178,7 @@ const Footer = (props: Props) => {
                 })}
                 onClick={generateProject}
               >
-                {intl.formatMessage(messages.generate)}
+                {formatMessage(messages.generate)}
               </button>
             )}
           </div>
@@ -212,27 +188,4 @@ const Footer = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState): IStateProps => ({
-  engine: rootSelector(state),
-  selectedCosmos: isCosmosResourceCreatedSelector(state),
-  cosmos: getCosmosDbSelectionSelector(state),
-  selectedAppService: isAppServiceSelectedSelector(state),
-  appService: getAppServiceSelectionSelector(state),
-  isVisited: getIsVisitedRoutesSelector(state),
-  isEnableNextPage: isEnableNextPage(state),
-  selectedRoute: state.wizardRoutes.selected,
-});
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, void, RootAction>): IDispatchProps => ({
-  setRouteVisited: (route: string) => {
-    dispatch(setVisitedWizardPageAction(route));
-  },
-  setPage: (route: string) => {
-    dispatch(setPageWizardPageAction(route));
-  },
-  openPostGenModal: () => {
-    dispatch(openPostGenModalAction());
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(Footer));
+export default injectIntl(Footer);

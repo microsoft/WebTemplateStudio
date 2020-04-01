@@ -9,7 +9,7 @@ import styles from "./styles.module.css";
 
 import { ROUTES_ARRAY } from "../../utils/constants";
 import { IRoutes } from "../../store/selection/pages/model";
-import { isEnableNextPage } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPageSelector } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../store/combineReducers";
 import RootAction from "../../store/ActionType";
@@ -117,7 +117,7 @@ const TopNavBar = (props: Props) => {
 };
 
 const mapStateToProps = (state: any): IStateProps => ({
-  isEnableNextPage: isEnableNextPage(state),
+  isEnableNextPage: isEnableNextPageSelector(state),
   isVisited: state.wizardRoutes.isVisited,
   selectedRoute : state.wizardRoutes.selected
 });

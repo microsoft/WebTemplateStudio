@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 
 import RootAction from "../../../store/ActionType";
 
-import { isEnableNextPage } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPageSelector } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 import { AppState } from "../../../store/combineReducers";
 import { IVSCodeObject } from "../../../types/vscode";
@@ -106,7 +106,7 @@ const mapStateToProps = (state: AppState): IStateProps => {
   const { previewStatus } = state.wizardContent;
   return {
     isPreview: previewStatus,
-    isEnableNextPage: isEnableNextPage(state)
+    isEnableNextPage: isEnableNextPageSelector(state)
   };
 };
 

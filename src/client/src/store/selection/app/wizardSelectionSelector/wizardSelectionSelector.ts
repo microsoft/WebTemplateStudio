@@ -20,7 +20,7 @@ const getSelectedPages = (state: AppState): Array<ISelected> =>
   state.selection.pages;
 const getOutputPath = (state: AppState): string =>
   state.selection.outputPathObject.outputPath;
-const isEnableNextPage = (state: AppState): boolean =>{
+const isEnableNextPageSelector = (state: AppState): boolean =>{
   let valid = false;
   if (state.wizardRoutes.selected === ROUTES.NEW_PROJECT){
     valid = state.selection.projectNameObject.validation.isValid === true && 
@@ -168,5 +168,5 @@ export {
   getValidations,
   getProjectNameValidation,
   isValidNameAndProjectPathSelector,
-  isEnableNextPage
+  isEnableNextPageSelector
 };
