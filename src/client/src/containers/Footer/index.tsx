@@ -8,7 +8,7 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   PAYLOAD_MESSAGES_TEXT,
-  PAGEID
+  KEY_EVENTS,
 } from "../../utils/constants";
 
 import { IVSCodeObject } from "../../types/vscode";
@@ -17,24 +17,20 @@ import { ISelectedAppService } from "../../store/azureProfileData/appService/mod
 import { rootSelector } from "../../store/selection/app/selector";
 import {
   getCosmosDbSelectionSelector,
-  isCosmosResourceCreatedSelector
+  isCosmosResourceCreatedSelector,
 } from "../../store/azureProfileData/cosmosDb/selector";
 import {
   isAppServiceSelectedSelector,
-  getAppServiceSelectionSelector
+  getAppServiceSelectionSelector,
 } from "../../store/azureProfileData/appService/selector";
 
 import { openPostGenModalAction } from "../../store/modals/action";
 
-import {
-  FormattedMessage,
-  InjectedIntlProps,
-  injectIntl
-} from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import {
   getIsVisitedRoutesSelector,
-  IVisitedPages
+  IVisitedPages,
 } from "../../store/wizardContent/wizardContent/wizardNavigationSelector";
 import { isEnableNextPage } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
@@ -63,24 +59,22 @@ interface IStateProps {
   appService: ISelectedAppService | null;
   isVisited: IVisitedPages;
   isEnableNextPage: boolean;
-  selectedRoute : string;
+  selectedRoute: string;
 }
 
-type Props = IStateProps &
-  IDispatchProps &
-  InjectedIntlProps;
+type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const pathsNext: any = {
   [ROUTES.NEW_PROJECT]: ROUTES.SELECT_FRAMEWORKS,
   [ROUTES.SELECT_FRAMEWORKS]: ROUTES.SELECT_PAGES,
   [ROUTES.SELECT_PAGES]: ROUTES.AZURE_LOGIN,
-  [ROUTES.AZURE_LOGIN]: ROUTES.REVIEW_AND_GENERATE
+  [ROUTES.AZURE_LOGIN]: ROUTES.REVIEW_AND_GENERATE,
 };
 const pathsBack: any = {
   [ROUTES.SELECT_FRAMEWORKS]: ROUTES.NEW_PROJECT,
   [ROUTES.SELECT_PAGES]: ROUTES.SELECT_FRAMEWORKS,
   [ROUTES.AZURE_LOGIN]: ROUTES.SELECT_PAGES,
-  [ROUTES.REVIEW_AND_GENERATE]: ROUTES.AZURE_LOGIN
+  [ROUTES.REVIEW_AND_GENERATE]: ROUTES.AZURE_LOGIN,
 };
 
 const Footer = (props: Props) => {
@@ -94,21 +88,19 @@ const Footer = (props: Props) => {
     isEnableNextPage,
     selectedRoute,
     isVisited,
-    intl
+    intl,
   } = props;
-  const { pathname } = location;
+
   const { showFrameworks } = isVisited;
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
-  React.useEffect(()=>{
-    const pageNames = new Set();
-    for (const page of engine.pages) {
-      const pageName = page.name;
-      pageNames.add(pageName);
-    }
-  },[])
+  const trackPageForTelemetry = (pathname: string) => {
+    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PAGE_SWITCH, {
+      pageName: pathname,
+    });
+  };
 
-  const logMessageToVsCode = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const generateProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     vscode.postMessage({
       module: EXTENSION_MODULES.GENERATE,
@@ -120,151 +112,105 @@ const Footer = (props: Props) => {
         selectedCosmos,
         cosmos,
         selectedAppService,
-        appService
-      }
+        appService,
+      },
     });
     trackPageForTelemetry(selectedRoute);
     openPostGenModal();
   };
+
+  const navigateBack = () => {
+    const { setPage, selectedRoute } = props;
+
+    trackPageForTelemetry(selectedRoute);
+    setPage(pathsBack[selectedRoute]);
+  };
+
+  const navigateForward = () => {
+    const { setRouteVisited, setPage, selectedRoute } = props;
+
+    trackPageForTelemetry(selectedRoute);
+    if (selectedRoute !== ROUTES.REVIEW_AND_GENERATE) {
+      setRouteVisited(pathsNext[selectedRoute]);
+    }
+    setPage(pathsNext[selectedRoute]);
+  };
+
+  const navigateForwardOnKeyPress = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
+    event.stopPropagation();
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
+      navigateForward();
+    }
+  };
+
+  const navigateBackOnKeyPress = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
+    event.stopPropagation();
+    if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
+      navigateBack();
+    }
+  };
+
   const canGenerate = (): boolean => {
     return isVisited.showReviewAndGenerate;
   };
-  const findPageID = (pathname: string): number => {
-    switch (pathname) {
-      case ROUTES.NEW_PROJECT:
-        return PAGEID.NEW_PROJECT;
-      case ROUTES.SELECT_FRAMEWORKS:
-        return PAGEID.SELECT_FRAMEWORKS;
-      case ROUTES.SELECT_PAGES:
-        return PAGEID.SELECT_PAGES;
-      case ROUTES.AZURE_LOGIN:
-        return PAGEID.AZURE_LOGIN;
-      default:
-        return PAGEID.REVIEW_AND_GENERATE;
-    }
-  };
-  const handleLinkClick = (event: React.SyntheticEvent, pathname: string) => {
-    const { isEnableNextPage, setRouteVisited, setPage } = props;
-    trackPageForTelemetry(pathname);
-    if (!isEnableNextPage) {
-      event.preventDefault();
-      return;
-    }
-    if (pathname !== ROUTES.REVIEW_AND_GENERATE) {
-      setRouteVisited(pathsNext[pathname]);
-    }
-    setPage(pathsNext[pathname]);
-    const pageNavLink = document.getElementById(
-      "page" + findPageID(pathsNext[pathname])
-    );
-    if (pageNavLink) {
-      pageNavLink.focus();
-    }
-  };
-
-  const handleLinkBackClick = (
-    event: React.SyntheticEvent,
-    pathname: string
-  ) => {
-    const { setRouteVisited, setPage } = props;
-    trackPageForTelemetry(pathname);
-    if (pathname !== ROUTES.NEW_PROJECT) {
-      setRouteVisited(pathname);
-    }
-    setPage(pathsBack[pathname]);
-    const pageNavLink = document.getElementById(
-      "page" + findPageID(pathsBack[pathname])
-    );
-    if (pageNavLink) {
-      pageNavLink.focus();
-    }
-  };
-
-  const trackPageForTelemetry = (pathname: string) => {
-    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PAGE_SWITCH, {
-      pageName: pathname
-    });
-  };
 
   return (
-      <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
-        {selectedRoute !== ROUTES.PAGE_DETAILS && (
-          <div className={styles.footer}>
-            <div>
-              {showFrameworks && (
-                <FormattedMessage
-                  id="footer.license"
-                  defaultMessage="By continuing, you agree to the terms of all the licenses in the
-              licenses section."
-                />
-              )}
-            </div>
-            <div className={styles.buttonContainer}>
-              {selectedRoute !== ROUTES.NEW_PROJECT && (
-                <a
-                  tabIndex={0}
-                  className={classnames(
-                    buttonStyles.buttonDark,
-                    styles.button,
-                    styles.buttonBack
-                  )}
-                  onClick={event => {
-                    handleLinkBackClick(event, selectedRoute);
-                  }}
-                  onKeyUp={keyUpHandler}
-                >
-                  <FormattedMessage id="footer.back" defaultMessage="Back" />
-                </a>
-              )}
-              {selectedRoute !== ROUTES.REVIEW_AND_GENERATE && (
-                <a
-                  tabIndex={isEnableNextPage ? 0 : -1}
-                  className={classnames(
-                    styles.button,
-                    styles.buttonNext,
-                    buttonStyles.buttonHighlighted,
-                    {
-                      [buttonStyles.buttonDark]: !isEnableNextPage,
-                      [styles.disabledOverlay]: !isEnableNextPage
-                    }
-                  )}
-                  onClick={event => {
-                    handleLinkClick(event, selectedRoute);
-                  }}
-                  onKeyUp={keyUpHandler}
-                >
-                  <FormattedMessage id="footer.next" defaultMessage="Next" />
-                  {nextArrow && (
-                    <NextArrow
-                      className={classnames(styles.nextIcon, {
-                        [styles.nextIconNotDisabled]: isEnableNextPage
-                      })}
-                    />
-                  )}
-                </a>
-              )}
-              {canGenerate() && (
-                <button
-                  disabled={!isEnableNextPage}
-                  className={classnames(styles.button, {
-                    [buttonStyles.buttonDark]: !isEnableNextPage,
-                    [buttonStyles.buttonHighlighted]: isEnableNextPage,
-                    [styles.disabledOverlay]:!isEnableNextPage
-                  })}
-                  onClick={logMessageToVsCode}
-                >
-                  <FormattedMessage
-                    id="footer.generate"
-                    defaultMessage="Create Project"
+    <nav aria-label={intl.formatMessage(messages.navAriaLabel)}>
+      {selectedRoute !== ROUTES.PAGE_DETAILS && (
+        <div className={styles.footer}>
+          <div>{showFrameworks && intl.formatMessage(messages.license)}</div>
+          <div className={styles.buttonContainer}>
+            {selectedRoute !== ROUTES.NEW_PROJECT && (
+              <a
+                tabIndex={0}
+                className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack)}
+                onClick={navigateBack}
+                onKeyPress={navigateBackOnKeyPress}
+                onKeyUp={keyUpHandler}
+              >
+                {intl.formatMessage(messages.back)}
+              </a>
+            )}
+            {selectedRoute !== ROUTES.REVIEW_AND_GENERATE && (
+              <a
+                tabIndex={isEnableNextPage ? 0 : -1}
+                className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
+                  [buttonStyles.buttonDark]: !isEnableNextPage,
+                  [styles.disabledOverlay]: !isEnableNextPage,
+                })}
+                onClick={navigateForward}
+                onKeyPress={navigateForwardOnKeyPress}
+                onKeyUp={keyUpHandler}
+              >
+                {intl.formatMessage(messages.next)}
+                {nextArrow && (
+                  <NextArrow
+                    className={classnames(styles.nextIcon, {
+                      [styles.nextIconNotDisabled]: isEnableNextPage,
+                    })}
                   />
-                </button>
-              )}
-            </div>
+                )}
+              </a>
+            )}
+            {canGenerate() && (
+              <button
+                disabled={!isEnableNextPage}
+                className={classnames(styles.button, {
+                  [buttonStyles.buttonDark]: !isEnableNextPage,
+                  [buttonStyles.buttonHighlighted]: isEnableNextPage,
+                  [styles.disabledOverlay]: !isEnableNextPage,
+                })}
+                onClick={generateProject}
+              >
+                {intl.formatMessage(messages.generate)}
+              </button>
+            )}
           </div>
-        )}
-      </nav>
-    );
-}
+        </div>
+      )}
+    </nav>
+  );
+};
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   engine: rootSelector(state),
@@ -274,12 +220,10 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   appService: getAppServiceSelectionSelector(state),
   isVisited: getIsVisitedRoutesSelector(state),
   isEnableNextPage: isEnableNextPage(state),
-  selectedRoute : state.wizardRoutes.selected
+  selectedRoute: state.wizardRoutes.selected,
 });
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, void, RootAction>): IDispatchProps => ({
   setRouteVisited: (route: string) => {
     dispatch(setVisitedWizardPageAction(route));
   },
@@ -288,11 +232,7 @@ const mapDispatchToProps = (
   },
   openPostGenModal: () => {
     dispatch(openPostGenModalAction());
-  }
+  },
 });
 
-export default
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(injectIntl(Footer));
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(Footer));

@@ -34,12 +34,15 @@ const TopNavBarLink = ({
     }
   };
 
+
+
   const getAriaLabel = (
     arialabeltext: FormattedMessage.MessageDescriptor,
     isSelected = false
   ): string => {
     if (isSelected) {
       arialabeltext = ARIA_LABELS_NAVIGATION.ARIA_LABELS_CURRENT_PAGE;
+      
     }
     return intl.formatMessage(arialabeltext, {
       pagesText: intl.formatMessage({

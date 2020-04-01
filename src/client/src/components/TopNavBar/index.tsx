@@ -52,8 +52,15 @@ const TopNavBar = (props: Props) => {
   };
 
   React.useEffect(() => {
-    setPathIndex(ROUTES_ARRAY.indexOf(selectedRoute));
-  });
+    var index = ROUTES_ARRAY.indexOf(selectedRoute);
+    setPathIndex(index);
+    const page = document.getElementById('page' + (index + 1));
+    if (page)
+    {
+      page.focus();
+    }
+  }, [selectedRoute]);
+
   const { isVisited, intl, isEnableNextPage, setPage } = props;
   return (
     <React.Fragment>
