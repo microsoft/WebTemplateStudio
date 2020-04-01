@@ -19,9 +19,10 @@ import { useState } from "react";
 import { closeModalAction } from "../../store/modals/action";
 import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
 import { getSubscriptionDataForCosmos } from "../../utils/extensionService/extensionService";
-import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
 import LocationSelection from "../../components/LocationSelection";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
+import { AppContext } from "../../AppContext";
+import ResourceGroupSelection from "../../components/ResourceGroupSelection";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -32,7 +33,7 @@ type Props = IStateProps & InjectedIntlProps;
 const CosmosModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
-  const vscode = useSelector((state: AppState) => getVSCodeApiSelector(state));
+  const { vscode } = React.useContext(AppContext);
   const cosmosInStore = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
   const initialSubscription = cosmosInStore ? cosmosInStore.subscription : "";
   const initialAccountName = cosmosInStore ? cosmosInStore.accountName : "";
@@ -45,6 +46,7 @@ const CosmosModal = ({ intl }: Props) => {
   const [accountName, setAccountName] = useState(initialAccountName);
   const [api, setApi] = useState(initialApi);
   const [location, setLocation] = useState("");
+  const [resourceGroup, setResourceGroup] = useState("");
   const [isAvailableAccountName, setIsAvailableAccountName] = useState(false);
   
   React.useEffect(() => {
@@ -116,6 +118,9 @@ const CosmosModal = ({ intl }: Props) => {
         <LocationSelection
             initialLocations={subscriptionData.locations}
             onLocationChange={setLocation} />
+        <ResourceGroupSelection
+          initialResourceGroups={subscriptionData.resourceGroups}
+          onResourceGroupChange={setResourceGroup} />
         </div>
 
         <ApiSelection initialApi={api} onApiChange={setApi} />

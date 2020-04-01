@@ -2,16 +2,16 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   title: {
-    id: "AppServiceLocationSelection.title",
+    id: "LocationSelection.title",
     defaultMessage: "Location",
   },
   subtitle: {
-    id: "AppServiceLocationSelection.subtitle",
+    id: "LocationSelection.subtitle",
     defaultMessage: "Choose your preferred location to use",
   },
   ariaDropdownLabel: {
-    id: "AppServiceLocationSelection.ariaDropdownLabel",
-    defaultMessage: "AppService Location Drop Down",
+    id: "LocationSelection.ariaDropdownLabel",
+    defaultMessage: "Location dropdown",
   },
 });
 

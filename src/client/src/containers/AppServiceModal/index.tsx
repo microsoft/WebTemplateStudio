@@ -20,9 +20,10 @@ import { useState } from "react";
 import { saveAppServiceSettingsAction } from "../../store/azureProfileData/appService/action";
 import { closeModalAction } from "../../store/modals/action";
 import { GetSubscriptionDataForAppService } from "../../utils/extensionService/extensionService";
-import { getVSCodeApiSelector } from "../../store/vscode/vscodeApiSelector";
 import LocationSelection from "../../components/LocationSelection";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
+import { AppContext } from "../../AppContext";
+import ResourceGroupSelection from "../../components/ResourceGroupSelection";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -33,7 +34,7 @@ type Props = IStateProps & InjectedIntlProps;
 const AppServiceModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
-  const vscode = useSelector((state: AppState) => getVSCodeApiSelector(state));
+  const { vscode } = React.useContext(AppContext);
   const appServiceInStore = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
@@ -43,6 +44,7 @@ const AppServiceModal = ({ intl }: Props) => {
   const [subscriptionData, setSubscriptionData] = useState(initialSubscriptionData);
   const [appName, setAppName] = useState(initialAppServiceName);
   const [location, setLocation] = useState("");
+  const [resourceGroup, setResourceGroup] = useState("");
   const [isAvailableAppName, setIsAvailableAppName] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   
@@ -109,10 +111,13 @@ const AppServiceModal = ({ intl }: Props) => {
         />
 
         {/* Advanced Mode */}
-        <div className={classNames({ [styles.hide]: !showAdvanced })}>          
+        <div className={classNames({ [styles.hide]: !showAdvanced })}>
           <LocationSelection
             initialLocations={subscriptionData.locations}
             onLocationChange={setLocation} />
+            <ResourceGroupSelection
+              initialResourceGroups={subscriptionData.resourceGroups}
+              onResourceGroupChange={setResourceGroup} />
         </div>
 
         <AppServicePlanInfo subscription={subscription} />
