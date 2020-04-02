@@ -9,23 +9,8 @@ import styles from "./styles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
-  PAYLOAD_MESSAGES_TEXT,
   PAGEID
 } from "../../utils/constants";
-
-import { IVSCodeObject } from "../../types/vscode";
-import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
-
-import { rootSelector } from "../../store/selection/app/selector";
-import {
-  getCosmosDbSelectionSelector,
-  isCosmosResourceCreatedSelector
-} from "../../store/azureProfileData/cosmosDb/selector";
-import {
-  isAppServiceSelectedSelector,
-  getAppServiceSelectionSelector
-} from "../../store/azureProfileData/appService/selector";
 
 import { openPostGenModalAction } from "../../store/modals/action";
 

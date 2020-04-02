@@ -10,7 +10,6 @@ import { ValidateCosmosAccountName, GetValidCosmosAccountName } from "../../../u
 import { useSelector } from "react-redux";
 import { AppState } from "../../../store/combineReducers";
 import { AppContext } from "../../../AppContext";
-import { IVSCodeObject } from "../../../types/vscode";
 
 let timeout: NodeJS.Timeout | undefined;
 let validationCosmosDbAccountNameScopeId = 0;

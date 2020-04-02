@@ -14,7 +14,6 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import { getLatestVersion } from "../../../utils/extensionService/extensionService";
 import { AppContext } from "../../../AppContext";
-import { IVSCodeObject } from "../../../types/vscode";
 
 type Props = ISelectProps & IDispatchProps & IStateProps & InjectedIntlProps;
 

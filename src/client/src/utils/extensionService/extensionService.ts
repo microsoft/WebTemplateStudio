@@ -195,7 +195,7 @@ const ValidateCosmosAccountName = (subscription: string, appName: string, scopeI
   }, vscode, scopeId);
 }
 
-const generateProject = (engine:any, selectedCosmos:boolean, cosmos:any, selectedAppService:boolean, appService: ISelectedAppService | null,vscode: IVSCodeObject) => {
+const generateProject = (engine: any, selectedCosmos: boolean, cosmos: any, selectedAppService: boolean, appService: ISelectedAppService | null,vscode: IVSCodeObject) => {
   return postMessageAsync(EXTENSION_COMMANDS.GENERATE, {
     module: EXTENSION_MODULES.GENERATE,
     command: EXTENSION_COMMANDS.GENERATE,

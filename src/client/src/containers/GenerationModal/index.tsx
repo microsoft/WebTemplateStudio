@@ -13,8 +13,7 @@ import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import * as PostGenSelectors from "../../store/generationStatus/selector";
-import {IAzureServiceStatus} from "../../store/generationStatus/model";
+import {IAzureServiceStatus} from "../../types/generationStatus";
 import { isPostGenModalOpenSelector } from "../../store/modals/selector";
 import {
   EXTENSION_COMMANDS,
@@ -38,6 +37,7 @@ import { AppContext } from "../../AppContext";
 import { rootSelector } from "../../store/selection/app/selector";
 import { isCosmosResourceCreatedSelector, getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
 import { isAppServiceSelectedSelector, getAppServiceSelectionSelector } from "../../store/azureProfileData/appService/selector";
+
 interface LinksDict {
   [serviceId: string]: string;
 }
@@ -78,19 +78,19 @@ const GenerationModal = ({
   const cosmos = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
   const isAppServiceSelected = useSelector((state: AppState) => isAppServiceSelectedSelector(state));
   const appService = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
-  const isServicesSelected = useSelector((state: AppState) => PostGenSelectors.isServicesSelectedSelector(state));
+  const [isServicesSelected] = React.useState(isCosmosSelected || isAppServiceSelected);
   const outputPath = useSelector((state: AppState) => getOutputPath(state));
   const [serviceStatus, setServiceStatus] = React.useState<IAzureServiceStatus>(getInitialServiceStatus());
 
   React.useEffect(()=>{
-    let localServiceStatus = getInitialServiceStatus();
+    const localServiceStatus = getInitialServiceStatus();
     if (generationStatus.templates){
-      if (isCosmosSelected && generationStatus.cosmo.success!=undefined){
+      if (isCosmosSelected && generationStatus.cosmo.success !== undefined){
         localServiceStatus.cosmosdb.isDeployed = generationStatus.cosmo.success;
         localServiceStatus.cosmosdb.isFailed = generationStatus.cosmo.failure;
       }
 
-      if (isAppServiceSelected && generationStatus.appService.success!=undefined){
+      if (isAppServiceSelected && generationStatus.appService.success !== undefined){
         localServiceStatus.appService.isDeployed = generationStatus.appService.success;
         localServiceStatus.appService.isFailed = generationStatus.appService.failure;
       }

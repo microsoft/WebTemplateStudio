@@ -9,7 +9,6 @@ import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { IVSCodeObject } from "../../../../types/vscode";
 import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
 import { AppContext } from "../../../../AppContext";
 

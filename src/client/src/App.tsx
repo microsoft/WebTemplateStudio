@@ -158,7 +158,7 @@ const App = (props: Props) => {
   },[vscode]);
 
   React.useEffect(()=>{
-    if (selectedFrontend.internalName!="" && selectedBackend.internalName!="") loadPages();
+    if (selectedFrontend.internalName !== "" && selectedBackend.internalName !== "") loadPages();
   },[selectedFrontend, selectedBackend]);
 
   function getFrameworksListAndSetToStore(){
