@@ -51,12 +51,7 @@ const links: LinksDict = {
 };
 
 interface IStateProps {
-  isTemplateGenerated: boolean;
-  isTemplatesFailed: boolean;
-  isServicesDeployed: boolean;
-  templateGenStatus: string;
   isModalOpen: boolean;
-  serviceStatus: IAzureServiceStatus;
   isServicesSelected: boolean;
   outputPath: string;
   projectName: string;
@@ -96,52 +91,28 @@ const GenerationModal = ({
   const cosmos = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
   const isAppServiceSelected = useSelector((state: AppState) => isAppServiceSelectedSelector(state));
   const appService = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
-  const [serviceStatus, setServiceStatus] = React.useState<IAzureServiceStatus>({
-    "cosmosdb":{
-      "title":{"id":"cosmosDb.title","defaultMessage":"Cosmos DB"},
-		  "isSelected":isCosmosSelected,
-		  "isDeployed":false,
-		  "isFailed":false
-	  },
-	  "appService":
-		  {"title":{"id":"appService.title","defaultMessage":"App Service"},
-		  "isSelected":isAppServiceSelected,
-		  "isDeployed":false,
-		  "isFailed":false
-	  }
-  });
+  const [serviceStatus, setServiceStatus] = React.useState<IAzureServiceStatus>(getInitialServiceStatus());
 
   React.useEffect(()=>{
-    let mm = {
-      "cosmosdb":{
-        "title":{"id":"cosmosDb.title","defaultMessage":"Cosmos DB"},
-        "isSelected":isCosmosSelected,
-        "isDeployed":false,
-        "isFailed":false
-      },
-      "appService":
-        {"title":{"id":"appService.title","defaultMessage":"App Service"},
-        "isSelected":isAppServiceSelected,
-        "isDeployed":false,
-        "isFailed":false
-      }
-    };
+    let localServiceStatus = getInitialServiceStatus();
     if (generationStatus.templates){
       if (isCosmosSelected && generationStatus.cosmo.success!=undefined){
-        mm.cosmosdb.isDeployed = generationStatus.cosmo.success;
-        mm.cosmosdb.isFailed = generationStatus.cosmo.failure;
+        localServiceStatus.cosmosdb.isDeployed = generationStatus.cosmo.success;
+        localServiceStatus.cosmosdb.isFailed = generationStatus.cosmo.failure;
       }
 
       if (isAppServiceSelected && generationStatus.appService.success!=undefined){
-        mm.appService.isDeployed = generationStatus.appService.success;
-        mm.appService.isFailed = generationStatus.appService.failure;
+        localServiceStatus.appService.isDeployed = generationStatus.appService.success;
+        localServiceStatus.appService.isFailed = generationStatus.appService.failure;
       }
-      debugger;
-      if (isCosmosSelected && !isAppServiceSelected && mm.cosmosdb.isDeployed) setIsServicesDeployed(true);
-      if (!isCosmosSelected && isAppServiceSelected && mm.appService.isDeployed) setIsServicesDeployed(true);
-      if (!isCosmosSelected && !isAppServiceSelected) setIsServicesDeployed(true);
-      if (!isCosmosSelected && isAppServiceSelected && mm.appService.isDeployed && mm.cosmosdb.isDeployed) setIsServicesDeployed(true);
-      setServiceStatus(mm);
+
+      if ((isCosmosSelected && !isAppServiceSelected && localServiceStatus.cosmosdb.isDeployed) ||
+      (!isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed)||
+      (!isCosmosSelected && !isAppServiceSelected) ||
+      (!isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed && localServiceStatus.cosmosdb.isDeployed))
+        setIsServicesDeployed(true);
+
+      setServiceStatus(localServiceStatus);
     }
   },[generationStatus]);
 
@@ -156,6 +127,23 @@ const GenerationModal = ({
       vscode);
       messageEventsFromExtension();
   },[]);
+
+  function getInitialServiceStatus(){
+    return {
+      "cosmosdb":{
+        "title":{"id":"cosmosDb.title","defaultMessage":"Cosmos DB"},
+        "isSelected":isCosmosSelected,
+        "isDeployed":false,
+        "isFailed":false
+      },
+      "appService":
+        {"title":{"id":"appService.title","defaultMessage":"App Service"},
+        "isSelected":isAppServiceSelected,
+        "isDeployed":false,
+        "isFailed":false
+      }
+    };
+  }
 
   function messageEventsFromExtension(){
     window.addEventListener("message", event => {
@@ -459,13 +447,8 @@ const GenerationModal = ({
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
-  isServicesDeployed: PostGenSelectors.isServicesDeployedOrFinishedSelector(state),
   isServicesSelected: PostGenSelectors.isServicesSelectedSelector(state),
-  isTemplateGenerated: PostGenSelectors.isTemplateGeneratedSelector(state),
-  isTemplatesFailed: PostGenSelectors.isTemplatesFailedSelector(state),
   outputPath: getOutputPath(state),
-  serviceStatus: PostGenSelectors.servicesToDeploySelector(state),
-  templateGenStatus: PostGenSelectors.getSyncStatusSelector(state),
   projectName: getProjectName(state)
 });
 
