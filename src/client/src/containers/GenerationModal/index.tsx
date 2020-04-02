@@ -53,21 +53,18 @@ interface IStateProps {
 type Props = IStateProps &
   InjectedIntlProps;
 
-let isEventAddToGenerationModal=false;
-
 const GenerationModal = ({
-  intl
+  intl, isModalOpen
 }: Props) => {
   const { formatMessage } = intl;
   let serviceFailed = false;
   const [templateGenStatus, setTemplateGenStatus] = React.useState("");
   const [generationStatus, setGenerationStatus] = React.useState<any>({});
+  const [isTemplateGenerated, setIsTemplateGenerated] = React.useState(false);
+  const [isTemplatesFailed, setIsTemplatesFailed] = React.useState(false);
+  const [templateGenerated, setTemplateGenerated] = React.useState(false);
+  const [templateGenerationInProgress, setTemplateGenerationInProgress] = React.useState(false);
 
-  const isTemplateGenerated = generationStatus.templates && generationStatus.templates.success;
-  const isTemplatesFailed = generationStatus.templates && generationStatus.templates.failure;
-  const templateGenerated = isTemplateGenerated && !isTemplatesFailed;
-  const templateGenerationInProgress =
-    !isTemplateGenerated && !isTemplatesFailed;
   const { vscode } = React.useContext(AppContext);
   const [isServicesDeployed, setIsServicesDeployed] = React.useState(false);
 
@@ -76,16 +73,16 @@ const GenerationModal = ({
   const cosmos = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
   const isAppServiceSelected = useSelector((state: AppState) => isAppServiceSelectedSelector(state));
   const appService = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
-  const [isServicesSelected] = React.useState(isCosmosSelected || isAppServiceSelected);
   const outputPath = useSelector((state: AppState) => getOutputPath(state));
+  const [isServicesSelected, setIsServicesSelected] = React.useState(false);
   const [serviceStatus, setServiceStatus] = React.useState<IAzureServiceStatus>(getInitialServiceStatus());
 
   React.useEffect(()=>{
     const localServiceStatus = getInitialServiceStatus();
     if (generationStatus.templates){
-      if (isCosmosSelected && generationStatus.cosmo.success !== undefined){
-        localServiceStatus.cosmosdb.isDeployed = generationStatus.cosmo.success;
-        localServiceStatus.cosmosdb.isFailed = generationStatus.cosmo.failure;
+      if (isCosmosSelected && generationStatus.cosmos.success !== undefined){
+        localServiceStatus.cosmosdb.isDeployed = generationStatus.cosmos.success;
+        localServiceStatus.cosmosdb.isFailed = generationStatus.cosmos.failure;
       }
 
       if (isAppServiceSelected && generationStatus.appService.success !== undefined){
@@ -96,12 +93,29 @@ const GenerationModal = ({
       if ((isCosmosSelected && !isAppServiceSelected && localServiceStatus.cosmosdb.isDeployed) ||
       (!isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed)||
       (!isCosmosSelected && !isAppServiceSelected) ||
-      (!isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed && localServiceStatus.cosmosdb.isDeployed))
+      (!isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed && localServiceStatus.cosmosdb.isDeployed)){
         setIsServicesDeployed(true);
+      }
 
       setServiceStatus(localServiceStatus);
+
+      setIsTemplateGenerated(generationStatus.templates.success);
+      setIsTemplatesFailed(generationStatus.templates.failure);
     }
   },[generationStatus]);
+
+  React.useEffect(()=>{
+    setTemplateGenerated(isTemplateGenerated && !isTemplatesFailed);
+    setTemplateGenerationInProgress(!isTemplateGenerated && !isTemplatesFailed);
+  },[isTemplateGenerated, isTemplatesFailed]);
+
+  React.useEffect(()=>{
+    setIsServicesSelected(isCosmosSelected || isAppServiceSelected);
+  },[])
+
+  React.useEffect(()=>{
+    window.removeEventListener("message",eventCallback);
+  },[isModalOpen]);
 
   const dispatch = useDispatch();
   
@@ -112,7 +126,7 @@ const GenerationModal = ({
       isAppServiceSelected,
       appService,
       vscode);
-      messageEventsFromExtension();
+    addMessageEventsFromExtension();
   },[]);
 
   function getInitialServiceStatus(){
@@ -132,21 +146,20 @@ const GenerationModal = ({
     };
   }
 
-  function messageEventsFromExtension(){
-    if (!isEventAddToGenerationModal){
-      isEventAddToGenerationModal=true;
-      window.addEventListener("message", event => {
-        const message = event.data;
-        switch (message.command) {
-          case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
-            setTemplateGenStatus(message.payload.status);
-            break;
-          case EXTENSION_COMMANDS.GEN_STATUS:
-            setGenerationStatus(message.payload);
-            break;
-        }
-      });
+  function eventCallback(event: any) {
+    const message = event.data;
+    switch (message.command) {
+      case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
+        setTemplateGenStatus(message.payload.status);
+        break;
+      case EXTENSION_COMMANDS.GEN_STATUS:
+        setGenerationStatus(message.payload);
+        break;
     }
+  };
+
+  function addMessageEventsFromExtension(){
+    window.addEventListener("message", eventCallback);
   }
 
   const LinkRenderer = (props: any) => (
@@ -290,28 +303,29 @@ const GenerationModal = ({
     });
   };
 
-  const renderServiceStatus = () => {
-    if (isTemplatesFailed) {
-      return Object.keys(serviceStatus).map((service: string, idx: number) => {
-        const serviceTitle = formatMessage(serviceStatus[service].title);
-        if (serviceStatus[service].isSelected) {
-          const halted = `${serviceTitle} deployment halted`;
-          return (
-            <div
-              className={styles.checkmarkStatusRow}
-              key={`${messages.isDeploying.defaultMessage}${idx}`}
-            >
-              <React.Fragment>
-                <div>{serviceTitle}</div>
-                <div role="img" aria-label={halted}>
-                  <ErrorRed className={styles.iconError} />
-                </div>
-              </React.Fragment>
-            </div>
-          );
-        }
-      });
-    }
+  const renderServiceStatusTemplateFailed = () => {
+    return Object.keys(serviceStatus).map((service: string, idx: number) => {
+      const serviceTitle = formatMessage(serviceStatus[service].title);
+      if (serviceStatus[service].isSelected) {
+        const halted = `${serviceTitle} deployment halted`;
+        return (
+          <div
+            className={styles.checkmarkStatusRow}
+            key={`${messages.isDeploying.defaultMessage}${idx}`}
+          >
+            <React.Fragment>
+              <div>{serviceTitle}</div>
+              <div role="img" aria-label={halted}>
+                <ErrorRed className={styles.iconError} />
+              </div>
+            </React.Fragment>
+          </div>
+        );
+      }
+    });
+  }
+
+  const renderServiceStatusTemplateSuccess = () => {
     return Object.keys(serviceStatus).map((service: string, idx: number) => {
       const serviceTitle = formatMessage(serviceStatus[service].title);
       if (serviceStatus[service].isSelected) {
@@ -349,20 +363,22 @@ const GenerationModal = ({
             </div>
           );
         }
-        const inProgress = `${serviceTitle} deployment in progress`;
-        return (
-          <div
-            className={styles.checkmarkStatusRow}
-            key={`${messages.isDeploying.defaultMessage}${idx}`}
-          >
-            <React.Fragment>
-              <div>{serviceTitle}</div>
-              <div role="img" aria-label={inProgress}>
-                <Spinner className={styles.spinner} />
-              </div>
-            </React.Fragment>
-          </div>
-        );
+        if (!serviceStatus[service].isDeployed) {
+          const inProgress = `${serviceTitle} deployment in progress`;
+          return (
+            <div
+              className={styles.checkmarkStatusRow}
+              key={`${messages.isDeploying.defaultMessage}${idx}`}
+            >
+              <React.Fragment>
+                <div>{serviceTitle}</div>
+                <div role="img" aria-label={inProgress}>
+                  <Spinner className={styles.spinner} />
+                </div>
+              </React.Fragment>
+            </div>
+          );
+        }
       }
     });
   };
@@ -394,7 +410,8 @@ const GenerationModal = ({
       <div className={classnames(styles.section, styles.checkmarkSection)}>
         <div className={styles.containerWithMargin}>
           {renderTemplatesStatus()}
-          {isServicesSelected && renderServiceStatus()}
+          {isServicesSelected && isTemplatesFailed && renderServiceStatusTemplateFailed()}
+          {isServicesSelected && !isTemplatesFailed && renderServiceStatusTemplateSuccess()}
         </div>
       </div>
 

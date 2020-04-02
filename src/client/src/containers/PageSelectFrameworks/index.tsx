@@ -17,23 +17,25 @@ const SelectFrameworks = (props: Props) => {
   const { vscode } = React.useContext(AppContext);
 
   React.useEffect(()=>{
+    window.removeEventListener("message", eventCallback);
     getDependencyInfoAndSetToStore();
   },[]);
 
-  const getDependencyInfoAndSetToStore = () =>{
+  function eventCallback(event: any){
     const { updateDependencyInfo } = props;
+    const message = event.data;
+    switch (message.command) {
+      case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
+        updateDependencyInfo(message.payload);
+        break;
+    }
+  }
+
+  const getDependencyInfoAndSetToStore = () =>{
     if (!isEventAddToSelectFrameworks){
       isEventAddToSelectFrameworks=true;
-      window.addEventListener("message", event => {
-        const message = event.data;
-        switch (message.command) {
-          case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
-            updateDependencyInfo(message.payload);
-            break;
-        }
-      });
+      window.addEventListener("message", eventCallback);
     }
-    
     vscode.postMessage({
       module: EXTENSION_MODULES.DEPENDENCYCHECKER,
       command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
