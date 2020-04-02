@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-
 import { ISelectProps, IDispatchProps, IStateProps } from "./interfaces";
 import { mapDispatchToProps, mapStateToProps } from "./store";
 import styles from "./styles.module.css";
