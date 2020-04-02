@@ -13,7 +13,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
 import {IAzureServiceStatus} from "../../types/generationStatus";
-import { isPostGenModalOpenSelector } from "../../store/modals/selector";
+import { isGenModalOpenSelector } from "../../store/modals/selector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
@@ -52,6 +52,8 @@ interface IStateProps {
 
 type Props = IStateProps &
   InjectedIntlProps;
+
+let isEventAddToGenerationModal=false;
 
 const GenerationModal = ({
   intl
@@ -131,17 +133,20 @@ const GenerationModal = ({
   }
 
   function messageEventsFromExtension(){
-    window.addEventListener("message", event => {
-      const message = event.data;
-      switch (message.command) {
-        case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
-          setTemplateGenStatus(message.payload.status);
-          break;
-        case EXTENSION_COMMANDS.GEN_STATUS:
-          setGenerationStatus(message.payload);
-          break;
-      }
-    });
+    if (!isEventAddToGenerationModal){
+      isEventAddToGenerationModal=true;
+      window.addEventListener("message", event => {
+        const message = event.data;
+        switch (message.command) {
+          case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
+            setTemplateGenStatus(message.payload.status);
+            break;
+          case EXTENSION_COMMANDS.GEN_STATUS:
+            setGenerationStatus(message.payload);
+            break;
+        }
+      });
+    }
   }
 
   const LinkRenderer = (props: any) => (
@@ -202,7 +207,7 @@ const GenerationModal = ({
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, {entryPoint});
   }
 
-  const postGenMessage = () => {
+  const genMessage = () => {
     return (
       <div>
         {isServicesSelected && (
@@ -381,7 +386,7 @@ const GenerationModal = ({
           <div className={styles.sectionLine}>
             {templateGenStatus}</div>
         )}
-        {templateGenerated && postGenMessage()}
+        {templateGenerated && genMessage()}
         {isTemplatesFailed && renderTemplatesError()}
         {isServicesSelected && renderServiceError()}
       </div>
@@ -429,10 +434,10 @@ const GenerationModal = ({
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  isModalOpen: isPostGenModalOpenSelector(state),
+  isModalOpen: isGenModalOpenSelector(state),
 });
 
 export default 
   connect(
     mapStateToProps
-  )(asModal(injectIntl(GenerationModal), MODAL_TYPES.POST_GEN_MODAL));
+  )(asModal(injectIntl(GenerationModal), MODAL_TYPES.GEN_MODAL));

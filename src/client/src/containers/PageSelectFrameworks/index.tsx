@@ -9,6 +9,7 @@ import messages from "./messages";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { AppContext } from "../../AppContext";
 
+let isEventAddToSelectFrameworks = false;
 type Props = IStateProps & IDispatchProps & InjectedIntlProps;
 
 const SelectFrameworks = (props: Props) => {
@@ -21,14 +22,17 @@ const SelectFrameworks = (props: Props) => {
 
   const getDependencyInfoAndSetToStore = () =>{
     const { updateDependencyInfo } = props;
-    window.addEventListener("message", event => {
-      const message = event.data;
-      switch (message.command) {
-        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
-          updateDependencyInfo(message.payload);
-          break;
-      }
-    });
+    if (!isEventAddToSelectFrameworks){
+      isEventAddToSelectFrameworks=true;
+      window.addEventListener("message", event => {
+        const message = event.data;
+        switch (message.command) {
+          case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
+            updateDependencyInfo(message.payload);
+            break;
+        }
+      });
+    }
     
     vscode.postMessage({
       module: EXTENSION_MODULES.DEPENDENCYCHECKER,

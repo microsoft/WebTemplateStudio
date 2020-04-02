@@ -10,7 +10,7 @@ import {
 
 import { IVSCodeObject } from "../../types/vscode";
 
-import { openPostGenModalAction } from "../../store/modals/action";
+import { openGenModalAction } from "../../store/modals/action";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
@@ -61,7 +61,7 @@ const Footer = (props: Props) => {
   const generateProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     trackPageForTelemetry(currentRoute);
-    dispatch(openPostGenModalAction());
+    dispatch(openGenModalAction());
   };
 
   const navigateBack = () => {

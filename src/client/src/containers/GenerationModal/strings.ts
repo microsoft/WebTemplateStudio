@@ -2,91 +2,91 @@ import { defineMessages } from "react-intl";
 
 export const strings = defineMessages({
   failedToGenerate: {
-    id: "postGenerationModal.failedToGenerate",
+    id: "generationModal.failedToGenerate",
     defaultMessage: "ERROR: Templates could not be generated"
   },
   deploymentHalted: {
-    id: "postGenerationModal.deploymentHalted",
+    id: "generationModal.deploymentHalted",
     defaultMessage: "ERROR: Azure Service deployment halted due to template error."
   },
   restartWizard: {
-    id: "postGenerationModal.restartWizard",
+    id: "generationModal.restartWizard",
     defaultMessage: "Restart"
   },
   error: {
-    id: "postGenerationModal.error",
+    id: "generationModal.error",
     defaultMessage: "ERROR:"
   },
   deploymentFailure: {
-    id: "postGenerationModal.deploymentFailure",
+    id: "generationModal.deploymentFailure",
     defaultMessage: "failed to deploy."
   },
   closeWizard: {
-    id: "postGenerationModal.closeWizard",
+    id: "generationModal.closeWizard",
     defaultMessage: "Close Wizard"
   },
   deploymentSuccess: {
-    id: "postGenerationModal.success",
+    id: "generationModal.success",
     defaultMessage: "is deployed on"
   },
   isDeploying: {
-    id: "postGenerationModal.isDeploying",
+    id: "generationModal.isDeploying",
     defaultMessage: "Deploying"
   },
   working: {
-    id: "postGenerationModal.working",
+    id: "generationModal.working",
     defaultMessage: "Working"
   },
   openInCode: {
-    id: "postGenerationModal.openInCode",
+    id: "generationModal.openInCode",
     defaultMessage: "Open Project"
   },
   unknownStatus: {
-    id: "postGenerationModal.unknownStatus",
+    id: "generationModal.unknownStatus",
     defaultMessage: "Unknown Status"
   },
   noServicesToDeploy: {
-    id: "postGenerationModal.noServicesToDeploy",
+    id: "generationModal.noServicesToDeploy",
     defaultMessage: "No services to deploy."
   },
   help: {
-    id: "postGenerationModal.help",
+    id: "generationModal.help",
     defaultMessage: "Report an issue"
   },
   createAnotherProject: {
-    id: "postGenerationModal.createAnotherProject",
+    id: "generationModal.createAnotherProject",
     defaultMessage: "Create New Project"
   },
   creatingYourProject: {
-    id: "postGenerationModal.creatingYourProject",
+    id: "generationModal.creatingYourProject",
     defaultMessage: "Creating Your Project"
   },
   projectCreation: {
-    id: "postGenerationModal.projectCreation",
+    id: "generationModal.projectCreation",
     defaultMessage: "Project Creation"
   },
   generationCompleteWithAzure: {
-    id: "postGenerationModal.generationCompleteWithAzure",
+    id: "generationModal.generationCompleteWithAzure",
     defaultMessage: "Open your project while we take a few minutes to finish deploying Azure services."
   },
   seeReadMePrefix: {
-    id: "postGenerationModal.seeReadMePrefix",
+    id: "generationModal.seeReadMePrefix",
     defaultMessage: "Click 'Open Project' and see "
   },
   seeReadMePrefixWithAzure: {
-    id: "postGenerationModal.seeReadMePrefixWithAzure",
+    id: "generationModal.seeReadMePrefixWithAzure",
     defaultMessage: "See "
   },
   readMe: {
-    id: "postGenerationModal.readme",
+    id: "generationModal.readme",
     defaultMessage: "README.md"
   },
   seeReadMeSuffix: {
-    id: "postGenerationModal.seeReadMeSuffix",
+    id: "generationModal.seeReadMeSuffix",
     defaultMessage: " to get instructions."
   },
   templateGeneration: {
-    id: "postGenerationModal.templateGeneration",
+    id: "generationModal.templateGeneration",
     defaultMessage: "Template Generation"
   }
 });

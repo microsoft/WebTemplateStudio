@@ -214,7 +214,7 @@ const App = (props: Props) => {
         {(modalState.modalType === MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType === MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
         {(modalState.modalType === MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
-        {(modalState.modalType === MODAL_TYPES.POST_GEN_MODAL) && (<GenerationModal/>)}
+        {(modalState.modalType === MODAL_TYPES.GEN_MODAL) && (<GenerationModal/>)}
 
         <main
           className={classnames(appStyles.centerView, {
