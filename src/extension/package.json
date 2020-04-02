@@ -111,6 +111,7 @@
     "gulp-filter": "^5.1.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^5.0.1",
+    "kind-of": "^6.0.3",
     "run-sequence": "^2.2.1",
     "typescript": "^3.1.4",
     "vscode": "^1.1.33",
