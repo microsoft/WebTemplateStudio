@@ -51,12 +51,10 @@ interface IStateProps {
 }
 
 type Props = IStateProps &
-  InjectedIntlProps &
-  RouteComponentProps;
+  InjectedIntlProps;
 
 const GenerationModal = ({
-  intl,
-  history
+  intl
 }: Props) => {
   const { formatMessage } = intl;
   let serviceFailed = false;
@@ -437,5 +435,4 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 export default 
   connect(
     mapStateToProps
-  )(asModal(injectIntl(GenerationModal), MODAL_TYPES.POST_GEN_MODAL))
-);
+  )(asModal(injectIntl(GenerationModal), MODAL_TYPES.POST_GEN_MODAL));

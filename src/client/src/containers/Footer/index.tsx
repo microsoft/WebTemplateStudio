@@ -5,22 +5,10 @@ import styles from "./styles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
-  PAYLOAD_MESSAGES_TEXT,
   KEY_EVENTS,
 } from "../../utils/constants";
 
 import { IVSCodeObject } from "../../types/vscode";
-
-import { rootSelector } from "../../store/selection/app/selector";
-import {
-  getCosmosDbSelectionSelector,
-  isCosmosResourceCreatedSelector,
-} from "../../store/azureProfileData/cosmosDb/selector";
-import {
-  isAppServiceSelectedSelector,
-  getAppServiceSelectionSelector,
-} from "../../store/azureProfileData/appService/selector";
 
 import { openPostGenModalAction } from "../../store/modals/action";
 
@@ -57,11 +45,6 @@ const pathsBack: any = {
 const Footer = (props: Props) => {
   const { formatMessage } = props.intl;
 
-  const engine = useSelector((state: AppState) => rootSelector(state));
-  const selectedCosmos = useSelector((state: AppState) => isCosmosResourceCreatedSelector(state));
-  const cosmos = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
-  const selectedAppService = useSelector((state: AppState) => isAppServiceSelectedSelector(state));
-  const appService = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
   const visitedRoutes = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
   const currentRoute = useSelector((state: AppState) => state.wizardRoutes.selected);

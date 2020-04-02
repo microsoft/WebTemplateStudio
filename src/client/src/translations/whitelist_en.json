@@ -36,8 +36,6 @@
   "footer.back",
   "footer.next",
   "footer.generate",
-<<<<<<< HEAD
-  "footer.navAriaLabel",
   "postGenerationModal.restartWizard",
   "postGenerationModal.deploymentFailure",
   "postGenerationModal.closeWizard",
@@ -53,8 +51,6 @@
   "postGenerationModal.readme",
   "postGenerationModal.seeReadMeSuffix",
   "postGenerationModal.templateGeneration",
-=======
->>>>>>> upstream/dev
   "pageAddPages.pagesTitleQuestion",
   "pageAddPages.iconAltMessage",
   "pageCard.details",
