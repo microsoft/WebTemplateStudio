@@ -24,11 +24,10 @@ import {
   WEB_TEMPLATE_STUDIO_LINKS,
   TELEMETRY
 } from "../../utils/constants";
-import { IVSCodeObject } from "../../types/vscode";
 
 import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getOutputPath, getProjectName } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { getOutputPath } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { MODAL_TYPES } from "../../store/modals/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
@@ -39,7 +38,6 @@ import { AppContext } from "../../AppContext";
 import { rootSelector } from "../../store/selection/app/selector";
 import { isCosmosResourceCreatedSelector, getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
 import { isAppServiceSelectedSelector, getAppServiceSelectionSelector } from "../../store/azureProfileData/appService/selector";
-import { updateTemplateGenerationStatusMessageAction, updateTemplateGenerationStatusAction } from "../../store/generationStatus/action";
 interface LinksDict {
   [serviceId: string]: string;
 }
@@ -52,9 +50,6 @@ const links: LinksDict = {
 
 interface IStateProps {
   isModalOpen: boolean;
-  isServicesSelected: boolean;
-  outputPath: string;
-  projectName: string;
 }
 
 interface IDispatchProps {
@@ -67,9 +62,7 @@ type Props = IStateProps &
   RouteComponentProps;
 
 const GenerationModal = ({
-  outputPath,
   intl,
-  isServicesSelected,
   resetWizard,
   history
 }: Props) => {
@@ -91,6 +84,8 @@ const GenerationModal = ({
   const cosmos = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
   const isAppServiceSelected = useSelector((state: AppState) => isAppServiceSelectedSelector(state));
   const appService = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
+  const isServicesSelected = useSelector((state: AppState) => PostGenSelectors.isServicesSelectedSelector(state));
+  const outputPath = useSelector((state: AppState) => getOutputPath(state));
   const [serviceStatus, setServiceStatus] = React.useState<IAzureServiceStatus>(getInitialServiceStatus());
 
   React.useEffect(()=>{
@@ -193,7 +188,7 @@ const GenerationModal = ({
 
   const closeModalAndCreateAnotherProject = (param: any) => {
     trackCreateNewProjectTelemetry(param);
-    resetWizard();
+    dispatch(resetWizardAction());
     history.push(ROUTES.NEW_PROJECT);
   };
 
@@ -447,20 +442,10 @@ const GenerationModal = ({
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
-  isServicesSelected: PostGenSelectors.isServicesSelectedSelector(state),
-  outputPath: getOutputPath(state),
-  projectName: getProjectName(state)
-});
-
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  resetWizard: () => {
-    dispatch(resetWizardAction());
-  }
 });
 
 export default withRouter(
   connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
   )(asModal(injectIntl(GenerationModal), MODAL_TYPES.POST_GEN_MODAL))
 );
