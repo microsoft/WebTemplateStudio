@@ -34,7 +34,6 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
     passedState = {
       azureProfileData: state!.azureProfileData,
       dependencyInfo: undefined,
-      generationStatus: undefined,
       modals: undefined,
       selection: {
         validations:state!.selection.validations,
