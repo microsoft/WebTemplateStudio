@@ -3,13 +3,12 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { ISelectProps, IDispatchProps, IStateProps } from "./interfaces";
-import {mapDispatchToProps, mapStateToProps} from "./store";
+import { mapDispatchToProps, mapStateToProps } from "./store";
 import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
-import { Link } from "react-router-dom";
-import { ROUTES, KEY_EVENTS } from "../../../utils/constants";
+import { KEY_EVENTS } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import { getLatestVersion } from "../../../utils/extensionService/extensionService";
@@ -19,43 +18,53 @@ import { IVSCodeObject } from "../../../types/vscode";
 type Props = ISelectProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
 const FrameworkCard = (props: Props) => {
-  const { framework, setFrontendSelect, frontEndSelect,
-    setBackendSelect, backEndSelect, isFrontEnd, intl, setDetailPage, updateFrameworks } = props;
+  const {
+    framework,
+    setFrontendSelect,
+    frontEndSelect,
+    setBackendSelect,
+    backEndSelect,
+    isFrontEnd,
+    intl,
+    setDetailPage,
+    updateFrameworks,
+  } = props;
 
   const [selected, setSelected] = React.useState(false);
   const [latestVersion, setLatestVersion] = React.useState(framework.latestVersion);
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     selectWhenLoadWithoutSelection();
-    if (!framework.latestVersionLoaded){
-      getLatestVersion(vscode, framework.checkVersionPackageName, framework.checkVersionPackageSource).then((latestVersionValidation: boolean)=>{
-        framework.latestVersion = latestVersionValidation;
-        framework.latestVersionLoaded = true;
-        updateFrameworks([framework]);
-        setLatestVersion(latestVersionValidation);
-      });
+    if (!framework.latestVersionLoaded) {
+      getLatestVersion(vscode, framework.checkVersionPackageName, framework.checkVersionPackageSource).then(
+        (latestVersionValidation: boolean) => {
+          framework.latestVersion = latestVersionValidation;
+          framework.latestVersionLoaded = true;
+          updateFrameworks([framework]);
+          setLatestVersion(latestVersionValidation);
+        }
+      );
     }
-  },[]);
+  }, []);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     if (isFrontEnd) setSelected(frontEndSelect.internalName === framework.internalName);
-  },[frontEndSelect]);
+  }, [frontEndSelect]);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     if (!isFrontEnd) setSelected(backEndSelect.internalName === framework.internalName);
-  },[backEndSelect]);
+  }, [backEndSelect]);
 
   const selectWhenLoadWithoutSelection = () => {
-    const frameworkSelectableFirstTime = isFrontEnd ?
-      frontEndSelect.internalName==="" && framework.internalName === "React":
-      backEndSelect.internalName==="" && framework.internalName === "Node";
+    const frameworkSelectableFirstTime = isFrontEnd
+      ? frontEndSelect.internalName === "" && framework.internalName === "React"
+      : backEndSelect.internalName === "" && framework.internalName === "Node";
 
-    if (frameworkSelectableFirstTime)
-      selectCard();
-  }
+    if (frameworkSelectableFirstTime) selectCard();
+  };
 
-  const selectCard = ()=>{
+  const selectCard = () => {
     const { title, internalName, licenses, author, version } = framework;
     const shorthandVersionLabel = `v${version || "1.0"}`;
     const selectedFramework = {
@@ -63,88 +72,76 @@ const FrameworkCard = (props: Props) => {
       title: title as string,
       version: shorthandVersionLabel,
       licenses,
-      author
+      author,
     };
-    if (isFrontEnd){
+    if (isFrontEnd) {
       setFrontendSelect(selectedFramework);
-    }else{
+    } else {
       setBackendSelect(selectedFramework);
     }
-  }
+  };
 
-  const selectCardIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) =>{
+  const selectCardIfEnterOrSpace = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const isSelectableCard = event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE;
-    if (isSelectableCard){
+    if (isSelectableCard) {
       event.preventDefault();
       selectCard();
     }
-  }
+  };
 
-  const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) =>{
+  const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
     event.stopPropagation();
-    if (event.key === KEY_EVENTS.ENTER){
+    if (event.key === KEY_EVENTS.ENTER) {
       setDetailPage(framework);
     }
-  }
+  };
 
-  const detailsClickWrapper = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
+  const detailsClickWrapper = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.stopPropagation();
     setDetailPage(framework);
-  }
+  };
 
   return (
     <div
-    role="button"
-    tabIndex={0}
-    onClick={selectCard}
-    onKeyDown={selectCardIfEnterOrSpace}
-    className={classNames(styles.container, styles.boundingBox, {
-      [styles.selected]: selected
-    })}>
-    <div>
-      <div className={styles.gridLayoutCardHeader}>
-        <div>
-          {getSvg(framework.internalName) ||
-            (framework.svgUrl && (
-              <img src={framework.svgUrl} alt="" />
-            ))}
+      role="button"
+      tabIndex={0}
+      onClick={selectCard}
+      onKeyDown={selectCardIfEnterOrSpace}
+      className={classNames(styles.container, styles.boundingBox, {
+        [styles.selected]: selected,
+      })}
+    >
+      <div>
+        <div className={styles.gridLayoutCardHeader}>
+          <div>{getSvg(framework.internalName) || (framework.svgUrl && <img src={framework.svgUrl} alt="" />)}</div>
+          <div
+            className={classNames(styles.title, {
+              [styles.titleLeftJustified]: framework.svgUrl === undefined ? true : false,
+            })}
+          >
+            {framework.title}
+          </div>
         </div>
-        <div className={classNames(styles.title,{
-          [styles.titleLeftJustified]: framework.svgUrl === undefined ? true : false
-          })}>
-          {framework.title}
-        </div>
-      </div>
 
-      <div className={styles.gridLayoutVersion}>
-        <div className={styles.version}>v{framework.version}</div>
-        {latestVersion === framework.version &&
-          (<div className={styles.latestVersion}>(Latest)</div>)
-        }
-      </div>
-      <div className={styles.description}>
-        {framework.body}
-      </div>
-      <div className={styles.DependencyInfo}>
-        {selected && (<DependencyInfo frameworkName={framework.internalName} />)}
-      </div>
-      <div className={styles.gridLayoutCardFooter}>
-        <div>
-          <Link
-            onClick={detailsClickWrapper}
-            onKeyDown={showDetailIfPressEnterKey}
-            className={styles.link}
-            to={ROUTES.PAGE_DETAILS}>
-            {intl.formatMessage(messages.learnMore)}
-          </Link>
+        <div className={styles.gridLayoutVersion}>
+          <div className={styles.version}>v{framework.version}</div>
+          {latestVersion === framework.version && <div className={styles.latestVersion}>(Latest)</div>}
         </div>
-        {selected && (<Check role="figure" className={styles.iconCheckMark} />)}
+        <div className={styles.description}>{framework.body}</div>
+        <div className={styles.DependencyInfo}>
+          {selected && <DependencyInfo frameworkName={framework.internalName} />}
+        </div>
+        <div className={styles.gridLayoutCardFooter}>
+          <div>
+            <a onClick={detailsClickWrapper} onKeyDown={showDetailIfPressEnterKey} className={styles.link} tabIndex={0}>
+              {intl.formatMessage(messages.learnMore)}
+            </a>
+          </div>
+          {selected && <Check role="figure" className={styles.iconCheckMark} />}
+        </div>
       </div>
     </div>
-  </div>
   );
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(FrameworkCard));

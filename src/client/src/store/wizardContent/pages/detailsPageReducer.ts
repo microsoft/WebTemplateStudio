@@ -18,7 +18,8 @@ const initialState = {
     selected: false,
     author: "",
     tags: undefined
-  }
+  },
+  originRoute:''
 };
 
 const detailPage = (state: IDetail = initialState, action: WizardInfoType) => {

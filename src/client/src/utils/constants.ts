@@ -1,11 +1,6 @@
 import { defineMessages } from "react-intl";
 
-const PAGE_DETAILS = "/PageDetail";
-const SELECT_FRAMEWORKS = "/SelectFrameworks";
-const SELECT_PAGES = "/SelectPages";
-const AZURE_LOGIN = "/AzureLogin";
-const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
-const NEW_PROJECT = "/";
+
 
 const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
@@ -52,14 +47,6 @@ const ARIA_LABELS_NAVIGATION = defineMessages({
   }
 });
 
-enum PAGEID {
-  NEW_PROJECT = 1,
-  SELECT_FRAMEWORKS = 2,
-  SELECT_PAGES = 3,
-  AZURE_LOGIN = 4,
-  REVIEW_AND_GENERATE = 5
-}
-
 const PAYLOAD_MESSAGES_TEXT = {
   RESET_PAGES_TEXT: "Sending reset pages request...",
   SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
@@ -67,21 +54,22 @@ const PAYLOAD_MESSAGES_TEXT = {
 };
 
 const ROUTES = {
-  PAGE_DETAILS,
-  SELECT_FRAMEWORKS,
-  SELECT_PAGES,
-  AZURE_LOGIN,
-  REVIEW_AND_GENERATE,
-  NEW_PROJECT
+  PAGE_DETAILS: "/PageDetail",
+  SELECT_FRAMEWORKS:  "/SelectFrameworks",
+  SELECT_PAGES: "/SelectPages",
+  AZURE_LOGIN: "/AzureLogin",
+  REVIEW_AND_GENERATE :"/ReviewAndGenerate",
+  NEW_PROJECT: "/"
 };
+
 
 // Presents the routes in the order of the wizard
 const ROUTES_ARRAY = [
-  NEW_PROJECT,
-  SELECT_FRAMEWORKS,
-  SELECT_PAGES,
-  AZURE_LOGIN,
-  REVIEW_AND_GENERATE
+  ROUTES.NEW_PROJECT,
+  ROUTES.SELECT_FRAMEWORKS,
+  ROUTES.SELECT_PAGES,
+  ROUTES.AZURE_LOGIN,
+  ROUTES.REVIEW_AND_GENERATE
 ];
 
 const SERVICE_KEYS = {
@@ -206,6 +194,5 @@ export {
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,
   BOOTSTRAP_LICENSE,
-  PAGEID,
   TELEMETRY
 };
