@@ -32,9 +32,11 @@
   "CosmosModal.ApiSelection.ariaDropdownLabel",
   "CosmosModal.title",
   "CosmosModal.saveMessage",
+  "footer.navAriaLabel",
   "footer.back",
   "footer.next",
   "footer.generate",
+<<<<<<< HEAD
   "footer.navAriaLabel",
   "postGenerationModal.restartWizard",
   "postGenerationModal.deploymentFailure",
@@ -51,6 +53,8 @@
   "postGenerationModal.readme",
   "postGenerationModal.seeReadMeSuffix",
   "postGenerationModal.templateGeneration",
+=======
+>>>>>>> upstream/dev
   "pageAddPages.pagesTitleQuestion",
   "pageAddPages.iconAltMessage",
   "pageCard.details",

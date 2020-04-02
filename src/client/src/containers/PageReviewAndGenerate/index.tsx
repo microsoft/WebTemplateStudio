@@ -11,11 +11,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
 import AddPagesModal from "./AddPagesModal";
 
-interface IDispatchProps {
-  openViewLicensesModal: () => any;
-}
-
-type Props = IDispatchProps & InjectedIntlProps;
+type Props = InjectedIntlProps;
 
 const ReviewAndGenerate = ({ intl }: Props) => {
   const { formatMessage } = intl;

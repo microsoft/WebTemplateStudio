@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { HashRouter as Router } from "react-router-dom";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import App from "./App";
@@ -29,11 +28,9 @@ const vscode = process.env.NODE_ENV === PRODUCTION ?
 ReactDOM.render(
   <IntlProvider textComponent={React.Fragment}>
     <Provider store={store}>
-      <Router>
         <AppContext.Provider value={{vscode}}>
           <App />
         </AppContext.Provider>
-      </Router>
     </Provider>
   </IntlProvider>,
   document.getElementById("root") as HTMLElement

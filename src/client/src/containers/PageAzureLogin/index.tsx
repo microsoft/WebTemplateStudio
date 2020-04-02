@@ -1,5 +1,4 @@
 import * as React from "react";
-import { withRouter, RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
@@ -21,7 +20,7 @@ import RootAction from "../../store/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
-import { setDetailPageAction } from "../../store/wizardContent/pages/action";
+import { setDetailPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 import { startLogOutAzureAction } from "../../store/azureProfileData/login/action";
 import { AppContext } from "../../AppContext";
 
@@ -37,8 +36,7 @@ interface IAzureLoginProps {
 
 type Props = IDispatchProps &
   IAzureLoginProps &
-  InjectedIntlProps &
-  RouteComponentProps;
+  InjectedIntlProps;
 
 const AzureLogin = (props: Props)=> {
   const {
@@ -65,14 +63,13 @@ const AzureLogin = (props: Props)=> {
   return (
       <div className={styles.centerViewAzure}>
         <AzureLoginModal/>
-        <Link
+        <a
           tabIndex={0}
-          to={ROUTES.REVIEW_AND_GENERATE}
           className={styles.optionalFlag}
           onKeyUp={keyUpHandler}
         >
           {azureMessages.azureSkipButton.defaultMessage}
-        </Link>
+        </a>
         <div
           className={classnames(styles.container, {
             [styles.signedIn]: isLoggedIn
@@ -119,16 +116,16 @@ const mapDispatchToProps = (
 ): IDispatchProps => ({
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
-    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));
+    dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
+    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted, ROUTES.AZURE_LOGIN));
   },
   startLogOutToAzure: () => {
     dispatch(startLogOutAzureAction());
   },
 });
 
-export default withRouter(
+export default 
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(injectIntl(AzureLogin))
-);
+  )(injectIntl(AzureLogin));

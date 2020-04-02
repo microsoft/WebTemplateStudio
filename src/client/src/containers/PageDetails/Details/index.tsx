@@ -4,7 +4,6 @@ import ReactMarkdown from "react-markdown";
 import { ReactComponent as BackArrow } from "../../../assets/backarrow.svg";
 import { getSvg } from "../../../utils/getSvgUrl";
 import styles from "./styles.module.css";
-import grid from "../../../css/grid.module.css";
 import backArrow from "../../../assets/backarrow.svg";
 import { KEY_EVENTS } from "../../../utils/constants";
 import { IOption } from "../../../types/option";
@@ -128,7 +127,7 @@ const Details = ({
             </div>
             <div>
               {detailInfo.author && (
-                <div className={classnames(styles.metaData, grid.row)}>
+                <div className={classnames(styles.metaData, styles.row)}>
                   <div className={classnames(styles.category, styles.colWidth)}>
                     <FormattedMessage
                       id="details.author"
@@ -155,7 +154,7 @@ const Details = ({
                       defaultMessage="Licenses:"
                     />
                   </div>
-                  <div className={classnames(grid.col8, styles.licenses)}>
+                  <div className={classnames(styles.col8, styles.licenses)}>
                     {Array.isArray(detailInfo.licenses)
                       ? detailInfo.licenses.map(
                           (license: License, idx: number) => {
@@ -184,7 +183,7 @@ const Details = ({
                 </div>
               )}
               {detailInfo.version && (
-                <div className={classnames(styles.metaData, grid.row)}>
+                <div className={classnames(styles.metaData, styles.row)}>
                   <div className={classnames(styles.category, styles.colWidth)}>
                     <FormattedMessage
                       id="details.version"

@@ -1,7 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router";
 import ReactMarkdown from "react-markdown";
 import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
 import { ReactComponent as ErrorRed } from "../../assets/errorred.svg";
@@ -19,7 +18,6 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   KEY_EVENTS,
-  ROUTES,
   WEB_TEMPLATE_STUDIO_LINKS,
   TELEMETRY
 } from "../../utils/constants";
@@ -157,7 +155,6 @@ const GenerationModal = ({
   const handleOpenProjectOrRestartWizard = () => {
     if (isTemplatesFailed) {
       dispatch(resetWizardAction());
-      history.push(ROUTES.NEW_PROJECT);
       return;
     }
     if (isTemplateGenerated) {
@@ -183,7 +180,6 @@ const GenerationModal = ({
   const closeModalAndCreateAnotherProject = (param: any) => {
     trackCreateNewProjectTelemetry(param);
     dispatch(resetWizardAction());
-    history.push(ROUTES.NEW_PROJECT);
   };
 
   const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -438,7 +434,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isPostGenModalOpenSelector(state),
 });
 
-export default withRouter(
+export default 
   connect(
     mapStateToProps
   )(asModal(injectIntl(GenerationModal), MODAL_TYPES.POST_GEN_MODAL))

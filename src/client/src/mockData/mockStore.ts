@@ -2,6 +2,7 @@ import { ISelected } from "../types/selected";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
 import { ModalType } from "../store/modals/typeKeys";
+import { ROUTES } from "../utils/constants";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -29,7 +30,8 @@ export const getInitialState = (): AppState => {
           selected: false,
           author: '',
           svgUrl:''
-        }
+        },
+        originRoute:''
       },
       previewStatus: false
     },
@@ -353,4 +355,27 @@ export const setFrontendFramework = (store: AppState, internalName: string) => {
 
 export const setOpenModal = (store: AppState, modalType: ModalType) => {
   store.modals.openModal.modalType = modalType;
+}
+
+export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
+  store.wizardRoutes.selected = seletedRoute;
+  switch (seletedRoute) 
+  { 
+    case ROUTES.SELECT_FRAMEWORKS:
+      store.wizardRoutes.isVisited = {
+        '/': true,
+        '/SelectFrameworks': true,
+        '/SelectPages': false,
+        '/AzureLogin': false,
+        '/ReviewAndGenerate': false
+      };
+    case ROUTES.REVIEW_AND_GENERATE:
+      store.wizardRoutes.isVisited = {
+        '/': true,
+        '/SelectFrameworks': true,
+        '/SelectPages': true,
+        '/AzureLogin': true,
+        '/ReviewAndGenerate': true
+      }
+  }
 }
