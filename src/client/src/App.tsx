@@ -55,8 +55,8 @@ const PageAzureLogin = Loadable({
   loader: () => import(/* webpackChunkName: "PageAzureLogin" */  "./containers/PageAzureLogin"),
   loading:() => <div/>
 });
-const PostGenerationModal = Loadable({
-  loader: () => import(/* webpackChunkName: "PostGenerationModal" */  "./containers/GenerationModal"),
+const GenerationModal = Loadable({
+  loader: () => import(/* webpackChunkName: "GenerationModal" */  "./containers/GenerationModal"),
   loading:() => <div/>
 });
 const CosmosDbModal = Loadable({
@@ -216,7 +216,7 @@ const App = (props: Props) => {
         {(modalState.modalType === MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType === MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
         {(modalState.modalType === MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
-        {(modalState.modalType === MODAL_TYPES.POST_GEN_MODAL) && (<PostGenerationModal/>)}
+        {(modalState.modalType === MODAL_TYPES.POST_GEN_MODAL) && (<GenerationModal/>)}
 
         <main
           className={classnames(appStyles.centerView, {

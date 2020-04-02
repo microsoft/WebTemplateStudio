@@ -52,18 +52,12 @@ interface IStateProps {
   isModalOpen: boolean;
 }
 
-interface IDispatchProps {
-  resetWizard: () => any;
-}
-
 type Props = IStateProps &
   InjectedIntlProps &
-  IDispatchProps &
   RouteComponentProps;
 
 const GenerationModal = ({
   intl,
-  resetWizard,
   history
 }: Props) => {
   const { formatMessage } = intl;
@@ -162,7 +156,7 @@ const GenerationModal = ({
 
   const handleOpenProjectOrRestartWizard = () => {
     if (isTemplatesFailed) {
-      resetWizard();
+      dispatch(resetWizardAction());
       history.push(ROUTES.NEW_PROJECT);
       return;
     }
