@@ -9,7 +9,7 @@ import styles from "./styles.module.css";
 import {startLogOutAzureAction} from "../../../store/azureProfileData/login/action";
 import * as ModalActions from "../../../store/modals/action";
 import { isCosmosDbModalOpenSelector } from "../../../store/modals/selector";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES, ROUTES } from "../../../utils/constants";
 
 import azureServiceOptions from "../../../mockData/azureServiceOptions";
 import { servicesEnum } from "../../../mockData/azureServiceOptions";
@@ -25,7 +25,7 @@ import RootAction from "../../../store/ActionType";
 
 import { isAppServiceSelectedSelector } from "../../../store/azureProfileData/appService/selector";
 import messages from "./messages";
-import { setDetailPageAction } from "../../../store/wizardContent/pages/action";
+import { setDetailPageAction, setPageWizardPageAction } from "../../../store/wizardContent/pages/action";
 
 interface IDispatchProps {
   startLogOutToAzure: () => any;
@@ -192,7 +192,8 @@ const mapDispatchToProps = (
   },
   setDetailPage: (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
-    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));
+    dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
+    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted, ROUTES.AZURE_LOGIN));
   },
   openCosmosDbModal: () => {
     dispatch(ModalActions.openCosmosDbModalAction());

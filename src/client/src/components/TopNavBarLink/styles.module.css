@@ -4,7 +4,7 @@
 }
 
 .textSelected {
-  font-weight: 600;
+  text-shadow: 0.75px 0 0 currentColor;
 }
 
 .text {

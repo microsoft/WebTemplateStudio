@@ -19,12 +19,14 @@ const setPageWizardPageAction = (route: string): ISetPageAction => ({
 
 const setDetailPageAction = (
   detailPageInfo: IOption,
-  isIntlFormatted = false
+  isIntlFormatted = false,
+  originRoute: string
 ): ISetDetails => ({
   type: WIZARD_INFO_TYPEKEYS.SET_DETAILS_PAGE_INFO,
   payload: {
     data: detailPageInfo,
-    isIntlFormatted
+    isIntlFormatted,
+    originRoute
   }
 });
 
@@ -74,8 +76,8 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
   }));
 }
 
-export { 
-  getPagesOptionsAction, 
+export {
+  getPagesOptionsAction,
   getPagesOptionsSuccessAction,
   setVisitedWizardPageAction,
   resetVisitedWizardPageAction,

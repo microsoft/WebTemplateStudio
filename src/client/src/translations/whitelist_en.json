@@ -34,12 +34,15 @@
   "CosmosModal.ApiSelection.ariaDropdownLabel",
   "CosmosModal.title",
   "CosmosModal.saveMessage",
+<<<<<<< HEAD
   "CosmosModal.showAdvancedMode",
   "CosmosModal.hideAdvancedMode",
+=======
+  "footer.navAriaLabel",
+>>>>>>> upstream/dev
   "footer.back",
   "footer.next",
   "footer.generate",
-  "footer.navAriaLabel",
   "pageAddPages.pagesTitleQuestion",
   "pageAddPages.iconAltMessage",
   "pageCard.details",
