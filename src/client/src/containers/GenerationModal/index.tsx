@@ -223,15 +223,15 @@ const GenerationModal = ({
   const genMessage = () => {
     return (
       <div>
-        {isServicesSelected && (
+        {isServicesSelected && !isServicesDeployed && (
           <p className={styles.sectionLine}>
             {formatMessage(messages.generationCompleteWithAzure)}
           </p>
         )}
         <p className={styles.sectionLine}>
           {formatMessage(
-            isServicesSelected
-              ? messages.seeReadMePrefixWithAzure
+            isServicesSelected && !isServicesDeployed
+              ? messages.seeReadMePrefixWithAzure 
               : messages.seeReadMePrefix
           )}
           <span className={styles.readMeText}>
@@ -389,18 +389,21 @@ const GenerationModal = ({
         <div className={styles.title}>
           {formatMessage(messages.creatingYourProject)}
         </div>
-        <Close
+        {((templateGenerated && isServicesDeployed) || isTemplatesFailed) && (
+          <Close
             tabIndex={0}
             className={styles.closeIcon}
             onClick={() => closeModalAndCreateAnotherProject({ fromCloseButton:true })}
             onKeyDown={closeKeyDownHandler}
           />
+        )}
       </div>
 
       <div className={styles.section}>
         {templateGenerationInProgress && (
           <div className={styles.sectionLine}>
-            {templateGenStatus}</div>
+            {templateGenStatus}
+          </div>
         )}
         {templateGenerated && genMessage()}
         {isTemplatesFailed && renderTemplatesError()}
@@ -426,7 +429,7 @@ const GenerationModal = ({
           </a>
         )}
 
-        {(templateGenerated || isTemplatesFailed) && (
+        {((templateGenerated && isServicesDeployed) || isTemplatesFailed) && (
           <button
             className={classnames(styles.button, {
               [buttonStyles.buttonDark]: templateGenerated,
