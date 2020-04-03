@@ -1,14 +1,13 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
 import styles from "./styles.module.css";
 import classnames from "classnames";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import {
   WIZARD_CONTENT_INTERNAL_NAMES
 } from "../../../../utils/constants";
-import { AppState } from "../../../../store/combineReducers";
 import Notification from "../../../../components/Notification";
 import messages from "./messages";
+import { DependencyContext } from "../../DependencyContext";
 
 export interface IDependency {
   dependencyStoreKey: string;
@@ -66,7 +65,7 @@ const DependencyInfo = (props: Props) => {
   const [installed, setInstalled] = React.useState(false);
   const [dependency, setDependency] = React.useState<IDependency | undefined>();
   const [dependencyMessage, setDependencyMessage] = React.useState("");
-  const dependenciesStore = useSelector((state: AppState) => state.dependencyInfo.dependencies);
+  const dependencyContext = React.useContext(DependencyContext);
 
   React.useEffect(()=>{
     const localDepency = frameworkNameToDependencyMap.get(frameworkName);
@@ -78,17 +77,13 @@ const DependencyInfo = (props: Props) => {
         dependencyStoreKey,
         dependencyMinimumVersion
       } = localDepency;
-      if (dependenciesStore[dependencyStoreKey]){
-        setInstalled(dependenciesStore[dependencyStoreKey].installed);
-        setDependencyMessage(installed
-          ? ""
-          : intl.formatMessage(messages.notInstalled, {
+        setInstalled(dependencyName.toLocaleLowerCase() === "node" ? dependencyContext.node: dependencyContext.python);
+        setDependencyMessage(intl.formatMessage(messages.notInstalled, {
               dependencyName: dependencyName,
               minimumVersion: dependencyMinimumVersion
             }));
-      }
     }
-  },[]);
+  },[dependencyContext]);
 
   return (
     <div>

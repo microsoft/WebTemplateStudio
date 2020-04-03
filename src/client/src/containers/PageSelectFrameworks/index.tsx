@@ -1,7 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { IStateProps, IDispatchProps } from "./interfaces";
-import {mapStateToProps, mapDispatchToProps} from "./store";
+import { useSelector } from "react-redux";
 import FrameworkCard from "./FrameworkCard";
 import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
@@ -9,28 +7,33 @@ import messages from "./messages";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { IVSCodeObject } from "../../types/vscode";
 import { AppContext } from "../../AppContext";
+import { DependencyContext } from "./DependencyContext";
+import { AppState } from "../../store/combineReducers";
 
-type Props = IStateProps & IDispatchProps & InjectedIntlProps;
+type Props = InjectedIntlProps;
 
-const SelectFrameworks = (props: Props) => {
-  const { frontendOptions, backendOptions, intl } = props;
+const SelectFrameworks = ({intl}: Props) => {
+  const frontendOptions = useSelector((state: AppState) => state.wizardContent.frontendOptions);
+  const backendOptions = useSelector((state: AppState) => state.wizardContent.backendOptions);
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const [isNodeInstalled, setNodeInstalled] = React.useState(true);
+  const [isPythonInstalled, setPythonInstalled] = React.useState(true);
 
   React.useEffect(()=>{
     getDependencyInfoAndSetToStore();
   },[]);
 
   const getDependencyInfoAndSetToStore = () =>{
-    const { updateDependencyInfo } = props;
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
-          updateDependencyInfo(message.payload);
+          if (message.payload.dependency=="node") setNodeInstalled(message.payload.installed);
+          if (message.payload.dependency=="python") setPythonInstalled(message.payload.installed);
           break;
       }
     });
-    
+
     vscode.postMessage({
       module: EXTENSION_MODULES.DEPENDENCYCHECKER,
       command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
@@ -53,7 +56,9 @@ const SelectFrameworks = (props: Props) => {
       <div className={styles.flexContainer}>
         {frontendOptions.map((framework) => {
           return (
-            <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={true}/>
+            <DependencyContext.Provider value={{node:isNodeInstalled, python: isPythonInstalled}}>
+              <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={true}/>
+            </DependencyContext.Provider>
           );
         })}
       </div>
@@ -61,7 +66,9 @@ const SelectFrameworks = (props: Props) => {
       <div className={styles.flexContainer}>
         {backendOptions.map((framework) => {
           return (
-            <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={false}/>
+            <DependencyContext.Provider value={{node:isNodeInstalled, python: isPythonInstalled}}>
+              <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={false}/>
+            </DependencyContext.Provider>
           );
         })}
       </div>
@@ -69,4 +76,4 @@ const SelectFrameworks = (props: Props) => {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(SelectFrameworks));
+export default injectIntl(SelectFrameworks);
