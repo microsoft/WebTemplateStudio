@@ -426,25 +426,30 @@ const GenerationModal = ({
           </a>
         )}
 
-        {templateGenerated && isServicesDeployed && (
+        {(templateGenerated || isTemplatesFailed) && (
           <button
-            className={classnames(styles.button, buttonStyles.buttonDark)}
+            className={classnames(styles.button, {
+              [buttonStyles.buttonDark]: templateGenerated,
+              [buttonStyles.buttonHighlighted]: !templateGenerated
+            })}
             onClick={() => closeModalAndCreateAnotherProject({ fromCreateNewProjectButton:true })}
           >
             {formatMessage(messages.createAnotherProject)}
           </button>
         )}
 
-        <button
-          className={classnames(styles.button, {
-            [buttonStyles.buttonDark]: templateGenerationInProgress,
-            [buttonStyles.buttonHighlighted]: !templateGenerationInProgress
-          })}
-          onClick={handleOpenProjectOrRestartWizard}
-          disabled={templateGenerationInProgress}
-        >
-          {openProjectOrRestartWizardMessage()}
-        </button>
+        {(!isTemplatesFailed) && (
+          <button
+            className={classnames(styles.button, {
+              [buttonStyles.buttonDark]: templateGenerationInProgress,
+              [buttonStyles.buttonHighlighted]: !templateGenerationInProgress
+            })}
+            onClick={handleOpenProjectOrRestartWizard}
+            disabled={templateGenerationInProgress}
+          >
+            {openProjectOrRestartWizardMessage()}
+          </button>
+        )}
       </div>
     </div>
   );
