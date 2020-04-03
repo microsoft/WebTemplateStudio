@@ -28,8 +28,8 @@ const SelectFrameworks = ({intl}: Props) => {
       const message = event.data;
       switch (message.command) {
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
-          if (message.payload.dependency=="node") setNodeInstalled(message.payload.installed);
-          if (message.payload.dependency=="python") setPythonInstalled(message.payload.installed);
+          if (message.payload.dependency === "node") setNodeInstalled(message.payload.installed);
+          if (message.payload.dependency === "python") setPythonInstalled(message.payload.installed);
           break;
       }
     });
@@ -52,26 +52,24 @@ const SelectFrameworks = ({intl}: Props) => {
 
   return (
     <div>
-      <h1 className={styles.title}>{intl.formatMessage(messages.frontendTitle)}</h1>
-      <div className={styles.flexContainer}>
-        {frontendOptions.map((framework) => {
-          return (
-            <DependencyContext.Provider value={{node:isNodeInstalled, python: isPythonInstalled}}>
+      <DependencyContext.Provider value={{node:isNodeInstalled, python: isPythonInstalled}}>
+        <h1 className={styles.title}>{intl.formatMessage(messages.frontendTitle)}</h1>
+        <div className={styles.flexContainer}>
+          {frontendOptions.map((framework) => {
+            return (
               <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={true}/>
-            </DependencyContext.Provider>
-          );
-        })}
-      </div>
-      <h1 className={styles.title}>{intl.formatMessage(messages.backendTitle)}</h1>
-      <div className={styles.flexContainer}>
-        {backendOptions.map((framework) => {
-          return (
-            <DependencyContext.Provider value={{node:isNodeInstalled, python: isPythonInstalled}}>
+            );
+          })}
+        </div>
+        <h1 className={styles.title}>{intl.formatMessage(messages.backendTitle)}</h1>
+        <div className={styles.flexContainer}>
+          {backendOptions.map((framework) => {
+            return (
               <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={false}/>
-            </DependencyContext.Provider>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      </DependencyContext.Provider>
     </div>
   );
 }

@@ -74,14 +74,13 @@ const DependencyInfo = (props: Props) => {
     if (localDepency){
       const {
         dependencyName,
-        dependencyStoreKey,
         dependencyMinimumVersion
       } = localDepency;
         setInstalled(dependencyName.toLocaleLowerCase() === "node" ? dependencyContext.node: dependencyContext.python);
         setDependencyMessage(intl.formatMessage(messages.notInstalled, {
-              dependencyName: dependencyName,
-              minimumVersion: dependencyMinimumVersion
-            }));
+          dependencyName: dependencyName,
+          minimumVersion: dependencyMinimumVersion
+        }));
     }
   },[dependencyContext]);
 
