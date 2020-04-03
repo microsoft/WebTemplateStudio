@@ -8,15 +8,17 @@ import { CoreTemplateStudio } from "../coreTemplateStudio";
 import { ResourceGroupSelection } from "../azure/azure-resource-group/resourceGroupModule";
 import { Settings } from "../azure/utils/settings";
 import { Logger } from "../utils/logger";
+import { IGenerationPayloadType } from "../types/generationPayloadType";
+import { GenerationStatus } from "../utils/generationStatus";
 
 export class Generation extends WizardServant {
   private static reactPanelContext: ReactPanel;
   private static Telemetry: ITelemetryService;
   clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.Generate, this.handleGeneratePayloadFromClient],
+    [ExtensionCommand.Generate, this.Generate],
     [ExtensionCommand.OpenProjectVSCode, Generation.openProjectVSCode],
   ]);
-  
+
   constructor(private Telemetry: ITelemetryService) {
     super();
     Generation.Telemetry = this.Telemetry;
@@ -26,37 +28,18 @@ export class Generation extends WizardServant {
     Generation.reactPanelContext = reactPanelContext;
   }
 
-  public async handleGeneratePayloadFromClient(message: any): Promise<IPayloadResponse> {
+  public async Generate(message: any): Promise<IPayloadResponse> {
     Generation.trackWizardTotalSessionTimeToGenerate();
+
+    const generationStatus = new GenerationStatus(Generation.reactPanelContext);
+
     const payload = message.payload;
-    const enginePayload: any = payload.engine;
-    const apiGenResult = await this.sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload).catch(error => {
-      Logger.appendLog("EXTENSION", "error", `Error on generation: ${error}`);
-      Generation.reactPanelContext.postMessageWebview({
-        command: ExtensionCommand.UpdateGenStatus,
-        payload: {
-          templates: Generation.getProgressObject(false),
-          cosmos: Generation.getProgressObject(false),
-        },
-      });
-      return;
-    });
+    const enginePayload: IGenerationPayloadType = message.payload.engine;
 
-    let progressObject = {
-      templates: Generation.getProgressObject(apiGenResult !== undefined),
-      resourceGroup: {},
-      cosmos: {},
-      appService: {},
-    };
-    let connectionString: string;
-
-    Generation.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.UpdateGenStatus,
-      payload: progressObject,
-    });
+    const apiGenResult = await this.GenerateProject(enginePayload, generationStatus);
 
     const serviceQueue: Promise<any>[] = [];
-    const resourceGroupQueue: Promise<any>[] = [];
+    let connectionString: string;
 
     if (apiGenResult) {
       enginePayload.path = apiGenResult.generationPath;
@@ -69,164 +52,77 @@ export class Generation extends WizardServant {
       payload: { outputPath: enginePayload.path },
     });
 
-    if (payload.selectedCosmos || payload.selectedAppService) {
-      const distinctResourceGroupSelections: ResourceGroupSelection[] = await AzureServices.generateDistinctResourceGroupSelections(
-        payload
+    const resourceGroupsSelections = await this.generateResourceGroups(payload, generationStatus);
+
+    if (payload.selectedAppService) {
+      const appServiceResourceGroup = resourceGroupsSelections.filter(
+        r => r.subscriptionItem.label === payload.appService.subscription
       );
-      distinctResourceGroupSelections.forEach(resourceGroupSelection => {
-        resourceGroupQueue.push(
-          Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(
-            TelemetryEventName.ResourceGroupDeploy,
-            async function(this: IActionContext): Promise<void> {
-              try {
-                await AzureServices.deployResourceGroup(resourceGroupSelection);
-                progressObject = {
-                  ...progressObject,
-                  resourceGroup: Generation.getProgressObject(true),
-                };
-                Generation.reactPanelContext.postMessageWebview({
-                  command: ExtensionCommand.UpdateGenStatus,
-                  payload: progressObject,
-                });
-              } catch (error) {
-                Logger.appendLog("EXTENSION", "error", `Error on Azure Resource Group creation: ${error}`);
-                progressObject = {
-                  ...progressObject,
-                  resourceGroup: Generation.getProgressObject(false),
-                };
-                Generation.reactPanelContext.postMessageWebview({
-                  command: ExtensionCommand.UpdateGenStatus,
-                  payload: progressObject,
-                });
-              }
-            }
-          )
-        );
-      });
-      // Add the new resouce group name to payload
-      if (payload.selectedCosmos) {
-        const cosmosResourceGroups = distinctResourceGroupSelections.filter(
-          r => r.subscriptionItem.label === payload.cosmos.subscription
-        );
-        payload.cosmos.resourceGroup = cosmosResourceGroups[0].resourceGroupName;
-      }
-      if (payload.selectedAppService) {
-        const appServiceResourceGroup = distinctResourceGroupSelections.filter(
-          r => r.subscriptionItem.label === payload.appService.subscription
-        );
-        payload.appService.resourceGroup = appServiceResourceGroup[0].resourceGroupName;
-      }
+      payload.appService.resourceGroup = appServiceResourceGroup[0].resourceGroupName;
+      serviceQueue.push(
+        Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.AppServiceDeploy, async function(
+          this: IActionContext
+        ): Promise<void> {
+          try {
+            const id: string = await AzureServices.deployWebApp(payload);
+            generationStatus.SetAppServiceStatus(true);
+            Settings.enableScmDoBuildDuringDeploy(enginePayload.path);
+            Settings.setDeployDefault(id, enginePayload.path);
+          } catch (error) {
+            Logger.appendLog("EXTENSION", "error", `Error on deploy Azure App Service: ${error}`);
+            generationStatus.SetAppServiceStatus(false);
+          }
+        })
+      );
     }
 
-    // Resource groups should be created before other deploy methods execute
-    Promise.all(resourceGroupQueue).then(() => {
-      if (payload.selectedAppService) {
-        serviceQueue.push(
-          Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(
-            TelemetryEventName.AppServiceDeploy,
-            async function(this: IActionContext): Promise<void> {
-              try {
-                const id: string = await AzureServices.deployWebApp(payload);
-                progressObject = {
-                  ...progressObject,
-                  appService: Generation.getProgressObject(true),
-                };
-                Generation.reactPanelContext.postMessageWebview({
-                  command: ExtensionCommand.UpdateGenStatus,
-                  payload: progressObject,
-                });
-                Settings.enableScmDoBuildDuringDeploy(enginePayload.path);
-                Settings.setDeployDefault(id, enginePayload.path);
-              } catch (error) {
-                Logger.appendLog("EXTENSION", "error", `Error on deploy Azure App Service: ${error}`);
-                progressObject = {
-                  ...progressObject,
-                  appService: Generation.getProgressObject(false),
-                };
-                Generation.reactPanelContext.postMessageWebview({
-                  command: ExtensionCommand.UpdateGenStatus,
-                  payload: progressObject,
-                });
-              }
-            }
-          )
-        );
-      }
-
-      if (payload.selectedCosmos) {
-        serviceQueue.push(
-          Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.CosmosDBDeploy, async function(
-            this: IActionContext
-          ): Promise<void> {
-            const cosmosPayload: any = payload.cosmos;
-            try {
-              const dbObject = await AzureServices.deployCosmosResource(cosmosPayload, enginePayload.path);
-              progressObject = {
-                ...progressObject,
-                cosmos: Generation.getProgressObject(true),
-              };
-              Generation.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject,
-              });
-              connectionString = dbObject.connectionString;
-              AzureServices.promptUserForCosmosReplacement(enginePayload.path, dbObject).then(
-                //log in telemetry how long it took replacement
-                cosmosReplaceResponse => {
-                  if (cosmosReplaceResponse.userReplacedEnv) {
-                    // Temporary Disable
-                    Generation.Telemetry.trackEventWithDuration(
-                      TelemetryEventName.ConnectionStringReplace,
-                      cosmosReplaceResponse.startTime,
-                      Date.now()
-                    );
-                  }
+    if (payload.selectedCosmos) {
+      const cosmosResourceGroups = resourceGroupsSelections.filter(
+        r => r.subscriptionItem.label === payload.cosmos.subscription
+      );
+      payload.cosmos.resourceGroup = cosmosResourceGroups[0].resourceGroupName;
+      serviceQueue.push(
+        Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.CosmosDBDeploy, async function(
+          this: IActionContext
+        ): Promise<void> {
+          const cosmosPayload: any = payload.cosmos;
+          try {
+            const dbObject = await AzureServices.deployCosmosResource(cosmosPayload, enginePayload.path);
+            generationStatus.SetCosmosStatus(true);
+            connectionString = dbObject.connectionString;
+            AzureServices.promptUserForCosmosReplacement(enginePayload.path, dbObject).then(
+              //log in telemetry how long it took replacement
+              cosmosReplaceResponse => {
+                if (cosmosReplaceResponse.userReplacedEnv) {
+                  // Temporary Disable
+                  Generation.Telemetry.trackEventWithDuration(
+                    TelemetryEventName.ConnectionStringReplace,
+                    cosmosReplaceResponse.startTime,
+                    Date.now()
+                  );
                 }
-              );
-            } catch (error) {
-              Logger.appendLog("EXTENSION", "error", `Error on deploy CosmosDB Service: ${error}`);
-              progressObject = {
-                ...progressObject,
-                cosmos: Generation.getProgressObject(false),
-              };
-              Generation.reactPanelContext.postMessageWebview({
-                command: ExtensionCommand.UpdateGenStatus,
-                payload: progressObject,
-              });
-            }
-          })
+              }
+            );
+          } catch (error) {
+            Logger.appendLog("EXTENSION", "error", `Error on deploy CosmosDB Service: ${error}`);
+            generationStatus.SetCosmosStatus(false);
+          }
+        })
+      );
+    }
+
+    // kick off both services asynchronously
+    Promise.all(serviceQueue).then(() => {
+      if (payload.selectedAppService && connectionString) {
+        AzureServices.updateAppSettings(
+          payload.appService.resourceGroup,
+          payload.appService.siteName,
+          connectionString
         );
       }
-
-      // kick off both services asynchronously
-      Promise.all(serviceQueue).then(() => {
-        if (payload.selectedAppService && connectionString) {
-          AzureServices.updateAppSettings(
-            payload.appService.resourceGroup,
-            payload.appService.siteName,
-            connectionString
-          );
-        }
-      });
     });
+
     return { payload: undefined };
-  }
-
-  public async sendTemplateGenInfoToApiAndSendStatusToClient(enginePayload: any): Promise<any> {
-    const apiInstance = CoreTemplateStudio.GetExistingInstance();
-    return await apiInstance.generate({
-      payload: enginePayload,
-      liveMessageHandler: this.handleGenLiveMessage,
-    });
-  }
-
-  private handleGenLiveMessage(message: string): void {
-    Generation.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.UpdateGenStatusMessage,
-      payload: {
-        status: message,
-      },
-    });
   }
 
   private static async openProjectVSCode(message: any): Promise<IPayloadResponse> {
@@ -238,18 +134,69 @@ export class Generation extends WizardServant {
     return { payload: true };
   }
 
-  private static getProgressObject(didSucceed: boolean): any {
-    return {
-      success: didSucceed,
-      failure: !didSucceed,
-    };
-  }
-
   private static trackWizardTotalSessionTimeToGenerate(): void {
     Generation.Telemetry.trackEventWithDuration(
       TelemetryEventName.WizardSession,
       Generation.Telemetry.wizardSessionStartTime,
       Date.now()
     );
+  }
+
+  public async GenerateProject(
+    generationData: IGenerationPayloadType,
+    generationStatus: GenerationStatus
+  ): Promise<any> {
+    try {
+      const apiInstance = CoreTemplateStudio.GetExistingInstance();
+      const result = await apiInstance.generate({
+        payload: generationData,
+        liveMessageHandler: this.SendGenerationMessageToClient,
+      });
+
+      generationStatus.SetTemplatesStatus(result !== undefined);
+      return result;
+    } catch (error) {
+      Logger.appendLog("EXTENSION", "error", `Error on generation: ${error}`);
+      generationStatus.SetTemplatesStatus(false);
+      return;
+    }
+  }
+
+  private SendGenerationMessageToClient(message: string): void {
+    Generation.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.UpdateGenStatusMessage,
+      payload: { status: message },
+    });
+  }
+
+  private async generateResourceGroups(
+    payload: any,
+    generationStatus: GenerationStatus
+  ): Promise<ResourceGroupSelection[]> {
+    const resourceGroupQueue: Promise<any>[] = [];
+    let resourceGroupsSelections: ResourceGroupSelection[] = [];
+
+    if (payload.selectedCosmos || payload.selectedAppService) {
+      resourceGroupsSelections = await AzureServices.getResourceGroupSelections(payload);
+      resourceGroupsSelections.forEach(resourceGroupSelection => {
+        resourceGroupQueue.push(
+          Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(
+            TelemetryEventName.ResourceGroupDeploy,
+            async function(this: IActionContext): Promise<void> {
+              try {
+                await AzureServices.deployResourceGroup(resourceGroupSelection);
+                generationStatus.SetResourceGroupStatus(true);
+              } catch (error) {
+                Logger.appendLog("EXTENSION", "error", `Error on Azure Resource Group creation: ${error}`);
+                generationStatus.SetResourceGroupStatus(false);
+              }
+            }
+          )
+        );
+      });
+
+      await Promise.all(resourceGroupQueue);
+    }
+    return resourceGroupsSelections;
   }
 }

@@ -139,7 +139,7 @@ export class AzureServices {
     };
   }
 
-  public static async generateDistinctResourceGroupSelections(payload: any): Promise<ResourceGroupSelection[]> {
+  public static async getResourceGroupSelections(payload: any): Promise<ResourceGroupSelection[]> {
     const projectName = payload.engine.projectName;
     const allSubscriptions: SubscriptionItem[] = [];    
     if (payload.selectedCosmos) {
