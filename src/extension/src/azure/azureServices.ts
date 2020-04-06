@@ -1,19 +1,14 @@
-import * as vscode from "vscode";
 import { MICROSOFT_LEARN_TENANTS } from "./../configuration.json";
 
 import { AzureAuth, SubscriptionItem, LocationItem } from "./azure-auth/azureAuth";
-import { CosmosDBDeploy, CosmosDBSelections, DatabaseObject } from "./azure-cosmosDB/cosmosDbModule";
-import {
-  CONSTANTS,
-  AzureResourceType,
-  DialogMessages,
-  DialogResponses,
-} from "../constants";
+import { CosmosDBDeploy, CosmosDBSelections } from "./azure-cosmosDB/cosmosDbModule";
+import { CONSTANTS, AzureResourceType} from "../constants";
 import { SubscriptionError, ValidationError } from "../errors";
 import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-group/resourceGroupModule";
 import { AppServiceProvider, AppServiceSelections } from "./azure-app-service/appServiceProvider";
 import { StringDictionary } from "azure-arm-website/lib/models";
 import { ConnectionString } from "./utils/connectionString";
+import { Settings } from "./utils/settings";
 
 interface UserStatus {
   email: string;
@@ -180,13 +175,13 @@ export class AzureServices {
     };
   }
 
-  public static async deployResourceGroup(selections: ResourceGroupSelection): Promise<any> {
-    if (!AzureServices.IsMicrosoftLearnSubscription(selections.subscriptionItem)) {
-      return await AzureServices.AzureResourceGroupProvider.createResourceGroup(selections);
+  public static async deployResourceGroup(resourceGroup: ResourceGroupSelection): Promise<void> {
+    if (!AzureServices.IsMicrosoftLearnSubscription(resourceGroup.subscriptionItem)) {
+      await AzureServices.AzureResourceGroupProvider.createResourceGroup(resourceGroup);
     }
   }
 
-  public static async deployWebApp(payload: any): Promise<string> {
+  public static async deployAppService(payload: any): Promise<void> {
     const subscription = AzureServices.getSubscription(payload.appService.subscription);
     const aspName = await AzureServices.AzureAppServiceProvider.generateValidASPName(payload.engine.projectName);
 
@@ -225,7 +220,10 @@ export class AzureServices {
     if (!result) {
       throw new Error(CONSTANTS.ERRORS.APP_SERVICE_UNDEFINED_ID);
     }
-    return AzureServices.convertId(result);
+
+    const id = AzureServices.convertId(result);    
+    Settings.enableScmDoBuildDuringDeploy(payload.engine.path);
+    Settings.setDeployDefault(id, payload.engine.path);
   }
 
   private static convertId(rawId: string): string {
@@ -235,7 +233,7 @@ export class AzureServices {
     return rawId.replace(MS_RESOURCE_DEPLOYMENT, MS_WEB_SITE).replace("-" + AzureResourceType.AppService, "");
   }
 
-  public static async deployCosmosResource(selections: any, genPath: string): Promise<DatabaseObject> {
+  public static async deployCosmos(selections: any, genPath: string): Promise<string> {
     const subscription = AzureServices.getSubscription(selections.subscription);
 
     const userCosmosDBSelection: CosmosDBSelections = {
@@ -259,27 +257,13 @@ export class AzureServices {
         throw error; //to log in telemetry
       });
 
-    return await AzureServices.AzureCosmosDBProvider.createCosmosDB(userCosmosDBSelection, genPath);
+    const dbObject = await AzureServices.AzureCosmosDBProvider.createCosmosDB(userCosmosDBSelection, genPath);
+    return dbObject.connectionString;
   }
 
-  public static async promptUserForCosmosReplacement(pathToEnv: string, dbObject: DatabaseObject): Promise<any> {
-    return await vscode.window
-      .showInformationMessage(
-        DialogMessages.cosmosDBConnectStringReplacePrompt,
-        ...[DialogResponses.yes, DialogResponses.no]
-      )
-      .then((selection: vscode.MessageItem | undefined) => {
-        const start = Date.now();
-        if (selection === DialogResponses.yes) {
-          CosmosDBDeploy.updateConnectionStringInEnvFile(pathToEnv, dbObject.connectionString);
-          vscode.window.showInformationMessage(CONSTANTS.INFO.FILE_REPLACED_MESSAGE + pathToEnv);
-        }
-        return {
-          userReplacedEnv: selection === DialogResponses.yes,
-          startTime: start,
-        };
-      });
-  }
+  public static updateConnectionStringInEnvFile(path: string, connectionString: string): void {    
+    CosmosDBDeploy.updateConnectionStringInEnvFile(path, connectionString);
+  } 
 
   public static async updateAppSettings(
     resourceGroupName: string,

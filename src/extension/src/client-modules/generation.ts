@@ -1,11 +1,10 @@
 import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import { ExtensionCommand, TelemetryEventName, CONSTANTS, AzureResourceType } from "../constants";
+import { ExtensionCommand, TelemetryEventName, CONSTANTS, AzureResourceType, DialogMessages, DialogResponses } from "../constants";
 import { IActionContext, ITelemetryService } from "../telemetry/telemetryService";
 import { AzureServices } from "../azure/azureServices";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
 import { ResourceGroupSelection } from "../azure/azure-resource-group/resourceGroupModule";
-import { Settings } from "../azure/utils/settings";
 import { Logger } from "../utils/logger";
 import { IGenerationPayloadType } from "../types/generationPayloadType";
 import { GenerationStatus } from "../utils/generationStatus";
@@ -80,7 +79,7 @@ export class Generation extends WizardServant {
       generationStatus.sendToClientGenerationPath(result.generationPath);
       return result;
     } catch (error) {
-      Logger.appendLog("EXTENSION", "error", `Error on generation: ${error}`);
+      Logger.appendLog("EXTENSION", "error", `Error on generation project: ${error}`);
       generationStatus.setTemplatesStatus(false);
       return;
     }
@@ -155,14 +154,11 @@ export class Generation extends WizardServant {
       isDeployed: false,
     };
     try {
-      const appServiceResourceGroup = resourceGroups.filter(
-        (r) => r.subscriptionItem.label === payload.appService.subscription
-      );
-      payload.appService.resourceGroup = appServiceResourceGroup[0].resourceGroupName;
-      const id: string = await AzureServices.deployWebApp(payload);
+      const subscription = payload.appService.subscription;
+      const resourceGroup = resourceGroups.find((r) => r.subscriptionItem.label === subscription);
+      payload.appService.resourceGroup = resourceGroup!.resourceGroupName;
+      await AzureServices.deployAppService(payload);
       generationStatus.setAppServiceStatus(true);
-      Settings.enableScmDoBuildDuringDeploy(payload.engine.path);
-      Settings.setDeployDefault(id, payload.engine.path);
       result.isDeployed = true;
     } catch (error) {
       Logger.appendLog("EXTENSION", "error", `Error on deploy Azure App Service: ${error}`);
@@ -182,27 +178,16 @@ export class Generation extends WizardServant {
       isDeployed: false,
       payload: { connectionString: "" },
     };
-    const cosmosResourceGroups = resourceGroups.filter((r) => r.subscriptionItem.label === payload.cosmos.subscription);
-    payload.cosmos.resourceGroup = cosmosResourceGroups[0].resourceGroupName;
-    const cosmosPayload = payload.cosmos;
-
     try {
-      const dbObject = await AzureServices.deployCosmosResource(cosmosPayload, payload.engine.path);
+      const subscription = payload.cosmos.subscription;
+      const resourceGroup = resourceGroups.find((r) => r.subscriptionItem.label === subscription);
+      payload.cosmos.resourceGroup = resourceGroup!.resourceGroupName;
+      const connectionString = await AzureServices.deployCosmos(payload.cosmos, payload.engine.path);
       generationStatus.setCosmosStatus(true);
       result.isDeployed = true;
-      result.payload.connectionString = dbObject.connectionString;
+      result.payload.connectionString = connectionString;
+      await this.replaceConnectionString(payload.engine.path,connectionString);
 
-      const cosmosReplaceResponse = await AzureServices.promptUserForCosmosReplacement(payload.engine.path, dbObject);
-
-      //log in telemetry how long it took replacement
-      if (cosmosReplaceResponse.userReplacedEnv) {
-        // Temporary Disable
-        this.Telemetry.trackEventWithDuration(
-          TelemetryEventName.ConnectionStringReplace,
-          cosmosReplaceResponse.startTime,
-          Date.now()
-        );
-      }
     } catch (error) {
       Logger.appendLog("EXTENSION", "error", `Error on deploy CosmosDB Service: ${error}`);
       generationStatus.setCosmosStatus(false);
@@ -211,10 +196,34 @@ export class Generation extends WizardServant {
     return result;
   }
 
+  private async replaceConnectionString(path: string, connectionString: string): Promise<void> {
+    const selection = await vscode.window.showInformationMessage(
+      DialogMessages.cosmosDBConnectStringReplacePrompt,
+      ...[DialogResponses.yes, DialogResponses.no]
+    );
+
+    const start = Date.now();
+    if (selection === DialogResponses.yes) {
+      AzureServices.updateConnectionStringInEnvFile(path, connectionString);
+      vscode.window.showInformationMessage(CONSTANTS.INFO.FILE_REPLACED_MESSAGE + path);      
+      this.trackCosmosConnectionStringReplace(start);
+    }
+  }
+
   private trackWizardTotalSessionTimeToGenerate(): void {
     this.Telemetry.trackEventWithDuration(
       TelemetryEventName.WizardSession,
       this.Telemetry.wizardSessionStartTime,
+      Date.now()
+    );
+  }
+
+  private trackCosmosConnectionStringReplace(startTime: number): void {
+    //log in telemetry how long it took replacement
+    // Temporary Disable
+    this.Telemetry.trackEventWithDuration(
+      TelemetryEventName.ConnectionStringReplace,
+      startTime,
       Date.now()
     );
   }
