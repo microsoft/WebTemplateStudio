@@ -31,7 +31,7 @@ describe("PageCard", () => {
   const mockStore = configureMockStore();
 
   beforeEach(()=>{
-    const initialState:AppState = getInitialState();
+    const initialState: AppState = getInitialState();
     loadMasters(initialState);
     store = mockStore(initialState);
     props = {

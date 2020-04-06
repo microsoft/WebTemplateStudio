@@ -1,5 +1,5 @@
 import { WIZARD_INFO_TYPEKEYS } from "../typeKeys";
-import WizardInfoType from "../templates/wizardInfoActionType";
+import WizardInfoType from "../templates/templatesType";
 
 /* State Shape
 {

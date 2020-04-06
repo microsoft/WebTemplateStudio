@@ -2,7 +2,7 @@ import { AZURE_TYPEKEYS } from "../typeKeys";
 import messages from "../../selection/app/wizardSelectionSelector/messages";
 import AzureActionType from "../azureActionType";
 import { WIZARD_INFO_TYPEKEYS } from "../../typeKeys";
-import WizardInfoType from "../../templates/wizardInfoActionType";
+import WizardInfoType from "../../templates/templatesType";
 import { IAppService } from "./model";
 
 const initialState: IAppService = {

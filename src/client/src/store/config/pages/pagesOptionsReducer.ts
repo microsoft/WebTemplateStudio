@@ -1,4 +1,4 @@
-import WizardContentActionType from "../wizardContentActionType";
+import WizardContentActionType from "../configActionType";
 import { IOption } from "../../../types/option";
 import { IResetPagesAction } from "../../selection/pages/model";
 import { WIZARD_CONTENT_TYPEKEYS } from "../../typeKeys";

@@ -1,6 +1,6 @@
 
 import { IPageOptionsActionType } from "./pages/model";
-import { IPreviewStatusActionTypeAction } from "./wizardContent/model";
+import { IPreviewStatusActionTypeAction } from "./config/model";
 
 type WizardContentActionType =
   | IPageOptionsActionType

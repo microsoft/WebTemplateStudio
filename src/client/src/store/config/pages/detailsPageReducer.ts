@@ -1,5 +1,5 @@
 import { WIZARD_INFO_TYPEKEYS } from "../../typeKeys";
-import WizardInfoType from "../wizardInfoActionType";
+import WizardInfoType from "../configType";
 import { IDetail } from "./model";
 
 const initialState = {

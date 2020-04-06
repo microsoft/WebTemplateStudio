@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import detailsPage from "./pages/detailsPageReducer";
-import previewStatus from "./wizardContent/previewReducer";
+import previewStatus from "./config/previewReducer";
 
-const wizardContentReducer = combineReducers({
+const configReducer = combineReducers({
   detailsPage,
   previewStatus
 });
 
-export default wizardContentReducer;
-export type TemplateType = ReturnType<typeof wizardContentReducer>;
+export default configReducer;
+export type TemplateType = ReturnType<typeof configReducer>;

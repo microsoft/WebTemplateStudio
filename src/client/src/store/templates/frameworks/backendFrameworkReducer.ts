@@ -1,4 +1,4 @@
-import WizardContentActionType from "../wizardContentActionType";
+import WizardContentActionType from "../templatesActionType";
 import { IOption } from "../../../types/option";
 import { WIZARD_CONTENT_TYPEKEYS } from "../../typeKeys";
 

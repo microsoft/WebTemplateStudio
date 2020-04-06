@@ -1,4 +1,4 @@
-import WizardContentActionType from "../wizardContentActionType";
+import WizardContentActionType from "../configActionType";
 import { WIZARD_CONTENT_TYPEKEYS } from "../../typeKeys";
 
 const previewStatus = (
