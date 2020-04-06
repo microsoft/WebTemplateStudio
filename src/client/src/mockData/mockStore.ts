@@ -14,7 +14,7 @@ export const getISelected = () => {
 
 export const getInitialState = (): AppState => {
   const initialState: AppState={
-    wizardContent: {
+    templates: {
       backendOptions: [],
       frontendOptions: [],
       pageOptions: [],
@@ -256,7 +256,7 @@ const getSubscriptionsSelector = (): Array<Subscription> => {
 }
 
 export const addFrontEndFrameworksOptions = (store: AppState)=>{
-  store.wizardContent.frontendOptions = [
+  store.templates.frontendOptions = [
     {
       author: 'Facebook',
       body: 'JavaScript framework',
@@ -304,7 +304,7 @@ export const addFrontEndFrameworksOptions = (store: AppState)=>{
 }
 
 export const addBackEndFrameworksOptions = (store: AppState)=>{
-  store.wizardContent.backendOptions = [
+  store.templates.backendOptions = [
     {
       author: 'Various',
       body: 'JavaScript framework',
@@ -352,7 +352,7 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
 }
 
 export const loadMasters = (store: AppState) =>{
-  store.wizardContent.pageOptions = loadPages("React");
+  store.templates.pageOptions = loadPages("React");
 }
 
 export const setSubscriptions = (store: AppState) => {

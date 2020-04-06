@@ -27,7 +27,7 @@ import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
 import { setPagesAction } from "../../../store/selection/pages/action";
-import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../../store/wizardContent/pages/action";
+import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../../store/templates/pages/action";
 import { AppContext } from "../../../AppContext";
 
 interface IStateProps {
@@ -103,7 +103,7 @@ const QuickStart = (props: Props) => {
   }
 
 const mapStateToProps = (state: AppState): IStateProps => {
-  const { previewStatus } = state.wizardContent;
+  const { previewStatus } = state.templates;
   return {
     isPreview: previewStatus,
     isEnableNextPage: isEnableNextPageSelector(state)

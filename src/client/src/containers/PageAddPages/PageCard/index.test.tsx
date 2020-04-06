@@ -34,7 +34,7 @@ describe("PageCard", () => {
     loadMasters(initialState);
     store = mockStore(initialState);
     props = {
-      page: initialState.wizardContent.pageOptions[0],
+      page: initialstate.templates.pageOptions[0],
       isModal:true,
       intl: global.intl
     };

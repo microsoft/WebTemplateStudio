@@ -2,15 +2,15 @@ import { combineReducers } from "redux";
 import azureProfileData from "./azureProfileData/combineReducers";
 import generationStatus from "./generationStatus/combineReducers";
 import modals from "./modals/combineReducers";
-import wizardContent from "./wizardContent/wizardContent/combineReducers";
+import templates from "./templates/combineReducers";
 import wizardRoutes from "./selection/pages/combineReducers";
 import selection from "./selection/combineReducers";
 import versions from "./versions/reducer";
 import RootAction from "./ActionType";
-import { WIZARD_INFO_TYPEKEYS } from "./wizardContent/typeKeys";
+import { WIZARD_INFO_TYPEKEYS } from "./typeKeys";
 
 const appReducer = combineReducers({
-  wizardContent,
+  templates,
   selection,
   azureProfileData,
   modals,
@@ -25,7 +25,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
   let passedState: any;
 
   if (action.type === WIZARD_INFO_TYPEKEYS.RESET_WIZARD) {
-    const { previewStatus, backendOptions, frontendOptions, pageOptions } = state!.wizardContent;
+    const { previewStatus, backendOptions, frontendOptions, pageOptions } = state!.templates;
 
     /* Elements that are undefined tell the reducer to replace the element
      * with the initial state that is specified in the element's reducer.

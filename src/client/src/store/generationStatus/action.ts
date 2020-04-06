@@ -1,4 +1,4 @@
-import { WIZARD_INFO_TYPEKEYS } from "../wizardContent/typeKeys";
+import { WIZARD_INFO_TYPEKEYS } from "../typeKeys";
 import { IServiceStatus } from "./model";
 import { IUpdateGenStatusMessageAction, IUpdateGenStatusAction } from "./model";
 

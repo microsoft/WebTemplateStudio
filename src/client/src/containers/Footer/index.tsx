@@ -26,7 +26,7 @@ import { openPostGenModalAction } from "../../store/modals/action";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
-import { getIsVisitedRoutesSelector } from "../../store/wizardContent/wizardContent/wizardNavigationSelector";
+import { getIsVisitedRoutesSelector } from "../../store/templates/wizardContent/wizardNavigationSelector";
 import { isEnableNextPageSelector } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
 
@@ -35,7 +35,7 @@ import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
 import messages from "./messages";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
+import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../store/templates/pages/action";
 import { AppContext } from "../../AppContext";
 import { useSelector, useDispatch } from "react-redux";
 

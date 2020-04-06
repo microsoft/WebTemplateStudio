@@ -32,7 +32,7 @@ import { MODAL_TYPES } from "../../store/modals/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import { resetWizardAction } from "../../store/wizardContent/wizardContent/action";
+import { resetWizardAction } from "../../store/templates/wizardContent/action";
 import { AppContext } from "../../AppContext";
 interface LinksDict {
   [serviceId: string]: string;

@@ -7,8 +7,8 @@ import { IDispatchProps, IStateProps } from "./interfaces";
 
 import { ISelected } from "../../../types/selected";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
-import { updateFrameworksAction } from "../../../store/wizardContent/frameworks/action";
-import { setDetailPageAction, setPageWizardPageAction } from "../../../store/wizardContent/pages/action";
+import { updateFrameworksAction } from "../../../store/templates/frameworks/action";
+import { setDetailPageAction, setPageWizardPageAction } from "../../../store/templates/pages/action";
 import { ROUTES } from "../../../utils/constants";
 
 const mapDispatchToProps = (
@@ -30,7 +30,7 @@ const mapDispatchToProps = (
 });
 
 const mapStateToProps = (state: AppState): IStateProps => {
-  const { previewStatus } = state.wizardContent;
+  const { previewStatus } = state.templates;
   const { frontendFramework, backendFramework } = state.selection;
   return {
     isPreview: previewStatus,

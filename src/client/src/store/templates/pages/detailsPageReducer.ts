@@ -1,4 +1,4 @@
-import { WIZARD_INFO_TYPEKEYS } from "../typeKeys";
+import { WIZARD_INFO_TYPEKEYS } from "../../typeKeys";
 import WizardInfoType from "../wizardInfoActionType";
 import { IDetail } from "./model";
 

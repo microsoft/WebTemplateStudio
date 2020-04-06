@@ -5,7 +5,7 @@ import RootAction from "../../../store/ActionType";
 import { IDispatchProps, IStateProps } from "./interfaces";
 import { ISelected } from "../../../types/selected";
 import { setPagesAction } from "../../../store/selection/pages/action";
-import { setDetailPageAction, setPageWizardPageAction } from "../../../store/wizardContent/pages/action";
+import { setDetailPageAction, setPageWizardPageAction } from "../../../store/templates/pages/action";
 import { ROUTES } from "../../../utils/constants";
 
 const mapDispatchToProps = (

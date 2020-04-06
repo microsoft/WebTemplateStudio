@@ -1,5 +1,5 @@
 import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction, ISetDetails, IPageOptionsActionType } from "./model";
-import { WIZARD_INFO_TYPEKEYS, WIZARD_CONTENT_TYPEKEYS } from "../typeKeys";
+import { WIZARD_INFO_TYPEKEYS, WIZARD_CONTENT_TYPEKEYS } from "../../typeKeys";
 import { IOption } from "../../../types/option";
 import { IApiTemplateInfo } from "../../../types/apiTemplateInfo";
 

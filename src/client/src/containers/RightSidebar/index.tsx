@@ -19,7 +19,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { AppState } from "../../store/combineReducers";
 import * as ModalActions from "../../store/modals/action";
 import { hasServicesSelector } from "../../store/azureProfileData/servicesSelector";
-import { getIsVisitedRoutesSelector, IVisitedPages } from "../../store/wizardContent/wizardContent/wizardNavigationSelector";
+import { getIsVisitedRoutesSelector, IVisitedPages } from "../../store/templates/wizardContent/wizardNavigationSelector";
 import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
 

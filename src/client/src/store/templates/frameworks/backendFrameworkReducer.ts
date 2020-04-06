@@ -1,6 +1,6 @@
 import WizardContentActionType from "../wizardContentActionType";
 import { IOption } from "../../../types/option";
-import { WIZARD_CONTENT_TYPEKEYS } from "../typeKeys";
+import { WIZARD_CONTENT_TYPEKEYS } from "../../typeKeys";
 
 const backendFrameworkOptions = (
   state: IOption[] = [],

@@ -13,8 +13,8 @@ import { AppState } from "../../store/combineReducers";
 type Props = InjectedIntlProps;
 
 const SelectFrameworks = ({intl}: Props) => {
-  const frontendOptions = useSelector((state: AppState) => state.wizardContent.frontendOptions);
-  const backendOptions = useSelector((state: AppState) => state.wizardContent.backendOptions);
+  const frontendOptions = useSelector((state: AppState) => state.templates.frontendOptions);
+  const backendOptions = useSelector((state: AppState) => state.templates.backendOptions);
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
   const [isNodeInstalled, setNodeInstalled] = React.useState(true);
   const [isPythonInstalled, setPythonInstalled] = React.useState(true);

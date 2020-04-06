@@ -37,9 +37,9 @@ import TopNavBar from "./components/TopNavBar";
 import { setPagesAction } from "./store/selection/pages/action";
 import { setValidationsAction } from "./store/selection/validations/action";
 import { setOutputPathAction } from "./store/selection/app/action";
-import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/wizardContent/frameworks/action";
-import { getPagesOptionsAction } from "./store/wizardContent/pages/action";
-import { setPreviewStatusAction } from "./store/wizardContent/wizardContent/action";
+import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/templates/frameworks/action";
+import { getPagesOptionsAction } from "./store/templates/pages/action";
+import { setPreviewStatusAction } from "./store/templates/wizardContent/action";
 import { logIntoAzureActionAction } from "./store/azureProfileData/login/action";
 import { AppContext } from "./AppContext";
 
@@ -311,9 +311,9 @@ const mapDispatchToProps = (
 const mapStateToProps = (state: AppState): IStateProps => ({
   selectedFrontend: state.selection.frontendFramework,
   selectedBackend: state.selection.backendFramework,
-  frontendOptions: state.wizardContent.frontendOptions,
+  frontendOptions: state.templates.frontendOptions,
   selectedPages: state.selection.pages,
-  isPreview:  state.wizardContent.previewStatus,
+  isPreview:  state.templates.previewStatus,
   modalState: state.modals.openModal,
   selectedRoute : state.wizardRoutes.selected,
 });

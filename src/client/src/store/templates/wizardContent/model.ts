@@ -1,4 +1,4 @@
-import { WIZARD_INFO_TYPEKEYS, WIZARD_CONTENT_TYPEKEYS } from "../typeKeys";
+import { WIZARD_INFO_TYPEKEYS, WIZARD_CONTENT_TYPEKEYS } from "../../typeKeys";
 
 export interface IResetWizardAction {
     type: WIZARD_INFO_TYPEKEYS.RESET_WIZARD;

@@ -34,7 +34,7 @@ describe("PageAddPages", () => {
 
   it("check card components", ()=>{
     const buttonLength = wrapper.queryAllByRole("button").length;
-    expect(buttonLength).toBe(initialState.wizardContent.pageOptions.length);
+    expect(buttonLength).toBe(initialstate.templates.pageOptions.length);
   });
 
   it("check title", ()=>{

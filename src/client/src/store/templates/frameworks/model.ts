@@ -1,5 +1,5 @@
 import { IOption } from "../../../types/option";
-import { WIZARD_CONTENT_TYPEKEYS } from "../typeKeys";
+import { WIZARD_CONTENT_TYPEKEYS } from "../../typeKeys";
 
 export interface IUpdateFrameworkActionTypeAction {
   type: WIZARD_CONTENT_TYPEKEYS.UPDATE_FRAMEWORK;

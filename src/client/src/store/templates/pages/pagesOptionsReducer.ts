@@ -1,7 +1,7 @@
 import WizardContentActionType from "../wizardContentActionType";
 import { IOption } from "../../../types/option";
 import { IResetPagesAction } from "../../selection/pages/model";
-import { WIZARD_CONTENT_TYPEKEYS } from "../typeKeys";
+import { WIZARD_CONTENT_TYPEKEYS } from "../../typeKeys";
 
 const pageOptions = (
   state: IOption[] = [],
