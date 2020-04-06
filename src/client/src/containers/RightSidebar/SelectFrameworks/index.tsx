@@ -8,7 +8,7 @@ import Dropdown from "../../../components/Dropdown";
 import { AppState } from "../../../store/combineReducers";
 import { SelectionState } from "../../../store/selection/combineReducers";
 import { IOption } from "../../../types/option";
-import { WizardContentType } from "../../../store/templates/combineReducers";
+import { TemplateType } from "../../../store/templates/combineReducers";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
 
 type Props = InjectedIntlProps;
@@ -21,7 +21,7 @@ const SelectFrameworks = (props: Props)=>{
     useSelector((state: AppState) => convertOptionsToDropdownItems(state.templates.frontendOptions));
   const backendDropdownItems: IDropDownOptionType[] =
     useSelector((state: AppState) => convertOptionsToDropdownItems(state.templates.backendOptions));
-  const contentOptions: WizardContentType = useSelector((state: AppState) => state.templates);
+  const contentOptions: TemplateType = useSelector((state: AppState) => state.templates);
 
   const { intl } = props;
   const { formatMessage } = intl;

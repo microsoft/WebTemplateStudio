@@ -1,6 +1,6 @@
 import { IUpdateFrameworkActionTypeAction, IFrontendFrameworksActionTypeAction, IBackendFrameworksSuccessActionTypeAction } from "./frameworks/model";
 import { IPageOptionsActionType } from "./pages/model";
-import { IPreviewStatusActionTypeAction } from "./wizardContent/model";
+import { IPreviewStatusActionTypeAction } from "./preview/model";
 
 type WizardContentActionType =
   | IBackendFrameworksSuccessActionTypeAction

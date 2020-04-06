@@ -39,7 +39,7 @@ import { setValidationsAction } from "./store/selection/validations/action";
 import { setOutputPathAction } from "./store/selection/app/action";
 import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/templates/frameworks/action";
 import { getPagesOptionsAction } from "./store/templates/pages/action";
-import { setPreviewStatusAction } from "./store/templates/wizardContent/action";
+import { setPreviewStatusAction } from "./store/templates/preview/action";
 import { logIntoAzureActionAction } from "./store/azureProfileData/login/action";
 import { AppContext } from "./AppContext";
 

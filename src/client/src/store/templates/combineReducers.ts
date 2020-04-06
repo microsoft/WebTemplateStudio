@@ -10,4 +10,4 @@ const wizardContentReducer = combineReducers({
 });
 
 export default wizardContentReducer;
-export type WizardContentType = ReturnType<typeof wizardContentReducer>;
+export type TemplateType = ReturnType<typeof wizardContentReducer>;
