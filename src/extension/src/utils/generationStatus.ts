@@ -1,5 +1,5 @@
-import { ReactPanel } from "../reactPanel";
 import { ExtensionCommand } from "../constants";
+import { Controller } from "../controller";
 
 export class GenerationStatus {
   templatesStatus?: boolean;
@@ -7,7 +7,19 @@ export class GenerationStatus {
   cosmosStatus?: boolean;
   appServiceStatus?: boolean;
 
-  constructor(private reactPanelContext: ReactPanel) {}
+  UpdateGenerationStatusMessage(message: string): void {
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.UpdateGenStatusMessage,
+      payload: { status: message },
+    });
+  }
+
+  SendToClientGenerationPath(outputPath: string): void {
+    Controller.reactPanelContext.postMessageWebview({
+      command: ExtensionCommand.GetOutputPath,
+      payload: { outputPath },
+    });
+  }
 
   SetTemplatesStatus(value: boolean): void {
     this.templatesStatus = value;
@@ -37,7 +49,7 @@ export class GenerationStatus {
       appService: this.getPayloadValue(this.appServiceStatus),
     };
 
-    this.reactPanelContext.postMessageWebview({
+    Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.UpdateGenStatus,
       payload,
     });
