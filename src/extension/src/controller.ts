@@ -162,7 +162,7 @@ export class Controller {
         context.extensionPath,
         this.routingMessageReceieverDelegate
       );
-      Generation.setReactPanel(Controller.reactPanelContext);
+      this.Generation.setReactPanel(Controller.reactPanelContext);
 
       Controller.getTemplateInfoAndStore(
         context,

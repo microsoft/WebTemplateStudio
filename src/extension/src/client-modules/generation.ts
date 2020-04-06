@@ -15,8 +15,8 @@ export class Generation extends WizardServant {
   private static reactPanelContext: ReactPanel;
   private static Telemetry: ITelemetryService;
   clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.Generate, this.Generate],
-    [ExtensionCommand.OpenProjectVSCode, Generation.openProjectVSCode],
+    [ExtensionCommand.Generate, this.generate],
+    [ExtensionCommand.OpenProjectVSCode, this.openProjectVSCode],
   ]);
 
   constructor(private Telemetry: ITelemetryService) {
@@ -24,21 +24,18 @@ export class Generation extends WizardServant {
     Generation.Telemetry = this.Telemetry;
   }
 
-  public static setReactPanel(reactPanelContext: ReactPanel): void {
+  public setReactPanel(reactPanelContext: ReactPanel): void {
     Generation.reactPanelContext = reactPanelContext;
   }
 
-  public async Generate(message: any): Promise<IPayloadResponse> {
-    Generation.trackWizardTotalSessionTimeToGenerate();
-
+  private async generate(message: any): Promise<IPayloadResponse> {
+    this.trackWizardTotalSessionTimeToGenerate();
     const generationStatus = new GenerationStatus(Generation.reactPanelContext);
-
     const payload = message.payload;
     const enginePayload: IGenerationPayloadType = message.payload.engine;
 
     const apiGenResult = await this.GenerateProject(enginePayload, generationStatus);
 
-    const serviceQueue: Promise<any>[] = [];
     let connectionString: string;
 
     if (apiGenResult) {
@@ -52,67 +49,14 @@ export class Generation extends WizardServant {
       payload: { outputPath: enginePayload.path },
     });
 
-    const resourceGroupsSelections = await this.generateResourceGroups(payload, generationStatus);
+    if(this.hasAzureServices(payload)) {
+      const resourceGroups = await AzureServices.getResourceGroupSelections(payload);
+      await this.generateResourceGroups(resourceGroups, generationStatus);
+      const result = await this.createAzureServices(payload, resourceGroups,generationStatus);
 
-    if (payload.selectedAppService) {
-      const appServiceResourceGroup = resourceGroupsSelections.filter(
-        r => r.subscriptionItem.label === payload.appService.subscription
-      );
-      payload.appService.resourceGroup = appServiceResourceGroup[0].resourceGroupName;
-      serviceQueue.push(
-        Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.AppServiceDeploy, async function(
-          this: IActionContext
-        ): Promise<void> {
-          try {
-            const id: string = await AzureServices.deployWebApp(payload);
-            generationStatus.SetAppServiceStatus(true);
-            Settings.enableScmDoBuildDuringDeploy(enginePayload.path);
-            Settings.setDeployDefault(id, enginePayload.path);
-          } catch (error) {
-            Logger.appendLog("EXTENSION", "error", `Error on deploy Azure App Service: ${error}`);
-            generationStatus.SetAppServiceStatus(false);
-          }
-        })
-      );
-    }
-
-    if (payload.selectedCosmos) {
-      const cosmosResourceGroups = resourceGroupsSelections.filter(
-        r => r.subscriptionItem.label === payload.cosmos.subscription
-      );
-      payload.cosmos.resourceGroup = cosmosResourceGroups[0].resourceGroupName;
-      serviceQueue.push(
-        Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.CosmosDBDeploy, async function(
-          this: IActionContext
-        ): Promise<void> {
-          const cosmosPayload: any = payload.cosmos;
-          try {
-            const dbObject = await AzureServices.deployCosmosResource(cosmosPayload, enginePayload.path);
-            generationStatus.SetCosmosStatus(true);
-            connectionString = dbObject.connectionString;
-            AzureServices.promptUserForCosmosReplacement(enginePayload.path, dbObject).then(
-              //log in telemetry how long it took replacement
-              cosmosReplaceResponse => {
-                if (cosmosReplaceResponse.userReplacedEnv) {
-                  // Temporary Disable
-                  Generation.Telemetry.trackEventWithDuration(
-                    TelemetryEventName.ConnectionStringReplace,
-                    cosmosReplaceResponse.startTime,
-                    Date.now()
-                  );
-                }
-              }
-            );
-          } catch (error) {
-            Logger.appendLog("EXTENSION", "error", `Error on deploy CosmosDB Service: ${error}`);
-            generationStatus.SetCosmosStatus(false);
-          }
-        })
-      );
-    }
-
-    // kick off both services asynchronously
-    Promise.all(serviceQueue).then(() => {
+      //POR AQUÍ VAMOS
+      //HAY QUE INTENTAR SACAR EL CONNECTION STRING, PERO HOY ESTÁ ROTO COSMOS
+      connectionString = result.connectionString;
       if (payload.selectedAppService && connectionString) {
         AzureServices.updateAppSettings(
           payload.appService.resourceGroup,
@@ -120,12 +64,12 @@ export class Generation extends WizardServant {
           connectionString
         );
       }
-    });
+    }
 
     return { payload: undefined };
   }
 
-  private static async openProjectVSCode(message: any): Promise<IPayloadResponse> {
+  private async openProjectVSCode(message: any): Promise<IPayloadResponse> {
     vscode.commands.executeCommand(
       CONSTANTS.VSCODE_COMMAND.OPEN_FOLDER,
       vscode.Uri.file(message.payload.outputPath),
@@ -134,15 +78,7 @@ export class Generation extends WizardServant {
     return { payload: true };
   }
 
-  private static trackWizardTotalSessionTimeToGenerate(): void {
-    Generation.Telemetry.trackEventWithDuration(
-      TelemetryEventName.WizardSession,
-      Generation.Telemetry.wizardSessionStartTime,
-      Date.now()
-    );
-  }
-
-  public async GenerateProject(
+  private async GenerateProject(
     generationData: IGenerationPayloadType,
     generationStatus: GenerationStatus
   ): Promise<any> {
@@ -162,6 +98,117 @@ export class Generation extends WizardServant {
     }
   }
 
+  private async generateResourceGroups(resourceGroups: ResourceGroupSelection[], generationStatus: GenerationStatus): Promise<void> {    
+    const resourceGroupQueue: Promise<void>[] = [];    
+    resourceGroups.forEach(resourceGroup => {
+      const deployResourceGroupPromise = this.deployResourceGroup(resourceGroup, generationStatus);
+        resourceGroupQueue.push(
+          Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(
+            TelemetryEventName.ResourceGroupDeploy,
+            async function(this: IActionContext): Promise<void> {
+              await deployResourceGroupPromise
+            }
+          )
+        );
+      });
+
+      await Promise.all(resourceGroupQueue);
+  }
+
+  private async deployResourceGroup(resourceGroup: ResourceGroupSelection, generationStatus: GenerationStatus): Promise<void> {
+    try {
+      await AzureServices.deployResourceGroup(resourceGroup);
+      generationStatus.SetResourceGroupStatus(true);
+    } catch (error) {
+      Logger.appendLog("EXTENSION", "error", `Error on Azure Resource Group creation: ${error}`);
+      generationStatus.SetResourceGroupStatus(false);
+    }
+  }
+
+  private async createAzureServices(payload: any, resourceGroups: ResourceGroupSelection[], generationStatus: GenerationStatus): Promise<any> {
+
+    const servicesQueue: Promise<any>[] = [];
+
+    if (payload.selectedAppService) {
+      const createAppServicePromise = this.createAppService(payload, resourceGroups, generationStatus);
+      servicesQueue.push(
+        Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.AppServiceDeploy, async function(
+          this: IActionContext
+        ): Promise<boolean> {
+          return await createAppServicePromise
+        })
+      );
+    }
+
+    if (payload.selectedCosmos) {
+      const createCosmosDBPromise = this.createCosmosDB(payload, resourceGroups, generationStatus);
+      servicesQueue.push(
+        Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(TelemetryEventName.CosmosDBDeploy, async function(
+          this: IActionContext
+        ): Promise<string> {
+          return await createCosmosDBPromise
+        })
+      );
+    }
+
+    const result = await Promise.all(servicesQueue);
+    return result;
+  }
+
+  private async createAppService(payload: any, resourceGroups: ResourceGroupSelection[], generationStatus: GenerationStatus): Promise<boolean> {
+    try {
+      const appServiceResourceGroup = resourceGroups.filter(r => r.subscriptionItem.label === payload.appService.subscription);
+      payload.appService.resourceGroup = appServiceResourceGroup[0].resourceGroupName;
+      const id: string = await AzureServices.deployWebApp(payload);
+      generationStatus.SetAppServiceStatus(true);
+      Settings.enableScmDoBuildDuringDeploy(payload.engine.path);
+      Settings.setDeployDefault(id, payload.engine.path);
+      return true;
+    } catch (error) {
+      Logger.appendLog("EXTENSION", "error", `Error on deploy Azure App Service: ${error}`);
+      generationStatus.SetAppServiceStatus(false);
+      return false;
+    }
+  }
+
+  private async createCosmosDB(payload: any, resourceGroups: ResourceGroupSelection[], generationStatus: GenerationStatus): Promise<string> {
+    
+    const cosmosResourceGroups = resourceGroups.filter(r => r.subscriptionItem.label === payload.cosmos.subscription);
+    payload.cosmos.resourceGroup = cosmosResourceGroups[0].resourceGroupName;
+    const cosmosPayload = payload.cosmos;
+    let connectionString = "";
+
+    try {
+      const dbObject = await AzureServices.deployCosmosResource(cosmosPayload, payload.engine.path);
+      generationStatus.SetCosmosStatus(true);
+      connectionString = dbObject.connectionString;
+      const cosmosReplaceResponse = await AzureServices.promptUserForCosmosReplacement(payload.engine.path, dbObject);
+
+      //log in telemetry how long it took replacement
+      if (cosmosReplaceResponse.userReplacedEnv) {
+        // Temporary Disable
+        Generation.Telemetry.trackEventWithDuration(
+          TelemetryEventName.ConnectionStringReplace,
+          cosmosReplaceResponse.startTime,
+          Date.now()
+        );
+      }
+    } catch (error) {
+      Logger.appendLog("EXTENSION", "error", `Error on deploy CosmosDB Service: ${error}`);
+      generationStatus.SetCosmosStatus(false);
+    }
+
+    return connectionString;
+  }
+
+  private trackWizardTotalSessionTimeToGenerate(): void {
+    Generation.Telemetry.trackEventWithDuration(
+      TelemetryEventName.WizardSession,
+      Generation.Telemetry.wizardSessionStartTime,
+      Date.now()
+    );
+  }
+
   private SendGenerationMessageToClient(message: string): void {
     Generation.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.UpdateGenStatusMessage,
@@ -169,34 +216,8 @@ export class Generation extends WizardServant {
     });
   }
 
-  private async generateResourceGroups(
-    payload: any,
-    generationStatus: GenerationStatus
-  ): Promise<ResourceGroupSelection[]> {
-    const resourceGroupQueue: Promise<any>[] = [];
-    let resourceGroupsSelections: ResourceGroupSelection[] = [];
-
-    if (payload.selectedCosmos || payload.selectedAppService) {
-      resourceGroupsSelections = await AzureServices.getResourceGroupSelections(payload);
-      resourceGroupsSelections.forEach(resourceGroupSelection => {
-        resourceGroupQueue.push(
-          Generation.Telemetry.callWithTelemetryAndCatchHandleErrors(
-            TelemetryEventName.ResourceGroupDeploy,
-            async function(this: IActionContext): Promise<void> {
-              try {
-                await AzureServices.deployResourceGroup(resourceGroupSelection);
-                generationStatus.SetResourceGroupStatus(true);
-              } catch (error) {
-                Logger.appendLog("EXTENSION", "error", `Error on Azure Resource Group creation: ${error}`);
-                generationStatus.SetResourceGroupStatus(false);
-              }
-            }
-          )
-        );
-      });
-
-      await Promise.all(resourceGroupQueue);
-    }
-    return resourceGroupsSelections;
+  private hasAzureServices(payload: any): boolean {
+    //TODO: Check payload.AppService and payload.Cosmos
+    return payload.selectedCosmos || payload.selectedAppService;
   }
 }
