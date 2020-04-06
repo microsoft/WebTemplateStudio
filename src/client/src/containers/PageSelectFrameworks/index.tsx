@@ -20,20 +20,21 @@ const SelectFrameworks = ({intl}: Props) => {
 
   React.useEffect(()=>{
     window.removeEventListener("message", eventCallback);
-    getDependencyInfoAndSetToStore();
+    window.addEventListener("message", eventCallback);
+    getDependencyInfo();
   },[]);
 
-  const getDependencyInfoAndSetToStore = () =>{
-    window.addEventListener("message", event => {
-      const message = event.data;
-      switch (message.command) {
-        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
-          if (message.payload.dependency === "node") setNodeInstalled(message.payload.installed);
-          if (message.payload.dependency === "python") setPythonInstalled(message.payload.installed);
-          break;
-      }
-    });
+  function eventCallback(event: any){
+    const message = event.data;
+    switch (message.command) {
+      case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
+        if (message.payload.dependency === "node") setNodeInstalled(message.payload.installed);
+        if (message.payload.dependency === "python") setPythonInstalled(message.payload.installed);
+        break;
+    }
+  }
 
+  const getDependencyInfo = () =>{
     vscode.postMessage({
       module: EXTENSION_MODULES.DEPENDENCYCHECKER,
       command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
