@@ -35,9 +35,9 @@ import nextArrow from "../../assets/nextarrow.svg";
 import keyUpHandler from "../../utils/keyUpHandler";
 import messages from "./messages";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
-import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../store/templates/pages/action";
 import { AppContext } from "../../AppContext";
 import { useSelector, useDispatch } from "react-redux";
+import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/config/pages/action";
 
 type Props = InjectedIntlProps;
 

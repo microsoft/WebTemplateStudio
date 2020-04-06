@@ -18,6 +18,8 @@ export const getInitialState = (): AppState => {
       backendOptions: [],
       frontendOptions: [],
       pageOptions: [],
+    },
+    config:{
       detailsPage: {
         isIntlFormatted: false,
         data: {

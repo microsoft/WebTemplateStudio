@@ -3,11 +3,32 @@ import { WIZARD_INFO_TYPEKEYS, WIZARD_CONTENT_TYPEKEYS } from "../../typeKeys";
 import { IOption } from "../../../types/option";
 import { IApiTemplateInfo } from "../../../types/apiTemplateInfo";
 
-const getPagesOptionsAction = (pagesOptions: IOption[]) => {
-  return getPagesOptionsSuccessAction(
-    getOptionalFromApiTemplateInfo(getApiTemplateInfoFromJson(pagesOptions))
-  );
-};
+const setVisitedWizardPageAction = (route: string): ISetVisitedPageAction => ({
+  type: WIZARD_INFO_TYPEKEYS.SET_VISITED_WIZARD_PAGE,
+  payload: route
+});
+
+const resetVisitedWizardPageAction = (): IResetVisitedPageAction => ({
+  type: WIZARD_INFO_TYPEKEYS.RESET_VISITED_WIZARD_PAGE,
+});
+
+const setPageWizardPageAction = (route: string): ISetPageAction => ({
+  type: WIZARD_INFO_TYPEKEYS.SET_PAGE_WIZARD_PAGE,
+  payload: route
+});
+
+const setDetailPageAction = (
+  detailPageInfo: IOption,
+  isIntlFormatted = false,
+  originRoute: string
+): ISetDetails => ({
+  type: WIZARD_INFO_TYPEKEYS.SET_DETAILS_PAGE_INFO,
+  payload: {
+    data: detailPageInfo,
+    isIntlFormatted,
+    originRoute
+  }
+});
 
 const getPagesOptionsSuccessAction = (
   pagesOptions: IOption[]
@@ -50,6 +71,9 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
 }
 
 export {
-  getPagesOptionsAction,
-  getPagesOptionsSuccessAction
+  getPagesOptionsSuccessAction,
+  setVisitedWizardPageAction,
+  resetVisitedWizardPageAction,
+  setPageWizardPageAction,
+  setDetailPageAction
  };

@@ -8,8 +8,8 @@ import { IDispatchProps, IStateProps } from "./interfaces";
 import { ISelected } from "../../../types/selected";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
 import { updateFrameworksAction } from "../../../store/templates/frameworks/action";
-import { setDetailPageAction, setPageWizardPageAction } from "../../../store/templates/pages/action";
 import { ROUTES } from "../../../utils/constants";
+import { setPageWizardPageAction, setDetailPageAction } from "../../../store/config/pages/action";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>
@@ -30,7 +30,7 @@ const mapDispatchToProps = (
 });
 
 const mapStateToProps = (state: AppState): IStateProps => {
-  const { previewStatus } = state.templates;
+  const { previewStatus } = state.config;
   const { frontendFramework, backendFramework } = state.selection;
   return {
     isPreview: previewStatus,

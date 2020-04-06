@@ -5,8 +5,8 @@ import RootAction from "../../../store/ActionType";
 import { IDispatchProps, IStateProps } from "./interfaces";
 import { ISelected } from "../../../types/selected";
 import { setPagesAction } from "../../../store/selection/pages/action";
-import { setDetailPageAction, setPageWizardPageAction } from "../../../store/templates/pages/action";
 import { ROUTES } from "../../../utils/constants";
+import { setPageWizardPageAction, setDetailPageAction } from "../../../store/config/pages/action";
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<AppState, void, RootAction>

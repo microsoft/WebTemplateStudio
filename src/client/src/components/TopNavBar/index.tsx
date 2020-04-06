@@ -14,7 +14,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../store/combineReducers";
 import RootAction from "../../store/ActionType";
 import messages from "./messages";
-import { setPageWizardPageAction } from "../../store/templates/pages/action";
+import { setPageWizardPageAction } from "../../store/config/pages/action";
 
 interface IStateProps {
   isVisited: IRoutes;

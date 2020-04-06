@@ -313,7 +313,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selectedBackend: state.selection.backendFramework,
   frontendOptions: state.templates.frontendOptions,
   selectedPages: state.selection.pages,
-  isPreview:  state.templates.previewStatus,
+  isPreview:  state.config.previewStatus,
   modalState: state.modals.openModal,
   selectedRoute : state.wizardRoutes.selected,
 });

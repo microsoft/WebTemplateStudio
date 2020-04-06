@@ -20,10 +20,10 @@ import RootAction from "../../store/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
-import { setDetailPageAction, setPageWizardPageAction } from "../../store/templates/pages/action";
 import { startLogOutAzureAction } from "../../store/azureProfileData/login/action";
 import { IVSCodeObject } from "../../types/vscode";
 import { AppContext } from "../../AppContext";
+import { setPageWizardPageAction, setDetailPageAction } from "../../store/config/pages/action";
 
 interface IDispatchProps {
   setDetailPage: (detailPageInfo: IOption) => any;

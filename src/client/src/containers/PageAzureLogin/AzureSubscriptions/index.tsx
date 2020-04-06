@@ -25,7 +25,7 @@ import RootAction from "../../../store/ActionType";
 
 import { isAppServiceSelectedSelector } from "../../../store/azureProfileData/appService/selector";
 import messages from "./messages";
-import { setDetailPageAction, setPageWizardPageAction } from "../../../store/templates/pages/action";
+import { setPageWizardPageAction, setDetailPageAction } from "../../../store/config/pages/action";
 
 interface IDispatchProps {
   startLogOutToAzure: () => any;
@@ -173,7 +173,7 @@ const AzureSubscriptions = (props: Props) => {
 }
 
 const mapStateToProps = (state: AppState): IAzureLoginProps => {
-  const { previewStatus } = state.templates;
+  const { previewStatus } = state.config;
   return {
     isLoggedIn: state.azureProfileData.isLoggedIn,
     isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),

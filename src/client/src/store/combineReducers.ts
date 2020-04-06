@@ -3,6 +3,7 @@ import azureProfileData from "./azureProfileData/combineReducers";
 import generationStatus from "./generationStatus/combineReducers";
 import modals from "./modals/combineReducers";
 import templates from "./templates/combineReducers";
+import config from "./config/combineReducers";
 import wizardRoutes from "./selection/pages/combineReducers";
 import selection from "./selection/combineReducers";
 import versions from "./versions/reducer";
@@ -11,6 +12,7 @@ import { WIZARD_INFO_TYPEKEYS } from "./typeKeys";
 
 const appReducer = combineReducers({
   templates,
+  config,
   selection,
   azureProfileData,
   modals,
@@ -25,7 +27,8 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
   let passedState: any;
 
   if (action.type === WIZARD_INFO_TYPEKEYS.RESET_WIZARD) {
-    const { previewStatus, backendOptions, frontendOptions, pageOptions } = state!.templates;
+    const { backendOptions, frontendOptions, pageOptions } = state!.templates;
+    const { previewStatus } = state!.config;
 
     /* Elements that are undefined tell the reducer to replace the element
      * with the initial state that is specified in the element's reducer.
@@ -49,7 +52,8 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
         backendFramework:backendOptions.filter((frame)=>frame.internalName==="Node")[0]
       },
       versions: state!.versions,
-      wizardContent: { previewStatus,backendOptions, frontendOptions, pageOptions },
+      template: { backendOptions, frontendOptions, pageOptions },
+      config:{previewStatus},
       wizardRoutes: undefined,
     };
 

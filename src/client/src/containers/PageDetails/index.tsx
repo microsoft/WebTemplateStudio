@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { ThunkDispatch } from "redux-thunk";
 import RootAction from "../../store/ActionType";
-import { setPageWizardPageAction } from "../../store/templates/pages/action";
+import { setPageWizardPageAction } from "../../store/config/pages/action";
 
 interface IPageDetailsProps {
   originRoute: string;
@@ -38,9 +38,9 @@ const PageDetails = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IPageDetailsProps => ({
-  originRoute : state.templates.detailsPage.originRoute,
-    detailsPageInfo: state.templates.detailsPage.data,
-    isIntlFormatted: state.templates.detailsPage.isIntlFormatted
+  originRoute : state.config.detailsPage.originRoute,
+    detailsPageInfo: state.config.detailsPage.data,
+    isIntlFormatted: state.config.detailsPage.isIntlFormatted
 });
 
 const mapDispatchToProps = (
