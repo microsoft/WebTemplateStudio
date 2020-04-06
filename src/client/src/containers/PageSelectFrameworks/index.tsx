@@ -18,12 +18,6 @@ const SelectFrameworks = ({intl}: Props) => {
   const [isNodeInstalled, setNodeInstalled] = React.useState(true);
   const [isPythonInstalled, setPythonInstalled] = React.useState(true);
 
-  React.useEffect(()=>{
-    window.removeEventListener("message", eventCallback);
-    window.addEventListener("message", eventCallback);
-    getDependencyInfo();
-  },[]);
-
   function eventCallback(event: any){
     const message = event.data;
     switch (message.command) {
@@ -33,6 +27,12 @@ const SelectFrameworks = ({intl}: Props) => {
         break;
     }
   }
+  
+  React.useEffect(()=>{
+    window.removeEventListener("message", eventCallback);
+    window.addEventListener("message", eventCallback);
+    getDependencyInfo();
+  },[]);
 
   const getDependencyInfo = () =>{
     vscode.postMessage({
