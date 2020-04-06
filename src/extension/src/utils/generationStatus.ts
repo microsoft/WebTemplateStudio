@@ -2,10 +2,10 @@ import { ReactPanel } from "../reactPanel";
 import { ExtensionCommand } from "../constants";
 
 export class GenerationStatus {
-  templatesStatus: boolean|undefined;
-  resourceGroupStatus: boolean|undefined;
-  cosmosStatus: boolean|undefined;
-  appServiceStatus: boolean|undefined;
+  templatesStatus?: boolean;
+  resourceGroupStatus?: boolean;
+  cosmosStatus?: boolean;
+  appServiceStatus?: boolean;
 
   constructor(private reactPanelContext: ReactPanel) {}
 
@@ -30,21 +30,26 @@ export class GenerationStatus {
   }
 
   private sendGenerationStatus(): void {
+    const payload = {
+      templates: this.getPayloadValue(this.templatesStatus),
+      resourceGroup: this.getPayloadValue(this.resourceGroupStatus),
+      cosmos: this.getPayloadValue(this.cosmosStatus),
+      appService: this.getPayloadValue(this.appServiceStatus),
+    };
+
     this.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.UpdateGenStatus,
-      payload: {
-        templates: this.templatesStatus ? this.getProgressObject(this.templatesStatus) : {},
-        resourceGroup: this.resourceGroupStatus ? this.getProgressObject(this.resourceGroupStatus) : {},
-        cosmos: this.cosmosStatus ? this.getProgressObject(this.cosmosStatus) : {},
-        appService: this.appServiceStatus ? this.getProgressObject(this.appServiceStatus) : {},
-      },
+      payload,
     });
   }
 
-  private getProgressObject(didSucceed: boolean|undefined): any {
+  private getPayloadValue(statusProperty?: boolean): any {
+    if (statusProperty === undefined) {
+      return {};
+    }
     return {
-      success: didSucceed,
-      failure: !didSucceed,
+      success: statusProperty,
+      failure: !statusProperty,
     };
   }
 }
