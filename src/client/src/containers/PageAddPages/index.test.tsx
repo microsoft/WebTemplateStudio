@@ -1,5 +1,3 @@
-
-
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import PageAddPages from "./index";
