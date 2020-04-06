@@ -10,7 +10,6 @@ import { ValidateAppServiceName, GetValidAppServiceName } from "../../../utils/e
 import { useSelector } from "react-redux";
 import { AppState } from "../../../store/combineReducers";
 import { AppContext } from "../../../AppContext";
-import { IVSCodeObject } from "../../../types/vscode";
 
 let timeout: NodeJS.Timeout | undefined;
 let validationAppServiceNameScopeId = 0;
@@ -32,7 +31,7 @@ const AppNameEditor = ({
   onIsAvailableAppNameChange,
 }: Props) => {
   const {formatMessage} = intl;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const {vscode} = React.useContext(AppContext);
   const projectName = useSelector((state: AppState) => getProjectName(state));
   const [invalidAppNameMessage, setInvalidAppNameMessage] = React.useState("");
   const [isValidatingName, setIsValidatingName] = React.useState(false);
