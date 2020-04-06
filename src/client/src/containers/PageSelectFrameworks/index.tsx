@@ -1,41 +1,39 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { IStateProps, IDispatchProps } from "./interfaces";
-import {mapStateToProps, mapDispatchToProps} from "./store";
+import { useSelector } from "react-redux";
 import FrameworkCard from "./FrameworkCard";
 import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants";
 import { AppContext } from "../../AppContext";
+import { DependencyContext } from "./DependencyContext";
+import { AppState } from "../../store/combineReducers";
 
-let isEventAddToSelectFrameworks = false;
-type Props = IStateProps & IDispatchProps & InjectedIntlProps;
+type Props = InjectedIntlProps;
 
-const SelectFrameworks = (props: Props) => {
-  const { frontendOptions, backendOptions, intl } = props;
-  const { vscode } = React.useContext(AppContext);
+const SelectFrameworks = ({intl}: Props) => {
+  const frontendOptions = useSelector((state: AppState) => state.wizardContent.frontendOptions);
+  const backendOptions = useSelector((state: AppState) => state.wizardContent.backendOptions);
+  const {vscode} = React.useContext(AppContext);
+  const [isNodeInstalled, setNodeInstalled] = React.useState(true);
+  const [isPythonInstalled, setPythonInstalled] = React.useState(true);
 
   React.useEffect(()=>{
     window.removeEventListener("message", eventCallback);
     getDependencyInfoAndSetToStore();
   },[]);
 
-  function eventCallback(event: any){
-    const { updateDependencyInfo } = props;
-    const message = event.data;
-    switch (message.command) {
-      case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
-        updateDependencyInfo(message.payload);
-        break;
-    }
-  }
-
   const getDependencyInfoAndSetToStore = () =>{
-    if (!isEventAddToSelectFrameworks){
-      isEventAddToSelectFrameworks=true;
-      window.addEventListener("message", eventCallback);
-    }
+    window.addEventListener("message", event => {
+      const message = event.data;
+      switch (message.command) {
+        case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
+          if (message.payload.dependency === "node") setNodeInstalled(message.payload.installed);
+          if (message.payload.dependency === "python") setPythonInstalled(message.payload.installed);
+          break;
+      }
+    });
+
     vscode.postMessage({
       module: EXTENSION_MODULES.DEPENDENCYCHECKER,
       command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
@@ -54,24 +52,26 @@ const SelectFrameworks = (props: Props) => {
 
   return (
     <div>
-      <h1 className={styles.title}>{intl.formatMessage(messages.frontendTitle)}</h1>
-      <div className={styles.flexContainer}>
-        {frontendOptions.map((framework) => {
-          return (
-            <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={true}/>
-          );
-        })}
-      </div>
-      <h1 className={styles.title}>{intl.formatMessage(messages.backendTitle)}</h1>
-      <div className={styles.flexContainer}>
-        {backendOptions.map((framework) => {
-          return (
-            <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={false}/>
-          );
-        })}
-      </div>
+      <DependencyContext.Provider value={{node:isNodeInstalled, python: isPythonInstalled}}>
+        <h1 className={styles.title}>{intl.formatMessage(messages.frontendTitle)}</h1>
+        <div className={styles.flexContainer}>
+          {frontendOptions.map((framework) => {
+            return (
+              <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={true}/>
+            );
+          })}
+        </div>
+        <h1 className={styles.title}>{intl.formatMessage(messages.backendTitle)}</h1>
+        <div className={styles.flexContainer}>
+          {backendOptions.map((framework) => {
+            return (
+              <FrameworkCard key={framework.internalName} framework={framework} isFrontEnd={false}/>
+            );
+          })}
+        </div>
+      </DependencyContext.Provider>
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(SelectFrameworks));
+export default injectIntl(SelectFrameworks);

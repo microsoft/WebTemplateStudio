@@ -141,9 +141,6 @@ export const getInitialState = (): AppState => {
     versions: {
       templatesVersion: '0.0.1',
       wizardVersion: '0.0.2'
-    },
-    dependencyInfo: {
-      dependencies: {}
     }
   };
   return initialState;
