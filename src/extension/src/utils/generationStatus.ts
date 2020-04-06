@@ -7,36 +7,36 @@ export class GenerationStatus {
   cosmosStatus?: boolean;
   appServiceStatus?: boolean;
 
-  UpdateGenerationStatusMessage(message: string): void {
+  updateGenerationStatusMessage(message: string): void {
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.UpdateGenStatusMessage,
       payload: { status: message },
     });
   }
 
-  SendToClientGenerationPath(outputPath: string): void {
+  sendToClientGenerationPath(outputPath: string): void {
     Controller.reactPanelContext.postMessageWebview({
       command: ExtensionCommand.GetOutputPath,
       payload: { outputPath },
     });
   }
 
-  SetTemplatesStatus(value: boolean): void {
+  setTemplatesStatus(value: boolean): void {
     this.templatesStatus = value;
     this.sendGenerationStatus();
   }
 
-  SetResourceGroupStatus(value: boolean): void {
+  setResourceGroupStatus(value: boolean): void {
     this.resourceGroupStatus = value;
     this.sendGenerationStatus();
   }
 
-  SetCosmosStatus(value: boolean): void {
+  setCosmosStatus(value: boolean): void {
     this.cosmosStatus = value;
     this.sendGenerationStatus();
   }
 
-  SetAppServiceStatus(value: boolean): void {
+  setAppServiceStatus(value: boolean): void {
     this.appServiceStatus = value;
     this.sendGenerationStatus();
   }
