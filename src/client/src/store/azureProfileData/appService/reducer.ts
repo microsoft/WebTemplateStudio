@@ -1,7 +1,7 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
 import messages from "../../selection/app/wizardSelectionSelector/messages";
 import AzureActionType from "../azureActionType";
-import { WIZARD_INFO_TYPEKEYS } from "../../typeKeys";
+import { WIZARD_INFO_TYPEKEYS, CONFIG_TYPEKEYS } from "../../typeKeys";
 import WizardInfoType from "../../templates/templatesType";
 import { IAppService } from "./model";
 
@@ -30,7 +30,7 @@ const appServiceReducer = (
         }
       };
       return newAvailabilityState;
-    case WIZARD_INFO_TYPEKEYS.RESET_WIZARD:
+    case CONFIG_TYPEKEYS.RESET_WIZARD:
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
     case AZURE_TYPEKEYS.REMOVE_APP_SERVICE_SETTINGS:
       return initialState;

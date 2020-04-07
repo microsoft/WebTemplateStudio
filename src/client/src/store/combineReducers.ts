@@ -6,7 +6,7 @@ import config from "./config/combineReducers";
 import wizardRoutes from "./selection/pages/combineReducers";
 import selection from "./selection/combineReducers";
 import RootAction from "./ActionType";
-import { WIZARD_INFO_TYPEKEYS } from "./typeKeys";
+import { CONFIG_TYPEKEYS } from "./typeKeys";
 
 const appReducer = combineReducers({
   templates,
@@ -22,7 +22,7 @@ export type AppState = ReturnType<typeof appReducer>;
 const rootReducer = (state: AppState | undefined, action: RootAction) => {
   let passedState: any;
 
-  if (action.type === WIZARD_INFO_TYPEKEYS.RESET_WIZARD) {
+  if (action.type === CONFIG_TYPEKEYS.RESET_WIZARD) {
     const { backendOptions, frontendOptions, pageOptions } = state!.templates;
     const { previewStatus, detailsPage, validations, isValidatingName, versions } = state!.config;
 
