@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 import azureProfileData from "./azureProfileData/combineReducers";
-import generationStatus from "./generationStatus/combineReducers";
 import modals from "./modals/combineReducers";
 import templates from "./templates/combineReducers";
 import config from "./config/combineReducers";
@@ -17,7 +16,6 @@ const appReducer = combineReducers({
   azureProfileData,
   modals,
   wizardRoutes,
-  generationStatus,
   versions
 });
 
@@ -36,7 +34,6 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
      */
     passedState = {
       azureProfileData: state!.azureProfileData,
-      generationStatus: undefined,
       modals: undefined,
       selection: {
         validations:state!.selection.validations,

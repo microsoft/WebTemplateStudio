@@ -8,8 +8,8 @@ const isAzureLoginModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.AZURE_LOGIN_MODAL;
 const isCosmosDbModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.COSMOS_DB_MODAL;
-const isPostGenModalOpen = (modal: ModalType): boolean =>
-  modal === MODAL_TYPES.POST_GEN_MODAL;
+const isGenModalOpen = (modal: ModalType): boolean =>
+  modal === MODAL_TYPES.GEN_MODAL;
 const isViewLicensesModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.VIEW_LICENSES_MODAL;
 const isAppServiceModalOpen = (modal: ModalType): boolean =>
@@ -27,9 +27,9 @@ const isCosmosDbModalOpenSelector = createSelector(
   isCosmosDbModalOpen
 );
 
-const isPostGenModalOpenSelector = createSelector(
+const isGenModalOpenSelector = createSelector(
   getOpenModal,
-  isPostGenModalOpen
+  isGenModalOpen
 );
 
 const isViewLicensesModalOpenSelector = createSelector(
@@ -50,7 +50,7 @@ const isAddPagesModalOpenSelector = createSelector(
 export {
   isAzureLoginModalOpenSelector,
   isCosmosDbModalOpenSelector,
-  isPostGenModalOpenSelector,
+  isGenModalOpenSelector,
   isViewLicensesModalOpenSelector,
   isAppServiceModalOpenSelector,
   isAddPagesModalOpenSelector

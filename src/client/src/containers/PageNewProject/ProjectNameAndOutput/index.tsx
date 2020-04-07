@@ -34,7 +34,6 @@ import { setProjectPathValidationAction } from "../../../store/selection/validat
 import { setProjectNameAction, setOutputPathAction } from "../../../store/selection/app/action";
 import { IValidations } from "../../../store/selection/validations/model";
 import { AppContext } from "../../../AppContext";
-import { IVSCodeObject } from "../../../types/vscode";
 
 interface IStateProps {
   outputPath: string;
@@ -56,7 +55,7 @@ const ProjectNameAndOutput = (props: Props) => {
   } = props;
 
   const dispatch = useDispatch();
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
   
   React.useEffect(() => {
     if (projectName==="" && outputPath!=="" && projectNameValidation.isDirty===false){

@@ -21,7 +21,6 @@ import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
 import { startLogOutAzureAction } from "../../store/azureProfileData/login/action";
-import { IVSCodeObject } from "../../types/vscode";
 import { AppContext } from "../../AppContext";
 import { setPageWizardPageAction, setDetailPageAction } from "../../store/config/pages/action";
 
@@ -44,7 +43,7 @@ const AzureLogin = (props: Props)=> {
     startLogOutToAzure,
     isLoggedIn, intl, email
   } = props;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
 
   const signOutClick = () => {
     azureLogout(vscode).then((event)=>{

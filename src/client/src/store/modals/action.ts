@@ -34,11 +34,11 @@ const openCosmosDbModalAction = () => {
   };
 };
 
-const openPostGenModalAction = () => {
+const openGenModalAction = () => {
   return (dispatch: Dispatch<ModalActionType>) => {
     dispatch(
       openModalAction({
-        modalType: MODAL_TYPES.POST_GEN_MODAL,
+        modalType: MODAL_TYPES.GEN_MODAL,
         modalData: null
       })
     );
@@ -82,7 +82,7 @@ export {
   closeModalAction,
   openAzureLoginModalAction,
   openCosmosDbModalAction,
-  openPostGenModalAction,
+  openGenModalAction,
   openViewLicensesModalAction,
   openAppServiceModalAction,
   openAddPagesModalAction
