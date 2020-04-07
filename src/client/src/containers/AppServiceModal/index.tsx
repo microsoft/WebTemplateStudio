@@ -79,7 +79,7 @@ const AppServiceModal = ({ intl }: Props) => {
   const saveAppServiceSelection = (): void => {
     const appServiceSelection: ISelectedAppService = {
       subscription,
-      resourceGroup: "",
+      resourceGroup,
       //location,
       siteName: appName,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,

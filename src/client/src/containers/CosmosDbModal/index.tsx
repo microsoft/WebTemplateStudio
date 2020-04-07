@@ -83,7 +83,7 @@ const CosmosModal = ({ intl }: Props) => {
       subscription,
       accountName,
       //location,
-      resourceGroup: "",
+      resourceGroup,
       api,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     };
