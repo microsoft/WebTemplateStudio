@@ -1,5 +1,5 @@
-import { IVersions } from "../../types/version";
-import { WIZARD_INFO_TYPEKEYS } from "../typeKeys";
+import { IVersions } from "../../../types/version";
+import { WIZARD_INFO_TYPEKEYS } from "../../typeKeys";
 
 const initialState = {
   templatesVersion: "",

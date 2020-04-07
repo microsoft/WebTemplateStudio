@@ -1,5 +1,5 @@
-import { IVersions } from "../../types/version";
-import { WIZARD_INFO_TYPEKEYS } from "../typeKeys";
+import { IVersions } from "../../../types/version";
+import { WIZARD_INFO_TYPEKEYS } from "../../typeKeys";
 import { IVersionData } from "./model";
 
 const getVersionsDataAction = (versions: IVersions): IVersionData => ({

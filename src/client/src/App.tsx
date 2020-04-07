@@ -11,7 +11,7 @@ import {
   FRAMEWORK_TYPE
 } from "./utils/constants";
 
-import { getVersionsDataAction } from "./store/versions/action";
+import { getVersionsDataAction } from "./store/config/versions/action";
 
 import appStyles from "./appStyles.module.css";
 import { IVersions } from "./types/version";

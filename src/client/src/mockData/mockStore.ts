@@ -51,6 +51,10 @@ export const getInitialState = (): AppState => {
           validateEmptyNames: true,
           validateExistingNames: true
         }
+      },
+      versions: {
+        templatesVersion: '0.0.1',
+        wizardVersion: '0.0.2'
       }
     },
     selection: {
@@ -139,10 +143,6 @@ export const getInitialState = (): AppState => {
         '/ReviewAndGenerate': false
       },
       selected: '/'
-    },
-    versions: {
-      templatesVersion: '0.0.1',
-      wizardVersion: '0.0.2'
     }
   };
   return initialState;
