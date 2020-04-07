@@ -1,28 +1,31 @@
 import classNames from "classnames";
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
-import { IProps, IDispatchProps, IStateProps } from "./interfaces";
-import { mapDispatchToProps, mapStateToProps } from "./store";
+import { IProps, IStateProps } from "./interfaces";
+import { mapStateToProps } from "./store";
 import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
 import messages from "./messages";
-import { KEY_EVENTS } from "../../../utils/constants";
+import { KEY_EVENTS, ROUTES } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
 import { ISelected } from "../../../types/selected";
 import { inferItemName } from "../../../utils/infer/itemName";
+import { setPageWizardPageAction, setDetailPageAction } from "../../../store/config/pages/action";
+import { setPagesAction } from "../../../store/selection/pages/action";
 
-type Props = IProps & IDispatchProps & IStateProps & InjectedIntlProps;
+type Props = IProps & IStateProps & InjectedIntlProps;
 
 const PageCard = (props: Props) => {
-  const { page, intl, setPages, selectedPages, setDetailPage, isModal, pageOutOfBounds } = props;
+  const { page, intl, selectedPages, isModal, pageOutOfBounds } = props;
   const [showPlusIcon, setShowPlusIcon] = React.useState(false);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     if (selectedPages.length === 0 && page.defaultName === "Blank") {
-      setTimeout(() => setPages([page]), 200);
+      setTimeout(() => dispatch(setPagesAction([page])), 200);
     }
   }, [page]);
 
@@ -39,7 +42,7 @@ const PageCard = (props: Props) => {
     if (!pageOutOfBounds) {
       const newSelectedPages: ISelected[] = selectedPages.splice(0);
       newSelectedPages.push(select);
-      setPages(newSelectedPages);
+      dispatch(setPagesAction(newSelectedPages));
     }
   };
 
@@ -53,13 +56,15 @@ const PageCard = (props: Props) => {
 
   const showMoreInfo = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.stopPropagation();
-    setDetailPage(page);
+    dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
+    dispatch(setDetailPageAction(page, false, ROUTES.SELECT_PAGES));
   };
 
   const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
     event.stopPropagation();
     if (event.key === KEY_EVENTS.ENTER) {
-      setDetailPage(page);
+      dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
+      dispatch(setDetailPageAction(page, false, ROUTES.SELECT_PAGES));
     }
   };
 
@@ -106,4 +111,4 @@ const PageCard = (props: Props) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(PageCard));
+export default connect(mapStateToProps)(injectIntl(PageCard));
