@@ -1,5 +1,5 @@
-import WizardSelectionActionType from "../selectionActionType";
-import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
+import WizardSelectionActionType from "../../selection/selectionActionType";
+import { WIZARD_SELECTION_TYPEKEYS } from "../../selection/typeKeys";
 import { IValidations } from "./model";
 
 const initialState = {

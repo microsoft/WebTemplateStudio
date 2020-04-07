@@ -30,9 +30,9 @@ import { IValidation} from "../../../utils/validations/validations";
 import { inferProjectName} from "../../../utils/infer/projectName";
 import messages from "./messages";
 import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
-import { setProjectPathValidationAction } from "../../../store/selection/validations/action";
+import { setProjectPathValidationAction } from "../../../store/config/validations/action";
 import { setProjectNameAction, setOutputPathAction } from "../../../store/selection/app/action";
-import { IValidations } from "../../../store/selection/validations/model";
+import { IValidations } from "../../../store/config/validations/model";
 import { AppContext } from "../../../AppContext";
 
 interface IStateProps {

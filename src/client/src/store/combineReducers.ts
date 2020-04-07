@@ -26,7 +26,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
 
   if (action.type === WIZARD_INFO_TYPEKEYS.RESET_WIZARD) {
     const { backendOptions, frontendOptions, pageOptions } = state!.templates;
-    const { previewStatus } = state!.config;
+    const { previewStatus, detailsPage, validations, isValidatingName } = state!.config;
 
     /* Elements that are undefined tell the reducer to replace the element
      * with the initial state that is specified in the element's reducer.
@@ -36,7 +36,6 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
       azureProfileData: state!.azureProfileData,
       modals: undefined,
       selection: {
-        validations:state!.selection.validations,
         projectNameObject:{
           projectName:"",
           validation:{
@@ -50,7 +49,12 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
       },
       versions: state!.versions,
       template: { backendOptions, frontendOptions, pageOptions },
-      config:{previewStatus},
+      config:{
+        previewStatus,
+        validations,
+        detailsPage,
+        isValidatingName
+      },
       wizardRoutes: undefined,
     };
 

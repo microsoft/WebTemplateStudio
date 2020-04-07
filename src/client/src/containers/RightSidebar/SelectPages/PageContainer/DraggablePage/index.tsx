@@ -16,7 +16,7 @@ import RootAction from "../../../../../store/ActionType";
 import { validateItemName } from "../../../../../utils/validations/itemName/itemName";
 import { getValidations } from "../../../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { setPageAction, setPagesAction } from "../../../../../store/selection/pages/action";
-import { IValidations } from "../../../../../store/selection/validations/model";
+import { IValidations } from "../../../../../store/config/validations/model";
 
 const Reorder = Loadable({
   loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../../../../utils/svgComponents/ReorderIcon"),

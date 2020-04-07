@@ -4,6 +4,7 @@ import ServicesList from "./index";
 import { Provider } from "react-redux";
 import AppServiceSelection from "./AppServiceSelection";
 import CosmosDBSelection from "./CosmosDBSelection";
+import { getInitialState } from "../../../mockData/mockStore";
 
 const mockStore = configureMockStore();
 
@@ -44,21 +45,20 @@ const mockVsCode = {
 describe("ServicesList", () => {
   let props: any;
   let wrapper: any;
-  let store: any;
+  let initialState: any;
 
   describe("When has not selected AppService in store", () => {
     beforeEach(() => {
-      store = mockStore({
-        selection: {
-          services: {
-            appService: emptyAppService
-          }
-        },
-        vscode: mockVsCode
-      });
+      initialState = getInitialState();
+      initialState.selection= {
+        services: {
+          appService: emptyAppService
+        }
+      };
+      initialState.vscode= mockVsCode
 
       wrapper = mountWithIntl(
-        <Provider store={store}>
+        <Provider store={mockStore(initialState)}>
           <ServicesList {...props} />
         </Provider>
       ).children();
@@ -77,18 +77,16 @@ describe("ServicesList", () => {
   describe("When has selected AppService in store", () => {
     beforeEach(() => {
       const appService = { ...emptyAppService, selection: {} };
-
-      store = mockStore({
-        selection: {
-          services: {
-            appService: appService
-          }
-        },
-        vscode: mockVsCode
-      });
+      initialState = getInitialState();
+      initialState.selection= {
+        services: {
+          appService: appService
+        }
+      };
+      initialState.vscode = mockVsCode;
 
       wrapper = mountWithIntl(
-        <Provider store={store}>
+        <Provider store={mockStore(initialState)}>
           <ServicesList {...props} />
         </Provider>
       ).children();
@@ -106,17 +104,16 @@ describe("ServicesList", () => {
 
   describe("When hasn not selected CosmosDB service in store", () => {
     beforeEach(() => {
-      store = mockStore({
-        selection: {
-          services: {
-            cosmosDB: emptyCosmosDB
-          }
-        },
-        vscode: mockVsCode
-      });
+      initialState = getInitialState();
+      initialState.selection= {
+        services: {
+          cosmosDB: emptyCosmosDB
+        }
+      };
+      initialState.vscode = mockVsCode;
 
       wrapper = mountWithIntl(
-        <Provider store={store}>
+        <Provider store={mockStore(initialState)}>
           <ServicesList {...props} />
         </Provider>
       ).children();
@@ -136,17 +133,14 @@ describe("ServicesList", () => {
     beforeEach(() => {
       const cosmosDB = { ...emptyCosmosDB, selection: ["any"] };
 
-      store = mockStore({
-        selection: {
-          services: {
-            cosmosDB: cosmosDB
-          }
-        },
-        vscode: mockVsCode
-      });
+      initialState = getInitialState();
+      initialState.selection= {
+        services: { cosmosDB }
+      };
+      initialState.vscode = mockVsCode;
 
       wrapper = mountWithIntl(
-        <Provider store={store}>
+        <Provider store={mockStore(initialState)}>
           <ServicesList {...props} />
         </Provider>
       ).children();

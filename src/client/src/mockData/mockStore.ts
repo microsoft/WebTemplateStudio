@@ -35,7 +35,23 @@ export const getInitialState = (): AppState => {
         },
         originRoute:''
       },
-      previewStatus: false
+      previewStatus: false,
+      isValidatingName: false,
+      validations: {
+        itemNameValidationConfig: {
+          regexs: [],
+          reservedNames: [],
+          validateEmptyNames: true,
+          validateExistingNames: true,
+          validateDefaultNames: true
+        },
+        projectNameValidationConfig: {
+          regexs: [],
+          reservedNames: [],
+          validateEmptyNames: true,
+          validateExistingNames: true
+        }
+      }
     },
     selection: {
       appType: {
@@ -88,28 +104,12 @@ export const getInitialState = (): AppState => {
       outputPathObject: {
         outputPath: '/generic_output_path'
       },
-      isValidatingName: false,
       projectNameObject: {
         projectName: 'myApp',
         validation: {
           isValid: true,
           error: "" as unknown as FormattedMessage.MessageDescriptor,
           isDirty: true
-        }
-      },
-      validations: {
-        itemNameValidationConfig: {
-          regexs: [],
-          reservedNames: [],
-          validateEmptyNames: true,
-          validateExistingNames: true,
-          validateDefaultNames: true
-        },
-        projectNameValidationConfig: {
-          regexs: [],
-          reservedNames: [],
-          validateEmptyNames: true,
-          validateExistingNames: true
         }
       }
     },
