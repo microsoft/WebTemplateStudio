@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 
@@ -74,18 +74,6 @@ if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
 }
 
-interface IDispatchProps {
-  updateOutputPath: (outputPath: string) => any;
-  logIntoAzure: (azureProfile: AzureProfile) => void;
-  setValidationsAction: (validations: any) => void;
-  getVersionsData: (versions: IVersions) => any;
-  getPages: (pages: IOption[]) => any;
-  setPreviewStatus: (isPreview: boolean) => void;
-  setPages: (pages: ISelected[]) => void;
-  setBackendFrameworks: (frameworks: IOption[]) => any;
-  setFrontendFrameworks: (frameworks: IOption[]) => any;
-}
-
 interface IStateProps {
   frontendOptions: IOption[];
   selectedFrontend: ISelected;
@@ -96,14 +84,15 @@ interface IStateProps {
   selectedRoute: string;
 }
 
-type Props = IDispatchProps & IStateProps;
+type Props = IStateProps;
 
 const App = (props: Props) => {
-  const { selectedFrontend, selectedBackend, selectedPages, setPages, frontendOptions,
-    isPreview, setFrontendFrameworks, setBackendFrameworks, modalState, logIntoAzure, selectedRoute } = props;
+  const { selectedFrontend, selectedBackend, selectedPages, frontendOptions,
+    isPreview, modalState, selectedRoute } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading: Array<any> = new Array<any>();
   const {vscode} = React.useContext(AppContext);
+  const dispatch = useDispatch();
 
   const addToPromisesList = (promise: Promise<any>)=>{
     promisesLoading.push(promise);
@@ -137,7 +126,7 @@ const App = (props: Props) => {
       const message = event.data;
       if (message.payload !== null) {
         const azureProfile = message.payload as AzureProfile;
-        logIntoAzure(azureProfile);
+        dispatch(logIntoAzureActionAction(azureProfile))
       }
     });
 
@@ -147,12 +136,12 @@ const App = (props: Props) => {
         templatesVersion:message.payload.templatesVersion,
         wizardVersion: message.payload.wizardVersion
       };
-      props.getVersionsData(versionData);
-      props.setValidationsAction({
+      dispatch(getVersionsDataAction(versionData));
+      dispatch(setValidationsAction({
         itemNameValidationConfig:message.payload.itemNameValidationConfig,
         projectNameValidationConfig:message.payload.projectNameValidationConfig
-      });
-      props.setPreviewStatus(message.payload.preview);
+      }));
+      dispatch(setPreviewStatusAction(message.payload.preview));
     });
   },[vscode]);
 
@@ -163,30 +152,30 @@ const App = (props: Props) => {
   function getFrameworksListAndSetToStore(){
     getFrameworks(vscode, isPreview).then((event: any)=>{
       const message = event.data;
-      setFrontendFrameworks(
+      dispatch(setFrontendFrameworksAction(
         parseFrameworksPayload(
           message.payload.frameworks,
           FRAMEWORK_TYPE.FRONTEND,
           message.payload.isPreview
         )
-      );
-      setBackendFrameworks(
+      ));
+      dispatch(setBackendFrameworksAction(
         parseFrameworksPayload(
           message.payload.frameworks,
           FRAMEWORK_TYPE.BACKEND,
           message.payload.isPreview
         )
-      );
+      ));
     });
   }
 
   const loadPages = () => {
     getPages(vscode, selectedFrontend.internalName, selectedBackend.internalName).then((event)=>{
-      props.getPages(event.data.payload.pages);
+      dispatch(getPagesOptionsAction(event.data.payload.pages));
       selectedPages.map((selectedPage)=>{
         selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName ? selectedPage.defaultName.replace(" ",""):""}`;
       });
-      setPages(selectedPages);
+      dispatch(setPagesAction(selectedPages));
     });
   }
 
@@ -194,11 +183,9 @@ const App = (props: Props) => {
     window.addEventListener("message", event => {
       const message = event.data;
       switch (message.command) {
-        //only one way
-        //from extension to client
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           if (message.payload !== null && message.payload.outputPath !== undefined) {
-            props.updateOutputPath(message.payload.outputPath);
+            dispatch(setOutputPathAction(message.payload.outputPath));
           }
           break;
       }
@@ -256,37 +243,6 @@ const App = (props: Props) => {
   );
 }
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  logIntoAzure: (azureProfile: AzureProfile) => {
-    dispatch(logIntoAzureActionAction(azureProfile));
-  },
-  updateOutputPath: (outputPath: string) => {
-    dispatch(setOutputPathAction(outputPath));
-  },
-  setValidationsAction: (validations: any) => {
-    dispatch(setValidationsAction(validations));
-  },
-  getPages: (pages: IOption[]) => {
-    dispatch(getPagesOptionsAction(pages));
-  },
-  getVersionsData: (versions: IVersions) => {
-    dispatch(getVersionsDataAction(versions));
-  },
-  setPreviewStatus: (isPreview: boolean) => {
-    dispatch(setPreviewStatusAction(isPreview));
-  },
-  setPages: (pages: ISelected[]) => {
-    dispatch(setPagesAction(pages));
-  },
-  setBackendFrameworks: (frameworks: IOption[]) => {
-    dispatch(setBackendFrameworksAction(frameworks));
-  },
-  setFrontendFrameworks: (frameworks: IOption[]) => {
-    dispatch(setFrontendFrameworksAction(frameworks));
-  }
-});
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   selectedFrontend: state.selection.frontendFramework,
@@ -300,6 +256,5 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 
 export default
   connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
   )(App);
