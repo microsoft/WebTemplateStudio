@@ -33,7 +33,7 @@ const getPagesOptionsSuccessAction = (
   pagesOptions: IOption[]
 ): IPageOptionsActionType => ({
   payload: pagesOptions,
-  type: TEMPLATES_TYPEKEYS.GET_PAGES_OPTIONS_SUCCESS
+  type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS
 });
 
 export {

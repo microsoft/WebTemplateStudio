@@ -8,7 +8,7 @@ const pageOptions = (
   action: WizardContentActionType | IResetPagesAction
 ) => {
   switch (action.type) {
-    case TEMPLATES_TYPEKEYS.GET_PAGES_OPTIONS_SUCCESS:
+    case TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS:
       return action.payload;
     default:
       return state;

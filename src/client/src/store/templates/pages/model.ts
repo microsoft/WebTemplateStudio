@@ -27,6 +27,6 @@ export interface ISetDetails {
 }
 
 export interface IPageOptionsActionType {
-  type: TEMPLATES_TYPEKEYS.GET_PAGES_OPTIONS_SUCCESS;
+  type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS;
   payload: IOption[];
 }
