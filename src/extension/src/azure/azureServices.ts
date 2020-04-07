@@ -135,49 +135,83 @@ export class AzureServices {
   }
 
   public static async getResourceGroupSelections(payload: any): Promise<ResourceGroupSelection[]> {
-    const projectName = payload.engine.projectName;
-    const allSubscriptions: SubscriptionItem[] = [];    
-    if (payload.selectedCosmos) {
-      const cosmosSubscription = AzureServices.getSubscription(payload.cosmos.subscription);    
-      allSubscriptions.push(cosmosSubscription);
-    }
-    if (payload.selectedAppService) {
-      const appserviceSubscription = AzureServices.getSubscription(payload.appService.subscription);
-      allSubscriptions.push(appserviceSubscription);
-    }
-    const allDistinctSubscriptions: SubscriptionItem[] = [...new Set(allSubscriptions)];
+    const selection: ResourceGroupSelection[] = [];
 
-    const generatedName: string = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
-      projectName,
-      allDistinctSubscriptions
-    );
+    if (payload.appService) {
+      const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(payload.appService, selection);
+      if (canCreateResourceGroup) {
+        const resourceGroupSelection = await AzureServices.getResourceGroupSelection(payload.appService);
+        selection.push(resourceGroupSelection);
+      }
+    }
 
-    return await Promise.all(
-      allDistinctSubscriptions.map(
-        async subscription => await AzureServices.generateResourceGroupSelection(generatedName, subscription)
-      )
-    );
+    if (payload.cosmos) {
+      const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(payload.cosmos, selection);
+      if (canCreateResourceGroup) {
+        const resourceGroupSelection = await AzureServices.getResourceGroupSelection(payload.cosmos);
+        selection.push(resourceGroupSelection);
+      }
+    }
+
+    return selection;
   }
 
-  private static async generateResourceGroupSelection(
-    generatedName: string,
-    subscriptionItem: SubscriptionItem
-  ): Promise<ResourceGroupSelection> {
-    let resourceGroupName = generatedName;
-    if (AzureServices.IsMicrosoftLearnSubscription(subscriptionItem)) {
-      const resourceGroups = await AzureServices.AzureResourceGroupProvider.GetResourceGroups(subscriptionItem);
-      resourceGroupName = resourceGroups[0].name as string;
-    }
+  private static async canCreateResourceGroup(
+    azureService: any,
+    selection: ResourceGroupSelection[]
+  ): Promise<boolean> {
+    const { subscription, resourceGroup } = azureService;
+    const subscriptionItem = AzureServices.getSubscription(subscription);
+    const isMicrosoftLearnSubscription = AzureServices.IsMicrosoftLearnSubscription(subscriptionItem);
+    const existResourceGroup = await AzureServices.AzureResourceGroupProvider.ExistResourceGroup(
+      resourceGroup,
+      subscriptionItem
+    );
+    const isResourceGroupInSelection = selection.some(
+      (r) => r.resourceGroupName === resourceGroup && r.subscriptionItem.label === subscriptionItem.label
+    );
+    return !(existResourceGroup || isResourceGroupInSelection || isMicrosoftLearnSubscription);
+  }
+
+  private static async getResourceGroupSelection(azureService: any): Promise<ResourceGroupSelection> {
+    const { subscription, resourceGroup } = azureService;
+    const subscriptionItem = AzureServices.getSubscription(subscription);
+
     return {
-      subscriptionItem: subscriptionItem,
-      resourceGroupName: resourceGroupName,
+      subscriptionItem,
+      resourceGroupName: resourceGroup,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
     };
   }
 
-  public static async deployResourceGroup(resourceGroup: ResourceGroupSelection): Promise<void> {
-    if (!AzureServices.IsMicrosoftLearnSubscription(resourceGroup.subscriptionItem)) {
-      await AzureServices.AzureResourceGroupProvider.createResourceGroup(resourceGroup);
+  public static async generateValidResourceGroupName(payload: any): Promise<string> {
+    const subscriptions: SubscriptionItem[] = [];
+    const projectName = payload.engine.projectName;
+
+    if (payload.cosmos) {
+      const cosmosSubscription = AzureServices.getSubscription(payload.cosmos.subscription);
+      subscriptions.push(cosmosSubscription);
+    }
+
+    if (payload.appService) {
+      const appserviceSubscription = AzureServices.getSubscription(payload.appService.subscription);
+      subscriptions.push(appserviceSubscription);
+    }
+    const allSubscriptions: SubscriptionItem[] = [...new Set(subscriptions)];
+
+    return await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
+      projectName,
+      allSubscriptions
+    );
+  }
+
+  public static async deployResourceGroup(resourceGroupSelection: ResourceGroupSelection): Promise<void> {
+    const name = resourceGroupSelection.resourceGroupName;
+    const subscription = resourceGroupSelection.subscriptionItem;
+    const resourceGroup = await AzureServices.AzureResourceGroupProvider.GetResourceGroup(name, subscription);
+
+    if (!resourceGroup) {
+      await AzureServices.AzureResourceGroupProvider.createResourceGroup(resourceGroupSelection);
     }
   }
 
