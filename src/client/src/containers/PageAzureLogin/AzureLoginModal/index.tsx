@@ -21,8 +21,8 @@ import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 import * as ModalActions from "../../../store/modals/action";
 import { ThunkDispatch } from "redux-thunk";
 import { azureLogin } from "../../../utils/extensionService/extensionService";
-import { logIntoAzureActionAction } from "../../../store/azureProfileData/login/action";
 import { AppContext } from "../../../AppContext";
+import { logIntoAzureActionAction } from "../../../store/config/azure/action";
 
 interface IStateProps {
   isModalOpen: boolean;

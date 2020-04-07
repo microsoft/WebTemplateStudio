@@ -34,8 +34,8 @@ import { setOutputPathAction } from "./store/selection/app/action";
 import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/templates/frameworks/action";
 import { getPagesOptionsAction } from "./store/templates/pages/action";
 import { setPreviewStatusAction } from "./store/templates/preview/action";
-import { logIntoAzureActionAction } from "./store/azureProfileData/login/action";
 import { AppContext } from "./AppContext";
+import { logIntoAzureActionAction } from "./store/config/azure/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),

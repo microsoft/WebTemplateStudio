@@ -55,6 +55,10 @@ export const getInitialState = (): AppState => {
       versions: {
         templatesVersion: '0.0.1',
         wizardVersion: '0.0.2'
+      },
+      azureProfileData: {
+        subscriptions: [],
+        email:''
       }
     },
     selection: {
@@ -119,10 +123,6 @@ export const getInitialState = (): AppState => {
     },
     azureProfileData: {
       isLoggedIn: false,
-      profileData: {
-        subscriptions: [],
-        email:''
-      },
       subscriptionData: {
         locations: [],
         resourceGroups: []
@@ -341,7 +341,7 @@ export const loadMasters = (store: AppState) =>{
 }
 
 export const setSubscriptions = (store: AppState) => {
-  store.azureProfileData.profileData.subscriptions = getSubscriptionsSelector();
+  store.config.azureProfileData.subscriptions = getSubscriptionsSelector();
 }
 
 export const setBackendFramework = (store: AppState, internalName: string) => {

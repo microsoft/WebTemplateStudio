@@ -104,7 +104,7 @@ const AzureLogin = (props: Props)=> {
 
 const mapStateToProps = (state: AppState): IAzureLoginProps => {
   const { isLoggedIn } = state.azureProfileData;
-  const { email } = state.azureProfileData.profileData;
+  const { email } = state.config.azureProfileData;
   return {
     isLoggedIn,
     email
