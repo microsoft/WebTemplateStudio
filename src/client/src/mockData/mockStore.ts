@@ -138,29 +138,9 @@ export const getInitialState = (): AppState => {
       },
       selected: '/'
     },
-    generationStatus: {
-      statusMessage: '...',
-      genStatus: {
-        templates: {
-          success: false,
-          failure: false
-        },
-        cosmos: {
-          success: false,
-          failure: false
-        },
-        appService: {
-          success: false,
-          failure: false
-        }
-      }
-    },
     versions: {
       templatesVersion: '0.0.1',
       wizardVersion: '0.0.2'
-    },
-    dependencyInfo: {
-      dependencies: {}
     }
   };
   return initialState;

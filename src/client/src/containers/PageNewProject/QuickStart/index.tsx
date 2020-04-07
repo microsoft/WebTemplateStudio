@@ -8,7 +8,6 @@ import RootAction from "../../../store/ActionType";
 import { isEnableNextPageSelector } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 import { AppState } from "../../../store/combineReducers";
-import { IVSCodeObject } from "../../../types/vscode";
 import { ISelected } from "../../../types/selected";
 
 import { ReactComponent as QuickStartWand } from "../../../assets/quickStartWand.svg";
@@ -55,8 +54,8 @@ const QuickStart = (props: Props) => {
     isEnableNextPage,
     setPage
   } = props;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
-
+  const { vscode } = React.useContext(AppContext);
+  
   const handleClick = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART);
     getAllFrameworks(vscode, isPreview);

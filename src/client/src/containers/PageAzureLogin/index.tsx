@@ -22,7 +22,6 @@ import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
 import { setDetailPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 import { startLogOutAzureAction } from "../../store/azureProfileData/login/action";
-import { IVSCodeObject } from "../../types/vscode";
 import { AppContext } from "../../AppContext";
 
 interface IDispatchProps {
@@ -44,7 +43,7 @@ const AzureLogin = (props: Props)=> {
     startLogOutToAzure,
     isLoggedIn, intl, email
   } = props;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
 
   const signOutClick = () => {
     azureLogout(vscode).then((event)=>{

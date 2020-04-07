@@ -5,24 +5,12 @@ import styles from "./styles.module.css";
 import {
   ROUTES,
   EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
-  PAYLOAD_MESSAGES_TEXT,
   KEY_EVENTS,
 } from "../../utils/constants";
 
 import { IVSCodeObject } from "../../types/vscode";
 
-import { rootSelector } from "../../store/selection/app/selector";
-import {
-  getCosmosDbSelectionSelector,
-  isCosmosResourceCreatedSelector,
-} from "../../store/azureProfileData/cosmosDb/selector";
-import {
-  isAppServiceSelectedSelector,
-  getAppServiceSelectionSelector,
-} from "../../store/azureProfileData/appService/selector";
-
-import { openPostGenModalAction } from "../../store/modals/action";
+import { openGenModalAction } from "../../store/modals/action";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
@@ -57,11 +45,6 @@ const pathsBack: any = {
 const Footer = (props: Props) => {
   const { formatMessage } = props.intl;
 
-  const engine = useSelector((state: AppState) => rootSelector(state));
-  const selectedCosmos = useSelector((state: AppState) => isCosmosResourceCreatedSelector(state));
-  const cosmos = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
-  const selectedAppService = useSelector((state: AppState) => isAppServiceSelectedSelector(state));
-  const appService = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
   const visitedRoutes = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
   const currentRoute = useSelector((state: AppState) => state.wizardRoutes.selected);
@@ -77,21 +60,8 @@ const Footer = (props: Props) => {
 
   const generateProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    vscode.postMessage({
-      module: EXTENSION_MODULES.GENERATE,
-      command: EXTENSION_COMMANDS.GENERATE,
-      track: false,
-      text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
-      payload: {
-        engine,
-        selectedCosmos,
-        cosmos,
-        selectedAppService,
-        appService,
-      },
-    });
     trackPageForTelemetry(currentRoute);
-    dispatch(openPostGenModalAction());
+    dispatch(openGenModalAction());
   };
 
   const navigateBack = () => {

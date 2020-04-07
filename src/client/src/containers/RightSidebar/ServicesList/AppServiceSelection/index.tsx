@@ -1,16 +1,11 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-
 import SidebarItem from "../SidebarItem";
-
 import { IAppService } from "../../../../store/azureProfileData/appService/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
-
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
-
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { IVSCodeObject } from "../../../../types/vscode";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { removeAppServiceSettingsAction } from "../../../../store/azureProfileData/appService/action";
 import { AppContext } from "../../../../AppContext";
@@ -27,7 +22,7 @@ const AppServiceSelection = ({
   intl
 }: Props) => {
   const { serviceType } = appServiceSelection.wizardContent;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 
   const openAppServiceModalAndSendTelemetry = () => {

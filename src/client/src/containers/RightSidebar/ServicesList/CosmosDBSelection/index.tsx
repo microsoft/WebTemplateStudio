@@ -9,7 +9,6 @@ import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { IVSCodeObject } from "../../../../types/vscode";
 import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
 import { AppContext } from "../../../../AppContext";
 
@@ -24,7 +23,7 @@ const CosmosDBSelection = ({
   intl
 }: Props) => {
   const { serviceType } = cosmosSelection.wizardContent;
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 
   const openCosmosDbModalAndSendTelemetry = () => {

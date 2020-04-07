@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-
 import { ISelectProps, IDispatchProps, IStateProps } from "./interfaces";
 import { mapDispatchToProps, mapStateToProps } from "./store";
 import styles from "./styles.module.css";
@@ -13,7 +12,6 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import { getLatestVersion } from "../../../utils/extensionService/extensionService";
 import { AppContext } from "../../../AppContext";
-import { IVSCodeObject } from "../../../types/vscode";
 
 type Props = ISelectProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
@@ -32,7 +30,7 @@ const FrameworkCard = (props: Props) => {
 
   const [selected, setSelected] = React.useState(false);
   const [latestVersion, setLatestVersion] = React.useState(framework.latestVersion);
-  const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const { vscode } = React.useContext(AppContext);
 
   React.useEffect(() => {
     selectWhenLoadWithoutSelection();
