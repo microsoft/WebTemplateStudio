@@ -1,12 +1,12 @@
 import WizardContentActionType from "../templatesActionType";
-import { WIZARD_CONTENT_TYPEKEYS } from "../../typeKeys";
+import { TEMPLATES_TYPEKEYS } from "../../typeKeys";
 
 const previewStatus = (
   state = false,
   action: WizardContentActionType
 ) => {
   switch (action.type) {
-    case WIZARD_CONTENT_TYPEKEYS.SET_PREVIEW_STATUS:
+    case TEMPLATES_TYPEKEYS.SET_PREVIEW_STATUS:
       return action.payload;
     default:
       return state;

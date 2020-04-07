@@ -1,5 +1,5 @@
 import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction, ISetDetails, IPageOptionsActionType } from "./model";
-import { WIZARD_INFO_TYPEKEYS, WIZARD_CONTENT_TYPEKEYS } from "../../typeKeys";
+import { WIZARD_INFO_TYPEKEYS, TEMPLATES_TYPEKEYS } from "../../typeKeys";
 import { IOption } from "../../../types/option";
 
 const setVisitedWizardPageAction = (route: string): ISetVisitedPageAction => ({
@@ -33,7 +33,7 @@ const getPagesOptionsSuccessAction = (
   pagesOptions: IOption[]
 ): IPageOptionsActionType => ({
   payload: pagesOptions,
-  type: WIZARD_CONTENT_TYPEKEYS.GET_PAGES_OPTIONS_SUCCESS
+  type: TEMPLATES_TYPEKEYS.GET_PAGES_OPTIONS_SUCCESS
 });
 
 export {
