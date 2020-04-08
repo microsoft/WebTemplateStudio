@@ -1,5 +1,5 @@
 
-import { ISelectProjectTypeAction } from "./app/model";
+import { ISelectProjectTypeAction } from "../config/app/model";
 
 type WizardSelectionActionType =
   ISelectProjectTypeAction;

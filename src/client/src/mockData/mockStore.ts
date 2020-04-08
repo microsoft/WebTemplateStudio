@@ -59,6 +59,12 @@ export const getInitialState = (): AppState => {
       azureProfileData: {
         subscriptions: [],
         email:''
+      },
+      appType: {
+        title: 'Fullstack Web Application',
+        internalName: 'FullStackWebApp',
+        version: 'v1.0',
+        licenses: ''
       }
     },
     userSelection: {
@@ -88,12 +94,6 @@ export const getInitialState = (): AppState => {
       }
     },
     selection:{
-      appType: {
-        title: 'Fullstack Web Application',
-        internalName: 'FullStackWebApp',
-        version: 'v1.0',
-        licenses: ''
-      },
       services: {
         cosmosDB: {
           accountNameAvailability: {

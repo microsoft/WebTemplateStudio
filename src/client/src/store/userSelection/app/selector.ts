@@ -4,7 +4,7 @@ import { getOutputPath, getProjectName } from "./wizardSelectionSelector/wizardS
 import { AppState } from "../../combineReducers";
 import { UserSelectionState } from "../combineReducers";
 import { IOption } from "../../../types/option";
-import { getProjectTypeSelector, getServicesSelector } from "../../selection/app/selector";
+import { getProjectTypeSelector, getServicesSelector } from "../../config/app/selector";
 
 const getWizardSelectionsUserSelector = (state: AppState): UserSelectionState => state.userSelection;
 const getBackendOptionsSelector = (state: AppState): IOption[] => state.templates.backendOptions;

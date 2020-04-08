@@ -7,7 +7,8 @@ import {
   WIZARD_CONTENT_INTERNAL_NAMES,
   COSMOS_APIS
 } from "../../../utils/constants";
-import { SelectionState } from "../combineReducers";
+import { SelectionState } from "../../selection/combineReducers";
+import { ConfigState } from "../combineReducers";
 import { AppState } from "../../combineReducers";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {
@@ -15,10 +16,11 @@ const DATABASE_INTERNAL_NAME_MAPPING = {
   [COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
 };
 
-const getWizardSelectionsSelector = (state: AppState): SelectionState => state.selection;
+const getSelectionsSelector = (state: AppState): SelectionState => state.selection;
+const getConfigSelector = (state: AppState): ConfigState => state.config;
 
-const getProjectType = (selection: SelectionState): string => {
-  const projectType = selection.appType as ISelected;
+const getProjectType = (config: ConfigState): string => {
+  const projectType = config.appType as ISelected;
   return projectType.internalName;
 };
 
@@ -39,12 +41,12 @@ const getServices = (selection: SelectionState): ITemplateInfo[] => {
 };
 
 export const getProjectTypeSelector = createSelector(
-  getWizardSelectionsSelector,
+  getConfigSelector,
   getProjectType
 );
 
 export const getServicesSelector = createSelector(
-  getWizardSelectionsSelector,
+  getSelectionsSelector,
   getServices
 );
 

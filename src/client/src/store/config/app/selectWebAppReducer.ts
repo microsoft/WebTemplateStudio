@@ -1,4 +1,4 @@
-import SelectionActionType from "../selectionActionType";
+import SelectionActionType from "../../selection/selectionActionType";
 import { ISelected } from "../../../types/selected";
 import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 

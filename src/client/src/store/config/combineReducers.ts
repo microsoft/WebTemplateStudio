@@ -5,6 +5,7 @@ import validations from "./validations/setValidationsReducer";
 import isValidatingName from "./validations/validatingNameReducer";
 import versions from "./versions/reducer";
 import { azureProfileData } from "./azure/reducer";
+import appType from "./app/selectWebAppReducer";
 
 const configReducer = combineReducers({
   detailsPage,
@@ -12,8 +13,9 @@ const configReducer = combineReducers({
   validations,
   isValidatingName,
   versions,
-  azureProfileData
+  azureProfileData,
+  appType
 });
 
 export default configReducer;
-export type TemplateType = ReturnType<typeof configReducer>;
+export type ConfigState = ReturnType<typeof configReducer>;
