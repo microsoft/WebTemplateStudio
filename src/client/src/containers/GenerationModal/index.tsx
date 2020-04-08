@@ -61,12 +61,14 @@ const GenerationModal = ({
   const [generationStatus, setGenerationStatus] = React.useState<any>({});
   const [isTemplateGenerated, setIsTemplateGenerated] = React.useState(false);
   const [isTemplatesFailed, setIsTemplatesFailed] = React.useState(false);
+  const [isServicesDeployed, setIsServicesDeployed] = React.useState(false);
   const [isServiceFailed, setIsServiceFailed] = React.useState(false);
+  
   const [templateGenerated, setTemplateGenerated] = React.useState(false);
   const [templateGenerationInProgress, setTemplateGenerationInProgress] = React.useState(false);
 
   const { vscode } = React.useContext(AppContext);
-  const [isServicesDeployed, setIsServicesDeployed] = React.useState(false);
+
 
   const engine = useSelector((state: AppState) => rootSelector(state));
   const isCosmosSelected = useSelector((state: AppState) => isCosmosResourceCreatedSelector(state));
@@ -91,13 +93,9 @@ const GenerationModal = ({
       }
       
       setIsServiceFailed(localServiceStatus.cosmosdb.isFailed || localServiceStatus.appService.isFailed);
-
-      if ((isCosmosSelected && !isAppServiceSelected && localServiceStatus.cosmosdb.isDeployed) ||
-      (!isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed)||
-      (!isCosmosSelected && !isAppServiceSelected) ||
-      (!isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed && localServiceStatus.cosmosdb.isDeployed)){
-        setIsServicesDeployed(true);
-      }
+      setIsServicesDeployed(isCosmosSelected && !isAppServiceSelected && localServiceStatus.cosmosdb.isDeployed || 
+        !isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed ||
+        isCosmosSelected && isAppServiceSelected && (localServiceStatus.cosmosdb.isDeployed && localServiceStatus.appService.isDeployed));
 
       setServiceStatus(localServiceStatus);
 
