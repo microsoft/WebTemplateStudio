@@ -1,18 +1,7 @@
-import { ISelectFrontendAction, ISelectBackendAction } from "./frameworks/model";
-import { IsetPagesAction, ISetPageAction, IResetPagesAction } from "./pages/model";
-import { IProjectPathValidationAction, IValidationsAction } from "../config/validations/model";
-import { ISelectProjectTypeAction, ISetProjectNameActionType, IUpdateProjectPathActionType } from "./app/model";
+
+import { ISelectProjectTypeAction } from "../config/app/model";
 
 type WizardSelectionActionType =
-  | ISelectBackendAction
-  | ISelectFrontendAction
-  | IsetPagesAction
-  | ISetPageAction
-  | ISelectProjectTypeAction
-  | IProjectPathValidationAction
-  | IValidationsAction
-  | ISetProjectNameActionType
-  | IUpdateProjectPathActionType
-  | IResetPagesAction;
+  ISelectProjectTypeAction;
 
 export default WizardSelectionActionType;

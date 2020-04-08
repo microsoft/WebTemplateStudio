@@ -3,7 +3,8 @@ import azureProfileData from "./azureProfileData/combineReducers";
 import modals from "./modals/combineReducers";
 import templates from "./templates/combineReducers";
 import config from "./config/combineReducers";
-import wizardRoutes from "./selection/pages/combineReducers";
+import wizardRoutes from "./userSelection/pages/combineReducers";
+import userSelection from "./userSelection/combineReducers";
 import selection from "./selection/combineReducers";
 import RootAction from "./ActionType";
 import { CONFIG_TYPEKEYS } from "./typeKeys";
@@ -11,6 +12,7 @@ import { CONFIG_TYPEKEYS } from "./typeKeys";
 const appReducer = combineReducers({
   templates,
   config,
+  userSelection,
   selection,
   azureProfileData,
   modals,
@@ -33,7 +35,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
     passedState = {
       azureProfileData: state!.azureProfileData,
       modals: undefined,
-      selection: {
+      userSelection: {
         projectNameObject:{
           projectName:"",
           validation:{

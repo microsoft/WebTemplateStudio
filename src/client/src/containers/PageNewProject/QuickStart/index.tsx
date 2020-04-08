@@ -1,7 +1,7 @@
 import React from "react";
 import { connect, useDispatch } from "react-redux";
 import { FormattedMessage } from "react-intl";
-import { isEnableNextPageSelector } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPageSelector } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../../store/combineReducers";
 import { ReactComponent as QuickStartWand } from "../../../assets/quickStartWand.svg";
 import quickStartWand from "../../../assets/quickStartWand.svg";
@@ -17,8 +17,8 @@ import { ROUTES_ARRAY, EXTENSION_COMMANDS, ROUTES } from "../../../utils/constan
 
 import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";
-import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
-import { setPagesAction } from "../../../store/selection/pages/action";
+import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/userSelection/frameworks/action";
+import { setPagesAction } from "../../../store/userSelection/pages/action";
 import { AppContext } from "../../../AppContext";
 import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../../store/config/pages/action";
 

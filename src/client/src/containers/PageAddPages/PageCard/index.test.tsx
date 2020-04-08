@@ -1,4 +1,4 @@
-jest.mock('../../../store/selection/pages/action',()=>{
+jest.mock('../../../store/userSelection/pages/action',()=>{
   const setPagesAction = jest.fn((pages: ISelected[]) => ({
     type: "WIZARD_SELECTION_TYPEKEYS.SELECT_PAGES",
     payload: pages
@@ -19,9 +19,9 @@ import PageCard from "./index";
 import { Provider } from "react-redux";
 import { getInitialState, loadMasters } from "../../../mockData/mockStore";
 import { render, fireEvent } from "@testing-library/react";
-import {IntlProvider} from 'react-intl';
+import { IntlProvider } from 'react-intl';
 import { ISelected } from "../../../types/selected";
-import { setPagesAction } from "../../../store/selection/pages/action";
+import { setPagesAction } from "../../../store/userSelection/pages/action";
 import { AppState } from "../../../store/combineReducers";
 
 describe("PageCard", () => {

@@ -26,9 +26,9 @@ import PageDetails from "./containers/PageDetails";
 import { MODAL_TYPES } from "./store/modals/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
-import { setPagesAction } from "./store/selection/pages/action";
+import { setPagesAction } from "./store/userSelection/pages/action";
 import { setValidationsAction } from "./store/config/validations/action";
-import { setOutputPathAction } from "./store/selection/app/action";
+import { setOutputPathAction } from "./store/userSelection/app/action";
 import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/templates/frameworks/action";
 import { getPagesOptionsAction } from "./store/templates/pages/action";
 import { setPreviewStatusAction } from "./store/templates/preview/action";
@@ -243,10 +243,10 @@ const App = (props: Props) => {
 
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  selectedFrontend: state.selection.frontendFramework,
-  selectedBackend: state.selection.backendFramework,
+  selectedFrontend: state.userSelection.frontendFramework,
+  selectedBackend: state.userSelection.backendFramework,
   frontendOptions: state.templates.frontendOptions,
-  selectedPages: state.selection.pages,
+  selectedPages: state.userSelection.pages,
   isPreview:  state.config.previewStatus,
   modalState: state.modals.openModal,
   selectedRoute : state.wizardRoutes.selected,

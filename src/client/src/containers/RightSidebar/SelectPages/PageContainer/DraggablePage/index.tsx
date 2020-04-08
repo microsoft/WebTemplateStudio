@@ -12,8 +12,8 @@ import { AppState } from "../../../../../store/combineReducers";
 
 import messages from "./messages";
 import { validateItemName } from "../../../../../utils/validations/itemName/itemName";
-import { getValidations } from "../../../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
-import { setPageAction, setPagesAction } from "../../../../../store/selection/pages/action";
+import { getValidations } from "../../../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { setPageAction, setPagesAction } from "../../../../../store/userSelection/pages/action";
 import { IValidations } from "../../../../../store/config/validations/model";
 
 const Reorder = Loadable({
@@ -170,7 +170,7 @@ const DraggablePage = ({
 };
 
 const mapStateToProps = (state: AppState) => ({
-  selectedPages: state.selection.pages,
+  selectedPages: state.userSelection.pages,
   validations: getValidations(state)
 });
 

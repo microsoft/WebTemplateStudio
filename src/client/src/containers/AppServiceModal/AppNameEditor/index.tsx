@@ -3,7 +3,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import messages from "./messages";
-import { getProjectName } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { getProjectName } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as GreenCheck } from "../../../assets/checkgreen.svg";
 import { ValidateAppServiceName, GetValidAppServiceName } from "../../../utils/extensionService/extensionService";

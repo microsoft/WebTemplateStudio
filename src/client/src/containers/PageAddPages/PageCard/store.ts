@@ -5,9 +5,9 @@ import { IStateProps } from "./interfaces";
 const mapStateToProps = (state: AppState): IStateProps => {
   //const { frontendFramework, backendFramework } = state.selection;
   return {
-    selectedPages: state.selection.pages,
-    selectedFrontend: state.selection.frontendFramework,
-    pageOutOfBounds: state.selection.pages.length>=20
+    selectedPages: state.userSelection.pages,
+    selectedFrontend: state.userSelection.frontendFramework,
+    pageOutOfBounds: state.userSelection.pages.length>=20
   };
 };
 

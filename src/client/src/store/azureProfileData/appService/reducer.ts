@@ -1,5 +1,5 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
-import messages from "../../selection/app/wizardSelectionSelector/messages";
+import messages from "../../userSelection/app/wizardSelectionSelector/messages";
 import AzureActionType from "../azureActionType";
 import { CONFIG_TYPEKEYS } from "../../typeKeys";
 import WizardInfoType from "../../templates/templatesType";
@@ -35,7 +35,7 @@ const appServiceReducer = (
     case AZURE_TYPEKEYS.REMOVE_APP_SERVICE_SETTINGS:
       return initialState;
     case AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS:
-      const newSelectionState = {
+      const newUserSelectionState = {
         ...state,
         selection: {
           subscription: action.payload.subscription,
@@ -45,7 +45,7 @@ const appServiceReducer = (
           siteName: action.payload.siteName
         }
       };
-      return newSelectionState;
+      return newUserSelectionState;
     default:
       return state;
   }

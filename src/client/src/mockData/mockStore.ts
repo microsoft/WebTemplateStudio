@@ -59,15 +59,15 @@ export const getInitialState = (): AppState => {
       azureProfileData: {
         subscriptions: [],
         email:''
-      }
-    },
-    selection: {
+      },
       appType: {
         title: 'Fullstack Web Application',
         internalName: 'FullStackWebApp',
         version: 'v1.0',
         licenses: ''
-      },
+      }
+    },
+    userSelection: {
       frontendFramework: {
         title: '',
         internalName: '',
@@ -81,6 +81,19 @@ export const getInitialState = (): AppState => {
         author: ''
       },
       pages: [],
+      outputPathObject: {
+        outputPath: '/generic_output_path'
+      },
+      projectNameObject: {
+        projectName: 'myApp',
+        validation: {
+          isValid: true,
+          error: "" as unknown as FormattedMessage.MessageDescriptor,
+          isDirty: true
+        }
+      }
+    },
+    selection:{
       services: {
         cosmosDB: {
           accountNameAvailability: {
@@ -107,17 +120,6 @@ export const getInitialState = (): AppState => {
               defaultMessage: 'App Service'
             }
           }
-        }
-      },
-      outputPathObject: {
-        outputPath: '/generic_output_path'
-      },
-      projectNameObject: {
-        projectName: 'myApp',
-        validation: {
-          isValid: true,
-          error: "" as unknown as FormattedMessage.MessageDescriptor,
-          isDirty: true
         }
       }
     },
@@ -345,11 +347,11 @@ export const setSubscriptions = (store: AppState) => {
 }
 
 export const setBackendFramework = (store: AppState, internalName: string) => {
-  store.selection.backendFramework.internalName = internalName;
+  store.userSelection.backendFramework.internalName = internalName;
 }
 
 export const setFrontendFramework = (store: AppState, internalName: string) => {
-  store.selection.backendFramework.internalName = internalName;
+  store.userSelection.backendFramework.internalName = internalName;
 }
 
 export const setOpenModal = (store: AppState, modalType: ModalType) => {

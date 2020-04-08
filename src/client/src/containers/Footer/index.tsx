@@ -15,7 +15,7 @@ import { openGenModalAction } from "../../store/modals/action";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import { getIsVisitedRoutesSelector } from "../../store/templates/preview/wizardNavigationSelector";
-import { isEnableNextPageSelector } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
 
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";

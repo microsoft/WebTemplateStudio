@@ -6,16 +6,15 @@ import messages from "../strings";
 import { ISelected } from "../../../types/selected";
 import Dropdown from "../../../components/Dropdown";
 import { AppState } from "../../../store/combineReducers";
-import { SelectionState } from "../../../store/selection/combineReducers";
+import { UserSelectionState } from "../../../store/userSelection/combineReducers";
 import { IOption } from "../../../types/option";
 import { TemplateType } from "../../../store/templates/combineReducers";
-import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
+import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/userSelection/frameworks/action";
 
 type Props = InjectedIntlProps;
 
 const SelectFrameworks = (props: Props)=>{
-
-  const selection: SelectionState = useSelector((state: AppState) => state.selection);
+  const selection: UserSelectionState = useSelector((state: AppState) => state.userSelection);
   const frontEndOptions: IOption[] = useSelector((state: AppState) => state.templates.frontendOptions);
   const frontendDropdownItems: IDropDownOptionType[] =
     useSelector((state: AppState) => convertOptionsToDropdownItems(state.templates.frontendOptions));
