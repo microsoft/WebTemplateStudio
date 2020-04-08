@@ -11,8 +11,6 @@ import { IValidations } from "../../../config/validations/model";
 
 const getWizardSelectionsSelector = (state: AppState): UserSelectionState =>
   state.userSelection;
-const getWizardServices = (state: AppState): SelectionState =>
-  state.selection;
 const getProjectName = (state: AppState): string =>
   state.userSelection.projectNameObject.projectName;
 const getProjectNameValidation = (state: AppState): IValidation =>

@@ -1,32 +1,14 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { ISelected } from "../../../types/selected";
 import { ITemplateInfo } from "../../../types/templateInfo";
 import { getOutputPath, getProjectName } from "./wizardSelectionSelector/wizardSelectionSelector";
-import {
-  SERVICE_KEYS,
-  WIZARD_CONTENT_INTERNAL_NAMES,
-  COSMOS_APIS
-} from "../../../utils/constants";
 import { AppState } from "../../combineReducers";
 import { UserSelectionState } from "../combineReducers";
 import { IOption } from "../../../types/option";
-import { SelectionState } from "../../selection/combineReducers";
-
-const DATABASE_INTERNAL_NAME_MAPPING = {
-  [COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
-  [COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
-};
+import { getProjectTypeSelector, getServicesSelector } from "../../selection/app/selector";
 
 const getWizardSelectionsUserSelector = (state: AppState): UserSelectionState => state.userSelection;
-const getWizardSelectionsSelector = (state: AppState): SelectionState => state.selection;
 const getBackendOptionsSelector = (state: AppState): IOption[] => state.templates.backendOptions;
-
-const getProjectType = (selection: SelectionState): string => {
-  const projectType = selection.appType as ISelected;
-  return projectType.internalName;
-};
-
 const getFrontendFramework = (selection: UserSelectionState): string => {
   const { frontendFramework } = selection;
   return frontendFramework.internalName;
@@ -35,22 +17,6 @@ const getFrontendFramework = (selection: UserSelectionState): string => {
 const getBackendFramework = (selection: UserSelectionState): string => {
   const { backendFramework } = selection;
   return backendFramework.internalName;
-};
-
-const getServices = (selection: SelectionState): ITemplateInfo[] => {
-  const { services } = selection;
-  const servicesInfo = [];
-  if (
-    _.has(services, SERVICE_KEYS.COSMOS_DB) &&
-    services.cosmosDB.selection.length > 0
-  ) {
-    servicesInfo.push({
-      name: "Cosmos",
-      identity:
-        DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.selection[0].api]
-    });
-  }
-  return servicesInfo;
 };
 
 const getPages = (selection: UserSelectionState): ITemplateInfo[] => {
@@ -65,11 +31,6 @@ const getPages = (selection: UserSelectionState): ITemplateInfo[] => {
   return pagesInfo;
 };
 
-const getProjectTypeSelector = createSelector(
-  getWizardSelectionsSelector,
-  getProjectType
-);
-
 const getFrontendFrameworkSelector = createSelector(
   getWizardSelectionsUserSelector,
   getFrontendFramework
@@ -83,11 +44,6 @@ const getBackendFrameworkSelector = createSelector(
 const getPagesSelector = createSelector(
   getWizardSelectionsUserSelector,
   getPages
-);
-
-const getServicesSelector = createSelector(
-  getWizardSelectionsSelector,
-  getServices
 );
 
 const getLinuxVersionFromBackendFrameworkSelector = (

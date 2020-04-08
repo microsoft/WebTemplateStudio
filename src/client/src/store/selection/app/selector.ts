@@ -38,12 +38,12 @@ const getServices = (selection: SelectionState): ITemplateInfo[] => {
   return servicesInfo;
 };
 
-const getProjectTypeSelector = createSelector(
+export const getProjectTypeSelector = createSelector(
   getWizardSelectionsSelector,
   getProjectType
 );
 
-const getServicesSelector = createSelector(
+export const getServicesSelector = createSelector(
   getWizardSelectionsSelector,
   getServices
 );
