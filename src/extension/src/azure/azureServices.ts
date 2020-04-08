@@ -231,7 +231,7 @@ export class AzureServices {
       tier: appServicePlan.tier,
       sku: appServicePlan.name,
       linuxFxVersion: payload.engine.backendFrameworkLinuxVersion,
-      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
+      location: payload.appService.location,
     };
 
     await AzureServices.AzureAppServiceProvider.checkWebAppName(
@@ -273,7 +273,7 @@ export class AzureServices {
     const userCosmosDBSelection: CosmosDBSelections = {
       cosmosAPI: selections.api,
       cosmosDBResourceName: selections.accountName,
-      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
+      location: selections.location,
       resourceGroupItem: await AzureAuth.getResourceGroupItem(selections.resourceGroup, subscription),
       subscriptionItem: subscription,
     };

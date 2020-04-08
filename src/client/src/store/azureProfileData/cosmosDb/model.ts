@@ -29,6 +29,7 @@ interface IServiceContent {
 export interface ISelectedCosmosService {
   subscription: string;
   resourceGroup: string;
+  location: string;
   accountName: string;
   api: string;
   internalName: string;

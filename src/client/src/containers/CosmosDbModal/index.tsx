@@ -82,7 +82,7 @@ const CosmosModal = ({ intl }: Props) => {
     const cosmosSelection: ISelectedCosmosService = {
       subscription,
       accountName,
-      //location,
+      location,
       resourceGroup,
       api,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
