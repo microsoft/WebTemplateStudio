@@ -22,7 +22,7 @@ const getWizardSelectionsUserSelector = (state: AppState): UserSelectionState =>
 const getWizardSelectionsSelector = (state: AppState): SelectionState => state.selection;
 const getBackendOptionsSelector = (state: AppState): IOption[] => state.templates.backendOptions;
 
-const getProjectType = (selection: UserSelectionState): string => {
+const getProjectType = (selection: SelectionState): string => {
   const projectType = selection.appType as ISelected;
   return projectType.internalName;
 };
@@ -66,7 +66,7 @@ const getPages = (selection: UserSelectionState): ITemplateInfo[] => {
 };
 
 const getProjectTypeSelector = createSelector(
-  getWizardSelectionsUserSelector,
+  getWizardSelectionsSelector,
   getProjectType
 );
 
@@ -95,8 +95,8 @@ const getLinuxVersionFromBackendFrameworkSelector = (
   backendFramework: string
 ): string => {
   const selectedBackendFramework = backendFrameworks.find(b => b.internalName === backendFramework);
-  return selectedBackendFramework && selectedBackendFramework.linuxVersion 
-  ? selectedBackendFramework.linuxVersion 
+  return selectedBackendFramework && selectedBackendFramework.linuxVersion
+  ? selectedBackendFramework.linuxVersion
   : "";
 };
 

@@ -89,18 +89,6 @@ const isValidNameAndProjectPathSelector = createSelector(
   isValidNameAndProjectPath
 );
 
-const getProjectTypeRowItems = (selection: UserSelectionState): RowType[] => {
-  const projectType = selection.appType as ISelected;
-  return [
-    {
-      title: projectType.title,
-      internalName: projectType.internalName,
-      version: selection.appType.version!,
-      author: projectType.author
-    }
-  ];
-};
-
 const frameworksRowItems = (selection: UserSelectionState): RowType[] => {
   const { frontendFramework, backendFramework } = selection;
   return [
@@ -145,26 +133,14 @@ const getServices = (selection: SelectionState): RowType[] => {
   return servicesRows;
 };
 
-const getProjectTypeRowItemSelector = createSelector(
-  getWizardSelectionsSelector,
-  getProjectTypeRowItems
-);
-
 const getFrameworksRowItemSelector = createSelector(
   getWizardSelectionsSelector,
   frameworksRowItems
 );
 
-const getServicesSelector = createSelector(
-  getWizardServices,
-  getServices
-);
-
 export {
-  getProjectTypeRowItemSelector,
   getWizardSelectionsSelector,
   getFrameworksRowItemSelector,
-  getServicesSelector,
   getOutputPath,
   getOutputPathValidation,
   getProjectName,

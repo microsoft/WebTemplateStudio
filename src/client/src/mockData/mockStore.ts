@@ -62,12 +62,6 @@ export const getInitialState = (): AppState => {
       }
     },
     userSelection: {
-      appType: {
-        title: 'Fullstack Web Application',
-        internalName: 'FullStackWebApp',
-        version: 'v1.0',
-        licenses: ''
-      },
       frontendFramework: {
         title: '',
         internalName: '',
@@ -94,6 +88,12 @@ export const getInitialState = (): AppState => {
       }
     },
     selection:{
+      appType: {
+        title: 'Fullstack Web Application',
+        internalName: 'FullStackWebApp',
+        version: 'v1.0',
+        licenses: ''
+      },
       services: {
         cosmosDB: {
           accountNameAvailability: {
