@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import * as React from "react";
 import { connect, useDispatch } from "react-redux";
-import { ISelectProps, IDispatchProps, IStateProps } from "./interfaces";
+import { ISelectProps, IStateProps } from "./interfaces";
 import { mapStateToProps } from "./store";
 import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
@@ -17,7 +17,7 @@ import { IOption } from "../../../types/option";
 import { setDetailPageAction, setPageWizardPageAction } from "../../../store/config/pages/action";
 import { setSelectedBackendFrameworkAction, setSelectedFrontendFrameworkAction } from "../../../store/selection/frameworks/action";
 
-type Props = ISelectProps & IDispatchProps & IStateProps & InjectedIntlProps;
+type Props = ISelectProps & IStateProps & InjectedIntlProps;
 
 const FrameworkCard = (props: Props) => {
   const {
