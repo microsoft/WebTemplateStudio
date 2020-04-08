@@ -1,5 +1,5 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
-import messages from "../../selection/app/wizardSelectionSelector/messages";
+import messages from "../../userSelection/app/wizardSelectionSelector/messages";
 import AzureActionType from "../azureActionType";
 import { ICosmosDB } from "./model";
 
@@ -26,7 +26,7 @@ const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
       return initialState;
     case AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS:
-      const newSelectionState = {
+      const newUserSelectionState = {
         ...state,
         selection: [
           {
@@ -38,7 +38,7 @@ const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
           }
         ]
       };
-      return newSelectionState;
+      return newUserSelectionState;
     case AZURE_TYPEKEYS.SET_ACCOUNT_AVAILABILITY:
       const newAvailabilityState = {
         ...state,

@@ -1,4 +1,4 @@
-import { WIZARD_SELECTION_TYPEKEYS } from "../../selection/typeKeys";
+import { WIZARD_SELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
 import { IProjectPathValidationAction, IValidationsAction } from "./model";
 
 export const setProjectPathValidationAction = (

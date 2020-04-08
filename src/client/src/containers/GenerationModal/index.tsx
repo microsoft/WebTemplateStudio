@@ -24,7 +24,7 @@ import {
 
 import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { getOutputPath } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { getOutputPath } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
 import { MODAL_TYPES } from "../../store/modals/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
@@ -32,7 +32,7 @@ import keyUpHandler from "../../utils/keyUpHandler";
 import { sendTelemetry, generateProject } from "../../utils/extensionService/extensionService";
 import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
-import { rootSelector } from "../../store/selection/app/selector";
+import { rootSelector } from "../../store/userSelection/app/selector";
 import { isCosmosResourceCreatedSelector, getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
 import { isAppServiceSelectedSelector, getAppServiceSelectionSelector } from "../../store/azureProfileData/appService/selector";
 

@@ -1,12 +1,7 @@
-import WizardSelectionActionType from "../selectionActionType";
+import SelectionActionType from "../../selection/selectionActionType";
 import { ISelected } from "../../../types/selected";
 import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 
-/* State Shape
-{
-    appType: ""
-}
-*/
 
 const initialState = {
   title: "Fullstack Web Application",
@@ -17,7 +12,7 @@ const initialState = {
 
 const webAppReducer = (
   state: ISelected = initialState,
-  action: WizardSelectionActionType
+  action: SelectionActionType
 ) => {
   switch (action.type) {
     case WIZARD_SELECTION_TYPEKEYS.SELECT_WEB_APP:

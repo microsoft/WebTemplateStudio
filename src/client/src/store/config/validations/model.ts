@@ -1,4 +1,4 @@
-import { WIZARD_SELECTION_TYPEKEYS } from "../../selection/typeKeys";
+import { WIZARD_SELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
 
 export interface IProjectPathValidationAction {
   type: WIZARD_SELECTION_TYPEKEYS.SET_PROJECT_PATH_VALIDATION;

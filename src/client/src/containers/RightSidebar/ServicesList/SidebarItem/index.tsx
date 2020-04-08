@@ -9,7 +9,7 @@ import { KEY_EVENTS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../../../store/combineReducers";
 import messages from "./messages";
-import { getValidations } from "../../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { getValidations } from "../../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../../../store/config/validations/model";
 
 const CosmosDBIcon = Loadable({
@@ -100,7 +100,7 @@ const DraggableSidebarItem = ({
 };
 
 const mapStateToProps = (state: AppState) => ({
-  selectedPages: state.selection.pages,
+  selectedPages: state.userSelection.pages,
   validations: getValidations(state)
 });
 
