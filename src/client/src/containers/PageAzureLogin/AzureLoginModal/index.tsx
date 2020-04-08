@@ -1,12 +1,11 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 import asModal from "../../../components/Modal";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { closeModalAction } from "../../../store/modals/action";
 import { AppState } from "../../../store/combineReducers";
-import RootAction from "../../../store/ActionType";
 import { isAzureLoginModalOpenSelector } from "../../../store/modals/selector";
 import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
@@ -19,10 +18,9 @@ import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
 import CollapsibleInfoBox from "../../../components/CollapsibleInfoBox";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 import * as ModalActions from "../../../store/modals/action";
-import { ThunkDispatch } from "redux-thunk";
 import { azureLogin } from "../../../utils/extensionService/extensionService";
-import { logIntoAzureActionAction } from "../../../store/azureProfileData/login/action";
 import { AppContext } from "../../../AppContext";
+import { logIntoAzureActionAction } from "../../../store/config/azure/action";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -30,33 +28,24 @@ interface IStateProps {
   selectedAzureServiceName: string;
 }
 
-interface IDispatchProps {
-  closeModal: () => any;
-  openAppServiceModal: () => any;
-  openCosmosDbModal: () => any;
-  logIntoAzure: (loginData: AzureProfile) => void;
-}
-
-type Props = IStateProps & IDispatchProps & InjectedIntlProps;
+type Props = IStateProps & InjectedIntlProps;
 
 const AzureLoginModal = (props: Props) => {
   const { formatMessage } = props.intl;
   const {
     isLoggedIn,
-    closeModal,
-    selectedAzureServiceName,
-    openAppServiceModal,
-    openCosmosDbModal,
-    logIntoAzure
+    selectedAzureServiceName
   } = props;
   const { vscode } = React.useContext(AppContext);
+  const dispatch = useDispatch();
+
 
   const handleSignInClick = () => {
     azureLogin(vscode).then((event)=>{
       const message = event.data;
       if (message.payload !== null) {
         const loginData = message.payload as AzureProfile;
-        logIntoAzure(loginData);
+        dispatch(logIntoAzureActionAction(loginData));
       }
     })
   };
@@ -65,24 +54,24 @@ const AzureLoginModal = (props: Props) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
-      closeModal();
+      dispatch(closeModalAction());
     }
   };
 
   React.useEffect(() => {
     // close sign in modal and opens azure service form
     if (isLoggedIn) {
-      closeModal();
+      dispatch(closeModalAction());
       if (
         selectedAzureServiceName &&
         selectedAzureServiceName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
       ) {
-        openAppServiceModal();
+        dispatch(ModalActions.openAppServiceModalAction());
       } else if (
         selectedAzureServiceName &&
         selectedAzureServiceName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
       ) {
-        openCosmosDbModal();
+        dispatch(ModalActions.openCosmosDbModalAction());
       }
     }
   }, [isLoggedIn]);
@@ -96,7 +85,7 @@ const AzureLoginModal = (props: Props) => {
         <Cancel
           tabIndex={0}
           className={styles.cancelIcon}
-          onClick={props.closeModal}
+          onClick={()=> dispatch(closeModalAction())}
           onKeyDown={cancelKeyDownHandler}
         />
       </div>
@@ -175,24 +164,7 @@ const mapStateToProps = (state: AppState): IStateProps => {
     selectedAzureServiceName: state.modals.openModal.modalData
   };
 };
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  closeModal: () => {
-    dispatch(closeModalAction());
-  },
-  openCosmosDbModal: () => {
-    dispatch(ModalActions.openCosmosDbModalAction());
-  },
-  openAppServiceModal: () => {
-    dispatch(ModalActions.openAppServiceModalAction());
-  },
-  logIntoAzure: (loginData: AzureProfile) => {
-    dispatch(logIntoAzureActionAction(loginData));
-  },
-});
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(asModal(injectIntl(AzureLoginModal)));

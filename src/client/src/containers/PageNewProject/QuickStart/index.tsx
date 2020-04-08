@@ -1,15 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
+import { connect, useDispatch } from "react-redux";
 import { FormattedMessage } from "react-intl";
-
-import RootAction from "../../../store/ActionType";
-
 import { isEnableNextPageSelector } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
-
 import { AppState } from "../../../store/combineReducers";
-import { ISelected } from "../../../types/selected";
-
 import { ReactComponent as QuickStartWand } from "../../../assets/quickStartWand.svg";
 import quickStartWand from "../../../assets/quickStartWand.svg";
 
@@ -26,45 +19,33 @@ import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
 import { setPagesAction } from "../../../store/selection/pages/action";
-import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../../store/wizardContent/pages/action";
 import { AppContext } from "../../../AppContext";
+import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../../store/config/pages/action";
 
 interface IStateProps {
   isPreview: boolean;
   isEnableNextPage: boolean;
 }
 
-interface IDispatchProps {
-  selectFrontendFramework: (framework: ISelected) => void;
-  selectBackendFramework: (backendFramework: ISelected) => void;
-  selectPages: (pages: ISelected[]) => void;
-  setRouteVisited: (route: string) => void;
-  setPage: (route: string) => void;
-}
-
-type Props = IStateProps & IDispatchProps;
+type Props = IStateProps;
 
 const QuickStart = (props: Props) => {
   const {
     isPreview,
-    selectFrontendFramework,
-    selectBackendFramework,
-    selectPages,
-    setRouteVisited,
-    isEnableNextPage,
-    setPage
+    isEnableNextPage
   } = props;
   const { vscode } = React.useContext(AppContext);
+  const dispatch = useDispatch();
   
   const handleClick = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART);
     getAllFrameworks(vscode, isPreview);
     getAllPages(vscode);
-    selectFrontendFramework(FRONT_END_SELECTION);
-    selectBackendFramework(BACK_END_SELECTION);
-    selectPages(PAGES_SELECTION);
-    ROUTES_ARRAY.forEach(route => setRouteVisited(route));
-    setPage(ROUTES.REVIEW_AND_GENERATE);
+    dispatch(setSelectedFrontendFrameworkAction(FRONT_END_SELECTION));
+    dispatch(setSelectedBackendFrameworkAction(BACK_END_SELECTION));
+    dispatch(setPagesAction(PAGES_SELECTION));
+    ROUTES_ARRAY.forEach(route => dispatch(setVisitedWizardPageAction(route)));
+    dispatch(setPageWizardPageAction(ROUTES.REVIEW_AND_GENERATE));
   };
 
   return (
@@ -102,35 +83,14 @@ const QuickStart = (props: Props) => {
   }
 
 const mapStateToProps = (state: AppState): IStateProps => {
-  const { previewStatus } = state.wizardContent;
+  const { previewStatus } = state.config;
   return {
     isPreview: previewStatus,
     isEnableNextPage: isEnableNextPageSelector(state)
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  selectFrontendFramework: (framework: ISelected) => {
-    dispatch(setSelectedFrontendFrameworkAction(framework));
-  },
-  selectBackendFramework: (backendFramework: ISelected) => {
-    dispatch(setSelectedBackendFrameworkAction(backendFramework));
-  },
-  selectPages: (pages: ISelected[]) => {
-    dispatch(setPagesAction(pages));
-  },
-  setRouteVisited: (route: string) => {
-    dispatch(setVisitedWizardPageAction(route));
-  },
-  setPage: (route: string) => {
-    dispatch(setPageWizardPageAction(route));
-  },
-});
-
 export default 
   connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
   )(QuickStart);

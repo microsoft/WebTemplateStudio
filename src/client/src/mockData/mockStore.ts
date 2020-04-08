@@ -14,10 +14,12 @@ export const getISelected = () => {
 
 export const getInitialState = (): AppState => {
   const initialState: AppState={
-    wizardContent: {
+    templates: {
       backendOptions: [],
       frontendOptions: [],
       pageOptions: [],
+    },
+    config:{
       detailsPage: {
         isIntlFormatted: false,
         data: {
@@ -33,7 +35,31 @@ export const getInitialState = (): AppState => {
         },
         originRoute:''
       },
-      previewStatus: false
+      previewStatus: false,
+      isValidatingName: false,
+      validations: {
+        itemNameValidationConfig: {
+          regexs: [],
+          reservedNames: [],
+          validateEmptyNames: true,
+          validateExistingNames: true,
+          validateDefaultNames: true
+        },
+        projectNameValidationConfig: {
+          regexs: [],
+          reservedNames: [],
+          validateEmptyNames: true,
+          validateExistingNames: true
+        }
+      },
+      versions: {
+        templatesVersion: '0.0.1',
+        wizardVersion: '0.0.2'
+      },
+      azureProfileData: {
+        subscriptions: [],
+        email:''
+      }
     },
     selection: {
       appType: {
@@ -86,7 +112,6 @@ export const getInitialState = (): AppState => {
       outputPathObject: {
         outputPath: '/generic_output_path'
       },
-      isValidatingName: false,
       projectNameObject: {
         projectName: 'myApp',
         validation: {
@@ -94,29 +119,10 @@ export const getInitialState = (): AppState => {
           error: "" as unknown as FormattedMessage.MessageDescriptor,
           isDirty: true
         }
-      },
-      validations: {
-        itemNameValidationConfig: {
-          regexs: [],
-          reservedNames: [],
-          validateEmptyNames: true,
-          validateExistingNames: true,
-          validateDefaultNames: true
-        },
-        projectNameValidationConfig: {
-          regexs: [],
-          reservedNames: [],
-          validateEmptyNames: true,
-          validateExistingNames: true
-        }
       }
     },
     azureProfileData: {
       isLoggedIn: false,
-      profileData: {
-        subscriptions: [],
-        email:''
-      },
       subscriptionData: {
         locations: [],
         resourceGroups: []
@@ -137,10 +143,6 @@ export const getInitialState = (): AppState => {
         '/ReviewAndGenerate': false
       },
       selected: '/'
-    },
-    versions: {
-      templatesVersion: '0.0.1',
-      wizardVersion: '0.0.2'
     }
   };
   return initialState;
@@ -239,7 +241,7 @@ const getSubscriptionsSelector = (): Array<Subscription> => {
 }
 
 export const addFrontEndFrameworksOptions = (store: AppState)=>{
-  store.wizardContent.frontendOptions = [
+  store.templates.frontendOptions = [
     {
       author: 'Facebook',
       body: 'JavaScript framework',
@@ -287,7 +289,7 @@ export const addFrontEndFrameworksOptions = (store: AppState)=>{
 }
 
 export const addBackEndFrameworksOptions = (store: AppState)=>{
-  store.wizardContent.backendOptions = [
+  store.templates.backendOptions = [
     {
       author: 'Various',
       body: 'JavaScript framework',
@@ -335,11 +337,11 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
 }
 
 export const loadMasters = (store: AppState) =>{
-  store.wizardContent.pageOptions = loadPages("React");
+  store.templates.pageOptions = loadPages("React");
 }
 
 export const setSubscriptions = (store: AppState) => {
-  store.azureProfileData.profileData.subscriptions = getSubscriptionsSelector();
+  store.config.azureProfileData.subscriptions = getSubscriptionsSelector();
 }
 
 export const setBackendFramework = (store: AppState, internalName: string) => {

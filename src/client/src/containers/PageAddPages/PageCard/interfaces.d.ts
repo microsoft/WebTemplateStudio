@@ -6,15 +6,10 @@ interface IProps {
   isModal: boolean;
 }
 
-interface IDispatchProps {
-  setPages: (pages: ISelected[]) => void;
-  setDetailPage: (framework: IOption) => any;
-}
-
 interface IStateProps {
   selectedPages: ISelected[];
   selectedFrontend: ISelected;
   pageOutOfBounds: boolean;
 }
 
-export { IStateProps, IDispatchProps, IProps };
+export { IStateProps, IProps };

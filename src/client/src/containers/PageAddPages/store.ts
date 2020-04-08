@@ -4,7 +4,7 @@ import { IStoreProps } from "./interfaces";
 
 const mapStateToProps = (state: AppState): IStoreProps => {
   return {
-    options: state.wizardContent.pageOptions,
+    options: state.templates.pageOptions,
     pageOutOfBounds: state.selection.pages.length>=20
   };
 };

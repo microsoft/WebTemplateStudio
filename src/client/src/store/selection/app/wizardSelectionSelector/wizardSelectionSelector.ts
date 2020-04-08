@@ -6,7 +6,7 @@ import { IValidation } from "../../../../utils/validations/validations";
 import { AppState } from "../../../combineReducers";
 import { SelectionState } from "../../combineReducers";
 import { ROUTES } from "../../../../utils/constants";
-import { IValidations } from "../../validations/model";
+import { IValidations } from "../../../config/validations/model";
 
 const getWizardSelectionsSelector = (state: AppState): SelectionState =>
   state.selection;
@@ -15,7 +15,7 @@ const getProjectName = (state: AppState): string =>
 const getProjectNameValidation = (state: AppState): IValidation =>
   state.selection.projectNameObject.validation;
 const getValidations = (state: AppState): IValidations =>
-  state.selection.validations;
+  state.config.validations;
 const getSelectedPages = (state: AppState): Array<ISelected> =>
   state.selection.pages;
 const getOutputPath = (state: AppState): string =>
