@@ -1,36 +1,37 @@
 import classNames from "classnames";
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { ISelectProps, IDispatchProps, IStateProps } from "./interfaces";
-import { mapDispatchToProps, mapStateToProps } from "./store";
+import { mapStateToProps } from "./store";
 import styles from "./styles.module.css";
 import { getSvg } from "../../../utils/getSvgUrl";
 import DependencyInfo from "./DependencyInfo";
 import messages from "./messages";
-import { KEY_EVENTS } from "../../../utils/constants";
+import { KEY_EVENTS, ROUTES } from "../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Check } from "../../../assets/check.svg";
 import { getLatestVersion } from "../../../utils/extensionService/extensionService";
 import { AppContext } from "../../../AppContext";
+import { updateFrameworksAction } from "../../../store/templates/frameworks/action";
+import { IOption } from "../../../types/option";
+import { setDetailPageAction, setPageWizardPageAction } from "../../../store/config/pages/action";
+import { setSelectedBackendFrameworkAction, setSelectedFrontendFrameworkAction } from "../../../store/selection/frameworks/action";
 
 type Props = ISelectProps & IDispatchProps & IStateProps & InjectedIntlProps;
 
 const FrameworkCard = (props: Props) => {
   const {
     framework,
-    setFrontendSelect,
     frontEndSelect,
-    setBackendSelect,
     backEndSelect,
     isFrontEnd,
-    intl,
-    setDetailPage,
-    updateFrameworks,
+    intl
   } = props;
 
   const [selected, setSelected] = React.useState(false);
   const [latestVersion, setLatestVersion] = React.useState(framework.latestVersion);
   const { vscode } = React.useContext(AppContext);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     selectWhenLoadWithoutSelection();
@@ -39,7 +40,7 @@ const FrameworkCard = (props: Props) => {
         (latestVersionValidation: boolean) => {
           framework.latestVersion = latestVersionValidation;
           framework.latestVersionLoaded = true;
-          updateFrameworks([framework]);
+          dispatch(updateFrameworksAction([framework]));
           setLatestVersion(latestVersionValidation);
         }
       );
@@ -54,6 +55,10 @@ const FrameworkCard = (props: Props) => {
     if (!isFrontEnd) setSelected(backEndSelect.internalName === framework.internalName);
   }, [backEndSelect]);
 
+  const setDetailPage = (detailPageInfo: IOption) => {
+    dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
+    dispatch(setDetailPageAction(detailPageInfo, false, ROUTES.SELECT_FRAMEWORKS));
+  }
   const selectWhenLoadWithoutSelection = () => {
     const frameworkSelectableFirstTime = isFrontEnd
       ? frontEndSelect.internalName === "" && framework.internalName === "React"
@@ -73,9 +78,9 @@ const FrameworkCard = (props: Props) => {
       author,
     };
     if (isFrontEnd) {
-      setFrontendSelect(selectedFramework);
+      dispatch(setSelectedFrontendFrameworkAction(selectedFramework));
     } else {
-      setBackendSelect(selectedFramework);
+      dispatch(setSelectedBackendFrameworkAction(selectedFramework));
     }
   };
 
@@ -142,4 +147,4 @@ const FrameworkCard = (props: Props) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(FrameworkCard));
+export default connect(mapStateToProps)(injectIntl(FrameworkCard));
