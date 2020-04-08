@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { FormattedMessage } from "react-intl";
 
@@ -34,37 +34,25 @@ interface IStateProps {
   isEnableNextPage: boolean;
 }
 
-interface IDispatchProps {
-  selectFrontendFramework: (framework: ISelected) => void;
-  selectBackendFramework: (backendFramework: ISelected) => void;
-  selectPages: (pages: ISelected[]) => void;
-  setRouteVisited: (route: string) => void;
-  setPage: (route: string) => void;
-}
-
-type Props = IStateProps & IDispatchProps;
+type Props = IStateProps;
 
 const QuickStart = (props: Props) => {
   const {
     isPreview,
-    selectFrontendFramework,
-    selectBackendFramework,
-    selectPages,
-    setRouteVisited,
-    isEnableNextPage,
-    setPage
+    isEnableNextPage
   } = props;
   const { vscode } = React.useContext(AppContext);
+  const dispatch = useDispatch();
   
   const handleClick = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART);
     getAllFrameworks(vscode, isPreview);
     getAllPages(vscode);
-    selectFrontendFramework(FRONT_END_SELECTION);
-    selectBackendFramework(BACK_END_SELECTION);
-    selectPages(PAGES_SELECTION);
-    ROUTES_ARRAY.forEach(route => setRouteVisited(route));
-    setPage(ROUTES.REVIEW_AND_GENERATE);
+    dispatch(setSelectedFrontendFrameworkAction(FRONT_END_SELECTION));
+    dispatch(setSelectedBackendFrameworkAction(BACK_END_SELECTION));
+    dispatch(setPagesAction(PAGES_SELECTION));
+    ROUTES_ARRAY.forEach(route => dispatch(setVisitedWizardPageAction(route)));
+    dispatch(setPageWizardPageAction(ROUTES.REVIEW_AND_GENERATE));
   };
 
   return (
@@ -109,28 +97,7 @@ const mapStateToProps = (state: AppState): IStateProps => {
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  selectFrontendFramework: (framework: ISelected) => {
-    dispatch(setSelectedFrontendFrameworkAction(framework));
-  },
-  selectBackendFramework: (backendFramework: ISelected) => {
-    dispatch(setSelectedBackendFrameworkAction(backendFramework));
-  },
-  selectPages: (pages: ISelected[]) => {
-    dispatch(setPagesAction(pages));
-  },
-  setRouteVisited: (route: string) => {
-    dispatch(setVisitedWizardPageAction(route));
-  },
-  setPage: (route: string) => {
-    dispatch(setPageWizardPageAction(route));
-  },
-});
-
 export default 
   connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
   )(QuickStart);

@@ -1,12 +1,10 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import Details from "./Details";
 import { IOption } from "../../types/option";
 import { getScreenShot } from "../../utils/getSvgUrl";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../store/ActionType";
 import { setPageWizardPageAction } from "../../store/config/pages/action";
 
 interface IPageDetailsProps {
@@ -15,18 +13,16 @@ interface IPageDetailsProps {
   isIntlFormatted: boolean;
 }
 
-interface IDispatchProps {
-  setPage: (route: string) => any;
-}
-
-type Props = IPageDetailsProps & IDispatchProps;
+type Props = IPageDetailsProps;
 
 const PageDetails = (props: Props) => {
-  const { detailsPageInfo, isIntlFormatted, originRoute, setPage } = props;
+  const { detailsPageInfo, isIntlFormatted, originRoute } = props;
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.detailsContainer}>
       <Details
-        handleBackClick={()=>{setPage(originRoute)}}
+        handleBackClick={()=>{dispatch(setPageWizardPageAction(originRoute))}}
         detailInfo={detailsPageInfo}
         formatteDetailInfo={isIntlFormatted ? detailsPageInfo : undefined}
       />
@@ -43,16 +39,7 @@ const mapStateToProps = (state: AppState): IPageDetailsProps => ({
     isIntlFormatted: state.config.detailsPage.isIntlFormatted
 });
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  setPage: (route: string) => {
-    dispatch(setPageWizardPageAction(route));
-  }
-});
-
 export default
   connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
   )(PageDetails);
