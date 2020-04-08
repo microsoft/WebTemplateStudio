@@ -50,12 +50,16 @@ const CosmosModal = ({ intl }: Props) => {
   const [isAvailableAccountName, setIsAvailableAccountName] = useState(false);
   
   React.useEffect(() => {
+    loadResourceGroups();
+  }, [subscription]);
+  
+  const loadResourceGroups = () => {
     if(subscription) {
       getSubscriptionDataForCosmos(vscode, subscription).then(event => {
         setSubscriptionData(event.data.payload);
       });
     }
-  }, [subscription]);
+  }
 
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
@@ -120,7 +124,8 @@ const CosmosModal = ({ intl }: Props) => {
             onLocationChange={setLocation} />
         <ResourceGroupSelection
           initialResourceGroups={subscriptionData.resourceGroups}
-          onResourceGroupChange={setResourceGroup} />
+          onResourceGroupChange={setResourceGroup}
+          onRefreshResourceGroup={loadResourceGroups} />
         </div>
 
         <ApiSelection initialApi={api} onApiChange={setApi} />

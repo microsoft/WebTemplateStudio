@@ -31,3 +31,7 @@
   font-size: 90%;
   opacity: 0.8;
 }
+
+.refreshButton {
+  margin: 0.5em 0 0 0;
+}

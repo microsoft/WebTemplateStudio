@@ -49,12 +49,16 @@ const AppServiceModal = ({ intl }: Props) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   
   React.useEffect(() => {
+    loadResourceGroups();
+  }, [subscription]);
+
+  const loadResourceGroups = () => {
     if(subscription) {
       GetSubscriptionDataForAppService(vscode, subscription).then(event => {
         setSubscriptionData(event.data.payload);
       });
     }
-  }, [subscription]);
+  }
 
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
@@ -117,7 +121,8 @@ const AppServiceModal = ({ intl }: Props) => {
             onLocationChange={setLocation} />
             <ResourceGroupSelection
               initialResourceGroups={subscriptionData.resourceGroups}
-              onResourceGroupChange={setResourceGroup} />
+              onResourceGroupChange={setResourceGroup}
+              onRefreshResourceGroup={loadResourceGroups} />
         </div>
 
         <AppServicePlanInfo subscription={subscription} />

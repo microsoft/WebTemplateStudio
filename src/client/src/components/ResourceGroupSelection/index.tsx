@@ -2,22 +2,23 @@ import * as React from "react";
 import { useState } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
+import buttonStyles from "../../css/buttonStyles.module.css";
 import messages from "./messages";
 import Dropdown from "../Dropdown";
 import classNames from "classnames";
 import { AZURE_LINKS } from "../../utils/constants";
-const DEFAULT_RESOURCE_GROUP = "Create new resource group";
 
 interface IProps {
   initialResourceGroups: ResourceGroup[];
   onResourceGroupChange(selectedResourceGroup: string): void;
+  onRefreshResourceGroup(): void;
 }
 
 type Props = IProps & InjectedIntlProps;
 
 const ResourceGroupSelection = (props: Props) => {
   const { formatMessage } = props.intl;
-  const { initialResourceGroups, onResourceGroupChange } = props;
+  const { initialResourceGroups, onResourceGroupChange, onRefreshResourceGroup } = props;
   const [resourceGroups, setResourceGroups] = useState<IDropDownOptionType[]>([]);
   const [selectedResourceGroup, setSelectedResourceGroup] = useState<IDropDownOptionType | undefined>(undefined);
 
@@ -33,9 +34,9 @@ const ResourceGroupSelection = (props: Props) => {
 
   
   React.useEffect(() => {
-    if (!selectedResourceGroup) {
-      const location = resourceGroups.find(s => s.label === DEFAULT_RESOURCE_GROUP);
-      setSelectedResourceGroup(location);
+    const resourceGroup = resourceGroups.find(s => s.value === selectedResourceGroup);
+    if (!resourceGroup) {
+      setSelectedResourceGroup(undefined);
     }
   }, [resourceGroups]);
 
@@ -44,6 +45,12 @@ const ResourceGroupSelection = (props: Props) => {
       onResourceGroupChange(selectedResourceGroup.value);
     }
   }, [selectedResourceGroup]);
+
+
+  const refreshResourceGroups = () => {
+    setResourceGroups([]);
+    onRefreshResourceGroup();
+  }
 
   return (
     <div className={classNames(styles.container, { [styles.containerDisabled]: resourceGroups.length === 0 })}>
@@ -63,6 +70,10 @@ const ResourceGroupSelection = (props: Props) => {
         value={selectedResourceGroup}
         disabled={resourceGroups.length === 0}
       />
+      <button data-testid="refresh-button" disabled={resourceGroups.length === 0} onClick={refreshResourceGroups}
+        className={classNames(buttonStyles.buttonLink, styles.refreshButton)}>
+          {formatMessage(messages.refresh)}
+      </button>
     </div>
   );
 };

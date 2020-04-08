@@ -17,6 +17,10 @@ const messages = defineMessages({
     id: "ResourceGroupSelection.newResourceGroupLink",
     defaultMessage: "Create New",
   },
+  refresh: {
+    id: "ResourceGroupSelection.refresh",
+    defaultMessage: "Refresh",
+  },
 });
 
 export default messages;
