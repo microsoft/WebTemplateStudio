@@ -8,8 +8,8 @@ import TopNavBarLink from "../TopNavBarLink";
 import styles from "./styles.module.css";
 
 import { ROUTES_ARRAY } from "../../utils/constants";
-import { IRoutes } from "../../store/selection/pages/model";
-import { isEnableNextPageSelector } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { IRoutes } from "../../store/userSelection/pages/model";
+import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
 import { setPageWizardPageAction } from "../../store/config/pages/action";
 

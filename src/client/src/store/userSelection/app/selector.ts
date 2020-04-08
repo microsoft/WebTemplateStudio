@@ -9,28 +9,30 @@ import {
   COSMOS_APIS
 } from "../../../utils/constants";
 import { AppState } from "../../combineReducers";
-import { SelectionState } from "../combineReducers";
+import { UserSelectionState } from "../combineReducers";
 import { IOption } from "../../../types/option";
+import { SelectionState } from "../../selection/combineReducers";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {
   [COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
   [COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
 };
 
+const getWizardSelectionsUserSelector = (state: AppState): UserSelectionState => state.userSelection;
 const getWizardSelectionsSelector = (state: AppState): SelectionState => state.selection;
 const getBackendOptionsSelector = (state: AppState): IOption[] => state.templates.backendOptions;
 
-const getProjectType = (selection: SelectionState): string => {
+const getProjectType = (selection: UserSelectionState): string => {
   const projectType = selection.appType as ISelected;
   return projectType.internalName;
 };
 
-const getFrontendFramework = (selection: SelectionState): string => {
+const getFrontendFramework = (selection: UserSelectionState): string => {
   const { frontendFramework } = selection;
   return frontendFramework.internalName;
 };
 
-const getBackendFramework = (selection: SelectionState): string => {
+const getBackendFramework = (selection: UserSelectionState): string => {
   const { backendFramework } = selection;
   return backendFramework.internalName;
 };
@@ -51,7 +53,7 @@ const getServices = (selection: SelectionState): ITemplateInfo[] => {
   return servicesInfo;
 };
 
-const getPages = (selection: SelectionState): ITemplateInfo[] => {
+const getPages = (selection: UserSelectionState): ITemplateInfo[] => {
   const { pages } = selection;
   const pagesInfo = [];
   for (const page of pages) {
@@ -64,22 +66,22 @@ const getPages = (selection: SelectionState): ITemplateInfo[] => {
 };
 
 const getProjectTypeSelector = createSelector(
-  getWizardSelectionsSelector,
+  getWizardSelectionsUserSelector,
   getProjectType
 );
 
 const getFrontendFrameworkSelector = createSelector(
-  getWizardSelectionsSelector,
+  getWizardSelectionsUserSelector,
   getFrontendFramework
 );
 
 const getBackendFrameworkSelector = createSelector(
-  getWizardSelectionsSelector,
+  getWizardSelectionsUserSelector,
   getBackendFramework
 );
 
 const getPagesSelector = createSelector(
-  getWizardSelectionsSelector,
+  getWizardSelectionsUserSelector,
   getPages
 );
 

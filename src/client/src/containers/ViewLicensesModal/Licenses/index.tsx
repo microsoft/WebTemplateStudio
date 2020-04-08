@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   getFrameworkLicensesSelector,
   getPageLicencesSelector
-} from "../../../store/selection/frameworksLicenseSelector";
+} from "../../../store/userSelection/frameworksLicenseSelector";
 import { ILicenseObject } from "../../../types/license";
 
 import styles from "./styles.module.css";

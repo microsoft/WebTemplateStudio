@@ -18,8 +18,8 @@ import { AppState } from "../../../store/combineReducers";
 import { PAGE_NAME_CHARACTER_LIMIT, EXTENSION_COMMANDS, BOOTSTRAP_LICENSE, ROUTES } from "../../../utils/constants";
 import messages from "./messages";
 import { sendTelemetry, resetAllPages } from "../../../utils/extensionService/extensionService";
-import { SelectionState } from "../../../store/selection/combineReducers";
-import { resetPagesAction, setPagesAction } from "../../../store/selection/pages/action";
+import { UserSelectionState } from "../../../store/userSelection/combineReducers";
+import { resetPagesAction, setPagesAction } from "../../../store/userSelection/pages/action";
 import { AppContext } from "../../../AppContext";
 
 interface IStateProps {
@@ -38,8 +38,8 @@ const SelectPages = (props: Props) => {
   } = props;
   const [isMinimized, setMinimized] = React.useState(false);
 
-  const selection: SelectionState = useSelector((state: AppState) => state.selection);
-  const selectedPages: any[] = useSelector((state: AppState) => state.selection.pages);
+  const selection: UserSelectionState = useSelector((state: AppState) => state.userSelection);
+  const selectedPages: any[] = useSelector((state: AppState) => state.userSelection.pages);
   const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 

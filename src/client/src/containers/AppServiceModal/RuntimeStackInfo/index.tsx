@@ -4,7 +4,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import { AppState } from "../../../store/combineReducers";
 import messages from "./messages";
-import { getRuntimeStackSelector } from "../../../store/selection/app/selector";
+import { getRuntimeStackSelector } from "../../../store/userSelection/app/selector";
 
 const RuntimeStackInfo = ({ intl }: InjectedIntlProps) => {
   const { formatMessage } = intl;

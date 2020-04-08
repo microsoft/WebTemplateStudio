@@ -4,42 +4,45 @@ import { RowType } from "../../../../types/rowType";
 import { ISelected } from "../../../../types/selected";
 import { IValidation } from "../../../../utils/validations/validations";
 import { AppState } from "../../../combineReducers";
-import { SelectionState } from "../../combineReducers";
+import { UserSelectionState } from "../../combineReducers";
+import { SelectionState } from "../../../selection/combineReducers";
 import { ROUTES } from "../../../../utils/constants";
 import { IValidations } from "../../../config/validations/model";
 
-const getWizardSelectionsSelector = (state: AppState): SelectionState =>
+const getWizardSelectionsSelector = (state: AppState): UserSelectionState =>
+  state.userSelection;
+const getWizardServices = (state: AppState): SelectionState =>
   state.selection;
 const getProjectName = (state: AppState): string =>
-  state.selection.projectNameObject.projectName;
+  state.userSelection.projectNameObject.projectName;
 const getProjectNameValidation = (state: AppState): IValidation =>
-  state.selection.projectNameObject.validation;
+  state.userSelection.projectNameObject.validation;
 const getValidations = (state: AppState): IValidations =>
   state.config.validations;
 const getSelectedPages = (state: AppState): Array<ISelected> =>
-  state.selection.pages;
+  state.userSelection.pages;
 const getOutputPath = (state: AppState): string =>
-  state.selection.outputPathObject.outputPath;
+  state.userSelection.outputPathObject.outputPath;
 const isEnableNextPageSelector = (state: AppState): boolean =>{
   let valid = false;
   if (state.wizardRoutes.selected === ROUTES.NEW_PROJECT){
-    valid = state.selection.projectNameObject.validation.isValid === true && 
-      state.selection.outputPathObject.outputPath !== "";
+    valid = state.userSelection.projectNameObject.validation.isValid === true && 
+      state.userSelection.outputPathObject.outputPath !== "";
   }
 
   if (state.wizardRoutes.selected === ROUTES.SELECT_FRAMEWORKS &&
-    state.selection.frontendFramework.title !== "" && state.selection.backendFramework.title !== "" &&
-    state.selection.pages.filter(page => !page.isValidTitle).length === 0){
+    state.userSelection.frontendFramework.title !== "" && state.userSelection.backendFramework.title !== "" &&
+    state.userSelection.pages.filter(page => !page.isValidTitle).length === 0){
     valid = true;
   }
 
-  if (state.wizardRoutes.selected === ROUTES.SELECT_PAGES && state.selection.pages.length>0 && 
-    state.selection.pages.filter(page => !page.isValidTitle).length === 0){
+  if (state.wizardRoutes.selected === ROUTES.SELECT_PAGES && state.userSelection.pages.length>0 && 
+    state.userSelection.pages.filter(page => !page.isValidTitle).length === 0){
     valid = true;
   }
 
   if ((state.wizardRoutes.selected === ROUTES.AZURE_LOGIN || state.wizardRoutes.selected === ROUTES.REVIEW_AND_GENERATE)
-    && state.selection.pages.filter(page => !page.isValidTitle).length === 0){
+    && state.userSelection.pages.filter(page => !page.isValidTitle).length === 0){
     valid = true;
   }
 
@@ -55,7 +58,7 @@ export const mapStateSelectedPages = (state: AppState): ISelectedPages => ({
 });
 
 const getOutputPathValidation = (state: AppState): IValidation =>
-  state.selection.outputPathObject.validation;
+  state.userSelection.outputPathObject.validation;
 
 const isValidNameAndProjectPath = (
   projectNameValidationObject: IValidation,
@@ -86,7 +89,7 @@ const isValidNameAndProjectPathSelector = createSelector(
   isValidNameAndProjectPath
 );
 
-const getProjectTypeRowItems = (selection: SelectionState): RowType[] => {
+const getProjectTypeRowItems = (selection: UserSelectionState): RowType[] => {
   const projectType = selection.appType as ISelected;
   return [
     {
@@ -98,7 +101,7 @@ const getProjectTypeRowItems = (selection: SelectionState): RowType[] => {
   ];
 };
 
-const frameworksRowItems = (selection: SelectionState): RowType[] => {
+const frameworksRowItems = (selection: UserSelectionState): RowType[] => {
   const { frontendFramework, backendFramework } = selection;
   return [
     {
@@ -153,7 +156,7 @@ const getFrameworksRowItemSelector = createSelector(
 );
 
 const getServicesSelector = createSelector(
-  getWizardSelectionsSelector,
+  getWizardServices,
   getServices
 );
 

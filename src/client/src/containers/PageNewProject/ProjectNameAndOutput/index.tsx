@@ -9,7 +9,7 @@ import {
   getProjectNameValidation,
   getOutputPathValidation,
   getValidations
-} from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+} from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 import {
   EXTENSION_COMMANDS,
@@ -31,7 +31,7 @@ import { inferProjectName} from "../../../utils/infer/projectName";
 import messages from "./messages";
 import { getOutputPath as getOutputPathFromExtension } from "../../../utils/extensionService/extensionService";
 import { setProjectPathValidationAction } from "../../../store/config/validations/action";
-import { setProjectNameAction, setOutputPathAction } from "../../../store/selection/app/action";
+import { setProjectNameAction, setOutputPathAction } from "../../../store/userSelection/app/action";
 import { IValidations } from "../../../store/config/validations/model";
 import { AppContext } from "../../../AppContext";
 

@@ -1,12 +1,16 @@
 import configureMockStore from "redux-mock-store";
 import { isEnableNextPageSelector} from "./wizardSelectionSelector";
 import { ROUTES } from "../../../../utils/constants";
+import { getInitialState } from "../../../../mockData/mockStore";
+import { AppState } from "../../../combineReducers";
+import { ISelected } from "../../../../types/selected";
 
 
 describe("wizardSelectionSelector", () => {
-  let mock: {};
+  let mock: AppState;
   beforeEach(()=>{
-    mock={
+    mock = getInitialState();
+    /*mock = {
       wizardRoutes: {
         selected: ""
       },
@@ -27,33 +31,33 @@ describe("wizardSelectionSelector", () => {
         },
         pages:[]
       }
-    };
+    };*/
   })
 
   describe("on home", () => {
     it("isEnableNextPage valid",()=>{
-      const mockStore = configureMockStore();
+      const mockStore = configureMockStore<AppState>();
       mock.wizardRoutes.selected = ROUTES.NEW_PROJECT;
-      mock.selection.projectNameObject.validation.isValid = true;
-      mock.selection.outputPathObject.outputPath="c:/sadadasd";
+      mock.userSelection.projectNameObject.validation.isValid = true;
+      mock.userSelection.outputPathObject.outputPath="c:/sadadasd";
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
     })
 
     it("isEnableNextPage invalid (project name invalid)",()=>{
-      const mockStore = configureMockStore();
+      const mockStore = configureMockStore<AppState>();
       mock.wizardRoutes.selected = ROUTES.NEW_PROJECT;
-      mock.selection.projectNameObject.validation.isValid = false;
-      mock.selection.outputPathObject.outputPath="c:/sadadasd";
+      mock.userSelection.projectNameObject.validation.isValid = false;
+      mock.userSelection.outputPathObject.outputPath="c:/sadadasd";
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
     })
 
     it("isEnableNextPage invalid (out path wrong)",()=>{
-      const mockStore = configureMockStore();
+      const mockStore = configureMockStore<AppState>();
       mock.wizardRoutes.selected = ROUTES.NEW_PROJECT;
-      mock.selection.projectNameObject.validation.isValid = true;
-      mock.selection.outputPathObject.outputPath="";
+      mock.userSelection.projectNameObject.validation.isValid = true;
+      mock.userSelection.outputPathObject.outputPath="";
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
     })
@@ -61,28 +65,28 @@ describe("wizardSelectionSelector", () => {
 
   describe("on select framework", () => {
     it("isEnableNextPage valid",()=>{
-      const mockStore = configureMockStore();
+      const mockStore = configureMockStore<AppState>();
       mock.wizardRoutes.selected = ROUTES.SELECT_FRAMEWORKS;
-      mock.selection.frontendFramework.title = "sfsdf";
-      mock.selection.backendFramework.title = "sfsdf";
+      mock.userSelection.frontendFramework.title = "sfsdf";
+      mock.userSelection.backendFramework.title = "sfsdf";
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
     })
 
     it("isEnableNextPage invalid (frontendFramework unselected)",()=>{
-      const mockStore = configureMockStore();
+      const mockStore = configureMockStore<AppState>();
       mock.wizardRoutes.selected = ROUTES.SELECT_FRAMEWORKS;
-      mock.selection.frontendFramework.title = "";
-      mock.selection.backendFramework.title = "sfsdf";
+      mock.userSelection.frontendFramework.title = "";
+      mock.userSelection.backendFramework.title = "sfsdf";
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
     })
 
     it("isEnableNextPage invalid (backendFramework unselected)",()=>{
-      const mockStore = configureMockStore();
+      const mockStore = configureMockStore<AppState>();
       mock.wizardRoutes.selected = ROUTES.SELECT_FRAMEWORKS;
-      mock.selection.frontendFramework.title = "sdfsdf";
-      mock.selection.backendFramework.title = "";
+      mock.userSelection.frontendFramework.title = "sdfsdf";
+      mock.userSelection.backendFramework.title = "";
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
     })
@@ -90,15 +94,16 @@ describe("wizardSelectionSelector", () => {
 
   describe("on select pages", () => {
     it("isEnableNextPage valid",()=>{
-      const mockStore = configureMockStore();
+      const mockStore = configureMockStore<AppState>();
       mock.wizardRoutes.selected = ROUTES.SELECT_PAGES;
-      mock.selection.pages.push({isValidTitle:true});
+      const validPage: ISelected = {title:"", isValidTitle:true, internalName:"wts.mock.blank"};
+      mock.userSelection.pages.push(validPage);
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
     })
 
     it("isEnableNextPage invalid (frontendFramework unselected)",()=>{
-      const mockStore = configureMockStore();
+      const mockStore = configureMockStore<AppState>();
       mock.wizardRoutes.selected = ROUTES.SELECT_PAGES;
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeFalsy();
@@ -107,7 +112,7 @@ describe("wizardSelectionSelector", () => {
 
   describe("on azure login", () => {
     it("isEnableNextPage valid always",()=>{
-      const mockStore = configureMockStore();
+      const mockStore = configureMockStore<AppState>();
       mock.wizardRoutes.selected = ROUTES.AZURE_LOGIN;
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
@@ -116,7 +121,7 @@ describe("wizardSelectionSelector", () => {
 
   describe("on review and generate", () => {
     it("isEnableNextPage valid always",()=>{
-      const mockStore = configureMockStore();
+      const mockStore = configureMockStore<AppState>();
       mock.wizardRoutes.selected = ROUTES.REVIEW_AND_GENERATE;
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeTruthy();

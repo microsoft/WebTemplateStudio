@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "../styles.module.css";
 import messages from "../strings";
-import { getOutputPath, getProjectName } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { getOutputPath, getProjectName } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../../store/combineReducers";
 
 type Props = InjectedIntlProps;

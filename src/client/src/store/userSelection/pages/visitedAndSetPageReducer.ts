@@ -17,11 +17,11 @@ export const isVisited = (
 ) => {
   switch (action.type) {
     case WIZARD_INFO_TYPEKEYS.SET_VISITED_WIZARD_PAGE:
-      const newSelectionState = {
+      const newUserSelectionState = {
         ...state,
         [action.payload]: true
       };
-      return newSelectionState;
+      return newUserSelectionState;
     case WIZARD_INFO_TYPEKEYS.RESET_VISITED_WIZARD_PAGE:
         return initialState;
     default:
