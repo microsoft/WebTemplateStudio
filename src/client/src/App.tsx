@@ -18,8 +18,6 @@ import { IVersions } from "./types/version";
 import { ISelected } from "./types/selected";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "./store/ActionType";
 import { getPages, getFrameworks, getUserStatus, getTemplateInfo } from "./utils/extensionService/extensionService";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 

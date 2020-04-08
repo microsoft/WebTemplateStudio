@@ -1,16 +1,13 @@
 import * as React from "react";
 import { connect, useDispatch } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
 import classnames from "classnames";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import styles from "./styles.module.css";
 
 import {
-  KEY_EVENTS,
-  ROUTES
+  KEY_EVENTS
 } from "../../utils/constants";
 
-import { IOption } from "../../types/option";
 import { azureMessages } from "../../mockData/azureServiceOptions";
 import { AppState } from "../../store/combineReducers";
 import AzureSubscriptions from "./AzureSubscriptions";

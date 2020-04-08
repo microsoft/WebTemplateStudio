@@ -1,15 +1,8 @@
 import React from "react";
 import { connect, useDispatch } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
 import { FormattedMessage } from "react-intl";
-
-import RootAction from "../../../store/ActionType";
-
 import { isEnableNextPageSelector } from "../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
-
 import { AppState } from "../../../store/combineReducers";
-import { ISelected } from "../../../types/selected";
-
 import { ReactComponent as QuickStartWand } from "../../../assets/quickStartWand.svg";
 import quickStartWand from "../../../assets/quickStartWand.svg";
 
