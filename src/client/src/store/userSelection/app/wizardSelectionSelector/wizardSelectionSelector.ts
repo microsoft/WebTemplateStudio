@@ -1,11 +1,9 @@
-import _ from "lodash";
 import { createSelector } from "reselect";
 import { RowType } from "../../../../types/rowType";
 import { ISelected } from "../../../../types/selected";
 import { IValidation } from "../../../../utils/validations/validations";
 import { AppState } from "../../../combineReducers";
 import { UserSelectionState } from "../../combineReducers";
-import { SelectionState } from "../../../selection/combineReducers";
 import { ROUTES } from "../../../../utils/constants";
 import { IValidations } from "../../../config/validations/model";
 
@@ -103,32 +101,6 @@ const frameworksRowItems = (selection: UserSelectionState): RowType[] => {
       author: backendFramework.author
     }
   ];
-};
-
-/**
- * Iterates through every service, and for every services, identifies each
- * resource that was created and adds it to a list that will be displayed on the
- * summary page. Currently supports Azure App Service and CosmosDB only. Information
- * provided is in line with props required by SummaryTile component.
- *
- * @param selection selection object created by the developer
- */
-
-const getServices = (selection: SelectionState): RowType[] => {
-  const { services } = selection;
-  const { cosmosDB } = services;
-  const servicesRows = [];
-  if (!_.isEmpty(cosmosDB.selection)) {
-    servicesRows.push({
-      title: cosmosDB.selection[0].accountName,
-      originalTitle: "CosmosDB",
-      company: "Microsoft",
-      svgUrl: "",
-      internalName: cosmosDB.selection[0].internalName,
-      version: "1.0"
-    });
-  }
-  return servicesRows;
 };
 
 const getFrameworksRowItemSelector = createSelector(

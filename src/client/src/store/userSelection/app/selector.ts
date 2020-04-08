@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { createSelector } from "reselect";
 import { ITemplateInfo } from "../../../types/templateInfo";
 import { getOutputPath, getProjectName } from "./wizardSelectionSelector/wizardSelectionSelector";
