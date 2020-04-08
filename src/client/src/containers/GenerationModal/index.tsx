@@ -57,11 +57,11 @@ const GenerationModal = ({
   intl, isModalOpen
 }: Props) => {
   const { formatMessage } = intl;
-  let serviceFailed = false;
   const [templateGenStatus, setTemplateGenStatus] = React.useState("");
   const [generationStatus, setGenerationStatus] = React.useState<any>({});
   const [isTemplateGenerated, setIsTemplateGenerated] = React.useState(false);
   const [isTemplatesFailed, setIsTemplatesFailed] = React.useState(false);
+  const [isServiceFailed, setIsServiceFailed] = React.useState(false);
   const [templateGenerated, setTemplateGenerated] = React.useState(false);
   const [templateGenerationInProgress, setTemplateGenerationInProgress] = React.useState(false);
 
@@ -89,6 +89,8 @@ const GenerationModal = ({
         localServiceStatus.appService.isDeployed = generationStatus.appService.success;
         localServiceStatus.appService.isFailed = generationStatus.appService.failure;
       }
+      
+      setIsServiceFailed(localServiceStatus.cosmosdb.isFailed || localServiceStatus.appService.isFailed);
 
       if ((isCosmosSelected && !isAppServiceSelected && localServiceStatus.cosmosdb.isDeployed) ||
       (!isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed)||
@@ -118,7 +120,7 @@ const GenerationModal = ({
   },[isModalOpen]);
 
   const dispatch = useDispatch();
-  
+
   React.useEffect(()=>{
     generateProject(engine,
       isCosmosSelected,
@@ -290,7 +292,6 @@ const GenerationModal = ({
         serviceStatus[service].isSelected &&
         serviceStatus[service].isFailed
       ) {
-        serviceFailed = true;
         return (
           <div
             className={styles.sectionLine}
@@ -389,7 +390,7 @@ const GenerationModal = ({
         <div className={styles.title}>
           {formatMessage(messages.creatingYourProject)}
         </div>
-        {((templateGenerated && isServicesDeployed) || isTemplatesFailed) && (
+        {((templateGenerated && isServicesDeployed) || isServiceFailed || isTemplatesFailed) && (
           <Close
             tabIndex={0}
             className={styles.closeIcon}
@@ -419,7 +420,7 @@ const GenerationModal = ({
       </div>
 
       <div className={styles.footerContainer}>
-        {(isTemplatesFailed || serviceFailed) && (
+        {(isTemplatesFailed || isServiceFailed) && (
           <a
             className={styles.link}
             href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
@@ -429,7 +430,7 @@ const GenerationModal = ({
           </a>
         )}
 
-        {((templateGenerated && isServicesDeployed) || isTemplatesFailed) && (
+        {((templateGenerated && isServicesDeployed) || isServiceFailed || isTemplatesFailed) && (
           <button
             className={classnames(styles.button, {
               [buttonStyles.buttonDark]: templateGenerated,
