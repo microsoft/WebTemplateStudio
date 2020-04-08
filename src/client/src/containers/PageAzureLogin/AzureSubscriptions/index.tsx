@@ -1,16 +1,12 @@
 import _ from "lodash";
 import classnames from "classnames";
 import * as React from "react";
-import { connect } from "react-redux";
-
+import { connect, useDispatch } from "react-redux";
 import Card from "../../../components/Card";
-
 import styles from "./styles.module.css";
-import {startLogOutAzureAction} from "../../../store/azureProfileData/login/action";
 import * as ModalActions from "../../../store/modals/action";
 import { isCosmosDbModalOpenSelector } from "../../../store/modals/selector";
 import { WIZARD_CONTENT_INTERNAL_NAMES, ROUTES } from "../../../utils/constants";
-
 import azureServiceOptions from "../../../mockData/azureServiceOptions";
 import { servicesEnum } from "../../../mockData/azureServiceOptions";
 import { IOption } from "../../../types/option";
@@ -20,20 +16,9 @@ import {
   injectIntl
 } from "react-intl";
 import { AppState } from "../../../store/combineReducers";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../../store/ActionType";
-
 import { isAppServiceSelectedSelector } from "../../../store/azureProfileData/appService/selector";
 import messages from "./messages";
 import { setPageWizardPageAction, setDetailPageAction } from "../../../store/config/pages/action";
-
-interface IDispatchProps {
-  startLogOutToAzure: () => any;
-  openCosmosDbModal: () => any;
-  setDetailPage: (detailPageInfo: IOption) => void;
-  openAppServiceModal: () => any;
-  openAzureLoginModal: (serviceInternalName: string) => any;
-}
 
 interface IAzureLoginProps {
   isLoggedIn: boolean;
@@ -48,22 +33,25 @@ interface IState {
   azureServices?: IOption[] | undefined;
 }
 
-type Props = IAzureLoginProps & IDispatchProps & InjectedIntlProps;
+type Props = IAzureLoginProps & InjectedIntlProps;
 
 const AzureSubscriptions = (props: Props) => {
   const {
     cosmosDbSelection,
     appServiceSelection,
     intl,
-    openCosmosDbModal,
-    openAppServiceModal,
-    openAzureLoginModal,
     isLoggedIn,
-    setDetailPage,
     isPreview
   } = props;
   const { formatMessage } = intl;
   const [uniqueServiceTypes, setUniqueServiceTypes] = React.useState<(string | undefined)[]>([]);
+  const dispatch = useDispatch();
+
+  const setDetailPage= (detailPageInfo: IOption) => {
+    const isIntlFormatted = true;
+    dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
+    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted, ROUTES.AZURE_LOGIN));
+  }
 
   React.useEffect(()=>{
     const serviceTypes = azureServiceOptions.map(option => option.type);
@@ -88,8 +76,8 @@ const AzureSubscriptions = (props: Props) => {
 
   const getServicesModalOpener = (internalName: string) => {
     const modalOpeners = {
-      [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: openCosmosDbModal,
-      [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: openAppServiceModal
+      [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: () => dispatch(ModalActions.openCosmosDbModalAction()),
+      [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: ()=> dispatch(ModalActions.openAppServiceModalAction())
     };
     if (modalOpeners.hasOwnProperty(internalName)) {
       return modalOpeners[internalName];
@@ -134,7 +122,7 @@ const AzureSubscriptions = (props: Props) => {
                       handleButtonClick={
                         isLoggedIn
                           ? getServicesModalOpener(option.internalName)
-                          : () => openAzureLoginModal(option.internalName)
+                          : () => dispatch(ModalActions.openAzureLoginModalAction(option.internalName))
                       }
                       handleDetailsClick={setDetailPage}
                     />
@@ -184,29 +172,6 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => {
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  startLogOutToAzure: () => {
-    dispatch(startLogOutAzureAction());
-  },
-  setDetailPage: (detailPageInfo: IOption) => {
-    const isIntlFormatted = true;
-    dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
-    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted, ROUTES.AZURE_LOGIN));
-  },
-  openCosmosDbModal: () => {
-    dispatch(ModalActions.openCosmosDbModalAction());
-  },
-  openAppServiceModal: () => {
-    dispatch(ModalActions.openAppServiceModalAction());
-  },
-  openAzureLoginModal: (serviceInternalName: string) => {
-    dispatch(ModalActions.openAzureLoginModalAction(serviceInternalName));
-  }
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(injectIntl(AzureSubscriptions));
