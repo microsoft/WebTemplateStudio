@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import Loadable from "react-loadable";
 import { ReactComponent as CloseSVG } from "../../../../../assets/cancel.svg";
 import { getSvg } from "../../../../../utils/getSvgUrl";
@@ -11,12 +11,10 @@ import { injectIntl, InjectedIntl, InjectedIntlProps } from "react-intl";
 import { AppState } from "../../../../../store/combineReducers";
 
 import messages from "./messages";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../../../../store/ActionType";
 import { validateItemName } from "../../../../../utils/validations/itemName/itemName";
 import { getValidations } from "../../../../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { setPageAction, setPagesAction } from "../../../../../store/selection/pages/action";
-import { IValidations } from "../../../../../store/selection/validations/model";
+import { IValidations } from "../../../../../store/config/validations/model";
 
 const Reorder = Loadable({
   loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../../../../utils/svgComponents/ReorderIcon"),
@@ -37,12 +35,7 @@ interface ISortablePageListProps {
   validations: IValidations;
 }
 
-interface ISortableDispatchProps {
-  updatePage: (page: ISelected) => any;
-  selectPages: (pages: ISelected[]) => any;
-}
-
-type Props = IStateProps & ISortablePageListProps & InjectedIntlProps & ISortableDispatchProps;
+type Props = IStateProps & ISortablePageListProps & InjectedIntlProps;
 
 const DraggablePage = ({
   page,
@@ -52,9 +45,7 @@ const DraggablePage = ({
   intl,
   validations,
   selectedPages,
-  updatePage,
-  customInputStyle,
-  selectPages
+  customInputStyle
 }: Props) => {
   React.useEffect(()=>{
     const hasFocusOnLasPage = selectedPages.length>1 && !page.isDirty && selectedPages.length === idx;
@@ -65,6 +56,7 @@ const DraggablePage = ({
       page.isDirty = true;
     }
   },[selectedPages]);
+  const dispatch = useDispatch();
 
   const moveDownScroll = () =>{
      if (document.getElementById("dvRightSideBar") && document.getElementById("dvSummaryContainer")) 
@@ -88,7 +80,7 @@ const DraggablePage = ({
   const handleCloseClick = (idx: number) => {
     const pagesWithOmittedIdx: ISelected[] = [...selectedPages];
     pagesWithOmittedIdx.splice(idx, 1);
-    selectPages(pagesWithOmittedIdx);
+    dispatch(setPagesAction(pagesWithOmittedIdx));
   };
 
   const handleCloseOnClick = () => {
@@ -103,7 +95,7 @@ const DraggablePage = ({
     const validationResult = await validateItemName(newTitle, validations.itemNameValidationConfig, selectedPages);
     page.error = validationResult.error;
     page.isValidTitle = validationResult.isValid;
-    updatePage(page);
+    dispatch(setPageAction(page));
   };
 
   return (
@@ -182,18 +174,4 @@ const mapStateToProps = (state: AppState) => ({
   validations: getValidations(state)
 });
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): ISortableDispatchProps => ({
-  updatePage: (page: ISelected) => {
-    dispatch(setPageAction(page));
-  },
-  selectPages: (pages: ISelected[]) => {
-    dispatch(setPagesAction(pages));
-  },
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectIntl(DraggablePage));
+export default connect(mapStateToProps)(injectIntl(DraggablePage));

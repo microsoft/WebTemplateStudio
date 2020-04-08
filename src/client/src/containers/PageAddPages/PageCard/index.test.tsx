@@ -22,6 +22,7 @@ import { render, fireEvent } from "@testing-library/react";
 import {IntlProvider} from 'react-intl';
 import { ISelected } from "../../../types/selected";
 import { setPagesAction } from "../../../store/selection/pages/action";
+import { AppState } from "../../../store/combineReducers";
 
 describe("PageCard", () => {
   let props: any;
@@ -30,11 +31,11 @@ describe("PageCard", () => {
   const mockStore = configureMockStore();
 
   beforeEach(()=>{
-    const initialState = getInitialState();
+    const initialState: AppState = getInitialState();
     loadMasters(initialState);
     store = mockStore(initialState);
     props = {
-      page: initialState.wizardContent.pageOptions[0],
+      page: initialState.templates.pageOptions[0],
       isModal:true,
       intl: global.intl
     };

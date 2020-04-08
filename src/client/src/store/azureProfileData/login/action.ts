@@ -1,15 +1,11 @@
-import { IsLoggedIntoAzureAction, ILoginToAzureAction, ILogoutAction } from "./model";
+
+import { IsLoggedIntoAzureAction, ILogoutAction } from "./model";
 import { AZURE_TYPEKEYS } from "../typeKeys";
 import { Dispatch } from "react";
 import logout from "../../../mockData/logout";
 
 export const IsLoggedIntoAzureActionAction = (): IsLoggedIntoAzureAction => ({
   type: AZURE_TYPEKEYS.IS_LOGGED_IN_TO_AZURE
-});
-
-export const logIntoAzureActionAction = (loginData: AzureProfile): ILoginToAzureAction => ({
-  type: AZURE_TYPEKEYS.LOG_IN_TO_AZURE,
-  payload: loginData
 });
 
 export const logOutAzureAction = (): ILogoutAction => ({

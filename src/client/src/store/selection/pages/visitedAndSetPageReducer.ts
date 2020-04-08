@@ -1,6 +1,6 @@
 import { ROUTES } from "../../../utils/constants";
-import { WIZARD_INFO_TYPEKEYS } from "../../wizardContent/typeKeys";
-import WizardInfoType from "../../wizardContent/wizardInfoActionType";
+import { WIZARD_INFO_TYPEKEYS } from "../../typeKeys";
+import WizardInfoType from "../../templates/templatesType";
 import { IRoutes } from "./model";
 
 const initialState = {

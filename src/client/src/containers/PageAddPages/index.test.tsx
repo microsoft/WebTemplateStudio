@@ -6,13 +6,14 @@ import { getInitialState, loadMasters } from "../../mockData/mockStore";
 import { render } from "@testing-library/react";
 import {IntlProvider} from 'react-intl';
 import messages from "./messages";
+import { AppState } from "../../store/combineReducers";
 
 
 describe("PageAddPages", () => {
   let props: any;
   let wrapper: any;
   let store: any;
-  let initialState: any;
+  let initialState: AppState;
   const mockStore = configureMockStore();
 
   beforeEach(()=>{
@@ -30,9 +31,9 @@ describe("PageAddPages", () => {
     </Provider></IntlProvider>);
   });
 
-  it("check card components", ()=>{
+  xit("check card components", ()=>{
     const buttonLength = wrapper.queryAllByRole("button").length;
-    expect(buttonLength).toBe(initialState.wizardContent.pageOptions.length);
+    expect(buttonLength).toBe(initialState.templates.backendOptions.length + initialState.templates.frontendOptions.length);
   });
 
   it("check title", ()=>{

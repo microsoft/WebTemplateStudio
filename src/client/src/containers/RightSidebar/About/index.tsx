@@ -10,7 +10,7 @@ import messages from "./messages";
 type Props = InjectedIntlProps;
 
 const About = ({ intl }: Props) => {
-  const versions: IVersions = useSelector((state: AppState) => state.versions);
+  const versions: IVersions = useSelector((state: AppState) => state.config.versions);
   const { templatesVersion, wizardVersion } = versions;
   const { formatMessage } = intl;
   return (

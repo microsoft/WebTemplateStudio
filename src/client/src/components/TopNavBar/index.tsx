@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import TopNavBarLink from "../TopNavBarLink";
@@ -10,11 +10,8 @@ import styles from "./styles.module.css";
 import { ROUTES_ARRAY } from "../../utils/constants";
 import { IRoutes } from "../../store/selection/pages/model";
 import { isEnableNextPageSelector } from "../../store/selection/app/wizardSelectionSelector/wizardSelectionSelector";
-import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../store/combineReducers";
-import RootAction from "../../store/ActionType";
 import messages from "./messages";
-import { setPageWizardPageAction } from "../../store/wizardContent/pages/action";
+import { setPageWizardPageAction } from "../../store/config/pages/action";
 
 interface IStateProps {
   isVisited: IRoutes;
@@ -22,11 +19,7 @@ interface IStateProps {
   selectedRoute: string;
 }
 
-interface IDispatchProps {
-  setPage: (route: string) => void;
-}
-
-type Props = IStateProps & IDispatchProps & InjectedIntlProps;
+type Props = IStateProps & InjectedIntlProps;
 
 const TopNavBar = (props: Props) => {
   const { formatMessage } = props.intl;
@@ -50,6 +43,7 @@ const TopNavBar = (props: Props) => {
       setPathIndex(ROUTES_ARRAY.indexOf(ROUTES_ARRAY[idx]));
     }
   };
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     const index = ROUTES_ARRAY.indexOf(selectedRoute);
@@ -61,7 +55,7 @@ const TopNavBar = (props: Props) => {
     }
   }, [selectedRoute]);
 
-  const { isVisited, intl, isEnableNextPage, setPage } = props;
+  const { isVisited, intl, isEnableNextPage } = props;
   return (
     <React.Fragment>
       {
@@ -104,7 +98,7 @@ const TopNavBar = (props: Props) => {
                     visitedCheck={isOtherVisitedRoute}
                     isSelected={idx === currentPathIndex}
                     pageNumber={idx + 1}
-                    reducerSetPage={setPage}
+                    reducerSetPage={(page)=> dispatch(setPageWizardPageAction(page))}
                   />
                 </div>
               );
@@ -122,12 +116,4 @@ const mapStateToProps = (state: any): IStateProps => ({
   selectedRoute : state.wizardRoutes.selected
 });
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  setPage: (route: string) => {
-    dispatch(setPageWizardPageAction(route));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(TopNavBar));
+export default connect(mapStateToProps)(injectIntl(TopNavBar));

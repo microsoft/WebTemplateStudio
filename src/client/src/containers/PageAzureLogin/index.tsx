@@ -1,55 +1,43 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
+import { connect, useDispatch } from "react-redux";
 import classnames from "classnames";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import styles from "./styles.module.css";
 
 import {
-  KEY_EVENTS,
-  ROUTES
+  KEY_EVENTS
 } from "../../utils/constants";
 
-import { IOption } from "../../types/option";
 import { azureMessages } from "../../mockData/azureServiceOptions";
 import { AppState } from "../../store/combineReducers";
 import AzureSubscriptions from "./AzureSubscriptions";
 import AzureStudent from "./AzureStudent";
 import Title from "../../components/Title";
-import RootAction from "../../store/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
-import { setDetailPageAction, setPageWizardPageAction } from "../../store/wizardContent/pages/action";
 import { startLogOutAzureAction } from "../../store/azureProfileData/login/action";
 import { AppContext } from "../../AppContext";
-
-interface IDispatchProps {
-  setDetailPage: (detailPageInfo: IOption) => any;
-  startLogOutToAzure: () => any;
-}
 
 interface IAzureLoginProps {
   isLoggedIn: boolean;
   email: string;
 }
 
-type Props = IDispatchProps &
-  IAzureLoginProps &
-  InjectedIntlProps;
+type Props = IAzureLoginProps & InjectedIntlProps;
 
 const AzureLogin = (props: Props)=> {
   const {
-    startLogOutToAzure,
     isLoggedIn, intl, email
   } = props;
   const { vscode } = React.useContext(AppContext);
+  const dispatch = useDispatch();
 
   const signOutClick = () => {
     azureLogout(vscode).then((event)=>{
       const message = event.data;
       if (message.payload.success) {
-        startLogOutToAzure();
+        dispatch(startLogOutAzureAction());
       }
     });
   };
@@ -104,28 +92,12 @@ const AzureLogin = (props: Props)=> {
 
 const mapStateToProps = (state: AppState): IAzureLoginProps => {
   const { isLoggedIn } = state.azureProfileData;
-  const { email } = state.azureProfileData.profileData;
+  const { email } = state.config.azureProfileData;
   return {
     isLoggedIn,
     email
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  setDetailPage: (detailPageInfo: IOption) => {
-    const isIntlFormatted = true;
-    dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
-    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted, ROUTES.AZURE_LOGIN));
-  },
-  startLogOutToAzure: () => {
-    dispatch(startLogOutAzureAction());
-  },
-});
-
 export default 
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(injectIntl(AzureLogin));
+  connect(mapStateToProps)(injectIntl(AzureLogin));

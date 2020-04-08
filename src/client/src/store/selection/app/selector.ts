@@ -18,7 +18,7 @@ const DATABASE_INTERNAL_NAME_MAPPING = {
 };
 
 const getWizardSelectionsSelector = (state: AppState): SelectionState => state.selection;
-const getBackendOptionsSelector = (state: AppState): IOption[] => state.wizardContent.backendOptions;
+const getBackendOptionsSelector = (state: AppState): IOption[] => state.templates.backendOptions;
 
 const getProjectType = (selection: SelectionState): string => {
   const projectType = selection.appType as ISelected;

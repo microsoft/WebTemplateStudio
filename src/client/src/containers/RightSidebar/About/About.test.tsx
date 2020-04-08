@@ -38,8 +38,8 @@ describe("About", () => {
       const expectedTextWizardVersion = intl.formatMessage(messages.wizardVersion);
       expect(wrapper.getByText(expectedTextVisitRepo)).toBeDefined();
       expect(wrapper.getByText(expectedTextReportIssue)).toBeDefined();
-      expect(wrapper.getByText(expectedTextTemplatesVersion + " " + store.getState().versions.templatesVersion)).toBeDefined();
-      expect(wrapper.getByText(expectedTextWizardVersion + " " + store.getState().versions.wizardVersion)).toBeDefined();
+      expect(wrapper.getByText(expectedTextTemplatesVersion + " " + store.getState().config.versions.templatesVersion)).toBeDefined();
+      expect(wrapper.getByText(expectedTextWizardVersion + " " + store.getState().config.versions.wizardVersion)).toBeDefined();
     });
   });
 });

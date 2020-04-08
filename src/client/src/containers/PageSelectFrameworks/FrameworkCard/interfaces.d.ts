@@ -6,17 +6,10 @@ interface ISelectProps {
   isFrontEnd: boolean;
 }
 
-interface IDispatchProps {
-  setFrontendSelect: (framework: ISelected) => any;
-  setBackendSelect: (framework: ISelected) => any;
-  setDetailPage: (framework: IOption) => any;
-  updateFrameworks: (frameworks: IOption[]) => any;
-}
-
 interface IStateProps {
   isPreview: boolean;
   frontEndSelect: ISelected;
   backEndSelect: ISelected;
 }
 
-export { IStateProps, IDispatchProps, ISelectProps };
+export { IStateProps, ISelectProps };

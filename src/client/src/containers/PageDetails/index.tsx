@@ -1,13 +1,11 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import Details from "./Details";
 import { IOption } from "../../types/option";
 import { getScreenShot } from "../../utils/getSvgUrl";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../store/ActionType";
-import { setPageWizardPageAction } from "../../store/wizardContent/pages/action";
+import { setPageWizardPageAction } from "../../store/config/pages/action";
 
 interface IPageDetailsProps {
   originRoute: string;
@@ -15,18 +13,16 @@ interface IPageDetailsProps {
   isIntlFormatted: boolean;
 }
 
-interface IDispatchProps {
-  setPage: (route: string) => any;
-}
-
-type Props = IPageDetailsProps & IDispatchProps;
+type Props = IPageDetailsProps;
 
 const PageDetails = (props: Props) => {
-  const { detailsPageInfo, isIntlFormatted, originRoute, setPage } = props;
+  const { detailsPageInfo, isIntlFormatted, originRoute } = props;
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.detailsContainer}>
       <Details
-        handleBackClick={()=>{setPage(originRoute)}}
+        handleBackClick={()=>{dispatch(setPageWizardPageAction(originRoute))}}
         detailInfo={detailsPageInfo}
         formatteDetailInfo={isIntlFormatted ? detailsPageInfo : undefined}
       />
@@ -38,21 +34,12 @@ const PageDetails = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IPageDetailsProps => ({
-  originRoute : state.wizardContent.detailsPage.originRoute,
-    detailsPageInfo: state.wizardContent.detailsPage.data,
-    isIntlFormatted: state.wizardContent.detailsPage.isIntlFormatted
-});
-
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  setPage: (route: string) => {
-    dispatch(setPageWizardPageAction(route));
-  }
+  originRoute : state.config.detailsPage.originRoute,
+    detailsPageInfo: state.config.detailsPage.data,
+    isIntlFormatted: state.config.detailsPage.isIntlFormatted
 });
 
 export default
   connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
   )(PageDetails);

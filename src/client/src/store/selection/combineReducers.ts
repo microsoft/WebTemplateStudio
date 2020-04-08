@@ -5,10 +5,8 @@ import frontendFramework from "./frameworks/selectFrontendFrameworkReducer";
 import pages from "./pages/selectPagesReducer";
 import appType from "./app/selectWebAppReducer";
 import projectNameObject from "./app/updateProjectNameReducer";
-import validations from "./validations/setValidationsReducer";
 import outputPathObject from "./app/updateOutputPathReducer";
 import services from "../azureProfileData";
-import isValidatingName from "./validations/validatingNameReducer";
 
 const selectionStateReducer = combineReducers({
   appType,
@@ -17,9 +15,7 @@ const selectionStateReducer = combineReducers({
   pages,
   services,
   outputPathObject,
-  isValidatingName,
-  projectNameObject,
-  validations
+  projectNameObject
 });
 
 export default selectionStateReducer;

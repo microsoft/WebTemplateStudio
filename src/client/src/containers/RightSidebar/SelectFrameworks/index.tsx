@@ -8,7 +8,7 @@ import Dropdown from "../../../components/Dropdown";
 import { AppState } from "../../../store/combineReducers";
 import { SelectionState } from "../../../store/selection/combineReducers";
 import { IOption } from "../../../types/option";
-import { WizardContentType } from "../../../store/wizardContent/wizardContent/combineReducers";
+import { TemplateType } from "../../../store/templates/combineReducers";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/selection/frameworks/action";
 
 type Props = InjectedIntlProps;
@@ -16,12 +16,12 @@ type Props = InjectedIntlProps;
 const SelectFrameworks = (props: Props)=>{
 
   const selection: SelectionState = useSelector((state: AppState) => state.selection);
-  const frontEndOptions: IOption[] = useSelector((state: AppState) => state.wizardContent.frontendOptions);
+  const frontEndOptions: IOption[] = useSelector((state: AppState) => state.templates.frontendOptions);
   const frontendDropdownItems: IDropDownOptionType[] =
-    useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.frontendOptions));
+    useSelector((state: AppState) => convertOptionsToDropdownItems(state.templates.frontendOptions));
   const backendDropdownItems: IDropDownOptionType[] =
-    useSelector((state: AppState) => convertOptionsToDropdownItems(state.wizardContent.backendOptions));
-  const contentOptions: WizardContentType = useSelector((state: AppState) => state.wizardContent);
+    useSelector((state: AppState) => convertOptionsToDropdownItems(state.templates.backendOptions));
+  const contentOptions: TemplateType = useSelector((state: AppState) => state.templates);
 
   const { intl } = props;
   const { formatMessage } = intl;

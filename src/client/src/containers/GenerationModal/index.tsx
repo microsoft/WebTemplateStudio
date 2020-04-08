@@ -30,7 +30,7 @@ import { MODAL_TYPES } from "../../store/modals/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
 import { sendTelemetry, generateProject } from "../../utils/extensionService/extensionService";
-import { resetWizardAction } from "../../store/wizardContent/wizardContent/action";
+import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
 import { rootSelector } from "../../store/selection/app/selector";
 import { isCosmosResourceCreatedSelector, getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
