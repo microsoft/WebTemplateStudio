@@ -37,6 +37,8 @@ const CosmosModal = ({ intl }: Props) => {
   const cosmosInStore = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
   const initialSubscription = cosmosInStore ? cosmosInStore.subscription : "";
   const initialAccountName = cosmosInStore ? cosmosInStore.accountName : "";
+  const initialLocation = cosmosInStore ? cosmosInStore.location : "";
+  const initialResourceGroup = cosmosInStore ? cosmosInStore.resourceGroup : "";
   const initialApi = cosmosInStore ? cosmosInStore.api : "";
   const [showAdvanced, setShowAdvanced] = useState(false);
   const initialSubscriptionData: SubscriptionData = { locations: [], resourceGroups:[] };
@@ -45,8 +47,8 @@ const CosmosModal = ({ intl }: Props) => {
   const [subscriptionData, setSubscriptionData] = useState(initialSubscriptionData);
   const [accountName, setAccountName] = useState(initialAccountName);
   const [api, setApi] = useState(initialApi);
-  const [location, setLocation] = useState("");
-  const [resourceGroup, setResourceGroup] = useState("");
+  const [location, setLocation] = useState(initialLocation);
+  const [resourceGroup, setResourceGroup] = useState(initialResourceGroup);
   const [isAvailableAccountName, setIsAvailableAccountName] = useState(false);
   
   React.useEffect(() => {
@@ -120,7 +122,8 @@ const CosmosModal = ({ intl }: Props) => {
         {/* Advanced Mode */}
         <div className={classNames({ [styles.hide]: !showAdvanced })}>
         <LocationSelection
-            initialLocations={subscriptionData.locations}
+            Location={location}
+            Locations={subscriptionData.locations}
             onLocationChange={setLocation} />
         <ResourceGroupSelection
           initialResourceGroups={subscriptionData.resourceGroups}

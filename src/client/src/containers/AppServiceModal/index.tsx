@@ -38,13 +38,15 @@ const AppServiceModal = ({ intl }: Props) => {
   const appServiceInStore = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
+  const initialLocation = appServiceInStore ? appServiceInStore.location : "";
+  const initialResourceGroup = appServiceInStore ? appServiceInStore.resourceGroup : "";
   const initialSubscriptionData: SubscriptionData = { locations: [], resourceGroups:[] };
 
   const [subscription, setSubscription] = useState(initialSubscription);
   const [subscriptionData, setSubscriptionData] = useState(initialSubscriptionData);
   const [appName, setAppName] = useState(initialAppServiceName);
-  const [location, setLocation] = useState("");
-  const [resourceGroup, setResourceGroup] = useState("");
+  const [location, setLocation] = useState(initialLocation);
+  const [resourceGroup, setResourceGroup] = useState(initialResourceGroup);
   const [isAvailableAppName, setIsAvailableAppName] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   
@@ -117,7 +119,8 @@ const AppServiceModal = ({ intl }: Props) => {
         {/* Advanced Mode */}
         <div className={classNames({ [styles.hide]: !showAdvanced })}>
           <LocationSelection
-            initialLocations={subscriptionData.locations}
+            Location={location}
+            Locations={subscriptionData.locations}
             onLocationChange={setLocation} />
             <ResourceGroupSelection
               initialResourceGroups={subscriptionData.resourceGroups}
