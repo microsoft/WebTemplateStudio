@@ -27,15 +27,17 @@ const LocationSelection = (props: Props) => {
       value: location.name,
     }));
     setDropdownLocations(newDropDownLocations);
+  }, [Locations]);
 
-    const newLocation = newDropDownLocations.find((s) => s.value === Location);
+  React.useEffect(() => {
+    const newLocation = dropdownLocations.find((s) => s.value === Location);
     if (newLocation) {
       setSelectedLocation(newLocation);
     } else {
-      const location = newDropDownLocations.find((s) => s.value === DEFAULT_LOCATION);
+      const location = dropdownLocations.find((s) => s.value === DEFAULT_LOCATION);
       setSelectedLocation(location);
     }
-  }, [Locations]);
+  }, [dropdownLocations]);
 
   React.useEffect(() => {
     if (selectedLocation) {
