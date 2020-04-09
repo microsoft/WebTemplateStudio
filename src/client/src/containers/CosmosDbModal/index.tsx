@@ -66,9 +66,10 @@ const CosmosModal = ({ intl }: Props) => {
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
     const isAccountNameEmpty = accountName === "";
+    const isLocationEmpty = location === "";
     const isApiEmpty = api === "";
 
-    return !(isSubscriptionEmpty || isAccountNameEmpty || isApiEmpty || !isAvailableAccountName);
+    return !(isSubscriptionEmpty || isAccountNameEmpty || isLocationEmpty || isApiEmpty || !isAvailableAccountName);
   };
 
   const getButtonClassNames = () => {

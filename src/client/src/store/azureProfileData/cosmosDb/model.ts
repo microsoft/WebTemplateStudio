@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 export interface ISaveCosmosDbSettingsAction {
   type: AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS;
-  payload: any;
+  payload: ISelectedCosmosService;
 }
 
 export interface IRemoveCosmosDbSettingsAction {
@@ -37,19 +37,6 @@ export interface ISelectedCosmosService {
 
 export interface ICosmosDB {
   accountNameAvailability: IAvailabilityCosmosDb;
-  selection: ISelectedCosmosService[];
+  selection: ISelectedCosmosService | null;
   wizardContent: IServiceContent;
-}
-
-export interface ISelectedDropdownsSelector {
-  subscription?: IDropDownOptionType;
-  resourceGroup?: IDropDownOptionType;
-  appName?: IDropDownOptionType;
-  runtimeStack?: IDropDownOptionType;
-  location?: IDropDownOptionType;
-}
-
-export interface ISelectionInformationSelector {
-  dropdownSelection: ISelectedDropdownsSelector;
-  previousFormData: ISelectedCosmosService;
 }

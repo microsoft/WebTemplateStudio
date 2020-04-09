@@ -65,8 +65,9 @@ const AppServiceModal = ({ intl }: Props) => {
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
     const isAppNameEmpty = appName === "";
+    const isLocationEmpty = location === "";
 
-    return !(isSubscriptionEmpty || isAppNameEmpty || !isAvailableAppName);
+    return !(isSubscriptionEmpty || isAppNameEmpty || isLocationEmpty || !isAvailableAppName);
   };
 
   const getButtonClassNames = () => {
