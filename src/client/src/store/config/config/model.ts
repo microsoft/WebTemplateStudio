@@ -8,3 +8,7 @@ export interface IPreviewStatusActionTypeAction {
     type: CONFIG_TYPEKEYS.SET_PREVIEW_STATUS;
     payload: boolean;
 }
+
+export interface ILoad {
+    type: CONFIG_TYPEKEYS.LOAD;
+}

@@ -31,6 +31,7 @@ import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store
 import { setPreviewStatusAction } from "./store/templates/preview/action";
 import { AppContext } from "./AppContext";
 import { logIntoAzureActionAction } from "./store/config/azure/action";
+import { loadAction } from "./store/config/config/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -115,13 +116,14 @@ const App = (props: Props) => {
   })
 
   React.useEffect(()=>{
-    getUserStatus(vscode).then((event)=>{
+    /*getUserStatus(vscode).then((event)=>{
       const message = event.data;
       if (message.payload !== null) {
         const azureProfile = message.payload as AzureProfile;
         dispatch(logIntoAzureActionAction(azureProfile))
       }
-    });
+    });*/
+    dispatch(loadAction());
 
     getTemplateInfo(vscode).then((event)=>{
       const message = event.data;
@@ -136,7 +138,7 @@ const App = (props: Props) => {
       }));
       dispatch(setPreviewStatusAction(message.payload.preview));
     });
-  },[vscode]);
+  },[]);
 
   function getFrameworksListAndSetToStore(){
     getFrameworks(vscode, isPreview).then((event: any)=>{
