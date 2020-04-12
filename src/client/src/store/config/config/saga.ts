@@ -1,8 +1,11 @@
-import {takeEvery, call, put} from "redux-saga/effects";
-import { CONFIG_TYPEKEYS, WIZARD_INFO_TYPEKEYS } from "../../typeKeys";
-import { getUserStatus, getTemplateInfo } from "../../../utils/extensionService/extensionService";
+import {takeEvery, call, put, select} from "redux-saga/effects";
+import { CONFIG_TYPEKEYS, WIZARD_INFO_TYPEKEYS, TEMPLATES_TYPEKEYS } from "../../typeKeys";
+import { getUserStatus, getTemplateInfo, getFrameworks } from "../../../utils/extensionService/extensionService";
 import { IVersions } from "../../../types/version";
 import { WIZARD_SELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
+import { AppState } from "../../combineReducers";
+import { parseFrameworksPayload } from "../../../utils/parseFrameworksPayload";
+import { FRAMEWORK_TYPE } from "../../../utils/constants";
 
 export function* loadSaga(vscode: any) {
   yield takeEvery(
@@ -13,6 +16,7 @@ export function* loadSaga(vscode: any) {
   function* callBack (){
     yield loadUserStatus();
     yield loadTemplates();
+    yield loadFrameworksList();
   }
 
   function* loadUserStatus (){
@@ -42,6 +46,31 @@ export function* loadSaga(vscode: any) {
     yield put({
       payload: messageTemplateInfo.payload.preview,
       type: CONFIG_TYPEKEYS.SET_PREVIEW_STATUS
+    });
+  }
+
+  function* loadFrameworksList(){
+    const isPreviewSelector = (state: AppState) => state.config.previewStatus;
+    const isPreview = yield select(isPreviewSelector);
+
+    const event: any = yield call(getFrameworks, vscode, isPreview);
+    const message = event.data;
+    yield put ({
+      type: TEMPLATES_TYPEKEYS.SET_FRONTEND_FRAMEWORKS,
+      payload: parseFrameworksPayload(
+        message.payload.frameworks,
+        FRAMEWORK_TYPE.FRONTEND,
+        message.payload.isPreview
+      )
+    });
+
+    yield put ({
+      type: TEMPLATES_TYPEKEYS.SET_BACKEND_FRAMEWORKS,
+      payload: parseFrameworksPayload(
+        message.payload.frameworks,
+        FRAMEWORK_TYPE.BACKEND,
+        message.payload.isPreview
+      )
     });
   }
 }

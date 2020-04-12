@@ -7,24 +7,18 @@ import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 import {
   EXTENSION_COMMANDS,
   ROUTES,
-  DEVELOPMENT,
-  FRAMEWORK_TYPE
+  DEVELOPMENT
 } from "./utils/constants";
 
 import appStyles from "./appStyles.module.css";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
-import { getFrameworks } from "./utils/extensionService/extensionService";
-import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
-
 import Loadable from "react-loadable";
 import PageDetails from "./containers/PageDetails";
 import { MODAL_TYPES } from "./store/modals/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setOutputPathAction } from "./store/userSelection/app/action";
-import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/templates/frameworks/action";
-import { AppContext } from "./AppContext";
 import { loadAction } from "./store/config/config/action";
 
 const PageSelectFrameworks = Loadable({
@@ -66,8 +60,6 @@ if (process.env.NODE_ENV === DEVELOPMENT) {
 
 interface IStateProps {
   frontendOptions: IOption[];
-
-  isPreview: boolean;
   modalState: any;
   selectedRoute: string;
 }
@@ -76,10 +68,9 @@ type Props = IStateProps;
 
 const App = (props: Props) => {
   const { frontendOptions,
-    isPreview, modalState, selectedRoute } = props;
+    modalState, selectedRoute } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading: Array<any> = new Array<any>();
-  const {vscode} = React.useContext(AppContext);
   const dispatch = useDispatch();
 
   const addToPromisesList = (promise: Promise<any>)=>{
@@ -102,7 +93,6 @@ const App = (props: Props) => {
 
   if (frontendOptions.length === 0){
     messageEventsFromExtension();
-    getFrameworksListAndSetToStore();
   }
 
   Promise.all(promisesLoading).then(()=>{
@@ -113,26 +103,7 @@ const App = (props: Props) => {
     dispatch(loadAction());
   },[]);
 
-  function getFrameworksListAndSetToStore(){
-    getFrameworks(vscode, isPreview).then((event: any)=>{
-      const message = event.data;
-      dispatch(setFrontendFrameworksAction(
-        parseFrameworksPayload(
-          message.payload.frameworks,
-          FRAMEWORK_TYPE.FRONTEND,
-          message.payload.isPreview
-        )
-      ));
-      dispatch(setBackendFrameworksAction(
-        parseFrameworksPayload(
-          message.payload.frameworks,
-          FRAMEWORK_TYPE.BACKEND,
-          message.payload.isPreview
-        )
-      ));
-    });
-  }
-
+  
 
   function messageEventsFromExtension(){
     window.addEventListener("message", event => {
@@ -199,7 +170,6 @@ const App = (props: Props) => {
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   frontendOptions: state.templates.frontendOptions,
-  isPreview:  state.config.previewStatus,
   modalState: state.modals.openModal,
   selectedRoute : state.wizardRoutes.selected,
 });
