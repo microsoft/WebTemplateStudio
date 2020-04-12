@@ -428,7 +428,10 @@ const GenerationModal = ({
           </a>
         )}
 
-        {((templateGenerated && isServicesDeployed) || isServiceFailed || isTemplatesFailed) && (
+        {((templateGenerated && isServicesSelected && isServicesDeployed)
+          || (templateGenerated && !isServicesSelected)
+          || isTemplatesFailed
+          || isServiceFailed) && (
           <button
             className={classnames(styles.button, {
               [buttonStyles.buttonDark]: templateGenerated,

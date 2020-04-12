@@ -47,7 +47,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
         frontendFramework:frontendOptions.filter((frame)=>frame.internalName==="React")[0],
         backendFramework:backendOptions.filter((frame)=>frame.internalName==="Node")[0]
       },
-      template: { backendOptions, frontendOptions, pageOptions },
+      templates: { backendOptions, frontendOptions, pageOptions },
       config:{
         previewStatus,
         validations,

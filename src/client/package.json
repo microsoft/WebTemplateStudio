@@ -16,8 +16,6 @@
     "@types/react-loadable": "^5.5.3",
     "@types/react-modal": "^3.8.1",
     "@types/react-redux": "^7.1.7",
-    "@types/react-router": "^4.4.3",
-    "@types/react-router-dom": "^4.3.1",
     "@types/react-select": "^2.0.11",
     "@types/react-sortable-hoc": "^0.6.5",
     "@types/reselect": "^2.2.0",
