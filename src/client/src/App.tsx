@@ -11,13 +11,10 @@ import {
   FRAMEWORK_TYPE
 } from "./utils/constants";
 
-import { getVersionsDataAction } from "./store/config/versions/action";
-
 import appStyles from "./appStyles.module.css";
-import { IVersions } from "./types/version";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
-import { getFrameworks, getUserStatus, getTemplateInfo } from "./utils/extensionService/extensionService";
+import { getFrameworks } from "./utils/extensionService/extensionService";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 
 import Loadable from "react-loadable";
@@ -25,12 +22,9 @@ import PageDetails from "./containers/PageDetails";
 import { MODAL_TYPES } from "./store/modals/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
-import { setValidationsAction } from "./store/config/validations/action";
 import { setOutputPathAction } from "./store/userSelection/app/action";
 import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/templates/frameworks/action";
-import { setPreviewStatusAction } from "./store/templates/preview/action";
 import { AppContext } from "./AppContext";
-import { logIntoAzureActionAction } from "./store/config/azure/action";
 import { loadAction } from "./store/config/config/action";
 
 const PageSelectFrameworks = Loadable({
@@ -116,28 +110,7 @@ const App = (props: Props) => {
   })
 
   React.useEffect(()=>{
-    /*getUserStatus(vscode).then((event)=>{
-      const message = event.data;
-      if (message.payload !== null) {
-        const azureProfile = message.payload as AzureProfile;
-        dispatch(logIntoAzureActionAction(azureProfile))
-      }
-    });*/
     dispatch(loadAction());
-
-    getTemplateInfo(vscode).then((event)=>{
-      const message = event.data;
-      const versionData: IVersions = {
-        templatesVersion:message.payload.templatesVersion,
-        wizardVersion: message.payload.wizardVersion
-      };
-      dispatch(getVersionsDataAction(versionData));
-      dispatch(setValidationsAction({
-        itemNameValidationConfig:message.payload.itemNameValidationConfig,
-        projectNameValidationConfig:message.payload.projectNameValidationConfig
-      }));
-      dispatch(setPreviewStatusAction(message.payload.preview));
-    });
   },[]);
 
   function getFrameworksListAndSetToStore(){
