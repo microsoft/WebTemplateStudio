@@ -11,13 +11,20 @@ export function* loadSaga(vscode: any) {
   );
 
   function* callBack (){
+    yield loadUserStatus();
+    yield loadTemplates();
+  }
+
+  function* loadUserStatus (){
     const eventUserStatus: any = yield call(getUserStatus, vscode);
     const messageUserStatus = eventUserStatus.data;
     if (messageUserStatus.payload !== null) {
       const payload = messageUserStatus.payload as AzureProfile;
       yield put({ type: CONFIG_TYPEKEYS.LOG_IN_TO_AZURE, payload });
     }
-  
+  }
+
+  function* loadTemplates (){
     const eventTemplateInfo: any = yield call(getTemplateInfo, vscode);
     const messageTemplateInfo = eventTemplateInfo.data;
     const versionData: IVersions = {
