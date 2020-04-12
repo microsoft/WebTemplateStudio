@@ -51,5 +51,7 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
 
 export {
   getPagesOptionsAction,
-  getPagesOptionsSuccessAction
+  getPagesOptionsSuccessAction,
+  getOptionalFromApiTemplateInfo,
+  getApiTemplateInfoFromJson
  };

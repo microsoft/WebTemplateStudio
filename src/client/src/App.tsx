@@ -15,10 +15,9 @@ import { getVersionsDataAction } from "./store/config/versions/action";
 
 import appStyles from "./appStyles.module.css";
 import { IVersions } from "./types/version";
-import { ISelected } from "./types/selected";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
-import { getPages, getFrameworks, getUserStatus, getTemplateInfo } from "./utils/extensionService/extensionService";
+import { getFrameworks, getUserStatus, getTemplateInfo } from "./utils/extensionService/extensionService";
 import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 
 import Loadable from "react-loadable";
@@ -26,11 +25,9 @@ import PageDetails from "./containers/PageDetails";
 import { MODAL_TYPES } from "./store/modals/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
-import { setPagesAction } from "./store/userSelection/pages/action";
 import { setValidationsAction } from "./store/config/validations/action";
 import { setOutputPathAction } from "./store/userSelection/app/action";
 import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/templates/frameworks/action";
-import { getPagesOptionsAction } from "./store/templates/pages/action";
 import { setPreviewStatusAction } from "./store/templates/preview/action";
 import { AppContext } from "./AppContext";
 import { logIntoAzureActionAction } from "./store/config/azure/action";
@@ -74,9 +71,7 @@ if (process.env.NODE_ENV === DEVELOPMENT) {
 
 interface IStateProps {
   frontendOptions: IOption[];
-  selectedFrontend: ISelected;
-  selectedBackend: ISelected;
-  selectedPages: ISelected[];
+
   isPreview: boolean;
   modalState: any;
   selectedRoute: string;
@@ -85,7 +80,7 @@ interface IStateProps {
 type Props = IStateProps;
 
 const App = (props: Props) => {
-  const { selectedFrontend, selectedBackend, selectedPages, frontendOptions,
+  const { frontendOptions,
     isPreview, modalState, selectedRoute } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading: Array<any> = new Array<any>();
@@ -143,10 +138,6 @@ const App = (props: Props) => {
     });
   },[vscode]);
 
-  React.useEffect(()=>{
-    if (selectedFrontend.internalName!=="" && selectedBackend.internalName!=="") loadPages();
-  },[selectedFrontend, selectedBackend]);
-
   function getFrameworksListAndSetToStore(){
     getFrameworks(vscode, isPreview).then((event: any)=>{
       const message = event.data;
@@ -167,15 +158,6 @@ const App = (props: Props) => {
     });
   }
 
-  const loadPages = () => {
-    getPages(vscode, selectedFrontend.internalName, selectedBackend.internalName).then((event)=>{
-      dispatch(getPagesOptionsAction(event.data.payload.pages));
-      selectedPages.map((selectedPage)=>{
-        selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName ? selectedPage.defaultName.replace(" ",""):""}`;
-      });
-      dispatch(setPagesAction(selectedPages));
-    });
-  }
 
   function messageEventsFromExtension(){
     window.addEventListener("message", event => {
@@ -228,7 +210,6 @@ const App = (props: Props) => {
           {(selectedRoute === ROUTES.AZURE_LOGIN) && (<PageAzureLogin/>)}
           {(selectedRoute === ROUTES.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
           {(selectedRoute === ROUTES.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
-
           {(selectedRoute === ROUTES.SELECT_PAGES) && (<PageAddPages isModal={false}/>)}
           {(selectedRoute === ROUTES.NEW_PROJECT) && (<PageNewProject/>)}
 
@@ -241,12 +222,8 @@ const App = (props: Props) => {
   );
 }
 
-
 const mapStateToProps = (state: AppState): IStateProps => ({
-  selectedFrontend: state.userSelection.frontendFramework,
-  selectedBackend: state.userSelection.backendFramework,
   frontendOptions: state.templates.frontendOptions,
-  selectedPages: state.userSelection.pages,
   isPreview:  state.config.previewStatus,
   modalState: state.modals.openModal,
   selectedRoute : state.wizardRoutes.selected,

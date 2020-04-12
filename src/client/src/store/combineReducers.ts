@@ -26,7 +26,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
 
   if (action.type === CONFIG_TYPEKEYS.RESET_WIZARD) {
     const { backendOptions, frontendOptions, pageOptions } = state!.templates;
-    const { previewStatus, detailsPage, validations, isValidatingName, versions } = state!.config;
+    const { previewStatus, detailsPage, validations, isValidatingName, versions, azureProfileData } = state!.config;
 
     /* Elements that are undefined tell the reducer to replace the element
      * with the initial state that is specified in the element's reducer.
@@ -54,6 +54,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
         detailsPage,
         isValidatingName,
         versions,
+        azureProfileData
       },
       wizardRoutes: undefined,
     };
