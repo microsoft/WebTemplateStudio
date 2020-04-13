@@ -388,7 +388,9 @@ const GenerationModal = ({
         <div className={styles.title}>
           {formatMessage(messages.creatingYourProject)}
         </div>
-        {((templateGenerated && isServicesDeployed) || isServiceFailed || isTemplatesFailed) && (
+        {((isServicesSelected && (isServiceFailed || isServicesDeployed)) ||
+         (!isServicesSelected && (isTemplatesFailed || isTemplateGenerated)))
+         && (
           <Close
             tabIndex={0}
             className={styles.closeIcon}
