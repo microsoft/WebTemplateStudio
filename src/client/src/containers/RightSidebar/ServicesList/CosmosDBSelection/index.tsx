@@ -38,7 +38,7 @@ const CosmosDBSelection = ({
   };
   return (
     <React.Fragment>
-      {!_.isEmpty(cosmosSelection.selection) && (
+      {cosmosSelection.selection && (
         <React.Fragment>
           <div className={styles.headerContainer}>
             <div>{intl.formatMessage(serviceType)}</div>
@@ -52,20 +52,15 @@ const CosmosDBSelection = ({
               <EditIcon className={styles.editIcon} />
             </div>
           </div>
-          {cosmosSelection.selection.map((resource: any, idx: number) => {
-            const { accountName } = resource;
-            return (
-              <SidebarItem
+          <SidebarItem
                 cosmosDB={true}
                 customInputStyle={styles.input}
-                key={`${accountName} ${idx + 1}`}
-                text={accountName}
+                key={cosmosSelection.selection.accountName}
+                text={cosmosSelection.selection.accountName}
                 withIndent={true}
                 handleCloseClick={(selectionIndex: number)=> dispatch(removeCosmosSelectionAction(selectionIndex))}
-                idx={idx + 1}
+                idx={1}
               />
-            );
-          })}
         </React.Fragment>
       )}
     </React.Fragment>

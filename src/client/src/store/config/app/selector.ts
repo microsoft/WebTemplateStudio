@@ -28,13 +28,12 @@ const getServices = (selection: SelectionState): ITemplateInfo[] => {
   const { services } = selection;
   const servicesInfo = [];
   if (
-    _.has(services, SERVICE_KEYS.COSMOS_DB) &&
-    services.cosmosDB.selection.length > 0
+    _.has(services, SERVICE_KEYS.COSMOS_DB) && services.cosmosDB.selection
   ) {
     servicesInfo.push({
       name: "Cosmos",
       identity:
-        DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.selection[0].api]
+        DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.selection.api]
     });
   }
   return servicesInfo;
