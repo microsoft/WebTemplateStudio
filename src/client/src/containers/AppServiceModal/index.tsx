@@ -120,11 +120,13 @@ const AppServiceModal = ({ intl }: Props) => {
         {/* Advanced Mode */}
         <div className={classNames({ [styles.hide]: !showAdvanced })}>
           <LocationSelection
-            Location={location}
-            Locations={subscriptionData.locations}
+            location={location}
+            locations={subscriptionData.locations}
             onLocationChange={setLocation} />
             <ResourceGroupSelection
-              initialResourceGroups={subscriptionData.resourceGroups}
+              isEnabled={subscription !== ""}
+              resourceGroup={resourceGroup}
+              resourceGroups={subscriptionData.resourceGroups}
               onResourceGroupChange={setResourceGroup}
               onRefreshResourceGroup={loadResourceGroups} />
         </div>

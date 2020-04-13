@@ -15,9 +15,9 @@ const locations: AzureLocation[] = [
   { name: "West US" }
 ];
 
-const resourceGroups: ResourceGroup[] = Array.from(Array(5).keys()).map(() => {
+const resourceGroups: ResourceGroup[] = Array.from(Array(5).keys()).map((key) => {
   return {
-    name: "resourceGroupMock",
+    name: `resourceGroupMock ${key}`,
   };
 });
 

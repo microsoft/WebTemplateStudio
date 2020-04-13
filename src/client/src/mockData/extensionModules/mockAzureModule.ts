@@ -49,8 +49,9 @@ const getUserStatus = (message: any) => {
   );
 };
 
-const getSubscriptionDataForCosmos = (message: any) => {
-  window.postMessage(
+const getSubscriptionDataForCosmos = (message: any) => {  
+  setTimeout(() =>
+   window.postMessage(
     {
       module: EXTENSION_MODULES.AZURE,
       command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
@@ -61,22 +62,23 @@ const getSubscriptionDataForCosmos = (message: any) => {
       },
     },
     "*"
-  );
+  ), 1000);
 };
 
 const getSubscriptionDataForAppService = (message: any) => {
+  setTimeout(() =>
   window.postMessage(
-    {
-      module: EXTENSION_MODULES.AZURE,
+   {
+    module: EXTENSION_MODULES.AZURE,
       command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
         locations: mockData.locations,
         resourceGroups: mockData.resourceGroups,
-      },
-    },
-    "*"
-  );
+     },
+   },
+   "*"
+ ), 1000);
 };
 
 const getValidAppServiceName = (message: any) => {

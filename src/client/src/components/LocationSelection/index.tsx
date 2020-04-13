@@ -8,42 +8,42 @@ import classNames from "classnames";
 const DEFAULT_LOCATION = "Central US";
 
 interface IProps {
-  Location: string;
-  Locations: AzureLocation[];
-  onLocationChange(selectedLocation: string): void;
+  location: string;
+  locations: AzureLocation[];
+  onLocationChange(location: string): void;
 }
 
 type Props = IProps & InjectedIntlProps;
 
 const LocationSelection = (props: Props) => {
   const { formatMessage } = props.intl;
-  const { Location, Locations, onLocationChange } = props;
+  const { location, locations, onLocationChange } = props;
   const [dropdownLocations, setDropdownLocations] = useState<IDropDownOptionType[]>([]);
-  const [selectedLocation, setSelectedLocation] = useState<IDropDownOptionType | undefined>(undefined);
+  const [selectedDropdownLocation, setSelectedDropdownLocation] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
-    const newDropDownLocations = Locations.map<IDropDownOptionType>((location) => ({
+    const newDropDownLocations = locations.map<IDropDownOptionType>((location) => ({
       label: location.name,
       value: location.name,
     }));
     setDropdownLocations(newDropDownLocations);
-  }, [Locations]);
+  }, [locations]);
 
   React.useEffect(() => {
-    const newLocation = dropdownLocations.find((s) => s.value === Location);
+    let newLocation = dropdownLocations.find((s) => s.value === location);
     if (newLocation) {
-      setSelectedLocation(newLocation);
+      setSelectedDropdownLocation(newLocation);
     } else {
-      const location = dropdownLocations.find((s) => s.value === DEFAULT_LOCATION);
-      setSelectedLocation(location);
+      newLocation = dropdownLocations.find((s) => s.value === DEFAULT_LOCATION);
+      setSelectedDropdownLocation(newLocation);
     }
   }, [dropdownLocations]);
 
   React.useEffect(() => {
-    if (selectedLocation) {
-      onLocationChange(selectedLocation.value);
+    if (selectedDropdownLocation) {
+      onLocationChange(selectedDropdownLocation.value);
     }
-  }, [selectedLocation]);
+  }, [selectedDropdownLocation]);
 
   return (
     <div className={classNames(styles.container, { [styles.containerDisabled]: dropdownLocations.length === 0 })}>
@@ -54,8 +54,8 @@ const LocationSelection = (props: Props) => {
       <Dropdown
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={dropdownLocations}
-        handleChange={(location) => setSelectedLocation(location)}
-        value={selectedLocation}
+        handleChange={(location) => setSelectedDropdownLocation(location)}
+        value={selectedDropdownLocation}
         disabled={dropdownLocations.length === 0}
       />
     </div>
