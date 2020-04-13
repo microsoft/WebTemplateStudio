@@ -1,11 +1,30 @@
 import {takeEvery, call, put, select} from "redux-saga/effects";
 import { CONFIG_TYPEKEYS, WIZARD_INFO_TYPEKEYS, TEMPLATES_TYPEKEYS } from "../../typeKeys";
-import { getTemplateInfo, getFrameworks } from "../../../utils/extensionService/extensionService";
+import { getTemplateInfo, getFrameworks, getUserStatus } from "../../../utils/extensionService/extensionService";
 import { IVersions } from "../../../types/version";
 import { WIZARD_SELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
 import { AppState } from "../../combineReducers";
 import { parseFrameworksPayload } from "../../../utils/parseFrameworksPayload";
 import { FRAMEWORK_TYPE } from "../../../utils/constants";
+
+export function* loadLogin(vscode: any){
+  yield takeEvery(
+    CONFIG_TYPEKEYS.LOAD,
+    callBack
+  );
+
+  function* callBack (){
+    const event: any = yield call(getUserStatus, vscode);
+    const message = event.data;
+    if (message.payload !== null) {
+      const azureProfile = message.payload as AzureProfile;
+      yield put({
+        type: CONFIG_TYPEKEYS.LOG_IN_TO_AZURE,
+        payload: azureProfile
+      });
+    }
+  }
+}
 
 export function* loadTemplatesSaga(vscode: any) {
   yield takeEvery(
