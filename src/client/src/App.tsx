@@ -20,6 +20,9 @@ import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setOutputPathAction } from "./store/userSelection/app/action";
 import { loadAction } from "./store/config/config/action";
+import { logIntoAzureActionAction } from "./store/config/azure/action";
+import { getUserStatus } from "./utils/extensionService/extensionService";
+import { AppContext } from "./AppContext";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -90,7 +93,8 @@ const App = (props: Props) => {
     loader: () => addToPromisesList(import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject")),
     loading:() => <div/>
   });
-
+  const {vscode} = React.useContext(AppContext);
+  
   if (frontendOptions.length === 0){
     messageEventsFromExtension();
   }
@@ -100,10 +104,15 @@ const App = (props: Props) => {
   })
 
   React.useEffect(()=>{
+    getUserStatus(vscode).then((event)=>{
+      const message = event.data;
+      if (message.payload !== null) {
+        const azureProfile = message.payload as AzureProfile;
+        dispatch(logIntoAzureActionAction(azureProfile))
+      }
+    });
     dispatch(loadAction());
-  },[]);
-
-  
+  },[vscode]);
 
   function messageEventsFromExtension(){
     window.addEventListener("message", event => {
