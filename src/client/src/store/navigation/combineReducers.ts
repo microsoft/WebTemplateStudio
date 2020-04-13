@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import modals from "./modals/combineReducers";
+import routes from "./routes/combineReducers";
 
 const navigationReducer = combineReducers({
-  modals
+  modals,
+  routes
 });
 
 export default navigationReducer;

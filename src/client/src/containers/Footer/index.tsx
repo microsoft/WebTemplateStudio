@@ -47,7 +47,7 @@ const Footer = (props: Props) => {
 
   const visitedRoutes = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
-  const currentRoute = useSelector((state: AppState) => state.wizardRoutes.selected);
+  const currentRoute = useSelector((state: AppState) => state.navigation.routes.selected);
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
   const dispatch = useDispatch();

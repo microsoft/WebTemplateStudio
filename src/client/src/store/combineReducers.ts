@@ -3,7 +3,6 @@ import azureProfileData from "./azureProfileData/combineReducers";
 import navigation from "./navigation/combineReducers";
 import templates from "./templates/combineReducers";
 import config from "./config/combineReducers";
-import wizardRoutes from "./userSelection/pages/combineReducers";
 import userSelection from "./userSelection/combineReducers";
 import selection from "./selection/combineReducers";
 import RootAction from "./ActionType";
@@ -15,8 +14,7 @@ const appReducer = combineReducers({
   userSelection,
   selection,
   azureProfileData,
-  navigation,
-  wizardRoutes
+  navigation
 });
 
 export type AppState = ReturnType<typeof appReducer>;

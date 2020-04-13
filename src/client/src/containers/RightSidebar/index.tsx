@@ -31,8 +31,8 @@ const RightSidebar = (props: Props)=>{
 
   const hasServices: boolean = useSelector((state: AppState) => hasServicesSelector(state));
   const isRoutesVisited: IVisitedPages = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
-  const wizardRoutes = useSelector((state: AppState) => state.wizardRoutes);
-  const selectedRoute = useSelector((state: AppState) => state.wizardRoutes.selected);
+  const wizardRoutes = useSelector((state: AppState) => state.navigation.routes);
+  const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
 
   const { showPages } = isRoutesVisited;
   const { intl } = props;

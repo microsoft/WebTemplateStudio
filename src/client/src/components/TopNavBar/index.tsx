@@ -112,8 +112,8 @@ const TopNavBar = (props: Props) => {
 
 const mapStateToProps = (state: any): IStateProps => ({
   isEnableNextPage: isEnableNextPageSelector(state),
-  isVisited: state.wizardRoutes.isVisited,
-  selectedRoute : state.wizardRoutes.selected
+  isVisited: state.navigation.routes.isVisited,
+  selectedRoute : state.navigation.routes.selected
 });
 
 export default connect(mapStateToProps)(injectIntl(TopNavBar));

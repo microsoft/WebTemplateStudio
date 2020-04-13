@@ -249,7 +249,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   selectedPages: state.userSelection.pages,
   isPreview:  state.config.previewStatus,
   modalState: state.navigation.modals.openModal,
-  selectedRoute : state.wizardRoutes.selected,
+  selectedRoute : state.navigation.routes.selected,
 });
 
 export default
