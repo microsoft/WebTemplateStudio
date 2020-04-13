@@ -223,7 +223,7 @@ export class Generation extends WizardServant {
 
   private hasAzureServices(payload: any): boolean {
     //TODO: Check payload.AppService and payload.Cosmos
-    return payload.appservice || payload.cosmos;
+    return payload.appService || payload.cosmos;
   }
 
   //TODO: Move to telemetryService?
