@@ -34,7 +34,7 @@ describe("LocationSelection", () => {
     });
   });
 
-  it("When selected an Api in a dropdown, onLocationChange notify selected Api", () => {
+  it("When selected an location in a dropdown, onLocationChange notify selected location", () => {
     const selectedLocation = "Central US";
     wrapper = renderWithIntl(<LocationSelection {...props} />);
     const dropdown = wrapper.getByTestId("dropdown");

@@ -77,7 +77,6 @@ const ResourceGroupSelection = (props: Props) => {
         disabled={disableComponent}
       />
       <button
-        data-testid="refresh-button"
         disabled={disableComponent}
         onClick={refreshResourceGroups}
         className={classNames(buttonStyles.buttonLink, styles.refreshButton)}
