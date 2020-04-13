@@ -223,7 +223,7 @@ const GenerationModal = ({
   const genMessage = () => {
     return (
       <div>
-        {isServicesSelected && !isServicesDeployed && (
+        {isServicesSelected && !isServicesDeployed && !isServiceFailed && (
           <p className={styles.sectionLine}>
             {formatMessage(messages.generationCompleteWithAzure)}
           </p>
