@@ -23,20 +23,25 @@ export function* frameworkSaga(vscode: any) {
       const selectedPagesSelector = (state: AppState) => state.userSelection.pages;
       const selectedFrontendSelector = (state: AppState) => state.userSelection.frontendFramework;
       const selectedBackendSelector = (state: AppState) => state.userSelection.backendFramework;
-
+      
       const selectedPages = yield select(selectedPagesSelector);
       const selectedFrontend = yield select(selectedFrontendSelector);
       const selectedBackend = yield select(selectedBackendSelector);
-
+      debugger;
       if (selectedFrontend.internalName !== "" && selectedBackend.internalName !== ""){
         const event: any = yield call(getPages, vscode, selectedFrontend.internalName, selectedBackend.internalName);
-        let payload = getOptionalFromApiTemplateInfo(getApiTemplateInfoFromJson(event.data.payload.pages));
-        yield put({ type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS, payload });
-        selectedPages.map((selectedPage: ISelected)=>{
-          selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName ? selectedPage.defaultName.replace(" ",""):""}`;
-        });
-        payload = selectedPages;
-        yield put({ type: WIZARD_SELECTION_TYPEKEYS.SELECT_PAGES, payload });
+        const pageOptions = getOptionalFromApiTemplateInfo(getApiTemplateInfoFromJson(event.data.payload.pages));
+        yield put({ type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS, payload: pageOptions });
+        
+        if (selectedPages.length === 0){
+          const blankPage = pageOptions.filter(page => page.title === "Blank")[0];
+          selectedPages.push(blankPage)
+        }else{
+          selectedPages.map((selectedPage: ISelected)=>{
+            selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName ? selectedPage.defaultName.replace(" ",""):""}`;
+          });
+        }
+        yield put({ type: WIZARD_SELECTION_TYPEKEYS.SELECT_PAGES, payload: selectedPages });
       }
     }
   }

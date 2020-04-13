@@ -8,8 +8,7 @@ import quickStartWand from "../../../assets/quickStartWand.svg";
 
 import {
   FRONT_END_SELECTION,
-  BACK_END_SELECTION,
-  PAGES_SELECTION
+  BACK_END_SELECTION
 } from "./defaultSelection";
 
 import { getAllFrameworks, getAllPages } from "./loadWizardContent";
@@ -18,7 +17,6 @@ import { ROUTES_ARRAY, EXTENSION_COMMANDS, ROUTES } from "../../../utils/constan
 import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/userSelection/frameworks/action";
-import { setPagesAction } from "../../../store/userSelection/pages/action";
 import { AppContext } from "../../../AppContext";
 import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../../store/config/pages/action";
 
@@ -37,13 +35,12 @@ const QuickStart = (props: Props) => {
   const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
   
-  const handleClick = () => {
+  const quickStart = () => {
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_PRESS_QUICKSTART);
     getAllFrameworks(vscode, isPreview);
     getAllPages(vscode);
     dispatch(setSelectedFrontendFrameworkAction(FRONT_END_SELECTION));
     dispatch(setSelectedBackendFrameworkAction(BACK_END_SELECTION));
-    dispatch(setPagesAction(PAGES_SELECTION));
     ROUTES_ARRAY.forEach(route => dispatch(setVisitedWizardPageAction(route)));
     dispatch(setPageWizardPageAction(ROUTES.REVIEW_AND_GENERATE));
   };
@@ -65,7 +62,7 @@ const QuickStart = (props: Props) => {
       <button
         tabIndex={0}
         className={styles.quickStart}
-        onClick={handleClick}
+        onClick={quickStart}
         disabled={!isEnableNextPage}
       >
         <div>

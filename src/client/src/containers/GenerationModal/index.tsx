@@ -35,6 +35,8 @@ import { AppContext } from "../../AppContext";
 import { rootSelector } from "../../store/userSelection/app/selector";
 import { isCosmosResourceCreatedSelector, getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
 import { isAppServiceSelectedSelector, getAppServiceSelectionSelector } from "../../store/azureProfileData/appService/selector";
+import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../store/userSelection/frameworks/action";
+import { FRONT_END_SELECTION, BACK_END_SELECTION } from "../PageNewProject/QuickStart/defaultSelection";
 
 interface LinksDict {
   [serviceId: string]: string;
@@ -168,9 +170,17 @@ const GenerationModal = ({
     </a>
   );
 
+  const reset= () => {
+    dispatch(resetWizardAction());
+    setTimeout(()=>{
+      dispatch(setSelectedFrontendFrameworkAction(FRONT_END_SELECTION));
+      dispatch(setSelectedBackendFrameworkAction(BACK_END_SELECTION));
+    },1000)
+  }
+
   const handleOpenProjectOrRestartWizard = () => {
     if (isTemplatesFailed) {
-      dispatch(resetWizardAction());
+      reset();
       return;
     }
     if (isTemplateGenerated) {
@@ -195,7 +205,7 @@ const GenerationModal = ({
 
   const closeModalAndCreateAnotherProject = (param: any) => {
     trackCreateNewProjectTelemetry(param);
-    dispatch(resetWizardAction());
+    reset();
   };
 
   const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
