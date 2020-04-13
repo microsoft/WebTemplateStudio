@@ -42,11 +42,8 @@ const ResourceGroupSelection = (props: Props) => {
   }, [resourceGroups]);
 
   React.useEffect(() => {
-    let newResourceGroup = dropdownResourceGroups.find((s) => s.value === resourceGroup);
+    const newResourceGroup = dropdownResourceGroups.find((s) => s.value === resourceGroup);
     if (newResourceGroup) {
-      setSelectedDropdownResourceGroup(newResourceGroup);
-    } else {
-      newResourceGroup = dropdownResourceGroups.find((s) => s.value === DEFAULT_RESOURCE_GROUP);
       setSelectedDropdownResourceGroup(newResourceGroup);
     }
   }, [dropdownResourceGroups]);

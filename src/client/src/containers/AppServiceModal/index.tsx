@@ -10,7 +10,7 @@ import AppNameEditor from "./AppNameEditor";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS, AZURE } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
@@ -38,8 +38,8 @@ const AppServiceModal = ({ intl }: Props) => {
   const appServiceInStore = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
-  const initialLocation = appServiceInStore ? appServiceInStore.location : "";
-  const initialResourceGroup = appServiceInStore ? appServiceInStore.resourceGroup : "";
+  const initialLocation = appServiceInStore ? appServiceInStore.location : AZURE.DEFAULT_LOCATION;
+  const initialResourceGroup = appServiceInStore ? appServiceInStore.resourceGroup : AZURE.DEFAULT_RESOURCE_GROUP;
   const initialSubscriptionData: SubscriptionData = { locations: [], resourceGroups:[] };
 
   const [subscription, setSubscription] = useState(initialSubscription);

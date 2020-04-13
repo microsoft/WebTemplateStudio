@@ -5,7 +5,6 @@ import styles from "./styles.module.css";
 import messages from "./messages";
 import Dropdown from "../Dropdown";
 import classNames from "classnames";
-const DEFAULT_LOCATION = "Central US";
 
 interface IProps {
   location: string;
@@ -30,11 +29,8 @@ const LocationSelection = (props: Props) => {
   }, [locations]);
 
   React.useEffect(() => {
-    let newLocation = dropdownLocations.find((s) => s.value === location);
+    const newLocation = dropdownLocations.find((s) => s.value === location);
     if (newLocation) {
-      setSelectedDropdownLocation(newLocation);
-    } else {
-      newLocation = dropdownLocations.find((s) => s.value === DEFAULT_LOCATION);
       setSelectedDropdownLocation(newLocation);
     }
   }, [dropdownLocations]);

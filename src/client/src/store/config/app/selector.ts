@@ -5,15 +5,15 @@ import { ITemplateInfo } from "../../../types/templateInfo";
 import {
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  COSMOS_APIS
+  AZURE
 } from "../../../utils/constants";
 import { SelectionState } from "../../selection/combineReducers";
 import { ConfigState } from "../combineReducers";
 import { AppState } from "../../combineReducers";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {
-  [COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
-  [COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
+  [AZURE.COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
+  [AZURE.COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
 };
 
 const getSelectionsSelector = (state: AppState): SelectionState => state.selection;

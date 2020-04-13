@@ -78,10 +78,14 @@ const SERVICE_KEYS = {
   APP_SERVICE: "appService"
 };
 
-const COSMOS_APIS = {
-  MONGO: "MongoDB",
-  SQL: "SQL"
-};
+const AZURE = {
+  COSMOS_APIS: {
+    MONGO: "MongoDB",
+    SQL: "SQL"
+  },
+  DEFAULT_LOCATION: "Central US",
+  DEFAULT_RESOURCE_GROUP: ""
+}
 
 enum FRAMEWORK_TYPE {
   FRONTEND = "frontend",
@@ -183,7 +187,7 @@ export {
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
   ARIA_LABELS_NAVIGATION,
-  COSMOS_APIS,
+  AZURE,
   DEVELOPMENT,
   TEST,
   PROJECT_NAME_CHARACTER_LIMIT,

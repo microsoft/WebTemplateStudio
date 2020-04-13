@@ -3,17 +3,17 @@ import { useState } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import Dropdown from "../../../components/Dropdown";
-import { COSMOS_APIS } from "../../../utils/constants";
+import { AZURE } from "../../../utils/constants";
 import messages from "./messages";
 
 const ApiValues: IDropDownOptionType[] = [
   {
-    label: COSMOS_APIS.MONGO,
-    value: COSMOS_APIS.MONGO,
+    label: AZURE.COSMOS_APIS.MONGO,
+    value: AZURE.COSMOS_APIS.MONGO,
   },
   {
-    label: COSMOS_APIS.SQL,
-    value: COSMOS_APIS.SQL,
+    label: AZURE.COSMOS_APIS.SQL,
+    value: AZURE.COSMOS_APIS.SQL,
   },
 ];
 
