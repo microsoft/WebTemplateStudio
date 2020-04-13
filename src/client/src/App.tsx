@@ -23,7 +23,7 @@ import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 
 import Loadable from "react-loadable";
 import PageDetails from "./containers/PageDetails";
-import { MODAL_TYPES } from "./store/modals/typeKeys";
+import { MODAL_TYPES } from "./store/navigation/modals/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setPagesAction } from "./store/userSelection/pages/action";
@@ -248,7 +248,7 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   frontendOptions: state.templates.frontendOptions,
   selectedPages: state.userSelection.pages,
   isPreview:  state.config.previewStatus,
-  modalState: state.modals.openModal,
+  modalState: state.navigation.modals.openModal,
   selectedRoute : state.wizardRoutes.selected,
 });
 

@@ -1,9 +1,9 @@
 import { createSelector } from "reselect";
-import { AppState } from "../combineReducers";
+import { AppState } from "../../combineReducers";
 import { ModalType, MODAL_TYPES } from "./typeKeys";
 
 const getOpenModal = (state: AppState): ModalType =>
-  state.modals.openModal.modalType;
+  state.navigation.modals.openModal.modalType;
 const isAzureLoginModalOpen = (modal: ModalType): boolean =>
   modal === MODAL_TYPES.AZURE_LOGIN_MODAL;
 const isCosmosDbModalOpen = (modal: ModalType): boolean =>

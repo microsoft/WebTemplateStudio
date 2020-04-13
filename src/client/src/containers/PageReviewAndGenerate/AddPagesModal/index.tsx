@@ -3,10 +3,10 @@ import { connect, useDispatch } from "react-redux";
 import { AppState } from "../../../store/combineReducers";
 import styles from "./styles.module.css";
 import asModal from "../../../components/Modal";
-import { closeModalAction } from "../../../store/modals/action";
+import { closeModalAction } from "../../../store/navigation/modals/action";
 import PageAddPages from "../../PageAddPages";
-import { isAddPagesModalOpenSelector } from "../../../store/modals/selector";
-import { MODAL_TYPES } from "../../../store/modals/typeKeys";
+import { isAddPagesModalOpenSelector } from "../../../store/navigation/modals/selector";
+import { MODAL_TYPES } from "../../../store/navigation/modals/typeKeys";
 import { KEY_EVENTS } from "../../../utils/constants";
 import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
 

@@ -7,9 +7,9 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
-import { MODAL_TYPES } from "../../store/modals/typeKeys";
+import { MODAL_TYPES } from "../../store/navigation/modals/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
-import { closeModalAction } from "../../store/modals/action";
+import { closeModalAction } from "../../store/navigation/modals/action";
 import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
 import { ISelectedCosmosService } from "../../store/azureProfileData/cosmosDb/model";
 

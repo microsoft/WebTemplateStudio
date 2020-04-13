@@ -13,7 +13,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
 import {IAzureServiceStatus} from "../../types/generationStatus";
-import { isGenModalOpenSelector } from "../../store/modals/selector";
+import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
@@ -26,7 +26,7 @@ import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getOutputPath } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
-import { MODAL_TYPES } from "../../store/modals/typeKeys";
+import { MODAL_TYPES } from "../../store/navigation/modals/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
 import { sendTelemetry, generateProject } from "../../utils/extensionService/extensionService";

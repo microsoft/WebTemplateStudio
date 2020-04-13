@@ -1,5 +1,5 @@
 import AzureActionType from "./azureProfileData/azureActionType";
-import ModalActionType from "./modals/modalActionType";
+import ModalActionType from "./navigation/modals/modalActionType";
 import WizardContentActionType from "./templates/templatesActionType";
 import WizardSelectionActionType from "./userSelection/selectionActionType";
 import WizardInfoActionType from "./templates/templatesType";

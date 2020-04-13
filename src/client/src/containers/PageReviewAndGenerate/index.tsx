@@ -2,7 +2,7 @@ import * as React from "react";
 import { useDispatch } from "react-redux";
 import classnames from "classnames";
 
-import * as ModalActions from "../../store/modals/action";
+import * as ModalActions from "../../store/navigation/modals/action";
 
 import styles from "./styles.module.css";
 import buttonStyles from "../../css/buttonStyles.module.css";

@@ -10,7 +10,7 @@ import {
 
 import { IVSCodeObject } from "../../types/vscode";
 
-import { openGenModalAction } from "../../store/modals/action";
+import { openGenModalAction } from "../../store/navigation/modals/action";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 

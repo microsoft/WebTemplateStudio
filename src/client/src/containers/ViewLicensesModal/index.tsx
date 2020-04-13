@@ -4,11 +4,11 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../store/combineReducers";
 import styles from "./styles.module.css";
 import asModal from "../../components/Modal";
-import { closeModalAction } from "../../store/modals/action";
+import { closeModalAction } from "../../store/navigation/modals/action";
 import Licenses from "./Licenses";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isViewLicensesModalOpenSelector } from "../../store/modals/selector";
-import { MODAL_TYPES } from "../../store/modals/typeKeys";
+import { isViewLicensesModalOpenSelector } from "../../store/navigation/modals/selector";
+import { MODAL_TYPES } from "../../store/navigation/modals/typeKeys";
 import { KEY_EVENTS } from "../../utils/constants";
 import messages from "./messages";
 
