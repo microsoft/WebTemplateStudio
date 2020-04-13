@@ -18,7 +18,7 @@ import {
 import { AppState } from "../../../store/combineReducers";
 import { isAppServiceSelectedSelector } from "../../../store/azureProfileData/appService/selector";
 import messages from "./messages";
-import { setPageWizardPageAction, setDetailPageAction } from "../../../store/config/pages/action";
+import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 
 interface IAzureLoginProps {
   isLoggedIn: boolean;

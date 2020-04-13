@@ -13,7 +13,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ReactComponent as Plus } from "../../../assets/plus.svg";
 import { ISelected } from "../../../types/selected";
 import { inferItemName } from "../../../utils/infer/itemName";
-import { setPageWizardPageAction, setDetailPageAction } from "../../../store/config/pages/action";
+import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 import { setPagesAction } from "../../../store/userSelection/pages/action";
 
 type Props = IProps & IStateProps & InjectedIntlProps;

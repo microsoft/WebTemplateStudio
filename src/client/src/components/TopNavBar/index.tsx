@@ -11,7 +11,7 @@ import { ROUTES_ARRAY } from "../../utils/constants";
 import { IRoutes } from "../../store/userSelection/pages/model";
 import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
-import { setPageWizardPageAction } from "../../store/config/pages/action";
+import { setPageWizardPageAction } from "../../store/navigation/routes/action";
 
 interface IStateProps {
   isVisited: IRoutes;

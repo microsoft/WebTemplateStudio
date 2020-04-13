@@ -25,7 +25,7 @@ import messages from "./messages";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { AppContext } from "../../AppContext";
 import { useSelector, useDispatch } from "react-redux";
-import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/config/pages/action";
+import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
 
 type Props = InjectedIntlProps;
 
