@@ -25,3 +25,8 @@ export interface IPageOptionsActionType {
   type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS;
   payload: IOption[];
 }
+
+export interface ISetDetails {
+  type: WIZARD_INFO_TYPEKEYS.SET_DETAILS_PAGE_INFO;
+  payload: IDetail;
+}

@@ -21,11 +21,6 @@ export interface IDetail {
   isIntlFormatted: boolean;
 }
 
-export interface ISetDetails {
-  type: WIZARD_INFO_TYPEKEYS.SET_DETAILS_PAGE_INFO;
-  payload: IDetail;
-}
-
 export interface IPageOptionsActionType {
   type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS;
   payload: IOption[];
