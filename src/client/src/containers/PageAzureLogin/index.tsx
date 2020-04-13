@@ -16,7 +16,7 @@ import Title from "../../components/Title";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
-import { startLogOutAzureAction } from "../../store/azureProfileData/login/action";
+import { logOutAzureAction } from "../../store/azureProfileData/login/action";
 import { AppContext } from "../../AppContext";
 
 interface IAzureLoginProps {
@@ -33,18 +33,18 @@ const AzureLogin = (props: Props)=> {
   const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 
-  const signOutClick = () => {
+  const signOutAzure = () => {
     azureLogout(vscode).then((event)=>{
       const message = event.data;
       if (message.payload.success) {
-        dispatch(startLogOutAzureAction());
+        dispatch(logOutAzureAction());
       }
     });
   };
 
   const signOutkeyDownHandler = (event: React.KeyboardEvent) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      signOutClick();
+      signOutAzure();
     }
   };
 
@@ -72,7 +72,7 @@ const AzureLogin = (props: Props)=> {
                   role="button"
                   tabIndex={0}
                   className={classnames(styles.button, styles.signOutButton)}
-                  onClick={signOutClick}
+                  onClick={signOutAzure}
                   onKeyDown={signOutkeyDownHandler}
                 >
                   <FormattedMessage

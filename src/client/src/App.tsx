@@ -20,9 +20,9 @@ import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setOutputPathAction } from "./store/userSelection/app/action";
 import { loadAction } from "./store/config/config/action";
-import { logIntoAzureActionAction } from "./store/config/azure/action";
 import { getUserStatus } from "./utils/extensionService/extensionService";
 import { AppContext } from "./AppContext";
+import { logIntoAzureActionAction } from "./store/azureProfileData/login/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
