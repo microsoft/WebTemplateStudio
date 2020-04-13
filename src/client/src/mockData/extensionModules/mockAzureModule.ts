@@ -62,7 +62,7 @@ const getSubscriptionDataForCosmos = (message: any) => {
       },
     },
     "*"
-  ), 1000);
+  ), 500);
 };
 
 const getSubscriptionDataForAppService = (message: any) => {
@@ -78,7 +78,7 @@ const getSubscriptionDataForAppService = (message: any) => {
      },
    },
    "*"
- ), 1000);
+ ), 500);
 };
 
 const getValidAppServiceName = (message: any) => {
