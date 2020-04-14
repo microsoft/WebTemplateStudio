@@ -1,6 +1,7 @@
 import WizardSelectionActionType from "../selectionActionType";
 import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 import { IOutputPath } from "./model";
+import { CONFIG_TYPEKEYS } from "../../typeKeys";
 
 const initialState = {
   outputPath: "",
@@ -17,7 +18,7 @@ const outputPathReducer = (
         ...state,
         outputPath: action.payload
       };
-    case WIZARD_SELECTION_TYPEKEYS.SET_PROJECT_PATH_VALIDATION:
+    case CONFIG_TYPEKEYS.SET_PROJECT_PATH_VALIDATION:
       return {
         ...state,
         validation: {

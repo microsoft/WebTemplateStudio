@@ -1,6 +1,6 @@
 import WizardSelectionActionType from "../../userSelection/selectionActionType";
-import { WIZARD_SELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
 import { IValidations } from "./model";
+import { CONFIG_TYPEKEYS } from "../../typeKeys";
 
 const initialState = {
   itemNameValidationConfig: {
@@ -23,7 +23,7 @@ const validationsReducer = (
   action: WizardSelectionActionType
 ) => {
   switch (action.type) {
-    case WIZARD_SELECTION_TYPEKEYS.SET_VALIDATIONS:
+    case CONFIG_TYPEKEYS.SET_VALIDATIONS:
       return action.payload;
     default:
       return state;
