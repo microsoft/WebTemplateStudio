@@ -7,7 +7,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
-import { MODAL_TYPES } from "../../store/navigation/modals/typeKeys";
+import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { saveAppServiceSettingsAction } from "../../store/azureProfileData/appService/action";
@@ -68,7 +68,7 @@ describe("AppServiceModal", () => {
 
   beforeEach(() => {
     initialState = getInitialState();
-    setOpenModal(initialState, MODAL_TYPES.APP_SERVICE_MODAL);
+    setOpenModal(initialState, NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL);
     store = mockStore(initialState);
     props = {
       isModalOpen: true,

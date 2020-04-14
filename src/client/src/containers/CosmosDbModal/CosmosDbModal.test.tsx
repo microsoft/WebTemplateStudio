@@ -7,7 +7,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
-import { MODAL_TYPES } from "../../store/navigation/modals/typeKeys";
+import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
@@ -74,7 +74,7 @@ describe("CosmosDbModal", () => {
 
   beforeEach(() => {
     initialState = getInitialState();
-    setOpenModal(initialState, MODAL_TYPES.COSMOS_DB_MODAL);
+    setOpenModal(initialState, NAVIGATION_MODAL_TYPES.COSMOS_DB_MODAL);
     store = mockStore(initialState);
     props = {
       isModalOpen: true,

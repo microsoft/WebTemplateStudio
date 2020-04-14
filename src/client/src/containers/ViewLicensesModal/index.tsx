@@ -8,7 +8,7 @@ import { closeModalAction } from "../../store/navigation/modals/action";
 import Licenses from "./Licenses";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { isViewLicensesModalOpenSelector } from "../../store/navigation/modals/selector";
-import { MODAL_TYPES } from "../../store/navigation/modals/typeKeys";
+import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { KEY_EVENTS } from "../../utils/constants";
 import messages from "./messages";
 
@@ -52,4 +52,4 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 
 export default connect(
   mapStateToProps
-)(asModal(injectIntl(ViewLicensesModal), MODAL_TYPES.VIEW_LICENSES_MODAL));
+)(asModal(injectIntl(ViewLicensesModal), NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL));

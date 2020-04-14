@@ -1,18 +1,19 @@
 import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction, ISetDetails, IPageOptionsActionType } from "./model";
-import { WIZARD_INFO_TYPEKEYS, TEMPLATES_TYPEKEYS } from "../../typeKeys";
+import { TEMPLATES_TYPEKEYS } from "../../typeKeys";
 import { IOption } from "../../../types/option";
+import { NAVIGATION_ROUTES_TYPEKEYS } from "../typeKeys";
 
 const setVisitedWizardPageAction = (route: string): ISetVisitedPageAction => ({
-  type: WIZARD_INFO_TYPEKEYS.SET_VISITED_WIZARD_PAGE,
+  type: NAVIGATION_ROUTES_TYPEKEYS.SET_VISITED_WIZARD_PAGE,
   payload: route
 });
 
 const resetVisitedWizardPageAction = (): IResetVisitedPageAction => ({
-  type: WIZARD_INFO_TYPEKEYS.RESET_VISITED_WIZARD_PAGE,
+  type: NAVIGATION_ROUTES_TYPEKEYS.RESET_VISITED_WIZARD_PAGE,
 });
 
 const setPageWizardPageAction = (route: string): ISetPageAction => ({
-  type: WIZARD_INFO_TYPEKEYS.SET_PAGE_WIZARD_PAGE,
+  type: NAVIGATION_ROUTES_TYPEKEYS.SET_PAGE_WIZARD_PAGE,
   payload: route
 });
 
@@ -21,7 +22,7 @@ const setDetailPageAction = (
   isIntlFormatted = false,
   originRoute: string
 ): ISetDetails => ({
-  type: WIZARD_INFO_TYPEKEYS.SET_DETAILS_PAGE_INFO,
+  type: NAVIGATION_ROUTES_TYPEKEYS.SET_DETAILS_PAGE_INFO,
   payload: {
     data: detailPageInfo,
     isIntlFormatted,

@@ -23,7 +23,7 @@ import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
 
 import Loadable from "react-loadable";
 import PageDetails from "./containers/PageDetails";
-import { MODAL_TYPES } from "./store/navigation/modals/typeKeys";
+import { NAVIGATION_MODAL_TYPES } from "./store/navigation/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setPagesAction } from "./store/userSelection/pages/action";
@@ -196,10 +196,10 @@ const App = (props: Props) => {
       {isLoaded && (<TopNavBar  />)}
 
       {isLoaded && (<div className={appStyles.container}>
-        {(modalState.modalType === MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
-        {(modalState.modalType === MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
-        {(modalState.modalType === MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
-        {(modalState.modalType === MODAL_TYPES.GEN_MODAL) && (<GenerationModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.GEN_MODAL) && (<GenerationModal/>)}
 
         <main
           className={classnames(appStyles.centerView, {

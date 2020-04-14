@@ -1,7 +1,7 @@
 import { ISelected } from "../types/selected";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
-import { ModalType } from "../store/navigation/modals/typeKeys";
+import { ModalType } from "../store/navigation/typeKeys";
 import { ROUTES } from "../utils/constants";
 
 export const getISelected = () => {

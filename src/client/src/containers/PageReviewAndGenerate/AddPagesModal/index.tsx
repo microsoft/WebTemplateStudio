@@ -6,7 +6,7 @@ import asModal from "../../../components/Modal";
 import { closeModalAction } from "../../../store/navigation/modals/action";
 import PageAddPages from "../../PageAddPages";
 import { isAddPagesModalOpenSelector } from "../../../store/navigation/modals/selector";
-import { MODAL_TYPES } from "../../../store/navigation/modals/typeKeys";
+import { NAVIGATION_MODAL_TYPES } from "../../../store/navigation/typeKeys";
 import { KEY_EVENTS } from "../../../utils/constants";
 import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
 
@@ -47,4 +47,4 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 
 export default connect(
   mapStateToProps
-)(asModal(AddPagesModal, MODAL_TYPES.ADD_PAGES_MODAL));
+)(asModal(AddPagesModal, NAVIGATION_MODAL_TYPES.ADD_PAGES_MODAL));

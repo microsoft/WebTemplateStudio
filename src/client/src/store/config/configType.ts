@@ -1,14 +1,14 @@
+import {ISelectProjectTypeAction} from "./app/model";
 import { IVersionData } from "./versions/model";
+import { IResetWizardAction, IPreviewStatusActionTypeAction } from "./config/model";
+import { IProjectPathValidationAction, IValidationsAction} from "./validations/model";
 
-import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction, ISetDetails } from "../navigation/routes/model";
-import { IResetWizardAction } from "./config/model";
-
-type WizardInfoType =
+type ConfigType =
+  ISelectProjectTypeAction
   | IVersionData
-  | ISetDetails
-  | ISetVisitedPageAction
-  | IResetVisitedPageAction
-  | ISetPageAction
-  | IResetWizardAction;
+  | IResetWizardAction
+  | IPreviewStatusActionTypeAction
+  | IProjectPathValidationAction
+  | IValidationsAction;
 
-export default WizardInfoType;
+export default ConfigType;

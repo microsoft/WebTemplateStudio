@@ -1,6 +1,7 @@
-import { WIZARD_INFO_TYPEKEYS } from "../../typeKeys";
 import WizardInfoType from "../../config/configType";
 import { IDetail } from "./model";
+import { NAVIGATION_ROUTES_TYPEKEYS } from "../typeKeys";
+import RootAction from "../../ActionType";
 
 const initialState = {
   isIntlFormatted: false,
@@ -22,9 +23,9 @@ const initialState = {
   originRoute:''
 };
 
-const detailPage = (state: IDetail = initialState, action: WizardInfoType) => {
+const detailPage = (state: IDetail = initialState, action: RootAction) => {
   switch (action.type) {
-    case WIZARD_INFO_TYPEKEYS.SET_DETAILS_PAGE_INFO:
+    case NAVIGATION_ROUTES_TYPEKEYS.SET_DETAILS_PAGE_INFO:
       return action.payload;
     default:
       return state;
