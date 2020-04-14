@@ -1,4 +1,5 @@
-import { CONFIG_TYPEKEYS } from "../../typeKeys";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
+
 
 export interface IProjectPathValidationAction {
   type: CONFIG_TYPEKEYS.SET_PROJECT_PATH_VALIDATION;

@@ -1,5 +1,5 @@
 import { IProjectPathValidationAction, IValidationsAction } from "./model";
-import { CONFIG_TYPEKEYS } from "../../typeKeys";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
 export const setProjectPathValidationAction = (
   validation: any

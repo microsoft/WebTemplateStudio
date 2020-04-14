@@ -1,5 +1,5 @@
 import { IPageOptionsActionType } from "./model";
-import { TEMPLATES_TYPEKEYS } from "../../typeKeys";
+import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 import { IOption } from "../../../types/option";
 import { IApiTemplateInfo } from "../../../types/apiTemplateInfo";
 

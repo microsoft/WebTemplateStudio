@@ -1,6 +1,5 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
 import AzureActionType from "../azureActionType";
-import { CONFIG_TYPEKEYS } from "../../typeKeys";
 
 export const isLoggedIn = (state = false, action: AzureActionType) => {
   switch (action.type) {

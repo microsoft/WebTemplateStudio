@@ -1,6 +1,6 @@
 import { IValidations } from "./model";
-import { CONFIG_TYPEKEYS } from "../../typeKeys";
 import RootAction from "../../ActionType";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
 const initialState = {
   itemNameValidationConfig: {

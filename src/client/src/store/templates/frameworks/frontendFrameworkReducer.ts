@@ -1,5 +1,5 @@
 import { IOption } from "../../../types/option";
-import { TEMPLATES_TYPEKEYS } from "../../typeKeys";
+import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 import RootAction from "../../ActionType";
 
 const frontendFrameworkOptions = (

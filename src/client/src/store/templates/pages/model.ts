@@ -1,4 +1,4 @@
-import { TEMPLATES_TYPEKEYS } from "../../typeKeys";
+import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 import { IOption } from "../../../types/option";
 
 export interface IDetail {

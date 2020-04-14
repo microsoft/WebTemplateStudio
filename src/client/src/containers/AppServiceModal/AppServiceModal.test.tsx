@@ -54,7 +54,7 @@ jest.mock("../../store/navigation/modals/action", () => {
 
 jest.mock("../../store/azureProfileData/appService/action", () => {
   const saveAppServiceSettingsAction = jest.fn((appServiceSettings: ISelectedAppService) => ({
-    type: "WTS/modals/CLOSE_MODALS",
+    type: "WTS/navigation/modals/CLOSE_MODALS",
     payload: appServiceSettings,
   }));
   return { saveAppServiceSettingsAction };

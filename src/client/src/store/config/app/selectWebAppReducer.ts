@@ -1,6 +1,6 @@
 import SelectionActionType from "../../selection/selectionActionType";
 import { ISelected } from "../../../types/selected";
-import { CONFIG_TYPEKEYS } from "../../typeKeys";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
 const initialState = {
   title: "Fullstack Web Application",

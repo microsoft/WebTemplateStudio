@@ -6,7 +6,7 @@ import config from "./config/combineReducers";
 import userSelection from "./userSelection/combineReducers";
 import selection from "./selection/combineReducers";
 import RootAction from "./ActionType";
-import { CONFIG_TYPEKEYS } from "./typeKeys";
+import { CONFIG_TYPEKEYS } from "./config/configTypeKeys";
 
 const appReducer = combineReducers({
   templates,

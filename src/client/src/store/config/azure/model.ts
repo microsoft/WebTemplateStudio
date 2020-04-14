@@ -1,4 +1,3 @@
-import { CONFIG_TYPEKEYS } from "../../typeKeys";
 import { AZURE_TYPEKEYS } from "../../azureProfileData/typeKeys";
 
 export interface IsLoggedIntoAzureAction {

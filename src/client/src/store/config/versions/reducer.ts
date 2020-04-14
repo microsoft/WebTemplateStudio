@@ -1,5 +1,5 @@
 import { IVersions } from "../../../types/version";
-import { CONFIG_TYPEKEYS } from "../../typeKeys";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
 const initialState = {
   templatesVersion: "",
