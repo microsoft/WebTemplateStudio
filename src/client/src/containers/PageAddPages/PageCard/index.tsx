@@ -23,12 +23,6 @@ const PageCard = (props: Props) => {
   const [showPlusIcon, setShowPlusIcon] = React.useState(false);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    if (selectedPages.length === 0 && page.defaultName === "Blank") {
-      setTimeout(() => dispatch(setPagesAction([page])), 200);
-    }
-  }, [page]);
-
   const addPage = () => {
     const select: ISelected = {
       author: page.author,
