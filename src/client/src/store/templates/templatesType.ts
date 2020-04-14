@@ -1,14 +1,11 @@
 import { IVersionData } from "../config/versions/model";
 
-import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction, ISetDetails } from "./pages/model";
-import { IResetWizardAction } from "./preview/model";
+import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction } from "./pages/model";
 
 type WizardInfoType =
   | IVersionData
-  | ISetDetails
   | ISetVisitedPageAction
   | IResetVisitedPageAction
-  | ISetPageAction
-  | IResetWizardAction;
+  | ISetPageAction;
 
 export default WizardInfoType;

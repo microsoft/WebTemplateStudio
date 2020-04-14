@@ -19,9 +19,9 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import { AppState } from "../../store/combineReducers";
 import * as ModalActions from "../../store/navigation/modals/action";
 import { hasServicesSelector } from "../../store/azureProfileData/servicesSelector";
-import { getIsVisitedRoutesSelector, IVisitedPages } from "../../store/templates/preview/wizardNavigationSelector";
 import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
+import { getIsVisitedRoutesSelector, IVisitedPages } from "../../store/config/config/wizardNavigationSelector";
 
 type Props = InjectedIntlProps;
 

@@ -1,10 +1,10 @@
-import WizardContentActionType from "../templatesActionType";
 import { IOption } from "../../../types/option";
 import { TEMPLATES_TYPEKEYS } from "../../typeKeys";
+import RootAction from "../../ActionType";
 
 const backendFrameworkOptions = (
   state: IOption[] = [],
-  action: WizardContentActionType
+  action: RootAction
 ) => {
   switch (action.type) {
     case TEMPLATES_TYPEKEYS.SET_BACKEND_FRAMEWORKS:

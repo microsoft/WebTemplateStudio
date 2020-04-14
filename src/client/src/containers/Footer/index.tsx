@@ -14,7 +14,6 @@ import { openGenModalAction } from "../../store/navigation/modals/action";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
-import { getIsVisitedRoutesSelector } from "../../store/templates/preview/wizardNavigationSelector";
 import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
 
@@ -26,6 +25,7 @@ import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { AppContext } from "../../AppContext";
 import { useSelector, useDispatch } from "react-redux";
 import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
+import { getIsVisitedRoutesSelector } from "../../store/config/config/wizardNavigationSelector";
 
 type Props = InjectedIntlProps;
 

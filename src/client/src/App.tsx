@@ -30,10 +30,10 @@ import { setPagesAction } from "./store/userSelection/pages/action";
 import { setValidationsAction } from "./store/config/validations/action";
 import { setOutputPathAction } from "./store/userSelection/app/action";
 import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/templates/frameworks/action";
-import { getPagesOptionsAction } from "./store/templates/pages/action";
-import { setPreviewStatusAction } from "./store/templates/preview/action";
+import { setPagesOptionsAction } from "./store/templates/pages/action";
 import { AppContext } from "./AppContext";
 import { logIntoAzureActionAction } from "./store/config/azure/action";
+import { setPreviewStatusAction } from "./store/config/config/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -169,7 +169,7 @@ const App = (props: Props) => {
 
   const loadPages = () => {
     getPages(vscode, selectedFrontend.internalName, selectedBackend.internalName).then((event)=>{
-      dispatch(getPagesOptionsAction(event.data.payload.pages));
+      dispatch(setPagesOptionsAction(event.data.payload.pages));
       selectedPages.map((selectedPage)=>{
         selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName ? selectedPage.defaultName.replace(" ",""):""}`;
       });
