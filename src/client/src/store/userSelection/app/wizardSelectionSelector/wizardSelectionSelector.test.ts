@@ -10,28 +10,6 @@ describe("wizardSelectionSelector", () => {
   let mock: AppState;
   beforeEach(()=>{
     mock = getInitialState();
-    /*mock = {
-      wizardRoutes: {
-        selected: ""
-      },
-      selection:{
-        projectNameObject:{
-          validation:{
-            isValid:true
-          }
-        },
-        outputPathObject:{
-          outputPath:""
-        },
-        frontendFramework:{
-          title:""
-        },
-        backendFramework:{
-          title:""
-        },
-        pages:[]
-      }
-    };*/
   })
 
   describe("on home", () => {

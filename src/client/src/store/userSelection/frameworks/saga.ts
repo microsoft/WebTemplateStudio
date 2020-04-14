@@ -27,12 +27,11 @@ export function* frameworkSaga(vscode: any) {
       const selectedPages = yield select(selectedPagesSelector);
       const selectedFrontend = yield select(selectedFrontendSelector);
       const selectedBackend = yield select(selectedBackendSelector);
-      debugger;
       if (selectedFrontend.internalName !== "" && selectedBackend.internalName !== ""){
         const event: any = yield call(getPages, vscode, selectedFrontend.internalName, selectedBackend.internalName);
         const pageOptions = getOptionalFromApiTemplateInfo(getApiTemplateInfoFromJson(event.data.payload.pages));
         yield put({ type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS, payload: pageOptions });
-        
+
         if (selectedPages.length === 0){
           const blankPage = pageOptions.filter(page => page.title === "Blank")[0];
           selectedPages.push(blankPage)
