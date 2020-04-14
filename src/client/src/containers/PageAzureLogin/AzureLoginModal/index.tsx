@@ -20,7 +20,7 @@ import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 import * as ModalActions from "../../../store/modals/action";
 import { azureLogin } from "../../../utils/extensionService/extensionService";
 import { AppContext } from "../../../AppContext";
-import { logIntoAzureActionAction } from "../../../store/config/azure/action";
+import { logIntoAzureActionAction } from "../../../store/azureProfileData/login/action";
 
 interface IStateProps {
   isModalOpen: boolean;
