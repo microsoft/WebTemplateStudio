@@ -1,5 +1,5 @@
 import { ISetProjectNameActionType } from "./model";
-import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 
 export const setProjectNameAction = (
   projectName: string, validation: any
@@ -9,12 +9,12 @@ export const setProjectNameAction = (
     validation
   };
   return {
-    type: WIZARD_SELECTION_TYPEKEYS.SET_PROJECT_NAME,
+    type: USERSELECTION_TYPEKEYS.SET_PROJECT_NAME,
     payload: projectNameObject
   };
 };
 
 export const setOutputPathAction = (outputPath: string): any => ({
-  type: WIZARD_SELECTION_TYPEKEYS.SET_OUTPUT_PATH,
+  type: USERSELECTION_TYPEKEYS.SET_OUTPUT_PATH,
   payload: outputPath
 });

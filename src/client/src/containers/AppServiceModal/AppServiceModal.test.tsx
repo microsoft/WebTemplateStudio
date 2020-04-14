@@ -45,9 +45,9 @@ jest.mock("./AppNameEditor", () => {
   };
 });
 
-jest.mock("../../store/modals/action", () => {
+jest.mock("../../store/navigation/modals/action", () => {
   const closeModalAction = jest.fn(() => ({
-    type: "WTS/modals/CLOSE_MODALS",
+    type: "WTS/navigation/modals/CLOSE_MODALS",
   }));
   return { closeModalAction };
 });

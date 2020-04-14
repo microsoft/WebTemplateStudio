@@ -1,6 +1,6 @@
 import { validationMessages } from "../../../utils/validations/messages";
 import WizardSelectionActionType from "../selectionActionType";
-import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { IProjectName } from "./model";
 
 const initialState = {
@@ -17,7 +17,7 @@ const projectNameReducer = (
   action: WizardSelectionActionType
 ) => {
   switch (action.type) {
-    case WIZARD_SELECTION_TYPEKEYS.SET_PROJECT_NAME:
+    case USERSELECTION_TYPEKEYS.SET_PROJECT_NAME:
       return action.payload;
     default:
       return state;

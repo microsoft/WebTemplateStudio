@@ -2,7 +2,6 @@ import { AZURE_TYPEKEYS } from "../typeKeys";
 import messages from "../../userSelection/app/wizardSelectionSelector/messages";
 import AzureActionType from "../azureActionType";
 import { CONFIG_TYPEKEYS } from "../../typeKeys";
-import WizardInfoType from "../../templates/templatesType";
 import { IAppService } from "./model";
 import RootAction from "../../ActionType";
 
@@ -19,7 +18,7 @@ const initialState: IAppService = {
 
 const appServiceReducer = (
   state: IAppService = initialState,
-  action: AzureActionType | WizardInfoType | RootAction
+  action: AzureActionType | RootAction
 ) => {
   switch (action.type) {
     case AZURE_TYPEKEYS.SET_APP_NAME_AVAILABILITY:

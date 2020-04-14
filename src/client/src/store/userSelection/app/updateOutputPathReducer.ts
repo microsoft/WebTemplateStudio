@@ -1,5 +1,4 @@
-import WizardSelectionActionType from "../selectionActionType";
-import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { IOutputPath } from "./model";
 import { CONFIG_TYPEKEYS } from "../../typeKeys";
 import RootAction from "../../ActionType";
@@ -14,7 +13,7 @@ const outputPathReducer = (
   action: RootAction
 ) => {
   switch (action.type) {
-    case WIZARD_SELECTION_TYPEKEYS.SET_OUTPUT_PATH:
+    case USERSELECTION_TYPEKEYS.SET_OUTPUT_PATH:
       return {
         ...state,
         outputPath: action.payload
