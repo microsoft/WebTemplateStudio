@@ -1,4 +1,3 @@
-import WizardInfoType from "../../config/configType";
 import { IDetail } from "./model";
 import { NAVIGATION_ROUTES_TYPEKEYS } from "../typeKeys";
 import RootAction from "../../ActionType";

@@ -1,6 +1,5 @@
 import { AZURE_TYPEKEYS } from "../typeKeys";
 import messages from "../../userSelection/app/wizardSelectionSelector/messages";
-import AzureActionType from "../azureActionType";
 import { IAppService } from "./model";
 import RootAction from "../../ActionType";
 import { CONFIG_TYPEKEYS } from "../../config/configTypeKeys";
