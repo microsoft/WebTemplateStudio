@@ -6,7 +6,7 @@ export interface IsLoggedIntoAzureAction {
 }
 
 export interface ILoginToAzureAction {
-  type: CONFIG_TYPEKEYS.LOG_IN_TO_AZURE;
+  type: AZURE_TYPEKEYS.LOG_IN_TO_AZURE;
   payload: AzureProfile;
 }
 

@@ -1,7 +1,6 @@
 import SelectionActionType from "../../selection/selectionActionType";
 import { ISelected } from "../../../types/selected";
-import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
-
+import { CONFIG_TYPEKEYS } from "../../typeKeys";
 
 const initialState = {
   title: "Fullstack Web Application",
@@ -15,7 +14,7 @@ const webAppReducer = (
   action: SelectionActionType
 ) => {
   switch (action.type) {
-    case WIZARD_SELECTION_TYPEKEYS.SELECT_WEB_APP:
+    case CONFIG_TYPEKEYS.SELECT_WEB_APP:
       return action.payload;
     default:
       return state;

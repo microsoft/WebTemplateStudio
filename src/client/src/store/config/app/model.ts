@@ -1,7 +1,7 @@
-import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 import { ISelected } from "../../../types/selected";
+import { CONFIG_TYPEKEYS } from "../../typeKeys";
 
 export interface ISelectProjectTypeAction {
-  type: WIZARD_SELECTION_TYPEKEYS.SELECT_WEB_APP;
+  type: CONFIG_TYPEKEYS.SELECT_WEB_APP;
   payload: ISelected;
 }
