@@ -41,10 +41,9 @@ const CosmosModal = ({ intl }: Props) => {
   const initialResourceGroup = cosmosInStore ? cosmosInStore.resourceGroup : AZURE.DEFAULT_RESOURCE_GROUP;
   const initialApi = cosmosInStore ? cosmosInStore.api : "";
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const initialSubscriptionData: SubscriptionData = { locations: [], resourceGroups:[] };
 
   const [subscription, setSubscription] = useState(initialSubscription);
-  const [subscriptionData, setSubscriptionData] = useState(initialSubscriptionData);
+  const [subscriptionData, setSubscriptionData] = useState<SubscriptionData|undefined>(undefined);
   const [accountName, setAccountName] = useState(initialAccountName);
   const [api, setApi] = useState(initialApi);
   const [location, setLocation] = useState(initialLocation);
@@ -124,12 +123,12 @@ const CosmosModal = ({ intl }: Props) => {
         <div className={classNames({ [styles.hide]: !showAdvanced })}>
         <LocationSelection
             location={location}
-            locations={subscriptionData.locations}
+            locations={subscriptionData ? subscriptionData.locations : []}
             onLocationChange={setLocation} />
         <ResourceGroupSelection
-          isEnabled={subscription !== ""}
+          subscription={subscription}
           resourceGroup={resourceGroup}
-          resourceGroups={subscriptionData.resourceGroups}
+          resourceGroups={subscriptionData ? subscriptionData.resourceGroups : undefined}
           onResourceGroupChange={setResourceGroup}
           onRefreshResourceGroup={loadResourceGroups} />
         </div>

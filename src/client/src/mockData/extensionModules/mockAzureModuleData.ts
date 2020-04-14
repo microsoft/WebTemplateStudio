@@ -21,6 +21,8 @@ const resourceGroups: ResourceGroup[] = Array.from(Array(5).keys()).map((key) =>
   };
 });
 
+const sandboxResourceGroups: ResourceGroup[] = [{name: "Sandbox resourceGroupMock"}];
+
 const subscriptions: Subscription[] = Array.from(Array(5).keys()).map((element: number) => {
   return {
     name: "GIV.Hackathon" + element,
@@ -33,4 +35,4 @@ subscriptions.push({
   isMicrosoftLearn: true,
 });
 
-export { appServiceName, cosmosDBName, locations, resourceGroups, subscriptions };
+export { appServiceName, cosmosDBName, locations, resourceGroups, sandboxResourceGroups, subscriptions };

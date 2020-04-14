@@ -40,10 +40,9 @@ const AppServiceModal = ({ intl }: Props) => {
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
   const initialLocation = appServiceInStore ? appServiceInStore.location : AZURE.DEFAULT_LOCATION;
   const initialResourceGroup = appServiceInStore ? appServiceInStore.resourceGroup : AZURE.DEFAULT_RESOURCE_GROUP;
-  const initialSubscriptionData: SubscriptionData = { locations: [], resourceGroups:[] };
-
+  
   const [subscription, setSubscription] = useState(initialSubscription);
-  const [subscriptionData, setSubscriptionData] = useState(initialSubscriptionData);
+  const [subscriptionData, setSubscriptionData] = useState<SubscriptionData|undefined>(undefined);
   const [appName, setAppName] = useState(initialAppServiceName);
   const [location, setLocation] = useState(initialLocation);
   const [resourceGroup, setResourceGroup] = useState(initialResourceGroup);
@@ -121,12 +120,12 @@ const AppServiceModal = ({ intl }: Props) => {
         <div className={classNames({ [styles.hide]: !showAdvanced })}>
           <LocationSelection
             location={location}
-            locations={subscriptionData.locations}
+            locations={subscriptionData ? subscriptionData.locations : []}
             onLocationChange={setLocation} />
             <ResourceGroupSelection
-              isEnabled={subscription !== ""}
+              subscription={subscription}
               resourceGroup={resourceGroup}
-              resourceGroups={subscriptionData.resourceGroups}
+              resourceGroups={subscriptionData ? subscriptionData.resourceGroups : undefined}
               onResourceGroupChange={setResourceGroup}
               onRefreshResourceGroup={loadResourceGroups} />
         </div>

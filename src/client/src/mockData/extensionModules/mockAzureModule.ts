@@ -49,7 +49,11 @@ const getUserStatus = (message: any) => {
   );
 };
 
-const getSubscriptionDataForCosmos = (message: any) => {  
+const getSubscriptionDataForCosmos = (message: any) => { 
+  const resourceGroups = IsMicrosoftLearnSubscription(message.subscription) 
+    ? mockData.sandboxResourceGroups 
+    : mockData.resourceGroups;
+  
   setTimeout(() =>
    window.postMessage(
     {
@@ -58,7 +62,7 @@ const getSubscriptionDataForCosmos = (message: any) => {
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
         locations: mockData.locations,
-        resourceGroups: mockData.resourceGroups,
+        resourceGroups,
       },
     },
     "*"
@@ -66,6 +70,10 @@ const getSubscriptionDataForCosmos = (message: any) => {
 };
 
 const getSubscriptionDataForAppService = (message: any) => {
+  const resourceGroups = IsMicrosoftLearnSubscription(message.subscription) 
+  ? mockData.sandboxResourceGroups 
+  : mockData.resourceGroups;
+
   setTimeout(() =>
   window.postMessage(
    {
@@ -74,7 +82,7 @@ const getSubscriptionDataForAppService = (message: any) => {
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
         locations: mockData.locations,
-        resourceGroups: mockData.resourceGroups,
+        resourceGroups,
      },
    },
    "*"
@@ -147,6 +155,11 @@ const validateAppServiceName = (message: any) => {
     "*"
   );
 };
+
+const IsMicrosoftLearnSubscription = (subscription: string) => {
+const selectedSubscription = mockData.subscriptions.find(s => s.name === subscription);
+return selectedSubscription !== undefined && selectedSubscription.isMicrosoftLearn;
+}
 
 export {
   login,
