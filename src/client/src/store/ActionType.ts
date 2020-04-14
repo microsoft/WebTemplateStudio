@@ -1,7 +1,6 @@
 import AzureActionType from "./azureProfileData/azureActionType";
 import ConfigType from "./config/configType";
-import ModalActionType from "./navigation/modals/modalActionType";
-import RoutesActionType from "./navigation/routes/routesActionType";
+import NavigationActionType from "./navigation/navigationActionType";
 import WizardContentActionType from "./templates/templatesActionType";
 import WizardSelectionActionType from "./userSelection/selectionActionType";
 import WizardInfoActionType from "./templates/templatesType";
@@ -9,8 +8,7 @@ import WizardInfoActionType from "./templates/templatesType";
 type RootAction =
   | AzureActionType
   | ConfigType
-  | ModalActionType
-  | RoutesActionType
+  | NavigationActionType
   | WizardContentActionType
   | WizardSelectionActionType
   | WizardInfoActionType;

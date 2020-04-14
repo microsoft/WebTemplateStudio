@@ -1,5 +1,4 @@
-import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction, ISetDetails, IPageOptionsActionType } from "./model";
-import { TEMPLATES_TYPEKEYS } from "../../typeKeys";
+import { ISetVisitedPageAction, IResetVisitedPageAction, ISetPageAction, ISetDetails } from "./model";
 import { IOption } from "../../../types/option";
 import { NAVIGATION_ROUTES_TYPEKEYS } from "../typeKeys";
 
@@ -30,15 +29,7 @@ const setDetailPageAction = (
   }
 });
 
-const getPagesOptionsSuccessAction = (
-  pagesOptions: IOption[]
-): IPageOptionsActionType => ({
-  payload: pagesOptions,
-  type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS
-});
-
 export {
-  getPagesOptionsSuccessAction,
   setVisitedWizardPageAction,
   resetVisitedWizardPageAction,
   setPageWizardPageAction,

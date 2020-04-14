@@ -1,4 +1,3 @@
-import { TEMPLATES_TYPEKEYS } from "../../typeKeys";
 import { IOption } from "../../../types/option";
 import { NAVIGATION_ROUTES_TYPEKEYS } from "../typeKeys";
 
@@ -20,11 +19,6 @@ export interface IDetail {
   originRoute: string;
   data: IOption;
   isIntlFormatted: boolean;
-}
-
-export interface IPageOptionsActionType {
-  type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS;
-  payload: IOption[];
 }
 
 export interface ISetDetails {
