@@ -1,6 +1,6 @@
-import WizardSelectionActionType from "../../userSelection/selectionActionType";
 import { IValidations } from "./model";
 import { CONFIG_TYPEKEYS } from "../../typeKeys";
+import RootAction from "../../ActionType";
 
 const initialState = {
   itemNameValidationConfig: {
@@ -20,7 +20,7 @@ const initialState = {
 
 const validationsReducer = (
   state: IValidations = initialState,
-  action: WizardSelectionActionType
+  action: RootAction
 ) => {
   switch (action.type) {
     case CONFIG_TYPEKEYS.SET_VALIDATIONS:
