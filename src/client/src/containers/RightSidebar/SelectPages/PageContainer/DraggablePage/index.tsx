@@ -47,6 +47,15 @@ const DraggablePage = ({
   selectedPages,
   customInputStyle
 }: Props) => {
+  const [namePage, setNamePage] = React.useState("");
+  const dispatch = useDispatch();
+  const [validValue, setValidValue] = React.useState<string>(page ? page.title:"");
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  React.useEffect(()=>{
+    setNamePage(page.title)
+  },[]);
+
   React.useEffect(()=>{
     const hasFocusOnLasPage = selectedPages.length>1 && !page.isDirty && selectedPages.length === idx;
     if (hasFocusOnLasPage){
@@ -56,7 +65,6 @@ const DraggablePage = ({
       page.isDirty = true;
     }
   },[selectedPages]);
-  const dispatch = useDispatch();
 
   const moveDownScroll = () =>{
      if (document.getElementById("dvRightSideBar") && document.getElementById("dvSummaryContainer")) 
@@ -87,10 +95,8 @@ const DraggablePage = ({
     idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
   };
 
-  const [validValue, setValidValue] = React.useState<string>(page ? page.title:"");
-  const inputRef = React.createRef<HTMLInputElement>();
-
   const handleInputChange = async (newTitle: string) => {
+    setNamePage(newTitle);
     page.title = newTitle;
     const validationResult = await validateItemName(newTitle, validations.itemNameValidationConfig, selectedPages);
     page.error = validationResult.error;
@@ -119,7 +125,7 @@ const DraggablePage = ({
                   aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input)}
                   maxLength={maxInputLength}
-                  value={page.title}
+                  value={namePage}
                   onChange={e => {
                     if (handleInputChange && idx) {
                       page.isDirty=true;
@@ -136,7 +142,7 @@ const DraggablePage = ({
                   }}
                   autoFocus={page.isDirty}
                   disabled={selectedPages.filter(selPage => selPage.title!==page.title && selPage.isValidTitle===false).length>0}
-                  ref={inputRef}
+                  
                 />
               )}
             </div>

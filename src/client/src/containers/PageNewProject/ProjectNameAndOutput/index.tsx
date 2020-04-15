@@ -1,6 +1,5 @@
 import * as React from "react";
 import { connect, useDispatch } from "react-redux";
-import Input from "../../../components/Input";
 import OutputPath from "../../../components/OutputPath";
 
 import {
@@ -34,7 +33,7 @@ import { setProjectPathValidationAction } from "../../../store/config/validation
 import { setProjectNameAction, setOutputPathAction } from "../../../store/userSelection/app/action";
 import { IValidations } from "../../../store/config/validations/model";
 import { AppContext } from "../../../AppContext";
-import stylesInput from "../../../components/Input/styles.module.css";
+import stylesInput from "../../../css/input.module.css";
 import classnames from "classnames";
 
 interface IStateProps {
