@@ -95,7 +95,7 @@ const DraggablePage = ({
     idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
   };
 
-  const handleInputChange = async (newTitle: string) => {
+  const validateNameAndSetStore = async (newTitle: string) => {
     setNamePage(newTitle);
     page.title = newTitle;
     const validationResult = await validateItemName(newTitle, validations.itemNameValidationConfig, selectedPages);
@@ -127,22 +127,21 @@ const DraggablePage = ({
                   maxLength={maxInputLength}
                   value={namePage}
                   onChange={e => {
-                    if (handleInputChange && idx) {
+                    if (validateNameAndSetStore && idx) {
                       page.isDirty=true;
-                      handleInputChange(e.target.value);
+                      validateNameAndSetStore(e.target.value);
                     }
                   }}
                   onBlur={e => {
-                    if (handleInputChange && idx && page && page.isValidTitle===false) {
-                      handleInputChange(validValue);
+                    if (validateNameAndSetStore && idx && page && page.isValidTitle===false) {
+                      validateNameAndSetStore(validValue);
                     }else{
-                      handleInputChange(e.target.value);
+                      validateNameAndSetStore(e.target.value);
                     }
                     if (page.isValidTitle) setValidValue(page.title);
                   }}
                   autoFocus={page.isDirty}
                   disabled={selectedPages.filter(selPage => selPage.title!==page.title && selPage.isValidTitle===false).length>0}
-                  
                 />
               )}
             </div>
