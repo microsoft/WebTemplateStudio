@@ -24,7 +24,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
 
   if (action.type === CONFIG_TYPEKEYS.RESET_WIZARD) {
     const { backendOptions, frontendOptions, pageOptions } = state!.templates;
-    const { previewStatus, detailsPage, validations, isValidatingName, versions } = state!.config;
+    const { previewStatus, detailsPage, validations, isValidatingName, versions, azureProfileData } = state!.config;
 
     passedState = {
       azureProfileData: state!.azureProfileData,
@@ -43,13 +43,14 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
         frontendFramework:frontendOptions.filter((frame)=>frame.internalName==="React")[0],
         backendFramework:backendOptions.filter((frame)=>frame.internalName==="Node")[0]
       },
-      template: { backendOptions, frontendOptions, pageOptions },
+      templates: { backendOptions, frontendOptions, pageOptions },
       config:{
         previewStatus,
         validations,
         detailsPage,
         isValidatingName,
         versions,
+        azureProfileData
       },
       wizardRoutes: undefined,
     };

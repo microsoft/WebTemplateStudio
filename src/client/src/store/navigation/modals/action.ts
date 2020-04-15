@@ -1,6 +1,4 @@
 import { NAVIGATION_MODAL_TYPEKEYS, NAVIGATION_MODAL_TYPES, ModalState } from "../typeKeys";
-import { Dispatch } from "react";
-import ModalActionType from "./modalActionType";
 import { IOpenModalAction, ICloseModalAction } from "./model";
 
 const openModalAction = (modal: ModalState): IOpenModalAction => ({
@@ -13,69 +11,45 @@ const closeModalAction = (): ICloseModalAction => ({
 });
 
 const openAzureLoginModalAction = (serviceInternalName: string) => {
-  return (dispatch: Dispatch<ModalActionType>) => {
-    dispatch(
-      openModalAction({
-        modalType: NAVIGATION_MODAL_TYPES.AZURE_LOGIN_MODAL,
-        modalData: serviceInternalName
-      })
-    );
-  };
+  return openModalAction({
+    modalType: NAVIGATION_MODAL_TYPES.AZURE_LOGIN_MODAL,
+    modalData: serviceInternalName
+  })
 };
 
 const openCosmosDbModalAction = () => {
-  return (dispatch: Dispatch<ModalActionType>) => {
-    dispatch(
-      openModalAction({
-        modalType: NAVIGATION_MODAL_TYPES.COSMOS_DB_MODAL,
-        modalData: null
-      })
-    );
-  };
+  return openModalAction({
+    modalType: NAVIGATION_MODAL_TYPES.COSMOS_DB_MODAL,
+    modalData: null
+  })
 };
 
 const openGenModalAction = () => {
-  return (dispatch: Dispatch<ModalActionType>) => {
-    dispatch(
-      openModalAction({
-        modalType: NAVIGATION_MODAL_TYPES.GEN_MODAL,
-        modalData: null
-      })
-    );
-  };
+  return openModalAction({
+    modalType: NAVIGATION_MODAL_TYPES.GEN_MODAL,
+    modalData: null
+  })
 };
 
 const openViewLicensesModalAction = () => {
-  return (dispatch: Dispatch<ModalActionType>) => {
-    dispatch(
-      openModalAction({
-        modalType: NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL,
-        modalData: null
-      })
-    );
-  };
+  return openModalAction({
+    modalType: NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL,
+    modalData: null
+  })
 };
 
 const openAppServiceModalAction = () => {
-  return (dispatch: Dispatch<ModalActionType>) => {
-    dispatch(
-      openModalAction({
-        modalType: NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL,
-        modalData: null
-      })
-    );
-  };
+  return openModalAction({
+    modalType: NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL,
+    modalData: null
+  })
 };
 
 const openAddPagesModalAction = () => {
-  return (dispatch: Dispatch<ModalActionType>) => {
-    dispatch(
-      openModalAction({
-        modalType: NAVIGATION_MODAL_TYPES.ADD_PAGES_MODAL,
-        modalData: null
-      })
-    );
-  };
+  return openModalAction({
+    modalType: NAVIGATION_MODAL_TYPES.ADD_PAGES_MODAL,
+    modalData: null
+  })
 };
 
 export {
@@ -85,5 +59,5 @@ export {
   openGenModalAction,
   openViewLicensesModalAction,
   openAppServiceModalAction,
-  openAddPagesModalAction
+  openAddPagesModalAction,
 };

@@ -35,6 +35,8 @@ import { AppContext } from "../../AppContext";
 import { rootSelector } from "../../store/userSelection/app/selector";
 import { isCosmosResourceCreatedSelector, getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
 import { isAppServiceSelectedSelector, getAppServiceSelectionSelector } from "../../store/azureProfileData/appService/selector";
+import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../store/userSelection/frameworks/action";
+import { FRONT_END_SELECTION, BACK_END_SELECTION } from "../PageNewProject/QuickStart/defaultSelection";
 
 interface LinksDict {
   [serviceId: string]: string;
@@ -57,16 +59,18 @@ const GenerationModal = ({
   intl, isModalOpen
 }: Props) => {
   const { formatMessage } = intl;
-  let serviceFailed = false;
   const [templateGenStatus, setTemplateGenStatus] = React.useState("");
   const [generationStatus, setGenerationStatus] = React.useState<any>({});
   const [isTemplateGenerated, setIsTemplateGenerated] = React.useState(false);
   const [isTemplatesFailed, setIsTemplatesFailed] = React.useState(false);
+  const [isServicesDeployed, setIsServicesDeployed] = React.useState(false);
+  const [isServiceFailed, setIsServiceFailed] = React.useState(false);
+  
   const [templateGenerated, setTemplateGenerated] = React.useState(false);
   const [templateGenerationInProgress, setTemplateGenerationInProgress] = React.useState(false);
 
   const { vscode } = React.useContext(AppContext);
-  const [isServicesDeployed, setIsServicesDeployed] = React.useState(false);
+
 
   const engine = useSelector((state: AppState) => rootSelector(state));
   const isCosmosSelected = useSelector((state: AppState) => isCosmosResourceCreatedSelector(state));
@@ -89,13 +93,11 @@ const GenerationModal = ({
         localServiceStatus.appService.isDeployed = generationStatus.appService.success;
         localServiceStatus.appService.isFailed = generationStatus.appService.failure;
       }
-
-      if ((isCosmosSelected && !isAppServiceSelected && localServiceStatus.cosmosdb.isDeployed) ||
-      (!isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed)||
-      (!isCosmosSelected && !isAppServiceSelected) ||
-      (!isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed && localServiceStatus.cosmosdb.isDeployed)){
-        setIsServicesDeployed(true);
-      }
+      
+      setIsServiceFailed(localServiceStatus.cosmosdb.isFailed || localServiceStatus.appService.isFailed);
+      setIsServicesDeployed(isCosmosSelected && !isAppServiceSelected && localServiceStatus.cosmosdb.isDeployed || 
+        !isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed ||
+        isCosmosSelected && isAppServiceSelected && (localServiceStatus.cosmosdb.isDeployed && localServiceStatus.appService.isDeployed));
 
       setServiceStatus(localServiceStatus);
 
@@ -118,7 +120,7 @@ const GenerationModal = ({
   },[isModalOpen]);
 
   const dispatch = useDispatch();
-  
+
   React.useEffect(()=>{
     generateProject(engine,
       isCosmosSelected,
@@ -168,9 +170,17 @@ const GenerationModal = ({
     </a>
   );
 
+  const reset= () => {
+    dispatch(resetWizardAction());
+    setTimeout(()=>{
+      dispatch(setSelectedFrontendFrameworkAction(FRONT_END_SELECTION));
+      dispatch(setSelectedBackendFrameworkAction(BACK_END_SELECTION));
+    },1000)
+  }
+
   const handleOpenProjectOrRestartWizard = () => {
     if (isTemplatesFailed) {
-      dispatch(resetWizardAction());
+      reset();
       return;
     }
     if (isTemplateGenerated) {
@@ -195,7 +205,7 @@ const GenerationModal = ({
 
   const closeModalAndCreateAnotherProject = (param: any) => {
     trackCreateNewProjectTelemetry(param);
-    dispatch(resetWizardAction());
+    reset();
   };
 
   const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -223,7 +233,7 @@ const GenerationModal = ({
   const genMessage = () => {
     return (
       <div>
-        {isServicesSelected && !isServicesDeployed && (
+        {isServicesSelected && !isServicesDeployed && !isServiceFailed && (
           <p className={styles.sectionLine}>
             {formatMessage(messages.generationCompleteWithAzure)}
           </p>
@@ -290,7 +300,6 @@ const GenerationModal = ({
         serviceStatus[service].isSelected &&
         serviceStatus[service].isFailed
       ) {
-        serviceFailed = true;
         return (
           <div
             className={styles.sectionLine}
@@ -389,7 +398,9 @@ const GenerationModal = ({
         <div className={styles.title}>
           {formatMessage(messages.creatingYourProject)}
         </div>
-        {((templateGenerated && isServicesDeployed) || isTemplatesFailed) && (
+        {((isServicesSelected && (isServiceFailed || isServicesDeployed)) ||
+         (!isServicesSelected && (isTemplatesFailed || isTemplateGenerated)))
+         && (
           <Close
             tabIndex={0}
             className={styles.closeIcon}
@@ -419,7 +430,7 @@ const GenerationModal = ({
       </div>
 
       <div className={styles.footerContainer}>
-        {(isTemplatesFailed || serviceFailed) && (
+        {(isTemplatesFailed || isServiceFailed) && (
           <a
             className={styles.link}
             href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
@@ -429,7 +440,9 @@ const GenerationModal = ({
           </a>
         )}
 
-        {((templateGenerated && isServicesDeployed) || isTemplatesFailed) && (
+        {((isServicesSelected && (isServiceFailed || isServicesDeployed)) ||
+         (!isServicesSelected && (isTemplatesFailed || isTemplateGenerated)))
+         && (
           <button
             className={classnames(styles.button, {
               [buttonStyles.buttonDark]: templateGenerated,

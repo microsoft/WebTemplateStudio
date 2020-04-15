@@ -74,15 +74,19 @@ const AzureSubscriptions = (props: Props) => {
     return formatMessage(messages.addResource);
   };
 
-  const getServicesModalOpener = (internalName: string) => {
+  const openCloudServiceModal = (option: IOption) => {
     const modalOpeners = {
       [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: () => dispatch(ModalActions.openCosmosDbModalAction()),
       [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: ()=> dispatch(ModalActions.openAppServiceModalAction())
     };
-    if (modalOpeners.hasOwnProperty(internalName)) {
-      return modalOpeners[internalName];
+    if (modalOpeners.hasOwnProperty(option.internalName)) {
+      modalOpeners[option.internalName]();
     }
-    return () => void(0);
+    //return () => void(0);
+  }
+
+  const openLoginModal = (option: IOption) => {
+    dispatch(ModalActions.openAzureLoginModalAction(option.internalName));
   }
 
   const getServicesOrganizer = (
@@ -121,8 +125,8 @@ const AzureSubscriptions = (props: Props) => {
                       )}
                       handleButtonClick={
                         isLoggedIn
-                          ? getServicesModalOpener(option.internalName)
-                          : () => dispatch(ModalActions.openAzureLoginModalAction(option.internalName))
+                          ? () => openCloudServiceModal(option)
+                          : () => openLoginModal(option)
                       }
                       handleDetailsClick={setDetailPage}
                     />
