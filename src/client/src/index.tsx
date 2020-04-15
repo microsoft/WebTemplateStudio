@@ -1,18 +1,21 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+
 import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
+import reduxSaga from "redux-saga";
 import App from "./App";
 import "focus-visible";
 import "./index.css";
 import reducers from "./store/combineReducers";
+import runSagaMiddelware from "./store/rootSaga";
 import { IntlProvider } from "react-intl";
 import { AppContext} from "./AppContext";
 import { PRODUCTION } from "./utils/constants";
 import mockVsCodeApi from "./mockData/mockVsCodeApi";
 
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+const sagaMiddleware = reduxSaga();
+const createStoreWithMiddleware = applyMiddleware(sagaMiddleware)(createStore);
 
 const store = createStoreWithMiddleware(
   reducers,
@@ -25,12 +28,14 @@ const vscode = process.env.NODE_ENV === PRODUCTION ?
   // @ts-ignore because function does not exist in dev environment
   acquireVsCodeApi(): mockVsCodeApi();
 
+runSagaMiddelware(vscode, sagaMiddleware);
+
 ReactDOM.render(
   <IntlProvider textComponent={React.Fragment}>
     <Provider store={store}>
-        <AppContext.Provider value={{vscode}}>
-          <App />
-        </AppContext.Provider>
+    <AppContext.Provider value={{vscode}}>
+      <App />
+    </AppContext.Provider>
     </Provider>
   </IntlProvider>,
   document.getElementById("root") as HTMLElement

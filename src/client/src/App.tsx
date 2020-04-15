@@ -7,33 +7,19 @@ import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 import {
   EXTENSION_COMMANDS,
   ROUTES,
-  DEVELOPMENT,
-  FRAMEWORK_TYPE
+  DEVELOPMENT
 } from "./utils/constants";
 
-import { getVersionsDataAction } from "./store/config/versions/action";
-
 import appStyles from "./appStyles.module.css";
-import { IVersions } from "./types/version";
-import { ISelected } from "./types/selected";
 import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
-import { getPages, getFrameworks, getUserStatus, getTemplateInfo } from "./utils/extensionService/extensionService";
-import { parseFrameworksPayload } from "./utils/parseFrameworksPayload";
-
 import Loadable from "react-loadable";
 import PageDetails from "./containers/PageDetails";
 import { MODAL_TYPES } from "./store/modals/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
-import { setPagesAction } from "./store/userSelection/pages/action";
-import { setValidationsAction } from "./store/config/validations/action";
 import { setOutputPathAction } from "./store/userSelection/app/action";
-import { setFrontendFrameworksAction, setBackendFrameworksAction } from "./store/templates/frameworks/action";
-import { getPagesOptionsAction } from "./store/templates/pages/action";
-import { setPreviewStatusAction } from "./store/templates/preview/action";
-import { AppContext } from "./AppContext";
-import { logIntoAzureActionAction } from "./store/config/azure/action";
+import { loadAction } from "./store/config/config/action";
 
 const PageSelectFrameworks = Loadable({
   loader: () => import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"),
@@ -74,10 +60,6 @@ if (process.env.NODE_ENV === DEVELOPMENT) {
 
 interface IStateProps {
   frontendOptions: IOption[];
-  selectedFrontend: ISelected;
-  selectedBackend: ISelected;
-  selectedPages: ISelected[];
-  isPreview: boolean;
   modalState: any;
   selectedRoute: string;
 }
@@ -85,11 +67,10 @@ interface IStateProps {
 type Props = IStateProps;
 
 const App = (props: Props) => {
-  const { selectedFrontend, selectedBackend, selectedPages, frontendOptions,
-    isPreview, modalState, selectedRoute } = props;
+  const { frontendOptions,
+    modalState, selectedRoute } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading: Array<any> = new Array<any>();
-  const {vscode} = React.useContext(AppContext);
   const dispatch = useDispatch();
 
   const addToPromisesList = (promise: Promise<any>)=>{
@@ -109,10 +90,9 @@ const App = (props: Props) => {
     loader: () => addToPromisesList(import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject")),
     loading:() => <div/>
   });
-
+  
   if (frontendOptions.length === 0){
     messageEventsFromExtension();
-    getFrameworksListAndSetToStore();
   }
 
   Promise.all(promisesLoading).then(()=>{
@@ -120,62 +100,8 @@ const App = (props: Props) => {
   })
 
   React.useEffect(()=>{
-    getUserStatus(vscode).then((event)=>{
-      const message = event.data;
-      if (message.payload !== null) {
-        const azureProfile = message.payload as AzureProfile;
-        dispatch(logIntoAzureActionAction(azureProfile))
-      }
-    });
-
-    getTemplateInfo(vscode).then((event)=>{
-      const message = event.data;
-      const versionData: IVersions = {
-        templatesVersion:message.payload.templatesVersion,
-        wizardVersion: message.payload.wizardVersion
-      };
-      dispatch(getVersionsDataAction(versionData));
-      dispatch(setValidationsAction({
-        itemNameValidationConfig:message.payload.itemNameValidationConfig,
-        projectNameValidationConfig:message.payload.projectNameValidationConfig
-      }));
-      dispatch(setPreviewStatusAction(message.payload.preview));
-    });
-  },[vscode]);
-
-  React.useEffect(()=>{
-    if (selectedFrontend.internalName!=="" && selectedBackend.internalName!=="") loadPages();
-  },[selectedFrontend, selectedBackend]);
-
-  function getFrameworksListAndSetToStore(){
-    getFrameworks(vscode, isPreview).then((event: any)=>{
-      const message = event.data;
-      dispatch(setFrontendFrameworksAction(
-        parseFrameworksPayload(
-          message.payload.frameworks,
-          FRAMEWORK_TYPE.FRONTEND,
-          message.payload.isPreview
-        )
-      ));
-      dispatch(setBackendFrameworksAction(
-        parseFrameworksPayload(
-          message.payload.frameworks,
-          FRAMEWORK_TYPE.BACKEND,
-          message.payload.isPreview
-        )
-      ));
-    });
-  }
-
-  const loadPages = () => {
-    getPages(vscode, selectedFrontend.internalName, selectedBackend.internalName).then((event)=>{
-      dispatch(getPagesOptionsAction(event.data.payload.pages));
-      selectedPages.map((selectedPage)=>{
-        selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName ? selectedPage.defaultName.replace(" ",""):""}`;
-      });
-      dispatch(setPagesAction(selectedPages));
-    });
-  }
+    dispatch(loadAction());
+  },[]);
 
   function messageEventsFromExtension(){
     window.addEventListener("message", event => {
@@ -228,7 +154,6 @@ const App = (props: Props) => {
           {(selectedRoute === ROUTES.AZURE_LOGIN) && (<PageAzureLogin/>)}
           {(selectedRoute === ROUTES.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
           {(selectedRoute === ROUTES.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
-
           {(selectedRoute === ROUTES.SELECT_PAGES) && (<PageAddPages isModal={false}/>)}
           {(selectedRoute === ROUTES.NEW_PROJECT) && (<PageNewProject/>)}
 
@@ -241,13 +166,8 @@ const App = (props: Props) => {
   );
 }
 
-
 const mapStateToProps = (state: AppState): IStateProps => ({
-  selectedFrontend: state.userSelection.frontendFramework,
-  selectedBackend: state.userSelection.backendFramework,
   frontendOptions: state.templates.frontendOptions,
-  selectedPages: state.userSelection.pages,
-  isPreview:  state.config.previewStatus,
   modalState: state.modals.openModal,
   selectedRoute : state.wizardRoutes.selected,
 });
