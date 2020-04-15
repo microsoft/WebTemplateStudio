@@ -101,7 +101,7 @@ const ResourceGroupSelection = (props: Props) => {
         disabled={disableComponent}
       />
       </div>
-      <button className={styles.refreshButton} onClick={refreshResourceGroups}>
+      <button data-testid="refresh-button" disabled={disableComponent} className={styles.refreshButton} onClick={refreshResourceGroups}>
         <Refresh className={styles.viewIcon} />
       </button>
       </div>

@@ -43,8 +43,8 @@ describe("ResourceGroupSelection", () => {
     wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
     //const dropdown = wrapper.getByTestId("dropdown");
     //expect(dropdown).toBeDisabled();
-    const refreshButton = wrapper.getByText(intl.formatMessage(messages.refresh))
-    expect(refreshButton).toBeDisabled();
+      const refreshButton = wrapper.getByTestId("refresh-button");
+      expect(refreshButton).toBeDisabled();
   });
 
   it("If has initial resource group, onResourceGroupChange notify selected resource group", async () => {
@@ -73,8 +73,8 @@ describe("ResourceGroupSelection", () => {
 
   it("When click on refresh button, onRefreshResourceGroup should be called", () => {
     wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
-    const link = wrapper.getByText(intl.formatMessage(messages.refresh))
-    fireEvent.click(link);
+    const refreshButton = wrapper.getByTestId("refresh-button");
+    fireEvent.click(refreshButton);
     expect(props.onRefreshResourceGroup).toHaveBeenCalledTimes(1);
   });
 });

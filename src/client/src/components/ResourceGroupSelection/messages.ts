@@ -17,10 +17,6 @@ const messages = defineMessages({
     id: "ResourceGroupSelection.newResourceGroupLink",
     defaultMessage: "Create New",
   },
-  refresh: {
-    id: "ResourceGroupSelection.refresh",
-    defaultMessage: "Refresh",
-  },
   createNewResourceGroup: {
     id: "ResourceGroupSelection.createNewResourceGroup",
     defaultMessage: "Create new resource group",
