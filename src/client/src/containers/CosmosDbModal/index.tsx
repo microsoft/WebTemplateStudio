@@ -119,6 +119,8 @@ const CosmosModal = ({ intl }: Props) => {
           onIsAvailableAccountNameChange={setIsAvailableAccountName}
         />
 
+        <ApiSelection initialApi={api} onApiChange={setApi} />
+
         {/* Advanced Mode */}
         <div className={classNames({ [styles.hide]: !showAdvanced })}>
         <LocationSelection
@@ -132,8 +134,7 @@ const CosmosModal = ({ intl }: Props) => {
           onResourceGroupChange={setResourceGroup}
           onRefreshResourceGroup={loadResourceGroups} />
         </div>
-
-        <ApiSelection initialApi={api} onApiChange={setApi} />
+        
         <div className={styles.bottomContainer}>
           <button
             className={classNames(buttonStyles.buttonLink, styles.showAdvancedModeLink)}

@@ -116,6 +116,9 @@ const AppServiceModal = ({ intl }: Props) => {
           onIsAvailableAppNameChange={setIsAvailableAppName}
         />
 
+        <AppServicePlanInfo subscription={subscription} />
+        <RuntimeStackInfo />
+
         {/* Advanced Mode */}
         <div className={classNames({ [styles.hide]: !showAdvanced })}>
           <LocationSelection
@@ -129,10 +132,6 @@ const AppServiceModal = ({ intl }: Props) => {
               onResourceGroupChange={setResourceGroup}
               onRefreshResourceGroup={loadResourceGroups} />
         </div>
-
-        <AppServicePlanInfo subscription={subscription} />
-
-        <RuntimeStackInfo />
 
         <div className={styles.bottomContainer}>
           <button

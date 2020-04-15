@@ -32,6 +32,31 @@
   opacity: 0.8;
 }
 
+.dropdownContainer {  
+  display:flex
+}
+
+.dropdown {  
+  flex: 1 1 auto;
+}
+
 .refreshButton {
-  margin: 0.5em 0 0 0;
+  flex: 0 0 auto;
+  cursor: pointer;
+  color: var(--vscode-textLink-foreground);
+  border: none;
+  background: none;
+  padding: 0 10px;
+}
+
+.refreshButton:disabled {  
+  cursor: none;
+}
+
+.refreshButton:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.viewIcon path {
+  fill: var(--vscode-editor-foreground);
 }

@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
-import buttonStyles from "../../css/buttonStyles.module.css";
+import { ReactComponent as Refresh } from "../../assets/i-refresh.svg";
 import messages from "./messages";
 import Dropdown from "../Dropdown";
 import classNames from "classnames";
@@ -29,6 +29,7 @@ const ResourceGroupSelection = (props: Props) => {
   const [selectedDropdownResourceGroup, setSelectedDropdownResourceGroup] = useState<IDropDownOptionType | undefined>(
     undefined
   );
+  const [isRefresh, setIsRefresh] = useState(false);
 
   const DEFAULT_RESOURCE_GROUP: IDropDownOptionType = {
     label: formatMessage(messages.createNewResourceGroup),
@@ -57,6 +58,7 @@ const ResourceGroupSelection = (props: Props) => {
       } else {
         setSelectedDropdownResourceGroup(dropdownResourceGroups[0]);
       }
+      setIsRefresh(false);
     }
   }, [dropdownResourceGroups]);
 
@@ -72,12 +74,15 @@ const ResourceGroupSelection = (props: Props) => {
   };
 
   const refreshResourceGroups = () => {
+    setIsRefresh(true);
     setDropownResourceGroups([]);
     onRefreshResourceGroup();
   };
 
+  const disableComponent = subscription === "" || isRefresh;
+
   return (
-    <div className={classNames(styles.container, { [styles.containerDisabled]: subscription === "" })}>
+    <div className={classNames(styles.container, { [styles.containerDisabled]: disableComponent })}>
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
         <a className={styles.link} href={AZURE_LINKS.CREATE_NEW_RESOURCE_GROUP}>
@@ -86,20 +91,20 @@ const ResourceGroupSelection = (props: Props) => {
       </div>
 
       <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
-      <Dropdown
+      <div className={styles.dropdownContainer}>
+        <div className={styles.dropdown}>
+        <Dropdown
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={dropdownResourceGroups}
         handleChange={(resourceGroup) => setSelectedDropdownResourceGroup(resourceGroup)}
         value={selectedDropdownResourceGroup}
-        disabled={subscription === ""}
+        disabled={disableComponent}
       />
-      <button
-        disabled={subscription === ""}
-        onClick={refreshResourceGroups}
-        className={classNames(buttonStyles.buttonLink, styles.refreshButton)}
-      >
-        {formatMessage(messages.refresh)}
+      </div>
+      <button className={styles.refreshButton} onClick={refreshResourceGroups}>
+        <Refresh className={styles.viewIcon} />
       </button>
+      </div>
     </div>
   );
 };
