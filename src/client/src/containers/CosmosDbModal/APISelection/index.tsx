@@ -20,13 +20,14 @@ const ApiValues: IDropDownOptionType[] = [
 interface IProps {
   initialApi: string;
   onApiChange(selectedApi: string): void;
+  isAdvancedMode: boolean;
 }
 
 type Props = IProps & InjectedIntlProps;
 
 const ApiSelection = (props: Props) => {
   const { formatMessage } = props.intl;
-  const { initialApi, onApiChange } = props;
+  const { initialApi, onApiChange, isAdvancedMode } = props;
   const [selectedApi, setSelectedApi] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
@@ -49,6 +50,7 @@ const ApiSelection = (props: Props) => {
       </div>
       <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <Dropdown
+        openDropdownUpwards={!isAdvancedMode}      
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={ApiValues}        
         handleChange={api => setSelectedApi(api)}

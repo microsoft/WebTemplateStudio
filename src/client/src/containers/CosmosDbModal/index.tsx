@@ -114,7 +114,7 @@ const CosmosModal = ({ intl }: Props) => {
           onKeyDown={closeModalIfPressEnterOrSpaceKey}
         />
       </div>
-      <div className={styles.bodyContainer}>
+      <div className={styles.body}>
         <SubscriptionSelection
           initialSubscription={subscription}
           onSubscriptionChange={setSubscription} />
@@ -126,7 +126,7 @@ const CosmosModal = ({ intl }: Props) => {
           onIsAvailableAccountNameChange={setIsAvailableAccountName}
         />
 
-        <ApiSelection initialApi={api} onApiChange={setApi} />
+        <ApiSelection initialApi={api} onApiChange={setApi} isAdvancedMode={showAdvanced} />
 
         {/* Advanced Mode */}
         <div className={classNames({ [styles.hide]: !showAdvanced })}>
@@ -141,8 +141,8 @@ const CosmosModal = ({ intl }: Props) => {
           onResourceGroupChange={setResourceGroup}
           onRefreshResourceGroup={loadResourceGroups} />
         </div>
-        
-        <div className={styles.bottomContainer}>
+      </div>
+      <div className={styles.footer}>
           <button
             className={classNames(buttonStyles.buttonLink, styles.showAdvancedModeLink)}
             onClick={() => setShowAdvanced(!showAdvanced)}>
@@ -153,7 +153,6 @@ const CosmosModal = ({ intl }: Props) => {
             {formatMessage(messages.save)}
           </button>
         </div>
-      </div>
     </React.Fragment>
   );
 };

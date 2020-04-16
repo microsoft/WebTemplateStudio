@@ -30,7 +30,6 @@
   "ResourceGroupSelection.ariaDropdownLabel": "Resource group Dropdown",
   "ResourceGroupSelection.createNewResourceGroup": "Create new resource group",
   "ResourceGroupSelection.newResourceGroupLink": "Create New",
-  "ResourceGroupSelection.refresh": "Refresh",
   "ResourceGroupSelection.subtitle": "Choose your preferred resource group to use",
   "ResourceGroupSelection.title": "Resource Group",
   "SubscriptionSelection.ariaDropdownLabel": "Subscription Drop Down",

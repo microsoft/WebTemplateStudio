@@ -94,6 +94,7 @@ const ResourceGroupSelection = (props: Props) => {
       <div className={styles.dropdownContainer}>
         <div className={styles.dropdown}>
         <Dropdown
+        openDropdownUpwards={dropdownResourceGroups.length > 1}
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={dropdownResourceGroups}
         handleChange={(resourceGroup) => setSelectedDropdownResourceGroup(resourceGroup)}
