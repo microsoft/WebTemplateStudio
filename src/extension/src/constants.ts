@@ -340,6 +340,7 @@ export enum ExtensionCommand {
   TrackPressQuickstart = "track-press-quickstart",
   TrackOpenAppServiceModalFromServicesList = "track-open-app-service-modal-from-services-list",
   TrackOpenCosmosDBServiceModalFromServicesList = "track-open-cosmosdb-service-modal-from-services-list",
+  TrackOpenAzureServiceAdvancedMode = "track-open-azure-service-advanced-mode",
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
@@ -377,7 +378,8 @@ export enum TelemetryEventName {
   TrackOpenAddPagesModal = "Open-Add-Pages-Modal",
   TrackPressQuickstart = "Press-Quickstart",
   OpenAppServiceModalFromServicesList = "Open-AppService-Modal-From-Services-List",
-  OpenCosmosDBServiceModalFromServicesList = "Open-CosmosDBService-Modal-From-Services-List"
+  OpenCosmosDBServiceModalFromServicesList = "Open-CosmosDBService-Modal-From-Services-List",
+  OpenAzureServiceAdvancedMode = "Open-Azure-Service-Advanced-Mode"
 }
 
 export namespace DialogResponses {
