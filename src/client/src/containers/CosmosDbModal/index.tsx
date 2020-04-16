@@ -9,7 +9,7 @@ import ApiSelection from "./APISelection/index";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS, AZURE } from "../../utils/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS, AZURE, EXTENSION_COMMANDS, SERVICE_KEYS } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { ISelectedCosmosService } from "../../store/azureProfileData/cosmosDb/model";
@@ -18,7 +18,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import { closeModalAction } from "../../store/modals/action";
 import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
-import { getSubscriptionDataForCosmos } from "../../utils/extensionService/extensionService";
+import { getSubscriptionDataForCosmos, sendTelemetry } from "../../utils/extensionService/extensionService";
 import LocationSelection from "../../components/LocationSelection";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 import { AppContext } from "../../AppContext";
@@ -49,6 +49,13 @@ const CosmosModal = ({ intl }: Props) => {
   const [location, setLocation] = useState(initialLocation);
   const [resourceGroup, setResourceGroup] = useState(initialResourceGroup);
   const [isAvailableAccountName, setIsAvailableAccountName] = useState(false);
+
+  React.useEffect(() => {
+    if(showAdvanced) {      
+      const azureServiceType = SERVICE_KEYS.COSMOS_DB;
+      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE, {azureServiceType});
+    }
+  }, [showAdvanced]);
   
   React.useEffect(() => {
     loadResourceGroups();

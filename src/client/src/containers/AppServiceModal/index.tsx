@@ -10,7 +10,7 @@ import AppNameEditor from "./AppNameEditor";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS, AZURE } from "../../utils/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS, AZURE, EXTENSION_COMMANDS, SERVICE_KEYS } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
@@ -19,7 +19,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import { saveAppServiceSettingsAction } from "../../store/azureProfileData/appService/action";
 import { closeModalAction } from "../../store/modals/action";
-import { GetSubscriptionDataForAppService } from "../../utils/extensionService/extensionService";
+import { GetSubscriptionDataForAppService, sendTelemetry } from "../../utils/extensionService/extensionService";
 import LocationSelection from "../../components/LocationSelection";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 import { AppContext } from "../../AppContext";
@@ -49,6 +49,13 @@ const AppServiceModal = ({ intl }: Props) => {
   const [isAvailableAppName, setIsAvailableAppName] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   
+  React.useEffect(() => {
+    if(showAdvanced) {      
+      const azureServiceType = SERVICE_KEYS.APP_SERVICE;
+      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE, {azureServiceType});
+    }
+  }, [showAdvanced]);
+
   React.useEffect(() => {
     loadResourceGroups();
   }, [subscription]);
