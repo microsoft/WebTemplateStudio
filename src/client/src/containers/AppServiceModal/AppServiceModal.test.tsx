@@ -7,9 +7,9 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
-import { MODAL_TYPES } from "../../store/modals/typeKeys";
+import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
-import { closeModalAction } from "../../store/modals/action";
+import { closeModalAction } from "../../store/navigation/modals/action";
 import { saveAppServiceSettingsAction } from "../../store/azureProfileData/appService/action";
 import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
 
@@ -45,16 +45,16 @@ jest.mock("./AppNameEditor", () => {
   };
 });
 
-jest.mock("../../store/modals/action", () => {
+jest.mock("../../store/navigation/modals/action", () => {
   const closeModalAction = jest.fn(() => ({
-    type: "WTS/modals/CLOSE_MODALS",
+    type: "WTS/navigation/modals/CLOSE_MODALS",
   }));
   return { closeModalAction };
 });
 
 jest.mock("../../store/azureProfileData/appService/action", () => {
   const saveAppServiceSettingsAction = jest.fn((appServiceSettings: ISelectedAppService) => ({
-    type: "WTS/modals/CLOSE_MODALS",
+    type: "WTS/navigation/modals/CLOSE_MODALS",
     payload: appServiceSettings,
   }));
   return { saveAppServiceSettingsAction };
@@ -68,7 +68,7 @@ describe("AppServiceModal", () => {
 
   beforeEach(() => {
     initialState = getInitialState();
-    setOpenModal(initialState, MODAL_TYPES.APP_SERVICE_MODAL);
+    setOpenModal(initialState, NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL);
     store = mockStore(initialState);
     props = {
       isModalOpen: true,

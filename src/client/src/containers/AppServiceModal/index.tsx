@@ -3,7 +3,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import asModal from "../../components/Modal";
 import messages from "./messages";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isAppServiceModalOpenSelector } from "../../store/modals/selector";
+import { isAppServiceModalOpenSelector } from "../../store/navigation/modals/selector";
 import RuntimeStackInfo from "./RuntimeStackInfo";
 import AppServicePlanInfo from "./AppServicePlanInfo";
 import AppNameEditor from "./AppNameEditor";
@@ -18,7 +18,7 @@ import { getAppServiceSelectionSelector } from "../../store/azureProfileData/app
 import classNames from "classnames";
 import { useState } from "react";
 import { saveAppServiceSettingsAction } from "../../store/azureProfileData/appService/action";
-import { closeModalAction } from "../../store/modals/action";
+import { closeModalAction } from "../../store/navigation/modals/action";
 import { GetSubscriptionDataForAppService, sendTelemetry } from "../../utils/extensionService/extensionService";
 import LocationSelection from "../../components/LocationSelection";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";

@@ -1,6 +1,5 @@
 import { ISelectFrontendAction, ISelectBackendAction } from "./frameworks/model";
 import { IsetPagesAction, ISetPageAction, IResetPagesAction } from "./pages/model";
-import { IProjectPathValidationAction, IValidationsAction } from "../config/validations/model";
 import { ISelectProjectTypeAction, ISetProjectNameActionType, IUpdateProjectPathActionType } from "./app/model";
 
 type WizardSelectionActionType =
@@ -9,8 +8,6 @@ type WizardSelectionActionType =
   | IsetPagesAction
   | ISetPageAction
   | ISelectProjectTypeAction
-  | IProjectPathValidationAction
-  | IValidationsAction
   | ISetProjectNameActionType
   | IUpdateProjectPathActionType
   | IResetPagesAction;

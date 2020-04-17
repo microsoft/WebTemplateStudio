@@ -3,7 +3,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import asModal from "../../components/Modal";
 import messages from "./messages";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
-import { isCosmosDbModalOpenSelector } from "../../store/modals/selector";
+import { isCosmosDbModalOpenSelector } from "../../store/navigation/modals/selector";
 import AccountNameEditor from "./AccountNameEditor/index";
 import ApiSelection from "./APISelection/index";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
@@ -16,7 +16,7 @@ import { ISelectedCosmosService } from "../../store/azureProfileData/cosmosDb/mo
 import { getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
 import classNames from "classnames";
 import { useState } from "react";
-import { closeModalAction } from "../../store/modals/action";
+import { closeModalAction } from "../../store/navigation/modals/action";
 import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
 import { getSubscriptionDataForCosmos, sendTelemetry } from "../../utils/extensionService/extensionService";
 import LocationSelection from "../../components/LocationSelection";

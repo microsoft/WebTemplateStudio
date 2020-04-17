@@ -11,7 +11,7 @@ import { ROUTES_ARRAY } from "../../utils/constants";
 import { IRoutes } from "../../store/userSelection/pages/model";
 import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
-import { setPageWizardPageAction } from "../../store/config/pages/action";
+import { setPageWizardPageAction } from "../../store/navigation/routes/action";
 
 interface IStateProps {
   isVisited: IRoutes;
@@ -112,8 +112,8 @@ const TopNavBar = (props: Props) => {
 
 const mapStateToProps = (state: any): IStateProps => ({
   isEnableNextPage: isEnableNextPageSelector(state),
-  isVisited: state.wizardRoutes.isVisited,
-  selectedRoute : state.wizardRoutes.selected
+  isVisited: state.navigation.routes.isVisited,
+  selectedRoute : state.navigation.routes.selected
 });
 
 export default connect(mapStateToProps)(injectIntl(TopNavBar));

@@ -21,23 +21,23 @@ const getOutputPath = (state: AppState): string =>
   state.userSelection.outputPathObject.outputPath;
 const isEnableNextPageSelector = (state: AppState): boolean =>{
   let valid = false;
-  if (state.wizardRoutes.selected === ROUTES.NEW_PROJECT){
+  if (state.navigation.routes.selected === ROUTES.NEW_PROJECT){
     valid = state.userSelection.projectNameObject.validation.isValid === true && 
       state.userSelection.outputPathObject.outputPath !== "";
   }
 
-  if (state.wizardRoutes.selected === ROUTES.SELECT_FRAMEWORKS &&
+  if (state.navigation.routes.selected === ROUTES.SELECT_FRAMEWORKS &&
     state.userSelection.frontendFramework.title !== "" && state.userSelection.backendFramework.title !== "" &&
     state.userSelection.pages.filter(page => !page.isValidTitle).length === 0){
     valid = true;
   }
 
-  if (state.wizardRoutes.selected === ROUTES.SELECT_PAGES && state.userSelection.pages.length>0 && 
+  if (state.navigation.routes.selected === ROUTES.SELECT_PAGES && state.userSelection.pages.length>0 && 
     state.userSelection.pages.filter(page => !page.isValidTitle).length === 0){
     valid = true;
   }
 
-  if ((state.wizardRoutes.selected === ROUTES.AZURE_LOGIN || state.wizardRoutes.selected === ROUTES.REVIEW_AND_GENERATE)
+  if ((state.navigation.routes.selected === ROUTES.AZURE_LOGIN || state.navigation.routes.selected === ROUTES.REVIEW_AND_GENERATE)
     && state.userSelection.pages.filter(page => !page.isValidTitle).length === 0){
     valid = true;
   }
