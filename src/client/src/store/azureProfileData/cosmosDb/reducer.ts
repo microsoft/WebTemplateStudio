@@ -8,10 +8,7 @@ const initialState: ICosmosDB = {
     isAccountNameAvailable: false,
     message: "Account name unavailable"
   },
-  selection: null,
-  wizardContent: {
-    serviceType: messages.cosmosOriginalTitle
-  }
+  selection: null
 };
 
 const services = (state: ICosmosDB = initialState, action: AzureActionType) => {

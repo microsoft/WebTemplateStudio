@@ -10,6 +10,7 @@ import { sendTelemetry } from "../../../../utils/extensionService/extensionServi
 import { removeAppServiceSettingsAction } from "../../../../store/azureProfileData/appService/action";
 import { AppContext } from "../../../../AppContext";
 import { openAppServiceModalAction } from "../../../../store/navigation/modals/action";
+import messages from "./messages";
 
 interface IProps {
   appServiceSelection: IAppService;
@@ -21,7 +22,6 @@ const AppServiceSelection = ({
   appServiceSelection,
   intl
 }: Props) => {
-  const { serviceType } = appServiceSelection.wizardContent;
   const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 
@@ -40,7 +40,7 @@ const AppServiceSelection = ({
       {appServiceSelection.selection && (
         <React.Fragment>
           <div className={styles.headerContainer}>
-            <div>{intl.formatMessage(serviceType)}</div>
+            <div>{intl.formatMessage(messages.title)}</div>
             <div
               role="button"
               tabIndex={0}

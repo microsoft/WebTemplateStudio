@@ -11,6 +11,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
 import { AppContext } from "../../../../AppContext";
+import messages from "./messages";
 
 interface IProps {
   cosmosSelection: ICosmosDB;
@@ -22,7 +23,6 @@ const CosmosDBSelection = ({
   cosmosSelection,
   intl
 }: Props) => {
-  const { serviceType } = cosmosSelection.wizardContent;
   const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 
@@ -41,7 +41,7 @@ const CosmosDBSelection = ({
       {cosmosSelection.selection && (
         <React.Fragment>
           <div className={styles.headerContainer}>
-            <div>{intl.formatMessage(serviceType)}</div>
+            <div>{intl.formatMessage(messages.title)}</div>
             <div
               role="button"
               tabIndex={0}

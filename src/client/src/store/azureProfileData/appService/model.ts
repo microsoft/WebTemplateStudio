@@ -29,12 +29,7 @@ export interface ISelectedAppService {
   internalName: string;
 }
 
-interface IServiceContent {
-  serviceType: FormattedMessage.MessageDescriptor;
-}
-
 export interface IAppService {
   siteNameAvailability: IAvailability;
   selection: ISelectedAppService | null;
-  wizardContent: IServiceContent;
 }

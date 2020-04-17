@@ -13,12 +13,7 @@ const emptyCosmosDB = {
     isAccountNameAvailable: false,
     message: ""
   },
-  selection: [],
-  wizardContent: {
-    serviceType: {
-      defaultMessage: "CosmosDB",
-      id: "cosmosDb.originalTitle"
-    }
+  selection: []
   }
 };
 
@@ -27,12 +22,7 @@ const emptyAppService = {
     isSiteNameAvailable: false,
     message: ""
   },
-  selection: null,
-  wizardContent: {
-    serviceType: {
-      defaultMessage: "App Service",
-      id: "appService.originalTitle"
-    }
+  selection: null
   }
 };
 

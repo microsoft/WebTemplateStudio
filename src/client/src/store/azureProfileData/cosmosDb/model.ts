@@ -22,10 +22,6 @@ interface IAvailabilityCosmosDb {
   message: string;
 }
 
-interface IServiceContent {
-  serviceType: FormattedMessage.MessageDescriptor;
-}
-
 export interface ISelectedCosmosService {
   subscription: string;
   resourceGroup: string;
@@ -38,5 +34,4 @@ export interface ISelectedCosmosService {
 export interface ICosmosDB {
   accountNameAvailability: IAvailabilityCosmosDb;
   selection: ISelectedCosmosService | null;
-  wizardContent: IServiceContent;
 }

@@ -9,10 +9,7 @@ const initialState: IAppService = {
     isSiteNameAvailable: false,
     message: "App name unavailable"
   },
-  selection: null,
-  wizardContent: {
-    serviceType: messages.appServiceOriginalTitle
-  }
+  selection: null
 };
 
 const appServiceReducer = (
