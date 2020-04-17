@@ -1,7 +1,7 @@
 import _ from "lodash";
 import classnames from "classnames";
 import * as React from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import Card from "../../../components/Card";
 import styles from "./styles.module.css";
 import * as ModalActions from "../../../store/navigation/modals/action";
@@ -19,9 +19,9 @@ import { AppState } from "../../../store/combineReducers";
 import { isAppServiceSelectedSelector } from "../../../store/azureProfileData/appService/selector";
 import messages from "./messages";
 import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
+import { isLoggedInSelector } from "../../../store/config/azure/selector";
 
 interface IAzureLoginProps {
-  isLoggedIn: boolean;
   isCosmosDbModalOpen: boolean;
   cosmosDbSelection: any;
   appServiceSelection: any;
@@ -40,12 +40,12 @@ const AzureSubscriptions = (props: Props) => {
     cosmosDbSelection,
     appServiceSelection,
     intl,
-    isLoggedIn,
     isPreview
   } = props;
   const { formatMessage } = intl;
   const [uniqueServiceTypes, setUniqueServiceTypes] = React.useState<(string | undefined)[]>([]);
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state: AppState) => isLoggedInSelector(state));
 
   const setDetailPage= (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
@@ -167,7 +167,6 @@ const AzureSubscriptions = (props: Props) => {
 const mapStateToProps = (state: AppState): IAzureLoginProps => {
   const { previewStatus } = state.config;
   return {
-    isLoggedIn: state.azureProfileData.isLoggedIn,
     isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
     cosmosDbSelection: state.selection.services.cosmosDB.selection,
     appServiceSelection: state.selection.services.appService.selection,
@@ -176,6 +175,4 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => {
   };
 };
 
-export default connect(
-  mapStateToProps
-)(injectIntl(AzureSubscriptions));
+export default connect(mapStateToProps)(injectIntl(AzureSubscriptions));

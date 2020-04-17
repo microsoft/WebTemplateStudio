@@ -1,5 +1,5 @@
 import * as React from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 
 import asModal from "../../../components/Modal";
 
@@ -21,10 +21,10 @@ import * as ModalActions from "../../../store/navigation/modals/action";
 import { azureLogin } from "../../../utils/extensionService/extensionService";
 import { AppContext } from "../../../AppContext";
 import { logIntoAzureActionAction } from "../../../store/azureProfileData/login/action";
+import { isLoggedInSelector } from "../../../store/config/azure/selector";
 
 interface IStateProps {
   isModalOpen: boolean;
-  isLoggedIn: boolean;
   selectedAzureServiceName: string;
 }
 
@@ -32,13 +32,10 @@ type Props = IStateProps & InjectedIntlProps;
 
 const AzureLoginModal = (props: Props) => {
   const { formatMessage } = props.intl;
-  const {
-    isLoggedIn,
-    selectedAzureServiceName
-  } = props;
+  const { selectedAzureServiceName } = props;
   const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
-
+  const isLoggedIn = useSelector((state: AppState) => isLoggedInSelector(state));
 
   const handleSignInClick = () => {
     azureLogin(vscode).then((event)=>{
@@ -157,14 +154,10 @@ const AzureLoginModal = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState): IStateProps => {
-  const { isLoggedIn } = state.azureProfileData;
   return {
     isModalOpen: isAzureLoginModalOpenSelector(state),
-    isLoggedIn,
     selectedAzureServiceName: state.navigation.modals.openModal.modalData
   };
 };
 
-export default connect(
-  mapStateToProps
-)(asModal(injectIntl(AzureLoginModal)));
+export default connect(mapStateToProps)(asModal(injectIntl(AzureLoginModal)));

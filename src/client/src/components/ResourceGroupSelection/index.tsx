@@ -9,7 +9,7 @@ import classNames from "classnames";
 import { AZURE_LINKS } from "../../utils/constants";
 import { useSelector } from "react-redux";
 import { AppState } from "../../store/combineReducers";
-import { getSubscriptionsSelector } from "../../store/azureProfileData/azure/selector";
+import { getSubscriptionsSelector } from "../../store/config/azure/selector";
 
 interface IProps {
   subscription: string;
