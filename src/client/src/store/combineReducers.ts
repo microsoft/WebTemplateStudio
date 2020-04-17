@@ -1,13 +1,12 @@
 import { combineReducers } from "redux";
 import azureProfileData from "./azureProfileData/combineReducers";
-import modals from "./modals/combineReducers";
+import navigation from "./navigation/combineReducers";
 import templates from "./templates/combineReducers";
 import config from "./config/combineReducers";
-import wizardRoutes from "./userSelection/pages/combineReducers";
 import userSelection from "./userSelection/combineReducers";
 import selection from "./selection/combineReducers";
 import RootAction from "./ActionType";
-import { CONFIG_TYPEKEYS } from "./typeKeys";
+import { CONFIG_TYPEKEYS } from "./config/configTypeKeys";
 
 const appReducer = combineReducers({
   templates,
@@ -15,8 +14,7 @@ const appReducer = combineReducers({
   userSelection,
   selection,
   azureProfileData,
-  modals,
-  wizardRoutes
+  navigation
 });
 
 export type AppState = ReturnType<typeof appReducer>;
@@ -28,13 +26,11 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
     const { backendOptions, frontendOptions, pageOptions } = state!.templates;
     const { previewStatus, detailsPage, validations, isValidatingName, versions, azureProfileData } = state!.config;
 
-    /* Elements that are undefined tell the reducer to replace the element
-     * with the initial state that is specified in the element's reducer.
-     * See: https://redux.js.org/recipes/structuring-reducers/initializing-state
-     */
     passedState = {
       azureProfileData: state!.azureProfileData,
-      modals: undefined,
+      navigation: {
+        modals:undefined
+      },
       userSelection: {
         projectNameObject:{
           projectName:"",

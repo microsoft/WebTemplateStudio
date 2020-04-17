@@ -17,11 +17,11 @@ import messages from "./strings";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import { AppState } from "../../store/combineReducers";
-import * as ModalActions from "../../store/modals/action";
+import * as ModalActions from "../../store/navigation/modals/action";
 import { hasServicesSelector } from "../../store/azureProfileData/servicesSelector";
-import { getIsVisitedRoutesSelector, IVisitedPages } from "../../store/templates/preview/wizardNavigationSelector";
 import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
+import { getIsVisitedRoutesSelector, IVisitedPages } from "../../store/config/config/wizardNavigationSelector";
 
 type Props = InjectedIntlProps;
 
@@ -31,8 +31,8 @@ const RightSidebar = (props: Props)=>{
 
   const hasServices: boolean = useSelector((state: AppState) => hasServicesSelector(state));
   const isRoutesVisited: IVisitedPages = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
-  const wizardRoutes = useSelector((state: AppState) => state.wizardRoutes);
-  const selectedRoute = useSelector((state: AppState) => state.wizardRoutes.selected);
+  const wizardRoutes = useSelector((state: AppState) => state.navigation.routes);
+  const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
 
   const { showPages } = isRoutesVisited;
   const { intl } = props;

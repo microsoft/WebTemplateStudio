@@ -1,20 +1,20 @@
 import {takeEvery, call, put} from "redux-saga/effects";
-import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
 import {select} from 'redux-saga/effects';
 import { AppState } from "../../combineReducers";
 import { getPages } from "../../../utils/extensionService/extensionService";
 import { ISelected } from "../../../types/selected";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { getOptionalFromApiTemplateInfo, getApiTemplateInfoFromJson } from "../../templates/pages/action";
-import { TEMPLATES_TYPEKEYS } from "../../typeKeys";
+import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
 
 export function* frameworkSaga(vscode: any) {
     yield takeEvery(
-      WIZARD_SELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK,
+      USERSELECTION_TYPEKEYS.SELECT_BACKEND_FRAMEWORK,
       callBack
     );
 
     yield takeEvery(
-      WIZARD_SELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK,
+      USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK,
       callBack
     );
 
@@ -40,7 +40,7 @@ export function* frameworkSaga(vscode: any) {
             selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName ? selectedPage.defaultName.replace(" ",""):""}`;
           });
         }
-        yield put({ type: WIZARD_SELECTION_TYPEKEYS.SELECT_PAGES, payload: selectedPages });
+        yield put({ type: USERSELECTION_TYPEKEYS.SELECT_PAGES, payload: selectedPages });
       }
     }
   }

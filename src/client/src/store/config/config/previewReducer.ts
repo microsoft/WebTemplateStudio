@@ -1,9 +1,9 @@
-import WizardContentActionType from "../configActionType";
-import { CONFIG_TYPEKEYS } from "../../typeKeys";
+import RootAction from "../../ActionType";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
 const previewStatus = (
   state = false,
-  action: WizardContentActionType
+  action: RootAction
 ) => {
   switch (action.type) {
     case CONFIG_TYPEKEYS.SET_PREVIEW_STATUS:

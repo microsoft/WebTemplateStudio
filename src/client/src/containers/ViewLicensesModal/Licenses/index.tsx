@@ -9,11 +9,9 @@ import { ILicenseObject } from "../../../types/license";
 
 import styles from "./styles.module.css";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import {
-  getIsVisitedRoutesSelector,
-  IVisitedPages
-} from "../../../store/templates/preview/wizardNavigationSelector";
+
 import { AppState } from "../../../store/combineReducers";
+import { IVisitedPages, getIsVisitedRoutesSelector } from "../../../store/config/config/wizardNavigationSelector";
 
 interface IStateProps {
   frameworkLicenses: string[];

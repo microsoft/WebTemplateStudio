@@ -1,12 +1,13 @@
-import { WIZARD_SELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
+
 
 export interface IProjectPathValidationAction {
-  type: WIZARD_SELECTION_TYPEKEYS.SET_PROJECT_PATH_VALIDATION;
+  type: CONFIG_TYPEKEYS.SET_PROJECT_PATH_VALIDATION;
   payload: any; //FIXME: Type is declared in future PR in validation reducer, replace when merged
 }
 
 export interface IValidationsAction {
-  type: WIZARD_SELECTION_TYPEKEYS.SET_VALIDATIONS;
+  type: CONFIG_TYPEKEYS.SET_VALIDATIONS;
   payload: any; //FIXME: Type is declared in future PR in validation reducer, replace when merged
 }
 

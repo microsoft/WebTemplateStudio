@@ -1,7 +1,7 @@
 import { IVersions } from "../../../types/version";
-import { WIZARD_INFO_TYPEKEYS } from "../../typeKeys";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
 export interface IVersionData {
-  type: WIZARD_INFO_TYPEKEYS.GET_TEMPLATE_INFO;
+  type: CONFIG_TYPEKEYS.GET_TEMPLATE_INFO;
   payload: IVersions;
 }

@@ -13,7 +13,7 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
 import {IAzureServiceStatus} from "../../types/generationStatus";
-import { isGenModalOpenSelector } from "../../store/modals/selector";
+import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
@@ -26,7 +26,7 @@ import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { getOutputPath } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { strings as messages } from "./strings";
-import { MODAL_TYPES } from "../../store/modals/typeKeys";
+import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
 import { sendTelemetry, generateProject } from "../../utils/extensionService/extensionService";
@@ -478,4 +478,4 @@ const mapStateToProps = (state: AppState): IStateProps => ({
 export default 
   connect(
     mapStateToProps
-  )(asModal(injectIntl(GenerationModal), MODAL_TYPES.GEN_MODAL));
+  )(asModal(injectIntl(GenerationModal), NAVIGATION_MODAL_TYPES.GEN_MODAL));
