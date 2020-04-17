@@ -14,7 +14,6 @@ const emptyCosmosDB = {
     message: ""
   },
   selection: []
-  }
 };
 
 const emptyAppService = {
@@ -23,7 +22,6 @@ const emptyAppService = {
     message: ""
   },
   selection: null
-  }
 };
 
 const mockVsCode = {
