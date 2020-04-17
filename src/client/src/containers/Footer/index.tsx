@@ -10,11 +10,10 @@ import {
 
 import { IVSCodeObject } from "../../types/vscode";
 
-import { openGenModalAction } from "../../store/modals/action";
+import { openGenModalAction } from "../../store/navigation/modals/action";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
-import { getIsVisitedRoutesSelector } from "../../store/templates/preview/wizardNavigationSelector";
 import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
 
@@ -25,7 +24,8 @@ import messages from "./messages";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import { AppContext } from "../../AppContext";
 import { useSelector, useDispatch } from "react-redux";
-import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/config/pages/action";
+import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
+import { getIsVisitedRoutesSelector } from "../../store/config/config/wizardNavigationSelector";
 
 type Props = InjectedIntlProps;
 
@@ -47,7 +47,7 @@ const Footer = (props: Props) => {
 
   const visitedRoutes = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
-  const currentRoute = useSelector((state: AppState) => state.wizardRoutes.selected);
+  const currentRoute = useSelector((state: AppState) => state.navigation.routes.selected);
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
 
   const dispatch = useDispatch();

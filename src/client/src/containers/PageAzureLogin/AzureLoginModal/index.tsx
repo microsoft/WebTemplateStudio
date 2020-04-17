@@ -4,9 +4,9 @@ import { connect, useDispatch } from "react-redux";
 import asModal from "../../../components/Modal";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { closeModalAction } from "../../../store/modals/action";
+import { closeModalAction } from "../../../store/navigation/modals/action";
 import { AppState } from "../../../store/combineReducers";
-import { isAzureLoginModalOpenSelector } from "../../../store/modals/selector";
+import { isAzureLoginModalOpenSelector } from "../../../store/navigation/modals/selector";
 import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import classnames from "classnames";
@@ -17,7 +17,7 @@ import { KEY_EVENTS } from "../../../utils/constants";
 import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
 import CollapsibleInfoBox from "../../../components/CollapsibleInfoBox";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
-import * as ModalActions from "../../../store/modals/action";
+import * as ModalActions from "../../../store/navigation/modals/action";
 import { azureLogin } from "../../../utils/extensionService/extensionService";
 import { AppContext } from "../../../AppContext";
 import { logIntoAzureActionAction } from "../../../store/azureProfileData/login/action";
@@ -161,7 +161,7 @@ const mapStateToProps = (state: AppState): IStateProps => {
   return {
     isModalOpen: isAzureLoginModalOpenSelector(state),
     isLoggedIn,
-    selectedAzureServiceName: state.modals.openModal.modalData
+    selectedAzureServiceName: state.navigation.modals.openModal.modalData
   };
 };
 
