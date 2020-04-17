@@ -111,13 +111,6 @@ export const getInitialState = (): AppState => {
         }
       }
     },
-    azureProfileData: {
-      isLoggedIn: false,
-      subscriptionData: {
-        locations: [],
-        resourceGroups: []
-      }
-    },
     navigation:{
       modals: {
         openModal: {

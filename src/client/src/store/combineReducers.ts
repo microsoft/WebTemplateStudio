@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import azureProfileData from "./azureProfileData/combineReducers";
 import navigation from "./navigation/combineReducers";
 import templates from "./templates/combineReducers";
 import config from "./config/combineReducers";
@@ -13,7 +12,6 @@ const appReducer = combineReducers({
   config,
   userSelection,
   selection,
-  azureProfileData,
   navigation
 });
 
@@ -27,7 +25,6 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
     const { previewStatus, detailsPage, validations, isValidatingName, versions, azureProfileData } = state!.config;
 
     passedState = {
-      azureProfileData: state!.azureProfileData,
       navigation: {
         modals:undefined
       },

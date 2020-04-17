@@ -23,15 +23,3 @@ export const azureProfileData = (
       return state;
   }
 };
-
-export const isLoggedIn = (state = false, action: AzureActionType) => {
-  switch (action.type) {
-    case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
-      return false;
-    case AZURE_TYPEKEYS.LOG_IN_TO_AZURE:
-      return true;
-    case AZURE_TYPEKEYS.IS_LOGGED_IN_TO_AZURE:
-    default:
-      return state;
-  }
-};

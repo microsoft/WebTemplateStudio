@@ -9,8 +9,3 @@ export interface IAzureValidationStatusAction {
   type: AZURE_TYPEKEYS.SET_VALIDATION_STATUS;
   payload: boolean;
 }
-
-export interface IGetSubscriptionAction {
-  type: AZURE_TYPEKEYS.GET_SUBSCRIPTION_DATA;
-  payload: SubscriptionData;
-}
