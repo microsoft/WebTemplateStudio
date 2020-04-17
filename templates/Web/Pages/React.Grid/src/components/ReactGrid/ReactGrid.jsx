@@ -1,12 +1,10 @@
 ﻿import React, { useState } from "react";
 import classnames from "classnames";
-import GridComponent from "./GridComponent";
 import WarningMessage from "../WarningMessage";
-import styles from "./grid.module.css";
+import styles from "./styles.module.css";
 import CONSTANTS from "../../constants";
-
-const ReactGrid = () => {
-  const [gridItems, setGridItems] = useState([]);
+import Item from "./Item";
+  const [items, setItems] = useState([]);
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
   const centeredHeaderStyle = classnames("text-center", styles.header);
   const getListGrids = () => {
@@ -29,7 +27,7 @@ const ReactGrid = () => {
 
   React.useEffect(() => {
     getListGrids()
-    .then(listGrids => {setGridItems(listGrids)})
+    .then(listGrids => {setItems(listGrids)})
     .catch(error =>
       setWarningMessage({
         warningMessageOpen: true,
@@ -56,10 +54,10 @@ const ReactGrid = () => {
         </div>
 
         <div className="row justify-content-around text-center pb-5">
-          {gridItems.map(gridItem => (
-            <GridComponent
-            key={gridItem.id}
-            gridItem={gridItem}
+          {items.map(item => (
+            <Item
+            key={item.id}
+            item={item}
             />
           ))}
         </div>
@@ -72,5 +70,3 @@ const ReactGrid = () => {
     </main>
   );
 }
-
-export default ReactGrid;

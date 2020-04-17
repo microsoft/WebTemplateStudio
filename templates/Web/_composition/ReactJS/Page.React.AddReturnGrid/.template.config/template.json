@@ -1,0 +1,26 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.React.GridReplaceName2",
+  "shortName": "Page.React.GridReplaceName2",
+  "identity": "Page.React.GridReplaceName2",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.compositionOrder": 2,
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$frontendframework == React & identity == wts.Page.React.Grid"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    }
+  }
+}
