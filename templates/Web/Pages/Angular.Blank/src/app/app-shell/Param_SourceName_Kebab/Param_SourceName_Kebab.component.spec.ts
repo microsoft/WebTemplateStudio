@@ -1,19 +1,19 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BlankComponent } from './blank.component';
+import { AngularBlankComponent } from './Param_SourceName_Kebab.component';
 
-describe('BlankComponent', () => {
-  let component: BlankComponent;
-  let fixture: ComponentFixture<BlankComponent>;
+describe('AngularBlankComponent', () => {
+  let component: AngularBlankComponent;
+  let fixture: ComponentFixture<AngularBlankComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BlankComponent]
+      declarations: [AngularBlankComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BlankComponent);
+    fixture = TestBed.createComponent(AngularBlankComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
