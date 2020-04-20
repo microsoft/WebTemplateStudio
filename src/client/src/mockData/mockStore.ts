@@ -93,23 +93,21 @@ export const getInitialState = (): AppState => {
         }
       }
     },
-    selection:{
-      services: {
-        cosmosDB: {
-          accountNameAvailability: {
-            isAccountNameAvailable: false,
-            message: 'Account name unavailable'
-          },
-          selection: null
+    services: {
+      cosmosDB: {
+        accountNameAvailability: {
+          isAccountNameAvailable: false,
+          message: 'Account name unavailable'
         },
-        appService: {
-          siteNameAvailability: {
-            isSiteNameAvailable: false,
-            message: 'App name unavailable'
-          },
-          selection: null
-        }
-      }
+        selection: null
+      },
+      appService: {
+        siteNameAvailability: {
+          isSiteNameAvailable: false,
+          message: 'App name unavailable'
+        },
+        selection: null
+      }      
     },
     navigation:{
       modals: {

@@ -3,7 +3,7 @@ import navigation from "./navigation/combineReducers";
 import templates from "./templates/combineReducers";
 import config from "./config/combineReducers";
 import userSelection from "./userSelection/combineReducers";
-import selection from "./selection/combineReducers";
+import services from "./azureProfileData";
 import RootAction from "./ActionType";
 import { CONFIG_TYPEKEYS } from "./config/configTypeKeys";
 
@@ -11,7 +11,7 @@ const appReducer = combineReducers({
   templates,
   config,
   userSelection,
-  selection,
+  services,
   navigation
 });
 

@@ -5,7 +5,7 @@ import { ServiceState } from "..";
 import { ISelectedAppService } from "./model";
 
 const getServices = (state: AppState): ServiceState =>
-  state.selection.services;
+  state.services;
 
 const isAppServiceSelected = (services: ServiceState): boolean => {
   return !_.isEmpty(services.appService.selection);

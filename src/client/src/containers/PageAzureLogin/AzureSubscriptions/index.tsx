@@ -168,8 +168,8 @@ const mapStateToProps = (state: AppState): IAzureLoginProps => {
   const { previewStatus } = state.config;
   return {
     isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
-    cosmosDbSelection: state.selection.services.cosmosDB.selection,
-    appServiceSelection: state.selection.services.appService.selection,
+    cosmosDbSelection: state.services.cosmosDB.selection,
+    appServiceSelection: state.services.appService.selection,
     isPreview: previewStatus,
     isAppServiceSelected: isAppServiceSelectedSelector(state)
   };

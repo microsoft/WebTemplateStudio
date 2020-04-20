@@ -7,7 +7,7 @@ import { isCosmosResourceCreatedSelector } from "./cosmosDb/selector";
 const getState = (state: AppState): AppState => state;
 
 const getServicesSelector = (state: AppState): ServiceState =>
-  state.selection.services;
+  state.services;
 
 const hasServicesSelected = (state: AppState): boolean => {
   return (

@@ -5,7 +5,7 @@ import { AppState } from "../../combineReducers";
 import { ISelectedCosmosService } from "./model";
 
 const getServices = (state: AppState): ServiceState =>
-  state.selection.services;
+  state.services;
 
 const isCosmosDbSelected = (services: ServiceState): boolean => {
   return !_.isEmpty(services.cosmosDB.selection);
