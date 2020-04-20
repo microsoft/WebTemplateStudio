@@ -1,21 +1,21 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { ListService } from './list.service';
-import { IListItem } from './list.model';
+import { AngularListService } from './Param_SourceName_Kebab.service';
+import { IAngularListItem } from './Param_SourceName_Kebab.model';
 import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  templateUrl: './Param_SourceName_Kebab.component.html',
+  styleUrls: ['./Param_SourceName_Kebab.component.css']
 })
-export class ListComponent implements OnInit {
-  listItems$: Observable<IListItem[]> = new Observable();
-  private dataSource: Subject<IListItem[]> = new Subject();
+export class AngularListComponent implements OnInit {
+  listItems$: Observable<IAngularListItem[]> = new Observable();
+  private dataSource: Subject<IAngularListItem[]> = new Subject();
   warningMessageText = '';
   warningMessageOpen = false;
 
-  constructor(private listService: ListService) {}
+  constructor(private listService: AngularListService) {}
 
   ngOnInit() {
     this.listItems$ = this.dataSource.asObservable();
@@ -24,7 +24,7 @@ export class ListComponent implements OnInit {
 
   loadItems() {
     this.listService.getListItems().subscribe(
-      (listItem: IListItem[]) => this.dataSource.next(listItem),
+      (listItem: IAngularListItem[]) => this.dataSource.next(listItem),
       error => this.handleError(`Request to get list items failed: ${error}`)
     );
   }

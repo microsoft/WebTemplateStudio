@@ -3,18 +3,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { ListComponent } from './list.component';
+import { AngularListComponent } from './Param_SourceName_Kebab.component';
 import { ListFormComponent } from './list-form/list-form.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 
 describe('ListComponent', () => {
-  let component: ListComponent;
-  let fixture: ComponentFixture<ListComponent>;
+  let component: AngularListComponent;
+  let fixture: ComponentFixture<AngularListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ListComponent, ListFormComponent, ListItemComponent],
+      declarations: [AngularListComponent, ListFormComponent, ListItemComponent],
       imports: [
         WarningMessageModule,
         FormsModule,
@@ -26,7 +26,7 @@ describe('ListComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListComponent);
+    fixture = TestBed.createComponent(AngularListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

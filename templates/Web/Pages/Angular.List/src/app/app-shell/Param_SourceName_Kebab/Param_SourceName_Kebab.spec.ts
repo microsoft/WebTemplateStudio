@@ -1,9 +1,9 @@
 ﻿import { async, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { ListService } from './list.service';
+import { AngularListService } from './Param_SourceName_Kebab.service';
 
-describe('ListService', () => {
+describe('AngularListService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]
@@ -11,7 +11,7 @@ describe('ListService', () => {
   }));
 
   it('should be created', () => {
-    const service: ListService = TestBed.inject(ListService);
+    const service: AngularListService = TestBed.inject(AngularListService);
     expect(service).toBeTruthy();
   });
 });

@@ -8,10 +8,10 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { IListItem } from './list.model';
+import { IAngularListItem } from './Param_SourceName_Kebab.model';
 
 @Injectable({providedIn: 'root'})
-export class ListService {
+export class AngularListService {
   private listUrl = environment.endpoint.list;
 
   constructor(private http: HttpClient) {}
@@ -32,13 +32,13 @@ export class ListService {
     return throwError('Something bad happened; please try again later.');
   }
 
-  getListItems(): Observable<IListItem[]> {
+  getListItems(): Observable<IAngularListItem[]> {
     return this.http
-      .get<IListItem[]>(this.listUrl)
+      .get<IAngularListItem[]>(this.listUrl)
       .pipe(catchError(this.handleError));
   }
 
-  addListItem(inputText: string): Observable<IListItem> {
+  addListItem(inputText: string): Observable<IAngularListItem> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -50,13 +50,13 @@ export class ListService {
     });
 
     return this.http
-      .post<IListItem>(this.listUrl, body, httpOptions)
+      .post<IAngularListItem>(this.listUrl, body, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  deleteListItem(id: number): Observable<IListItem> {
+  deleteListItem(id: number): Observable<IAngularListItem> {
     return this.http
-      .delete<IListItem>(`${environment.endpoint.list}/${id}`)
+      .delete<IAngularListItem>(`${environment.endpoint.list}/${id}`)
       .pipe(catchError(this.handleError));
   }
 }
