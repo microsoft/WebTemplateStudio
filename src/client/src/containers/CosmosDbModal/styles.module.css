@@ -5,16 +5,22 @@
   margin-bottom: 1.5em;
 }
 
-.title {
-  font-size: 1.8em;
-}
-
 /* scrollable part of the form */
-.bodyContainer {
+.body {
   padding-right: 20px;
   max-height: calc(80vh - 200px);
   overflow-y: auto;
-  margin-bottom: 5px;
+  margin-bottom: 1.5em;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.8em;
 }
 
 .button {
@@ -49,4 +55,27 @@
 
 .closeIcon:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.showAdvancedModeLink {
+  padding: 0.5em;
+}
+
+.hide {
+  display: none;
+}
+
+.advancedModeIcon {
+  height: 13px;
+  margin-left: 10px;
+  margin-bottom: -2px;
+}
+
+.rotateAdvancedModeIcon {  
+  transform: rotate(180deg);
+}
+
+
+.advancedModeIcon path {
+  fill: var(--vscode-editor-foreground);
 }

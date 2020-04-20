@@ -1,19 +1,14 @@
-import * as vscode from "vscode";
 import { MICROSOFT_LEARN_TENANTS } from "./../configuration.json";
 
-import { AzureAuth, SubscriptionItem } from "./azure-auth/azureAuth";
-import { CosmosDBDeploy, CosmosDBSelections, DatabaseObject } from "./azure-cosmosDB/cosmosDbModule";
-import {
-  CONSTANTS,
-  AzureResourceType,
-  DialogMessages,
-  DialogResponses,
-} from "../constants";
+import { AzureAuth, SubscriptionItem, LocationItem } from "./azure-auth/azureAuth";
+import { CosmosDBDeploy, CosmosDBSelections } from "./azure-cosmosDB/cosmosDbModule";
+import { CONSTANTS, AzureResourceType} from "../constants";
 import { SubscriptionError, ValidationError } from "../errors";
 import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-group/resourceGroupModule";
 import { AppServiceProvider, AppServiceSelections } from "./azure-app-service/appServiceProvider";
 import { StringDictionary } from "azure-arm-website/lib/models";
 import { ConnectionString } from "./utils/connectionString";
+import { Settings } from "./utils/settings";
 
 interface UserStatus {
   email: string;
@@ -25,11 +20,29 @@ interface ValidateResult {
   errorMessage: string;
 }
 
+interface ResourceGroup {
+  name: string;
+}
+
+interface AzureLocation {
+  name: string;
+}
+
 export class AzureServices {
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static AzureAppServiceProvider = new AppServiceProvider();
   private static AzureResourceGroupProvider = new ResourceGroupDeploy();
   private static subscriptionsCache: SubscriptionItem[] = [];
+
+  public static async Login(): Promise<boolean>{
+    return await AzureAuth.login();
+  }
+
+  public static async Logout(): Promise<boolean>{
+    const success = await AzureAuth.logout();
+    AzureServices.CleanSubscriptionCache();
+    return success;
+  }
 
   public static async getUserStatus(): Promise<UserStatus> {
     const email = AzureAuth.getEmail();
@@ -48,7 +61,7 @@ export class AzureServices {
     return AzureServices.subscriptionsCache;
   }
 
-  public static CleanSubscriptionCache(): void {
+  private static CleanSubscriptionCache(): void {
     AzureServices.subscriptionsCache.length = 0;
   }
 
@@ -64,6 +77,30 @@ export class AzureServices {
 
   public static IsMicrosoftLearnSubscription(subscription: SubscriptionItem): boolean {
     return MICROSOFT_LEARN_TENANTS.includes(subscription.session.tenantId);
+  }
+
+  public static async getResourceGroups(subscriptionName: string): Promise<ResourceGroup[]> {
+    const subscription = AzureServices.getSubscription(subscriptionName);
+    const items = await AzureAuth.getAllResourceGroupItems(subscription);
+    const resources: ResourceGroup[] = [];
+    items.map(item => resources.push({ name: item.name }));
+    return resources;
+  }
+
+  public static async getLocations(subscriptionName: string, azureServiceType: AzureResourceType): Promise<AzureLocation[]> {
+    const subscription = AzureServices.getSubscription(subscriptionName);
+    let items: LocationItem[] = [];
+    switch (azureServiceType) {
+      case AzureResourceType.Cosmos:
+        items = await AzureAuth.getLocationsForCosmos(subscription);
+        break;
+      case AzureResourceType.AppService:
+        items = await AzureAuth.getLocationsForApp(subscription);
+        break;
+    }
+    const locations: AzureLocation[] = [];
+    items.map(item => locations.push({ name: item.locationDisplayName }));
+    return locations;
   }
 
   public static async validateAppServiceName(name: string, subscription: string): Promise<ValidateResult> {
@@ -84,54 +121,88 @@ export class AzureServices {
     };
   }
 
-  public static async generateDistinctResourceGroupSelections(payload: any): Promise<ResourceGroupSelection[]> {
-    const projectName = payload.engine.projectName;
-    const allSubscriptions: SubscriptionItem[] = [];    
-    if (payload.selectedCosmos) {
-      const cosmosSubscription = AzureServices.getSubscription(payload.cosmos.subscription);    
-      allSubscriptions.push(cosmosSubscription);
-    }
-    if (payload.selectedAppService) {
-      const appserviceSubscription = AzureServices.getSubscription(payload.appService.subscription);
-      allSubscriptions.push(appserviceSubscription);
-    }
-    const allDistinctSubscriptions: SubscriptionItem[] = [...new Set(allSubscriptions)];
+  public static async getResourceGroupSelections(payload: any): Promise<ResourceGroupSelection[]> {
+    const selection: ResourceGroupSelection[] = [];
 
-    const generatedName: string = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
-      projectName,
-      allDistinctSubscriptions
-    );
+    if (payload.appService) {
+      const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(payload.appService, selection);
+      if (canCreateResourceGroup) {
+        const resourceGroupSelection = await AzureServices.getResourceGroupSelection(payload.appService);
+        selection.push(resourceGroupSelection);
+      }
+    }
 
-    return await Promise.all(
-      allDistinctSubscriptions.map(
-        async subscription => await AzureServices.generateResourceGroupSelection(generatedName, subscription)
-      )
-    );
+    if (payload.cosmos) {
+      const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(payload.cosmos, selection);
+      if (canCreateResourceGroup) {
+        const resourceGroupSelection = await AzureServices.getResourceGroupSelection(payload.cosmos);
+        selection.push(resourceGroupSelection);
+      }
+    }
+
+    return selection;
   }
 
-  private static async generateResourceGroupSelection(
-    generatedName: string,
-    subscriptionItem: SubscriptionItem
-  ): Promise<ResourceGroupSelection> {
-    let resourceGroupName = generatedName;
-    if (AzureServices.IsMicrosoftLearnSubscription(subscriptionItem)) {
-      const resourceGroups = await AzureServices.AzureResourceGroupProvider.GetResourceGroups(subscriptionItem);
-      resourceGroupName = resourceGroups[0].name as string;
-    }
+  private static async canCreateResourceGroup(
+    azureService: any,
+    selection: ResourceGroupSelection[]
+  ): Promise<boolean> {
+    const { subscription, resourceGroup } = azureService;
+    const subscriptionItem = AzureServices.getSubscription(subscription);
+    const isMicrosoftLearnSubscription = AzureServices.IsMicrosoftLearnSubscription(subscriptionItem);
+    const existResourceGroup = await AzureServices.AzureResourceGroupProvider.ExistResourceGroup(
+      resourceGroup,
+      subscriptionItem
+    );
+    const isResourceGroupInSelection = selection.some(
+      (r) => r.resourceGroupName === resourceGroup && r.subscriptionItem.label === subscriptionItem.label
+    );
+    return !(existResourceGroup || isResourceGroupInSelection || isMicrosoftLearnSubscription);
+  }
+
+  private static async getResourceGroupSelection(azureService: any): Promise<ResourceGroupSelection> {
+    const { subscription, resourceGroup } = azureService;
+    const subscriptionItem = AzureServices.getSubscription(subscription);
+
     return {
-      subscriptionItem: subscriptionItem,
-      resourceGroupName: resourceGroupName,
+      subscriptionItem,
+      resourceGroupName: resourceGroup,
       location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
     };
   }
 
-  public static async deployResourceGroup(selections: ResourceGroupSelection): Promise<any> {
-    if (!AzureServices.IsMicrosoftLearnSubscription(selections.subscriptionItem)) {
-      return await AzureServices.AzureResourceGroupProvider.createResourceGroup(selections);
+  public static async generateValidResourceGroupName(payload: any): Promise<string> {
+    const subscriptions: SubscriptionItem[] = [];
+    const projectName = payload.engine.projectName;
+
+    if (payload.cosmos) {
+      const cosmosSubscription = AzureServices.getSubscription(payload.cosmos.subscription);
+      subscriptions.push(cosmosSubscription);
+    }
+
+    if (payload.appService) {
+      const appserviceSubscription = AzureServices.getSubscription(payload.appService.subscription);
+      subscriptions.push(appserviceSubscription);
+    }
+    const allSubscriptions: SubscriptionItem[] = [...new Set(subscriptions)];
+
+    return await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
+      projectName,
+      allSubscriptions
+    );
+  }
+
+  public static async deployResourceGroup(resourceGroupSelection: ResourceGroupSelection): Promise<void> {
+    const name = resourceGroupSelection.resourceGroupName;
+    const subscription = resourceGroupSelection.subscriptionItem;
+    const resourceGroup = await AzureServices.AzureResourceGroupProvider.GetResourceGroup(name, subscription);
+
+    if (!resourceGroup) {
+      await AzureServices.AzureResourceGroupProvider.createResourceGroup(resourceGroupSelection);
     }
   }
 
-  public static async deployWebApp(payload: any): Promise<string> {
+  public static async deployAppService(payload: any): Promise<void> {
     const subscription = AzureServices.getSubscription(payload.appService.subscription);
     const aspName = await AzureServices.AzureAppServiceProvider.generateValidASPName(payload.engine.projectName);
 
@@ -147,7 +218,7 @@ export class AzureServices {
       tier: appServicePlan.tier,
       sku: appServicePlan.name,
       linuxFxVersion: payload.engine.backendFrameworkLinuxVersion,
-      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
+      location: payload.appService.location,
     };
 
     await AzureServices.AzureAppServiceProvider.checkWebAppName(
@@ -170,7 +241,10 @@ export class AzureServices {
     if (!result) {
       throw new Error(CONSTANTS.ERRORS.APP_SERVICE_UNDEFINED_ID);
     }
-    return AzureServices.convertId(result);
+
+    const id = AzureServices.convertId(result);    
+    Settings.enableScmDoBuildDuringDeploy(payload.engine.path);
+    Settings.setDeployDefault(id, payload.engine.path);
   }
 
   private static convertId(rawId: string): string {
@@ -180,13 +254,13 @@ export class AzureServices {
     return rawId.replace(MS_RESOURCE_DEPLOYMENT, MS_WEB_SITE).replace("-" + AzureResourceType.AppService, "");
   }
 
-  public static async deployCosmosResource(selections: any, genPath: string): Promise<DatabaseObject> {
+  public static async deployCosmos(selections: any, genPath: string): Promise<string> {
     const subscription = AzureServices.getSubscription(selections.subscription);
 
     const userCosmosDBSelection: CosmosDBSelections = {
       cosmosAPI: selections.api,
       cosmosDBResourceName: selections.accountName,
-      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
+      location: selections.location,
       resourceGroupItem: await AzureAuth.getResourceGroupItem(selections.resourceGroup, subscription),
       subscriptionItem: subscription,
     };
@@ -204,27 +278,13 @@ export class AzureServices {
         throw error; //to log in telemetry
       });
 
-    return await AzureServices.AzureCosmosDBProvider.createCosmosDB(userCosmosDBSelection, genPath);
+    const dbObject = await AzureServices.AzureCosmosDBProvider.createCosmosDB(userCosmosDBSelection, genPath);
+    return dbObject.connectionString;
   }
 
-  public static async promptUserForCosmosReplacement(pathToEnv: string, dbObject: DatabaseObject): Promise<any> {
-    return await vscode.window
-      .showInformationMessage(
-        DialogMessages.cosmosDBConnectStringReplacePrompt,
-        ...[DialogResponses.yes, DialogResponses.no]
-      )
-      .then((selection: vscode.MessageItem | undefined) => {
-        const start = Date.now();
-        if (selection === DialogResponses.yes) {
-          CosmosDBDeploy.updateConnectionStringInEnvFile(pathToEnv, dbObject.connectionString);
-          vscode.window.showInformationMessage(CONSTANTS.INFO.FILE_REPLACED_MESSAGE + pathToEnv);
-        }
-        return {
-          userReplacedEnv: selection === DialogResponses.yes,
-          startTime: start,
-        };
-      });
-  }
+  public static updateConnectionStringInEnvFile(path: string, connectionString: string): void {    
+    CosmosDBDeploy.updateConnectionStringInEnvFile(path, connectionString);
+  } 
 
   public static async updateAppSettings(
     resourceGroupName: string,

@@ -1,0 +1,62 @@
+.container {
+  margin-bottom: 35px;
+}
+
+.containerDisabled {
+  opacity: 0.5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--vscode-textLink-foreground);
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.subtitle {
+  margin-bottom: 1em;
+  font-size: 90%;
+  opacity: 0.8;
+}
+
+.dropdownContainer {  
+  display:flex
+}
+
+.dropdown {  
+  flex: 1 1 auto;
+}
+
+.refreshButton {
+  flex: 0 0 auto;
+  cursor: pointer;
+  color: var(--vscode-textLink-foreground);
+  border: none;
+  background: none;
+  padding: 0 10px;
+}
+
+.refreshButton:disabled {  
+  cursor: none;
+}
+
+.refreshButton:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.viewIcon path {
+  fill: var(--vscode-editor-foreground);
+}

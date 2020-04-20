@@ -128,4 +128,19 @@ export class ResourceGroupDeploy {
     const groups = await this.azureResourceClient.resourceGroups.list();
     return groups;
   }
+
+  public async GetResourceGroup(
+    name: string,
+    subscription: SubscriptionItem
+  ): Promise<ResourceGroup | undefined> {
+    const resourceGroups = await this.GetResourceGroups(subscription);
+    return resourceGroups.find((r) => r.name === name);
+  }
+
+  public async ExistResourceGroup(
+    name: string,
+    subscription: SubscriptionItem): Promise<boolean> {
+      const resourceGroup = await this.GetResourceGroup(name, subscription);
+      return resourceGroup !== undefined;
+    }
 }

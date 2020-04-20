@@ -100,7 +100,7 @@ export const getInitialState = (): AppState => {
             isAccountNameAvailable: false,
             message: 'Account name unavailable'
           },
-          selection: [],
+          selection: null,
           wizardContent: {
             serviceType: {
               id: 'cosmosDb.originalTitle',

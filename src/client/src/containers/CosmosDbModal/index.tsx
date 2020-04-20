@@ -9,7 +9,7 @@ import ApiSelection from "./APISelection/index";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS } from "../../utils/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS, AZURE, EXTENSION_COMMANDS, SERVICE_KEYS, AzureResourceType } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { ISelectedCosmosService } from "../../store/azureProfileData/cosmosDb/model";
@@ -18,6 +18,11 @@ import classNames from "classnames";
 import { useState } from "react";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
+import LocationSelection from "../../components/LocationSelection";
+import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
+import { AppContext } from "../../AppContext";
+import ResourceGroupSelection from "../../components/ResourceGroupSelection";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -28,22 +33,36 @@ type Props = IStateProps & InjectedIntlProps;
 const CosmosModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
+  const { vscode } = React.useContext(AppContext);
   const cosmosInStore = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
   const initialSubscription = cosmosInStore ? cosmosInStore.subscription : "";
   const initialAccountName = cosmosInStore ? cosmosInStore.accountName : "";
+  const initialLocation = cosmosInStore ? cosmosInStore.location : AZURE.DEFAULT_LOCATION;
+  const initialResourceGroup = cosmosInStore ? cosmosInStore.resourceGroup : AZURE.DEFAULT_RESOURCE_GROUP;
   const initialApi = cosmosInStore ? cosmosInStore.api : "";
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const [subscription, setSubscription] = useState(initialSubscription);
   const [accountName, setAccountName] = useState(initialAccountName);
   const [api, setApi] = useState(initialApi);
+  const [location, setLocation] = useState(initialLocation);
+  const [resourceGroup, setResourceGroup] = useState(initialResourceGroup);
   const [isAvailableAccountName, setIsAvailableAccountName] = useState(false);
 
+  React.useEffect(() => {
+    if(showAdvanced) {      
+      const azureServiceType = SERVICE_KEYS.COSMOS_DB;
+      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE, {azureServiceType});
+    }
+  }, [showAdvanced]);
+  
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
     const isAccountNameEmpty = accountName === "";
+    const isLocationEmpty = location === "";
     const isApiEmpty = api === "";
 
-    return !(isSubscriptionEmpty || isAccountNameEmpty || isApiEmpty || !isAvailableAccountName);
+    return !(isSubscriptionEmpty || isAccountNameEmpty || isLocationEmpty || isApiEmpty || !isAvailableAccountName);
   };
 
   const getButtonClassNames = () => {
@@ -63,9 +82,10 @@ const CosmosModal = ({ intl }: Props) => {
     const cosmosSelection: ISelectedCosmosService = {
       subscription,
       accountName,
-      resourceGroup: "",
+      location,
+      resourceGroup,
       api,
-      internalName:  WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB
+      internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     };
     dispatch(saveCosmosDbSettingsAction(cosmosSelection));
   };
@@ -74,9 +94,14 @@ const CosmosModal = ({ intl }: Props) => {
     <React.Fragment>
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
-        <Cancel data-testid="close-button" className={styles.closeIcon} onClick={() => dispatch(closeModalAction())} onKeyDown={closeModalIfPressEnterOrSpaceKey} />
+        <Cancel
+          data-testid="close-button"
+          className={styles.closeIcon}
+          onClick={() => dispatch(closeModalAction())}
+          onKeyDown={closeModalIfPressEnterOrSpaceKey}
+        />
       </div>
-      <div className={styles.bodyContainer}>
+      <div className={styles.body}>
         <SubscriptionSelection
           initialSubscription={subscription}
           onSubscriptionChange={setSubscription} />
@@ -87,20 +112,39 @@ const CosmosModal = ({ intl }: Props) => {
           onAccountNameChange={setAccountName}
           onIsAvailableAccountNameChange={setIsAvailableAccountName}
         />
-        <ApiSelection
-          initialApi={api}
-          onApiChange={setApi} />
 
-        <button className={getButtonClassNames()} onClick={saveCosmosSelection} disabled={!isEnableSaveButton()}>
-          {formatMessage(messages.save)}
-        </button>
+        <ApiSelection initialApi={api} onApiChange={setApi} isAdvancedMode={showAdvanced} />
+
+        {/* Advanced Mode */}
+        <div className={classNames({ [styles.hide]: !showAdvanced })}>
+        <LocationSelection
+            location={location}
+            subscription={subscription}
+            azureServiceType={AzureResourceType.Cosmos}
+            onLocationChange={setLocation} />
+        <ResourceGroupSelection
+          subscription={subscription}
+          resourceGroup={resourceGroup}
+          onResourceGroupChange={setResourceGroup} />
+        </div>
       </div>
+      <div className={styles.footer}>
+          <button
+            className={classNames(buttonStyles.buttonLink, styles.showAdvancedModeLink)}
+            onClick={() => setShowAdvanced(!showAdvanced)}>
+            {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
+            <ArrowDown className={classNames(styles.advancedModeIcon, {[styles.rotateAdvancedModeIcon]: !showAdvanced})} />
+          </button>
+          <button className={getButtonClassNames()} onClick={saveCosmosSelection} disabled={!isEnableSaveButton()}>
+            {formatMessage(messages.save)}
+          </button>
+        </div>
     </React.Fragment>
   );
 };
 
 const mapStateToProps = (state: AppState): IStateProps => ({
-  isModalOpen: isCosmosDbModalOpenSelector(state)
+  isModalOpen: isCosmosDbModalOpenSelector(state),
 });
 
 export default connect(mapStateToProps)(asModal(injectIntl(CosmosModal)));
