@@ -1,12 +1,12 @@
 ﻿import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { GridComponent } from './grid.component';
+import { AngularGridComponent } from './Param_SourceName_Kebab.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: GridComponent
+    component: AngularGridComponent
   }
 ];
 

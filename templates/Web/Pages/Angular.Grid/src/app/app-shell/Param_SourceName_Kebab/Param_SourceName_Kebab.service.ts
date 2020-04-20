@@ -4,10 +4,10 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { IGridTextItem } from './grid.model';
+import { IAngularGridTextItem } from './Param_SourceName_Kebab.model';
 
 @Injectable({providedIn: 'root'})
-export class GridService {
+export class AngularGridService {
   private listUrl = environment.endpoint.grid;
 
   constructor(private http: HttpClient) {}
@@ -28,9 +28,9 @@ export class GridService {
     return throwError('Something bad happened; please try again later.');
   }
 
-  getGridItems(): Observable<IGridTextItem[]> {
+  getGridItems(): Observable<IAngularGridTextItem[]> {
     return this.http
-      .get<IGridTextItem[]>(this.listUrl)
+      .get<IAngularGridTextItem[]>(this.listUrl)
       .pipe(catchError(this.handleError));
   }
 }

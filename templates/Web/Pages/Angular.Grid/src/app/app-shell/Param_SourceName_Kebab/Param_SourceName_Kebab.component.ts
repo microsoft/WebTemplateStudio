@@ -1,22 +1,22 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { GridService } from './grid.service';
-import { IGridTextItem } from './grid.model';
+import { AngularGridService } from './Param_SourceName_Kebab.service';
+import { IAngularGridTextItem } from './Param_SourceName_Kebab.model';
 import {catchError, map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-grid',
-  templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.css']
+  templateUrl: './Param_SourceName_Kebab.component.html',
+  styleUrls: ['./Param_SourceName_Kebab.component.css']
 })
-export class GridComponent implements OnInit {
+export class AngularGridComponent implements OnInit {
   greyBoxUrl = '../../../assets/GreyBox.svg';
   warningMessageText = '';
   warningMessageOpen = false;
-  gridItems$: Observable<IGridTextItem[]>;
+  gridItems$: Observable<IAngularGridTextItem[]>;
 
-  constructor(private gridService: GridService) {}
+  constructor(private gridService: AngularGridService) {}
 
   ngOnInit() {
     this.gridItems$ = this.gridService.getGridItems().pipe(catchError((error) => {

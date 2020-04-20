@@ -1,4 +1,4 @@
-export interface IGridTextItem {
+export interface IAngularGridTextItem {
   id: number;
   longDescription: string;
   orderDate: Date;
