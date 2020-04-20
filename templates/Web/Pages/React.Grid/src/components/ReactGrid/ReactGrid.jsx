@@ -3,7 +3,7 @@ import classnames from "classnames";
 import WarningMessage from "../WarningMessage";
 import styles from "./styles.module.css";
 import CONSTANTS from "../../constants";
-import Item from "./Item";
+import GridItem from "./GridItem";
 
 const ReactGrid = () => {
   const [items, setItems] = useState([]);
@@ -58,7 +58,7 @@ const ReactGrid = () => {
 
         <div className="row justify-content-around text-center pb-5">
           {items.map(item => (
-            <Item
+            <GridItem
             key={item.id}
             item={item}
             />

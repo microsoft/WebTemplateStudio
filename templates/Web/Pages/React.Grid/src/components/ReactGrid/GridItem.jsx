@@ -2,7 +2,7 @@
 import ImgGreyBox from "../../images/GreyBox.svg"
 import PropTypes from "prop-types";
 
-const Item = ({ item }) => {
+const GridItem = ({ item }) => {
   return (
     <div className="col-md-4 col-sm-12 p-5">
       <img src={ImgGreyBox} alt="Default Grey Box" className="mb-3" />
@@ -12,8 +12,8 @@ const Item = ({ item }) => {
   );
 }
 
-Item.propTypes = {
+GridItem.propTypes = {
   item: PropTypes.any
 }
 
-export default Item;
+export default GridItem;
