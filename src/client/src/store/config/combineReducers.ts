@@ -5,7 +5,7 @@ import validations from "./validations/setValidationsReducer";
 import isValidatingName from "./validations/validatingNameReducer";
 import versions from "./versions/reducer";
 import { azureProfileData } from "./azure/reducer";
-import appType from "./app/selectWebAppReducer";
+import appType from "./app/reducer";
 
 const configReducer = combineReducers({
   detailsPage,
