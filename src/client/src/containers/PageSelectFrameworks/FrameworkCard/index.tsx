@@ -14,7 +14,7 @@ import { getLatestVersion } from "../../../utils/extensionService/extensionServi
 import { AppContext } from "../../../AppContext";
 import { updateFrameworksAction } from "../../../store/templates/frameworks/action";
 import { IOption } from "../../../types/option";
-import { setDetailPageAction, setPageWizardPageAction } from "../../../store/config/pages/action";
+import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 import { setSelectedBackendFrameworkAction, setSelectedFrontendFrameworkAction } from "../../../store/userSelection/frameworks/action";
 
 type Props = ISelectProps & IStateProps & InjectedIntlProps;

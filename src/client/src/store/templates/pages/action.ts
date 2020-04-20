@@ -1,15 +1,15 @@
 import { IPageOptionsActionType } from "./model";
-import { TEMPLATES_TYPEKEYS } from "../../typeKeys";
+import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 import { IOption } from "../../../types/option";
 import { IApiTemplateInfo } from "../../../types/apiTemplateInfo";
 
-const getPagesOptionsAction = (pagesOptions: IOption[]) => {
-  return getPagesOptionsSuccessAction(
+const setPagesOptionsAction = (pagesOptions: IOption[]) => {
+  return setPagesOptionsSuccessAction(
     getOptionalFromApiTemplateInfo(getApiTemplateInfoFromJson(pagesOptions))
   );
 };
 
-const getPagesOptionsSuccessAction = (
+const setPagesOptionsSuccessAction = (
   pagesOptions: IOption[]
 ): IPageOptionsActionType => ({
   payload: pagesOptions,
@@ -50,8 +50,8 @@ function getOptionalFromApiTemplateInfo(items: IApiTemplateInfo[]): IOption[] {
 }
 
 export {
-  getPagesOptionsAction,
-  getPagesOptionsSuccessAction,
+  setPagesOptionsAction,
+  setPagesOptionsSuccessAction,
   getOptionalFromApiTemplateInfo,
   getApiTemplateInfoFromJson
  };

@@ -9,7 +9,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { removeAppServiceSettingsAction } from "../../../../store/azureProfileData/appService/action";
 import { AppContext } from "../../../../AppContext";
-import { openAppServiceModalAction } from "../../../../store/modals/action";
+import { openAppServiceModalAction } from "../../../../store/navigation/modals/action";
 
 interface IProps {
   appServiceSelection: IAppService;

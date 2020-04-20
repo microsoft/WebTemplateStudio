@@ -1,4 +1,4 @@
-import { AzureAuth, SubscriptionItem, LocationItem } from "../azure/azure-auth/azureAuth";
+import { SubscriptionItem } from "../azure/azure-auth/azureAuth";
 
 import { CONSTANTS, AzureResourceType, ExtensionCommand } from "../constants";
 
@@ -13,26 +13,13 @@ interface Subscription {
   isMicrosoftLearn: boolean;
 }
 
-interface SubscriptionData {
-  resourceGroups: ResourceGroup[];
-  locations: AzureLocation[];
-}
-
-interface ResourceGroup {
-  name: string;
-}
-
-interface AzureLocation {
-  name: string;
-}
-
 export class AzureModule extends WizardServant {
   clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
     [ExtensionCommand.Login, this.login],
     [ExtensionCommand.Logout, this.logout],
     [ExtensionCommand.GetUserStatus, this.getUserStatus],
-    [ExtensionCommand.GetSubscriptionDataForCosmos, this.getSubscriptionDataForCosmos],
-    [ExtensionCommand.GetSubscriptionDataForAppService, this.getSubscriptionDataForAppService],
+    [ExtensionCommand.GetResourceGroups, this.getResourceGroups],
+    [ExtensionCommand.GetLocations, this.getLocations],
     [ExtensionCommand.GetValidAppServiceName, this.getValidAppServiceName],
     [ExtensionCommand.GetValidCosmosName, this.getValidCosmosName],
     [ExtensionCommand.ValidateCosmosName, this.validateCosmosName],
@@ -41,7 +28,7 @@ export class AzureModule extends WizardServant {
 
   public async login(message: any): Promise<IPayloadResponse> {
     Logger.appendLog("EXTENSION", "info", "Attempt to log user in");
-    const isLoggedIn = await AzureAuth.login();
+    const isLoggedIn = await AzureServices.Login();
     if (isLoggedIn) {
       Logger.appendLog("EXTENSION", "info", "User logged in");
       return this.getUserStatus(message);
@@ -50,8 +37,7 @@ export class AzureModule extends WizardServant {
   }
 
   public async logout(message: any): Promise<IPayloadResponse> {
-    const success = await AzureAuth.logout();
-    AzureServices.CleanSubscriptionCache();
+    const success = await AzureServices.Logout();
     const payload = { scope: message.payload.scope, success };
     return { payload };
   }
@@ -68,21 +54,21 @@ export class AzureModule extends WizardServant {
     };
   }
 
-  public async getSubscriptionDataForCosmos(message: any): Promise<IPayloadResponse> {
-    const data = await this.getSubscriptionData(message.subscription, AzureResourceType.Cosmos);
+  public async getResourceGroups(message: any): Promise<IPayloadResponse> {
+    const resourceGroups = await AzureServices.getResourceGroups(message.subscription);
     return {
       payload: {
-        ...data,
+        resourceGroups,
         scope: message.payload.scope,
       },
     };
   }
 
-  public async getSubscriptionDataForAppService(message: any): Promise<IPayloadResponse> {
-    const data = await this.getSubscriptionData(message.subscription, AzureResourceType.AppService);
+  public async getLocations(message: any): Promise<IPayloadResponse> {
+    const locations = await AzureServices.getLocations(message.subscription, message.azureServiceType);
     return {
       payload: {
-        ...data,
+        locations,
         scope: message.payload.scope,
       },
     };
@@ -135,38 +121,5 @@ export class AzureModule extends WizardServant {
         isMicrosoftLearn: AzureServices.IsMicrosoftLearnSubscription(subscription),
       };
     });
-  }
-
-  private async getSubscriptionData(subscriptionName: string, AzureType: AzureResourceType): Promise<SubscriptionData> {
-    const subscription = AzureServices.getSubscription(subscriptionName);
-    const resourceGroups = await this.getResourceGroups(subscription);
-    const locations = await this.getLocations(subscription, AzureType);
-
-    return {
-      resourceGroups,
-      locations,
-    };
-  }
-
-  private async getResourceGroups(subscription: SubscriptionItem): Promise<ResourceGroup[]> {
-    const items = await AzureAuth.getAllResourceGroupItems(subscription);
-    const resources: ResourceGroup[] = [];
-    items.map(item => resources.push({ name: item.name }));
-    return resources;
-  }
-
-  private async getLocations(subscription: SubscriptionItem, AzureType: AzureResourceType): Promise<AzureLocation[]> {
-    let items: LocationItem[] = [];
-    switch (AzureType) {
-      case AzureResourceType.Cosmos:
-        items = await AzureAuth.getLocationsForCosmos(subscription);
-        break;
-      case AzureResourceType.AppService:
-        items = await AzureAuth.getLocationsForApp(subscription);
-        break;
-    }
-    const locations: AzureLocation[] = [];
-    items.map(item => locations.push({ name: item.locationDisplayName }));
-    return locations;
   }
 }

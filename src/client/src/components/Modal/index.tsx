@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import Modal from "react-modal";
-import { MODAL_TYPES, ModalType } from "../../store/modals/typeKeys";
+import { NAVIGATION_MODAL_TYPES, ModalType } from "../../store/navigation/typeKeys";
 
 /**
  * A Higher-Order Component that creates a modal from a normal React component
@@ -25,13 +25,13 @@ const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
   // depends on modal type, customize width
   if (
     MODAL_TYPE &&
-    (MODAL_TYPE === MODAL_TYPES.GEN_MODAL ||
-      MODAL_TYPE === MODAL_TYPES.VIEW_LICENSES_MODAL)
+    (MODAL_TYPE === NAVIGATION_MODAL_TYPES.GEN_MODAL ||
+      MODAL_TYPE === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL)
   ) {
     CUSTOM_WIDTH = "40%";
   }
 
-  if (MODAL_TYPE && MODAL_TYPE === MODAL_TYPES.ADD_PAGES_MODAL) {
+  if (MODAL_TYPE && MODAL_TYPE === NAVIGATION_MODAL_TYPES.ADD_PAGES_MODAL) {
     backgroundColor = "var(--vscode-editor-background)";
   }
 

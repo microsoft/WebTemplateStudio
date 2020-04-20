@@ -1,11 +1,12 @@
 import {takeEvery, call, put, select} from "redux-saga/effects";
-import { CONFIG_TYPEKEYS, WIZARD_INFO_TYPEKEYS, TEMPLATES_TYPEKEYS } from "../../typeKeys";
 import { getTemplateInfo, getFrameworks, getUserStatus } from "../../../utils/extensionService/extensionService";
 import { IVersions } from "../../../types/version";
-import { WIZARD_SELECTION_TYPEKEYS } from "../../userSelection/typeKeys";
 import { AppState } from "../../combineReducers";
 import { parseFrameworksPayload } from "../../../utils/parseFrameworksPayload";
 import { FRAMEWORK_TYPE } from "../../../utils/constants";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
+import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
+import { AZURE_TYPEKEYS } from "../../azureProfileData/typeKeys";
 
 export function* loadLogin(vscode: any){
   yield takeEvery(
@@ -19,7 +20,7 @@ export function* loadLogin(vscode: any){
     if (message.payload !== null) {
       const azureProfile = message.payload as AzureProfile;
       yield put({
-        type: CONFIG_TYPEKEYS.LOG_IN_TO_AZURE,
+        type: AZURE_TYPEKEYS.LOG_IN_TO_AZURE,
         payload: azureProfile
       });
     }
@@ -39,9 +40,9 @@ export function* loadTemplatesSaga(vscode: any) {
       templatesVersion:messageTemplateInfo.payload.templatesVersion,
       wizardVersion: messageTemplateInfo.payload.wizardVersion
     };
-    yield put({type: WIZARD_INFO_TYPEKEYS.GET_TEMPLATE_INFO,payload: versionData});
+    yield put({type: CONFIG_TYPEKEYS.GET_TEMPLATE_INFO,payload: versionData});
     yield put({
-      type: WIZARD_SELECTION_TYPEKEYS.SET_VALIDATIONS,
+      type: CONFIG_TYPEKEYS.SET_VALIDATIONS,
       payload: {
         itemNameValidationConfig:messageTemplateInfo.payload.itemNameValidationConfig,
         projectNameValidationConfig:messageTemplateInfo.payload.projectNameValidationConfig

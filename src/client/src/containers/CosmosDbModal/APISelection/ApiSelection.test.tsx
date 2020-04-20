@@ -4,7 +4,7 @@ import ApiSelection from ".";
 import { RenderResult, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithIntl } from "../../../testUtils";
-import { COSMOS_APIS } from "../../../utils/constants";
+import { AZURE } from "../../../utils/constants";
 
 jest.mock("../../../components/Dropdown", () => require("../../../testUtils").dropdownMock);
 
@@ -25,14 +25,14 @@ describe("ApiSelection", () => {
   });
 
   it("If has initial Api, onApiChange notify selected Api", () => {
-    props.initialApi = COSMOS_APIS.MONGO;
+    props.initialApi = AZURE.COSMOS_APIS.MONGO;
     wrapper = renderWithIntl(<ApiSelection {...props} />);
     expect(props.onApiChange).toHaveBeenCalledTimes(1);
-    expect(props.onApiChange).toHaveBeenCalledWith(COSMOS_APIS.MONGO);
+    expect(props.onApiChange).toHaveBeenCalledWith(AZURE.COSMOS_APIS.MONGO);
   });
 
   it("When selected an Api in a dropdown, onApiChange notify selected Api", () => {
-    const selectedApi = COSMOS_APIS.SQL;
+    const selectedApi = AZURE.COSMOS_APIS.SQL;
     wrapper = renderWithIntl(<ApiSelection {...props} />);
     const dropdown = wrapper.getByTestId("dropdown");
     fireEvent.change(dropdown, { target: { label: selectedApi, value: selectedApi } });

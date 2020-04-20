@@ -9,6 +9,14 @@ const messages = defineMessages({
     id: "CosmosModal.saveMessage",
     defaultMessage: "Save",
   },
+  showAdvancedMode:{
+    id: "CosmosModal.showAdvancedMode",
+    defaultMessage: "Advanced mode",
+  },
+  hideAdvancedMode:{
+    id: "CosmosModal.hideAdvancedMode",
+    defaultMessage: "Hide advanced mode",
+  },
 });
 
 export default messages;

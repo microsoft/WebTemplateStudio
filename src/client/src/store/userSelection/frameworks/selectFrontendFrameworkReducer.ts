@@ -1,4 +1,4 @@
-import { WIZARD_SELECTION_TYPEKEYS } from "../typeKeys";
+import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 import { ISelected } from "../../../types/selected";
 import WizardSelectionActionType from "../selectionActionType";
 
@@ -14,7 +14,7 @@ const frontendFramework = (
   action: WizardSelectionActionType
 ) => {
   switch (action.type) {
-    case WIZARD_SELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK:
+    case USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK:
       return action.payload;
     default:
       return state;

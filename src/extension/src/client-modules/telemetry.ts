@@ -18,7 +18,8 @@ export class Telemetry extends WizardServant {
     [
       ExtensionCommand.TrackOpenCosmosDBServiceModalFromServicesList,
       this.trackOpenCosmosDBServiceModalFromServicesList
-    ]
+    ],
+    [ExtensionCommand.TrackOpenAzureServiceAdvancedMode, this.TrackOpenAzureServiceAdvancedMode]
   ]);
 
   constructor(private telemetry: ITelemetryService) {
@@ -71,6 +72,13 @@ export class Telemetry extends WizardServant {
     this.telemetry.trackEvent(
       TelemetryEventName.OpenCosmosDBServiceModalFromServicesList
     );
+    return { payload: true };
+  }  
+
+  public async TrackOpenAzureServiceAdvancedMode(payload: any): Promise<IPayloadResponse> {
+    this.telemetry.trackEvent(TelemetryEventName.OpenAzureServiceAdvancedMode, {
+      "Azure-service-type": payload.azureServiceType
+    });
     return { payload: true };
   }
 }

@@ -18,7 +18,7 @@ import styles from "./styles.module.css";
 import { sendTelemetry } from "../../../utils/extensionService/extensionService";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../../store/userSelection/frameworks/action";
 import { AppContext } from "../../../AppContext";
-import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../../store/config/pages/action";
+import { setVisitedWizardPageAction, setPageWizardPageAction } from "../../../store/navigation/routes/action";
 
 interface IStateProps {
   isPreview: boolean;

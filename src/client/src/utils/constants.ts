@@ -15,6 +15,7 @@ const WEB_TEMPLATE_STUDIO_LINKS = {
 
 const AZURE_LINKS = {
   CREATE_NEW_SUBSCRIPTION: "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
+  CREATE_NEW_RESOURCE_GROUP: "https://portal.azure.com/#create/Microsoft.ResourceGroup",
   APP_SERVICE_PLAN:"https://azure.microsoft.com/en-us/pricing/details/app-service/plans/"
 };
 
@@ -77,10 +78,19 @@ const SERVICE_KEYS = {
   APP_SERVICE: "appService"
 };
 
-const COSMOS_APIS = {
-  MONGO: "MongoDB",
-  SQL: "SQL"
-};
+enum AzureResourceType {
+  AppService = "app-service",
+  Cosmos = "cosmos"
+}
+
+const AZURE = {
+  COSMOS_APIS: {
+    MONGO: "MongoDB",
+    SQL: "SQL"
+  },
+  DEFAULT_LOCATION: "Central US",
+  DEFAULT_RESOURCE_GROUP: ""
+}
 
 enum FRAMEWORK_TYPE {
   FRONTEND = "frontend",
@@ -143,8 +153,8 @@ const EXTENSION_COMMANDS = {
   VALIDATE_COSMOS_NAME: "validate-cosmos-name",
   VALIDATE_APPSERVICE_NAME: "validate-appservice-name",
   PROJECT_PATH_VALIDATION: "project-path-validation",
-  GET_SUBSCRIPTION_DATA_FOR_COSMOS: "get-subscription-data-for-cosmos",
-  GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE: "get-subscription-data-for-app-service",
+  GET_RESOURCE_GROUPS: "get-resource-groups",
+  GET_LOCATIONS: "get-locations",
   GET_VALID_APP_SERVICE_NAME: "get-valid-app-service-name",
   GET_VALID_COSMOS_NAME: "get-valid-cosmos-name",
   TRACK_PAGE_SWITCH: "track-page-switch",
@@ -153,6 +163,7 @@ const EXTENSION_COMMANDS = {
   TRACK_PRESS_QUICKSTART: "track-press-quickstart",
   TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-app-service-modal-from-services-list",
   TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-cosmosdb-service-modal-from-services-list",
+  TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE: "track-open-azure-service-advanced-mode",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
@@ -182,7 +193,7 @@ export {
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
   ARIA_LABELS_NAVIGATION,
-  COSMOS_APIS,
+  AZURE,
   DEVELOPMENT,
   TEST,
   PROJECT_NAME_CHARACTER_LIMIT,
@@ -194,5 +205,6 @@ export {
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,
   BOOTSTRAP_LICENSE,
-  TELEMETRY
+  TELEMETRY,
+  AzureResourceType
 };
