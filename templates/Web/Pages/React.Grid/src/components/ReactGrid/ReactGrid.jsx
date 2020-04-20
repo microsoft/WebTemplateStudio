@@ -4,11 +4,14 @@ import WarningMessage from "../WarningMessage";
 import styles from "./styles.module.css";
 import CONSTANTS from "../../constants";
 import Item from "./Item";
+
+const ReactGrid = () => {
   const [items, setItems] = useState([]);
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
   const centeredHeaderStyle = classnames("text-center", styles.header);
-  const getListGrids = () => {
-    const promiseListGrids = fetch(CONSTANTS.ENDPOINT.GRID)
+
+  const getItems = () => {
+    const promiseItems = fetch(CONSTANTS.ENDPOINT.GRID)
     .then(response => {
       if (!response.ok) {
         throw Error(response.statusText);
@@ -16,9 +19,9 @@ import Item from "./Item";
       return response.json();
     });
 
-    return promiseListGrids;
+    return promiseItems;
   }
-  const handleWarningClose = () => {
+  const closeWarningMessage = () => {
     setWarningMessage({
       warningMessageOpen: false,
       warningMessageText: ""
@@ -26,8 +29,8 @@ import Item from "./Item";
   }
 
   React.useEffect(() => {
-    getListGrids()
-    .then(listGrids => {setItems(listGrids)})
+    getItems()
+    .then(newItems => {setItems(newItems)})
     .catch(error =>
       setWarningMessage({
         warningMessageOpen: true,
@@ -65,8 +68,10 @@ import Item from "./Item";
       <WarningMessage
         open={warningMessage.warningMessageOpen}
         text={warningMessage.warningMessageText}
-        onWarningClose={handleWarningClose}
+        onWarningClose={closeWarningMessage}
       />
     </main>
   );
 }
+
+export default ReactGrid;

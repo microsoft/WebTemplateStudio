@@ -1,6 +1,6 @@
 ﻿import React from "react";
 
-const Blank = () => {
+const ReactBlank = () => {
   return <main id="mainContent" />;
 }
-export default Blank;
+export default ReactBlank;

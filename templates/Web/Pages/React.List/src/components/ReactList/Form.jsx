@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 
-const ListForm = (params) =>{
+const Form = (params) =>{
   const [textField, setTextField] = useState("");
 
   const handleChange = (e) => {
@@ -9,7 +9,7 @@ const ListForm = (params) =>{
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    params.addListItem(textField);
+    params.addItem(textField);
     setTextField("");
   }
 
@@ -31,4 +31,4 @@ const ListForm = (params) =>{
   );
 }
 
-export default ListForm;
+export default Form;

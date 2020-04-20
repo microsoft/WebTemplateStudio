@@ -1,13 +1,14 @@
 ﻿import React, { useState } from "react";
-import ListItem from "./ListItem";
-import ListForm from "./ListForm";
+import Item from "./Item";
+import Form from "./Form";
 import WarningMessage from "../WarningMessage";
 import CONSTANTS from "../../constants";
 
-const List = () => {
-  const [listItems, setListItems] = useState([]);
+const ReactList = () => {
+  const [items, setItems] = useState([]);
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
-  const getListItem = () => {
+
+  const getItems = () => {
     let promiseList = fetch(CONSTANTS.ENDPOINT.LIST)
       .then(response => {
         if (!response.ok) {
@@ -18,8 +19,8 @@ const List = () => {
     return promiseList;
   }
 
-  const deleteListItem = (listItem) => {
-    fetch(`${CONSTANTS.ENDPOINT.LIST}/${listItem._id}`, { method: "DELETE" })
+  const deleteItem = (item) => {
+    fetch(`${CONSTANTS.ENDPOINT.LIST}/${item._id}`, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -27,7 +28,7 @@ const List = () => {
         return response.json();
       })
       .then(result => {
-        setListItems(listItems.filter(item => item._id !== result._id));
+        setItems(items.filter(item => item._id !== result._id));
       })
       .catch(error => {
         setWarningMessage({
@@ -37,7 +38,7 @@ const List = () => {
       });
   }
 
-  const addListItem = (textField) => {
+  const addItem = (textField) => {
     // Warning Pop Up if the user submits an empty message
     if (!textField) {
       setWarningMessage({
@@ -61,7 +62,7 @@ const List = () => {
         return response.json();
       })
       .then(itemAdded =>{
-        setListItems([itemAdded, ...listItems]);
+        setItems([itemAdded, ...items]);
       })
       .catch(error =>
         setWarningMessage({
@@ -71,7 +72,7 @@ const List = () => {
       );
   };
 
-  const handleWarningClose = () => {
+  const closeWarningMessage = () => {
     setWarningMessage({
       warningMessageOpen: false,
       warningMessageText: ""
@@ -79,8 +80,8 @@ const List = () => {
   };
 
   React.useEffect(() => {
-    getListItem()
-      .then(list => {setListItems(list)})
+    getItems()
+      .then(list => {setItems(list)})
       .catch(error =>
         setWarningMessage({
           warningMessageOpen: true,
@@ -96,23 +97,23 @@ const List = () => {
           <h3>Bootstrap List Template</h3>
         </div>
         <div className="col-12 p-0">
-          <ListForm addListItem={addListItem}/>
+          <Form addItem={addItem}/>
         </div>
-        {listItems.map(listItem => (
-          <ListItem
+        {items.map(listItem => (
+          <Item
             key={listItem._id}
-            listItem={listItem}
-            deleteListItem={deleteListItem}
+            item={listItem}
+            deleteItem={deleteItem}
           />
         ))}
         <WarningMessage
           open={warningMessage.warningMessageOpen}
           text={warningMessage.warningMessageText}
-          onWarningClose={handleWarningClose}
+          onWarningClose={closeWarningMessage}
         />
       </div>
     </main>
   );
 }
 
-export default List;
+export default ReactList;
