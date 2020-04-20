@@ -2,15 +2,15 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { ListFormComponent } from './list-form.component';
+import { FormComponent } from './form.component';
 
-describe('ListFormComponent', () => {
-  let component: ListFormComponent;
-  let fixture: ComponentFixture<ListFormComponent>;
+describe('FormComponent', () => {
+  let component: FormComponent;
+  let fixture: ComponentFixture<FormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ListFormComponent],
+      declarations: [FormComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,
@@ -20,7 +20,7 @@ describe('ListFormComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListFormComponent);
+    fixture = TestBed.createComponent(FormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

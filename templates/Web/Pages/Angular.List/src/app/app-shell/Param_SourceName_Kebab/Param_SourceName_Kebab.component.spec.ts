@@ -4,7 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AngularListComponent } from './Param_SourceName_Kebab.component';
-import { ListFormComponent } from './list-form/list-form.component';
+import { FormComponent } from './form/form.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 
@@ -14,7 +14,7 @@ describe('ListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AngularListComponent, ListFormComponent, ListItemComponent],
+      declarations: [AngularListComponent, FormComponent, ListItemComponent],
       imports: [
         WarningMessageModule,
         FormsModule,
