@@ -1,16 +1,17 @@
 ﻿import React, { useState } from "react";
 import classnames from "classnames";
 import WarningMessage from "../WarningMessage";
-import MasterDetailPage from "./MasterDetailPage";
-import MasterDetailSideBarTab from "./MasterDetailSideBarTab";
-import styles from "./masterdetail.module.css";
+import Page from "./Page";
+import SideBarTab from "./SideBarTab";
+import styles from "./styles.module.css";
 import CONSTANTS from "../../constants";
 
-const Master_Detail = () => {
+const ReactMasterDetail = () => {
   const [sampleOrders, setSampleOrders] = useState([]);
   const [currentSampleOrder, setCurrentSampleOrder] = useState({});
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
   const sidebarStyle = classnames("col-2","p-0","border-right", styles.sidebar);
+
   const getSampleOrders = () => {
     let promiseSampleOrders = fetch(CONSTANTS.ENDPOINT.MASTERDETAIL)
       .then(response => {
@@ -23,12 +24,8 @@ const Master_Detail = () => {
     return promiseSampleOrders;
   }
 
-  const handleWarningClose = () => {
+  const closeWarningMessage = () => {
     setWarningMessage({warningMessageOpen: false , warningMessageText: ""});
-  }
-
-  const selectSampleOrder = (sampleOrder) => {
-    setCurrentSampleOrder(sampleOrder);
   }
 
   React.useEffect(() => {
@@ -50,8 +47,8 @@ const Master_Detail = () => {
           <div className={sidebarStyle}>
             <div className="list-group list-group-flush border-bottom">
               {sampleOrders.map((sampleOrder) => (
-                <MasterDetailSideBarTab
-                  selectSampleOrder={selectSampleOrder}
+                <SideBarTab
+                  selectSampleOrder={setCurrentSampleOrder}
                   sampleOrder={sampleOrder}
                   key={sampleOrder.id}
                 />
@@ -59,7 +56,7 @@ const Master_Detail = () => {
             </div>
           </div>
           {currentSampleOrder.id && (
-            <MasterDetailPage
+            <Page
               textSampleData={currentSampleOrder}
             />
           )}
@@ -68,10 +65,10 @@ const Master_Detail = () => {
       <WarningMessage
         open={warningMessage.warningMessageOpen}
         text={warningMessage.warningMessageText}
-        onWarningClose={handleWarningClose}
+        onWarningClose={closeWarningMessage}
       />
     </main>
   );
 }
 
-export default Master_Detail;
+export default ReactMasterDetail;

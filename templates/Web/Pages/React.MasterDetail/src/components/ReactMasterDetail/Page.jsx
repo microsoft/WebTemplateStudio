@@ -1,9 +1,9 @@
 ﻿import React from "react";
 import classnames from "classnames";
-import styles from "./masterdetail.module.css";
+import styles from "./styles.module.css";
 import PropTypes from "prop-types";
 
-const MasterDetailPage = ({ textSampleData }) => {
+const Page = ({ textSampleData }) => {
   const {
     longDescription,
     title,
@@ -12,6 +12,7 @@ const MasterDetailPage = ({ textSampleData }) => {
     orderTotal,
     orderDate
   } = textSampleData;
+
   return (
     <div className="col">
       <div className={classnames("row", styles.heading)}>
@@ -37,8 +38,8 @@ const MasterDetailPage = ({ textSampleData }) => {
   );
 }
 
-MasterDetailPage.propTypes = {
+Page.propTypes = {
   textSampleData: PropTypes.any
 }
 
-export default MasterDetailPage;
+export default Page;
