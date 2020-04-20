@@ -1,5 +1,5 @@
 ﻿import React, { useState } from "react";
-import Item from "./Item";
+import ListItem from "./ListItem";
 import Form from "./Form";
 import WarningMessage from "../WarningMessage";
 import CONSTANTS from "../../constants";
@@ -100,7 +100,7 @@ const ReactList = () => {
           <Form addItem={addItem}/>
         </div>
         {items.map(listItem => (
-          <Item
+          <ListItem
             key={listItem._id}
             item={listItem}
             deleteItem={deleteItem}
