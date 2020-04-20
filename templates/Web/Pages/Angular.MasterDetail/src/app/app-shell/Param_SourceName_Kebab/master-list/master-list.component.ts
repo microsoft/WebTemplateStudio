@@ -2,11 +2,11 @@
 import { ISampleOrder } from '../Param_SourceName_Kebab.model';
 
 @Component({
-  selector: 'app-master-detail-sidebar-tab',
-  templateUrl: './master-detail-sidebar-tab.component.html',
-  styleUrls: ['./master-detail-sidebar-tab.component.css']
+  selector: 'app-master-list',
+  templateUrl: './master-list.component.html',
+  styleUrls: ['./master-list.component.css']
 })
-export class MasterDetailSidebarTabComponent implements OnInit {
+export class MasterList implements OnInit {
   @Input() sampleOrder: ISampleOrder;
   @Output() itemClick = new EventEmitter<ISampleOrder>();
 

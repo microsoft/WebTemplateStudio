@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-2 p-0 border-right sidebar">
-        <app-master-detail-sidebar-tab
+        <app-master-list
           class="list-group list-group-flush border-bottom"
           *ngFor="let sampleOrder of (sampleOrders$ | async)"
           (itemClick)="selectSampleOrder(sampleOrder)"
           [sampleOrder]="sampleOrder"
         >
-        </app-master-detail-sidebar-tab>
+        </app-master-list>
       </div>
       <app-page
         class="col"

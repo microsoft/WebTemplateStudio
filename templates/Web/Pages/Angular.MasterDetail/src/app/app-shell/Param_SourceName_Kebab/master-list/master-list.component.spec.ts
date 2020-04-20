@@ -1,18 +1,18 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MasterDetailSidebarTabComponent } from './master-detail-sidebar-tab.component';
+import { MasterList } from './master-list.component';
 
-describe('ListItemComponent', () => {
-  let component: MasterDetailSidebarTabComponent;
-  let fixture: ComponentFixture<MasterDetailSidebarTabComponent>;
+describe('MasterList', () => {
+  let component: MasterList;
+  let fixture: ComponentFixture<MasterList>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MasterDetailSidebarTabComponent]
+      declarations: [MasterList]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MasterDetailSidebarTabComponent);
+    fixture = TestBed.createComponent(MasterList);
     component = fixture.componentInstance;
     component.sampleOrder = {
       title: '1',
