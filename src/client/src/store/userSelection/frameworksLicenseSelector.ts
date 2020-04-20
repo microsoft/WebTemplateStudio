@@ -1,17 +1,19 @@
 import { createSelector } from "reselect";
 import { ILicenseObject } from "../../types/license";
+import { AppState } from "../combineReducers";
+import { UserSelectionState } from "./combineReducers";
 
-const getSelection = (state: any) => state.selection;
-const getFrameworkLicenses = (selection: any): string[] => {
+const getUserSelection = (state: AppState) => state.userSelection;
+const getFrameworkLicenses = (userSelection: UserSelectionState): string[] => {
   const licenses = [];
-  licenses.push(selection.frontendFramework.licenses);
-  licenses.push(selection.backendFramework.licenses);
+  licenses.push(userSelection.frontendFramework.licenses);
+  licenses.push(userSelection.backendFramework.licenses);
   return licenses;
 };
-const getPageLicenses = (selection: any): ILicenseObject[] => {
+const getPageLicenses = (userSelection: UserSelectionState): ILicenseObject[] => {
   const licenses = [];
   const licenseSet = new Set();
-  for (const page of selection.pages) {
+  for (const page of userSelection.pages) {
     for (const license of page.licenses) {
       if (!licenseSet.has(license.text)) {
         licenses.push(license);
@@ -23,12 +25,12 @@ const getPageLicenses = (selection: any): ILicenseObject[] => {
 };
 
 const getFrameworkLicensesSelector = createSelector(
-  getSelection,
+  getUserSelection,
   getFrameworkLicenses
 );
 
 const getPageLicencesSelector = createSelector(
-  getSelection,
+  getUserSelection,
   getPageLicenses
 );
 
