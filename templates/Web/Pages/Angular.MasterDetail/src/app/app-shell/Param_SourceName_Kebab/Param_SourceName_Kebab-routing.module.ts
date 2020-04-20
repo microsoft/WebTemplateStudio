@@ -1,12 +1,12 @@
 ﻿import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { MasterDetailComponent } from './master-detail.component';
+import { AngularMasterDetailComponent } from './Param_SourceName_Kebab.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MasterDetailComponent
+    component: AngularMasterDetailComponent
   }
 ];
 

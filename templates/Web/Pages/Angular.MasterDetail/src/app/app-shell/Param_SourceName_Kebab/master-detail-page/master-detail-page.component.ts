@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
-import { ISampleOrder } from '../master-detail.model';
+import { ISampleOrder } from '../Param_SourceName_Kebab.model';
 
 @Component({
   selector: 'app-master-detail-page',

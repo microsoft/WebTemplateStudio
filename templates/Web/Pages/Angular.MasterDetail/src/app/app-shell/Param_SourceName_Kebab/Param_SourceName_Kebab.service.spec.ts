@@ -1,7 +1,7 @@
 ﻿import { async, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { MasterDetailService } from './master-detail.service';
+import { AngularMasterDetailService } from './Param_SourceName_Kebab.service';
 
 describe('MasterDetailService', () => {
   beforeEach(async(() => {
@@ -11,7 +11,7 @@ describe('MasterDetailService', () => {
   }));
 
   it('should be created', () => {
-    const service: MasterDetailService = TestBed.inject(MasterDetailService);
+    const service: AngularMasterDetailService = TestBed.inject(AngularMasterDetailService);
     expect(service).toBeTruthy();
   });
 });

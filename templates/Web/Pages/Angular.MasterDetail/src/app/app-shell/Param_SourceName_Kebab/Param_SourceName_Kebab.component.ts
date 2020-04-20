@@ -1,23 +1,23 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { MasterDetailService } from './master-detail.service';
-import { ISampleOrder } from './master-detail.model';
+import { AngularMasterDetailService } from './Param_SourceName_Kebab.service';
+import { ISampleOrder } from './Param_SourceName_Kebab.model';
 import {catchError, map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-master-detail',
-  templateUrl: './master-detail.component.html',
-  styleUrls: ['./master-detail.component.css']
+  templateUrl: './Param_SourceName_Kebab.component.html',
+  styleUrls: ['./Param_SourceName_Kebab.component.css']
 })
-export class MasterDetailComponent implements OnInit {
+export class AngularMasterDetailComponent implements OnInit {
   greyAvatarUrl = '../../../assets/GreyAvatar.svg';
   warningMessageText = '';
   warningMessageOpen = false;
   currentSampleOrder: ISampleOrder;
   sampleOrders$: Observable<ISampleOrder[]>;
 
-  constructor(private masterDetailService: MasterDetailService) {}
+  constructor(private masterDetailService: AngularMasterDetailService) {}
 
   ngOnInit() {
     this.sampleOrders$ = this.masterDetailService.getMasterDetailItems().pipe(catchError((error) => {

@@ -4,10 +4,10 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { ISampleOrder } from './master-detail.model';
+import { ISampleOrder } from './Param_SourceName_Kebab.model';
 
 @Injectable({providedIn: 'root'})
-export class MasterDetailService {
+export class AngularMasterDetailService {
   private listUrl = environment.endpoint.masterdetail;
 
   constructor(private http: HttpClient) {}
