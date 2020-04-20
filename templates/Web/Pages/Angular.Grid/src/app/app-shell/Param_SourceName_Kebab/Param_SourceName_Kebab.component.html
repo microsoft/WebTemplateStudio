@@ -14,12 +14,12 @@
       <h1>Bootstrap AngularGrid Template</h1>
     </div>
     <div class="row justify-content-around text-center pb-5">
-      <app-grid-box
+      <app-grid-item
         class="col-4 p-5"
         *ngFor="let gridItem of (gridItems$ | async)"
         [gridItem]="gridItem"
       >
-      </app-grid-box>
+      </app-grid-item>
     </div>
   </div>
   <app-warning-message

@@ -2,7 +2,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AngularGridComponent } from './Param_SourceName_Kebab.component';
-import { GridBoxComponent } from './grid-box/grid-box.component';
+import { GridItemComponent } from './grid-item/grid-item.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 
 describe('GridComponent', () => {
@@ -11,7 +11,7 @@ describe('GridComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AngularGridComponent, GridBoxComponent],
+      declarations: [AngularGridComponent, GridItemComponent],
       imports: [WarningMessageModule, HttpClientTestingModule]
     }).compileComponents();
   }));
