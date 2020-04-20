@@ -8,7 +8,7 @@ import { WarningMessageModule } from '../../shared/warning-message/warning-messa
 
 describe('MasterDetailComponent', () => {
   let component: AngularMasterDetailComponent;
-  let fixture: ComponentFixture<MasterDetailComponent>;
+  let fixture: ComponentFixture<AngularMasterDetailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
