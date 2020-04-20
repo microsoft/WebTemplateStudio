@@ -20,11 +20,6 @@ interface ValidateResult {
   errorMessage: string;
 }
 
-interface SubscriptionData {
-  resourceGroups: ResourceGroup[];
-  locations: AzureLocation[];
-}
-
 interface ResourceGroup {
   name: string;
 }
@@ -84,26 +79,18 @@ export class AzureServices {
     return MICROSOFT_LEARN_TENANTS.includes(subscription.session.tenantId);
   }
 
-  public static async getSubscriptionData(subscriptionName: string, AzureType: AzureResourceType): Promise<SubscriptionData> {
+  public static async getResourceGroups(subscriptionName: string): Promise<ResourceGroup[]> {
     const subscription = AzureServices.getSubscription(subscriptionName);
-    const resourceGroups = await AzureServices.getResourceGroups(subscription);
-    const locations = await AzureServices.getLocations(subscription, AzureType);
-    return {
-      resourceGroups,
-      locations,
-    };
-  }
-
-  private static async getResourceGroups(subscription: SubscriptionItem): Promise<ResourceGroup[]> {
     const items = await AzureAuth.getAllResourceGroupItems(subscription);
     const resources: ResourceGroup[] = [];
     items.map(item => resources.push({ name: item.name }));
     return resources;
   }
 
-  private static async getLocations(subscription: SubscriptionItem, AzureType: AzureResourceType): Promise<AzureLocation[]> {
+  public static async getLocations(subscriptionName: string, azureServiceType: AzureResourceType): Promise<AzureLocation[]> {
+    const subscription = AzureServices.getSubscription(subscriptionName);
     let items: LocationItem[] = [];
-    switch (AzureType) {
+    switch (azureServiceType) {
       case AzureResourceType.Cosmos:
         items = await AzureAuth.getLocationsForCosmos(subscription);
         break;

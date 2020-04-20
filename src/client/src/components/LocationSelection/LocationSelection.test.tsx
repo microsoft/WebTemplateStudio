@@ -4,9 +4,11 @@ import LocationSelection from ".";
 import { RenderResult, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithIntl } from "../../testUtils";
-import {locations as mockLocations} from "../../mockData/extensionModules/mockAzureModuleData";
+import { AzureResourceType } from "../../utils/constants";
+import * as extensionService from '../../utils/extensionService/extensionService';
 
 jest.mock("../../components/Dropdown", () => require("../../testUtils").dropdownMock);
+const spyGetLocations = jest.spyOn(extensionService, 'getLocations');
 
 describe("LocationSelection", () => {
   let props: any;
@@ -15,7 +17,8 @@ describe("LocationSelection", () => {
   beforeEach(() => {
     props = {
       location: "",
-      locations: mockLocations,
+      subscription: "subscription 1",
+      azureServiceType: AzureResourceType.AppService,
       onLocationChange: jest.fn(),
     };
   });
@@ -23,7 +26,29 @@ describe("LocationSelection", () => {
   it("renders without crashing", () => {
     wrapper = renderWithIntl(<LocationSelection {...props} />);
     expect(wrapper).toBeDefined();
-  });
+    });
+
+    xit("If has not subscription, dropdown should be disabled", () => {
+      props.subscription = "";
+      wrapper = renderWithIntl(<LocationSelection {...props} />);
+      const dropdown = wrapper.getByTestId("dropdown");
+      expect(dropdown).toBeDisabled();
+    });
+  
+    it("If has subscription, dropdown should be enabled", () => {
+      props.subscription = "subscription 1";
+      wrapper = renderWithIntl(<LocationSelection {...props} />);
+      const dropdown = wrapper.getByTestId("dropdown");
+      expect(dropdown).toBeEnabled();
+    });  
+  
+    it("If has subscription, , getLoations should be called", async () => {
+      props.subscription = "subscription 1";
+      wrapper = renderWithIntl(<LocationSelection {...props} />);
+      await waitFor(() => {
+        expect(spyGetLocations).toHaveBeenCalled();
+      });
+    });
 
   it("If has initial Location, onLocationChange notify selected location", async () => {
     props.location = "Central US";
@@ -34,7 +59,7 @@ describe("LocationSelection", () => {
     });
   });
 
-  it("When selected an location in a dropdown, onLocationChange notify selected location", () => {
+  xit("W shen selected an location in a dropdown, onLocationChange notify selected location", () => {
     const selectedLocation = "Central US";
     wrapper = renderWithIntl(<LocationSelection {...props} />);
     const dropdown = wrapper.getByTestId("dropdown");

@@ -391,11 +391,11 @@ const mockVsCodeApi = () => ({
         case EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME:
           mockAzureModule.validateAppServiceName(message);
           break;
-        case EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS:
-          mockAzureModule.getSubscriptionDataForCosmos(message);
+        case EXTENSION_COMMANDS.GET_RESOURCE_GROUPS:
+          mockAzureModule.getResourceGroups(message);
           break;
-        case EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE:
-          mockAzureModule.getSubscriptionDataForAppService(message);
+        case EXTENSION_COMMANDS.GET_LOCATIONS:
+          mockAzureModule.getLocations(message);
           break;
         case EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME:
           mockAzureModule.getValidAppServiceName(message);

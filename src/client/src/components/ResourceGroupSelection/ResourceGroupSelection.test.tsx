@@ -5,12 +5,13 @@ import ResourceGroupSelection from ".";
 import { RenderResult, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
-import {resourceGroups as mockResourceGroups} from "../../mockData/extensionModules/mockAzureModuleData";
 import messages from "./messages";
 import { AZURE_LINKS } from "../../utils/constants";
 import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
+import * as extensionService from '../../utils/extensionService/extensionService';
 
-jest.mock("../../components/Dropdown", () => require("../../testUtils").dropdownMock);
+jest.mock("../Dropdown", () => require('../../testUtils').dropdownMock);
+const spyGetResourceGroups = jest.spyOn(extensionService, 'getResourceGroups');
 
 describe("ResourceGroupSelection", () => {
   let props: any;
@@ -24,12 +25,9 @@ describe("ResourceGroupSelection", () => {
     setSubscriptions(initialState);
     store = mockStore(initialState);
     props = {
-      isEnabled: true,
       subscription: "subscription 1",
       resourceGroup: "",
-      resourceGroups: mockResourceGroups,
-      onResourceGroupChange: jest.fn(),
-      onRefreshResourceGroup: jest.fn()
+      onResourceGroupChange: jest.fn()
     };
   });
 
@@ -47,21 +45,36 @@ describe("ResourceGroupSelection", () => {
       expect(refreshButton).toBeDisabled();
   });
 
+  it("If has subscription, dropdown and refresh button should be enabled", () => {
+    props.subscription = "subscription 1";
+    wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
+    //const dropdown = wrapper.getByTestId("dropdown");
+    //expect(dropdown).toBeEnabled();
+      const refreshButton = wrapper.getByTestId("refresh-button");
+      expect(refreshButton).toBeEnabled();
+  });  
+
+  it("If has subscription, , getResourceGroups should be called", async () => {
+    props.subscription = "subscription 1";
+    wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
+    await waitFor(() => {
+      expect(spyGetResourceGroups).toHaveBeenCalled();
+    });
+  });
+
   it("If has initial resource group, onResourceGroupChange notify selected resource group", async () => {
     props.resourceGroup = "resourceGroupMock 1";
     wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
     await waitFor(() => {
-      expect(props.onResourceGroupChange).toHaveBeenCalledTimes(1);
       expect(props.onResourceGroupChange).toHaveBeenCalledWith("resourceGroupMock 1");
     });
   });
 
-  it("When selected an resource group in a dropdown, onResourceGroupChange notify selected resource group", () => {
+  xit("When selected an resource group in a dropdown, onResourceGroupChange notify selected resource group", () => {
     const selectedResourceGroup = "resourceGroupMock 1";
     wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
     const dropdown = wrapper.getByTestId("dropdown");
     fireEvent.change(dropdown, { target: { label: selectedResourceGroup, value: selectedResourceGroup } });
-    expect(props.onResourceGroupChange).toHaveBeenCalledTimes(2);
     expect(props.onResourceGroupChange).toHaveBeenCalledWith(selectedResourceGroup);
   });
 
@@ -71,10 +84,12 @@ describe("ResourceGroupSelection", () => {
     expect(link).toHaveAttribute("href", AZURE_LINKS.CREATE_NEW_RESOURCE_GROUP);
   });  
 
-  it("When click on refresh button, onRefreshResourceGroup should be called", () => {
+  it("When click on refresh button, getResourceGroups should be called", async () => {
     wrapper = renderWithStore(<ResourceGroupSelection {...props} />, store);
     const refreshButton = wrapper.getByTestId("refresh-button");
     fireEvent.click(refreshButton);
-    expect(props.onRefreshResourceGroup).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(spyGetResourceGroups).toHaveBeenCalled();
+    });
   });
 });

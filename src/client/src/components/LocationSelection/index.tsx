@@ -5,10 +5,14 @@ import styles from "./styles.module.css";
 import messages from "./messages";
 import Dropdown from "../Dropdown";
 import classNames from "classnames";
+import { AzureResourceType } from "../../utils/constants";
+import { getLocations } from "../../utils/extensionService/extensionService";
+import { AppContext } from "../../AppContext";
 
 interface IProps {
   location: string;
-  locations: AzureLocation[];
+  subscription: string;
+  azureServiceType: AzureResourceType;
   onLocationChange(location: string): void;
 }
 
@@ -16,17 +20,16 @@ type Props = IProps & InjectedIntlProps;
 
 const LocationSelection = (props: Props) => {
   const { formatMessage } = props.intl;
-  const { location, locations, onLocationChange } = props;
+  const { vscode } = React.useContext(AppContext);
+  const { location, subscription, azureServiceType, onLocationChange } = props;
   const [dropdownLocations, setDropdownLocations] = useState<IDropDownOptionType[]>([]);
   const [selectedDropdownLocation, setSelectedDropdownLocation] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
-    const newDropDownLocations = locations.map<IDropDownOptionType>((location) => ({
-      label: location.name,
-      value: location.name,
-    }));
-    setDropdownLocations(newDropDownLocations);
-  }, [locations]);
+    if(subscription) {
+      chargeLocations();
+    }
+  }, [subscription]);
 
   React.useEffect(() => {
     const newLocation = dropdownLocations.find((s) => s.value === location);
@@ -41,8 +44,20 @@ const LocationSelection = (props: Props) => {
     }
   }, [selectedDropdownLocation]);
 
+  const chargeLocations = async () => {
+    const event = await getLocations(vscode, subscription, azureServiceType);
+    const locations = event.data.payload.locations as AzureLocation[];
+    const newDropDownLocations = locations.map<IDropDownOptionType>((location) => ({
+      label: location.name,
+      value: location.name,
+    }));
+    setDropdownLocations(newDropDownLocations);
+  };
+  
+  const disableComponent = subscription === "" || dropdownLocations.length === 0;
+
   return (
-    <div className={classNames(styles.container, { [styles.containerDisabled]: dropdownLocations.length === 0 })}>
+    <div className={classNames(styles.container, { [styles.containerDisabled]: disableComponent })}>
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.title)}</div>
       </div>
@@ -52,7 +67,7 @@ const LocationSelection = (props: Props) => {
         options={dropdownLocations}
         handleChange={(location) => setSelectedDropdownLocation(location)}
         value={selectedDropdownLocation}
-        disabled={dropdownLocations.length === 0}
+        disabled={disableComponent}
       />
     </div>
   );
