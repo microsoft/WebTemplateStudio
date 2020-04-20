@@ -1,18 +1,18 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MasterDetailPageComponent } from './master-detail-page.component';
+import { PageComponent } from './page.component';
 
-describe('MasterDetailPageComponent', () => {
-  let component: MasterDetailPageComponent;
-  let fixture: ComponentFixture<MasterDetailPageComponent>;
+describe('PageComponent', () => {
+  let component: PageComponent;
+  let fixture: ComponentFixture<PageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MasterDetailPageComponent]
+      declarations: [PageComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MasterDetailPageComponent);
+    fixture = TestBed.createComponent(PageComponent);
     component = fixture.componentInstance;
     component.sampleOrder = {
       title: '1',

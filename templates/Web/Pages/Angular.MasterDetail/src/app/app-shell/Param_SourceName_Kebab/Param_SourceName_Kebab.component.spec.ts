@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AngularMasterDetailComponent } from './Param_SourceName_Kebab.component';
 import { MasterDetailSidebarTabComponent } from './master-detail-sidebar-tab/master-detail-sidebar-tab.component';
-import { MasterDetailPageComponent } from './master-detail-page/master-detail-page.component';
+import { PageComponent } from './page/page.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 
 describe('MasterDetailComponent', () => {
@@ -12,7 +12,7 @@ describe('MasterDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AngularMasterDetailComponent, MasterDetailSidebarTabComponent, MasterDetailPageComponent],
+      declarations: [AngularMasterDetailComponent, MasterDetailSidebarTabComponent, PageComponent],
       imports: [WarningMessageModule, HttpClientTestingModule]
     }).compileComponents();
   }));

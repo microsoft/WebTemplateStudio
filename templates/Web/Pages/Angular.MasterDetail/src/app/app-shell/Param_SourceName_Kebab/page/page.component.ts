@@ -2,11 +2,11 @@
 import { ISampleOrder } from '../Param_SourceName_Kebab.model';
 
 @Component({
-  selector: 'app-master-detail-page',
-  templateUrl: './master-detail-page.component.html',
-  styleUrls: ['./master-detail-page.component.css']
+  selector: 'app-page',
+  templateUrl: './page.component.html',
+  styleUrls: ['./page.component.css']
 })
-export class MasterDetailPageComponent implements OnInit {
+export class PageComponent implements OnInit {
   @Input() sampleOrder: ISampleOrder;
 
   constructor() {}
