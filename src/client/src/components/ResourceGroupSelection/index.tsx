@@ -10,20 +10,21 @@ import { AZURE_LINKS } from "../../utils/constants";
 import { useSelector } from "react-redux";
 import { AppState } from "../../store/combineReducers";
 import { getSubscriptionsSelector } from "../../store/config/azure/selector";
+import { getResourceGroups } from "../../utils/extensionService/extensionService";
+import { AppContext } from "../../AppContext";
 
 interface IProps {
   subscription: string;
   resourceGroup: string;
-  resourceGroups: ResourceGroup[] | undefined;
   onResourceGroupChange(newResourceGroup: string): void;
-  onRefreshResourceGroup(): void;
 }
 
 type Props = IProps & InjectedIntlProps;
 
 const ResourceGroupSelection = (props: Props) => {
   const { formatMessage } = props.intl;
-  const { subscription, resourceGroup, resourceGroups, onResourceGroupChange, onRefreshResourceGroup } = props;
+  const { vscode } = React.useContext(AppContext);
+  const { subscription, resourceGroup, onResourceGroupChange } = props;
   const subscriptions = useSelector((state: AppState) => getSubscriptionsSelector(state));
   const [dropdownResourceGroups, setDropownResourceGroups] = useState<IDropDownOptionType[]>([]);
   const [selectedDropdownResourceGroup, setSelectedDropdownResourceGroup] = useState<IDropDownOptionType | undefined>(
@@ -37,18 +38,10 @@ const ResourceGroupSelection = (props: Props) => {
   };
 
   React.useEffect(() => {
-    if (resourceGroups) {
-      const newDropdownResourceGroups = isMicrosoftLearnSubscription() ? [] : [DEFAULT_RESOURCE_GROUP];
-
-      resourceGroups.forEach((resourceGroup) =>
-        newDropdownResourceGroups.push({
-          label: resourceGroup.name,
-          value: resourceGroup.name,
-        })
-      );
-      setDropownResourceGroups(newDropdownResourceGroups);
+    if (subscription) {
+      chargeResourceGroups();
     }
-  }, [resourceGroups]);
+  }, [subscription]);
 
   React.useEffect(() => {
     if (dropdownResourceGroups.length > 0) {
@@ -68,15 +61,29 @@ const ResourceGroupSelection = (props: Props) => {
     }
   }, [selectedDropdownResourceGroup]);
 
+  const chargeResourceGroups = async () => {
+    const event = await getResourceGroups(vscode, subscription);
+    const resourceGroups = event.data.payload.resourceGroups as ResourceGroup[];
+    const newDropdownResourceGroups = isMicrosoftLearnSubscription() ? [] : [DEFAULT_RESOURCE_GROUP];
+
+    resourceGroups.forEach((resourceGroup) =>
+      newDropdownResourceGroups.push({
+        label: resourceGroup.name,
+        value: resourceGroup.name,
+      })
+    );
+    setDropownResourceGroups(newDropdownResourceGroups);
+  };
+
   const isMicrosoftLearnSubscription = (): boolean => {
     const newSubscription = subscriptions.find((s) => s.name === subscription);
     return newSubscription !== undefined && newSubscription.isMicrosoftLearn;
   };
 
-  const refreshResourceGroups = () => {
+  const refreshResourceGroups = async () => {
     setIsRefresh(true);
     setDropownResourceGroups([]);
-    onRefreshResourceGroup();
+    chargeResourceGroups();
   };
 
   const disableComponent = subscription === "" || isRefresh;
@@ -93,18 +100,23 @@ const ResourceGroupSelection = (props: Props) => {
       <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <div className={styles.dropdownContainer}>
         <div className={styles.dropdown}>
-        <Dropdown
-        openDropdownUpwards={dropdownResourceGroups.length > 1}
-        ariaLabel={formatMessage(messages.ariaDropdownLabel)}
-        options={dropdownResourceGroups}
-        handleChange={(resourceGroup) => setSelectedDropdownResourceGroup(resourceGroup)}
-        value={selectedDropdownResourceGroup}
-        disabled={disableComponent}
-      />
-      </div>
-      <button data-testid="refresh-button" disabled={disableComponent} className={styles.refreshButton} onClick={refreshResourceGroups}>
-        <Refresh className={styles.viewIcon} />
-      </button>
+          <Dropdown
+            openDropdownUpwards={dropdownResourceGroups.length > 1}
+            ariaLabel={formatMessage(messages.ariaDropdownLabel)}
+            options={dropdownResourceGroups}
+            handleChange={(resourceGroup) => setSelectedDropdownResourceGroup(resourceGroup)}
+            value={selectedDropdownResourceGroup}
+            disabled={disableComponent}
+          />
+        </div>
+        <button
+          data-testid="refresh-button"
+          disabled={disableComponent}
+          className={styles.refreshButton}
+          onClick={refreshResourceGroups}
+        >
+          <Refresh className={styles.viewIcon} />
+        </button>
       </div>
     </div>
   );

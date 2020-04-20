@@ -9,7 +9,7 @@ import ApiSelection from "./APISelection/index";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS, AZURE, EXTENSION_COMMANDS, SERVICE_KEYS } from "../../utils/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS, AZURE, EXTENSION_COMMANDS, SERVICE_KEYS, AzureResourceType } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { ISelectedCosmosService } from "../../store/azureProfileData/cosmosDb/model";
@@ -18,7 +18,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
-import { getSubscriptionDataForCosmos, sendTelemetry } from "../../utils/extensionService/extensionService";
+import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import LocationSelection from "../../components/LocationSelection";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 import { AppContext } from "../../AppContext";
@@ -43,7 +43,6 @@ const CosmosModal = ({ intl }: Props) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const [subscription, setSubscription] = useState(initialSubscription);
-  const [subscriptionData, setSubscriptionData] = useState<SubscriptionData|undefined>(undefined);
   const [accountName, setAccountName] = useState(initialAccountName);
   const [api, setApi] = useState(initialApi);
   const [location, setLocation] = useState(initialLocation);
@@ -57,18 +56,6 @@ const CosmosModal = ({ intl }: Props) => {
     }
   }, [showAdvanced]);
   
-  React.useEffect(() => {
-    loadResourceGroups();
-  }, [subscription]);
-  
-  const loadResourceGroups = () => {
-    if(subscription) {
-      getSubscriptionDataForCosmos(vscode, subscription).then(event => {
-        setSubscriptionData(event.data.payload);
-      });
-    }
-  }
-
   const isEnableSaveButton = (): boolean => {
     const isSubscriptionEmpty = subscription === "";
     const isAccountNameEmpty = accountName === "";
@@ -132,14 +119,13 @@ const CosmosModal = ({ intl }: Props) => {
         <div className={classNames({ [styles.hide]: !showAdvanced })}>
         <LocationSelection
             location={location}
-            locations={subscriptionData ? subscriptionData.locations : []}
+            subscription={subscription}
+            azureServiceType={AzureResourceType.Cosmos}
             onLocationChange={setLocation} />
         <ResourceGroupSelection
           subscription={subscription}
           resourceGroup={resourceGroup}
-          resourceGroups={subscriptionData ? subscriptionData.resourceGroups : undefined}
-          onResourceGroupChange={setResourceGroup}
-          onRefreshResourceGroup={loadResourceGroups} />
+          onResourceGroupChange={setResourceGroup} />
         </div>
       </div>
       <div className={styles.footer}>

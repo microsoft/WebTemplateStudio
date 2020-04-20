@@ -18,8 +18,8 @@ export class AzureModule extends WizardServant {
     [ExtensionCommand.Login, this.login],
     [ExtensionCommand.Logout, this.logout],
     [ExtensionCommand.GetUserStatus, this.getUserStatus],
-    [ExtensionCommand.GetSubscriptionDataForCosmos, this.getSubscriptionDataForCosmos],
-    [ExtensionCommand.GetSubscriptionDataForAppService, this.getSubscriptionDataForAppService],
+    [ExtensionCommand.GetResourceGroups, this.getResourceGroups],
+    [ExtensionCommand.GetLocations, this.getLocations],
     [ExtensionCommand.GetValidAppServiceName, this.getValidAppServiceName],
     [ExtensionCommand.GetValidCosmosName, this.getValidCosmosName],
     [ExtensionCommand.ValidateCosmosName, this.validateCosmosName],
@@ -54,21 +54,21 @@ export class AzureModule extends WizardServant {
     };
   }
 
-  public async getSubscriptionDataForCosmos(message: any): Promise<IPayloadResponse> {
-    const data = await AzureServices.getSubscriptionData(message.subscription, AzureResourceType.Cosmos);
+  public async getResourceGroups(message: any): Promise<IPayloadResponse> {
+    const resourceGroups = await AzureServices.getResourceGroups(message.subscription);
     return {
       payload: {
-        ...data,
+        resourceGroups,
         scope: message.payload.scope,
       },
     };
   }
 
-  public async getSubscriptionDataForAppService(message: any): Promise<IPayloadResponse> {
-    const data = await AzureServices.getSubscriptionData(message.subscription, AzureResourceType.AppService);
+  public async getLocations(message: any): Promise<IPayloadResponse> {
+    const locations = await AzureServices.getLocations(message.subscription, message.azureServiceType);
     return {
       payload: {
-        ...data,
+        locations,
         scope: message.payload.scope,
       },
     };

@@ -49,27 +49,22 @@ const getUserStatus = (message: any) => {
   );
 };
 
-const getSubscriptionDataForCosmos = (message: any) => { 
-  const resourceGroups = IsMicrosoftLearnSubscription(message.subscription) 
-    ? mockData.sandboxResourceGroups 
-    : mockData.resourceGroups;
-  
+const getLocations = (message: any) => {
   setTimeout(() =>
-   window.postMessage(
-    {
-      module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
+  window.postMessage(
+   {
+    module: EXTENSION_MODULES.AZURE,
+      command: EXTENSION_COMMANDS.GET_LOCATIONS,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        locations: mockData.locations,
-        resourceGroups,
-      },
-    },
-    "*"
-  ), 500);
+        locations: mockData.locations
+     },
+   },
+   "*"
+ ), 500);
 };
 
-const getSubscriptionDataForAppService = (message: any) => {
+const getResourceGroups = (message: any) => {
   const resourceGroups = IsMicrosoftLearnSubscription(message.subscription) 
   ? mockData.sandboxResourceGroups 
   : mockData.resourceGroups;
@@ -78,10 +73,9 @@ const getSubscriptionDataForAppService = (message: any) => {
   window.postMessage(
    {
     module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE,
+      command: EXTENSION_COMMANDS.GET_RESOURCE_GROUPS,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        locations: mockData.locations,
         resourceGroups,
      },
    },
@@ -165,8 +159,8 @@ export {
   login,
   logout,
   getUserStatus,
-  getSubscriptionDataForCosmos,
-  getSubscriptionDataForAppService,
+  getLocations,
+  getResourceGroups,
   getValidAppServiceName,
   getValidCosmosName,
   validateCosmosName,

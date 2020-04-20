@@ -78,6 +78,11 @@ const SERVICE_KEYS = {
   APP_SERVICE: "appService"
 };
 
+enum AzureResourceType {
+  AppService = "app-service",
+  Cosmos = "cosmos"
+}
+
 const AZURE = {
   COSMOS_APIS: {
     MONGO: "MongoDB",
@@ -148,8 +153,8 @@ const EXTENSION_COMMANDS = {
   VALIDATE_COSMOS_NAME: "validate-cosmos-name",
   VALIDATE_APPSERVICE_NAME: "validate-appservice-name",
   PROJECT_PATH_VALIDATION: "project-path-validation",
-  GET_SUBSCRIPTION_DATA_FOR_COSMOS: "get-subscription-data-for-cosmos",
-  GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE: "get-subscription-data-for-app-service",
+  GET_RESOURCE_GROUPS: "get-resource-groups",
+  GET_LOCATIONS: "get-locations",
   GET_VALID_APP_SERVICE_NAME: "get-valid-app-service-name",
   GET_VALID_COSMOS_NAME: "get-valid-cosmos-name",
   TRACK_PAGE_SWITCH: "track-page-switch",
@@ -200,5 +205,6 @@ export {
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,
   BOOTSTRAP_LICENSE,
-  TELEMETRY
+  TELEMETRY,
+  AzureResourceType
 };
