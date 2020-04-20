@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import imgGreyAvatar from "../../images/GreyAvatar.svg";
 import PropTypes from "prop-types";
 
-const SideBarTab = ({ sampleOrder, selectSampleOrder }) => {
+const MasterList = ({ sampleOrder, selectSampleOrder }) => {
   return (
     <button
       onClick={() => selectSampleOrder(sampleOrder)}
@@ -21,9 +21,9 @@ const SideBarTab = ({ sampleOrder, selectSampleOrder }) => {
   );
 }
 
-SideBarTab.propTypes = {
+MasterList.propTypes = {
   sampleOrder: PropTypes.any,
   selectSampleOrder: PropTypes.func
 }
 
-export default SideBarTab;
+export default MasterList;

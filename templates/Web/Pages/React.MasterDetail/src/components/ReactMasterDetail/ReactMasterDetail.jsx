@@ -1,8 +1,8 @@
 ﻿import React, { useState } from "react";
 import classnames from "classnames";
 import WarningMessage from "../WarningMessage";
-import Page from "./Page";
-import SideBarTab from "./SideBarTab";
+import Detail from "./Detail";
+import MasterList from "./MasterList";
 import styles from "./styles.module.css";
 import CONSTANTS from "../../constants";
 
@@ -47,7 +47,7 @@ const ReactMasterDetail = () => {
           <div className={sidebarStyle}>
             <div className="list-group list-group-flush border-bottom">
               {sampleOrders.map((sampleOrder) => (
-                <SideBarTab
+                <MasterList
                   selectSampleOrder={setCurrentSampleOrder}
                   sampleOrder={sampleOrder}
                   key={sampleOrder.id}
@@ -56,7 +56,7 @@ const ReactMasterDetail = () => {
             </div>
           </div>
           {currentSampleOrder.id && (
-            <Page
+            <Detail
               textSampleData={currentSampleOrder}
             />
           )}

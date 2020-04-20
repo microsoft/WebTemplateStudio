@@ -3,7 +3,7 @@ import classnames from "classnames";
 import styles from "./styles.module.css";
 import PropTypes from "prop-types";
 
-const Page = ({ textSampleData }) => {
+const Detail = ({ textSampleData }) => {
   const {
     longDescription,
     title,
@@ -38,8 +38,8 @@ const Page = ({ textSampleData }) => {
   );
 }
 
-Page.propTypes = {
+Detail.propTypes = {
   textSampleData: PropTypes.any
 }
 
-export default Page;
+export default Detail;
