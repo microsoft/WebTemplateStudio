@@ -55,23 +55,20 @@ export class AzureModule extends WizardServant {
   }
 
   public async getResourceGroups(message: any): Promise<IPayloadResponse> {
-    const data = await AzureServices.getResourceGroups(message.subscription);
+    const resourceGroups = await AzureServices.getResourceGroups(message.subscription);
     return {
       payload: {
-        ...data,
+        resourceGroups,
         scope: message.payload.scope,
       },
     };
   }
 
   public async getLocations(message: any): Promise<IPayloadResponse> {
-    //MESSAGE tiene que tener o AzureResourceType.Cosmos o AzureResourceType.AppService
-    //AppService = "app-service",
-    //Cosmos = "cosmos",
-    const data = await AzureServices.getLocations(message.subscription, message.serviceType);
+    const locations = await AzureServices.getLocations(message.subscription, message.azureServiceType);
     return {
       payload: {
-        ...data,
+        locations,
         scope: message.payload.scope,
       },
     };

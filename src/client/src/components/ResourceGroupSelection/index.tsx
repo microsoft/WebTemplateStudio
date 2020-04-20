@@ -64,17 +64,15 @@ const ResourceGroupSelection = (props: Props) => {
   const chargeResourceGroups = async () => {
     const event = await getResourceGroups(vscode, subscription);
     const resourceGroups = event.data.payload.resourceGroups as ResourceGroup[];
-    if (resourceGroups) {
-      const newDropdownResourceGroups = isMicrosoftLearnSubscription() ? [] : [DEFAULT_RESOURCE_GROUP];
+    const newDropdownResourceGroups = isMicrosoftLearnSubscription() ? [] : [DEFAULT_RESOURCE_GROUP];
 
-      resourceGroups.forEach((resourceGroup) =>
-        newDropdownResourceGroups.push({
-          label: resourceGroup.name,
-          value: resourceGroup.name,
-        })
-      );
-      setDropownResourceGroups(newDropdownResourceGroups);
-    }
+    resourceGroups.forEach((resourceGroup) =>
+      newDropdownResourceGroups.push({
+        label: resourceGroup.name,
+        value: resourceGroup.name,
+      })
+    );
+    setDropownResourceGroups(newDropdownResourceGroups);
   };
 
   const isMicrosoftLearnSubscription = (): boolean => {
