@@ -1,16 +1,11 @@
-import { ISaveCosmosDbSettingsAction, IRemoveCosmosDbSettingsAction } from "./model";
+import { ISaveCosmosDbAction, IRemoveCosmosDbAction, ISelectedCosmosService } from "./model";
 import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
 
-export const saveCosmosDbSettingsAction = (
-  cosmosDbSettings: any
-): ISaveCosmosDbSettingsAction => ({
-  type: AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS,
-  payload: cosmosDbSettings
+export const saveCosmosDbAction = (cosmosDb: ISelectedCosmosService): ISaveCosmosDbAction => ({
+  type: AZURE_TYPEKEYS.SAVE_COSMOS_DB,
+  payload: cosmosDb,
 });
 
-export const removeCosmosSelectionAction = (
-  selectionIndex: number
-): IRemoveCosmosDbSettingsAction => ({
-  type: AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE,
-  payload: selectionIndex
+export const removeCosmosDbAction = (): IRemoveCosmosDbAction => ({
+  type: AZURE_TYPEKEYS.REMOVE_COSMOS_DB,
 });

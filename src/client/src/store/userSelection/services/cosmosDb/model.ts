@@ -1,13 +1,12 @@
 import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
 
-export interface ISaveCosmosDbSettingsAction {
-  type: AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS;
+export interface ISaveCosmosDbAction {
+  type: AZURE_TYPEKEYS.SAVE_COSMOS_DB;
   payload: ISelectedCosmosService;
 }
 
-export interface IRemoveCosmosDbSettingsAction {
-  type: AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE;
-  payload: number;
+export interface IRemoveCosmosDbAction {
+  type: AZURE_TYPEKEYS.REMOVE_COSMOS_DB;
 }
 
 export interface ISelectedCosmosService {

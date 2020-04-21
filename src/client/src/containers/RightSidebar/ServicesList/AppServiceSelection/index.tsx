@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { removeAppServiceSettingsAction } from "../../../../store/userSelection/services/appService/action";
+import { removeAppServiceAction } from "../../../../store/userSelection/services/appService/action";
 import { AppContext } from "../../../../AppContext";
 import { openAppServiceModalAction } from "../../../../store/navigation/modals/action";
 import messages from "./messages";
@@ -57,7 +57,7 @@ const AppServiceSelection = ({
             key={appServiceSelection.selection.siteName}
             text={appServiceSelection.selection.siteName}
             withIndent={true}
-            handleCloseClick={()=> dispatch(removeAppServiceSettingsAction())}
+            handleCloseClick={()=> dispatch(removeAppServiceAction())}
             idx={1}
           />
         </React.Fragment>

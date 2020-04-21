@@ -1,17 +1,12 @@
 import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
 
-export interface ISaveAppServiceSettingsAction {
-  type: AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS;
+export interface ISaveAppServiceAction {
+  type: AZURE_TYPEKEYS.SAVE_APP_SERVICE;
   payload: ISelectedAppService;
 }
 
-export interface IRemoveAppServiceSettingsAction {
-  type: AZURE_TYPEKEYS.REMOVE_APP_SERVICE_SETTINGS;
-}
-
-export interface IAvailability {
-  isSiteNameAvailable: boolean;
-  message: string;
+export interface IRemoveAppServiceAction {
+  type: AZURE_TYPEKEYS.REMOVE_APP_SERVICE;
 }
 
 export interface ISelectedAppService {

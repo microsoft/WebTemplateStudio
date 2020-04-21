@@ -17,7 +17,7 @@ import { ISelectedAppService } from "../../store/userSelection/services/appServi
 import { getAppServiceSelectionSelector } from "../../store/userSelection/services/appService/selector";
 import classNames from "classnames";
 import { useState } from "react";
-import { saveAppServiceSettingsAction } from "../../store/userSelection/services/appService/action";
+import { saveAppServiceAction } from "../../store/userSelection/services/appService/action";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import LocationSelection from "../../components/LocationSelection";
@@ -84,7 +84,7 @@ const AppServiceModal = ({ intl }: Props) => {
       siteName: appName,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
     };
-    dispatch(saveAppServiceSettingsAction(appServiceSelection));
+    dispatch(saveAppServiceAction(appServiceSelection));
   };
 
   return (

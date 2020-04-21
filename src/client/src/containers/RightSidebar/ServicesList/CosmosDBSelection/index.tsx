@@ -9,7 +9,7 @@ import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { removeCosmosSelectionAction } from "../../../../store/userSelection/services/cosmosDb/action";
+import { removeCosmosDbAction } from "../../../../store/userSelection/services/cosmosDb/action";
 import { AppContext } from "../../../../AppContext";
 import messages from "./messages";
 
@@ -58,7 +58,7 @@ const CosmosDBSelection = ({
                 key={cosmosSelection.selection.accountName}
                 text={cosmosSelection.selection.accountName}
                 withIndent={true}
-                handleCloseClick={(selectionIndex: number)=> dispatch(removeCosmosSelectionAction(selectionIndex))}
+                handleCloseClick={()=> dispatch(removeCosmosDbAction())}
                 idx={1}
               />
         </React.Fragment>

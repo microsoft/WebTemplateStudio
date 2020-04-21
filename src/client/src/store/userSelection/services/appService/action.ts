@@ -1,14 +1,12 @@
 import { ISelectedAppService } from "./model";
-import { ISaveAppServiceSettingsAction, IRemoveAppServiceSettingsAction } from "./model";
+import { ISaveAppServiceAction, IRemoveAppServiceAction } from "./model";
 import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
 
-export const saveAppServiceSettingsAction = (
-  appServiceSettings: ISelectedAppService
-): ISaveAppServiceSettingsAction => ({
-  type: AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS,
-  payload: appServiceSettings
+export const saveAppServiceAction = (appService: ISelectedAppService): ISaveAppServiceAction => ({
+  type: AZURE_TYPEKEYS.SAVE_APP_SERVICE,
+  payload: appService,
 });
 
-export const removeAppServiceSettingsAction = (): IRemoveAppServiceSettingsAction => ({
-  type: AZURE_TYPEKEYS.REMOVE_APP_SERVICE_SETTINGS
+export const removeAppServiceAction = (): IRemoveAppServiceAction => ({
+  type: AZURE_TYPEKEYS.REMOVE_APP_SERVICE,
 });

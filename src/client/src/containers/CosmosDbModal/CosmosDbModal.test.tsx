@@ -10,7 +10,7 @@ import messages from "./messages";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
 import { closeModalAction } from "../../store/navigation/modals/action";
-import { saveCosmosDbSettingsAction } from "../../store/userSelection/services/cosmosDb/action";
+import { saveCosmosDbAction } from "../../store/userSelection/services/cosmosDb/action";
 import { ISelectedCosmosService } from "../../store/userSelection/services/cosmosDb/model";
 
 jest.mock("../../components/SubscriptionSelection", () => {
@@ -59,11 +59,11 @@ jest.mock("../../store/navigation/modals/action", () => {
 });
 
 jest.mock("../../store/userSelection/services/cosmosDb/action", () => {
-  const saveCosmosDbSettingsAction = jest.fn((cosmosDbSettings: ISelectedCosmosService) => ({
-    type: "WTS/azure/SAVE_COSMOS_DB_RESOURCE_SETTINGS",
+  const saveCosmosDbAction = jest.fn((cosmosDbSettings: ISelectedCosmosService) => ({
+    type: "WTS/azure/SAVE_COSMOS_DB",
     payload: cosmosDbSettings,
   }));
-  return { saveCosmosDbSettingsAction };
+  return { saveCosmosDbAction };
 });
 
 describe("CosmosDbModal", () => {
@@ -145,7 +145,7 @@ describe("CosmosDbModal", () => {
       const saveButton = getByText(intl.formatMessage(messages.save));
       expect(saveButton).toBeEnabled();
       fireEvent.click(saveButton);
-      expect(saveCosmosDbSettingsAction).toBeCalled();
+      expect(saveCosmosDbAction).toBeCalled();
     });
   });
 

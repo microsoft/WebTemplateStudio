@@ -17,7 +17,7 @@ import { getCosmosDbSelectionSelector } from "../../store/userSelection/services
 import classNames from "classnames";
 import { useState } from "react";
 import { closeModalAction } from "../../store/navigation/modals/action";
-import { saveCosmosDbSettingsAction } from "../../store/userSelection/services/cosmosDb/action";
+import { saveCosmosDbAction } from "../../store/userSelection/services/cosmosDb/action";
 import { sendTelemetry } from "../../utils/extensionService/extensionService";
 import LocationSelection from "../../components/LocationSelection";
 import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
@@ -87,7 +87,7 @@ const CosmosModal = ({ intl }: Props) => {
       api,
       internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
     };
-    dispatch(saveCosmosDbSettingsAction(cosmosSelection));
+    dispatch(saveCosmosDbAction(cosmosSelection));
   };
 
   return (
