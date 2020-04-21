@@ -60,9 +60,12 @@ const DraggablePage = ({
     const hasFocusOnLasPage = selectedPages.length>1 && !page.isDirty && selectedPages.length === idx;
     if (hasFocusOnLasPage){
       setFocus();
-      setSelect();
       moveDownScroll();
       page.isDirty = true;
+      setTimeout(()=>{
+        const node: any = document.getElementsByClassName("focus-visible")![0];
+        node.select();
+      },200);
     }
   },[selectedPages]);
 
@@ -73,10 +76,6 @@ const DraggablePage = ({
   const setFocus = () =>{
     const node = inputRef.current!
     node.focus();
-  }
-  const setSelect = () =>{
-    const node = inputRef.current!
-    node.select();
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
