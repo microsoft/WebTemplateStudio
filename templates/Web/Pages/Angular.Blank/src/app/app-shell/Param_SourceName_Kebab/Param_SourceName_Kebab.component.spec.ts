@@ -1,19 +1,19 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AngularBlankComponent } from './Param_SourceName_Kebab.component';
+import { Param_SourceName_PascalComponent } from './Param_SourceName_Kebab.component';
 
-describe('AngularBlankComponent', () => {
-  let component: AngularBlankComponent;
-  let fixture: ComponentFixture<AngularBlankComponent>;
+describe('Param_SourceName_PascalComponent', () => {
+  let component: Param_SourceName_PascalComponent;
+  let fixture: ComponentFixture<Param_SourceName_PascalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AngularBlankComponent]
+      declarations: [Param_SourceName_PascalComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AngularBlankComponent);
+    fixture = TestBed.createComponent(Param_SourceName_PascalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

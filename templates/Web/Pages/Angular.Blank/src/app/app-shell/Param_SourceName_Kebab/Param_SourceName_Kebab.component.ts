@@ -5,7 +5,7 @@
   templateUrl: './Param_SourceName_Kebab.component.html',
   styleUrls: ['./Param_SourceName_Kebab.component.css']
 })
-export class AngularBlankComponent implements OnInit {
+export class Param_SourceName_PascalComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}

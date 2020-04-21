@@ -1,12 +1,12 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AngularBlankComponent } from './Param_SourceName_Kebab.component';
+import { Param_SourceName_PascalComponent } from './Param_SourceName_Kebab.component';
 import { Param_SourceName_PascalRoutingModule } from './Param_SourceName_Kebab-routing.module';
 
 
 @NgModule({
-  declarations: [AngularBlankComponent],
+  declarations: [Param_SourceName_PascalComponent],
   imports: [
     CommonModule,
     Param_SourceName_PascalRoutingModule

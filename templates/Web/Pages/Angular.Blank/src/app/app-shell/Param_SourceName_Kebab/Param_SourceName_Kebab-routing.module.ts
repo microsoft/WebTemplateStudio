@@ -1,12 +1,12 @@
 ﻿import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AngularBlankComponent } from './Param_SourceName_Kebab.component';
+import { Param_SourceName_PascalComponent } from './Param_SourceName_Kebab.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AngularBlankComponent
+    component: Param_SourceName_PascalComponent
   }
 ];
 
