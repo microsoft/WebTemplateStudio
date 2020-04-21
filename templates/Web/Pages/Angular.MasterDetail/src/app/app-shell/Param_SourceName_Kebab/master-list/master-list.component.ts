@@ -6,7 +6,7 @@ import { ISampleOrder } from '../Param_SourceName_Kebab.model';
   templateUrl: './master-list.component.html',
   styleUrls: ['./master-list.component.css']
 })
-export class MasterList implements OnInit {
+export class MasterListComponent implements OnInit {
   @Input() sampleOrder: ISampleOrder;
   @Output() itemClick = new EventEmitter<ISampleOrder>();
 

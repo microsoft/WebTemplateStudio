@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { AngularGridService } from './Param_SourceName_Kebab.service';
-import { IAngularGridTextItem } from './Param_SourceName_Kebab.model';
+import { Param_SourceName_PascalService } from './Param_SourceName_Kebab.service';
+import { IParam_SourceName_PascalTextItem } from './Param_SourceName_Kebab.model';
 import {catchError, map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 
@@ -10,13 +10,13 @@ import {Observable, of} from 'rxjs';
   templateUrl: './Param_SourceName_Kebab.component.html',
   styleUrls: ['./Param_SourceName_Kebab.component.css']
 })
-export class AngularGridComponent implements OnInit {
+export class Param_SourceName_PascalComponent implements OnInit {
   greyBoxUrl = '../../../assets/GreyBox.svg';
   warningMessageText = '';
   warningMessageOpen = false;
-  gridItems$: Observable<IAngularGridTextItem[]>;
+  gridItems$: Observable<IParam_SourceName_PascalTextItem[]>;
 
-  constructor(private gridService: AngularGridService) {}
+  constructor(private gridService: Param_SourceName_PascalService) {}
 
   ngOnInit() {
     this.gridItems$ = this.gridService.getGridItems().pipe(catchError((error) => {

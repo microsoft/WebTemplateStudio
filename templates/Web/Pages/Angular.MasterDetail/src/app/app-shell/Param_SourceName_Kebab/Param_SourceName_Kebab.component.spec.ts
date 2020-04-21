@@ -1,24 +1,24 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { AngularMasterDetailComponent } from './Param_SourceName_Kebab.component';
+import { Param_SourceName_PascalComponent } from './Param_SourceName_Kebab.component';
 import { MasterList } from './master-list/master-list.component';
 import { PageComponent } from './page/page.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 
 describe('MasterDetailComponent', () => {
-  let component: AngularMasterDetailComponent;
-  let fixture: ComponentFixture<AngularMasterDetailComponent>;
+  let component: Param_SourceName_PascalComponent;
+  let fixture: ComponentFixture<Param_SourceName_PascalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AngularMasterDetailComponent, MasterList, PageComponent],
+      declarations: [Param_SourceName_PascalComponent, MasterList, PageComponent],
       imports: [WarningMessageModule, HttpClientTestingModule]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AngularMasterDetailComponent);
+    fixture = TestBed.createComponent(Param_SourceName_PascalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

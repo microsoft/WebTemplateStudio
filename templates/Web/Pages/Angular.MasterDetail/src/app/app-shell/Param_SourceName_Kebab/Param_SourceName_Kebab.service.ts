@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import { ISampleOrder } from './Param_SourceName_Kebab.model';
 
 @Injectable({providedIn: 'root'})
-export class AngularMasterDetailService {
+export class Param_SourceName_PascalService {
   private listUrl = environment.endpoint.masterdetail;
 
   constructor(private http: HttpClient) {}

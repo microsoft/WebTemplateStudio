@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, Input } from '@angular/core';
-import { IAngularGridTextItem } from '../Param_SourceName_Kebab.model';
+import { IParam_SourceName_PascalTextItem } from '../Param_SourceName_Kebab.model';
 
 @Component({
   selector: 'app-grid-item',
@@ -8,7 +8,7 @@ import { IAngularGridTextItem } from '../Param_SourceName_Kebab.model';
 })
 export class GridItemComponent implements OnInit {
   @Input() key: number;
-  @Input() gridItem: IAngularGridTextItem;
+  @Input() gridItem: IParam_SourceName_PascalTextItem;
 
   constructor() {}
 

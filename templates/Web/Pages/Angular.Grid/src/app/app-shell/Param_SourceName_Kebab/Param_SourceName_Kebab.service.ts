@@ -4,10 +4,10 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { IAngularGridTextItem } from './Param_SourceName_Kebab.model';
+import { IParam_SourceName_PascalTextItem } from './Param_SourceName_Kebab.model';
 
 @Injectable({providedIn: 'root'})
-export class AngularGridService {
+export class Param_SourceName_PascalService {
   private listUrl = environment.endpoint.grid;
 
   constructor(private http: HttpClient) {}
@@ -28,9 +28,9 @@ export class AngularGridService {
     return throwError('Something bad happened; please try again later.');
   }
 
-  getGridItems(): Observable<IAngularGridTextItem[]> {
+  getGridItems(): Observable<IParam_SourceName_PascalTextItem[]> {
     return this.http
-      .get<IAngularGridTextItem[]>(this.listUrl)
+      .get<IParam_SourceName_PascalTextItem[]>(this.listUrl)
       .pipe(catchError(this.handleError));
   }
 }

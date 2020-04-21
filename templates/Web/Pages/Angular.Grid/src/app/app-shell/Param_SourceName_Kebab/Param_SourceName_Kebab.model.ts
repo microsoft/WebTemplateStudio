@@ -1,4 +1,4 @@
-export interface IAngularGridTextItem {
+export interface IParam_SourceName_PascalTextItem {
   id: number;
   longDescription: string;
   orderDate: Date;

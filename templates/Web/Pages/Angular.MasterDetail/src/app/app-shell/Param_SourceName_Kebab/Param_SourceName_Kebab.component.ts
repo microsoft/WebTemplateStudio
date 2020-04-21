@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { AngularMasterDetailService } from './Param_SourceName_Kebab.service';
+import { Param_SourceName_PascalService } from './Param_SourceName_Kebab.service';
 import { ISampleOrder } from './Param_SourceName_Kebab.model';
 import {catchError, map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
@@ -10,14 +10,14 @@ import {Observable, of} from 'rxjs';
   templateUrl: './Param_SourceName_Kebab.component.html',
   styleUrls: ['./Param_SourceName_Kebab.component.css']
 })
-export class AngularMasterDetailComponent implements OnInit {
+export class Param_SourceName_PascalComponent implements OnInit {
   greyAvatarUrl = '../../../assets/GreyAvatar.svg';
   warningMessageText = '';
   warningMessageOpen = false;
   currentSampleOrder: ISampleOrder;
   sampleOrders$: Observable<ISampleOrder[]>;
 
-  constructor(private masterDetailService: AngularMasterDetailService) {}
+  constructor(private masterDetailService: Param_SourceName_PascalService) {}
 
   ngOnInit() {
     this.sampleOrders$ = this.masterDetailService.getMasterDetailItems().pipe(catchError((error) => {
