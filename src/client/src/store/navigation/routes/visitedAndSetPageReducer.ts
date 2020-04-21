@@ -1,7 +1,7 @@
 import { ROUTES } from "../../../utils/constants";
-import { WIZARD_INFO_TYPEKEYS } from "../../typeKeys";
-import WizardInfoType from "../../templates/templatesType";
-import { IRoutes } from "./model";
+import { IRoutes } from "../../userSelection/pages/model";
+import { NAVIGATION_ROUTES_TYPEKEYS } from "../typeKeys";
+import RootAction from "../../ActionType";
 
 const initialState = {
   [ROUTES.NEW_PROJECT]: true,
@@ -13,16 +13,16 @@ const initialState = {
 
 export const isVisited = (
   state: IRoutes = initialState,
-  action: WizardInfoType
+  action: RootAction
 ) => {
   switch (action.type) {
-    case WIZARD_INFO_TYPEKEYS.SET_VISITED_WIZARD_PAGE:
+    case NAVIGATION_ROUTES_TYPEKEYS.SET_VISITED_WIZARD_PAGE:
       const newUserSelectionState = {
         ...state,
         [action.payload]: true
       };
       return newUserSelectionState;
-    case WIZARD_INFO_TYPEKEYS.RESET_VISITED_WIZARD_PAGE:
+    case NAVIGATION_ROUTES_TYPEKEYS.RESET_VISITED_WIZARD_PAGE:
         return initialState;
     default:
       return state;
@@ -31,10 +31,10 @@ export const isVisited = (
 
 export const selected = (
   state = "/",
-  action: WizardInfoType
+  action: RootAction
 ) => {
   switch (action.type) {
-    case WIZARD_INFO_TYPEKEYS.SET_PAGE_WIZARD_PAGE:
+    case NAVIGATION_ROUTES_TYPEKEYS.SET_PAGE_WIZARD_PAGE:
       return action.payload;
     default:
       return state;

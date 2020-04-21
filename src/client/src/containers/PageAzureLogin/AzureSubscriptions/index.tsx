@@ -4,8 +4,8 @@ import * as React from "react";
 import { connect, useDispatch } from "react-redux";
 import Card from "../../../components/Card";
 import styles from "./styles.module.css";
-import * as ModalActions from "../../../store/modals/action";
-import { isCosmosDbModalOpenSelector } from "../../../store/modals/selector";
+import * as ModalActions from "../../../store/navigation/modals/action";
+import { isCosmosDbModalOpenSelector } from "../../../store/navigation/modals/selector";
 import { WIZARD_CONTENT_INTERNAL_NAMES, ROUTES } from "../../../utils/constants";
 import azureServiceOptions from "../../../mockData/azureServiceOptions";
 import { servicesEnum } from "../../../mockData/azureServiceOptions";
@@ -18,7 +18,7 @@ import {
 import { AppState } from "../../../store/combineReducers";
 import { isAppServiceSelectedSelector } from "../../../store/azureProfileData/appService/selector";
 import messages from "./messages";
-import { setPageWizardPageAction, setDetailPageAction } from "../../../store/config/pages/action";
+import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 
 interface IAzureLoginProps {
   isLoggedIn: boolean;

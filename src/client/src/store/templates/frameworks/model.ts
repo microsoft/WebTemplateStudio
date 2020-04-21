@@ -1,5 +1,5 @@
 import { IOption } from "../../../types/option";
-import { TEMPLATES_TYPEKEYS } from "../../typeKeys";
+import { TEMPLATES_TYPEKEYS } from "../templateTypeKeys";
 
 export interface IUpdateFrameworkActionTypeAction {
   type: TEMPLATES_TYPEKEYS.UPDATE_FRAMEWORK;

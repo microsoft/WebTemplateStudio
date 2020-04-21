@@ -15,7 +15,7 @@ import { AppState } from "./store/combineReducers";
 import { IOption } from "./types/option";
 import Loadable from "react-loadable";
 import PageDetails from "./containers/PageDetails";
-import { MODAL_TYPES } from "./store/modals/typeKeys";
+import { NAVIGATION_MODAL_TYPES } from "./store/navigation/typeKeys";
 import RightSidebar from "./containers/RightSidebar";
 import TopNavBar from "./components/TopNavBar";
 import { setOutputPathAction } from "./store/userSelection/app/action";
@@ -122,10 +122,10 @@ const App = (props: Props) => {
       {isLoaded && (<TopNavBar  />)}
 
       {isLoaded && (<div className={appStyles.container}>
-        {(modalState.modalType === MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
-        {(modalState.modalType === MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
-        {(modalState.modalType === MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
-        {(modalState.modalType === MODAL_TYPES.GEN_MODAL) && (<GenerationModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.GEN_MODAL) && (<GenerationModal/>)}
 
         <main
           className={classnames(appStyles.centerView, {
@@ -168,8 +168,8 @@ const App = (props: Props) => {
 
 const mapStateToProps = (state: AppState): IStateProps => ({
   frontendOptions: state.templates.frontendOptions,
-  modalState: state.modals.openModal,
-  selectedRoute : state.wizardRoutes.selected,
+  modalState: state.navigation.modals.openModal,
+  selectedRoute : state.navigation.routes.selected,
 });
 
 export default

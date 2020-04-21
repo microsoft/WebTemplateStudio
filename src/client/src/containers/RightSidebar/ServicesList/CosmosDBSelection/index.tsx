@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import SidebarItem from "../SidebarItem";
 import { ICosmosDB } from "../../../../store/azureProfileData/cosmosDb/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
-import { openCosmosDbModalAction } from "../../../../store/modals/action";
+import { openCosmosDbModalAction } from "../../../../store/navigation/modals/action";
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";

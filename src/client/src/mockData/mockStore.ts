@@ -1,7 +1,7 @@
 import { ISelected } from "../types/selected";
 import { FormattedMessage } from "react-intl";
 import { AppState } from "../store/combineReducers";
-import { ModalType } from "../store/modals/typeKeys";
+import { ModalType } from "../store/navigation/typeKeys";
 import { ROUTES } from "../utils/constants";
 
 export const getISelected = () => {
@@ -130,21 +130,23 @@ export const getInitialState = (): AppState => {
         resourceGroups: []
       }
     },
-    modals: {
-      openModal: {
-        modalType: null,
-        modalData: null
-      }
-    },
-    wizardRoutes: {
-      isVisited: {
-        '/': true,
-        '/SelectFrameworks': false,
-        '/SelectPages': false,
-        '/AzureLogin': false,
-        '/ReviewAndGenerate': false
+    navigation:{
+      modals: {
+        openModal: {
+          modalType: null,
+          modalData: null
+        }
       },
-      selected: '/'
+      routes: {
+        isVisited: {
+          '/': true,
+          '/SelectFrameworks': false,
+          '/SelectPages': false,
+          '/AzureLogin': false,
+          '/ReviewAndGenerate': false
+        },
+        selected: '/'
+      }
     }
   };
   return initialState;
@@ -355,15 +357,15 @@ export const setFrontendFramework = (store: AppState, internalName: string) => {
 }
 
 export const setOpenModal = (store: AppState, modalType: ModalType) => {
-  store.modals.openModal.modalType = modalType;
+  store.navigation.modals.openModal.modalType = modalType;
 }
 
 export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
-  store.wizardRoutes.selected = seletedRoute;
+  store.navigation.routes.selected = seletedRoute;
   switch (seletedRoute) 
-  { 
+  {
     case ROUTES.SELECT_FRAMEWORKS:
-      store.wizardRoutes.isVisited = {
+      store.navigation.routes.isVisited = {
         '/': true,
         '/SelectFrameworks': true,
         '/SelectPages': false,
@@ -371,7 +373,7 @@ export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
         '/ReviewAndGenerate': false
       };
     case ROUTES.REVIEW_AND_GENERATE:
-      store.wizardRoutes.isVisited = {
+      store.navigation.routes.isVisited = {
         '/': true,
         '/SelectFrameworks': true,
         '/SelectPages': true,

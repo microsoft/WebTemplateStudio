@@ -1,4 +1,4 @@
-import { CONFIG_TYPEKEYS } from "../../typeKeys";
+import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 
 export interface IResetWizardAction {
     type: CONFIG_TYPEKEYS.RESET_WIZARD;
