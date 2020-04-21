@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { AngularListService } from './Param_SourceName_Kebab.service';
-import { IAngularListItem } from './Param_SourceName_Kebab.model';
+import { Param_SourceName_PascalService } from './Param_SourceName_Kebab.service';
+import { IParam_SourceName_PascalItem } from './Param_SourceName_Kebab.model';
 import { Subject, Observable } from 'rxjs';
 
 @Component({
@@ -9,13 +9,13 @@ import { Subject, Observable } from 'rxjs';
   templateUrl: './Param_SourceName_Kebab.component.html',
   styleUrls: ['./Param_SourceName_Kebab.component.css']
 })
-export class AngularListComponent implements OnInit {
-  listItems$: Observable<IAngularListItem[]> = new Observable();
-  private dataSource: Subject<IAngularListItem[]> = new Subject();
+export class Param_SourceName_PascalComponent implements OnInit {
+  listItems$: Observable<IParam_SourceName_PascalItem[]> = new Observable();
+  private dataSource: Subject<IParam_SourceName_PascalItem[]> = new Subject();
   warningMessageText = '';
   warningMessageOpen = false;
 
-  constructor(private listService: AngularListService) {}
+  constructor(private listService: Param_SourceName_PascalService) {}
 
   ngOnInit() {
     this.listItems$ = this.dataSource.asObservable();
@@ -24,7 +24,7 @@ export class AngularListComponent implements OnInit {
 
   loadItems() {
     this.listService.getListItems().subscribe(
-      (listItem: IAngularListItem[]) => this.dataSource.next(listItem),
+      (listItem: IParam_SourceName_PascalItem[]) => this.dataSource.next(listItem),
       error => this.handleError(`Request to get list items failed: ${error}`)
     );
   }

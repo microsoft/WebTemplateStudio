@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IAngularListItem } from '../Param_SourceName_Kebab.model';
+import { IParam_SourceName_PascalItem } from '../Param_SourceName_Kebab.model';
 
 @Component({
   selector: 'app-list-item',
@@ -9,7 +9,7 @@ import { IAngularListItem } from '../Param_SourceName_Kebab.model';
 export class ListItemComponent implements OnInit {
   // tslint:disable-next-line:variable-name
   @Input() _id: number;
-  @Input() listItem: IAngularListItem;
+  @Input() listItem: IParam_SourceName_PascalItem;
   @Output() deleteItem = new EventEmitter<number>();
 
   constructor() {}
