@@ -1,4 +1,4 @@
-import { AZURE_TYPEKEYS } from "../../azureProfileData/typeKeys";
+import { SERVICES_TYPEKEYS } from "../../userSelection/services/typeKeys";
 import {
   NAVIGATION_MODAL_TYPEKEYS,
   ModalState
@@ -14,8 +14,8 @@ const openModal = (state: ModalState = initialState, action: RootAction) => {
   switch (action.type) {
     case NAVIGATION_MODAL_TYPEKEYS.OPEN_MODAL:
       return action.payload;
-    case AZURE_TYPEKEYS.SAVE_COSMOS_DB:
-    case AZURE_TYPEKEYS.SAVE_APP_SERVICE:
+    case SERVICES_TYPEKEYS.SAVE_COSMOS_DB:
+    case SERVICES_TYPEKEYS.SAVE_APP_SERVICE:
     case NAVIGATION_MODAL_TYPEKEYS.CLOSE_MODALS:
       return initialState;
     default:

@@ -1,4 +1,5 @@
 import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
+import { SERVICES_TYPEKEYS } from "../typeKeys";
 import { IAppService } from "./model";
 import RootAction from "../../../ActionType";
 import { CONFIG_TYPEKEYS } from "../../../config/configTypeKeys";
@@ -11,9 +12,9 @@ const appServiceReducer = (state: IAppService = initialState, action: RootAction
   switch (action.type) {
     case CONFIG_TYPEKEYS.RESET_WIZARD:
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
-    case AZURE_TYPEKEYS.REMOVE_APP_SERVICE:
+    case SERVICES_TYPEKEYS.REMOVE_APP_SERVICE:
       return initialState;
-    case AZURE_TYPEKEYS.SAVE_APP_SERVICE:
+    case SERVICES_TYPEKEYS.SAVE_APP_SERVICE:
       return {
         ...state,
         selection: {

@@ -1,12 +1,12 @@
-import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
+import { SERVICES_TYPEKEYS } from "../typeKeys";
 
 export interface ISaveAppServiceAction {
-  type: AZURE_TYPEKEYS.SAVE_APP_SERVICE;
+  type: SERVICES_TYPEKEYS.SAVE_APP_SERVICE;
   payload: ISelectedAppService;
 }
 
 export interface IRemoveAppServiceAction {
-  type: AZURE_TYPEKEYS.REMOVE_APP_SERVICE;
+  type: SERVICES_TYPEKEYS.REMOVE_APP_SERVICE;
 }
 
 export interface ISelectedAppService {
