@@ -36,7 +36,6 @@ export const getInitialState = (): AppState => {
         originRoute:''
       },
       previewStatus: false,
-      isValidatingName: false,
       validations: {
         itemNameValidationConfig: {
           regexs: [],

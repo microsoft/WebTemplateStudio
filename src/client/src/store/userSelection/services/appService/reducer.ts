@@ -1,4 +1,4 @@
-import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
+import { AZURE_TYPEKEYS } from "../../../config/azure/typeKeys";
 import { SERVICES_TYPEKEYS } from "../typeKeys";
 import { IAppService } from "./model";
 import RootAction from "../../../ActionType";

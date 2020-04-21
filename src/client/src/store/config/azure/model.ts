@@ -1,4 +1,4 @@
-import { AZURE_TYPEKEYS } from "../typeKeys";
+import { AZURE_TYPEKEYS } from "./typeKeys";
 
 export interface ILoginToAzureAction {
   type: AZURE_TYPEKEYS.LOG_IN_TO_AZURE;

@@ -20,7 +20,7 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
 
   if (action.type === CONFIG_TYPEKEYS.RESET_WIZARD) {
     const { backendOptions, frontendOptions, pageOptions } = state!.templates;
-    const { previewStatus, detailsPage, validations, isValidatingName, versions, azureProfileData } = state!.config;
+    const { previewStatus, detailsPage, validations, versions, azureProfileData } = state!.config;
 
     passedState = {
       navigation: {
@@ -43,7 +43,6 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
         previewStatus,
         validations,
         detailsPage,
-        isValidatingName,
         versions,
         azureProfileData
       },

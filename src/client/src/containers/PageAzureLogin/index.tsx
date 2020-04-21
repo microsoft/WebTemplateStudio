@@ -16,7 +16,7 @@ import Title from "../../components/Title";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
-import { logOutAzureAction } from "../../store/azureProfileData/login/action";
+import { logOutAzureAction } from "../../store/config/azure/action";
 import { AppContext } from "../../AppContext";
 import { isLoggedInSelector } from "../../store/config/azure/selector";
 
