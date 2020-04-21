@@ -9,14 +9,14 @@ import {
 } from "../../../utils/constants";
 import { ConfigState } from "../combineReducers";
 import { AppState } from "../../combineReducers";
-import { ServiceState } from "../../azureProfileData";
+import { ServiceState } from "../../userSelection/services/combineReducers";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {
   [AZURE.COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
   [AZURE.COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
 };
 
-const getServices = (state: AppState): ServiceState => state.services;
+const getServices = (state: AppState): ServiceState => state.userSelection.services;
 const getConfigSelector = (state: AppState): ConfigState => state.config;
 
 const getProjectType = (config: ConfigState): string => {

@@ -91,23 +91,23 @@ export const getInitialState = (): AppState => {
           error: "" as unknown as FormattedMessage.MessageDescriptor,
           isDirty: true
         }
-      }
-    },
-    services: {
-      cosmosDB: {
-        accountNameAvailability: {
-          isAccountNameAvailable: false,
-          message: 'Account name unavailable'
-        },
-        selection: null
       },
-      appService: {
-        siteNameAvailability: {
-          isSiteNameAvailable: false,
-          message: 'App name unavailable'
+      services: {
+        cosmosDB: {
+          accountNameAvailability: {
+            isAccountNameAvailable: false,
+            message: 'Account name unavailable'
+          },
+          selection: null
         },
-        selection: null
-      }      
+        appService: {
+          siteNameAvailability: {
+            isSiteNameAvailable: false,
+            message: 'App name unavailable'
+          },
+          selection: null
+        }      
+      }
     },
     navigation:{
       modals: {

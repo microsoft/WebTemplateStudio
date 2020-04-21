@@ -1,11 +1,11 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { ServiceState } from "..";
+import { ServiceState } from "../../userSelection/services/combineReducers";
 import { AppState } from "../../combineReducers";
 import { ISelectedCosmosService } from "./model";
 
 const getServices = (state: AppState): ServiceState =>
-  state.services;
+  state.userSelection.services;
 
 const isCosmosDbSelected = (services: ServiceState): boolean => {
   return !_.isEmpty(services.cosmosDB.selection);

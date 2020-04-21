@@ -1,13 +1,13 @@
 import { createSelector } from "reselect";
 import { AppState } from "../combineReducers";
-import { ServiceState } from ".";
+import { ServiceState } from "../userSelection/services/combineReducers";
 import { isAppServiceSelectedSelector } from "./appService/selector";
 import { isCosmosResourceCreatedSelector } from "./cosmosDb/selector";
 
 const getState = (state: AppState): AppState => state;
 
 const getServicesSelector = (state: AppState): ServiceState =>
-  state.services;
+  state.userSelection.services;
 
 const hasServicesSelected = (state: AppState): boolean => {
   return (

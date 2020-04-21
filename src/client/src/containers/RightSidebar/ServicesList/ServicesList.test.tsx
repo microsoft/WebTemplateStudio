@@ -38,7 +38,7 @@ describe("ServicesList", () => {
   describe("When has not selected AppService in store", () => {
     beforeEach(() => {
       initialState = getInitialState();
-      initialState.services = {
+      initialState.userSelection.services = {
         appService: emptyAppService
       };
       initialState.vscode= mockVsCode
@@ -64,7 +64,7 @@ describe("ServicesList", () => {
     beforeEach(() => {
       const appService = { ...emptyAppService, selection: {} };
       initialState = getInitialState();
-      initialState.services = {
+      initialState.userSelection.services = {
         appService: appService
       };
       initialState.vscode = mockVsCode;
@@ -89,7 +89,7 @@ describe("ServicesList", () => {
   describe("When hasn not selected CosmosDB service in store", () => {
     beforeEach(() => {
       initialState = getInitialState();
-      initialState.services = {
+      initialState.userSelection.services = {
         cosmosDB: emptyCosmosDB
       };
       initialState.vscode = mockVsCode;
@@ -116,7 +116,7 @@ describe("ServicesList", () => {
       const cosmosDB = { ...emptyCosmosDB, selection: ["any"] };
 
       initialState = getInitialState();
-      initialState.services = { cosmosDB };
+      initialState.userSelection.services = { cosmosDB };
       initialState.vscode = mockVsCode;
 
       wrapper = mountWithIntl(

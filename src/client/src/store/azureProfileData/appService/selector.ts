@@ -1,11 +1,11 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { AppState } from "../../combineReducers";
-import { ServiceState } from "..";
+import { ServiceState } from "../../userSelection/services/combineReducers";
 import { ISelectedAppService } from "./model";
 
 const getServices = (state: AppState): ServiceState =>
-  state.services;
+  state.userSelection.services;
 
 const isAppServiceSelected = (services: ServiceState): boolean => {
   return !_.isEmpty(services.appService.selection);

@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import cosmosDB from "./cosmosDb/reducer";
-import appService from "./appService/reducer";
+import cosmosDB from "../../azureProfileData/cosmosDb/reducer";
+import appService from "../../azureProfileData/appService/reducer";
 
 const serviceReducer = combineReducers({
   cosmosDB,
