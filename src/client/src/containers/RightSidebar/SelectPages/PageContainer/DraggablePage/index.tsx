@@ -142,6 +142,7 @@ const DraggablePage = ({
                   }}
                   autoFocus={page.isDirty}
                   disabled={selectedPages.filter(selPage => selPage.title!==page.title && selPage.isValidTitle===false).length>0}
+                  ref={inputRef}
                 />
               )}
             </div>
