@@ -33,8 +33,8 @@ import { sendTelemetry, generateProject } from "../../utils/extensionService/ext
 import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
 import { rootSelector } from "../../store/userSelection/app/selector";
-import { isCosmosResourceCreatedSelector, getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
-import { isAppServiceSelectedSelector, getAppServiceSelectionSelector } from "../../store/azureProfileData/appService/selector";
+import { isCosmosResourceCreatedSelector, getCosmosDbSelectionSelector } from "../../store/userSelection/services/cosmosDb/selector";
+import { isAppServiceSelectedSelector, getAppServiceSelectionSelector } from "../../store/userSelection/services/appService/selector";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../store/userSelection/frameworks/action";
 import { FRONT_END_SELECTION, BACK_END_SELECTION } from "../PageNewProject/QuickStart/defaultSelection";
 

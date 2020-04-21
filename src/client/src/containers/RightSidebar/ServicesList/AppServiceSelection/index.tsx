@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import SidebarItem from "../SidebarItem";
-import { IAppService } from "../../../../store/azureProfileData/appService/model";
+import { IAppService } from "../../../../store/userSelection/services/appService/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { removeAppServiceSettingsAction } from "../../../../store/azureProfileData/appService/action";
+import { removeAppServiceSettingsAction } from "../../../../store/userSelection/services/appService/action";
 import { AppContext } from "../../../../AppContext";
 import { openAppServiceModalAction } from "../../../../store/navigation/modals/action";
 import messages from "./messages";

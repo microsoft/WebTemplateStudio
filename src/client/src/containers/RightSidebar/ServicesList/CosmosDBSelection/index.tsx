@@ -2,14 +2,14 @@ import _ from "lodash";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import SidebarItem from "../SidebarItem";
-import { ICosmosDB } from "../../../../store/azureProfileData/cosmosDb/model";
+import { ICosmosDB } from "../../../../store/userSelection/services/cosmosDb/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 import { openCosmosDbModalAction } from "../../../../store/navigation/modals/action";
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
+import { removeCosmosSelectionAction } from "../../../../store/userSelection/services/cosmosDb/action";
 import { AppContext } from "../../../../AppContext";
 import messages from "./messages";
 

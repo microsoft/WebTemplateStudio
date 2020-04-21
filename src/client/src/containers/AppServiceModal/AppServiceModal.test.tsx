@@ -10,8 +10,8 @@ import messages from "./messages";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
 import { closeModalAction } from "../../store/navigation/modals/action";
-import { saveAppServiceSettingsAction } from "../../store/azureProfileData/appService/action";
-import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
+import { saveAppServiceSettingsAction } from "../../store/userSelection/services/appService/action";
+import { ISelectedAppService } from "../../store/userSelection/services/appService/model";
 
 jest.mock("../../components/SubscriptionSelection", () => {
   return (props: any) => {
@@ -52,7 +52,7 @@ jest.mock("../../store/navigation/modals/action", () => {
   return { closeModalAction };
 });
 
-jest.mock("../../store/azureProfileData/appService/action", () => {
+jest.mock("../../store/userSelection/services/appService/action", () => {
   const saveAppServiceSettingsAction = jest.fn((appServiceSettings: ISelectedAppService) => ({
     type: "WTS/navigation/modals/CLOSE_MODALS",
     payload: appServiceSettings,

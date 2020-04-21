@@ -1,5 +1,5 @@
-import { AZURE_TYPEKEYS } from "../typeKeys";
-import { IAvailabilityFromExtensionAction } from "../azure/model";
+import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
+import { IAvailabilityFromExtensionAction } from "../../../azureProfileData/azure/model";
 import { FormattedMessage } from "react-intl";
 
 export interface ISaveCosmosDbSettingsAction {

@@ -1,5 +1,5 @@
-import { ISaveAppServiceSettingsAction, IRemoveAppServiceSettingsAction, ISetAppServiceSiteNameAvailabilityAction } from "./appService/model";
-import { ISaveCosmosDbSettingsAction, IRemoveCosmosDbSettingsAction, ISetCosmosAccountNameAvailabilityAction } from "./cosmosDb/model";
+import { ISaveAppServiceSettingsAction, IRemoveAppServiceSettingsAction, ISetAppServiceSiteNameAvailabilityAction } from "../userSelection/services/appService/model";
+import { ISaveCosmosDbSettingsAction, IRemoveCosmosDbSettingsAction, ISetCosmosAccountNameAvailabilityAction } from "../userSelection/services/cosmosDb/model";
 import { ILoginToAzureAction, ILogoutAction } from "./login/model";
 import { IAzureValidationStatusAction } from "./azure/model";
 

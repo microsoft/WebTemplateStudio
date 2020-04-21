@@ -1,6 +1,6 @@
-import { AZURE_TYPEKEYS } from "../typeKeys";
-import messages from "../../userSelection/app/wizardSelectionSelector/messages";
-import AzureActionType from "../azureActionType";
+import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
+import messages from "../../app/wizardSelectionSelector/messages";
+import AzureActionType from "../../../azureProfileData/azureActionType";
 import { ICosmosDB } from "./model";
 
 const initialState: ICosmosDB = {

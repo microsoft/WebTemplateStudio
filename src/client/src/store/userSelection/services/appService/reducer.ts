@@ -1,8 +1,8 @@
-import { AZURE_TYPEKEYS } from "../typeKeys";
-import messages from "../../userSelection/app/wizardSelectionSelector/messages";
+import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
+import messages from "../../app/wizardSelectionSelector/messages";
 import { IAppService } from "./model";
-import RootAction from "../../ActionType";
-import { CONFIG_TYPEKEYS } from "../../config/configTypeKeys";
+import RootAction from "../../../ActionType";
+import { CONFIG_TYPEKEYS } from "../../../config/configTypeKeys";
 
 const initialState: IAppService = {
   siteNameAvailability: {

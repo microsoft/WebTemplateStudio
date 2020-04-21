@@ -10,8 +10,8 @@ import messages from "./messages";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
 import { closeModalAction } from "../../store/navigation/modals/action";
-import { saveCosmosDbSettingsAction } from "../../store/azureProfileData/cosmosDb/action";
-import { ISelectedCosmosService } from "../../store/azureProfileData/cosmosDb/model";
+import { saveCosmosDbSettingsAction } from "../../store/userSelection/services/cosmosDb/action";
+import { ISelectedCosmosService } from "../../store/userSelection/services/cosmosDb/model";
 
 jest.mock("../../components/SubscriptionSelection", () => {
   return (props: any) => {
@@ -58,7 +58,7 @@ jest.mock("../../store/navigation/modals/action", () => {
   return { closeModalAction };
 });
 
-jest.mock("../../store/azureProfileData/cosmosDb/action", () => {
+jest.mock("../../store/userSelection/services/cosmosDb/action", () => {
   const saveCosmosDbSettingsAction = jest.fn((cosmosDbSettings: ISelectedCosmosService) => ({
     type: "WTS/azure/SAVE_COSMOS_DB_RESOURCE_SETTINGS",
     payload: cosmosDbSettings,

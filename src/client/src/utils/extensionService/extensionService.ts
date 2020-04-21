@@ -2,7 +2,7 @@ import { IVSCodeObject } from "../../types/vscode";
 import {
   EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES, PAYLOAD_MESSAGES_TEXT
 } from "../constants";
-import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
+import { ISelectedAppService } from "../../store/userSelection/services/appService/model";
 
 const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject, scopeId: number = Math.random())=>{
   const promise = new Promise<any>((resolve) => {

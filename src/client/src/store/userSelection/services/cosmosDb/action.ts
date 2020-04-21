@@ -1,5 +1,5 @@
 import { ISaveCosmosDbSettingsAction, IRemoveCosmosDbSettingsAction } from "./model";
-import { AZURE_TYPEKEYS } from "../typeKeys";
+import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
 
 export const saveCosmosDbSettingsAction = (
   cosmosDbSettings: any

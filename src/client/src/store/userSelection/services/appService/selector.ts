@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { createSelector } from "reselect";
-import { AppState } from "../../combineReducers";
-import { ServiceState } from "../../userSelection/services/combineReducers";
+import { AppState } from "../../../combineReducers";
+import { ServiceState } from "../combineReducers";
 import { ISelectedAppService } from "./model";
 
 const getServices = (state: AppState): ServiceState =>
