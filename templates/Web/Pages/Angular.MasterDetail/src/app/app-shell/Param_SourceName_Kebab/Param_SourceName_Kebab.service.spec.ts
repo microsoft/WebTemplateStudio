@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { Param_SourceName_PascalService } from './Param_SourceName_Kebab.service';
 
-describe('MasterDetailService', () => {
+describe('Param_SourceName_PascalService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]

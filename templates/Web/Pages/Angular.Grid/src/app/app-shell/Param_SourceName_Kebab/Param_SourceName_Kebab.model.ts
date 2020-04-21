@@ -1,4 +1,4 @@
-export interface IParam_SourceName_PascalTextItem {
+export interface IParam_SourceName_PascalItem {
   id: number;
   longDescription: string;
   orderDate: Date;

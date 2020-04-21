@@ -5,7 +5,7 @@ import { Param_SourceName_PascalComponent } from './Param_SourceName_Kebab.compo
 import { GridItemComponent } from './grid-item/grid-item.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 
-describe('GridComponent', () => {
+describe('Param_SourceName_PascalComponent', () => {
   let component: Param_SourceName_PascalComponent;
   let fixture: ComponentFixture<Param_SourceName_PascalComponent>;
 

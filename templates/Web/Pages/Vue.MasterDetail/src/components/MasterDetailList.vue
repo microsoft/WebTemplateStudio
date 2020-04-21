@@ -12,7 +12,7 @@
 <script>
 import imgGreyAvatar from '../assets/GreyAvatar.svg';
 export default {
-  name: "MasterDetailSideBarTab",
+  name: "MasterDetailList",
   props: {
     sampleOrder: {
       type: Object,

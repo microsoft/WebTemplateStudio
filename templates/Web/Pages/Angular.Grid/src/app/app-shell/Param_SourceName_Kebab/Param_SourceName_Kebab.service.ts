@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { IParam_SourceName_PascalTextItem } from './Param_SourceName_Kebab.model';
+import { IParam_SourceName_PascalItem } from './Param_SourceName_Kebab.model';
 
 @Injectable({providedIn: 'root'})
 export class Param_SourceName_PascalService {
@@ -28,9 +28,9 @@ export class Param_SourceName_PascalService {
     return throwError('Something bad happened; please try again later.');
   }
 
-  getGridItems(): Observable<IParam_SourceName_PascalTextItem[]> {
+  getGridItems(): Observable<IParam_SourceName_PascalItem[]> {
     return this.http
-      .get<IParam_SourceName_PascalTextItem[]>(this.listUrl)
+      .get<IParam_SourceName_PascalItem[]>(this.listUrl)
       .pipe(catchError(this.handleError));
   }
 }

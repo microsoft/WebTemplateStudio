@@ -1,18 +1,18 @@
 ﻿import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MasterList } from './master-list.component';
+import { MasterListComponent } from './master-list.component';
 
-describe('MasterList', () => {
-  let component: MasterList;
-  let fixture: ComponentFixture<MasterList>;
+describe('MasterListComponent', () => {
+  let component: MasterListComponent;
+  let fixture: ComponentFixture<MasterListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MasterList]
+      declarations: [MasterListComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MasterList);
+    fixture = TestBed.createComponent(MasterListComponent);
     component = fixture.componentInstance;
     component.sampleOrder = {
       title: '1',

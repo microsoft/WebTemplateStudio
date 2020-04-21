@@ -8,7 +8,7 @@ import { FormComponent } from './form/form.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 
-describe('ListComponent', () => {
+describe('Param_SourceName_PascalComponent', () => {
   let component: Param_SourceName_PascalComponent;
   let fixture: ComponentFixture<Param_SourceName_PascalComponent>;
 

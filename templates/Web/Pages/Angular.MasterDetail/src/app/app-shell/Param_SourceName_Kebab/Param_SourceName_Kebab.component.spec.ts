@@ -2,17 +2,17 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { Param_SourceName_PascalComponent } from './Param_SourceName_Kebab.component';
-import { MasterList } from './master-list/master-list.component';
-import { PageComponent } from './page/page.component';
+import { MasterListComponent } from './master-list/master-list.component';
+import { DetailComponent } from './detail/detail.component';
 import { WarningMessageModule } from '../../shared/warning-message/warning-message.module';
 
-describe('MasterDetailComponent', () => {
+describe('Param_SourceName_PascalComponent', () => {
   let component: Param_SourceName_PascalComponent;
   let fixture: ComponentFixture<Param_SourceName_PascalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [Param_SourceName_PascalComponent, MasterList, PageComponent],
+      declarations: [Param_SourceName_PascalComponent, MasterListComponent, DetailComponent],
       imports: [WarningMessageModule, HttpClientTestingModule]
     }).compileComponents();
   }));

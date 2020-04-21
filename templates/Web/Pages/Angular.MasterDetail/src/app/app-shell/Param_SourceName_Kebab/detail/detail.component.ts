@@ -3,10 +3,10 @@ import { ISampleOrder } from '../Param_SourceName_Kebab.model';
 
 @Component({
   selector: 'app-page',
-  templateUrl: './page.component.html',
-  styleUrls: ['./page.component.css']
+  templateUrl: './detail.component.html',
+  styleUrls: ['./detail.component.css']
 })
-export class PageComponent implements OnInit {
+export class DetailComponent implements OnInit {
   @Input() sampleOrder: ISampleOrder;
 
   constructor() {}
