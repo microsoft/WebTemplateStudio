@@ -1,4 +1,3 @@
-import _ from "lodash";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import SidebarItem from "../SidebarItem";
@@ -14,7 +13,7 @@ import { AppContext } from "../../../../AppContext";
 import messages from "./messages";
 
 interface IProps {
-  cosmosSelection: ICosmosDB;
+  cosmosSelection: ICosmosDB | null;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -38,7 +37,7 @@ const CosmosDBSelection = ({
   };
   return (
     <React.Fragment>
-      {cosmosSelection.selection && (
+      {cosmosSelection && (
         <React.Fragment>
           <div className={styles.headerContainer}>
             <div>{intl.formatMessage(messages.title)}</div>
@@ -55,8 +54,8 @@ const CosmosDBSelection = ({
           <SidebarItem
                 cosmosDB={true}
                 customInputStyle={styles.input}
-                key={cosmosSelection.selection.accountName}
-                text={cosmosSelection.selection.accountName}
+                key={cosmosSelection.accountName}
+                text={cosmosSelection.accountName}
                 withIndent={true}
                 handleCloseClick={()=> dispatch(removeCosmosDbAction())}
                 idx={1}

@@ -12,8 +12,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS, AZURE, EXTENSION_COMMANDS, SERVICE_KEYS, AzureResourceType } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
-import { ISelectedCosmosService } from "../../store/userSelection/services/cosmosDb/model";
-import { getCosmosDbSelectionSelector } from "../../store/userSelection/services/cosmosDb/selector";
+import { ICosmosDB } from "../../store/userSelection/services/cosmosDb/model";
+import { getCosmosDB } from "../../store/userSelection/services/servicesSelector";
 import classNames from "classnames";
 import { useState } from "react";
 import { closeModalAction } from "../../store/navigation/modals/action";
@@ -34,7 +34,7 @@ const CosmosModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
-  const cosmosInStore = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
+  const cosmosInStore = useSelector(getCosmosDB);
   const initialSubscription = cosmosInStore ? cosmosInStore.subscription : "";
   const initialAccountName = cosmosInStore ? cosmosInStore.accountName : "";
   const initialLocation = cosmosInStore ? cosmosInStore.location : AZURE.DEFAULT_LOCATION;
@@ -79,7 +79,7 @@ const CosmosModal = ({ intl }: Props) => {
   };
 
   const saveCosmosSelection = () => {
-    const cosmosSelection: ISelectedCosmosService = {
+    const cosmosSelection: ICosmosDB = {
       subscription,
       accountName,
       location,

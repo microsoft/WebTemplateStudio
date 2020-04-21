@@ -18,7 +18,7 @@ import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 
 import { AppState } from "../../store/combineReducers";
 import * as ModalActions from "../../store/navigation/modals/action";
-import { hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
+import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
 import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
 import { getIsVisitedRoutesSelector, IVisitedPages } from "../../store/config/config/wizardNavigationSelector";
@@ -29,7 +29,7 @@ const RightSidebar = (props: Props)=>{
   const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
   const [ isSidebarUserControlled, setIsSidebarUserControlled ] = React.useState(false);
 
-  const hasServices: boolean = useSelector((state: AppState) => hasServicesSelector(state));
+  const hasServices: boolean = useSelector(hasServicesSelector);
   const isRoutesVisited: IVisitedPages = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const wizardRoutes = useSelector((state: AppState) => state.navigation.routes);
   const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);

@@ -1,8 +1,8 @@
-import { ISelectedAppService } from "./model";
+import { IAppService } from "./model";
 import { ISaveAppServiceAction, IRemoveAppServiceAction } from "./model";
 import { SERVICES_TYPEKEYS } from "../typeKeys";
 
-export const saveAppServiceAction = (appService: ISelectedAppService): ISaveAppServiceAction => ({
+export const saveAppServiceAction = (appService: IAppService): ISaveAppServiceAction => ({
   type: SERVICES_TYPEKEYS.SAVE_APP_SERVICE,
   payload: appService,
 });

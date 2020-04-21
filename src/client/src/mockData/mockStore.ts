@@ -92,12 +92,8 @@ export const getInitialState = (): AppState => {
         }
       },
       services: {
-        cosmosDB: {
-          selection: null
-        },
-        appService: {
-          selection: null
-        }      
+        cosmosDB: null,
+        appService: null      
       }
     },
     navigation:{

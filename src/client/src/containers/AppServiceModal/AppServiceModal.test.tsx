@@ -11,7 +11,7 @@ import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { saveAppServiceAction } from "../../store/userSelection/services/appService/action";
-import { ISelectedAppService } from "../../store/userSelection/services/appService/model";
+import { IAppService } from "../../store/userSelection/services/appService/model";
 
 jest.mock("../../components/SubscriptionSelection", () => {
   return (props: any) => {
@@ -53,9 +53,9 @@ jest.mock("../../store/navigation/modals/action", () => {
 });
 
 jest.mock("../../store/userSelection/services/appService/action", () => {
-  const saveAppServiceAction = jest.fn((appServiceSettings: ISelectedAppService) => ({
+  const saveAppServiceAction = jest.fn((appService: IAppService) => ({
     type: "WTS/navigation/modals/CLOSE_MODALS",
-    payload: appServiceSettings,
+    payload: appService,
   }));
   return { saveAppServiceAction };
 });

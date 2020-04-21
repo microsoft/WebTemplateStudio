@@ -1,24 +1,24 @@
 import { createSelector } from "reselect";
 import { AppState } from "../../combineReducers";
-import { ServiceState } from "./combineReducers";
-import { isAppServiceSelectedSelector } from "./appService/selector";
-import { isCosmosResourceCreatedSelector } from "./cosmosDb/selector";
 
-const getState = (state: AppState): AppState => state;
-
-const getServicesSelector = (state: AppState): ServiceState =>
-  state.userSelection.services;
-
-const hasServicesSelected = (state: AppState): boolean => {
-  return (
-    isAppServiceSelectedSelector(state) ||
-    isCosmosResourceCreatedSelector(state)
-  );
-};
-
-const hasServicesSelector = createSelector(
-  getState,
-  hasServicesSelected
+const getServices = createSelector(
+  (state: AppState): AppState => state,
+  (s) => s.userSelection.services
 );
 
-export { getServicesSelector, hasServicesSelector };
+const getAppService = createSelector(
+  getServices,
+  (services) => services.appService
+)
+
+const getCosmosDB = createSelector(
+  getServices,
+  (services) => services.cosmosDB
+)
+const hasServices = createSelector(
+  getAppService,
+  getCosmosDB,
+  (appService, cosmosDB) => (appService !== null || cosmosDB !== null)
+)
+
+export { getServices, getAppService, getCosmosDB, hasServices };

@@ -34,12 +34,12 @@ export const getServicesSelector = createSelector(
   (services: ServiceState): ITemplateInfo[] => {
     const servicesInfo = [];
     if (
-      _.has(services, SERVICE_KEYS.COSMOS_DB) && services.cosmosDB.selection
+      _.has(services, SERVICE_KEYS.COSMOS_DB) && services.cosmosDB
     ) {
       servicesInfo.push({
         name: "Cosmos",
         identity:
-          DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.selection.api]
+          DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.api]
       });
     }
     return servicesInfo;

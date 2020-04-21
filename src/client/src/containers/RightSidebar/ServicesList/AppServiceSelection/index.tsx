@@ -13,7 +13,7 @@ import { openAppServiceModalAction } from "../../../../store/navigation/modals/a
 import messages from "./messages";
 
 interface IProps {
-  appServiceSelection: IAppService;
+  appServiceSelection: IAppService | null;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -37,7 +37,7 @@ const AppServiceSelection = ({
   };
   return (
     <React.Fragment>
-      {appServiceSelection.selection && (
+      {appServiceSelection && (
         <React.Fragment>
           <div className={styles.headerContainer}>
             <div>{intl.formatMessage(messages.title)}</div>
@@ -54,8 +54,8 @@ const AppServiceSelection = ({
           <SidebarItem
             appService={true}
             customInputStyle={styles.input}
-            key={appServiceSelection.selection.siteName}
-            text={appServiceSelection.selection.siteName}
+            key={appServiceSelection.siteName}
+            text={appServiceSelection.siteName}
             withIndent={true}
             handleCloseClick={()=> dispatch(removeAppServiceAction())}
             idx={1}

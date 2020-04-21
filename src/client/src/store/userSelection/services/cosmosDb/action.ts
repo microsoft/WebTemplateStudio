@@ -1,7 +1,7 @@
-import { ISaveCosmosDbAction, IRemoveCosmosDbAction, ISelectedCosmosService } from "./model";
+import { ISaveCosmosDbAction, IRemoveCosmosDbAction, ICosmosDB } from "./model";
 import { SERVICES_TYPEKEYS } from "../typeKeys";
 
-export const saveCosmosDbAction = (cosmosDb: ISelectedCosmosService): ISaveCosmosDbAction => ({
+export const saveCosmosDbAction = (cosmosDb: ICosmosDB): ISaveCosmosDbAction => ({
   type: SERVICES_TYPEKEYS.SAVE_COSMOS_DB,
   payload: cosmosDb,
 });

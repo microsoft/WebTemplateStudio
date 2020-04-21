@@ -8,13 +8,8 @@ import { getInitialState } from "../../../mockData/mockStore";
 
 const mockStore = configureMockStore();
 
-const emptyCosmosDB = {
-  selection: []
-};
-
-const emptyAppService = {
-  selection: null
-};
+const emptyCosmosDB = null;
+const emptyAppService = null;
 
 const mockVsCode = {
   vscodeObject:{

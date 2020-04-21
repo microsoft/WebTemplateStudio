@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { AppState } from "../../../store/combineReducers";
-import { getServicesSelector } from "../../../store/userSelection/services/servicesSelector";
+import { getServices } from "../../../store/userSelection/services/servicesSelector";
 import React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import messages from "./strings";
@@ -8,7 +8,6 @@ import styles from "./styles.module.css";
 import CosmosDBSelection from "./CosmosDBSelection";
 import AppServiceSelection from "./AppServiceSelection";
 import { ServiceState } from "../../../store/userSelection/services/combineReducers";
-import _ from "lodash";
 
 interface IProps {
   services: ServiceState;
@@ -18,8 +17,8 @@ type Props = IProps & InjectedIntlProps;
 
 function ServicesList({ services, intl }: Props) {
   const { formatMessage } = intl;
-  const hasAppService = services.appService && services.appService.selection;
-  const hasCosmos = services.cosmosDB && !_.isEmpty(services.cosmosDB.selection);
+  const hasAppService = services.appService !== null;
+  const hasCosmos = services.cosmosDB !== null;
 
   return (
     <div className={styles.servicesSection}>
@@ -31,7 +30,7 @@ function ServicesList({ services, intl }: Props) {
 }
 
 const mapStateToProps = (state: AppState): IProps => ({
-  services: getServicesSelector(state)
+  services: getServices(state)
 });
 
 export default connect(mapStateToProps)(injectIntl(ServicesList));

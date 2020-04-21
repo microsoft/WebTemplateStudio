@@ -11,7 +11,7 @@ import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { saveCosmosDbAction } from "../../store/userSelection/services/cosmosDb/action";
-import { ISelectedCosmosService } from "../../store/userSelection/services/cosmosDb/model";
+import { ICosmosDB } from "../../store/userSelection/services/cosmosDb/model";
 
 jest.mock("../../components/SubscriptionSelection", () => {
   return (props: any) => {
@@ -59,7 +59,7 @@ jest.mock("../../store/navigation/modals/action", () => {
 });
 
 jest.mock("../../store/userSelection/services/cosmosDb/action", () => {
-  const saveCosmosDbAction = jest.fn((cosmosDbSettings: ISelectedCosmosService) => ({
+  const saveCosmosDbAction = jest.fn((cosmosDbSettings: ICosmosDB) => ({
     type: "WTS/azure/SAVE_COSMOS_DB",
     payload: cosmosDbSettings,
   }));

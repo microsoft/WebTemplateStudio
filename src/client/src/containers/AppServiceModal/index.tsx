@@ -13,8 +13,8 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS, AZURE, EXTENSION_COMMANDS, SERVICE_KEYS, AzureResourceType } from "../../utils/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
-import { ISelectedAppService } from "../../store/userSelection/services/appService/model";
-import { getAppServiceSelectionSelector } from "../../store/userSelection/services/appService/selector";
+import { IAppService } from "../../store/userSelection/services/appService/model";
+import { getAppService } from "../../store/userSelection/services/servicesSelector";
 import classNames from "classnames";
 import { useState } from "react";
 import { saveAppServiceAction } from "../../store/userSelection/services/appService/action";
@@ -35,7 +35,7 @@ const AppServiceModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
-  const appServiceInStore = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
+  const appServiceInStore = useSelector(getAppService);
   const initialSubscription = appServiceInStore ? appServiceInStore.subscription : "";
   const initialAppServiceName = appServiceInStore ? appServiceInStore.siteName : "";
   const initialLocation = appServiceInStore ? appServiceInStore.location : AZURE.DEFAULT_LOCATION;
@@ -77,7 +77,7 @@ const AppServiceModal = ({ intl }: Props) => {
   };
 
   const saveAppServiceSelection = (): void => {
-    const appServiceSelection: ISelectedAppService = {
+    const appServiceSelection: IAppService = {
       subscription,
       resourceGroup,
       location,
