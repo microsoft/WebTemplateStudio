@@ -1,6 +1,4 @@
 import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
-import { IAvailabilityFromExtensionAction } from "../../../azureProfileData/azure/model";
-import { FormattedMessage } from "react-intl";
 
 export interface ISaveAppServiceSettingsAction {
   type: AZURE_TYPEKEYS.SAVE_APP_SERVICE_SETTINGS;
@@ -9,11 +7,6 @@ export interface ISaveAppServiceSettingsAction {
 
 export interface IRemoveAppServiceSettingsAction {
   type: AZURE_TYPEKEYS.REMOVE_APP_SERVICE_SETTINGS;
-}
-
-export interface ISetAppServiceSiteNameAvailabilityAction {
-  type: AZURE_TYPEKEYS.SET_APP_NAME_AVAILABILITY;
-  payload: IAvailabilityFromExtensionAction;
 }
 
 export interface IAvailability {
@@ -30,6 +23,5 @@ export interface ISelectedAppService {
 }
 
 export interface IAppService {
-  siteNameAvailability: IAvailability;
   selection: ISelectedAppService | null;
 }

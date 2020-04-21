@@ -9,18 +9,10 @@ import { getInitialState } from "../../../mockData/mockStore";
 const mockStore = configureMockStore();
 
 const emptyCosmosDB = {
-  accountNameAvailability: {
-    isAccountNameAvailable: false,
-    message: ""
-  },
   selection: []
 };
 
 const emptyAppService = {
-  siteNameAvailability: {
-    isSiteNameAvailable: false,
-    message: ""
-  },
   selection: null
 };
 

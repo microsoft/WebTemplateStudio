@@ -1,27 +1,13 @@
 import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
-import messages from "../../app/wizardSelectionSelector/messages";
 import AzureActionType from "../../../azureProfileData/azureActionType";
 import { ICosmosDB } from "./model";
 
 const initialState: ICosmosDB = {
-  accountNameAvailability: {
-    isAccountNameAvailable: false,
-    message: "Account name unavailable"
-  },
   selection: null
 };
 
 const services = (state: ICosmosDB = initialState, action: AzureActionType) => {
   switch (action.type) {
-    case AZURE_TYPEKEYS.SET_ACCOUNT_AVAILABILITY:
-      const newAvailabilityState = {
-        ...state,
-        accountNameAvailability: {
-          isAccountNameAvailable: action.payload.isAvailable,
-          message: action.payload.message
-        }
-      };
-      return newAvailabilityState;
       case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
         case AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE:
         return initialState;

@@ -1,14 +1,9 @@
 import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
-import messages from "../../app/wizardSelectionSelector/messages";
 import { IAppService } from "./model";
 import RootAction from "../../../ActionType";
 import { CONFIG_TYPEKEYS } from "../../../config/configTypeKeys";
 
 const initialState: IAppService = {
-  siteNameAvailability: {
-    isSiteNameAvailable: false,
-    message: "App name unavailable"
-  },
   selection: null
 };
 
@@ -17,15 +12,6 @@ const appServiceReducer = (
   action: RootAction
 ) => {
   switch (action.type) {
-    case AZURE_TYPEKEYS.SET_APP_NAME_AVAILABILITY:
-      const newAvailabilityState = {
-        ...state,
-        siteNameAvailability: {
-          isSiteNameAvailable: action.payload.isAvailable,
-          message: action.payload.message
-        }
-      };
-      return newAvailabilityState;
     case CONFIG_TYPEKEYS.RESET_WIZARD:
     case AZURE_TYPEKEYS.LOG_OUT_OF_AZURE:
     case AZURE_TYPEKEYS.REMOVE_APP_SERVICE_SETTINGS:

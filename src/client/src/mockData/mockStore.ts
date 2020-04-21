@@ -94,17 +94,9 @@ export const getInitialState = (): AppState => {
       },
       services: {
         cosmosDB: {
-          accountNameAvailability: {
-            isAccountNameAvailable: false,
-            message: 'Account name unavailable'
-          },
           selection: null
         },
         appService: {
-          siteNameAvailability: {
-            isSiteNameAvailable: false,
-            message: 'App name unavailable'
-          },
           selection: null
         }      
       }

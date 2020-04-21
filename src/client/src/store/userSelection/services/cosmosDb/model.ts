@@ -1,6 +1,4 @@
 import { AZURE_TYPEKEYS } from "../../../azureProfileData/typeKeys";
-import { IAvailabilityFromExtensionAction } from "../../../azureProfileData/azure/model";
-import { FormattedMessage } from "react-intl";
 
 export interface ISaveCosmosDbSettingsAction {
   type: AZURE_TYPEKEYS.SAVE_COSMOS_DB_RESOURCE_SETTINGS;
@@ -10,16 +8,6 @@ export interface ISaveCosmosDbSettingsAction {
 export interface IRemoveCosmosDbSettingsAction {
   type: AZURE_TYPEKEYS.REMOVE_COSMOS_RESOURCE;
   payload: number;
-}
-
-export interface ISetCosmosAccountNameAvailabilityAction {
-  type: AZURE_TYPEKEYS.SET_ACCOUNT_AVAILABILITY;
-  payload: IAvailabilityFromExtensionAction;
-}
-
-interface IAvailabilityCosmosDb {
-  isAccountNameAvailable: boolean;
-  message: string;
 }
 
 export interface ISelectedCosmosService {
@@ -32,6 +20,5 @@ export interface ISelectedCosmosService {
 }
 
 export interface ICosmosDB {
-  accountNameAvailability: IAvailabilityCosmosDb;
   selection: ISelectedCosmosService | null;
 }
