@@ -111,16 +111,6 @@ const azureLogout = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
-const getSubscriptionDataForCosmos = (vscode: IVSCodeObject, subscription: string, projectName: string ) => {
-  return postMessageAsync(EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS, {
-    module: EXTENSION_MODULES.AZURE,
-    command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
-    track: true,
-    subscription,
-    projectName
-  }, vscode);
-}
-
 const azureLogin = (vscode: IVSCodeObject)=>{
   return postMessageAsync(EXTENSION_COMMANDS.AZURE_LOGIN, {
     command: EXTENSION_COMMANDS.AZURE_LOGIN,
@@ -144,17 +134,6 @@ const sendTelemetry = (vscode: IVSCodeObject, command: string, payload?: any): v
     command,
     ...payload
   });
-}
-
-const GetSubscriptionDataForAppService = (subscription: string, projectName: string, vscode: IVSCodeObject): Promise<any> => {
-  return postMessageAsync(
-    EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE, {
-    module: EXTENSION_MODULES.AZURE,
-    command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE,
-    track: true,
-    subscription,
-    projectName
-  }, vscode);
 }
 
 const GetValidAppServiceName = (projectName: string, vscode: IVSCodeObject): Promise<any> => {
@@ -211,6 +190,25 @@ const generateProject = (engine: any, selectedCosmos: boolean, cosmos: any, sele
   }, vscode);
 }
 
+const getLocations = (vscode: IVSCodeObject, subscription: string, azureServiceType: string) => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_LOCATIONS, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.GET_LOCATIONS,
+    track: true,
+    subscription,
+    azureServiceType
+  }, vscode);
+}
+
+const getResourceGroups = (vscode: IVSCodeObject, subscription: string) => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_RESOURCE_GROUPS, {
+    module: EXTENSION_MODULES.AZURE,
+    command: EXTENSION_COMMANDS.GET_RESOURCE_GROUPS,
+    track: true,
+    subscription
+  }, vscode);
+}
+
 export {
   projectPathValidation,
   getValidationsConfig,
@@ -219,13 +217,13 @@ export {
   getPages,
   getOutputPath,
   sendTelemetry,
-  GetSubscriptionDataForAppService,
+  getResourceGroups,
   GetValidAppServiceName,
   GetValidCosmosAccountName,
   ValidateAppServiceName,
   resetAllPages,
   azureLogout,
-  getSubscriptionDataForCosmos,
+  getLocations,
   ValidateCosmosAccountName,
   azureLogin,
   getUserStatus,

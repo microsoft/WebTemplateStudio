@@ -49,34 +49,38 @@ const getUserStatus = (message: any) => {
   );
 };
 
-const getSubscriptionDataForCosmos = (message: any) => {
+const getLocations = (message: any) => {
+  setTimeout(() =>
   window.postMessage(
-    {
-      module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_COSMOS,
+   {
+    module: EXTENSION_MODULES.AZURE,
+      command: EXTENSION_COMMANDS.GET_LOCATIONS,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        locations: mockData.locations,
-        resourceGroups: mockData.resourceGroups,
-      },
-    },
-    "*"
-  );
+        locations: mockData.locations
+     },
+   },
+   "*"
+ ), 500);
 };
 
-const getSubscriptionDataForAppService = (message: any) => {
+const getResourceGroups = (message: any) => {
+  const resourceGroups = IsMicrosoftLearnSubscription(message.subscription) 
+  ? mockData.sandboxResourceGroups 
+  : mockData.resourceGroups;
+
+  setTimeout(() =>
   window.postMessage(
-    {
-      module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.GET_SUBSCRIPTION_DATA_FOR_APP_SERVICE,
+   {
+    module: EXTENSION_MODULES.AZURE,
+      command: EXTENSION_COMMANDS.GET_RESOURCE_GROUPS,
       payload: {
         scope: message.payload && message.payload.scope ? message.payload.scope : "",
-        locations: mockData.locations,
-        resourceGroups: mockData.resourceGroups,
-      },
-    },
-    "*"
-  );
+        resourceGroups,
+     },
+   },
+   "*"
+ ), 500);
 };
 
 const getValidAppServiceName = (message: any) => {
@@ -146,12 +150,17 @@ const validateAppServiceName = (message: any) => {
   );
 };
 
+const IsMicrosoftLearnSubscription = (subscription: string) => {
+const selectedSubscription = mockData.subscriptions.find(s => s.name === subscription);
+return selectedSubscription !== undefined && selectedSubscription.isMicrosoftLearn;
+}
+
 export {
   login,
   logout,
   getUserStatus,
-  getSubscriptionDataForCosmos,
-  getSubscriptionDataForAppService,
+  getLocations,
+  getResourceGroups,
   getValidAppServiceName,
   getValidCosmosName,
   validateCosmosName,

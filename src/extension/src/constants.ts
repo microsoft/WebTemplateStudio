@@ -321,8 +321,8 @@ export enum ExtensionCommand {
   Log = "log",
   Login = "login",
   Logout = "logout",
-  GetSubscriptionDataForCosmos = "get-subscription-data-for-cosmos",
-  GetSubscriptionDataForAppService = "get-subscription-data-for-app-service",
+  GetResourceGroups = "get-resource-groups",
+  GetLocations = "get-locations",
   GetValidAppServiceName = "get-valid-app-service-name",
   GetValidCosmosName = "get-valid-cosmos-name",
   ValidateCosmosName = "validate-cosmos-name",
@@ -340,6 +340,7 @@ export enum ExtensionCommand {
   TrackPressQuickstart = "track-press-quickstart",
   TrackOpenAppServiceModalFromServicesList = "track-open-app-service-modal-from-services-list",
   TrackOpenCosmosDBServiceModalFromServicesList = "track-open-cosmosdb-service-modal-from-services-list",
+  TrackOpenAzureServiceAdvancedMode = "track-open-azure-service-advanced-mode",
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
@@ -377,7 +378,8 @@ export enum TelemetryEventName {
   TrackOpenAddPagesModal = "Open-Add-Pages-Modal",
   TrackPressQuickstart = "Press-Quickstart",
   OpenAppServiceModalFromServicesList = "Open-AppService-Modal-From-Services-List",
-  OpenCosmosDBServiceModalFromServicesList = "Open-CosmosDBService-Modal-From-Services-List"
+  OpenCosmosDBServiceModalFromServicesList = "Open-CosmosDBService-Modal-From-Services-List",
+  OpenAzureServiceAdvancedMode = "Open-Azure-Service-Advanced-Mode"
 }
 
 export namespace DialogResponses {

@@ -34,7 +34,7 @@ const SubscriptionSelection = (props: Props) => {
       onSubscriptionChange(selectedSubscription.value);
     }
   }, [selectedSubscription]);
-
+  
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -47,7 +47,7 @@ const SubscriptionSelection = (props: Props) => {
       <Dropdown
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
         options={subscriptions}
-        handleChange={setSelectedSubscription}
+        handleChange={subscription => setSelectedSubscription(subscription)}
         value={selectedSubscription}
       />
     </div>

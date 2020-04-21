@@ -24,6 +24,7 @@ export interface IAvailability {
 export interface ISelectedAppService {
   subscription: string;
   resourceGroup: string;
+  location: string;
   siteName: string;
   internalName: string;
 }

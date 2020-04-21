@@ -5,15 +5,15 @@ import { ITemplateInfo } from "../../../types/templateInfo";
 import {
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
-  COSMOS_APIS
+  AZURE
 } from "../../../utils/constants";
 import { SelectionState } from "../../selection/combineReducers";
 import { ConfigState } from "../combineReducers";
 import { AppState } from "../../combineReducers";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {
-  [COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
-  [COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
+  [AZURE.COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
+  [AZURE.COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
 };
 
 const getSelectionsSelector = (state: AppState): SelectionState => state.selection;
@@ -28,13 +28,12 @@ const getServices = (selection: SelectionState): ITemplateInfo[] => {
   const { services } = selection;
   const servicesInfo = [];
   if (
-    _.has(services, SERVICE_KEYS.COSMOS_DB) &&
-    services.cosmosDB.selection.length > 0
+    _.has(services, SERVICE_KEYS.COSMOS_DB) && services.cosmosDB.selection
   ) {
     servicesInfo.push({
       name: "Cosmos",
       identity:
-        DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.selection[0].api]
+        DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.selection.api]
     });
   }
   return servicesInfo;

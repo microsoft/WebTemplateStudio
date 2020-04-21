@@ -13,7 +13,7 @@ import { VSCodeUI } from "./utils/vscodeUI";
 import { TelemetryService, IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { Logger } from "./utils/logger";
 import { WizardServant } from "./wizardServant";
-import { GenerationExperience } from "./generationExperience";
+import { Generation } from "./client-modules/generation";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
 import { DependencyChecker } from "./utils/dependencyChecker";
@@ -35,7 +35,7 @@ export class Controller {
   private vscodeUI: VSCodeUI;
   public static Logger: Logger;
   private AzureModule: AzureModule;
-  private GenExperience: GenerationExperience;
+  private Generation: Generation;
   private Validator: Validator;
   private DependencyChecker: DependencyChecker;
   private CoreTSModule: CoreTSModule;
@@ -53,7 +53,7 @@ export class Controller {
       [ExtensionModule.VSCodeUI, this.vscodeUI],
       [ExtensionModule.Azure, this.AzureModule],
       [ExtensionModule.Validator, this.Validator],
-      [ExtensionModule.Generate, this.GenExperience],
+      [ExtensionModule.Generate, this.Generation],
       [ExtensionModule.Logger, Controller.Logger],
       [ExtensionModule.DependencyChecker, this.DependencyChecker],
       [ExtensionModule.CoreTSModule, this.CoreTSModule],
@@ -115,7 +115,7 @@ export class Controller {
     this.vscodeUI = new VSCodeUI();
     this.Validator = new Validator();
     this.AzureModule = new AzureModule();
-    this.GenExperience = new GenerationExperience(Controller.TelemetryService);
+    this.Generation = new Generation(Controller.TelemetryService);
     this.DependencyChecker = new DependencyChecker();
     this.CoreTSModule = new CoreTSModule();
     this.Telemetry = new Telemetry(Controller.TelemetryService);
@@ -162,7 +162,6 @@ export class Controller {
         context.extensionPath,
         this.routingMessageReceieverDelegate
       );
-      GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
       Controller.getTemplateInfoAndStore(
         context,

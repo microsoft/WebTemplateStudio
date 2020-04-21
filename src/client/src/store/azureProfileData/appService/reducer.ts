@@ -39,6 +39,7 @@ const appServiceReducer = (
         selection: {
           subscription: action.payload.subscription,
           resourceGroup: action.payload.resourceGroup,
+          location: action.payload.location,
           internalName: action.payload.internalName,
           siteName: action.payload.siteName
         }

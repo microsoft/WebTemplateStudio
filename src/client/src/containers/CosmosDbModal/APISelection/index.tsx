@@ -3,30 +3,31 @@ import { useState } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import Dropdown from "../../../components/Dropdown";
-import { COSMOS_APIS } from "../../../utils/constants";
+import { AZURE } from "../../../utils/constants";
 import messages from "./messages";
 
 const ApiValues: IDropDownOptionType[] = [
   {
-    label: COSMOS_APIS.MONGO,
-    value: COSMOS_APIS.MONGO,
+    label: AZURE.COSMOS_APIS.MONGO,
+    value: AZURE.COSMOS_APIS.MONGO,
   },
   {
-    label: COSMOS_APIS.SQL,
-    value: COSMOS_APIS.SQL,
+    label: AZURE.COSMOS_APIS.SQL,
+    value: AZURE.COSMOS_APIS.SQL,
   },
 ];
 
 interface IProps {
   initialApi: string;
   onApiChange(selectedApi: string): void;
+  isAdvancedMode: boolean;
 }
 
 type Props = IProps & InjectedIntlProps;
 
 const ApiSelection = (props: Props) => {
   const { formatMessage } = props.intl;
-  const { initialApi, onApiChange } = props;
+  const { initialApi, onApiChange, isAdvancedMode } = props;
   const [selectedApi, setSelectedApi] = useState<IDropDownOptionType | undefined>(undefined);
 
   React.useEffect(() => {
@@ -49,9 +50,10 @@ const ApiSelection = (props: Props) => {
       </div>
       <div className={styles.subtitle}>{formatMessage(messages.subtitle)}</div>
       <Dropdown
+        openDropdownUpwards={!isAdvancedMode}      
         ariaLabel={formatMessage(messages.ariaDropdownLabel)}
-        options={ApiValues}
-        handleChange={setSelectedApi}
+        options={ApiValues}        
+        handleChange={api => setSelectedApi(api)}
         value={selectedApi}
       />
     </div>
