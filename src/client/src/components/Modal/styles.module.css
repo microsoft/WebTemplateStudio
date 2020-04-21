@@ -1,0 +1,39 @@
+.content {
+  top: "50%",
+  left: "50%",
+  right: "auto",
+  bottom: "auto",
+  marginRight: "-50%",
+  transform: "translate(-50%, -50%)",
+  borderRadius: "3px",
+  padding: "4vh",
+  border: "0.5px solid var(--vscode-editor-foreground)",
+  maxWidth: "700px",
+  minWidth: "300px"
+}
+
+.bgBolor {
+  background: var(--vscode-menu-background)
+}
+
+.bgBolorADD_PAGES_MODAL {
+  background: var(--vscode-editor-background)
+}
+
+.width {
+  width: 50%
+}
+
+.widthGEN_MODAL__VIEW_LICENSES_MODAL {
+  width: 40%
+}
+
+.overlay {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  zIndex: 2000,
+  backgroundColor: "rgba(0, 0, 0, 0.6)"
+}

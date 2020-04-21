@@ -66,6 +66,7 @@ const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
 interface IProps {
   closeModal: () => any;
   isModalOpen: boolean;
+  styles: any;
 }
 
 const asModal = <P extends object>(
@@ -75,15 +76,17 @@ const asModal = <P extends object>(
   return class extends React.Component<P & IProps> {
     static defaultProps = {
       closeModal: () => void(0),
-      isModalOpen: false
+      isModalOpen: false,
+      styles: getCustomStyles(MODAL_TYPE)
     };
+    
     render() {
       return (
         <Modal
           isOpen={this.props.isModalOpen}
           onRequestClose={this.props.closeModal}
           contentLabel="Modal Display"
-          style={getCustomStyles(MODAL_TYPE)}
+          style={this.props.styles}
           ariaHideApp={false}
         >
           <WrappedComponent {...this.props as P} />
