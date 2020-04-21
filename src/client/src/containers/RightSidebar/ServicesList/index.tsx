@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { AppState } from "../../../store/combineReducers";
-import { getServicesSelector } from "../../../store/azureProfileData/servicesSelector";
+import { getServicesSelector } from "../../../store/userSelection/services/servicesSelector";
 import React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import messages from "./strings";
