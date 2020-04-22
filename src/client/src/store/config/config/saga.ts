@@ -6,7 +6,7 @@ import { parseFrameworksPayload } from "../../../utils/parseFrameworksPayload";
 import { FRAMEWORK_TYPE } from "../../../utils/constants";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
-import { AZURE_TYPEKEYS } from "../../azureProfileData/typeKeys";
+import { AZURE_TYPEKEYS } from "../azure/typeKeys";
 
 export function* loadLogin(vscode: any){
   yield takeEvery(

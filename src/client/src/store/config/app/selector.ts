@@ -7,36 +7,21 @@ import {
   WIZARD_CONTENT_INTERNAL_NAMES,
   AZURE
 } from "../../../utils/constants";
-import { SelectionState } from "../../selection/combineReducers";
 import { ConfigState } from "../combineReducers";
 import { AppState } from "../../combineReducers";
+import { ServiceState } from "../../userSelection/services/combineReducers";
 
 const DATABASE_INTERNAL_NAME_MAPPING = {
   [AZURE.COSMOS_APIS.MONGO]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO,
   [AZURE.COSMOS_APIS.SQL]: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL
 };
 
-const getSelectionsSelector = (state: AppState): SelectionState => state.selection;
+const getServices = (state: AppState): ServiceState => state.userSelection.services;
 const getConfigSelector = (state: AppState): ConfigState => state.config;
 
 const getProjectType = (config: ConfigState): string => {
   const projectType = config.appType as ISelected;
   return projectType.internalName;
-};
-
-const getServices = (selection: SelectionState): ITemplateInfo[] => {
-  const { services } = selection;
-  const servicesInfo = [];
-  if (
-    _.has(services, SERVICE_KEYS.COSMOS_DB) && services.cosmosDB.selection
-  ) {
-    servicesInfo.push({
-      name: "Cosmos",
-      identity:
-        DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.selection.api]
-    });
-  }
-  return servicesInfo;
 };
 
 export const getProjectTypeSelector = createSelector(
@@ -45,8 +30,20 @@ export const getProjectTypeSelector = createSelector(
 );
 
 export const getServicesSelector = createSelector(
-  getSelectionsSelector,
-  getServices
+  getServices,
+  (services: ServiceState): ITemplateInfo[] => {
+    const servicesInfo = [];
+    if (
+      _.has(services, SERVICE_KEYS.COSMOS_DB) && services.cosmosDB
+    ) {
+      servicesInfo.push({
+        name: "Cosmos",
+        identity:
+          DATABASE_INTERNAL_NAME_MAPPING[services.cosmosDB.api]
+      });
+    }
+    return servicesInfo;
+  }
 );
 
 const rootSelector = createSelector(

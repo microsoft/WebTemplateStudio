@@ -5,7 +5,7 @@ import messages from "./messages";
 import { AZURE_LINKS } from "../../../utils/constants";
 import { AppState } from "../../../store/combineReducers";
 import { useSelector } from "react-redux";
-import { getSubscriptionsSelector } from "../../../store/azureProfileData/azure/selector";
+import { getSubscriptionsSelector } from "../../../store/config/azure/selector";
 
 interface IProps {
   subscription: string;

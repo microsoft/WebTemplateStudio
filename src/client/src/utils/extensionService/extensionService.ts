@@ -2,7 +2,7 @@ import { IVSCodeObject } from "../../types/vscode";
 import {
   EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES, PAYLOAD_MESSAGES_TEXT
 } from "../constants";
-import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
+import { IAppService } from "../../store/userSelection/services/appService/model";
 
 const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject, scopeId: number = Math.random())=>{
   const promise = new Promise<any>((resolve) => {
@@ -174,7 +174,7 @@ const ValidateCosmosAccountName = (subscription: string, appName: string, scopeI
   }, vscode, scopeId);
 }
 
-const generateProject = (engine: any, selectedCosmos: boolean, cosmos: any, selectedAppService: boolean, appService: ISelectedAppService | null,vscode: IVSCodeObject) => {
+const generateProject = (engine: any, selectedCosmos: boolean, cosmos: any, selectedAppService: boolean, appService: IAppService | null,vscode: IVSCodeObject) => {
   return postMessageAsync(EXTENSION_COMMANDS.GENERATE, {
     module: EXTENSION_MODULES.GENERATE,
     command: EXTENSION_COMMANDS.GENERATE,

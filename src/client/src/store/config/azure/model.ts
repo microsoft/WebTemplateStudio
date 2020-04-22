@@ -1,8 +1,4 @@
-import { AZURE_TYPEKEYS } from "../typeKeys";
-
-export interface IIsLoggedIntoAzureAction {
-  type: AZURE_TYPEKEYS.IS_LOGGED_IN_TO_AZURE;
-}
+import { AZURE_TYPEKEYS } from "./typeKeys";
 
 export interface ILoginToAzureAction {
   type: AZURE_TYPEKEYS.LOG_IN_TO_AZURE;

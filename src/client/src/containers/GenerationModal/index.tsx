@@ -33,10 +33,11 @@ import { sendTelemetry, generateProject } from "../../utils/extensionService/ext
 import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
 import { rootSelector } from "../../store/userSelection/app/selector";
-import { isCosmosResourceCreatedSelector, getCosmosDbSelectionSelector } from "../../store/azureProfileData/cosmosDb/selector";
-import { isAppServiceSelectedSelector, getAppServiceSelectionSelector } from "../../store/azureProfileData/appService/selector";
+import { getCosmosDB } from "../../store/userSelection/services/servicesSelector";
+import { getAppService } from "../../store/userSelection/services/servicesSelector";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../store/userSelection/frameworks/action";
 import { FRONT_END_SELECTION, BACK_END_SELECTION } from "../PageNewProject/QuickStart/defaultSelection";
+
 
 interface LinksDict {
   [serviceId: string]: string;
@@ -73,10 +74,10 @@ const GenerationModal = ({
 
 
   const engine = useSelector((state: AppState) => rootSelector(state));
-  const isCosmosSelected = useSelector((state: AppState) => isCosmosResourceCreatedSelector(state));
-  const cosmos = useSelector((state: AppState) => getCosmosDbSelectionSelector(state));
-  const isAppServiceSelected = useSelector((state: AppState) => isAppServiceSelectedSelector(state));
-  const appService = useSelector((state: AppState) => getAppServiceSelectionSelector(state));
+  const cosmos = useSelector(getCosmosDB);
+  const isCosmosSelected = cosmos !== null;
+  const appService = useSelector(getAppService);
+  const isAppServiceSelected = appService !== null;
   const outputPath = useSelector((state: AppState) => getOutputPath(state));
   const [isServicesSelected, setIsServicesSelected] = React.useState(false);
   const [serviceStatus, setServiceStatus] = React.useState<IAzureServiceStatus>(getInitialServiceStatus());

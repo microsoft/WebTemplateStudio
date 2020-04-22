@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import messages from "./messages";
 import Dropdown from "../Dropdown";
 import { useSelector } from "react-redux";
-import { getDropdownSubscriptionsSelector } from "../../store/azureProfileData/azure/selector";
+import { getDropdownSubscriptionsSelector } from "../../store/config/azure/selector";
 import { useState } from "react";
 import { AppState } from "../../store/combineReducers";
 import { AZURE_LINKS } from "../../utils/constants";

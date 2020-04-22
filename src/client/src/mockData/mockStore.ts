@@ -36,7 +36,6 @@ export const getInitialState = (): AppState => {
         originRoute:''
       },
       previewStatus: false,
-      isValidatingName: false,
       validations: {
         itemNameValidationConfig: {
           regexs: [],
@@ -91,43 +90,10 @@ export const getInitialState = (): AppState => {
           error: "" as unknown as FormattedMessage.MessageDescriptor,
           isDirty: true
         }
-      }
-    },
-    selection:{
+      },
       services: {
-        cosmosDB: {
-          accountNameAvailability: {
-            isAccountNameAvailable: false,
-            message: 'Account name unavailable'
-          },
-          selection: null,
-          wizardContent: {
-            serviceType: {
-              id: 'cosmosDb.originalTitle',
-              defaultMessage: 'CosmosDB'
-            }
-          }
-        },
-        appService: {
-          siteNameAvailability: {
-            isSiteNameAvailable: false,
-            message: 'App name unavailable'
-          },
-          selection: null,
-          wizardContent: {
-            serviceType: {
-              id: 'appService.originalTitle',
-              defaultMessage: 'App Service'
-            }
-          }
-        }
-      }
-    },
-    azureProfileData: {
-      isLoggedIn: false,
-      subscriptionData: {
-        locations: [],
-        resourceGroups: []
+        cosmosDB: null,
+        appService: null      
       }
     },
     navigation:{

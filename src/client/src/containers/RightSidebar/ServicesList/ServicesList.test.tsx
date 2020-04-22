@@ -8,33 +8,8 @@ import { getInitialState } from "../../../mockData/mockStore";
 
 const mockStore = configureMockStore();
 
-const emptyCosmosDB = {
-  accountNameAvailability: {
-    isAccountNameAvailable: false,
-    message: ""
-  },
-  selection: [],
-  wizardContent: {
-    serviceType: {
-      defaultMessage: "CosmosDB",
-      id: "cosmosDb.originalTitle"
-    }
-  }
-};
-
-const emptyAppService = {
-  siteNameAvailability: {
-    isSiteNameAvailable: false,
-    message: ""
-  },
-  selection: null,
-  wizardContent: {
-    serviceType: {
-      defaultMessage: "App Service",
-      id: "appService.originalTitle"
-    }
-  }
-};
+const emptyCosmosDB = null;
+const emptyAppService = null;
 
 const mockVsCode = {
   vscodeObject:{
@@ -50,10 +25,8 @@ describe("ServicesList", () => {
   describe("When has not selected AppService in store", () => {
     beforeEach(() => {
       initialState = getInitialState();
-      initialState.selection= {
-        services: {
-          appService: emptyAppService
-        }
+      initialState.userSelection.services = {
+        appService: emptyAppService
       };
       initialState.vscode= mockVsCode
 
@@ -78,10 +51,8 @@ describe("ServicesList", () => {
     beforeEach(() => {
       const appService = { ...emptyAppService, selection: {} };
       initialState = getInitialState();
-      initialState.selection= {
-        services: {
-          appService: appService
-        }
+      initialState.userSelection.services = {
+        appService: appService
       };
       initialState.vscode = mockVsCode;
 
@@ -105,10 +76,8 @@ describe("ServicesList", () => {
   describe("When hasn not selected CosmosDB service in store", () => {
     beforeEach(() => {
       initialState = getInitialState();
-      initialState.selection= {
-        services: {
-          cosmosDB: emptyCosmosDB
-        }
+      initialState.userSelection.services = {
+        cosmosDB: emptyCosmosDB
       };
       initialState.vscode = mockVsCode;
 
@@ -134,9 +103,7 @@ describe("ServicesList", () => {
       const cosmosDB = { ...emptyCosmosDB, selection: ["any"] };
 
       initialState = getInitialState();
-      initialState.selection= {
-        services: { cosmosDB }
-      };
+      initialState.userSelection.services = { cosmosDB };
       initialState.vscode = mockVsCode;
 
       wrapper = mountWithIntl(

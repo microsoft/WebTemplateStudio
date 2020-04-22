@@ -1,4 +1,4 @@
-import AzureActionType from "./azureProfileData/azureActionType";
+import AzureActionType from "./config/azure/azureActionType";
 import ConfigType from "./config/configType";
 import NavigationActionType from "./navigation/navigationActionType";
 import UserSelectionActionType from "./userSelection/selectionActionType";
