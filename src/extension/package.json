@@ -111,8 +111,6 @@
     "gulp-filter": "^6.0.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "kind-of": "^6.0.3",
-    "run-sequence": "^2.2.1",
     "typescript": "^3.8.3",
     "vscode": "^1.1.36",
     "vscode-nls-dev": "^3.3.1"
@@ -131,7 +129,6 @@
     "azure-arm-resource": "^7.3.0",
     "azure-arm-website": "^5.7.0",
     "fs-extra": "^9.0.0",
-    "global": "^4.4.0",
     "latest-version": "^5.1.0",
     "log4js": "^6.2.1",
     "ms-rest": "^2.5.4",
