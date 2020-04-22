@@ -1,6 +1,7 @@
 import { ISelectFrontendAction, ISelectBackendAction } from "./frameworks/model";
 import { IsetPagesAction, ISetPageAction, IResetPagesAction } from "./pages/model";
 import { ISelectProjectTypeAction, ISetProjectNameActionType, IUpdateProjectPathActionType } from "./app/model";
+import ServicesActionType from "./services/actionTypes";
 
 type WizardSelectionActionType =
   | ISelectBackendAction
@@ -10,6 +11,7 @@ type WizardSelectionActionType =
   | ISelectProjectTypeAction
   | ISetProjectNameActionType
   | IUpdateProjectPathActionType
-  | IResetPagesAction;
+  | IResetPagesAction
+  | ServicesActionType;
 
 export default WizardSelectionActionType;

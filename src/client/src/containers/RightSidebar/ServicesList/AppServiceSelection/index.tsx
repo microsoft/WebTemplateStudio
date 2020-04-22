@@ -1,18 +1,19 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import SidebarItem from "../SidebarItem";
-import { IAppService } from "../../../../store/azureProfileData/appService/model";
+import { IAppService } from "../../../../store/userSelection/services/appService/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { removeAppServiceSettingsAction } from "../../../../store/azureProfileData/appService/action";
+import { removeAppServiceAction } from "../../../../store/userSelection/services/appService/action";
 import { AppContext } from "../../../../AppContext";
 import { openAppServiceModalAction } from "../../../../store/navigation/modals/action";
+import messages from "./messages";
 
 interface IProps {
-  appServiceSelection: IAppService;
+  appServiceSelection: IAppService | null;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -21,7 +22,6 @@ const AppServiceSelection = ({
   appServiceSelection,
   intl
 }: Props) => {
-  const { serviceType } = appServiceSelection.wizardContent;
   const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 
@@ -37,10 +37,10 @@ const AppServiceSelection = ({
   };
   return (
     <React.Fragment>
-      {appServiceSelection.selection && (
+      {appServiceSelection && (
         <React.Fragment>
           <div className={styles.headerContainer}>
-            <div>{intl.formatMessage(serviceType)}</div>
+            <div>{intl.formatMessage(messages.title)}</div>
             <div
               role="button"
               tabIndex={0}
@@ -54,10 +54,10 @@ const AppServiceSelection = ({
           <SidebarItem
             appService={true}
             customInputStyle={styles.input}
-            key={appServiceSelection.selection.siteName}
-            text={appServiceSelection.selection.siteName}
+            key={appServiceSelection.siteName}
+            text={appServiceSelection.siteName}
             withIndent={true}
-            handleCloseClick={()=> dispatch(removeAppServiceSettingsAction())}
+            handleCloseClick={()=> dispatch(removeAppServiceAction())}
             idx={1}
           />
         </React.Fragment>

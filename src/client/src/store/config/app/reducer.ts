@@ -1,4 +1,4 @@
-import SelectionActionType from "../../selection/selectionActionType";
+import SelectionActionType from "./actionTypes";
 import { ISelected } from "../../../types/selected";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 

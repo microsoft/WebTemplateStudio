@@ -13,6 +13,8 @@
   "AppServiceModal.saveMessage": "Save",
   "AppServiceModal.showAdvancedMode": "Advanced mode",
   "AppServiceModal.title": "Create App Service",
+  "AppServiceSelection.title": "App Service",
+  "CosmosDbSelection.title": "CosmosDB",
   "CosmosModal.AccountNameEditor.ariaInputLabel": "Account Name Input",
   "CosmosModal.AccountNameEditor.inputPlaceholderMessage": "Account Name",
   "CosmosModal.AccountNameEditor.subtitle": "We have created a unique account name that you can edit",

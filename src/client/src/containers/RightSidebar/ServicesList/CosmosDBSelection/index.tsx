@@ -1,18 +1,19 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import SidebarItem from "../SidebarItem";
-import { ICosmosDB } from "../../../../store/azureProfileData/cosmosDb/model";
+import { ICosmosDB } from "../../../../store/userSelection/services/cosmosDb/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 import { openCosmosDbModalAction } from "../../../../store/navigation/modals/action";
 import styles from "./styles.module.css";
 import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
-import { removeCosmosSelectionAction } from "../../../../store/azureProfileData/cosmosDb/action";
+import { removeCosmosDbAction } from "../../../../store/userSelection/services/cosmosDb/action";
 import { AppContext } from "../../../../AppContext";
+import messages from "./messages";
 
 interface IProps {
-  cosmosSelection: ICosmosDB;
+  cosmosSelection: ICosmosDB | null;
 }
 
 type Props = IProps & InjectedIntlProps;
@@ -21,7 +22,6 @@ const CosmosDBSelection = ({
   cosmosSelection,
   intl
 }: Props) => {
-  const { serviceType } = cosmosSelection.wizardContent;
   const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 
@@ -37,10 +37,10 @@ const CosmosDBSelection = ({
   };
   return (
     <React.Fragment>
-      {cosmosSelection.selection && (
+      {cosmosSelection && (
         <React.Fragment>
           <div className={styles.headerContainer}>
-            <div>{intl.formatMessage(serviceType)}</div>
+            <div>{intl.formatMessage(messages.title)}</div>
             <div
               role="button"
               tabIndex={0}
@@ -54,10 +54,10 @@ const CosmosDBSelection = ({
           <SidebarItem
                 cosmosDB={true}
                 customInputStyle={styles.input}
-                key={cosmosSelection.selection.accountName}
-                text={cosmosSelection.selection.accountName}
+                key={cosmosSelection.accountName}
+                text={cosmosSelection.accountName}
                 withIndent={true}
-                handleCloseClick={(selectionIndex: number)=> dispatch(removeCosmosSelectionAction(selectionIndex))}
+                handleCloseClick={()=> dispatch(removeCosmosDbAction())}
                 idx={1}
               />
         </React.Fragment>

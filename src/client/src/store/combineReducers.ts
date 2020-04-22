@@ -1,10 +1,8 @@
 import { combineReducers } from "redux";
-import azureProfileData from "./azureProfileData/combineReducers";
 import navigation from "./navigation/combineReducers";
 import templates from "./templates/combineReducers";
 import config from "./config/combineReducers";
 import userSelection from "./userSelection/combineReducers";
-import selection from "./selection/combineReducers";
 import RootAction from "./ActionType";
 import { CONFIG_TYPEKEYS } from "./config/configTypeKeys";
 
@@ -12,8 +10,6 @@ const appReducer = combineReducers({
   templates,
   config,
   userSelection,
-  selection,
-  azureProfileData,
   navigation
 });
 
@@ -24,10 +20,9 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
 
   if (action.type === CONFIG_TYPEKEYS.RESET_WIZARD) {
     const { backendOptions, frontendOptions, pageOptions } = state!.templates;
-    const { previewStatus, detailsPage, validations, isValidatingName, versions, azureProfileData } = state!.config;
+    const { previewStatus, detailsPage, validations, versions, azureProfileData } = state!.config;
 
     passedState = {
-      azureProfileData: state!.azureProfileData,
       navigation: {
         modals:undefined
       },
@@ -48,7 +43,6 @@ const rootReducer = (state: AppState | undefined, action: RootAction) => {
         previewStatus,
         validations,
         detailsPage,
-        isValidatingName,
         versions,
         azureProfileData
       },

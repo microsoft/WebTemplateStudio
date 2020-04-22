@@ -10,8 +10,8 @@ import messages from "./messages";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import { waitFor, fireEvent } from "@testing-library/react";
 import { closeModalAction } from "../../store/navigation/modals/action";
-import { saveAppServiceSettingsAction } from "../../store/azureProfileData/appService/action";
-import { ISelectedAppService } from "../../store/azureProfileData/appService/model";
+import { saveAppServiceAction } from "../../store/userSelection/services/appService/action";
+import { IAppService } from "../../store/userSelection/services/appService/model";
 
 jest.mock("../../components/SubscriptionSelection", () => {
   return (props: any) => {
@@ -52,12 +52,12 @@ jest.mock("../../store/navigation/modals/action", () => {
   return { closeModalAction };
 });
 
-jest.mock("../../store/azureProfileData/appService/action", () => {
-  const saveAppServiceSettingsAction = jest.fn((appServiceSettings: ISelectedAppService) => ({
+jest.mock("../../store/userSelection/services/appService/action", () => {
+  const saveAppServiceAction = jest.fn((appService: IAppService) => ({
     type: "WTS/navigation/modals/CLOSE_MODALS",
-    payload: appServiceSettings,
+    payload: appService,
   }));
-  return { saveAppServiceSettingsAction };
+  return { saveAppServiceAction };
 });
 
 describe("AppServiceModal", () => {
@@ -123,7 +123,7 @@ describe("AppServiceModal", () => {
       const saveButton = getByText(intl.formatMessage(messages.save));
       expect(saveButton).toBeEnabled();
       fireEvent.click(saveButton);
-      expect(saveAppServiceSettingsAction).toBeCalled();
+      expect(saveAppServiceAction).toBeCalled();
     });
   });
 

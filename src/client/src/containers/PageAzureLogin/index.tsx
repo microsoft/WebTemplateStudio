@@ -1,5 +1,5 @@
 import * as React from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classnames from "classnames";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import styles from "./styles.module.css";
@@ -16,22 +16,18 @@ import Title from "../../components/Title";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
 import { azureLogout } from "../../utils/extensionService/extensionService";
-import { logOutAzureAction } from "../../store/azureProfileData/login/action";
+import { logOutAzureAction } from "../../store/config/azure/action";
 import { AppContext } from "../../AppContext";
+import { isLoggedInSelector } from "../../store/config/azure/selector";
 
-interface IAzureLoginProps {
-  isLoggedIn: boolean;
-  email: string;
-}
-
-type Props = IAzureLoginProps & InjectedIntlProps;
+type Props = InjectedIntlProps;
 
 const AzureLogin = (props: Props)=> {
-  const {
-    isLoggedIn, intl, email
-  } = props;
+  const { intl } = props;
   const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
+  const email = useSelector((state: AppState) => state.config.azureProfileData.email);
+  const isLoggedIn = useSelector((state: AppState) => isLoggedInSelector(state));
 
   const signOutAzure = () => {
     azureLogout(vscode).then((event)=>{
@@ -90,14 +86,4 @@ const AzureLogin = (props: Props)=> {
     );
   }
 
-const mapStateToProps = (state: AppState): IAzureLoginProps => {
-  const { isLoggedIn } = state.azureProfileData;
-  const { email } = state.config.azureProfileData;
-  return {
-    isLoggedIn,
-    email
-  };
-};
-
-export default 
-  connect(mapStateToProps)(injectIntl(AzureLogin));
+export default (injectIntl(AzureLogin));
