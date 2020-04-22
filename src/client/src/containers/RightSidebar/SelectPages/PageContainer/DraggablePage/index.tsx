@@ -47,16 +47,27 @@ const DraggablePage = ({
   selectedPages,
   customInputStyle
 }: Props) => {
+  const [namePage, setNamePage] = React.useState("");
+  const dispatch = useDispatch();
+  const [validValue, setValidValue] = React.useState<string>(page ? page.title:"");
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  React.useEffect(()=>{
+    setNamePage(page.title)
+  },[]);
+
   React.useEffect(()=>{
     const hasFocusOnLasPage = selectedPages.length>1 && !page.isDirty && selectedPages.length === idx;
     if (hasFocusOnLasPage){
       setFocus();
-      setSelect();
       moveDownScroll();
       page.isDirty = true;
+      setTimeout(()=>{
+        const node: any = document.getElementsByClassName("focus-visible")![0];
+        node.select();
+      },200);
     }
   },[selectedPages]);
-  const dispatch = useDispatch();
 
   const moveDownScroll = () =>{
      if (document.getElementById("dvRightSideBar") && document.getElementById("dvSummaryContainer")) 
@@ -65,10 +76,6 @@ const DraggablePage = ({
   const setFocus = () =>{
     const node = inputRef.current!
     node.focus();
-  }
-  const setSelect = () =>{
-    const node = inputRef.current!
-    node.select();
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
@@ -87,10 +94,8 @@ const DraggablePage = ({
     idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
   };
 
-  const [validValue, setValidValue] = React.useState<string>(page ? page.title:"");
-  const inputRef = React.createRef<HTMLInputElement>();
-
-  const handleInputChange = async (newTitle: string) => {
+  const validateNameAndSetStore = async (newTitle: string) => {
+    setNamePage(newTitle);
     page.title = newTitle;
     const validationResult = await validateItemName(newTitle, validations.itemNameValidationConfig, selectedPages);
     page.error = validationResult.error;
@@ -119,18 +124,18 @@ const DraggablePage = ({
                   aria-label={intl.formatMessage(messages.changeItemName)}
                   className={classnames(styles.input)}
                   maxLength={maxInputLength}
-                  value={page.title}
+                  value={namePage}
                   onChange={e => {
-                    if (handleInputChange && idx) {
+                    if (validateNameAndSetStore && idx) {
                       page.isDirty=true;
-                      handleInputChange(e.target.value);
+                      validateNameAndSetStore(e.target.value);
                     }
                   }}
                   onBlur={e => {
-                    if (handleInputChange && idx && page && page.isValidTitle===false) {
-                      handleInputChange(validValue);
+                    if (validateNameAndSetStore && idx && page && page.isValidTitle===false) {
+                      validateNameAndSetStore(validValue);
                     }else{
-                      handleInputChange(e.target.value);
+                      validateNameAndSetStore(e.target.value);
                     }
                     if (page.isValidTitle) setValidValue(page.title);
                   }}
