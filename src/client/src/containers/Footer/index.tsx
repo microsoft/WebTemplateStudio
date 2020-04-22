@@ -123,8 +123,8 @@ const Footer = (props: Props) => {
                   [buttonStyles.buttonDark]: !isEnableNextPage,
                   [styles.disabledOverlay]: !isEnableNextPage,
                 })}
-                onClick={navigateForward}
-                onKeyPress={navigateForwardOnKeyPress}
+                onClick={() =>{ if (isEnableNextPage) navigateForward()}}
+                onKeyPress={(event) =>{ if (isEnableNextPage) navigateForwardOnKeyPress(event)}}
                 onKeyUp={keyUpHandler}
               >
                 {formatMessage(messages.next)}
