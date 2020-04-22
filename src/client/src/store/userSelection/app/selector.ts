@@ -67,7 +67,7 @@ const getRuntimeStackSelector = createSelector(
   (version) => version === "" ? "" : version.split("|")[0]
 )
 
-const rootSelector = createSelector(
+const getGenerationData = createSelector(
   getProjectName,
   getOutputPath,
   getProjectTypeSelector,
@@ -99,4 +99,4 @@ const rootSelector = createSelector(
   }
 );
 
-export { rootSelector, getRuntimeStackSelector };
+export { getGenerationData, getRuntimeStackSelector };

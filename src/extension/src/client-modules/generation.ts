@@ -13,7 +13,7 @@ import { AzureServices } from "../azure/azureServices";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
 import { ResourceGroupSelection } from "../azure/azure-resource-group/resourceGroupModule";
 import { Logger } from "../utils/logger";
-import { IGenerationPayloadType } from "../types/generationPayloadType";
+import { IGenerationPayloadType, IServicesGenerationPayload } from "../types/generationPayloadType";
 import { GenerationStatus } from "../utils/generationStatus";
 
 interface DeployedServiceStatus {
@@ -35,24 +35,23 @@ export class Generation extends WizardServant {
   private async generate(message: any): Promise<IPayloadResponse> {
     this.trackWizardTotalSessionTimeToGenerate();
     const generationStatus = new GenerationStatus();
-    const payload = message.payload;
-    const generationData = payload.engine as IGenerationPayloadType;
+    const generationData = message.payload as IGenerationPayloadType;
 
     const generateProjectResult = await this.generateProject(generationData, generationStatus);
 
     if (generateProjectResult) {
       generationData.path = generateProjectResult.generationPath;
 
-      if (this.hasAzureServices(payload)) {
-        await this.generateResourceGroups(payload, generationStatus);
-        const generateAzureServicesResult = await this.generateAzureServices(payload, generationStatus);
+      if (this.hasAzureServices(generationData.services)) {
+        await this.generateResourceGroups(generationData, generationStatus);
+        const generateAzureServicesResult = await this.generateAzureServices(generationData, generationStatus);
 
         //if have deployed appservice and cosmos, update connectionString in appservice
         const cosmosResult = generateAzureServicesResult.find((s) => s.serviceType === AzureResourceType.Cosmos);
-        if (payload.appService && cosmosResult && cosmosResult.payload.connectionString !== "") {
+        if (generationData.services.appService && cosmosResult && cosmosResult.payload.connectionString !== "") {
           AzureServices.updateAppSettings(
-            payload.appService.resourceGroup,
-            payload.appService.siteName,
+            generationData.services.appService.resourceGroup,
+            generationData.services.appService.siteName,
             cosmosResult.payload.connectionString
           );
         }
@@ -91,18 +90,23 @@ export class Generation extends WizardServant {
     }
   }
 
-  private async generateResourceGroups(payload: any, generationStatus: GenerationStatus): Promise<void> {
-    const defaultResourceGroupName = await AzureServices.generateValidResourceGroupName(payload);
+  private async generateResourceGroups(
+    generationData: IGenerationPayloadType,
+    generationStatus: GenerationStatus
+  ): Promise<void> {
+    const { projectName, services } = generationData;
+    const { appService, cosmosDB } = services;
+    const defaultResourceGroupName = await AzureServices.generateValidResourceGroupName(projectName, services);
 
-    if (payload.appService && payload.appService.resourceGroup === "") {
-      payload.appService.resourceGroup = defaultResourceGroupName;
+    if (appService && appService.resourceGroup === "") {
+      appService.resourceGroup = defaultResourceGroupName;
     }
 
-    if (payload.cosmos && payload.cosmos.resourceGroup === "") {
-      payload.cosmos.resourceGroup = defaultResourceGroupName;
+    if (cosmosDB && cosmosDB.resourceGroup === "") {
+      cosmosDB.resourceGroup = defaultResourceGroupName;
     }
 
-    const resourceGroupsToGenerate = await AzureServices.getResourceGroupSelections(payload);
+    const resourceGroupsToGenerate = await AzureServices.getResourceGroupSelections(services);
 
     const resourceGroupQueue: Promise<void>[] = [];
     resourceGroupsToGenerate.forEach((resourceGroup) => {
@@ -131,24 +135,26 @@ export class Generation extends WizardServant {
   }
 
   private async generateAzureServices(
-    payload: any,
+    generationData: IGenerationPayloadType,
     generationStatus: GenerationStatus
   ): Promise<DeployedServiceStatus[]> {
     const servicesQueue: Promise<DeployedServiceStatus>[] = [];
 
-    if (payload.appService) {
+    if (generationData.services.appService) {
       servicesQueue.push(
         this.deployWithTelemetry(
           TelemetryEventName.AppServiceDeploy,
-          this.createAppService(payload, generationStatus))
+          this.createAppService(generationData, generationStatus)
+        )
       );
     }
 
-    if (payload.cosmos) {
+    if (generationData.services.cosmosDB) {
       servicesQueue.push(
         this.deployWithTelemetry(
           TelemetryEventName.CosmosDBDeploy,
-          this.createCosmosDB(payload, generationStatus))
+          this.createCosmosDB(generationData, generationStatus)
+        )
       );
     }
 
@@ -156,38 +162,49 @@ export class Generation extends WizardServant {
     return result;
   }
 
-  private async createAppService(payload: any, generationStatus: GenerationStatus): Promise<DeployedServiceStatus> {
+  private async createAppService(
+    generationData: IGenerationPayloadType,
+    generationStatus: GenerationStatus
+  ): Promise<DeployedServiceStatus> {
+    const { services, projectName, backendFrameworkLinuxVersion, path } = generationData;
     const result: DeployedServiceStatus = {
       serviceType: AzureResourceType.AppService,
       isDeployed: false,
     };
-    try {
-      await AzureServices.deployAppService(payload);
-      generationStatus.setAppServiceStatus(true);
-      result.isDeployed = true;
-    } catch (error) {
-      Logger.appendLog("EXTENSION", "error", `Error on deploy Azure App Service: ${error}`);
-      generationStatus.setAppServiceStatus(false);
+    if (services.appService) {
+      try {
+        await AzureServices.deployAppService(services.appService, projectName, backendFrameworkLinuxVersion, path);
+        generationStatus.setAppServiceStatus(true);
+        result.isDeployed = true;
+      } catch (error) {
+        Logger.appendLog("EXTENSION", "error", `Error on deploy Azure App Service: ${error}`);
+        generationStatus.setAppServiceStatus(false);
+      }
     }
-
     return result;
   }
 
-  private async createCosmosDB(payload: any, generationStatus: GenerationStatus): Promise<DeployedServiceStatus> {
+  private async createCosmosDB(
+    generationData: IGenerationPayloadType,
+    generationStatus: GenerationStatus
+  ): Promise<DeployedServiceStatus> {
+    const { services, path } = generationData;
     const result: DeployedServiceStatus = {
       serviceType: AzureResourceType.Cosmos,
       isDeployed: false,
       payload: { connectionString: "" },
     };
-    try {
-      const connectionString = await AzureServices.deployCosmos(payload.cosmos, payload.engine.path);
-      generationStatus.setCosmosStatus(true);
-      result.isDeployed = true;
-      result.payload.connectionString = connectionString;
-      await this.replaceConnectionString(payload.engine.path, connectionString);
-    } catch (error) {
-      Logger.appendLog("EXTENSION", "error", `Error on deploy CosmosDB Service: ${error}`);
-      generationStatus.setCosmosStatus(false);
+    if (services.cosmosDB) {
+      try {
+        const connectionString = await AzureServices.deployCosmos(services.cosmosDB, path);
+        generationStatus.setCosmosStatus(true);
+        result.isDeployed = true;
+        result.payload.connectionString = connectionString;
+        await this.replaceConnectionString(path, connectionString);
+      } catch (error) {
+        Logger.appendLog("EXTENSION", "error", `Error on deploy CosmosDB Service: ${error}`);
+        generationStatus.setCosmosStatus(false);
+      }
     }
 
     return result;
@@ -221,9 +238,8 @@ export class Generation extends WizardServant {
     this.Telemetry.trackEventWithDuration(TelemetryEventName.ConnectionStringReplace, startTime, Date.now());
   }
 
-  private hasAzureServices(payload: any): boolean {
-    //TODO: Check payload.AppService and payload.Cosmos
-    return payload.appService || payload.cosmos;
+  private hasAzureServices(services: IServicesGenerationPayload): boolean {
+    return services.appService !== null || services.cosmosDB !== null;
   }
 
   //TODO: Move to telemetryService?

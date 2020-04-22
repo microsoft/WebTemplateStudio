@@ -175,17 +175,13 @@ const ValidateCosmosAccountName = (subscription: string, appName: string, scopeI
   }, vscode, scopeId);
 }
 
-const generateProject = (engine: any, cosmos: ICosmosDB | null, appService: IAppService | null,vscode: IVSCodeObject) => {
+const generateProject = (genrationData: any,vscode: IVSCodeObject) => {
   return postMessageAsync(EXTENSION_COMMANDS.GENERATE, {
     module: EXTENSION_MODULES.GENERATE,
     command: EXTENSION_COMMANDS.GENERATE,
     track: false,
     text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
-    payload: {
-      engine,
-      cosmos,
-      appService
-    }
+    payload: genrationData
   }, vscode);
 }
 
