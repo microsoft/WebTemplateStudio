@@ -1,4 +1,3 @@
-import _ from "lodash";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import SidebarItem from "../SidebarItem";

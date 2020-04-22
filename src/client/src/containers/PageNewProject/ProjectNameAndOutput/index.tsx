@@ -1,6 +1,5 @@
 import * as React from "react";
 import { connect, useDispatch } from "react-redux";
-import Input from "../../../components/Input";
 import OutputPath from "../../../components/OutputPath";
 
 import {
@@ -34,6 +33,8 @@ import { setProjectPathValidationAction } from "../../../store/config/validation
 import { setProjectNameAction, setOutputPathAction } from "../../../store/userSelection/app/action";
 import { IValidations } from "../../../store/config/validations/model";
 import { AppContext } from "../../../AppContext";
+import stylesInput from "../../../css/input.module.css";
+import classnames from "classnames";
 
 interface IStateProps {
   outputPath: string;
@@ -56,11 +57,17 @@ const ProjectNameAndOutput = (props: Props) => {
 
   const dispatch = useDispatch();
   const { vscode } = React.useContext(AppContext);
+  const [name, setName] = React.useState("");
   
+  React.useEffect(()=>{
+    setName(projectName);
+  },[]);
+
   React.useEffect(() => {
     if (projectName==="" && outputPath!=="" && projectNameValidation.isDirty===false){
       inferProjectName(outputPath, vscode).then(suggestedProjectName => {
         dispatch(setProjectNameAction(suggestedProjectName, {isValid:true, error:"", isDirty:true}));
+        setName(suggestedProjectName);
       });
     }
   },[projectName, outputPath]);
@@ -76,7 +83,9 @@ const ProjectNameAndOutput = (props: Props) => {
     }
   }, [vscode]);
 
-  const validateSetProjectValueAndSetDirty = (projectNameToSet: string) =>{
+  const validateSetProjectValueAndSetDirty = (e: React.SyntheticEvent<HTMLInputElement>) => {
+    const projectNameToSet: string = e.currentTarget.value;
+    setName(projectNameToSet);
     validateProjectName(projectNameToSet, outputPath, validations.projectNameValidationConfig, vscode).then((validateState: IValidation)=>{
       validateState.isDirty = projectNameValidation.isDirty;
       dispatch(setProjectNameAction(projectNameToSet, validateState));
@@ -86,13 +95,7 @@ const ProjectNameAndOutput = (props: Props) => {
       dispatch(setProjectPathValidationAction({isValid: true}));
     }
   }
-  const handleProjectNameChange = (
-    e: React.SyntheticEvent<HTMLInputElement>
-  ) => {
-    const element = e.currentTarget as HTMLInputElement;
-    validateSetProjectValueAndSetDirty(element.value);
-  };
- 
+
   const handleSaveClick = () => {
     vscode.postMessage({
       module: EXTENSION_MODULES.VALIDATOR,
@@ -107,12 +110,12 @@ const ProjectNameAndOutput = (props: Props) => {
         <div className={styles.inputTitle}>
           {props.intl.formatMessage(messages.projectNameTitle)}
         </div>
-        <Input
-          handleChange={handleProjectNameChange}
-          ariaLabel={props.intl.formatMessage(messages.ariaProjectNameLabel)}
-          value={projectName}
+        <input
+          onChange={validateSetProjectValueAndSetDirty}
+          aria-label={props.intl.formatMessage(messages.ariaProjectNameLabel)}
+          value={name}
           maxLength={PROJECT_NAME_CHARACTER_LIMIT}
-          autoFocus={true}
+          className={classnames(stylesInput.input)}
         />
 
         {!projectNameValidation.isValid && projectNameValidation.isDirty && (
