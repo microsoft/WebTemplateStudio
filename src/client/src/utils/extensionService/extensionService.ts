@@ -3,6 +3,7 @@ import {
   EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES, PAYLOAD_MESSAGES_TEXT
 } from "../constants";
 import { IAppService } from "../../store/userSelection/services/appService/model";
+import { ICosmosDB } from "../../store/userSelection/services/cosmosDb/model";
 
 const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject, scopeId: number = Math.random())=>{
   const promise = new Promise<any>((resolve) => {
@@ -174,7 +175,7 @@ const ValidateCosmosAccountName = (subscription: string, appName: string, scopeI
   }, vscode, scopeId);
 }
 
-const generateProject = (engine: any, selectedCosmos: boolean, cosmos: any, selectedAppService: boolean, appService: IAppService | null,vscode: IVSCodeObject) => {
+const generateProject = (engine: any, cosmos: ICosmosDB | null, appService: IAppService | null,vscode: IVSCodeObject) => {
   return postMessageAsync(EXTENSION_COMMANDS.GENERATE, {
     module: EXTENSION_MODULES.GENERATE,
     command: EXTENSION_COMMANDS.GENERATE,
@@ -182,9 +183,7 @@ const generateProject = (engine: any, selectedCosmos: boolean, cosmos: any, sele
     text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
     payload: {
       engine,
-      selectedCosmos,
       cosmos,
-      selectedAppService,
       appService
     }
   }, vscode);

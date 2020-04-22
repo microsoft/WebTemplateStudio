@@ -123,12 +123,7 @@ const GenerationModal = ({
   const dispatch = useDispatch();
 
   React.useEffect(()=>{
-    generateProject(engine,
-      isCosmosSelected,
-      cosmos,
-      isAppServiceSelected,
-      appService,
-      vscode);
+    generateProject(engine, cosmos, appService, vscode);
     addMessageEventsFromExtension();
   },[]);
 

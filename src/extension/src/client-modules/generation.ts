@@ -49,7 +49,7 @@ export class Generation extends WizardServant {
 
         //if have deployed appservice and cosmos, update connectionString in appservice
         const cosmosResult = generateAzureServicesResult.find((s) => s.serviceType === AzureResourceType.Cosmos);
-        if (payload.selectedAppService && cosmosResult && cosmosResult.payload.connectionString !== "") {
+        if (payload.appService && cosmosResult && cosmosResult.payload.connectionString !== "") {
           AzureServices.updateAppSettings(
             payload.appService.resourceGroup,
             payload.appService.siteName,
