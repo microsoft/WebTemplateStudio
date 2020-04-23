@@ -114,8 +114,8 @@
     "typescript": "^3.8.3",
     "kind-of": "^6.0.3",
     "run-sequence": "^2.2.1",
-    "vscode": "^1.1.33",
-    "vscode-nls-dev": "3.2.7"
+    "vscode": "^1.1.36",
+    "vscode-nls-dev": "^3.3.1"
   },
   "extensionDependencies": [
     "ms-vscode.azure-account",
