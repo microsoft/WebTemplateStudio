@@ -139,7 +139,8 @@ const EXTENSION_MODULES = {
   VSCODEUI: "VSCodeUI",
   DEPENDENCYCHECKER: "DependencyChecker",
   CORETS: "CoreTSModule",
-  DEFAULTS: "Defaults"
+  DEFAULTS: "Defaults",
+  LOGGER: "Logger",
 };
 
 // Define extension commands here that should be received from the extension
@@ -175,7 +176,9 @@ const EXTENSION_COMMANDS = {
   GET_FRAMEWORKS: "get-frameworks",
   GET_LATEST_VERSION:"get-latest-version",
   GET_PAGES: "get-pages",
-  GET_VALIDATIONS: "get-validations"
+  GET_VALIDATIONS: "get-validations",
+  LOG: "log",
+  OPEN_LOG: "open-log"
 };
 
 const TELEMETRY = {

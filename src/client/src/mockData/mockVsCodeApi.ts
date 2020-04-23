@@ -5,6 +5,7 @@ import {
 } from "../utils/constants";
 
 import * as mockAzureModule from "./extensionModules/mockAzureModule";
+import * as mockLoggerModule from "./extensionModules/mockLoggerModule";
 
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
@@ -525,6 +526,14 @@ const mockVsCodeApi = () => ({
             },
             "*"
           );
+          break;
+          
+        case EXTENSION_COMMANDS.LOG:
+          mockLoggerModule.logFromWizard(message);
+          break;
+        case EXTENSION_COMMANDS.OPEN_LOG:
+          mockLoggerModule.openLog();
+          break;
       }
     }
   }
