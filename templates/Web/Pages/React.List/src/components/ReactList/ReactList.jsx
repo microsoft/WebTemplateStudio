@@ -92,7 +92,7 @@ const ReactList = () => {
 
   return (
     <main id="mainContent" className="container">
-      <div class="row justify-content-center py-5">
+      <div className="row justify-content-center py-5">
         <h3>ReactList</h3>
       </div>
       <div className="row">

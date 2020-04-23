@@ -8,7 +8,6 @@ import GridItem from "./GridItem";
 const ReactGrid = () => {
   const [items, setItems] = useState([]);
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
-  const centeredHeaderStyle = classnames("text-center", styles.header);
 
   const getItems = () => {
     const promiseItems = fetch(CONSTANTS.ENDPOINT.GRID)
