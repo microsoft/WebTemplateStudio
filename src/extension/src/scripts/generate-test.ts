@@ -45,7 +45,10 @@ let generateProj = (
         path: "../../../../../template_test",
         projectName: backend + "-" + frontend,
         projectType: projType,
-        services: []
+        services: {
+          appService: null,
+          cosmosDB: null
+        }
       },
       liveMessageHandler: value => {
         value;
