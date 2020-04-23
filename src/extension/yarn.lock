@@ -5406,7 +5406,7 @@ vinyl@^2.0.0, vinyl@^2.1.0, vinyl@^2.2.0:
     remove-trailing-separator "^1.0.1"
     replace-ext "^1.0.0"
 
-vsce@^1.57.1:
+vsce@^1.75.0:
   version "1.75.0"
   resolved "https://registry.yarnpkg.com/vsce/-/vsce-1.75.0.tgz#1207e12ca632cd41ac66c33d23c3a09d74a75525"
   integrity sha512-qyAQTmolxKWc9bV1z0yBTSH4WEIWhDueBJMKB0GUFD6lM4MiaU1zJ9BtzekUORZu094YeNSKz0RmVVuxfqPq0g==
@@ -5432,17 +5432,17 @@ vsce@^1.57.1:
     yauzl "^2.3.1"
     yazl "^2.2.2"
 
-vscode-extension-telemetry@^0.1.1:
+vscode-extension-telemetry@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/vscode-extension-telemetry/-/vscode-extension-telemetry-0.1.2.tgz#049207f5453930888ff68ca925b07bab08f2c955"
   integrity sha512-FSbaZKlIH3VKvBJsKw7v5bESWHXzltji2rtjaJeJglpQH4tfClzwHMzlMXUZGiblV++djEzb1gW8mb5E+wxFsg==
   dependencies:
     applicationinsights "1.4.0"
 
-vscode-nls-dev@3.2.7:
-  version "3.2.7"
-  resolved "https://registry.yarnpkg.com/vscode-nls-dev/-/vscode-nls-dev-3.2.7.tgz#3844cd0a96e8b2f8c820fc67f6790f7154b92a6f"
-  integrity sha512-hpLxV/vmUhef4Q3sVHjyf2/o8S96iZB6AjXz+K6+jt/Vi/NcM9ROLdXlOy5vpVQUiRbtlJ6kmO9e7XuniH+kuA==
+vscode-nls-dev@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/vscode-nls-dev/-/vscode-nls-dev-3.3.1.tgz#15fc03e0c9ca5a150abb838690d9554ac06f77e4"
+  integrity sha512-fug18D7CXb8pv8JoQ0D0JmZaIYDQoKLiyZxkAy5P8Cln/FwlNsdzwQILDph62EdGY5pvsJ2Jd1T5qgHAExe/tg==
   dependencies:
     ansi-colors "^3.2.3"
     clone "^2.1.1"
@@ -5457,7 +5457,7 @@ vscode-nls-dev@3.2.7:
     xml2js "^0.4.19"
     yargs "^13.2.4"
 
-vscode-nls@^4.1.0:
+vscode-nls@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/vscode-nls/-/vscode-nls-4.1.2.tgz#ca8bf8bb82a0987b32801f9fddfdd2fb9fd3c167"
   integrity sha512-7bOHxPsfyuCqmP+hZXscLhiHwe7CSuFE4hyhbs22xPIhQ4jv99FcR4eBzfYYVLP356HNFpdvz63FFb/xw6T4Iw==
@@ -5470,7 +5470,7 @@ vscode-test@^0.4.1:
     http-proxy-agent "^2.1.0"
     https-proxy-agent "^2.2.1"
 
-vscode@^1.1.33:
+vscode@^1.1.36:
   version "1.1.36"
   resolved "https://registry.yarnpkg.com/vscode/-/vscode-1.1.36.tgz#5e1a0d1bf4977d0c7bc5159a9a13d5b104d4b1b6"
   integrity sha512-cGFh9jmGLcTapCpPCKvn8aG/j9zVQ+0x5hzYJq5h5YyUXVGa1iamOaB2M2PZXoumQPES4qeAP1FwkI0b6tL4bQ==
