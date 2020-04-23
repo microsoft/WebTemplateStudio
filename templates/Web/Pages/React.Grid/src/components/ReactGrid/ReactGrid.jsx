@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import CONSTANTS from "../../constants";
 import GridItem from "./GridItem";
 
-const ReactGrid = () => {
+const Param_SourceName_Pascal = () => {
   const [items, setItems] = useState([]);
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
   const centeredHeaderStyle = classnames("text-center", styles.header);
@@ -74,4 +74,4 @@ const ReactGrid = () => {
   );
 }
 
-export default ReactGrid;
+export default Param_SourceName_Pascal;

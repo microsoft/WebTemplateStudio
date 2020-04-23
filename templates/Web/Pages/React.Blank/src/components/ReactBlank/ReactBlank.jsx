@@ -1,6 +1,6 @@
 ﻿import React from "react";
 
-const ReactBlank = () => {
+const Param_SourceName_Pascal = () => {
   return <main id="mainContent" />;
 }
-export default ReactBlank;
+export default Param_SourceName_Pascal;
