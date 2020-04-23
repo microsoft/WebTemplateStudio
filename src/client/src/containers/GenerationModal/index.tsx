@@ -32,7 +32,7 @@ import keyUpHandler from "../../utils/keyUpHandler";
 import { sendTelemetry, generateProject } from "../../utils/extensionService/extensionService";
 import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
-import { rootSelector } from "../../store/userSelection/app/selector";
+import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB } from "../../store/userSelection/services/servicesSelector";
 import { getAppService } from "../../store/userSelection/services/servicesSelector";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../store/userSelection/frameworks/action";
@@ -73,7 +73,7 @@ const GenerationModal = ({
   const { vscode } = React.useContext(AppContext);
 
 
-  const engine = useSelector((state: AppState) => rootSelector(state));
+  const generationData = useSelector(getGenerationData);
   const cosmos = useSelector(getCosmosDB);
   const isCosmosSelected = cosmos !== null;
   const appService = useSelector(getAppService);
@@ -123,12 +123,7 @@ const GenerationModal = ({
   const dispatch = useDispatch();
 
   React.useEffect(()=>{
-    generateProject(engine,
-      isCosmosSelected,
-      cosmos,
-      isAppServiceSelected,
-      appService,
-      vscode);
+    generateProject(generationData, vscode);
     addMessageEventsFromExtension();
   },[]);
 

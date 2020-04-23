@@ -4,7 +4,8 @@ import { getOutputPath, getProjectName } from "./wizardSelectionSelector/wizardS
 import { AppState } from "../../combineReducers";
 import { UserSelectionState } from "../combineReducers";
 import { IOption } from "../../../types/option";
-import { getProjectTypeSelector, getServicesSelector } from "../../config/app/selector";
+import { getProjectTypeSelector } from "../../config/app/selector";
+import { getServices } from "../services/servicesSelector";
 
 const getWizardSelectionsUserSelector = (state: AppState): UserSelectionState => state.userSelection;
 const getBackendOptionsSelector = (state: AppState): IOption[] => state.templates.backendOptions;
@@ -66,7 +67,7 @@ const getRuntimeStackSelector = createSelector(
   (version) => version === "" ? "" : version.split("|")[0]
 )
 
-const rootSelector = createSelector(
+const getGenerationData = createSelector(
   getProjectName,
   getOutputPath,
   getProjectTypeSelector,
@@ -74,7 +75,7 @@ const rootSelector = createSelector(
   getBackendFrameworkSelector,
   getLinuxVersionSelector,
   getPagesSelector,
-  getServicesSelector,
+  getServices,
   (
     projectName,
     path,
@@ -98,4 +99,4 @@ const rootSelector = createSelector(
   }
 );
 
-export { rootSelector, getRuntimeStackSelector };
+export { getGenerationData, getRuntimeStackSelector };
