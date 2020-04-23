@@ -41,19 +41,10 @@ const ReactGrid = () => {
 
   return (
     <main id="mainContent">
-      <div className={centeredHeaderStyle}>
-        <p>This is placeholder text. Your web app description goes here.</p>
-        <a
-          href="https://github.com/Microsoft/WebTemplateStudio"
-          className="btn btn-primary my-2"
-        >
-          Link to our Github
-        </a>
-      </div>
 
       <div className="container">
-        <div className="row justify-content-center py-5">
-          <h1>Bootstrap Grid Template</h1>
+        <div className="row justify-content-center mt-5 p-0">
+          <h3>ReactGrid</h3>
         </div>
 
         <div className="row justify-content-around text-center pb-5">

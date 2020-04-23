@@ -1,6 +1,9 @@
 ﻿<template>
   <div>
     <main id="mainContent" class="container-fluid">
+      <div class="row justify-content-center py-5">
+        <h3>VueMasterDetail</h3>
+      </div>
       <div class="row">
         <div class="col-2 p-0 border-right sidebar">
           <div class="list-group list-group-flush border-bottom">

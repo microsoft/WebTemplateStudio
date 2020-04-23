@@ -92,10 +92,10 @@ const ReactList = () => {
 
   return (
     <main id="mainContent" className="container">
+      <div class="row justify-content-center py-5">
+        <h3>ReactList</h3>
+      </div>
       <div className="row">
-        <div className="col mt-5 p-0">
-          <h3>Bootstrap List Template</h3>
-        </div>
         <div className="col-12 p-0">
           <Form addItem={addItem}/>
         </div>
