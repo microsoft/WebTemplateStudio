@@ -29,7 +29,7 @@ import { strings as messages } from "./strings";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
-import { sendTelemetry, generateProject } from "../../utils/extensionService/extensionService";
+import { sendTelemetry, generateProject, openLogFile } from "../../utils/extensionService/extensionService";
 import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
 import { getGenerationData } from "../../store/userSelection/app/selector";
@@ -273,9 +273,16 @@ const GenerationModal = ({
             </div>
           )}
           {isTemplatesFailed && (
+            <div className={styles.inLine}>
+            <button
+              className={classnames(buttonStyles.buttonLink, styles.link)}
+              onClick={() => openLogFile(vscode)}>
+              {formatMessage(messages.showLog)}
+            </button>
             <div role="img" aria-label="project creation failed">
               <ErrorRed className={styles.iconError} />
             </div>
+          </div>            
           )}
         </React.Fragment>
       </div>
@@ -320,8 +327,15 @@ const GenerationModal = ({
           >
             <React.Fragment>
               <div>{serviceTitle}</div>
-              <div role="img" aria-label={halted}>
-                <ErrorRed className={styles.iconError} />
+              <div className={styles.inLine}>
+                <button
+                  className={classnames(buttonStyles.buttonLink, styles.link)}
+                  onClick={() => openLogFile(vscode)}>
+                  {formatMessage(messages.showLog)}
+                </button>
+                <div role="img" aria-label={halted}>
+                  <ErrorRed className={styles.iconError} />
+                </div>
               </div>
             </React.Fragment>
           </div>
@@ -337,16 +351,18 @@ const GenerationModal = ({
         if (serviceStatus[service].isFailed) {
           const failed = `${serviceTitle} deployment failed`;
           return (
-            <div
-              className={styles.checkmarkStatusRow}
-              key={`${messages.isDeploying.defaultMessage}${idx}`}
-            >
-              <React.Fragment>
+            <div className={styles.checkmarkStatusRow} key={`${messages.isDeploying.defaultMessage}${idx}`}>
                 <div>{serviceTitle}</div>
+                <div className={styles.inLine}>
+                <button
+                  className={classnames(buttonStyles.buttonLink, styles.link)}
+                  onClick={() => openLogFile(vscode)}>
+                  {formatMessage(messages.showLog)}
+                </button>
                 <div role="img" aria-label={failed}>
                   <ErrorRed className={styles.iconError} />
                 </div>
-              </React.Fragment>
+              </div>
             </div>
           );
         }
