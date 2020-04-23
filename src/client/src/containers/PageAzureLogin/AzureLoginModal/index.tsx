@@ -59,15 +59,9 @@ const AzureLoginModal = (props: Props) => {
     // close sign in modal and opens azure service form
     if (isLoggedIn) {
       dispatch(closeModalAction());
-      if (
-        selectedAzureServiceName &&
-        selectedAzureServiceName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
-      ) {
+      if (selectedAzureServiceName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE) {
         dispatch(ModalActions.openAppServiceModalAction());
-      } else if (
-        selectedAzureServiceName &&
-        selectedAzureServiceName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE
-      ) {
+      } else if (selectedAzureServiceName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB) {
         dispatch(ModalActions.openCosmosDbModalAction());
       }
     }
