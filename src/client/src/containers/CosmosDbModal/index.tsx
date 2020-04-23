@@ -85,7 +85,9 @@ const CosmosModal = ({ intl }: Props) => {
       location,
       resourceGroup,
       api,
-      internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
+      internalName: api === AZURE.COSMOS_APIS.MONGO 
+        ? WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO
+        : WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL,
     };
     dispatch(saveCosmosDbAction(cosmosSelection));
   };
