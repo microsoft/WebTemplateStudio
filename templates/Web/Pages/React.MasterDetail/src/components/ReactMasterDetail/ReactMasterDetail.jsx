@@ -43,9 +43,6 @@ const Param_SourceName_Pascal = () => {
   return (
     <main id="mainContent">
       <div className="container-fluid">
-        <div className="row justify-content-center py-5">
-          <h3>ReactMasterDetail</h3>
-        </div>
         <div className="row">
           <div className={sidebarStyle}>
             <div className="list-group list-group-flush border-bottom">
