@@ -42,6 +42,20 @@ export class Logger {
     Logger.outputChannel.appendLine("[".concat(new Date().toLocaleString(), "]", "[", source, "] ", data));
   }
 
+  public static appendError(source: LogSource, message: string, error: Error): void {
+    const level: LogLevel = "error";
+    const showLogInfo = "Show log for more info.";
+    const messageToOutput = `${message} ${error.message} ${showLogInfo}`;
+    const stackMessage = error.stack ? error.stack : error.message;
+    const messageToLog = `${message} ${stackMessage}`;
+
+    if (Logger.outputChannel === undefined) {
+      Logger.initializeOutputChannel(OUTPUT_CHANNEL_DEFAULT);
+    }
+    Logger.logger[level]("[", source, "] ", messageToLog);
+    Logger.outputChannel.appendLine("[".concat(new Date().toLocaleString(), "]", "[", source, "] ", messageToOutput));
+  }
+
   public static display(): void {
     if (Logger.outputChannel === undefined) {
       Logger.initializeOutputChannel(OUTPUT_CHANNEL_DEFAULT);
