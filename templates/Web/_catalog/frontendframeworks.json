@@ -11,7 +11,7 @@
       "Any"
     ],
     "tags": {
-      "version": "16.12.0",
+      "version": "16.13.1",
       "checkVersionPackageName":"react",
       "checkVersionPackageSource":"npm",
       "preview": false
