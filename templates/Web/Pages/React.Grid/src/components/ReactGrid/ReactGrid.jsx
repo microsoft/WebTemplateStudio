@@ -3,7 +3,7 @@ import WarningMessage from "../WarningMessage";
 import CONSTANTS from "../../constants";
 import GridItem from "./GridItem";
 
-const ReactGrid = () => {
+const Param_SourceName_Pascal = () => {
   const [items, setItems] = useState([]);
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
 
@@ -62,4 +62,4 @@ const ReactGrid = () => {
   );
 }
 
-export default ReactGrid;
+export default Param_SourceName_Pascal;

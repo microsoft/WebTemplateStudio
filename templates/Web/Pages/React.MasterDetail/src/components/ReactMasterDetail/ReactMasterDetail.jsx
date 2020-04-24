@@ -6,7 +6,7 @@ import MasterList from "./MasterList";
 import styles from "./styles.module.css";
 import CONSTANTS from "../../constants";
 
-const ReactMasterDetail = () => {
+const Param_SourceName_Pascal = () => {
   const [sampleOrders, setSampleOrders] = useState([]);
   const [currentSampleOrder, setCurrentSampleOrder] = useState({});
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
@@ -74,4 +74,4 @@ const ReactMasterDetail = () => {
   );
 }
 
-export default ReactMasterDetail;
+export default Param_SourceName_Pascal;

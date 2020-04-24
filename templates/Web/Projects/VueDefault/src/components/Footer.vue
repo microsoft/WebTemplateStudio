@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  name: "TheFooter"
+  name: "Footer"
 };
 </script>
 

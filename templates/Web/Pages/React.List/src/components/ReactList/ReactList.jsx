@@ -4,7 +4,7 @@ import Form from "./Form";
 import WarningMessage from "../WarningMessage";
 import CONSTANTS from "../../constants";
 
-const ReactList = () => {
+const Param_SourceName_Pascal = () => {
   const [items, setItems] = useState([]);
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
 
@@ -116,4 +116,4 @@ const ReactList = () => {
   );
 }
 
-export default ReactList;
+export default Param_SourceName_Pascal;

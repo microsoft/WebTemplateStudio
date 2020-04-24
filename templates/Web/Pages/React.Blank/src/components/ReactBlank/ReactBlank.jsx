@@ -1,6 +1,6 @@
 ﻿import React from "react";
 
-const ReactBlank = () => {
+const Param_SourceName_Pascal = () => {
   return <main id="mainContent">
     <div className="container">
       <div className="row justify-content-center mt-5 p-0">
@@ -9,4 +9,4 @@ const ReactBlank = () => {
     </div>
   </main>;
 }
-export default ReactBlank;
+export default Param_SourceName_Pascal;

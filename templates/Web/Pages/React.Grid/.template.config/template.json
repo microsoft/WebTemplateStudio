@@ -19,7 +19,8 @@
     "wts.displayOrder": "1",
     "wts.genGroup": "0",
     "wts.rightClickEnabled": "true",
-    "wts.licenses": "[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)"
+    "wts.licenses": "[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)",
+    "wts.casing.sourceName": "pascal"
   },
   "sourceName": "ReactGrid",
   "preferNameDirectory": true,
@@ -32,6 +33,10 @@
     "wts.projectName": {
       "type": "parameter",
       "replaces": "Param_ProjectName"
+    },
+    "wts.sourceName.casing.pascal": {
+      "type": "parameter",
+      "replaces": "Param_SourceName_Pascal"
     }
   }
 }
