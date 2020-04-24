@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-2 p-0 border-right sidebar">
           <div class="list-group list-group-flush border-bottom">
-            <MasterDetailSideBarTab
+            <MasterDetailList
               v-for="(sampleOrder) in sampleOrders"
               :key="sampleOrder.id"
               :sampleOrder="sampleOrder"
@@ -26,7 +26,7 @@
 <script>
 import CONSTANTS from "@/constants";
 import MasterDetailPage from "@/components/MasterDetailPage";
-import MasterDetailSideBarTab from "@/components/MasterDetailSideBarTab";
+import MasterDetailList from "@/components/MasterDetailList";
 import BaseWarningMessage from "@/components/BaseWarningMessage";
 
 export default {
@@ -34,7 +34,7 @@ export default {
 
   components: {
     MasterDetailPage,
-    MasterDetailSideBarTab,
+    MasterDetailList,
     BaseWarningMessage
   },
 

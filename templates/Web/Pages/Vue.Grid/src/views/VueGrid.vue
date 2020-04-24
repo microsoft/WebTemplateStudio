@@ -1,18 +1,10 @@
 ﻿<template>
   <div>
     <main id="mainContent">
-      <div class="text-center header">
-        <h1>Param_ProjectName</h1>
-        <p>This is placeholder text. Your web app description goes here.</p>
-        <a
-          href="https://github.com/Microsoft/WebTemplateStudio"
-          class="btn btn-primary my-2"
-        >Link to our Github</a>
-      </div>
 
       <div class="container">
         <div class="row justify-content-center py-5">
-          <h1>Bootstrap VueGrid Template</h1>
+          <h3>VueGrid</h3>
         </div>
 
         <div class="row justify-content-around text-center pb-5">
