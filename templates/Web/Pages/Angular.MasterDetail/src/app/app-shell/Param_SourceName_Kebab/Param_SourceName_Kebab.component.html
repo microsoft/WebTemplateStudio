@@ -1,0 +1,26 @@
+﻿<main id="mainContent">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-2 p-0 border-right sidebar">
+        <app-master-list
+          class="list-group list-group-flush border-bottom"
+          *ngFor="let sampleOrder of (sampleOrders$ | async)"
+          (itemClick)="selectSampleOrder(sampleOrder)"
+          [sampleOrder]="sampleOrder"
+        >
+        </app-master-list>
+      </div>
+      <app-page
+        class="col"
+        *ngIf="currentSampleOrder"
+        [sampleOrder]="currentSampleOrder">
+      </app-page>
+    </div>
+  </div>
+  <app-warning-message
+    *ngIf="warningMessageOpen"
+    [text]="warningMessageText"
+    (warningMessageOpen)="handleWarningClose($event)"
+  >
+  </app-warning-message>
+</main>

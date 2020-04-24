@@ -1,9 +1,9 @@
 ﻿<template>
   <main class="container" id="mainContent">
+    <div class="row justify-content-center py-5">
+      <h3>VueList</h3>
+    </div>
     <div class="row">
-      <div class="col mt-5 p-0">
-        <h3>Bootstrap VueList Template</h3>
-      </div>
       <div class="col-12 p-0">
         <ListForm v-model="textField" @addListItem="addListItem" />
       </div>
