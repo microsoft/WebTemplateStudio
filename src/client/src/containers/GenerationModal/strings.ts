@@ -88,5 +88,9 @@ export const strings = defineMessages({
   templateGeneration: {
     id: "generationModal.templateGeneration",
     defaultMessage: "Template Generation"
+  },
+  showLog: {
+    id: "generationModal.showLog",
+    defaultMessage: "Show Log"
   }
 });
