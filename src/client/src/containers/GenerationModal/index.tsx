@@ -66,6 +66,7 @@ const GenerationModal = ({
   const [isTemplatesFailed, setIsTemplatesFailed] = React.useState(false);
   const [isServicesDeployed, setIsServicesDeployed] = React.useState(false);
   const [isServiceFailed, setIsServiceFailed] = React.useState(false);
+  const [showCreateNewProject, setShowCreateNewProject] = React.useState(false);
   
   const [templateGenerated, setTemplateGenerated] = React.useState(false);
   const [templateGenerationInProgress, setTemplateGenerationInProgress] = React.useState(false);
@@ -104,6 +105,8 @@ const GenerationModal = ({
 
       setIsTemplateGenerated(generationStatus.templates.success);
       setIsTemplatesFailed(generationStatus.templates.failure);
+
+      setShowCreateNewProject(generationStatus.finished);
     }
   },[generationStatus]);
 
@@ -452,9 +455,7 @@ const GenerationModal = ({
           </a>
         )}
 
-        {((isServicesSelected && (isServiceFailed || isServicesDeployed)) ||
-         (!isServicesSelected && (isTemplatesFailed || isTemplateGenerated)))
-         && (
+        {showCreateNewProject && (
           <button
             className={classnames(styles.button, {
               [buttonStyles.buttonDark]: templateGenerated,

@@ -431,7 +431,8 @@ const mockVsCodeApi = () => ({
                 appService: {
                   success: true,
                   failure: false
-                }
+                },
+                finished: true
               }
             },
             "*"

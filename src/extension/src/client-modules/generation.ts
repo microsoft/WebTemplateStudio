@@ -57,6 +57,7 @@ export class Generation extends WizardServant {
         }
       }
     }
+    generationStatus.setFinished(true);
     return { payload: undefined };
   }
 
