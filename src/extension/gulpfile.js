@@ -26,6 +26,40 @@ const outDest = "out";
 // A list of all locales supported by VSCode can be found here: https://code.visualstudio.com/docs/getstarted/locales
 const languages = [{ folderName: "en", id: "en" }];
 
+function compile(buildNls) {
+  const r = tsProject
+    .src()
+    .pipe(sourcemaps.init())
+    .pipe(tsProject())
+    .js.pipe(buildNls ? nls.rewriteLocalizeCalls() : es.through())
+    .pipe(
+      buildNls
+        ? nls.createAdditionalLanguageFiles(languages, "locales", "out")
+        : es.through()
+    );
+
+  if (inlineMap && inlineSource) {
+    r = r.pipe(sourcemaps.write());
+  } else {
+    r = r.pipe(
+      sourcemaps.write("../out", {
+        // no inlined source
+        includeContent: inlineSource,
+        // Return relative source map root directories per file.
+        sourceRoot: "../src"
+      })
+    );
+  }
+
+  // Copy configuration.json to out folder because gulp-typescript-package
+  // has a issue with resolveJsonModule option
+  // (https://github.com/ivogabe/gulp-typescript/issues/609)
+  gulp.src('src/configuration.json')
+    .pipe(gulp.dest(outDest));
+
+  return r.pipe(gulp.dest(outDest));
+}
+
 gulp.task("clean", function() {
   return del(
     [
@@ -93,36 +127,4 @@ gulp.task(
 
 //---- internal
 
-function compile(buildNls) {
-  var r = tsProject
-    .src()
-    .pipe(sourcemaps.init())
-    .pipe(tsProject())
-    .js.pipe(buildNls ? nls.rewriteLocalizeCalls() : es.through())
-    .pipe(
-      buildNls
-        ? nls.createAdditionalLanguageFiles(languages, "locales", "out")
-        : es.through()
-    );
 
-  if (inlineMap && inlineSource) {
-    r = r.pipe(sourcemaps.write());
-  } else {
-    r = r.pipe(
-      sourcemaps.write("../out", {
-        // no inlined source
-        includeContent: inlineSource,
-        // Return relative source map root directories per file.
-        sourceRoot: "../src"
-      })
-    );
-  }
-
-  // Copy configuration.json to out folder because gulp-typescript-package
-  // has a issue with resolveJsonModule option
-  // (https://github.com/ivogabe/gulp-typescript/issues/609)
-  gulp.src('src/configuration.json')
-    .pipe(gulp.dest(outDest));
-
-  return r.pipe(gulp.dest(outDest));
-}

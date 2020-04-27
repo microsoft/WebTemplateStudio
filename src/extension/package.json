@@ -88,7 +88,10 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "webpack --mode production",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch",
+    "test-compile": "tsc -p ./",
     "compile": "gulp compile",
     "build": "gulp build",
     "watch": "tsc -watch -p ./",
@@ -111,11 +114,14 @@
     "gulp-filter": "^6.0.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "typescript": "^3.8.3",
     "kind-of": "^6.0.3",
     "run-sequence": "^2.2.1",
+    "ts-loader": "^7.0.1",
+    "typescript": "^3.8.3",
     "vscode": "^1.1.36",
-    "vscode-nls-dev": "^3.3.1"
+    "vscode-nls-dev": "^3.3.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "extensionDependencies": [
     "ms-vscode.azure-account",
