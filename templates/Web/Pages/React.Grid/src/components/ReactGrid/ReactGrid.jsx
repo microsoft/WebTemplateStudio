@@ -1,14 +1,11 @@
 ﻿import React, { useState } from "react";
-import classnames from "classnames";
 import WarningMessage from "../WarningMessage";
-import styles from "./styles.module.css";
 import CONSTANTS from "../../constants";
 import GridItem from "./GridItem";
 
 const Param_SourceName_Pascal = () => {
   const [items, setItems] = useState([]);
   const [warningMessage, setWarningMessage] = useState({warningMessageOpen: false, warningMessageText: ""});
-  const centeredHeaderStyle = classnames("text-center", styles.header);
 
   const getItems = () => {
     const promiseItems = fetch(CONSTANTS.ENDPOINT.GRID)
@@ -41,19 +38,10 @@ const Param_SourceName_Pascal = () => {
 
   return (
     <main id="mainContent">
-      <div className={centeredHeaderStyle}>
-        <p>This is placeholder text. Your web app description goes here.</p>
-        <a
-          href="https://github.com/Microsoft/WebTemplateStudio"
-          className="btn btn-primary my-2"
-        >
-          Link to our Github
-        </a>
-      </div>
 
       <div className="container">
-        <div className="row justify-content-center py-5">
-          <h1>Bootstrap Grid Template</h1>
+        <div className="row justify-content-center mt-5 p-0">
+          <h3>ReactGrid</h3>
         </div>
 
         <div className="row justify-content-around text-center pb-5">
