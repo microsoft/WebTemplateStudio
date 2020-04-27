@@ -57,6 +57,7 @@ export class Generation extends WizardServant {
         }
       }
     }
+    generationStatus.setFinished(true);
     return { payload: undefined };
   }
 
@@ -84,7 +85,7 @@ export class Generation extends WizardServant {
       generationStatus.sendToClientGenerationPath(result.generationPath);
       return result;
     } catch (error) {
-      Logger.appendLog("EXTENSION", "error", `Error on generation project: ${error}`);
+      Logger.appendError("EXTENSION", "Error on generation project:", error);
       generationStatus.setTemplatesStatus(false);
       return;
     }
@@ -129,7 +130,7 @@ export class Generation extends WizardServant {
       await AzureServices.deployResourceGroup(resourceGroup);
       generationStatus.setResourceGroupStatus(true);
     } catch (error) {
-      Logger.appendLog("EXTENSION", "error", `Error on Azure Resource Group creation: ${error}`);
+      Logger.appendError("EXTENSION", "Error on Azure Resource Group creation:", error);
       generationStatus.setResourceGroupStatus(false);
     }
   }
@@ -177,7 +178,7 @@ export class Generation extends WizardServant {
         generationStatus.setAppServiceStatus(true);
         result.isDeployed = true;
       } catch (error) {
-        Logger.appendLog("EXTENSION", "error", `Error on deploy Azure App Service: ${error}`);
+        Logger.appendError("EXTENSION", "Error on deploy Azure App Service:", error);
         generationStatus.setAppServiceStatus(false);
       }
     }
@@ -202,7 +203,7 @@ export class Generation extends WizardServant {
         result.payload.connectionString = connectionString;
         await this.replaceConnectionString(path, connectionString);
       } catch (error) {
-        Logger.appendLog("EXTENSION", "error", `Error on deploy CosmosDB Service: ${error}`);
+        Logger.appendError("EXTENSION", "Error on deploy CosmosDB Service:", error);
         generationStatus.setCosmosStatus(false);
       }
     }

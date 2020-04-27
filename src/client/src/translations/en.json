@@ -123,6 +123,7 @@
   "generationModal.seeReadMePrefix": "Click 'Open Project' and see ",
   "generationModal.seeReadMePrefixWithAzure": "See ",
   "generationModal.seeReadMeSuffix": " to get instructions.",
+  "generationModal.showLog": "Show Log",
   "generationModal.success": "is deployed on",
   "generationModal.templateGeneration": "Template Generation",
   "generationModal.unknownStatus": "Unknown Status",
