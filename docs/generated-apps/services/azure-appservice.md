@@ -17,10 +17,21 @@ To create an Azure App Service using Web Template Studio:
 
 - Enter a _Name_ for your azure web app. Enter a unique app name that includes only the valid characters, those are a-z, A-Z, 0-9, and -. Alternatively, you can accept the automatically generated unique name. The URL of the web app is `http://<app_name>.azurewebsites.net`, where `<app_name>` is your app name.
 
-_**Note:**_ by default, Web Template Studio creates a Resource Group with the same name as the web app. It will also create the free BASIC App Service Plan that hosts the web app. [More info for App Service Plans](https://azure.microsoft.com/en-us/pricing/details/app-service/plans/).
-
 ![azure-appservice-card](../../resources/azure-appservice-createappservice.png)
 
+### Advanced mode
+
+By default, Web Template Studio deploy App Service in Central US location and creates a Resource Group with the same name as the web app. It will also create the free BASIC App Service Plan that hosts the web app. [More info for App Service Plans](https://azure.microsoft.com/en-us/pricing/details/app-service/plans/).
+
+We can change this settings using advanced mode. To display the advanced mode, click on the "advanced mode" button and the App Service modal will show two new configuration options.
+
+![azure-appservice-card](../../resources/azure-appservice-createappservice-advanced-mode.png)
+
+- Location: Azure region where the App Service will be deployed. Central US selected by default. [More info about Azure Locations](https://azure.microsoft.com/en-us/global-infrastructure/regions/).
+
+- Resource Group: A resource group is a container that holds related resources for an Azure solution. If we want to deploy the App Service in any resource group that we have created in the Azure Subscription previously, we must select it in the dropdown. If we don't select any resource group, it will be created a Resource Group with the same name as the web app.
+
+## Creating App Service
 Once you hit generate on the summary page, Web Template Studio will create an Azure App Service that will be accessible from `http://<app_name>.azurewebsites.net`.
 
 Web Template Studio uses an arm-template for Azure App Services (generated under the arm-templates directory). This template contains the definitions and parameters for all resources that need to deploy. Once Azure receives your template, it takes about 2-3 minutes to create the App Service and the App Service Plan. The app service initially contains an empty web app.

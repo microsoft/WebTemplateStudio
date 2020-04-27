@@ -25,6 +25,20 @@ To deploy Cosmos DB using Web Template Studio:
   
 ![azure-cosmos-modal](../../resources/azure-cosmos-modal.png)
 
+### Advanced mode
+
+By default, Web Template Studio deploy Cosmos DB in Central US location and creates a Resource Group with the same name as the web app.
+
+We can change this settings using advanced mode. To display the advanced mode, click on the "advanced mode" button and the Cosmos DB modal will show two new configuration options.
+
+![azure-cosmos-modal](../../resources/azure-cosmos-modal-advanced-mode.png)
+
+- Location: Azure region where the Cosmos DB will be deployed. Central US selected by default. [More info about Azure Locations](https://azure.microsoft.com/en-us/global-infrastructure/regions/).
+
+- Resource Group: A resource group is a container that holds related resources for an Azure solution. If we want to deploy the Cosmos DB in any resource group that we have created in the Azure Subscription previously, we must select it in the dropdown. If we don't select any resource group, it will be created a Resource Group with the same name as the web app.
+
+## Creating Cosmos DB
+
 Once you hit generate on the summary page, Web Template Studio will deploy your database and display a popup with your
 database connection string once it's available (usually within 5-6 minutes). This will prompt you to replace the
 connection string in your _.env_ file with the new connection string. _**Note:**_ For advanced users, the _arm templates_
