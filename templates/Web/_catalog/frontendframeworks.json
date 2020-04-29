@@ -11,7 +11,7 @@
       "Any"
     ],
     "tags": {
-      "version": "16.12.0",
+      "version": "16.13.1",
       "checkVersionPackageName":"react",
       "checkVersionPackageSource":"npm",
       "preview": false
@@ -29,7 +29,7 @@
       "Any"
     ],
     "tags": {
-      "version": "9.0.2",
+      "version": "9.1.3",
       "checkVersionPackageName":"@angular/core",
       "checkVersionPackageSource":"npm",
       "preview": false

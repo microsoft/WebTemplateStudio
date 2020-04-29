@@ -23,6 +23,7 @@ import { Telemetry } from "./client-modules/telemetry";
 import { AzureModule } from "./client-modules/azureModule";
 import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
 import { ISyncReturnType } from "./types/syncReturnType";
+import { LoggerModule } from "./client-modules/loggerModule";
 
 export class Controller {
   /**
@@ -34,6 +35,7 @@ export class Controller {
   public static TelemetryService: ITelemetryService;
   private vscodeUI: VSCodeUI;
   public static Logger: Logger;
+  private loggerModule: LoggerModule;
   private AzureModule: AzureModule;
   private Generation: Generation;
   private Validator: Validator;
@@ -54,7 +56,7 @@ export class Controller {
       [ExtensionModule.Azure, this.AzureModule],
       [ExtensionModule.Validator, this.Validator],
       [ExtensionModule.Generate, this.Generation],
-      [ExtensionModule.Logger, Controller.Logger],
+      [ExtensionModule.Logger, this.loggerModule],
       [ExtensionModule.DependencyChecker, this.DependencyChecker],
       [ExtensionModule.CoreTSModule, this.CoreTSModule],
       [ExtensionModule.Defaults, this.Defaults]
@@ -116,6 +118,7 @@ export class Controller {
     this.Validator = new Validator();
     this.AzureModule = new AzureModule();
     this.Generation = new Generation(Controller.TelemetryService);
+    this.loggerModule = new LoggerModule();
     this.DependencyChecker = new DependencyChecker();
     this.CoreTSModule = new CoreTSModule();
     this.Telemetry = new Telemetry(Controller.TelemetryService);

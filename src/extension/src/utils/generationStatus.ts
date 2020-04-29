@@ -6,6 +6,7 @@ export class GenerationStatus {
   resourceGroupStatus?: boolean;
   cosmosStatus?: boolean;
   appServiceStatus?: boolean;
+  finished = false;
 
   updateGenerationStatusMessage(message: string): void {
     Controller.reactPanelContext.postMessageWebview({
@@ -41,12 +42,18 @@ export class GenerationStatus {
     this.sendGenerationStatus();
   }
 
+  setFinished(value: boolean): void {
+    this.finished = value;
+    this.sendGenerationStatus();
+  }
+
   private sendGenerationStatus(): void {
     const payload = {
       templates: this.getPayloadValue(this.templatesStatus),
       resourceGroup: this.getPayloadValue(this.resourceGroupStatus),
       cosmos: this.getPayloadValue(this.cosmosStatus),
       appService: this.getPayloadValue(this.appServiceStatus),
+      finished: this.finished,
     };
 
     Controller.reactPanelContext.postMessageWebview({
