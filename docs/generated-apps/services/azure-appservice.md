@@ -23,7 +23,7 @@ To create an Azure App Service using Web Template Studio:
 
 By default, Web Template Studio deploys the App Service in the location Central US and creates a Resource Group with the same name as the web app. It will also create the free BASIC App Service Plan that hosts the web app. [More info for App Service Plans](https://azure.microsoft.com/en-us/pricing/details/app-service/plans/).
 
-We can change theese settings using the advanced mode. To display the advanced mode, click on the "advanced mode" button and the App Service modal will show two new configuration options.
+We can change these settings using the advanced mode. To display the advanced mode, click on the "advanced mode" button and the App Service modal will show two new configuration options.
 
 ![azure-appservice-card](../../resources/azure-appservice-createappservice-advanced-mode.png)
 
