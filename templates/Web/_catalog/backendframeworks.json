@@ -26,7 +26,7 @@
     "platform": "Web",
     "languages": ["Any"],
     "tags": {
-      "version": "1.1.1",
+      "version": "1.1.2",
       "checkVersionPackageName":"pallets/flask",
       "checkVersionPackageSource":"github",
       "preview": false,
@@ -43,7 +43,7 @@
     "platform": "Web",
     "languages": ["Any"],
     "tags": {
-      "version": "0.14.3",
+      "version": "0.14.6",
       "latestVersion":"",
       "checkVersionPackageName":"moleculer",
       "checkVersionPackageSource":"npm",
