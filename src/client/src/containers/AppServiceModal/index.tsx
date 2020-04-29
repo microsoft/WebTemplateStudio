@@ -128,7 +128,7 @@ const AppServiceModal = ({ intl }: Props) => {
       </div>
       <div className={styles.footer}>
           <button
-            className={classNames(buttonStyles.buttonLink, styles.showAdvancedModeLink)}
+            className={buttonStyles.buttonLink}
             onClick={() => setShowAdvanced(!showAdvanced)}>
               {formatMessage(showAdvanced ? messages.hideAdvancedMode : messages.showAdvancedMode)}
               <ArrowDown className={classNames(styles.advancedModeIcon, {[styles.rotateAdvancedModeIcon]: !showAdvanced})} />

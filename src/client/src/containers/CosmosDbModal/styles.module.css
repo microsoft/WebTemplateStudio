@@ -57,10 +57,6 @@
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
 
-.showAdvancedModeLink {
-  padding: 0.5em;
-}
-
 .hide {
   display: none;
 }
