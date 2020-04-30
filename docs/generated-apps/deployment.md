@@ -19,37 +19,39 @@ The easiest way to deploy an application generated with Web Template Studio is t
    
 3. In the Command Palette, type `Web Template Studio: Deploy App` and press `Enter` to launch the deploy.
 
-![Web Template Studio Deploy App Command](./resources/select-webts-deploy-command.png)
+![Web Template Studio Deploy App Command](../resources/select-webts-deploy-command.png)
 
 Web Template Studio will begin preparing the application for deployment. You can see the progress in the Visual Studio Code output. In addition, a notification will be launched for each step executed.
 
  - It will run the `npm install` command to install all the necessary dependencies for the frontend and the backend apps.
 
-![Install Dependencies](./resources/preparing-deploy-install-dependencies.png)
+![Install Dependencies](../resources/preparing-deploy-install-dependencies.png)
   
  - Creating a Production Build:  creates a build directory with a production build of your frontend app.
 
-![Build project](./resources/preparing-deploy-build-project.png)
+![Build project](../resources/preparing-deploy-build-project.png)
  
  - Copy the build directory to `server/build`. In this way, the `server` folder will contain all the necessary frontend and backend files for the deployment.
 
-![Build directory](./resources/deploy-build-directory.png)
+![Build directory](../resources/deploy-build-directory.png)
   
  - Web Template Studio will automatically launch the command `Azure App Service: Deploy to Web App...`, which will be in charge of deploying the application to an Azure App Service.
 
     - If you have added an Azure App Service when creating your application with Web Template Studio, the application already has a deployment configuration, so it will use the created Azure App Service.
 
-    - Otherwise, Visual Studio Code will ask you for the deployment directory and if you want to create a new Azure App Service or use a previously created. **IMPORTANT**:exclamation::exclamation:: Remember to select the `server` folder for deployment to be successful.
+    - Otherwise, Visual Studio Code will ask you for the deployment directory and if you want to create a new Azure App Service or use a previously created. 
+    
+       **IMPORTANT**:exclamation: -  Remember to select the `server` folder for deployment to be successful.
   
-![Select deploy directory](./resources/select-folder-to-deploy.png)
+![Select deploy directory](../resources/select-folder-to-deploy.png)
   
   - Start the application deployment to Azure App Service. We can see the progress of the deployment in the output of the Azure App Service extension.
   
-![Deploying app service](./resources/deploying-azure-app-service.png)
+![Deploying app service](../resources/deploying-azure-app-service.png)
   
   - At the end of the deployment, Visual Studio Code shows us a notification that the deployment has been successful.
   
-![Deploying app service finished](./resources/deploying-azure-app-service-finished.png)
+![Deploying app service finished](../resources/deploying-azure-app-service-finished.png)
 
 
 
@@ -65,16 +67,16 @@ The Azure App Service Extension provides an easy way to manage and deploy your w
 3. Move the build folder into the server folder.
 4. Click the deploy button in the Azure App Service Extension.
 
-![Azure App Service Extension Deploy Button](./resources/azure-appservice-deploy-button.png)
+![Azure App Service Extension Deploy Button](../resources/azure-appservice-deploy-button.png)
 
 5. When prompted on which folder to deploy, select the server folder.
 6. Click yes when prompted to update your configuration to run `npm install` on the target server.
 
-![Azure App Service Extension Update Build Notification](./resources/azure-appservice-update-build-notification.png)
+![Azure App Service Extension Update Build Notification](../resources/azure-appservice-update-build-notification.png)
 
 7. If you are using a Cosmos Database add the Cosmos Keys in the .env file to the Application Settings of your Azure App Service. To run the app in production mode set the variable NODE_ENV to production in your Application Settings. You can add an Application Setting by right clicking the Application Settings tab in the Azure App Service Extension.
 
-![Azure App Service Extension Application Settings](./resources/azure-appservice-application-settings.png)
+![Azure App Service Extension Application Settings](../resources/azure-appservice-application-settings.png)
 
 8. Consider adding authentication and securing back-end APIs by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
 
@@ -86,19 +88,19 @@ This method will require you to have [git](https://git-scm.com/downloads) instal
 
 - Go to the [Azure Portal](https://portal.azure.com) and click on the _App Services_ button.
 
-  ![Portal image the button is on the left](./resources/azure-appservice-portal.png)
+  ![Portal image the button is on the left](../resources/azure-appservice-portal.png)
 
 - Click on the _Add_ button in the new window that appears.
 
-  ![Portal image the add button is on the top left](./resources/azure-appservice-add.png)
+  ![Portal image the add button is on the top left](../resources/azure-appservice-add.png)
 
 - Click the _web app_ button.
 
-  ![Portal image click webapp](./resources/azure-appservice-click-webapp.png)
+  ![Portal image click webapp](../resources/azure-appservice-click-webapp.png)
 
 - You will be presented with another screen on which you should click _create_.
 
-  ![Portal image click create](./resources/azure-appservice-click-create.png)
+  ![Portal image click create](../resources/azure-appservice-click-create.png)
 
 - Another screen will appear in which you are required to do the following actions:
 
@@ -110,15 +112,15 @@ This method will require you to have [git](https://git-scm.com/downloads) instal
    1. Click on the _App service_ button and you will be to create a new app service.
    2. If creating an _app service_ name it and select a location, and finally select the tier you want.
 
-![Portal image create resource](./resources/azure-appservice-createresource.png)
+![Portal image create resource](../resources/azure-appservice-createresource.png)
 
 6. Click create resource.
 
-![Portal image create resource create button](./resources/azure-appservice-createadd.png)
+![Portal image create resource create button](../resources/azure-appservice-createadd.png)
 
 - After clicking create you will get a notification. Click the bell icon on the top right to view notifications, then click the _go to resource_ button.
 
-![Portal image go to resource](./resources/azure-appservice-notification.png)
+![Portal image go to resource](../resources/azure-appservice-notification.png)
 
 You now have an app service resource in the cloud, where you can upload your web application.
 
@@ -126,7 +128,7 @@ You now have an app service resource in the cloud, where you can upload your web
 
 To be able to deploy your web application, you will need to do the following set of commands in either _terminal_ or _git bash_. **Note: you must be in the root of your generated project's directory**.
 
-![Root directory of generated project](./resources/azure-appservice-rootdirectory.png)
+![Root directory of generated project](../resources/azure-appservice-rootdirectory.png)
 
 `npm install && npm build` or `yarn install && yarn build`
 
