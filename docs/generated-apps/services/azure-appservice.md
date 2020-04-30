@@ -21,15 +21,15 @@ To create an Azure App Service using Web Template Studio:
 
 ### Advanced mode
 
-By default, Web Template Studio deploy App Service in Central US location and creates a Resource Group with the same name as the web app. It will also create the free BASIC App Service Plan that hosts the web app. [More info for App Service Plans](https://azure.microsoft.com/en-us/pricing/details/app-service/plans/).
+By default, Web Template Studio deploys the App Service in the location Central US and creates a Resource Group with the same name as the web app. It will also create the free BASIC App Service Plan that hosts the web app. [More info for App Service Plans](https://azure.microsoft.com/en-us/pricing/details/app-service/plans/).
 
-We can change this settings using advanced mode. To display the advanced mode, click on the "advanced mode" button and the App Service modal will show two new configuration options.
+We can change these settings using the advanced mode. To display the advanced mode, click on the "advanced mode" button and the App Service modal will show two new configuration options.
 
 ![azure-appservice-card](../../resources/azure-appservice-createappservice-advanced-mode.png)
 
-- Location: Azure region where the App Service will be deployed. Central US selected by default. [More info about Azure Locations](https://azure.microsoft.com/en-us/global-infrastructure/regions/).
+- Location: Azure region where the App Service will be deployed. Central US is selected by default. [More info about Azure Locations](https://azure.microsoft.com/en-us/global-infrastructure/regions/).
 
-- Resource Group: A resource group is a container that holds related resources for an Azure solution. If we want to deploy the App Service in any resource group that we have created in the Azure Subscription previously, we must select it in the dropdown. If we don't select any resource group, it will be created a Resource Group with the same name as the web app.
+- Resource Group: A resource group is a container that holds related resources for an Azure solution. If we want to deploy the App Service in any resource group that you have created in the Azure Subscription previously, we can select it in the dropdown. If you don't select any resource group, it will be created in a new Resource Group with the same name as the web app.
 
 ## Creating App Service
 Once you hit generate on the summary page, Web Template Studio will create an Azure App Service that will be accessible from `http://<app_name>.azurewebsites.net`.
