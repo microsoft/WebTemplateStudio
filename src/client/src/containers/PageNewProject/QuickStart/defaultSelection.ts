@@ -18,25 +18,7 @@ const BACK_END_SELECTION: ISelected = {
   version: "v10.15.0"
 };
 
-const PAGES_SELECTION: ISelected[] = [
-  {
-    title: "Blank",
-    internalName: "wts.Page.React.Blank",
-    id: "Blank",
-    defaultName: "Blank",
-    isValidTitle: true,
-    licenses: [
-      {
-        text: "Bootstrap",
-        url: "https://github.com/twbs/bootstrap/blob/master/LICENSE"
-      }
-    ],
-    author: "Microsoft"
-  }
-];
-
 export {
   FRONT_END_SELECTION,
-  BACK_END_SELECTION,
-  PAGES_SELECTION
+  BACK_END_SELECTION
 };

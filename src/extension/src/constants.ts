@@ -40,7 +40,7 @@ export const CONSTANTS = {
     ),
     APP_NAME_NOT_AVAILABLE: (appName: string, type: string): string => {
       return localize(
-        "error.functionAppNameNotAvailable",
+        "error.appNameNotAvailable",
         "{1} app name {0} is not available",
         appName,
         type
@@ -86,13 +86,9 @@ export const CONSTANTS = {
       "error.runtimeNotImplemented",
       "Runtime not implemented yet"
     ),
-    FUNCTIONS_NO_DUPLICATES: localize(
-      "error.functionsNoDuplicate",
-      "No duplicates allowed for function names"
-    ),
     APP_INVALID_NAME: (name: string): string => {
       return localize(
-        "error.functionInvalidName",
+        "error.appInvalidName",
         "Invalid name {0}. Name can only include alphanumeric characters and dashes, and must start/end with alphanumeric characters",
         name
       );
@@ -171,7 +167,7 @@ export const CONSTANTS = {
     },
     APP_DEPLOYED: (appName: string): string => {
       return localize(
-        "info.functionAppDeployed",
+        "info.appDeployed",
         "{1} App {0} has been deployed and is ready to use!",
         appName
       );
@@ -323,14 +319,15 @@ export const PROJECT_NAME_VALIDATION_LIMIT = 50;
 
 export enum ExtensionCommand {
   Log = "log",
+  OpenLog = "open-log",
   Login = "login",
   Logout = "logout",
-  SubscriptionDataForFunctions = "subscription-data-for-functions",
-  SubscriptionDataForCosmos = "subscription-data-for-cosmos",
-  SubscriptionDataForAppService = "subscription-data-for-app-service",
-  NameFunctions = "name-functions",
-  NameCosmos = "name-cosmos",
-  NameAppService = "name-app-service",
+  GetResourceGroups = "get-resource-groups",
+  GetLocations = "get-locations",
+  GetValidAppServiceName = "get-valid-app-service-name",
+  GetValidCosmosName = "get-valid-cosmos-name",
+  ValidateCosmosName = "validate-cosmos-name",
+  ValidateAppServiceName = "validate-appservice-name",
   Generate = "generate",
   GetOutputPath = "get-output-path",
   GetProjectName = "get-project-name",
@@ -344,6 +341,7 @@ export enum ExtensionCommand {
   TrackPressQuickstart = "track-press-quickstart",
   TrackOpenAppServiceModalFromServicesList = "track-open-app-service-modal-from-services-list",
   TrackOpenCosmosDBServiceModalFromServicesList = "track-open-cosmosdb-service-modal-from-services-list",
+  TrackOpenAzureServiceAdvancedMode = "track-open-azure-service-advanced-mode",
   ProjectPathValidation = "project-path-validation",
   UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
@@ -353,7 +351,6 @@ export enum ExtensionCommand {
   GetPort = "get-port",
   GetVersions = "get-versions",
   ResetPages = "reset-pages",
-  GetPreviewStatus = "get-preview",
   CheckDependency = "check-dependency"
 }
 export enum ExtensionModule {
@@ -382,7 +379,8 @@ export enum TelemetryEventName {
   TrackOpenAddPagesModal = "Open-Add-Pages-Modal",
   TrackPressQuickstart = "Press-Quickstart",
   OpenAppServiceModalFromServicesList = "Open-AppService-Modal-From-Services-List",
-  OpenCosmosDBServiceModalFromServicesList = "Open-CosmosDBService-Modal-From-Services-List"
+  OpenCosmosDBServiceModalFromServicesList = "Open-CosmosDBService-Modal-From-Services-List",
+  OpenAzureServiceAdvancedMode = "Open-Azure-Service-Advanced-Mode"
 }
 
 export namespace DialogResponses {
@@ -439,22 +437,14 @@ export const PAYLOAD_MESSAGES_TEXT = {
 export enum AzureResourceType {
   AppService = "app-service",
   Cosmos = "cosmos",
-  Functions = "functions",
   AppServicePlan = "app-service-plan"
 }
 
 export enum AppType {
-  Web = "Web",
-  Function = "Function"
+  Web = "Web"
 }
 
 export enum OS {
   Linux = "linux",
   Windows = "windows"
 }
-
-export const BackendFrameworkLinuxVersion: { [s: string]: string } = {
-  Node: "node|10.14",
-  Flask: "python|3.7",
-  Moleculer: "node|10.14"
-};

@@ -1,57 +1,36 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
-import { azureMessages } from "../../../mockData/azureServiceOptions";
-import RuntimeStackInfo from "./RuntimeStackInfo";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
-import { Provider } from "react-redux";
-
-const mockStore = configureMockStore();
-
-const cases = [
-  [WIZARD_CONTENT_INTERNAL_NAMES.NODE, WIZARD_CONTENT_INTERNAL_NAMES.NODE],
-  [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER, WIZARD_CONTENT_INTERNAL_NAMES.NODE],
-  [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, WIZARD_CONTENT_INTERNAL_NAMES.PYTHON]
-];
+import RuntimeStackInfo from ".";
+import { getInitialState, setBackendFramework, addBackEndFrameworksOptions } from "../../../mockData/mockStore";
+import { RenderResult } from "@testing-library/react";
+import { renderWithStore } from "../../../testUtils";
+import messages from "./messages";
 
 describe("RuntimeStackInfo", () => {
   let props: any;
-  let wrapper: any;
+  let wrapper: RenderResult;
   let store: any;
+  let initialState: any;
+  const mockStore = configureMockStore();
+  const cases = [
+    ["Node", "node"],
+    ["Moleculer", "node"],
+    ["Flask", "python"],
+  ];
 
   test.each(cases)(
-    "when selected framework is %p, runtime stack is %p",
-    (selectedFrameworkName, runtimeStackName) => {
-      props = {
-        selectedBackend: {
-          internalName: ""
-        },
-        intl: global.intl
-      };
+    "when selected backend framework is %p, runtime stack is %p",
+    (backendFramework, runtimeStack) => {
+      initialState = getInitialState();
+      addBackEndFrameworksOptions(initialState);
+      setBackendFramework(initialState, backendFramework);
+      store = mockStore(initialState);
+      props = {};
 
-      store = mockStore({
-        selection: {
-          backendFramework: {
-            internalName: selectedFrameworkName
-          }
-        }
-      });
-
-      wrapper = mountWithIntl(
-        <Provider store={store}>
-          <RuntimeStackInfo {...props} />
-        </Provider>
-      ).children();
-
-      //renders without crashing
+      wrapper = renderWithStore(<RuntimeStackInfo {...props} />, store);
       expect(wrapper).toBeDefined();
-
-      const intl = wrapper.props().intl;
-      const message = wrapper.find("#message").text();
-      expect(message).toBe(
-        intl.formatMessage(azureMessages.runtimeStackSubLabel, {
-          runtimeStack: runtimeStackName
-        })
-      );
+      const expectedText = intl.formatMessage(messages.runtimeStack, { runtimeStack });
+      expect(wrapper.getByText(expectedText)).toBeDefined();
     }
   );
 });

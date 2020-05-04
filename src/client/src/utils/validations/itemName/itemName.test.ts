@@ -13,9 +13,9 @@ jest.mock('../validations',()=>{return {
   })
 }});
 import { validateItemName } from "./itemName";
-import { IitemNameValidationConfig } from "../../../reducers/wizardSelectionReducers/setValidations";
 import { addRequiredValidate, addExistingItemNameValidate, addRegexValidate,
   addReservedNameValidate } from '../validations';
+import { IitemNameValidationConfig } from "../../../store/config/validations/model";
 
 describe("validate", () => {
   it("config validate",(resolve)=>{

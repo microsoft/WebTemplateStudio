@@ -1,502 +1,259 @@
-import * as vscode from "vscode";
-import { MICROSOFT_LEARN_TENANTS } from './../configuration.json';
+import { MICROSOFT_LEARN_TENANTS } from "./../configuration.json";
 
-import {
-  AzureAuth,
-  SubscriptionItem,
-  LocationItem
-} from "./azure-auth/azureAuth";
-import {
-  CosmosDBDeploy,
-  CosmosDBSelections,
-  DatabaseObject
-} from "./azure-cosmosDB/cosmosDbModule";
-import {
-  FunctionProvider,
-  FunctionSelections
-} from "./azure-functions/functionProvider";
-import {
-  CONSTANTS,
-  AzureResourceType,
-  DialogMessages,
-  DialogResponses,
-  ExtensionCommand,
-  BackendFrameworkLinuxVersion
-} from "../constants";
-import {
-  SubscriptionError,
-  AuthorizationError,
-  ValidationError
-} from "../errors";
-import { WizardServant, IPayloadResponse } from "../wizardServant";
-import { AppNameValidationResult, NameValidator } from "./utils/nameValidator";
-import { Logger } from "../utils/logger";
-import {
-  ResourceGroupDeploy,
-  ResourceGroupSelection
-} from "./azure-resource-group/resourceGroupModule";
-import {
-  AppServiceProvider,
-  AppServiceSelections
-} from "./azure-app-service/appServiceProvider";
-import { NameGenerator } from "./utils/nameGenerator";
+import { AzureAuth, SubscriptionItem, LocationItem } from "./azure-auth/azureAuth";
+import { CosmosDBDeploy, CosmosDBSelections } from "./azure-cosmosDB/cosmosDbModule";
+import { CONSTANTS, AzureResourceType} from "../constants";
+import { SubscriptionError, ValidationError } from "../errors";
+import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-group/resourceGroupModule";
+import { AppServiceProvider, AppServiceSelections } from "./azure-app-service/appServiceProvider";
 import { StringDictionary } from "azure-arm-website/lib/models";
 import { ConnectionString } from "./utils/connectionString";
+import { Settings } from "./utils/settings";
+import { ICosmosDBGenerationPayload, IAppServiceGenerationPayload, IServicesGenerationPayload } from "../types/generationPayloadType";
 
-export class AzureServices extends WizardServant {
-  clientCommandMap: Map<
-    ExtensionCommand,
-    (message: any) => Promise<IPayloadResponse>
-  > = new Map([
-    [ExtensionCommand.Login, AzureServices.performLoginForSubscriptions],
-    [ExtensionCommand.GetUserStatus, AzureServices.sendUserStatusIfLoggedIn],
-    [ExtensionCommand.Logout, AzureServices.performLogout],
-    [
-      ExtensionCommand.SubscriptionDataForCosmos,
-      AzureServices.sendCosmosSubscriptionDataToClient
-    ],
-    [
-      ExtensionCommand.SubscriptionDataForFunctions,
-      AzureServices.sendFunctionsSubscriptionDataToClient
-    ],
-    [
-      ExtensionCommand.SubscriptionDataForAppService,
-      AzureServices.sendAppServiceSubscriptionDataToClient
-    ],
-    [
-      ExtensionCommand.NameFunctions,
-      AzureServices.sendFunctionNameValidationStatusToClient
-    ],
-    [
-      ExtensionCommand.NameCosmos,
-      AzureServices.sendCosmosNameValidationStatusToClient
-    ],
-    [
-      ExtensionCommand.NameAppService,
-      AzureServices.sendAppServiceNameValidationStatusToClient
-    ]
-  ]);
+interface UserStatus {
+  email: string;
+  subscriptions: SubscriptionItem[];
+}
 
-  private static AzureFunctionProvider = new FunctionProvider();
+interface ValidateResult {
+  isValid: boolean;
+  errorMessage: string;
+}
+
+interface ResourceGroup {
+  name: string;
+}
+
+interface AzureLocation {
+  name: string;
+}
+
+export class AzureServices {
   private static AzureCosmosDBProvider = new CosmosDBDeploy();
   private static AzureAppServiceProvider = new AppServiceProvider();
   private static AzureResourceGroupProvider = new ResourceGroupDeploy();
+  private static subscriptionsCache: SubscriptionItem[] = [];
 
-  private static subscriptionItemList: SubscriptionItem[] = [];
-
-  private static usersFunctionSubscriptionItemCache: SubscriptionItem;
-  private static usersCosmosDBSubscriptionItemCache: SubscriptionItem;
-  private static usersAppServiceSubscriptionItemCache: SubscriptionItem;
-
-  public static async performLoginForSubscriptions(): Promise<IPayloadResponse> {
-    Logger.appendLog("EXTENSION", "info", "Attempt to log user in");
-    const isLoggedIn = await AzureAuth.login();
-    if (isLoggedIn) {
-      Logger.appendLog("EXTENSION", "info", "User logged in");
-      return AzureServices.sendUserStatusIfLoggedIn();
-    }
-    throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
+  public static async Login(): Promise<boolean>{
+    return await AzureAuth.login();
   }
 
-  public static async sendUserStatusIfLoggedIn(): Promise<IPayloadResponse> {
-    if (AzureAuth.getEmail()) {
-      AzureServices.subscriptionItemList = await AzureAuth.getSubscriptions();
-      const subscriptionListToDisplay = AzureServices.subscriptionItemList.map(
-        subscriptionItem => {
-          return {
-            label: subscriptionItem.label,
-            value: subscriptionItem.label,
-            isMicrosoftLearnSubscription: AzureServices.IsMicrosoftLearnSubscription(subscriptionItem)
-          };
-        }
-      );
-      return {
-        payload: {
-          email: AzureAuth.getEmail(),
-          subscriptions: subscriptionListToDisplay
-        }
-      };
-    } else {
-      return { payload: null };
-    }
-  }
-  public static async performLogout(): Promise<IPayloadResponse> {
+  public static async Logout(): Promise<boolean>{
     const success = await AzureAuth.logout();
-    const payloadResponse: IPayloadResponse = { payload: success };
-    return payloadResponse;
-  }
-  public static async sendAppServiceSubscriptionDataToClient(
-    message: any
-  ): Promise<IPayloadResponse> {
-    return {
-      payload: await AzureServices.getSubscriptionData(
-        message.subscription,
-        AzureResourceType.AppService,
-        message.projectName
-      )
-    };
+    AzureServices.CleanSubscriptionCache();
+    return success;
   }
 
-  public static async sendCosmosSubscriptionDataToClient(
-    message: any
-  ): Promise<IPayloadResponse> {
-    return {
-      payload: await AzureServices.getSubscriptionData(
-        message.subscription,
-        AzureResourceType.Cosmos,
-        message.projectName
-      )
-    };
+  public static async getUserStatus(): Promise<UserStatus> {
+    const email = AzureAuth.getEmail();
+    let subscriptions: SubscriptionItem[] = [];
+
+    if (email) {
+      subscriptions = await AzureServices.getSubscriptions();
+    }
+    return { email, subscriptions };
   }
 
-  public static async sendFunctionsSubscriptionDataToClient(
-    message: any
-  ): Promise<IPayloadResponse> {
-    return {
-      payload: await AzureServices.getSubscriptionData(
-        message.subscription,
-        AzureResourceType.Functions,
-        message.projectName
-      )
-    };
+  public static async getSubscriptions(): Promise<SubscriptionItem[]> {
+    if (AzureServices.subscriptionsCache.length === 0) {
+      AzureServices.subscriptionsCache = await AzureAuth.getSubscriptions();
+    }
+    return AzureServices.subscriptionsCache;
   }
 
-  /**
-   * @param subscriptionLabel subscription label
-   * @returns a Json object of Formatted Resource and Location strings
-   *
-   * */
-  private static async getSubscriptionData(
-    subscriptionLabel: string,
-    AzureType: AzureResourceType,
-    projectName: string
-  ): Promise<any> {
-    const subscriptionItem = AzureServices.subscriptionItemList.find(
-      subscriptionItem => subscriptionItem.label === subscriptionLabel
-    );
-    if (subscriptionItem === undefined) {
+  private static CleanSubscriptionCache(): void {
+    AzureServices.subscriptionsCache.length = 0;
+  }
+
+  public static getSubscription(name: string): SubscriptionItem {
+    const subscription = AzureServices.subscriptionsCache.find(item => item.label === name);
+
+    if (!subscription) {
       throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
     }
-    const resourceGroupItems = AzureAuth.getAllResourceGroupItems(
-      subscriptionItem
-    ).then(resourceGroups => {
-      const formatResourceGroupList = [];
-      formatResourceGroupList.push(
-        ...resourceGroups.map(resourceGroup => {
-          return {
-            label: resourceGroup.name,
-            value: resourceGroup.name
-          };
-        })
-      );
-      return formatResourceGroupList;
-    });
 
-    let locationItems: LocationItem[] = [];
-    const validName: string = await NameGenerator.generateValidAzureTypeName(
-      projectName,
-      subscriptionItem,
-      AzureType
-    );
+    return subscription;
+  }
 
-    switch (AzureType) {
+  public static IsMicrosoftLearnSubscription(subscription: SubscriptionItem): boolean {
+    return MICROSOFT_LEARN_TENANTS.includes(subscription.session.tenantId);
+  }
+
+  public static async getResourceGroups(subscriptionName: string): Promise<ResourceGroup[]> {
+    const subscription = AzureServices.getSubscription(subscriptionName);
+    const items = await AzureAuth.getAllResourceGroupItems(subscription);
+    const resources: ResourceGroup[] = [];
+    items.map(item => resources.push({ name: item.name }));
+    return resources;
+  }
+
+  public static async getLocations(subscriptionName: string, azureServiceType: AzureResourceType): Promise<AzureLocation[]> {
+    const subscription = AzureServices.getSubscription(subscriptionName);
+    let items: LocationItem[] = [];
+    switch (azureServiceType) {
       case AzureResourceType.Cosmos:
-        locationItems = await AzureAuth.getLocationsForCosmos(subscriptionItem);
+        items = await AzureAuth.getLocationsForCosmos(subscription);
         break;
-      case AzureResourceType.Functions:
       case AzureResourceType.AppService:
-        locationItems = await AzureAuth.getLocationsForApp(subscriptionItem);
+        items = await AzureAuth.getLocationsForApp(subscription);
         break;
     }
+    const locations: AzureLocation[] = [];
+    items.map(item => locations.push({ name: item.locationDisplayName }));
+    return locations;
+  }
 
-    const locations = [];
-    locations.push(
-      ...locationItems.map(location => {
-        return {
-          label: location.locationDisplayName,
-          value: location.locationDisplayName
-        };
-      })
-    );
-
+  public static async validateAppServiceName(name: string, subscription: string): Promise<ValidateResult> {
+    const subscriptionItem = AzureServices.getSubscription(subscription);
+    const message = await AzureServices.AzureAppServiceProvider.checkWebAppName(name, subscriptionItem);
     return {
-      resourceGroups: await resourceGroupItems,
-      locations: locations,
-      validName: validName
+      isValid: !message || message === "",
+      errorMessage: message ? message : "",
     };
   }
 
-  public static async validateNameForAzureType(
-    projectName: string,
-    userSubscriptionItem: SubscriptionItem,
-    azureType: AzureResourceType
-  ): Promise<boolean> {
-    let validationResult;
-    switch (azureType) {
-      case AzureResourceType.AppService:
-        validationResult = await AzureServices.AzureAppServiceProvider.checkWebAppName(
-          projectName,
-          userSubscriptionItem
-        );
-        break;
-      case AzureResourceType.Cosmos:
-        validationResult = await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(
-          projectName,
-          userSubscriptionItem
-        );
-        break;
-      case AzureResourceType.Functions:
-        validationResult = await AzureServices.AzureFunctionProvider.checkFunctionAppName(
-          projectName,
-          userSubscriptionItem
-        );
-        break;
-    }
-    return validationResult === undefined;
+  public static async validateCosmosName(name: string, subscription: string): Promise<ValidateResult> {
+    const subscriptionItem = AzureServices.getSubscription(subscription);
+    const message = await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(name, subscriptionItem);
+    return {
+      isValid: !message || message === "",
+      errorMessage: message ? message : "",
+    };
   }
 
-  public static async sendAppServiceNameValidationStatusToClient(
-    message: any
-  ): Promise<IPayloadResponse> {
-    await AzureServices.updateAppServiceSubscriptionItemCache(
-      message.subscription
-    );
-    return await AzureServices.AzureAppServiceProvider.checkWebAppName(
-      message.appName,
-      AzureServices.usersAppServiceSubscriptionItemCache
-    )
-      .then((invalidReason: string | undefined) => {
-        return {
-          payload: {
-            isAvailable:
-              !invalidReason ||
-              invalidReason === undefined ||
-              invalidReason === "",
-            reason: invalidReason
-          }
-        };
-      })
-      .catch((error: Error) => {
-        throw error; //to log in telemetry
-      });
-  }
-
-  public static async sendCosmosNameValidationStatusToClient(
-    message: any
-  ): Promise<IPayloadResponse> {
-    await AzureServices.updateCosmosDBSubscriptionItemCache(
-      message.subscription
-    );
-
-    return await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(
-      message.appName,
-      AzureServices.usersCosmosDBSubscriptionItemCache
-    )
-      .then((invalidReason: string | undefined) => {
-        return {
-          payload: {
-            isAvailable:
-              !invalidReason ||
-              invalidReason === undefined ||
-              invalidReason === "",
-            reason: invalidReason
-          }
-        };
-      })
-      .catch((error: Error) => {
-        throw error; //to log in telemetry
-      });
-  }
-
-  public static async sendFunctionNameValidationStatusToClient(
-    message: any
-  ): Promise<IPayloadResponse> {
-    await AzureServices.updateFunctionSubscriptionItemCache(
-      message.subscription
-    );
-    return AzureServices.AzureFunctionProvider.checkFunctionAppName(
-      message.appName,
-      AzureServices.usersFunctionSubscriptionItemCache
-    )
-      .then((invalidReason: string | undefined) => {
-        return {
-          payload: {
-            isAvailable:
-              !invalidReason ||
-              invalidReason === undefined ||
-              invalidReason === "",
-            reason: invalidReason
-          }
-        };
-      })
-      .catch((error: Error) => {
-        throw error; //to log in telemetry
-      });
-  }
-
-  /*
-   * Caching is used for performance; when displaying live check on keystroke to wizard
-   */
-
-  private static async updateAppServiceSubscriptionItemCache(
-    subscriptionLabel: string
-  ): Promise<void> {
-    if (
-      AzureServices.usersAppServiceSubscriptionItemCache === undefined ||
-      subscriptionLabel !==
-        AzureServices.usersAppServiceSubscriptionItemCache.label
-    ) {
-      const subscriptionItem = AzureServices.subscriptionItemList.find(
-        subscriptionItem => subscriptionItem.label === subscriptionLabel
-      );
-      if (subscriptionItem) {
-        AzureServices.usersAppServiceSubscriptionItemCache = subscriptionItem;
-      } else {
-        throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
-      }
-    }
-  }
-
-  private static async updateCosmosDBSubscriptionItemCache(
-    subscriptionLabel: string
-  ): Promise<void> {
-    if (
-      AzureServices.usersCosmosDBSubscriptionItemCache === undefined ||
-      subscriptionLabel !==
-        AzureServices.usersCosmosDBSubscriptionItemCache.label
-    ) {
-      const subscriptionItem = AzureServices.subscriptionItemList.find(
-        subscriptionItem => subscriptionItem.label === subscriptionLabel
-      );
-      if (subscriptionItem) {
-        AzureServices.usersCosmosDBSubscriptionItemCache = subscriptionItem;
-      } else {
-        throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
-      }
-    }
-  }
-
-  private static async updateFunctionSubscriptionItemCache(
-    subscriptionLabel: string
-  ): Promise<void> {
-    if (
-      AzureServices.usersFunctionSubscriptionItemCache === undefined ||
-      subscriptionLabel !==
-        AzureServices.usersFunctionSubscriptionItemCache.label
-    ) {
-      const subscriptionItem = AzureServices.subscriptionItemList.find(
-        subscriptionItem => subscriptionItem.label === subscriptionLabel
-      );
-      if (subscriptionItem) {
-        AzureServices.usersFunctionSubscriptionItemCache = subscriptionItem;
-      } else {
-        throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_FOUND);
-      }
-    }
-  }
-
-  public static async generateDistinctResourceGroupSelections(
-    payload: any
+  public static async getResourceGroupSelections(
+    services: IServicesGenerationPayload
   ): Promise<ResourceGroupSelection[]> {
-    const projectName = payload.engine.projectName;
-    const allSubscriptions: SubscriptionItem[] = [];
+    const selection: ResourceGroupSelection[] = [];
+    const { appService, cosmosDB } = services;
+    if (appService) {
+      const { subscription, resourceGroup } = appService;
+      const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(
+        subscription,
+        resourceGroup,
+        selection
+      );
+      if (canCreateResourceGroup) {
+        const resourceGroupSelection = await AzureServices.getResourceGroupSelection(
+          subscription,
+          resourceGroup
+        );
+        selection.push(resourceGroupSelection);
+      }
+    }
 
-    if (payload.selectedFunctions) {
-      await AzureServices.updateFunctionSubscriptionItemCache(
-        payload.functions.subscription
+    if (cosmosDB) {
+      const { subscription, resourceGroup } = cosmosDB;
+      const canCreateResourceGroup = await AzureServices.canCreateResourceGroup(
+        subscription,
+        resourceGroup,
+        selection
       );
-      allSubscriptions.push(AzureServices.usersFunctionSubscriptionItemCache);
+      if (canCreateResourceGroup) {
+        const resourceGroupSelection = await AzureServices.getResourceGroupSelection(
+          subscription,
+          resourceGroup
+        );
+        selection.push(resourceGroupSelection);
+      }
     }
-    if (payload.selectedCosmos) {
-      await AzureServices.updateCosmosDBSubscriptionItemCache(
-        payload.cosmos.subscription
-      );
-      allSubscriptions.push(AzureServices.usersCosmosDBSubscriptionItemCache);
-    }
-    if (payload.selectedAppService) {
-      await AzureServices.updateAppServiceSubscriptionItemCache(
-        payload.appService.subscription
-      );
-      allSubscriptions.push(AzureServices.usersAppServiceSubscriptionItemCache);
-    }
-    const allDistinctSubscriptions: SubscriptionItem[] = [
-      ...new Set(allSubscriptions)
-    ];
-    const generatedName: string = await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
-      projectName,
-      allDistinctSubscriptions
-    );
 
-    return await Promise.all(
-      allDistinctSubscriptions.map(
-        async subscription =>
-          await AzureServices.generateResourceGroupSelection(
-            generatedName,
-            subscription
-          )
-      )
-    );
+    return selection;
   }
 
-  private static async generateResourceGroupSelection(
-    generatedName: string,
-    subscriptionItem: SubscriptionItem
+  private static async canCreateResourceGroup(
+    subscription: string,
+    resourceGroup: string,
+    selection: ResourceGroupSelection[]
+  ): Promise<boolean> {
+    const subscriptionItem = AzureServices.getSubscription(subscription);
+    const isMicrosoftLearnSubscription = AzureServices.IsMicrosoftLearnSubscription(subscriptionItem);
+    const existResourceGroup = await AzureServices.AzureResourceGroupProvider.ExistResourceGroup(
+      resourceGroup,
+      subscriptionItem
+    );
+    const isResourceGroupInSelection = selection.some(
+      (r) => r.resourceGroupName === resourceGroup && r.subscriptionItem.label === subscriptionItem.label
+    );
+    return !(existResourceGroup || isResourceGroupInSelection || isMicrosoftLearnSubscription);
+  }
+
+  private static async getResourceGroupSelection(
+    subscription: string,
+    resourceGroup: string
   ): Promise<ResourceGroupSelection> {
-    let resourceGroupName = generatedName;
-    if (AzureServices.IsMicrosoftLearnSubscription(subscriptionItem)) {
-      const resourceGroups = await AzureServices.AzureResourceGroupProvider.GetResourceGroups(subscriptionItem);
-      resourceGroupName = resourceGroups[0].name as string;
-    }
+    const subscriptionItem = AzureServices.getSubscription(subscription);
+
     return {
-      subscriptionItem: subscriptionItem,
-      resourceGroupName: resourceGroupName,
-      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
+      subscriptionItem,
+      resourceGroupName: resourceGroup,
+      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
     };
   }
 
-  public static async deployResourceGroup(
-    selections: ResourceGroupSelection
-  ): Promise<any> {
-    if (!AzureServices.IsMicrosoftLearnSubscription(selections.subscriptionItem)) {
-      return await AzureServices.AzureResourceGroupProvider.createResourceGroup(
-        selections
-      );
+  public static async generateValidResourceGroupName(
+    projectName: string,
+    services: IServicesGenerationPayload
+  ): Promise<string> {
+    const subscriptions: SubscriptionItem[] = [];
+
+    if (services.cosmosDB) {
+      const cosmosSubscription = AzureServices.getSubscription(services.cosmosDB.subscription);
+      subscriptions.push(cosmosSubscription);
+    }
+
+    if (services.appService) {
+      const appserviceSubscription = AzureServices.getSubscription(services.appService.subscription);
+      subscriptions.push(appserviceSubscription);
+    }
+    const allSubscriptions: SubscriptionItem[] = [...new Set(subscriptions)];
+
+    return await AzureServices.AzureResourceGroupProvider.generateValidResourceGroupName(
+      projectName,
+      allSubscriptions
+    );
+  }
+
+  public static async deployResourceGroup(resourceGroupSelection: ResourceGroupSelection): Promise<void> {
+    const name = resourceGroupSelection.resourceGroupName;
+    const subscription = resourceGroupSelection.subscriptionItem;
+    const resourceGroup = await AzureServices.AzureResourceGroupProvider.GetResourceGroup(name, subscription);
+
+    if (!resourceGroup) {
+      await AzureServices.AzureResourceGroupProvider.createResourceGroup(resourceGroupSelection);
     }
   }
 
-  public static async deployWebApp(payload: any): Promise<string> {
-    await AzureServices.updateAppServiceSubscriptionItemCache(
-      payload.appService.subscription
-    );
-    const aspName = await AzureServices.AzureAppServiceProvider.generateValidASPName(
-      payload.engine.projectName
-    );
-    const appServicePlan = AzureServices.IsMicrosoftLearnSubscription(
-      AzureServices.usersAppServiceSubscriptionItemCache
-    )
+  public static async deployAppService(
+    appService: IAppServiceGenerationPayload,
+    projectName: string,
+    backendFrameworkLinuxVersion: string,
+    path: string
+  ): Promise<void> {
+    const subscription = AzureServices.getSubscription(appService.subscription);
+    const aspName = await AzureServices.AzureAppServiceProvider.generateValidASPName(projectName);
+
+    const appServicePlan = AzureServices.IsMicrosoftLearnSubscription(subscription)
       ? CONSTANTS.SKU_DESCRIPTION.FREE
       : CONSTANTS.SKU_DESCRIPTION.BASIC;
 
     const userAppServiceSelection: AppServiceSelections = {
-      siteName: payload.appService.siteName,
-      subscriptionItem: AzureServices.usersAppServiceSubscriptionItemCache,
-      resourceGroupItem: await AzureAuth.getResourceGroupItem(
-        payload.appService.resourceGroup,
-        AzureServices.usersAppServiceSubscriptionItemCache
-      ),
+      siteName: appService.siteName,
+      subscriptionItem: subscription,
+      resourceGroupItem: await AzureAuth.getResourceGroupItem(appService.resourceGroup, subscription),
       appServicePlanName: aspName,
       tier: appServicePlan.tier,
       sku: appServicePlan.name,
-      linuxFxVersion:
-        BackendFrameworkLinuxVersion[payload.engine.backendFramework],
-      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US
+      linuxFxVersion: backendFrameworkLinuxVersion,
+      location: appService.location,
     };
 
     await AzureServices.AzureAppServiceProvider.checkWebAppName(
       userAppServiceSelection.siteName,
       userAppServiceSelection.subscriptionItem
     )
-      .then(invalidReason => {
+      .then((invalidReason) => {
         if (invalidReason !== undefined && invalidReason === "") {
           throw new ValidationError(invalidReason);
         }
@@ -505,95 +262,39 @@ export class AzureServices extends WizardServant {
         throw error; //to log in telemetry
       });
 
-    const result = await AzureServices.AzureAppServiceProvider.createWebApp(
-      userAppServiceSelection,
-      payload.engine.path
-    );
+    const result = await AzureServices.AzureAppServiceProvider.createWebApp(userAppServiceSelection, path);
     if (!result) {
       throw new Error(CONSTANTS.ERRORS.APP_SERVICE_UNDEFINED_ID);
     }
-    return AzureServices.convertId(result);
+
+    const id = AzureServices.convertId(result);
+    Settings.enableScmDoBuildDuringDeploy(path);
+    Settings.setDeployDefault(id, path);
   }
 
   private static convertId(rawId: string): string {
     // workaround to convert deployment id to app service id
     const MS_RESOURCE_DEPLOYMENT = "Microsoft.Resources/deployments";
     const MS_WEB_SITE = "Microsoft.Web/sites";
-    return rawId
-      .replace(MS_RESOURCE_DEPLOYMENT, MS_WEB_SITE)
-      .replace("-" + AzureResourceType.AppService, "");
+    return rawId.replace(MS_RESOURCE_DEPLOYMENT, MS_WEB_SITE).replace("-" + AzureResourceType.AppService, "");
   }
 
-  public static async deployFunctionApp(
-    selections: any,
-    appPath: string
-  ): Promise<void> {
-    await AzureServices.updateFunctionSubscriptionItemCache(
-      selections.subscription
-    );
-
-    const userFunctionsSelections: FunctionSelections = {
-      functionAppName: selections.appName,
-      subscriptionItem: AzureServices.usersFunctionSubscriptionItemCache,
-      resourceGroupItem: await AzureAuth.getResourceGroupItem(
-        selections.resourceGroup,
-        AzureServices.usersFunctionSubscriptionItemCache
-      ),
-      location: selections.location,
-      runtime: selections.runtimeStack,
-      functionNames: selections.functionNames
-    };
-
-    const functionNamesValidation: AppNameValidationResult = NameValidator.validateFunctionNames(
-      userFunctionsSelections.functionNames
-    );
-    if (!functionNamesValidation.isValid) {
-      throw new ValidationError(functionNamesValidation.message);
-    }
-
-    await AzureServices.AzureFunctionProvider.checkFunctionAppName(
-      userFunctionsSelections.functionAppName,
-      userFunctionsSelections.subscriptionItem
-    )
-      .then(invalidReason => {
-        if (invalidReason !== undefined && invalidReason === "") {
-          throw new ValidationError(invalidReason);
-        }
-      })
-      .catch((error: Error) => {
-        throw error; //to log in telemetry
-      });
-
-    return await AzureServices.AzureFunctionProvider.createFunctionApp(
-      userFunctionsSelections,
-      appPath
-    );
-  }
-
-  public static async deployCosmosResource(
-    selections: any,
-    genPath: string
-  ): Promise<DatabaseObject> {
-    await AzureServices.updateCosmosDBSubscriptionItemCache(
-      selections.subscription
-    );
+  public static async deployCosmos(cosmosDB: ICosmosDBGenerationPayload, genPath: string): Promise<string> {
+    const subscription = AzureServices.getSubscription(cosmosDB.subscription);
 
     const userCosmosDBSelection: CosmosDBSelections = {
-      cosmosAPI: selections.api,
-      cosmosDBResourceName: selections.accountName,
-      location: CONSTANTS.AZURE_LOCATION.CENTRAL_US,
-      resourceGroupItem: await AzureAuth.getResourceGroupItem(
-        selections.resourceGroup,
-        AzureServices.usersCosmosDBSubscriptionItemCache
-      ),
-      subscriptionItem: AzureServices.usersCosmosDBSubscriptionItemCache
+      cosmosAPI: cosmosDB.api,
+      cosmosDBResourceName: cosmosDB.accountName,
+      location: cosmosDB.location,
+      resourceGroupItem: await AzureAuth.getResourceGroupItem(cosmosDB.resourceGroup, subscription),
+      subscriptionItem: subscription,
     };
 
     await AzureServices.AzureCosmosDBProvider.validateCosmosDBAccountName(
       userCosmosDBSelection.cosmosDBResourceName,
       userCosmosDBSelection.subscriptionItem
     )
-      .then(invalidReason => {
+      .then((invalidReason) => {
         if (invalidReason !== undefined && invalidReason === "") {
           throw new ValidationError(invalidReason);
         }
@@ -602,59 +303,28 @@ export class AzureServices extends WizardServant {
         throw error; //to log in telemetry
       });
 
-    return await AzureServices.AzureCosmosDBProvider.createCosmosDB(
-      userCosmosDBSelection,
-      genPath
-    );
+    const dbObject = await AzureServices.AzureCosmosDBProvider.createCosmosDB(userCosmosDBSelection, genPath);
+    return dbObject.connectionString;
   }
-  public static async promptUserForCosmosReplacement(
-    pathToEnv: string,
-    dbObject: DatabaseObject
-  ): Promise<any> {
-    return await vscode.window
-      .showInformationMessage(
-        DialogMessages.cosmosDBConnectStringReplacePrompt,
-        ...[DialogResponses.yes, DialogResponses.no]
-      )
-      .then((selection: vscode.MessageItem | undefined) => {
-        const start = Date.now();
-        if (selection === DialogResponses.yes) {
-          CosmosDBDeploy.updateConnectionStringInEnvFile(
-            pathToEnv,
-            dbObject.connectionString
-          );
-          vscode.window.showInformationMessage(
-            CONSTANTS.INFO.FILE_REPLACED_MESSAGE + pathToEnv
-          );
-        }
-        return {
-          userReplacedEnv: selection === DialogResponses.yes,
-          startTime: start
-        };
-      });
-  }
+
+  public static updateConnectionStringInEnvFile(path: string, connectionString: string): void {    
+    CosmosDBDeploy.updateConnectionStringInEnvFile(path, connectionString);
+  } 
+
   public static async updateAppSettings(
     resourceGroupName: string,
     webAppName: string,
     connectionString: string
   ): Promise<void> {
-    const parsed: string = ConnectionString.parseConnectionString(
-      connectionString
-    );
+    const parsed: string = ConnectionString.parseConnectionString(connectionString);
     const settings: StringDictionary = {
-      properties: AzureServices.convertToSettings(parsed)
+      properties: AzureServices.convertToSettings(parsed),
     };
 
-    AzureServices.AzureAppServiceProvider.updateAppSettings(
-      resourceGroupName,
-      webAppName,
-      settings
-    );
+    AzureServices.AzureAppServiceProvider.updateAppSettings(resourceGroupName, webAppName, settings);
   }
 
-  private static convertToSettings(
-    parsedConnectionString: string
-  ): { [s: string]: string } {
+  private static convertToSettings(parsedConnectionString: string): { [s: string]: string } {
     // format of parsedConnectionString: "<key1>=<value1>\n<key2>=<value2>\n<key3>=<value3>\n"
     const fields = parsedConnectionString.split("\n");
     const result: { [s: string]: string } = {};
@@ -664,13 +334,5 @@ export class AzureServices extends WizardServant {
       result[key] = value;
     }
     return result;
-  }
-
-  private static IsMicrosoftLearnSubscription(
-    subscriptionItem: SubscriptionItem
-  ): boolean {
-    return MICROSOFT_LEARN_TENANTS.includes(
-      subscriptionItem.session.tenantId
-    );
   }
 }

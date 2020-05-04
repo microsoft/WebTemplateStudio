@@ -1,7 +1,0 @@
-./build || bash build
-yarn --cwd ./src/extension createVsixPackage
-RED='\033[0;31m'
-CYAN='\033[0;36m'
-GREEN='\033[0;32m'
-NC='\033[0m'
-echo -e "\n${GREEN}wts.vsix${NC} is now built in ${RED}root/dist/${NC} and is ready for distribution.\n"

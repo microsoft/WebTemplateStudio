@@ -4,21 +4,14 @@ import { connect } from "react-redux";
 import {
   getFrameworkLicensesSelector,
   getPageLicencesSelector
-} from "../../../selectors/licenseSelector";
+} from "../../../store/userSelection/frameworksLicenseSelector";
 import { ILicenseObject } from "../../../types/license";
 
 import styles from "./styles.module.css";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import {
-  getIsVisitedRoutesSelector,
-  IVisitedPages
-} from "../../../selectors/wizardNavigationSelector";
-import { AppState } from "../../../reducers";
-import * as ModalActions from "../../../actions/modalActions/modalActions";
-import { ThunkDispatch } from "redux-thunk";
-import RootAction from "../../../actions/ActionType";
-import { IRedirectModalData } from "../../RedirectModal";
-import messages from "./messages";
+
+import { AppState } from "../../../store/combineReducers";
+import { IVisitedPages, getIsVisitedRoutesSelector } from "../../../store/config/config/wizardNavigationSelector";
 
 interface IStateProps {
   frameworkLicenses: string[];
@@ -26,36 +19,23 @@ interface IStateProps {
   isVisited: IVisitedPages;
 }
 
-interface IDispatchProps {
-  openRedirectModal: (license: IRedirectModalData | undefined) => any;
-}
-
-type Props = IStateProps & IDispatchProps & InjectedIntlProps;
+type Props = IStateProps & InjectedIntlProps;
 
 const Licenses = ({
   frameworkLicenses,
   pageLicenses,
-  isVisited,
-  intl,
-  openRedirectModal
+  isVisited
 }: Props) => {
   const LinkRenderer = (props: any) => {
     return (
-      <button
+      <a
         className={styles.licenseButton}
-        onClick={() =>
-          openRedirectModal({
-            redirectLink: String(props.href),
-            redirectLinkLabel: intl.formatMessage(messages.redirectLinkLabel, {
-              licenseName: props.children[0].props.value
-            }),
-            privacyStatementLink: "",
-            isThirdPartyLink: true
-          })
-        }
+        href={String(props.href)}
+        target={"_blank"}
+        rel="noreferrer noopener"
       >
         {props.children}
-      </button>
+      </a>
     );
   };
   return (
@@ -70,25 +50,15 @@ const Licenses = ({
       {isVisited.showPages &&
         pageLicenses.map((license: ILicenseObject) => (
           <p key={license.url}>
-            <button
+            <a
               className={styles.licenseButton}
-              onClick={() =>
-                openRedirectModal({
-                  redirectLink: String(license.url),
-                  redirectLinkLabel: intl.formatMessage(
-                    messages.redirectLinkLabel,
-                    {
-                      licenseName: license.text
-                    }
-                  ),
-                  privacyStatementLink: "",
-                  isThirdPartyLink: true
-                })
-              }
+              href={String(license.url)}
               key={license.text}
+              target={"_blank"}
+              rel="noreferrer noopener"
             >
               {license.text}
-            </button>
+            </a>
           </p>
         ))}
     </div>
@@ -101,15 +71,6 @@ const mapStateToProps = (state: AppState) => ({
   pageLicenses: getPageLicencesSelector(state)
 });
 
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  openRedirectModal: license => {
-    dispatch(ModalActions.openRedirectModalAction(license));
-  }
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(injectIntl(Licenses));

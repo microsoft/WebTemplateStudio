@@ -8,72 +8,61 @@ import CardBody from "../CardBody";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import { IOption } from "../../types/option";
-import { Link } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
 import keyUpHandler from "../../utils/keyUpHandler";
+import { getSvg } from "../../utils/getSvgUrl";
+import { KEY_EVENTS } from "../../utils/constants";
 
 interface IProps {
   buttonText: string;
   option: IOption;
-  disabled?: boolean;
   handleButtonClick: () => void;
   handleDetailsClick: (detailPageInfo: IOption) => void;
 }
 
 type Props = IProps & InjectedIntlProps;
 
-export const Card = ({
-  option,
-  buttonText,
-  disabled,
-  handleButtonClick,
-  handleDetailsClick,
-  intl
-}: Props) => {
+export const Card = ({ option, buttonText, handleButtonClick, handleDetailsClick, intl }: Props) => {
   const formattedBody = option.body as FormattedMessage.MessageDescriptor;
   const formattedTitle = option.title as FormattedMessage.MessageDescriptor;
+
+  const handleDetailsClickIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>, option: IOption) => {
+    event.stopPropagation();
+    if (event.key === KEY_EVENTS.ENTER) {
+      handleDetailsClick(option);
+    }
+  };
   return (
     <div className={styles.loginContainer}>
       <div className={styles.cardTitleContainer}>
-        {option.svgUrl && (
-          <img className={styles.icon} src={option.svgUrl} alt="" />
-        )}
-        <div className={styles.cardTitle}>
-          {intl.formatMessage(formattedTitle)}
-        </div>
+        {getSvg(option.internalName, styles.icon)}
+        <div className={styles.cardTitle}>{intl.formatMessage(formattedTitle)}</div>
       </div>
       <div className={styles.cardContent}>
         <div className={styles.cardBody}>
           <CardBody
             formattedBody={formattedBody}
-            expectedTime={
-              option.expectedTime as FormattedMessage.MessageDescriptor
-            }
-            expectedPrice={
-              option.expectedPrice as FormattedMessage.MessageDescriptor
-            }
+            expectedTime={option.expectedTime as FormattedMessage.MessageDescriptor}
+            expectedPrice={option.expectedPrice as FormattedMessage.MessageDescriptor}
           />
         </div>
         <div className={styles.selectionContainer}>
-          <Link
+          <a
             onClick={() => handleDetailsClick(option)}
+            onKeyPress={event => handleDetailsClickIfPressEnterKey(event, option)}
             className={styles.details}
-            to={ROUTES.PAGE_DETAILS}
-            tabIndex={disabled! ? -1 : 0}
+            tabIndex={0}
             onKeyUp={keyUpHandler}
           >
             <FormattedMessage id="card.details" defaultMessage="Learn more" />
-          </Link>
+          </a>
           <button
-            disabled={disabled!}
             onClick={handleButtonClick}
-            className={classnames(styles.signInButton, {
-              [buttonStyles.buttonDark]: disabled,
-              [buttonStyles.buttonHighlighted]: !disabled,
-              [buttonStyles.buttonCursorDefault]: disabled,
-              [buttonStyles.buttonCursorPointer]: !disabled
-            })}
-            tabIndex={disabled! ? -1 : 0}
+            className={classnames(
+              styles.signInButton,
+              buttonStyles.buttonHighlighted,
+              buttonStyles.buttonCursorPointer
+            )}
+            tabIndex={0}
           >
             {buttonText}
           </button>

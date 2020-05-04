@@ -18,44 +18,8 @@ export namespace NameValidator {
     }
     return { isValid: true, message: "" };
   }
-  
-  export function validateFunctionNames(
-    names: string[]
-  ): AppNameValidationResult {
-    for (const name of names) {
-      if (
-        name.length > CONSTANTS.APP_NAME.MAX_LENGTH ||
-        name.length < CONSTANTS.APP_NAME.MIN_LENGTH
-      ) {
-        return {
-          isValid: false,
-          message: CONSTANTS.ERRORS.NAME_MIN_MAX(
-            CONSTANTS.APP_NAME.MIN_LENGTH,
-            CONSTANTS.APP_NAME.MAX_LENGTH
-          )
-        };
-      }
-      const regexResult: AppNameValidationResult = checkNameRegex(name);
-      if (!regexResult.isValid) {
-        return regexResult;
-      }
-    }
 
-    names = names.map(name => {
-      return name.toLowerCase();
-    });
-
-    if (new Set(names).size !== names.length) {
-      return {
-        isValid: false,
-        message: CONSTANTS.ERRORS.FUNCTIONS_NO_DUPLICATES
-      };
-    }
-
-    return { isValid: true, message: "" };
-  }
-
-  // For validating Function App and Web App names
+  // For validating Web App names
   export function validateAppName(name: string): AppNameValidationResult {
     if (
       name.length > CONSTANTS.APP_NAME.MAX_LENGTH ||

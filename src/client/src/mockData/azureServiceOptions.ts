@@ -1,6 +1,5 @@
 import { IOption } from "../types/option";
 import { defineMessages } from "react-intl";
-import getSvgUrl from "../utils/getSvgUrl";
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "../utils/constants";
 
 export const azureMessages = defineMessages({
@@ -16,7 +15,7 @@ export const azureMessages = defineMessages({
   azureCardBody: {
     id: "azureLogin.azureCardBody",
     defaultMessage:
-      "Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. Sign in or create an account to get access to CosmosDB and Azure Functions from this extension"
+      "Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. Sign in or create an account to get access to CosmosDB and App Service from this extension"
   },
   azureLongDescription: {
     id: "azureLogin.longDescription",
@@ -30,20 +29,6 @@ export const azureMessages = defineMessages({
   azureLoginInfo: {
     id: "azureLogin.azureLoginInfo",
     defaultMessage: "Sign in to add these services to your web app project"
-  },
-  azureFunctionsTitle: {
-    id: "azureFunctions.Title",
-    defaultMessage: "Azure Functions"
-  },
-  azureFunctionsLongDescription: {
-    id: "azureFunctions.longDescription",
-    defaultMessage:
-      "Deploy serverless web applications using an event-driven platform."
-  },
-  azureFunctionsCardBody: {
-    id: "azureFunctions.cardBody",
-    defaultMessage:
-      "Deploy serverless web applications using an event-driven platform."
   },
   cosmosTitle: {
     id: "cosmosDb.title",
@@ -67,60 +52,6 @@ export const azureMessages = defineMessages({
     id: "cosmosDb.priceExpectation",
     defaultMessage: "Free 30 day access to your databse"
   },
-  azureModalChooseExisting: {
-    id: "azureModal.chooseExisting",
-    defaultMessage: "Choose existing"
-  },
-  azureModalCreateNewResourceGroupDisplayMessage: {
-    id: "azureModal.createNewResourceGroupDisplayMessage",
-    defaultMessage: "Create a new resource group"
-  },
-  azureModalCreateNewResourceGroupSelectedDisplayMessage: {
-    id: "azureModal.createNewResourceGroupSelectedDisplayMessage",
-    defaultMessage:
-      "We will automatically create a resource group for you in Central US to manage all related resources to this project!"
-  },
-  azureModalSubscriptionLabel: {
-    id: "azureModal.subscriptionLabel",
-    defaultMessage: "Subscription"
-  },
-  azureModalAriaSubscriptionLabel: {
-    id: "azureModal.ariaSubscriptionLabel",
-    defaultMessage: "Subscription Drop Down"
-  },
-  azureModalResourceGroupLabel: {
-    id: "azureModal.resourceGroupLabel",
-    defaultMessage: "Resource Group"
-  },
-  azureModalAriaResourceGroupLabel: {
-    id: "azureModal.ariaResourceGroupLabel",
-    defaultMessage: "Resource Group Drop Down"
-  },
-  azureModalLocationLabel: {
-    id: "azureModal.locationLabel",
-    defaultMessage: "Location"
-  },
-  azureModalAriaLocationLabel: {
-    id: "azureModal.ariaLocationLabel",
-    defaultMessage: "Location Drop Down"
-  },
-  azureModalCreateNew: {
-    id: "azureModal.createNew",
-    defaultMessage: "Create New"
-  },
-  azureModalSubscriptionSubLabel: {
-    id: "azureModal.subscriptionSubLabel",
-    defaultMessage: "Choose a subscription to manage your billing preferences"
-  },
-  azureModalResourceGroupSubLabel: {
-    id: "azureModal.resourceGroupSubLabel",
-    defaultMessage:
-      "A resource group is a container that holds related resources for an Azure solution"
-  },
-  appServiceModalTitle: {
-    id: "appService.modalTitle",
-    defaultMessage: "Create App Service"
-  },
   appServiceTitle: {
     id: "appService.title",
     defaultMessage: "App Service"
@@ -135,28 +66,6 @@ export const azureMessages = defineMessages({
     defaultMessage:
       "Quickly build, deploy, and scale your web apps with confidence."
   },
-  runtimeStackLabel: {
-    id: "azureFunctionsModal.runtimeStackLabel",
-    defaultMessage: "Runtime Stack"
-  },
-  runtimeStackSubLabel: {
-    id: "azureFunctionsModal.runtimeStackSubLabel",
-    defaultMessage: "Your runtime stack is {runtimeStack}"
-  },
-  appServiceBasicTierInfo: {
-    id: "appService.appServiceBasicTierInfo",
-    defaultMessage:
-      "A free BASIC tier 30 day trial app service plan will be created for you."
-  },
-  appServiceFreeTierInfo: {
-    id: "appService.appServiceFreeTierInfo",
-    defaultMessage:
-      "A FREE tier app service plan will be created for you."
-  },
-  appServiceLearnMore: {
-    id: "appService.learnMore",
-    defaultMessage: "Learn More"
-  },
   appServicePriceExpectation: {
     id: "appService.priceExpectation",
     defaultMessage: "Free 30 Day Trial"
@@ -164,26 +73,6 @@ export const azureMessages = defineMessages({
   appServiceTimeExpectation: {
     id: "appService.timeExpectation",
     defaultMessage: "3 - 5 minute set-up time"
-  },
-  appServiceAppNameLabel: {
-    id: "appService.appNameLabel",
-    defaultMessage: "Web App Name"
-  },
-  appServiceAriaAppNameLabel: {
-    id: "appService.ariaAppNameLabel",
-    defaultMessage: "Web App Name Dropdown"
-  },
-  appServiceAppNameSubLabel: {
-    id: "appService.appNameSubLabel",
-    defaultMessage: "We have created a unique web app name that you can edit"
-  },
-  azureModalSave: {
-    id: "azureModal.save",
-    defaultMessage: "Save"
-  },
-  appServicePlanLabel: {
-    id: "azureModal.appServicePlanLabel",
-    defaultMessage: "App Service Plan"
   }
 });
 
@@ -196,7 +85,7 @@ const azureServiceOptions: IOption[] = [
   {
     author: "Microsoft",
     type: servicesEnum.HOSTING,
-    svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE),
+    svgUrl: "",
     isPreview: false,
     title: azureMessages.appServiceTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE,
@@ -208,7 +97,7 @@ const azureServiceOptions: IOption[] = [
   {
     author: "Microsoft",
     type: servicesEnum.DATABASE,
-    svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB),
+    svgUrl: "",
     isPreview: false,
     title: azureMessages.cosmosTitle,
     internalName: WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB,
@@ -221,7 +110,7 @@ const azureServiceOptions: IOption[] = [
 
 export const microsoftAzureDetails: IOption = {
   author: "Microsoft",
-  svgUrl: getSvgUrl(WIZARD_CONTENT_INTERNAL_NAMES.AZURE),
+  svgUrl: "",
   title: azureMessages.azureTitle,
   internalName: WIZARD_CONTENT_INTERNAL_NAMES.AZURE,
   longDescription: azureMessages.azureLongDescription,

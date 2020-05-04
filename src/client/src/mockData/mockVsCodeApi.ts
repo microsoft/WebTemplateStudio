@@ -1,44 +1,11 @@
 import {
   EXTENSION_COMMANDS,
   DEVELOPMENT,
-  EXTENSION_MODULES
+  TEST
 } from "../utils/constants";
 
-const WEST_US = "WEST US";
-const mockLocations = Array.from({ length: 12 }).fill({
-  label: WEST_US,
-  value: WEST_US
-});
-
-const RESOURCE_GROUP_MOCK = "resourceGroupMock";
-const mockResourceGroups = Array.from({ length: 12 }).fill({
-  label: RESOURCE_GROUP_MOCK,
-  value: RESOURCE_GROUP_MOCK
-});
-
-const SUBSCRIPTION_MOCK = "GIV.Hackathon";
-const mockSubscriptions = Array.from(Array(10).keys()).map(
-  (element: number) => {
-    return {
-      label: SUBSCRIPTION_MOCK + element,
-      value: SUBSCRIPTION_MOCK + element,
-      isMicrosoftLearnSubscription: false
-    };
-  }
-);
-
-mockSubscriptions.push({
-  label: "Microsoft Learn Mock Subscription",
-      value: "Microsoft Learn Mock Subscription",
-      isMicrosoftLearnSubscription: true
-});
-
-const DEV_NO_ERROR_MSG = "in development, no error message";
-const DEV_NO_ERROR_TYPE = "in development, no error type";
-
-const mockAppServiceName = "mockappservicename";
-const mockFunctionsName = "mockfunctionsname";
-const mockCosmosDBName = "mockcosmosdbname";
+import * as mockAzureModule from "./extensionModules/mockAzureModule";
+import * as mockLoggerModule from "./extensionModules/mockLoggerModule";
 
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
@@ -49,7 +16,7 @@ const mockCosmosDBName = "mockcosmosdbname";
  */
 const mockVsCodeApi = () => ({
   postMessage: (message: any) => {
-    if (process.env.NODE_ENV === DEVELOPMENT) {
+    if (process.env.NODE_ENV === DEVELOPMENT || process.env.NODE_ENV === TEST) {
       switch (message.command) {
         case "alert":
           console.log("Command: ", message.alert);
@@ -195,7 +162,8 @@ const mockVsCodeApi = () => ({
                       latestVersion: "10.15.0",
                       preview: false,
                       enabled: true,
-                      type: "backend"
+                      type: "backend",
+                      linuxVersion: "node|10.14"
                     }
                   },
                   {
@@ -209,9 +177,11 @@ const mockVsCodeApi = () => ({
                     platforms: ["Web"],
                     languages: ["Any"],
                     tags: {
-                      version: "0.14.2",
-                      latestVersion: "0.14.2",
-                      preview: false
+                      version: "0.14.3",
+                      latestVersion: "0.14.3",
+                      preview: false,
+                      type: "backend",
+                      linuxVersion: "node|10.14"
                     }
                   },
                   {
@@ -239,7 +209,8 @@ const mockVsCodeApi = () => ({
                       latestVersion: "1.0.6",
                       preview: false,
                       enabled: true,
-                      type: "backend"
+                      type: "backend",
+                      linuxVersion: "python|3.7"
                     }
                   }
                 ],
@@ -251,9 +222,7 @@ const mockVsCodeApi = () => ({
           );
           break;
         case EXTENSION_COMMANDS.GET_LATEST_VERSION:
-            const min=1;
-            const max=8;
-            const latestVersion = (Math.floor(Math.random() * (+max - +min)) + +min) % 2 === 0;
+            const latestVersion = true;
             window.postMessage(
               {
                 command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
@@ -417,98 +386,23 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
-        case EXTENSION_COMMANDS.NAME_FUNCTIONS:
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.NAME_FUNCTIONS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                isAvailable: message.appName.length > 0
-              },
-              message: DEV_NO_ERROR_MSG,
-              errorType: DEV_NO_ERROR_TYPE
-            },
-            "*"
-          );
+        case EXTENSION_COMMANDS.VALIDATE_COSMOS_NAME:
+          mockAzureModule.validateCosmosName(message);
           break;
-        case EXTENSION_COMMANDS.NAME_COSMOS:
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.NAME_COSMOS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                isAvailable: message.appName.length > 0
-              },
-              message: DEV_NO_ERROR_MSG,
-              errorType: DEV_NO_ERROR_TYPE
-            },
-            "*"
-          );
+        case EXTENSION_COMMANDS.VALIDATE_APPSERVICE_NAME:
+          mockAzureModule.validateAppServiceName(message);
           break;
-        case EXTENSION_COMMANDS.NAME_APP_SERVICE:
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.NAME_APP_SERVICE,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                isAvailable: message.appName.length > 0
-              },
-              message: DEV_NO_ERROR_MSG,
-              errorType: DEV_NO_ERROR_TYPE
-            },
-            "*"
-          );
+        case EXTENSION_COMMANDS.GET_RESOURCE_GROUPS:
+          mockAzureModule.getResourceGroups(message);
           break;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS:
-          // produces locations and resource groups in development
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_COSMOS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                locations: mockLocations,
-                resourceGroups: mockResourceGroups,
-                validName: mockCosmosDBName
-              }
-            },
-            "*"
-          );
+        case EXTENSION_COMMANDS.GET_LOCATIONS:
+          mockAzureModule.getLocations(message);
           break;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS:
-          // produces locations and resource groups in development
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_FUNCTIONS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                locations: mockLocations,
-                resourceGroups: mockResourceGroups,
-                validName: mockFunctionsName
-              }
-            },
-            "*"
-          );
+        case EXTENSION_COMMANDS.GET_VALID_APP_SERVICE_NAME:
+          mockAzureModule.getValidAppServiceName(message);
           break;
-        case EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE:
-          // produces locations and resource groups in development
-          window.postMessage(
-            {
-              module: EXTENSION_MODULES.AZURE,
-              command: EXTENSION_COMMANDS.SUBSCRIPTION_DATA_APP_SERVICE,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                locations: mockLocations,
-                resourceGroups: mockResourceGroups,
-                validName: mockAppServiceName
-              }
-            },
-            "*"
-          );
+        case EXTENSION_COMMANDS.GET_VALID_COSMOS_NAME:
+          mockAzureModule.getValidCosmosName(message);
           break;
         case EXTENSION_COMMANDS.GENERATE:
           window.postMessage(
@@ -534,21 +428,17 @@ const mockVsCodeApi = () => ({
                   success: false,
                   failure: true
                 },
-                azureFunctions: {
-                  success: true,
-                  failure: false
-                },
                 appService: {
                   success: true,
                   failure: false
-                }
+                },
+                finished: true
               }
             },
             "*"
           );
           break;
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
-          // produces a mock login response from VSCode in development
           window.postMessage(
             {
               command: EXTENSION_COMMANDS.GET_OUTPUT_PATH,
@@ -559,26 +449,43 @@ const mockVsCodeApi = () => ({
             },
             "*"
           );
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.GET_PREVIEW_STATUS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                preview: true
-              }
-            },
-            "*"
-          );
           break;
         case EXTENSION_COMMANDS.GET_TEMPLATE_INFO:
-          // produces a mock login response from VSCode in development
           window.postMessage(
             {
               command: EXTENSION_COMMANDS.GET_TEMPLATE_INFO,
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
                 wizardVersion: "1.x",
-                templatesVersion: "1.x"
+                templatesVersion: "1.x",
+                itemNameValidationConfig:{
+                  regexs:[{
+                    "name":"nameStartLetter",
+                    "pattern" : "^[A-Za-z]"
+                  },
+                  {
+                    "name":"nameContainLettersNumbersDashes",
+                    "pattern" : "^((?!\\d)[a-zA-Z0-9\\s_-]+)$"
+                  }],
+                  reservedNames:[],
+                  validateDefaultNames:false,
+                  validateEmptyNames:true,
+                  validateExistingNames:true
+                },
+                projectNameValidationConfig:{
+                  regexs:[{
+                    "name":"nameStartLetter",
+                    "pattern" : "^[A-Za-z]"
+                  },
+                  {
+                    "name":"nameContainLettersNumbersDashes",
+                    "pattern" : "^((?!\\d)[a-zA-Z0-9_-]+)$"
+                  }],
+                  reservedNames:[],
+                  validateEmptyNames:true,
+                  validateExistingNames:false
+                },
+                preview:false
               }
             },
             "*"
@@ -586,20 +493,12 @@ const mockVsCodeApi = () => ({
           break;
         case EXTENSION_COMMANDS.GEN_STATUS:
           break;
-        case EXTENSION_COMMANDS.AZURE_LOGIN:
-          // produces a mock login response from VSCode in development
-          window.postMessage(
-            {
-              command: "login",
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                email: "devEnvironment2@email.com",
-                subscriptions: mockSubscriptions
-              }
-            },
-            "*"
-          );
-          break;
+          case EXTENSION_COMMANDS.AZURE_LOGIN:
+            mockAzureModule.login(message);
+            break;
+            case EXTENSION_COMMANDS.AZURE_LOGOUT:
+              mockAzureModule.logout(message);
+              break;
         case EXTENSION_COMMANDS.PROJECT_PATH_VALIDATION:
           // produces a mock validation response from VSCode in development
           window.postMessage(
@@ -628,6 +527,14 @@ const mockVsCodeApi = () => ({
             },
             "*"
           );
+          break;
+          
+        case EXTENSION_COMMANDS.LOG:
+          mockLoggerModule.logFromWizard(message);
+          break;
+        case EXTENSION_COMMANDS.OPEN_LOG:
+          mockLoggerModule.openLog();
+          break;
       }
     }
   }

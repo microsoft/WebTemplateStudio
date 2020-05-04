@@ -18,6 +18,7 @@ class CliEventEmitter extends EventEmitter {}
  */
 export class CoreTemplateStudio {
   private static _instance: CoreTemplateStudio | undefined;
+  public static _templateConfig: any;
 
   private _processCli: ChildProcess;
   private promiseChain: Promise<any>;
@@ -159,6 +160,10 @@ export class CoreTemplateStudio {
     );
   }
 
+  public getTemplateConfig(): any {
+    return CoreTemplateStudio._templateConfig;
+  }
+
   public async getPages(
     projectType: string,
     frontendFramework: string,
@@ -211,7 +216,8 @@ export class CoreTemplateStudio {
     const itemsToGenerateCount =
       projectItemsToGenerateCount +
       typedPayload.pages.length +
-      typedPayload.services.length;
+      (typedPayload.services.appService ? 1 : 0) +
+      (typedPayload.services.cosmosDB ? 1 : 0)
     let generatedItemsCount = 0;
 
     this.cliEvents.on(CONSTANTS.CLI.GENERATE_PROGRESS_STATE, data => {
@@ -252,11 +258,24 @@ export class CoreTemplateStudio {
         name: page.name,
         templateid: page.identity
       })),
-      features: services.map((service: any) => ({
-        name: service.name,
-        templateid: service.identity
-      }))
+      features: this.getServiceTemplateInfo(services)
     };
+  }
+
+  private getServiceTemplateInfo(services: any): any {
+    const servicesInfo = [];
+    if(services.appService) {
+      servicesInfo.push({
+        name: services.appService.siteName, //AppService
+        templateid: services.appService.internalName
+      })
+    }if(services.cosmosDB) {
+      servicesInfo.push({
+        name: services.cosmosDB.accountName, //Cosmos
+        templateid: services.cosmosDB.internalName
+      })
+    }
+    return servicesInfo;
   }
 
   public stop(): void {

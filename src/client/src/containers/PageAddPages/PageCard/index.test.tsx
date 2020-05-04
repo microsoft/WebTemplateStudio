@@ -1,14 +1,14 @@
-jest.mock('../../../actions/wizardSelectionActions/selectPages',()=>{
-  const selectPagesAction = jest.fn((pages: ISelected[]) => ({
-    type: "WIZARD_SELECTION_TYPEKEYS.SELECT_PAGES",
+jest.mock('../../../store/userSelection/pages/action',()=>{
+  const setPagesAction = jest.fn((pages: ISelected[]) => ({
+    type: "USERSELECTION_TYPEKEYS.SELECT_PAGES",
     payload: pages
   }));
   const resetPagesAction = jest.fn(() => ({
-    type: "WIZARD_SELECTION_TYPEKEYS.RESET_PAGES"
+    type: "USERSELECTION_TYPEKEYS.RESET_PAGES"
   }));
 
   return {
-    selectPagesAction,
+    setPagesAction,
     resetPagesAction
   }
 });
@@ -19,9 +19,10 @@ import PageCard from "./index";
 import { Provider } from "react-redux";
 import { getInitialState, loadMasters } from "../../../mockData/mockStore";
 import { render, fireEvent } from "@testing-library/react";
-import {IntlProvider} from 'react-intl';
+import { IntlProvider } from 'react-intl';
 import { ISelected } from "../../../types/selected";
-import { selectPagesAction} from "../../../actions/wizardSelectionActions/selectPages";
+import { setPagesAction } from "../../../store/userSelection/pages/action";
+import { AppState } from "../../../store/combineReducers";
 
 describe("PageCard", () => {
   let props: any;
@@ -30,11 +31,11 @@ describe("PageCard", () => {
   const mockStore = configureMockStore();
 
   beforeEach(()=>{
-    const initialState = getInitialState();
+    const initialState: AppState = getInitialState();
     loadMasters(initialState);
     store = mockStore(initialState);
     props = {
-      page: initialState.wizardContent.pageOptions[0],
+      page: initialState.templates.pageOptions[0],
       isModal:true,
       intl: global.intl
     };
@@ -70,6 +71,6 @@ describe("PageCard", () => {
 
   it("add page", ()=>{
     fireEvent.click(wrapper.getByRole("button"));
-    expect(selectPagesAction).toBeCalled();
+    expect(setPagesAction).toBeCalled();
   });
 });

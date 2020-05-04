@@ -10,19 +10,20 @@ import {
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { VSCodeUI } from "./utils/vscodeUI";
-import { AzureServices } from "./azure/azureServices";
 import { TelemetryService, IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { Logger } from "./utils/logger";
 import { WizardServant } from "./wizardServant";
-import { GenerationExperience } from "./generationExperience";
+import { Generation } from "./client-modules/generation";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
 import { DependencyChecker } from "./utils/dependencyChecker";
 import { CoreTSModule } from "./coreTSModule";
 import { Defaults } from "./utils/defaults";
 import { Telemetry } from "./client-modules/telemetry";
+import { AzureModule } from "./client-modules/azureModule";
 import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
 import { ISyncReturnType } from "./types/syncReturnType";
+import { LoggerModule } from "./client-modules/loggerModule";
 
 export class Controller {
   /**
@@ -34,8 +35,9 @@ export class Controller {
   public static TelemetryService: ITelemetryService;
   private vscodeUI: VSCodeUI;
   public static Logger: Logger;
-  private AzureService: AzureServices;
-  private GenExperience: GenerationExperience;
+  private loggerModule: LoggerModule;
+  private AzureModule: AzureModule;
+  private Generation: Generation;
   private Validator: Validator;
   private DependencyChecker: DependencyChecker;
   private CoreTSModule: CoreTSModule;
@@ -51,10 +53,10 @@ export class Controller {
     Controller.extensionModuleMap = new Map([
       [ExtensionModule.Telemetry, this.Telemetry],
       [ExtensionModule.VSCodeUI, this.vscodeUI],
-      [ExtensionModule.Azure, this.AzureService],
+      [ExtensionModule.Azure, this.AzureModule],
       [ExtensionModule.Validator, this.Validator],
-      [ExtensionModule.Generate, this.GenExperience],
-      [ExtensionModule.Logger, Controller.Logger],
+      [ExtensionModule.Generate, this.Generation],
+      [ExtensionModule.Logger, this.loggerModule],
       [ExtensionModule.DependencyChecker, this.DependencyChecker],
       [ExtensionModule.CoreTSModule, this.CoreTSModule],
       [ExtensionModule.Defaults, this.Defaults]
@@ -114,8 +116,9 @@ export class Controller {
 
     this.vscodeUI = new VSCodeUI();
     this.Validator = new Validator();
-    this.AzureService = new AzureServices();
-    this.GenExperience = new GenerationExperience(Controller.TelemetryService);
+    this.AzureModule = new AzureModule();
+    this.Generation = new Generation(Controller.TelemetryService);
+    this.loggerModule = new LoggerModule();
     this.DependencyChecker = new DependencyChecker();
     this.CoreTSModule = new CoreTSModule();
     this.Telemetry = new Telemetry(Controller.TelemetryService);
@@ -162,11 +165,8 @@ export class Controller {
         context.extensionPath,
         this.routingMessageReceieverDelegate
       );
-      GenerationExperience.setReactPanel(Controller.reactPanelContext);
 
-      Controller.loadUserSettings();
-
-      Controller.getTemplateInfoAndSendToClient(
+      Controller.getTemplateInfoAndStore(
         context,
         syncObject
       );
@@ -176,34 +176,21 @@ export class Controller {
     }
   }
 
-  private static getTemplateInfoAndSendToClient(
+  private static getTemplateInfoAndStore(
     ctx: vscode.ExtensionContext,
     syncObject: ISyncReturnType
   ): void {
-    Controller.reactPanelContext.postMessageWebview({
-      command: ExtensionCommand.GetTemplateInfo,
-      payload: {
-        templatesVersion:syncObject.templatesVersion,
-        wizardVersion: getExtensionVersionNumber(ctx),
-        itemNameValidationConfig: syncObject.itemNameValidationConfig,
-        projectNameValidationConfig: syncObject.projectNameValidationConfig,
-      }
-    });
-  }
-
-  private static loadUserSettings(): void {
     const preview = vscode.workspace
       .getConfiguration()
       .get<boolean>("wts.enablePreviewMode");
 
-    if (preview !== undefined) {
-      Controller.reactPanelContext.postMessageWebview({
-        command: ExtensionCommand.GetPreviewStatus,
-        payload: {
-          preview: preview
-        }
-      });
-    }
+    CoreTemplateStudio._templateConfig = {
+      templatesVersion:syncObject.templatesVersion,
+      wizardVersion: getExtensionVersionNumber(ctx),
+      itemNameValidationConfig: syncObject.itemNameValidationConfig,
+      projectNameValidationConfig: syncObject.projectNameValidationConfig,
+      preview
+    };
   }
 
   private static handleValidMessage(

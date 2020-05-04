@@ -1,35 +1,28 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-
-import { AppState } from "../../../reducers";
+import { connect, useDispatch } from "react-redux";
+import { AppState } from "../../../store/combineReducers";
 import styles from "./styles.module.css";
 import asModal from "../../../components/Modal";
-import RootAction from "../../../actions/ActionType";
-import { closeModalAction } from "../../../actions/modalActions/modalActions";
+import { closeModalAction } from "../../../store/navigation/modals/action";
 import PageAddPages from "../../PageAddPages";
-import { isAddPagesModalOpenSelector } from "../../../selectors/modalSelector";
-import { MODAL_TYPES } from "../../../actions/modalActions/typeKeys";
+import { isAddPagesModalOpenSelector } from "../../../store/navigation/modals/selector";
+import { NAVIGATION_MODAL_TYPES } from "../../../store/navigation/typeKeys";
 import { KEY_EVENTS } from "../../../utils/constants";
-
 import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
 
 interface IStateProps {
   isModalOpen: boolean;
 }
 
-interface IDispatchProps {
-  closeModal: () => any;
-}
+type Props = IStateProps;
 
-type Props = IStateProps & IDispatchProps;
-
-const AddPagesModal = ({ closeModal }: Props) => {
+const AddPagesModal = () => {
+  const dispatch = useDispatch();
   const cancelKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
-      closeModal();
+      dispatch(closeModalAction());
     }
   };
 
@@ -39,7 +32,7 @@ const AddPagesModal = ({ closeModal }: Props) => {
         <Cancel
           tabIndex={0}
           className={styles.icon}
-          onClick={closeModal}
+          onClick={() => dispatch(closeModalAction())}
           onKeyDown={cancelKeyDownHandler}
         />
       </div>
@@ -52,15 +45,6 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isAddPagesModalOpenSelector(state)
 });
 
-const mapDispatchToProps = (
-  dispatch: Dispatch<RootAction>
-): IDispatchProps => ({
-  closeModal: () => {
-    dispatch(closeModalAction());
-  }
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(asModal(AddPagesModal, MODAL_TYPES.ADD_PAGES_MODAL));
+  mapStateToProps
+)(asModal(AddPagesModal, NAVIGATION_MODAL_TYPES.ADD_PAGES_MODAL));

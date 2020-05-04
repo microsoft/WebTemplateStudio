@@ -2,7 +2,6 @@ import classnames from "classnames";
 import * as React from "react";
 import { injectIntl, FormattedMessage, InjectedIntl } from "react-intl";
 
-import { Link } from "react-router-dom";
 
 import styles from "./styles.module.css";
 import keyUpHandler from "../../utils/keyUpHandler";
@@ -35,12 +34,15 @@ const TopNavBarLink = ({
     }
   };
 
+
+
   const getAriaLabel = (
     arialabeltext: FormattedMessage.MessageDescriptor,
     isSelected = false
   ): string => {
     if (isSelected) {
       arialabeltext = ARIA_LABELS_NAVIGATION.ARIA_LABELS_CURRENT_PAGE;
+      
     }
     return intl.formatMessage(arialabeltext, {
       pagesText: intl.formatMessage({
@@ -52,9 +54,8 @@ const TopNavBarLink = ({
 
   const linkTabIndex = disabled ? -1 : 0;
   return (
-    <Link
+    <a
       tabIndex={linkTabIndex}
-      to={path}
       onClick={handleClick}
       className={styles.container}
       onKeyUp={keyUpHandler}
@@ -90,7 +91,7 @@ const TopNavBarLink = ({
           {text}
         </div>
       </div>
-    </Link>
+    </a>
   );
 };
 

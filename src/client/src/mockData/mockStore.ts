@@ -1,8 +1,8 @@
 import { ISelected } from "../types/selected";
-import { IVSCode, IVSCodeAPI, IVSCodeObject } from "../reducers/vscodeApiReducer";
-import mockVsCodeApi from "./mockVsCodeApi";
 import { FormattedMessage } from "react-intl";
-import { AppState } from "../reducers";
+import { AppState } from "../store/combineReducers";
+import { ModalType } from "../store/navigation/typeKeys";
+import { ROUTES } from "../utils/constants";
 
 export const getISelected = () => {
   const selected: ISelected = {
@@ -12,32 +12,14 @@ export const getISelected = () => {
   return selected;
 };
 
-
-export const getIVSCodeApi = () => {
-  const isVsCodeApiAcquired = false;
-  const vscodeObject: IVSCodeObject = mockVsCodeApi();
-
-  const vscode: IVSCodeAPI = {
-    isVsCodeApiAcquired,
-    vscodeObject
-  };
-  const mockVSCode: IVSCode = {
-    vscode
-  };
-  return mockVSCode;
-};
-
-export const getInitialState = () => {
+export const getInitialState = (): AppState => {
   const initialState: AppState={
-    vscode: {
-      isVsCodeApiAcquired: true,
-      vscodeObject: getIVSCodeApi().vscode.vscodeObject
-    },
-    wizardContent: {
+    templates: {
       backendOptions: [],
       frontendOptions: [],
       pageOptions: [],
-      projectTypes: [],
+    },
+    config:{
       detailsPage: {
         isIntlFormatted: false,
         data: {
@@ -50,87 +32,10 @@ export const getInitialState = () => {
           selected: false,
           author: '',
           svgUrl:''
-        }
+        },
+        originRoute:''
       },
-      serverPort: 9502,
       previewStatus: false,
-      createProjectButton: false,
-      enableQuickStart: false,
-    },
-    selection: {
-      appType: {
-        title: 'Fullstack Web Application',
-        internalName: 'FullStackWebApp',
-        version: 'v1.0',
-        licenses: ''
-      },
-      frontendFramework: {
-        title: '',
-        internalName: '',
-        version: '',
-        author: ''
-      },
-      backendFramework: {
-        title: '',
-        internalName: '',
-        version: '',
-        author: ''
-      },
-      pages: [],
-      services: {
-        azureFunctions: {
-          appNameAvailability: {
-            isAppNameAvailable: false,
-            message: 'App name unavailable'
-          },
-          selection: [],
-          wizardContent: {
-            serviceType: {
-              id: 'azureFunctions.originalTitle',
-              defaultMessage: 'Azure Functions'
-            }
-          },
-          chooseExistingRadioButtonSelected: false
-        },
-        cosmosDB: {
-          accountNameAvailability: {
-            isAccountNameAvailable: false,
-            message: 'Account name unavailable'
-          },
-          selection: [],
-          wizardContent: {
-            serviceType: {
-              id: 'cosmosDb.originalTitle',
-              defaultMessage: 'CosmosDB'
-            }
-          }
-        },
-        appService: {
-          siteNameAvailability: {
-            isSiteNameAvailable: false,
-            message: 'App name unavailable'
-          },
-          selection: null,
-          wizardContent: {
-            serviceType: {
-              id: 'appService.originalTitle',
-              defaultMessage: 'App Service'
-            }
-          }
-        }
-      },
-      outputPathObject: {
-        outputPath: '/generic_output_path'
-      },
-      isValidatingName: false,
-      projectNameObject: {
-        projectName: 'myApp',
-        validation: {
-          isValid: true,
-          error: "" as unknown as FormattedMessage.MessageDescriptor,
-          isDirty: true
-        }
-      },
       validations: {
         itemNameValidationConfig: {
           regexs: [],
@@ -145,63 +50,69 @@ export const getInitialState = () => {
           validateEmptyNames: true,
           validateExistingNames: true
         }
-      }
-    },
-    azureProfileData: {
-      isLoggedIn: false,
-      profileData: {
-        subscriptions: {},
+      },
+      versions: {
+        templatesVersion: '0.0.1',
+        wizardVersion: '0.0.2'
+      },
+      azureProfileData: {
+        subscriptions: [],
         email:''
       },
-      subscriptionData: {
-        locations: [],
-        resourceGroups: [],
-        validName: ''
+      appType: {
+        title: 'Fullstack Web Application',
+        internalName: 'FullStackWebApp',
+        version: 'v1.0',
+        licenses: ''
       }
     },
-    modals: {
-      openModal: {
-        modalType: null,
-        modalData: null
-      }
-    },
-    wizardRoutes: {
-      isVisited: {
-        '/': true,
-        '/SelectFrameworks': false,
-        '/SelectPages': false,
-        '/AzureLogin': false,
-        '/ReviewAndGenerate': false
+    userSelection: {
+      frontendFramework: {
+        title: '',
+        internalName: '',
+        version: '',
+        author: ''
       },
-      selected: '/'
-    },
-    generationStatus: {
-      statusMessage: '...',
-      genStatus: {
-        templates: {
-          success: false,
-          failure: false
-        },
-        cosmos: {
-          success: false,
-          failure: false
-        },
-        azureFunctions: {
-          success: false,
-          failure: false
-        },
-        appService: {
-          success: false,
-          failure: false
+      backendFramework: {
+        title: '',
+        internalName: '',
+        version: '',
+        author: ''
+      },
+      pages: [],
+      outputPathObject: {
+        outputPath: '/generic_output_path'
+      },
+      projectNameObject: {
+        projectName: 'myApp',
+        validation: {
+          isValid: true,
+          error: "" as unknown as FormattedMessage.MessageDescriptor,
+          isDirty: true
         }
+      },
+      services: {
+        cosmosDB: null,
+        appService: null      
       }
     },
-    versions: {
-      templatesVersion: '',
-      wizardVersion: ''
-    },
-    dependencyInfo: {
-      dependencies: {}
+    navigation:{
+      modals: {
+        openModal: {
+          modalType: null,
+          modalData: null
+        }
+      },
+      routes: {
+        isVisited: {
+          '/': true,
+          '/SelectFrameworks': false,
+          '/SelectPages': false,
+          '/AzureLogin': false,
+          '/ReviewAndGenerate': false
+        },
+        selected: '/'
+      }
     }
   };
   return initialState;
@@ -281,6 +192,159 @@ const loadPages = (frameWorkName: string): Array<any>=>{
   return pages;
 }
 
-export const loadMasters = (store: any) =>{
-  store.wizardContent.pageOptions = loadPages("React");
+const getSubscriptionsSelector = (): Array<Subscription> => {
+  const subscriptions = Array.from(Array(2).keys()).map(
+    (item: number) => {
+      return {
+        name: `subscription ${item}`,
+        isMicrosoftLearn: false
+      };
+    }
+  );
+  
+  subscriptions.push({
+    name: "Microsoft Learn Subscription",
+    isMicrosoftLearn: true
+  });
+
+  return subscriptions;
+}
+
+export const addFrontEndFrameworksOptions = (store: AppState)=>{
+  store.templates.frontendOptions = [
+    {
+      author: 'Facebook',
+      body: 'JavaScript framework',
+      internalName: 'React',
+      licenses: ['[React](https://github.com/facebook/react/blob/master/LICENSE)  \n[Create React App](https://github.com/facebook/create-react-app/blob/master/LICENSE)'],
+      longDescription: 'React is a component-based open source JavaScript library for building interfaces for single page applications. It is used for handling view layer for web and mobile apps. React allows you to design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.  \r\n\r\n  \r\nMore information about React can be found [here](https://reactjs.org).\r\n',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'React',
+      version: '16.8.4',
+      latestVersion: "0.0.1",
+      latestVersionLoaded: true
+    },
+    {
+      author: 'Google',
+      body: 'JavaScript framework',
+      internalName: 'Angular',
+      licenses: ['[Angular](https://github.com/angular/angular/blob/master/LICENSE)  \n[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)'],
+      longDescription: 'Angular is a platform that makes it easy to build applications with the web. Angular combines declarative templates, dependency injection, end to end tooling, and integrated best practices to solve development challenges. Angular empowers developers to build applications that live on the web, mobile, or the desktop.\r\n\r\nMore information about Angular can be found [here](https://angular.io).\r\n',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'Angular',
+      version: '7.2.0',
+      latestVersion: "0.0.1",
+      latestVersionLoaded: true
+    },
+    {
+      author: 'Evan You',
+      body: 'JavaScript framework',
+      internalName: 'Vue',
+      licenses: ['Vue](https://github.com/vuejs/vue/blob/dev/LICENSE)  \n[Vue CLI](https://github.com/vuejs/vue-cli/blob/dev/LICENSE)'],
+      longDescription: 'Vue is a lightweight, progressive JavaScript framework for building user interfaces. Vue is heavily focused on the view layer, and is designed to be simple and flexible.\r\n\r\nMore information about Vue can be found [here](https://vuejs.org/).\r\n',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'Vue.js',
+      version: '2.6.6',
+      latestVersion: "0.0.1",
+      latestVersionLoaded: true
+    }
+  ];
+  return store;
+}
+
+export const addBackEndFrameworksOptions = (store: AppState)=>{
+  store.templates.backendOptions = [
+    {
+      author: 'Various',
+      body: 'JavaScript framework',
+      internalName: 'Node',
+      licenses: ['[Node](https://github.com/nodejs/node/blob/master/LICENSE)','[Express](https://github.com/expressjs/express/blob/master/LICENSE)','[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)'],
+      longDescription: 'Node.js is an open source server environment based on JavaScript that helps you build fast and scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices. Node.js runs across various platforms like Windows, Linux, Unix, and Mac OS X.\r\n\r\nMore information about Node.js can be found [here](https://nodejs.org).\r\n',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'Node.js/Express',
+      version: '10.15.0',
+      linuxVersion: 'node|10.14',
+      latestVersionLoaded: true
+    },
+    {
+      author: 'Various',
+      body: 'JavaScript framework',
+      internalName: 'Moleculer',
+      licenses: ['[Moleculer](https://github.com/moleculerjs/moleculer/blob/master/LICENSE)'],
+      selected: false,
+      svgUrl: '',
+      title: 'Moleculer',
+      version: '0.14.3',
+      linuxVersion: 'node|10.14',
+      latestVersionLoaded: true
+    },
+    {
+      author: 'Various',
+      body: 'Python framework',
+      internalName: 'Flask',
+      licenses: ['[Flask](https://github.com/pallets/flask/blob/master/LICENSE)'],
+      longDescription: 'Flask is a python microframework with a small core for building web applications. It is based on [Werkzeug](https://www.palletsprojects.com/p/werkzeug/) and [Jinja](https://www.palletsprojects.com/p/jinja/). It is licensed under [BSD](https://github.com/pallets/flask/blob/master/LICENSE) license.\r\nIt is developed and supported by Pallets organization.\r\n\r\nMore information on Flask can be found [here](http://flask.pocoo.org/)\r\n',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'Flask',
+      version: '1.0.3',
+      linuxVersion: 'python|3.7',
+      latestVersionLoaded: true
+    }
+
+
+  ];
+  return store;
+}
+
+export const loadMasters = (store: AppState) =>{
+  store.templates.pageOptions = loadPages("React");
+}
+
+export const setSubscriptions = (store: AppState) => {
+  store.config.azureProfileData.subscriptions = getSubscriptionsSelector();
+}
+
+export const setBackendFramework = (store: AppState, internalName: string) => {
+  store.userSelection.backendFramework.internalName = internalName;
+}
+
+export const setFrontendFramework = (store: AppState, internalName: string) => {
+  store.userSelection.backendFramework.internalName = internalName;
+}
+
+export const setOpenModal = (store: AppState, modalType: ModalType) => {
+  store.navigation.modals.openModal.modalType = modalType;
+}
+
+export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
+  store.navigation.routes.selected = seletedRoute;
+  switch (seletedRoute) 
+  {
+    case ROUTES.SELECT_FRAMEWORKS:
+      store.navigation.routes.isVisited = {
+        '/': true,
+        '/SelectFrameworks': true,
+        '/SelectPages': false,
+        '/AzureLogin': false,
+        '/ReviewAndGenerate': false
+      };
+    case ROUTES.REVIEW_AND_GENERATE:
+      store.navigation.routes.isVisited = {
+        '/': true,
+        '/SelectFrameworks': true,
+        '/SelectPages': true,
+        '/AzureLogin': true,
+        '/ReviewAndGenerate': true
+      }
+  }
 }

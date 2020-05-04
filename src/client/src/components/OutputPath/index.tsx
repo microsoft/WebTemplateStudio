@@ -1,5 +1,4 @@
 import * as React from "react";
-import Input from "../Input";
 import { INTL_MESSAGES, KEY_EVENTS } from "../../utils/constants";
 
 import styles from "./styles.module.css";
@@ -10,6 +9,8 @@ import classNames from "classnames";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import messages from "./messages";
+import stylesInput from "../../css/input.module.css";
+import classnames from "classnames";
 
 interface IProps {
   handleSaveClick: () => any;
@@ -36,12 +37,12 @@ const OutputPath = ({
       <div className={styles.container} tabIndex={0} onKeyDown={handleKeyDown}>
         <div className={styles.errorStack}>
           <div className={styles.outputPath} onClick={handleSaveClick}>
-            <Input
-              ariaLabel={intl.formatMessage(messages.ariaOutputPathLabel)}
+            <input 
+              aria-label={intl.formatMessage(messages.ariaOutputPathLabel)}
               value={value}
-              customStyle={styles.pathInput}
               placeholder={placeholder}
               disabled={true}
+              className={classnames(stylesInput.input, styles.pathInput)}
             />
           </div>
           {(isEmpty && (

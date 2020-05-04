@@ -1,11 +1,6 @@
 import { defineMessages } from "react-intl";
 
-const PAGE_DETAILS = "/PageDetail";
-const SELECT_FRAMEWORKS = "/SelectFrameworks";
-const SELECT_PAGES = "/SelectPages";
-const AZURE_LOGIN = "/AzureLogin";
-const REVIEW_AND_GENERATE = "/ReviewAndGenerate";
-const NEW_PROJECT = "/";
+
 
 const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
@@ -15,13 +10,18 @@ const MAX_PAGES_ALLOWED = 20;
 
 const WEB_TEMPLATE_STUDIO_LINKS = {
   REPO: "https://github.com/Microsoft/WebTemplateStudio",
-  ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues",
-  APP_SERVICE_PLAN:
-    "https://azure.microsoft.com/en-us/pricing/details/app-service/plans/"
+  ISSUES: "https://github.com/Microsoft/WebTemplateStudio/issues"
+};
+
+const AZURE_LINKS = {
+  CREATE_NEW_SUBSCRIPTION: "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
+  CREATE_NEW_RESOURCE_GROUP: "https://portal.azure.com/#create/Microsoft.ResourceGroup",
+  APP_SERVICE_PLAN:"https://azure.microsoft.com/en-us/pricing/details/app-service/plans/"
 };
 
 const PRODUCTION = "production";
 const DEVELOPMENT = "development";
+const TEST = "test";
 
 const INTL_MESSAGES = defineMessages({
   EMPTY_FIELD: {
@@ -48,14 +48,6 @@ const ARIA_LABELS_NAVIGATION = defineMessages({
   }
 });
 
-enum PAGEID {
-  NEW_PROJECT = 1,
-  SELECT_FRAMEWORKS = 2,
-  SELECT_PAGES = 3,
-  AZURE_LOGIN = 4,
-  REVIEW_AND_GENERATE = 5
-}
-
 const PAYLOAD_MESSAGES_TEXT = {
   RESET_PAGES_TEXT: "Sending reset pages request...",
   SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
@@ -63,33 +55,42 @@ const PAYLOAD_MESSAGES_TEXT = {
 };
 
 const ROUTES = {
-  PAGE_DETAILS,
-  SELECT_FRAMEWORKS,
-  SELECT_PAGES,
-  AZURE_LOGIN,
-  REVIEW_AND_GENERATE,
-  NEW_PROJECT
+  PAGE_DETAILS: "/PageDetail",
+  SELECT_FRAMEWORKS:  "/SelectFrameworks",
+  SELECT_PAGES: "/SelectPages",
+  AZURE_LOGIN: "/AzureLogin",
+  REVIEW_AND_GENERATE :"/ReviewAndGenerate",
+  NEW_PROJECT: "/"
 };
+
 
 // Presents the routes in the order of the wizard
 const ROUTES_ARRAY = [
-  NEW_PROJECT,
-  SELECT_FRAMEWORKS,
-  SELECT_PAGES,
-  AZURE_LOGIN,
-  REVIEW_AND_GENERATE
+  ROUTES.NEW_PROJECT,
+  ROUTES.SELECT_FRAMEWORKS,
+  ROUTES.SELECT_PAGES,
+  ROUTES.AZURE_LOGIN,
+  ROUTES.REVIEW_AND_GENERATE
 ];
 
 const SERVICE_KEYS = {
   COSMOS_DB: "cosmosDB",
-  AZURE_FUNCTIONS: "azureFunctions",
   APP_SERVICE: "appService"
 };
 
-const COSMOS_APIS = {
-  MONGO: "MongoDB",
-  SQL: "SQL"
-};
+enum AzureResourceType {
+  AppService = "app-service",
+  Cosmos = "cosmos"
+}
+
+const AZURE = {
+  COSMOS_APIS: {
+    MONGO: "MongoDB",
+    SQL: "SQL"
+  },
+  DEFAULT_LOCATION: "Central US",
+  DEFAULT_RESOURCE_GROUP: ""
+}
 
 enum FRAMEWORK_TYPE {
   FRONTEND = "frontend",
@@ -104,9 +105,8 @@ enum KEY_EVENTS {
 
 const WIZARD_CONTENT_INTERNAL_NAMES = {
   ANGULAR: "Angular",
-  APP_SERVICE: "AppService",
+  APP_SERVICE: "wts.Feature.Azure.AppService",
   AZURE: "wts.Feature.Azure",
-  AZURE_FUNCTIONS: "wts.Feature.Azure.AzureFunctions",
   REACT_BLANK_PAGE: "wts.Page.React.Blank",
   REACT_CONTENT_GRID: "wts.Page.React.Grid",
   REACT_MASTER_DETAIL: "wts.Page.React.MasterDetail",
@@ -122,7 +122,6 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   NODE: "Node",
   MOLECULER: "Moleculer",
   FLASK: "Flask",
-  PYTHON: "Python",
   REACT: "React",
   REST_API: "RestAPI",
   VUE: "Vue",
@@ -140,7 +139,8 @@ const EXTENSION_MODULES = {
   VSCODEUI: "VSCodeUI",
   DEPENDENCYCHECKER: "DependencyChecker",
   CORETS: "CoreTSModule",
-  DEFAULTS: "Defaults"
+  DEFAULTS: "Defaults",
+  LOGGER: "Logger",
 };
 
 // Define extension commands here that should be received from the extension
@@ -151,19 +151,20 @@ const EXTENSION_COMMANDS = {
   GET_OUTPUT_PATH: "get-output-path",
   GET_PROJECT_NAME: "get-project-name",
   GET_USER_STATUS: "get-user-status",
-  NAME_COSMOS: "name-cosmos",
-  NAME_FUNCTIONS: "name-functions",
-  NAME_APP_SERVICE: "name-app-service",
+  VALIDATE_COSMOS_NAME: "validate-cosmos-name",
+  VALIDATE_APPSERVICE_NAME: "validate-appservice-name",
   PROJECT_PATH_VALIDATION: "project-path-validation",
-  SUBSCRIPTION_DATA_COSMOS: "subscription-data-for-cosmos",
-  SUBSCRIPTION_DATA_FUNCTIONS: "subscription-data-for-functions",
-  SUBSCRIPTION_DATA_APP_SERVICE: "subscription-data-for-app-service",
+  GET_RESOURCE_GROUPS: "get-resource-groups",
+  GET_LOCATIONS: "get-locations",
+  GET_VALID_APP_SERVICE_NAME: "get-valid-app-service-name",
+  GET_VALID_COSMOS_NAME: "get-valid-cosmos-name",
   TRACK_PAGE_SWITCH: "track-page-switch",
   TRACK_CREATE_NEW_PROJECT: "track-create-new-project",
   TRACK_OPEN_ADD_PAGES_MODAL: "track-open-add-pages-modal",
   TRACK_PRESS_QUICKSTART: "track-press-quickstart",
   TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-app-service-modal-from-services-list",
   TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-cosmosdb-service-modal-from-services-list",
+  TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE: "track-open-azure-service-advanced-mode",
   GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
@@ -171,12 +172,13 @@ const EXTENSION_COMMANDS = {
   CLOSE_WIZARD: "close-wizard",
   GET_VERSIONS: "get-versions",
   RESET_PAGES: "reset-pages",
-  GET_PREVIEW_STATUS: "get-preview",
   GET_DEPENDENCY_INFO: "check-dependency",
   GET_FRAMEWORKS: "get-frameworks",
   GET_LATEST_VERSION:"get-latest-version",
   GET_PAGES: "get-pages",
-  GET_VALIDATIONS: "get-validations"
+  GET_VALIDATIONS: "get-validations",
+  LOG: "log",
+  OPEN_LOG: "open-log"
 };
 
 const TELEMETRY = {
@@ -194,16 +196,18 @@ export {
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
   ARIA_LABELS_NAVIGATION,
-  COSMOS_APIS,
+  AZURE,
   DEVELOPMENT,
+  TEST,
   PROJECT_NAME_CHARACTER_LIMIT,
   PAGE_NAME_CHARACTER_LIMIT,
   MAX_PAGES_ALLOWED,
   WEB_TEMPLATE_STUDIO_LINKS,
+  AZURE_LINKS,
   FRAMEWORK_TYPE,
   KEY_EVENTS,
   PAYLOAD_MESSAGES_TEXT,
   BOOTSTRAP_LICENSE,
-  PAGEID,
-  TELEMETRY
+  TELEMETRY,
+  AzureResourceType
 };

@@ -1,51 +1,45 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { withRouter, RouteComponentProps } from "react-router";
+import { connect, useDispatch } from "react-redux";
 import Details from "./Details";
 import { IOption } from "../../types/option";
-import { screenShotMapping } from "../../utils/getSvgUrl";
+import { getScreenShot } from "../../utils/getSvgUrl";
 import styles from "./styles.module.css";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
+import { setPageWizardPageAction } from "../../store/navigation/routes/action";
 
 interface IPageDetailsProps {
+  originRoute: string;
   detailsPageInfo: IOption;
   isIntlFormatted: boolean;
 }
 
-type Props = IPageDetailsProps & RouteComponentProps;
+type Props = IPageDetailsProps;
 
 const PageDetails = (props: Props) => {
-  const { history, detailsPageInfo, isIntlFormatted } = props;
+  const { detailsPageInfo, isIntlFormatted, originRoute } = props;
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.detailsContainer}>
       <Details
-        handleBackClick={history.goBack}
+        handleBackClick={()=>{dispatch(setPageWizardPageAction(originRoute))}}
         detailInfo={detailsPageInfo}
         formatteDetailInfo={isIntlFormatted ? detailsPageInfo : undefined}
       />
       <div className={styles.screenShotContainer}>
-        {screenShotMapping(detailsPageInfo.internalName) && (
-          <img
-            className={styles.screenshot}
-            src={screenShotMapping(props.detailsPageInfo.internalName)}
-            alt="Screenshot preview of web page that will be generated"
-          />
-        )}
+      {getScreenShot(detailsPageInfo.internalName, styles.screenshot)}
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state: AppState): IPageDetailsProps => {
-  return {
-    detailsPageInfo: state.wizardContent.detailsPage.data,
-    isIntlFormatted: state.wizardContent.detailsPage.isIntlFormatted
-  };
-};
+const mapStateToProps = (state: AppState): IPageDetailsProps => ({
+  originRoute : state.config.detailsPage.originRoute,
+    detailsPageInfo: state.config.detailsPage.data,
+    isIntlFormatted: state.config.detailsPage.isIntlFormatted
+});
 
-export default withRouter(
+export default
   connect(
-    mapStateToProps,
-    null
-  )(PageDetails)
-);
+    mapStateToProps
+  )(PageDetails);

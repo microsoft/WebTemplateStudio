@@ -6,7 +6,7 @@ import dropdownstyles from "./dropdownstyles";
 
 import styles from "./styles.module.css";
 
-interface IDropdownProps {
+export interface IDropdownProps {
   options: IDropDownOptionType[];
   disabled?: boolean;
   defaultValue?: IDropDownOptionType;
@@ -15,6 +15,11 @@ interface IDropdownProps {
   ariaLabel: string;
   openDropdownUpwards?: boolean;
 }
+
+const DEFAULT_VALUE = {
+  value: "Select...",
+  label: "Select...",
+};
 
 const DropdownIndicator = (props: any) => {
   return (
@@ -43,7 +48,7 @@ const Dropdown = ({
       onChange={handleChange}
       styles={dropdownstyles}
       isSearchable={true}
-      defaultValue={defaultValue}
+      defaultValue={defaultValue || DEFAULT_VALUE}
       options={options}
       menuPlacement={openDropdownUpwards ? "top" : "auto"}
       isDisabled={disabled}

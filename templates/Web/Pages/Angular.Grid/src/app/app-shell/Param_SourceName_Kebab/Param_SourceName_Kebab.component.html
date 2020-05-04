@@ -1,0 +1,22 @@
+﻿<main id="mainContent">
+
+  <div class="container">
+    <div class="row justify-content-center py-5">
+      <h3>AngularGrid</h3>
+    </div>
+    <div class="row justify-content-around text-center pb-5">
+      <app-grid-item
+        class="col-4 p-5"
+        *ngFor="let gridItem of (gridItems$ | async)"
+        [gridItem]="gridItem"
+      >
+      </app-grid-item>
+    </div>
+  </div>
+  <app-warning-message
+    *ngIf="warningMessageOpen"
+    [text]="warningMessageText"
+    (warningMessageOpen)="handleWarningClose($event)"
+  >
+  </app-warning-message>
+</main>

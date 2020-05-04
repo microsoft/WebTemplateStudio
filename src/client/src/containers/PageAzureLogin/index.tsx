@@ -1,72 +1,59 @@
 import * as React from "react";
-import { withRouter, RouteComponentProps, Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
+import { useDispatch, useSelector } from "react-redux";
 import classnames from "classnames";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import styles from "./styles.module.css";
 
 import {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
-  KEY_EVENTS,
-  ROUTES
+  KEY_EVENTS
 } from "../../utils/constants";
 
-import { setDetailPageAction } from "../../actions/wizardInfoActions/setDetailsPage";
-import { IOption } from "../../types/option";
 import { azureMessages } from "../../mockData/azureServiceOptions";
-import { AppState } from "../../reducers";
+import { AppState } from "../../store/combineReducers";
 import AzureSubscriptions from "./AzureSubscriptions";
 import AzureStudent from "./AzureStudent";
 import Title from "../../components/Title";
-import RootAction from "../../actions/ActionType";
 import keyUpHandler from "../../utils/keyUpHandler";
 import AzureLoginModal from "./AzureLoginModal";
+import { azureLogout } from "../../utils/extensionService/extensionService";
+import { logOutAzureAction } from "../../store/config/azure/action";
+import { AppContext } from "../../AppContext";
+import { isLoggedInSelector } from "../../store/config/azure/selector";
 
-interface IDispatchProps {
-  setDetailPage: (detailPageInfo: IOption) => any;
-}
+type Props = InjectedIntlProps;
 
-interface IAzureLoginProps {
-  isLoggedIn: boolean;
-  vscode: any;
-  email: string;
-}
+const AzureLogin = (props: Props)=> {
+  const { intl } = props;
+  const { vscode } = React.useContext(AppContext);
+  const dispatch = useDispatch();
+  const email = useSelector((state: AppState) => state.config.azureProfileData.email);
+  const isLoggedIn = useSelector((state: AppState) => isLoggedInSelector(state));
 
-type Props = IDispatchProps &
-  IAzureLoginProps &
-  InjectedIntlProps &
-  RouteComponentProps;
-
-class AzureLogin extends React.Component<Props> {
-  signOutClick = () => {
-    this.props.vscode.postMessage({
-      module: EXTENSION_MODULES.AZURE,
-      command: EXTENSION_COMMANDS.AZURE_LOGOUT,
-      track: true
+  const signOutAzure = () => {
+    azureLogout(vscode).then((event)=>{
+      const message = event.data;
+      if (message.payload.success) {
+        dispatch(logOutAzureAction());
+      }
     });
   };
-  signOutkeyDownHandler = (event: React.KeyboardEvent) => {
+
+  const signOutkeyDownHandler = (event: React.KeyboardEvent) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      this.signOutClick();
+      signOutAzure();
     }
   };
 
-  public render() {
-    const { isLoggedIn, intl, email } = this.props;
-
-    return (
+  return (
       <div className={styles.centerViewAzure}>
         <AzureLoginModal/>
-        <Link
+        <a
           tabIndex={0}
-          to={ROUTES.REVIEW_AND_GENERATE}
           className={styles.optionalFlag}
           onKeyUp={keyUpHandler}
         >
           {azureMessages.azureSkipButton.defaultMessage}
-        </Link>
+        </a>
         <div
           className={classnames(styles.container, {
             [styles.signedIn]: isLoggedIn
@@ -81,8 +68,8 @@ class AzureLogin extends React.Component<Props> {
                   role="button"
                   tabIndex={0}
                   className={classnames(styles.button, styles.signOutButton)}
-                  onClick={this.signOutClick}
-                  onKeyDown={this.signOutkeyDownHandler}
+                  onClick={signOutAzure}
+                  onKeyDown={signOutkeyDownHandler}
                 >
                   <FormattedMessage
                     id="header.signOut"
@@ -98,31 +85,5 @@ class AzureLogin extends React.Component<Props> {
       </div>
     );
   }
-}
 
-const mapStateToProps = (state: AppState): IAzureLoginProps => {
-  const { isLoggedIn } = state.azureProfileData;
-  const { vscodeObject } = state.vscode;
-  const { email } = state.azureProfileData.profileData;
-  return {
-    isLoggedIn,
-    vscode: vscodeObject,
-    email
-  };
-};
-
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<AppState, void, RootAction>
-): IDispatchProps => ({
-  setDetailPage: (detailPageInfo: IOption) => {
-    const isIntlFormatted = true;
-    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted));
-  }
-});
-
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(injectIntl(AzureLogin))
-);
+export default (injectIntl(AzureLogin));
