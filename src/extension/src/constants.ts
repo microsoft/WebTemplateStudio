@@ -319,6 +319,7 @@ export const PROJECT_NAME_VALIDATION_LIMIT = 50;
 
 export enum ExtensionCommand {
   Log = "log",
+  OpenLog = "open-log",
   Login = "login",
   Logout = "logout",
   GetResourceGroups = "get-resource-groups",

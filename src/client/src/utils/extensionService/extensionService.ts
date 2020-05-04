@@ -2,8 +2,7 @@ import { IVSCodeObject } from "../../types/vscode";
 import {
   EXTENSION_COMMANDS, EXTENSION_MODULES, WIZARD_CONTENT_INTERNAL_NAMES, PAYLOAD_MESSAGES_TEXT
 } from "../constants";
-import { IAppService } from "../../store/userSelection/services/appService/model";
-import { ICosmosDB } from "../../store/userSelection/services/cosmosDb/model";
+import { ILoggingPayload } from "../../types/logger";
 
 const postMessageAsync = (command: string, paramsMessage: any, vscode: IVSCodeObject, scopeId: number = Math.random())=>{
   const promise = new Promise<any>((resolve) => {
@@ -204,6 +203,21 @@ const getResourceGroups = (vscode: IVSCodeObject, subscription: string) => {
   }, vscode);
 }
 
+const sendLog = (logData: ILoggingPayload, vscode: IVSCodeObject) => {
+  return postMessageAsync(EXTENSION_COMMANDS.LOG, {
+    module: EXTENSION_MODULES.LOGGER,
+    command: EXTENSION_COMMANDS.LOG,
+    logData
+  }, vscode);
+}
+
+const openLogFile = (vscode: IVSCodeObject) => {
+  return postMessageAsync(EXTENSION_COMMANDS.OPEN_LOG, {
+    module: EXTENSION_MODULES.LOGGER,
+    command: EXTENSION_COMMANDS.OPEN_LOG,
+  }, vscode);
+}
+
 export {
   projectPathValidation,
   getValidationsConfig,
@@ -223,5 +237,7 @@ export {
   azureLogin,
   getUserStatus,
   getTemplateInfo,
-  generateProject
+  generateProject,
+  sendLog,
+  openLogFile
 }
