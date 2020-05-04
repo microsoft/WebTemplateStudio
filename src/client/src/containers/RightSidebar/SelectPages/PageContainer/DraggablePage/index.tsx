@@ -78,20 +78,15 @@ const DraggablePage = ({
     node.focus();
   }
 
-  const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
+  const deletePageOnKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      handleCloseOnClick();
+      deletePage();
     }
   };
 
-  const handleCloseClick = (idx: number) => {
-    const pagesWithOmittedIdx: ISelected[] = [...selectedPages];
-    pagesWithOmittedIdx.splice(idx, 1);
-    dispatch(setPagesAction(pagesWithOmittedIdx));
-  };
-
-  const handleCloseOnClick = () => {
-    idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
+  const deletePage = () => {
+    const selectedPagesUpdated = selectedPages.splice(0).filter(selPage => selPage.id !== page.id);
+    dispatch(setPagesAction(selectedPagesUpdated));
   };
 
   const validateNameAndSetStore = async (newTitle: string) => {
@@ -169,8 +164,8 @@ const DraggablePage = ({
         {(totalCount !== undefined ? totalCount > 1 : true) && (
           <CloseSVG
             tabIndex={0}
-            onClick={handleCloseOnClick}
-            onKeyDown={handleKeyDown}
+            onClick={deletePage}
+            onKeyDown={deletePageOnKeyDown}
             className={styles.cancelIcon}
             aria-label={intl.formatMessage(messages.deleteItem)}
           />
