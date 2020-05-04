@@ -54,7 +54,7 @@ const DraggablePage = ({
 
   React.useEffect(()=>{
     setNamePage(page.title)
-  },[]);
+  },[page]);
 
   React.useEffect(()=>{
     const hasFocusOnLasPage = selectedPages.length>1 && !page.isDirty && selectedPages.length === idx;
