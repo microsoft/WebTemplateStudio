@@ -2,6 +2,7 @@
 .vscode-test/**
 out/**
 src/**
+node_modules/**
 .gitignore
 vsc-extension-quickstart.md
 **/tsconfig.json
