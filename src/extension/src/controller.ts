@@ -44,6 +44,7 @@ export class Controller {
   private Telemetry: Telemetry;
   private Defaults: Defaults;
   private SyncCompleted = false;
+  public static vsContext: vscode.ExtensionContext;
 
   /**
    *  Defines the WizardServant modules to which wizard client commands are routed
@@ -108,6 +109,7 @@ export class Controller {
   private constructor(
     private context: vscode.ExtensionContext
   ) {
+    Controller.vsContext = context;
     Controller.TelemetryService = new TelemetryService(
       this.context
     );
