@@ -146,11 +146,13 @@ export class Controller {
     context: vscode.ExtensionContext,
     launchExperience: LaunchExperience
   ): Promise<void> {
-    const syncObject = await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
+     let syncObject
+     await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
       async function(this: IActionContext) {
         return await launchExperience
           .launchApiSyncModule(context)
+          .then(data => syncObject=data)
           .catch(error => {
             console.log(error);
             CoreTemplateStudio.DestroyInstance();

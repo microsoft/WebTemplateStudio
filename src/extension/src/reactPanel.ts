@@ -110,11 +110,7 @@ export class ReactPanel {
   }
 
   private _getHtmlForWebview(): string {
-    const manifest = require(path.join(
-      this._extensionPath,
-      "react",
-      "asset-manifest.json"
-    ));
+    const manifest = require('../react/asset-manifest.json');
     const mainScript = manifest.files["main.js"];
     const mainStyle = manifest.files["main.css"];
 
