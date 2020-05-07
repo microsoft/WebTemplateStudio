@@ -92,8 +92,6 @@
     "webpack": "webpack --mode development",
     "webpack-dev": "webpack --mode development --watch",
     "test-compile": "tsc -p ./",
-    "compile": "gulp compile",
-    "build": "gulp build",
     "watch": "tsc -watch -p ./",
     "lint": "yarn eslint ./src/**/*.{ts,tsx}",
     "postinstall": "node ./node_modules/vscode/bin/install",
@@ -109,11 +107,6 @@
     "del": "^5.1.0",
     "eslint": "^6.8.0",
     "event-stream": "^4.0.1",
-    "gulp": "^4.0.2",
-    "gulp-cli": "^2.2.0",
-    "gulp-filter": "^6.0.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-typescript": "^6.0.0-alpha.1",
     "kind-of": "^6.0.3",
     "run-sequence": "^2.2.1",
     "ts-loader": "^7.0.1",
@@ -153,6 +146,7 @@
     "url-parse": "^1.4.7",
     "vsce": "^1.75.0",
     "vscode-extension-telemetry": "^0.1.2",
-    "vscode-nls": "^4.1.2"
+    "vscode-nls": "^4.1.2",
+    "webpack-filter-warnings-plugin": "^1.2.1"
   }
 }

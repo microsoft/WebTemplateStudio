@@ -13,6 +13,6 @@ echo
 
 echo -e "${magenta}Building extension ${nc}"
 echo
-yarn --cwd ../src/extension build
+yarn --cwd ../src/extension vscode:prepublish
 
 
