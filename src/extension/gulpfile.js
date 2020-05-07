@@ -79,12 +79,6 @@ gulp.task("internal-nls-compile", function() {
   return compile(true);
 });
 
-gulp.task("add-locales", function() {
-  return gulp
-    .src(["package.nls.json"])
-    .pipe(nls.createAdditionalLanguageFiles(languages, "locales"))
-    .pipe(gulp.dest("."));
-});
 
 gulp.task("vsce:publish", function() {
   return vsce.publish();
@@ -106,7 +100,7 @@ gulp.task(
 
 gulp.task(
   "build",
-  gulp.series("clean", "internal-nls-compile", "add-locales", callback => {
+  gulp.series("clean", "internal-nls-compile", callback => {
     callback();
   })
 );
