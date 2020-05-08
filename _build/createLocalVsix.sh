@@ -11,8 +11,8 @@ sh ./build-client.sh
 # Build the cli in release
 sh ./build-coretscli.sh "release"
 
-# Build the cli in release
-yarn --cwd ../src/extension vscode:prepublish
+# Build Webpack bundle
+yarn --cwd ../src/extension webpack-prod
 
 # Create vsix package
 echo -e "${magenta}Creating vsix package ${nc}"

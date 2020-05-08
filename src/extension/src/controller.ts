@@ -166,10 +166,7 @@ export class Controller {
 
     if (syncObject) {
       this.SyncCompleted = true;
-      Controller.reactPanelContext = ReactPanel.createOrShow(
-        context.extensionPath,
-        this.routingMessageReceieverDelegate
-      );
+      Controller.reactPanelContext = ReactPanel.createOrShow(this.routingMessageReceieverDelegate);
 
       Controller.getTemplateInfoAndStore(
         context,
@@ -208,10 +205,7 @@ export class Controller {
 
   showReactPanel(): void {
     if (ReactPanel.currentPanel) {
-      ReactPanel.createOrShow(
-        this.context.extensionPath,
-        this.routingMessageReceieverDelegate
-      );
+      ReactPanel.createOrShow(this.routingMessageReceieverDelegate);
     }
   }
 

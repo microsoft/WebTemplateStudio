@@ -88,7 +88,7 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "webpack --mode production",
+    "webpack-prod": "webpack --mode production",
     "webpack": "webpack --mode development",
     "webpack-dev": "webpack --mode development --watch",
     "build": "tsc -p tsconfig.json",
@@ -122,14 +122,12 @@
     "ms-azuretools.vscode-azureappservice"
   ],
   "dependencies": {
-    "@types/app-root-path": "^1.2.4",
     "@types/archiver": "^3.1.0",
     "@types/fs-extra": "^8.1.0",
     "@types/node-fetch": "^2.5.6",
     "@types/opn": "^5.5.0",
     "@types/request": "^2.48.4",
     "@types/rimraf": "^3.0.0",
-    "app-root-path": "^3.0.0",
     "archiver": "^4.0.1",
     "axios": "^0.19.2",
     "azure-arm-cosmosdb": "^2.3.0",

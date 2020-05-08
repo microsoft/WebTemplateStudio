@@ -4,6 +4,7 @@ import { CONSTANTS } from "./constants";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { Logger } from "./utils/logger";
 import { deactivate } from "./extension";
+import { Controller } from "./controller";
 
 /**
  * Manages react webview panels
@@ -16,7 +17,6 @@ export class ReactPanel {
 
   private static readonly viewType = "react";
   private readonly _panel: vscode.WebviewPanel;
-  private readonly _extensionPath: string;
   private _disposables: vscode.Disposable[] = [];
   private static _controllerFunctionDelegate = function(message: any): void {
     //default behavior
@@ -25,10 +25,8 @@ export class ReactPanel {
     }
   };
 
-  public static createOrShow(
-    extensionPath: string,
-    controllerFunctionDelegate: (message: any) => any = this
-      ._controllerFunctionDelegate
+  public static createOrShow(controllerFunctionDelegate: (message: any) => 
+    any = this._controllerFunctionDelegate
   ): ReactPanel {
     const column = vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
@@ -41,7 +39,7 @@ export class ReactPanel {
       ReactPanel._controllerFunctionDelegate = controllerFunctionDelegate;
 
       ReactPanel.currentPanel = new ReactPanel(
-        extensionPath,
+        Controller.vsContext.extensionPath,
         column || vscode.ViewColumn.One
       );
     }
@@ -56,7 +54,6 @@ export class ReactPanel {
     extensionPath: string,
     column: vscode.ViewColumn
   ) {
-    this._extensionPath = extensionPath;
 
     // Create and show a new webview panel
     this._panel = vscode.window.createWebviewPanel(
@@ -72,7 +69,7 @@ export class ReactPanel {
 
         // And restric the webview to only loading content from our extension's `media` directory.
         localResourceRoots: [
-          vscode.Uri.file(path.join(this._extensionPath, "react"))
+          vscode.Uri.file(path.join(Controller.vsContext.extensionPath, "react"))
         ]
       }
     );
@@ -115,11 +112,11 @@ export class ReactPanel {
     const mainStyle = manifest.files["main.css"];
 
     const scriptPathOnDisk = vscode.Uri.file(
-      path.join(this._extensionPath, "react", mainScript)
+      path.join(Controller.vsContext.extensionPath, "react", mainScript)
     );
     const scriptUri = scriptPathOnDisk.with({ scheme: "vscode-resource" });
     const stylePathOnDisk = vscode.Uri.file(
-      path.join(this._extensionPath, "react", mainStyle)
+      path.join(Controller.vsContext.extensionPath, "react", mainStyle)
     );
     const styleUri = stylePathOnDisk.with({ scheme: "vscode-resource" });
 
@@ -132,7 +129,7 @@ export class ReactPanel {
 				<title>Web Template Studio</title>
 				<link rel="stylesheet" type="text/css" href="${styleUri}">
 				<meta img-src vscode-resource: https: ;style-src vscode-resource: 'unsafe-inline' http: https: data:;">
-				<base href="${vscode.Uri.file(path.join(this._extensionPath, "react")).with({
+				<base href="${vscode.Uri.file(path.join(Controller.vsContext.extensionPath, "react")).with({
           scheme: "vscode-resource"
         })}/">
 			</head>
