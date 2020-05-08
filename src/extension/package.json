@@ -92,7 +92,7 @@
     "webpack": "webpack --mode development",
     "webpack-dev": "webpack --mode development --watch",
     "build": "tsc -p tsconfig.json",
-    "test-compile": "tsc -p ./",
+    "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "yarn eslint ./src/**/*.{ts,tsx}",
     "postinstall": "node ./node_modules/vscode/bin/install",

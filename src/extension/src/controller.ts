@@ -125,6 +125,7 @@ export class Controller {
     this.CoreTSModule = new CoreTSModule();
     this.Telemetry = new Telemetry(Controller.TelemetryService);
     this.Defaults = new Defaults();
+    Logger.load(this.context.extensionPath);
     Logger.initializeOutputChannel(getExtensionName(this.context));
     this.defineExtensionModule();
     vscode.window.withProgress(

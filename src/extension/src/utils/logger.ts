@@ -3,29 +3,33 @@ import path = require("path");
 import log4js = require("log4js");
 export type LogLevel = "trace" | "debug" | "info" | "warn" | "error" | "fatal";
 export type LogSource = "WIZARD" | "EXTENSION" | "CORE";
-export const LOG_FILE = path.join(__dirname, "../../logs", "wts.log");
 const OUTPUT_CHANNEL_DEFAULT = "Web Template Studio";
-
-log4js.configure({
-  appenders: {
-    webtemplatestudio: {
-      type: "file",
-      filename: LOG_FILE,
-      pattern: ".yyyy-MM-dd",
-      daysToKeep: 5,
-    },
-  },
-  categories: {
-    default: {
-      appenders: ["webtemplatestudio"],
-      level: "all",
-    },
-  },
-});
 
 export class Logger {
   public static outputChannel: vscode.OutputChannel;
-  private static logger: log4js.Logger = log4js.getLogger();
+  private static logger: log4js.Logger;
+  public static filename: string;
+
+  public static load(context: string): void {
+    this.filename = path.join(context, "logs", "wts.log");
+    log4js.configure({
+      appenders: {
+        webtemplatestudio: {
+          type: "file",
+          filename: this.filename,
+          pattern: ".yyyy-MM-dd",
+          daysToKeep: 5,
+        },
+      },
+      categories: {
+        default: {
+          appenders: ["webtemplatestudio"],
+          level: "all",
+        },
+      },
+    });
+    this.logger = log4js.getLogger();
+  }
 
   public static initializeOutputChannel(extensionName: string): void {
     if (Logger.outputChannel === undefined) {
