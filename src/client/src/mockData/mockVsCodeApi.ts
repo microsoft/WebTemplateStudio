@@ -362,6 +362,94 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
+        case EXTENSION_COMMANDS.GET_FEATURES:
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_FEATURES,
+              payload: {
+                scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                features: [
+                  {
+                    templateId: "wts.Feature.Azure.AppService",
+                    name: "AppService",
+                    defaultName: "AppService",
+                    description: "Realtime distributed database.",
+                    richDescription: "App service long description\r\n",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    group: null,
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: false,
+                    itemNameEditable: false,
+                    licenses: [],
+                    dependencies: [],
+                    requirements: [],
+                    exclusions: [],
+                    requiredSdks: [],
+                    templateType: "feature",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  },
+                  {
+                    templateId: "wts.Feature.Azure.Cosmos.Mongo",
+                    name: "CosmosDB",
+                    defaultName: "CosmosDB",
+                    description: "Realtime distributed database.",
+                    richDescription: "This is a long list which can be used for blog comments and feeds.\r\n",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    group: null,
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: false,
+                    itemNameEditable: false,
+                    licenses: [],
+                    dependencies: [],
+                    requirements: [],
+                    exclusions: [],
+                    requiredSdks: [],
+                    templateType: "feature",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  },
+                  {
+                    templateId: "wts.Feature.Azure.Cosmos.SQL",
+                    name: "CosmosDB",
+                    defaultName: "CosmosDB",
+                    description: "Realtime distributed database.",
+                    richDescription: "This is a long list which can be used for blog comments and feeds.\r\n",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    group: null,
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: false,
+                    itemNameEditable: false,
+                    licenses: [],
+                    dependencies: [],
+                    requirements: [],
+                    exclusions: [],
+                    requiredSdks: [],
+                    templateType: "feature",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  }
+                ]
+              }
+            },
+            "*"
+          );
+          break;
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           window.postMessage(
             {

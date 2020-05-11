@@ -176,6 +176,7 @@ const EXTENSION_COMMANDS = {
   GET_FRAMEWORKS: "get-frameworks",
   GET_LATEST_VERSION:"get-latest-version",
   GET_PAGES: "get-pages",
+  GET_FEATURES: "get-features",
   GET_VALIDATIONS: "get-validations",
   LOG: "log",
   OPEN_LOG: "open-log"
