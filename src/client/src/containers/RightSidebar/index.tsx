@@ -26,15 +26,13 @@ import { getIsVisitedRoutesSelector, IVisitedPages } from "../../store/config/co
 type Props = InjectedIntlProps;
 
 const RightSidebar = (props: Props)=>{
-  const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
+  const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(true);
   const [ isSidebarUserControlled, setIsSidebarUserControlled ] = React.useState(false);
 
   const hasServices: boolean = useSelector(hasServicesSelector);
-  const isRoutesVisited: IVisitedPages = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const wizardRoutes = useSelector((state: AppState) => state.navigation.routes);
   const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
 
-  const { showPages } = isRoutesVisited;
   const { intl } = props;
   const { formatMessage } = intl;
 
@@ -58,13 +56,7 @@ const RightSidebar = (props: Props)=>{
   };
 
   return (
-    <div
-      className={
-        selectedRoute === ROUTES.PAGE_DETAILS || selectedRoute === ROUTES.NEW_PROJECT
-          ? styles.hide
-          : undefined
-      }
-    >
+    <div>
     {!isSidebarOpen && (
     <div className={styles.hamburgerContainer}>
       <button
@@ -100,7 +92,7 @@ const RightSidebar = (props: Props)=>{
 
         <ProjectDetails/>
         <SelectFrameworks/>
-        {showPages && (<SelectPages pathname={selectedRoute}/>)}
+        <SelectPages pathname={selectedRoute}/>
         {hasServices && <ServicesList />}
         <div className={styles.container}>
           {selectedRoute !== ROUTES.REVIEW_AND_GENERATE && (

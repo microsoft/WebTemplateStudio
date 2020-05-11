@@ -90,17 +90,14 @@ const App = (props: Props) => {
     loader: () => addToPromisesList(import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject")),
     loading:() => <div/>
   });
-  
-  if (frontendOptions.length === 0){
-    messageEventsFromExtension();
-  }
-
+ 
   Promise.all(promisesLoading).then(()=>{
     setIsLoaded(true);
   })
 
   React.useEffect(()=>{
     dispatch(loadAction());
+    messageEventsFromExtension();
   },[]);
 
   function messageEventsFromExtension(){

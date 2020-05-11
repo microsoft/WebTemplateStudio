@@ -2,7 +2,6 @@ import * as React from "react";
 import styles from "./styles.module.css";
 
 import ProjectNameAndOutput from "./ProjectNameAndOutput";
-import QuickStart from "./QuickStart";
 import { FormattedMessage } from "react-intl";
 
 const NewProject = () => {
@@ -24,9 +23,6 @@ const NewProject = () => {
         </div>
         <div className={styles.projectDetailsContainer}>
           <ProjectNameAndOutput />
-        </div>
-        <div className={styles.quickStartContainer}>
-          <QuickStart />
         </div>
       </div>
     </div>
