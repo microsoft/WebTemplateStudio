@@ -55,6 +55,7 @@
 .disabledOverlay {
   opacity: 0.5;
   background: var(--vscode-editor-background);
+  cursor: default;
 }
 
 @media (min-width: 730px) {

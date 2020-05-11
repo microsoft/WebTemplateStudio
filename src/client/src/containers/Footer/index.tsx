@@ -26,6 +26,7 @@ import { AppContext } from "../../AppContext";
 import { useSelector, useDispatch } from "react-redux";
 import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
 import { getIsVisitedRoutesSelector } from "../../store/config/config/wizardNavigationSelector";
+import { useMemo } from "react";
 
 type Props = InjectedIntlProps;
 
@@ -49,6 +50,8 @@ const Footer = (props: Props) => {
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
   const currentRoute = useSelector((state: AppState) => state.navigation.routes.selected);
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
+  const isFirstStep = useMemo(() => currentRoute === ROUTES.NEW_PROJECT, [currentRoute]);
+  const isLastStep = useMemo(() => currentRoute === ROUTES.REVIEW_AND_GENERATE, [currentRoute]);
 
   const dispatch = useDispatch();
 
@@ -105,27 +108,29 @@ const Footer = (props: Props) => {
         <div className={styles.footer}>
           <div>{showLicenses() && formatMessage(messages.license)}</div>
           <div className={styles.buttonContainer}>
-            {currentRoute !== ROUTES.NEW_PROJECT && (
+            
               <a
                 tabIndex={0}
-                className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack)}
-                onClick={navigateBack}
-                onKeyPress={navigateBackOnKeyPress}
-                onKeyUp={keyUpHandler}
+                className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack,
+                  {
+                    [styles.disabledOverlay]: isFirstStep
+                  })}
+                onClick={() => { if (!isFirstStep) navigateBack() }}
+                onKeyPress={(event) => { if (!isFirstStep) navigateBackOnKeyPress(event) }}
+                onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => { if (!isFirstStep) keyUpHandler(event) }}
               >
                 {formatMessage(messages.back)}
               </a>
-            )}
-            {currentRoute !== ROUTES.REVIEW_AND_GENERATE && (
+            
               <a
                 tabIndex={isEnableNextPage ? 0 : -1}
                 className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
                   [buttonStyles.buttonDark]: !isEnableNextPage,
-                  [styles.disabledOverlay]: !isEnableNextPage,
+                  [styles.disabledOverlay]: isLastStep
                 })}
-                onClick={() =>{ if (isEnableNextPage) navigateForward()}}
-                onKeyPress={(event) =>{ if (isEnableNextPage) navigateForwardOnKeyPress(event)}}
-                onKeyUp={keyUpHandler}
+                onClick={() => { if (!isLastStep) navigateForward()}}
+                onKeyPress={(event) => { if (!isLastStep) navigateForwardOnKeyPress(event)}}
+                onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => { if (!isLastStep) keyUpHandler(event) }}
               >
                 {formatMessage(messages.next)}
                 {nextArrow && (
@@ -136,7 +141,7 @@ const Footer = (props: Props) => {
                   />
                 )}
               </a>
-            )}
+            
             {canGenerate() && (
               <button
                 disabled={!isEnableNextPage}
