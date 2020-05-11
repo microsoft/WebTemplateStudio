@@ -4,6 +4,7 @@
 
 const path = require('path');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const config = {
   target: 'node', // vscode extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/
@@ -46,6 +47,7 @@ const config = {
     new FilterWarningsPlugin({
       exclude: /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/,
     }),
+    new CleanWebpackPlugin()
   ]
 };
 module.exports = config;
