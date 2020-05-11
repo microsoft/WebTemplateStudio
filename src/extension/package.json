@@ -97,7 +97,7 @@
     "lint": "yarn eslint ./src/**/*.{ts,tsx}",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test",
-    "template-tests": "node ./out/scripts/generate-test && node ./out/scripts/run-tests",
+    "template-tests": "node ./dist/scripts/generate-test && node ./dist/scripts/run-tests",
     "createVsixPackage": "vsce package --yarn -o \"./../../dist/webts-0.0.0-UNTRACKEDVERSION.vsix\""
   },
   "devDependencies": {
