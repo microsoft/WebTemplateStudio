@@ -21,7 +21,6 @@ import * as ModalActions from "../../store/navigation/modals/action";
 import { hasServices as hasServicesSelector } from "../../store/userSelection/services/servicesSelector";
 import ProjectDetails from "./ProjectDetails";
 import SelectFrameworks from "./SelectFrameworks";
-import { getIsVisitedRoutesSelector, IVisitedPages } from "../../store/config/config/wizardNavigationSelector";
 
 type Props = InjectedIntlProps;
 

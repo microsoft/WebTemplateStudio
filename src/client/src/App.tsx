@@ -67,8 +67,7 @@ interface IStateProps {
 type Props = IStateProps;
 
 const App = (props: Props) => {
-  const { frontendOptions,
-    modalState, selectedRoute } = props;
+  const { modalState, selectedRoute } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading: Array<any> = new Array<any>();
   const dispatch = useDispatch();

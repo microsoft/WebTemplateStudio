@@ -36,7 +36,6 @@ import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB } from "../../store/userSelection/services/servicesSelector";
 import { getAppService } from "../../store/userSelection/services/servicesSelector";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../store/userSelection/frameworks/action";
-import StateManager from "react-select";
 import { IOption } from "../../types/option";
 
 
