@@ -15,11 +15,6 @@
         "kind": "build",
         "isDefault": true
       }
-    },
-    {
-      "type": "gulp",
-      "task": "add-locales",
-      "problemMatcher": []
     }
   ]
 }
