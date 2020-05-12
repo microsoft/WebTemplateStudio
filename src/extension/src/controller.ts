@@ -44,6 +44,7 @@ export class Controller {
   private Telemetry: Telemetry;
   private Defaults: Defaults;
   private SyncCompleted = false;
+  public static vsContext: vscode.ExtensionContext;
 
   /**
    *  Defines the WizardServant modules to which wizard client commands are routed
@@ -108,6 +109,7 @@ export class Controller {
   private constructor(
     private context: vscode.ExtensionContext
   ) {
+    Controller.vsContext = context;
     Controller.TelemetryService = new TelemetryService(
       this.context
     );
@@ -123,6 +125,7 @@ export class Controller {
     this.CoreTSModule = new CoreTSModule();
     this.Telemetry = new Telemetry(Controller.TelemetryService);
     this.Defaults = new Defaults();
+    Logger.load(this.context.extensionPath);
     Logger.initializeOutputChannel(getExtensionName(this.context));
     this.defineExtensionModule();
     vscode.window.withProgress(
@@ -146,11 +149,13 @@ export class Controller {
     context: vscode.ExtensionContext,
     launchExperience: LaunchExperience
   ): Promise<void> {
-    const syncObject = await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
+     let syncObject
+     await Controller.TelemetryService.callWithTelemetryAndCatchHandleErrors(
       TelemetryEventName.SyncEngine,
       async function(this: IActionContext) {
         return await launchExperience
           .launchApiSyncModule(context)
+          .then(data => syncObject=data)
           .catch(error => {
             console.log(error);
             CoreTemplateStudio.DestroyInstance();
@@ -161,10 +166,7 @@ export class Controller {
 
     if (syncObject) {
       this.SyncCompleted = true;
-      Controller.reactPanelContext = ReactPanel.createOrShow(
-        context.extensionPath,
-        this.routingMessageReceieverDelegate
-      );
+      Controller.reactPanelContext = ReactPanel.createOrShow(this.routingMessageReceieverDelegate);
 
       Controller.getTemplateInfoAndStore(
         context,
@@ -203,10 +205,7 @@ export class Controller {
 
   showReactPanel(): void {
     if (ReactPanel.currentPanel) {
-      ReactPanel.createOrShow(
-        this.context.extensionPath,
-        this.routingMessageReceieverDelegate
-      );
+      ReactPanel.createOrShow(this.routingMessageReceieverDelegate);
     }
   }
 

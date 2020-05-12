@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { ExtensionCommand } from "../constants";
-import { Logger, LogLevel, LOG_FILE } from "../utils/logger";
+import { Logger, LogLevel } from "../utils/logger";
 
 type ILoggingPayload = {
   level: LogLevel;
@@ -22,7 +22,7 @@ export class LoggerModule extends WizardServant {
   }
 
   private async openLog(): Promise<IPayloadResponse> {
-    const logDocument = await vscode.workspace.openTextDocument(LOG_FILE);
+    const logDocument = await vscode.workspace.openTextDocument(Logger.filename);
     await vscode.window.showTextDocument(logDocument);
     return { payload: null };
   }
