@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import * as React from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
 import TopNavBarLink from "../TopNavBarLink";
@@ -8,20 +8,18 @@ import TopNavBarLink from "../TopNavBarLink";
 import styles from "./styles.module.css";
 
 import { ROUTES_ARRAY } from "../../utils/constants";
-import { IRoutes } from "../../store/userSelection/pages/model";
 import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import messages from "./messages";
-import { setPageWizardPageAction } from "../../store/navigation/routes/action";
+import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
+import { AppState } from "../../store/combineReducers";
 
-interface IStateProps {
-  isVisited: IRoutes;
-  isEnableNextPage: boolean;
-  selectedRoute: string;
-}
-
-type Props = IStateProps & InjectedIntlProps;
+type Props = InjectedIntlProps;
 
 const TopNavBar = (props: Props) => {
+  const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
+  const isVisited = useSelector((state: AppState) => state.navigation.routes.isVisited);
+  const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
+  const { intl } = props;
   const { formatMessage } = props.intl;
   const topNavBarData: string[] = [
     formatMessage(messages.welcome),
@@ -30,19 +28,7 @@ const TopNavBar = (props: Props) => {
     formatMessage(messages.services),
     formatMessage(messages.summary)
   ];
-  const selectedRoute  = props.selectedRoute;
-  const [currentPathIndex, setPathIndex] = React.useState(
-    ROUTES_ARRAY.indexOf(selectedRoute)
-  );
-  const topNavTabClicked = (
-    idx: number,
-    visited: boolean,
-    disabled: boolean
-  ) => {
-    if (visited && !disabled) {
-      setPathIndex(ROUTES_ARRAY.indexOf(ROUTES_ARRAY[idx]));
-    }
-  };
+  const [currentPathIndex, setPathIndex] = React.useState(ROUTES_ARRAY.indexOf(selectedRoute));
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -55,7 +41,18 @@ const TopNavBar = (props: Props) => {
     }
   }, [selectedRoute]);
 
-  const { isVisited, intl, isEnableNextPage } = props;
+  const navigateToPageAndSetVisited = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>, idx: number
+  ) => {
+    event.preventDefault();
+    setPathIndex(ROUTES_ARRAY.indexOf(ROUTES_ARRAY[idx]));
+    for (let i=0; i<= idx; i++){
+      const routeToSetVisited = ROUTES_ARRAY[i];
+      dispatch(setVisitedWizardPageAction(routeToSetVisited));
+    }
+  };
+
+ 
   return (
     <React.Fragment>
       {
@@ -70,26 +67,14 @@ const TopNavBar = (props: Props) => {
               const isOtherVisitedRoute =
                 idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]];
 
-              const navTabClickedHandler = (
-                event: React.MouseEvent<HTMLDivElement, MouseEvent>
-              ) => {
-                event.preventDefault();
-                topNavTabClicked(
-                  idx,
-                  isVisited[ROUTES_ARRAY[idx]],
-                  !alreadyVisitedRouteAndCanVisit
-                );
-              };
               return (
                 <div
                   className={classnames(styles.itemBorder, {
                     [styles.visitedPath]: alreadyVisitedRouteAndCanVisit,
-                    [styles.nextPath]:
-                      idx > currentPathIndex && !alreadyVisitedRouteAndCanVisit,
                     [styles.itemBorderTop]: idx === 0
                   })}
                   key={sidebartitle}
-                  onClick={navTabClickedHandler}
+                  onClick={(event) => navigateToPageAndSetVisited(event, idx) }
                 >
                   <TopNavBarLink
                     disabled={!alreadyVisitedRouteAndCanVisit}
@@ -110,10 +95,4 @@ const TopNavBar = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: any): IStateProps => ({
-  isEnableNextPage: isEnableNextPageSelector(state),
-  isVisited: state.navigation.routes.isVisited,
-  selectedRoute : state.navigation.routes.selected
-});
-
-export default connect(mapStateToProps)(injectIntl(TopNavBar));
+export default (injectIntl(TopNavBar));
