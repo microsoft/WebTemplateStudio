@@ -1,12 +1,15 @@
 import * as React from "react";
 import styles from "./styles.module.css";
+import { ReactComponent as HomeSplashSVG } from "../../assets/homeSplash.svg";
 
 import ProjectNameAndOutput from "./ProjectNameAndOutput";
 import { FormattedMessage } from "react-intl";
+import classnames from "classnames";
 
 const NewProject = () => {
 
   return (
+    <React.Fragment>
     <div className={styles.container}>
       <div className={styles.newProjectInfo}>
         <h1 className={styles.header}>
@@ -25,7 +28,12 @@ const NewProject = () => {
           <ProjectNameAndOutput />
         </div>
       </div>
+      
     </div>
+    <HomeSplashSVG
+      className={classnames(styles.homeSplash)}
+    />
+    </React.Fragment>
   );
 };
 

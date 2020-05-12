@@ -45,6 +45,15 @@
   padding: 6vh;
 }
 
+.homeSplash{
+  position: fixed;
+  max-width: 90%;
+  height: auto;
+  z-index: 0;
+  bottom: 65px;
+  right: 0;
+}
+
 @media (min-width: 850px) and (max-width: 1120px) {
   .newProjectInfo {
     max-width: 70%;
