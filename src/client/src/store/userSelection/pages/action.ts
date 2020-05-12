@@ -1,5 +1,5 @@
 import { ISelected } from "../../../types/selected";
-import { ISetPageAction, IsetPagesAction, IResetPagesAction } from "./model";
+import { ISetPageAction, IsetPagesAction } from "./model";
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
 
 export const setPagesAction = (pages: ISelected[]): IsetPagesAction => ({
@@ -10,8 +10,4 @@ export const setPagesAction = (pages: ISelected[]): IsetPagesAction => ({
 export const setPageAction = (page: ISelected): ISetPageAction => ({
   type: USERSELECTION_TYPEKEYS.SELECT_PAGE,
   payload: page
-});
-
-export const resetPagesAction = (): IResetPagesAction => ({
-  type: USERSELECTION_TYPEKEYS.RESET_PAGES
 });

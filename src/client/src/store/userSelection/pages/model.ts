@@ -10,10 +10,6 @@ export interface IsetPagesAction {
     type: USERSELECTION_TYPEKEYS.SELECT_PAGE;
     payload: ISelected;
   }
-  
-  export interface IResetPagesAction {
-    type: USERSELECTION_TYPEKEYS.RESET_PAGES;
-  }
 
   export interface IRoutes {
     [key: string]: boolean;

@@ -49,7 +49,6 @@ const ARIA_LABELS_NAVIGATION = defineMessages({
 });
 
 const PAYLOAD_MESSAGES_TEXT = {
-  RESET_PAGES_TEXT: "Sending reset pages request...",
   SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
   SENT_GENERATION_INFO_TEXT: "Sending generation info..."
 };
@@ -170,7 +169,6 @@ const EXTENSION_COMMANDS = {
   GET_TEMPLATE_INFO: "get-template-info",
   CLOSE_WIZARD: "close-wizard",
   GET_VERSIONS: "get-versions",
-  RESET_PAGES: "reset-pages",
   GET_DEPENDENCY_INFO: "check-dependency",
   GET_FRAMEWORKS: "get-frameworks",
   GET_LATEST_VERSION:"get-latest-version",
