@@ -22,7 +22,7 @@ import { isLoggedInSelector } from "../../store/config/azure/selector";
 
 type Props = InjectedIntlProps;
 
-const AzureLogin = (props: Props)=> {
+const PageAddServices = (props: Props)=> {
   const { intl } = props;
   const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
@@ -86,4 +86,4 @@ const AzureLogin = (props: Props)=> {
     );
   }
 
-export default (injectIntl(AzureLogin));
+export default (injectIntl(PageAddServices));

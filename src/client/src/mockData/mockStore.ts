@@ -109,7 +109,7 @@ export const getInitialState = (): AppState => {
           '/': true,
           '/SelectFrameworks': false,
           '/SelectPages': false,
-          '/AzureLogin': false,
+          '/AddPages': false,
           '/ReviewAndGenerate': false
         },
         selected: '/'
@@ -336,7 +336,7 @@ export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
         '/': true,
         '/SelectFrameworks': true,
         '/SelectPages': false,
-        '/AzureLogin': false,
+        '/AddPages': false,
         '/ReviewAndGenerate': false
       };
     case ROUTES.REVIEW_AND_GENERATE:
@@ -344,7 +344,7 @@ export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
         '/': true,
         '/SelectFrameworks': true,
         '/SelectPages': true,
-        '/AzureLogin': true,
+        '/AddPages': true,
         '/ReviewAndGenerate': true
       }
   }

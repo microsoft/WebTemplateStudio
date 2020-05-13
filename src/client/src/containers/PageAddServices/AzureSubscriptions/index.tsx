@@ -47,7 +47,7 @@ const AzureSubscriptions = (props: Props) => {
   const setDetailPage= (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
     dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
-    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted, ROUTES.AZURE_LOGIN));
+    dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted, ROUTES.ADD_SERVICES));
   }
 
   React.useEffect(()=>{

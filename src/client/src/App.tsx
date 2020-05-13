@@ -33,8 +33,8 @@ const PageReviewAndGenerate = Loadable({
   loader: () => import(/* webpackChunkName: "PageReviewAndGenerate" */  "./containers/PageReviewAndGenerate"),
   loading:() => <div/>
 });
-const PageAzureLogin = Loadable({
-  loader: () => import(/* webpackChunkName: "PageAzureLogin" */  "./containers/PageAzureLogin"),
+const PageAddServices = Loadable({
+  loader: () => import(/* webpackChunkName: "PageAddServices" */  "./containers/PageAddServices"),
   loading:() => <div/>
 });
 const GenerationModal = Loadable({
@@ -132,7 +132,7 @@ const App = (props: Props) => {
             [appStyles.centerViewNewProjectPage]:
               selectedRoute === ROUTES.NEW_PROJECT,
             [appStyles.centerViewMaxHeight]: selectedRoute === ROUTES.PAGE_DETAILS,
-            [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.AZURE_LOGIN
+            [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.ADD_SERVICES
           })}
         >
           {selectedRoute === ROUTES.NEW_PROJECT ? (
@@ -151,7 +151,7 @@ const App = (props: Props) => {
           ) : null}
 
           {(selectedRoute === ROUTES.PAGE_DETAILS) && (<PageDetails />)}
-          {(selectedRoute === ROUTES.AZURE_LOGIN) && (<PageAzureLogin/>)}
+          {(selectedRoute === ROUTES.ADD_SERVICES) && (<PageAddServices/>)}
           {(selectedRoute === ROUTES.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
           {(selectedRoute === ROUTES.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
           {(selectedRoute === ROUTES.SELECT_PAGES) && (<PageAddPages isModal={false}/>)}

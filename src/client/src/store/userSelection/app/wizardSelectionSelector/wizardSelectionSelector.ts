@@ -37,7 +37,7 @@ const isEnableNextPageSelector = (state: AppState): boolean =>{
     valid = true;
   }
 
-  if ((state.navigation.routes.selected === ROUTES.AZURE_LOGIN || state.navigation.routes.selected === ROUTES.REVIEW_AND_GENERATE)
+  if ((state.navigation.routes.selected === ROUTES.ADD_SERVICES || state.navigation.routes.selected === ROUTES.REVIEW_AND_GENERATE)
     && state.userSelection.pages.filter(page => !page.isValidTitle).length === 0){
     valid = true;
   }
