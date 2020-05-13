@@ -53,6 +53,10 @@ const ViewLicensesModal = Loadable({
   loader: () => import(/* webpackChunkName: "ViewLicensesModal" */  "./containers/ViewLicensesModal"),
   loading:() => <div/>
 });
+const AzureLoginModal = Loadable({
+  loader: () => import(/* webpackChunkName: "AzureLoginModal" */  "./containers/PageAddServices/AzureLoginModal"),
+  loading:() => <div/>
+});
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -125,6 +129,7 @@ const App = (props: Props) => {
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.AZURE_LOGIN_MODAL) && (<AzureLoginModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.GEN_MODAL) && (<GenerationModal/>)}
 
         <main
