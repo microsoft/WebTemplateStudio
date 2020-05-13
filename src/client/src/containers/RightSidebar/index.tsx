@@ -79,7 +79,7 @@ const RightSidebar = (props: Props)=>{
         })}
       >
       <div className={styles.summaryContainer} id="dvSummaryContainer">
-        {selectedRoute !== ROUTES.REVIEW_AND_GENERATE && (
+        {selectedRoute !== ROUTES.REVIEW_AND_GENERATE && selectedRoute !== ROUTES.NEW_PROJECT && (
           <Cancel
             tabIndex={0}
             className={styles.icon}

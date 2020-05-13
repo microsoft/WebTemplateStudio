@@ -2,7 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect, useDispatch } from "react-redux";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
-
+import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import {
   EXTENSION_COMMANDS,
   ROUTES,
@@ -130,6 +130,11 @@ const App = (props: Props) => {
             [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.AZURE_LOGIN
           })}
         >
+           {selectedRoute === ROUTES.NEW_PROJECT ? (	
+            <HomeSplashSVG	
+             className={classnames(appStyles.splash, appStyles.homeSplash)}	
+            />	
+          ) : null}
 
           {selectedRoute === ROUTES.REVIEW_AND_GENERATE ? (
             <SummarySplashSVG

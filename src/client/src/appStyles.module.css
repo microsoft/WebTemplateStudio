@@ -22,9 +22,7 @@
 }
 
 .centerViewNewProjectPage {
-  padding-left: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0;
 }
 
 .centerViewMaxHeight {
@@ -55,7 +53,7 @@
 }
 
 .homeSplash {
-  right: 0;
+  right: 500px;
 }
 
 .summarySplash {
