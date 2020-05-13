@@ -18,6 +18,7 @@ export const getInitialState = (): AppState => {
       backendOptions: [],
       frontendOptions: [],
       pageOptions: [],
+      featureOptions: [],
     },
     config:{
       detailsPage: {
