@@ -4,7 +4,6 @@ import { CoreTemplateStudio } from "./coreTemplateStudio";
 
 export class CoreTSModule extends WizardServant {
   clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>>;
-  coreTemplateStudio: CoreTemplateStudio = CoreTemplateStudio.GetExistingInstance();
 
   constructor() {
     super();
@@ -21,7 +20,7 @@ export class CoreTSModule extends WizardServant {
   }
 
   async getFrameworks(message: any): Promise<IPayloadResponse> {
-    const frameworks = await this.coreTemplateStudio.getFrameworks(message.payload.projectType);
+    const frameworks = await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType);
     return {
       payload: {
         scope: message.payload.scope,
@@ -33,14 +32,14 @@ export class CoreTSModule extends WizardServant {
   }
 
   async getTemplateConfig(message: any): Promise<IPayloadResponse> {
-    const payload = this.coreTemplateStudio.getTemplateConfig();
+    const payload = CoreTemplateStudio.GetExistingInstance().getTemplateConfig();
     payload.scope = message.payload.scope;
     return { payload };
   }
 
   async getPages(message: any): Promise<IPayloadResponse> {
     const { projectType, frontendFramework, backendFramework } = message.payload;
-    const pages = await this.coreTemplateStudio.getPages(projectType, frontendFramework, backendFramework);
+    const pages = await CoreTemplateStudio.GetExistingInstance().getPages(projectType, frontendFramework, backendFramework);
     return {
       payload: {
         scope: message.payload.scope,
@@ -51,7 +50,7 @@ export class CoreTSModule extends WizardServant {
 
   async getFeatures(message: any): Promise<IPayloadResponse> {
     const { projectType, frontendFramework, backendFramework } = message.payload;
-    const features = await this.coreTemplateStudio.getFeatures(projectType, frontendFramework, backendFramework);
+    const features = await CoreTemplateStudio.GetExistingInstance().getFeatures(projectType, frontendFramework, backendFramework);
     return {
       payload: {
         scope: message.payload.scope,
