@@ -40,25 +40,37 @@ export const getPagesOptions = (json: any[]): IOption[] => {
 
 export const getFeaturesOptions = (json: any[]): IOption[] => {
   const items = getFeaturesTemplateInfo(json);
-  return items.map<IOption>((val) => ({
-    body: val.summary,
-    internalName: val.name,
-    licenses: val.licenses,
-    longDescription: val.longDescription,
-    selected: val.selected,
-    svgUrl: "",
-    title: val.displayName,
-    defaultName: val.defaultName,
-    isValidTitle: true,
-    author: val.author,
-    group: val.group,
-  }));
+  const stored = items.reduce((result, val) => {
+    if(!result.some(option => option.templateGroupIdentity === val.templateGroupIdentity)) {
+      const option: IOption = {
+        body: val.summary,
+        internalName: val.name,
+        templateGroupIdentity: val.templateGroupIdentity,
+        licenses: val.licenses,
+        longDescription: val.longDescription,
+        selected: val.selected,
+        svgUrl: "",
+        title: val.displayName,
+        defaultName: val.defaultName,
+        isValidTitle: true,
+        author: val.author,
+        group: val.group,
+      }
+      result.push(option);
+    }    
+    return result;
+  }, [] as IOption[]);
+
+
+
+  return stored;
 };
 
 const getFrameworksTemplateInfo = (items: any[], type: FRAMEWORK_TYPE, isPreview: boolean): IApiTemplateInfo[] => {
   return items
     .map<IApiTemplateInfo>((val) => ({
       author: val.author,
+      templateGroupIdentity: val.templateGroupIdentity,
       defaultName: val.defaultName,
       displayName: val.displayName,
       licenses: val.licenses,
@@ -89,6 +101,7 @@ const getTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
     licenses: val.licenses,
     longDescription: val.richDescription,
     name: val.templateId,
+    templateGroupIdentity: val.templateGroupIdentity,
     position: val.displayOrder,
     selected: false,
     summary: val.description,

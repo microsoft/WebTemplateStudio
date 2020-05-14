@@ -1,5 +1,6 @@
 export interface IApiTemplateInfo {
   name: string;
+  templateGroupIdentity: string;
   displayName: string;
   summary: string;
   longDescription: string;
