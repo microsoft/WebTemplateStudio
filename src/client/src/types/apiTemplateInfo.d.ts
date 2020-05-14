@@ -10,4 +10,5 @@ export interface IApiTemplateInfo {
   tags: any;
   defaultName: string;
   author: string;
+  group?: string;
 }

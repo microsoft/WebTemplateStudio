@@ -22,6 +22,7 @@ export interface IOption {
   unselectable?: boolean;
   isValidTitle?: boolean;
   author?: string;
+  group?: string;
   expectedTime?: string | FM.MessageDescriptor;
   expectedPrice?: string | FM.MessageDescriptor;
 }

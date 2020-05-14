@@ -2,7 +2,7 @@ import {takeEvery, call, put, select} from "redux-saga/effects";
 import { getTemplateInfo, getFrameworks, getUserStatus } from "../../../utils/extensionService/extensionService";
 import { IVersions } from "../../../types/version";
 import { AppState } from "../../combineReducers";
-import { parseFrameworksPayload } from "../../../utils/parseFrameworksPayload";
+import { getFrameworksOptions } from "../../../utils/cliTemplatesParser";
 import { FRAMEWORK_TYPE } from "../../../utils/constants";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
@@ -69,7 +69,7 @@ export function* loadFrameworksListSaga(vscode: any) {
     const message = event.data;
     yield put ({
       type: TEMPLATES_TYPEKEYS.SET_FRONTEND_FRAMEWORKS,
-      payload: parseFrameworksPayload(
+      payload: getFrameworksOptions(
         message.payload.frameworks,
         FRAMEWORK_TYPE.FRONTEND,
         message.payload.isPreview
@@ -78,7 +78,7 @@ export function* loadFrameworksListSaga(vscode: any) {
 
     yield put ({
       type: TEMPLATES_TYPEKEYS.SET_BACKEND_FRAMEWORKS,
-      payload: parseFrameworksPayload(
+      payload: getFrameworksOptions(
         message.payload.frameworks,
         FRAMEWORK_TYPE.BACKEND,
         message.payload.isPreview

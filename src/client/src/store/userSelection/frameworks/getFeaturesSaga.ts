@@ -3,8 +3,9 @@ import { select } from "redux-saga/effects";
 import { AppState } from "../../combineReducers";
 import { getFeatures } from "../../../utils/extensionService/extensionService";
 import { USERSELECTION_TYPEKEYS } from "../typeKeys";
-import { getOptionalFromApiTemplateInfo, getApiTemplateInfoFromJson } from "../../templates/pages/action";
+import { getFeaturesOptions } from "../../../utils/cliTemplatesParser";
 import { setFeaturesAction } from "../../templates/features/actions";
+
 //import { ServiceState } from "../services/combineReducers";
 
 export function* getFeaturesSaga(vscode: any) {
@@ -22,7 +23,7 @@ export function* getFeaturesSaga(vscode: any) {
 
     if (selectedFrontend.internalName !== "" && selectedBackend.internalName !== "") {
       const event: any = yield call(getFeatures, vscode, selectedFrontend.internalName, selectedBackend.internalName);
-      const features = getOptionalFromApiTemplateInfo(getApiTemplateInfoFromJson(event.data.payload.features));
+      const features = getFeaturesOptions(event.data.payload.features);
       yield put(setFeaturesAction(features));
 
       //todo: remove services if not exist
