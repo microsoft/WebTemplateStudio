@@ -44,7 +44,8 @@ export const getFeaturesOptions = (json: any[]): IOption[] => {
     if(!result.some(option => option.templateGroupIdentity === val.templateGroupIdentity)) {
       const option: IOption = {
         body: val.summary,
-        internalName: val.name,
+        //internalName: val.name,
+        internalName: val.templateGroupIdentity,
         templateGroupIdentity: val.templateGroupIdentity,
         licenses: val.licenses,
         longDescription: val.longDescription,
