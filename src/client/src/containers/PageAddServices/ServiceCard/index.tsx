@@ -3,26 +3,41 @@ import * as React from "react";
 
 import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl";
 
-import CardBody from "../CardBody";
 
-import buttonStyles from "../../css/buttonStyles.module.css";
+import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
-import { IOption } from "../../types/option";
-import keyUpHandler from "../../utils/keyUpHandler";
-import { getSvg } from "../../utils/getSvgUrl";
-import { KEY_EVENTS } from "../../utils/constants";
+import { IOption } from "../../../types/option";
+import { getSvg } from "../../../utils/getSvgUrl";
+import CardBody from "../../../components/CardBody";
+import keyUpHandler from "../../../utils/keyUpHandler";
+import { KEY_EVENTS } from "../../../utils/constants";
 
 interface IProps {
-  buttonText: string;
   option: IOption;
-  handleButtonClick: () => void;
-  handleDetailsClick: (detailPageInfo: IOption) => void;
 }
 
 type Props = IProps & InjectedIntlProps;
 
-export const Card = ({ option, buttonText, handleButtonClick, handleDetailsClick, intl }: Props) => {
-  const formattedTitle = option.title as FormattedMessage.MessageDescriptor;
+export const ServiceCard = (props: Props) => {
+  const { intl, option } = props;
+  const { formatMessage } = intl;
+
+/*
+  const addOrEditResourceText = (internalName: string): string => {
+    if (isSelectionCreated(internalName)) {
+      return formatMessage(messages.editResource);
+    }
+    return formatMessage(messages.addResource);
+  };
+*/
+
+  const handleDetailsClick = (option: IOption) => {
+    console.log(option);
+  };
+  
+  const handleButtonClick = (option: IOption) => {
+    console.log(option);
+  };
 
   const handleDetailsClickIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>, option: IOption) => {
     event.stopPropagation();
@@ -41,8 +56,8 @@ export const Card = ({ option, buttonText, handleButtonClick, handleDetailsClick
         <div className={styles.cardBody}>
           <CardBody
             formattedBody={option.body as string}
-            expectedTime={option.expectedTime as string}
-            expectedPrice={option.expectedPrice as string}
+            expectedTime={option.expectedTime as string|undefined}
+            expectedPrice={option.expectedPrice as string|undefined}
           />
         </div>
         <div className={styles.selectionContainer}>
@@ -56,7 +71,7 @@ export const Card = ({ option, buttonText, handleButtonClick, handleDetailsClick
             <FormattedMessage id="card.details" defaultMessage="Learn more" />
           </a>
           <button
-            onClick={handleButtonClick}
+            onClick={() => handleButtonClick}
             className={classnames(
               styles.signInButton,
               buttonStyles.buttonHighlighted,
@@ -64,7 +79,7 @@ export const Card = ({ option, buttonText, handleButtonClick, handleDetailsClick
             )}
             tabIndex={0}
           >
-            {buttonText}
+            {"VER addOrEditResourceText"}
           </button>
         </div>
       </div>
@@ -73,4 +88,4 @@ export const Card = ({ option, buttonText, handleButtonClick, handleDetailsClick
   );
 };
 
-export default injectIntl(Card);
+export default injectIntl(ServiceCard);

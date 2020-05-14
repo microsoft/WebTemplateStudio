@@ -1,13 +1,11 @@
 import _ from "lodash";
 import classnames from "classnames";
 import * as React from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Card from "../../../components/Card";
 import styles from "./styles.module.css";
 import * as ModalActions from "../../../store/navigation/modals/action";
-import { isCosmosDbModalOpenSelector } from "../../../store/navigation/modals/selector";
 import { WIZARD_CONTENT_INTERNAL_NAMES, ROUTES } from "../../../utils/constants";
-import azureServiceOptions from "../../../mockData/azureServiceOptions";
 import { servicesEnum } from "../../../mockData/azureServiceOptions";
 import { IOption } from "../../../types/option";
 
@@ -20,40 +18,41 @@ import messages from "./messages";
 import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 import { isLoggedInSelector } from "../../../store/config/azure/selector";
 import { getAppService } from "../../../store/userSelection/services/servicesSelector";
+import ServiceCard from "../ServiceCard";
 
-interface IAzureLoginProps {
-  isCosmosDbModalOpen: boolean;
-  cosmosDbSelection: any;
-  isPreview: boolean;
+interface IStateProps {
+  serviceType: string;
+  services: IOption[];
 }
 
-interface IState {
-  azureServices?: IOption[] | undefined;
-}
+type Props = IStateProps & InjectedIntlProps;
 
-type Props = IAzureLoginProps & InjectedIntlProps;
-
-const AzureSubscriptions = (props: Props) => {
-  const {
-    cosmosDbSelection,
-    intl,
-    isPreview
-  } = props;
+const ServiceGroup = ({ intl, services, serviceType }: Props) => {
   const { formatMessage } = intl;
-  const [uniqueServiceTypes, setUniqueServiceTypes] = React.useState<(string | undefined)[]>([]);
   const dispatch = useDispatch();
+  const cosmosDbSelection = useSelector((state: AppState) => state.userSelection.services.cosmosDB);
+  const isPreview = useSelector((state: AppState) => state.config.previewStatus);
   const isLoggedIn = useSelector((state: AppState) => isLoggedInSelector(state));
   const appServiceSelection = useSelector(getAppService);
-  const setDetailPage= (detailPageInfo: IOption) => {
+  const [title, setTitle] = React.useState("");
+  
+  React.useEffect(()=>{
+    switch (serviceType) {
+      case servicesEnum.HOSTING:
+        setTitle(formatMessage(messages.hostingTitle));
+        break;
+      case servicesEnum.DATABASE:
+        setTitle(formatMessage(messages.storageTitle));
+        break;
+    }
+  },[]);
+        
+
+  const setDetailPage = (detailPageInfo: IOption) => {
     const isIntlFormatted = true;
     dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
     dispatch(setDetailPageAction(detailPageInfo, isIntlFormatted, ROUTES.ADD_SERVICES));
   }
-
-  React.useEffect(()=>{
-    const serviceTypes = azureServiceOptions.map(option => option.type);
-    setUniqueServiceTypes([...new Set(serviceTypes)]);
-  },[]);
 
   const isSelectionCreated = (internalName: string): boolean => {
     if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB) {
@@ -86,28 +85,13 @@ const AzureSubscriptions = (props: Props) => {
     dispatch(ModalActions.openAzureLoginModalAction(option.internalName));
   }
 
-  const getServicesOrganizer = (
-    type: string | undefined,
-    isLoggedIn: boolean,
-    setDetailPage: any,
-    title: any,
-    isPreview: boolean
-  ) => {
-    return (
-      <div key={type}
-        className={classnames(styles.servicesContainer, {
-          [styles.overlay]: !isLoggedIn
-        })}
-      >
-        <div className={styles.servicesCategory}>
-          <div className={styles.categoryTitle}>{type}</div>
-          <div className={styles.categoryDescriptor}>
-            {formatMessage(title)}
-          </div>
-          <div className={styles.servicesCategoryContainer}>
-            {azureServiceOptions.map(option => {
-              const shouldShowCard = isPreview || !option.isPreview;
-              if (shouldShowCard && option.type === type) {
+  return (
+      <div className={styles.container}>
+          <div className={styles.serviceType}>{serviceType}</div>
+          <div className={styles.descriptor}>{title}</div>
+          <div className={styles.cardsContainer}>
+            {services.map((option, key) => {
+              if (isPreview || !option.isPreview) {
                 return (
                   <div
                     key={JSON.stringify(option.title)}
@@ -117,9 +101,7 @@ const AzureSubscriptions = (props: Props) => {
                   >
                     <Card
                       option={option}
-                      buttonText={addOrEditResourceText(
-                        option.internalName
-                      )}
+                      buttonText={addOrEditResourceText(option.internalName)}
                       handleButtonClick={
                         isLoggedIn
                           ? () => openCloudServiceModal(option)
@@ -127,47 +109,14 @@ const AzureSubscriptions = (props: Props) => {
                       }
                       handleDetailsClick={setDetailPage}
                     />
+                    <ServiceCard key={key} option={option} />
                   </div>
                 );
               }
             })}
           </div>
-        </div>
       </div>
-    );
-  }
-
-  return (
-    <div className={styles.container}>
-      {uniqueServiceTypes.map((serviceType: any) => {
-        let categoryTitle;
-        switch (serviceType) {
-          case servicesEnum.HOSTING:
-            categoryTitle = messages.hostingTitle;
-            break;
-          case servicesEnum.DATABASE:
-            categoryTitle = messages.storageTitle;
-            break;
-        }
-        return getServicesOrganizer(
-          serviceType,
-          isLoggedIn,
-          setDetailPage,
-          categoryTitle,
-          isPreview
-        );
-      })}
-    </div>
   );
 }
 
-const mapStateToProps = (state: AppState): IAzureLoginProps => {
-  const { previewStatus } = state.config;
-  return {
-    isCosmosDbModalOpen: isCosmosDbModalOpenSelector(state),
-    cosmosDbSelection: state.userSelection.services.cosmosDB,
-    isPreview: previewStatus,
-  };
-};
-
-export default connect(mapStateToProps)(injectIntl(AzureSubscriptions));
+export default injectIntl(ServiceGroup);

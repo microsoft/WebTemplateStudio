@@ -1,0 +1,23 @@
+.container {
+  display: block;
+  margin-right: 10%;
+  margin-bottom: 5em;
+  padding: 0em 0em;
+}
+
+.serviceType {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.descriptor {
+  font-size: 2em;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;  
+  justify-content: left;
+  margin-top: 20px;
+}

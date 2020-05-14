@@ -9,9 +9,9 @@ interface IProps {
   body?: string;
   version?: string;
   latestVersion?: string;
-  formattedBody?: FormattedMessage.MessageDescriptor;
-  expectedTime?: FormattedMessage.MessageDescriptor;
-  expectedPrice?: FormattedMessage.MessageDescriptor;
+  formattedBody?: string;
+  expectedTime?: string;
+  expectedPrice?: string;
 }
 
 type Props = InjectedIntlProps & IProps;
@@ -35,17 +35,17 @@ const CardBody = ({
       {expectedPrice &&
         <div className={styles.expectedPrice}>
           {expectedPrice && <PriceSVG className={styles.svg} />}
-          {expectedPrice && <div>{intl.formatMessage(expectedPrice)}</div>}
+          {expectedPrice && <div>{expectedPrice}</div>}
         </div>
       }
       {expectedTime &&
         <div className={styles.expectedTime}>
           {expectedTime && <TimeSVG className={styles.svg} />}
-          {expectedTime && <div>{intl.formatMessage(expectedTime)}</div>}
+          {expectedTime && <div>{expectedTime}</div>}
       </div>
       }
       <div className={styles.formattedBody}>
-        {body || (formattedBody && intl.formatMessage(formattedBody))}
+        {body || (formattedBody && formattedBody)}
       </div>
     </div>
   );
