@@ -91,10 +91,6 @@ const Footer = (props: Props) => {
     }
   };
 
-  const canGenerate = (): boolean => {
-    return visitedRoutes.showReviewAndGenerate;
-  };
-
   const showLicenses = (): boolean => {
     return visitedRoutes.showFrameworks;
   };
@@ -137,19 +133,17 @@ const Footer = (props: Props) => {
                 )}
               </a>
             )}
-            {canGenerate() && (
-              <button
-                disabled={!isEnableNextPage}
-                className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]: !isEnableNextPage,
-                  [buttonStyles.buttonHighlighted]: isEnableNextPage,
-                  [styles.disabledOverlay]: !isEnableNextPage,
-                })}
-                onClick={generateProject}
-              >
-                {formatMessage(messages.generate)}
-              </button>
-            )}
+            <button
+              disabled={!isEnableNextPage}
+              className={classnames(styles.button, {
+                [buttonStyles.buttonDark]: !isEnableNextPage,
+                [buttonStyles.buttonHighlighted]: isEnableNextPage,
+                [styles.disabledOverlay]: !isEnableNextPage,
+              })}
+              onClick={generateProject}
+            >
+              {formatMessage(messages.generate)}
+            </button>
           </div>
         </div>
       )}

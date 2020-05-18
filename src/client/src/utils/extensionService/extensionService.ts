@@ -102,19 +102,6 @@ const getOutputPath = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
-const resetAllPages = (vscode: IVSCodeObject, internalName: string, pagesLength: number) => {
-  return postMessageAsync(EXTENSION_COMMANDS.RESET_PAGES, {
-    module: EXTENSION_MODULES.VSCODEUI,
-    command: EXTENSION_COMMANDS.RESET_PAGES,
-    track: true,
-    text: PAYLOAD_MESSAGES_TEXT.RESET_PAGES_TEXT,
-    payload: {
-      internalName: internalName,
-      pagesLength: pagesLength
-    }
-  }, vscode);
-}
-
 const azureLogout = (vscode: IVSCodeObject) => {
   return postMessageAsync(EXTENSION_COMMANDS.AZURE_LOGOUT, {
     module: EXTENSION_MODULES.AZURE,
@@ -243,7 +230,6 @@ export {
   GetValidAppServiceName,
   GetValidCosmosAccountName,
   ValidateAppServiceName,
-  resetAllPages,
   azureLogout,
   getLocations,
   ValidateCosmosAccountName,

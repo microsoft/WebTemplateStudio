@@ -36,7 +36,7 @@ import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB } from "../../store/userSelection/services/servicesSelector";
 import { getAppService } from "../../store/userSelection/services/servicesSelector";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../store/userSelection/frameworks/action";
-import { FRONT_END_SELECTION, BACK_END_SELECTION } from "../PageNewProject/QuickStart/defaultSelection";
+import { IOption } from "../../types/option";
 
 
 interface LinksDict {
@@ -82,6 +82,8 @@ const GenerationModal = ({
   const outputPath = useSelector((state: AppState) => getOutputPath(state));
   const [isServicesSelected, setIsServicesSelected] = React.useState(false);
   const [serviceStatus, setServiceStatus] = React.useState<IAzureServiceStatus>(getInitialServiceStatus());
+  const frontendOptions = useSelector((state: AppState) => state.templates.frontendOptions);
+  const backendOptions = useSelector((state: AppState) => state.templates.backendOptions);
 
   React.useEffect(()=>{
     const localServiceStatus = getInitialServiceStatus();
@@ -95,7 +97,7 @@ const GenerationModal = ({
         localServiceStatus.appService.isDeployed = generationStatus.appService.success;
         localServiceStatus.appService.isFailed = generationStatus.appService.failure;
       }
-      
+
       setIsServiceFailed(localServiceStatus.cosmosdb.isFailed || localServiceStatus.appService.isFailed);
       setIsServicesDeployed(isCosmosSelected && !isAppServiceSelected && localServiceStatus.cosmosdb.isDeployed || 
         !isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed ||
@@ -171,9 +173,27 @@ const GenerationModal = ({
 
   const reset= () => {
     dispatch(resetWizardAction());
+    const defaultOptionFront: IOption = frontendOptions[0];
+    const defaultSelectedFrontEndFramework = {
+      internalName: defaultOptionFront.internalName,
+      title: defaultOptionFront.title as string,
+      version: `v${defaultOptionFront.version || "1.0"}`,
+      licenses: defaultOptionFront.licenses,
+      author: defaultOptionFront.author,
+    };
+
+    const defaultOptionBack = backendOptions[0];
+    const defaultSelectedBackEndFramework = {
+      title: defaultOptionBack.title as string,
+      internalName: defaultOptionBack.internalName,
+      version: `v${defaultOptionBack.version || "1.0"}`,
+      author: defaultOptionBack.author,
+      licenses: defaultOptionBack.licenses
+    };
+
     setTimeout(()=>{
-      dispatch(setSelectedFrontendFrameworkAction(FRONT_END_SELECTION));
-      dispatch(setSelectedBackendFrameworkAction(BACK_END_SELECTION));
+      dispatch(setSelectedFrontendFrameworkAction(defaultSelectedFrontEndFramework));
+      dispatch(setSelectedBackendFrameworkAction(defaultSelectedBackEndFramework));
     },1000)
   }
 

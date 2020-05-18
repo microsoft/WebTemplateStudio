@@ -606,19 +606,6 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
-        case EXTENSION_COMMANDS.RESET_PAGES:
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.RESET_PAGES,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                internalName: message.payload.internalName,
-                resetPages: true
-              }
-            },
-            "*"
-          );
-          break;
           
         case EXTENSION_COMMANDS.LOG:
           mockLoggerModule.logFromWizard(message);
