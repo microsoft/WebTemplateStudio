@@ -20,7 +20,7 @@ import { NAVIGATION_MODAL_TYPES, ModalType } from "../../store/navigation/typeKe
 const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
   // default width
   let CUSTOM_WIDTH = "50%";
-  let backgroundColor = "var(--vscode-menu-background)";
+  const backgroundColor = "var(--vscode-menu-background)";
 
   // depends on modal type, customize width
   if (
@@ -29,10 +29,6 @@ const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
       MODAL_TYPE === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL)
   ) {
     CUSTOM_WIDTH = "40%";
-  }
-
-  if (MODAL_TYPE && MODAL_TYPE === NAVIGATION_MODAL_TYPES.ADD_PAGES_MODAL) {
-    backgroundColor = "var(--vscode-editor-background)";
   }
 
   return {

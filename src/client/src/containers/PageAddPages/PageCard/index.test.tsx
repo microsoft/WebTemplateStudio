@@ -3,13 +3,9 @@ jest.mock('../../../store/userSelection/pages/action',()=>{
     type: "USERSELECTION_TYPEKEYS.SELECT_PAGES",
     payload: pages
   }));
-  const resetPagesAction = jest.fn(() => ({
-    type: "USERSELECTION_TYPEKEYS.RESET_PAGES"
-  }));
 
   return {
-    setPagesAction,
-    resetPagesAction
+    setPagesAction
   }
 });
 

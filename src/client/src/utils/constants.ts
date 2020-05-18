@@ -49,7 +49,6 @@ const ARIA_LABELS_NAVIGATION = defineMessages({
 });
 
 const PAYLOAD_MESSAGES_TEXT = {
-  RESET_PAGES_TEXT: "Sending reset pages request...",
   SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
   SENT_GENERATION_INFO_TEXT: "Sending generation info..."
 };
@@ -160,7 +159,6 @@ const EXTENSION_COMMANDS = {
   GET_VALID_COSMOS_NAME: "get-valid-cosmos-name",
   TRACK_PAGE_SWITCH: "track-page-switch",
   TRACK_CREATE_NEW_PROJECT: "track-create-new-project",
-  TRACK_OPEN_ADD_PAGES_MODAL: "track-open-add-pages-modal",
   TRACK_PRESS_QUICKSTART: "track-press-quickstart",
   TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-app-service-modal-from-services-list",
   TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-cosmosdb-service-modal-from-services-list",
@@ -171,7 +169,6 @@ const EXTENSION_COMMANDS = {
   GET_TEMPLATE_INFO: "get-template-info",
   CLOSE_WIZARD: "close-wizard",
   GET_VERSIONS: "get-versions",
-  RESET_PAGES: "reset-pages",
   GET_DEPENDENCY_INFO: "check-dependency",
   GET_FRAMEWORKS: "get-frameworks",
   GET_LATEST_VERSION:"get-latest-version",
