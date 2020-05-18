@@ -45,19 +45,11 @@ const openAppServiceModalAction = () => {
   })
 };
 
-const openAddPagesModalAction = () => {
-  return openModalAction({
-    modalType: NAVIGATION_MODAL_TYPES.ADD_PAGES_MODAL,
-    modalData: null
-  })
-};
-
 export {
   closeModalAction,
   openAzureLoginModalAction,
   openCosmosDbModalAction,
   openGenModalAction,
   openViewLicensesModalAction,
-  openAppServiceModalAction,
-  openAddPagesModalAction,
+  openAppServiceModalAction
 };

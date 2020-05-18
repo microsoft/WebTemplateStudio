@@ -33,8 +33,17 @@ export function* frameworkSaga(vscode: any) {
         yield put({ type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS, payload: pageOptions });
 
         if (selectedPages.length === 0){
-          const blankPage = pageOptions.filter(page => page.title === "Blank")[0];
-          selectedPages.push(blankPage)
+          const blankPage = pageOptions[0];
+          const blankSelect: ISelected = {
+            author: blankPage.author,
+            defaultName: blankPage.defaultName,
+            internalName: blankPage.internalName,
+            isValidTitle: blankPage.isValidTitle,
+            licenses: blankPage.licenses,
+            title: blankPage.defaultName ? blankPage.defaultName : "",
+            id:Math.random().toString()
+          };
+          selectedPages.push(blankSelect)
         }else{
           selectedPages.map((selectedPage: ISelected)=>{
             selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName ? selectedPage.defaultName.replace(" ",""):""}`;

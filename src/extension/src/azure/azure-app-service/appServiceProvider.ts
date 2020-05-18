@@ -1,4 +1,3 @@
-import * as appRoot from "app-root-path";
 import * as fs from "fs";
 import * as path from "path";
 import { ServiceClientCredentials } from "ms-rest";
@@ -24,6 +23,7 @@ import { NameGenerator } from "../utils/nameGenerator";
 import { AppNameValidationResult, NameValidator } from "../utils/nameValidator";
 import { ResourceManager } from "../azure-arm/resourceManager";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
+import { Controller } from "../../controller";
 
 export interface AppServiceSelections {
   siteName: string;
@@ -144,7 +144,7 @@ export class AppServiceProvider {
 
   private getAppServiceARMTemplate(): any {
     const templatePath = path.join(
-      appRoot.toString(),
+      Controller.vsContext.extensionPath,
       "src",
       "azure",
       "azure-app-service",
@@ -156,7 +156,7 @@ export class AppServiceProvider {
 
   private getAppServiceARMParameter(selections: AppServiceSelections): any {
     const parameterPath = path.join(
-      appRoot.toString(),
+      Controller.vsContext.extensionPath,
       "src",
       "azure",
       "azure-app-service",
