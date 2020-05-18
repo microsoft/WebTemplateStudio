@@ -37,13 +37,21 @@ const messages = defineMessages({
     id: "rightSidebar.redirectLinkLabel",
     defaultMessage: "GitHub.com"
   },
-  openSideBar: {
-    id: "rightSidebar.open",
-    defaultMessage: "View project details menu"
+  showAriaLabel: {
+    id: "rightSidebar.showAriaLabel",
+    defaultMessage: "Show project details menu"
   },
-  closeSideBar: {
-    id: "rightSidebar.close",
-    defaultMessage: "Close project details menu"
+  hideAriaLabel: {
+    id: "rightSidebar.hideAriaLabel",
+    defaultMessage: "Hide project details menu"
+  },
+  showIcon: {
+    id: "rightSidebar.showIcon",
+    defaultMessage: "Show"
+  },
+  hideIcon: {
+    id: "rightSidebar.hideIcon",
+    defaultMessage: "Hide"
   }
 });
 

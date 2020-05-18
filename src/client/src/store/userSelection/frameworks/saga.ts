@@ -1,5 +1,5 @@
-import {takeEvery, call, put} from "redux-saga/effects";
-import {select} from 'redux-saga/effects';
+import { takeEvery, call, put } from "redux-saga/effects";
+import { select} from 'redux-saga/effects';
 import { AppState } from "../../combineReducers";
 import { getPages } from "../../../utils/extensionService/extensionService";
 import { ISelected } from "../../../types/selected";
@@ -23,7 +23,7 @@ export function* frameworkSaga(vscode: any) {
       const selectedPagesSelector = (state: AppState) => state.userSelection.pages;
       const selectedFrontendSelector = (state: AppState) => state.userSelection.frontendFramework;
       const selectedBackendSelector = (state: AppState) => state.userSelection.backendFramework;
-      
+
       const selectedPages = yield select(selectedPagesSelector);
       const selectedFrontend = yield select(selectedFrontendSelector);
       const selectedBackend = yield select(selectedBackendSelector);

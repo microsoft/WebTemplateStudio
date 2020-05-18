@@ -94,10 +94,6 @@ const Footer = (props: Props) => {
     }
   };
 
-  const canGenerate = (): boolean => {
-    return visitedRoutes.showReviewAndGenerate;
-  };
-
   const showLicenses = (): boolean => {
     return visitedRoutes.showFrameworks;
   };
@@ -108,7 +104,6 @@ const Footer = (props: Props) => {
         <div className={styles.footer}>
           <div>{showLicenses() && formatMessage(messages.license)}</div>
           <div className={styles.buttonContainer}>
-            
               <a
                 tabIndex={0}
                 className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack,
@@ -121,7 +116,6 @@ const Footer = (props: Props) => {
               >
                 {formatMessage(messages.back)}
               </a>
-            
               <a
                 tabIndex={isEnableNextPage ? 0 : -1}
                 className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
@@ -141,20 +135,17 @@ const Footer = (props: Props) => {
                   />
                 )}
               </a>
-            
-            {canGenerate() && (
-              <button
-                disabled={!isEnableNextPage}
-                className={classnames(styles.button, {
-                  [buttonStyles.buttonDark]: !isEnableNextPage,
-                  [buttonStyles.buttonHighlighted]: isEnableNextPage,
-                  [styles.disabledOverlay]: !isEnableNextPage,
-                })}
-                onClick={generateProject}
-              >
-                {formatMessage(messages.generate)}
-              </button>
-            )}
+            <button
+              disabled={!isEnableNextPage}
+              className={classnames(styles.button, {
+                [buttonStyles.buttonDark]: !isEnableNextPage,
+                [buttonStyles.buttonHighlighted]: isEnableNextPage,
+                [styles.disabledOverlay]: !isEnableNextPage,
+              })}
+              onClick={generateProject}
+            >
+              {formatMessage(messages.generate)}
+            </button>
           </div>
         </div>
       )}

@@ -1,9 +1,8 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect, useDispatch } from "react-redux";
-import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
-
+import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import {
   EXTENSION_COMMANDS,
   ROUTES,
@@ -67,8 +66,7 @@ interface IStateProps {
 type Props = IStateProps;
 
 const App = (props: Props) => {
-  const { frontendOptions,
-    modalState, selectedRoute } = props;
+  const { modalState, selectedRoute } = props;
   const [isLoaded, setIsLoaded] = React.useState(false);
   const promisesLoading: Array<any> = new Array<any>();
   const dispatch = useDispatch();
@@ -90,17 +88,14 @@ const App = (props: Props) => {
     loader: () => addToPromisesList(import(/* webpackChunkName: "PageNewProject" */ "./containers/PageNewProject")),
     loading:() => <div/>
   });
-  
-  if (frontendOptions.length === 0){
-    messageEventsFromExtension();
-  }
-
+ 
   Promise.all(promisesLoading).then(()=>{
     setIsLoaded(true);
   })
 
   React.useEffect(()=>{
     dispatch(loadAction());
+    messageEventsFromExtension();
   },[]);
 
   function messageEventsFromExtension(){
@@ -135,7 +130,7 @@ const App = (props: Props) => {
             [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.AZURE_LOGIN
           })}
         >
-          {selectedRoute === ROUTES.NEW_PROJECT ? (
+           {selectedRoute === ROUTES.NEW_PROJECT ? (
             <HomeSplashSVG
              className={classnames(appStyles.splash, appStyles.homeSplash)}
             />
