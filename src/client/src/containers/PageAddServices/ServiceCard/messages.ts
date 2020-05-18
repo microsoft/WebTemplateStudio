@@ -9,5 +9,9 @@ const messages = defineMessages({
     id: "serviceCard.addToMyProject",
     defaultMessage: "Add to my project",
   },
+  learnMore: {
+    id: "serviceCard.LearnMore",
+    defaultMessage: "Learn more",
+  },
 });
 export default messages;

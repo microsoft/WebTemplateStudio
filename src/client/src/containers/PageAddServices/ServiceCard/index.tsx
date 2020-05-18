@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import * as React from "react";
 import _ from "lodash";
-import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import * as ModalActions from "../../../store/navigation/modals/action";
 
 import buttonStyles from "../../../css/buttonStyles.module.css";
@@ -9,13 +9,13 @@ import styles from "./styles.module.css";
 import { IOption } from "../../../types/option";
 import { getSvg } from "../../../utils/getSvgUrl";
 import CardBody from "../../../components/CardBody";
-import keyUpHandler from "../../../utils/keyUpHandler";
 import { KEY_EVENTS, ROUTES, WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 import messages from "./messages";
-import { getServices } from "../../../store/userSelection/services/servicesSelector";
+import { getServices, hasSelectedService } from "../../../store/userSelection/services/servicesSelector";
 import { isLoggedInSelector } from "../../../store/config/azure/selector";
+import { AppState } from "../../../store/combineReducers";
 
 interface IProps {
   option: IOption;
@@ -28,33 +28,19 @@ export const ServiceCard = (props: Props) => {
   const { formatMessage } = intl;
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(isLoggedInSelector);
-  const servicesSelection = useSelector(getServices);
+  const hasService = useSelector((state: AppState) => hasSelectedService(state, option.internalName));
 
-  const handleDetailsClick = (option: IOption) => {
+  const showDetails = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    event.stopPropagation();
     dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
     dispatch(setDetailPageAction(option, false, ROUTES.ADD_SERVICES));
-  };
-
-  const isSelectionCreated = (internalName: string): boolean => {
-    if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB) {
-      return !_.isEmpty(servicesSelection.cosmosDB);
-    } else if (internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE) {
-      return !_.isEmpty(servicesSelection.appService);
-    }
-    return false;
-  };
-
-  const addOrEditResourceText = (internalName: string): string => {
-    if (isSelectionCreated(internalName)) {
-      return formatMessage(messages.editResource);
-    }
-    return formatMessage(messages.addToProject);
-  };
+  }; 
   
-  const handleDetailsClickIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>, option: IOption) => {
+  const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
     event.stopPropagation();
     if (event.key === KEY_EVENTS.ENTER) {
-      handleDetailsClick(option);
+      dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
+      dispatch(setDetailPageAction(option, false, ROUTES.ADD_SERVICES));
     }
   };
 
@@ -90,12 +76,11 @@ export const ServiceCard = (props: Props) => {
         </div>
         <div className={styles.selectionContainer}>
           <a
-            onClick={() => handleDetailsClick(option)}
-            onKeyPress={event => handleDetailsClickIfPressEnterKey(event, option)}
-            className={styles.details}
-            onKeyUp={keyUpHandler}
-          >
-            <FormattedMessage id="card.details" defaultMessage="Learn more" />
+            tabIndex={0}
+            onClick={showDetails}
+            onKeyDown={showDetailIfPressEnterKey}
+            className={styles.details}>
+              {formatMessage(messages.learnMore)}
           </a>
           <button
             onClick={
@@ -110,7 +95,9 @@ export const ServiceCard = (props: Props) => {
             )}
             tabIndex={0}
           >
-            {addOrEditResourceText(option.internalName)}
+            {hasService 
+              ? formatMessage( messages.editResource) 
+              : formatMessage( messages.addToProject)}
           </button>
         </div>
       </div>
