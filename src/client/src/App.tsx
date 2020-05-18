@@ -54,7 +54,7 @@ const ViewLicensesModal = Loadable({
   loading:() => <div/>
 });
 const AzureLoginModal = Loadable({
-  loader: () => import(/* webpackChunkName: "AzureLoginModal" */  "./containers/PageAddServices/AzureLoginModal"),
+  loader: () => import(/* webpackChunkName: "AzureLoginModal" */  "./containers/AzureLoginModal"),
   loading:() => <div/>
 });
 
