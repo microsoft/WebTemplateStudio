@@ -130,10 +130,10 @@ const App = (props: Props) => {
             [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.AZURE_LOGIN
           })}
         >
-           {selectedRoute === ROUTES.NEW_PROJECT ? (	
-            <HomeSplashSVG	
-             className={classnames(appStyles.splash, appStyles.homeSplash)}	
-            />	
+           {selectedRoute === ROUTES.NEW_PROJECT ? (
+            <HomeSplashSVG
+             className={classnames(appStyles.splash, appStyles.homeSplash)}
+            />
           ) : null}
 
           {selectedRoute === ROUTES.REVIEW_AND_GENERATE ? (
