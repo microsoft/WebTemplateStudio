@@ -66,11 +66,46 @@
   height: 36px;
 }
 
-
 .container {
   width: 300px;
   height: 300px;
   padding: 2.5em;
   background-color: hsla(0, 0%, 47%, 0.2);
   margin-bottom: 10px;
+}
+
+
+/* Card body styles */
+
+
+.body {
+  font-size: 15px;
+  line-height: 1.75em;
+}
+
+.expectedPrice {
+  margin-top: 5px;
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.expectedTime {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.formattedBody{
+  margin-bottom: 0.5em;
+}
+
+@media (max-width: 700px) {
+  .formattedBody {
+    display: none;
+  }
+}
+
+.svg {
+  margin-right: 18px;
+  margin-top: 4px;
+  fill: var(--vscode-editor-foreground);
 }
