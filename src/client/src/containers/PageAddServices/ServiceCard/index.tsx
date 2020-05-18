@@ -31,9 +31,8 @@ export const ServiceCard = (props: Props) => {
   const servicesSelection = useSelector(getServices);
 
   const handleDetailsClick = (option: IOption) => {
-    const isIntlFormatted = true;
     dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
-    dispatch(setDetailPageAction(option, isIntlFormatted, ROUTES.ADD_SERVICES));
+    dispatch(setDetailPageAction(option, false, ROUTES.ADD_SERVICES));
   };
 
   const isSelectionCreated = (internalName: string): boolean => {
@@ -94,7 +93,6 @@ export const ServiceCard = (props: Props) => {
             onClick={() => handleDetailsClick(option)}
             onKeyPress={event => handleDetailsClickIfPressEnterKey(event, option)}
             className={styles.details}
-            tabIndex={0}
             onKeyUp={keyUpHandler}
           >
             <FormattedMessage id="card.details" defaultMessage="Learn more" />
