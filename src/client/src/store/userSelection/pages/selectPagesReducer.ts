@@ -14,8 +14,6 @@ const pagesReducer = (
       const list = state.slice(0);
       list.filter(page => page.id===action.payload.id)[0] = action.payload;
       return list;
-    case USERSELECTION_TYPEKEYS.RESET_PAGES:
-      return [];
     default:
       return state;
   }

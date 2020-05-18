@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { createSelector } from "reselect";
 import { ConfigState } from "../combineReducers";
 import { AppState } from "../../combineReducers";

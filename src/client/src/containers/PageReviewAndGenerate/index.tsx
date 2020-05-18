@@ -9,7 +9,6 @@ import buttonStyles from "../../css/buttonStyles.module.css";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
-import AddPagesModal from "./AddPagesModal";
 
 type Props = InjectedIntlProps;
 
@@ -19,7 +18,6 @@ const ReviewAndGenerate = ({ intl }: Props) => {
   
   return (
     <div className={styles.container}>
-      <AddPagesModal/>
       <div className={styles.reviewContextContainer}>
         <div className={styles.selectionContainer}>
           <h1>{formatMessage(messages.launchYourProject)}</h1>
