@@ -23,7 +23,7 @@ import SelectFrameworks from "./SelectFrameworks";
 type Props = InjectedIntlProps;
 
 const RightSidebar = (props: Props)=>{
-  const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(false);
+  const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(true);
   const hasServices: boolean = useSelector(hasServicesSelector);
   const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
   const navigateIsDirty = useSelector((state: AppState) => state.navigation.isDirty);
@@ -45,7 +45,7 @@ const RightSidebar = (props: Props)=>{
   };
 
   React.useEffect(()=>{
-    if (navigateIsDirty===false) setIsSiderbarOpen(false);
+    if (navigateIsDirty===false) setIsSiderbarOpen(true);
   },[navigateIsDirty]);
 
   return (
