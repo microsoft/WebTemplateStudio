@@ -1,14 +1,12 @@
 import classnames from "classnames";
 import * as React from "react";
-import _ from "lodash";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import * as ModalActions from "../../../store/navigation/modals/action";
+import {openAzureLoginModalAction} from "../../../store/navigation/modals/action";
 
 import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
-import { IOption } from "../../../types/option";
 import { getSvg } from "../../../utils/getSvgUrl";
-import { KEY_EVENTS, ROUTES, WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
+import { KEY_EVENTS, ROUTES } from "../../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setPageWizardPageAction, setDetailPageAction } from "../../../store/navigation/routes/action";
 import messages from "./messages";
@@ -17,69 +15,64 @@ import { isLoggedInSelector } from "../../../store/config/azure/selector";
 import { AppState } from "../../../store/combineReducers";
 import { ReactComponent as PriceSVG } from "../../../assets/money.svg";
 import { ReactComponent as TimeSVG } from "../../../assets/timer.svg";
+import { IService } from "../../../store/templates/features/selector";
 
 interface IProps {
-  option: IOption;
+  service: IService;
 }
 
 type Props = IProps & InjectedIntlProps;
 
 export const ServiceCard = (props: Props) => {
-  const { intl, option } = props;
+  const { intl, service } = props;
   const { formatMessage } = intl;
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(isLoggedInSelector);
-  const hasService = useSelector((state: AppState) => hasSelectedService(state, option.internalName));
+  const hasService = useSelector((state: AppState) => hasSelectedService(state, service.internalName));
 
   const showDetails = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.stopPropagation();
     dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
-    dispatch(setDetailPageAction(option, false, ROUTES.ADD_SERVICES));
+    dispatch(setDetailPageAction(service, false, ROUTES.ADD_SERVICES));
   };
 
   const showDetailIfPressEnterKey = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
     event.stopPropagation();
     if (event.key === KEY_EVENTS.ENTER) {
       dispatch(setPageWizardPageAction(ROUTES.PAGE_DETAILS));
-      dispatch(setDetailPageAction(option, false, ROUTES.ADD_SERVICES));
+      dispatch(setDetailPageAction(service, false, ROUTES.ADD_SERVICES));
     }
   };
 
   const openModal = () => {
-    if(isLoggedIn) {
-      if(option.internalName === WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE) {
-        dispatch(ModalActions.openAppServiceModalAction());
-      } else if (option.internalName === WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB) {
-        dispatch(ModalActions.openCosmosDbModalAction());
-      }
-    } else {
-      dispatch(ModalActions.openAzureLoginModalAction(option.internalName));
-    }    
+    isLoggedIn && service.openModalAction
+      ? dispatch(service.openModalAction)
+      : dispatch(openAzureLoginModalAction(service.internalName));
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.loginContainer}>
         <div className={styles.cardTitleContainer}>
-          {getSvg(option.internalName, styles.icon)}
-          <div className={styles.cardTitle}>{option.title}</div>
+          {getSvg(service.internalName, styles.icon)}
+          <div className={styles.cardTitle}>{service.title}</div>
         </div>
         <div className={styles.cardContent}>
           <div className={styles.cardBody}>
             <div className={styles.body}>
-              {option.expectedPrice && (
+              {service.expectedPrice && (
                 <div className={styles.expectedPrice}>
-                  {option.expectedPrice && <PriceSVG className={styles.svg} />}
-                  {option.expectedPrice && <div>{option.expectedPrice}</div>}
+                  <PriceSVG className={styles.svg} />
+                  <div>{formatMessage(service.expectedPrice)}</div>
                 </div>
               )}
-              {option.expectedTime && (
+              {service.expectedTime && (
                 <div className={styles.expectedTime}>
-                  {option.expectedTime && <TimeSVG className={styles.svg} />}
-                  {option.expectedTime && <div>{option.expectedTime}</div>}
+                  <TimeSVG className={styles.svg} />
+                  <div>{formatMessage(service.expectedTime)}</div>
                 </div>
               )}
-              <div className={styles.formattedBody}>{option.body}</div>
+              <div className={styles.formattedBody}>{service.body}</div>
             </div>
           </div>
           <div className={styles.selectionContainer}>

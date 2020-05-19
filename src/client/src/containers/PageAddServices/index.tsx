@@ -12,7 +12,7 @@ import { azureLogout } from "../../utils/extensionService/extensionService";
 import { logOutAzureAction } from "../../store/config/azure/action";
 import { AppContext } from "../../AppContext";
 import { isLoggedInSelector } from "../../store/config/azure/selector";
-import { getServicesByTypeSelector } from "../../store/templates/features/selector";
+import { getServiceGroups } from "../../store/templates/features/selector";
 import ServiceGroup from "./ServiceGroup";
 
 type Props = InjectedIntlProps;
@@ -23,22 +23,13 @@ const PageAddServices = ({ intl }: Props) => {
   const dispatch = useDispatch();
   const email = useSelector((state: AppState) => state.config.azureProfileData.email);
   const isLoggedIn = useSelector((state: AppState) => isLoggedInSelector(state));
-
-  const groupedServices = useSelector(getServicesByTypeSelector);
+  const serviceGroups = useSelector(getServiceGroups);
 
   const signOutAzure = async () => {
     const event = await azureLogout(vscode);
     if (event.data.payload.success) {
       dispatch(logOutAzureAction());
     }
-  };
-
-  const renderServiceGroups = () => {
-    const renderElements: any[] = [];
-    groupedServices.forEach((services, serviceType) => {
-      renderElements.push(<ServiceGroup services={services} serviceType={serviceType} key={serviceType}/>);
-    });
-    return renderElements;
   };
 
   return (
@@ -58,7 +49,9 @@ const PageAddServices = ({ intl }: Props) => {
         </div>
         {!isLoggedIn && <AzureStudent />}
         <div className={styles.servicesContainer}>
-          {renderServiceGroups()}
+          {serviceGroups.map((group, key) => {
+            return <ServiceGroup group={group} key={key}/>
+          })}
         </div>
       </div>
     </div>
