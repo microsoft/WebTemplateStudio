@@ -21,13 +21,13 @@ interface AzureLocation {
   name: string;
 }
 
-interface IServiceGroup {
+export interface IServiceGroup {
   name: FormattedMessage.MessageDescriptor;
   description: FormattedMessage.MessageDescriptor;
   services: IService[];
 }
 
-type IService = IOption & {  
+export type IService = IOption & {  
   openModalAction?: IOpenModalAction;
   expectedPrice?: FormattedMessage.MessageDescriptor;
   expectedTime?: FormattedMessage.MessageDescriptor;

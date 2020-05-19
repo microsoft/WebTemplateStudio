@@ -15,7 +15,7 @@ import { isLoggedInSelector } from "../../../store/config/azure/selector";
 import { AppState } from "../../../store/combineReducers";
 import { ReactComponent as PriceSVG } from "../../../assets/money.svg";
 import { ReactComponent as TimeSVG } from "../../../assets/timer.svg";
-import { IService } from "../../../store/templates/features/selector";
+import { IService } from "../../../types/azureTypes";
 
 interface IProps {
   service: IService;
@@ -52,14 +52,12 @@ export const ServiceCard = (props: Props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.loginContainer}>
-        <div className={styles.cardTitleContainer}>
+      <div className={styles.cardContainer}>
+        <div className={styles.header}>
           {getSvg(service.internalName, styles.icon)}
-          <div className={styles.cardTitle}>{service.title}</div>
+          <div className={styles.title}>{service.title}</div>
         </div>
-        <div className={styles.cardContent}>
-          <div className={styles.cardBody}>
-            <div className={styles.body}>
+        <div className={styles.body}>
               {service.expectedPrice && (
                 <div className={styles.expectedPrice}>
                   <PriceSVG className={styles.svg} />
@@ -72,17 +70,16 @@ export const ServiceCard = (props: Props) => {
                   <div>{formatMessage(service.expectedTime)}</div>
                 </div>
               )}
-              <div className={styles.formattedBody}>{service.body}</div>
-            </div>
+              <div>{service.body}</div>
           </div>
-          <div className={styles.selectionContainer}>
-            <a tabIndex={0} onClick={showDetails} onKeyDown={showDetailIfPressEnterKey} className={styles.details}>
+        <div className={styles.footer}>
+            <a tabIndex={0} onClick={showDetails} onKeyDown={showDetailIfPressEnterKey} className={styles.link}>
               {formatMessage(messages.learnMore)}
             </a>
             <button
               onClick={openModal}
               className={classnames(
-                styles.signInButton,
+                styles.addButton,
                 buttonStyles.buttonHighlighted,
                 buttonStyles.buttonCursorPointer
               )}
@@ -91,7 +88,7 @@ export const ServiceCard = (props: Props) => {
               {hasService ? formatMessage(messages.editResource) : formatMessage(messages.addToProject)}
             </button>
           </div>
-        </div>
+      
       </div>
     </div>
   );

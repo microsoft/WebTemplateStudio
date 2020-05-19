@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../../store/combineReducers";
 import ServiceCard from "../ServiceCard";
-import { IServiceGroup } from "../../../store/templates/features/selector";
+import { IServiceGroup } from "../../../types/azureTypes";
 
 interface IStateProps {
   group: IServiceGroup;
@@ -18,8 +18,8 @@ const ServiceGroup = ({ group, intl }: Props) => {
   
   return (
     <div className={styles.container}>
-      <div className={styles.serviceType}>{formatMessage(group.name)}</div>
-      <div className={styles.descriptor}>{formatMessage(group.description)}</div>
+      <div className={styles.title}>{formatMessage(group.name)}</div>
+      <div className={styles.description}>{formatMessage(group.description)}</div>
       <div className={styles.cardsContainer}>
         {group.services.map((service,key) => {
           if (isPreview || !service.isPreview) {

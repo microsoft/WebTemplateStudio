@@ -1,71 +1,3 @@
-.loginContainer {
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.selectionContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--vscode-textLink-foreground);
-}
-
-.buttonContainer {
-  display: flex;
-  cursor: pointer;
-}
-
-.cardContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.signInButton {
-  margin-left: 10px;
-  font-size: var(--vscode-font-size);
-  border: none;
-}
-
-.signInButton:focus {
-  outline: 1.5px solid var(--vscode-contrastActiveBorder);
-}
-
-.cardTitle {
-  margin-left: 10px;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.cardBody {
-  margin-bottom: 5%;
-  font-size: 13px;
-}
-
-.cardTitleContainer {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.details {
-  color: var(--vscode-textLink-foreground);
-  font-size: 15px;
-  text-decoration: none;
-}
-
-.details:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.icon {
-  height: 36px;
-}
-
 .container {
   width: 300px;
   height: 300px;
@@ -74,11 +6,35 @@
   margin-bottom: 10px;
 }
 
+.cardContainer {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
 
-/* Card body styles */
+.cardContainer>*:last-child {
+  margin-top: auto;
+}
 
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.title {
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.icon {
+  height: 36px;
+}
 
 .body {
+  margin-bottom: 1em;
   font-size: 15px;
   line-height: 1.75em;
 }
@@ -94,18 +50,35 @@
   margin-bottom: 15px;
 }
 
-.formattedBody{
-  margin-bottom: 0.5em;
-}
-
-@media (max-width: 700px) {
-  .formattedBody {
-    display: none;
-  }
-}
-
 .svg {
   margin-right: 18px;
   margin-top: 4px;
   fill: var(--vscode-editor-foreground);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--vscode-textLink-foreground);
+}
+
+.link {
+  color: var(--vscode-textLink-foreground);
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.link:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.addButton {
+  margin-left: 10px;
+  font-size: var(--vscode-font-size);
+  border: none;
+}
+
+.addButton:focus {
+  outline: 1.5px solid var(--vscode-contrastActiveBorder);
 }
