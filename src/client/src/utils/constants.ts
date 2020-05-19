@@ -130,6 +130,11 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   VUE_LIST: "wts.Page.Vue.List"
 };
 
+enum SERVICE_GROUPS {
+  HOSTING = "CloudHosting",
+  DATABASE = "CloudDatabase",
+}
+
 const EXTENSION_MODULES = {
   AZURE: "Azure",
   GENERATE: "GenerateExperience",
@@ -207,5 +212,6 @@ export {
   PAYLOAD_MESSAGES_TEXT,
   BOOTSTRAP_LICENSE,
   TELEMETRY,
-  AzureResourceType
+  AzureResourceType,
+  SERVICE_GROUPS
 };

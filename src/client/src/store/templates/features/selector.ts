@@ -1,10 +1,9 @@
 import { createSelector } from "reselect";
 import { AppState } from "../../combineReducers";
 import { IOption } from "../../../types/option";
-import { IOpenModalAction } from "../../navigation/modals/model";
-import { FormattedMessage } from "react-intl";
 import { openAppServiceModalAction, openCosmosDbModalAction } from "../../navigation/modals/action";
 import messages from "./messages";
+import { SERVICE_GROUPS, WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
 
 const getFeatures = (state: AppState) => state.templates.featureOptions;
 
@@ -38,32 +37,15 @@ const getService = (option: IOption): IService => {
   };
 };
 
-export interface IServiceGroup {
-  name: FormattedMessage.MessageDescriptor;
-  description: FormattedMessage.MessageDescriptor;
-  services: IService[];
-}
-
-export type IService = IOption & {  
-  openModalAction?: IOpenModalAction;
-  expectedPrice?: FormattedMessage.MessageDescriptor;
-  expectedTime?: FormattedMessage.MessageDescriptor;
-};
-
-export enum SERVICE_TYPE {
-  APP_SERVICE = "wts.Feature.Azure.AppService",
-  COSMOS_DB = "wts.Feature.Azure.Cosmos",
-}
-
 const getServiceMetadata = (serviceId: string) => {
   switch (serviceId) {
-    case SERVICE_TYPE.APP_SERVICE:
+    case WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE:
       return {
         openModalAction: openAppServiceModalAction(),
         expectedPrice: messages.appServiceExpectedPrice,
         expectedTime: messages.appServiceExpectedTime,
       };
-    case SERVICE_TYPE.COSMOS_DB:
+    case WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB:
       return {
         openModalAction: openCosmosDbModalAction(),
         expectedPrice: messages.cosmosDbExpectedPrice,
@@ -74,19 +56,14 @@ const getServiceMetadata = (serviceId: string) => {
   }
 };
 
-enum SERVICES_GROUP {
-  HOSTING = "CloudHosting",
-  DATABASE = "CloudDatabase",
-}
-
 export const getServiceGroupMetadata = (groupName: string|undefined) => {
   switch (groupName) {
-    case SERVICES_GROUP.HOSTING:
+    case SERVICE_GROUPS.HOSTING:
       return {
         name: messages.serviceGroupHostingName,
         description: messages.serviceGroupHostingDescription,
       };
-    case SERVICES_GROUP.DATABASE:
+    case SERVICE_GROUPS.DATABASE:
       return {
         name: messages.serviceGroupStorageName,
         description: messages.serviceGroupStorageDescription,
