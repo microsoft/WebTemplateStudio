@@ -12,6 +12,7 @@ import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSe
 import messages from "./messages";
 import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store/navigation/routes/action";
 import { AppState } from "../../store/combineReducers";
+import { setIsDirtyAction } from "../../store/navigation/isDirty/action";
 
 type Props = InjectedIntlProps;
 
@@ -83,7 +84,10 @@ const TopNavBar = (props: Props) => {
                     visitedCheck={isOtherVisitedRoute}
                     isSelected={idx === currentPathIndex}
                     pageNumber={idx + 1}
-                    reducerSetPage={(page)=> dispatch(setPageWizardPageAction(page))}
+                    reducerSetPage={(page)=> {
+                      dispatch(setPageWizardPageAction(page));
+                      dispatch(setIsDirtyAction(true));
+                    }}
                   />
                 </div>
               );
