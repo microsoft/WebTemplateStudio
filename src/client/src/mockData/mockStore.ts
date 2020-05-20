@@ -350,3 +350,7 @@ export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
       }
   }
 }
+
+export const setAzureEmail = (store: AppState) => {
+  store.config.azureProfileData.email = "test@test.com";
+}
