@@ -16,7 +16,8 @@ export enum NAVIGATION_ROUTES_TYPEKEYS {
   SET_VISITED_WIZARD_PAGE = "WTS/navigation/routes/SET_VISITED_WIZARD_PAGE",
   RESET_VISITED_WIZARD_PAGE = "WTS/navigation/routes/RESET_VISITED_WIZARD_PAGE",
   SET_PAGE_WIZARD_PAGE = "WTS/navigation/routes/SET_PAGE_WIZARD_PAGE",
-  SET_DETAILS_PAGE_INFO = "WTS/navigation/routes/SET_DETAILS_PAGE_INFO"
+  SET_DETAILS_PAGE_INFO = "WTS/navigation/routes/SET_DETAILS_PAGE_INFO",
+  SET_IS_DIRTY = "WTS/navigation/routes/SET_IS_DIRTY"
 }
 
 export type ModalType =
