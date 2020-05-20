@@ -4,7 +4,6 @@ import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { AppState } from "../../../store/combineReducers";
 import ServiceCard from "../ServiceCard";
-import { IServiceGroup } from "../../../types/azureTypes";
 
 interface IStateProps {
   group: IServiceGroup;

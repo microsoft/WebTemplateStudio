@@ -15,7 +15,6 @@ import { isLoggedInSelector } from "../../../store/config/azure/selector";
 import { AppState } from "../../../store/combineReducers";
 import { ReactComponent as PriceSVG } from "../../../assets/money.svg";
 import { ReactComponent as TimeSVG } from "../../../assets/timer.svg";
-import { IService } from "../../../types/azureTypes";
 
 interface IProps {
   service: IService;
