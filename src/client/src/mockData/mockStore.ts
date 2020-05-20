@@ -113,7 +113,8 @@ export const getInitialState = (): AppState => {
           '/ReviewAndGenerate': false
         },
         selected: '/'
-      }
+      },
+      isDirty: false
     }
   };
   return initialState;

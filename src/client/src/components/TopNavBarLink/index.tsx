@@ -26,15 +26,7 @@ const TopNavBarLink = ({
   intl: InjectedIntl;
   reducerSetPage: (route: string) => void;
 }) => {
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    if (disabled) {
-      e.preventDefault();
-    }else{
-      reducerSetPage(path);
-    }
-  };
-
-
+  const handleClick = () => reducerSetPage(path);
 
   const getAriaLabel = (
     arialabeltext: FormattedMessage.MessageDescriptor,
@@ -42,7 +34,6 @@ const TopNavBarLink = ({
   ): string => {
     if (isSelected) {
       arialabeltext = ARIA_LABELS_NAVIGATION.ARIA_LABELS_CURRENT_PAGE;
-      
     }
     return intl.formatMessage(arialabeltext, {
       pagesText: intl.formatMessage({
@@ -70,9 +61,7 @@ const TopNavBarLink = ({
       }
     >
       <div
-        className={classnames(styles.text, {
-          [styles.textSelected]: isSelected
-        })}
+        className={classnames(styles.text,styles.textSelected)}
       >
         <div
           className={classnames(styles.pageNumber, {
