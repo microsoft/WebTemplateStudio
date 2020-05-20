@@ -1,8 +1,7 @@
 .container {
   display: block;
-  margin-right: 10%;
-  margin-bottom: 5em;
-  padding: 0em 0em;
+  margin: 2em 3em;
+  padding: 0em;
 }
 
 .title {

@@ -26,6 +26,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   padding: 3em;
 }
 
@@ -57,15 +58,5 @@
 @media (min-width: 830px) {
   .azureProfile {
     right: 7%;
-  }
-}
-
-
-@media (max-width: 1250px) {
-  .servicesContainer {
-    display: block;
-    justify-content: center;
-    align-items: center;
-    padding: 3em;
   }
 }
