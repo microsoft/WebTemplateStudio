@@ -81,6 +81,7 @@
   flex-grow: 3;
   margin: auto;
   padding-left: 10px;
+  cursor: pointer;
 }
 
 @media (max-width: 700px) {
@@ -96,6 +97,7 @@
   }
   .pageIsSelectedSmall {
     animation: move 0.5s;
+    cursor: pointer;
   }
 }
 
@@ -105,6 +107,7 @@
     flex-grow: 3;
     margin: auto;
     padding-left: 10px;
+    cursor: pointer;
   }
 }
 

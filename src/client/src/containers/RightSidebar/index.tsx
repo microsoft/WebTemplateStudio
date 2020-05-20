@@ -25,18 +25,14 @@ type Props = InjectedIntlProps;
 const RightSidebar = (props: Props)=>{
   const [ isSidebarOpen, setIsSiderbarOpen ] = React.useState(true);
   const hasServices: boolean = useSelector(hasServicesSelector);
-  const wizardRoutes = useSelector((state: AppState) => state.navigation.routes);
   const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
+  const navigateIsDirty = useSelector((state: AppState) => state.navigation.isDirty);
+  const isFirstOrLastPage: boolean = React.useMemo<boolean>(()=>selectedRoute === ROUTES.NEW_PROJECT ||
+    selectedRoute === ROUTES.REVIEW_AND_GENERATE,[selectedRoute]);
 
   const { intl } = props;
   const { formatMessage } = intl;
   const dispatch = useDispatch();
-
-  React.useEffect(()=>{
-    if (selectedRoute === ROUTES.NEW_PROJECT || 
-      selectedRoute === ROUTES.REVIEW_AND_GENERATE)
-      setIsSiderbarOpen(true);
-  },[wizardRoutes]);
 
   const showHideMenu = () => {
     setIsSiderbarOpen(!isSidebarOpen);
@@ -48,9 +44,13 @@ const RightSidebar = (props: Props)=>{
     }
   };
 
+  React.useEffect(()=>{
+    if (navigateIsDirty===false) setIsSiderbarOpen(true);
+  },[navigateIsDirty]);
+
   return (
     <div>
-    {!isSidebarOpen && (
+    {!isSidebarOpen && !isFirstOrLastPage && (
     <div className={styles.hamburgerContainer}>
       <button
         tabIndex={0}
@@ -65,7 +65,7 @@ const RightSidebar = (props: Props)=>{
       </button>
     </div>
     )}
-    {(isSidebarOpen || selectedRoute === ROUTES.REVIEW_AND_GENERATE) && (
+    {(isSidebarOpen || isFirstOrLastPage) && (
       <div
         role="complementary" id="dvRightSideBar"
         className={classnames(styles.container, styles.rightViewCropped)}
