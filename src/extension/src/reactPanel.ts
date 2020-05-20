@@ -111,14 +111,11 @@ export class ReactPanel {
     const mainScript = manifest.files["main.js"];
     const mainStyle = manifest.files["main.css"];
 
-    const scriptPathOnDisk = vscode.Uri.file(
-      path.join(Controller.vsContext.extensionPath, "react", mainScript)
-    );
-    const scriptUri = scriptPathOnDisk.with({ scheme: "vscode-resource" });
-    const stylePathOnDisk = vscode.Uri.file(
-      path.join(Controller.vsContext.extensionPath, "react", mainStyle)
-    );
-    const styleUri = stylePathOnDisk.with({ scheme: "vscode-resource" });
+    const scriptPathOnDisk = vscode.Uri.file(path.join(Controller.vsContext.extensionPath, "react", mainScript));
+
+    const stylePathOnDisk = vscode.Uri.file(path.join(Controller.vsContext.extensionPath, "react", mainStyle));
+
+    const basePathOnDisk = vscode.Uri.file(path.join(Controller.vsContext.extensionPath, "react"));
 
     return `<!DOCTYPE html>
 			<html lang="en">
@@ -127,16 +124,14 @@ export class ReactPanel {
 				<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 				<meta name="theme-color" content="#000000">
 				<title>Web Template Studio</title>
-				<link rel="stylesheet" type="text/css" href="${styleUri}">
-				<meta img-src vscode-resource: https: ;style-src vscode-resource: 'unsafe-inline' http: https: data:;">
-				<base href="${vscode.Uri.file(path.join(Controller.vsContext.extensionPath, "react")).with({
-          scheme: "vscode-resource"
-        })}/">
+				<link rel="stylesheet" type="text/css" href="${this._panel.webview.asWebviewUri(stylePathOnDisk)}">
+				<meta img-src https: ;style-src 'unsafe-inline' http: https: data:;">
+				<base href="${this._panel.webview.asWebviewUri(basePathOnDisk)}/">
 			</head>
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>
 				<div id="root"></div>
-        <script src="${scriptUri}"></script>
+        <script src="${this._panel.webview.asWebviewUri(scriptPathOnDisk)}"></script>
 			</body>
 			</html>`;
   }

@@ -6,7 +6,7 @@
   "publisher": "WASTeamAccount",
   "aiKey": "###AIKEY###",
   "engines": {
-    "vscode": "^1.32.0"
+    "vscode": "^1.38.0"
   },
   "categories": [
     "Other"
@@ -128,6 +128,7 @@
     "@types/opn": "^5.5.0",
     "@types/request": "^2.48.4",
     "@types/rimraf": "^3.0.0",
+    "@types/vscode": "^1.45.1",
     "archiver": "^4.0.1",
     "axios": "^0.19.2",
     "azure-arm-cosmosdb": "^2.3.0",
