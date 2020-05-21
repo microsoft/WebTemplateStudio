@@ -158,6 +158,10 @@
   fill: var(--vscode-editor-foreground);
 }
 
+.iconHide{
+  visibility:hidden;
+}
+
 .selection {
   display: flex;
   flex-direction: column;

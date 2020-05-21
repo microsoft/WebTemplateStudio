@@ -1,5 +1,5 @@
-import {takeEvery, call, put} from "redux-saga/effects";
-import {select} from 'redux-saga/effects';
+import { takeEvery, call, put } from "redux-saga/effects";
+import { select} from 'redux-saga/effects';
 import { AppState } from "../../combineReducers";
 import { getPages } from "../../../utils/extensionService/extensionService";
 import { ISelected } from "../../../types/selected";
@@ -23,7 +23,7 @@ export function* frameworkSaga(vscode: any) {
       const selectedPagesSelector = (state: AppState) => state.userSelection.pages;
       const selectedFrontendSelector = (state: AppState) => state.userSelection.frontendFramework;
       const selectedBackendSelector = (state: AppState) => state.userSelection.backendFramework;
-      
+
       const selectedPages = yield select(selectedPagesSelector);
       const selectedFrontend = yield select(selectedFrontendSelector);
       const selectedBackend = yield select(selectedBackendSelector);
@@ -33,8 +33,17 @@ export function* frameworkSaga(vscode: any) {
         yield put({ type: TEMPLATES_TYPEKEYS.SET_PAGES_OPTIONS_SUCCESS, payload: pageOptions });
 
         if (selectedPages.length === 0){
-          const blankPage = pageOptions.filter(page => page.title === "Blank")[0];
-          selectedPages.push(blankPage)
+          const blankPage = pageOptions[0];
+          const blankSelect: ISelected = {
+            author: blankPage.author,
+            defaultName: blankPage.defaultName,
+            internalName: blankPage.internalName,
+            isValidTitle: blankPage.isValidTitle,
+            licenses: blankPage.licenses,
+            title: blankPage.defaultName ? blankPage.defaultName : "",
+            id:Math.random().toString()
+          };
+          selectedPages.push(blankSelect)
         }else{
           selectedPages.map((selectedPage: ISelected)=>{
             selectedPage.internalName = `wts.Page.${selectedFrontend.internalName}.${selectedPage.defaultName ? selectedPage.defaultName.replace(" ",""):""}`;

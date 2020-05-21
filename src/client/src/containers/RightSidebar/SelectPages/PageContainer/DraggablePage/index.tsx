@@ -51,7 +51,7 @@ const DraggablePage = ({
 
   React.useEffect(()=>{
     setNamePage(page.title)
-  },[]);
+  },[page]);
 
   React.useEffect(()=>{
     const hasFocusOnLasPage = selectedPages.length>1 && !page.isDirty && selectedPages.length === idx;
@@ -75,20 +75,15 @@ const DraggablePage = ({
     node.focus();
   }
 
-  const handleKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
+  const deletePageOnKeyDown = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
-      handleCloseOnClick();
+      deletePage();
     }
   };
 
-  const handleCloseClick = (idx: number) => {
-    const pagesWithOmittedIdx: ISelected[] = [...selectedPages];
-    pagesWithOmittedIdx.splice(idx, 1);
-    dispatch(setPagesAction(pagesWithOmittedIdx));
-  };
-
-  const handleCloseOnClick = () => {
-    idx && handleCloseClick && handleCloseClick(idx - 1); // correction for idx + 1 to prevent 0th falsey behaviour
+  const deletePage = () => {
+    const selectedPagesUpdated = selectedPages.splice(0).filter(selPage => selPage.id !== page.id);
+    dispatch(setPagesAction(selectedPagesUpdated));
   };
 
   const validateNameAndSetStore = async (newTitle: string) => {
@@ -123,18 +118,24 @@ const DraggablePage = ({
                   maxLength={maxInputLength}
                   value={namePage}
                   onChange={e => {
-                    if (validateNameAndSetStore && idx) {
-                      page.isDirty=true;
-                      validateNameAndSetStore(e.target.value);
+                    const isDirty = namePage !== e.target.value;
+                    if (isDirty){
+                      if (validateNameAndSetStore && idx) {
+                        page.isDirty=true;
+                        validateNameAndSetStore(e.target.value);
+                      }
                     }
                   }}
                   onBlur={e => {
-                    if (validateNameAndSetStore && idx && page && page.isValidTitle===false) {
-                      validateNameAndSetStore(validValue);
-                    }else{
-                      validateNameAndSetStore(e.target.value);
+                    const isDirty = namePage !== e.target.value;
+                    if (isDirty){
+                      if (validateNameAndSetStore && idx && page && page.isValidTitle===false) {
+                        validateNameAndSetStore(validValue);
+                      }else{
+                        validateNameAndSetStore(e.target.value);
+                      }
+                      if (page.isValidTitle) setValidValue(page.title);
                     }
-                    if (page.isValidTitle) setValidValue(page.title);
                   }}
                   autoFocus={page.isDirty}
                   disabled={selectedPages.filter(selPage => selPage.title!==page.title && selPage.isValidTitle===false).length>0}
@@ -160,8 +161,8 @@ const DraggablePage = ({
         {(totalCount !== undefined ? totalCount > 1 : true) && (
           <CloseSVG
             tabIndex={0}
-            onClick={handleCloseOnClick}
-            onKeyDown={handleKeyDown}
+            onClick={deletePage}
+            onKeyDown={deletePageOnKeyDown}
             className={styles.cancelIcon}
             aria-label={intl.formatMessage(messages.deleteItem)}
           />
