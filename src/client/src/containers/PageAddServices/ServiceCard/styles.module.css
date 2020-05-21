@@ -67,6 +67,7 @@
   color: var(--vscode-textLink-foreground);
   font-size: 15px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .link:focus {
