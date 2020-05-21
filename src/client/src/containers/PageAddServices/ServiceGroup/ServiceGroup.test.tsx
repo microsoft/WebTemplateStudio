@@ -7,7 +7,7 @@ import { getInitialState } from "../../../mockData/mockStore";
 
 jest.mock("../ServiceCard", () => {
   return (props: any) => {
-    return <div></div>;
+    return <div data-testid="service-card-component"></div>;
   };
 });
 
@@ -47,5 +47,11 @@ describe("ServiceGroup", () => {
 
     expect(wrapper.getByText(intl.formatMessage(mockServiceGroup.name))).toBeDefined();
     expect(wrapper.getByText(intl.formatMessage(mockServiceGroup.description))).toBeDefined();
+  });
+
+  it("should be the same number of service cards components as service", () => {
+    const wrapper = renderWithStore(<ServiceGroup {...props} />, store);
+    const servicesGroupsComponent = wrapper.queryAllByTestId("service-card-component");
+    expect(servicesGroupsComponent.length).toBe(mockServiceGroup.services.length);
   });
 });

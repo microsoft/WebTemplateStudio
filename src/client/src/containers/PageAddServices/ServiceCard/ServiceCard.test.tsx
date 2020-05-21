@@ -10,6 +10,36 @@ import { openAzureLoginModalAction } from "../../../store/navigation/modals/acti
 import { IOption } from "../../../types/option";
 import { AppState } from "../../../store/combineReducers";
 
+jest.mock("../../../store/navigation/routes/action", () => {
+  const setDetailPageAction = jest.fn((detailPageInfo: IOption, isIntlFormatted = false, originRoute: string) => ({
+    type: "WTS/navigation/routes/SET_DETAILS_PAGE_INFO",
+    payload: {
+      data: detailPageInfo,
+      isIntlFormatted,
+      originRoute,
+    },
+  }));
+
+  const setPageWizardPageAction = jest.fn((route: string) => ({
+    type: "WTS/navigation/routes/SET_PAGE_WIZARD_PAGE",
+    payload: route,
+  }));
+  return {
+    setDetailPageAction,
+    setPageWizardPageAction,
+  };
+});
+
+jest.mock("../../../store/navigation/modals/action", () => {
+  const openAzureLoginModalAction = jest.fn((serviceInternalName: string) => ({
+    type: "AZURE_LOGIN_MODAL",
+    payload: serviceInternalName,
+  }));
+  return {
+    openAzureLoginModalAction,
+  };
+});
+
 describe("ServiceCard", () => {
   let props: any;
   let store: any;
@@ -49,36 +79,6 @@ describe("ServiceCard", () => {
     },
   };
 
-  jest.mock("../../../store/navigation/routes/action", () => {
-    const setDetailPageAction = jest.fn((detailPageInfo: IOption, isIntlFormatted = false, originRoute: string) => ({
-      type: "WTS/navigation/routes/SET_DETAILS_PAGE_INFO",
-      payload: {
-        data: detailPageInfo,
-        isIntlFormatted,
-        originRoute,
-      },
-    }));
-
-    const setPageWizardPageAction = jest.fn((route: string) => ({
-      type: "WTS/navigation/routes/SET_PAGE_WIZARD_PAGE",
-      payload: route,
-    }));
-    return {
-      setDetailPageAction,
-      setPageWizardPageAction,
-    };
-  });
-
-  jest.mock("../../../store/navigation/modals/action", () => {
-    const openAzureLoginModalAction = jest.fn((serviceInternalName: string) => ({
-      type: "AZURE_LOGIN_MODAL",
-      payload: serviceInternalName,
-    }));
-    return {
-      openAzureLoginModalAction,
-    };
-  });
-
   beforeEach(() => {
     initialState = getInitialState();
     store = mockStore(initialState);
@@ -102,16 +102,16 @@ describe("ServiceCard", () => {
     expect(wrapper.getByText(intl.formatMessage(mockService.expectedTime))).toBeDefined();
   });
 
-  xit("when learn more button clicked, setPageWizardPageAction and setDetailPageAction should be called", () => {
+  it("when learn more button clicked, setPageWizardPageAction and setDetailPageAction should be called", () => {
     const wrapper = renderWithStore(<ServiceCard {...props} />, store);
 
     const learnMoreButton = wrapper.getByText(intl.formatMessage(messages.learnMore));
     fireEvent.click(learnMoreButton);
-    expect(setPageWizardPageAction).toBeCalled();
-    expect(setDetailPageAction).toBeCalled();
+    expect(setPageWizardPageAction).toHaveBeenCalled();
+    expect(setDetailPageAction).toHaveBeenCalled();
   });
 
-  xit("when press enter key on learn more button, setPageWizardPageAction and setDetailPageAction should be called", () => {
+  it("when press enter key on learn more button, setPageWizardPageAction and setDetailPageAction should be called", () => {
     const wrapper = renderWithStore(<ServiceCard {...props} />, store);
 
     const learnMoreButton = wrapper.getByText(intl.formatMessage(messages.learnMore));
@@ -120,7 +120,7 @@ describe("ServiceCard", () => {
     expect(setDetailPageAction).toBeCalled();
   });
 
-  xit("If user is not Logged in and click on open modal button, openAzureLoginModalAction should be called  ", () => {
+  it("If user is not Logged in and click on open modal button, openAzureLoginModalAction should be called  ", () => {
     const wrapper = renderWithStore(<ServiceCard {...props} />, store);
     expect(wrapper).toBeDefined();
 
