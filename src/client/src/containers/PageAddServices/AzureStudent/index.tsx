@@ -7,7 +7,7 @@ import { ReactComponent as CloudServicesSVG } from "../../../assets/cloudservice
 
 const AzureStudent = () => {
   return (
-    <div className={styles.studentContainer}>
+    <div data-testid="azure-student-component" className={styles.studentContainer}>
       <CloudServicesSVG className={styles.cloudServicesSvg} />
       <div className={styles.infoContainer}>
         <div className={styles.azureForStudent}>
