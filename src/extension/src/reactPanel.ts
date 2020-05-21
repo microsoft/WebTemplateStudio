@@ -125,7 +125,7 @@ export class ReactPanel {
 				<meta name="theme-color" content="#000000">
 				<title>Web Template Studio</title>
 				<link rel="stylesheet" type="text/css" href="${this._panel.webview.asWebviewUri(stylePathOnDisk)}">
-				<meta img-src https: ;style-src 'unsafe-inline' http: https: data:;">
+				<meta img-src ${this._panel.webview.cspSource} https: ;style-src ${this._panel.webview.cspSource} 'unsafe-inline' http: https: data:;">
 				<base href="${this._panel.webview.asWebviewUri(basePathOnDisk)}/">
 			</head>
 			<body>
