@@ -10,7 +10,7 @@ import { AppState } from "../../store/combineReducers";
 import PageAddServices from ".";
 
 jest.mock("./ServiceGroup", () => {
-  return (props: any) => {
+  return () => {
     return <div data-testid="service-group-component"></div>;
   };
 });

@@ -6,7 +6,7 @@ import { AppState } from "../../../store/combineReducers";
 import { getInitialState } from "../../../mockData/mockStore";
 
 jest.mock("../ServiceCard", () => {
-  return (props: any) => {
+  return () => {
     return <div data-testid="service-card-component"></div>;
   };
 });
