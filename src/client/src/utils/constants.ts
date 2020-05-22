@@ -57,7 +57,7 @@ const ROUTES = {
   PAGE_DETAILS: "/PageDetail",
   SELECT_FRAMEWORKS:  "/SelectFrameworks",
   SELECT_PAGES: "/SelectPages",
-  AZURE_LOGIN: "/AzureLogin",
+  ADD_SERVICES: "/AddPages",
   REVIEW_AND_GENERATE :"/ReviewAndGenerate",
   NEW_PROJECT: "/"
 };
@@ -68,7 +68,7 @@ const ROUTES_ARRAY = [
   ROUTES.NEW_PROJECT,
   ROUTES.SELECT_FRAMEWORKS,
   ROUTES.SELECT_PAGES,
-  ROUTES.AZURE_LOGIN,
+  ROUTES.ADD_SERVICES,
   ROUTES.REVIEW_AND_GENERATE
 ];
 
@@ -130,6 +130,11 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   VUE_LIST: "wts.Page.Vue.List"
 };
 
+enum SERVICE_GROUPS {
+  HOSTING = "CloudHosting",
+  DATABASE = "CloudDatabase",
+}
+
 const EXTENSION_MODULES = {
   AZURE: "Azure",
   GENERATE: "GenerateExperience",
@@ -173,6 +178,7 @@ const EXTENSION_COMMANDS = {
   GET_FRAMEWORKS: "get-frameworks",
   GET_LATEST_VERSION:"get-latest-version",
   GET_PAGES: "get-pages",
+  GET_FEATURES: "get-features",
   GET_VALIDATIONS: "get-validations",
   LOG: "log",
   OPEN_LOG: "open-log"
@@ -206,5 +212,6 @@ export {
   PAYLOAD_MESSAGES_TEXT,
   BOOTSTRAP_LICENSE,
   TELEMETRY,
-  AzureResourceType
+  AzureResourceType,
+  SERVICE_GROUPS
 };

@@ -1,27 +1,27 @@
 import * as React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 
-import asModal from "../../../components/Modal";
+import asModal from "../../components/Modal";
 
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { closeModalAction } from "../../../store/navigation/modals/action";
-import { AppState } from "../../../store/combineReducers";
-import { isAzureLoginModalOpenSelector } from "../../../store/navigation/modals/selector";
-import buttonStyles from "../../../css/buttonStyles.module.css";
+import { closeModalAction } from "../../store/navigation/modals/action";
+import { AppState } from "../../store/combineReducers";
+import { isAzureLoginModalOpenSelector } from "../../store/navigation/modals/selector";
+import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import classnames from "classnames";
 import { FormattedMessage } from "react-intl";
-import keyUpHandler from "../../../utils/keyUpHandler";
+import keyUpHandler from "../../utils/keyUpHandler";
 import messages from "./messages";
-import { KEY_EVENTS } from "../../../utils/constants";
-import { ReactComponent as Cancel } from "../../../assets/cancel.svg";
-import CollapsibleInfoBox from "../../../components/CollapsibleInfoBox";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants";
-import * as ModalActions from "../../../store/navigation/modals/action";
-import { azureLogin } from "../../../utils/extensionService/extensionService";
-import { AppContext } from "../../../AppContext";
-import { logIntoAzureActionAction } from "../../../store/config/azure/action";
-import { isLoggedInSelector } from "../../../store/config/azure/selector";
+import { KEY_EVENTS } from "../../utils/constants";
+import { ReactComponent as Cancel } from "../../assets/cancel.svg";
+import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants";
+import * as ModalActions from "../../store/navigation/modals/action";
+import { azureLogin } from "../../utils/extensionService/extensionService";
+import { AppContext } from "../../AppContext";
+import { logIntoAzureActionAction } from "../../store/config/azure/action";
+import { isLoggedInSelector } from "../../store/config/azure/selector";
 
 interface IStateProps {
   isModalOpen: boolean;

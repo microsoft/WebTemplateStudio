@@ -91,7 +91,7 @@ describe("wizardSelectionSelector", () => {
   describe("on azure login", () => {
     it("isEnableNextPage valid always",()=>{
       const mockStore = configureMockStore<AppState>();
-      mock.navigation.routes.selected = ROUTES.AZURE_LOGIN;
+      mock.navigation.routes.selected = ROUTES.ADD_SERVICES;
       const store = mockStore(mock);
       expect(isEnableNextPageSelector(store.getState())).toBeTruthy();
     });

@@ -83,6 +83,18 @@ const getPages = (vscode: IVSCodeObject, frontEndInternalName: string, backEndIn
   }, vscode);
 }
 
+const getFeatures = (vscode: IVSCodeObject, frontEndInternalName: string, backEndInternalName: string)=>{
+  return postMessageAsync( EXTENSION_COMMANDS.GET_FEATURES, {
+    module: EXTENSION_MODULES.CORETS,
+    command: EXTENSION_COMMANDS.GET_FEATURES,
+    payload: {
+      projectType: WIZARD_CONTENT_INTERNAL_NAMES.FULL_STACK_APP,
+      frontendFramework: frontEndInternalName,
+      backendFramework: backEndInternalName
+    }
+  }, vscode);
+}
+
 const getOutputPath = (vscode: IVSCodeObject) => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_OUTPUT_PATH, {
     module: EXTENSION_MODULES.DEFAULTS,
@@ -211,6 +223,7 @@ export {
   getFrameworks,
   getLatestVersion,
   getPages,
+  getFeatures,
   getOutputPath,
   sendTelemetry,
   getResourceGroups,

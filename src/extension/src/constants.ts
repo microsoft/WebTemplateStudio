@@ -335,6 +335,7 @@ export enum ExtensionCommand {
   GetFrameworks = "get-frameworks",
   GetLatestVersion = "get-latest-version",
   GetPages = "get-pages",
+  GetFeatures = "get-features",
   TrackPageSwitch = "track-page-switch",
   TrackCreateNewProject = "track-create-new-project",
   TrackOpenAddPagesModal = "track-open-add-pages-modal",

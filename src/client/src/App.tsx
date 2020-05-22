@@ -23,11 +23,12 @@ import loadable from '@loadable/component'
 const PageSelectFrameworks = loadable(()=> import(/* webpackChunkName: "PageSelectFrameworks" */  "./containers/PageSelectFrameworks"));
 const PageAddPages = loadable(()=> import(/* webpackChunkName: "PageAddPages" */  "./containers/PageAddPages"));
 const PageReviewAndGenerate = loadable(() => import(/* webpackChunkName: "PageReviewAndGenerate" */  "./containers/PageReviewAndGenerate"));
-const PageAzureLogin = loadable(() => import(/* webpackChunkName: "PageAzureLogin" */  "./containers/PageAzureLogin"));
+const PageAddServices = loadable(() => import(/* webpackChunkName: "PageAddServices" */  "./containers/PageAddServices"));
 const GenerationModal = loadable(() => import(/* webpackChunkName: "GenerationModal" */  "./containers/GenerationModal"));
 const CosmosDbModal = loadable(() => import(/* webpackChunkName: "CosmosDbModal" */  "./containers/CosmosDbModal"));
 const AppServiceModal = loadable(() => import(/* webpackChunkName: "AppServiceModal" */  "./containers/AppServiceModal"));
 const ViewLicensesModal = loadable(() => import(/* webpackChunkName: "ViewLicensesModal" */  "./containers/ViewLicensesModal"));
+const AzureLoginModal = loadable(() => import(/* webpackChunkName: "AzureLoginModal" */  "./containers/AzureLoginModal"));
 
 if (process.env.NODE_ENV === DEVELOPMENT) {
   require("./css/themes.css");
@@ -76,6 +77,7 @@ const App = (props: Props) => {
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.VIEW_LICENSES_MODAL) && (<ViewLicensesModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.APP_SERVICE_MODAL) && (<AppServiceModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.COSMOS_DB_MODAL) && (<CosmosDbModal/>)}
+        {(modalState.modalType === NAVIGATION_MODAL_TYPES.AZURE_LOGIN_MODAL) && (<AzureLoginModal/>)}
         {(modalState.modalType === NAVIGATION_MODAL_TYPES.GEN_MODAL) && (<GenerationModal/>)}
 
         <main
@@ -83,7 +85,7 @@ const App = (props: Props) => {
             [appStyles.centerViewNewProjectPage]:
               selectedRoute === ROUTES.NEW_PROJECT,
             [appStyles.centerViewMaxHeight]: selectedRoute === ROUTES.PAGE_DETAILS,
-            [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.AZURE_LOGIN
+            [appStyles.centerViewAzurePage]: selectedRoute === ROUTES.ADD_SERVICES
           })}
         >
            {selectedRoute === ROUTES.NEW_PROJECT ? (
@@ -102,7 +104,7 @@ const App = (props: Props) => {
           ) : null}
 
           {(selectedRoute === ROUTES.PAGE_DETAILS) && (<PageDetails />)}
-          {(selectedRoute === ROUTES.AZURE_LOGIN) && (<PageAzureLogin/>)}
+          {(selectedRoute === ROUTES.ADD_SERVICES) && (<PageAddServices/>)}
           {(selectedRoute === ROUTES.REVIEW_AND_GENERATE) && (<PageReviewAndGenerate />)}
           {(selectedRoute === ROUTES.SELECT_FRAMEWORKS) && (<PageSelectFrameworks/>)}
           {(selectedRoute === ROUTES.SELECT_PAGES) && (<PageAddPages isModal={false}/>)}

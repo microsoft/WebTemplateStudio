@@ -2,6 +2,7 @@ import { FormattedMessage as FM } from "react-intl";
 
 export interface IOption {
   title: string | FM.MessageDescriptor;
+  templateGroupIdentity?: string;
   isPreview?: boolean;
   type?: string;
   internalName: string;
@@ -22,6 +23,7 @@ export interface IOption {
   unselectable?: boolean;
   isValidTitle?: boolean;
   author?: string;
+  group?: string;
   expectedTime?: string | FM.MessageDescriptor;
   expectedPrice?: string | FM.MessageDescriptor;
 }

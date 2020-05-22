@@ -3,58 +3,59 @@ import { ExtensionCommand } from "./constants";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 
 export class CoreTSModule extends WizardServant {
-  clientCommandMap: Map<
-    ExtensionCommand,
-    (message: any) => Promise<IPayloadResponse>
-  >;
+  clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>>;
 
   constructor() {
     super();
     this.clientCommandMap = this.defineCommandMap();
   }
 
-  private defineCommandMap(): Map<
-    ExtensionCommand,
-    (message: any) => Promise<IPayloadResponse>
-  > {
+  private defineCommandMap(): Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> {
     return new Map([
       [ExtensionCommand.GetFrameworks, this.getFrameworks],
       [ExtensionCommand.GetPages, this.getPages],
-      [ExtensionCommand.GetTemplateInfo, this.getTemplateConfig]
+      [ExtensionCommand.GetFeatures, this.getFeatures],
+      [ExtensionCommand.GetTemplateInfo, this.getTemplateConfig],
     ]);
   }
 
   async getFrameworks(message: any): Promise<IPayloadResponse> {
-    const result = await CoreTemplateStudio.GetExistingInstance().getFrameworks(
-      message.payload.projectType
-    );
+    const frameworks = await CoreTemplateStudio.GetExistingInstance().getFrameworks(message.payload.projectType);
     return {
       payload: {
-        scope:message.payload.scope,
-        frameworks: result,
+        scope: message.payload.scope,
+        frameworks,
         isPreview: message.payload.isPreview,
-        projectType: message.payload.projectType
-      }
+        projectType: message.payload.projectType,
+      },
     };
   }
 
-  async getTemplateConfig(message: any): Promise<IPayloadResponse>{
+  async getTemplateConfig(message: any): Promise<IPayloadResponse> {
     const payload = CoreTemplateStudio.GetExistingInstance().getTemplateConfig();
     payload.scope = message.payload.scope;
     return { payload };
   }
 
   async getPages(message: any): Promise<IPayloadResponse> {
-    const result = await CoreTemplateStudio.GetExistingInstance().getPages(
-      message.payload.projectType,
-      message.payload.frontendFramework,
-      message.payload.backendFramework
-    );
+    const { projectType, frontendFramework, backendFramework } = message.payload;
+    const pages = await CoreTemplateStudio.GetExistingInstance().getPages(projectType, frontendFramework, backendFramework);
     return {
       payload: {
-        scope:message.payload.scope,
-        pages: result
-      }
+        scope: message.payload.scope,
+        pages,
+      },
+    };
+  }
+
+  async getFeatures(message: any): Promise<IPayloadResponse> {
+    const { projectType, frontendFramework, backendFramework } = message.payload;
+    const features = await CoreTemplateStudio.GetExistingInstance().getFeatures(projectType, frontendFramework, backendFramework);
+    return {
+      payload: {
+        scope: message.payload.scope,
+        features,
+      },
     };
   }
 }

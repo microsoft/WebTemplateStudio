@@ -362,6 +362,97 @@ const mockVsCodeApi = () => ({
             "*"
           );
           break;
+        case EXTENSION_COMMANDS.GET_FEATURES:
+          window.postMessage(
+            {
+              command: EXTENSION_COMMANDS.GET_FEATURES,
+              payload: {
+                scope:message.payload && message.payload.scope ? message.payload.scope : "",
+                features: [
+                  {
+                    templateId: "wts.Feature.Azure.AppService",
+                    templateGroupIdentity: "wts.Feature.Azure.AppService",
+                    name: "App Service",
+                    defaultName: "App Service",
+                    description: "Quickly build, deploy, and scale your web apps with confidence.",
+                    richDescription: "Quickly build, deploy, and scale web apps with confidence. Meet rigorous, enterprise-grade performance, security, and compliance requirements by using the fully managed platform for your operational and monitoring tasks.",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    group: "CloudHosting",
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: false,
+                    itemNameEditable: false,
+                    licenses: [],
+                    dependencies: [],
+                    requirements: [],
+                    exclusions: [],
+                    requiredSdks: [],
+                    templateType: "feature",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  },
+                  {
+                    templateId: "wts.Feature.Azure.Cosmos.Mongo",
+                    templateGroupIdentity: "wts.Feature.Azure.Cosmos",
+                    name: "Cosmos DB",
+                    defaultName: "Cosmos DB",
+                    description: "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API.",
+                    richDescription: "Azure Cosmos DB is Microsoft's proprietary globally-distributed, multi-model database service for managing data on a global scale. It offers a variety of APIs for your database including Azure Table, Core (SQL), MongoDB and Gremlin (GraphQL). Web Template Studio offers you the functionality to deploy a Cosmos DB instance from the wizard itself and select an initial location to deploy your database with the ability to scale it to multiple locations at a future time. As an added feature, deploying with the MongoDB API enables you to quickly connect the project Web Template Studio generates to your database instance.",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    group: "CloudDatabase",
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: false,
+                    itemNameEditable: false,
+                    licenses: [],
+                    dependencies: [],
+                    requirements: [],
+                    exclusions: [],
+                    requiredSdks: [],
+                    templateType: "feature",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  },
+                  {
+                    templateId: "wts.Feature.Azure.Cosmos.SQL",
+                    templateGroupIdentity: "wts.Feature.Azure.Cosmos",
+                    name: "Cosmos DB",
+                    defaultName: "Cosmos DB",
+                    description: "Connect your web app to a distributed database service to access and query data using SQL or MongoDB API.",
+                    richDescription: "Azure Cosmos DB is Microsoft's proprietary globally-distributed, multi-model database service for managing data on a global scale. It offers a variety of APIs for your database including Azure Table, Core (SQL), MongoDB and Gremlin (GraphQL). Web Template Studio offers you the functionality to deploy a Cosmos DB instance from the wizard itself and select an initial location to deploy your database with the ability to scale it to multiple locations at a future time. As an added feature, deploying with the MongoDB API enables you to quickly connect the project Web Template Studio generates to your database instance.",
+                    author: "Microsoft",
+                    version: "1.0.0",
+                    icon: "",
+                    displayOrder: 1,
+                    isHidden: false,
+                    group: "CloudDatabase",
+                    isGroupExclusiveSelection: false,
+                    genGroup: 0,
+                    multipleInstance: false,
+                    itemNameEditable: false,
+                    licenses: [],
+                    dependencies: [],
+                    requirements: [],
+                    exclusions: [],
+                    requiredSdks: [],
+                    templateType: "feature",
+                    rightClickEnabled: true,
+                    requiredVisualStudioWorkloads: []
+                  }
+                ]
+              }
+            },
+            "*"
+          );
+          break;
         case EXTENSION_COMMANDS.GET_DEPENDENCY_INFO:
           window.postMessage(
             {

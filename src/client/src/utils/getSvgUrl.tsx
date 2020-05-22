@@ -53,6 +53,12 @@ const SVG_MAPPINGS = {
   ),
   [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: (style: string) => (
     <CosmosdbIcon style={style}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_MONGO]: (style: string) => (
+    <CosmosdbIcon style={style}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB_SQL]: (style: string) => (
+    <CosmosdbIcon style={style}/>
   )
 };
 

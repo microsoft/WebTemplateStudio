@@ -1,0 +1,22 @@
+.container {
+  display: block;
+  margin: 2em 3em;
+  padding: 0em;
+}
+
+.title {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 2em;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;  
+  justify-content: left;
+  margin-top: 20px;
+}

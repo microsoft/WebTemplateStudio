@@ -2,7 +2,7 @@ import {takeEvery, call, put, select} from "redux-saga/effects";
 import { getTemplateInfo, getFrameworks, getUserStatus } from "../../../utils/extensionService/extensionService";
 import { IVersions } from "../../../types/version";
 import { AppState } from "../../combineReducers";
-import { parseFrameworksPayload } from "../../../utils/parseFrameworksPayload";
+import { getFrameworksOptions } from "../../../utils/cliTemplatesParser";
 import { FRAMEWORK_TYPE } from "../../../utils/constants";
 import { CONFIG_TYPEKEYS } from "../configTypeKeys";
 import { TEMPLATES_TYPEKEYS } from "../../templates/templateTypeKeys";
@@ -68,7 +68,7 @@ export function* loadFrameworksListSaga(vscode: any) {
 
     const event: any = yield call(getFrameworks, vscode, isPreview);
     const message = event.data;
-    const optionFrontEndFrameworks = parseFrameworksPayload(
+    const optionFrontEndFrameworks = getFrameworksOptions(
       message.payload.frameworks,
       FRAMEWORK_TYPE.FRONTEND,
       message.payload.isPreview
@@ -92,7 +92,7 @@ export function* loadFrameworksListSaga(vscode: any) {
       type: USERSELECTION_TYPEKEYS.SELECT_FRONTEND_FRAMEWORK,
       payload: defaultSelectedFrontEndFramework
     });
-    const optionBackEndFrameworks = parseFrameworksPayload(
+    const optionBackEndFrameworks = getFrameworksOptions(
       message.payload.frameworks,
       FRAMEWORK_TYPE.BACKEND,
       message.payload.isPreview
