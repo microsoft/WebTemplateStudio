@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect, useDispatch } from "react-redux";
-import Loadable from "react-loadable";
+import loadable from '@loadable/component'
 import { ReactComponent as CloseSVG } from "../../../../../assets/cancel.svg";
 import { getSvg } from "../../../../../utils/getSvgUrl";
 import { ISelected } from "../../../../../types/selected";
@@ -16,10 +16,7 @@ import { getValidations } from "../../../../../store/userSelection/app/wizardSel
 import { setPageAction, setPagesAction } from "../../../../../store/userSelection/pages/action";
 import { IValidations } from "../../../../../store/config/validations/model";
 
-const Reorder = Loadable({
-  loader: () => import(/* webpackChunkName: "ReorderIcon" */  "../../../../../utils/svgComponents/ReorderIcon"),
-  loading:() => <div/>
-});
+const Reorder = loadable(() => import(/* webpackChunkName: "ReorderIcon" */  "../../../../../utils/svgComponents/ReorderIcon"));
 
 interface IStateProps {
   page: ISelected;

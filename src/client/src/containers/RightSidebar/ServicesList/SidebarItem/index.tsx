@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
-import Loadable from "react-loadable";
+import loadable from '@loadable/component'
 import { ReactComponent as CloseSVG } from "../../../../assets/cancel.svg";
 import { ISelected } from "../../../../types/selected";
 import styles from "./styles.module.css";
@@ -12,14 +12,8 @@ import messages from "./messages";
 import { getValidations } from "../../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { IValidations } from "../../../../store/config/validations/model";
 
-const CosmosDBIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "CosmosdbIcon" */  "../../../../utils/svgComponents/CosmosdbIcon"),
-  loading:() => <div/>
-});
-const AppServiceIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "AppServiceIcon" */  "../../../../utils/svgComponents/AppserviceIcon"),
-  loading:() => <div/>
-});
+const CosmosDBIcon = loadable(() => import(/* webpackChunkName: "CosmosdbIcon" */  "../../../../utils/svgComponents/CosmosdbIcon"));
+const AppServiceIcon = loadable(() => import(/* webpackChunkName: "AppServiceIcon" */  "../../../../utils/svgComponents/AppserviceIcon"));
 
 interface IStateProps {
   text?: string;

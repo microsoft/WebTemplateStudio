@@ -1,7 +1,7 @@
 import * as React from "react";
 import "@testing-library/jest-dom";
 import LocationSelection from ".";
-import { RenderResult, fireEvent, waitFor } from "@testing-library/react";
+import { RenderResult, fireEvent, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithIntl } from "../../testUtils";
 import { AzureResourceType } from "../../utils/constants";
@@ -24,8 +24,10 @@ describe("LocationSelection", () => {
   });
 
   it("renders without crashing", () => {
-    wrapper = renderWithIntl(<LocationSelection {...props} />);
-    expect(wrapper).toBeDefined();
+      act(()=>{
+        wrapper = renderWithIntl(<LocationSelection {...props} />);
+        expect(wrapper).toBeDefined();
+      })
     });
 
     xit("If has not subscription, dropdown should be disabled", () => {
@@ -35,36 +37,42 @@ describe("LocationSelection", () => {
       expect(dropdown).toBeDisabled();
     });
   
-    it("If has subscription, dropdown should be enabled", () => {
-      props.subscription = "subscription 1";
-      wrapper = renderWithIntl(<LocationSelection {...props} />);
-      const dropdown = wrapper.getByTestId("dropdown");
-      expect(dropdown).toBeEnabled();
-    });  
+  it("If has subscription, dropdown should be enabled", () => {
+      act(()=>{
+        props.subscription = "subscription 1";
+        wrapper = renderWithIntl(<LocationSelection {...props} />);
+        const dropdown = wrapper.getByTestId("dropdown");
+        expect(dropdown).toBeEnabled();
+      })
+    });
   
-    it("If has subscription, , getLoations should be called", async () => {
-      props.subscription = "subscription 1";
-      wrapper = renderWithIntl(<LocationSelection {...props} />);
+  it("If has subscription, , getLoations should be called", async () => {
+      act(()=>{
+        props.subscription = "subscription 1";
+        wrapper = renderWithIntl(<LocationSelection {...props} />);
+      })
       await waitFor(() => {
         expect(spyGetLocations).toHaveBeenCalled();
       });
     });
 
   it("If has initial Location, onLocationChange notify selected location", async () => {
-    props.location = "Central US";
-    wrapper = renderWithIntl(<LocationSelection {...props} />);
-    await waitFor(() => {
-      expect(props.onLocationChange).toHaveBeenCalledTimes(1);
-      expect(props.onLocationChange).toHaveBeenCalledWith("Central US");
+      act(()=>{
+        props.location = "Central US";
+        wrapper = renderWithIntl(<LocationSelection {...props} />);
+      });
+      await waitFor(() => {
+        expect(props.onLocationChange).toHaveBeenCalledTimes(1);
+        expect(props.onLocationChange).toHaveBeenCalledWith("Central US");
+      });
     });
-  });
 
-  xit("W shen selected an location in a dropdown, onLocationChange notify selected location", () => {
-    const selectedLocation = "Central US";
-    wrapper = renderWithIntl(<LocationSelection {...props} />);
-    const dropdown = wrapper.getByTestId("dropdown");
-    fireEvent.change(dropdown, { target: { label: selectedLocation, value: selectedLocation } });
-    expect(props.onLocationChange).toHaveBeenCalledTimes(1);
-    expect(props.onLocationChange).toHaveBeenCalledWith(selectedLocation);
-  });
+    xit("Wen selected an location in a dropdown, onLocationChange notify selected location", () => {
+      const selectedLocation = "Central US";
+      wrapper = renderWithIntl(<LocationSelection {...props} />);
+      const dropdown = wrapper.getByTestId("dropdown");
+      fireEvent.change(dropdown, { target: { label: selectedLocation, value: selectedLocation } });
+      expect(props.onLocationChange).toHaveBeenCalledTimes(1);
+      expect(props.onLocationChange).toHaveBeenCalledWith(selectedLocation);
+    });
 });
