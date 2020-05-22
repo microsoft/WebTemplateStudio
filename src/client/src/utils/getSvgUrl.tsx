@@ -1,84 +1,30 @@
 import * as React from "react";
-import Loadable from "react-loadable";
+import loadable from '@loadable/component'
 import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants";
 
 import warning from "../assets/warning.svg";
 import cancel from "../assets/cancel.svg";
 import greencheck from "../assets/checkgreen.svg";
 
-const FullStack = Loadable({
-  loader: () => import(/* webpackChunkName: "FullStack" */  "./svgComponents/FullStack"),
-  loading:() => <div/>
-});
-const MasterDetail = Loadable({
-  loader: () => import(/* webpackChunkName: "MasterDetail" */  "./svgComponents/MasterDetail"),
-  loading:() => <div/>
-});
-const BlankPage = Loadable({
-  loader: () => import(/* webpackChunkName: "BlankPage" */  "./svgComponents/BlankPage"),
-  loading:() => <div/>
-});
-const ContentGrid = Loadable({
-  loader: () => import(/* webpackChunkName: "ContentGrid" */  "./svgComponents/ContentGrid"),
-  loading:() => <div/>
-});
-const Masterdetailscreenshot = Loadable({
-  loader: () => import(/* webpackChunkName: "Masterdetailscreenshot" */  "./svgComponents/Masterdetailscreenshot"),
-  loading:() => <div/>
-});
-const Listscreenshot = Loadable({
-  loader: () => import(/* webpackChunkName: "Listscreenshot" */  "./svgComponents/Listscreenshot"),
-  loading:() => <div/>
-});
-const Gridscreenshot = Loadable({
-  loader: () => import(/* webpackChunkName: "Gridscreenshot" */  "./svgComponents/Gridscreenshot"),
-  loading:() => <div/>
-});
-const Blankscreenshot = Loadable({
-  loader: () => import(/* webpackChunkName: "Blankscreenshot" */  "./svgComponents/Blankscreenshot"),
-  loading:() => <div/>
-});
-const List = Loadable({
-  loader: () => import(/* webpackChunkName: "List" */  "./svgComponents/List"),
-  loading:() => <div/>
-});
+const FullStack = loadable(() => import(/* webpackChunkName: "FullStack" */  "./svgComponents/FullStack"));
+const MasterDetail = loadable(() => import(/* webpackChunkName: "MasterDetail" */  "./svgComponents/MasterDetail"));
+const BlankPage = loadable(() => import(/* webpackChunkName: "BlankPage" */  "./svgComponents/BlankPage"));
+const ContentGrid = loadable(() => import(/* webpackChunkName: "ContentGrid" */  "./svgComponents/ContentGrid"));
+const Masterdetailscreenshot = loadable(() => import(/* webpackChunkName: "Masterdetailscreenshot" */  "./svgComponents/Masterdetailscreenshot"));
+const Listscreenshot = loadable(() => import(/* webpackChunkName: "Listscreenshot" */  "./svgComponents/Listscreenshot"));
+const Gridscreenshot = loadable(() => import(/* webpackChunkName: "Gridscreenshot" */  "./svgComponents/Gridscreenshot"));
+const Blankscreenshot = loadable(() => import(/* webpackChunkName: "Blankscreenshot" */  "./svgComponents/Blankscreenshot"));
+const List = loadable(() => import(/* webpackChunkName: "List" */  "./svgComponents/List"));
 //icons
-const ReactIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "ReactIcon" */  "./svgComponents/ReactIcon"),
-  loading:() => <div/>
-});
-const AngularIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "AngularIcon" */  "./svgComponents/AngularIcon"),
-  loading:() => <div/>
-});
-const VueIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "VueIcon" */  "./svgComponents/VueIcon"),
-  loading:() => <div/>
-});
-const NodeIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "NodeIcon" */  "./svgComponents/NodeIcon"),
-  loading:() => <div/>
-});
-const FlaskIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "FlaskIcon" */  "./svgComponents/FlaskIcon"),
-  loading:() => <div/>
-});
-const MoleculerIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "MoleculerIcon" */  "./svgComponents/MoleculerIcon"),
-  loading:() => <div/>
-});
-const AzureIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "AzureIcon" */  "./svgComponents/AzureIcon"),
-  loading:() => <div/>
-});
-const AppserviceIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "AppServiceIcon" */  "./svgComponents/AppserviceIcon"),
-  loading:() => <div/>
-});
-const CosmosdbIcon = Loadable({
-  loader: () => import(/* webpackChunkName: "CosmosdbIcon" */  "./svgComponents/CosmosdbIcon"),
-  loading:() => <div/>
-});
+const ReactIcon = loadable(() => import(/* webpackChunkName: "ReactIcon" */  "./svgComponents/ReactIcon"));
+const AngularIcon = loadable(() => import(/* webpackChunkName: "AngularIcon" */  "./svgComponents/AngularIcon"));
+const VueIcon = loadable(() => import(/* webpackChunkName: "VueIcon" */  "./svgComponents/VueIcon"));
+const NodeIcon = loadable(() => import(/* webpackChunkName: "NodeIcon" */  "./svgComponents/NodeIcon"));
+const FlaskIcon = loadable(() => import(/* webpackChunkName: "FlaskIcon" */  "./svgComponents/FlaskIcon"));
+const MoleculerIcon = loadable(() => import(/* webpackChunkName: "MoleculerIcon" */  "./svgComponents/MoleculerIcon"));
+const AzureIcon = loadable(() => import(/* webpackChunkName: "AzureIcon" */  "./svgComponents/AzureIcon"));
+const AppserviceIcon = loadable(() => import(/* webpackChunkName: "AppServiceIcon" */  "./svgComponents/AppserviceIcon"));
+const CosmosdbIcon = loadable(() => import(/* webpackChunkName: "CosmosdbIcon" */  "./svgComponents/CosmosdbIcon"));
 
 const SVG_MAPPINGS = {
   [WIZARD_CONTENT_INTERNAL_NAMES.REACT]: (style: string) => (

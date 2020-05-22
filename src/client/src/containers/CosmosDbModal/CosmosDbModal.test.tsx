@@ -8,7 +8,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
-import { waitFor, fireEvent } from "@testing-library/react";
+import { waitFor, fireEvent, act } from "@testing-library/react";
 import { closeModalAction } from "../../store/navigation/modals/action";
 import { saveCosmosDbAction } from "../../store/userSelection/services/cosmosDb/action";
 import { ICosmosDB } from "../../store/userSelection/services/cosmosDb/model";
@@ -84,22 +84,27 @@ describe("CosmosDbModal", () => {
 
   it("renders without crashing", () => {
     const wrapper = renderWithStore(<CosmosDbModal {...props} />, store);
-    expect(wrapper).toBeDefined();
+    act(()=>{
+      expect(wrapper).toBeDefined();
+    })
   });
 
   it("If has not cosmos selection in store, save button shold be disabled", () => {
     const { getByText } = renderWithStore(<CosmosDbModal {...props} />, store);
-    const saveButton = getByText(intl.formatMessage(messages.save));
-    expect(saveButton).toBeDisabled();
-    expect(saveButton).toHaveClass(buttonStyles.buttonDark);
+    act(()=>{
+      const saveButton = getByText(intl.formatMessage(messages.save));
+      expect(saveButton).toBeDisabled();
+      expect(saveButton).toHaveClass(buttonStyles.buttonDark);
+    })
   });
 
   it("If has valid subscription, account name and api, save button shold be enabled", async () => {
     const { getByText, getByTestId } = renderWithStore(<CosmosDbModal {...props} />, store);
-
-    fireEvent.click(getByTestId("subscriptions-mock-button"));
-    fireEvent.click(getByTestId("accountname-mock-button"));
-    fireEvent.click(getByTestId("api-mock-button"));
+    act(()=>{
+      fireEvent.click(getByTestId("subscriptions-mock-button"));
+      fireEvent.click(getByTestId("accountname-mock-button"));
+      fireEvent.click(getByTestId("api-mock-button"));
+    });
 
     await waitFor(() => {
       const saveButton = getByText(intl.formatMessage(messages.save));
@@ -110,10 +115,11 @@ describe("CosmosDbModal", () => {
 
   it("If has valid subscription and api, and invalid account name, save button shold be disabled", async () => {
     const { getByText, getByTestId } = renderWithStore(<CosmosDbModal {...props} />, store);
-
-    fireEvent.click(getByTestId("subscriptions-mock-button"));
-    fireEvent.click(getByTestId("invalid-accountname-mock-button"));
-    fireEvent.click(getByTestId("api-mock-button"));
+    act(()=>{
+      fireEvent.click(getByTestId("subscriptions-mock-button"));
+      fireEvent.click(getByTestId("invalid-accountname-mock-button"));
+      fireEvent.click(getByTestId("api-mock-button"));
+    });
 
     await waitFor(() => {
       const saveButton = getByText(intl.formatMessage(messages.save));
@@ -124,9 +130,10 @@ describe("CosmosDbModal", () => {
 
   it("If has valid subscription and account name, and invalid api, save button shold be disabled", async () => {
     const { getByText, getByTestId } = renderWithStore(<CosmosDbModal {...props} />, store);
-
-    fireEvent.click(getByTestId("subscriptions-mock-button"));
-    fireEvent.click(getByTestId("invalid-accountname-mock-button"));
+    act(()=>{
+      fireEvent.click(getByTestId("subscriptions-mock-button"));
+      fireEvent.click(getByTestId("invalid-accountname-mock-button"));
+    });
 
     await waitFor(() => {
       const saveButton = getByText(intl.formatMessage(messages.save));
@@ -137,9 +144,11 @@ describe("CosmosDbModal", () => {
 
   it("If has valid subscription, account name and api and click on save button, save action should be called", async () => {
     const { getByText, getByTestId } = renderWithStore(<CosmosDbModal {...props} />, store);
-    fireEvent.click(getByTestId("subscriptions-mock-button"));
-    fireEvent.click(getByTestId("accountname-mock-button"));
-    fireEvent.click(getByTestId("api-mock-button"));
+    act(()=>{
+      fireEvent.click(getByTestId("subscriptions-mock-button"));
+      fireEvent.click(getByTestId("accountname-mock-button"));
+      fireEvent.click(getByTestId("api-mock-button"));
+    });
 
     await waitFor(() => {
       const saveButton = getByText(intl.formatMessage(messages.save));
@@ -151,7 +160,9 @@ describe("CosmosDbModal", () => {
 
   it("On press close button, close modal", () => {
     const { getByTestId } = renderWithStore(<CosmosDbModal {...props} />, store);
-    fireEvent.click(getByTestId("close-button"));
-    expect(closeModalAction).toBeCalled();
-  });
+    act(()=>{
+      fireEvent.click(getByTestId("close-button"));
+      expect(closeModalAction).toBeCalled();
+    });
+  }); 
 });
