@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@loadable/component": "^5.12.0",
-    "@testing-library/react": "^10.0.3",
+    "@testing-library/react": "^10.0.4",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/classnames": "^2.2.10",
     "@types/jest": "^25.2.3",
@@ -25,7 +25,7 @@
     "global": "^4.4.0",
     "latest-version": "^5.1.0",
     "lodash": "^4.17.15",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.3.0",
     "npm": "^6.14.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
