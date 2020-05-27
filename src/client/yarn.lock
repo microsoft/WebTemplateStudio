@@ -13672,10 +13672,10 @@ typescript-logic@^0.0.0:
   resolved "https://registry.yarnpkg.com/typescript-logic/-/typescript-logic-0.0.0.tgz#66ebd82a2548f2b444a43667bec120b496890196"
   integrity sha512-zXFars5LUkI3zP492ls0VskH3TtdeHCqu0i7/duGt60i5IGPIpAHE/DWo5FqJ6EjQ15YKXrt+AETjv60Dat34Q==
 
-typescript-react-intl@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/typescript-react-intl/-/typescript-react-intl-0.4.1.tgz#9b92732ebe7cbe36aaf14f89322452613bba1a63"
-  integrity sha512-ktOVL7L6NDxMyVOhN56eovI6MPlnLYvB+IEn/Gsb8BMFQGpzZuiMv9KvD2RI2CemWiyF3sxz7jwehbmFrh8hfQ==
+typescript-react-intl@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/typescript-react-intl/-/typescript-react-intl-0.3.0.tgz#30334b85bc142b22e7653d03a371174f9f8cb207"
+  integrity sha512-sQmWJ4DDvH3kqV18OtbW1P4eem0Y9J6pK4eI1FOQF6kyrXhOf0LBGKa+fgIJgOw/OhHPPBsdbdsaysFbbVhXng==
   dependencies:
     typescript "^2.6.2"
 
