@@ -92,7 +92,7 @@
     "webpack": "webpack --mode development",
     "webpack-dev": "webpack --mode development --watch",
     "build": "webpack --mode development",
-    "compile": "tsc -p ./",
+    "compile": "webpack --mode development",
     "watch": "tsc -watch -p ./",
     "lint": "yarn eslint ./src/**/*.{ts,tsx}",
     "test": "npm run compile && node ./out/test/runTest.js",
