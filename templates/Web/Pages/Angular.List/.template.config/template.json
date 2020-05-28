@@ -32,7 +32,8 @@
     },
     "wts.sourceName.casing.kebab": {
       "type": "parameter",
-      "replaces": "Param_SourceName_Kebab"
+      "replaces": "Param_SourceName_Kebab",
+      "fileRename": "Param_SourceName_Kebab"
     },
     "wts.sourceName.casing.pascal": {
       "type": "parameter",
