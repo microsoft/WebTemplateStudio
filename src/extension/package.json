@@ -95,7 +95,7 @@
     "compile": "webpack --mode development",
     "watch": "tsc -watch -p ./",
     "lint": "yarn eslint ./src/**/*.{ts,tsx}",
-    "test": "npm run compile && node ./out/test/runTest.js",
+    "test": "npm run compile && node ./src/test/runTest.ts",
     "template-tests": "node ./out/scripts/generate-test && node ./out/scripts/run-tests",
     "createVsixPackage": "vsce package --yarn -o \"./../../dist/webts-0.0.0-UNTRACKEDVERSION.vsix\""
   },
