@@ -10,11 +10,11 @@ sample_data['list_text_assets'] = {
     'list_id': 3,
     'list_items': [
         {
-            '_id': 1,
+            'id': 1,
             'text': short_lorem_ipsum
         },
         {
-            '_id': 2,
+            'id': 2,
             'text': short_lorem_ipsum
         }
     ],

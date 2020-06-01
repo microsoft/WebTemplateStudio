@@ -20,7 +20,7 @@ const Param_SourceName_Pascal = () => {
   }
 
   const deleteItem = (item) => {
-    fetch(`${CONSTANTS.ENDPOINT.LIST}/${item._id}`, { method: "DELETE" })
+    fetch(`${CONSTANTS.ENDPOINT.LIST}/${item.id}`, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -28,7 +28,7 @@ const Param_SourceName_Pascal = () => {
         return response.json();
       })
       .then(result => {
-        setItems(items.filter(item => item._id !== result._id));
+        setItems(items.filter(item => item.id !== result.id));
       })
       .catch(error => {
         setWarningMessage({
@@ -101,7 +101,7 @@ const Param_SourceName_Pascal = () => {
         </div>
         {items.map(listItem => (
           <ListItem
-            key={listItem._id}
+            key={listItem.id}
             item={listItem}
             deleteItem={deleteItem}
           />

@@ -12,11 +12,11 @@ sampleData.listID = 3;
 sampleData.listTextAssets = [
   {
     text: shortLoremIpsum,
-    _id: 1
+    id: 1
   },
   {
     text: shortLoremIpsum,
-    _id: 2
+    id: 2
   }
 ];
 //}]}
