@@ -1,4 +1,6 @@
 ﻿//{[{
+const { v4: uuidv4 } = require('uuid');
+
 const shortLoremIpsum = `Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.`;
 //}]}
 const sampleData = {};
@@ -6,17 +8,14 @@ const sampleData = {};
 // This class holds sample data used by some generated pages to show how they can be used.
 // TODO Web Template Studio: Delete this file once your app is using real data.
 //{[{
-// TODO Web Template Studio: If you use a database replace this ID with the ID created by the database
-sampleData.listID = 3;
-
 sampleData.listTextAssets = [
   {
     text: shortLoremIpsum,
-    id: 1
+    id: uuidv4()
   },
   {
     text: shortLoremIpsum,
-    id: 2
+    id: uuidv4()
   }
 ];
 //}]}

@@ -1,5 +1,8 @@
 from flask import Flask, jsonify, make_response, send_from_directory
 //{[{
+import uuid
+//}]}
+//{[{
 from flask import request
 //}]}
 import os
@@ -21,13 +24,12 @@ def get_list():
 @app.route(CONSTANTS['ENDPOINT']['LIST'], methods = ['POST'])
 def add_list_item():
     data = request.get_json()
-    list_item = {'id': sample_data['list_text_assets']['list_id'], 'text': data['text']}
+    list_item = {'id':  str(uuid.uuid4()), 'text': data['text']}
     sample_data['list_text_assets']['list_items'].insert(0, list_item)
-    sample_data['list_text_assets']['list_id'] += 1
     json_response = jsonify(list_item)
     return make_response(json_response, CONSTANTS['HTTP_STATUS']['201_CREATED'])
 
-@app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<int:id>', methods=['DELETE'])
+@app.route(CONSTANTS['ENDPOINT']['LIST'] + '/<string:id>', methods=['DELETE'])
 def delete_list_item(id):
     list_items_to_remove = [list_item for list_item in sample_data['list_text_assets']['list_items'] if list_item['id'] == id]
     if not list_items_to_remove:

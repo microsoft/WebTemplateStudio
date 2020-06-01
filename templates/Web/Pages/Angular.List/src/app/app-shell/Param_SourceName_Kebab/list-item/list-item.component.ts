@@ -8,9 +8,9 @@ import { IParam_SourceName_PascalItem } from '../Param_SourceName_Kebab.model';
 })
 export class ListItemComponent implements OnInit {
   // tslint:disable-next-line:variable-name
-  @Input() id: number;
+  @Input() id: string;
   @Input() listItem: IParam_SourceName_PascalItem;
-  @Output() deleteItem = new EventEmitter<number>();
+  @Output() deleteItem = new EventEmitter<string>();
 
   constructor() {}
 

@@ -15,7 +15,7 @@ describe('ListItemComponent', () => {
     fixture = TestBed.createComponent(ListItemComponent);
     component = fixture.componentInstance;
     component.listItem = {
-      id: 1,
+      id: '',
       text: ''
     };
     fixture.detectChanges();

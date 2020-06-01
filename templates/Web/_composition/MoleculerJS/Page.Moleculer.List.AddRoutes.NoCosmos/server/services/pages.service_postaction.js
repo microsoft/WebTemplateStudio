@@ -1,6 +1,7 @@
 const sampleData = require("../data/sampleData");
 //{[{
 const { MoleculerError } = require("moleculer").Errors;
+const { v4: uuidv4 } = require('uuid');
 //}]}
 
 
@@ -30,11 +31,10 @@ const { MoleculerError } = require("moleculer").Errors;
       handler(ctx) {
         let listItem = {
           text: ctx.params.text,
-          id: sampleData.listID
+          id: uuidv4()
         };
     
         sampleData.listTextAssets.unshift(listItem);
-        sampleData.listID++;
     
         return listItem;
       }
@@ -50,7 +50,7 @@ const { MoleculerError } = require("moleculer").Errors;
         $$strict: true // no additional properties allowed
       },
       handler(ctx) {
-        const id = Number(ctx.params.id);
+        const id = ctx.params.id;
         const index = sampleData.listTextAssets.findIndex(
           listItem => listItem.id === id
         );
