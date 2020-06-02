@@ -6,7 +6,7 @@ require("./mongoConnect").connect();
 // Find all list items from the nearest instance of Cosmos MongoDB
 function get(req, res, next) {
   const docquery = ListItem.find({})
-    .sort({ id: -1 })
+    .sort({ _id: -1 })
     .read(ReadPreference.NEAREST);
   docquery
     .exec()
