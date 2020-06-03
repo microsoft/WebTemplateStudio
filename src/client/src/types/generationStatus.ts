@@ -23,10 +23,10 @@ export interface IAzureServiceStatus {
 }
 
 export enum GenerationItemStatus {
-  Stopped,
-  Generating,
-  Failed,
-  Sucess
+  Stopped = "Stopped",
+  Generating = "Generating",
+  Failed = "Failed",
+  Sucess = "Sucess"
 }
 
 export interface GenerationItem {
