@@ -479,6 +479,19 @@ const GenerationModal = ({
     updateGenerationItemsWithServices(isAppServiceSelected, isCosmosSelected);
   },[])
 
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div>
       <div className={styles.headerContainer}>

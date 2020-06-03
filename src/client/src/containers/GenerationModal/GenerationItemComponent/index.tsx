@@ -1,10 +1,12 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import ReactMarkdown from "react-markdown";
 import { GenerationItem, GenerationItemStatus } from "../../../types/generationStatus";
 import classnames from "classnames";
 import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 import messages from "./messages";
+import keyUpHandler from "../../../utils/keyUpHandler";
 
 import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as Checkmark } from "../../../assets/checkgreen.svg";
@@ -22,6 +24,12 @@ const GenerationItemComponent = ({intl, item}: Props) => {
   const { formatMessage } = intl;
   const { vscode } = React.useContext(AppContext);
 
+  const LinkRenderer = (props: any) => (
+    <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
+      {props.children}
+    </a>
+  );
+
   return (
     <div className={styles.checkmarkStatusRow}>
         <React.Fragment>
@@ -32,8 +40,16 @@ const GenerationItemComponent = ({intl, item}: Props) => {
             </div>
           )}
           {item.status === GenerationItemStatus.Sucess && (
-            <div role="img" aria-label="project creation done">
-              <Checkmark className={styles.iconCheck} />
+            <div className={styles.inLine}>
+              {item.link && (
+                <ReactMarkdown
+                source={`[View](${item.link})`}
+                renderers={{ link: LinkRenderer }}
+              />
+              )}
+              <div role="img" aria-label="project creation done">
+                <Checkmark className={styles.iconCheck} />
+              </div>
             </div>
           )}
           {item.status === GenerationItemStatus.Failed && (
