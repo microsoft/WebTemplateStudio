@@ -442,7 +442,8 @@ const GenerationModal = ({
   const initialGenerationItems = () => {
     const items: GenerationItem[] = [
       {
-        status: GenerationItemStatus.Generating,
+        id: "templates",
+        status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.projectCreation)
       }
     ]
@@ -457,6 +458,7 @@ const GenerationModal = ({
 
     if(hasAppService) {
       items.push({
+        id: "appService",
         status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.appServiceTitle),
         link: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites",
@@ -465,6 +467,7 @@ const GenerationModal = ({
 
     if(hasCosmosDb) {
       items.push({
+        id: "cosmosDB",
         status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.cosmosDbTitle),
         link: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts"

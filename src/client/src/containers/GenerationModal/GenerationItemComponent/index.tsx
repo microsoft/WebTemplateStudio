@@ -13,6 +13,8 @@ import { ReactComponent as Checkmark } from "../../../assets/checkgreen.svg";
 import { ReactComponent as ErrorRed } from "../../../assets/errorred.svg";
 import { openLogFile } from "../../../utils/extensionService/extensionService";
 import { AppContext } from "../../../AppContext";
+import { useEffect } from "react";
+import { EXTENSION_COMMANDS } from "../../../utils/constants";
 
 interface IProps {
   item: GenerationItem;
@@ -23,6 +25,24 @@ type Props = IProps & InjectedIntlProps;
 const GenerationItemComponent = ({intl, item}: Props) => {
   const { formatMessage } = intl;
   const { vscode } = React.useContext(AppContext);
+  const [status, setStatus] = React.useState(item.status);
+
+  useEffect(() => {
+    function eventCallback(event: any) {
+      const message = event.data;
+
+      if(message.command === EXTENSION_COMMANDS.GEN_STATUS && message.payload.name === item.id) {
+        setStatus(message.payload.status);
+      }
+    };
+
+    window.addEventListener("message", eventCallback);
+    return () => {
+      window.removeEventListener("message", eventCallback);
+    };
+  }, []);
+
+
 
   const LinkRenderer = (props: any) => (
     <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
@@ -34,12 +54,12 @@ const GenerationItemComponent = ({intl, item}: Props) => {
     <div className={styles.checkmarkStatusRow}>
         <React.Fragment>
           <div>{item.title}</div>
-          {item.status === GenerationItemStatus.Generating && (
+          {status === GenerationItemStatus.Generating && (
             <div role="img" aria-label="project creation in progress">
               <Spinner className={styles.spinner} />
             </div>
           )}
-          {item.status === GenerationItemStatus.Sucess && (
+          {status === GenerationItemStatus.Sucess && (
             <div className={styles.inLine}>
               {item.link && (
                 <ReactMarkdown
@@ -52,7 +72,7 @@ const GenerationItemComponent = ({intl, item}: Props) => {
               </div>
             </div>
           )}
-          {item.status === GenerationItemStatus.Failed && (
+          {status === GenerationItemStatus.Failed && (
             <div className={styles.inLine}>
             <button
               className={classnames(buttonStyles.buttonLink, styles.link)}

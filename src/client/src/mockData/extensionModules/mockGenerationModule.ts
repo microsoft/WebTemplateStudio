@@ -6,23 +6,24 @@ const wait = (m: number) => new Promise((r) => setTimeout(r, m));
 const generate = async (message: any) => {
   const scope = message.payload && message.payload.scope ? message.payload.scope : "";
   const { pages, services } = message.payload;
+  const servicesQueue: Promise<void>[] = [];
 
+  //Simulate generation pages
   sendGenerationStatus("templates", GenerationItemStatus.Generating, scope);
   await mockGenerateTemplates(pages, scope);
   sendGenerationStatus("templates", GenerationItemStatus.Sucess, scope);
 
+  //Simulate generation services
   if (services.appService) {
-    sendGenerationStatus("appService", GenerationItemStatus.Generating, scope);
-    await wait(1000);
-    sendGenerationStatus("appService", GenerationItemStatus.Sucess, scope);
+    servicesQueue.push(mockGenerateSuccess("appService", 1000, scope));
+  }
+  if (services.cosmosDB) {
+    servicesQueue.push(mockGenerateFailed("cosmosDB", 2500, scope));
   }
 
-  if (services.appService) {
-    sendGenerationStatus("cosmosDb", GenerationItemStatus.Generating, scope);
-    await wait(2500);
-    sendGenerationStatus("appService", GenerationItemStatus.Failed, scope);
-  }
+  await Promise.all(servicesQueue);
 
+  //Old -> remove when finished
   window.postMessage(
     {
       command: EXTENSION_COMMANDS.GEN_STATUS,
@@ -79,6 +80,18 @@ const sendGenerationStatus = (name: string, status: GenerationItemStatus, scope:
     },
     "*"
   );
+};
+
+const mockGenerateSuccess = async (name: string, duration: number, scope: string) => {
+  sendGenerationStatus(name, GenerationItemStatus.Generating, scope);
+  await wait(duration);
+  sendGenerationStatus(name, GenerationItemStatus.Sucess, scope);
+};
+
+const mockGenerateFailed = async (name: string, duration: number, scope: string) => {
+  sendGenerationStatus(name, GenerationItemStatus.Generating, scope);
+  await wait(duration);
+  sendGenerationStatus(name, GenerationItemStatus.Failed, scope);
 };
 
 export { generate, openProjectVSCode };

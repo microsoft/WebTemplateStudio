@@ -30,6 +30,7 @@ export enum GenerationItemStatus {
 }
 
 export interface GenerationItem {
+  id: string;
   title: string;
   status: GenerationItemStatus;
   link?: string;
