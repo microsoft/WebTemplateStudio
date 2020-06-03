@@ -21,3 +21,16 @@ export interface IAzureServiceStatus {
   cosmosdb: IDeployStatus;
   appService: IDeployStatus;
 }
+
+export enum GenerationItemStatus {
+  Stopped,
+  Generating,
+  Failed,
+  Sucess
+}
+
+export interface GenerationItem {
+  title: string;
+  status: GenerationItemStatus;
+  link?: string;
+}

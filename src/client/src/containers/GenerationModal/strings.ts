@@ -61,10 +61,6 @@ export const strings = defineMessages({
     id: "generationModal.creatingYourProject",
     defaultMessage: "Creating Your Project"
   },
-  projectCreation: {
-    id: "generationModal.projectCreation",
-    defaultMessage: "Project Creation"
-  },
   generationCompleteWithAzure: {
     id: "generationModal.generationCompleteWithAzure",
     defaultMessage: "Open your project while we take a few minutes to finish deploying Azure services."
@@ -92,5 +88,21 @@ export const strings = defineMessages({
   showLog: {
     id: "generationModal.showLog",
     defaultMessage: "Show Log"
-  }
+  },
+  
+
+
+  
+  projectCreation: {
+    id: "generationModal.projectCreation",
+    defaultMessage: "Project Creation"
+  },
+  appServiceTitle: {
+    id: "generationModal.appServiceTitle",
+    defaultMessage: "App Service"
+  },
+  cosmosDbTitle: {
+    id: "generationModal.cosmosDbTitle",
+    defaultMessage: "Cosmos DB"
+  },
 });

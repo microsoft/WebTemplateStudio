@@ -12,7 +12,7 @@ import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import {IAzureServiceStatus} from "../../types/generationStatus";
+import {IAzureServiceStatus, GenerationItem, GenerationItemStatus} from "../../types/generationStatus";
 import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
 import {
   EXTENSION_COMMANDS,
@@ -37,6 +37,9 @@ import { getCosmosDB } from "../../store/userSelection/services/servicesSelector
 import { getAppService } from "../../store/userSelection/services/servicesSelector";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../store/userSelection/frameworks/action";
 import { IOption } from "../../types/option";
+import GenerationItemComponent from "./GenerationItemComponent";
+
+
 
 
 interface LinksDict {
@@ -60,6 +63,9 @@ const GenerationModal = ({
   intl, isModalOpen
 }: Props) => {
   const { formatMessage } = intl;
+  const { vscode } = React.useContext(AppContext);
+  const dispatch = useDispatch();
+
   const [templateGenStatus, setTemplateGenStatus] = React.useState("");
   const [generationStatus, setGenerationStatus] = React.useState<any>({});
   const [isTemplateGenerated, setIsTemplateGenerated] = React.useState(false);
@@ -70,9 +76,6 @@ const GenerationModal = ({
   
   const [templateGenerated, setTemplateGenerated] = React.useState(false);
   const [templateGenerationInProgress, setTemplateGenerationInProgress] = React.useState(false);
-
-  const { vscode } = React.useContext(AppContext);
-
 
   const generationData = useSelector(getGenerationData);
   const cosmos = useSelector(getCosmosDB);
@@ -125,8 +128,6 @@ const GenerationModal = ({
     window.removeEventListener("message",eventCallback);
   },[isModalOpen]);
 
-  const dispatch = useDispatch();
-
   React.useEffect(()=>{
     generateProject(generationData, vscode);
     addMessageEventsFromExtension();
@@ -135,13 +136,13 @@ const GenerationModal = ({
   function getInitialServiceStatus(){
     return {
       "cosmosdb":{
-        "title":{"id":"cosmosDb.title","defaultMessage":"Cosmos DB"},
+        "title":messages.cosmosDbTitle,
         "isSelected":isCosmosSelected,
         "isDeployed":false,
         "isFailed":false
       },
       "appService":
-        {"title":{"id":"appService.title","defaultMessage":"App Service"},
+        {"title":messages.appServiceTitle,
         "isSelected":isAppServiceSelected,
         "isDeployed":false,
         "isFailed":false
@@ -427,6 +428,57 @@ const GenerationModal = ({
     });
   };
 
+
+
+
+
+
+
+
+
+
+
+  
+  const initialGenerationItems = () => {
+    const items: GenerationItem[] = [
+      {
+        status: GenerationItemStatus.Generating,
+        title: formatMessage(messages.projectCreation)
+      }
+    ]
+    return items;
+  }
+
+  const [generationItems, setGenerationItems] = React.useState(initialGenerationItems);
+
+  
+  const updateGenerationItemsWithServices = (hasAppService: boolean, hasCosmosDb: boolean) => {
+    const items: GenerationItem[] = [...generationItems];
+
+    if(hasAppService) {
+      items.push({
+        status: GenerationItemStatus.Stopped,
+        title: formatMessage(messages.appServiceTitle),
+        link: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites",
+      })
+    }
+
+    if(hasCosmosDb) {
+      items.push({
+        status: GenerationItemStatus.Stopped,
+        title: formatMessage(messages.cosmosDbTitle),
+        link: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts"
+      })
+    }
+
+    setGenerationItems(items);
+
+  }
+
+  React.useEffect(()=>{
+    updateGenerationItemsWithServices(isAppServiceSelected, isCosmosSelected);
+  },[])
+
   return (
     <div>
       <div className={styles.headerContainer}>
@@ -462,6 +514,12 @@ const GenerationModal = ({
           {isServicesSelected && isTemplatesFailed && renderServiceStatusTemplateFailed()}
           {isServicesSelected && !isTemplatesFailed && renderServiceStatusTemplateSuccess()}
         </div>
+        <div className={styles.containerWithMargin}>
+        {generationItems.map((item, key) => {
+            return <GenerationItemComponent key={key} item={item} />
+          })}
+        </div>
+        
       </div>
 
       <div className={styles.footerContainer}>
