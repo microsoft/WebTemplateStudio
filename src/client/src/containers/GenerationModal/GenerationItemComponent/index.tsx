@@ -18,11 +18,12 @@ import { EXTENSION_COMMANDS } from "../../../utils/constants";
 
 interface IProps {
   item: GenerationItem;
+  onStatusChange(itemId: string, newStatus: GenerationItemStatus): void;
 }
 
 type Props = IProps & InjectedIntlProps;
 
-const GenerationItemComponent = ({intl, item}: Props) => {
+const GenerationItemComponent = ({ intl, item, onStatusChange }: Props) => {
   const { formatMessage } = intl;
   const { vscode } = React.useContext(AppContext);
   const [status, setStatus] = React.useState(item.status);
@@ -31,10 +32,10 @@ const GenerationItemComponent = ({intl, item}: Props) => {
     function eventCallback(event: any) {
       const message = event.data;
 
-      if(message.command === EXTENSION_COMMANDS.GEN_STATUS && message.payload.name === item.id) {
+      if (message.command === EXTENSION_COMMANDS.GEN_STATUS && message.payload.name === item.id) {
         setStatus(message.payload.status);
       }
-    };
+    }
 
     window.addEventListener("message", eventCallback);
     return () => {
@@ -42,50 +43,52 @@ const GenerationItemComponent = ({intl, item}: Props) => {
     };
   }, []);
 
-
-
-  const LinkRenderer = (props: any) => (
-    <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
-      {props.children}
-    </a>
-  );
+  useEffect(() => {
+    if (status !== item.status) {
+      onStatusChange(item.id, status);
+    }
+  }, [status]);
 
   return (
     <div className={styles.checkmarkStatusRow}>
-        <React.Fragment>
-          <div>{item.title}</div>
-          {status === GenerationItemStatus.Generating && (
-            <div role="img" aria-label="project creation in progress">
-              <Spinner className={styles.spinner} />
-            </div>
-          )}
-          {status === GenerationItemStatus.Sucess && (
-            <div className={styles.inLine}>
-              {item.link && (
-                <ReactMarkdown
+      <React.Fragment>
+        <div>{item.title}</div>
+        {status === GenerationItemStatus.Generating && (
+          <div role="img" aria-label="project creation in progress">
+            <Spinner className={styles.spinner} />
+          </div>
+        )}
+        {status === GenerationItemStatus.Sucess && (
+          <div className={styles.inLine}>
+            {item.link && (
+              <ReactMarkdown
                 source={`[View](${item.link})`}
-                renderers={{ link: LinkRenderer }}
+                renderers={{
+                  link: (props: any) => (
+                    <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
+                      {props.children}
+                    </a>
+                  ),
+                }}
               />
-              )}
-              <div role="img" aria-label="project creation done">
-                <Checkmark className={styles.iconCheck} />
-              </div>
+            )}
+            <div role="img" aria-label="project creation done">
+              <Checkmark className={styles.iconCheck} />
             </div>
-          )}
-          {status === GenerationItemStatus.Failed && (
-            <div className={styles.inLine}>
-            <button
-              className={classnames(buttonStyles.buttonLink, styles.link)}
-              onClick={() => openLogFile(vscode)}>
+          </div>
+        )}
+        {status === GenerationItemStatus.Failed && (
+          <div className={styles.inLine}>
+            <button className={classnames(buttonStyles.buttonLink, styles.link)} onClick={() => openLogFile(vscode)}>
               {formatMessage(messages.showLog)}
             </button>
             <div role="img" aria-label="project creation failed">
               <ErrorRed className={styles.iconError} />
             </div>
-          </div>            
-          )}
-        </React.Fragment>
-      </div>
+          </div>
+        )}
+      </React.Fragment>
+    </div>
   );
 };
 

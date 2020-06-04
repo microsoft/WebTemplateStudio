@@ -480,7 +480,17 @@ const GenerationModal = ({
 
   React.useEffect(()=>{
     updateGenerationItemsWithServices(isAppServiceSelected, isCosmosSelected);
-  },[])
+  },[]);
+
+  const onItemStatusChange = (itemId: string, newStatus: GenerationItemStatus) => {
+    const newList = generationItems.map((item) => {
+      if (item.id === itemId) {
+        return {...item, status: newStatus}; 
+      }
+      return item;
+    }); 
+    setGenerationItems(newList);
+  }
 
 
 
@@ -532,7 +542,7 @@ const GenerationModal = ({
         </div>
         <div className={styles.containerWithMargin}>
         {generationItems.map((item, key) => {
-            return <GenerationItemComponent key={key} item={item} />
+            return <GenerationItemComponent key={key} item={item} onStatusChange={onItemStatusChange} />
           })}
         </div>
         
