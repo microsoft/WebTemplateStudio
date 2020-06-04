@@ -58,7 +58,7 @@ const GenerationItemComponent = ({ intl, item, onStatusChange }: Props) => {
             <Spinner className={styles.spinner} />
           </div>
         )}
-        {status === GenerationItemStatus.Sucess && (
+        {status === GenerationItemStatus.Success && (
           <div className={styles.inLine}>
             {item.link && (
               <ReactMarkdown

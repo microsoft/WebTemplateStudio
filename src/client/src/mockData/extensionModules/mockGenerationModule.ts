@@ -11,7 +11,7 @@ const generate = async (message: any) => {
   //Simulate generation pages
   sendGenerationStatus("templates", GenerationItemStatus.Generating, scope);
   await mockGenerateTemplates(pages, scope);
-  sendGenerationStatus("templates", GenerationItemStatus.Sucess, scope);
+  sendGenerationStatus("templates", GenerationItemStatus.Failed, scope);
 
   //Simulate generation services
   if (services.appService) {
@@ -85,7 +85,7 @@ const sendGenerationStatus = (name: string, status: GenerationItemStatus, scope:
 const mockGenerateSuccess = async (name: string, duration: number, scope: string) => {
   sendGenerationStatus(name, GenerationItemStatus.Generating, scope);
   await wait(duration);
-  sendGenerationStatus(name, GenerationItemStatus.Sucess, scope);
+  sendGenerationStatus(name, GenerationItemStatus.Success, scope);
 };
 
 const mockGenerateFailed = async (name: string, duration: number, scope: string) => {

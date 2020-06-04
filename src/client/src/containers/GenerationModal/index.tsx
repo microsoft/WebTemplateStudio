@@ -281,38 +281,6 @@ const GenerationModal = ({
     );
   };
 
-  const renderTemplatesStatus = () => {
-    return (
-      <div className={styles.checkmarkStatusRow}>
-        <React.Fragment>
-          <div>{formatMessage(messages.projectCreation)}</div>
-          {templateGenerationInProgress && (
-            <div role="img" aria-label="project creation in progress">
-              <Spinner className={styles.spinner} />
-            </div>
-          )}
-          {templateGenerated && (
-            <div role="img" aria-label="project creation done">
-              <Checkmark className={styles.iconCheck} />
-            </div>
-          )}
-          {isTemplatesFailed && (
-            <div className={styles.inLine}>
-            <button
-              className={classnames(buttonStyles.buttonLink, styles.link)}
-              onClick={() => openLogFile(vscode)}>
-              {formatMessage(messages.showLog)}
-            </button>
-            <div role="img" aria-label="project creation failed">
-              <ErrorRed className={styles.iconError} />
-            </div>
-          </div>            
-          )}
-        </React.Fragment>
-      </div>
-    );
-  };
-
   const renderServiceError = () => {
     if (isTemplatesFailed) {
       return (
@@ -339,94 +307,6 @@ const GenerationModal = ({
     });
   };
 
-  const renderServiceStatusTemplateFailed = () => {
-    return Object.keys(serviceStatus).map((service: string, idx: number) => {
-      const serviceTitle = formatMessage(serviceStatus[service].title);
-      if (serviceStatus[service].isSelected) {
-        const halted = `${serviceTitle} deployment halted`;
-        return (
-          <div
-            className={styles.checkmarkStatusRow}
-            key={`${messages.isDeploying.defaultMessage}${idx}`}
-          >
-            <React.Fragment>
-              <div>{serviceTitle}</div>
-              <div className={styles.inLine}>
-                <button
-                  className={classnames(buttonStyles.buttonLink, styles.link)}
-                  onClick={() => openLogFile(vscode)}>
-                  {formatMessage(messages.showLog)}
-                </button>
-                <div role="img" aria-label={halted}>
-                  <ErrorRed className={styles.iconError} />
-                </div>
-              </div>
-            </React.Fragment>
-          </div>
-        );
-      }
-    });
-  }
-
-  const renderServiceStatusTemplateSuccess = () => {
-    return Object.keys(serviceStatus).map((service: string, idx: number) => {
-      const serviceTitle = formatMessage(serviceStatus[service].title);
-      if (serviceStatus[service].isSelected) {
-        if (serviceStatus[service].isFailed) {
-          const failed = `${serviceTitle} deployment failed`;
-          return (
-            <div className={styles.checkmarkStatusRow} key={`${messages.isDeploying.defaultMessage}${idx}`}>
-                <div>{serviceTitle}</div>
-                <div className={styles.inLine}>
-                <button
-                  className={classnames(buttonStyles.buttonLink, styles.link)}
-                  onClick={() => openLogFile(vscode)}>
-                  {formatMessage(messages.showLog)}
-                </button>
-                <div role="img" aria-label={failed}>
-                  <ErrorRed className={styles.iconError} />
-                </div>
-              </div>
-            </div>
-          );
-        }
-        if (serviceStatus[service].isDeployed) {
-          const deployed = `${serviceTitle} deployment done`;
-          return (
-            <div className={styles.checkmarkStatusRow}>
-              <div>{serviceTitle}</div>
-              <div className={styles.inLine}>
-                <ReactMarkdown
-                  source={`${links[serviceTitle]}`}
-                  key={`${messages.deploymentSuccess.defaultMessage}${idx}`}
-                  renderers={{ link: LinkRenderer }}
-                />
-                <div role="img" aria-label={deployed}>
-                  <Checkmark className={styles.iconCheck} />
-                </div>
-              </div>
-            </div>
-          );
-        }
-        if (!serviceStatus[service].isDeployed) {
-          const inProgress = `${serviceTitle} deployment in progress`;
-          return (
-            <div
-              className={styles.checkmarkStatusRow}
-              key={`${messages.isDeploying.defaultMessage}${idx}`}
-            >
-              <React.Fragment>
-                <div>{serviceTitle}</div>
-                <div role="img" aria-label={inProgress}>
-                  <Spinner className={styles.spinner} />
-                </div>
-              </React.Fragment>
-            </div>
-          );
-        }
-      }
-    });
-  };
 
 
 
@@ -452,11 +332,10 @@ const GenerationModal = ({
 
   const [generationItems, setGenerationItems] = React.useState(initialGenerationItems);
 
-  
-  const updateGenerationItemsWithServices = (hasAppService: boolean, hasCosmosDb: boolean) => {
+  React.useEffect(()=>{
     const items: GenerationItem[] = [...generationItems];
 
-    if(hasAppService) {
+    if(isAppServiceSelected) {
       items.push({
         id: "appService",
         status: GenerationItemStatus.Stopped,
@@ -465,7 +344,7 @@ const GenerationModal = ({
       })
     }
 
-    if(hasCosmosDb) {
+    if(isCosmosSelected) {
       items.push({
         id: "cosmosDB",
         status: GenerationItemStatus.Stopped,
@@ -475,11 +354,6 @@ const GenerationModal = ({
     }
 
     setGenerationItems(items);
-
-  }
-
-  React.useEffect(()=>{
-    updateGenerationItemsWithServices(isAppServiceSelected, isCosmosSelected);
   },[]);
 
   const onItemStatusChange = (itemId: string, newStatus: GenerationItemStatus) => {
@@ -490,6 +364,28 @@ const GenerationModal = ({
       return item;
     }); 
     setGenerationItems(newList);
+  }
+
+  const isGenerationFinished = () => {
+    return generationItems.every(item => 
+      item.status === GenerationItemStatus.Success ||
+      item.status === GenerationItemStatus.Failed);
+  }
+
+  const anyGenerationItemFailed = () => {
+    return generationItems.some(item => item.status === GenerationItemStatus.Failed);
+  }
+
+  const generationTemplatesIsSuccess = () => {
+    return generationItems.some(item => item.id === "templates" && item.status === GenerationItemStatus.Success);
+  }
+
+  const generationTemplatesIsInProgress = () => {
+    return generationItems.some(item => item.id === "templates" && item.status === GenerationItemStatus.Generating);
+  }
+
+  const generationTemplatesIsFailed = () => {
+    return generationItems.some(item => item.id === "templates" && item.status === GenerationItemStatus.Failed);
   }
 
 
@@ -511,9 +407,7 @@ const GenerationModal = ({
         <div className={styles.title}>
           {formatMessage(messages.creatingYourProject)}
         </div>
-        {((isServicesSelected && (isServiceFailed || isServicesDeployed)) ||
-         (!isServicesSelected && (isTemplatesFailed || isTemplateGenerated)))
-         && (
+        {isGenerationFinished() && (
           <Close
             tabIndex={0}
             className={styles.closeIcon}
@@ -524,32 +418,26 @@ const GenerationModal = ({
       </div>
 
       <div className={styles.section}>
-        {templateGenerationInProgress && (
+        {generationTemplatesIsInProgress() && (
           <div className={styles.sectionLine}>
             {templateGenStatus}
           </div>
         )}
-        {templateGenerated && genMessage()}
-        {isTemplatesFailed && renderTemplatesError()}
-        {isServicesSelected && renderServiceError()}
+        {generationTemplatesIsSuccess() && genMessage()}
+        {generationTemplatesIsFailed() && renderTemplatesError()}
+        {(isCosmosSelected || isAppServiceSelected) && renderServiceError()}
       </div>
 
       <div className={classnames(styles.section, styles.checkmarkSection)}>
         <div className={styles.containerWithMargin}>
-          {renderTemplatesStatus()}
-          {isServicesSelected && isTemplatesFailed && renderServiceStatusTemplateFailed()}
-          {isServicesSelected && !isTemplatesFailed && renderServiceStatusTemplateSuccess()}
-        </div>
-        <div className={styles.containerWithMargin}>
         {generationItems.map((item, key) => {
             return <GenerationItemComponent key={key} item={item} onStatusChange={onItemStatusChange} />
           })}
-        </div>
-        
+        </div>        
       </div>
 
       <div className={styles.footerContainer}>
-        {(isTemplatesFailed || isServiceFailed) && (
+        {isGenerationFinished() && anyGenerationItemFailed() && (
           <a
             className={styles.link}
             href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
@@ -559,11 +447,11 @@ const GenerationModal = ({
           </a>
         )}
 
-        {showCreateNewProject && (
+        {isGenerationFinished() && (
           <button
             className={classnames(styles.button, {
-              [buttonStyles.buttonDark]: templateGenerated,
-              [buttonStyles.buttonHighlighted]: !templateGenerated
+              [buttonStyles.buttonDark]: generationTemplatesIsSuccess(),
+              [buttonStyles.buttonHighlighted]: !generationTemplatesIsSuccess()
             })}
             onClick={() => closeModalAndCreateAnotherProject({ fromCreateNewProjectButton:true })}
           >
@@ -571,14 +459,14 @@ const GenerationModal = ({
           </button>
         )}
 
-        {(!isTemplatesFailed) && (
+        {(generationTemplatesIsInProgress() || generationTemplatesIsSuccess()) && (
           <button
             className={classnames(styles.button, {
-              [buttonStyles.buttonDark]: templateGenerationInProgress,
-              [buttonStyles.buttonHighlighted]: !templateGenerationInProgress
+              [buttonStyles.buttonDark]: generationTemplatesIsInProgress(),
+              [buttonStyles.buttonHighlighted]: generationTemplatesIsSuccess()
             })}
             onClick={handleOpenProjectOrRestartWizard}
-            disabled={templateGenerationInProgress}
+            disabled={!generationTemplatesIsSuccess()}
           >
             {openProjectOrRestartWizardMessage()}
           </button>

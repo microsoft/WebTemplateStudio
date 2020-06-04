@@ -26,7 +26,7 @@ export enum GenerationItemStatus {
   Stopped = "Stopped",
   Generating = "Generating",
   Failed = "Failed",
-  Sucess = "Sucess"
+  Success = "Success"
 }
 
 export interface GenerationItem {
