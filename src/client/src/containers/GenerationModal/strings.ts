@@ -63,23 +63,11 @@ export const strings = defineMessages({
   },
   generationCompleteWithAzure: {
     id: "generationModal.generationCompleteWithAzure",
-    defaultMessage: "Open your project while we take a few minutes to finish deploying Azure services."
-  },
-  seeReadMePrefix: {
-    id: "generationModal.seeReadMePrefix",
-    defaultMessage: "Click 'Open Project' and see "
-  },
-  seeReadMePrefixWithAzure: {
-    id: "generationModal.seeReadMePrefixWithAzure",
-    defaultMessage: "See "
+    defaultMessage: "Deploying Azure services (this may take a few minutes)."
   },
   readMe: {
     id: "generationModal.readme",
-    defaultMessage: "README.md"
-  },
-  seeReadMeSuffix: {
-    id: "generationModal.seeReadMeSuffix",
-    defaultMessage: " to get instructions."
+    defaultMessage: "Click 'Open Project' and see README.md to get instructions."
   },
   templateGeneration: {
     id: "generationModal.templateGeneration",

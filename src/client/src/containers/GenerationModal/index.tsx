@@ -166,12 +166,6 @@ const GenerationModal = ({
     window.addEventListener("message", eventCallback);
   }
 
-  const LinkRenderer = (props: any) => (
-    <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
-      {props.children}
-    </a>
-  );
-
   const reset= () => {
     dispatch(resetWizardAction());
     const defaultOptionFront: IOption = frontendOptions[0];
@@ -250,37 +244,6 @@ const GenerationModal = ({
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, {entryPoint});
   }
 
-  const genMessage = () => {
-    return (
-      <div>
-        {isServicesSelected && !isServicesDeployed && !isServiceFailed && (
-          <p className={styles.sectionLine}>
-            {formatMessage(messages.generationCompleteWithAzure)}
-          </p>
-        )}
-        <p className={styles.sectionLine}>
-          {formatMessage(
-            isServicesSelected && !isServicesDeployed
-              ? messages.seeReadMePrefixWithAzure 
-              : messages.seeReadMePrefix
-          )}
-          <span className={styles.readMeText}>
-            {formatMessage(messages.readMe)}
-          </span>
-          {formatMessage(messages.seeReadMeSuffix)}
-        </p>
-      </div>
-    );
-  };
-
-  const renderTemplatesError = () => {
-    return (
-      <div className={styles.sectionLine}>
-        {formatMessage(messages.failedToGenerate)}
-      </div>
-    );
-  };
-
   const renderServiceError = () => {
     if (isTemplatesFailed) {
       return (
@@ -356,6 +319,12 @@ const GenerationModal = ({
     setGenerationItems(items);
   },[]);
 
+  React.useEffect(()=> {
+    if(anyGenerationServiceInProgress()) {
+      setTemplateGenStatus(formatMessage(messages.generationCompleteWithAzure));
+    }
+  },[generationItems]);
+
   const onItemStatusChange = (itemId: string, newStatus: GenerationItemStatus) => {
     const newList = generationItems.map((item) => {
       if (item.id === itemId) {
@@ -386,6 +355,10 @@ const GenerationModal = ({
 
   const generationTemplatesIsFailed = () => {
     return generationItems.some(item => item.id === "templates" && item.status === GenerationItemStatus.Failed);
+  }  
+
+  const anyGenerationServiceInProgress = () => {
+    return generationItems.some(item => item.id !== "templates" && item.status === GenerationItemStatus.Generating);
   }
 
 
@@ -418,13 +391,22 @@ const GenerationModal = ({
       </div>
 
       <div className={styles.section}>
-        {generationTemplatesIsInProgress() && (
+        {!isGenerationFinished() && (
           <div className={styles.sectionLine}>
             {templateGenStatus}
           </div>
         )}
-        {generationTemplatesIsSuccess() && genMessage()}
-        {generationTemplatesIsFailed() && renderTemplatesError()}
+        {generationTemplatesIsSuccess() && (
+          <div className={styles.sectionLine}>
+            {formatMessage(messages.readMe)}
+          </div>
+        )}
+        
+        {generationTemplatesIsFailed() && (          
+          <div className={styles.sectionLine}>
+            {formatMessage(messages.failedToGenerate)}
+          </div>
+        )}
         {(isCosmosSelected || isAppServiceSelected) && renderServiceError()}
       </div>
 

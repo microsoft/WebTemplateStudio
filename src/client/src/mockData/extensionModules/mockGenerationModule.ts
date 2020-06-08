@@ -11,11 +11,11 @@ const generate = async (message: any) => {
   //Simulate generation pages
   sendGenerationStatus("templates", GenerationItemStatus.Generating, scope);
   await mockGenerateTemplates(pages, scope);
-  sendGenerationStatus("templates", GenerationItemStatus.Failed, scope);
+  sendGenerationStatus("templates", GenerationItemStatus.Success, scope);
 
   //Simulate generation services
   if (services.appService) {
-    servicesQueue.push(mockGenerateSuccess("appService", 1000, scope));
+    servicesQueue.push(mockGenerateSuccess("appService", 10000, scope));
   }
   if (services.cosmosDB) {
     servicesQueue.push(mockGenerateFailed("cosmosDB", 2500, scope));
