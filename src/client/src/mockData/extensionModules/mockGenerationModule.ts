@@ -15,10 +15,10 @@ const generate = async (message: any) => {
 
   //Simulate generation services
   if (services.appService) {
-    servicesQueue.push(mockGenerateSuccess("appService", 10000, scope));
+    servicesQueue.push(mockGenerateSuccess("appService", 1000, scope));
   }
   if (services.cosmosDB) {
-    servicesQueue.push(mockGenerateFailed("cosmosDB", 2500, scope));
+    servicesQueue.push(mockGenerateFailed("cosmosDB", 2500, scope, "ERROR: CosmosDB failed to deploy 2"));
   }
 
   await Promise.all(servicesQueue);
@@ -68,7 +68,7 @@ const mockGenerateTemplates = async (pages: any[], scope: string) => {
   }
 };
 
-const sendGenerationStatus = (name: string, status: GenerationItemStatus, scope: string) => {
+const sendGenerationStatus = (name: string, status: GenerationItemStatus, scope: string, message?: string) => {
   window.postMessage(
     {
       command: EXTENSION_COMMANDS.GEN_STATUS,
@@ -76,6 +76,7 @@ const sendGenerationStatus = (name: string, status: GenerationItemStatus, scope:
         scope,
         name,
         status,
+        message,
       },
     },
     "*"
@@ -88,10 +89,10 @@ const mockGenerateSuccess = async (name: string, duration: number, scope: string
   sendGenerationStatus(name, GenerationItemStatus.Success, scope);
 };
 
-const mockGenerateFailed = async (name: string, duration: number, scope: string) => {
+const mockGenerateFailed = async (name: string, duration: number, scope: string, message: string) => {
   sendGenerationStatus(name, GenerationItemStatus.Generating, scope);
   await wait(duration);
-  sendGenerationStatus(name, GenerationItemStatus.Failed, scope);
+  sendGenerationStatus(name, GenerationItemStatus.Failed, scope, message);
 };
 
 export { generate, openProjectVSCode };

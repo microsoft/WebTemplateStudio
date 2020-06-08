@@ -33,8 +33,7 @@ import { sendTelemetry, generateProject, openLogFile } from "../../utils/extensi
 import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
 import { getGenerationData } from "../../store/userSelection/app/selector";
-import { getCosmosDB } from "../../store/userSelection/services/servicesSelector";
-import { getAppService } from "../../store/userSelection/services/servicesSelector";
+import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";
 import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../store/userSelection/frameworks/action";
 import { IOption } from "../../types/option";
 import GenerationItemComponent from "./GenerationItemComponent";
@@ -244,32 +243,6 @@ const GenerationModal = ({
     sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, {entryPoint});
   }
 
-  const renderServiceError = () => {
-    if (isTemplatesFailed) {
-      return (
-        <div className={styles.sectionLine}>
-          {isServicesSelected && formatMessage(messages.deploymentHalted)}
-        </div>
-      );
-    }
-    return Object.keys(serviceStatus).map((service: string, idx: number) => {
-      const serviceTitle = formatMessage(serviceStatus[service].title);
-      if (
-        serviceStatus[service].isSelected &&
-        serviceStatus[service].isFailed
-      ) {
-        return (
-          <div
-            className={styles.sectionLine}
-            key={`${messages.error.defaultMessage}${idx}`}
-          >{`${formatMessage(messages.error)} ${serviceTitle} ${formatMessage(
-            messages.deploymentFailure
-          )}`}</div>
-        );
-      }
-    });
-  };
-
 
 
 
@@ -294,6 +267,7 @@ const GenerationModal = ({
   }
 
   const [generationItems, setGenerationItems] = React.useState(initialGenerationItems);
+  const [errorMessages, setErrorMessages] = React.useState<string[]>([]);
 
   React.useEffect(()=>{
     const items: GenerationItem[] = [...generationItems];
@@ -335,31 +309,30 @@ const GenerationModal = ({
     setGenerationItems(newList);
   }
 
+  const onErrorMessage = (itemId: string, message: string) => {
+    const newErrorMessages = [...errorMessages, message];
+    setErrorMessages([...new Set(newErrorMessages)]);
+  }
+
   const isGenerationFinished = () => {
     return generationItems.every(item => 
       item.status === GenerationItemStatus.Success ||
       item.status === GenerationItemStatus.Failed);
   }
 
-  const anyGenerationItemFailed = () => {
-    return generationItems.some(item => item.status === GenerationItemStatus.Failed);
-  }
+  const anyGenerationItemFailed = () => generationItems.some(item => item.status === GenerationItemStatus.Failed);
 
-  const generationTemplatesIsSuccess = () => {
-    return generationItems.some(item => item.id === "templates" && item.status === GenerationItemStatus.Success);
-  }
+  const getGenerationTemplatesItem = () => generationItems.find(item => item.id === "templates") as GenerationItem;  
 
-  const generationTemplatesIsInProgress = () => {
-    return generationItems.some(item => item.id === "templates" && item.status === GenerationItemStatus.Generating);
-  }
+  const getGenerationServices = () => generationItems.filter(item => item.id !== getGenerationTemplatesItem().id);
 
-  const generationTemplatesIsFailed = () => {
-    return generationItems.some(item => item.id === "templates" && item.status === GenerationItemStatus.Failed);
-  }  
+  const generationTemplatesIsSuccess = () => getGenerationTemplatesItem().status === GenerationItemStatus.Success;
 
-  const anyGenerationServiceInProgress = () => {
-    return generationItems.some(item => item.id !== "templates" && item.status === GenerationItemStatus.Generating);
-  }
+  const generationTemplatesIsInProgress = () => getGenerationTemplatesItem().status === GenerationItemStatus.Generating;
+
+  const generationTemplatesIsFailed = () => getGenerationTemplatesItem().status === GenerationItemStatus.Failed;
+
+  const anyGenerationServiceInProgress = () => getGenerationServices().some(item => item.status === GenerationItemStatus.Generating);
 
 
 
@@ -401,19 +374,22 @@ const GenerationModal = ({
             {formatMessage(messages.readMe)}
           </div>
         )}
-        
-        {generationTemplatesIsFailed() && (          
-          <div className={styles.sectionLine}>
-            {formatMessage(messages.failedToGenerate)}
-          </div>
-        )}
-        {(isCosmosSelected || isAppServiceSelected) && renderServiceError()}
+
+        {errorMessages.map((message, key) => {
+            return <div key={key} className={styles.sectionLine}>
+              {message}
+            </div>
+          })}
       </div>
 
       <div className={classnames(styles.section, styles.checkmarkSection)}>
         <div className={styles.containerWithMargin}>
         {generationItems.map((item, key) => {
-            return <GenerationItemComponent key={key} item={item} onStatusChange={onItemStatusChange} />
+            return <GenerationItemComponent
+            key={key}
+            item={item}
+            onStatusChange={onItemStatusChange}
+            onErrorMessage={onErrorMessage} />
           })}
         </div>        
       </div>

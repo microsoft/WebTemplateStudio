@@ -19,11 +19,12 @@ import { EXTENSION_COMMANDS } from "../../../utils/constants";
 interface IProps {
   item: GenerationItem;
   onStatusChange(itemId: string, newStatus: GenerationItemStatus): void;
+  onErrorMessage(itemId: string, message: string): void;
 }
 
 type Props = IProps & InjectedIntlProps;
 
-const GenerationItemComponent = ({ intl, item, onStatusChange }: Props) => {
+const GenerationItemComponent = ({ intl, item, onStatusChange, onErrorMessage }: Props) => {
   const { formatMessage } = intl;
   const { vscode } = React.useContext(AppContext);
   const [status, setStatus] = React.useState(item.status);
@@ -34,6 +35,9 @@ const GenerationItemComponent = ({ intl, item, onStatusChange }: Props) => {
 
       if (message.command === EXTENSION_COMMANDS.GEN_STATUS && message.payload.name === item.id) {
         setStatus(message.payload.status);
+        if (message.payload.message) {
+          onErrorMessage(item.id, message.payload.message);
+        }
       }
     }
 
