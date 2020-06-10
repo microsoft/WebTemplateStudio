@@ -9,13 +9,7 @@ import styles from "./styles.module.css";
 
 import { GenerationItem, GenerationItemStatus } from "../../types/generationStatus";
 import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
-import {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
-  KEY_EVENTS,
-  WEB_TEMPLATE_STUDIO_LINKS,
-  TELEMETRY,
-} from "../../utils/constants";
+import { EXTENSION_COMMANDS, KEY_EVENTS, WEB_TEMPLATE_STUDIO_LINKS, TELEMETRY } from "../../utils/constants";
 
 import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";
@@ -24,7 +18,7 @@ import { strings as messages } from "./strings";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
-import { sendTelemetry, generateProject } from "../../utils/extensionService/extensionService";
+import { sendTelemetry, generateProject, openProjectInVSCode } from "../../utils/extensionService/extensionService";
 import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
 import { getGenerationData } from "../../store/userSelection/app/selector";
@@ -55,11 +49,9 @@ const GenerationModal = ({ intl }: Props) => {
   const frontendOptions = useSelector((state: AppState) => state.templates.frontendOptions);
   const backendOptions = useSelector((state: AppState) => state.templates.backendOptions);
 
-  React.useEffect(() => {
-    generateProject(generationData, vscode);
-  }, []);
+  const closeModalAndCreateNewProject = (param: any) => {
+    trackCreateNewProjectTelemetry(param);
 
-  const reset = () => {
     dispatch(resetWizardAction());
     const defaultOptionFront: IOption = frontendOptions[0];
     const defaultSelectedFrontEndFramework = {
@@ -85,55 +77,26 @@ const GenerationModal = ({ intl }: Props) => {
     }, 1000);
   };
 
-  const handleOpenProjectOrRestartWizard = () => {
-    if (generationTemplatesIsFailed()) {
-      reset();
-      return;
-    }
-    if (generationTemplatesIsSuccess()) {
-      const fullpath = outputPath;
-      vscode.postMessage({
-        module: EXTENSION_MODULES.GENERATE,
-        command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
-        track: true,
-        payload: {
-          outputPath: fullpath,
-        },
-      });
-    }
-  };
-
-  const openProjectOrRestartWizardMessage = () => {
-    if (generationTemplatesIsFailed()) {
-      return formatMessage(messages.restartWizard);
-    }
-    return formatMessage(messages.openInCode);
-  };
-
-  const closeModalAndCreateAnotherProject = (param: any) => {
-    trackCreateNewProjectTelemetry(param);
-    reset();
-  };
-
   const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
-      closeModalAndCreateAnotherProject({ fromCloseButton: true });
+      closeModalAndCreateNewProject({ fromCloseButton: true });
     }
   };
 
   const trackCreateNewProjectTelemetry = ({ fromCloseButton, fromCreateNewProjectButton }: any) => {
-    let entryPoint = "";
-
     if (fromCloseButton) {
-      entryPoint = TELEMETRY.CLOSE_GENERATION_MODAL_BUTTON;
+      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, {
+        entryPoint: TELEMETRY.CLOSE_GENERATION_MODAL_BUTTON,
+      });
     }
 
     if (fromCreateNewProjectButton) {
-      entryPoint = TELEMETRY.CREATE_NEW_PROJECT_BUTTON;
+      sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, {
+        entryPoint: TELEMETRY.CREATE_NEW_PROJECT_BUTTON,
+      });
     }
-    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, { entryPoint });
   };
 
   const initialGenerationItems = () => {
@@ -173,6 +136,7 @@ const GenerationModal = ({ intl }: Props) => {
     }
 
     setGenerationItems(items);
+    generateProject(generationData, vscode);
   }, []);
 
   React.useEffect(() => {
@@ -229,7 +193,7 @@ const GenerationModal = ({ intl }: Props) => {
           <Close
             tabIndex={0}
             className={styles.closeIcon}
-            onClick={() => closeModalAndCreateAnotherProject({ fromCloseButton: true })}
+            onClick={() => closeModalAndCreateNewProject({ fromCloseButton: true })}
             onKeyDown={closeKeyDownHandler}
           />
         )}
@@ -265,7 +229,7 @@ const GenerationModal = ({ intl }: Props) => {
       </div>
 
       <div className={styles.footerContainer}>
-        {isGenerationFinished() && anyGenerationItemFailed() && (
+        {anyGenerationItemFailed() && (
           <a className={styles.link} href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES} onKeyUp={keyUpHandler}>
             {formatMessage(messages.help)}
           </a>
@@ -275,24 +239,24 @@ const GenerationModal = ({ intl }: Props) => {
           <button
             className={classnames(styles.button, {
               [buttonStyles.buttonDark]: generationTemplatesIsSuccess(),
-              [buttonStyles.buttonHighlighted]: !generationTemplatesIsSuccess(),
+              [buttonStyles.buttonHighlighted]: generationTemplatesIsFailed(),
             })}
-            onClick={() => closeModalAndCreateAnotherProject({ fromCreateNewProjectButton: true })}
+            onClick={() => closeModalAndCreateNewProject({ fromCreateNewProjectButton: true })}
           >
             {formatMessage(messages.createAnotherProject)}
           </button>
         )}
 
-        {(generationTemplatesIsInProgress() || generationTemplatesIsSuccess()) && (
+        {!generationTemplatesIsFailed() && (
           <button
             className={classnames(styles.button, {
               [buttonStyles.buttonDark]: generationTemplatesIsInProgress(),
               [buttonStyles.buttonHighlighted]: generationTemplatesIsSuccess(),
             })}
-            onClick={handleOpenProjectOrRestartWizard}
+            onClick={() => openProjectInVSCode(outputPath, vscode)}
             disabled={!generationTemplatesIsSuccess()}
           >
-            {openProjectOrRestartWizardMessage()}
+            {formatMessage(messages.openInCode)}
           </button>
         )}
       </div>
