@@ -124,12 +124,7 @@ const GenerationModal = ({
   },[])
 
   React.useEffect(()=>{
-    window.removeEventListener("message",eventCallback);
-  },[isModalOpen]);
-
-  React.useEffect(()=>{
     generateProject(generationData, vscode);
-    addMessageEventsFromExtension();
   },[]);
 
   function getInitialServiceStatus(){
@@ -149,21 +144,6 @@ const GenerationModal = ({
     };
   }
 
-  function eventCallback(event: any) {
-    const message = event.data;
-    switch (message.command) {
-      case EXTENSION_COMMANDS.GEN_STATUS_MESSAGE:
-        setTemplateGenStatus(message.payload.status);
-        break;
-      case EXTENSION_COMMANDS.GEN_STATUS:
-        setGenerationStatus(message.payload);
-        break;
-    }
-  };
-
-  function addMessageEventsFromExtension(){
-    window.addEventListener("message", eventCallback);
-  }
 
   const reset= () => {
     dispatch(resetWizardAction());
@@ -309,9 +289,13 @@ const GenerationModal = ({
     setGenerationItems(newList);
   }
 
-  const onErrorMessage = (itemId: string, message: string) => {
+  const onErrorMessage = (message: string) => {
     const newErrorMessages = [...errorMessages, message];
     setErrorMessages([...new Set(newErrorMessages)]);
+  }
+
+  const onStatusMessage = (message: string) => {
+    setTemplateGenStatus(message);
   }
 
   const isGenerationFinished = () => {
@@ -329,8 +313,6 @@ const GenerationModal = ({
   const generationTemplatesIsSuccess = () => getGenerationTemplatesItem().status === GenerationItemStatus.Success;
 
   const generationTemplatesIsInProgress = () => getGenerationTemplatesItem().status === GenerationItemStatus.Generating;
-
-  const generationTemplatesIsFailed = () => getGenerationTemplatesItem().status === GenerationItemStatus.Failed;
 
   const anyGenerationServiceInProgress = () => getGenerationServices().some(item => item.status === GenerationItemStatus.Generating);
 
@@ -389,7 +371,8 @@ const GenerationModal = ({
             key={key}
             item={item}
             onStatusChange={onItemStatusChange}
-            onErrorMessage={onErrorMessage} />
+            onErrorMessage={onErrorMessage}
+            onStatusMessage={onStatusMessage} />
           })}
         </div>        
       </div>
