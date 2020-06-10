@@ -1,25 +1,20 @@
 import classnames from "classnames";
 import * as React from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
-import ReactMarkdown from "react-markdown";
-import { ReactComponent as Checkmark } from "../../assets/checkgreen.svg";
-import { ReactComponent as ErrorRed } from "../../assets/errorred.svg";
 import { ReactComponent as Close } from "../../assets/cancel.svg";
-
 import asModal from "../../components/Modal";
-import { ReactComponent as Spinner } from "../../assets/spinner.svg";
 
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import {IAzureServiceStatus, GenerationItem, GenerationItemStatus} from "../../types/generationStatus";
+import { GenerationItem, GenerationItemStatus } from "../../types/generationStatus";
 import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
 import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   KEY_EVENTS,
   WEB_TEMPLATE_STUDIO_LINKS,
-  TELEMETRY
+  TELEMETRY,
 } from "../../utils/constants";
 
 import { AppState } from "../../store/combineReducers";
@@ -29,123 +24,42 @@ import { strings as messages } from "./strings";
 import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
-import { sendTelemetry, generateProject, openLogFile } from "../../utils/extensionService/extensionService";
+import { sendTelemetry, generateProject } from "../../utils/extensionService/extensionService";
 import { resetWizardAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
 import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";
-import { setSelectedFrontendFrameworkAction, setSelectedBackendFrameworkAction } from "../../store/userSelection/frameworks/action";
+import {
+  setSelectedFrontendFrameworkAction,
+  setSelectedBackendFrameworkAction,
+} from "../../store/userSelection/frameworks/action";
 import { IOption } from "../../types/option";
 import GenerationItemComponent from "./GenerationItemComponent";
-
-
-
-
-interface LinksDict {
-  [serviceId: string]: string;
-}
-const links: LinksDict = {
-  "Cosmos DB":
-    "[View](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts)",
-  "App Service":
-    "[View](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites)"
-};
 
 interface IStateProps {
   isModalOpen: boolean;
 }
 
-type Props = IStateProps &
-  InjectedIntlProps;
+type Props = IStateProps & InjectedIntlProps;
 
-const GenerationModal = ({
-  intl, isModalOpen
-}: Props) => {
+const GenerationModal = ({ intl }: Props) => {
   const { formatMessage } = intl;
   const { vscode } = React.useContext(AppContext);
   const dispatch = useDispatch();
 
   const [templateGenStatus, setTemplateGenStatus] = React.useState("");
-  const [generationStatus, setGenerationStatus] = React.useState<any>({});
-  const [isTemplateGenerated, setIsTemplateGenerated] = React.useState(false);
-  const [isTemplatesFailed, setIsTemplatesFailed] = React.useState(false);
-  const [isServicesDeployed, setIsServicesDeployed] = React.useState(false);
-  const [isServiceFailed, setIsServiceFailed] = React.useState(false);
-  const [showCreateNewProject, setShowCreateNewProject] = React.useState(false);
-  
-  const [templateGenerated, setTemplateGenerated] = React.useState(false);
-  const [templateGenerationInProgress, setTemplateGenerationInProgress] = React.useState(false);
-
   const generationData = useSelector(getGenerationData);
-  const cosmos = useSelector(getCosmosDB);
-  const isCosmosSelected = cosmos !== null;
-  const appService = useSelector(getAppService);
-  const isAppServiceSelected = appService !== null;
+  const isCosmosSelected = useSelector(getCosmosDB) !== null;
+  const isAppServiceSelected = useSelector(getAppService) !== null;
   const outputPath = useSelector((state: AppState) => getOutputPath(state));
-  const [isServicesSelected, setIsServicesSelected] = React.useState(false);
-  const [serviceStatus, setServiceStatus] = React.useState<IAzureServiceStatus>(getInitialServiceStatus());
   const frontendOptions = useSelector((state: AppState) => state.templates.frontendOptions);
   const backendOptions = useSelector((state: AppState) => state.templates.backendOptions);
 
-  React.useEffect(()=>{
-    const localServiceStatus = getInitialServiceStatus();
-    if (generationStatus.templates){
-      if (isCosmosSelected && generationStatus.cosmos.success !== undefined){
-        localServiceStatus.cosmosdb.isDeployed = generationStatus.cosmos.success;
-        localServiceStatus.cosmosdb.isFailed = generationStatus.cosmos.failure;
-      }
-
-      if (isAppServiceSelected && generationStatus.appService.success !== undefined){
-        localServiceStatus.appService.isDeployed = generationStatus.appService.success;
-        localServiceStatus.appService.isFailed = generationStatus.appService.failure;
-      }
-
-      setIsServiceFailed(localServiceStatus.cosmosdb.isFailed || localServiceStatus.appService.isFailed);
-      setIsServicesDeployed(isCosmosSelected && !isAppServiceSelected && localServiceStatus.cosmosdb.isDeployed || 
-        !isCosmosSelected && isAppServiceSelected && localServiceStatus.appService.isDeployed ||
-        isCosmosSelected && isAppServiceSelected && (localServiceStatus.cosmosdb.isDeployed && localServiceStatus.appService.isDeployed));
-
-      setServiceStatus(localServiceStatus);
-
-      setIsTemplateGenerated(generationStatus.templates.success);
-      setIsTemplatesFailed(generationStatus.templates.failure);
-
-      setShowCreateNewProject(generationStatus.finished);
-    }
-  },[generationStatus]);
-
-  React.useEffect(()=>{
-    setTemplateGenerated(isTemplateGenerated && !isTemplatesFailed);
-    setTemplateGenerationInProgress(!isTemplateGenerated && !isTemplatesFailed);
-  },[isTemplateGenerated, isTemplatesFailed]);
-
-  React.useEffect(()=>{
-    setIsServicesSelected(isCosmosSelected || isAppServiceSelected);
-  },[])
-
-  React.useEffect(()=>{
+  React.useEffect(() => {
     generateProject(generationData, vscode);
-  },[]);
+  }, []);
 
-  function getInitialServiceStatus(){
-    return {
-      "cosmosdb":{
-        "title":messages.cosmosDbTitle,
-        "isSelected":isCosmosSelected,
-        "isDeployed":false,
-        "isFailed":false
-      },
-      "appService":
-        {"title":messages.appServiceTitle,
-        "isSelected":isAppServiceSelected,
-        "isDeployed":false,
-        "isFailed":false
-      }
-    };
-  }
-
-
-  const reset= () => {
+  const reset = () => {
     dispatch(resetWizardAction());
     const defaultOptionFront: IOption = frontendOptions[0];
     const defaultSelectedFrontEndFramework = {
@@ -162,35 +76,35 @@ const GenerationModal = ({
       internalName: defaultOptionBack.internalName,
       version: `v${defaultOptionBack.version || "1.0"}`,
       author: defaultOptionBack.author,
-      licenses: defaultOptionBack.licenses
+      licenses: defaultOptionBack.licenses,
     };
 
-    setTimeout(()=>{
+    setTimeout(() => {
       dispatch(setSelectedFrontendFrameworkAction(defaultSelectedFrontEndFramework));
       dispatch(setSelectedBackendFrameworkAction(defaultSelectedBackEndFramework));
-    },1000)
-  }
+    }, 1000);
+  };
 
   const handleOpenProjectOrRestartWizard = () => {
-    if (isTemplatesFailed) {
+    if (generationTemplatesIsFailed()) {
       reset();
       return;
     }
-    if (isTemplateGenerated) {
+    if (generationTemplatesIsSuccess()) {
       const fullpath = outputPath;
       vscode.postMessage({
         module: EXTENSION_MODULES.GENERATE,
         command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
         track: true,
         payload: {
-          outputPath:fullpath
-        }
+          outputPath: fullpath,
+        },
       });
     }
   };
 
   const openProjectOrRestartWizardMessage = () => {
-    if (isTemplatesFailed) {
+    if (generationTemplatesIsFailed()) {
       return formatMessage(messages.restartWizard);
     }
     return formatMessage(messages.openInCode);
@@ -205,185 +119,154 @@ const GenerationModal = ({
     if (event.key === KEY_EVENTS.ENTER || event.key === KEY_EVENTS.SPACE) {
       event.preventDefault();
       event.stopPropagation();
-      closeModalAndCreateAnotherProject({ fromCloseButton:true });
+      closeModalAndCreateAnotherProject({ fromCloseButton: true });
     }
   };
 
-  const trackCreateNewProjectTelemetry = ({ fromCloseButton, fromCreateNewProjectButton }: any) => 
-  {
-    let entryPoint = '';
+  const trackCreateNewProjectTelemetry = ({ fromCloseButton, fromCreateNewProjectButton }: any) => {
+    let entryPoint = "";
 
-    if (fromCloseButton){
+    if (fromCloseButton) {
       entryPoint = TELEMETRY.CLOSE_GENERATION_MODAL_BUTTON;
     }
 
-    if (fromCreateNewProjectButton){
+    if (fromCreateNewProjectButton) {
       entryPoint = TELEMETRY.CREATE_NEW_PROJECT_BUTTON;
     }
-    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, {entryPoint});
-  }
+    sendTelemetry(vscode, EXTENSION_COMMANDS.TRACK_CREATE_NEW_PROJECT, { entryPoint });
+  };
 
-
-
-
-
-
-
-
-
-
-
-
-  
   const initialGenerationItems = () => {
     const items: GenerationItem[] = [
       {
         id: "templates",
         status: GenerationItemStatus.Stopped,
-        title: formatMessage(messages.projectCreation)
-      }
-    ]
+        title: formatMessage(messages.projectCreation),
+      },
+    ];
     return items;
-  }
+  };
 
   const [generationItems, setGenerationItems] = React.useState(initialGenerationItems);
   const [errorMessages, setErrorMessages] = React.useState<string[]>([]);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     const items: GenerationItem[] = [...generationItems];
 
-    if(isAppServiceSelected) {
+    if (isAppServiceSelected) {
       items.push({
         id: "appService",
         status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.appServiceTitle),
         link: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites",
-      })
+      });
     }
 
-    if(isCosmosSelected) {
+    if (isCosmosSelected) {
       items.push({
         id: "cosmosDB",
         status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.cosmosDbTitle),
-        link: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts"
-      })
+        link:
+          "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts",
+      });
     }
 
     setGenerationItems(items);
-  },[]);
+  }, []);
 
-  React.useEffect(()=> {
-    if(anyGenerationServiceInProgress()) {
+  React.useEffect(() => {
+    if (anyGenerationServiceInProgress()) {
       setTemplateGenStatus(formatMessage(messages.generationCompleteWithAzure));
     }
-  },[generationItems]);
+  }, [generationItems]);
 
   const onItemStatusChange = (itemId: string, newStatus: GenerationItemStatus) => {
     const newList = generationItems.map((item) => {
       if (item.id === itemId) {
-        return {...item, status: newStatus}; 
+        return { ...item, status: newStatus };
       }
       return item;
-    }); 
+    });
     setGenerationItems(newList);
-  }
+  };
 
   const onErrorMessage = (message: string) => {
     const newErrorMessages = [...errorMessages, message];
     setErrorMessages([...new Set(newErrorMessages)]);
-  }
+  };
 
   const onStatusMessage = (message: string) => {
     setTemplateGenStatus(message);
-  }
+  };
 
   const isGenerationFinished = () => {
-    return generationItems.every(item => 
-      item.status === GenerationItemStatus.Success ||
-      item.status === GenerationItemStatus.Failed);
-  }
+    return generationItems.every(
+      (item) => item.status === GenerationItemStatus.Success || item.status === GenerationItemStatus.Failed
+    );
+  };
 
-  const anyGenerationItemFailed = () => generationItems.some(item => item.status === GenerationItemStatus.Failed);
+  const anyGenerationItemFailed = () => generationItems.some((item) => item.status === GenerationItemStatus.Failed);
 
-  const getGenerationTemplatesItem = () => generationItems.find(item => item.id === "templates") as GenerationItem;  
+  const getGenerationTemplatesItem = () => generationItems.find((item) => item.id === "templates") as GenerationItem;
 
-  const getGenerationServices = () => generationItems.filter(item => item.id !== getGenerationTemplatesItem().id);
+  const getGenerationServices = () => generationItems.filter((item) => item.id !== getGenerationTemplatesItem().id);
 
   const generationTemplatesIsSuccess = () => getGenerationTemplatesItem().status === GenerationItemStatus.Success;
 
   const generationTemplatesIsInProgress = () => getGenerationTemplatesItem().status === GenerationItemStatus.Generating;
 
-  const anyGenerationServiceInProgress = () => getGenerationServices().some(item => item.status === GenerationItemStatus.Generating);
+  const generationTemplatesIsFailed = () => getGenerationTemplatesItem().status === GenerationItemStatus.Failed;
 
-
-
-
-
-
-
-
-
-
-
-
-
+  const anyGenerationServiceInProgress = () =>
+    getGenerationServices().some((item) => item.status === GenerationItemStatus.Generating);
 
   return (
     <div>
       <div className={styles.headerContainer}>
-        <div className={styles.title}>
-          {formatMessage(messages.creatingYourProject)}
-        </div>
+        <div className={styles.title}>{formatMessage(messages.creatingYourProject)}</div>
         {isGenerationFinished() && (
           <Close
             tabIndex={0}
             className={styles.closeIcon}
-            onClick={() => closeModalAndCreateAnotherProject({ fromCloseButton:true })}
+            onClick={() => closeModalAndCreateAnotherProject({ fromCloseButton: true })}
             onKeyDown={closeKeyDownHandler}
           />
         )}
       </div>
 
       <div className={styles.section}>
-        {!isGenerationFinished() && (
-          <div className={styles.sectionLine}>
-            {templateGenStatus}
-          </div>
-        )}
-        {generationTemplatesIsSuccess() && (
-          <div className={styles.sectionLine}>
-            {formatMessage(messages.readMe)}
-          </div>
-        )}
+        {!isGenerationFinished() && <div className={styles.sectionLine}>{templateGenStatus}</div>}
+        {generationTemplatesIsSuccess() && <div className={styles.sectionLine}>{formatMessage(messages.readMe)}</div>}
 
         {errorMessages.map((message, key) => {
-            return <div key={key} className={styles.sectionLine}>
+          return (
+            <div key={key} className={styles.sectionLine}>
               {message}
             </div>
-          })}
+          );
+        })}
       </div>
 
       <div className={classnames(styles.section, styles.checkmarkSection)}>
         <div className={styles.containerWithMargin}>
-        {generationItems.map((item, key) => {
-            return <GenerationItemComponent
-            key={key}
-            item={item}
-            onStatusChange={onItemStatusChange}
-            onErrorMessage={onErrorMessage}
-            onStatusMessage={onStatusMessage} />
+          {generationItems.map((item, key) => {
+            return (
+              <GenerationItemComponent
+                key={key}
+                item={item}
+                onStatusChange={onItemStatusChange}
+                onErrorMessage={onErrorMessage}
+                onStatusMessage={onStatusMessage}
+              />
+            );
           })}
-        </div>        
+        </div>
       </div>
 
       <div className={styles.footerContainer}>
         {isGenerationFinished() && anyGenerationItemFailed() && (
-          <a
-            className={styles.link}
-            href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES}
-            onKeyUp={keyUpHandler}
-          >
+          <a className={styles.link} href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES} onKeyUp={keyUpHandler}>
             {formatMessage(messages.help)}
           </a>
         )}
@@ -392,9 +275,9 @@ const GenerationModal = ({
           <button
             className={classnames(styles.button, {
               [buttonStyles.buttonDark]: generationTemplatesIsSuccess(),
-              [buttonStyles.buttonHighlighted]: !generationTemplatesIsSuccess()
+              [buttonStyles.buttonHighlighted]: !generationTemplatesIsSuccess(),
             })}
-            onClick={() => closeModalAndCreateAnotherProject({ fromCreateNewProjectButton:true })}
+            onClick={() => closeModalAndCreateAnotherProject({ fromCreateNewProjectButton: true })}
           >
             {formatMessage(messages.createAnotherProject)}
           </button>
@@ -404,7 +287,7 @@ const GenerationModal = ({
           <button
             className={classnames(styles.button, {
               [buttonStyles.buttonDark]: generationTemplatesIsInProgress(),
-              [buttonStyles.buttonHighlighted]: generationTemplatesIsSuccess()
+              [buttonStyles.buttonHighlighted]: generationTemplatesIsSuccess(),
             })}
             onClick={handleOpenProjectOrRestartWizard}
             disabled={!generationTemplatesIsSuccess()}
@@ -421,7 +304,4 @@ const mapStateToProps = (state: AppState): IStateProps => ({
   isModalOpen: isGenModalOpenSelector(state),
 });
 
-export default 
-  connect(
-    mapStateToProps
-  )(asModal(injectIntl(GenerationModal), NAVIGATION_MODAL_TYPES.GEN_MODAL));
+export default connect(mapStateToProps)(asModal(injectIntl(GenerationModal), NAVIGATION_MODAL_TYPES.GEN_MODAL));
