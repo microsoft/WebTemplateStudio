@@ -7,7 +7,7 @@ import asModal from "../../components/Modal";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import { GenerationItem, GenerationItemStatus } from "../../types/generationStatus";
+import { GenerationItem, GenerationItemStatus, GENERATION_NAMES } from "../../types/generationStatus";
 import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
 import { EXTENSION_COMMANDS, KEY_EVENTS, WEB_TEMPLATE_STUDIO_LINKS, TELEMETRY } from "../../utils/constants";
 
@@ -102,7 +102,7 @@ const GenerationModal = ({ intl }: Props) => {
   const initialGenerationItems = () => {
     const items: GenerationItem[] = [
       {
-        name: "templates",
+        name: GENERATION_NAMES.TEMPLATES,
         status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.projectCreation),
       },
@@ -118,7 +118,7 @@ const GenerationModal = ({ intl }: Props) => {
 
     if (isAppServiceSelected) {
       items.push({
-        name: "appService",
+        name: GENERATION_NAMES.APP_SERVICE,
         status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.appServiceTitle),
         link: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites",
@@ -127,7 +127,7 @@ const GenerationModal = ({ intl }: Props) => {
 
     if (isCosmosSelected) {
       items.push({
-        name: "cosmosDB",
+        name: GENERATION_NAMES.COSMOS_DB,
         status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.cosmosDbTitle),
         link:
@@ -156,8 +156,7 @@ const GenerationModal = ({ intl }: Props) => {
   };
 
   const onErrorMessage = (message: string) => {
-    const newErrorMessages = [...errorMessages, message];
-    setErrorMessages([...new Set(newErrorMessages)]);
+    setErrorMessages(messages => [...new Set([...messages, message])]);
   };
 
   const onStatusMessage = (message: string) => {
@@ -172,7 +171,7 @@ const GenerationModal = ({ intl }: Props) => {
 
   const anyGenerationItemFailed = () => generationItems.some((item) => item.status === GenerationItemStatus.Failed);
 
-  const getGenerationTemplatesItem = () => generationItems.find((item) => item.name === "templates") as GenerationItem;
+  const getGenerationTemplatesItem = () => generationItems.find((item) => item.name === GENERATION_NAMES.TEMPLATES) as GenerationItem;
 
   const getGenerationServices = () => generationItems.filter((item) => item.name !== getGenerationTemplatesItem().name);
 

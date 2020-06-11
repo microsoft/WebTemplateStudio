@@ -1,5 +1,5 @@
 import { EXTENSION_COMMANDS } from "../../utils/constants";
-import { GenerationItemStatus } from "../../types/generationStatus";
+import { GenerationItemStatus, GENERATION_NAMES } from "../../types/generationStatus";
 
 const wait = (m: number) => new Promise((r) => setTimeout(r, m));
 
@@ -12,10 +12,10 @@ const generate = async (message: any) => {
 
   //Simulate generation services
   if (services.appService) {
-    servicesQueue.push(mockGenerateSuccess("appService", 1000));
+    servicesQueue.push(mockGenerateSuccess(GENERATION_NAMES.APP_SERVICE, 1000));
   }
   if (services.cosmosDB) {
-    servicesQueue.push(mockGenerateFailed("cosmosDB", 2500, "ERROR: CosmosDB failed to deploy"));
+    servicesQueue.push(mockGenerateFailed(GENERATION_NAMES.COSMOS_DB, 2500, "ERROR: CosmosDB failed to deploy"));
   }
 
   await Promise.all(servicesQueue);
@@ -26,17 +26,16 @@ const openProjectVSCode = (message: any) => {
 };
 
 const mockGenerateTemplates = async (pages: any[]) => {
-  const name = "templates";
 
-  sendGenerationStatus(name, GenerationItemStatus.Generating);
+  sendGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating);
 
   for (const page of pages) {
     const message = `create page ${page.name}`;
-    sendGenerationStatus(name, GenerationItemStatus.Generating, message);
+    sendGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating, message);
     await wait(300);
   }  
 
-  sendGenerationStatus(name, GenerationItemStatus.Success);
+  sendGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Success);
 };
 
 const sendGenerationStatus = (name: string, status: GenerationItemStatus, message?: string) => {

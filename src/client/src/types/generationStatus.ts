@@ -1,26 +1,10 @@
-import { FormattedMessage } from "react-intl";
 
-export interface IStatus {
-  success: boolean;
-  failure: boolean;
-}
 
-export interface IServiceStatus {
-  [key: string]: IStatus;
-}
-
-export interface IDeployStatus {
-  title: FormattedMessage.MessageDescriptor;
-  isSelected: boolean;
-  isDeployed: boolean;
-  isFailed: boolean;
-}
-
-export interface IAzureServiceStatus {
-  [key: string]: IDeployStatus;
-  cosmosdb: IDeployStatus;
-  appService: IDeployStatus;
-}
+export const GENERATION_NAMES = {
+  TEMPLATES: "templates",
+  APP_SERVICE: "appService",
+  COSMOS_DB: "cosmosDB",
+};
 
 export enum GenerationItemStatus {
   Stopped = "Stopped",
