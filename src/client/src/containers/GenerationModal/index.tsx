@@ -102,7 +102,7 @@ const GenerationModal = ({ intl }: Props) => {
   const initialGenerationItems = () => {
     const items: GenerationItem[] = [
       {
-        id: "templates",
+        name: "templates",
         status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.projectCreation),
       },
@@ -118,7 +118,7 @@ const GenerationModal = ({ intl }: Props) => {
 
     if (isAppServiceSelected) {
       items.push({
-        id: "appService",
+        name: "appService",
         status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.appServiceTitle),
         link: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites",
@@ -127,7 +127,7 @@ const GenerationModal = ({ intl }: Props) => {
 
     if (isCosmosSelected) {
       items.push({
-        id: "cosmosDB",
+        name: "cosmosDB",
         status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.cosmosDbTitle),
         link:
@@ -145,9 +145,9 @@ const GenerationModal = ({ intl }: Props) => {
     }
   }, [generationItems]);
 
-  const onItemStatusChange = (itemId: string, newStatus: GenerationItemStatus) => {
+  const onItemStatusChange = (name: string, newStatus: GenerationItemStatus) => {
     const newList = generationItems.map((item) => {
-      if (item.id === itemId) {
+      if (item.name === name) {
         return { ...item, status: newStatus };
       }
       return item;
@@ -172,9 +172,9 @@ const GenerationModal = ({ intl }: Props) => {
 
   const anyGenerationItemFailed = () => generationItems.some((item) => item.status === GenerationItemStatus.Failed);
 
-  const getGenerationTemplatesItem = () => generationItems.find((item) => item.id === "templates") as GenerationItem;
+  const getGenerationTemplatesItem = () => generationItems.find((item) => item.name === "templates") as GenerationItem;
 
-  const getGenerationServices = () => generationItems.filter((item) => item.id !== getGenerationTemplatesItem().id);
+  const getGenerationServices = () => generationItems.filter((item) => item.name !== getGenerationTemplatesItem().name);
 
   const generationTemplatesIsSuccess = () => getGenerationTemplatesItem().status === GenerationItemStatus.Success;
 

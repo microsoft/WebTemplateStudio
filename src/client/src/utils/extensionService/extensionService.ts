@@ -228,6 +228,14 @@ const openProjectInVSCode = (outputPath: string, vscode: IVSCodeObject) => {
   });
 }
 
+const subscribeToExtensionEvents = (listener: any) => {
+  window.addEventListener("message", listener);
+}
+
+const unsubscribeToExtensionEvents = (listener: any) => {
+  window.removeEventListener("message", listener);
+}
+
 export {
   projectPathValidation,
   getValidationsConfig,
@@ -250,5 +258,7 @@ export {
   generateProject,
   sendLog,
   openLogFile,
-  openProjectInVSCode
+  openProjectInVSCode,
+  subscribeToExtensionEvents,
+  unsubscribeToExtensionEvents
 }

@@ -11,7 +11,11 @@ import keyUpHandler from "../../../utils/keyUpHandler";
 import { ReactComponent as Spinner } from "../../../assets/spinner.svg";
 import { ReactComponent as Checkmark } from "../../../assets/checkgreen.svg";
 import { ReactComponent as ErrorRed } from "../../../assets/errorred.svg";
-import { openLogFile } from "../../../utils/extensionService/extensionService";
+import {
+  openLogFile,
+  subscribeToExtensionEvents,
+  unsubscribeToExtensionEvents,
+} from "../../../utils/extensionService/extensionService";
 import { AppContext } from "../../../AppContext";
 import { useEffect } from "react";
 import { EXTENSION_COMMANDS } from "../../../utils/constants";
@@ -31,30 +35,32 @@ const GenerationItemComponent = ({ intl, item, onStatusChange, onErrorMessage, o
   const [status, setStatus] = React.useState(item.status);
 
   useEffect(() => {
-    function eventCallback(event: any) {
-      const message = event.data;
+    function getGenerationEvents(event: any) {
+      const { command } = event.data;
+      const { name, status, message } = event.data.payload;
 
-      if (message.payload.name === item.id && message.command === EXTENSION_COMMANDS.GEN_STATUS) {
-        setStatus(message.payload.status);
-        if (message.payload.message) {
-          onErrorMessage(message.payload.message);
+      if (command === EXTENSION_COMMANDS.GEN_STATUS && name === item.name) {
+        setStatus(status);
+        
+        if (message) {
+          if (status === GenerationItemStatus.Failed) {
+            onErrorMessage(message);
+          } else {
+            onStatusMessage(message);
+          }
         }
-      }
-
-      if (message.command === EXTENSION_COMMANDS.GEN_STATUS_MESSAGE) {
-        onStatusMessage(message.payload.status);
       }
     }
 
-    window.addEventListener("message", eventCallback);
+    subscribeToExtensionEvents(getGenerationEvents);
     return () => {
-      window.removeEventListener("message", eventCallback);
+      unsubscribeToExtensionEvents(getGenerationEvents);
     };
   }, []);
 
   useEffect(() => {
     if (status !== item.status) {
-      onStatusChange(item.id, status);
+      onStatusChange(item.name, status);
     }
   }, [status]);
 
