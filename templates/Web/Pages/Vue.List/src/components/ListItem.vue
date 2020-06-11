@@ -27,7 +27,7 @@ export default {
       type: Object,
       required: true,
       validator: function(value) {
-        return value.text !== undefined && value._id !== undefined;
+        return value.text !== undefined && value.id !== undefined;
       }
     }
   }

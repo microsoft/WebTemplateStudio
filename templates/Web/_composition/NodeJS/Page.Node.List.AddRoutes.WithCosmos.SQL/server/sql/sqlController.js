@@ -14,7 +14,7 @@ module.exports = class SQLController {
   // Find all items from the ListItem container in Cosmos Core SQL List database
   async get(req, res, next) {
     const querySpec = {
-      query: "SELECT r.id as _id, r.text FROM root r ORDER BY r._ts DESC",
+      query: "SELECT r.id as id, r.text FROM root r ORDER BY r._ts DESC",
       parameters: []
     };
 
@@ -38,7 +38,7 @@ module.exports = class SQLController {
     };
     try {
       const { resource } =  await this.sqlClient.container.items.create(listItem);
-      res.json({ _id: resource.id, text: listItem.text });
+      res.json({ id: resource.id, text: listItem.text });
     } catch (error) {
       next(error);
     }
@@ -46,10 +46,10 @@ module.exports = class SQLController {
 
   // Remove an item from the ListItem container in Cosmos Core SQL List database
   async destroy(req, res, next) {
-    const { _id } = req.params;
+    const { id } = req.params;
     try {
-      await this.sqlClient.container.item(_id).delete();
-      res.json({ _id });
+      await this.sqlClient.container.item(id).delete();
+      res.json({ id });
     } catch (error) {
       next(error);
     }
