@@ -2,23 +2,23 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({ 
   showLog: {
-    id: "generationItemComponent.showLog",
+    id: "generationItem.showLog",
     defaultMessage: "Show Log"
   },
   view: {
-    id: "generationItemComponent.view",
+    id: "generationItem.view",
     defaultMessage: "View"
   },
   generationInProgress: {
-    id: "generationItemComponent.generationInProgress",
+    id: "generationItem.generationInProgress",
     defaultMessage: "{name} generation in progress"
   },
   generationSuccess: {
-    id: "generationItemComponent.generationSuccess",
+    id: "generationItem.generationSuccess",
     defaultMessage: "{name} generation Success"
   },
   generationFailed: {
-    id: "generationItemComponent.generationFailed",
+    id: "generationItem.generationFailed",
     defaultMessage: "{name} generation failed"
   },
 });

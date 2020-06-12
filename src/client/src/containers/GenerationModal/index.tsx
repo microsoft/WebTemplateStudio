@@ -29,7 +29,7 @@ import { resetWizardAction, loadAction } from "../../store/config/config/action"
 import { AppContext } from "../../AppContext";
 import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";
-import GenerationItemComponent from "./GenerationItemComponent";
+import GenerationItem from "./GenerationItem";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -167,7 +167,7 @@ const GenerationModal = ({ intl }: Props) => {
       <div className={styles.generationItems}>
         {generationItems.map((item, key) => {
           return (
-            <GenerationItemComponent
+            <GenerationItem
               key={key}
               item={item}
               onStatusChange={updateStatusInGenerationItems}

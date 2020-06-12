@@ -28,7 +28,7 @@ interface IProps {
 
 type Props = IProps & InjectedIntlProps;
 
-const GenerationItemComponent = ({ intl, item, onStatusChange, onErrorMessage, onStatusMessage }: Props) => {
+const GenerationItem = ({ intl, item, onStatusChange, onErrorMessage, onStatusMessage }: Props) => {
   const { formatMessage } = intl;
   const { vscode } = React.useContext(AppContext);
   const [status, setStatus] = React.useState(item.status);
@@ -97,4 +97,4 @@ const GenerationItemComponent = ({ intl, item, onStatusChange, onErrorMessage, o
   );
 };
 
-export default injectIntl(GenerationItemComponent);
+export default injectIntl(GenerationItem);
