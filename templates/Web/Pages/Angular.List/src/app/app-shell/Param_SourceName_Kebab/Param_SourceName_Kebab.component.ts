@@ -35,7 +35,7 @@ export class Param_SourceName_PascalComponent implements OnInit {
     );
   }
 
-  deleteItem(id: number) {
+  deleteItem(id: string) {
     this.listService.deleteListItem(id).subscribe(
       () => this.loadItems(), error => this.handleError(`Request to delete item failed: ${error}`)
     );
