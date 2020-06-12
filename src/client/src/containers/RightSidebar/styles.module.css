@@ -27,7 +27,6 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  padding-left: 18px;
   box-sizing: border-box;
 }
 
@@ -93,7 +92,7 @@
   transition: display 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
   padding: 6vh 2vh;
   border-left: 1px solid #7f7f7f;
-  width: 68px;
+  width: 45px;
 }
 
 .rightViewCroppedSummaryPage {
