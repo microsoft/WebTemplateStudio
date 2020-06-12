@@ -25,15 +25,10 @@ import { NAVIGATION_MODAL_TYPES } from "../../store/navigation/typeKeys";
 import keyUpHandler from "../../utils/keyUpHandler";
 
 import { sendTelemetry, generateProject, openProjectInVSCode } from "../../utils/extensionService/extensionService";
-import { resetWizardAction } from "../../store/config/config/action";
+import { resetWizardAction, loadAction } from "../../store/config/config/action";
 import { AppContext } from "../../AppContext";
 import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";
-import {
-  setSelectedFrontendFrameworkAction,
-  setSelectedBackendFrameworkAction,
-} from "../../store/userSelection/frameworks/action";
-import { IOption } from "../../types/option";
 import GenerationItemComponent from "./GenerationItemComponent";
 
 interface IStateProps {
@@ -65,8 +60,6 @@ const GenerationModal = ({ intl }: Props) => {
   const isCosmosSelected = useSelector(getCosmosDB) !== null;
   const isAppServiceSelected = useSelector(getAppService) !== null;
   const outputPath = useSelector((state: AppState) => getOutputPath(state));
-  const frontendOptions = useSelector((state: AppState) => state.templates.frontendOptions);
-  const backendOptions = useSelector((state: AppState) => state.templates.backendOptions);
 
   React.useEffect(() => {
     const items: GenerationItem[] = [...generationItems];
@@ -95,30 +88,8 @@ const GenerationModal = ({ intl }: Props) => {
 
   const closeModalAndCreateNewProject = (param: any) => {
     trackCreateNewProjectTelemetry(param);
-
     dispatch(resetWizardAction());
-    const defaultOptionFront: IOption = frontendOptions[0];
-    const defaultSelectedFrontEndFramework = {
-      internalName: defaultOptionFront.internalName,
-      title: defaultOptionFront.title as string,
-      version: `v${defaultOptionFront.version || "1.0"}`,
-      licenses: defaultOptionFront.licenses,
-      author: defaultOptionFront.author,
-    };
-
-    const defaultOptionBack = backendOptions[0];
-    const defaultSelectedBackEndFramework = {
-      title: defaultOptionBack.title as string,
-      internalName: defaultOptionBack.internalName,
-      version: `v${defaultOptionBack.version || "1.0"}`,
-      author: defaultOptionBack.author,
-      licenses: defaultOptionBack.licenses,
-    };
-
-    setTimeout(() => {
-      dispatch(setSelectedFrontendFrameworkAction(defaultSelectedFrontEndFramework));
-      dispatch(setSelectedBackendFrameworkAction(defaultSelectedBackEndFramework));
-    }, 1000);
+    dispatch(loadAction());
   };
 
   const closeKeyDownHandler = (event: React.KeyboardEvent<SVGSVGElement>) => {
