@@ -1,6 +1,6 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { GenerationItem, GenerationItemStatus } from "../../../types/generationStatus";
+import { GenerationItemData, GenerationItemStatus } from "../../../types/generationStatus";
 import classnames from "classnames";
 import buttonStyles from "../../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
@@ -20,7 +20,7 @@ import { useEffect } from "react";
 import { EXTENSION_COMMANDS } from "../../../utils/constants";
 
 interface IProps {
-  item: GenerationItem;
+  item: GenerationItemData;
   onStatusChange(name: string, newStatus: GenerationItemStatus): void;
   onStatusMessage(message: string): void;
   onErrorMessage(message: string): void;
@@ -65,34 +65,34 @@ const GenerationItemComponent = ({ intl, item, onStatusChange, onErrorMessage, o
 
   return (
     <div className={styles.container}>
-        <div>{item.title}</div>
-        {status === GenerationItemStatus.Generating && (
-          <div role="img" aria-label={formatMessage(messages.generationInProgress, { name: item.title })}>
-            <Spinner className={styles.spinner} />
+      <div>{item.title}</div>
+      {status === GenerationItemStatus.Generating && (
+        <div role="img" aria-label={formatMessage(messages.generationInProgress, { name: item.title })}>
+          <Spinner className={styles.spinner} />
+        </div>
+      )}
+      {status === GenerationItemStatus.Success && (
+        <div className={styles.inLine}>
+          {item.link && (
+            <a className={styles.link} href={item.link} onKeyUp={keyUpHandler}>
+              {formatMessage(messages.view)}
+            </a>
+          )}
+          <div role="img" aria-label={formatMessage(messages.generationSuccess, { name: item.title })}>
+            <Checkmark className={styles.iconCheck} />
           </div>
-        )}
-        {status === GenerationItemStatus.Success && (
-          <div className={styles.inLine}>
-            {item.link && (
-              <a className={styles.link} href={item.link} onKeyUp={keyUpHandler}>
-                {formatMessage(messages.view)}
-              </a>
-            )}
-            <div role="img" aria-label={formatMessage(messages.generationSuccess, { name: item.title })}>
-              <Checkmark className={styles.iconCheck} />
-            </div>
+        </div>
+      )}
+      {status === GenerationItemStatus.Failed && (
+        <div className={styles.inLine}>
+          <button className={classnames(buttonStyles.buttonLink, styles.link)} onClick={() => openLogFile(vscode)}>
+            {formatMessage(messages.showLog)}
+          </button>
+          <div role="img" aria-label={formatMessage(messages.generationFailed, { name: item.title })}>
+            <ErrorRed className={styles.iconError} />
           </div>
-        )}
-        {status === GenerationItemStatus.Failed && (
-          <div className={styles.inLine}>
-            <button className={classnames(buttonStyles.buttonLink, styles.link)} onClick={() => openLogFile(vscode)}>
-              {formatMessage(messages.showLog)}
-            </button>
-            <div role="img" aria-label={formatMessage(messages.generationFailed, { name: item.title })}>
-              <ErrorRed className={styles.iconError} />
-            </div>
-          </div>
-        )}
+        </div>
+      )}
     </div>
   );
 };

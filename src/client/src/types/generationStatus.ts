@@ -11,7 +11,7 @@ export enum GenerationItemStatus {
   Success = "Success"
 }
 
-export interface GenerationItem {
+export interface GenerationItemData {
   name: string;
   title: string;
   status: GenerationItemStatus;

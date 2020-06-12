@@ -7,7 +7,7 @@ import asModal from "../../components/Modal";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import { GenerationItem, GenerationItemStatus, GENERATION_NAMES } from "../../types/generationStatus";
+import { GenerationItemData, GenerationItemStatus, GENERATION_NAMES } from "../../types/generationStatus";
 import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
 import {
   EXTENSION_COMMANDS,
@@ -43,7 +43,7 @@ const GenerationModal = ({ intl }: Props) => {
   const dispatch = useDispatch();
 
   const initialGenerationItems = () => {
-    const items: GenerationItem[] = [
+    const items: GenerationItemData[] = [
       {
         name: GENERATION_NAMES.TEMPLATES,
         status: GenerationItemStatus.Stopped,
@@ -62,7 +62,7 @@ const GenerationModal = ({ intl }: Props) => {
   const outputPath = useSelector((state: AppState) => getOutputPath(state));
 
   React.useEffect(() => {
-    const items: GenerationItem[] = [...generationItems];
+    const items = [...generationItems];
 
     if (isAppServiceSelected) {
       items.push({
@@ -133,7 +133,7 @@ const GenerationModal = ({ intl }: Props) => {
   const anyGenerationItemFailed = () => generationItems.some((item) => item.status === GenerationItemStatus.Failed);
 
   const getGenerationTemplatesItem = () =>
-    generationItems.find((item) => item.name === GENERATION_NAMES.TEMPLATES) as GenerationItem;
+    generationItems.find((item) => item.name === GENERATION_NAMES.TEMPLATES) as GenerationItemData;
 
   const generationTemplatesIsSuccess = () => getGenerationTemplatesItem().status === GenerationItemStatus.Success;
 
