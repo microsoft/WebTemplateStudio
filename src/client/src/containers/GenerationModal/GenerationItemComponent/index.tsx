@@ -1,6 +1,5 @@
 import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import ReactMarkdown from "react-markdown";
 import { GenerationItem, GenerationItemStatus } from "../../../types/generationStatus";
 import classnames from "classnames";
 import buttonStyles from "../../../css/buttonStyles.module.css";
@@ -22,7 +21,7 @@ import { EXTENSION_COMMANDS } from "../../../utils/constants";
 
 interface IProps {
   item: GenerationItem;
-  onStatusChange(itemId: string, newStatus: GenerationItemStatus): void;
+  onStatusChange(name: string, newStatus: GenerationItemStatus): void;
   onStatusMessage(message: string): void;
   onErrorMessage(message: string): void;
 }
@@ -41,7 +40,7 @@ const GenerationItemComponent = ({ intl, item, onStatusChange, onErrorMessage, o
 
       if (command === EXTENSION_COMMANDS.GEN_STATUS && name === item.name) {
         setStatus(status);
-        
+
         if (message) {
           if (status === GenerationItemStatus.Failed) {
             onErrorMessage(message);
@@ -65,29 +64,21 @@ const GenerationItemComponent = ({ intl, item, onStatusChange, onErrorMessage, o
   }, [status]);
 
   return (
-    <div className={styles.checkmarkStatusRow}>
-      <React.Fragment>
+    <div className={styles.container}>
         <div>{item.title}</div>
         {status === GenerationItemStatus.Generating && (
-          <div role="img" aria-label="project creation in progress">
+          <div role="img" aria-label={formatMessage(messages.generationInProgress, { name: item.title })}>
             <Spinner className={styles.spinner} />
           </div>
         )}
         {status === GenerationItemStatus.Success && (
           <div className={styles.inLine}>
             {item.link && (
-              <ReactMarkdown
-                source={`[View](${item.link})`}
-                renderers={{
-                  link: (props: any) => (
-                    <a href={props.href} className={styles.link} onKeyUp={keyUpHandler}>
-                      {props.children}
-                    </a>
-                  ),
-                }}
-              />
+              <a className={styles.link} href={item.link} onKeyUp={keyUpHandler}>
+                {formatMessage(messages.view)}
+              </a>
             )}
-            <div role="img" aria-label="project creation done">
+            <div role="img" aria-label={formatMessage(messages.generationSuccess, { name: item.title })}>
               <Checkmark className={styles.iconCheck} />
             </div>
           </div>
@@ -97,12 +88,11 @@ const GenerationItemComponent = ({ intl, item, onStatusChange, onErrorMessage, o
             <button className={classnames(buttonStyles.buttonLink, styles.link)} onClick={() => openLogFile(vscode)}>
               {formatMessage(messages.showLog)}
             </button>
-            <div role="img" aria-label="project creation failed">
+            <div role="img" aria-label={formatMessage(messages.generationFailed, { name: item.title })}>
               <ErrorRed className={styles.iconError} />
             </div>
           </div>
         )}
-      </React.Fragment>
     </div>
   );
 };

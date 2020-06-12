@@ -7,15 +7,13 @@ const generate = async (message: any) => {
   const { pages, services } = message.payload;
   const servicesQueue: Promise<void>[] = [];
 
-  //Simulate generation pages
-  await mockGenerateTemplates(pages);
+  await generateProject(pages);
 
-  //Simulate generation services
   if (services.appService) {
-    servicesQueue.push(mockGenerateSuccess(GENERATION_NAMES.APP_SERVICE, 1000));
+    servicesQueue.push(generateAppService());
   }
   if (services.cosmosDB) {
-    servicesQueue.push(mockGenerateFailed(GENERATION_NAMES.COSMOS_DB, 2500, "ERROR: CosmosDB failed to deploy"));
+    servicesQueue.push(generateCosmosDB());
   }
 
   await Promise.all(servicesQueue);
@@ -25,17 +23,36 @@ const openProjectVSCode = (message: any) => {
   console.log(`Call to open project in vscode: ${JSON.stringify(message)} `);
 };
 
-const mockGenerateTemplates = async (pages: any[]) => {
-
+const generateProject = async (pages: any[]) => {
   sendGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating);
 
   for (const page of pages) {
     const message = `create page ${page.name}`;
     sendGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating, message);
     await wait(300);
-  }  
+  }
 
   sendGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Success);
+};
+
+const generateAppService = async () => {
+  sendGenerationStatus(
+    GENERATION_NAMES.APP_SERVICE,
+    GenerationItemStatus.Generating,
+    "Deploying Azure services (this may take a few minutes)."
+  );
+  await wait(1000);
+  sendGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Success);
+};
+
+const generateCosmosDB = async () => {
+  sendGenerationStatus(
+    GENERATION_NAMES.COSMOS_DB,
+    GenerationItemStatus.Generating,
+    "Deploying Azure services (this may take a few minutes)."
+  );
+  await wait(3000);
+  sendGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Failed, "ERROR: CosmosDB failed to deploy");
 };
 
 const sendGenerationStatus = (name: string, status: GenerationItemStatus, message?: string) => {
@@ -50,18 +67,6 @@ const sendGenerationStatus = (name: string, status: GenerationItemStatus, messag
     },
     "*"
   );
-};
-
-const mockGenerateSuccess = async (name: string, duration: number) => {
-  sendGenerationStatus(name, GenerationItemStatus.Generating);
-  await wait(duration);
-  sendGenerationStatus(name, GenerationItemStatus.Success);
-};
-
-const mockGenerateFailed = async (name: string, duration: number, message: string) => {
-  sendGenerationStatus(name, GenerationItemStatus.Generating);
-  await wait(duration);
-  sendGenerationStatus(name, GenerationItemStatus.Failed, message);
 };
 
 export { generate, openProjectVSCode };

@@ -1,11 +1,12 @@
-.checkmarkStatusRow {
+.container {
   display: flex;
   justify-content: space-between;
-}
-
-.checkmarkStatusRow > div {
   padding: 0.6em 1.5em;
   font-size: 1.2em;
+}
+
+.inLine {
+  display: flex;
 }
 
 .spinner {
@@ -19,20 +20,6 @@
   stroke: var(--vscode-editor-foreground);
 }
 
-.iconCheck {
-  margin-top: 3px;
-  margin-left: 1em;
-  height: 18px;
-}
-
-.iconCheck path {
-  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
-}
-
-.inLine {
-  display: flex;
-}
-
 .link {
   color: var(--vscode-textLink-foreground);
   font-weight: var(--vscode-font-weight);
@@ -42,6 +29,16 @@
 
 .link:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.iconCheck {
+  margin-top: 3px;
+  margin-left: 1em;
+  height: 18px;
+}
+
+.iconCheck path {
+  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
 }
 
 .iconError {
@@ -54,7 +51,6 @@
 .iconError path {
   fill: var(--vscode-errorForeground);
 }
-
 
 @keyframes rotate {
   from {

@@ -162,7 +162,7 @@ export class Generation extends WizardServant {
     };
     if (services.appService) {
       try {
-        sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Generating);
+        sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Generating, "Deploying Azure services (this may take a few minutes).");
         await AzureServices.deployAppService(services.appService, projectName, backendFrameworkLinuxVersion, path);
         sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Success);
         result.isDeployed = true;                
@@ -185,7 +185,7 @@ export class Generation extends WizardServant {
     };
     if (services.cosmosDB) {
       try {
-        sendToClientGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Generating);
+        sendToClientGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Generating, "Deploying Azure services (this may take a few minutes).");
         const connectionString = await AzureServices.deployCosmos(services.cosmosDB, path);
         sendToClientGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Success);
         result.isDeployed = true;

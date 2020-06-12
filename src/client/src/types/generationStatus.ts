@@ -1,5 +1,3 @@
-
-
 export const GENERATION_NAMES = {
   TEMPLATES: "templates",
   APP_SERVICE: "appService",
