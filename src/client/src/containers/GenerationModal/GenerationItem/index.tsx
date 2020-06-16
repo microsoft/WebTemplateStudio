@@ -28,7 +28,7 @@ type Props = IProps & InjectedIntlProps;
 const GenerationItem = ({ intl, item }: Props) => {
   const { formatMessage } = intl;
   const { vscode } = React.useContext(AppContext);
-  const [status, setStatus] = React.useState(GenerationItemStatus.Stopped);
+  const [status, setStatus] = React.useState(GenerationItemStatus.Generating);
 
   useEffect(() => {
     function getGenerationEvents(event: any) {
