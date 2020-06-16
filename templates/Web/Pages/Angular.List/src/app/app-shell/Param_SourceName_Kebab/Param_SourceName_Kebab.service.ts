@@ -54,7 +54,7 @@ export class Param_SourceName_PascalService {
       .pipe(catchError(this.handleError));
   }
 
-  deleteListItem(id: number): Observable<IParam_SourceName_PascalItem> {
+  deleteListItem(id: string): Observable<IParam_SourceName_PascalItem> {
     return this.http
       .delete<IParam_SourceName_PascalItem>(`${environment.endpoint.list}/${id}`)
       .pipe(catchError(this.handleError));
