@@ -28,10 +28,11 @@
   cursor: pointer;
   padding: 0;
   box-sizing: border-box;
+  width: 25px;
 }
 
 .hamburgerLine {
-  width: 20px;
+  width: 25px;
   height: 1px;
   background: var(--vscode-editor-foreground);
 }
@@ -83,16 +84,14 @@
   background-color: var(--vscode-editor-background);
   border-left: 0.5px solid #7f7f7f;
   box-sizing: border-box;
-  position: relative;
-  right: 0;
   height: calc(100vh - 70px);
   flex-direction: column;
   overflow: scroll;
   display: block;
   transition: display 100ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  padding: 6vh 2vh;
+  padding: 40px 15px;
   border-left: 1px solid #7f7f7f;
-  width: 45px;
+  width: 56px;
 }
 
 .rightViewCroppedSummaryPage {
