@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { Subject } from "rxjs";
 
 export const GENERATION_NAMES = {
   TEMPLATES: "templates",
@@ -10,7 +10,7 @@ export enum GenerationItemStatus {
   Stopped = "Stopped",
   Generating = "Generating",
   Failed = "Failed",
-  Success = "Success"
+  Success = "Success",
 }
 
 export interface GenerationItemData {

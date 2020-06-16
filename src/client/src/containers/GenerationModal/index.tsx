@@ -49,10 +49,10 @@ const GenerationModal = ({ intl }: Props) => {
       name: GENERATION_NAMES.TEMPLATES,
       title: formatMessage(messages.projectCreation),
       message: new Subject(),
-    }
+    };
 
     templateItem.message.subscribe(
-      void(0),
+      void 0,
       () => setIsGenerationTemplatesFailed(true),
       () => setIsGenerationTemplatesSuccess(true)
     );
