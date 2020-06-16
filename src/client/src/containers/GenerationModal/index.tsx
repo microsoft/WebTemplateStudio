@@ -7,7 +7,7 @@ import asModal from "../../components/Modal";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
 
-import { GenerationItemData, GenerationItemStatus, GENERATION_NAMES } from "../../types/generationStatus";
+import { GenerationItemData, GENERATION_NAMES } from "../../types/generationStatus";
 import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
 import {
   EXTENSION_COMMANDS,
@@ -30,6 +30,7 @@ import { AppContext } from "../../AppContext";
 import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";
 import GenerationItem from "./GenerationItem";
+import { Subject, forkJoin } from "rxjs";
 
 interface IStateProps {
   isModalOpen: boolean;
@@ -43,13 +44,13 @@ const GenerationModal = ({ intl }: Props) => {
   const dispatch = useDispatch();
 
   const initialGenerationItems = () => {
-    const items: GenerationItemData[] = [
-      {
-        name: GENERATION_NAMES.TEMPLATES,
-        status: GenerationItemStatus.Stopped,
-        title: formatMessage(messages.projectCreation),
-      },
-    ];
+    const items: GenerationItemData[] = [];
+
+    items.push({
+      name: GENERATION_NAMES.TEMPLATES,
+      title: formatMessage(messages.projectCreation),
+      message: new Subject(),
+    });
     return items;
   };
 
@@ -60,6 +61,10 @@ const GenerationModal = ({ intl }: Props) => {
   const isCosmosSelected = useSelector(getCosmosDB) !== null;
   const isAppServiceSelected = useSelector(getAppService) !== null;
   const outputPath = useSelector((state: AppState) => getOutputPath(state));
+  const [isGenerationFinished, setIsGenerationFinished] = React.useState(false);
+  const [isGenerationTemplatesSuccess, setIsGenerationTemplatesSuccess] = React.useState(false);
+  const [isGenerationTemplatesFailed, setIsGenerationTemplatesFailed] = React.useState(false);
+  const [isGenerationFailed, setIsGenerationFailed] = React.useState(false);
 
   React.useEffect(() => {
     const items = [...generationItems];
@@ -67,23 +72,47 @@ const GenerationModal = ({ intl }: Props) => {
     if (isAppServiceSelected) {
       items.push({
         name: GENERATION_NAMES.APP_SERVICE,
-        status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.appServiceTitle),
         link: AZURE_LINKS.VIEW_GENERATE_APP_SERVICE,
+        message: new Subject(),
       });
     }
 
     if (isCosmosSelected) {
       items.push({
         name: GENERATION_NAMES.COSMOS_DB,
-        status: GenerationItemStatus.Stopped,
         title: formatMessage(messages.cosmosDbTitle),
         link: AZURE_LINKS.VIEW_GENERATE_MONGO_DB,
+        message: new Subject(),
       });
     }
 
     setGenerationItems(items);
     generateProject(generationData, vscode);
+
+    items.forEach((item) => {
+      item.message.subscribe(
+        (message) => setStatusMessage(message),
+        (errorMessage: string) => {
+          setErrorMessages((messages) => [...new Set([...messages, errorMessage])]);
+          if (item.name === GENERATION_NAMES.TEMPLATES) setIsGenerationTemplatesFailed(true);
+        },
+        () => {
+          if (item.name === GENERATION_NAMES.TEMPLATES) setIsGenerationTemplatesSuccess(true);
+        }
+      );
+    });
+
+    forkJoin(items.map((item) => item.message)).subscribe(
+      () => void 0,
+      () => {
+        setIsGenerationFailed(true);
+        setIsGenerationFinished(true);
+      },
+      () => {
+        setIsGenerationFinished(true);
+      }
+    );
   }, []);
 
   const closeModalAndCreateNewProject = (param: any) => {
@@ -114,38 +143,11 @@ const GenerationModal = ({ intl }: Props) => {
     }
   };
 
-  const updateStatusInGenerationItems = (name: string, newStatus: GenerationItemStatus) => {
-    const newList = generationItems.map((item) => {
-      if (item.name === name) {
-        return { ...item, status: newStatus };
-      }
-      return item;
-    });
-    setGenerationItems(newList);
-  };
-
-  const isGenerationFinished = () => {
-    return generationItems.every(
-      (item) => item.status === GenerationItemStatus.Success || item.status === GenerationItemStatus.Failed
-    );
-  };
-
-  const anyGenerationItemFailed = () => generationItems.some((item) => item.status === GenerationItemStatus.Failed);
-
-  const getGenerationTemplatesItem = () =>
-    generationItems.find((item) => item.name === GENERATION_NAMES.TEMPLATES) as GenerationItemData;
-
-  const generationTemplatesIsSuccess = () => getGenerationTemplatesItem().status === GenerationItemStatus.Success;
-
-  const generationTemplatesIsInProgress = () => getGenerationTemplatesItem().status === GenerationItemStatus.Generating;
-
-  const generationTemplatesIsFailed = () => getGenerationTemplatesItem().status === GenerationItemStatus.Failed;
-
   return (
     <div>
       <div className={styles.header}>
         <div className={styles.title}>{formatMessage(messages.creatingYourProject)}</div>
-        {isGenerationFinished() && (
+        {isGenerationFinished && (
           <Close
             tabIndex={0}
             className={styles.closeIcon}
@@ -156,8 +158,8 @@ const GenerationModal = ({ intl }: Props) => {
       </div>
 
       <div className={styles.messages}>
-        {!isGenerationFinished() && <p>{statusMessage}</p>}
-        {generationTemplatesIsSuccess() && <p>{formatMessage(messages.seeReadme)}</p>}
+        {!isGenerationFinished && <p>{statusMessage}</p>}
+        {isGenerationTemplatesSuccess && <p>{formatMessage(messages.seeReadme)}</p>}
 
         {errorMessages.map((message, key) => {
           return <p key={key}>{message}</p>;
@@ -166,30 +168,22 @@ const GenerationModal = ({ intl }: Props) => {
 
       <div className={styles.generationItems}>
         {generationItems.map((item, key) => {
-          return (
-            <GenerationItem
-              key={key}
-              item={item}
-              onStatusChange={updateStatusInGenerationItems}
-              onErrorMessage={(message) => setErrorMessages((messages) => [...new Set([...messages, message])])}
-              onStatusMessage={(message) => setStatusMessage(message)}
-            />
-          );
+          return <GenerationItem key={key} item={item} />;
         })}
       </div>
 
       <div className={styles.footer}>
-        {anyGenerationItemFailed() && (
+        {isGenerationFailed && (
           <a className={styles.link} href={WEB_TEMPLATE_STUDIO_LINKS.ISSUES} onKeyUp={keyUpHandler}>
             {formatMessage(messages.reportAndIssue)}
           </a>
         )}
 
-        {isGenerationFinished() && (
+        {isGenerationFinished && (
           <button
             className={classnames({
-              [buttonStyles.buttonDark]: generationTemplatesIsSuccess(),
-              [buttonStyles.buttonHighlighted]: generationTemplatesIsFailed(),
+              [buttonStyles.buttonDark]: isGenerationTemplatesSuccess,
+              [buttonStyles.buttonHighlighted]: isGenerationTemplatesFailed,
             })}
             onClick={() => closeModalAndCreateNewProject({ fromCreateNewProjectButton: true })}
           >
@@ -197,14 +191,14 @@ const GenerationModal = ({ intl }: Props) => {
           </button>
         )}
 
-        {!generationTemplatesIsFailed() && (
+        {!isGenerationTemplatesFailed && (
           <button
             className={classnames({
-              [buttonStyles.buttonDark]: generationTemplatesIsInProgress(),
-              [buttonStyles.buttonHighlighted]: generationTemplatesIsSuccess(),
+              [buttonStyles.buttonDark]: !isGenerationTemplatesSuccess,
+              [buttonStyles.buttonHighlighted]: isGenerationTemplatesSuccess,
             })}
             onClick={() => openProjectInVSCode(outputPath, vscode)}
-            disabled={!generationTemplatesIsSuccess()}
+            disabled={!isGenerationTemplatesSuccess}
           >
             {formatMessage(messages.openProject)}
           </button>

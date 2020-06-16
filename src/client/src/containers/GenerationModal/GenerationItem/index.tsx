@@ -21,17 +21,14 @@ import { EXTENSION_COMMANDS } from "../../../utils/constants";
 
 interface IProps {
   item: GenerationItemData;
-  onStatusChange(name: string, newStatus: GenerationItemStatus): void;
-  onStatusMessage(message: string): void;
-  onErrorMessage(message: string): void;
 }
 
 type Props = IProps & InjectedIntlProps;
 
-const GenerationItem = ({ intl, item, onStatusChange, onErrorMessage, onStatusMessage }: Props) => {
+const GenerationItem = ({ intl, item }: Props) => {
   const { formatMessage } = intl;
   const { vscode } = React.useContext(AppContext);
-  const [status, setStatus] = React.useState(item.status);
+  const [status, setStatus] = React.useState(GenerationItemStatus.Stopped);
 
   useEffect(() => {
     function getGenerationEvents(event: any) {
@@ -40,28 +37,18 @@ const GenerationItem = ({ intl, item, onStatusChange, onErrorMessage, onStatusMe
 
       if (command === EXTENSION_COMMANDS.GEN_STATUS && name === item.name) {
         setStatus(status);
-
-        if (message) {
-          if (status === GenerationItemStatus.Failed) {
-            onErrorMessage(message);
-          } else {
-            onStatusMessage(message);
-          }
-        }
+        if (status === GenerationItemStatus.Generating && message) item.message.next(message);
+        if (status === GenerationItemStatus.Success) item.message.complete();
+        if (status === GenerationItemStatus.Failed) item.message.error(message);
       }
     }
 
     subscribeToExtensionEvents(getGenerationEvents);
+
     return () => {
       unsubscribeToExtensionEvents(getGenerationEvents);
     };
   }, []);
-
-  useEffect(() => {
-    if (status !== item.status) {
-      onStatusChange(item.name, status);
-    }
-  }, [status]);
 
   return (
     <div className={styles.container}>

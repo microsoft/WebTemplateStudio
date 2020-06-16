@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 export const GENERATION_NAMES = {
   TEMPLATES: "templates",
   APP_SERVICE: "appService",
@@ -14,6 +16,6 @@ export enum GenerationItemStatus {
 export interface GenerationItemData {
   name: string;
   title: string;
-  status: GenerationItemStatus;
   link?: string;
+  message: Subject<string>;
 }
