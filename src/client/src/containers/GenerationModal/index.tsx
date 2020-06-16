@@ -45,12 +45,19 @@ const GenerationModal = ({ intl }: Props) => {
 
   const initialGenerationItems = () => {
     const items: GenerationItemData[] = [];
-
-    items.push({
+    const templateItem: GenerationItemData = {
       name: GENERATION_NAMES.TEMPLATES,
       title: formatMessage(messages.projectCreation),
       message: new Subject(),
-    });
+    }
+
+    templateItem.message.subscribe(
+      void(0),
+      () => setIsGenerationTemplatesFailed(true),
+      () => setIsGenerationTemplatesSuccess(true)
+    );
+
+    items.push(templateItem);
     return items;
   };
 
@@ -93,13 +100,7 @@ const GenerationModal = ({ intl }: Props) => {
     items.forEach((item) => {
       item.message.subscribe(
         (message) => setStatusMessage(message),
-        (errorMessage: string) => {
-          setErrorMessages((messages) => [...new Set([...messages, errorMessage])]);
-          if (item.name === GENERATION_NAMES.TEMPLATES) setIsGenerationTemplatesFailed(true);
-        },
-        () => {
-          if (item.name === GENERATION_NAMES.TEMPLATES) setIsGenerationTemplatesSuccess(true);
-        }
+        (error: string) => setErrorMessages((messages) => [...new Set([...messages, error])])
       );
     });
 
