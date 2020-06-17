@@ -6,7 +6,16 @@ const CONSTANTS = require("../constants");
 const ListItem = mongoose.model(
   CONSTANTS.COSMOS.COLLECTION,
   new mongoose.Schema({
-    text: String
+    text: String,
+  },
+  {
+    toJSON: {
+      virtuals: true,
+      versionKey: false,
+      transform: function (doc, ret) {
+        delete ret._id;
+      },
+    },
   })
 );
 

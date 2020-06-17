@@ -1,3 +1,7 @@
+//^^
+//{[{
+import uuid
+//}]}
 sample_data = {}
 //{[{
 short_lorem_ipsum = 'Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.';
@@ -7,14 +11,13 @@ short_lorem_ipsum = 'Lorem id sint aliqua tempor tempor sit. Ad dolor dolor ut n
 # TODO Web Template Studio: Delete this file once your app is using real data.
 //{[{
 sample_data['list_text_assets'] = {
-    'list_id': 3,
     'list_items': [
         {
-            '_id': 1,
+            'id': str(uuid.uuid4()),
             'text': short_lorem_ipsum
         },
         {
-            '_id': 2,
+            'id': str(uuid.uuid4()),
             'text': short_lorem_ipsum
         }
     ],

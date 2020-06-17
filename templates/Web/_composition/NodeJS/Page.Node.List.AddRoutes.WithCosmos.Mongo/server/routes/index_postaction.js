@@ -17,7 +17,7 @@ router.post(CONSTANTS.ENDPOINT.LIST, function(req, res, next) {
   mongoService.create(req, res, next);
 });
 
-router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res, next) {
+router.delete(CONSTANTS.ENDPOINT.LIST + "/:id", function(req, res, next) {
   mongoService.destroy(req, res, next);
 });
 //}]}

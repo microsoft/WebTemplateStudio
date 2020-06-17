@@ -6,7 +6,7 @@ sql_database_obj = SQLObj()
 
 def get():
     query_str = {
-        'query': "SELECT r.id as _id, r.text FROM root r ORDER BY r._ts DESC"}
+        'query': "SELECT r.id as id, r.text FROM root r ORDER BY r._ts DESC"}
     options = {}
     options['enableCrossPartitionQuery'] = True
     options['maxItemCount'] = 2
@@ -19,7 +19,7 @@ def create():
     list_item = {'text': data['text']}
     created = sql_database_obj.get_client().CreateItem(
         sql_database_obj.get_container()['_self'], list_item)
-    return {'_id': created['id'], 'text': list_item['text']}
+    return {'id': created['id'], 'text': list_item['text']}
 
 def delete(id):
     # Use parameterized queries to avoid SQL injection attacks.
@@ -37,4 +37,4 @@ def delete(id):
         raise Exception('Could not find an item with given id')
     item = next(iter(result))
     sql_database_obj.get_client().DeleteItem(item['_self'])
-    return {'_id': id, 'text': 'This comment was deleted'}
+    return {'id': id, 'text': 'This comment was deleted'}
