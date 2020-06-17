@@ -16,23 +16,22 @@ router.get(CONSTANTS.ENDPOINT.LIST, function(req, res) {
 router.post(CONSTANTS.ENDPOINT.LIST, function(req, res) {
   let listItem = {
     text: req.body.text,
-    _id: sampleData.listID
+    id: uuidv4()
   };
   sampleData.listTextAssets.unshift(listItem);
   res.json(listItem);
-  sampleData.listID++;
 });
 
-router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res) {
-  const { _id } = req.params;
+router.delete(CONSTANTS.ENDPOINT.LIST + "/:id", function(req, res) {
+  const { id } = req.params;
   var index = sampleData.listTextAssets.findIndex(
-    listItem => listItem._id === Number(_id)
+    listItem => listItem.id === id
   );
   if (index > -1) {
     sampleData.listTextAssets.splice(index, 1);
-    res.json({ _id: Number(_id), text: "This commented was deleted" });
+    res.json({ id, text: "This commented was deleted" });
   } else {
-    res.status(404).send("Could not find item with id:" + _id);
+    res.status(404).send("Could not find item with id:" + id);
   }
 });
 //}]}

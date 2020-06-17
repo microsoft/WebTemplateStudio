@@ -1,4 +1,4 @@
 export interface IParam_SourceName_PascalItem {
-  _id: number;
+  id: string;
   text: string;
 }

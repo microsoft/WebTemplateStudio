@@ -10,7 +10,7 @@
       class="col-12 mb-3 border"
       *ngFor="let listItem of (listItems$ | async)"
       [listItem]="listItem"
-      [_id]="listItem._id"
+      [id]="listItem.id"
       (deleteItem)="deleteItem($event)"
     >
     </app-list-item>

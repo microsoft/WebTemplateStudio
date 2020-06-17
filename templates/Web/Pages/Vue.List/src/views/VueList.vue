@@ -9,7 +9,7 @@
       </div>
       <ListItem
         v-for="listItem in listItems"
-        :key="listItem._id"
+        :key="listItem.id"
         :listItem="listItem"
         @deleteListItem="deleteListItem"
       />
@@ -89,7 +89,7 @@ export default {
         });
     },
     deleteListItem(listItem) {
-      fetch(`${CONSTANTS.ENDPOINT.LIST}/${listItem._id}`, { method: "DELETE" })
+      fetch(`${CONSTANTS.ENDPOINT.LIST}/${listItem.id}`, { method: "DELETE" })
         .then(response => {
           if (!response.ok) {
             throw Error(response.statusText);
@@ -97,7 +97,7 @@ export default {
           return response.json();
         })
         .then(result => {
-          this.listItems = this.listItems.filter(item => item._id !== result._id);
+          this.listItems = this.listItems.filter(item => item.id !== result.id);
         })
         .catch(error => {
           this.WarningMessageOpen = true;

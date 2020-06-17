@@ -19,7 +19,7 @@ router.post(CONSTANTS.ENDPOINT.LIST, function(req, res, next) {
   sqlController.create(req, res, next);
 });
 
-router.delete(CONSTANTS.ENDPOINT.LIST + "/:_id", function(req, res, next) {
+router.delete(CONSTANTS.ENDPOINT.LIST + "/:id", function(req, res, next) {
   sqlController.destroy(req, res, next);
 });
 //}]}
