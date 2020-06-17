@@ -4,7 +4,6 @@ import os = require("os");
 import util = require("util");
 import latestVersion from 'latest-version';
 const axios = require('axios');
-
 const semver = require('semver');
 const exec = util.promisify(require("child_process").exec);
 
