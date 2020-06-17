@@ -53,7 +53,7 @@ const GenerationItem = ({ intl, item }: Props) => {
       <div>{item.title}</div>
       {status === GenerationItemStatus.Generating && (
         <div role="img" aria-label={formatMessage(messages.generationInProgress, { name: item.title })}>
-          <Spinner className={styles.spinner} />
+          <Spinner className={styles.spinner} data-testid="spinner-icon" />
         </div>
       )}
       {status === GenerationItemStatus.Success && (
@@ -64,7 +64,7 @@ const GenerationItem = ({ intl, item }: Props) => {
             </a>
           )}
           <div role="img" aria-label={formatMessage(messages.generationSuccess, { name: item.title })}>
-            <Checkmark className={styles.iconCheck} />
+            <Checkmark className={styles.iconCheck} data-testid="checkmark-icon" />
           </div>
         </div>
       )}
@@ -74,7 +74,7 @@ const GenerationItem = ({ intl, item }: Props) => {
             {formatMessage(messages.showLog)}
           </button>
           <div role="img" aria-label={formatMessage(messages.generationFailed, { name: item.title })}>
-            <ErrorRed className={styles.iconError} />
+            <ErrorRed className={styles.iconError} data-testid="error-icon" />
           </div>
         </div>
       )}
