@@ -152,6 +152,7 @@ const GenerationModal = ({ intl }: Props) => {
           <Close
             tabIndex={0}
             className={styles.closeIcon}
+            data-testid="close-button"
             onClick={() => closeModalAndCreateNewProject({ fromCloseButton: true })}
             onKeyDown={closeKeyDownHandler}
           />
