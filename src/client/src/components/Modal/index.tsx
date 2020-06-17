@@ -17,7 +17,7 @@ import { NAVIGATION_MODAL_TYPES, ModalType } from "../../store/navigation/typeKe
  * Custom styling guidance:
  * https://reactcommunity.org/react-modal/styles/
  */
-const getCustomStyles = (MODAL_TYPE: ModalType | undefined) => {
+const getCustomStyles = (MODAL_TYPE?: ModalType): Modal.Styles => {
   // default width
   let CUSTOM_WIDTH = "50%";
   const backgroundColor = "var(--vscode-menu-background)";
@@ -75,6 +75,7 @@ const asModal = <P extends object>(
     };
     render() {
       return (
+
         <Modal
           isOpen={this.props.isModalOpen}
           onRequestClose={this.props.closeModal}
