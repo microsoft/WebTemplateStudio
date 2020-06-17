@@ -9,7 +9,7 @@ const semver = require('semver');
 const exec = util.promisify(require("child_process").exec);
 
 const NODE_REGEX = RegExp("v(.+)");
-const NODE_REQUIREMENT = ">=10.15.x";
+const NODE_REQUIREMENT = ">=12.0.x";
 const PYTHON_REGEX = RegExp("Python ([0-9.]+)");
 const PYTHON_REQUIREMENT = ">=3.5.x";
 
