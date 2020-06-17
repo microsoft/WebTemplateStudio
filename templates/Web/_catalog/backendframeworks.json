@@ -13,7 +13,7 @@
       "checkVersionPackageName":"express",
       "checkVersionPackageSource":"npm",
       "preview": false,
-      "linuxVersion": "node|10.14"
+      "linuxVersion": "node|12.0"
     }
   },
   {
@@ -48,7 +48,7 @@
       "checkVersionPackageName":"moleculer",
       "checkVersionPackageSource":"npm",
       "preview": false,
-      "linuxVersion": "node|10.14"
+      "linuxVersion": "node|12.0"
     }
   }
 ]

@@ -163,7 +163,7 @@ const mockVsCodeApi = () => ({
                       preview: false,
                       enabled: true,
                       type: "backend",
-                      linuxVersion: "node|10.14"
+                      linuxVersion: "node|12.0"
                     }
                   },
                   {
@@ -181,7 +181,7 @@ const mockVsCodeApi = () => ({
                       latestVersion: "0.14.3",
                       preview: false,
                       type: "backend",
-                      linuxVersion: "node|10.14"
+                      linuxVersion: "node|12.0"
                     }
                   },
                   {

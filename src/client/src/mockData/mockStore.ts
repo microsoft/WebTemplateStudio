@@ -306,8 +306,8 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       selected: false,
       svgUrl: '',
       title: 'Node.js/Express',
-      version: '10.15.0',
-      linuxVersion: 'node|10.14',
+      version: '12.0.0',
+      linuxVersion: 'node|12.0',
       latestVersionLoaded: true
     },
     {
@@ -319,7 +319,7 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       svgUrl: '',
       title: 'Moleculer',
       version: '0.14.3',
-      linuxVersion: 'node|10.14',
+      linuxVersion: 'node|12.0',
       latestVersionLoaded: true
     },
     {
