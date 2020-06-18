@@ -36,8 +36,11 @@ const GenerationItem = ({ intl, item }: Props) => {
       if (command === EXTENSION_COMMANDS.GEN_STATUS && payload.name === item.name) {
         setStatus(payload.status);
         if (payload.status === GenerationItemStatus.Generating && payload.message) item.message.next(payload.message);
-        if (payload.status === GenerationItemStatus.Success) item.message.complete();
         if (payload.status === GenerationItemStatus.Failed) item.message.error(payload.message);
+        if (payload.status === GenerationItemStatus.Success) {
+          if(payload.message) item.message.next(payload.message);
+          item.message.complete();
+        };
       }
     }
 

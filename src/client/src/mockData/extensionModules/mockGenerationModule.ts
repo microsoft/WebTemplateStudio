@@ -32,7 +32,11 @@ const generateProject = async (pages: any[]) => {
     await wait(300);
   }
 
-  sendGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Success);
+  sendGenerationStatus(
+    GENERATION_NAMES.TEMPLATES,
+    GenerationItemStatus.Success,
+    "The project generation has finished successfully"
+  );
 };
 
 const generateAppService = async () => {

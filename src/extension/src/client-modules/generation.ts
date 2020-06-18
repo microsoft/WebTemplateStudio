@@ -67,7 +67,7 @@ export class Generation extends WizardServant {
       sendToClientGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Generating);
       const cli = CoreTemplateStudio.GetExistingInstance();
       const result = await cli.generate({payload: generationData,liveMessageHandler: updateStatusMessage});
-      sendToClientGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Success);      
+      sendToClientGenerationStatus(GENERATION_NAMES.TEMPLATES, GenerationItemStatus.Success, "The project generation has finished successfully");      
       return result.generationPath;
     } catch (error) {
       Logger.appendError("EXTENSION", "Error on generation project:", error);      
