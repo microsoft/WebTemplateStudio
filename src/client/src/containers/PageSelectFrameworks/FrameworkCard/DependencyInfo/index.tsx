@@ -26,7 +26,7 @@ const dependencies: IDependencies = {
   Node: {
     dependencyStoreKey: "node",
     dependencyName: "Node",
-    dependencyMinimumVersion: "v10.15+",
+    dependencyMinimumVersion: "v12.0+",
     downloadLink: "https://nodejs.org/en/download/",
     privacyStatementLink: "https://nodejs.org/en/about/privacy/",
     downloadLinkLabel: "Node download link"
