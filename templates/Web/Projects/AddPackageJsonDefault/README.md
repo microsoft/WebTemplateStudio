@@ -21,7 +21,7 @@ If you did not select Azure App Service and want to create a new Azure App Servi
    - Select your subscription
    - Enter your web app name
    - Select Linux as your OS
-   - Select Node.js 12.0 for a Node/Express application, Python 3.7 for a Flask application
+   - Select Node.js 12 LTS for a Node/Express application, Python 3.7 for a Flask application
 2. Once the creation is done, click "Deploy" in the notification window on the lower right corner.
    - Click "Browse" on the top middle section of your screen and select the server folder within your project
    - Click "Yes" in the notification window on the lower right corner (build prompt)
