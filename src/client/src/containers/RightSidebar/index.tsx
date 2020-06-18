@@ -51,7 +51,7 @@ const RightSidebar = (props: Props)=>{
   return (
     <div>
     {!isSidebarOpen && !isFirstOrLastPage && (
-    <div className={styles.hamburgerContainer}>
+    <div className={classnames(styles.container, styles.rightViewCroppedHamburguer)}>
       <button
         tabIndex={0}
         className={styles.hamburgerButton}
