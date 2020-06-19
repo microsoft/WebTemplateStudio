@@ -1,75 +1,24 @@
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import { ExtensionCommand, CONSTANTS } from "../constants";
-import os = require("os");
-import util = require("util");
+import { ExtensionCommand } from "../constants";
 import latestVersion from "latest-version";
+import DependencyChecker from "../utils/dependencyChecker/dependencyChecker";
 const axios = require("axios");
-const semver = require("semver");
-const exec = util.promisify(require("child_process").exec);
-
-const NODE_REGEX = RegExp("v(.+)");
-const NODE_REQUIREMENT = ">=12.0.x";
-const PYTHON_REGEX = RegExp("Python ([0-9.]+)");
-const PYTHON_REQUIREMENT = ">=3.5.x";
 
 export class DependenciesModule extends WizardServant {
-  clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>>;
+  clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
+    [ExtensionCommand.CheckDependency, this.checkDependency],
+    [ExtensionCommand.GetLatestVersion, this.getLatestVersion],
+  ]);
 
-  constructor() {
-    super();
-    this.clientCommandMap = this.defineCommandMap();
-  }
-
-  private defineCommandMap(): Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> {
-    return new Map([
-      [ExtensionCommand.CheckDependency, this.checkDependency],
-      [ExtensionCommand.GetLatestVersion, this.getLatestVersion],
-    ]);
-  }
-
-  private async runPythonVersionCommand(command: string): Promise<boolean> {
-    let installed: boolean;
-    try {
-      const { stdout, stderr } = await exec(command + " --version");
-      // stderr is also processed for older versions of anaconda!
-      const matches = stdout.match(PYTHON_REGEX) || stderr.match(PYTHON_REGEX);
-      const version: string = matches[1];
-      installed = semver.satisfies(version, PYTHON_REQUIREMENT);
-    } catch (err) {
-      installed = false;
-    }
-    return installed;
-  }
+  dependencyChecker = new DependencyChecker();
 
   async checkDependency(message: any): Promise<IPayloadResponse> {
-    const name: string = message.payload.dependency;
-    let state = false;
-    if (name === CONSTANTS.DEPENDENCY_CHECKER.NODE) {
-      try {
-        const { stdout } = await exec(CONSTANTS.DEPENDENCY_CHECKER.NODE + " --version");
-        const version = stdout.match(NODE_REGEX)[1];
-        state = semver.satisfies(version, NODE_REQUIREMENT);
-      } catch (err) {
-        state = false;
-      }
-    } else if (name === CONSTANTS.DEPENDENCY_CHECKER.PYTHON) {
-      const userOS: string = os.platform();
-      const userOnWin: boolean = userOS.indexOf("win") === 0;
-
-      if (await this.runPythonVersionCommand(CONSTANTS.DEPENDENCY_CHECKER.PYTHON3)) {
-        state = true;
-      } else if (await this.runPythonVersionCommand(CONSTANTS.DEPENDENCY_CHECKER.PYTHON)) {
-        state = true;
-      } else if (userOnWin && (await this.runPythonVersionCommand(CONSTANTS.DEPENDENCY_CHECKER.PYTHON_LAUNCHER))) {
-        state = true;
-      } else {
-        state = false;
-      }
-    }
+    const dependency = message.payload.dependency as string;
+    const installed = await this.dependencyChecker.hasDependency(dependency);
     return {
       payload: {
-        dependency: name,
-        installed: state,
+        dependency,
+        installed,
       },
     };
   }

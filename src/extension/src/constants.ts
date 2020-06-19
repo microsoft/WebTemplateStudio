@@ -259,7 +259,8 @@ export const CONSTANTS = {
     NODE: "node",
     PYTHON: "python",
     PYTHON3: "python3",
-    PYTHON_LAUNCHER: "py -3"
+    PYTHON_LAUNCHER: "py -3",
+    NETCORE: "netcore"
   },
   AZURE_LOCATION: {
     CENTRAL_US: "Central US"
