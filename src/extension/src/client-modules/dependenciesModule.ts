@@ -1,20 +1,20 @@
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { ExtensionCommand } from "../constants";
 import latestVersion from "latest-version";
-import DependencyChecker from "../utils/dependencyChecker/dependencyChecker";
+import RequirementsService from "../utils/requirements/requirementsService";
 const axios = require("axios");
 
 export class DependenciesModule extends WizardServant {
+  private requirementsService = new RequirementsService();
+  
   clientCommandMap: Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> = new Map([
-    [ExtensionCommand.CheckDependency, this.checkDependency],
+    [ExtensionCommand.CheckDependency, this.requirementIsInstalled],
     [ExtensionCommand.GetLatestVersion, this.getLatestVersion],
   ]);
 
-  dependencyChecker = new DependencyChecker();
-
-  async checkDependency(message: any): Promise<IPayloadResponse> {
+  async requirementIsInstalled(message: any): Promise<IPayloadResponse> {
     const dependency = message.payload.dependency as string;
-    const installed = await this.dependencyChecker.hasDependency(dependency);
+    const installed = await this.requirementsService.isInstalled(dependency);
     return {
       payload: {
         dependency,

@@ -7,8 +7,8 @@ const exec = util.promisify(require("child_process").exec);
 const PYTHON_REGEX = RegExp("Python ([0-9.]+)");
 const PYTHON_REQUIREMENT = ">=3.5.x";
 
-export default class PythonChecker implements IDependencyChecker {
-  public async hasDependency() {
+export default class PythonValidator implements IRequirementValidator {
+  public async isInstalled() {
     const userOS: string = os.platform();
     const userOnWin: boolean = userOS.indexOf("win") === 0;
 
