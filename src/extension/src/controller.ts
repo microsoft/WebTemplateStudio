@@ -16,7 +16,7 @@ import { WizardServant } from "./wizardServant";
 import { Generation } from "./client-modules/generation";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { LaunchExperience } from "./launchExperience";
-import { DependencyChecker } from "./utils/dependencyChecker";
+import { DependenciesModule } from "./client-modules/dependenciesModule";
 import { CoreTSModule } from "./coreTSModule";
 import { Defaults } from "./utils/defaults";
 import { Telemetry } from "./client-modules/telemetry";
@@ -39,7 +39,7 @@ export class Controller {
   private AzureModule: AzureModule;
   private Generation: Generation;
   private Validator: Validator;
-  private DependencyChecker: DependencyChecker;
+  private dependencies: DependenciesModule;
   private CoreTSModule: CoreTSModule;
   private Telemetry: Telemetry;
   private Defaults: Defaults;
@@ -58,7 +58,7 @@ export class Controller {
       [ExtensionModule.Validator, this.Validator],
       [ExtensionModule.Generate, this.Generation],
       [ExtensionModule.Logger, this.loggerModule],
-      [ExtensionModule.DependencyChecker, this.DependencyChecker],
+      [ExtensionModule.DependencyChecker, this.dependencies],
       [ExtensionModule.CoreTSModule, this.CoreTSModule],
       [ExtensionModule.Defaults, this.Defaults]
     ]);
@@ -121,7 +121,7 @@ export class Controller {
     this.AzureModule = new AzureModule();
     this.Generation = new Generation(Controller.TelemetryService);
     this.loggerModule = new LoggerModule();
-    this.DependencyChecker = new DependencyChecker();
+    this.dependencies = new DependenciesModule();
     this.CoreTSModule = new CoreTSModule();
     this.Telemetry = new Telemetry(Controller.TelemetryService);
     this.Defaults = new Defaults();
