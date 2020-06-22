@@ -122,9 +122,9 @@ const Footer = (props: Props) => {
                 tabIndex={isEnableNextPage ? 0 : -1}
                 className={classnames(styles.button, styles.buttonNext, buttonStyles.buttonHighlighted, {
                   [buttonStyles.buttonDark]: !isEnableNextPage,
-                  [styles.disabledOverlay]: isLastStep
+                  [styles.disabledOverlay]: isLastStep || !isEnableNextPage
                 })}
-                onClick={() => { if (!isLastStep) navigateForward()}}
+                onClick={() => { if (!isLastStep && isEnableNextPage) navigateForward()}}
                 onKeyPress={(event) => { if (!isLastStep) navigateForwardOnKeyPress(event)}}
                 onKeyUp={(event: React.KeyboardEvent<HTMLAnchorElement>) => { if (!isLastStep) keyUpHandler(event) }}
               >
