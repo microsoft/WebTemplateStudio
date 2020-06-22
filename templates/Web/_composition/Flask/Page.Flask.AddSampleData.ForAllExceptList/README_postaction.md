@@ -5,7 +5,7 @@
 ### Sample Data
 
 Replace the sample data stored in /server/sampleData.py.
-Replace the default images stored in https://wtsrepository.blob.core.windows.net/sampledata/.
+Replace the default images. Sample images are consumed from https://wtsrepository.blob.core.windows.net/sampledata/.
 //}]}
 
 ## File Structure
