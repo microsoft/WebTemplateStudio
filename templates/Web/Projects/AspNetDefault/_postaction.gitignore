@@ -1,0 +1,9 @@
+# vscode configuration
+.vscode/
+
+//{[{
+# production
+/server/bin
+/server/obj
+//}]}
+

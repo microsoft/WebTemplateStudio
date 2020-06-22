@@ -50,5 +50,22 @@
       "preview": false,
       "linuxVersion": "node|12-lts"
     }
-  }
+  },
+  {
+    "name": "AspNet",
+    "displayName": "ASP.NET",
+    "summary": ".NET framework",
+    "author": "Microsoft",
+    "order": "1",
+    "licenses": "[AspNet](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)",
+    "platform": "Web",
+    "languages": ["Any"],
+    "tags": {
+      "version": "3.1.4",
+      "checkVersionPackageName":"dotnet/aspnetcore",
+      "checkVersionPackageSource":"github",
+      "preview": true,
+      "linuxVersion": "DOTNETCORE|3.1"
+    }
+  },
 ]
