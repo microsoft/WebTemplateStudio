@@ -3,16 +3,19 @@ import * as vscode from "vscode";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import * as os from "os";
 import { Logger } from "./utils/logger";
+import { getExtensionName } from "./utils/packageInfo";
 
 export class Deploy {
   private folderPath: string | undefined;
   private progressObject!: vscode.Progress<IVSCodeProgressType>;
 
-  public static getInstance(): Deploy {
-    return new Deploy();
+  public static getInstance(context: vscode.ExtensionContext): Deploy {
+    return new Deploy(context);
   }
 
-  constructor() {
+  constructor(private context: vscode.ExtensionContext) {
+    Logger.load(this.context.extensionPath);
+    Logger.initializeOutputChannel(getExtensionName(this.context));
     const folderPath = Deploy.getCurrentWorkingDirectory();
     if (!this.checkValidFolderPath(folderPath)) {
       return;
