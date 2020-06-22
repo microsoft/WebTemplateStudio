@@ -54,7 +54,6 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 //^^
 //{[{
 ├── src - Vue front-end
-│   ├── assets/                     - Default images
 │   ├── components/                 - Common Vue components shared between different views
 │   ├── router/                     - Vue routes
 │   ├── views/                      - The main pages displayed
