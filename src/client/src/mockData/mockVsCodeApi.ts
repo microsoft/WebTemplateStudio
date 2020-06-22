@@ -212,6 +212,34 @@ const mockVsCodeApi = () => ({
                       type: "backend",
                       linuxVersion: "python|3.7"
                     }
+                  },
+                  {
+                    name: "AspNet",
+                    displayName: "ASP.NET",
+                    summary: ".NET framework",
+                    description: "",
+                    author: "Microsoft",
+                    order: 1,
+                    metadataType: "Framework",
+                    licenses:
+                      "[AspNet](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)",
+                    licenseTerms: [
+                      {
+                        text: "AspNet",
+                        url:
+                          "https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt"
+                      }
+                    ],
+                    platforms: ["Web"],
+                    languages: ["Any"],
+                    tags: {
+                      version: "3.1.4",
+                      latestVersion: "3.1.4",
+                      preview: false,
+                      enabled: true,
+                      type: "backend",
+                      linuxVersion: "DOTNETCORE|3.1"
+                    }
                   }
                 ],
                 isPreview: true,

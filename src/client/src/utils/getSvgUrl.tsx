@@ -22,6 +22,7 @@ const VueIcon = loadable(() => import(/* webpackChunkName: "VueIcon" */  "./svgC
 const NodeIcon = loadable(() => import(/* webpackChunkName: "NodeIcon" */  "./svgComponents/NodeIcon"));
 const FlaskIcon = loadable(() => import(/* webpackChunkName: "FlaskIcon" */  "./svgComponents/FlaskIcon"));
 const MoleculerIcon = loadable(() => import(/* webpackChunkName: "MoleculerIcon" */  "./svgComponents/MoleculerIcon"));
+const AspNetIcon = loadable(() => import(/* webpackChunkName: "AspNetIcon" */  "./svgComponents/AspNetIcon"));
 const AzureIcon = loadable(() => import(/* webpackChunkName: "AzureIcon" */  "./svgComponents/AzureIcon"));
 const AppserviceIcon = loadable(() => import(/* webpackChunkName: "AppServiceIcon" */  "./svgComponents/AppserviceIcon"));
 const CosmosdbIcon = loadable(() => import(/* webpackChunkName: "CosmosdbIcon" */  "./svgComponents/CosmosdbIcon"));
@@ -41,6 +42,9 @@ const SVG_MAPPINGS = {
   ),
   [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER]: (style: string) => (
     <MoleculerIcon style={style}/>
+  ),
+  [WIZARD_CONTENT_INTERNAL_NAMES.ASPNET]: (style: string) => (
+    <AspNetIcon style={style}/>
   ),
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK]: (style: string) => (
     <FlaskIcon style={style}/>
