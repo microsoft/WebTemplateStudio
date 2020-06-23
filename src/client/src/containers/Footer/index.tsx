@@ -14,7 +14,7 @@ import { openGenModalAction } from "../../store/navigation/modals/action";
 
 import { InjectedIntlProps, injectIntl } from "react-intl";
 
-import { isEnableNextPageSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
+import { isEnableNextPageSelector, isEnableGenerateButtonSelector } from "../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 import { AppState } from "../../store/combineReducers";
 
 import { ReactComponent as NextArrow } from "../../assets/nextarrow.svg";
@@ -50,6 +50,7 @@ const Footer = (props: Props) => {
   const visitedRoutes = useSelector((state: AppState) => getIsVisitedRoutesSelector(state));
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
   const currentRoute = useSelector((state: AppState) => state.navigation.routes.selected);
+  const isEnableGenerateButton = useSelector((state: AppState) => isEnableGenerateButtonSelector(state));
   const vscode: IVSCodeObject = React.useContext(AppContext).vscode;
   const isFirstStep = useMemo(() => currentRoute === ROUTES.NEW_PROJECT, [currentRoute]);
   const isLastStep = useMemo(() => currentRoute === ROUTES.REVIEW_AND_GENERATE, [currentRoute]);
@@ -138,11 +139,11 @@ const Footer = (props: Props) => {
                 )}
               </a>
             <button
-              disabled={!isEnableNextPage}
+              disabled={!isEnableGenerateButton}
               className={classnames(styles.button, {
-                [buttonStyles.buttonDark]: !isEnableNextPage,
-                [buttonStyles.buttonHighlighted]: isEnableNextPage,
-                [styles.disabledOverlay]: !isEnableNextPage,
+                [buttonStyles.buttonDark]: !isEnableGenerateButton,
+                [buttonStyles.buttonHighlighted]: isEnableGenerateButton,
+                [styles.disabledOverlay]: !isEnableGenerateButton,
               })}
               onClick={generateProject}
             >
