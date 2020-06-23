@@ -345,7 +345,6 @@ export enum ExtensionCommand {
   TrackOpenCosmosDBServiceModalFromServicesList = "track-open-cosmosdb-service-modal-from-services-list",
   TrackOpenAzureServiceAdvancedMode = "track-open-azure-service-advanced-mode",
   ProjectPathValidation = "project-path-validation",
-  UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
   OpenProjectVSCode = "open-project-vscode",
   GetTemplateInfo = "get-template-info",

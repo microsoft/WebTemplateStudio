@@ -411,3 +411,24 @@ export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
 export const setAzureEmail = (store: AppState, email = "test@test.com") => {
   store.config.azureProfileData.email = email;
 }
+
+export const setGenerationData = (store: AppState) => {
+  store.userSelection.pages = [getISelected()];
+  store.userSelection.services.appService = {
+    subscription: "",
+    resourceGroup: "",
+    location: "",
+    siteName: "",
+    internalName: "",
+  };
+  store.userSelection.services.cosmosDB = {
+    subscription: "",
+    resourceGroup: "",
+    location: "",
+    accountName: "",
+    api: "",
+    internalName: "",
+    groupName: "",
+  };
+  return 3;
+};

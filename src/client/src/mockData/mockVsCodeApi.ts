@@ -6,6 +6,7 @@ import {
 
 import * as mockAzureModule from "./extensionModules/mockAzureModule";
 import * as mockLoggerModule from "./extensionModules/mockLoggerModule";
+import * as mockGenerationModule from "./extensionModules/mockGenerationModule";
 
 /**
  * Models the functionality of acquireVsCodeApi() from vscode for use
@@ -524,38 +525,10 @@ const mockVsCodeApi = () => ({
           mockAzureModule.getValidCosmosName(message);
           break;
         case EXTENSION_COMMANDS.GENERATE:
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.GEN_STATUS_MESSAGE,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                status: "updated status message..."
-              }
-            },
-            "*"
-          );
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.GEN_STATUS,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                templates: {
-                  success: true,
-                  failure: false
-                },
-                cosmos: {
-                  success: false,
-                  failure: true
-                },
-                appService: {
-                  success: true,
-                  failure: false
-                },
-                finished: true
-              }
-            },
-            "*"
-          );
+          mockGenerationModule.generate(message);
+          break;
+        case EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE:
+          mockGenerationModule.openProjectVSCode(message);
           break;
         case EXTENSION_COMMANDS.GET_OUTPUT_PATH:
           window.postMessage(
