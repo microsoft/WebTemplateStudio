@@ -20,6 +20,7 @@ const TopNavBar = (props: Props) => {
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
   const isVisited = useSelector((state: AppState) => state.navigation.routes.isVisited);
   const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
+  const projectNameValidation = useSelector((state: AppState) => state.userSelection.projectNameObject.validation);
   const { intl } = props;
   const { formatMessage } = props.intl;
   const topNavBarData: string[] = [
@@ -75,7 +76,9 @@ const TopNavBar = (props: Props) => {
                     [styles.itemBorderTop]: idx === 0
                   })}
                   key={sidebartitle}
-                  onClick={(event) => navigateToPageAndSetVisited(event, idx) }
+                  onClick={(event) => {
+                    if (projectNameValidation.isValid) navigateToPageAndSetVisited(event, idx) 
+                  }}
                 >
                   <TopNavBarLink
                     disabled={!alreadyVisitedRouteAndCanVisit}

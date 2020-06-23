@@ -6,6 +6,8 @@ import { injectIntl, FormattedMessage, InjectedIntl } from "react-intl";
 import styles from "./styles.module.css";
 import keyUpHandler from "../../utils/keyUpHandler";
 import { ARIA_LABELS_NAVIGATION } from "../../utils/constants";
+import { useSelector } from "react-redux";
+import { AppState } from "../../store/combineReducers";
 
 const TopNavBarLink = ({
   pageNumber,
@@ -26,7 +28,10 @@ const TopNavBarLink = ({
   intl: InjectedIntl;
   reducerSetPage: (route: string) => void;
 }) => {
-  const handleClick = () => reducerSetPage(path);
+  const projectNameValidation = useSelector((state: AppState) => state.userSelection.projectNameObject.validation);
+  const handleClick = () =>{
+    if (projectNameValidation.isValid) reducerSetPage(path);
+  } 
 
   const getAriaLabel = (
     arialabeltext: FormattedMessage.MessageDescriptor,
@@ -66,7 +71,8 @@ const TopNavBarLink = ({
         <div
           className={classnames(styles.pageNumber, {
             [styles.pageIsSelected]: isSelected,
-            [styles.pageIsVisited]: visitedCheck
+            [styles.pageIsVisited]: visitedCheck,
+            [styles.pageCursorPointer]: projectNameValidation.isValid
           })}
         >
           {pageNumber}
@@ -74,7 +80,8 @@ const TopNavBarLink = ({
         <div
           className={classnames({
             [styles.pageIsSelectedSmall]: isSelected,
-            [styles.pageText]: !isSelected
+            [styles.pageText]: !isSelected,
+            [styles.pageCursorPointer]: projectNameValidation.isValid
           })}
         >
           {text}
