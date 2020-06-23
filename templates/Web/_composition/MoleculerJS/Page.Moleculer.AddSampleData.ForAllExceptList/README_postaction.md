@@ -17,5 +17,5 @@ Replace the sample data stored in `server/data/sampleData.js`.
 │ │ └── pages.service.js - Service that serves the data and contains the actual handlers for the API calls
 //{[{
 │ ├── data/ - Folder containing data samples
-│ └── sampleData.js - Contains all sample text data required to generate pages
+│ │ └── sampleData.js - Contains all sample text data required to generate pages
 //}]}
