@@ -16,7 +16,9 @@
     "wts.backendframework": "AspNet",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1"
+    "wts.displayOrder": "1",
+    "wts.casing.sourceName": "pascal",
+    "wts.casing.rootNamespace": "pascal"
   },
   "sourceName": "wts.AspNetDefault",
   "preferNameDirectory": true,
@@ -27,40 +29,19 @@
       "dataType": "string",
       "replaces": "Param_ProjectName"
     },
-    "wts.userName": {
+    "wts.rootNamespace": {
       "type": "parameter",
       "dataType": "string",
-      "replaces": "Param_UserName"
+      "replaces": "Param_RootNamespace"
     },
-    "wts.wizardVersion": {
+    "wts.sourceName.casing.pascal": {
       "type": "parameter",
-      "dataType": "string",
-      "replaces": "Param_Wizard.Version"
+      "fileRename": "Param_SourceName_Pascal",
+      "replaces": "Param_SourceName_Pascal"
     },
-    "wts.templatesVersion": {
+    "wts.rootNamespace.casing.pascal": {
       "type": "parameter",
-      "dataType": "string",
-      "replaces": "Param_Templates.Version"
-    },
-    "wts.generationProjectType": {
-      "type": "parameter",
-      "replaces": "Param_ProjectType"
-    },
-    "wts.generationFramework": {
-      "type": "parameter",
-      "replaces": "Param_Framework"
-    },
-    "wts.generationPlatform": {
-      "type": "parameter",
-      "replaces": "Param_Platform"
-    },
-    "copyrightYear": {
-      "type": "generated",
-      "generator": "now",
-      "replaces": "1976",
-      "parameters": {
-        "format": "yyyy"
-      }
+      "replaces": "Param_RootNamespace_Pascal"
     }
   },
   "postActions": [

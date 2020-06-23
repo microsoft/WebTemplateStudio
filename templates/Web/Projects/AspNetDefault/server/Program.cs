@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace WTSWebApi
+namespace Param_RootNamespace_Pascal.WebApi
 {
     public class Program
     {

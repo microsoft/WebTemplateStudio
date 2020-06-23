@@ -64,7 +64,7 @@
       "version": "3.1.4",
       "checkVersionPackageName":"dotnet/aspnetcore",
       "checkVersionPackageSource":"github",
-      "preview": true,
+      "preview": false,
       "linuxVersion": "DOTNETCORE|3.1"
     }
   }

@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace WTSWebApi
+namespace Param_RootNamespace_Pascal.WebApi
 {
     public class Startup
     {
