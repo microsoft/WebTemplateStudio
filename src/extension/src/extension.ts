@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand(
       "webTemplateStudioExtension.deployApp",
       async () => {
-        Deploy.getInstance();
+        Deploy.getInstance(context);
       }
     )
   );

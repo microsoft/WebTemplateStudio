@@ -259,7 +259,8 @@ export const CONSTANTS = {
     NODE: "node",
     PYTHON: "python",
     PYTHON3: "python3",
-    PYTHON_LAUNCHER: "py -3"
+    PYTHON_LAUNCHER: "py -3",
+    NETCORE: "netcore"
   },
   AZURE_LOCATION: {
     CENTRAL_US: "Central US"
@@ -344,7 +345,6 @@ export enum ExtensionCommand {
   TrackOpenCosmosDBServiceModalFromServicesList = "track-open-cosmosdb-service-modal-from-services-list",
   TrackOpenAzureServiceAdvancedMode = "track-open-azure-service-advanced-mode",
   ProjectPathValidation = "project-path-validation",
-  UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
   OpenProjectVSCode = "open-project-vscode",
   GetTemplateInfo = "get-template-info",
