@@ -1,164 +1,15 @@
-.title {
-  font-size: 2.5em;
-  font-weight: lighter;
-  line-height: 25px;
-  color: var(--vscode-editor-foreground);
-}
-
-h1 {
-  font-size: 2.5em;
-  font-weight: 600;
-  font-weight: lighter;
-  margin-bottom: 0px;
-}
-
-.section {
-  margin-top: 40px;
-}
-
-.sectionLine {
-  margin-top: 15px;
-  font-size: 1.2em;
-}
-
-.sectionLineButton {
-  margin-top: 20px;
-  margin-left: -5px;
-}
-
-.readMeText {
-  color: var(--vscode-editorMarkerNavigationWarning-background);
-}
-
-.headerContainer {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2em;
 }
 
-.footerContainer {
-  margin-top: 60px;
-  float: right;
-  align-items: center;
-  display: flex;
-}
-
-.button {
-  align-items: center;
-  font-size: 1.2em;
-  margin-left: 1em;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 33px;
-}
-
-.button:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
-}
-
-.iconCheck {
-  margin-top: 3px;
-  margin-left: 1em;
-  height: 18px;
-}
-
-.iconError {
-  margin-top: 3px;
-  margin-left: 1em;
-  height: 18px;
-  width: 18px;
-}
-
-.iconError path {
-  fill: var(--vscode-errorForeground);
-}
-
-.iconCheck path {
-  fill: var(--vscode-gitDecoration-untrackedResourceForeground);
-}
-
-.spinner {
-  animation: rotate steps(60) 1s infinite;
-  height: 18px;
-  width: 18px;
-  margin-top: 3px;
-}
-
-.spinner path {
-  stroke: var(--vscode-editor-foreground);
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* styles for generation status checkmark section*/
-.checkmarkSection {
-  background-color: var(--vscode-editorWidget-border);
-}
-
-.containerWithMargin {
-  padding-top: 0.6em;
-  padding-bottom: 0.6em;
-}
-
-.checkmarkStatusRow {
-  display: flex;
-  justify-content: space-between;
-}
-
-.checkmarkStatusRow > div {
-  padding: 0.6em 1.5em;
-  font-size: 1.2em;
-}
-
-.inLine {
-  display: flex;
-}
-
-.loading {
-  font-size: 1em;
-}
-
-.loading:after {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
-  animation: ellipsis steps(4, end) 900ms infinite;
-  content: "\2026";
-  /* ascii code for the ellipsis character */
-  width: 0px;
-}
-
-@keyframes ellipsis {
-  to {
-    width: 1.25em;
-  }
-}
-
-@-webkit-keyframes ellipsis {
-  to {
-    width: 1.25em;
-  }
-}
-
-.link {
-  color: var(--vscode-textLink-foreground);
-  font-weight: var(--vscode-font-weight);
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.link:focus {
-  outline: 1px solid var(--vscode-contrastActiveBorder);
+.title {
+  font-size: 2.5em;
+  font-weight: lighter;
+  line-height: 25px;
+  color: var(--vscode-editor-foreground);
 }
 
 .closeIcon {
@@ -174,5 +25,52 @@ h1 {
 }
 
 .closeIcon:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.messages {
+  margin-top: 40px;
+}
+
+.messages > p {
+  margin-top: 15px;
+  font-size: 1.2em;
+}
+
+.generationItems {
+  margin-top: 40px;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
+  background-color: var(--vscode-editorWidget-border);
+}
+
+.footer {
+  margin-top: 60px;
+  float: right;
+  align-items: center;
+  display: flex;
+}
+
+.footer > button {
+  align-items: center;
+  font-size: 1.2em;
+  margin-left: 1em;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 33px;
+}
+
+.footer > button:focus {
+  outline: 1px solid var(--vscode-contrastActiveBorder);
+}
+
+.link {
+  color: var(--vscode-textLink-foreground);
+  font-weight: var(--vscode-font-weight);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.link:focus {
   outline: 1px solid var(--vscode-contrastActiveBorder);
 }
