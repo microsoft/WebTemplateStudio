@@ -26,6 +26,7 @@ namespace Param_RootNamespace_Pascal.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSpaStaticFiles(config => config.RootPath = "ClientApp/build");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,15 +38,21 @@ namespace Param_RootNamespace_Pascal.WebApi
             }
 
             app.UseHttpsRedirection();
+            
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+            
+            if (!env.IsDevelopment())
+            {
+                app.UseSpa(spa => spa.Options.SourcePath = "ClientApp");
+            }
         }
     }
 }
