@@ -14,6 +14,6 @@ Replace the default images. Sample images are consumed from https://wtsrepositor
 │ ├── routes/ - Handles API calls for routes
 │ ├── app.js - Adds middleware to the express server
 //{[{
-│ │ ├── sampleData.js - Contains all sample text data for generate pages
+│ ├── sampleData.js - Contains all sample text data for generate pages
 //}]}
 │ └── server.js - Configures Port and HTTP Server
