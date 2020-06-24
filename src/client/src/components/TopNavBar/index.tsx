@@ -81,7 +81,7 @@ const TopNavBar = (props: Props) => {
                   }}
                 >
                   <TopNavBarLink
-                    disabled={!alreadyVisitedRouteAndCanVisit}
+                    disabled={!projectNameValidation.isValid}
                     path={ROUTES_ARRAY[idx]}
                     text={sidebartitle}
                     visitedCheck={isOtherVisitedRoute}

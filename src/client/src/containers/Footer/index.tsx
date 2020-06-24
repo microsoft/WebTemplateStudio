@@ -108,7 +108,7 @@ const Footer = (props: Props) => {
           <div>{showLicenses() && formatMessage(messages.license)}</div>
           <div className={styles.buttonContainer}>
               <a
-                tabIndex={0}
+                tabIndex={!isFirstStep ? 0 : -1}
                 className={classnames(buttonStyles.buttonDark, styles.button, styles.buttonBack,
                   {
                     [styles.disabledOverlay]: isFirstStep
