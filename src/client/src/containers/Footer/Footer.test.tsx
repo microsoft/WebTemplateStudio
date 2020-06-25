@@ -16,46 +16,143 @@ describe("Footer", () => {
   let initialState: AppState;
   const mockStore = configureMockStore();
 
-  beforeEach(() => {
-    initialState = getInitialState();
-    store = mockStore(initialState);
-    props = {};
+  describe("When project name and page name is valid", () => {
+
+    beforeEach(() => {
+      initialState = getInitialState();
+      store = mockStore(initialState);
+      props = {};
+    });
+
+    it("renders without crashing", () => {
+      wrapper = renderWithStore(<Footer {...props} />, store);
+      expect(wrapper).toBeDefined();
+    });
+
+    it("When page is new project next and create project buttons should be shown", () => {
+      wrapper = renderWithStore(<Footer {...props} />, store);
+      const nextButton = wrapper.getByText('Next');
+      expect(nextButton).toBeDefined();
+      expect(nextButton).toHaveClass(styles.buttonHighlighted);
+
+      const createProjectButton = wrapper.getByText('Create Project');
+      expect(createProjectButton).toBeDefined();
+      expect(createProjectButton).toHaveClass(styles.buttonHighlighted);
+    });
+
+    it("When page is new project create project button should be shown", () => {
+      wrapper = renderWithStore(<Footer {...props} />, store);
+      const createProjectButton = wrapper.getByText('Create Project');
+      expect(createProjectButton).toBeDefined();
+      expect(createProjectButton).toHaveClass(styles.buttonHighlighted);
+    });
+
+    it("When page is SELECT_FRAMEWORKS next, back and create project button should be shown", () => {
+      setSelectedRoute(initialState, ROUTES.SELECT_FRAMEWORKS);
+      wrapper = renderWithStore(<Footer {...props} />, store);
+      const nextButton = wrapper.getByText('Next');
+      expect(nextButton).toBeDefined();
+      expect(nextButton).toHaveClass(styles.buttonHighlighted);
+
+      const backButton = wrapper.getByText('Back');
+      expect(backButton).toBeDefined();
+      expect(backButton).toHaveClass(styles.buttonBack);
+
+      const createProjectButton = wrapper.getByText('Create Project');
+      expect(createProjectButton).toBeDefined();
+      expect(createProjectButton).toHaveClass(styles.buttonHighlighted);
+    });
+
+    it("When page is SELECT_PAGES next, back and create project button should be shown", () => {
+      setSelectedRoute(initialState, ROUTES.SELECT_PAGES);
+      wrapper = renderWithStore(<Footer {...props} />, store);
+      const nextButton = wrapper.getByText('Next');
+      expect(nextButton).toBeDefined();
+      expect(nextButton).toHaveClass(styles.buttonHighlighted);
+
+      const backButton = wrapper.getByText('Back');
+      expect(backButton).toBeDefined();
+      expect(backButton).toHaveClass(styles.buttonBack);
+
+      const createProjectButton = wrapper.getByText('Create Project');
+      expect(createProjectButton).toBeDefined();
+      expect(createProjectButton).toHaveClass(styles.buttonHighlighted);
+    });
+
+    it("When page is ADD_SERVICES next, back and create project button should be shown", () => {
+      setSelectedRoute(initialState, ROUTES.ADD_SERVICES);
+      wrapper = renderWithStore(<Footer {...props} />, store);
+      const nextButton = wrapper.getByText('Next');
+      expect(nextButton).toBeDefined();
+      expect(nextButton).toHaveClass(styles.buttonHighlighted);
+
+      const backButton = wrapper.getByText('Back');
+      expect(backButton).toBeDefined();
+      expect(backButton).toHaveClass(styles.buttonBack);
+
+      const createProjectButton = wrapper.getByText('Create Project');
+      expect(createProjectButton).toBeDefined();
+      expect(createProjectButton).toHaveClass(styles.buttonHighlighted);
+    });
+
+    it("When page is REVIEW_AND_GENERATE back and generate button should be shown", () => {
+      setSelectedRoute(initialState, ROUTES.REVIEW_AND_GENERATE);
+      wrapper = renderWithStore(<Footer {...props} />, store);
+
+      const backButton = wrapper.getByText('Back');
+      expect(backButton).toBeDefined();
+      expect(backButton).toHaveClass(styles.buttonBack);
+
+      const createButton = wrapper.getByText('Create Project');
+      expect(createButton).toBeDefined();
+      expect(createButton).toHaveClass(buttonStyles.buttonHighlighted);
+    });
   });
 
-  xit("renders without crashing", () => {
-    wrapper = renderWithStore(<Footer {...props} />, store);
-    expect(wrapper).toBeDefined();
+  describe("When project name is invalid", () => {
+    beforeEach(() => {
+      initialState = getInitialState();
+      initialState.userSelection.projectNameObject.projectName="";
+      initialState.userSelection.projectNameObject.validation.isValid=false;
+      store = mockStore(initialState);
+    });
+
+    it("renders without crashing", () => {
+      wrapper = renderWithStore(<Footer />, store);
+      expect(wrapper).toBeDefined();
+    });
+
+    it("back, next and generate button should be disabled", () => {
+      wrapper = renderWithStore(<Footer />, store);
+
+      const backButton = wrapper.getByText('Back');
+      expect(backButton).toHaveClass(styles.disabledOverlay);
+
+      const nextButton = wrapper.getByText('Next');
+      expect(nextButton).toHaveClass(styles.disabledOverlay);
+
+      const createButton = wrapper.getByText('Create Project');
+      expect(createButton).toHaveClass(styles.disabledOverlay);
+    });
   });
 
-  xit("When page is new project next button should be shown", () => {
-    wrapper = renderWithStore(<Footer {...props} />, store);
-    const nextButton = wrapper.getByText('Next');
-    expect(nextButton).toBeDefined();
-    expect(nextButton).toHaveClass(styles.buttonHighlighted);
-  });
+  describe("When some page name is invalid on select frameworks", () => {
+    beforeEach(() => {
+      initialState = getInitialState();
+      initialState.userSelection.pages[0].isValidTitle=false;
+      store = mockStore(initialState);
+      setSelectedRoute(initialState, ROUTES.SELECT_FRAMEWORKS);
+    });
 
-  xit("When page is SELECT_FRAMEWORKS next and back button should be shown", () => {
-    setSelectedRoute(initialState, ROUTES.SELECT_FRAMEWORKS);
-    wrapper = renderWithStore(<Footer {...props} />, store);
-    const nextButton = wrapper.getByText('Next');
-    expect(nextButton).toBeDefined();
-    expect(nextButton).toHaveClass(styles.buttonHighlighted);
+    it("renders without crashing", () => {
+      wrapper = renderWithStore(<Footer />, store);
+      expect(wrapper).toBeDefined();
+    });
 
-    const backButton = wrapper.getByText('Back');
-    expect(backButton).toBeDefined();
-    expect(backButton).toHaveClass(styles.buttonBack);
-  });
-
-  it("When page is REVIEW_AND_GENERATE back and generate button should be shown", () => {
-    setSelectedRoute(initialState, ROUTES.REVIEW_AND_GENERATE);
-    wrapper = renderWithStore(<Footer {...props} />, store);
-
-    const backButton = wrapper.getByText('Back');
-    expect(backButton).toBeDefined();
-    expect(backButton).toHaveClass(styles.buttonBack);
-
-    const createButton = wrapper.getByText('Create Project');
-    expect(createButton).toBeDefined();
-    expect(createButton).toHaveClass(buttonStyles.buttonHighlighted);
+    it("generate button should be disabled", () => {
+      wrapper = renderWithStore(<Footer />, store);
+      const createButton = wrapper.getByText('Create Project');
+      expect(createButton).toHaveClass(styles.disabledOverlay);
+    });
   });
 });
