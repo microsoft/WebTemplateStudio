@@ -250,6 +250,7 @@ export const CONSTANTS = {
     return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
+  ASPNET_BACKEND_FRAMEWORK_NAME: "AspNet",
   MAX_PROJECT_NAME_LENGTH: 50,
   START_PORT: 9502,
   VSCODE_COMMAND: {

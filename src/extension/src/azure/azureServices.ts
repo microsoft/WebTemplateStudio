@@ -307,8 +307,12 @@ export class AzureServices {
     return dbObject.connectionString;
   }
 
-  public static updateConnectionStringInEnvFile(path: string, connectionString: string): void {    
-    CosmosDBDeploy.updateConnectionStringInEnvFile(path, connectionString);
+  public static updateConnectionStringToProject(path: string, connectionString: string, backendFramework: string): void {
+    if(backendFramework === CONSTANTS.ASPNET_BACKEND_FRAMEWORK_NAME) {
+      CosmosDBDeploy.updateConnectionStringInAppSettingsFile(path, connectionString);
+    } else {
+      CosmosDBDeploy.updateConnectionStringInEnvFile(path, connectionString);
+    }
   } 
 
   public static async updateAppSettings(
