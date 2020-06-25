@@ -26,6 +26,8 @@ describe("TopNavBar", () => {
     beforeEach(() => {
       initialState = getInitialState();
       store = mockStore(initialState);
+      spySetPageWizardPageAction.mockClear();
+      spySetIsDirtyAction.mockClear();
     });
 
     it("renders without crashing", () => {
@@ -33,52 +35,104 @@ describe("TopNavBar", () => {
       expect(wrapper).toBeDefined();
     });
 
-    it("New Project", () => {
+    it("New Project text", () => {
       wrapper = renderWithStore(<TopNavBar />, store);
       const text = wrapper.getByText(intl.formatMessage(messages.welcome))
       expect(text).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
+
       fireEvent.click(text);
       expect(spySetPageWizardPageAction).toHaveBeenCalled();
       expect(spySetIsDirtyAction).toHaveBeenCalled();
-
-      const number = wrapper.getByText("1")
-      expect(number).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
     });
 
-    it("Add Frameworks", () => {
+    it("New Project number", () => {
+      wrapper = renderWithStore(<TopNavBar />, store);
+      const number = wrapper.getByText("1")
+      expect(number).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
+
+      fireEvent.click(number);
+      expect(spySetPageWizardPageAction).toHaveBeenCalled();
+      expect(spySetIsDirtyAction).toHaveBeenCalled();
+    });
+
+    it("Add Frameworks text", () => {
       wrapper = renderWithStore(<TopNavBar />, store);
       const text = wrapper.getByText(intl.formatMessage(messages.frameworks))
       expect(text).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
 
-      const number = wrapper.getByText("2")
-      expect(number).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
+      fireEvent.click(text);
+      expect(spySetPageWizardPageAction).toHaveBeenCalled();
+      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
-    it("Add Pages", () => {
+    it("Add Frameworks number", () => {
+      wrapper = renderWithStore(<TopNavBar />, store);
+      const number = wrapper.getByText("2")
+      expect(number).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
+
+      fireEvent.click(number);
+      expect(spySetPageWizardPageAction).toHaveBeenCalled();
+      expect(spySetIsDirtyAction).toHaveBeenCalled();
+    });
+
+    it("Add Pages Text", () => {
       wrapper = renderWithStore(<TopNavBar />, store);
       const text = wrapper.getByText(intl.formatMessage(messages.pages))
       expect(text).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
 
-      const number = wrapper.getByText("3")
-      expect(number).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
+      fireEvent.click(text);
+      expect(spySetPageWizardPageAction).toHaveBeenCalled();
+      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
-    it("Add Optional Cloud Service", () => {
+    it("Add Pages Number", () => {
+      wrapper = renderWithStore(<TopNavBar />, store);
+      const number = wrapper.getByText("3")
+      expect(number).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
+
+      fireEvent.click(number);
+      expect(spySetPageWizardPageAction).toHaveBeenCalled();
+      expect(spySetIsDirtyAction).toHaveBeenCalled();
+    });
+
+    it("Add Optional Cloud Service text", () => {
       wrapper = renderWithStore(<TopNavBar />, store);
       const text = wrapper.getByText(intl.formatMessage(messages.services))
       expect(text).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
 
-      const number = wrapper.getByText("4")
-      expect(number).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
+      fireEvent.click(text);
+      expect(spySetPageWizardPageAction).toHaveBeenCalled();
+      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
 
-    it("Summary", () => {
+    it("Add Optional Cloud Service number", () => {
+      wrapper = renderWithStore(<TopNavBar />, store);
+      const number = wrapper.getByText("4")
+      expect(number).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
+
+      fireEvent.click(number);
+      expect(spySetPageWizardPageAction).toHaveBeenCalled();
+      expect(spySetIsDirtyAction).toHaveBeenCalled();
+    });
+
+    it("Summary text", () => {
       wrapper = renderWithStore(<TopNavBar />, store);
       const text = wrapper.getByText(intl.formatMessage(messages.summary))
       expect(text).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
 
+      fireEvent.click(text);
+      expect(spySetPageWizardPageAction).toHaveBeenCalled();
+      expect(spySetIsDirtyAction).toHaveBeenCalled();
+    });
+
+    it("Summary number", () => {
+      wrapper = renderWithStore(<TopNavBar />, store);
       const number = wrapper.getByText("5")
       expect(number).toHaveClass(stylesTopNavBarLink.pageCursorPointer);
+
+      fireEvent.click(number);
+      expect(spySetPageWizardPageAction).toHaveBeenCalled();
+      expect(spySetIsDirtyAction).toHaveBeenCalled();
     });
   });
 
