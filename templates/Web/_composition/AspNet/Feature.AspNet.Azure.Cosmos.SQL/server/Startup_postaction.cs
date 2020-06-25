@@ -20,7 +20,7 @@ using Microsoft.Azure.Cosmos;
         //{[{
         private async Task<CosmosClient> InitializeCosmosClientInstanceAsync()
         {
-            var cosmosSection = Configuration.GetSection("CosmosDb");
+            var cosmosSection = Configuration.GetSection("CosmosDB");
             string databaseName = cosmosSection.GetSection("DatabaseName").Value;
             string containerName = cosmosSection.GetSection("ContainerName").Value;
             string account = cosmosSection.GetSection("Account").Value;

@@ -15,7 +15,7 @@ namespace Param_RootNamespace_Pascal.WebApi.Services
 
         public SampleListService(CosmosClient client, IConfiguration config)
         {           
-            var cosmosSection = config.GetSection("CosmosDb");
+            var cosmosSection = config.GetSection("CosmosDB");
             string databaseName = cosmosSection.GetSection("DatabaseName").Value;
             string containerName = cosmosSection.GetSection("ContainerName").Value;
             listItemsContainer = client.GetContainer(databaseName, containerName);
