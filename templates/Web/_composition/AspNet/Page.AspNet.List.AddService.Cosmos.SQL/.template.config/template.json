@@ -1,0 +1,30 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.AspNet.List.AddService.Cosmos.SQL",
+  "shortName": "Page.AspNet.List.AddService.Cosmos.SQL",
+  "identity": "Page.AspNet.List.AddService.Cosmos.SQL",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$backendframework == AspNet & identity == wts.Feature.Azure.Cosmos.SQL & $page == wts.Page.React.List|wts.Page.Angular.List|wts.Page.Vue.List",
+    "wts.casing.rootNamespace": "pascal"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.rootNamespace.casing.pascal": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace_Pascal"
+    }
+  }
+}
