@@ -217,6 +217,25 @@ const openLogFile = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
+const openProjectInVSCode = (outputPath: string, vscode: IVSCodeObject) => {
+  return vscode.postMessage({
+    module: EXTENSION_MODULES.GENERATE,
+    command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
+    track: true,
+    payload: {
+      outputPath,
+    },
+  });
+}
+
+const subscribeToExtensionEvents = (listener: any) => {
+  window.addEventListener("message", listener);
+}
+
+const unsubscribeToExtensionEvents = (listener: any) => {
+  window.removeEventListener("message", listener);
+}
+
 export {
   projectPathValidation,
   getValidationsConfig,
@@ -238,5 +257,8 @@ export {
   getTemplateInfo,
   generateProject,
   sendLog,
-  openLogFile
+  openLogFile,
+  openProjectInVSCode,
+  subscribeToExtensionEvents,
+  unsubscribeToExtensionEvents
 }

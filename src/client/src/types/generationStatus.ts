@@ -1,23 +1,21 @@
-import { FormattedMessage } from "react-intl";
+import { Subject } from "rxjs";
 
-export interface IStatus {
-  success: boolean;
-  failure: boolean;
+export const GENERATION_NAMES = {
+  TEMPLATES: "templates",
+  APP_SERVICE: "appService",
+  COSMOS_DB: "cosmosDB",
+};
+
+export enum GenerationItemStatus {
+  Stopped = "Stopped",
+  Generating = "Generating",
+  Failed = "Failed",
+  Success = "Success",
 }
 
-export interface IServiceStatus {
-  [key: string]: IStatus;
-}
-
-export interface IDeployStatus {
-  title: FormattedMessage.MessageDescriptor;
-  isSelected: boolean;
-  isDeployed: boolean;
-  isFailed: boolean;
-}
-
-export interface IAzureServiceStatus {
-  [key: string]: IDeployStatus;
-  cosmosdb: IDeployStatus;
-  appService: IDeployStatus;
+export interface GenerationItemData {
+  name: string;
+  title: string;
+  link?: string;
+  message: Subject<string>;
 }
