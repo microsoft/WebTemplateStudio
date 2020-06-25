@@ -2,9 +2,9 @@
   "$schema": "http://json.schemastore.org/template",
   "author": "Microsoft",
   "classifications": ["Universal"],
-  "name": "AspNet.Project.AddBackendProxy",
-  "shortName": "AspNet.Project.AddBackendProxy",
-  "identity": "wts.AspNet.Project.AddBackendProxy",
+  "name": "Project.AspNet.AddBackendProxy",
+  "shortName": "Project.AspNet.AddBackendProxy",
+  "identity": "wts.Project.AspNet.AddBackendProxy",
   "tags": {
     "language": "Any",
     "type": "project",
