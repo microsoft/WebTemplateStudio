@@ -427,10 +427,10 @@ export class CosmosDBDeploy {
 
       if(ConnectionString.isCosmosSQLConnectionString(connectionString)) {
         const sqlData = ConnectionString.getConnectionStringSqlData(connectionString);
-        appsettings.CosmosDb.Account = sqlData.account;
-        appsettings.CosmosDb.Key = sqlData.primaryKey;
+        appsettings.CosmosDB.Account = sqlData.account;
+        appsettings.CosmosDB.Key = sqlData.primaryKey;
       } else {   
-        appsettings.ConnectionStrings.CosmosDb = connectionString;
+        appsettings.ConnectionStrings.CosmosDB = connectionString;
       }
 
       fs.writeJSONSync(appSettingsPath, appsettings, {spaces: 2});
