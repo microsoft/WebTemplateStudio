@@ -183,6 +183,16 @@ const generateProject = (genrationData: any,vscode: IVSCodeObject) => {
   }, vscode);
 }
 
+const getAllLicenses = (licenseData: any,vscode: IVSCodeObject) => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_ALL_LICENSES, {
+    module: EXTENSION_MODULES.CORETS,
+    command: EXTENSION_COMMANDS.GET_ALL_LICENSES,
+    track: false,
+    text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
+    payload: licenseData
+  }, vscode);
+}
+
 const getLocations = (vscode: IVSCodeObject, subscription: string, azureServiceType: string) => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_LOCATIONS, {
     module: EXTENSION_MODULES.AZURE,
@@ -240,6 +250,7 @@ export {
   projectPathValidation,
   getValidationsConfig,
   getFrameworks,
+  getAllLicenses,
   getLatestVersion,
   getPages,
   getFeatures,

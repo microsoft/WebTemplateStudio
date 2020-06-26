@@ -1,6 +1,6 @@
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import {
   getFrameworkLicensesSelector,
   getPageLicencesSelector
@@ -12,6 +12,9 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 
 import { AppState } from "../../../store/combineReducers";
 import { IVisitedPages, getIsVisitedRoutesSelector } from "../../../store/config/config/wizardNavigationSelector";
+import { getGenerationData } from "../../../store/userSelection/app/selector";
+import { getAllLicenses } from "../../../utils/extensionService/extensionService";
+import { AppContext } from "../../../AppContext";
 
 interface IStateProps {
   frameworkLicenses: string[];
@@ -26,6 +29,13 @@ const Licenses = ({
   pageLicenses,
   isVisited
 }: Props) => {
+  const { vscode } = React.useContext(AppContext);
+  const generationData = useSelector(getGenerationData);
+  const [licenses, setLicenses] = React.useState("pte");
+  getAllLicenses(generationData, vscode).then(()=>{
+    setLicenses("resolved");
+  });
+
   const LinkRenderer = (props: any) => {
     return (
       <a
@@ -34,7 +44,8 @@ const Licenses = ({
         target={"_blank"}
         rel="noreferrer noopener"
       >
-        {props.children}
+        {props.children} 
+        -- {licenses}
       </a>
     );
   };

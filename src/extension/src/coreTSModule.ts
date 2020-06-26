@@ -13,6 +13,7 @@ export class CoreTSModule extends WizardServant {
   private defineCommandMap(): Map<ExtensionCommand, (message: any) => Promise<IPayloadResponse>> {
     return new Map([
       [ExtensionCommand.GetFrameworks, this.getFrameworks],
+      [ExtensionCommand.GetAllLicenses, this.getAllLicenses],
       [ExtensionCommand.GetPages, this.getPages],
       [ExtensionCommand.GetFeatures, this.getFeatures],
       [ExtensionCommand.GetTemplateInfo, this.getTemplateConfig],
@@ -27,6 +28,16 @@ export class CoreTSModule extends WizardServant {
         frameworks,
         isPreview: message.payload.isPreview,
         projectType: message.payload.projectType,
+      },
+    };
+  }
+
+  async getAllLicenses(message: any): Promise<IPayloadResponse> {
+    const licenses = await CoreTemplateStudio.GetExistingInstance().getAllLicenses(message);
+    return {
+      payload: {
+        scope: message.payload.scope,
+        licenses
       },
     };
   }
