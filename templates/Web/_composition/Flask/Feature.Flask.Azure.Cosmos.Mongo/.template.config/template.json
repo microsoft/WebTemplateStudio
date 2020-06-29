@@ -11,7 +11,8 @@
       "wts.type": "composition",
       "wts.platform": "Web",
       "wts.version": "1.0.0",
-      "wts.compositionFilter": "$backendframework == Flask & identity == wts.Feature.Azure.Cosmos.Mongo"
+      "wts.compositionFilter": "$backendframework == Flask & identity == wts.Feature.Azure.Cosmos.Mongo",
+      "wts.licenses":"[PyMongo](https://github.com/mongodb/mongo-python-driver/blob/master/LICENSE)|[PythonDev](https://github.com/theskumar/python-dotenv/blob/master/LICENSE)"
     },
     "sourceName": "wts.ItemName",
     "preferNameDirectory": true,
