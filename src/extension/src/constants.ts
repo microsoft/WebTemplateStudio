@@ -298,20 +298,6 @@ export const CONSTANTS = {
     }
   },
   VALIDATION_LIMIT: 3,
-  APP_SERVICE_DEPLOYMENT: {
-    SERVER_FOLDER: "server",
-    DOT_VSCODE_FOLDER: ".vscode",
-    SETTINGS_FILE_NAME: "settings.json",
-    SETTINGS_FILE: (id: string, subpath: string): string => {
-      return `{
-    "appService.defaultWebAppToDeploy": "${id}",
-    "appService.deploySubpath": "${subpath}"
-}`;
-    },
-    DEPLOYMENT_FILE_NAME: ".deployment",
-    DEPLOYMENT_FILE: `[config] 
-SCM_DO_BUILD_DURING_DEPLOYMENT=true`
-  },
   TELEMETRY: {
     LAUNCH_WIZARD_STARTED_POINT: "Launch wizard"
   }
