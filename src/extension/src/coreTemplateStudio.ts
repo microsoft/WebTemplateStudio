@@ -99,22 +99,26 @@ export class CoreTemplateStudio {
   // then it will always get triggered when a command is write to the cli and there is responses from cli, until the process gets killed
   public async readStream(process: ChildProcess): Promise<void> {
     let data = "";
-    process.stdout.on("data", chunk => {
-      data += chunk;
-      const responses = data.toString().split("\n");
-      for (let i = 0; i < responses.length - 1; i++) {
-        const result = JSON.parse(responses[i]);
-        this.cliEvents.emit(result["messageType"], result["content"]);
-      }
-      data = responses[responses.length - 1];
-    });
-
-    process.stderr.on("data", data => {
-      this.cliEvents.emit("eventError", data.toString());
-    });
-    process.on("exit", code =>
-      this.cliEvents.emit("eventError", `process exited with code ${code}`)
-    );
+    if(process.stdout) {
+      process.stdout.on("data", chunk => {
+        data += chunk;
+        const responses = data.toString().split("\n");
+        for (let i = 0; i < responses.length - 1; i++) {
+          const result = JSON.parse(responses[i]);
+          this.cliEvents.emit(result["messageType"], result["content"]);
+        }
+        data = responses[responses.length - 1];
+      });
+    }
+    
+    if(process.stderr) {
+      process.stderr.on("data", data => {
+        this.cliEvents.emit("eventError", data.toString());
+      });
+      process.on("exit", code =>
+        this.cliEvents.emit("eventError", `process exited with code ${code}`)
+      );
+    }    
   }
 
   private async awaitCliEvent(
@@ -122,7 +126,9 @@ export class CoreTemplateStudio {
     command: string
   ): Promise<any> {
     this.promiseChain = this.promiseChain.then(() => {
-      this._processCli.stdin.write(command);
+      if(this._processCli.stdin) {
+        this._processCli.stdin.write(command);
+      }      
       return new Promise((resolve, reject) => {
         this.cliEvents
           .once(eventName, data => {
