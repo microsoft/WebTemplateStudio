@@ -2,9 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-
 import TopNavBarLink from "../TopNavBarLink";
-
 import styles from "./styles.module.css";
 
 import { ROUTES_ARRAY } from "../../utils/constants";
@@ -20,6 +18,7 @@ const TopNavBar = (props: Props) => {
   const isEnableNextPage = useSelector((state: AppState) => isEnableNextPageSelector(state));
   const isVisited = useSelector((state: AppState) => state.navigation.routes.isVisited);
   const selectedRoute = useSelector((state: AppState) => state.navigation.routes.selected);
+  const projectNameValidation = useSelector((state: AppState) => state.userSelection.projectNameObject.validation);
   const { intl } = props;
   const { formatMessage } = props.intl;
   const topNavBarData: string[] = [
@@ -36,10 +35,7 @@ const TopNavBar = (props: Props) => {
     const index = ROUTES_ARRAY.indexOf(selectedRoute);
     setPathIndex(index);
     const page = document.getElementById('page' + (index + 1));
-    if (page)
-    {
-      page.focus();
-    }
+    if (page) page.focus();
   }, [selectedRoute]);
 
   const navigateToPageAndSetVisited = (
@@ -53,7 +49,6 @@ const TopNavBar = (props: Props) => {
     }
   };
 
- 
   return (
     <React.Fragment>
       {
@@ -63,10 +58,8 @@ const TopNavBar = (props: Props) => {
         >
           <div>
             {topNavBarData.map((sidebartitle, idx) => {
-              const alreadyVisitedRouteAndCanVisit =
-                isVisited[ROUTES_ARRAY[idx]] && isEnableNextPage;
-              const isOtherVisitedRoute =
-                idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]];
+              const alreadyVisitedRouteAndCanVisit = isVisited[ROUTES_ARRAY[idx]] && isEnableNextPage;
+              const isOtherVisitedRoute = idx !== currentPathIndex && isVisited[ROUTES_ARRAY[idx]];
 
               return (
                 <div
@@ -75,10 +68,12 @@ const TopNavBar = (props: Props) => {
                     [styles.itemBorderTop]: idx === 0
                   })}
                   key={sidebartitle}
-                  onClick={(event) => navigateToPageAndSetVisited(event, idx) }
+                  onClick={(event) => {
+                    if (projectNameValidation.isValid) navigateToPageAndSetVisited(event, idx) 
+                  }}
                 >
                   <TopNavBarLink
-                    disabled={!alreadyVisitedRouteAndCanVisit}
+                    disabled={!projectNameValidation.isValid}
                     path={ROUTES_ARRAY[idx]}
                     text={sidebartitle}
                     visitedCheck={isOtherVisitedRoute}

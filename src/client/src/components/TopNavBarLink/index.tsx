@@ -26,7 +26,9 @@ const TopNavBarLink = ({
   intl: InjectedIntl;
   reducerSetPage: (route: string) => void;
 }) => {
-  const handleClick = () => reducerSetPage(path);
+  const handleClick = () =>{
+    if (!disabled) reducerSetPage(path);
+  } 
 
   const getAriaLabel = (
     arialabeltext: FormattedMessage.MessageDescriptor,
@@ -66,7 +68,8 @@ const TopNavBarLink = ({
         <div
           className={classnames(styles.pageNumber, {
             [styles.pageIsSelected]: isSelected,
-            [styles.pageIsVisited]: visitedCheck
+            [styles.pageIsVisited]: visitedCheck,
+            [styles.pageCursorPointer]: !disabled
           })}
         >
           {pageNumber}
@@ -74,7 +77,8 @@ const TopNavBarLink = ({
         <div
           className={classnames({
             [styles.pageIsSelectedSmall]: isSelected,
-            [styles.pageText]: !isSelected
+            [styles.pageText]: !isSelected,
+            [styles.pageCursorPointer]: !disabled
           })}
         >
           {text}
