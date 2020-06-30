@@ -5,7 +5,7 @@
 ### Sample Data
 
 Replace the sample data stored in /server/sampleData.js.
-Replace the default images stored in /src/images.
+Replace the default images. Sample images are consumed from https://wtsrepository.blob.core.windows.net/sampledata/.
 //}]}
 
 ### Deployment

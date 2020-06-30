@@ -12,8 +12,8 @@ In the root directory of the project...
 ### Adding a New Page
 
 1. Create a folder in `/src/components` with your react components.
-2. Add a route for your page to `/src/App.js`.
-3. Add a button to the navigation bar in `/src/components/NavBar/index.js`.
+2. Add a route for your page to `/src/App.jsx`.
+3. Add a button to the navigation bar in `/src/components/NavBar/index.jsx`.
    //}]}
 
 ### Deployment
