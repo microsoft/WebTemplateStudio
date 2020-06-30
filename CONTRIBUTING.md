@@ -43,7 +43,7 @@ While we're grateful for any and all contributions, we don't want you to waste a
 Every contribution has to come with:
 
 - Before starting coding, **you must open an issue** and start discussing with the community to see if the idea/feature is interesting enough.
-- A documentation page in the [documentation folder](https://github.com/Microsoft/WebTemplateStudio/tree/master/docs) if applicable.
+- A documentation page in the [documentation folder](https://github.com/Microsoft/WebTemplateStudio/tree/release/docs) if applicable.
 - Unit tests (If applicable, or an explanation why they're not)
 
 - If you've changed the UI:
