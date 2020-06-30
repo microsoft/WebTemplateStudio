@@ -16,7 +16,8 @@
     "wts.backendframework": "all",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1"
+    "wts.displayOrder": "1",
+    "wts.licenses": "[Angular](https://github.com/angular/angular/blob/master/LICENSE)|[Angular CLI](https://github.com/angular/angular-cli/blob/master/LICENSE)|[Bootstrap](https://github.com/twbs/bootstrap/blob/master/LICENSE)"
   },
   "sourceName": "wts.AngularDefault",
   "preferNameDirectory": true,

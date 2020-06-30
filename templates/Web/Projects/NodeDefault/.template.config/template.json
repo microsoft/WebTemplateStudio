@@ -16,7 +16,8 @@
     "wts.backendframework": "Node",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1"
+    "wts.displayOrder": "1",
+    "wts.licenses": "[Node](https://github.com/nodejs/node/blob/master/LICENSE)|[Express](https://github.com/expressjs/express/blob/master/LICENSE)|[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)"
   },
   "sourceName": "wts.NodeDefault",
   "preferNameDirectory": true,

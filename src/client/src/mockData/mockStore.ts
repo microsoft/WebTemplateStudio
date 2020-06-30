@@ -80,7 +80,18 @@ export const getInitialState = (): AppState => {
         version: '',
         author: ''
       },
-      pages: [],
+      pages: [{
+        author:"Microsoft",
+        defaultName:"Blank",
+        internalName:"wts.Page.React.Blank",
+        isValidTitle:true,
+        licenses:[{
+          text:"Bootstrap",
+          url:"https://github.com/twbs/bootstrap/blob/master/LICENSE"
+        }],
+        title:"Blank",
+        id:"0.7087795384523403"
+      }],
       outputPathObject: {
         outputPath: '/generic_output_path'
       },

@@ -184,6 +184,21 @@ export class CoreTemplateStudio {
     );
   }
 
+  public async getAllLicenses(payload: ICommandPayload): Promise<any> {
+    const typedPayload = payload.payload as IGenerationPayloadType;
+    const getAllLicensesPayload = JSON.stringify(
+      this.makeEngineGenerationPayload(typedPayload)
+    );
+    const getAllLicensesCommand = `${
+      CONSTANTS.CLI.GET_ALL_LICENSES_COMMAND_PREFIX
+    } -d ${getAllLicensesPayload}\n`;
+
+    return this.awaitCliEvent(
+      CONSTANTS.CLI.GET_ALL_LICENSES_COMPLETE_STATE,
+      getAllLicensesCommand
+    );
+  }
+
   public async getFeatures(
     projectType: string,
     frontendFramework: string,
