@@ -65,7 +65,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'bootstrap': '4.4.1', 'bootstrap-vue': '2.12.0', 'core-js': '3.6.4', 'vue': '2.6.11', 'vue-router': '3.1.6', 'fs-extra': '9.0.0'}",
+        "dict": "{'bootstrap': '4.5.0', 'bootstrap-vue': '2.12.0', 'core-js': '3.6.4', 'vue': '2.6.11', 'vue-router': '3.1.6', 'fs-extra': '9.0.1'}",
         "key": "dependencies",
         "jsonPath": "package.json"
       },
