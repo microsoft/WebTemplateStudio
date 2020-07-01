@@ -11,7 +11,8 @@
     "wts.type": "composition",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.compositionFilter": "$backendframework == Node & identity == wts.Feature.Azure.Cosmos.Mongo"
+    "wts.compositionFilter": "$backendframework == Node & identity == wts.Feature.Azure.Cosmos.Mongo",
+    "wts.licenses":"[Dotenv](https://github.com/motdotla/dotenv/blob/master/LICENSE)|[MongoDB](https://github.com/mongodb/node-mongodb-native/blob/master/LICENSE.md)|[Mongoose](https://github.com/Automattic/mongoose/blob/master/LICENSE.md)"
   },
   "sourceName": "wts.ItemName",
   "preferNameDirectory": true,
