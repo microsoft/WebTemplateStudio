@@ -1,18 +1,32 @@
-﻿## File Structure
+﻿## Getting Started
+
+In the root directory of the project...
+
+1. Install node modules `yarn install` or `npm install`.
+//{[{
+2. Restore .Net packages `yarn restore-packages` or `npm restore-packages`
+//}]}
+2. Start development server `yarn start` or `npm start`.
+
+## File Structure
 
 //{[{
-The back-end is based on [Moleculer CLI](https://moleculer.services/docs/0.14/usage.html#Create-a-Moleculer-project).
+The back-end is based on [ASP.NET Web API](https://dotnet.microsoft.com/apps/aspnet/apis).
 //}]}
 The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/.
 
 ```
 .
 //{[{
-├── server/ Directory with everything backend-related
-│ ├── moleculer.config.js - Moleculer Service Broker configuration file. More info: https://moleculer.services/docs/0.14/broker.html
-│ ├── services/ - Moleculer services that provides API routes and serves front-end with data
-│ │ ├── api.service.js - HTTP gateway service
-│ │ └── pages.service.js - Service that serves the data and contains the actual handlers for the API calls
+├── server/ - ASP.NET Web Api that provides API routes and serves front-end
+│ ├── Contracts/ - Interfaces for services
+│ ├── Controllers/ - Handles API calls for routes
+│ ├── Models/ - Data models
+│ ├── Services/ - Data services
+│ ├── appsettings.json - Configuration data file
+│ ├── Program.cs - Contains create host and run application
+│ ├── Startup.cs - Register services and configure application
+│ └── WebApi.csproj - Configures Port and HTTP Server
 //}]}
 └── README.md
 ```
@@ -21,7 +35,6 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 
 - Bootstrap CSS - https://getbootstrap.com/
   //{[{
-- Moleculer - https://moleculer.services/
+- .NET - https://dotnet.microsoft.com/
+- ASP.NET - https://dotnet.microsoft.com/apps/aspnet
   //}]}
-
-  This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
