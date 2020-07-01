@@ -1,14 +1,13 @@
 ﻿## Next Steps
-
+//^^
 //{[{
-
 ### Sample Data
 
 Replace the sample data stored in /server/Services/SampleDataService.cs
 Replace the default images. Sample images are consumed from https://wtsrepository.blob.core.windows.net/sampledata/.
 //}]}
 
-## File Structure
+### Deployment
 
 ```
 .

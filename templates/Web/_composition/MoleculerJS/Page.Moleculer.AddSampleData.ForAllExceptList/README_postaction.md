@@ -1,14 +1,15 @@
 ﻿## Next Steps
-
+//^^
 //{[{
-
 ### Sample Data
 
 Replace the sample data stored in `server/data/sampleData.js`.
+Replace the default images. Sample images are consumed from https://wtsrepository.blob.core.windows.net/sampledata/.
 //}]}
 
 ### Deployment
 
+```
 .
 ├── server/ Directory with everything backend-related
 │ ├── moleculer.config.js - Moleculer Service Broker configuration file. More info: https://moleculer.services/docs/0.14/broker.html
@@ -19,3 +20,4 @@ Replace the sample data stored in `server/data/sampleData.js`.
 │ └── data/ - Folder containing data samples
 │   └── sampleData.js - Contains all sample text data required to generate pages
 //}]}
+```

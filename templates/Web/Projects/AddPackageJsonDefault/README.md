@@ -6,7 +6,6 @@ In the root directory of the project...
 2. Start development server `yarn start` or `npm start`.
 
 ## Next Steps
-
 ### Deployment
 
 If you selected Azure App Service when creating your project, follow these steps:
@@ -34,16 +33,12 @@ Consider adding authentication and securing back-end API's by following [Azure A
 Full documentation for deployment to Azure App Service can be found here: [Deployment Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md).
 
 ## File Structure
-
-The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/.
-
 ```
 .
 └── README.md
 ```
 
 ## Additional Documentation
-
 - Bootstrap CSS - https://getbootstrap.com/
 
   This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).

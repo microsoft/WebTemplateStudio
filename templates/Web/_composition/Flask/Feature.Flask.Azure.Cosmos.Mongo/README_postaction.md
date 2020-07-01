@@ -8,10 +8,9 @@
 ```
 
 ## Additional Documentation
-
 //^^
 //{[{
 - Cosmos DB - https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongoose
-
 //}]}
+
   This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
