@@ -5,7 +5,10 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "target": "es5"
   },
   "files": [
     "test.ts",
