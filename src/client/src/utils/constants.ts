@@ -122,6 +122,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   FULL_STACK_APP: "FullStackWebApp",
   NODE: "Node",
   MOLECULER: "Moleculer",
+  ASPNET: "AspNet",
   FLASK: "Flask",
   REACT: "React",
   REST_API: "RestAPI",

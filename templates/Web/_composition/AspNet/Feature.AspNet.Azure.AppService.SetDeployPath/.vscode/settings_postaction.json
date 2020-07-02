@@ -1,0 +1,7 @@
+{
+  //^^
+  //{[{
+  "appService.deploySubpath": "publish",
+  //}]}
+  "appService.defaultWebAppToDeploy": "{web-app-to-deploy}"
+}
