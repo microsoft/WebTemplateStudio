@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-//{[{   
+//{[{
 using Param_RootNamespace_Pascal.WebApi.Contracts;
 using Param_RootNamespace_Pascal.WebApi.Services;
 //}]}
@@ -12,5 +12,5 @@ using Param_RootNamespace_Pascal.WebApi.Services;
             //{[{
             services.AddSingleton<ISampleListService, SampleListService>();
             //}]}
-        }        
+        }
     }

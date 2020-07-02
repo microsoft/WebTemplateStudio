@@ -10,11 +10,11 @@ using Param_RootNamespace_Pascal.WebApi.Models;
 namespace Param_RootNamespace_Pascal.WebApi.Services
 {
     public class SampleListService : ISampleListService
-    {        
+    {
         private Container listItemsContainer;
 
         public SampleListService(CosmosClient client, IConfiguration config)
-        {           
+        {
             var cosmosSection = config.GetSection("CosmosDB");
             string databaseName = cosmosSection.GetSection("DatabaseName").Value;
             string containerName = cosmosSection.GetSection("ContainerName").Value;
@@ -42,7 +42,6 @@ namespace Param_RootNamespace_Pascal.WebApi.Services
             while (query.HasMoreResults)
             {
                 var response = await query.ReadNextAsync();
-                
                 results.AddRange(response.ToList());
             }
 

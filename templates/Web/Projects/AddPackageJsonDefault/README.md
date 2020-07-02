@@ -22,7 +22,7 @@ If you did not select Azure App Service and want to create a new Azure App Servi
    - Select Linux as your OS
    - Select Node.js 12 LTS for a Node/Express application, Python 3.7 for a Flask application or .Net Core Latest runtime for ASP .NET application.
 2. Once the creation is done, click "Deploy" in the notification window on the lower right corner.
-   - Click "Browse" on the top middle section of your screen and select the "server" folder (or "publish" folder if Asp.Net backend is selected) within your project
+   - Click "Browse" on the top middle section of your screen and select the "server" folder (or "publish" folder if ASP.NET backend is selected) within your project
    - Click "Yes" in the notification window on the lower right corner (build prompt)
    - Click "Deploy" on the window pop up
    - Click "Yes" in the notification window on the lower right corner again

@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-//{[{   
+//{[{
 using Microsoft.Azure.Cosmos;
 //}]}
 
@@ -29,7 +29,7 @@ using Microsoft.Azure.Cosmos;
             var client = clientBuilder
                                 .WithConnectionModeDirect()
                                 .Build();
-            
+
             var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
             await database.Database.CreateContainerIfNotExistsAsync(containerName, "/_partitionKey");
             return client;

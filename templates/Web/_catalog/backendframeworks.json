@@ -57,7 +57,7 @@
     "summary": ".NET framework",
     "author": "Microsoft",
     "order": "1",
-    "licenses": "[AspNet](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)",
+    "licenses": "[ASP.NET](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)",
     "platform": "Web",
     "languages": ["Any"],
     "tags": {

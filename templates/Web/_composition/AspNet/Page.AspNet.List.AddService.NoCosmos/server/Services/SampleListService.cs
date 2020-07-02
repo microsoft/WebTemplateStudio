@@ -10,7 +10,7 @@ namespace Param_RootNamespace_Pascal.WebApi.Services
     public class SampleListService : ISampleListService
     {
         private static string shortLoremIpsum = "Lorem id sint aliqua tempor tempor sit.Ad dolor dolor ut nulla mollit dolore non eiusmod Lorem tempor nisi cillum.";
-        
+
         private readonly List<ListItem> ListItems = new List<ListItem>(){
             new ListItem {
                 Id = Guid.NewGuid().ToString(),

@@ -38,7 +38,7 @@ namespace Param_RootNamespace_Pascal.WebApi
             }
 
             app.UseHttpsRedirection();
-            
+
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
@@ -48,7 +48,7 @@ namespace Param_RootNamespace_Pascal.WebApi
             {
                 endpoints.MapControllers();
             });
-            
+
             if (!env.IsDevelopment())
             {
                 app.UseSpa(spa => spa.Options.SourcePath = "ClientApp");

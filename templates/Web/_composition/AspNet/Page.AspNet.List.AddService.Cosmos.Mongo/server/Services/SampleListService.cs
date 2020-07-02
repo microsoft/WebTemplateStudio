@@ -14,8 +14,8 @@ namespace Param_RootNamespace_Pascal.WebApi.Services
         private readonly IMongoCollection<ListItem> items;
 
         public SampleListService(IMongoClient client, IConfiguration config)
-        {            
-            var cosmosSection = config.GetSection("CosmosDB");            
+        {
+            var cosmosSection = config.GetSection("CosmosDB");
             string databaseName = cosmosSection.GetSection("DatabaseName").Value;
             string collectionName = cosmosSection.GetSection("CollectionName").Value;
             var mongoDb = client.GetDatabase(databaseName);

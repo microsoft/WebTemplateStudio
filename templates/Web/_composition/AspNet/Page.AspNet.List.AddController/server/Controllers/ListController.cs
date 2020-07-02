@@ -33,19 +33,18 @@ namespace Param_RootNamespace_Pascal.WebApi.Controllers
         {
             return await _service.AddItemAsync(item);
         }
-        
 
         [HttpDelete("/api/[controller]/{id}")]
         public async Task<ActionResult> Delete(string id)
         {
             var removeId = await _service.DeleteItemAsync(id);
-            if(removeId == -1)
+            if (removeId == -1)
             {
                 return NotFound("Could not find item with id:" + id);
             }
 
             var result = new { id, text = "This commented was deleted" };
-            return Ok(result);           
+            return Ok(result);
         }
     }
 }
