@@ -31,7 +31,10 @@ Web Template Studio will begin preparing the application for deployment. You can
 
 ![Build project](../resources/preparing-deploy-build-project.png)
  
- - Copy the build directory to `server/build`, so the `server` folder will contain all the necessary frontend and backend files for the deployment.
+ - Copy the build directory to:
+   -  `server/build` if Node, Flask or Moleculer backend framework is selected.
+   -  `publish/ClientApp/build` if Asp .Net backend framework is selected.
+- This folder will contain all the necessary frontend and backend files for the deployment.
 
 ![Build directory](../resources/deploy-build-directory.png)
   
@@ -41,7 +44,7 @@ Web Template Studio will begin preparing the application for deployment. You can
 
     - Otherwise, Visual Studio Code will ask you for the deployment directory and if you want to create a new Azure App Service or use a previously created. 
     
-       **IMPORTANT**:exclamation: -  Remember to select the `server` folder for deployment to be successful.
+       **IMPORTANT**:exclamation: -  Remember to select the `server` (or `publish` if Asp .Net backend framework is selected) folder for deployment to be successful.
   
 ![Select deploy directory](../resources/select-folder-to-deploy.png)
   
