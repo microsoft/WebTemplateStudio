@@ -22,6 +22,15 @@ The following test results hold as of April 23, 2019.
 | Master Detail  | 100%        |  Pass                             |  Pass with exception WCAG 2.4.5    |
 | Blank          | 100%        |  Pass                             |  Pass with exception WCAG 2.4.5    |
 
+<br/>
+
+| Vue.js         | Lighthouse  | Accessibility Insights Fast Pass  | Accessibility Insights Assessment  |
+|----------------|-------------|-----------------------------------|------------------------------------|
+| Grid           | 100%        |  Pass                             |  Pass with exception WCAG 2.4.5    |
+| List           | 100%        |  Pass                             |  Pass with exception WCAG 2.4.5    |
+| Master Detail  | 100%        |  Pass                             |  Pass with exception WCAG 2.4.5    |
+| Blank          | 100%        |  Pass                             |  Pass with exception WCAG 2.4.5    |
+
 ## Exceptions:
 
 [WCAG 2.4.5 Multiple Ways (Level AA)](https://www.w3.org/WAI/WCAG21/Understanding/multiple-ways.html): 
