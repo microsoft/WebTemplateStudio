@@ -32,7 +32,7 @@ Lorem donec massa sapien faucibus et molestie ac.";
                 LongDescription= longLoremIpsum,
                 Title= "Company A",
                 Status= "Closed",
-                ShipTo= "Francisco P�rez-Olaeta",
+                ShipTo= "Francisco Pérez-Olaeta",
                 OrderTotal= 2490.0,
                 OrderDate= new DateTime(2017, 5, 24),
                 Id= 1,
