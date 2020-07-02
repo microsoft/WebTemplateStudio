@@ -12,6 +12,7 @@
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.compositionFilter": "$backendframework == AspNet & identity == wts.Feature.Azure.Cosmos.Mongo",
+    "wts.licenses":"[MongoDB C# Driver](https://github.com/mongodb/mongo-csharp-driver/blob/master/License.txt)",
     "wts.casing.projectName": "pascal",
     "wts.casing.rootNamespace": "pascal"
   },

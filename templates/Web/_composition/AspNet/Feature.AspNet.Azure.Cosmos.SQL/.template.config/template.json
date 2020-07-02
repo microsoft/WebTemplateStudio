@@ -12,6 +12,7 @@
     "wts.platform": "Web",
     "wts.version": "1.0.0",
     "wts.compositionFilter": "$backendframework == AspNet & identity == wts.Feature.Azure.Cosmos.SQL",
+    "wts.licenses":"[Microsoft Azure Cosmos DB .NET SDK Version 3](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/master/LICENSE)",
     "wts.casing.projectName": "pascal",
     "wts.casing.rootNamespace": "pascal"
   },
