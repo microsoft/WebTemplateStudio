@@ -177,7 +177,7 @@ export class Generation extends WizardServant {
   private async createCosmosDB(
     generationData: IGenerationPayloadType
   ): Promise<DeployedServiceStatus> {
-    const { services, path } = generationData;
+    const { services, path, backendFramework } = generationData;
     const result: DeployedServiceStatus = {
       serviceType: AzureResourceType.Cosmos,
       isDeployed: false,
@@ -190,7 +190,7 @@ export class Generation extends WizardServant {
         sendToClientGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Success);
         result.isDeployed = true;
         result.payload.connectionString = connectionString;
-        await this.replaceConnectionString(path, connectionString);
+        await this.replaceConnectionString(path, connectionString, backendFramework);
       } catch (error) {
         Logger.appendError("EXTENSION", "Error on deploy CosmosDB Service:", error);
         sendToClientGenerationStatus(GENERATION_NAMES.COSMOS_DB, GenerationItemStatus.Failed, "ERROR: Cosmos DB failed to deploy");
@@ -200,7 +200,7 @@ export class Generation extends WizardServant {
     return result;
   }
 
-  private async replaceConnectionString(path: string, connectionString: string): Promise<void> {
+  private async replaceConnectionString(path: string, connectionString: string, backendFramework: string): Promise<void> {
     const selection = await vscode.window.showInformationMessage(
       DialogMessages.cosmosDBConnectStringReplacePrompt,
       ...[DialogResponses.yes, DialogResponses.no]
@@ -208,7 +208,7 @@ export class Generation extends WizardServant {
 
     const start = Date.now();
     if (selection === DialogResponses.yes) {
-      AzureServices.updateConnectionStringInEnvFile(path, connectionString);
+      AzureServices.updateConnectionStringToProject(path, connectionString, backendFramework);
       vscode.window.showInformationMessage(CONSTANTS.INFO.FILE_REPLACED_MESSAGE + path);
       this.trackCosmosConnectionStringReplace(start);
     }

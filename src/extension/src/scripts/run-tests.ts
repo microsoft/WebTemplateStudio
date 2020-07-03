@@ -66,6 +66,15 @@ function installDependencies(file: string) {
         maxBuffer: 1024 * 1024
       });
     }
+
+    if (file.indexOf("AspNet") > -1) {
+      console.log(cyanColor, `Restore Asp .Net packages in ${file}`);
+      child_process.execSync("yarn restore-packages", {
+        cwd: currDir,
+        stdio: "inherit",
+        maxBuffer: 1024 * 1024
+      });
+    }
   } catch (err) {
     console.error(
       redColor,

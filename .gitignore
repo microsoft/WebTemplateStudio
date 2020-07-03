@@ -293,6 +293,7 @@ paket-files/
 
 # VSCode custom workspace settings
 .vscode/
+!/templates/**/.vscode
 
 # CodeRush
 .cr/

@@ -346,6 +346,20 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       version: '1.0.3',
       linuxVersion: 'python|3.7',
       latestVersionLoaded: true
+    },
+    {
+      author: 'Microsoft',
+      body: 'ASP.NET Framework',
+      internalName: 'AspNet',
+      licenses: ['[AspNet](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)'],
+      longDescription: 'ASP.NET long description',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'ASP.NET',
+      version: '3.1.4',
+      linuxVersion: 'DOTNETCORE|3.1',
+      latestVersionLoaded: true
     }
 
 

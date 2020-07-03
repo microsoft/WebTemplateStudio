@@ -252,6 +252,7 @@ export const CONSTANTS = {
     return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
+  ASPNET_BACKEND_FRAMEWORK_NAME: "AspNet",
   MAX_PROJECT_NAME_LENGTH: 50,
   START_PORT: 9502,
   VSCODE_COMMAND: {
@@ -299,20 +300,6 @@ export const CONSTANTS = {
     }
   },
   VALIDATION_LIMIT: 3,
-  APP_SERVICE_DEPLOYMENT: {
-    SERVER_FOLDER: "server",
-    DOT_VSCODE_FOLDER: ".vscode",
-    SETTINGS_FILE_NAME: "settings.json",
-    SETTINGS_FILE: (id: string, subpath: string): string => {
-      return `{
-    "appService.defaultWebAppToDeploy": "${id}",
-    "appService.deploySubpath": "${subpath}"
-}`;
-    },
-    DEPLOYMENT_FILE_NAME: ".deployment",
-    DEPLOYMENT_FILE: `[config] 
-SCM_DO_BUILD_DURING_DEPLOYMENT=true`
-  },
   TELEMETRY: {
     LAUNCH_WIZARD_STARTED_POINT: "Launch wizard"
   }

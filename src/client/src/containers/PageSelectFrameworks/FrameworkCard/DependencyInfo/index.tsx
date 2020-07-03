@@ -38,6 +38,14 @@ const dependencies: IDependencies = {
     downloadLink: "https://www.python.org/downloads/",
     privacyStatementLink: "https://www.python.org/privacy/",
     downloadLinkLabel: "Python download link"
+  },
+  NetCore: {
+    dependencyStoreKey: "netCore",
+    dependencyName: ".NET Core",
+    dependencyMinimumVersion: "v3.1+",
+    downloadLink: "https://dotnet.microsoft.com/download",
+    privacyStatementLink: "https://dotnet.microsoft.com/privacy",
+    downloadLinkLabel: ".NET Core download link"
   }
 };
 
@@ -47,7 +55,8 @@ const frameworkNameToDependencyMap: Map<string, IDependency> = new Map([
   [WIZARD_CONTENT_INTERNAL_NAMES.VUE, dependencies.Node],
   [WIZARD_CONTENT_INTERNAL_NAMES.FLASK, dependencies.Python],
   [WIZARD_CONTENT_INTERNAL_NAMES.NODE, dependencies.Node],
-  [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER, dependencies.Node]
+  [WIZARD_CONTENT_INTERNAL_NAMES.MOLECULER, dependencies.Node],
+  [WIZARD_CONTENT_INTERNAL_NAMES.ASPNET, dependencies.NetCore]
 ]);
 
 interface IProps {
