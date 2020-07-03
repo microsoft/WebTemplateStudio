@@ -3,7 +3,7 @@
 The generated code was tested against [Accessibility Insights](https://accessibilityinsights.io/) and [Lighthouse](https://developers.google.com/web/tools/lighthouse/) to ensure web accessibility standards were met. The full assessment through Accessibility Insights was used to measure compliance against the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/WCAG21/quickref/?currentsidebar=%23col_overview&versions=2.0&levels=aaa) (WCAG) 2.0 Level AA Success Criteria. Please ensure all pull requests meet the [WCAG](https://www.w3.org/WAI/WCAG21/quickref/?currentsidebar=%23col_overview&versions=2.0&levels=aaa) success criteria with the exception of [WCAG 2.4.5](https://www.w3.org/WAI/WCAG21/Understanding/multiple-ways.html).
 
 ## Results
-The following test results hold as of April 23, 2019.
+The following test results hold as of July 2, 2020.
 
 
 | React          | Lighthouse  | Accessibility Insights Fast Pass  | Accessibility Insights Assessment  |
