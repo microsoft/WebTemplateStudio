@@ -1,0 +1,30 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Page.AspNet.List.AddController",
+  "shortName": "Page.AspNet.List.AddController",
+  "identity": "Page.AspNet.List.AddController",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$backendframework == AspNet & groupIdentity == wts.Page.List",
+    "wts.casing.rootNamespace": "pascal"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.rootNamespace.casing.pascal": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace_Pascal"
+    }
+  }
+}

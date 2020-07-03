@@ -16,6 +16,7 @@ describe("RuntimeStackInfo", () => {
     ["Node", "node"],
     ["Moleculer", "node"],
     ["Flask", "python"],
+    ["AspNet", "DOTNETCORE"]
   ];
 
   test.each(cases)(

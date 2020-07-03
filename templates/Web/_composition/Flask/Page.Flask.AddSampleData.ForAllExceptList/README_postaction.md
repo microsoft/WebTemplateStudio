@@ -1,17 +1,13 @@
 ﻿## Next Steps
-
+//^^
 //{[{
-
 ### Sample Data
 
 Replace the sample data stored in /server/sample_data.py.
 Replace the default images. Sample images are consumed from https://wtsrepository.blob.core.windows.net/sampledata/.
 //}]}
 
-## File Structure
-
-The back-end is based on [Flask](https://github.com/pallets/flask).
-The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/.
+### Deployment
 
 ```
 .

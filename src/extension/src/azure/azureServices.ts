@@ -8,8 +8,9 @@ import { ResourceGroupDeploy, ResourceGroupSelection } from "./azure-resource-gr
 import { AppServiceProvider, AppServiceSelections } from "./azure-app-service/appServiceProvider";
 import { StringDictionary } from "azure-arm-website/lib/models";
 import { ConnectionString } from "./utils/connectionString";
-import { Settings } from "./utils/settings";
 import { ICosmosDBGenerationPayload, IAppServiceGenerationPayload, IServicesGenerationPayload } from "../types/generationPayloadType";
+import * as fse from "fs-extra";
+import * as path from "path";
 
 interface UserStatus {
   email: string;
@@ -268,8 +269,7 @@ export class AzureServices {
     }
 
     const id = AzureServices.convertId(result);
-    Settings.enableScmDoBuildDuringDeploy(path);
-    Settings.setDeployDefault(id, path);
+    AzureServices.updateAppServiceDeployInSettingsFile(path, id);
   }
 
   private static convertId(rawId: string): string {
@@ -277,6 +277,17 @@ export class AzureServices {
     const MS_RESOURCE_DEPLOYMENT = "Microsoft.Resources/deployments";
     const MS_WEB_SITE = "Microsoft.Web/sites";
     return rawId.replace(MS_RESOURCE_DEPLOYMENT, MS_WEB_SITE).replace("-" + AzureResourceType.AppService, "");
+  }
+
+  private static updateAppServiceDeployInSettingsFile(filePath: string, id: string): void {
+    try {
+      const settingsPath = path.join(filePath, ".vscode", "settings.json");
+      const settings = fse.readJSONSync(settingsPath);
+      settings["appService.defaultWebAppToDeploy"] = id;
+      fse.writeJSONSync(settingsPath, settings, {spaces: 2});      
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 
   public static async deployCosmos(cosmosDB: ICosmosDBGenerationPayload, genPath: string): Promise<string> {
@@ -307,8 +318,12 @@ export class AzureServices {
     return dbObject.connectionString;
   }
 
-  public static updateConnectionStringInEnvFile(path: string, connectionString: string): void {    
-    CosmosDBDeploy.updateConnectionStringInEnvFile(path, connectionString);
+  public static updateConnectionStringToProject(path: string, connectionString: string, backendFramework: string): void {
+    if(backendFramework === CONSTANTS.ASPNET_BACKEND_FRAMEWORK_NAME) {
+      CosmosDBDeploy.updateConnectionStringInAppSettingsFile(path, connectionString);
+    } else {
+      CosmosDBDeploy.updateConnectionStringInEnvFile(path, connectionString);
+    }
   } 
 
   public static async updateAppSettings(
