@@ -2,6 +2,7 @@ import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { ExtensionCommand } from "../constants";
 import latestVersion from "latest-version";
 import RequirementsService from "../utils/requirements/requirementsService";
+import { Logger } from "../utils/logger";
 const axios = require("axios");
 
 export class DependenciesModule extends WizardServant {
@@ -53,7 +54,7 @@ export class DependenciesModule extends WizardServant {
         //ASP.NET version start with 'v', remove this
         latestVersion = latestVersion.replace('v', '');
     } catch (error) {
-      console.log(error);
+      Logger.appendError("EXTENSION", `Error getting latest version of ${packageName} package from GitHub:`, error);
     }
     return latestVersion;
   }
