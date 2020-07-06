@@ -357,7 +357,7 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       selected: false,
       svgUrl: '',
       title: 'ASP.NET',
-      version: '3.1.4',
+      version: '3.1.5',
       linuxVersion: 'DOTNETCORE|3.1',
       latestVersionLoaded: true
     }
