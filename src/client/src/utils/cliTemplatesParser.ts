@@ -2,8 +2,8 @@ import { IApiTemplateInfo } from "../types/apiTemplateInfo";
 import { IOption } from "../types/option";
 import { FRAMEWORK_TYPE } from "./constants";
 
-export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE, isPreview: boolean): IOption[] => {
-  const items = getFrameworksTemplateInfo(json, type, isPreview);
+export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE): IOption[] => {
+  const items = getFrameworksTemplateInfo(json, type);
   return items.map<IOption>((val) => ({
     author: val.author,
     body: val.summary,
@@ -19,6 +19,7 @@ export const getFrameworksOptions = (json: any[], type: FRAMEWORK_TYPE, isPrevie
     latestVersion: val.tags!.latestVersion,
     checkVersionPackageName: val.tags!.checkVersionPackageName,
     checkVersionPackageSource: val.tags!.checkVersionPackageSource,
+    isPreview: val.tags.preview
   }));
 };
 
@@ -58,7 +59,7 @@ export const getFeaturesOptions = (json: any[]): IOption[] => {
         group: val.group,
       }
       result.push(option);
-    }    
+    }
     return result;
   }, [] as IOption[]);
 
@@ -67,8 +68,9 @@ export const getFeaturesOptions = (json: any[]): IOption[] => {
   return stored;
 };
 
-const getFrameworksTemplateInfo = (items: any[], type: FRAMEWORK_TYPE, isPreview: boolean): IApiTemplateInfo[] => {
+const getFrameworksTemplateInfo = (items: any[], type: FRAMEWORK_TYPE): IApiTemplateInfo[] => {
   return items
+    .filter(val => val.tags.type === type)
     .map<IApiTemplateInfo>((val) => ({
       author: val.author,
       templateGroupIdentity: val.templateGroupIdentity,
@@ -82,10 +84,7 @@ const getFrameworksTemplateInfo = (items: any[], type: FRAMEWORK_TYPE, isPreview
       summary: val.summary,
       svgUrl: val.icon,
       tags: val.tags,
-    }))
-    .filter((val: IApiTemplateInfo) => {
-      return val.tags.type === type && (isPreview || !val.tags.preview);
-    });
+    }));
 };
 
 const getPagesTemplateInfo = (items: any[]): IApiTemplateInfo[] => {
