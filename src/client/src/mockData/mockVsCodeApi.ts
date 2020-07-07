@@ -236,7 +236,7 @@ const mockVsCodeApi = () => ({
                     tags: {
                       version: "3.1.5",
                       latestVersion: "3.1.5",
-                      preview: false,
+                      preview: true,
                       enabled: true,
                       type: "backend",
                       linuxVersion: "DOTNETCORE|3.1"
