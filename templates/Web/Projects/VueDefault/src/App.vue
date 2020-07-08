@@ -43,9 +43,4 @@ footer {
   background-color: #025fce !important;
 }
 
-button:focus,
-button:active {
-  outline: none !important;
-  box-shadow: none !important;
-}
 </style>

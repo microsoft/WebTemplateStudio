@@ -14,7 +14,7 @@ const ListItem = ({ item, deleteItem }) => {
             className="close py-2"
             data-dismiss="alert"
             aria-label="delete"
-            alt={item.text}
+            alt="delete"
             onClick={() => deleteItem(item)}
           >
             <div aria-hidden="true">&times;</div>
