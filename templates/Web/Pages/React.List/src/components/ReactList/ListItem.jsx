@@ -13,7 +13,8 @@ const ListItem = ({ item, deleteItem }) => {
             type="button"
             className="close py-2"
             data-dismiss="alert"
-            aria-label="Close"
+            aria-label="delete"
+            alt={item.text}
             onClick={() => deleteItem(item)}
           >
             <div aria-hidden="true">&times;</div>
