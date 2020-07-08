@@ -234,9 +234,9 @@ const mockVsCodeApi = () => ({
                     platforms: ["Web"],
                     languages: ["Any"],
                     tags: {
-                      version: "3.1.4",
-                      latestVersion: "3.1.4",
-                      preview: false,
+                      version: "3.1.5",
+                      latestVersion: "3.1.5",
+                      preview: true,
                       enabled: true,
                       type: "backend",
                       linuxVersion: "DOTNETCORE|3.1"
@@ -251,7 +251,7 @@ const mockVsCodeApi = () => ({
           );
           break;
         case EXTENSION_COMMANDS.GET_LATEST_VERSION:
-            const latestVersion = true;
+            const latestVersion = "v3.1.5";
             window.postMessage(
               {
                 command: EXTENSION_COMMANDS.GET_LATEST_VERSION,
