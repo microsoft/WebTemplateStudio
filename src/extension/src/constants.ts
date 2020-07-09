@@ -407,7 +407,7 @@ export namespace DialogMessages {
   );
   export const cosmosDBConnectStringReplacePrompt: string = localize(
     "dialog.cosmosDBConnectStringReplacePrompt",
-    "Replace your DB connection string in the .env file with the generated CosmosDB connection string?"
+    "Do you want to update the CosmosDB connection string in configuration file?"
   );
   export const resetPagesPrompt: string = localize(
     "dialog.resetPagesPrompt",
