@@ -22,7 +22,7 @@ To deploy Cosmos DB using Web Template Studio:
   `<cosmos_account_name>.documents.azure.com`.
 
 - Select an API for your database. _**Note:**_ Web Template Studio only supports MongoDB API and SQL API.
-  
+
 ![azure-cosmos-modal](../../resources/azure-cosmos-modal.png)
 
 ### Advanced mode
@@ -76,7 +76,7 @@ collections, setting up firewalls, viewing metrics for your deployment etc.
 ![azure-cosmos-extension](../../resources/azure-cosmos-extension.png)
 
 If you would like to manage your Cosmos DB environment from VSCode itself, we recommend you install the
-[Azure Cosmos](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-cosmosdb) extension for VSCode.
+[Azure Databases](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-cosmosdb) extension for VSCode.
 Select Azure from the activity bar. From the Cosmos menu, you can create a new database account (as shown in the image
 above) or attach a previously created database account. From here, you can create/view/edit/delete accounts, collections
 and documents etc. or execute commands (such as SQL or mongo shell commands). Read the extension [documentation](https://
