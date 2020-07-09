@@ -19,10 +19,27 @@ are merged together by [Core Template Studio](https://github.com/Microsoft/CoreT
 | master  | [![Build Status](https://winappstudio.visualstudio.com/Vegas/_apis/build/status/WebTemplateStudio%20-%20CI%20and%20Deploy?branchName=master)](https://winappstudio.visualstudio.com/Vegas/_build/latest?definitionId=158&branchName=master) |
 
 # Documentation
+Web Template Studio (WebTS) documentation is divided into three areas.
+
+
+## General
+Everyone should read these.
 
 - [Installing the extension](/docs/install.md)
+- [Core Concepts](/docs/concepts.md)
+
+## Using WebTS to build apps
+These will help if using WebTS to build apps.
+
+- [Deployment of the generated apps](docs/generated-apps/deployment.md)
+
+
+## Working on WebTS
+These will help if you want to know more about WebTS or contribute to the project.
+
+- [Application Arquitecture](docs/contributing/application-architecture.md)
 - [Getting started with the codebase](/docs/contributing/getting-started-developers.md)
-- [Terminology for developers](/docs/terminology.md)
+- [Templates](./contributing/templates.md)
 
 ## SHA256
 

@@ -25,5 +25,5 @@ Web Template Studio is divided in the following main elements:
 - [Installing the extension](./install.md)
 - [Application Arquitecture](./contributing/application-architecture.md)
 - [Getting started with the WebTS codebase](./contributing/getting-started-developers.md)
-- [Templares](./contributing/templates.md)
+- [Templates](./contributing/templates.md)
 - [All docs](./readme.md)
