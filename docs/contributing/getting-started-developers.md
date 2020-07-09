@@ -42,7 +42,7 @@ This folder contains the source code for the different components of Web Templat
             - Selector: Selectors contain helper methods which takes the Redux store as an argument and returns a specific field.
             - Action: Actions for the Redux store
             - Model: Interfaces for actions, reducers and selectors.
-           
+
 
 - extension: This folder contains the Visual Studio extensions code.
     - src:
