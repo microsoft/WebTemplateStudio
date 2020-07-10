@@ -31,6 +31,10 @@ Everyone should read these.
 ## Using WebTS to build apps
 These will help if using WebTS to build apps.
 
+- [Front-end frameworks](docs/generated-apps/frontend-frameworks/readme.md)
+- [Back-end frameworks](docs/generated-apps/backend-frameworks/readme.md)
+- [Pages](docs/generated-apps/pages/readme.md)
+- [Pages](docs/generated-apps/services/readme.md)
 - [Deployment of the generated apps](docs/generated-apps/deployment.md)
 
 
