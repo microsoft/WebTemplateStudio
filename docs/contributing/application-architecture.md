@@ -1,3 +1,5 @@
+# Application Architecture
+
 Web Template Studio is a [Visual Studio Code Extension](https://code.visualstudio.com/api) that has three major components: 
 
   - The extension's backend (referred to as the [extension](https://github.com/Microsoft/WebTemplateStudio/tree/dev/src/extension)), which is written in [Typescript](https://www.typescriptlang.org/).
