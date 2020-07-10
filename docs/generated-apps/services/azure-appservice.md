@@ -41,7 +41,7 @@ used to deploy your application are also available under the _arm-templates_ dir
 
 ## How to deploy
 
-When we create a Azure App Service, it initially contains an empty web app. To learn how to deploy your generated application to the created Azure App Service, read the [Web Template Studio deployment documentation](../../deployment.md).
+When we create a Azure App Service, it initially contains an empty web app. To learn how to deploy your generated application to the created Azure App Service, read the [Web Template Studio deployment documentation](../deployment.md).
 
 ## VSCode Extension for Azure App Service
 
