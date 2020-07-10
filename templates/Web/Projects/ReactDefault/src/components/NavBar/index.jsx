@@ -11,7 +11,7 @@ const NavBar = () => {
         <a href="#mainContent">Skip to Main Content</a>
       </div>
       <nav className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/" role="heading">
           wts.ReactDefault
         </Link>
         <div className="navbar-nav">
