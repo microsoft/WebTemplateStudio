@@ -16,7 +16,8 @@
     "wts.backendframework": "Node",
     "wts.platform": "Web",
     "wts.version": "1.0.0",
-    "wts.displayOrder": "1"
+    "wts.displayOrder": "1",
+    "wts.licenses": "[Node](https://github.com/nodejs/node/blob/master/LICENSE)|[Express](https://github.com/expressjs/express/blob/master/LICENSE)|[Express Generator](https://github.com/expressjs/generator/blob/master/LICENSE)"
   },
   "sourceName": "wts.NodeDefault",
   "preferNameDirectory": true,
@@ -79,7 +80,7 @@
       "manualInstructions": [],
       "actionId": "CB387AC0-16D0-4E07-B41A-F1EA616A7CA9",
       "args": {
-        "dict": "{'cookie-parser': '1.4.5', 'debug': '4.1.1','express': '4.17.1','http-errors': '1.7.3','morgan': '1.10.0'}",
+        "dict": "{'cookie-parser': '1.4.5', 'debug': '4.1.1','express': '4.17.1','http-errors': '1.8.0','morgan': '1.10.0'}",
         "key": "dependencies",
         "jsonPath": "package.json"
       },

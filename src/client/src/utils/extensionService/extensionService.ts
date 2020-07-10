@@ -183,6 +183,16 @@ const generateProject = (genrationData: any,vscode: IVSCodeObject) => {
   }, vscode);
 }
 
+const getAllLicenses = (licenseData: any,vscode: IVSCodeObject) => {
+  return postMessageAsync(EXTENSION_COMMANDS.GET_ALL_LICENSES, {
+    module: EXTENSION_MODULES.CORETS,
+    command: EXTENSION_COMMANDS.GET_ALL_LICENSES,
+    track: false,
+    text: PAYLOAD_MESSAGES_TEXT.SENT_GENERATION_INFO_TEXT,
+    payload: licenseData
+  }, vscode);
+}
+
 const getLocations = (vscode: IVSCodeObject, subscription: string, azureServiceType: string) => {
   return postMessageAsync(EXTENSION_COMMANDS.GET_LOCATIONS, {
     module: EXTENSION_MODULES.AZURE,
@@ -217,10 +227,30 @@ const openLogFile = (vscode: IVSCodeObject) => {
   }, vscode);
 }
 
+const openProjectInVSCode = (outputPath: string, vscode: IVSCodeObject) => {
+  return vscode.postMessage({
+    module: EXTENSION_MODULES.GENERATE,
+    command: EXTENSION_COMMANDS.OPEN_PROJECT_IN_VSCODE,
+    track: true,
+    payload: {
+      outputPath,
+    },
+  });
+}
+
+const subscribeToExtensionEvents = (listener: any) => {
+  window.addEventListener("message", listener);
+}
+
+const unsubscribeToExtensionEvents = (listener: any) => {
+  window.removeEventListener("message", listener);
+}
+
 export {
   projectPathValidation,
   getValidationsConfig,
   getFrameworks,
+  getAllLicenses,
   getLatestVersion,
   getPages,
   getFeatures,
@@ -238,5 +268,8 @@ export {
   getTemplateInfo,
   generateProject,
   sendLog,
-  openLogFile
+  openLogFile,
+  openProjectInVSCode,
+  subscribeToExtensionEvents,
+  unsubscribeToExtensionEvents
 }

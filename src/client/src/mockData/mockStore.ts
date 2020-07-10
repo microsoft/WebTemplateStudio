@@ -80,7 +80,18 @@ export const getInitialState = (): AppState => {
         version: '',
         author: ''
       },
-      pages: [],
+      pages: [{
+        author:"Microsoft",
+        defaultName:"Blank",
+        internalName:"wts.Page.React.Blank",
+        isValidTitle:true,
+        licenses:[{
+          text:"Bootstrap",
+          url:"https://github.com/twbs/bootstrap/blob/master/LICENSE"
+        }],
+        title:"Blank",
+        id:"0.7087795384523403"
+      }],
       outputPathObject: {
         outputPath: '/generic_output_path'
       },
@@ -335,6 +346,20 @@ export const addBackEndFrameworksOptions = (store: AppState)=>{
       version: '1.0.3',
       linuxVersion: 'python|3.7',
       latestVersionLoaded: true
+    },
+    {
+      author: 'Microsoft',
+      body: 'ASP.NET Framework',
+      internalName: 'AspNet',
+      licenses: ['[AspNet](https://github.com/dotnet/aspnetcore/blob/master/LICENSE.txt)'],
+      longDescription: 'ASP.NET long description',
+      position: 1,
+      selected: false,
+      svgUrl: '',
+      title: 'ASP.NET',
+      version: '3.1.5',
+      linuxVersion: 'DOTNETCORE|3.1',
+      latestVersionLoaded: true
     }
 
 
@@ -397,3 +422,24 @@ export const setSelectedRoute = (store: AppState, seletedRoute: string) => {
 export const setAzureEmail = (store: AppState, email = "test@test.com") => {
   store.config.azureProfileData.email = email;
 }
+
+export const setGenerationData = (store: AppState) => {
+  store.userSelection.pages = [getISelected()];
+  store.userSelection.services.appService = {
+    subscription: "",
+    resourceGroup: "",
+    location: "",
+    siteName: "",
+    internalName: "",
+  };
+  store.userSelection.services.cosmosDB = {
+    subscription: "",
+    resourceGroup: "",
+    location: "",
+    accountName: "",
+    api: "",
+    internalName: "",
+    groupName: "",
+  };
+  return 3;
+};

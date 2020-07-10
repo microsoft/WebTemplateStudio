@@ -63,15 +63,13 @@ export function* loadFrameworksListSaga(vscode: any) {
   );
 
   function* callBack (){
-    const isPreviewSelector = (state: AppState) => state.config.previewStatus;
-    const isPreview = yield select(isPreviewSelector);
+    const isPreview = yield select((state: AppState) => state.config.previewStatus);
 
     const event: any = yield call(getFrameworks, vscode, isPreview);
     const message = event.data;
     const optionFrontEndFrameworks = getFrameworksOptions(
       message.payload.frameworks,
-      FRAMEWORK_TYPE.FRONTEND,
-      message.payload.isPreview
+      FRAMEWORK_TYPE.FRONTEND
     );
 
     const defaultOptionFront = optionFrontEndFrameworks[0];
@@ -94,10 +92,9 @@ export function* loadFrameworksListSaga(vscode: any) {
     });
     const optionBackEndFrameworks = getFrameworksOptions(
       message.payload.frameworks,
-      FRAMEWORK_TYPE.BACKEND,
-      message.payload.isPreview
+      FRAMEWORK_TYPE.BACKEND
     );
-    
+
     const defaultOptionBack = optionBackEndFrameworks[0];
     const defaultSelectedBackEndFramework = {
       title: defaultOptionBack.title as string,

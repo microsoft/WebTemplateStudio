@@ -68,12 +68,14 @@
   z-index: 1000;
   border: 1px solid #0067b8;
   color: var(--vscode-button-foreground);
-  cursor: pointer;
 }
 
 .pageIsVisited {
   background-color: var(--vscode-editor-foreground);
   color: var(--vscode-editor-background);
+}
+
+.pageCursorPointer{
   cursor: pointer;
 }
 
@@ -81,7 +83,6 @@
   flex-grow: 3;
   margin: auto;
   padding-left: 10px;
-  cursor: pointer;
 }
 
 @media (max-width: 700px) {
@@ -97,7 +98,6 @@
   }
   .pageIsSelectedSmall {
     animation: move 0.5s;
-    cursor: pointer;
   }
 }
 
@@ -107,7 +107,6 @@
     flex-grow: 3;
     margin: auto;
     padding-left: 10px;
-    cursor: pointer;
   }
 }
 

@@ -16,7 +16,9 @@ const WEB_TEMPLATE_STUDIO_LINKS = {
 const AZURE_LINKS = {
   CREATE_NEW_SUBSCRIPTION: "https://account.azure.com/signup?showCatalog=True&appId=SubscriptionsBlade",
   CREATE_NEW_RESOURCE_GROUP: "https://portal.azure.com/#create/Microsoft.ResourceGroup",
-  APP_SERVICE_PLAN:"https://azure.microsoft.com/en-us/pricing/details/app-service/plans/"
+  APP_SERVICE_PLAN:"https://azure.microsoft.com/en-us/pricing/details/app-service/plans/",
+  VIEW_GENERATE_APP_SERVICE: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites",
+  VIEW_GENERATE_MONGO_DB: "https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts"
 };
 
 const PRODUCTION = "production";
@@ -120,6 +122,7 @@ const WIZARD_CONTENT_INTERNAL_NAMES = {
   FULL_STACK_APP: "FullStackWebApp",
   NODE: "Node",
   MOLECULER: "Moleculer",
+  ASPNET: "AspNet",
   FLASK: "Flask",
   REACT: "React",
   REST_API: "RestAPI",
@@ -168,7 +171,6 @@ const EXTENSION_COMMANDS = {
   TRACK_OPEN_APP_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-app-service-modal-from-services-list",
   TRACK_OPEN_COSMOSDB_SERVICE_MODAL_FROM_SERVICES_LIST: "track-open-cosmosdb-service-modal-from-services-list",
   TRACK_OPEN_AZURE_SERVICE_ADVANCED_MODE: "track-open-azure-service-advanced-mode",
-  GEN_STATUS_MESSAGE: "update-status-message",
   GEN_STATUS: "update-status",
   OPEN_PROJECT_IN_VSCODE: "open-project-vscode",
   GET_TEMPLATE_INFO: "get-template-info",
@@ -176,6 +178,7 @@ const EXTENSION_COMMANDS = {
   GET_VERSIONS: "get-versions",
   GET_DEPENDENCY_INFO: "check-dependency",
   GET_FRAMEWORKS: "get-frameworks",
+  GET_ALL_LICENSES: "get-all-licenses",
   GET_LATEST_VERSION:"get-latest-version",
   GET_PAGES: "get-pages",
   GET_FEATURES: "get-features",

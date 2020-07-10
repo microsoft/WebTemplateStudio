@@ -1,13 +1,14 @@
 import { CONSTANTS } from "../../constants";
 const Url = require("url-parse");
 
+interface ConnectionStringSqlData {
+  account: string;
+  primaryKey: string;
+}
+
 export namespace ConnectionString {
   export function parseConnectionString(connectionString: string): string {
-    if (
-      connectionString
-        .toLowerCase()
-        .startsWith(CONSTANTS.SQL_CONNECTION_STRING_PREFIX)
-    ) {
+    if (isCosmosSQLConnectionString(connectionString)) {
       const [origin, primaryKey] = connectionString
         .split(";")
         .map(str => str.substr(str.indexOf("=") + 1));
@@ -21,5 +22,19 @@ export namespace ConnectionString {
         cosmosConnectionString.origin
       );
     }
+  }
+
+  export function getConnectionStringSqlData(connectionString: string): ConnectionStringSqlData {
+    const [account, primaryKey] = connectionString
+        .split(";")
+        .map(str => str.substr(str.indexOf("=") + 1));
+
+      return {account, primaryKey};    
+  }
+
+  export function isCosmosSQLConnectionString (connectionString: string): boolean {
+    return connectionString
+      .toLowerCase()
+      .startsWith(CONSTANTS.SQL_CONNECTION_STRING_PREFIX);
   }
 }

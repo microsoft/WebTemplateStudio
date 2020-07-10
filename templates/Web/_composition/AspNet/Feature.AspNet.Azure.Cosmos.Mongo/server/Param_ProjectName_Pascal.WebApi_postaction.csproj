@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <!--^^-->
+    <!--{[{-->
+    <PackageReference Include="MongoDB.Driver" Version="2.10.4" />
+    <!--}]}-->
+  </ItemGroup>
+
+</Project>

@@ -141,7 +141,7 @@ const Details = ({
               )}
             </div>
             <div>
-              {detailInfo.licenses && (
+              {detailInfo.licenses && detailInfo.licenses.length > 0 && (
                 <div className={classnames(styles.metaData)}>
                   <div
                     className={classnames(

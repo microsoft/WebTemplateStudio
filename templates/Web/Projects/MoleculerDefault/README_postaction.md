@@ -1,9 +1,8 @@
 ﻿## File Structure
-
+//^^
 //{[{
-The back-end is based on [Moleculer CLI](https://moleculer.services/docs/0.14/usage.html#Create-a-Moleculer-project).
+The back-end is based on [Moleculer CLI](https://moleculer.services/docs/0.14/usage.html#Create-a-Moleculer-project). It is served on http://localhost:3001/.
 //}]}
-The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/.
 
 ```
 .
@@ -20,8 +19,7 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 ## Additional Documentation
 
 - Bootstrap CSS - https://getbootstrap.com/
-  //{[{
+//{[{
 - Moleculer - https://moleculer.services/
-  //}]}
+//}]}
 
-  This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).

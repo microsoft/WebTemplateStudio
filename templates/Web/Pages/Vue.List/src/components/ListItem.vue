@@ -6,10 +6,11 @@
       </div>
       <div class="col-1">
         <button
-          aria-label="Close"
+          aria-label="delete"
           class="close py-2"
           data-dismiss="alert"
           type="button"
+          alt="delete"
           @click="$emit('deleteListItem', listItem)"
         >
           <div aria-hidden="true">&times;</div>

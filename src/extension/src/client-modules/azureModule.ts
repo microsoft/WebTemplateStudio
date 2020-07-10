@@ -105,13 +105,21 @@ export class AzureModule extends WizardServant {
   }
 
   public async validateCosmosName(message: any): Promise<IPayloadResponse> {
-    const validateResult = await AzureServices.validateCosmosName(message.appName, message.subscription);
+    try{
+      const validateResult = await AzureServices.validateCosmosName(message.appName, message.subscription);
     return {
       payload: {
         scope: message.payload.scope,
         ...validateResult,
       },
     };
+    }catch(error) {
+      return {
+        payload: {
+          scope: message.payload.scope,
+        }
+      };
+    }
   }
 
   private getFormattedSubscriptions(subscriptions: SubscriptionItem[]): Subscription[] {

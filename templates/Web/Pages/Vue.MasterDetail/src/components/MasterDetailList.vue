@@ -4,7 +4,7 @@
     type="button"
     @click="$emit('selectSampleOrder', sampleOrder)"
   >
-    <img class="mr-3" :src="sampleOrder.imageSrc ? sampleOrder.imageSrc : imgGreyAvatar" alt="Default Grey Avatar" />
+    <img class="mr-3" :src="sampleOrder.imageSrc ? sampleOrder.imageSrc : imgGreyAvatar" :alt="sampleOrder.title" />
     {{sampleOrder.title}}
   </button>
 </template>

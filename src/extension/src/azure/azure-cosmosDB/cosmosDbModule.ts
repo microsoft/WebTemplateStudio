@@ -15,7 +15,7 @@ import {
 import { ResourceManager } from "../azure-arm/resourceManager";
 import { ARMFileHelper } from "../azure-arm/armFileHelper";
 import { CONSTANTS } from "../../constants";
-import fs = require("fs");
+import fs = require("fs-extra");
 import { ConnectionString } from "../utils/connectionString";
 import { Controller } from "../../controller";
 
@@ -412,6 +412,29 @@ export class CosmosDBDeploy {
       if (fs.existsSync(filePath)) {
         fs.writeFileSync(envPath, cosmosEnvironmentVariables);
       }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+  
+  public static updateConnectionStringInAppSettingsFile(
+    filePath: string,
+    connectionString: string
+  ): void {
+    try {
+      const appSettingsPath = path.join(filePath, "server", "appsettings.json");
+      const appsettings = fs.readJSONSync(appSettingsPath);
+
+      if(ConnectionString.isCosmosSQLConnectionString(connectionString)) {
+        const sqlData = ConnectionString.getConnectionStringSqlData(connectionString);
+        appsettings.CosmosDB.Account = sqlData.account;
+        appsettings.CosmosDB.Key = sqlData.primaryKey;
+      } else {   
+        appsettings.ConnectionStrings.CosmosDB = connectionString;
+      }
+
+      fs.writeJSONSync(appSettingsPath, appsettings, {spaces: 2});
+      
     } catch (err) {
       throw new Error(err);
     }

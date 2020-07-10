@@ -1,0 +1,41 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Microsoft Community",
+  "classifications": ["Universal"],
+  "name": "Feature.AspNet.Azure.Cosmos.Mongo",
+  "shortName": "Feature.AspNet.Azure.Cosmos.Mongo",
+  "identity": "Feature.AspNet.Azure.Cosmos.Mongo",
+  "tags": {
+    "language": "Any",
+    "type": "item",
+    "wts.type": "composition",
+    "wts.platform": "Web",
+    "wts.version": "1.0.0",
+    "wts.compositionFilter": "$backendframework == AspNet & identity == wts.Feature.Azure.Cosmos.Mongo",
+    "wts.licenses":"[MongoDB C# Driver](https://github.com/mongodb/mongo-csharp-driver/blob/master/License.txt)",
+    "wts.casing.projectName": "pascal",
+    "wts.casing.rootNamespace": "pascal"
+  },
+  "sourceName": "wts.ItemName",
+  "preferNameDirectory": true,
+  "PrimaryOutputs": [],
+  "symbols": {
+    "wts.rootNamespace": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace"
+    },
+    "wts.projectName": {
+      "type": "parameter",
+      "replaces": "Param_ProjectName"
+    },
+    "wts.projectName.casing.pascal": {
+      "type": "parameter",
+      "fileRename": "Param_ProjectName_Pascal",
+      "replaces": "Param_ProjectName_Pascal"
+    },
+    "wts.rootNamespace.casing.pascal": {
+      "type": "parameter",
+      "replaces": "Param_RootNamespace_Pascal"
+    }
+  }
+}

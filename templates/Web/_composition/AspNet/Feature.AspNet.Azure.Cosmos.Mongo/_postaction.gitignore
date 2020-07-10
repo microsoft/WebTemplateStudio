@@ -1,0 +1,8 @@
+# production
+/server/bin
+/server/obj
+
+//{[{
+# App Settings
+/server/appsettings.json
+//}]}

@@ -80,9 +80,11 @@ export class Deploy {
     return new Promise(function(resolve, reject) {
       child.addListener("error", reject);
       child.addListener("exit", resolve);
-      child.stderr.on("data", data =>
-        Logger.appendLog("EXTENSION", "error", data.toString())
-      );
+      if(child.stderr) {
+        child.stderr.on("data", data =>
+          Logger.appendLog("EXTENSION", "error", data.toString())
+        );
+      }
     });
   }
 

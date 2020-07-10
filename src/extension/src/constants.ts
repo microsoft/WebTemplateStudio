@@ -195,6 +195,8 @@ export const CONSTANTS = {
     WINDOWS_PLATFORM_VERSION: "win32",
     SYNC_COMMAND_PREFIX: "sync",
     GET_FRAMEWORKS_COMMAND_PREFIX: "getframeworks",
+    GET_ALL_LICENSES_COMMAND_PREFIX: "getalllicences",
+    GET_ALL_LICENSES_COMPLETE_STATE: "getAllLicencesResult",
     GET_PAGES_COMMAND_PREFIX: "getpages",
     GET_FEATURES_COMMAND_PREFIX: "getfeatures",
     GET_PROJECT_TYPES_COMMAND_PREFIX: "getprojecttypes",
@@ -250,6 +252,7 @@ export const CONSTANTS = {
     return `COSMOSDB_URI=${origin}\nCOSMOSDB_PRIMARY_KEY=${primaryKey}\n`;
   },
   SQL_CONNECTION_STRING_PREFIX: "accountendpoint=",
+  ASPNET_BACKEND_FRAMEWORK_NAME: "AspNet",
   MAX_PROJECT_NAME_LENGTH: 50,
   START_PORT: 9502,
   VSCODE_COMMAND: {
@@ -297,20 +300,6 @@ export const CONSTANTS = {
     }
   },
   VALIDATION_LIMIT: 3,
-  APP_SERVICE_DEPLOYMENT: {
-    SERVER_FOLDER: "server",
-    DOT_VSCODE_FOLDER: ".vscode",
-    SETTINGS_FILE_NAME: "settings.json",
-    SETTINGS_FILE: (id: string, subpath: string): string => {
-      return `{
-    "appService.defaultWebAppToDeploy": "${id}",
-    "appService.deploySubpath": "${subpath}"
-}`;
-    },
-    DEPLOYMENT_FILE_NAME: ".deployment",
-    DEPLOYMENT_FILE: `[config] 
-SCM_DO_BUILD_DURING_DEPLOYMENT=true`
-  },
   TELEMETRY: {
     LAUNCH_WIZARD_STARTED_POINT: "Launch wizard"
   }
@@ -334,6 +323,7 @@ export enum ExtensionCommand {
   GetProjectName = "get-project-name",
   GetUserStatus = "get-user-status",
   GetFrameworks = "get-frameworks",
+  GetAllLicenses = "get-all-licenses",
   GetLatestVersion = "get-latest-version",
   GetPages = "get-pages",
   GetFeatures = "get-features",
@@ -345,7 +335,6 @@ export enum ExtensionCommand {
   TrackOpenCosmosDBServiceModalFromServicesList = "track-open-cosmosdb-service-modal-from-services-list",
   TrackOpenAzureServiceAdvancedMode = "track-open-azure-service-advanced-mode",
   ProjectPathValidation = "project-path-validation",
-  UpdateGenStatusMessage = "update-status-message",
   UpdateGenStatus = "update-status",
   OpenProjectVSCode = "open-project-vscode",
   GetTemplateInfo = "get-template-info",
@@ -418,7 +407,7 @@ export namespace DialogMessages {
   );
   export const cosmosDBConnectStringReplacePrompt: string = localize(
     "dialog.cosmosDBConnectStringReplacePrompt",
-    "Replace your DB connection string in the .env file with the generated CosmosDB connection string?"
+    "Do you want to update the CosmosDB connection string in configuration file?"
   );
   export const resetPagesPrompt: string = localize(
     "dialog.resetPagesPrompt",
