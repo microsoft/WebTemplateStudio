@@ -1,6 +1,8 @@
 # Acknowledgments
 
-Microsoft Web Template Studio was initially built by a great group of interns from the Microsoft Garage. This full list of individuals that helped build the project during the first quarter of 2019.
+Microsoft Web Template Studio was initially built by two great groups of interns from the Microsoft Garage. This full list of individuals that helped build the project.
+
+##First group (first quarter of 2019):
 
 **Design Intern**
 
@@ -31,7 +33,7 @@ Microsoft Web Template Studio was initially built by a great group of interns fr
 [Clint Rutkas](https://www.linkedin.com/in/clintrutkas/),
 [Stephane Morichere-Matte](https://www.linkedin.com/in/stephanemoricherematte/)
 
-Microsoft Web Template Studio is currently built and maintained by a new group of interns from the Microsoft Garage. This full list of individuals that helped build the project during the summer quarter of 2019.
+##Second group (summer quarter of 2019):
 
 **Design Intern**
 
@@ -46,7 +48,7 @@ Microsoft Web Template Studio is currently built and maintained by a new group o
 [Tanya Tan](https://www.linkedin.com/in/tanya-tan-programmer/),
 [Ali Khamesy](https://www.linkedin.com/in/ali-khamesy-038003158/)
 
-**Program Manager Intern**  
+**Program Manager Intern**
 
 [Lea Akkari](https://www.linkedin.com/in/lea-akkari-640889103/)
 
