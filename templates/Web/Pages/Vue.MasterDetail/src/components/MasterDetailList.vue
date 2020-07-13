@@ -1,6 +1,7 @@
 ﻿<template>
   <button
     class="list-group-item list-group-item-action styles.sidebarText"
+    v-bind:class="{ active: isActive }"
     type="button"
     @click="$emit('selectSampleOrder', sampleOrder)"
   >
@@ -16,6 +17,10 @@ export default {
   props: {
     sampleOrder: {
       type: Object,
+      required: true
+    },
+    isActive: {
+      type: Boolean,
       required: true
     }
   },

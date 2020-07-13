@@ -8,6 +8,7 @@ import { ISampleOrder } from '../Param_SourceName_Kebab.model';
 })
 export class MasterListComponent implements OnInit {
   @Input() sampleOrder: ISampleOrder;
+  @Input() isActive: boolean;
   @Output() itemClick = new EventEmitter<ISampleOrder>();
 
   constructor() {}

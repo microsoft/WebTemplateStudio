@@ -9,6 +9,7 @@
               :key="sampleOrder.id"
               :sampleOrder="sampleOrder"
               @selectSampleOrder="selectSampleOrder"
+              :isActive="sampleOrder === currentSampleOrder"
             />
           </div>
         </div>
