@@ -24,7 +24,8 @@ const MasterList = ({ sampleOrder, selectSampleOrder, isActive }) => {
 
 MasterList.propTypes = {
   sampleOrder: PropTypes.any,
-  selectSampleOrder: PropTypes.func
+  selectSampleOrder: PropTypes.func,
+  isActive: PropTypes.bool
 }
 
 export default MasterList;
