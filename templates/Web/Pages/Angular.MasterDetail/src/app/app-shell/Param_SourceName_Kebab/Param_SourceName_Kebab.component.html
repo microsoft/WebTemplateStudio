@@ -7,6 +7,7 @@
           *ngFor="let sampleOrder of (sampleOrders$ | async)"
           (itemClick)="selectSampleOrder(sampleOrder)"
           [sampleOrder]="sampleOrder"
+          [isActive]="sampleOrder === currentSampleOrder"
         >
         </app-master-list>
       </div>
