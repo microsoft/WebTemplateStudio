@@ -5,7 +5,7 @@ import { getInitialState, setSubscriptions } from "../../../mockData/mockStore";
 import { RenderResult } from "@testing-library/react";
 import { renderWithStore } from "../../../testUtils";
 import messages from "./messages";
-import { AZURE_LINKS } from "../../../utils/constants/constants";
+import { AZURE_LINKS } from "../../../utils/constants/azure";
 
 describe("AppServicePlanInfo", () => {
   let props: any;

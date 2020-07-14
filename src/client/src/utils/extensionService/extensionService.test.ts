@@ -5,7 +5,7 @@ import { IVSCodeObject } from "../../types/vscode";
 
 import {
   EXTENSION_COMMANDS
-} from "../constants/constants";
+} from "../constants/extension";
 
 
 xdescribe("wizardSelectionSelector", () => {
