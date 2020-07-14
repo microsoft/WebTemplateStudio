@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
-import { CONSTANTS, ExtensionCommand } from "../constants/constants";
+import { CONSTANTS } from "../constants/constants";
+import { ExtensionCommand } from "../constants/extension";
 import fs = require("fs");
 import path = require("path");
 import { WizardServant, IPayloadResponse } from "../wizardServant";

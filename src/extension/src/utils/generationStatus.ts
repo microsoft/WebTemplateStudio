@@ -1,4 +1,4 @@
-import { ExtensionCommand } from "../constants/constants";
+import { ExtensionCommand } from "../constants/extension";
 import { Controller } from "../controller";
 
 export enum GenerationItemStatus {

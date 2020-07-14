@@ -124,55 +124,6 @@ export const CONSTANTS = {
 
 export const PROJECT_NAME_VALIDATION_LIMIT = 50;
 
-export enum ExtensionCommand {
-  Log = "log",
-  OpenLog = "open-log",
-  Login = "login",
-  Logout = "logout",
-  GetResourceGroups = "get-resource-groups",
-  GetLocations = "get-locations",
-  GetValidAppServiceName = "get-valid-app-service-name",
-  GetValidCosmosName = "get-valid-cosmos-name",
-  ValidateCosmosName = "validate-cosmos-name",
-  ValidateAppServiceName = "validate-appservice-name",
-  Generate = "generate",
-  GetOutputPath = "get-output-path",
-  GetProjectName = "get-project-name",
-  GetUserStatus = "get-user-status",
-  GetFrameworks = "get-frameworks",
-  GetAllLicenses = "get-all-licenses",
-  GetLatestVersion = "get-latest-version",
-  GetPages = "get-pages",
-  GetFeatures = "get-features",
-  TrackPageSwitch = "track-page-switch",
-  TrackCreateNewProject = "track-create-new-project",
-  TrackOpenAddPagesModal = "track-open-add-pages-modal",
-  TrackPressQuickstart = "track-press-quickstart",
-  TrackOpenAppServiceModalFromServicesList = "track-open-app-service-modal-from-services-list",
-  TrackOpenCosmosDBServiceModalFromServicesList = "track-open-cosmosdb-service-modal-from-services-list",
-  TrackOpenAzureServiceAdvancedMode = "track-open-azure-service-advanced-mode",
-  ProjectPathValidation = "project-path-validation",
-  UpdateGenStatus = "update-status",
-  OpenProjectVSCode = "open-project-vscode",
-  GetTemplateInfo = "get-template-info",
-  CloseWizard = "close-wizard",
-  GetPort = "get-port",
-  GetVersions = "get-versions",
-  ResetPages = "reset-pages",
-  CheckDependency = "check-dependency"
-}
-export enum ExtensionModule {
-  Azure = "Azure",
-  Generate = "GenerateExperience",
-  Telemetry = "Telemetry",
-  Validator = "Validator",
-  VSCodeUI = "VSCodeUI",
-  Logger = "Logger",
-  DependencyChecker = "DependencyChecker",
-  CoreTSModule = "CoreTSModule",
-  Defaults = "Defaults"
-}
-
 export enum TelemetryEventName {
   ExtensionLaunch = "Extension-Launch",
   ExtensionClosed = "Extension-closed",

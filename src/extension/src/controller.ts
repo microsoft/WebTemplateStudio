@@ -3,9 +3,7 @@ import * as vscode from "vscode";
 import { Validator } from "./utils/validator";
 import {
   CONSTANTS,
-  ExtensionModule,
   TelemetryEventName,
-  ExtensionCommand
 } from "./constants/constants";
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
@@ -25,6 +23,7 @@ import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo
 import { ISyncReturnType } from "./types/syncReturnType";
 import { LoggerModule } from "./client-modules/loggerModule";
 import { MESSAGES } from "./constants/messages";
+import { ExtensionModule, ExtensionCommand } from "./constants/extension";
 
 export class Controller {
   /**
