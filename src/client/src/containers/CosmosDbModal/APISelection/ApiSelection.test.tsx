@@ -4,7 +4,7 @@ import ApiSelection from ".";
 import { RenderResult, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithIntl } from "../../../testUtils";
-import { AZURE } from "../../../utils/constants/constants";
+import { AZURE } from "../../../utils/constants/azure";
 
 jest.mock("../../../components/Dropdown", () => require("../../../testUtils").dropdownMock);
 
