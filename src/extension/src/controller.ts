@@ -6,7 +6,7 @@ import {
   ExtensionModule,
   TelemetryEventName,
   ExtensionCommand
-} from "./constants";
+} from "./constants/constants";
 import { ReactPanel } from "./reactPanel";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { VSCodeUI } from "./utils/vscodeUI";
@@ -24,6 +24,7 @@ import { AzureModule } from "./client-modules/azureModule";
 import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo";
 import { ISyncReturnType } from "./types/syncReturnType";
 import { LoggerModule } from "./client-modules/loggerModule";
+import { MESSAGES } from "./constants/messages";
 
 export class Controller {
   /**
@@ -83,10 +84,10 @@ export class Controller {
           Controller.handleValidMessage(message.command, responsePayload);
         }
       } else {
-        vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_COMMAND);
+        vscode.window.showErrorMessage(MESSAGES.ERRORS.INVALID_COMMAND);
       }
     } else {
-      vscode.window.showErrorMessage(CONSTANTS.ERRORS.INVALID_MODULE);
+      vscode.window.showErrorMessage(MESSAGES.ERRORS.INVALID_MODULE);
     }
   }
 

@@ -1,5 +1,5 @@
 import { IPayloadResponse, WizardServant } from "../wizardServant";
-import { ExtensionCommand, TelemetryEventName } from "../constants";
+import { ExtensionCommand, TelemetryEventName } from "../constants/constants";
 import { ITelemetryService } from "../telemetry/telemetryService";
 
 export class Telemetry extends WizardServant {

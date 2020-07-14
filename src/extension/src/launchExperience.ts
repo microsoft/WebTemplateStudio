@@ -1,9 +1,10 @@
 import * as vscode from "vscode";
-import { CONSTANTS } from "./constants";
+import { CONSTANTS } from "./constants/constants";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 import { ISyncReturnType } from "./types/syncReturnType";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { Logger } from "./utils/logger";
+import { MESSAGES } from "./constants/messages";
 
 export class LaunchExperience {
   private static _progressObject: vscode.Progress<IVSCodeProgressType>;
@@ -18,12 +19,12 @@ export class LaunchExperience {
 
     await CoreTemplateStudio.GetInstance(context)
       .catch((error: Error) => {
-        error.message = CONSTANTS.ERRORS.CANNOT_START_GENERATION_ENGINE.concat(" ", error.message);
+        error.message = MESSAGES.ERRORS.CANNOT_START_GENERATION_ENGINE.concat(" ", error.message);
         throw error;
     });
 
     LaunchExperience._progressObject.report({
-      message: CONSTANTS.INFO.STARTING_GENERATION_SERVER
+      message: MESSAGES.INFO.STARTING_GENERATION_SERVER
     });
 
     let syncObject: ISyncReturnType = {
@@ -46,7 +47,7 @@ export class LaunchExperience {
     }
     if (syncAttempts >= CONSTANTS.API.MAX_SYNC_REQUEST_ATTEMPTS) {
       CoreTemplateStudio.DestroyInstance();
-      throw new Error(CONSTANTS.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS(syncObject.errorMessage));
+      throw new Error(MESSAGES.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS(syncObject.errorMessage));
     }
 
     return { ...syncObject };

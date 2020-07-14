@@ -1,5 +1,5 @@
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import { ExtensionCommand, PROJECT_NAME_VALIDATION_LIMIT } from "../constants";
+import { ExtensionCommand, PROJECT_NAME_VALIDATION_LIMIT } from "../constants/constants";
 import * as vscode from "vscode";
 import * as os from "os";
 import * as fs from "fs";

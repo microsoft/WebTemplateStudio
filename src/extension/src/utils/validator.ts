@@ -1,8 +1,9 @@
 import * as vscode from "vscode";
-import { CONSTANTS, ExtensionCommand } from "../constants";
+import { CONSTANTS, ExtensionCommand } from "../constants/constants";
 import fs = require("fs");
 import path = require("path");
 import { WizardServant, IPayloadResponse } from "../wizardServant";
+import { MESSAGES } from "../constants/messages";
 
 export class Validator extends WizardServant {
   clientCommandMap: Map<
@@ -78,14 +79,14 @@ export class Validator extends WizardServant {
         path
       )
     ) {
-      error = CONSTANTS.ERRORS.PATH_WITH_EMOJIS(path);
+      error = MESSAGES.ERRORS.PATH_WITH_EMOJIS(path);
       isValid = false;
     }
     if (!fs.existsSync(path) && path !== "") {
-      error = CONSTANTS.ERRORS.INVALID_OUTPUT_PATH(path);
+      error = MESSAGES.ERRORS.INVALID_OUTPUT_PATH(path);
       isValid = false;
     } else if (name !== "" && !Validator.isUniquePath(path, name)) {
-      error = CONSTANTS.ERRORS.PROJECT_PATH_EXISTS(path, name);
+      error = MESSAGES.ERRORS.PROJECT_PATH_EXISTS(path, name);
       isValid = false;
     }
     return {

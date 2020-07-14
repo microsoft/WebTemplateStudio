@@ -6,7 +6,7 @@
 
  import * as vscode from "vscode";
 import { MessageItem, window } from "vscode";
-import { DialogResponses, DialogMessages } from "../constants";
+import { DialogResponses, DialogMessages } from "../constants/dialog";
 import { reportAnIssue } from "./reportAnIssue";
 import { IParsedError, parseError } from "./parseError";
 import { ExtensionContext } from "vscode";

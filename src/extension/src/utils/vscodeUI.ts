@@ -2,10 +2,9 @@ import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import {
   ExtensionCommand,
-  DialogMessages,
-  DialogResponses,
   PAYLOAD_MESSAGES_TEXT
-} from "../constants";
+} from "../constants/constants";
+import { DialogResponses, DialogMessages } from "../constants/dialog";
 
 export class VSCodeUI extends WizardServant {
   clientCommandMap: Map<

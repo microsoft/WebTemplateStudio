@@ -4,7 +4,7 @@ import * as os from "os";
 import * as fs from "fs";
 
 import { ChildProcess, spawn } from "child_process";
-import { CONSTANTS } from "./constants";
+import { CONSTANTS } from "./constants/constants";
 import { ICommandPayload } from "./types/commandPayload";
 import { IGenerationPayloadType } from "./types/generationPayloadType";
 import { EventEmitter } from "events";

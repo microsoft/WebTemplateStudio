@@ -1,5 +1,5 @@
 import { WizardServant, IPayloadResponse } from "../wizardServant";
-import { ExtensionCommand } from "../constants";
+import { ExtensionCommand } from "../constants/constants";
 import latestVersion from "latest-version";
 import RequirementsService from "../utils/requirements/requirementsService";
 import { Logger } from "../utils/logger";

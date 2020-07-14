@@ -1,5 +1,5 @@
 import { CoreTemplateStudio } from "../coreTemplateStudio";
-import { CONSTANTS } from "../constants";
+import { CONSTANTS } from "../constants/constants";
 
 let instance: CoreTemplateStudio;
 let backends: string[] = [];

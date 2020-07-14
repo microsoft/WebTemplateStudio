@@ -1,5 +1,6 @@
-import { ExtensionCommand, CONSTANTS } from "./constants";
+import { ExtensionCommand } from "./constants/constants";
 import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
+import { MESSAGES } from "./constants/messages";
 
 export abstract class WizardServant {
   abstract clientCommandMap: Map<
@@ -50,7 +51,7 @@ export abstract class WizardServant {
         messagePayload.command,
         async function(this: IActionContext) {
           throw Error(
-            CONSTANTS.ERRORS.INVALID_COMMAND + ":" + messagePayload.command
+            MESSAGES.ERRORS.INVALID_COMMAND + ":" + messagePayload.command
           );
         }
       );

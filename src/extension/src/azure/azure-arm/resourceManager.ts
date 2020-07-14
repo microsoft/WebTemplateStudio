@@ -2,7 +2,7 @@ import ResourceManagementClient from "azure-arm-resource/lib/resource/resourceMa
 import { SubscriptionItem } from "../azure-auth/azureAuth";
 import { ServiceClientCredentials } from "ms-rest";
 import { SubscriptionError } from "../../errors";
-import { CONSTANTS } from "../../constants";
+import { MESSAGES } from "../../constants/messages";
 
 export class ResourceManager {
   private AzureResourceManagementClient: ResourceManagementClient | undefined;
@@ -17,7 +17,7 @@ export class ResourceManager {
       userSubscriptionItem.subscription === undefined ||
       userSubscriptionItem.subscriptionId === undefined
     ) {
-      throw new SubscriptionError(CONSTANTS.ERRORS.SUBSCRIPTION_NOT_DEFINED);
+      throw new SubscriptionError(MESSAGES.ERRORS.SUBSCRIPTION_NOT_DEFINED);
     }
     return new ResourceManagementClient(
       userCredentials,

@@ -1,12 +1,13 @@
 import { SubscriptionItem } from "../azure/azure-auth/azureAuth";
 
-import { CONSTANTS, AzureResourceType, ExtensionCommand } from "../constants";
+import { AzureResourceType, ExtensionCommand } from "../constants/constants";
 
 import { AuthorizationError } from "../errors";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { Logger } from "../utils/logger";
 import { AzureServices } from "../azure/azureServices";
 import { NameGenerator } from "../azure/utils/nameGenerator";
+import { MESSAGES } from "../constants/messages";
 
 interface Subscription {
   name: string;
@@ -33,7 +34,7 @@ export class AzureModule extends WizardServant {
       Logger.appendLog("EXTENSION", "info", "User logged in");
       return this.getUserStatus(message);
     }
-    throw new AuthorizationError(CONSTANTS.ERRORS.LOGIN_TIMEOUT);
+    throw new AuthorizationError(MESSAGES.ERRORS.LOGIN_TIMEOUT);
   }
 
   public async logout(message: any): Promise<IPayloadResponse> {

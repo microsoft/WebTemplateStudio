@@ -4,10 +4,9 @@ import {
   ExtensionCommand,
   TelemetryEventName,
   CONSTANTS,
-  AzureResourceType,
-  DialogMessages,
-  DialogResponses,
-} from "../constants";
+  AzureResourceType
+} from "../constants/constants";
+import { DialogMessages, DialogResponses} from "../constants/dialog";
 import { IActionContext, ITelemetryService } from "../telemetry/telemetryService";
 import { AzureServices } from "../azure/azureServices";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
@@ -15,6 +14,7 @@ import { ResourceGroupSelection } from "../azure/azure-resource-group/resourceGr
 import { Logger } from "../utils/logger";
 import { IGenerationPayloadType, IServicesGenerationPayload } from "../types/generationPayloadType";
 import { sendToClientGenerationStatus, GenerationItemStatus, updateStatusMessage, sendToClientGenerationPath, GENERATION_NAMES } from "../utils/generationStatus";
+import { MESSAGES } from "../constants/messages";
 
 interface DeployedServiceStatus {
   serviceType: AzureResourceType;
@@ -44,7 +44,7 @@ export class Generation extends WizardServant {
 
       if (this.hasAzureServices(generationData.services)) {
         await this.generateResourceGroups(generationData);
-        await this.generateAzureServices(generationData);        
+        await this.generateAzureServices(generationData);
       }
     } else if (this.hasAzureServices(generationData.services)) {
       sendToClientGenerationStatus(GENERATION_NAMES.APP_SERVICE, GenerationItemStatus.Failed, "ERROR: Azure Service deployment halted due to template error.");
@@ -209,7 +209,7 @@ export class Generation extends WizardServant {
     const start = Date.now();
     if (selection === DialogResponses.yes) {
       AzureServices.updateConnectionStringToProject(path, connectionString, backendFramework);
-      vscode.window.showInformationMessage(CONSTANTS.INFO.FILE_REPLACED_MESSAGE + path);
+      vscode.window.showInformationMessage(MESSAGES.INFO.FILE_REPLACED_MESSAGE + path);
       this.trackCosmosConnectionStringReplace(start);
     }
   }
