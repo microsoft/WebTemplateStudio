@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { CONSTANTS } from "../constants/constants";
+import { CLI } from "../constants/extension";
 import { ExtensionCommand } from "../constants/extension";
 import fs = require("fs");
 import path = require("path");
@@ -29,7 +29,7 @@ export class Validator extends WizardServant {
         let path = undefined;
 
         if (res !== undefined) {
-          if (process.platform === CONSTANTS.CLI.WINDOWS_PLATFORM_VERSION) {
+          if (process.platform === CLI.WINDOWS_PLATFORM_VERSION) {
             path = res[0].path.substring(1, res[0].path.length);
           } else {
             path = res[0].path;
