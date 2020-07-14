@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import messages from "./messages";
 import Dropdown from "../Dropdown";
 import classNames from "classnames";
-import { AzureResourceType } from "../../utils/constants/constants";
+import { AzureResourceType } from "../../utils/constants/azure";
 import { getLocations } from "../../utils/extensionService/extensionService";
 import { AppContext } from "../../AppContext";
 

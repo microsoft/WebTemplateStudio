@@ -12,8 +12,7 @@ import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
 import {
   KEY_EVENTS,
   WEB_TEMPLATE_STUDIO_LINKS,
-  TELEMETRY,
-  AZURE_LINKS,
+  TELEMETRY
 } from "../../utils/constants/constants";
 
 import { AppState } from "../../store/combineReducers";
@@ -31,6 +30,7 @@ import { getCosmosDB, getAppService } from "../../store/userSelection/services/s
 import GenerationItem from "./GenerationItem";
 import { Subject, forkJoin } from "rxjs";
 import { EXTENSION_COMMANDS } from "../../utils/constants/extension";
+import { AZURE_LINKS } from "../../utils/constants/azure";
 
 interface IStateProps {
   isModalOpen: boolean;

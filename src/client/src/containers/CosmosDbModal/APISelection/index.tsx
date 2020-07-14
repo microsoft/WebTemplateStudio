@@ -3,7 +3,7 @@ import { useState } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import Dropdown from "../../../components/Dropdown";
-import { AZURE } from "../../../utils/constants/constants";
+import { AZURE } from "../../../utils/constants/azure";
 import messages from "./messages";
 
 const ApiValues: IDropDownOptionType[] = [

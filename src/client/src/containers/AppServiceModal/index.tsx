@@ -10,7 +10,9 @@ import AppNameEditor from "./AppNameEditor";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { KEY_EVENTS, AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/constants";
+import { KEY_EVENTS } from "../../utils/constants/constants";
+import { AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/azure";
+
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { IAppService } from "../../store/userSelection/services/appService/model";
