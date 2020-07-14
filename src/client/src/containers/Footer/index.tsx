@@ -2,7 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
-import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../utils/constants/constants";
+import { KEY_EVENTS } from "../../utils/constants/constants";
 import { ROUTES } from "../../utils/constants/routes";
 
 import { IVSCodeObject } from "../../types/vscode";
@@ -25,6 +25,7 @@ import { setPageWizardPageAction, setVisitedWizardPageAction } from "../../store
 import { getIsVisitedRoutesSelector } from "../../store/config/config/wizardNavigationSelector";
 import { useMemo } from "react";
 import { setIsDirtyAction } from "../../store/navigation/isDirty/action";
+import { EXTENSION_COMMANDS } from "../../utils/constants/extension";
 
 type Props = InjectedIntlProps;
 

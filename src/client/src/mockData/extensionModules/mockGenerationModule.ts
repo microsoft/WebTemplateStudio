@@ -1,4 +1,4 @@
-import { EXTENSION_COMMANDS } from "../../utils/constants/constants";
+import { EXTENSION_COMMANDS } from "../../utils/constants/extension";
 import { GenerationItemStatus, GENERATION_NAMES } from "../../types/generationStatus";
 
 const wait = (m: number) => new Promise((r) => setTimeout(r, m));

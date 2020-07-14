@@ -11,8 +11,6 @@ import {
 } from "../../../store/userSelection/app/wizardSelectionSelector/wizardSelectionSelector";
 
 import {
-  EXTENSION_COMMANDS,
-  EXTENSION_MODULES,
   PROJECT_NAME_CHARACTER_LIMIT
 } from "../../../utils/constants/constants";
 
@@ -35,6 +33,7 @@ import { IValidations } from "../../../store/config/validations/model";
 import { AppContext } from "../../../AppContext";
 import stylesInput from "../../../css/input.module.css";
 import classnames from "classnames";
+import { EXTENSION_MODULES, EXTENSION_COMMANDS } from "../../../utils/constants/extension";
 
 interface IStateProps {
   outputPath: string;

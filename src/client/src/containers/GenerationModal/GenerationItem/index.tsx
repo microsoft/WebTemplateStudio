@@ -17,7 +17,7 @@ import {
 } from "../../../utils/extensionService/extensionService";
 import { AppContext } from "../../../AppContext";
 import { useEffect } from "react";
-import { EXTENSION_COMMANDS } from "../../../utils/constants/constants";
+import { EXTENSION_COMMANDS } from "../../../utils/constants/extension";
 
 interface IProps {
   item: GenerationItemData;

@@ -4,10 +4,10 @@ import FrameworkCard from "./FrameworkCard";
 import styles from "./styles.module.css";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import messages from "./messages";
-import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/constants";
 import { AppContext } from "../../AppContext";
 import { DependencyContext } from "./DependencyContext";
 import { AppState } from "../../store/combineReducers";
+import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../../utils/constants/extension";
 
 type Props = InjectedIntlProps;
 

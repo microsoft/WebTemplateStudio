@@ -10,7 +10,6 @@ import styles from "./styles.module.css";
 import { GenerationItemData, GENERATION_NAMES } from "../../types/generationStatus";
 import { isGenModalOpenSelector } from "../../store/navigation/modals/selector";
 import {
-  EXTENSION_COMMANDS,
   KEY_EVENTS,
   WEB_TEMPLATE_STUDIO_LINKS,
   TELEMETRY,
@@ -31,6 +30,7 @@ import { getGenerationData } from "../../store/userSelection/app/selector";
 import { getCosmosDB, getAppService } from "../../store/userSelection/services/servicesSelector";
 import GenerationItem from "./GenerationItem";
 import { Subject, forkJoin } from "rxjs";
+import { EXTENSION_COMMANDS } from "../../utils/constants/extension";
 
 interface IStateProps {
   isModalOpen: boolean;
