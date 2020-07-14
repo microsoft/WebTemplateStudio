@@ -6,7 +6,7 @@
       <a href="#mainContent">Skip to Main Content</a>
     </div>
     <div class="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
-      <a class="navbar-brand" href="/" role="heading">wts.VueDefault</a>
+      <a class="navbar-brand" href="/" role="heading" aria-level="1">wts.VueDefault</a>
       <b-nav class="navbar-nav">
       </b-nav>
     </div>
