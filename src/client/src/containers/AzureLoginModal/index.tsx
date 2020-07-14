@@ -16,7 +16,7 @@ import messages from "./messages";
 import { KEY_EVENTS } from "../../utils/constants/constants";
 import { ReactComponent as Cancel } from "../../assets/cancel.svg";
 import CollapsibleInfoBox from "../../components/CollapsibleInfoBox";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
 import * as ModalActions from "../../store/navigation/modals/action";
 import { azureLogin } from "../../utils/extensionService/extensionService";
 import { AppContext } from "../../AppContext";

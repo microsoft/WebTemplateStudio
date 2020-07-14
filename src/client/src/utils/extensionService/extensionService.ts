@@ -1,7 +1,6 @@
 import { IVSCodeObject } from "../../types/vscode";
-import {
-  WIZARD_CONTENT_INTERNAL_NAMES, PAYLOAD_MESSAGES_TEXT
-} from "../constants/constants";
+import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../constants/internalNames";
 import { ILoggingPayload } from "../../types/logger";
 import { EXTENSION_COMMANDS, EXTENSION_MODULES } from "../constants/extension";
 

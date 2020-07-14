@@ -10,7 +10,7 @@ import AppNameEditor from "./AppNameEditor";
 import SubscriptionSelection from "../../components/SubscriptionSelection";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import buttonStyles from "../../css/buttonStyles.module.css";
-import { WIZARD_CONTENT_INTERNAL_NAMES, KEY_EVENTS, AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/constants";
+import { KEY_EVENTS, AZURE, SERVICE_KEYS, AzureResourceType } from "../../utils/constants/constants";
 import styles from "./styles.module.css";
 import { AppState } from "../../store/combineReducers";
 import { IAppService } from "../../store/userSelection/services/appService/model";
@@ -25,6 +25,7 @@ import { ReactComponent as ArrowDown } from "../../assets/chevron.svg";
 import { AppContext } from "../../AppContext";
 import ResourceGroupSelection from "../../components/ResourceGroupSelection";
 import { EXTENSION_COMMANDS } from "../../utils/constants/extension";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../utils/constants/internalNames";
 
 interface IStateProps {
   isModalOpen: boolean;

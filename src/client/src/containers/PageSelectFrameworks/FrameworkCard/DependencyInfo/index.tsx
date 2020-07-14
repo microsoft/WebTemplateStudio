@@ -2,12 +2,11 @@ import * as React from "react";
 import styles from "./styles.module.css";
 import classnames from "classnames";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import {
-  WIZARD_CONTENT_INTERNAL_NAMES
-} from "../../../../utils/constants/constants";
+
 import Notification from "../../../../components/Notification";
 import messages from "./messages";
 import { DependencyContext } from "../../DependencyContext";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../../utils/constants/internalNames";
 
 export interface IDependency {
   dependencyStoreKey: string;

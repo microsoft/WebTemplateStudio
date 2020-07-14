@@ -3,7 +3,8 @@ import { AppState } from "../../combineReducers";
 import { IOption } from "../../../types/option";
 import { openAppServiceModalAction, openCosmosDbModalAction } from "../../navigation/modals/action";
 import messages from "./messages";
-import { SERVICE_GROUPS, WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants/constants";
+import { SERVICE_GROUPS } from "../../../utils/constants/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "../../../utils/constants/internalNames";
 
 const getFeatures = (state: AppState) => state.templates.featureOptions;
 

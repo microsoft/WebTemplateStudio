@@ -1,5 +1,5 @@
 import * as React from "react";
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants/internalNames";
 import classNames from "classnames";
 import { connect } from "react-redux";
 

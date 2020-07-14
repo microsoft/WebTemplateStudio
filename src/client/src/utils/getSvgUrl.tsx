@@ -1,6 +1,6 @@
 import * as React from "react";
 import loadable from '@loadable/component'
-import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants/constants";
+import { WIZARD_CONTENT_INTERNAL_NAMES } from "./constants/internalNames";
 
 import warning from "../assets/warning.svg";
 import cancel from "../assets/cancel.svg";
