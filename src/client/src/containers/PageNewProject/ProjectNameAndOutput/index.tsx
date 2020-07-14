@@ -14,7 +14,7 @@ import {
   EXTENSION_COMMANDS,
   EXTENSION_MODULES,
   PROJECT_NAME_CHARACTER_LIMIT
-} from "../../../utils/constants";
+} from "../../../utils/constants/constants";
 
 import styles from "./styles.module.css";
 

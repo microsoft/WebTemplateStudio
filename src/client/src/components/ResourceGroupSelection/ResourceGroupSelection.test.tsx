@@ -6,7 +6,7 @@ import { RenderResult, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { renderWithStore } from "../../testUtils";
 import messages from "./messages";
-import { AZURE_LINKS } from "../../utils/constants";
+import { AZURE_LINKS } from "../../utils/constants/constants";
 import { getInitialState, setSubscriptions } from "../../mockData/mockStore";
 import * as extensionService from '../../utils/extensionService/extensionService';
 

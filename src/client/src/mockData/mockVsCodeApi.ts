@@ -2,7 +2,7 @@ import {
   EXTENSION_COMMANDS,
   DEVELOPMENT,
   TEST
-} from "../utils/constants";
+} from "../utils/constants/constants";
 
 import * as mockAzureModule from "./extensionModules/mockAzureModule";
 import * as mockLoggerModule from "./extensionModules/mockLoggerModule";

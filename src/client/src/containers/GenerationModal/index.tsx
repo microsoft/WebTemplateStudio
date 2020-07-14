@@ -15,7 +15,7 @@ import {
   WEB_TEMPLATE_STUDIO_LINKS,
   TELEMETRY,
   AZURE_LINKS,
-} from "../../utils/constants";
+} from "../../utils/constants/constants";
 
 import { AppState } from "../../store/combineReducers";
 import { injectIntl, InjectedIntlProps } from "react-intl";

@@ -2,7 +2,7 @@ import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import styles from "./styles.module.css";
 import messages from "./messages";
-import { AZURE_LINKS } from "../../../utils/constants";
+import { AZURE_LINKS } from "../../../utils/constants/constants";
 import { AppState } from "../../../store/combineReducers";
 import { useSelector } from "react-redux";
 import { getSubscriptionsSelector } from "../../../store/config/azure/selector";

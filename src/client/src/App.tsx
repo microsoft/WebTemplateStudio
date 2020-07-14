@@ -5,9 +5,10 @@ import { ReactComponent as SummarySplashSVG } from "./assets/summarySplash.svg";
 import { ReactComponent as HomeSplashSVG } from "./assets/homeSplash.svg";
 import {
   EXTENSION_COMMANDS,
-  ROUTES,
   DEVELOPMENT
-} from "./utils/constants";
+} from "./utils/constants/constants";
+
+import { ROUTES } from "./utils/constants/routes";
 
 import appStyles from "./appStyles.module.css";
 import { AppState } from "./store/combineReducers";

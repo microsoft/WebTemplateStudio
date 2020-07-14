@@ -2,11 +2,8 @@ import classnames from "classnames";
 import * as React from "react";
 import buttonStyles from "../../css/buttonStyles.module.css";
 import styles from "./styles.module.css";
-import {
-  ROUTES,
-  EXTENSION_COMMANDS,
-  KEY_EVENTS,
-} from "../../utils/constants";
+import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../utils/constants/constants";
+import { ROUTES } from "../../utils/constants/routes";
 
 import { IVSCodeObject } from "../../types/vscode";
 

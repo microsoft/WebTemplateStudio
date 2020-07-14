@@ -4,7 +4,7 @@ import SidebarItem from "../SidebarItem";
 import { IAppService } from "../../../../store/userSelection/services/appService/model";
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 import styles from "./styles.module.css";
-import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
+import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { removeAppServiceAction } from "../../../../store/userSelection/services/appService/action";

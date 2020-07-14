@@ -5,7 +5,7 @@ import { ICosmosDB } from "../../../../store/userSelection/services/cosmosDb/mod
 import { ReactComponent as EditIcon } from "../../../../assets/edit.svg";
 import { openCosmosDbModalAction } from "../../../../store/navigation/modals/action";
 import styles from "./styles.module.css";
-import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants";
+import { KEY_EVENTS, EXTENSION_COMMANDS } from "../../../../utils/constants/constants";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sendTelemetry } from "../../../../utils/extensionService/extensionService";
 import { removeCosmosDbAction } from "../../../../store/userSelection/services/cosmosDb/action";

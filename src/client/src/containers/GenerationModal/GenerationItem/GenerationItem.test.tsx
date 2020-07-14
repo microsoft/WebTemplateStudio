@@ -7,7 +7,7 @@ import GenerationItem from ".";
 import { Subject } from "rxjs/internal/Subject";
 import { GenerationItemData, GenerationItemStatus } from "../../../types/generationStatus";
 import messages from "./messages";
-import { EXTENSION_COMMANDS } from "../../../utils/constants";
+import { EXTENSION_COMMANDS } from "../../../utils/constants/constants";
 
 describe("GenerationItem", () => {
   let props: any;

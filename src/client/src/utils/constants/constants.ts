@@ -1,7 +1,5 @@
 import { defineMessages } from "react-intl";
 
-
-
 const PROJECT_NAME_CHARACTER_LIMIT = 50;
 
 const PAGE_NAME_CHARACTER_LIMIT = 50;
@@ -54,25 +52,6 @@ const PAYLOAD_MESSAGES_TEXT = {
   SWITCH_FRAMEWORKS_TEXT: "Sending framework change request...",
   SENT_GENERATION_INFO_TEXT: "Sending generation info..."
 };
-
-const ROUTES = {
-  PAGE_DETAILS: "/PageDetail",
-  SELECT_FRAMEWORKS:  "/SelectFrameworks",
-  SELECT_PAGES: "/SelectPages",
-  ADD_SERVICES: "/AddPages",
-  REVIEW_AND_GENERATE :"/ReviewAndGenerate",
-  NEW_PROJECT: "/"
-};
-
-
-// Presents the routes in the order of the wizard
-const ROUTES_ARRAY = [
-  ROUTES.NEW_PROJECT,
-  ROUTES.SELECT_FRAMEWORKS,
-  ROUTES.SELECT_PAGES,
-  ROUTES.ADD_SERVICES,
-  ROUTES.REVIEW_AND_GENERATE
-];
 
 const SERVICE_KEYS = {
   COSMOS_DB: "cosmosDB",
@@ -196,8 +175,6 @@ export {
   PRODUCTION,
   EXTENSION_MODULES,
   EXTENSION_COMMANDS,
-  ROUTES,
-  ROUTES_ARRAY,
   SERVICE_KEYS,
   WIZARD_CONTENT_INTERNAL_NAMES,
   INTL_MESSAGES,
