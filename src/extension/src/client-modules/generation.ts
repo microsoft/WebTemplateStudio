@@ -1,10 +1,10 @@
 import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import {
-  TelemetryEventName,
   CONSTANTS,
   AzureResourceType
 } from "../constants/constants";
+import { TelemetryEventName } from '../constants/telemetry';
 import { DialogMessages, DialogResponses} from "../constants/dialog";
 import { IActionContext, ITelemetryService } from "../telemetry/telemetryService";
 import { AzureServices } from "../azure/azureServices";
