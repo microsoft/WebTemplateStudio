@@ -488,19 +488,8 @@ const mockVsCodeApi = () => ({
               command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
               payload: {
                 scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                dependency: "node",
-                installed: true
-              }
-            },
-            "*"
-          );
-          window.postMessage(
-            {
-              command: EXTENSION_COMMANDS.GET_DEPENDENCY_INFO,
-              payload: {
-                scope:message.payload && message.payload.scope ? message.payload.scope : "",
-                dependency: "python",
-                installed: false
+                dependency: message.payload.dependency,
+                installed: message.payload.dependency === "node"
               }
             },
             "*"
