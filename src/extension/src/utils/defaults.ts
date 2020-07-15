@@ -4,7 +4,7 @@ import * as vscode from "vscode";
 import * as os from "os";
 import * as fs from "fs";
 import * as path from "path";
-import { ExtensionCommand } from "../constants/extension";
+import { ExtensionCommand } from "../constants/commands";
 
 export class Defaults extends WizardServant {
   clientCommandMap: Map<ExtensionCommand,(message: any) => Promise<IPayloadResponse>>;

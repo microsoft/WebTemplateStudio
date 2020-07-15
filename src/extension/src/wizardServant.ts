@@ -1,4 +1,4 @@
-import { ExtensionCommand } from "./constants/extension";
+import { ExtensionCommand } from "./constants/commands";
 import { IActionContext, ITelemetryService } from "./telemetry/telemetryService";
 import { MESSAGES } from "./constants/messages";
 

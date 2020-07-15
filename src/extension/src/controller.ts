@@ -21,7 +21,8 @@ import { getExtensionName, getExtensionVersionNumber } from "./utils/packageInfo
 import { ISyncReturnType } from "./types/syncReturnType";
 import { LoggerModule } from "./client-modules/loggerModule";
 import { MESSAGES } from "./constants/messages";
-import { ExtensionModule, ExtensionCommand } from "./constants/extension";
+import { ExtensionModule } from "./constants/modules";
+import { ExtensionCommand } from "./constants/commands";
 
 export class Controller {
   /**

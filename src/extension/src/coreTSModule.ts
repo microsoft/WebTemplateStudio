@@ -1,5 +1,5 @@
 import { WizardServant, IPayloadResponse } from "./wizardServant";
-import { ExtensionCommand } from "./constants/extension";
+import { ExtensionCommand } from "./constants/commands";
 import { CoreTemplateStudio } from "./coreTemplateStudio";
 
 export class CoreTSModule extends WizardServant {

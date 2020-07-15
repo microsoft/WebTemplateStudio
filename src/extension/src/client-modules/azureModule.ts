@@ -1,7 +1,7 @@
 import { SubscriptionItem } from "../azure/azure-auth/azureAuth";
 
 import { AzureResourceType } from "../constants/constants";
-import { ExtensionCommand } from "../constants/extension";
+import { ExtensionCommand } from "../constants/commands";
 
 import { AuthorizationError } from "../errors";
 import { WizardServant, IPayloadResponse } from "../wizardServant";

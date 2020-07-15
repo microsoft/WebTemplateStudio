@@ -158,10 +158,10 @@ export class CoreTemplateStudio {
 
   public async getFrameworks(projectType: string): Promise<any> {
     const getFrameworksCommand = `${
-      CLI.GET_FRAMEWORKS_COMMAND_PREFIX
+      CLI.GET_FRAMEWORKS
     } -p ${projectType}\n`;
     return this.awaitCliEvent(
-      CLI.GET_FRAMEWORKS_COMPLETE_STATE,
+      CLI.GET_FRAMEWORKS_RESULT,
       getFrameworksCommand
     );
   }
@@ -176,10 +176,10 @@ export class CoreTemplateStudio {
     backendFramework: string
   ): Promise<any> {
     const getPagesCommand = `${
-      CLI.GET_PAGES_COMMAND_PREFIX
+      CLI.GET_PAGES
     } -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
     return this.awaitCliEvent(
-      CLI.GET_PAGES_COMPLETE_STATE,
+      CLI.GET_PAGES_RESULT,
       getPagesCommand
     );
   }
@@ -206,10 +206,10 @@ export class CoreTemplateStudio {
   ): Promise<any> {
     // to use this in client
     const getFeaturesCommand = `${
-      CLI.GET_FEATURES_COMMAND_PREFIX
+      CLI.GET_FEATURES
     } -p ${projectType} -f ${frontendFramework} -b ${backendFramework}\n`;
     return this.awaitCliEvent(
-      CLI.GET_FEATURES_COMPLETE_STATE,
+      CLI.GET_FEATURES_RESULT,
       getFeaturesCommand
     );
   }
@@ -217,10 +217,10 @@ export class CoreTemplateStudio {
   public async getProjectTypes(): Promise<any> {
     // to use this in client
     const getProjectTypesCommand = `${
-      CLI.GET_PROJECT_TYPES_COMMAND_PREFIX
+      CLI.GET_PROJECT_TYPES
     }\n`;
     return this.awaitCliEvent(
-      CLI.GET_PROJECT_TYPES_COMPLETE_STATE,
+      CLI.GET_PROJECT_TYPES_RESULT,
       getProjectTypesCommand
     );
   }
@@ -231,7 +231,7 @@ export class CoreTemplateStudio {
       this.makeEngineGenerationPayload(typedPayload)
     );
     const generateCommand = `${
-      CLI.GENERATE_COMMAND_PREFIX
+      CLI.GENERATE
     } -d ${generatePayload}\n`;
     const projectItemsToGenerateCount = 4; // Derived from CoreTS logic
     const itemsToGenerateCount =
@@ -241,14 +241,14 @@ export class CoreTemplateStudio {
       (typedPayload.services.cosmosDB ? 1 : 0)
     let generatedItemsCount = 0;
 
-    this.cliEvents.on(CLI.GENERATE_PROGRESS_STATE, data => {
+    this.cliEvents.on(CLI.GENERATE_RESULT, data => {
       generatedItemsCount++;
       const percentage = (generatedItemsCount / itemsToGenerateCount) * 100;
       const messageWithProgress = `(${percentage.toFixed(0)}%) ${data}`;
       payload.liveMessageHandler(messageWithProgress);
     });
     return await this.awaitCliEvent(
-      CLI.GENERATE_COMPLETE_STATE,
+      CLI.GENERATE_RESULT,
       generateCommand
     );
   }

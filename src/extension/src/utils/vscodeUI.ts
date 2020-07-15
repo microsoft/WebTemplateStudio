@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
-import { ExtensionCommand } from "../constants/extension";
+import { ExtensionCommand } from "../constants/commands";
 import { MESSAGES } from "../constants/messages";
 
 export class VSCodeUI extends WizardServant {

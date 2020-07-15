@@ -13,7 +13,7 @@ import { Logger } from "../utils/logger";
 import { IGenerationPayloadType, IServicesGenerationPayload } from "../types/generationPayloadType";
 import { sendToClientGenerationStatus, GenerationItemStatus, updateStatusMessage, sendToClientGenerationPath, GENERATION_NAMES } from "../utils/generationStatus";
 import { MESSAGES } from "../constants/messages";
-import { ExtensionCommand } from "../constants/extension";
+import { ExtensionCommand } from "../constants/commands";
 
 interface DeployedServiceStatus {
   serviceType: AzureResourceType;

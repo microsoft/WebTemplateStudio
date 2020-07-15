@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { CLI } from "../constants/cli";
-import { ExtensionCommand } from "../constants/extension";
+import { ExtensionCommand } from "../constants/commands";
 import fs = require("fs");
 import path = require("path");
 import { WizardServant, IPayloadResponse } from "../wizardServant";
