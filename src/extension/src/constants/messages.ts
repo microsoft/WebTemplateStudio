@@ -180,5 +180,34 @@ export const MESSAGES = {
       "Starting Generation Server"
     ),
     SYNC_STATUS: localize("info.syncStatus", "Sync Status: ")
+  },
+  DialogResponses:{
+    yes: { title: localize("dialog.yes", "Yes") },
+    no: { title: localize("dialog.no", "No") },
+    cancel: { title: localize("dialog.cancel", "Cancel"), isCloseAffordance: true },
+    deleteResponse: { title: localize("dialog.delete", "Delete") },
+    learnMore: { title: localize("dialog.learnMore", "Learn more") },
+    dontWarnAgain: { title: localize("dialog.dontWarnAgain", "Don't warn again")},
+    skipForNow: { title: localize("dialog.skipForNow", "Skip for now")},
+    reportAnIssue: { title: localize("dialog.reportAnIssue", "Report an issue")},
+    showLog: { title: localize("dialog.showLog", "Show log")}
+  },
+  DialogMessages: {
+    multiLineError: localize(
+      "dialog.multilineError",
+      "An error has occured. Check output window for more details."
+    ),
+    cosmosDBConnectStringReplacePrompt: localize(
+      "dialog.cosmosDBConnectStringReplacePrompt",
+      "Do you want to update the CosmosDB connection string in configuration file?"
+    ),
+    resetPagesPrompt: localize(
+      "dialog.resetPagesPrompt",
+      "Are you sure you want to reset all the selected pages?"
+    ),
+    logoutPrompt: localize(
+      "dialog.logoutPrompt",
+      "Are you sure you want to sign out of your Azure account?"
+    )
   }
 }

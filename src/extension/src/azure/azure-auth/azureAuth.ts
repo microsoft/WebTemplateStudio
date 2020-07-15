@@ -7,7 +7,6 @@ import {
 } from "azure-arm-resource";
 import { AuthorizationError, ResourceGroupError } from "../../errors";
 import { CONSTANTS } from "../../constants/constants";
-import { DialogMessages, DialogResponses } from "../../constants/dialog";
 import { MESSAGES } from "../../constants/messages";
 
 const MICROSOFT_DOCUMENT_DB_PROVIDER = "Microsoft.DocumentDb";
@@ -57,14 +56,14 @@ export abstract class AzureAuth {
   public static async promptUsersToLogout(): Promise<any> {
     return await vscode.window
       .showInformationMessage(
-        DialogMessages.logoutPrompt,
-        ...[DialogResponses.yes, DialogResponses.no]
+        MESSAGES.DialogMessages.logoutPrompt,
+        ...[MESSAGES.DialogResponses.yes, MESSAGES.DialogResponses.no]
       )
       .then((selection: vscode.MessageItem | undefined) => {
         const userConfirmation = {
           signOut: false
         };
-        if (selection === DialogResponses.yes) {
+        if (selection === MESSAGES.DialogResponses.yes) {
           userConfirmation.signOut = true;
         }
         return { payload: userConfirmation };

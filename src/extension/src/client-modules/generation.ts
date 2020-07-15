@@ -5,7 +5,6 @@ import {
   AzureResourceType
 } from "../constants/constants";
 import { TelemetryEventName } from '../constants/telemetry';
-import { DialogMessages, DialogResponses} from "../constants/dialog";
 import { IActionContext, ITelemetryService } from "../telemetry/telemetryService";
 import { AzureServices } from "../azure/azureServices";
 import { CoreTemplateStudio } from "../coreTemplateStudio";
@@ -202,12 +201,12 @@ export class Generation extends WizardServant {
 
   private async replaceConnectionString(path: string, connectionString: string, backendFramework: string): Promise<void> {
     const selection = await vscode.window.showInformationMessage(
-      DialogMessages.cosmosDBConnectStringReplacePrompt,
-      ...[DialogResponses.yes, DialogResponses.no]
+      MESSAGES.DialogMessages.cosmosDBConnectStringReplacePrompt,
+      ...[MESSAGES.DialogResponses.yes, MESSAGES.DialogResponses.no]
     );
 
     const start = Date.now();
-    if (selection === DialogResponses.yes) {
+    if (selection === MESSAGES.DialogResponses.yes) {
       AzureServices.updateConnectionStringToProject(path, connectionString, backendFramework);
       vscode.window.showInformationMessage(MESSAGES.INFO.FILE_REPLACED_MESSAGE + path);
       this.trackCosmosConnectionStringReplace(start);

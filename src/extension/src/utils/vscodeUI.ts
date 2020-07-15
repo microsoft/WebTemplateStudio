@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { WizardServant, IPayloadResponse } from "../wizardServant";
 import { PAYLOAD_MESSAGES_TEXT } from "../constants/constants";
 import { ExtensionCommand } from "../constants/extension";
-import { DialogResponses, DialogMessages } from "../constants/dialog";
+import { MESSAGES } from "../constants/messages";
 
 export class VSCodeUI extends WizardServant {
   clientCommandMap: Map<
@@ -34,8 +34,8 @@ export class VSCodeUI extends WizardServant {
     ) {
       return await vscode.window
         .showInformationMessage(
-          DialogMessages.resetPagesPrompt,
-          ...[DialogResponses.yes, DialogResponses.no]
+          MESSAGES.DialogMessages.resetPagesPrompt,
+          ...[MESSAGES.DialogResponses.yes, MESSAGES.DialogResponses.no]
         )
         .then((selection: vscode.MessageItem | undefined) => {
           let userConfirmation = {
@@ -43,7 +43,7 @@ export class VSCodeUI extends WizardServant {
             internalName: message.payload.internalName,
             scope:Number
           };
-          if (selection === DialogResponses.yes) {
+          if (selection === MESSAGES.DialogResponses.yes) {
             userConfirmation = {
               resetPages: true,
               internalName: message.payload.internalName,

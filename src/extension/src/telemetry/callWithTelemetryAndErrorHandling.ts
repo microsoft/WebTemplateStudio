@@ -6,7 +6,7 @@
 
  import * as vscode from "vscode";
 import { MessageItem, window } from "vscode";
-import { DialogResponses, DialogMessages } from "../constants/dialog";
+import { MESSAGES } from "../constants/messages";
 import { reportAnIssue } from "./reportAnIssue";
 import { IParsedError, parseError } from "./parseError";
 import { ExtensionContext } from "vscode";
@@ -121,19 +121,19 @@ function handleError(
     let message: string;
     if (errorData.message.includes("\n")) {
       console.log(errorData.message);
-      message = DialogMessages.multiLineError;
+      message = MESSAGES.DialogMessages.multiLineError;
     } else {
       message = errorData.message;
     }
 
     // don't wait
     window
-      .showErrorMessage(message, DialogResponses.showLog, DialogResponses.reportAnIssue)
+      .showErrorMessage(message, MESSAGES.DialogResponses.showLog, MESSAGES.DialogResponses.reportAnIssue)
       .then((result: MessageItem | undefined) => {
-        if (result === DialogResponses.reportAnIssue) {
+        if (result === MESSAGES.DialogResponses.reportAnIssue) {
           reportAnIssue(vscodeContext, callbackId, errorData);
         }
-        else if (result === DialogResponses.showLog) {
+        else if (result === MESSAGES.DialogResponses.showLog) {
           vscode.workspace.openTextDocument(Logger.filename)
           .then(TextDocument => vscode.window.showTextDocument(TextDocument));
         }
