@@ -81,8 +81,8 @@ const DependencyInfo = (props: Props) => {
     setDependency(localDepency);
 
     if (localDepency){
-      const { dependencyName, dependencyMinimumVersion } = localDepency;
-      switch (dependencyName.toLocaleLowerCase()) {
+      const { dependencyName, dependencyStoreKey, dependencyMinimumVersion } = localDepency;
+      switch (dependencyStoreKey.toLocaleLowerCase()) {
         case "node":
           setInstalled(dependencyContext.node);
           break;
