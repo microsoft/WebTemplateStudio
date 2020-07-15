@@ -81,11 +81,18 @@ const DependencyInfo = (props: Props) => {
     setDependency(localDepency);
 
     if (localDepency){
-      const {
-        dependencyName,
-        dependencyMinimumVersion
-      } = localDepency;
-        setInstalled(dependencyName.toLocaleLowerCase() === "node" ? dependencyContext.node: dependencyContext.python);
+      const { dependencyName, dependencyMinimumVersion } = localDepency;
+      switch (dependencyName.toLocaleLowerCase()) {
+        case "node":
+          setInstalled(dependencyContext.node);
+          break;
+        case "python":
+          setInstalled(dependencyContext.python);
+          break;
+        case "netcore":
+          setInstalled(dependencyContext.netcore);
+          break;
+      }
         setDependencyMessage(intl.formatMessage(messages.notInstalled, {
           dependencyName: dependencyName,
           minimumVersion: dependencyMinimumVersion
