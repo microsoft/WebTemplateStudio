@@ -1,9 +1,4 @@
-
-//reagrupar por request/result
 export const CLI = {
-  BASE_CLI_TOOL_NAME: "Microsoft.Templates.Cli",
-  SYNC_COMPLETE_STATE: "syncResult",
-  SYNC_PROGRESS_STATE: "syncProgress",
   GET_FEATURES: "getfeatures",
   GET_FEATURES_RESULT: "getFeaturesResult",
   GET_FRAMEWORKS: "getframeworks",
@@ -12,15 +7,21 @@ export const CLI = {
   GET_PAGES_RESULT: "getPagesResult",
   GET_PROJECT_TYPES: "getprojecttypes",
   GET_PROJECT_TYPES_RESULT: "getProjectTypesResult",
+  GET_ALL_LICENSES: "getalllicences",
+  GET_ALL_LICENSES_RESULT: "getAllLicencesResult",
   GENERATE: "generate",
   GENERATE_RESULT: "generateResult",
-  GENERATE_RESULT: "generateProgress",
-  WINDOWS_PLATFORM_VERSION: "win32",
+  GENERATE_PROGRESS: "generateProgress",
+  BASE_CLI_TOOL_NAME: "Microsoft.Templates.Cli",
   SYNC_COMMAND_PREFIX: "sync",
-  GET_ALL_LICENSES_COMMAND_PREFIX: "getalllicences",
-  GET_ALL_LICENSES_COMPLETE_STATE: "getAllLicencesResult",
+  SYNC_COMPLETE_STATE: "syncResult",
+  SYNC_PROGRESS_STATE: "syncProgress"
+};
+
+export const CLI_SETTINGS = {
   PRODUCTION_PATH_TO_TEMPLATES: "..",
   DEVELOPMENT_PATH_TO_TEMPLATES: "../../../../..",
   MAX_SYNC_REQUEST_ATTEMPTS: 51,
   SYNC_RETRY_WAIT_TIME: 250,
-};
+  WINDOWS_PLATFORM_VERSION: "win32"
+}

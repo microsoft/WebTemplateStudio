@@ -4,7 +4,7 @@ import { ISyncReturnType } from "./types/syncReturnType";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { Logger } from "./utils/logger";
 import { MESSAGES } from "./constants/messages";
-import { CLI } from "./constants/cli";
+import { CLI_SETTINGS } from "./constants/cli";
 
 export class LaunchExperience {
   private static _progressObject: vscode.Progress<IVSCodeProgressType>;
@@ -37,15 +37,15 @@ export class LaunchExperience {
     let syncAttempts = 0;
     while (
       !syncObject.successfullySynced &&
-      syncAttempts < CLI.MAX_SYNC_REQUEST_ATTEMPTS
+      syncAttempts < CLI_SETTINGS.MAX_SYNC_REQUEST_ATTEMPTS
     ) {
       syncObject = await this.attemptSync();
       syncAttempts++;
       if (!syncObject.successfullySynced) {
-        await this.timeout(CLI.SYNC_RETRY_WAIT_TIME);
+        await this.timeout(CLI_SETTINGS.SYNC_RETRY_WAIT_TIME);
       }
     }
-    if (syncAttempts >= CLI.MAX_SYNC_REQUEST_ATTEMPTS) {
+    if (syncAttempts >= CLI_SETTINGS.MAX_SYNC_REQUEST_ATTEMPTS) {
       CoreTemplateStudio.DestroyInstance();
       throw new Error(MESSAGES.ERRORS.TOO_MANY_FAILED_SYNC_REQUESTS(syncObject.errorMessage));
     }
@@ -61,9 +61,9 @@ export class LaunchExperience {
     let pathToTemplates: string;
 
     if (process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "development") {
-      pathToTemplates = CLI.DEVELOPMENT_PATH_TO_TEMPLATES;
+      pathToTemplates = CLI_SETTINGS.DEVELOPMENT_PATH_TO_TEMPLATES;
     } else {
-      pathToTemplates = CLI.PRODUCTION_PATH_TO_TEMPLATES;
+      pathToTemplates = CLI_SETTINGS.PRODUCTION_PATH_TO_TEMPLATES;
     }
 
     const apiInstance = CoreTemplateStudio.GetExistingInstance();

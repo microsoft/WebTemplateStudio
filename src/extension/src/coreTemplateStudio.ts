@@ -4,7 +4,7 @@ import * as os from "os";
 import * as fs from "fs";
 
 import { ChildProcess, spawn } from "child_process";
-import { CLI } from "./constants/cli";
+import { CLI, CLI_SETTINGS } from "./constants/cli";
 import { ICommandPayload } from "./types/commandPayload";
 import { IGenerationPayloadType } from "./types/generationPayloadType";
 import { EventEmitter } from "events";
@@ -49,7 +49,7 @@ export class CoreTemplateStudio {
       extensionPath = path.join(__dirname, "..");
     }
 
-    if (platform === CLI.WINDOWS_PLATFORM_VERSION) {
+    if (platform === CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
       cliExecutableName += ".exe";
     }
 
@@ -68,7 +68,7 @@ export class CoreTemplateStudio {
       platform
     );
 
-    if (os.platform() !== CLI.WINDOWS_PLATFORM_VERSION) {
+    if (os.platform() !== CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
       // Not unsafe as the parameter comes from trusted source
       fs.chmodSync(cliPath, 0o755);
     }
@@ -190,11 +190,11 @@ export class CoreTemplateStudio {
       this.makeEngineGenerationPayload(typedPayload)
     );
     const getAllLicensesCommand = `${
-      CLI.GET_ALL_LICENSES_COMMAND_PREFIX
+      CLI.GET_ALL_LICENSES
     } -d ${getAllLicensesPayload}\n`;
 
     return this.awaitCliEvent(
-      CLI.GET_ALL_LICENSES_COMPLETE_STATE,
+      CLI.GET_ALL_LICENSES_RESULT,
       getAllLicensesCommand
     );
   }
@@ -241,7 +241,7 @@ export class CoreTemplateStudio {
       (typedPayload.services.cosmosDB ? 1 : 0)
     let generatedItemsCount = 0;
 
-    this.cliEvents.on(CLI.GENERATE_RESULT, data => {
+    this.cliEvents.on(CLI.GENERATE_PROGRESS, data => {
       generatedItemsCount++;
       const percentage = (generatedItemsCount / itemsToGenerateCount) * 100;
       const messageWithProgress = `(${percentage.toFixed(0)}%) ${data}`;
@@ -306,7 +306,7 @@ export class CoreTemplateStudio {
   }
 
   private killProcess(processToKill: ChildProcess): void {
-    if (process.platform === CLI.WINDOWS_PLATFORM_VERSION) {
+    if (process.platform === CLI_SETTINGS.WINDOWS_PLATFORM_VERSION) {
       const pid = processToKill.pid;
       const spawn = require("child_process").spawn;
       spawn("taskkill", ["/pid", pid, "/f", "/t"]);
