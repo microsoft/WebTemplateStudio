@@ -4,7 +4,7 @@ import { ISyncReturnType } from "./types/syncReturnType";
 import { IVSCodeProgressType } from "./types/vscodeProgressType";
 import { Logger } from "./utils/logger";
 import { MESSAGES } from "./constants/messages";
-import { CLI } from "./constants/extension";
+import { CLI } from "./constants/cli";
 
 export class LaunchExperience {
   private static _progressObject: vscode.Progress<IVSCodeProgressType>;
