@@ -3,12 +3,12 @@
 If you are authoring templates for Web Template Studio, or interested in contributing to this repo, then you are likely interested in how to use the latest version of this code.
 
 This document covers:
-- Prerequisites
-- Project folder structure
-- Core Template Studio Submodule
-- How to run the extension locally
-- How to develop the client
-- How to built a local vsix
+- [Prerequisites](#prerequisites)
+- [Project folder structure](#project-folder-structure)
+- [Core Template Studio Submodule](#core-template-studio-submodule)
+- [How to run the extension locally](#how-to-run-the-extension-locally)
+- [How to develop the client](#how-to-develop-the-client)
+- [How to built a local vsix](#how-to-built-a-local-vsix)
 
 Before starting make sure you read the [Web Template Studio arquitecture](application-architecture.md) document.
 
@@ -74,14 +74,14 @@ When you clone Web Template Studio you have to run two commands: `git submodule 
 ### Update with remote changes
 Changes on Core Template Studio should be done on the Core Template Studio repos. In WebTS, to update the submodule to the most recent commit, you have to run the command: `git submodule update --remote`.
 
-## Run the extension locally
+## How to run the extension locally
 1. Run `./build-all.sh` from the _build folder. This script installs dependencies and compiles the client and core template studio and copies it to the extension. It also builds and installs the extension. There are also separate scripts for building the client (build-client.sh), the Core Template Studio Cli (build-coretscli.sh), or the extension (build-extension.sh) available.
 2. Open the `src/extension` folder using `VSCode`.
 3. Start the debugger by pressing `F5`. This should open the Extension Development Host in a new Visual Studio Code window.
 4. In the Extension Development Host, press `Ctrl + Shift + P` on Windows/Linux or `Command ⌘ + Shift + P` to open the Command Palette.
 5. In the Command Palette, type `Web Template Studio: Launch` and press `Enter` to launch the extension. Make sure that you don't have the Web Template Studio from the marketplace installed, concurrent installation is nor yet supported.
 
-## Developing the client
+## How to develop the client
 As the client is injected as a static web app in the webview of the extension, debugging inside the extension can be challenging. Running the client in a browser is useful for quickly testing HTML or CSS changes and for debugging since you can use Chrome extensions such as React and Redux developer tools.
 
 When running in the browser communication with the extension is done agains the mock mockVsCodeApi.ts in the mockData folder. Note that the behavior of on the browser may differ from the behavior in the extension so make sure to test out both.
@@ -102,7 +102,7 @@ More info:
 - https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
 - https://code.visualstudio.com/docs/editor/debugging
 
-## Create VSIX Package
+## How to built a local vsix
 Run `./createLocalVsix.sh` from the _build folder.
 
 The script will compile the client, CoreTS (in release mode) and the extension and package the extension into the root directory `/dist` folder. The vsix package can be distributed and installed by anyone who has VSCode using the command in the extension directory:

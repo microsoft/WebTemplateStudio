@@ -43,6 +43,7 @@ These will help if you want to know more about WebTS or contribute to the projec
 - [Application Arquitecture](docs/contributing/application-architecture.md)
 - [Getting started with the codebase](/docs/contributing/getting-started-developers.md)
 - [Templates](./contributing/templates.md)
+- [Accessibility](./contributing/accessibility.md)
 
 ## SHA256
 

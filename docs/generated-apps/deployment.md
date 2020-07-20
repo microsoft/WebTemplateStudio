@@ -9,7 +9,7 @@ One way to deploy is using Azure App Service. This service will allow you to dep
 
 ## Web Template Studio: Deploy App command
 
-NOTE: Make sure that the [Web Template Studio](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WebTemplateStudio-dev-nightly) and [Azure App Service](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice) extensions are installed in visual studio code.
+NOTE: Make sure that the [Web Template Studio](https://marketplace.visualstudio.com/items?itemName=WASTeamAccount.WebTemplateStudio-dev-nightly) and [Azure App Service](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice) extensions are installed in Visual Studio Code.
 
 The easiest way to deploy an application generated with Web Template Studio is to use the `Web Template Studio: Deploy Application` command. To execute this command, follow these steps:
 
